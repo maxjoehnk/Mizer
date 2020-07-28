@@ -1,0 +1,33 @@
+[workspace]
+members = [
+    "api",
+    "nodes/artnet",
+    "nodes/clock",
+    "nodes/conversion",
+    "nodes/inputs",
+    "nodes/log",
+    "nodes/midi",
+    "nodes/osc",
+    "nodes/oscillator",
+    "nodes/sequence"
+]
+
+[package]
+name = "mizer"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+derive_more = "0.99"
+env_logger = "0.7"
+mizer-node-api = { path = "./api" }
+mizer-artnet-nodes = { path = "./nodes/artnet" }
+mizer-conversion-nodes = { path = "./nodes/conversion" }
+mizer-input-nodes = { path = "./nodes/inputs" }
+mizer-log-nodes = { path = "./nodes/log" }
+mizer-sequence-nodes = { path = "./nodes/sequence" }
+mizer-clock-nodes = { path = "./nodes/clock" }
+mizer-oscillator-nodes = { path = "./nodes/oscillator" }
+mizer-osc-nodes = { path = "./nodes/osc" }
+mizer-midi-nodes = { path = "./nodes/midi" }

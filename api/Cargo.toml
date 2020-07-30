@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 crossbeam-channel = "0.4"
+gstreamer = "0.16"

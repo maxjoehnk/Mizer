@@ -3,7 +3,7 @@ use std::net::{SocketAddrV4, UdpSocket};
 use std::sync::Mutex;
 use std::thread;
 
-use crossbeam_channel::{Receiver, Sender, unbounded};
+use crossbeam_channel::{Receiver, unbounded};
 use lazy_static::lazy_static;
 use rosc::{OscMessage, OscPacket, OscType};
 

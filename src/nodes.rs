@@ -10,6 +10,7 @@ pub use mizer_sequence_nodes::*;
 pub use mizer_oscillator_nodes::*;
 pub use mizer_clock_nodes::*;
 pub use mizer_osc_nodes::*;
+pub use mizer_video_nodes::*;
 
 #[derive(From)]
 pub enum Node {
@@ -20,6 +21,9 @@ pub enum Node {
     OscillatorNode(OscillatorNode),
     ClockNode(ClockNode),
     OscInputNode(OscInputNode),
+    VideoFileNode(VideoFileNode),
+    VideoOutputNode(VideoOutputNode),
+    VideoEffectNode(VideoEffectNode)
 }
 
 macro_rules! derive_node {
@@ -87,5 +91,8 @@ derive_node! {
     Node::ArtnetOutputNode,
     Node::OscillatorNode,
     Node::ClockNode,
-    Node::OscInputNode
+    Node::OscInputNode,
+    Node::VideoFileNode,
+    Node::VideoOutputNode,
+    Node::VideoEffectNode
 }

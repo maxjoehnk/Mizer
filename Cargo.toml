@@ -9,7 +9,8 @@ members = [
     "nodes/midi",
     "nodes/osc",
     "nodes/oscillator",
-    "nodes/sequence"
+    "nodes/sequence",
+    "nodes/video"
 ]
 
 [package]
@@ -31,3 +32,4 @@ mizer-clock-nodes = { path = "./nodes/clock" }
 mizer-oscillator-nodes = { path = "./nodes/oscillator" }
 mizer-osc-nodes = { path = "./nodes/osc" }
 mizer-midi-nodes = { path = "./nodes/midi" }
+mizer-video-nodes = { path = "./nodes/video" }

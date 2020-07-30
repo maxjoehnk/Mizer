@@ -14,6 +14,7 @@ pub trait InputNode {
     fn connect_numeric_input(&mut self, channel: NumericChannel) {}
     fn connect_trigger_input(&mut self, channel: TriggerChannel) {}
     fn connect_clock_input(&mut self, channel: ClockChannel) {}
+    fn connect_video_input(&mut self, source: &impl gstreamer::ElementExt) {}
 }
 
 pub trait OutputNode {
@@ -21,6 +22,7 @@ pub trait OutputNode {
     fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {}
     fn connect_to_trigger_input(&mut self, input: &mut impl InputNode) {}
     fn connect_to_clock_input(&mut self, input: &mut impl InputNode) {}
+    fn connect_to_video_input(&mut self, input: &mut impl InputNode) {}
 }
 
 mod deps {

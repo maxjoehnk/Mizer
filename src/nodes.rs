@@ -11,9 +11,10 @@ pub use mizer_oscillator_nodes::*;
 pub use mizer_clock_nodes::*;
 pub use mizer_osc_nodes::*;
 pub use mizer_video_nodes::*;
+pub use mizer_scripting_nodes::*;
 
 #[derive(From)]
-pub enum Node {
+pub enum Node<'a> {
     Fader(FaderNode),
     ConvertToDmxNode(ConvertToDmxNode),
     LogNode(LogNode),
@@ -23,20 +24,21 @@ pub enum Node {
     OscInputNode(OscInputNode),
     VideoFileNode(VideoFileNode),
     VideoOutputNode(VideoOutputNode),
-    VideoEffectNode(VideoEffectNode)
+    VideoEffectNode(VideoEffectNode),
+    ScriptingNode(ScriptingNode<'a>)
 }
 
 macro_rules! derive_node {
     ($($i:path),*) => {
-        impl ProcessingNode for Node {
+        impl<'a> ProcessingNode for Node<'a> {
             derive_process!($($i), *);
         }
 
-        impl InputNode for Node {
+        impl<'a> InputNode for Node<'a> {
             derive_input!($($i), *);
         }
 
-        impl OutputNode for Node {
+        impl<'a> OutputNode for Node<'a> {
             derive_output!($($i), *);
         }
     }
@@ -94,5 +96,6 @@ derive_node! {
     Node::OscInputNode,
     Node::VideoFileNode,
     Node::VideoOutputNode,
-    Node::VideoEffectNode
+    Node::VideoEffectNode,
+    Node::ScriptingNode
 }

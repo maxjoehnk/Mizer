@@ -49,7 +49,7 @@ impl ProcessingNode for ClockNode {
         }
     }
 
-    fn set_float_property<S: Into<String>>(&mut self, property: S, value: f64) {
+    fn set_numeric_property<S: Into<String>>(&mut self, property: S, value: f64) {
         if property.into() == "speed" {
             self.speed = value;
         }

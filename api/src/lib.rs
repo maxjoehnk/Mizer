@@ -5,8 +5,7 @@ pub use crate::channels::*;
 pub trait ProcessingNode: InputNode + OutputNode {
     fn process(&mut self) {}
 
-    fn set_int_property<S: Into<String>>(&mut self, property: S, value: i64) {}
-    fn set_float_property<S: Into<String>>(&mut self, property: S, value: f64) {}
+    fn set_numeric_property<S: Into<String>>(&mut self, property: S, value: f64) {}
 }
 
 pub trait InputNode {

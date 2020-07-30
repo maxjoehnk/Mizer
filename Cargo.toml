@@ -9,6 +9,7 @@ members = [
     "nodes/midi",
     "nodes/osc",
     "nodes/oscillator",
+    "nodes/scripting",
     "nodes/sequence",
     "nodes/video"
 ]
@@ -22,6 +23,7 @@ edition = "2018"
 [dependencies]
 derive_more = "0.99"
 env_logger = "0.7"
+log = "0.4"
 mizer-node-api = { path = "./api" }
 mizer-artnet-nodes = { path = "./nodes/artnet" }
 mizer-conversion-nodes = { path = "./nodes/conversion" }
@@ -33,3 +35,4 @@ mizer-oscillator-nodes = { path = "./nodes/oscillator" }
 mizer-osc-nodes = { path = "./nodes/osc" }
 mizer-midi-nodes = { path = "./nodes/midi" }
 mizer-video-nodes = { path = "./nodes/video" }
+mizer-scripting-nodes = { path = "./nodes/scripting" }

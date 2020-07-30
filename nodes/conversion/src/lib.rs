@@ -23,6 +23,12 @@ impl ConvertToDmxNode {
 }
 
 impl ProcessingNode for ConvertToDmxNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("ConvertToDmxNode")
+            .with_inputs(vec![NodeInput::numeric("numeric")])
+            .with_outputs(vec![NodeOutput::dmx("dmx")])
+    }
+
     fn process(&mut self) {
         let mut last = None;
         for channel in &self.inputs {

@@ -45,7 +45,12 @@ impl VideoFileNode {
     }
 }
 
-impl ProcessingNode for VideoFileNode {}
+impl ProcessingNode for VideoFileNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("VideoFileNode")
+            .with_outputs(vec![NodeOutput::new("output", NodeChannel::Video)])
+    }
+}
 impl InputNode for VideoFileNode {}
 impl OutputNode for VideoFileNode {
     fn connect_to_video_input(&mut self, input: &mut impl InputNode) {

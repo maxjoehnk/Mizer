@@ -1,4 +1,5 @@
 use std::time::{SystemTime, UNIX_EPOCH};
+
 use mizer_node_api::*;
 
 fn now() -> u128 {
@@ -30,6 +31,12 @@ impl ClockNode {
 }
 
 impl ProcessingNode for ClockNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("ClockNode")
+            .with_outputs(vec![NodeOutput::new("clock", NodeChannel::Clock)])
+            .with_properties(vec![NodeProperty::numeric("speed")])
+    }
+
     fn process(&mut self) {
         let tick = now();
         let delta: f64 = (tick - self.last_tick) as f64 * (self.speed / 60000f64);

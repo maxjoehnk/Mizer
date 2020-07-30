@@ -41,11 +41,21 @@ macro_rules! derive_node {
         impl<'a> OutputNode for Node<'a> {
             derive_output!($($i), *);
         }
+
+        impl<'a> std::fmt::Debug for Node<'a> {
+            derive_debug!($($i), *);
+        }
     }
 }
 
 macro_rules! derive_process {
     ($($i:path),*) => {
+        fn get_details(&self) -> NodeDetails {
+            match self {
+                $($i(node) => node.get_details(),)*
+            }
+        }
+
         fn process(&mut self) {
             match self {
                 $($i(node) => node.process(),)*
@@ -81,6 +91,16 @@ macro_rules! derive_output {
         fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {
             match self {
                 $($i(node) => node.connect_to_numeric_input(input),)*
+            }
+        }
+    };
+}
+
+macro_rules! derive_debug {
+    ($($i:path),*) => {
+        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            match self {
+                $($i(node) => node.get_details().fmt(f),)*
             }
         }
     };

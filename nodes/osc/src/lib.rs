@@ -92,6 +92,11 @@ impl OscInputNode {
 }
 
 impl ProcessingNode for OscInputNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("OscInputNode")
+            .with_outputs(vec![NodeOutput::numeric("value")])
+    }
+
     fn process(&mut self) {
         while let Ok(packet) = self.rx.try_recv() {
             self.handle_packet(packet);

@@ -29,6 +29,10 @@ impl<'a> ScriptingNode<'a> {
 }
 
 impl<'a> ProcessingNode for ScriptingNode<'a> {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("ScriptingNode")
+    }
+
     fn process(&mut self) {
         let mut input = None;
         for channel in &self.inputs {

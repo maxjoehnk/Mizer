@@ -21,6 +21,11 @@ impl VideoOutputNode {
 }
 
 impl ProcessingNode for VideoOutputNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("VideoOutputNode")
+            .with_inputs(vec![NodeInput::new("input", NodeChannel::Video)])
+    }
+
     fn process(&mut self) {
         let pipeline = PIPELINE.lock().unwrap();
         pipeline.set_state(gstreamer::State::Playing).unwrap();

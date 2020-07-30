@@ -87,6 +87,11 @@ impl InputNode for ArtnetOutputNode {
 impl OutputNode for ArtnetOutputNode {}
 
 impl ProcessingNode for ArtnetOutputNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("ArtnetOutputNode")
+            .with_inputs(vec![NodeInput::dmx("dmx")])
+    }
+
     fn process(&mut self) {
         self.recv();
         self.flush();

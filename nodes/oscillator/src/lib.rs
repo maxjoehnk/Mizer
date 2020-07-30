@@ -31,6 +31,12 @@ impl OscillatorNode {
 }
 
 impl ProcessingNode for OscillatorNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("OscillatorNode")
+            .with_inputs(vec![NodeInput::new("clock", NodeChannel::Clock)])
+            .with_outputs(vec![NodeOutput::numeric("value")])
+    }
+
     fn process(&mut self) {
         if let Some(clock) = self.clock.as_ref() {
             for event in clock.recv_all().unwrap() {

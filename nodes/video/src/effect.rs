@@ -68,7 +68,13 @@ impl VideoEffectNode {
     }
 }
 
-impl ProcessingNode for VideoEffectNode {}
+impl ProcessingNode for VideoEffectNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("VideoEffectNode")
+            .with_inputs(vec![NodeInput::new("input", NodeChannel::Video)])
+            .with_outputs(vec![NodeOutput::new("output", NodeChannel::Video)])
+    }
+}
 impl InputNode for VideoEffectNode {
     fn connect_video_input(&mut self, source: &impl ElementExt) {
         source.link(&self.effect).unwrap();

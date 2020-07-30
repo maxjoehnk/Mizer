@@ -13,6 +13,11 @@ impl LogNode {
 }
 
 impl ProcessingNode for LogNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("LogNode")
+            .with_inputs(vec![NodeInput::dmx("dmx")])
+    }
+
     fn process(&mut self) {
         for channel in self.dmx_channels.iter() {
             match channel.recv() {

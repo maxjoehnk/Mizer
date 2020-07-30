@@ -3,8 +3,10 @@ use std::time::Duration;
 use mizer_node_api::*;
 
 use crate::nodes::*;
+use crate::pipeline::Pipeline;
 
 mod nodes;
+mod pipeline;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
@@ -30,24 +32,23 @@ fn main() {
     script.connect_to_numeric_input(&mut converter1);
     oscillator.connect_to_numeric_input(&mut converter2);
     fader.set_numeric_property("value", 50f64);
-    let mut nodes: Vec<Node<'_>> = vec![
-        clock.into(),
-        osc.into(),
-        oscillator.into(),
-        fader.into(),
-        converter1.into(),
-        converter2.into(),
-        artnet.into(),
-        script.into(),
-        file.into(),
-        effect.into(),
-        screen.into()
-    ];
+    let mut pipeline = Pipeline::default();
+    pipeline.add_node(clock);
+    pipeline.add_node(osc);
+    pipeline.add_node(oscillator);
+    pipeline.add_node(fader);
+    pipeline.add_node(converter1);
+    pipeline.add_node(converter2);
+    pipeline.add_node(artnet);
+    pipeline.add_node(script);
+    pipeline.add_node(file);
+    pipeline.add_node(effect);
+    pipeline.add_node(screen);
+    log::info!("{:?}", pipeline);
+
     loop {
         let before = std::time::Instant::now();
-        for node in nodes.iter_mut() {
-            node.process();
-        }
+        pipeline.process();
         let after = std::time::Instant::now();
         let frame_time = after.duration_since(before);
         if frame_time <= FRAME_DELAY_60FPS {
@@ -55,3 +56,4 @@ fn main() {
         }
     }
 }
+

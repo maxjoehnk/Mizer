@@ -15,6 +15,12 @@ impl FaderNode {
 }
 
 impl ProcessingNode for FaderNode {
+    fn get_details(&self) -> NodeDetails {
+        NodeDetails::new("FaderNode")
+            .with_properties(vec![NodeProperty::numeric("value")])
+            .with_outputs(vec![NodeOutput::numeric("value")])
+    }
+
     fn set_numeric_property<S: Into<String>>(&mut self, property: S, value: f64) {
         if property.into() == "value" {
             self.value = value;

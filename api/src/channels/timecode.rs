@@ -1,4 +1,4 @@
-use crate::deps::{Receiver, Sender, channel, TryRecvError};
+use crate::deps::{Receiver, channel, TryRecvError};
 use super::GenericSender;
 
 #[derive(Debug, Clone, Copy)]

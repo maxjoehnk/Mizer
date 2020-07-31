@@ -66,15 +66,15 @@ macro_rules! derive_process {
 
 macro_rules! derive_input {
     ($($i:path),*) => {
-        fn connect_dmx_input(&mut self, channels: &[DmxChannel]) {
+        fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
             match self {
-                $($i(node) => node.connect_dmx_input(channels),)*
+                $($i(node) => node.connect_dmx_input(input, channels),)*
             }
         }
 
-        fn connect_numeric_input(&mut self, channel: NumericChannel) {
+        fn connect_numeric_input(&mut self, input: &str, channel: NumericChannel) -> ConnectionResult {
             match self {
-                $($i(node) => node.connect_numeric_input(channel),)*
+                $($i(node) => node.connect_numeric_input(input, channel),)*
             }
         }
     };
@@ -82,15 +82,15 @@ macro_rules! derive_input {
 
 macro_rules! derive_output {
     ($($i:path),*) => {
-        fn connect_to_dmx_input(&mut self, input: &mut impl InputNode) {
+        fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
             match self {
-                $($i(node) => node.connect_to_dmx_input(input),)*
+                $($i(this) => this.connect_to_dmx_input(output, node, input),)*
             }
         }
 
-        fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {
+        fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
             match self {
-                $($i(node) => node.connect_to_numeric_input(input),)*
+                $($i(this) => this.connect_to_numeric_input(output, node, input),)*
             }
         }
     };

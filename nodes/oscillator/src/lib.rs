@@ -51,16 +51,26 @@ impl ProcessingNode for OscillatorNode {
 }
 
 impl InputNode for OscillatorNode {
-    fn connect_clock_input(&mut self, channel: ClockChannel) {
-        self.clock = Some(channel);
+    fn connect_clock_input(&mut self, input: &str, channel: ClockChannel) -> ConnectionResult {
+        if input == "clock" {
+            self.clock = Some(channel);
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidInput)
+        }
     }
 }
 
 impl OutputNode for OscillatorNode {
-    fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {
-        let (tx, channel) = NumericChannel::new();
-        input.connect_numeric_input(channel);
-        self.outputs.push(tx);
+    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        if output == "value" {
+            let (tx, channel) = NumericChannel::new();
+            node.connect_numeric_input(input, channel)?;
+            self.outputs.push(tx);
+            Ok(())
+        }else {
+            Err(ConnectionError::InvalidOutput)
+        }
     }
 }
 

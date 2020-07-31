@@ -30,9 +30,14 @@ impl ProcessingNode for LogNode {
 }
 
 impl InputNode for LogNode {
-    fn connect_dmx_input(&mut self, channels: &[DmxChannel]) {
-        for channel in channels {
-            self.dmx_channels.push(channel.clone());
+    fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
+        if input == "dmx" {
+            for channel in channels {
+                self.dmx_channels.push(channel.clone());
+            }
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidInput)
         }
     }
 }

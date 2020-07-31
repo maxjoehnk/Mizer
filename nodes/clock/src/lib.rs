@@ -66,9 +66,14 @@ impl ProcessingNode for ClockNode {
 impl InputNode for ClockNode {}
 
 impl OutputNode for ClockNode {
-    fn connect_to_clock_input(&mut self, input: &mut impl InputNode) {
-        let (tx, channel) = ClockChannel::new();
-        input.connect_clock_input(channel);
-        self.outputs.push(tx);
+    fn connect_to_clock_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        if output == "clock" {
+            let (tx, channel) = ClockChannel::new();
+            node.connect_clock_input(input, channel)?;
+            self.outputs.push(tx);
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidOutput)
+        }
     }
 }

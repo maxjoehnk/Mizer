@@ -1,13 +1,15 @@
-mod channels;
+use thiserror::Error;
 
 pub use crate::channels::*;
+
+mod channels;
 
 #[derive(Debug, Clone)]
 pub struct NodeDetails {
     name: String,
     inputs: Vec<NodeInput>,
     outputs: Vec<NodeOutput>,
-    properties: Vec<NodeProperty>
+    properties: Vec<NodeProperty>,
 }
 
 impl NodeDetails {
@@ -154,24 +156,67 @@ pub trait ProcessingNode: InputNode + OutputNode {
 
     fn process(&mut self) {}
 
-    fn set_numeric_property<S: Into<String>>(&mut self, property: S, value: f64) {}
+    fn set_numeric_property<S: Into<String>>(&mut self, _property: S, _value: f64) {}
 }
 
 pub trait InputNode {
-    fn connect_dmx_input(&mut self, channels: &[DmxChannel]) {}
-    fn connect_numeric_input(&mut self, channel: NumericChannel) {}
-    fn connect_trigger_input(&mut self, channel: TriggerChannel) {}
-    fn connect_clock_input(&mut self, channel: ClockChannel) {}
-    fn connect_video_input(&mut self, source: &impl gstreamer::ElementExt) {}
+    fn connect_dmx_input(&mut self, _input: &str, _channels: &[DmxChannel]) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
+    fn connect_numeric_input(&mut self, _input: &str, _channel: NumericChannel) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
+    fn connect_trigger_input(&mut self, _input: &str, _channel: TriggerChannel) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
+    fn connect_clock_input(&mut self, _input: &str, _channel: ClockChannel) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
+    fn connect_video_input(&mut self, _input: &str, _source: &impl gstreamer::ElementExt) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
 }
 
 pub trait OutputNode {
-    fn connect_to_dmx_input(&mut self, input: &mut impl InputNode) {}
-    fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {}
-    fn connect_to_trigger_input(&mut self, input: &mut impl InputNode) {}
-    fn connect_to_clock_input(&mut self, input: &mut impl InputNode) {}
-    fn connect_to_video_input(&mut self, input: &mut impl InputNode) {}
+    fn connect_to_dmx_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        Err(ConnectionError::InvalidOutput)
+    }
+    fn connect_to_numeric_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        Err(ConnectionError::InvalidOutput)
+    }
+    fn connect_to_trigger_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        Err(ConnectionError::InvalidOutput)
+    }
+    fn connect_to_clock_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        Err(ConnectionError::InvalidOutput)
+    }
+    fn connect_to_video_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        Err(ConnectionError::InvalidOutput)
+    }
 }
+
+#[derive(Debug, Error)]
+pub enum ConnectionError {
+    #[error("invalid input")]
+    InvalidInput,
+    #[error("invalid output")]
+    InvalidOutput,
+    #[error("invalid channel type (expected {expected:?}, actual {actual:?})")]
+    InvalidType {
+        expected: NodeChannel,
+        actual: NodeChannel,
+    },
+    #[error(transparent)]
+    Other(#[from] Box<dyn std::error::Error + Sync + Send>)
+}
+
+impl From<glib::error::BoolError> for ConnectionError {
+    fn from(err: glib::error::BoolError) -> Self {
+        ConnectionError::Other(Box::new(err))
+    }
+}
+
+pub type ConnectionResult = Result<(), ConnectionError>;
 
 mod deps {
     pub use crossbeam_channel::{Receiver, Sender, TryRecvError};

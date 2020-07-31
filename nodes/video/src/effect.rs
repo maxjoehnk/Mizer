@@ -76,12 +76,21 @@ impl ProcessingNode for VideoEffectNode {
     }
 }
 impl InputNode for VideoEffectNode {
-    fn connect_video_input(&mut self, source: &impl ElementExt) {
-        source.link(&self.effect).unwrap();
+    fn connect_video_input(&mut self, input: &str, source: &impl ElementExt) -> ConnectionResult {
+        if input == "input" {
+            source.link(&self.effect)?;
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidInput)
+        }
     }
 }
 impl OutputNode for VideoEffectNode {
-    fn connect_to_video_input(&mut self, input: &mut impl InputNode) {
-        input.connect_video_input(&self.effect);
+    fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        if output == "output" {
+            node.connect_video_input(input, &self.effect)
+        } else {
+            Err(ConnectionError::InvalidOutput)
+        }
     }
 }

@@ -77,9 +77,14 @@ impl ArtnetOutputNode {
 }
 
 impl InputNode for ArtnetOutputNode {
-    fn connect_dmx_input(&mut self, channels: &[DmxChannel]) {
-        for channel in channels {
-            self.channels.push(channel.clone());
+    fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
+        if input == "dmx" {
+            for channel in channels {
+                self.channels.push(channel.clone());
+            }
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidInput)
         }
     }
 }

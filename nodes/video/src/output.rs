@@ -1,6 +1,8 @@
-use mizer_node_api::*;
-use gstreamer::{Element, ElementFactory, DebugGraphDetails};
+use gstreamer::{DebugGraphDetails, Element, ElementFactory};
 use gstreamer::prelude::*;
+
+use mizer_node_api::*;
+
 use crate::PIPELINE;
 
 pub struct VideoOutputNode {
@@ -32,10 +34,15 @@ impl ProcessingNode for VideoOutputNode {
     }
 }
 impl InputNode for VideoOutputNode {
-    fn connect_video_input(&mut self, element: &impl ElementExt) {
-        element.link(&self.sink).unwrap();
-        let pipeline = PIPELINE.lock().unwrap();
-        gstreamer::debug_bin_to_dot_file(&*pipeline, DebugGraphDetails::ALL, "linked");
+    fn connect_video_input(&mut self, input: &str, element: &impl ElementExt) -> ConnectionResult {
+        if input == "input" {
+            element.link(&self.sink)?;
+            let pipeline = PIPELINE.lock().unwrap();
+            gstreamer::debug_bin_to_dot_file(&*pipeline, DebugGraphDetails::ALL, "linked");
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidInput)
+        }
     }
 }
 impl OutputNode for VideoOutputNode {}

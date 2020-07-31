@@ -25,7 +25,7 @@ impl ConvertToDmxNode {
 impl ProcessingNode for ConvertToDmxNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("ConvertToDmxNode")
-            .with_inputs(vec![NodeInput::numeric("numeric")])
+            .with_inputs(vec![NodeInput::numeric("value")])
             .with_outputs(vec![NodeOutput::dmx("dmx")])
     }
 
@@ -47,14 +47,24 @@ impl ProcessingNode for ConvertToDmxNode {
     }
 }
 impl InputNode for ConvertToDmxNode {
-    fn connect_numeric_input(&mut self, channel: NumericChannel) {
-        self.inputs.push(channel);
+    fn connect_numeric_input(&mut self, input: &str, channel: NumericChannel) -> ConnectionResult {
+        if input == "value" {
+            self.inputs.push(channel);
+            Ok(())
+        }else {
+            Err(ConnectionError::InvalidInput)
+        }
     }
 }
 impl OutputNode for ConvertToDmxNode {
-    fn connect_to_dmx_input(&mut self, input: &mut impl InputNode) {
-        let (tx, channel) = DmxChannel::new(self.universe, self.channel);
-        self.outputs.push(tx);
-        input.connect_dmx_input(&[channel]);
+    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        if output == "dmx" {
+            let (tx, channel) = DmxChannel::new(self.universe, self.channel);
+            node.connect_dmx_input(input, &[channel])?;
+            self.outputs.push(tx);
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidOutput)
+        }
     }
 }

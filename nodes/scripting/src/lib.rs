@@ -1,6 +1,5 @@
 use mizer_node_api::*;
 use rhai::{Engine, AST, Scope, Map};
-use rhai::packages::{BasicMapPackage, Package, CorePackage};
 
 pub struct ScriptingNode<'a> {
     engine: Engine,
@@ -12,7 +11,7 @@ pub struct ScriptingNode<'a> {
 
 impl<'a> ScriptingNode<'a> {
     pub fn new(script: &str) -> Self {
-        let mut engine = Engine::new();
+        let engine = Engine::new();
         let ast = engine.compile(script).unwrap();
         let mut scope = Scope::new();
         scope.set_value("state", Map::new());
@@ -52,14 +51,16 @@ impl<'a> ProcessingNode for ScriptingNode<'a> {
     }
 }
 impl<'a> InputNode for ScriptingNode<'a> {
-    fn connect_numeric_input(&mut self, channel: NumericChannel) {
+    fn connect_numeric_input(&mut self, _input: &str, channel: NumericChannel) -> ConnectionResult {
         self.inputs.push(channel);
+        Ok(())
     }
 }
 impl<'a> OutputNode for ScriptingNode<'a> {
-    fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {
+    fn connect_to_numeric_input(&mut self, _output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
         let (sender, channel) = NumericChannel::new();
-        input.connect_numeric_input(channel);
+        node.connect_numeric_input(input, channel)?;
         self.outputs.push(sender);
+        Ok(())
     }
 }

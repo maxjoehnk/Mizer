@@ -107,9 +107,14 @@ impl ProcessingNode for OscInputNode {
 impl InputNode for OscInputNode {}
 
 impl OutputNode for OscInputNode {
-    fn connect_to_numeric_input(&mut self, input: &mut impl InputNode) {
-        let (tx, channel) = NumericChannel::new();
-        input.connect_numeric_input(channel);
-        self.numeric_connections.push(tx);
+    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        if output == "value" {
+            let (tx, channel) = NumericChannel::new();
+            node.connect_numeric_input(input, channel)?;
+            self.numeric_connections.push(tx);
+            Ok(())
+        } else {
+            Err(ConnectionError::InvalidOutput)
+        }
     }
 }

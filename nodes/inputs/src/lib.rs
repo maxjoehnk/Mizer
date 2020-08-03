@@ -21,8 +21,8 @@ impl ProcessingNode for FaderNode {
             .with_outputs(vec![NodeOutput::numeric("value")])
     }
 
-    fn set_numeric_property<S: Into<String>>(&mut self, property: S, value: f64) {
-        if property.into() == "value" {
+    fn set_numeric_property(&mut self, property: &str, value: f64) {
+        if property == "value" {
             self.value = value;
             for tx in &self.outputs {
                 tx.send(value);
@@ -35,8 +35,8 @@ impl OutputNode for FaderNode {
     fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
         if output == "value" {
             let (sender, channel) = NumericChannel::new();
-            self.outputs.push(sender);
             node.connect_numeric_input(input, channel)?;
+            self.outputs.push(sender);
             Ok(())
         } else {
             Err(ConnectionError::InvalidOutput)

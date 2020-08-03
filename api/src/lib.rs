@@ -156,7 +156,7 @@ pub trait ProcessingNode: InputNode + OutputNode {
 
     fn process(&mut self) {}
 
-    fn set_numeric_property<S: Into<String>>(&mut self, _property: S, _value: f64) {}
+    fn set_numeric_property(&mut self, _property: &str, _value: f64) {}
 }
 
 pub trait InputNode {

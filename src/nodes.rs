@@ -25,6 +25,7 @@ pub enum Node<'a> {
     VideoFileNode(VideoFileNode),
     VideoOutputNode(VideoOutputNode),
     VideoEffectNode(VideoEffectNode),
+    VideoTransformNode(VideoTransformNode),
     ScriptingNode(ScriptingNode<'a>)
 }
 
@@ -117,5 +118,6 @@ derive_node! {
     Node::VideoFileNode,
     Node::VideoOutputNode,
     Node::VideoEffectNode,
+    Node::VideoTransformNode,
     Node::ScriptingNode
 }

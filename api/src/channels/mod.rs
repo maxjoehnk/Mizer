@@ -10,6 +10,7 @@ pub use self::numeric::*;
 pub use self::timecode::*;
 pub use self::trigger::*;
 
+#[derive(Debug)]
 pub struct GenericChannel<T> {
     pub receiver: crate::deps::Receiver<T>,
 }
@@ -48,5 +49,10 @@ impl<T> GenericChannel<T> {
             events.push(event);
         }
         Ok(events)
+    }
+
+    pub fn recv_last(&self) -> Result<Option<T>, crate::deps::TryRecvError> {
+        let events = self.recv_all()?;
+        Ok(events.into_iter().last())
     }
 }

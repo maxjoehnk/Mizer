@@ -48,6 +48,16 @@ impl ProcessingNode for OscillatorNode {
             channel.send(value);
         }
     }
+
+    fn set_numeric_property(&mut self, property: &str, value: f64) {
+        match property {
+            "ratio" => self.ratio = value,
+            "max" => self.max = value,
+            "min" => self.min = value,
+            "offset" => self.offset = value,
+            _ => ()
+        }
+    }
 }
 
 impl InputNode for OscillatorNode {

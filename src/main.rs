@@ -22,16 +22,23 @@ fn main() -> anyhow::Result<()> {
     let mut fader = FaderNode::new();
     let mut file = VideoFileNode::new("/home/max/Code/0_mizer/mizer-video-projector/assets/DOC000 Alley Booze - H.264 1080p.mov");
     let mut effect = VideoEffectNode::new(VideoEffectType::Twirl);
+    let mut transform = VideoTransformNode::new();
     let mut screen = VideoOutputNode::new();
     file.connect_to_video_input("output", &mut effect, "input")?;
-    effect.connect_to_video_input("output", &mut screen, "input")?;
+    effect.connect_to_video_input("output", &mut transform, "input")?;
+    transform.connect_to_video_input("output", &mut screen, "input")?;
     clock.connect_to_clock_input("clock", &mut oscillator, "clock")?;
+    clock.set_numeric_property("speed", 90f64);
     converter1.connect_to_dmx_input("dmx", &mut artnet, "dmx")?;
     converter2.connect_to_dmx_input("dmx", &mut artnet, "dmx")?;
     osc.connect_to_numeric_input("value", &mut script, "")?;
-    script.connect_to_numeric_input("", &mut converter1, "value")?;
+    script.connect_to_numeric_input("value", &mut converter1, "value")?;
     oscillator.connect_to_numeric_input("value", &mut converter2, "value")?;
-    fader.set_numeric_property("value", 50f64);
+    oscillator.connect_to_numeric_input("value", &mut transform, "rotate-x")?;
+    oscillator.connect_to_numeric_input("value", &mut transform, "rotate-y")?;
+    oscillator.set_numeric_property("ratio", 4f64);
+    oscillator.set_numeric_property("max", 1f64);
+    fader.set_numeric_property("value", 0.5f64);
     let mut pipeline = Pipeline::default();
     pipeline.add_node(clock);
     pipeline.add_node(osc);
@@ -43,6 +50,7 @@ fn main() -> anyhow::Result<()> {
     pipeline.add_node(script);
     pipeline.add_node(file);
     pipeline.add_node(effect);
+    pipeline.add_node(transform);
     pipeline.add_node(screen);
     log::info!("{:?}", pipeline);
 

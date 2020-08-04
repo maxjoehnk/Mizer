@@ -1,5 +1,8 @@
 use std::time::Duration;
 
+#[cfg(feature = "export_metrics")]
+use metrics_runtime::{Receiver, exporters::HttpExporter, observers::PrometheusBuilder};
+
 use mizer_node_api::*;
 
 use crate::nodes::*;
@@ -12,7 +15,28 @@ const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
 fn main() -> anyhow::Result<()> {
     env_logger::init();
+    #[cfg(feature = "export_metrics")]
+    setup_metrics();
+
+    let mut pipeline = build_pipeline()?;
+
+    loop {
+        let before = std::time::Instant::now();
+        pipeline.process();
+        let after = std::time::Instant::now();
+        let frame_time = after.duration_since(before);
+        metrics::timing!("mizer.frame_time", frame_time);
+        if frame_time <= FRAME_DELAY_60FPS {
+            std::thread::sleep(FRAME_DELAY_60FPS - frame_time);
+        }
+    }
+}
+
+fn build_pipeline() -> anyhow::Result<Pipeline<'static>> {
     let mut artnet = ArtnetOutputNode::new("0.0.0.0", None);
+    let mut pattern = PixelPatternGeneratorNode::new(Pattern::RGBIterate);
+    let mut opc = OPCOutputNode::new("127.0.0.1", None, (25, 50));
+    pattern.connect_to_pixel_input("output", &mut opc, "pixels")?;
     let mut converter1 = ConvertToDmxNode::new(None, Some(0));
     let mut converter2 = ConvertToDmxNode::new(None, Some(18));
     let mut oscillator = OscillatorNode::new(OscillatorType::Sine);
@@ -40,13 +64,15 @@ fn main() -> anyhow::Result<()> {
     oscillator.set_numeric_property("max", 1f64);
     fader.set_numeric_property("value", 0.5f64);
     let mut pipeline = Pipeline::default();
+    pipeline.add_node(pattern);
+    pipeline.add_node(opc);
+    pipeline.add_node(artnet);
     pipeline.add_node(clock);
     pipeline.add_node(osc);
     pipeline.add_node(oscillator);
     pipeline.add_node(fader);
     pipeline.add_node(converter1);
     pipeline.add_node(converter2);
-    pipeline.add_node(artnet);
     pipeline.add_node(script);
     pipeline.add_node(file);
     pipeline.add_node(effect);
@@ -54,14 +80,21 @@ fn main() -> anyhow::Result<()> {
     pipeline.add_node(screen);
     log::info!("{:?}", pipeline);
 
-    loop {
-        let before = std::time::Instant::now();
-        pipeline.process();
-        let after = std::time::Instant::now();
-        let frame_time = after.duration_since(before);
-        if frame_time <= FRAME_DELAY_60FPS {
-            std::thread::sleep(FRAME_DELAY_60FPS - frame_time);
-        }
-    }
+    Ok(pipeline)
+}
+
+#[cfg(feature = "export_metrics")]
+fn setup_metrics() {
+    let receiver = Receiver::builder().build().expect("failed to create metrics receiver");
+    let controller = receiver.controller();
+    receiver.install();
+
+    std::thread::spawn(move || {
+        smol::run(HttpExporter::new(
+            controller,
+            PrometheusBuilder::new(),
+            "0.0.0.0:8888".parse().unwrap()
+        ).async_run())
+    });
 }
 

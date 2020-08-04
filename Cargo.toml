@@ -7,8 +7,10 @@ members = [
     "nodes/inputs",
     "nodes/log",
     "nodes/midi",
+    "nodes/opc",
     "nodes/osc",
     "nodes/oscillator",
+    "nodes/pixels",
     "nodes/scripting",
     "nodes/sequence",
     "nodes/video"
@@ -20,11 +22,18 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
 
+[features]
+default = ["export_metrics"]
+export_metrics = ["metrics-runtime", "smol"]
+
 [dependencies]
 derive_more = "0.99"
 env_logger = "0.7"
 log = "0.4"
 anyhow = "1"
+smol = { version = "0.3", features = ["tokio02"], optional = true }
+metrics = "0.12"
+metrics-runtime = { version = "0.13", optional = true }
 mizer-node-api = { path = "./api" }
 mizer-artnet-nodes = { path = "./nodes/artnet" }
 mizer-conversion-nodes = { path = "./nodes/conversion" }
@@ -32,8 +41,10 @@ mizer-input-nodes = { path = "./nodes/inputs" }
 mizer-log-nodes = { path = "./nodes/log" }
 mizer-sequence-nodes = { path = "./nodes/sequence" }
 mizer-clock-nodes = { path = "./nodes/clock" }
-mizer-oscillator-nodes = { path = "./nodes/oscillator" }
+mizer-opc-nodes = { path = "./nodes/opc" }
 mizer-osc-nodes = { path = "./nodes/osc" }
+mizer-oscillator-nodes = { path = "./nodes/oscillator" }
 mizer-midi-nodes = { path = "./nodes/midi" }
 mizer-video-nodes = { path = "./nodes/video" }
 mizer-scripting-nodes = { path = "./nodes/scripting" }
+mizer-pixel-nodes = { path = "./nodes/pixels" }

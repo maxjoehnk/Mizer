@@ -2,6 +2,7 @@ use std::{net::ToSocketAddrs, net::UdpSocket};
 use std::collections::HashMap;
 
 use mizer_node_api::*;
+use std::convert::TryFrom;
 
 pub struct ArtnetOutputNode {
     socket: UdpSocket,
@@ -57,12 +58,9 @@ impl ArtnetOutputNode {
 
         for (universe, buffer) in self.buffer.iter() {
             let msg = artnet_protocol::Output {
-                version: artnet_protocol::ARTNET_PROTOCOL_VERSION,
-                sequence: 0,
-                physical: 0,
-                subnet: *universe,
-                length: 2,
-                data: buffer.to_vec(),
+                port_address: artnet_protocol::PortAddress::try_from(*universe).unwrap(),
+                data: buffer.to_vec().into(),
+                ..artnet_protocol::Output::default()
             };
 
             let msg = artnet_protocol::ArtCommand::Output(msg)

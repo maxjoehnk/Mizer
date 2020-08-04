@@ -1,12 +1,16 @@
 mod clock;
-mod numeric;
+mod color;
 mod dmx;
+mod numeric;
+mod pixels;
 mod timecode;
 mod trigger;
 
 pub use self::clock::*;
+pub use self::color::*;
 pub use self::dmx::*;
 pub use self::numeric::*;
+pub use self::pixels::*;
 pub use self::timecode::*;
 pub use self::trigger::*;
 

@@ -3,14 +3,14 @@ use crate::GenericSender;
 
 #[derive(Debug, Clone)]
 pub struct DmxChannel {
-    pub channel: u8,
+    pub channel: u16,
     pub universe: u16,
     pub receiver: Receiver<u8>
 }
 pub type DmxSender = GenericSender<u8>;
 
 impl DmxChannel {
-    pub fn new(universe: u16, channel: u8) -> (DmxSender, Self) {
+    pub fn new(universe: u16, channel: u16) -> (DmxSender, Self) {
         let (tx, rx) = new_channel();
         let channel = DmxChannel {
             channel,

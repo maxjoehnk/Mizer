@@ -9,6 +9,7 @@ pub struct Pipeline<'a> {
 impl<'a> Pipeline<'a> {
     pub fn add_node<N: Into<Node<'a>>>(&mut self, node: N) {
         self.nodes.push(node.into());
+        metrics::gauge!("mizer.total_nodes", self.nodes.len() as i64);
     }
 
     pub fn process(&mut self) {

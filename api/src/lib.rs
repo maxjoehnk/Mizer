@@ -63,7 +63,8 @@ pub enum NodeChannel {
     Midi,
     Timecode,
     Boolean,
-    Select
+    Select,
+    Pixels
 }
 
 #[derive(Debug, Clone)]
@@ -175,6 +176,9 @@ pub trait InputNode {
     fn connect_video_input(&mut self, _input: &str, _source: &impl gstreamer::ElementExt) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
+    fn connect_pixel_input(&mut self, _input: &str, _channel: PixelChannel) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
 }
 
 pub trait OutputNode {
@@ -191,6 +195,9 @@ pub trait OutputNode {
         Err(ConnectionError::InvalidOutput)
     }
     fn connect_to_video_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        Err(ConnectionError::InvalidOutput)
+    }
+    fn connect_to_pixel_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
         Err(ConnectionError::InvalidOutput)
     }
 }

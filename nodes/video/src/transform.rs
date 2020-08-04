@@ -129,7 +129,7 @@ impl OutputNode for VideoTransformNode {
         if output == "output" {
             node.connect_video_input(input, &self.element)
         } else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

@@ -1,0 +1,16 @@
+[package]
+name = "mizer-project-files"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_yaml = "0.8"
+regex = "1.3"
+lazy_static = "1.4"
+anyhow = "1"
+# These dependencies are kinda shit, but this reduces maintenance cost so for now it's okay
+mizer-video-nodes = { path = "../nodes/video" }
+mizer-oscillator-nodes = { path = "../nodes/oscillator" }
+mizer-pixel-nodes = { path = "../nodes/pixels" }

@@ -13,7 +13,8 @@ members = [
     "nodes/pixels",
     "nodes/scripting",
     "nodes/sequence",
-    "nodes/video"
+    "nodes/video",
+    "projects"
 ]
 
 [package]
@@ -31,6 +32,7 @@ derive_more = "0.99"
 env_logger = "0.7"
 log = "0.4"
 anyhow = "1"
+gstreamer = "0.16"
 smol = { version = "0.3", features = ["tokio02"], optional = true }
 metrics = "0.12"
 metrics-runtime = { version = "0.13", optional = true }
@@ -48,3 +50,6 @@ mizer-midi-nodes = { path = "./nodes/midi" }
 mizer-video-nodes = { path = "./nodes/video" }
 mizer-scripting-nodes = { path = "./nodes/scripting" }
 mizer-pixel-nodes = { path = "./nodes/pixels" }
+mizer-project-files = { path = "./projects" }
+# TODO: check for a better way/a maintained library
+multi_mut = "0.1"

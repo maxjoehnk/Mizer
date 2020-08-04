@@ -64,7 +64,7 @@ impl OutputNode for VideoFileNode {
         if output == "output" {
             node.connect_video_input(input, &self.convert)
         } else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

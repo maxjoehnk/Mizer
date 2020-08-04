@@ -1,4 +1,5 @@
 use std::f64::consts::PI;
+use serde::{Deserialize, Serialize};
 
 use mizer_node_api::*;
 
@@ -79,7 +80,7 @@ impl OutputNode for OscillatorNode {
             self.outputs.push(tx);
             Ok(())
         }else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }
@@ -130,7 +131,8 @@ impl OscillatorNode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
 pub enum OscillatorType {
     Square,
     Sine,

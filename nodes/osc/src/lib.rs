@@ -114,7 +114,7 @@ impl OutputNode for OscInputNode {
             self.numeric_connections.push(tx);
             Ok(())
         } else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

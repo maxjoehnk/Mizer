@@ -39,7 +39,7 @@ impl OutputNode for FaderNode {
             self.outputs.push(sender);
             Ok(())
         } else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

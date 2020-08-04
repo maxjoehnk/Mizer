@@ -1,0 +1,13 @@
+nodes:
+  - type: pixel-pattern
+    id: pixel-pattern-0
+    config:
+      pattern: rgb-iterate
+  - type: opc-output
+    id: opc-output-0
+    config:
+      host: 127.0.0.1
+      width: 25
+      height: 50
+channels:
+  - output@pixel-pattern-0 -> pixels@opc-output-0

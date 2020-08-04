@@ -1,3 +1,4 @@
+use serde::{Deserialize, Serialize};
 use mizer_node_api::*;
 
 pub struct PixelPatternGeneratorNode {
@@ -5,9 +6,11 @@ pub struct PixelPatternGeneratorNode {
     sender: Vec<(PixelSender, Pixels, PatternState)>,
 }
 
+#[derive(Debug, Copy, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
 pub enum Pattern {
-    RGBIterate,
-    RGBSnake
+    RgbIterate,
+    RgbSnake
 }
 
 enum PatternState {
@@ -41,7 +44,7 @@ impl ProcessingNode for PixelPatternGeneratorNode {
                 pixels.resize(pixel_count as usize, Color::BLACK);
             }
             match (&self.pattern, state) {
-                (Pattern::RGBIterate, PatternState::Iterate { index, color }) => {
+                (Pattern::RgbIterate, PatternState::Iterate { index, color }) => {
                     if (*index) as u64 == pixel_count {
                         *index = 0;
                         next_color(color);
@@ -69,7 +72,7 @@ impl OutputNode for PixelPatternGeneratorNode {
             self.sender.push((sender, Vec::new(), PatternState::Iterate { index: 0, color: Color::new(255, 0, 0) }));
             Ok(())
         }else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

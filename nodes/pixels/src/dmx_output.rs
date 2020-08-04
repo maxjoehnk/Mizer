@@ -67,7 +67,7 @@ const DMX_CHANNELS: u16 = 512;
 impl OutputNode for PixelDmxNode {
     fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
         if output != "output" {
-            return Err(ConnectionError::InvalidOutput);
+            return Err(ConnectionError::InvalidOutput(output.to_string()));
         }
         let channels_per_pixel = 3; // RGB, add configuration later
         let channel_count = self.width * self.height * channels_per_pixel;

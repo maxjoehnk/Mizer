@@ -73,7 +73,7 @@ impl OutputNode for ClockNode {
             self.outputs.push(tx);
             Ok(())
         } else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

@@ -48,6 +48,10 @@ impl NodeDetails {
             properties,
         }
     }
+
+    pub fn get_output_type(&self, name: &str) -> Option<NodeChannel> {
+        self.outputs.iter().find(|output| output.name == name).map(|output| output.channel_type)
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -182,23 +186,29 @@ pub trait InputNode {
 }
 
 pub trait OutputNode {
-    fn connect_to_dmx_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
-        Err(ConnectionError::InvalidOutput)
+    fn connect_to_dmx_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_dmx_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_numeric_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
-        Err(ConnectionError::InvalidOutput)
+    fn connect_to_numeric_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_numeric_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_trigger_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
-        Err(ConnectionError::InvalidOutput)
+    fn connect_to_trigger_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_trigger_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_clock_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
-        Err(ConnectionError::InvalidOutput)
+    fn connect_to_clock_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_clock_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_video_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
-        Err(ConnectionError::InvalidOutput)
+    fn connect_to_video_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_video_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_pixel_input(&mut self, _output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
-        Err(ConnectionError::InvalidOutput)
+    fn connect_to_pixel_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_pixel_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
     }
 }
 
@@ -206,8 +216,8 @@ pub trait OutputNode {
 pub enum ConnectionError {
     #[error("invalid input")]
     InvalidInput,
-    #[error("invalid output")]
-    InvalidOutput,
+    #[error("invalid output {0}")]
+    InvalidOutput(String),
     #[error("invalid channel type (expected {expected:?}, actual {actual:?})")]
     InvalidType {
         expected: NodeChannel,

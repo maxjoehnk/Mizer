@@ -3,7 +3,7 @@ use std::net::TcpStream;
 use crate::protocol::SetColors;
 use std::io::Write;
 
-pub struct OPCOutputNode {
+pub struct OpcOutputNode {
     socket: TcpStream,
     // host: String,
     // port: u16,
@@ -12,7 +12,7 @@ pub struct OPCOutputNode {
     channels: Vec<PixelChannel>,
 }
 
-impl OPCOutputNode {
+impl OpcOutputNode {
     pub fn new<S: Into<String>>(host: S, port: Option<u16>, dimensions: (u64, u64)) -> Self {
         let host = host.into();
         let port = port.unwrap_or(7890);
@@ -20,7 +20,7 @@ impl OPCOutputNode {
 
         let socket = TcpStream::connect((host.as_str(), port)).unwrap();
 
-        OPCOutputNode {
+        OpcOutputNode {
             socket,
             width: dimensions.0,
             height: dimensions.1,
@@ -50,7 +50,7 @@ impl OPCOutputNode {
     }
 }
 
-impl InputNode for OPCOutputNode {
+impl InputNode for OpcOutputNode {
     fn connect_pixel_input(&mut self, input: &str, channel: PixelChannel) -> ConnectionResult {
         if input == "pixels" {
             channel.back_channel.send((self.width, self.height));
@@ -62,9 +62,9 @@ impl InputNode for OPCOutputNode {
     }
 }
 
-impl OutputNode for OPCOutputNode {}
+impl OutputNode for OpcOutputNode {}
 
-impl ProcessingNode for OPCOutputNode {
+impl ProcessingNode for OpcOutputNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("OPCOutputNode")
             .with_inputs(vec![NodeInput::new("pixels", NodeChannel::Pixels)])

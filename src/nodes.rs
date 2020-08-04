@@ -31,7 +31,7 @@ pub enum Node<'a> {
     ScriptingNode(ScriptingNode<'a>),
     PixelOutputNode(PixelDmxNode),
     PixelPatternNode(PixelPatternGeneratorNode),
-    OpcOutputNode(OPCOutputNode),
+    OpcOutputNode(OpcOutputNode),
 }
 
 macro_rules! derive_node {
@@ -83,6 +83,30 @@ macro_rules! derive_input {
                 $($i(node) => node.connect_numeric_input(input, channel),)*
             }
         }
+
+        fn connect_trigger_input(&mut self, input: &str, channel: TriggerChannel) -> ConnectionResult {
+            match self {
+                $($i(node) => node.connect_trigger_input(input, channel),)*
+            }
+        }
+
+        fn connect_clock_input(&mut self, input: &str, channel: ClockChannel) -> ConnectionResult {
+            match self {
+                $($i(node) => node.connect_clock_input(input, channel),)*
+            }
+        }
+
+        fn connect_video_input(&mut self, input: &str, source: &impl gstreamer::ElementExt) -> ConnectionResult {
+            match self {
+                $($i(node) => node.connect_video_input(input, source),)*
+            }
+        }
+
+        fn connect_pixel_input(&mut self, input: &str, channel: PixelChannel) -> ConnectionResult {
+            match self {
+                $($i(node) => node.connect_pixel_input(input, channel),)*
+            }
+        }
     };
 }
 
@@ -97,6 +121,30 @@ macro_rules! derive_output {
         fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_numeric_input(output, node, input),)*
+            }
+        }
+
+        fn connect_to_trigger_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+            match self {
+                $($i(this) => this.connect_to_trigger_input(output, node, input),)*
+            }
+        }
+
+        fn connect_to_clock_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+            match self {
+                $($i(this) => this.connect_to_clock_input(output, node, input),)*
+            }
+        }
+
+        fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+            match self {
+                $($i(this) => this.connect_to_video_input(output, node, input),)*
+            }
+        }
+
+        fn connect_to_pixel_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+            match self {
+                $($i(this) => this.connect_to_pixel_input(output, node, input),)*
             }
         }
     };

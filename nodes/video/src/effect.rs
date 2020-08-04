@@ -1,6 +1,7 @@
 use mizer_node_api::*;
 use gstreamer::{Element, ElementFactory};
 use gstreamer::prelude::*;
+use serde::{Deserialize, Serialize};
 use crate::PIPELINE;
 
 pub struct VideoEffectNode {
@@ -8,7 +9,8 @@ pub struct VideoEffectNode {
     effect: Element,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
 pub enum VideoEffectType {
     /// Mirror Effect
     Mirror,
@@ -90,7 +92,7 @@ impl OutputNode for VideoEffectNode {
         if output == "output" {
             node.connect_video_input(input, &self.effect)
         } else {
-            Err(ConnectionError::InvalidOutput)
+            Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
 }

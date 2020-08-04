@@ -12,3 +12,4 @@ gstreamer-player = "0.16"
 gstreamer-gl = "0.16"
 glib = "0.10"
 lazy_static = "1.4"
+serde = { version = "1", features = ["derive"] }

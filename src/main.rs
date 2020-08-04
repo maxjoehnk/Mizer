@@ -1,5 +1,7 @@
 use std::time::Duration;
 
+use structopt::StructOpt;
+
 #[cfg(feature = "export_metrics")]
 use metrics_runtime::{exporters::HttpExporter, observers::PrometheusBuilder, Receiver};
 

@@ -1,11 +1,14 @@
 use std::time::Duration;
 
 #[cfg(feature = "export_metrics")]
-use metrics_runtime::{Receiver, exporters::HttpExporter, observers::PrometheusBuilder};
+use metrics_runtime::{exporters::HttpExporter, observers::PrometheusBuilder, Receiver};
 
-use crate::pipeline::Pipeline;
 use mizer_project_files::load_project_file;
 
+use crate::flags::Flags;
+use crate::pipeline::Pipeline;
+
+mod flags;
 mod nodes;
 mod pipeline;
 
@@ -13,10 +16,22 @@ const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
 fn main() -> anyhow::Result<()> {
     env_logger::init();
-    #[cfg(feature = "export_metrics")]
-    setup_metrics();
+    let flags = Flags::from_args();
 
-    let mut pipeline = build_pipeline()?;
+    #[cfg(feature = "export_metrics")]
+    if flags.metrics {
+        setup_metrics(flags.metrics_port);
+    }
+
+    let mut pipeline = Pipeline::default();
+    for file in flags.files {
+        let project = load_project_file(&file)?;
+        pipeline.load_project(project)?;
+    }
+
+    if flags.print_pipeline {
+        log::info!("{:#?}", pipeline);
+    }
 
     loop {
         let before = std::time::Instant::now();
@@ -30,21 +45,8 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn build_pipeline() -> anyhow::Result<Pipeline<'static>> {
-    let mut pipeline = Pipeline::default();
-    let artnet = load_project_file("examples/artnet.yml")?;
-    pipeline.load_project(artnet)?;
-    let pixels = load_project_file("examples/pixels.yml")?;
-    pipeline.load_project(pixels)?;
-    let video = load_project_file("examples/video.yml")?;
-    pipeline.load_project(video)?;
-    log::trace!("{:#?}", pipeline);
-
-    Ok(pipeline)
-}
-
 #[cfg(feature = "export_metrics")]
-fn setup_metrics() {
+fn setup_metrics(port: u16) {
     let receiver = Receiver::builder().build().expect("failed to create metrics receiver");
     let controller = receiver.controller();
     receiver.install();
@@ -53,8 +55,7 @@ fn setup_metrics() {
         smol::run(HttpExporter::new(
             controller,
             PrometheusBuilder::new(),
-            "0.0.0.0:8888".parse().unwrap()
+            format!("0.0.0.0:{}", port).parse().unwrap(),
         ).async_run())
     });
 }
-

@@ -39,8 +39,11 @@ impl<'a> Pipeline<'a> {
     }
 
     pub fn process(&mut self) {
-        for (_, node) in self.nodes.iter_mut() {
+        for (id, node) in self.nodes.iter_mut() {
+            let before = std::time::Instant::now();
             node.process();
+            let after = std::time::Instant::now();
+            metrics::timing!("mizer.process_time", before, after, "id" => id.clone());
         }
     }
 }

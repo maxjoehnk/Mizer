@@ -81,6 +81,11 @@ pub enum NodeConfig {
     PixelPattern {
         pattern: mizer_pixel_nodes::Pattern
     },
+    PixelDmx {
+        width: u64,
+        height: u64,
+        start_universe: Option<u16>
+    },
     OpcOutput {
         host: String,
         port: Option<u16>,
@@ -113,6 +118,7 @@ pub enum NodeConfig {
         effect_type: VideoEffectType
     },
     VideoTransform,
+    VideoColorBalance,
     VideoOutput
 }
 

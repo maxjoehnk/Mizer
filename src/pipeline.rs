@@ -55,19 +55,21 @@ trait NodeBuilder {
 impl NodeBuilder for mizer_project_files::Node {
     fn build<'a>(self) -> Node<'a> {
         let mut node: Node = match self.config {
-            NodeConfig::ArtnetOutput { host, port } => ArtnetOutputNode::new(host, port).into(),
-            NodeConfig::PixelPattern { pattern } => PixelPatternGeneratorNode::new(pattern).into(),
-            NodeConfig::OpcOutput { host, port, width, height } => OpcOutputNode::new(host, port, (width, height)).into(),
+            NodeConfig::Fader => FaderNode::new().into(),
             NodeConfig::ConvertToDmx { universe, channel } => ConvertToDmxNode::new(universe, channel).into(),
+            NodeConfig::ArtnetOutput { host, port } => ArtnetOutputNode::new(host, port).into(),
             NodeConfig::Oscillator { oscillator_type } => OscillatorNode::new(oscillator_type).into(),
             NodeConfig::Clock { speed } => ClockNode::new(speed).into(),
-            NodeConfig::Script(script) => ScriptingNode::new(script.as_str()).into(),
             NodeConfig::OscInput { host, port, path } => OscInputNode::new(host, port, path).into(),
-            NodeConfig::Fader => FaderNode::new().into(),
             NodeConfig::VideoFile { file } => VideoFileNode::new(file).into(),
-            NodeConfig::VideoEffect { effect_type } => VideoEffectNode::new(effect_type).into(),
-            NodeConfig::VideoTransform => VideoTransformNode::new().into(),
             NodeConfig::VideoOutput => VideoOutputNode::new().into(),
+            NodeConfig::VideoEffect { effect_type } => VideoEffectNode::new(effect_type).into(),
+            NodeConfig::VideoColorBalance => VideoColorBalanceNode::new().into(),
+            NodeConfig::VideoTransform => VideoTransformNode::new().into(),
+            NodeConfig::Script(script) => ScriptingNode::new(script.as_str()).into(),
+            NodeConfig::PixelPattern { pattern } => PixelPatternGeneratorNode::new(pattern).into(),
+            NodeConfig::PixelDmx { width, height, start_universe } => PixelDmxNode::new(width, height, start_universe).into(),
+            NodeConfig::OpcOutput { host, port, width, height } => OpcOutputNode::new(host, port, (width, height)).into(),
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

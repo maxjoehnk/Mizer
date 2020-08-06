@@ -3,6 +3,7 @@ use derive_more::From;
 use mizer_node_api::*;
 
 pub use mizer_artnet_nodes::*;
+pub use mizer_sacn_nodes::*;
 pub use mizer_conversion_nodes::*;
 pub use mizer_input_nodes::*;
 pub use mizer_log_nodes::*;
@@ -21,6 +22,7 @@ pub enum Node<'a> {
     ConvertToDmxNode(ConvertToDmxNode),
     LogNode(LogNode),
     ArtnetOutputNode(ArtnetOutputNode),
+    StreamingAcnOutputNode(StreamingAcnOutputNode),
     OscillatorNode(OscillatorNode),
     ClockNode(ClockNode),
     OscInputNode(OscInputNode),
@@ -166,6 +168,7 @@ derive_node! {
     Node::ConvertToDmxNode,
     Node::LogNode,
     Node::ArtnetOutputNode,
+    Node::StreamingAcnOutputNode,
     Node::OscillatorNode,
     Node::ClockNode,
     Node::OscInputNode,

@@ -1,31 +1,22 @@
-use std::{net::ToSocketAddrs, net::UdpSocket};
 use std::collections::HashMap;
+use sacn::DmxSource;
 
 use mizer_node_api::*;
-use std::convert::TryFrom;
 
-pub struct ArtnetOutputNode {
-    socket: UdpSocket,
-    host: String,
-    port: u16,
+pub struct StreamingAcnOutputNode {
+    source: DmxSource,
     buffer: HashMap<u16, [u8; 512]>,
     channels: Vec<DmxChannel>,
 }
 
-impl ArtnetOutputNode {
-    pub fn new<S: Into<String>>(host: S, port: Option<u16>) -> Self {
-        let host = host.into();
-        let port = port.unwrap_or(6454);
-        log::trace!("New ArtnetOutputNode({}:{})", &host, port);
+impl StreamingAcnOutputNode {
+    pub fn new() -> Self {
+        log::trace!("New StreamingAcnOutputNode");
 
-        let socket = UdpSocket::bind(("127.0.0.1", 0)).unwrap();
+        let source = DmxSource::new("mizer").unwrap();
 
-        socket.set_broadcast(true).unwrap();
-
-        ArtnetOutputNode {
-            socket,
-            host,
-            port,
+        StreamingAcnOutputNode {
+            source,
             buffer: HashMap::new(),
             channels: Vec::new(),
         }
@@ -51,31 +42,13 @@ impl ArtnetOutputNode {
     }
 
     fn flush(&mut self) {
-        let broadcast_addr = (self.host.as_str(), self.port)
-            .to_socket_addrs()
-            .unwrap()
-            .next()
-            .unwrap();
-
         for (universe, buffer) in self.buffer.iter() {
-            let msg = artnet_protocol::Output {
-                port_address: artnet_protocol::PortAddress::try_from(*universe - 1).unwrap(),
-                data: buffer.to_vec().into(),
-                ..artnet_protocol::Output::default()
-            };
-
-            let msg = artnet_protocol::ArtCommand::Output(msg)
-                .into_buffer()
-                .unwrap();
-
-            self.socket
-                .send_to(&msg, broadcast_addr)
-                .unwrap();
+            self.source.send(*universe, buffer).unwrap();
         }
     }
 }
 
-impl InputNode for ArtnetOutputNode {
+impl InputNode for StreamingAcnOutputNode {
     fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
         if input == "dmx" {
             for channel in channels {
@@ -88,11 +61,11 @@ impl InputNode for ArtnetOutputNode {
     }
 }
 
-impl OutputNode for ArtnetOutputNode {}
+impl OutputNode for StreamingAcnOutputNode {}
 
-impl ProcessingNode for ArtnetOutputNode {
+impl ProcessingNode for StreamingAcnOutputNode {
     fn get_details(&self) -> NodeDetails {
-        NodeDetails::new("ArtnetOutputNode")
+        NodeDetails::new("StreamingAcnOutputNode")
             .with_inputs(vec![NodeInput::dmx("dmx")])
     }
 

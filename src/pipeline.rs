@@ -58,6 +58,7 @@ impl NodeBuilder for mizer_project_files::Node {
             NodeConfig::Fader => FaderNode::new().into(),
             NodeConfig::ConvertToDmx { universe, channel } => ConvertToDmxNode::new(universe, channel).into(),
             NodeConfig::ArtnetOutput { host, port } => ArtnetOutputNode::new(host, port).into(),
+            NodeConfig::SacnOutput => StreamingAcnOutputNode::new().into(),
             NodeConfig::Oscillator { oscillator_type } => OscillatorNode::new(oscillator_type).into(),
             NodeConfig::Clock { speed } => ClockNode::new(speed).into(),
             NodeConfig::OscInput { host, port, path } => OscInputNode::new(host, port, path).into(),

@@ -9,9 +9,9 @@ pub struct ConvertToDmxNode {
 
 impl ConvertToDmxNode {
     pub fn new(universe: Option<u16>, channel: Option<u16>) -> Self {
-        let universe = universe.unwrap_or_default();
-        let channel = channel.unwrap_or_default();
-        log::trace!("New ConvertToDmxNode({}.{:0>3})", universe + 1, channel + 1);
+        let universe = universe.unwrap_or(1);
+        let channel = channel.unwrap_or(1);
+        log::trace!("New ConvertToDmxNode({}.{:0>3})", universe, channel);
 
         ConvertToDmxNode {
             universe,

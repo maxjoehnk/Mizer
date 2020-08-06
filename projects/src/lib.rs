@@ -103,6 +103,7 @@ pub enum NodeConfig {
     Clock {
         speed: f64
     },
+    SacnOutput,
     Script(String),
     OscInput {
         host: Option<String>,

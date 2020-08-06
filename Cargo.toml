@@ -11,6 +11,7 @@ members = [
     "nodes/osc",
     "nodes/oscillator",
     "nodes/pixels",
+    "nodes/sacn",
     "nodes/scripting",
     "nodes/sequence",
     "nodes/video",
@@ -49,6 +50,7 @@ mizer-osc-nodes = { path = "./nodes/osc" }
 mizer-oscillator-nodes = { path = "./nodes/oscillator" }
 mizer-midi-nodes = { path = "./nodes/midi" }
 mizer-video-nodes = { path = "./nodes/video" }
+mizer-sacn-nodes = { path = "./nodes/sacn" }
 mizer-scripting-nodes = { path = "./nodes/scripting" }
 mizer-pixel-nodes = { path = "./nodes/pixels" }
 mizer-project-files = { path = "./projects" }

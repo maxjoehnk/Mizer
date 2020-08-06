@@ -6,7 +6,7 @@ nodes:
   - type: convert-to-dmx
     id: convert-to-dmx-0
     config:
-      channel: 0
+      channel: 1
   - type: convert-to-dmx
     id: convert-to-dmx-1
     config:

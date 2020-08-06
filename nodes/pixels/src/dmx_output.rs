@@ -13,7 +13,7 @@ impl PixelDmxNode {
         PixelDmxNode {
             width,
             height,
-            start_universe: start_universe.unwrap_or(0),
+            start_universe: start_universe.unwrap_or(1),
             channels: Vec::new(),
             outputs: Vec::new(),
         }

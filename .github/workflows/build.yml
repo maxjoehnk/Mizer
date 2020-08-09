@@ -1,13 +1,14 @@
 on: [push]
 
-name: CI
+name: Build
 
 jobs:
-  build_and_test:
-    name: Rust project
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install Gstreamer
+        run: sudo apt-get install libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

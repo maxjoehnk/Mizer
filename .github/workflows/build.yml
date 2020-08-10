@@ -12,7 +12,15 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
       - uses: actions-rs/cargo@v1
         with:
           command: build
           args: --release --all-features
+      - uses: actions/upload-artifact@v2
+        with:
+          name: bin
+          path: target/release/mizer

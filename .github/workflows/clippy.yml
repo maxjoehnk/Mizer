@@ -4,6 +4,8 @@ jobs:
   clippy_check:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Gstreamer
+        run: sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
         with:

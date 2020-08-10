@@ -44,7 +44,7 @@ impl OpcOutputNode {
             let msg = SetColors(1, pixels).to_buffer();
 
             self.socket
-                .write(&msg)
+                .write_all(&msg)
                 .unwrap();
         }
     }

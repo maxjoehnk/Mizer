@@ -1,16 +1,12 @@
-use mizer_project_files::load_project;
+use mizer_project_files::load_project_file;
+use test_case::test_case;
 
-#[test]
-fn load_pixels() {
-    let _ = load_project(include_str!("../../examples/pixels.yml")).unwrap();
-}
+#[test_case("pixels"; "pixels")]
+#[test_case("video"; "video")]
+#[test_case("artnet"; "artnet")]
+#[test_case("sacn"; "sacn")]
+fn test_load_project(project: &str) {
+    let path = format!("{}/../examples/{}.yml", env!("CARGO_MANIFEST_DIR"), project);
 
-#[test]
-fn load_video() {
-    let _ = load_project(include_str!("../../examples/video.yml")).unwrap();
-}
-
-#[test]
-fn load_artnet() {
-    let _ = load_project(include_str!("../../examples/artnet.yml")).unwrap();
+    let _ = load_project_file(&path).unwrap();
 }

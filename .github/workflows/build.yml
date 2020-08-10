@@ -6,6 +6,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Install Gstreamer
         run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev
       - uses: actions/checkout@v2
@@ -22,5 +29,5 @@ jobs:
           args: --release --all-features
       - uses: actions/upload-artifact@v2
         with:
-          name: bin
+          name: mizer
           path: target/release/mizer

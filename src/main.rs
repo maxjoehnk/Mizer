@@ -5,14 +5,12 @@ use structopt::StructOpt;
 #[cfg(feature = "export_metrics")]
 use metrics_runtime::{exporters::HttpExporter, observers::PrometheusBuilder, Receiver};
 
-use mizer_project_files::load_project_file;
+use mizer_project_files::Project;
 
 use crate::flags::Flags;
-use crate::pipeline::Pipeline;
+use mizer::Pipeline;
 
 mod flags;
-mod nodes;
-mod pipeline;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
@@ -27,7 +25,7 @@ fn main() -> anyhow::Result<()> {
 
     let mut pipeline = Pipeline::default();
     for file in flags.files {
-        let project = load_project_file(&file)?;
+        let project = Project::load_file(&file)?;
         pipeline.load_project(project)?;
     }
 

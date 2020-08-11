@@ -1,4 +1,4 @@
-use mizer_project_files::load_project_file;
+use mizer_project_files::Project;
 use test_case::test_case;
 
 #[test_case("pixels"; "pixels")]
@@ -8,5 +8,5 @@ use test_case::test_case;
 fn test_load_project(project: &str) {
     let path = format!("{}/../examples/{}.yml", env!("CARGO_MANIFEST_DIR"), project);
 
-    let _ = load_project_file(&path).unwrap();
+    let _ = Project::load_file(&path).unwrap();
 }

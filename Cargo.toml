@@ -18,6 +18,14 @@ members = [
     "projects"
 ]
 
+[lib]
+name = "mizer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "mizer"
+path = "src/main.rs"
+
 [package]
 name = "mizer"
 version = "0.1.0"
@@ -56,3 +64,10 @@ mizer-pixel-nodes = { path = "./nodes/pixels" }
 mizer-project-files = { path = "./projects" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "dmx_pixel_pushing"
+harness = false

@@ -19,6 +19,21 @@ pub struct Project {
     pub channels: Vec<Channel>
 }
 
+impl Project {
+    pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
+        let file = File::open(path)?;
+        let project = serde_yaml::from_reader(file)?;
+
+        Ok(project)
+    }
+
+    pub fn load(content: &str) -> anyhow::Result<Project> {
+        let project = serde_yaml::from_str(content)?;
+
+        Ok(project)
+    }
+}
+
 #[derive(Clone, Serialize, Deserialize, PartialEq)]
 #[serde(try_from = "String", into = "String")]
 pub struct Channel {
@@ -123,19 +138,6 @@ pub enum NodeConfig {
     VideoOutput
 }
 
-pub fn load_project_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
-    let file = File::open(path)?;
-    let project = serde_yaml::from_reader(file)?;
-
-    Ok(project)
-}
-
-pub(crate) fn load_project(content: &str) -> anyhow::Result<Project> {
-    let project = serde_yaml::from_str(content)?;
-
-    Ok(project)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -145,7 +147,7 @@ mod tests {
     fn load_empty_project() -> anyhow::Result<()> {
         let content = "nodes: []\nchannels: []";
 
-        let result = load_project(content)?;
+        let result = Project::load(content)?;
 
         assert_eq!(result.nodes.len(), 0);
         assert_eq!(result.channels.len(), 0);
@@ -164,7 +166,7 @@ mod tests {
             height: 20
         "#;
 
-        let result = load_project(content)?;
+        let result = Project::load(content)?;
 
         assert_eq!(result.nodes.len(), 1);
         assert_eq!(result.nodes[0], Node {
@@ -198,7 +200,7 @@ mod tests {
           - output@pixel-pattern-0 -> pixels@opc-output-0
         "#;
 
-        let result = load_project(content)?;
+        let result = Project::load(content)?;
 
         assert_eq!(result.nodes.len(), 2);
         assert_eq!(result.channels.len(), 1);
@@ -238,7 +240,7 @@ mod tests {
             value: 0.5
         "#;
 
-        let result = load_project(content)?;
+        let result = Project::load(content)?;
 
         let mut expected = HashMap::new();
         expected.insert("value".to_string(), 0.5f64);

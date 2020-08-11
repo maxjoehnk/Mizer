@@ -1,3 +1,8 @@
+#[cfg(feature = "testing")]
+mod test_node;
+#[cfg(feature = "testing")]
+pub use test_node::*;
+
 use thiserror::Error;
 
 pub use crate::channels::*;

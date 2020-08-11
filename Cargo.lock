@@ -1134,6 +1134,7 @@ version = "0.1.0"
 dependencies = [
  "log",
  "mizer-node-api",
+ "test-case",
 ]
 
 [[package]]

@@ -7,3 +7,7 @@ edition = "2018"
 [dependencies]
 mizer-node-api = { path = "../../api" }
 log = "0.4"
+
+[dev-dependencies]
+test-case = "1.0"
+mizer-node-api = { path = "../../api", features = ["testing"] }

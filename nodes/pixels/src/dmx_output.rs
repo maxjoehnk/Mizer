@@ -5,7 +5,7 @@ pub struct PixelDmxNode {
     height: u64,
     start_universe: u16,
     channels: Vec<PixelChannel>,
-    outputs: Vec<Vec<DmxSender>>,
+    outputs: Vec<BatchedDmxSender>,
 }
 
 impl PixelDmxNode {
@@ -41,10 +41,11 @@ impl ProcessingNode for PixelDmxNode {
                 .flat_map(|color| vec![color.r, color.g, color.b])
                 .collect::<Vec<_>>();
             for output in &self.outputs {
-                output.iter()
-                    .zip(&data)
-                    .for_each(|(sender, pixel)| {
-                        sender.send(*pixel);
+                let universes = data.chunks(512);
+                universes
+                    .zip(output.iter())
+                    .for_each(|(channels, sender)| {
+                        sender.send(Vec::from(channels));
                     });
             }
         }
@@ -71,20 +72,11 @@ impl OutputNode for PixelDmxNode {
         }
         let channels_per_pixel = 3; // RGB, add configuration later
         let channel_count = self.width * self.height * channels_per_pixel;
-        let mut senders = Vec::with_capacity(channel_count as usize);
-        let mut channels = Vec::with_capacity(channel_count as usize);
         let universe_count = (channel_count / DMX_CHANNELS as u64) as u16;
         log::debug!("universes for pixels: {}", universe_count);
-        for universe in 0..universe_count {
-            let channel_count = ((channel_count - (universe * DMX_CHANNELS) as u64) as u16).min(DMX_CHANNELS);
-            for channel in 0..channel_count {
-                let (sender, channel) = DmxChannel::new(universe + self.start_universe, channel as u16);
-                senders.push(sender);
-                channels.push(channel);
-            }
-        }
-        node.connect_dmx_input(input, &channels)?;
-        self.outputs.push(senders);
+        let (sender, channel) = DmxChannel::batched(self.start_universe, universe_count);
+        self.outputs.push(sender);
+        node.connect_dmx_input(input, &[channel])?;
         Ok(())
     }
 }

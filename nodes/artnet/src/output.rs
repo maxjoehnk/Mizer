@@ -1,8 +1,8 @@
 use std::{net::ToSocketAddrs, net::UdpSocket};
 use std::collections::HashMap;
+use std::convert::TryFrom;
 
 use mizer_node_api::*;
-use std::convert::TryFrom;
 
 pub struct ArtnetOutputNode {
     socket: UdpSocket,
@@ -33,19 +33,22 @@ impl ArtnetOutputNode {
 
     fn recv(&mut self) {
         for channel in &self.channels {
-            let channel_index = (channel.channel - 1) as usize;
-            loop {
-                match channel.recv() {
-                    Ok(Some(value)) => {
-                        if !self.buffer.contains_key(&channel.universe) {
-                            self.buffer.insert(channel.universe, [0; 512]);
+            match channel.recv() {
+                Ok(Some(value)) => {
+                    for (universe, values) in value {
+                        if !self.buffer.contains_key(&universe) {
+                            self.buffer.insert(universe, [0; 512]);
                         }
-                        let buffer = self.buffer.get_mut(&channel.universe).unwrap();
-                        buffer[channel_index] = value;
-                    },
-                    Ok(None) => break,
-                    Err(e) => println!("{:?}", e)
-                }
+                        let buffer = self.buffer.get_mut(&universe).unwrap();
+                        for (channel_index, value) in values.iter().enumerate() {
+                            if let Some(value) = value {
+                                buffer[channel_index] = *value;
+                            }
+                        }
+                    }
+                },
+                Ok(None) => continue,
+                Err(e) => println!("{:?}", e)
             }
         }
     }

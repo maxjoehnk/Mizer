@@ -3,7 +3,7 @@ use mizer_node_api::*;
 pub struct ConvertToDmxNode {
     channel: u16,
     universe: u16,
-    outputs: Vec<DmxSender>,
+    outputs: Vec<SingleDmxSender>,
     inputs: Vec<NumericChannel>,
 }
 
@@ -65,7 +65,7 @@ impl InputNode for ConvertToDmxNode {
 impl OutputNode for ConvertToDmxNode {
     fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
         if output == "dmx" {
-            let (tx, channel) = DmxChannel::new(self.universe, self.channel);
+            let (tx, channel) = DmxChannel::single(self.universe, self.channel);
             node.connect_dmx_input(input, &[channel])?;
             self.outputs.push(tx);
             Ok(())
@@ -98,15 +98,20 @@ mod tests {
     #[test_case(1, 2)]
     #[test_case(2, 5)]
     #[test_case(256, 512)]
-    fn convert_numeric_to_dmx_should_set_universe_and_channel(universe: u16, channel: u16) {
+    fn convert_numeric_to_dmx_should_set_universe_and_channel(expected_universe: u16, expected_channel: u16) {
         let mut receiver = TestNode::default();
-        let mut node = ConvertToDmxNode::new(Some(universe), Some(channel));
+        let mut node = ConvertToDmxNode::new(Some(expected_universe), Some(expected_channel));
 
         node.connect_to_dmx_input("dmx", &mut receiver, "input").unwrap();
 
         let dmx_channel = receiver.dmx_channels.get("input").unwrap().get(0).unwrap();
-        assert_eq!(dmx_channel.universe, universe);
-        assert_eq!(dmx_channel.channel, channel);
+        match dmx_channel {
+            DmxChannel::Single { universe, channel, receiver: _ } => {
+                assert_eq!(universe, expected_universe);
+                assert_eq!(channel, expected_channel);
+            }
+            _ => assert!(false, "invalid dmx channel layout")
+        }
     }
 
     #[test_case(0f64, 0u8)]
@@ -124,6 +129,9 @@ mod tests {
 
         tx.send(input);
         node.process();
+
+        let values = dmx_channel.recv().unwrap().unwrap();
+
 
         assert_eq!(dmx_channel.recv().unwrap(), Some(expected));
     }

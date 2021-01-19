@@ -14,7 +14,7 @@ pub use self::pixels::*;
 pub use self::timecode::*;
 pub use self::trigger::*;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct GenericChannel<T> {
     pub receiver: crate::deps::Receiver<T>,
 }

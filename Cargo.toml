@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "api/grpc",
     "nodes/api",
     "nodes/protocols/artnet",
     "nodes/clock",
@@ -14,7 +15,9 @@ members = [
     "nodes/behaviors/scripting",
     "nodes/behaviors/sequence",
     "nodes/video",
-    "projects"
+    "pipeline",
+    "projects",
+    "proto"
 ]
 
 [lib]
@@ -45,21 +48,9 @@ smol = { version = "0.3", features = ["tokio02"], optional = true }
 structopt = "0.3"
 metrics = "0.12"
 metrics-runtime = { version = "0.13", optional = true }
-mizer-node-api = { path = "nodes/api" }
-mizer-artnet-nodes = { path = "nodes/protocols/artnet" }
-mizer-conversion-nodes = { path = "nodes/behaviors/conversion" }
-mizer-input-nodes = { path = "nodes/inputs" }
-mizer-sequence-nodes = { path = "nodes/behaviors/sequence" }
-mizer-clock-nodes = { path = "nodes/clock" }
-mizer-opc-nodes = { path = "nodes/protocols/opc" }
-mizer-osc-nodes = { path = "nodes/protocols/osc" }
-mizer-oscillator-nodes = { path = "nodes/oscillator" }
-mizer-midi-nodes = { path = "nodes/protocols/midi" }
-mizer-video-nodes = { path = "nodes/video" }
-mizer-sacn-nodes = { path = "nodes/protocols/sacn" }
-mizer-scripting-nodes = { path = "nodes/behaviors/scripting" }
-mizer-pixel-nodes = { path = "nodes/pixels" }
 mizer-project-files = { path = "projects" }
+mizer-pipeline = { path = "pipeline" }
+mizer-grpc-api = { path = "api/grpc" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"
 

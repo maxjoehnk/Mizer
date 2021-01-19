@@ -8,7 +8,7 @@ use metrics_runtime::{exporters::HttpExporter, observers::PrometheusBuilder, Rec
 use mizer_project_files::Project;
 
 use crate::flags::Flags;
-use mizer::Pipeline;
+use mizer_pipeline::Pipeline;
 
 mod flags;
 
@@ -24,14 +24,23 @@ fn main() -> anyhow::Result<()> {
     }
 
     let mut pipeline = Pipeline::default();
+    let mut projects = vec![];
     for file in flags.files {
         let project = Project::load_file(&file)?;
+        projects.push(project.clone());
         pipeline.load_project(project)?;
     }
 
     if flags.print_pipeline {
         log::info!("{:#?}", pipeline);
     }
+
+    // TODO: add pipeline view for api access
+    let mut pipeline2 = Pipeline::default();
+    for project in &projects {
+        pipeline2.load_project(project.clone())?;
+    }
+    mizer_grpc_api::start(projects, pipeline2);
 
     loop {
         let before = std::time::Instant::now();

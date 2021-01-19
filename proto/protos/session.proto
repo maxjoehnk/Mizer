@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package mizer;
+
+service SessionApi {
+  rpc GetSession (SessionRequest) returns (stream Session) {}
+}
+
+message SessionRequest {}
+
+message Session {
+  repeated SessionDevice devices = 1;
+}
+
+message SessionDevice {
+  string name = 1;
+  repeated string ips = 2;
+  DeviceClock clock = 3;
+  double ping = 4;
+}
+
+message DeviceClock {
+  bool master = 1;
+  double drift = 2;
+}

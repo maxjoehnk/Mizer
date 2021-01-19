@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package mizer;
+
+service NodesApi {
+  rpc GetNodes (NodesRequest) returns (Nodes) {}
+}
+
+message NodesRequest {}
+
+message Nodes {
+  repeated Node nodes = 1;
+  repeated NodeConnection channels = 2;
+}
+
+message NodeConnection {
+  string inputNode = 1;
+  Port inputPort = 2;
+  string outputNode = 3;
+  Port outputPort = 4;
+  ChannelProtocol protocol = 5;
+}
+
+message Node {
+  enum NodeType {
+    ArtnetOutput = 0;
+    ConvertToDmx = 1;
+    Oscillator = 2;
+    Clock = 3;
+    OscInput = 4;
+    Script = 5;
+  }
+
+  NodeType type = 1;
+  string id = 2;
+  string title = 3;
+  repeated Port inputs = 4;
+  repeated Port outputs = 5;
+  map<string, double> properties = 7;
+}
+
+enum ChannelProtocol {
+    Dmx = 0;
+    Numeric = 1;
+    Trigger = 2;
+    Clock = 3;
+    Video = 4;
+    Color = 5;
+    Vector = 6;
+    Text = 7;
+    Midi = 8;
+    Timecode = 9;
+    Boolean = 10;
+    Select = 11;
+    Pixels = 12;
+}
+
+message Port {
+  string name = 1;
+  ChannelProtocol protocol = 2;
+}

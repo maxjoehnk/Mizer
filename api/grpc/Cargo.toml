@@ -1,0 +1,15 @@
+[package]
+name = "mizer-grpc-api"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+mizer-pipeline = { path = "../../pipeline" }
+mizer-project-files = { path = "../../projects" }
+mizer-proto = { path = "../../proto" }
+grpc = { git = "https://github.com/maxjoehnk/grpc-rust.git" }
+grpc-protobuf = { git = "https://github.com/maxjoehnk/grpc-rust.git" }
+
+[build-dependencies]
+protoc-rust-grpc = { git = "https://github.com/maxjoehnk/grpc-rust.git" }

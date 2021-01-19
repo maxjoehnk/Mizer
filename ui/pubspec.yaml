@@ -1,0 +1,25 @@
+name: ui
+description: UI for Mizer
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  graphview: ^0.6.6
+  protobuf: ^1.1.0
+  grpc: ^2.8.0
+  bloc: ^5.0.0
+  flutter_bloc: ^5.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

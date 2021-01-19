@@ -6,7 +6,6 @@ pub use mizer_artnet_nodes::*;
 pub use mizer_sacn_nodes::*;
 pub use mizer_conversion_nodes::*;
 pub use mizer_input_nodes::*;
-pub use mizer_log_nodes::*;
 pub use mizer_sequence_nodes::*;
 pub use mizer_oscillator_nodes::*;
 pub use mizer_clock_nodes::*;
@@ -20,7 +19,6 @@ pub use mizer_opc_nodes::*;
 pub enum Node<'a> {
     Fader(FaderNode),
     ConvertToDmxNode(ConvertToDmxNode),
-    LogNode(LogNode),
     ArtnetOutputNode(ArtnetOutputNode),
     StreamingAcnOutputNode(StreamingAcnOutputNode),
     OscillatorNode(OscillatorNode),
@@ -166,7 +164,6 @@ macro_rules! derive_debug {
 derive_node! {
     Node::Fader,
     Node::ConvertToDmxNode,
-    Node::LogNode,
     Node::ArtnetOutputNode,
     Node::StreamingAcnOutputNode,
     Node::OscillatorNode,

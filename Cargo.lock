@@ -1181,7 +1181,6 @@ dependencies = [
  "mizer-clock-nodes",
  "mizer-conversion-nodes",
  "mizer-input-nodes",
- "mizer-log-nodes",
  "mizer-midi-nodes",
  "mizer-node-api",
  "mizer-opc-nodes",
@@ -1227,14 +1226,6 @@ dependencies = [
 name = "mizer-input-nodes"
 version = "0.1.0"
 dependencies = [
- "mizer-node-api",
-]
-
-[[package]]
-name = "mizer-log-nodes"
-version = "0.1.0"
-dependencies = [
- "log",
  "mizer-node-api",
 ]
 

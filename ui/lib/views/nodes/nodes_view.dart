@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graphview/GraphView.dart';
-import 'package:ui/blocs/nodes_bloc.dart';
-import 'package:ui/protos/nodes.pb.dart' as api;
-import 'package:ui/views/nodes/node/base_node.dart';
+import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/protos/nodes.pb.dart' as api;
+import 'package:mizer/views/nodes/node/base_node.dart';
 
 class FetchNodesView extends StatelessWidget {
   @override

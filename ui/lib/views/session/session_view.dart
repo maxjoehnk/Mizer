@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ui/blocs/session_bloc.dart';
-import 'package:ui/protos/session.pb.dart';
+import 'package:mizer/state/session_bloc.dart';
+import 'package:mizer/protos/session.pb.dart';
 
 class SessionView extends StatelessWidget {
   @override

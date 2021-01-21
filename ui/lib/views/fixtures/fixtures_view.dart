@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ui/blocs/fixtures_bloc.dart';
-import 'package:ui/protos/fixtures.pb.dart';
+import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 
 class FixturesView extends StatelessWidget {
   @override

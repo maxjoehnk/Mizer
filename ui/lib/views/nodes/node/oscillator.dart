@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ui/protos/nodes.pb.dart';
+import 'package:mizer/protos/nodes.pb.dart';
 
 class OscillatorNode extends StatelessWidget {
   final Node node;

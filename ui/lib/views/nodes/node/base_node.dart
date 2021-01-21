@@ -2,15 +2,15 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:ui/protos/nodes.pb.dart';
-import 'package:ui/views/nodes/node/artnet_output.dart';
-import 'package:ui/views/nodes/node/clock.dart';
-import 'package:ui/views/nodes/node/convert_to_dmx.dart';
-import 'package:ui/views/nodes/node/fixture.dart';
-import 'package:ui/views/nodes/node/osc_input.dart';
-import 'package:ui/views/nodes/node/oscillator.dart';
-import 'package:ui/views/nodes/node/sacn_output.dart';
-import 'package:ui/views/nodes/node/script.dart';
+import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/node/artnet_output.dart';
+import 'package:mizer/views/nodes/node/clock.dart';
+import 'package:mizer/views/nodes/node/convert_to_dmx.dart';
+import 'package:mizer/views/nodes/node/fixture.dart';
+import 'package:mizer/views/nodes/node/osc_input.dart';
+import 'package:mizer/views/nodes/node/oscillator.dart';
+import 'package:mizer/views/nodes/node/sacn_output.dart';
+import 'package:mizer/views/nodes/node/script.dart';
 
 class BaseNode extends StatelessWidget {
   final Node node;

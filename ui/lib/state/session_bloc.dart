@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:ui/protos/session.pb.dart';
-import 'package:ui/protos/session.pbgrpc.dart';
+import 'package:mizer/protos/session.pb.dart';
+import 'package:mizer/protos/session.pbgrpc.dart';
 
 class SessionBloc extends Bloc<Session, Session> {
   final SessionApiClient client;

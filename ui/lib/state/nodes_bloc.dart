@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:ui/protos/nodes.pb.dart';
-import 'package:ui/protos/nodes.pbgrpc.dart';
+import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/protos/nodes.pbgrpc.dart';
 
 enum NodesEvent { Fetch }
 

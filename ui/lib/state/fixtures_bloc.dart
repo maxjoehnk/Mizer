@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:grpc/grpc.dart';
-import 'package:ui/protos/fixtures.pb.dart';
-import 'package:ui/protos/fixtures.pbgrpc.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/protos/fixtures.pbgrpc.dart';
 
 enum FixturesEvent { Fetch }
 

@@ -46,23 +46,28 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Home extends StatefulWidget {
-  final List<Widget> widgets = [
-    LayoutView(),
-    FetchNodesView(),
-    FixturesView(),
-    MediaView(),
-    ConnectionsView(),
-    SessionView(),
-    SettingsView(),
-  ];
+List<Route> routes = [
+  Route(() => LayoutView(), Icons.view_quilt_outlined, "Layout"),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, "Nodes"),
+  Route(() => FixturesView(), MdiIcons.spotlight, "Fixtures"),
+  Route(() => MediaView(), Icons.perm_media_outlined, "Media"),
+  Route(() => ConnectionsView(), Icons.device_hub, "Connections"),
+  Route(() => SessionView(), Icons.mediation, "Session"),
+  Route(() => SettingsView(), Icons.settings, "Settings"),
+];
 
+class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
+  Widget _currentWidget;
+
+  _HomeState() {
+    _updateWidget();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,33 +79,33 @@ class _HomeState extends State<Home> {
           onDestinationSelected: (index) {
             setState(() {
               _selectedIndex = index;
+              _updateWidget();
             });
           },
-          labelType: NavigationRailLabelType.all,
-          destinations: [
-            NavigationRailDestination(
-                icon: const Icon(Icons.view_quilt_outlined),
-                label: Text("Layout")),
-            NavigationRailDestination(
-                icon: const Icon(Icons.account_tree_outlined),
-                label: Text("Nodes")),
-            NavigationRailDestination(
-              icon: const Icon(MdiIcons.spotlight),
-              label: Text("Fixtures"),
-            ),
-            NavigationRailDestination(
-                icon: const Icon(Icons.perm_media_outlined),
-                label: Text("Media")),
-            NavigationRailDestination(
-                icon: const Icon(Icons.device_hub), label: Text("Connections")),
-            NavigationRailDestination(
-                icon: const Icon(Icons.mediation), label: Text("Session")),
-            NavigationRailDestination(
-                icon: const Icon(Icons.settings), label: Text("Settings")),
-          ],
+          labelType: NavigationRailLabelType.selected,
+          destinations: routes.map((route) => route.toRail()).toList(),
         ),
-        Expanded(child: widget.widgets[_selectedIndex])
+        Expanded(child: _currentWidget)
       ],
     ));
   }
+
+  void _updateWidget() {
+    _currentWidget = routes[_selectedIndex].view();
+  }
 }
+
+class Route {
+  final WidgetFunction view;
+  final IconData icon;
+  final String label;
+
+  Route(this.view, this.icon, this.label);
+
+  NavigationRailDestination toRail() {
+    return NavigationRailDestination(
+        icon: Icon(this.icon), label: Text(this.label));
+  }
+}
+
+typedef WidgetFunction = Widget Function();

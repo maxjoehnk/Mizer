@@ -8,8 +8,13 @@ class FixturesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return DataTable(
-        columns: const [DataColumn(label: Text("Id")), DataColumn(label: Text("Manufacturer")), DataColumn(label: Text("Model")), DataColumn(label: Text("Address"))],
-        rows: fixtures.fixtures
+          columns: const [
+            DataColumn(label: Text("Id")),
+            DataColumn(label: Text("Manufacturer")),
+            DataColumn(label: Text("Model")),
+            DataColumn(label: Text("Address"))
+          ],
+          rows: fixtures.fixtures
               .map((fixture) => DataRow(cells: [
                     DataCell(Text(fixture.id)),
                     DataCell(Text(fixture.manufacturer)),

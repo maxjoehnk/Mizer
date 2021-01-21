@@ -29,6 +29,8 @@ message Node {
     Clock = 3;
     OscInput = 4;
     Script = 5;
+    SacnOutput = 6;
+    Fixture = 7;
   }
 
   NodeType type = 1;

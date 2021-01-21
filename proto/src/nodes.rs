@@ -1088,6 +1088,8 @@ pub enum Node_NodeType {
     Clock = 3,
     OscInput = 4,
     Script = 5,
+    SacnOutput = 6,
+    Fixture = 7,
 }
 
 impl ::protobuf::ProtobufEnum for Node_NodeType {
@@ -1103,6 +1105,8 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
             3 => ::std::option::Option::Some(Node_NodeType::Clock),
             4 => ::std::option::Option::Some(Node_NodeType::OscInput),
             5 => ::std::option::Option::Some(Node_NodeType::Script),
+            6 => ::std::option::Option::Some(Node_NodeType::SacnOutput),
+            7 => ::std::option::Option::Some(Node_NodeType::Fixture),
             _ => ::std::option::Option::None
         }
     }
@@ -1115,6 +1119,8 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
             Node_NodeType::Clock,
             Node_NodeType::OscInput,
             Node_NodeType::Script,
+            Node_NodeType::SacnOutput,
+            Node_NodeType::Fixture,
         ];
         values
     }
@@ -1427,7 +1433,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Node\x12)\n\tinputPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\tinputPort\
     \x12\x1e\n\noutputNode\x18\x03\x20\x01(\tR\noutputNode\x12+\n\noutputPor\
     t\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\noutputPort\x122\n\x08protocol\
-    \x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\x83\x03\
+    \x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\xa1\x03\
     \n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\
     \x04type\x12\x0e\n\x02id\x18\x02\x20\x01(\tR\x02id\x12\x14\n\x05title\
     \x18\x03\x20\x01(\tR\x05title\x12#\n\x06inputs\x18\x04\x20\x03(\x0b2\x0b\
@@ -1435,9 +1441,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .PortR\x07outputs\x12;\n\nproperties\x18\x07\x20\x03(\x0b2\x1b.mizer.Nod\
     e.PropertiesEntryR\nproperties\x1a=\n\x0fPropertiesEntry\x12\x10\n\x03ke\
     y\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\
-    \x05value:\x028\x01\"c\n\x08NodeType\x12\x10\n\x0cArtnetOutput\x10\0\x12\
-    \x10\n\x0cConvertToDmx\x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05\
-    Clock\x10\x03\x12\x0c\n\x08OscInput\x10\x04\x12\n\n\x06Script\x10\x05\"N\
+    \x05value:\x028\x01\"\x80\x01\n\x08NodeType\x12\x10\n\x0cArtnetOutput\
+    \x10\0\x12\x10\n\x0cConvertToDmx\x10\x01\x12\x0e\n\nOscillator\x10\x02\
+    \x12\t\n\x05Clock\x10\x03\x12\x0c\n\x08OscInput\x10\x04\x12\n\n\x06Scrip\
+    t\x10\x05\x12\x0e\n\nSacnOutput\x10\x06\x12\x0b\n\x07Fixture\x10\x07\"N\
     \n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08proto\
     col\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\xa8\
     \x01\n\x0fChannelProtocol\x12\x07\n\x03Dmx\x10\0\x12\x0b\n\x07Numeric\

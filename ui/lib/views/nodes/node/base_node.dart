@@ -3,13 +3,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:ui/protos/nodes.pb.dart';
+import 'package:ui/views/nodes/node/artnet_output.dart';
 import 'package:ui/views/nodes/node/clock.dart';
 import 'package:ui/views/nodes/node/convert_to_dmx.dart';
+import 'package:ui/views/nodes/node/fixture.dart';
 import 'package:ui/views/nodes/node/osc_input.dart';
 import 'package:ui/views/nodes/node/oscillator.dart';
+import 'package:ui/views/nodes/node/sacn_output.dart';
 import 'package:ui/views/nodes/node/script.dart';
-
-import 'artnet_output.dart';
 
 class BaseNode extends StatelessWidget {
   final Node node;
@@ -135,6 +136,8 @@ Widget getChildForNode(Node node) {
   switch (node.type) {
     case Node_NodeType.ArtnetOutput:
       return ArtnetOutputNode(node);
+    case Node_NodeType.SacnOutput:
+      return SacnOutputNode(node);
     case Node_NodeType.ConvertToDmx:
       return ConvertToDmxNode(node);
     case Node_NodeType.Oscillator:
@@ -145,6 +148,8 @@ Widget getChildForNode(Node node) {
       return OscInputNode(node);
     case Node_NodeType.Script:
       return ScriptNode(node);
+    case Node_NodeType.Fixture:
+      return FixtureNode(node);
     default:
       log("no child for node type ${node.type.name}");
       return Container();

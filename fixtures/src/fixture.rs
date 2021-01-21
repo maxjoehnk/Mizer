@@ -2,16 +2,18 @@ use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct Fixture {
-    definition: FixtureDefinition,
+    pub id: String,
+    pub definition: FixtureDefinition,
     current_mode: FixtureMode,
     pub universe: u16,
-    channel: u8,
+    pub channel: u8,
     channel_values: HashMap<String, f64>,
 }
 
 impl Fixture {
-    pub fn new(definition: FixtureDefinition, selected_mode: Option<String>, channel: u8, universe: Option<u16>) -> Self {
+    pub fn new(fixture_id: String, definition: FixtureDefinition, selected_mode: Option<String>, channel: u8, universe: Option<u16>) -> Self {
         Fixture {
+            id: fixture_id,
             current_mode: get_current_mode(&definition, selected_mode),
             definition,
             channel,
@@ -68,6 +70,7 @@ fn get_current_mode(definition: &FixtureDefinition, selected_mode: Option<String
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureDefinition {
     pub name: String,
+    pub manufacturer: String,
     pub modes: Vec<FixtureMode>,
 }
 

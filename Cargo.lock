@@ -1357,6 +1357,7 @@ version = "0.1.0"
 dependencies = [
  "grpc",
  "grpc-protobuf",
+ "mizer-fixtures",
  "mizer-pipeline",
  "mizer-project-files",
  "mizer-proto",

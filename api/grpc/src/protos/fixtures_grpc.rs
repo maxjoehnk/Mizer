@@ -1,0 +1,79 @@
+// This file is generated. Do not edit
+// @generated
+
+// https://github.com/Manishearth/rust-clippy/issues/702
+#![allow(unknown_lints)]
+#![allow(clippy::all)]
+
+#![cfg_attr(rustfmt, rustfmt_skip)]
+
+#![allow(box_pointers)]
+#![allow(dead_code)]
+#![allow(missing_docs)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
+#![allow(non_upper_case_globals)]
+#![allow(trivial_casts)]
+#![allow(unsafe_code)]
+#![allow(unused_imports)]
+#![allow(unused_results)]
+
+
+// server interface
+
+pub trait FixturesApi {
+    fn get_fixtures(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
+}
+
+// client
+
+pub struct FixturesApiClient {
+    grpc_client: ::std::sync::Arc<::grpc::Client>,
+}
+
+impl ::grpc::ClientStub for FixturesApiClient {
+    fn with_client(grpc_client: ::std::sync::Arc<::grpc::Client>) -> Self {
+        FixturesApiClient {
+            grpc_client: grpc_client,
+        }
+    }
+}
+
+impl FixturesApiClient {
+    pub fn get_fixtures(&self, o: ::grpc::RequestOptions, req: super::fixtures::GetFixturesRequest) -> ::grpc::SingleResponse<super::fixtures::Fixtures> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.FixturesApi/GetFixtures"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+}
+
+// server
+
+pub struct FixturesApiServer;
+
+
+impl FixturesApiServer {
+    pub fn new_service_def<H : FixturesApi + 'static + Sync + Send + 'static>(handler: H) -> ::grpc::rt::ServerServiceDefinition {
+        let handler_arc = ::std::sync::Arc::new(handler);
+        ::grpc::rt::ServerServiceDefinition::new("/mizer.FixturesApi",
+            vec![
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.FixturesApi/GetFixtures"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_fixtures(ctx, req, resp))
+                    },
+                ),
+            ],
+        )
+    }
+}

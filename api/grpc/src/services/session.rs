@@ -24,18 +24,18 @@ impl SessionApi for SessionApiImpl {
             desktop.set_clock(clock);
             desktop
         };
-        let dmxNode = {
-            let mut dmxNode = SessionDevice::new();
-            dmxNode.name = "dmx-node-1".into();
-            dmxNode.ping = 0.4;
-            dmxNode.set_ips(vec!["192.168.1.14".to_string()].into());
+        let dmx_node = {
+            let mut dmx_node = SessionDevice::new();
+            dmx_node.name = "dmx-node-1".into();
+            dmx_node.ping = 0.4;
+            dmx_node.set_ips(vec!["192.168.1.14".to_string()].into());
             let mut clock = DeviceClock::new();
             clock.drift = 0f64;
             clock.master = false;
-            dmxNode.set_clock(clock);
-            dmxNode
+            dmx_node.set_clock(clock);
+            dmx_node
         };
-        session.set_devices(vec![desktop, dmxNode].into());
+        session.set_devices(vec![desktop, dmx_node].into());
 
         resp.send_data(session)
     }

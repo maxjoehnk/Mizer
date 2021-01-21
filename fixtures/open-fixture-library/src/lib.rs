@@ -100,6 +100,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     fn from(def: OpenFixtureLibraryFixtureDefinition) -> Self {
         FixtureDefinition {
             name: def.name,
+            manufacturer: def.manufacturer.name,
             modes: def.modes.into_iter().map(|mode| {
                 FixtureMode {
                     name: mode.name,

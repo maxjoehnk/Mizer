@@ -61,7 +61,7 @@ fn main() -> anyhow::Result<()> {
     for project in &projects {
         pipeline2.load_project(project.clone(), &fixture_manager)?;
     }
-    mizer_grpc_api::start(projects, pipeline2);
+    mizer_grpc_api::start(projects, pipeline2, fixture_manager);
 
     loop {
         let before = std::time::Instant::now();

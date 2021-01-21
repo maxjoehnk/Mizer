@@ -53,6 +53,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Clock = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Clock');
   static const Node_NodeType OscInput = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscInput');
   static const Node_NodeType Script = Node_NodeType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Script');
+  static const Node_NodeType SacnOutput = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SacnOutput');
+  static const Node_NodeType Fixture = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fixture');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     ArtnetOutput,
@@ -61,6 +63,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Clock,
     OscInput,
     Script,
+    SacnOutput,
+    Fixture,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

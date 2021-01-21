@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package mizer;
+
+service FixturesApi {
+  rpc GetFixtures (GetFixturesRequest) returns (Fixtures) {}
+}
+
+message GetFixturesRequest {}
+
+message Fixtures {
+  repeated Fixture fixtures = 1;
+}
+
+message Fixture {
+  string id = 1;
+  string name = 2;
+  string manufacturer = 3;
+  int32 universe = 4;
+  int32 channel = 5;
+}

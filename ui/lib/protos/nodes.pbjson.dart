@@ -79,6 +79,8 @@ const Node_NodeType$json = const {
     const {'1': 'Clock', '2': 3},
     const {'1': 'OscInput', '2': 4},
     const {'1': 'Script', '2': 5},
+    const {'1': 'SacnOutput', '2': 6},
+    const {'1': 'Fixture', '2': 7},
   ],
 };
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:ui/blocs/fixtures_bloc.dart';
 import 'package:ui/blocs/nodes_bloc.dart';
 import 'package:ui/views/connections/connections_view.dart';
+import 'package:ui/views/fixtures/fixtures_view.dart';
 import 'package:ui/views/layout/layout_view.dart';
 import 'package:ui/views/media/media_view.dart';
 import 'package:ui/views/nodes/nodes_view.dart';
@@ -32,6 +35,7 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (BuildContext context) => NodesBloc(channel)),
           BlocProvider(create: (BuildContext context) => SessionBloc(channel)),
+          BlocProvider(create: (BuildContext context) => FixturesBloc(channel)),
         ],
         child: MaterialApp(
           title: 'Mizer',
@@ -46,6 +50,7 @@ class Home extends StatefulWidget {
   final List<Widget> widgets = [
     LayoutView(),
     FetchNodesView(),
+    FixturesView(),
     MediaView(),
     ConnectionsView(),
     SessionView(),
@@ -80,6 +85,10 @@ class _HomeState extends State<Home> {
                 icon: const Icon(Icons.account_tree_outlined),
                 label: Text("Nodes")),
             NavigationRailDestination(
+              icon: const Icon(MdiIcons.spotlight),
+              label: Text("Fixtures"),
+            ),
+            NavigationRailDestination(
                 icon: const Icon(Icons.perm_media_outlined),
                 label: Text("Media")),
             NavigationRailDestination(
@@ -90,7 +99,7 @@ class _HomeState extends State<Home> {
                 icon: const Icon(Icons.settings), label: Text("Settings")),
           ],
         ),
-        Expanded(child: Center(child: widget.widgets[_selectedIndex]))
+        Expanded(child: widget.widgets[_selectedIndex])
       ],
     ));
   }

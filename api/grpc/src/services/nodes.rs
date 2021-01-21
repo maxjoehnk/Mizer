@@ -77,6 +77,8 @@ fn get_node_type(node: &mizer_project_files::Node) -> Node_NodeType {
         NodeConfig::Clock { .. } => Node_NodeType::Clock,
         NodeConfig::OscInput { .. } => Node_NodeType::OscInput,
         NodeConfig::Script(_) => Node_NodeType::Script,
+        NodeConfig::SacnOutput { .. } => Node_NodeType::SacnOutput,
+        NodeConfig::Fixture { .. } => Node_NodeType::Fixture,
         config => unimplemented!("{:?}", config)
     }
 }

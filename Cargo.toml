@@ -1,19 +1,22 @@
 [workspace]
 members = [
     "api/grpc",
+    "fixtures",
+    "fixtures/open-fixture-library",
     "nodes/api",
-    "nodes/protocols/artnet",
-    "nodes/clock",
     "nodes/behaviors/conversion",
+    "nodes/behaviors/scripting",
+    "nodes/behaviors/sequence",
+    "nodes/clock",
+    "nodes/fixture",
     "nodes/inputs",
+    "nodes/oscillator",
+    "nodes/protocols/artnet",
     "nodes/protocols/midi",
     "nodes/protocols/opc",
     "nodes/protocols/osc",
-    "nodes/oscillator",
-    "nodes/pixels",
     "nodes/protocols/sacn",
-    "nodes/behaviors/scripting",
-    "nodes/behaviors/sequence",
+    "nodes/pixels",
     "nodes/video",
     "pipeline",
     "projects",
@@ -49,6 +52,8 @@ structopt = "0.3"
 metrics = "0.12"
 metrics-runtime = { version = "0.13", optional = true }
 mizer-project-files = { path = "projects" }
+mizer-fixtures = { path = "fixtures" }
+mizer-open-fixture-library-provider = { path = "fixtures/open-fixture-library" }
 mizer-pipeline = { path = "pipeline" }
 mizer-grpc-api = { path = "api/grpc" }
 # TODO: check for a better way/a maintained library

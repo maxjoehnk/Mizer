@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use lazy_static::lazy_static;
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 use std::collections::HashMap;
 use std::fs::File;
 use std::path::Path;
@@ -9,14 +9,20 @@ use mizer_oscillator_nodes::OscillatorType;
 use mizer_video_nodes::VideoEffectType;
 
 lazy_static! {
-    static ref CHANNEL_REGEX: Regex = Regex::new(r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-]*)$").unwrap();
+    static ref CHANNEL_REGEX: Regex = RegexBuilder::new(r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-]*)$")
+        .case_insensitive(true)
+        .build()
+        .unwrap();
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
+    #[serde(default)]
     pub nodes: Vec<Node>,
     #[serde(default)]
-    pub channels: Vec<Channel>
+    pub channels: Vec<Channel>,
+    #[serde(default)]
+    pub fixtures: Vec<FixtureConfig>,
 }
 
 impl Project {
@@ -135,7 +141,21 @@ pub enum NodeConfig {
     },
     VideoTransform,
     VideoColorBalance,
-    VideoOutput
+    VideoOutput,
+    Fixture {
+        #[serde(rename = "fixture")]
+        fixture_id: String
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct FixtureConfig {
+    pub id: String,
+    pub fixture: String,
+    pub channel: u8,
+    pub universe: Option<u16>,
+    #[serde(default)]
+    pub mode: Option<String>,
 }
 
 #[cfg(test)]
@@ -149,8 +169,9 @@ mod tests {
 
         let result = Project::load(content)?;
 
-        assert_eq!(result.nodes.len(), 0);
-        assert_eq!(result.channels.len(), 0);
+        assert_eq!(result.nodes.len(), 0, "no nodes");
+        assert_eq!(result.channels.len(), 0, "no channels");
+        assert_eq!(result.fixtures.len(), 0, "no fixtures");
         Ok(())
     }
 
@@ -231,7 +252,28 @@ mod tests {
     }
 
     #[test]
+    fn load_channel_should_support_uppercase() -> anyhow::Result<()> {
+        let content = r#"
+        nodes: []
+        channels:
+          - Output@pixel-pattern-0 -> pixels@opc-output-0
+        "#;
+
+        let result = Project::load(content)?;
+
+        assert_eq!(result.channels[0], Channel {
+            from_id: "pixel-pattern-0".into(),
+            from_channel: "Output".into(),
+            to_id: "opc-output-0".into(),
+            to_channel: "pixels".into()
+        });
+        Ok(())
+    }
+
+    #[test]
     fn load_properties() -> anyhow::Result<()> {
+        let mut expected = HashMap::new();
+        expected.insert("value".to_string(), 0.5f64);
         let content = r#"
         nodes:
         - type: fader
@@ -242,13 +284,79 @@ mod tests {
 
         let result = Project::load(content)?;
 
-        let mut expected = HashMap::new();
-        expected.insert("value".to_string(), 0.5f64);
         assert_eq!(result.nodes.len(), 1);
         assert_eq!(result.nodes[0], Node {
             id: "fader-0".into(),
             config: NodeConfig::Fader,
             properties: expected,
+        });
+        Ok(())
+    }
+
+    #[test]
+    fn load_fixtures() -> anyhow::Result<()> {
+        let content = r#"
+        fixtures:
+        - id: fixture-0
+          fixture: fixture-definition-ref
+          channel: 1
+        "#;
+
+        let result = Project::load(content)?;
+
+        assert_eq!(result.fixtures.len(), 1);
+        assert_eq!(result.fixtures[0], FixtureConfig {
+            id: "fixture-0".into(),
+            fixture: "fixture-definition-ref".into(),
+            channel: 1,
+            universe: None,
+            mode: None,
+        });
+        Ok(())
+    }
+
+    #[test]
+    fn load_fixtures_with_mode() -> anyhow::Result<()> {
+        let content = r#"
+        fixtures:
+        - id: fixture-1
+          fixture: another-fixture
+          channel: 5
+          mode: 2-channel
+        "#;
+
+        let result = Project::load(content)?;
+
+        assert_eq!(result.fixtures.len(), 1);
+        assert_eq!(result.fixtures[0], FixtureConfig {
+            id: "fixture-1".into(),
+            fixture: "another-fixture".into(),
+            channel: 5,
+            universe: None,
+            mode: Some("2-channel".into()),
+        });
+        Ok(())
+    }
+
+    #[test]
+    fn load_fixtures_with_universe() -> anyhow::Result<()> {
+        let content = r#"
+        fixtures:
+        - id: fixture-1
+          fixture: another-fixture
+          channel: 5
+          universe: 1
+        "#;
+
+        let result = Project::load(content)?;
+
+        assert_eq!(result.fixtures.len(), 1);
+        assert_eq!(result.fixtures[0], FixtureConfig {
+            id: "fixture-1".into(),
+            fixture: "another-fixture".into(),
+            channel: 5,
+            universe: Some(1),
+            mode: None,
         });
         Ok(())
     }

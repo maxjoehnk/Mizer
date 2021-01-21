@@ -14,6 +14,7 @@ pub use mizer_video_nodes::*;
 pub use mizer_scripting_nodes::*;
 pub use mizer_pixel_nodes::*;
 pub use mizer_opc_nodes::*;
+pub use mizer_fixture_nodes::*;
 
 #[derive(From)]
 pub enum Node<'a> {
@@ -33,6 +34,7 @@ pub enum Node<'a> {
     PixelOutputNode(PixelDmxNode),
     PixelPatternNode(PixelPatternGeneratorNode),
     OpcOutputNode(OpcOutputNode),
+    FixtureNode(FixtureNode),
 }
 
 macro_rules! derive_node {
@@ -177,5 +179,6 @@ derive_node! {
     Node::ScriptingNode,
     Node::PixelOutputNode,
     Node::PixelPatternNode,
-    Node::OpcOutputNode
+    Node::OpcOutputNode,
+    Node::FixtureNode
 }

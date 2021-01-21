@@ -1,0 +1,10 @@
+[package]
+name = "mizer-fixture-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+log = "0.4"
+mizer-node-api = { path = "../api" }
+mizer-fixtures = { path = "../../fixtures" }

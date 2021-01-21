@@ -221,7 +221,7 @@ pub trait OutputNode {
 pub enum ConnectionError {
     #[error("invalid input")]
     InvalidInput,
-    #[error("invalid output {0}")]
+    #[error("invalid output '{0}'")]
     InvalidOutput(String),
     #[error("invalid channel type (expected {expected:?}, actual {actual:?})")]
     InvalidType {

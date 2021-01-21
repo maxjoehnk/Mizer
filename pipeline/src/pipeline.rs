@@ -1,4 +1,5 @@
 use crate::nodes::Node;
+use mizer_fixtures::manager::FixtureManager;
 use mizer_node_api::*;
 use mizer_project_files::{Project, NodeConfig};
 use std::collections::HashMap;
@@ -12,10 +13,10 @@ pub struct Pipeline<'a> {
 }
 
 impl<'a> Pipeline<'a> {
-    pub fn load_project(&mut self, project: Project) -> anyhow::Result<()> {
+    pub fn load_project(&mut self, project: Project, fixture_manager: &FixtureManager) -> anyhow::Result<()> {
         for node in project.nodes {
             let id = node.id.clone();
-            let node = node.build();
+            let node = node.build(fixture_manager);
             self.nodes.insert(id, node);
         }
 
@@ -49,11 +50,11 @@ impl<'a> Pipeline<'a> {
 }
 
 trait NodeBuilder {
-    fn build<'a>(self) -> Node<'a>;
+    fn build<'a>(self, fixture_manager: &FixtureManager) -> Node<'a>;
 }
 
 impl NodeBuilder for mizer_project_files::Node {
-    fn build<'a>(self) -> Node<'a> {
+    fn build<'a>(self, fixture_manager: &FixtureManager) -> Node<'a> {
         let mut node: Node = match self.config {
             NodeConfig::Fader => FaderNode::new().into(),
             NodeConfig::ConvertToDmx { universe, channel } => ConvertToDmxNode::new(universe, channel).into(),
@@ -71,6 +72,7 @@ impl NodeBuilder for mizer_project_files::Node {
             NodeConfig::PixelPattern { pattern } => PixelPatternGeneratorNode::new(pattern).into(),
             NodeConfig::PixelDmx { width, height, start_universe } => PixelDmxNode::new(width, height, start_universe).into(),
             NodeConfig::OpcOutput { host, port, width, height } => OpcOutputNode::new(host, port, (width, height)).into(),
+            NodeConfig::Fixture { fixture_id } => FixtureNode::new(fixture_manager.get_fixture(&fixture_id).cloned().unwrap()).into(),
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

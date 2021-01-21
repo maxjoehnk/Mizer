@@ -1390,6 +1390,7 @@ dependencies = [
 name = "mizer-oscillator-nodes"
 version = "0.1.0"
 dependencies = [
+ "log",
  "mizer-node-api",
  "serde",
 ]

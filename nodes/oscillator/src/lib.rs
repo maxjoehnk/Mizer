@@ -98,11 +98,16 @@ impl OscillatorNode {
                 }
             }
             OscillatorType::Sine => {
+                let min = self.min.clone();
+                let max = self.max.clone();
+                let offset = (max - min) / 2f64;
                 let value = f64::sin(
                     (3f64 / 2f64) * PI + PI * ((beat + self.offset) * 2f64) * (1f64 / self.ratio),
-                ) * 127.5
-                    + 127.5;
-                value.floor()
+                ) * offset
+                    + offset + min;
+                let value = value.max(min).min(max);
+                log::trace!("min: {}, max: {}, offset: {}, result: {}", min, max, offset, value);
+                value
             }
             OscillatorType::Triangle => {
                 let base = self.ratio / 2f64;

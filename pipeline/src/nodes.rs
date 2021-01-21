@@ -65,6 +65,12 @@ macro_rules! derive_process {
             }
         }
 
+        fn set_numeric_property(&mut self, property: &str, value: f64) {
+            match self {
+                $($i(node) => node.set_numeric_property(property, value),)*
+            }
+        }
+
         fn process(&mut self) {
             match self {
                 $($i(node) => node.process(),)*

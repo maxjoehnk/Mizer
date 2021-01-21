@@ -77,7 +77,7 @@ impl ProcessingNode for VideoEffectNode {
             .with_outputs(vec![NodeOutput::new("output", NodeChannel::Video)])
     }
 }
-impl InputNode for VideoEffectNode {
+impl SourceNode for VideoEffectNode {
     fn connect_video_input(&mut self, input: &str, source: &impl ElementExt) -> ConnectionResult {
         if input == "input" {
             source.link(&self.effect)?;
@@ -87,8 +87,8 @@ impl InputNode for VideoEffectNode {
         }
     }
 }
-impl OutputNode for VideoEffectNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for VideoEffectNode {
+    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.effect)
         } else {

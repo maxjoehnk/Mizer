@@ -50,7 +50,7 @@ impl OpcOutputNode {
     }
 }
 
-impl InputNode for OpcOutputNode {
+impl SourceNode for OpcOutputNode {
     fn connect_pixel_input(&mut self, input: &str, channel: PixelChannel) -> ConnectionResult {
         if input == "pixels" {
             channel.back_channel.send((self.width, self.height));
@@ -62,7 +62,7 @@ impl InputNode for OpcOutputNode {
     }
 }
 
-impl OutputNode for OpcOutputNode {}
+impl DestinationNode for OpcOutputNode {}
 
 impl ProcessingNode for OpcOutputNode {
     fn get_details(&self) -> NodeDetails {

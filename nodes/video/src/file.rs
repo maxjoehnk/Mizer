@@ -58,9 +58,9 @@ impl ProcessingNode for VideoFileNode {
             .with_outputs(vec![NodeOutput::new("output", NodeChannel::Video)])
     }
 }
-impl InputNode for VideoFileNode {}
-impl OutputNode for VideoFileNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl SourceNode for VideoFileNode {}
+impl DestinationNode for VideoFileNode {
+    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.convert)
         } else {

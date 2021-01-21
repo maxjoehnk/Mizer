@@ -43,12 +43,12 @@ macro_rules! derive_node {
             derive_process!($($i), *);
         }
 
-        impl<'a> InputNode for Node<'a> {
-            derive_input!($($i), *);
+        impl<'a> SourceNode for Node<'a> {
+            derive_source!($($i), *);
         }
 
-        impl<'a> OutputNode for Node<'a> {
-            derive_output!($($i), *);
+        impl<'a> DestinationNode for Node<'a> {
+            derive_destination!($($i), *);
         }
 
         impl<'a> std::fmt::Debug for Node<'a> {
@@ -79,7 +79,7 @@ macro_rules! derive_process {
     };
 }
 
-macro_rules! derive_input {
+macro_rules! derive_source {
     ($($i:path),*) => {
         fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
             match self {
@@ -119,39 +119,39 @@ macro_rules! derive_input {
     };
 }
 
-macro_rules! derive_output {
+macro_rules! derive_destination {
     ($($i:path),*) => {
-        fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_dmx_input(output, node, input),)*
             }
         }
 
-        fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_numeric_input(output, node, input),)*
             }
         }
 
-        fn connect_to_trigger_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        fn connect_to_trigger_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_trigger_input(output, node, input),)*
             }
         }
 
-        fn connect_to_clock_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        fn connect_to_clock_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_clock_input(output, node, input),)*
             }
         }
 
-        fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_video_input(output, node, input),)*
             }
         }
 
-        fn connect_to_pixel_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+        fn connect_to_pixel_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_pixel_input(output, node, input),)*
             }

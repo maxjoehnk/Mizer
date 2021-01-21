@@ -51,7 +51,7 @@ impl StreamingAcnOutputNode {
     }
 }
 
-impl InputNode for StreamingAcnOutputNode {
+impl SourceNode for StreamingAcnOutputNode {
     fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
         if input == "dmx" {
             for channel in channels {
@@ -64,7 +64,7 @@ impl InputNode for StreamingAcnOutputNode {
     }
 }
 
-impl OutputNode for StreamingAcnOutputNode {}
+impl DestinationNode for StreamingAcnOutputNode {}
 
 impl ProcessingNode for StreamingAcnOutputNode {
     fn get_details(&self) -> NodeDetails {

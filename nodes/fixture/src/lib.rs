@@ -51,7 +51,7 @@ impl ProcessingNode for FixtureNode {
     }
 }
 
-impl InputNode for FixtureNode {
+impl SourceNode for FixtureNode {
     fn connect_numeric_input(&mut self, input: &str, channel: NumericChannel) -> ConnectionResult {
         if let Some(channels) = self.inputs.get_mut(input) {
             channels.push(channel);
@@ -62,8 +62,8 @@ impl InputNode for FixtureNode {
     }
 }
 
-impl OutputNode for FixtureNode {
-    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for FixtureNode {
+    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "output" {
             let (tx, channel) = DmxChannel::batched(self.fixture.universe, 1);
             node.connect_dmx_input(input, &[channel])?;

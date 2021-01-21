@@ -12,7 +12,7 @@ impl ProcessingNode for TestNode {
         unimplemented!()
     }
 }
-impl InputNode for TestNode {
+impl SourceNode for TestNode {
     fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
         let dmx_channels = self.dmx_channels.entry(input.to_string()).or_default();
         dmx_channels.extend_from_slice(channels);
@@ -24,4 +24,4 @@ impl InputNode for TestNode {
         Ok(())
     }
 }
-impl OutputNode for TestNode {}
+impl DestinationNode for TestNode {}

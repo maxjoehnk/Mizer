@@ -78,7 +78,7 @@ impl ArtnetOutputNode {
     }
 }
 
-impl InputNode for ArtnetOutputNode {
+impl SourceNode for ArtnetOutputNode {
     fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
         if input == "dmx" {
             for channel in channels {
@@ -91,7 +91,7 @@ impl InputNode for ArtnetOutputNode {
     }
 }
 
-impl OutputNode for ArtnetOutputNode {}
+impl DestinationNode for ArtnetOutputNode {}
 
 impl ProcessingNode for ArtnetOutputNode {
     fn get_details(&self) -> NodeDetails {

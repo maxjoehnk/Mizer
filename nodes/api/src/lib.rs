@@ -161,7 +161,7 @@ pub enum PropertyType {
     Numeric
 }
 
-pub trait ProcessingNode: InputNode + OutputNode {
+pub trait ProcessingNode: SourceNode + DestinationNode {
     fn get_details(&self) -> NodeDetails;
 
     fn process(&mut self) {}
@@ -169,7 +169,7 @@ pub trait ProcessingNode: InputNode + OutputNode {
     fn set_numeric_property(&mut self, _property: &str, _value: f64) {}
 }
 
-pub trait InputNode {
+pub trait SourceNode {
     fn connect_dmx_input(&mut self, _input: &str, _channels: &[DmxChannel]) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
@@ -190,28 +190,28 @@ pub trait InputNode {
     }
 }
 
-pub trait OutputNode {
-    fn connect_to_dmx_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+pub trait DestinationNode {
+    fn connect_to_dmx_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_dmx_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_numeric_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_numeric_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_trigger_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+    fn connect_to_trigger_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_trigger_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_clock_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+    fn connect_to_clock_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_clock_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_video_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+    fn connect_to_video_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_video_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_pixel_input(&mut self, output: &str, _node: &mut impl InputNode, _input: &str) -> ConnectionResult {
+    fn connect_to_pixel_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_pixel_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }

@@ -51,7 +51,7 @@ impl ProcessingNode for PixelDmxNode {
         }
     }
 }
-impl InputNode for PixelDmxNode {
+impl SourceNode for PixelDmxNode {
     fn connect_pixel_input(&mut self, input: &str, channel: PixelChannel) -> ConnectionResult {
         if input == "input" {
             channel.back_channel.send((self.width, self.height));
@@ -65,8 +65,8 @@ impl InputNode for PixelDmxNode {
 
 const DMX_CHANNELS: u16 = 512;
 
-impl OutputNode for PixelDmxNode {
-    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for PixelDmxNode {
+    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output != "output" {
             return Err(ConnectionError::InvalidOutput(output.to_string()));
         }

@@ -33,7 +33,7 @@ impl ProcessingNode for VideoOutputNode {
         pipeline.set_state(gstreamer::State::Playing).unwrap();
     }
 }
-impl InputNode for VideoOutputNode {
+impl SourceNode for VideoOutputNode {
     fn connect_video_input(&mut self, input: &str, element: &impl ElementExt) -> ConnectionResult {
         if input == "input" {
             element.link(&self.sink)?;
@@ -45,5 +45,5 @@ impl InputNode for VideoOutputNode {
         }
     }
 }
-impl OutputNode for VideoOutputNode {}
+impl DestinationNode for VideoOutputNode {}
 

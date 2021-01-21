@@ -52,7 +52,7 @@ impl ProcessingNode for ConvertToDmxNode {
         }
     }
 }
-impl InputNode for ConvertToDmxNode {
+impl SourceNode for ConvertToDmxNode {
     fn connect_numeric_input(&mut self, input: &str, channel: NumericChannel) -> ConnectionResult {
         if input == "value" {
             self.inputs.push(channel);
@@ -62,8 +62,8 @@ impl InputNode for ConvertToDmxNode {
         }
     }
 }
-impl OutputNode for ConvertToDmxNode {
-    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for ConvertToDmxNode {
+    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "dmx" {
             let (tx, channel) = DmxChannel::single(self.universe, self.channel);
             node.connect_dmx_input(input, &[channel])?;

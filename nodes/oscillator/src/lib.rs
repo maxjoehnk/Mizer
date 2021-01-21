@@ -61,7 +61,7 @@ impl ProcessingNode for OscillatorNode {
     }
 }
 
-impl InputNode for OscillatorNode {
+impl SourceNode for OscillatorNode {
     fn connect_clock_input(&mut self, input: &str, channel: ClockChannel) -> ConnectionResult {
         if input == "clock" {
             self.clock = Some(channel);
@@ -72,8 +72,8 @@ impl InputNode for OscillatorNode {
     }
 }
 
-impl OutputNode for OscillatorNode {
-    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for OscillatorNode {
+    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "value" {
             let (tx, channel) = NumericChannel::new();
             node.connect_numeric_input(input, channel)?;

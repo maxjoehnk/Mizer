@@ -51,14 +51,14 @@ impl<'a> ProcessingNode for ScriptingNode<'a> {
         }
     }
 }
-impl<'a> InputNode for ScriptingNode<'a> {
+impl<'a> SourceNode for ScriptingNode<'a> {
     fn connect_numeric_input(&mut self, _input: &str, channel: NumericChannel) -> ConnectionResult {
         self.inputs.push(channel);
         Ok(())
     }
 }
-impl<'a> OutputNode for ScriptingNode<'a> {
-    fn connect_to_numeric_input(&mut self, _output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl<'a> DestinationNode for ScriptingNode<'a> {
+    fn connect_to_numeric_input(&mut self, _output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         let (sender, channel) = NumericChannel::new();
         node.connect_numeric_input(input, channel)?;
         self.outputs.push(sender);

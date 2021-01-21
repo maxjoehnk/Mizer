@@ -75,7 +75,7 @@ impl ProcessingNode for VideoTransformNode {
     }
 }
 
-impl InputNode for VideoTransformNode {
+impl SourceNode for VideoTransformNode {
     fn connect_numeric_input(&mut self, input: &str, channel: NumericChannel) -> ConnectionResult {
         match input {
             "translate-x" => {
@@ -124,8 +124,8 @@ impl InputNode for VideoTransformNode {
     }
 }
 
-impl OutputNode for VideoTransformNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for VideoTransformNode {
+    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.element)
         } else {

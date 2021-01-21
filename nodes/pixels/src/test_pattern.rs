@@ -60,12 +60,12 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     }
 }
 
-impl InputNode for PixelPatternGeneratorNode {
+impl SourceNode for PixelPatternGeneratorNode {
 
 }
 
-impl OutputNode for PixelPatternGeneratorNode {
-    fn connect_to_pixel_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for PixelPatternGeneratorNode {
+    fn connect_to_pixel_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "output" {
             let (sender, channel) = PixelChannel::new();
             node.connect_pixel_input(input, channel)?;

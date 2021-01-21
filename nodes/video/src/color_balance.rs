@@ -48,7 +48,7 @@ impl ProcessingNode for VideoColorBalanceNode {
         }
     }
 }
-impl InputNode for VideoColorBalanceNode {
+impl SourceNode for VideoColorBalanceNode {
     fn connect_video_input(&mut self, input: &str, source: &impl ElementExt) -> ConnectionResult {
         if input == "input" {
             source.link(&self.node)?;
@@ -58,8 +58,8 @@ impl InputNode for VideoColorBalanceNode {
         }
     }
 }
-impl OutputNode for VideoColorBalanceNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl InputNode, input: &str) -> ConnectionResult {
+impl DestinationNode for VideoColorBalanceNode {
+    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.node)
         } else {

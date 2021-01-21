@@ -9,5 +9,5 @@ impl ProcessingNode for SequenceNode {
         unimplemented!()
     }
 }
-impl InputNode for SequenceNode {}
-impl OutputNode for SequenceNode {}
+impl SourceNode for SequenceNode {}
+impl DestinationNode for SequenceNode {}

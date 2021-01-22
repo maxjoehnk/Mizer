@@ -20,7 +20,7 @@ members = [
     "nodes/video",
     "pipeline",
     "projects",
-    "proto"
+    "api/proto"
 ]
 
 [lib]

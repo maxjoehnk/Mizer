@@ -73,6 +73,7 @@ impl NodeBuilder for mizer_project_files::Node {
             NodeConfig::PixelDmx { width, height, start_universe } => PixelDmxNode::new(width, height, start_universe).into(),
             NodeConfig::OpcOutput { host, port, width, height } => OpcOutputNode::new(host, port, (width, height)).into(),
             NodeConfig::Fixture { fixture_id } => FixtureNode::new(fixture_manager.get_fixture(&fixture_id).cloned().unwrap()).into(),
+            NodeConfig::Sequence { steps } => SequenceNode::new(steps).into(),
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

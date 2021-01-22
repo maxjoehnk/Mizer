@@ -1474,6 +1474,7 @@ dependencies = [
  "lazy_static",
  "mizer-oscillator-nodes",
  "mizer-pixel-nodes",
+ "mizer-sequence-nodes",
  "mizer-video-nodes",
  "regex",
  "serde",
@@ -1512,6 +1513,7 @@ name = "mizer-sequence-nodes"
 version = "0.1.0"
 dependencies = [
  "mizer-node-api",
+ "serde",
 ]
 
 [[package]]

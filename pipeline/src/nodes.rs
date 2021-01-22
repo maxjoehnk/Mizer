@@ -35,6 +35,7 @@ pub enum Node<'a> {
     PixelPatternNode(PixelPatternGeneratorNode),
     OpcOutputNode(OpcOutputNode),
     FixtureNode(FixtureNode),
+    SequenceNode(SequenceNode),
 }
 
 macro_rules! derive_node {
@@ -186,5 +187,6 @@ derive_node! {
     Node::PixelOutputNode,
     Node::PixelPatternNode,
     Node::OpcOutputNode,
-    Node::FixtureNode
+    Node::FixtureNode,
+    Node::SequenceNode
 }

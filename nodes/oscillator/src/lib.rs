@@ -20,7 +20,7 @@ impl OscillatorNode {
         OscillatorNode {
             oscillator_type,
             ratio: 1f64,
-            max: 255f64,
+            max: 1f64,
             min: 0f64,
             offset: 0f64,
             reverse: false,

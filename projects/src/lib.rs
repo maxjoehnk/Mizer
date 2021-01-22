@@ -7,6 +7,7 @@ use std::fs::File;
 use std::path::Path;
 use mizer_oscillator_nodes::OscillatorType;
 use mizer_video_nodes::VideoEffectType;
+use mizer_sequence_nodes::SequenceStep;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-]*)$")
@@ -145,6 +146,9 @@ pub enum NodeConfig {
     Fixture {
         #[serde(rename = "fixture")]
         fixture_id: String
+    },
+    Sequence {
+        steps: Vec<SequenceStep>
     }
 }
 

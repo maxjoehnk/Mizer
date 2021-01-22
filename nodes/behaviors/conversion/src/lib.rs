@@ -45,7 +45,7 @@ impl ProcessingNode for ConvertToDmxNode {
             }
         }
         if let Some(value) = last {
-            let bounded = (value as i64).min(255).max(0) as u8;
+            let bounded = (value * u8::max_value() as f64).min(255.).max(0.).floor() as u8;
             for tx in &self.outputs {
                 tx.send(bounded);
             }

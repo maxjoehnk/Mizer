@@ -1,0 +1,33 @@
+nodes:
+  - type: sacn-output
+    id: sacn-output-0
+  - type: convert-to-dmx
+    id: convert-to-dmx-0
+    config:
+      channel: 1
+  - type: sequence
+    id: sequence-0
+    config:
+      steps:
+        - tick: 0
+          value: 0
+        - tick: 1
+          value: 0.5
+          hold: true
+        - tick: 2
+          value: 1
+        - tick: 3
+          value: 0.75
+        - tick: 3.5
+          value: 1
+  - type: clock
+    id: clock-0
+    config:
+      speed: 128
+    properties:
+      speed: 90
+
+channels:
+  - dmx@convert-to-dmx-0 -> dmx@sacn-output-0
+  - clock@clock-0 -> clock@sequence-0
+  - value@sequence-0 -> value@convert-to-dmx-0

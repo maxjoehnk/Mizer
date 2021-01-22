@@ -14,6 +14,7 @@ anyhow = "1"
 mizer-video-nodes = { path = "../nodes/video" }
 mizer-oscillator-nodes = { path = "../nodes/oscillator" }
 mizer-pixel-nodes = { path = "../nodes/pixels" }
+mizer-sequence-nodes = { path = "../nodes/behaviors/sequence" }
 
 [dev-dependencies]
 test-case = "1.0"

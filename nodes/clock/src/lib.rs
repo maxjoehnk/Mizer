@@ -1,6 +1,7 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use mizer_node_api::*;
+use std::fmt::Formatter;
 
 fn now() -> u128 {
     let time = SystemTime::now();
@@ -27,6 +28,13 @@ impl ClockNode {
             speed,
             outputs: Vec::new(),
         }
+    }
+
+    pub fn get_clock_channel(&mut self) -> ClockChannel {
+        let (sender, channel) = ClockChannel::new();
+        self.outputs.push(sender);
+
+        channel
     }
 }
 
@@ -75,5 +83,13 @@ impl DestinationNode for ClockNode {
         } else {
             Err(ConnectionError::InvalidOutput(output.to_string()))
         }
+    }
+}
+
+impl std::fmt::Debug for ClockNode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("ClockNode")
+            .field("speed", &self.speed)
+            .finish()
     }
 }

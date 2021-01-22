@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node_api::*;
 
 pub struct SequenceNode {
-    clock: Option<ClockChannel>,
+    clock: ClockChannel,
     speed_channels: Vec<NumericChannel>,
     outputs: Vec<NumericSender>,
     steps: Vec<SequenceStep>,
@@ -12,9 +12,9 @@ pub struct SequenceNode {
 }
 
 impl SequenceNode {
-    pub fn new(steps: Vec<SequenceStep>) -> Self{
+    pub fn new(steps: Vec<SequenceStep>, default_clock: ClockChannel) -> Self{
         SequenceNode {
-            clock: Default::default(),
+            clock: default_clock,
             speed_channels: Default::default(),
             outputs: Default::default(),
             steps,
@@ -25,10 +25,8 @@ impl SequenceNode {
     }
 
     fn apply_clock_link(&mut self) {
-        if let Some(ref clock) = self.clock {
-            if let Some(beat) = clock.recv_last().unwrap() {
-                self.beat += beat.delta * self.speed;
-            }
+        if let Some(beat) = self.clock.recv_last().unwrap() {
+            self.beat += beat.delta * self.speed;
         }
     }
 
@@ -117,7 +115,7 @@ impl SourceNode for SequenceNode {
 
     fn connect_clock_input(&mut self, input: &str, channel: ClockChannel) -> ConnectionResult {
         if input == "clock" {
-            self.clock.replace(channel);
+            self.clock = channel;
             Ok(())
         }else {
             Err(ConnectionError::InvalidInput)

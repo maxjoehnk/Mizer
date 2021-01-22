@@ -10,13 +10,13 @@ pub struct OscillatorNode {
     pub min: f64,
     pub offset: f64,
     pub reverse: bool,
-    pub clock: Option<ClockChannel>,
+    pub clock: ClockChannel,
     pub beat: f64,
     pub outputs: Vec<NumericSender>,
 }
 
 impl OscillatorNode {
-    pub fn new(oscillator_type: OscillatorType) -> Self {
+    pub fn new(oscillator_type: OscillatorType, default_clock: ClockChannel) -> Self {
         OscillatorNode {
             oscillator_type,
             ratio: 1f64,
@@ -24,7 +24,7 @@ impl OscillatorNode {
             min: 0f64,
             offset: 0f64,
             reverse: false,
-            clock: None,
+            clock: default_clock,
             beat: 0f64,
             outputs: Vec::new(),
         }
@@ -39,10 +39,8 @@ impl ProcessingNode for OscillatorNode {
     }
 
     fn process(&mut self) {
-        if let Some(clock) = self.clock.as_ref() {
-            for event in clock.recv_all().unwrap() {
-                self.beat += event.delta;
-            }
+        for event in self.clock.recv_all().unwrap() {
+            self.beat += event.delta;
         }
         let value = self.tick(self.beat);
         for channel in &self.outputs {
@@ -64,7 +62,7 @@ impl ProcessingNode for OscillatorNode {
 impl SourceNode for OscillatorNode {
     fn connect_clock_input(&mut self, input: &str, channel: ClockChannel) -> ConnectionResult {
         if input == "clock" {
-            self.clock = Some(channel);
+            self.clock = channel;
             Ok(())
         } else {
             Err(ConnectionError::InvalidInput)

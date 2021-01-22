@@ -20,14 +20,7 @@ nodes:
           value: 0.75
         - tick: 3.5
           value: 1
-  - type: clock
-    id: clock-0
-    config:
-      speed: 128
-    properties:
-      speed: 90
 
 channels:
   - dmx@convert-to-dmx-0 -> dmx@sacn-output-0
-  - clock@clock-0 -> clock@sequence-0
   - value@sequence-0 -> value@convert-to-dmx-0

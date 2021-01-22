@@ -18,14 +18,9 @@ nodes:
     properties:
       ratio: 4
       max: 1
-  - type: clock
-    id: clock-0
-    config:
-      speed: 90
 channels:
   - output@video-file-0 -> input@video-effect-0
   - output@video-effect-0 -> input@video-transform-0
   - output@video-transform-0 -> input@video-output-0
-  - clock@clock-0 -> clock@oscillator-0
   - value@oscillator-0 -> rotate-x@video-transform-0
   - value@oscillator-0 -> rotate-y@video-transform-0

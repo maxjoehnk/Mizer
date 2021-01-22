@@ -5,12 +5,6 @@ nodes:
     id: fixture-0
     config:
       fixture: hazer-0
-  - type: clock
-    id: clock-0
-    config:
-      speed: 128
-    properties:
-      speed: 90
   - type: oscillator
     id: oscillator-0
     config:
@@ -20,7 +14,6 @@ nodes:
       max: 1
 
 channels:
-  - clock@clock-0 -> clock@oscillator-0
   - output@fixture-0 -> dmx@sacn-output-0
   - value@oscillator-0 -> Fan@fixture-0
 

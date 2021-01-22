@@ -7,16 +7,26 @@ use crate::nodes::*;
 use anyhow::{anyhow, Context};
 use multi_mut::HashMapMultiMut;
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct Pipeline<'a> {
+    default_clock: ClockNode,
     nodes: HashMap<String, Node<'a>>,
+}
+
+impl<'a> Default for Pipeline<'a> {
+    fn default() -> Self {
+        Pipeline {
+            default_clock: ClockNode::new(90.),
+            nodes: Default::default(),
+        }
+    }
 }
 
 impl<'a> Pipeline<'a> {
     pub fn load_project(&mut self, project: Project, fixture_manager: &FixtureManager) -> anyhow::Result<()> {
         for node in project.nodes {
             let id = node.id.clone();
-            let node = node.build(fixture_manager);
+            let node = node.build(fixture_manager, &mut self.default_clock);
             self.nodes.insert(id, node);
         }
 
@@ -40,6 +50,7 @@ impl<'a> Pipeline<'a> {
     }
 
     pub fn process(&mut self) {
+        self.default_clock.process();
         for (id, node) in self.nodes.iter_mut() {
             let before = std::time::Instant::now();
             node.process();
@@ -50,17 +61,17 @@ impl<'a> Pipeline<'a> {
 }
 
 trait NodeBuilder {
-    fn build<'a>(self, fixture_manager: &FixtureManager) -> Node<'a>;
+    fn build<'a>(self, fixture_manager: &FixtureManager, default_clock: &mut ClockNode) -> Node<'a>;
 }
 
 impl NodeBuilder for mizer_project_files::Node {
-    fn build<'a>(self, fixture_manager: &FixtureManager) -> Node<'a> {
+    fn build<'a>(self, fixture_manager: &FixtureManager, default_clock: &mut ClockNode) -> Node<'a> {
         let mut node: Node = match self.config {
             NodeConfig::Fader => FaderNode::new().into(),
             NodeConfig::ConvertToDmx { universe, channel } => ConvertToDmxNode::new(universe, channel).into(),
             NodeConfig::ArtnetOutput { host, port } => ArtnetOutputNode::new(host, port).into(),
             NodeConfig::SacnOutput => StreamingAcnOutputNode::new().into(),
-            NodeConfig::Oscillator { oscillator_type } => OscillatorNode::new(oscillator_type).into(),
+            NodeConfig::Oscillator { oscillator_type } => OscillatorNode::new(oscillator_type, default_clock.get_clock_channel()).into(),
             NodeConfig::Clock { speed } => ClockNode::new(speed).into(),
             NodeConfig::OscInput { host, port, path } => OscInputNode::new(host, port, path).into(),
             NodeConfig::VideoFile { file } => VideoFileNode::new(file).into(),
@@ -73,7 +84,7 @@ impl NodeBuilder for mizer_project_files::Node {
             NodeConfig::PixelDmx { width, height, start_universe } => PixelDmxNode::new(width, height, start_universe).into(),
             NodeConfig::OpcOutput { host, port, width, height } => OpcOutputNode::new(host, port, (width, height)).into(),
             NodeConfig::Fixture { fixture_id } => FixtureNode::new(fixture_manager.get_fixture(&fixture_id).cloned().unwrap()).into(),
-            NodeConfig::Sequence { steps } => SequenceNode::new(steps).into(),
+            NodeConfig::Sequence { steps } => SequenceNode::new(steps, default_clock.get_clock_channel()).into(),
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

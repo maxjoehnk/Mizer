@@ -12,14 +12,7 @@ nodes:
     properties:
       ratio: 4
       max: 1
-  - type: clock
-    id: clock-0
-    config:
-      speed: 128
-    properties:
-      speed: 90
 
 channels:
   - dmx@convert-to-dmx-0 -> dmx@sacn-output-0
-  - clock@clock-0 -> clock@oscillator-0
   - value@oscillator-0 -> value@convert-to-dmx-0

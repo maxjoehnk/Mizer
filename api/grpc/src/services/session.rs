@@ -46,4 +46,13 @@ impl SessionApi for SessionApiImpl {
 
         resp.send_data(session)
     }
+
+    fn join_session(
+        &self,
+        o: ServerHandlerContext,
+        req: ServerRequestSingle<ClientAnnouncement>,
+        resp: ServerResponseUnarySink<Session>,
+    ) -> grpc::Result<()> {
+        unimplemented!()
+    }
 }

@@ -1,7 +1,9 @@
-use crate::protos::{FixturesApiServer, NodesApiServer, SessionApiServer};
+use crate::protos::{FixturesApiServer, NodesApiServer, SessionApiClient, SessionApiServer};
+use grpc::ClientStub;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_pipeline::Pipeline;
 use mizer_project_files::Project;
+use std::sync::Arc;
 
 mod protos;
 mod services;
@@ -24,4 +26,22 @@ pub fn start(projects: Vec<Project>, pipeline: Pipeline, fixture_manager: Fixtur
             std::thread::park();
         }
     });
+}
+
+pub fn connect(host: &str, port: u16) -> anyhow::Result<MizerApiClient> {
+    MizerApiClient::new(host, port)
+}
+
+pub struct MizerApiClient {
+    pub sessions: SessionApiClient,
+}
+
+impl MizerApiClient {
+    pub fn new(host: &str, port: u16) -> anyhow::Result<Self> {
+        let client = grpc::ClientBuilder::new(host, port).build()?;
+        let client = Arc::new(client);
+        let sessions = SessionApiClient::with_client(client);
+
+        Ok(MizerApiClient { sessions })
+    }
 }

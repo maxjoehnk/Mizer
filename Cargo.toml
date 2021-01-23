@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "api/grpc",
+    "api/proto",
     "fixtures",
     "fixtures/open-fixture-library",
     "nodes/api",
@@ -20,7 +21,7 @@ members = [
     "nodes/video",
     "pipeline",
     "projects",
-    "api/proto"
+    "session"
 ]
 
 [lib]
@@ -56,6 +57,7 @@ mizer-fixtures = { path = "fixtures" }
 mizer-open-fixture-library-provider = { path = "fixtures/open-fixture-library" }
 mizer-pipeline = { path = "pipeline" }
 mizer-grpc-api = { path = "api/grpc" }
+mizer-session = { path = "session" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"
 

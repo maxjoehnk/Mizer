@@ -23,6 +23,8 @@
 
 pub trait SessionApi {
     fn get_session(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::SessionRequest>, resp: ::grpc::ServerResponseSink<super::session::Session>) -> ::grpc::Result<()>;
+
+    fn join_session(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::ClientAnnouncement>, resp: ::grpc::ServerResponseUnarySink<super::session::Session>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -49,6 +51,16 @@ impl SessionApiClient {
         });
         self.grpc_client.call_server_streaming(o, req, descriptor)
     }
+
+    pub fn join_session(&self, o: ::grpc::RequestOptions, req: super::session::ClientAnnouncement) -> ::grpc::SingleResponse<super::session::Session> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/JoinSession"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
 }
 
 // server
@@ -71,6 +83,18 @@ impl SessionApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerServerStreaming::new(move |ctx, req, resp| (*handler_copy).get_session(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/JoinSession"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).join_session(ctx, req, resp))
                     },
                 ),
             ],

@@ -1,0 +1,13 @@
+[package]
+name = "mizer-session"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+tokio = "0.2"
+zeroconf = "0.7"
+systemstat = "0.1"
+hostname = "0.3"
+serde = { version = "1", features = ["derive"] }

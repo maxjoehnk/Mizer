@@ -4,6 +4,11 @@ package mizer;
 
 service SessionApi {
   rpc GetSession (SessionRequest) returns (stream Session) {}
+  rpc JoinSession (ClientAnnouncement) returns (Session) {}
+}
+
+message ClientAnnouncement {
+  string name = 1;
 }
 
 message SessionRequest {}

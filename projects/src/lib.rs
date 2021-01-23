@@ -1,19 +1,21 @@
-use serde::{Deserialize, Serialize};
-use std::convert::TryFrom;
 use lazy_static::lazy_static;
+use mizer_oscillator_nodes::OscillatorType;
+use mizer_sequence_nodes::SequenceStep;
+use mizer_video_nodes::VideoEffectType;
 use regex::{Regex, RegexBuilder};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::convert::TryFrom;
 use std::fs::File;
 use std::path::Path;
-use mizer_oscillator_nodes::OscillatorType;
-use mizer_video_nodes::VideoEffectType;
-use mizer_sequence_nodes::SequenceStep;
 
 lazy_static! {
-    static ref CHANNEL_REGEX: Regex = RegexBuilder::new(r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-]*)$")
-        .case_insensitive(true)
-        .build()
-        .unwrap();
+    static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
+        r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-]*)$"
+    )
+    .case_insensitive(true)
+    .build()
+    .unwrap();
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -47,7 +49,7 @@ pub struct Channel {
     pub from_id: String,
     pub from_channel: String,
     pub to_id: String,
-    pub to_channel: String
+    pub to_channel: String,
 }
 
 impl TryFrom<String> for Channel {
@@ -64,9 +66,9 @@ impl TryFrom<String> for Channel {
                 from_id,
                 from_channel,
                 to_id,
-                to_channel
+                to_channel,
             })
-        }else {
+        } else {
             Err("invalid channel format".into())
         }
     }
@@ -80,7 +82,11 @@ impl From<Channel> for String {
 
 impl std::fmt::Debug for Channel {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}@{} -> {}@{}", self.from_channel, self.from_id, self.to_channel, self.to_id)
+        write!(
+            f,
+            "{}@{} -> {}@{}",
+            self.from_channel, self.from_id, self.to_channel, self.to_id
+        )
     }
 }
 
@@ -98,58 +104,58 @@ pub struct Node {
 pub enum NodeConfig {
     ArtnetOutput {
         host: String,
-        port: Option<u16>
+        port: Option<u16>,
     },
     PixelPattern {
-        pattern: mizer_pixel_nodes::Pattern
+        pattern: mizer_pixel_nodes::Pattern,
     },
     PixelDmx {
         width: u64,
         height: u64,
-        start_universe: Option<u16>
+        start_universe: Option<u16>,
     },
     OpcOutput {
         host: String,
         port: Option<u16>,
         width: u64,
-        height: u64
+        height: u64,
     },
     ConvertToDmx {
         universe: Option<u16>,
-        channel: Option<u16>
+        channel: Option<u16>,
     },
     Oscillator {
         #[serde(rename = "type")]
-        oscillator_type: OscillatorType
+        oscillator_type: OscillatorType,
     },
     Clock {
-        speed: f64
+        speed: f64,
     },
     SacnOutput,
     Script(String),
     OscInput {
         host: Option<String>,
         port: u16,
-        path: String
+        path: String,
     },
     Fader,
     VideoFile {
-        file: String
+        file: String,
     },
     VideoEffect {
         #[serde(rename = "type")]
-        effect_type: VideoEffectType
+        effect_type: VideoEffectType,
     },
     VideoTransform,
     VideoColorBalance,
     VideoOutput,
     Fixture {
         #[serde(rename = "fixture")]
-        fixture_id: String
+        fixture_id: String,
     },
     Sequence {
-        steps: Vec<SequenceStep>
-    }
+        steps: Vec<SequenceStep>,
+    },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -194,16 +200,19 @@ mod tests {
         let result = Project::load(content)?;
 
         assert_eq!(result.nodes.len(), 1);
-        assert_eq!(result.nodes[0], Node {
-            id: "opc-output-0".into(),
-            config: NodeConfig::OpcOutput {
-                host: "0.0.0.0".into(),
-                port: None,
-                width: 10,
-                height: 20
-            },
-            properties: HashMap::new(),
-        });
+        assert_eq!(
+            result.nodes[0],
+            Node {
+                id: "opc-output-0".into(),
+                config: NodeConfig::OpcOutput {
+                    host: "0.0.0.0".into(),
+                    port: None,
+                    width: 10,
+                    height: 20
+                },
+                properties: HashMap::new(),
+            }
+        );
         Ok(())
     }
 
@@ -229,29 +238,38 @@ mod tests {
 
         assert_eq!(result.nodes.len(), 2);
         assert_eq!(result.channels.len(), 1);
-        assert_eq!(result.nodes[0], Node {
-            id: "pixel-pattern-0".into(),
-            config: NodeConfig::PixelPattern {
-                pattern: mizer_pixel_nodes::Pattern::RgbIterate
-            },
-            properties: HashMap::new(),
-        });
-        assert_eq!(result.nodes[1], Node {
-            id: "opc-output-0".into(),
-            config: NodeConfig::OpcOutput {
-                host: "127.0.0.1".into(),
-                port: None,
-                width: 25,
-                height: 50
-            },
-            properties: HashMap::new(),
-        });
-        assert_eq!(result.channels[0], Channel {
-            from_id: "pixel-pattern-0".into(),
-            from_channel: "output".into(),
-            to_id: "opc-output-0".into(),
-            to_channel: "pixels".into()
-        });
+        assert_eq!(
+            result.nodes[0],
+            Node {
+                id: "pixel-pattern-0".into(),
+                config: NodeConfig::PixelPattern {
+                    pattern: mizer_pixel_nodes::Pattern::RgbIterate
+                },
+                properties: HashMap::new(),
+            }
+        );
+        assert_eq!(
+            result.nodes[1],
+            Node {
+                id: "opc-output-0".into(),
+                config: NodeConfig::OpcOutput {
+                    host: "127.0.0.1".into(),
+                    port: None,
+                    width: 25,
+                    height: 50
+                },
+                properties: HashMap::new(),
+            }
+        );
+        assert_eq!(
+            result.channels[0],
+            Channel {
+                from_id: "pixel-pattern-0".into(),
+                from_channel: "output".into(),
+                to_id: "opc-output-0".into(),
+                to_channel: "pixels".into()
+            }
+        );
         Ok(())
     }
 
@@ -265,12 +283,15 @@ mod tests {
 
         let result = Project::load(content)?;
 
-        assert_eq!(result.channels[0], Channel {
-            from_id: "pixel-pattern-0".into(),
-            from_channel: "Output".into(),
-            to_id: "opc-output-0".into(),
-            to_channel: "pixels".into()
-        });
+        assert_eq!(
+            result.channels[0],
+            Channel {
+                from_id: "pixel-pattern-0".into(),
+                from_channel: "Output".into(),
+                to_id: "opc-output-0".into(),
+                to_channel: "pixels".into()
+            }
+        );
         Ok(())
     }
 
@@ -289,11 +310,14 @@ mod tests {
         let result = Project::load(content)?;
 
         assert_eq!(result.nodes.len(), 1);
-        assert_eq!(result.nodes[0], Node {
-            id: "fader-0".into(),
-            config: NodeConfig::Fader,
-            properties: expected,
-        });
+        assert_eq!(
+            result.nodes[0],
+            Node {
+                id: "fader-0".into(),
+                config: NodeConfig::Fader,
+                properties: expected,
+            }
+        );
         Ok(())
     }
 
@@ -309,13 +333,16 @@ mod tests {
         let result = Project::load(content)?;
 
         assert_eq!(result.fixtures.len(), 1);
-        assert_eq!(result.fixtures[0], FixtureConfig {
-            id: "fixture-0".into(),
-            fixture: "fixture-definition-ref".into(),
-            channel: 1,
-            universe: None,
-            mode: None,
-        });
+        assert_eq!(
+            result.fixtures[0],
+            FixtureConfig {
+                id: "fixture-0".into(),
+                fixture: "fixture-definition-ref".into(),
+                channel: 1,
+                universe: None,
+                mode: None,
+            }
+        );
         Ok(())
     }
 
@@ -332,13 +359,16 @@ mod tests {
         let result = Project::load(content)?;
 
         assert_eq!(result.fixtures.len(), 1);
-        assert_eq!(result.fixtures[0], FixtureConfig {
-            id: "fixture-1".into(),
-            fixture: "another-fixture".into(),
-            channel: 5,
-            universe: None,
-            mode: Some("2-channel".into()),
-        });
+        assert_eq!(
+            result.fixtures[0],
+            FixtureConfig {
+                id: "fixture-1".into(),
+                fixture: "another-fixture".into(),
+                channel: 5,
+                universe: None,
+                mode: Some("2-channel".into()),
+            }
+        );
         Ok(())
     }
 
@@ -355,13 +385,16 @@ mod tests {
         let result = Project::load(content)?;
 
         assert_eq!(result.fixtures.len(), 1);
-        assert_eq!(result.fixtures[0], FixtureConfig {
-            id: "fixture-1".into(),
-            fixture: "another-fixture".into(),
-            channel: 5,
-            universe: Some(1),
-            mode: None,
-        });
+        assert_eq!(
+            result.fixtures[0],
+            FixtureConfig {
+                id: "fixture-1".into(),
+                fixture: "another-fixture".into(),
+                channel: 5,
+                universe: Some(1),
+                mode: None,
+            }
+        );
         Ok(())
     }
 }

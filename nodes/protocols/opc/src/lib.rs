@@ -1,4 +1,4 @@
-mod protocol;
 mod output;
+mod protocol;
 
 pub use self::output::*;

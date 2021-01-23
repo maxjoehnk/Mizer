@@ -1,6 +1,8 @@
-use grpc::{ServerHandlerContext, ServerResponseUnarySink, ServerRequestSingle, ServerResponseSink};
-use mizer_proto::session::*;
 use crate::protos::SessionApi;
+use grpc::{
+    ServerHandlerContext, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
+};
+use mizer_proto::session::*;
 
 pub struct SessionApiImpl;
 
@@ -11,7 +13,12 @@ impl SessionApiImpl {
 }
 
 impl SessionApi for SessionApiImpl {
-    fn get_session(&self, _: ServerHandlerContext, req: ServerRequestSingle<SessionRequest>, mut resp: ServerResponseSink<Session>) -> grpc::Result<()> {
+    fn get_session(
+        &self,
+        _: ServerHandlerContext,
+        req: ServerRequestSingle<SessionRequest>,
+        mut resp: ServerResponseSink<Session>,
+    ) -> grpc::Result<()> {
         let mut session = Session::new();
         let desktop = {
             let mut desktop = SessionDevice::new();

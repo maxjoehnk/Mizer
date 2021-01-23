@@ -37,16 +37,15 @@ impl ProcessingNode for PixelDmxNode {
             }
         }
         if let Some(pixels) = pixels {
-            let data = pixels.into_iter()
+            let data = pixels
+                .into_iter()
                 .flat_map(|color| vec![color.r, color.g, color.b])
                 .collect::<Vec<_>>();
             for output in &self.outputs {
                 let universes = data.chunks(512);
-                universes
-                    .zip(output.iter())
-                    .for_each(|(channels, sender)| {
-                        sender.send(Vec::from(channels));
-                    });
+                universes.zip(output.iter()).for_each(|(channels, sender)| {
+                    sender.send(Vec::from(channels));
+                });
             }
         }
     }
@@ -57,7 +56,7 @@ impl SourceNode for PixelDmxNode {
             channel.back_channel.send((self.width, self.height));
             self.channels.push(channel);
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidInput)
         }
     }
@@ -66,7 +65,12 @@ impl SourceNode for PixelDmxNode {
 const DMX_CHANNELS: u16 = 512;
 
 impl DestinationNode for PixelDmxNode {
-    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_dmx_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output != "output" {
             return Err(ConnectionError::InvalidOutput(output.to_string()));
         }

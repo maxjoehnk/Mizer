@@ -40,7 +40,7 @@ impl ProcessingNode for ConvertToDmxNode {
         for channel in &self.inputs {
             match channel.recv() {
                 Ok(Some(value)) => last = Some(value),
-                Ok(None) => {},
+                Ok(None) => {}
                 Err(err) => println!("{:?}", err),
             }
         }
@@ -57,13 +57,18 @@ impl SourceNode for ConvertToDmxNode {
         if input == "value" {
             self.inputs.push(channel);
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidInput)
         }
     }
 }
 impl DestinationNode for ConvertToDmxNode {
-    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_dmx_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "dmx" {
             let (tx, channel) = DmxChannel::single(self.universe, self.channel);
             node.connect_dmx_input(input, &[channel])?;
@@ -77,9 +82,9 @@ impl DestinationNode for ConvertToDmxNode {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use mizer_node_api::*;
     use test_case::test_case;
-    use super::*;
 
     #[test_case("input")]
     #[test_case("another input")]
@@ -87,7 +92,8 @@ mod tests {
         let mut receiver = TestNode::default();
         let mut node = ConvertToDmxNode::new(None, None);
 
-        node.connect_to_dmx_input("dmx", &mut receiver, input).unwrap();
+        node.connect_to_dmx_input("dmx", &mut receiver, input)
+            .unwrap();
 
         assert_eq!(receiver.dmx_channels.get(input).unwrap().len(), 1);
         let channel = receiver.dmx_channels.get(input).unwrap().get(0).unwrap();
@@ -98,19 +104,27 @@ mod tests {
     #[test_case(1, 2)]
     #[test_case(2, 5)]
     #[test_case(256, 512)]
-    fn convert_numeric_to_dmx_should_set_universe_and_channel(expected_universe: u16, expected_channel: u16) {
+    fn convert_numeric_to_dmx_should_set_universe_and_channel(
+        expected_universe: u16,
+        expected_channel: u16,
+    ) {
         let mut receiver = TestNode::default();
         let mut node = ConvertToDmxNode::new(Some(expected_universe), Some(expected_channel));
 
-        node.connect_to_dmx_input("dmx", &mut receiver, "input").unwrap();
+        node.connect_to_dmx_input("dmx", &mut receiver, "input")
+            .unwrap();
 
         let dmx_channel = receiver.dmx_channels.get("input").unwrap().get(0).unwrap();
         match dmx_channel {
-            DmxChannel::Single { universe, channel, receiver: _ } => {
+            DmxChannel::Single {
+                universe,
+                channel,
+                receiver: _,
+            } => {
                 assert_eq!(universe, expected_universe);
                 assert_eq!(channel, expected_channel);
             }
-            _ => assert!(false, "invalid dmx channel layout")
+            _ => assert!(false, "invalid dmx channel layout"),
         }
     }
 
@@ -124,14 +138,14 @@ mod tests {
         let mut node = ConvertToDmxNode::default();
         let (tx, rx) = NumericChannel::new();
         node.connect_numeric_input("value", rx).unwrap();
-        node.connect_to_dmx_input("dmx", &mut receiver, "input").unwrap();
+        node.connect_to_dmx_input("dmx", &mut receiver, "input")
+            .unwrap();
         let dmx_channel = receiver.dmx_channels.get("input").unwrap().get(0).unwrap();
 
         tx.send(input);
         node.process();
 
         let values = dmx_channel.recv().unwrap().unwrap();
-
 
         assert_eq!(dmx_channel.recv().unwrap(), Some(expected));
     }

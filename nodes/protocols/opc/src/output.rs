@@ -1,7 +1,7 @@
-use mizer_node_api::*;
-use std::net::TcpStream;
 use crate::protocol::SetColors;
+use mizer_node_api::*;
 use std::io::Write;
+use std::net::TcpStream;
 
 pub struct OpcOutputNode {
     socket: TcpStream,
@@ -34,18 +34,16 @@ impl OpcOutputNode {
             match channel.receiver.recv_last() {
                 Ok(data @ Some(_)) => {
                     pixels = data;
-                },
-                Ok(None) => {},
-                Err(e) => log::error!("{:?}", e)
+                }
+                Ok(None) => {}
+                Err(e) => log::error!("{:?}", e),
             }
         }
 
         if let Some(pixels) = pixels {
             let msg = SetColors(1, pixels).to_buffer();
 
-            self.socket
-                .write_all(&msg)
-                .unwrap();
+            self.socket.write_all(&msg).unwrap();
         }
     }
 }

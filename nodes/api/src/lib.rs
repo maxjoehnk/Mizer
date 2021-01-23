@@ -23,7 +23,7 @@ impl NodeDetails {
             name: name.into(),
             inputs: Vec::new(),
             outputs: Vec::new(),
-            properties: Vec::new()
+            properties: Vec::new(),
         }
     }
 
@@ -32,7 +32,7 @@ impl NodeDetails {
             name: self.name,
             outputs: self.outputs,
             properties: self.properties,
-            inputs
+            inputs,
         }
     }
 
@@ -41,7 +41,7 @@ impl NodeDetails {
             name: self.name,
             inputs: self.inputs,
             properties: self.properties,
-            outputs
+            outputs,
         }
     }
 
@@ -55,7 +55,10 @@ impl NodeDetails {
     }
 
     pub fn get_output_type(&self, name: &str) -> Option<NodeChannel> {
-        self.outputs.iter().find(|output| output.name == name).map(|output| output.channel_type)
+        self.outputs
+            .iter()
+            .find(|output| output.name == name)
+            .map(|output| output.channel_type)
     }
 }
 
@@ -73,34 +76,34 @@ pub enum NodeChannel {
     Timecode,
     Boolean,
     Select,
-    Pixels
+    Pixels,
 }
 
 #[derive(Debug, Clone)]
 pub struct NodeInput {
     pub name: String,
-    pub channel_type: NodeChannel
+    pub channel_type: NodeChannel,
 }
 
 impl NodeInput {
     pub fn new<S: Into<String>>(name: S, channel_type: NodeChannel) -> Self {
         NodeInput {
             name: name.into(),
-            channel_type
+            channel_type,
         }
     }
 
     pub fn dmx<S: Into<String>>(name: S) -> Self {
         NodeInput {
             name: name.into(),
-            channel_type: NodeChannel::Dmx
+            channel_type: NodeChannel::Dmx,
         }
     }
 
     pub fn numeric<S: Into<String>>(name: S) -> Self {
         NodeInput {
             name: name.into(),
-            channel_type: NodeChannel::Numeric
+            channel_type: NodeChannel::Numeric,
         }
     }
 }
@@ -108,28 +111,28 @@ impl NodeInput {
 #[derive(Debug, Clone)]
 pub struct NodeOutput {
     pub name: String,
-    pub channel_type: NodeChannel
+    pub channel_type: NodeChannel,
 }
 
 impl NodeOutput {
     pub fn new<S: Into<String>>(name: S, channel_type: NodeChannel) -> Self {
         NodeOutput {
             name: name.into(),
-            channel_type
+            channel_type,
         }
     }
 
     pub fn dmx<S: Into<String>>(name: S) -> Self {
         NodeOutput {
             name: name.into(),
-            channel_type: NodeChannel::Dmx
+            channel_type: NodeChannel::Dmx,
         }
     }
 
     pub fn numeric<S: Into<String>>(name: S) -> Self {
         NodeOutput {
             name: name.into(),
-            channel_type: NodeChannel::Numeric
+            channel_type: NodeChannel::Numeric,
         }
     }
 }
@@ -137,28 +140,28 @@ impl NodeOutput {
 #[derive(Debug, Clone)]
 pub struct NodeProperty {
     pub name: String,
-    pub property_type: PropertyType
+    pub property_type: PropertyType,
 }
 
 impl NodeProperty {
     pub fn new<S: Into<String>>(name: S, property_type: PropertyType) -> Self {
         NodeProperty {
             name: name.into(),
-            property_type
+            property_type,
         }
     }
 
     pub fn numeric<S: Into<String>>(name: S) -> Self {
         NodeProperty {
             name: name.into(),
-            property_type: PropertyType::Numeric
+            property_type: PropertyType::Numeric,
         }
     }
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum PropertyType {
-    Numeric
+    Numeric,
 }
 
 pub trait ProcessingNode: SourceNode + DestinationNode {
@@ -173,19 +176,31 @@ pub trait SourceNode {
     fn connect_dmx_input(&mut self, _input: &str, _channels: &[DmxChannel]) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
-    fn connect_numeric_input(&mut self, _input: &str, _channel: NumericChannel) -> ConnectionResult {
+    fn connect_numeric_input(
+        &mut self,
+        _input: &str,
+        _channel: NumericChannel,
+    ) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
     fn connect_bool_input(&mut self, _input: &str, _channel: BoolChannel) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
-    fn connect_trigger_input(&mut self, _input: &str, _channel: TriggerChannel) -> ConnectionResult {
+    fn connect_trigger_input(
+        &mut self,
+        _input: &str,
+        _channel: TriggerChannel,
+    ) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
     fn connect_clock_input(&mut self, _input: &str, _channel: ClockChannel) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
-    fn connect_video_input(&mut self, _input: &str, _source: &impl gstreamer::ElementExt) -> ConnectionResult {
+    fn connect_video_input(
+        &mut self,
+        _input: &str,
+        _source: &impl gstreamer::ElementExt,
+    ) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
     fn connect_pixel_input(&mut self, _input: &str, _channel: PixelChannel) -> ConnectionResult {
@@ -194,31 +209,66 @@ pub trait SourceNode {
 }
 
 pub trait DestinationNode {
-    fn connect_to_dmx_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_dmx_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_dmx_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_numeric_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_numeric_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_bool_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_bool_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_bool_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_trigger_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_trigger_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_trigger_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_clock_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_clock_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_clock_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_video_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_video_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_video_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
-    fn connect_to_pixel_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+    fn connect_to_pixel_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
         log::warn!("connect_to_pixel_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
@@ -236,7 +286,7 @@ pub enum ConnectionError {
         actual: NodeChannel,
     },
     #[error(transparent)]
-    Other(#[from] Box<dyn std::error::Error + Sync + Send>)
+    Other(#[from] Box<dyn std::error::Error + Sync + Send>),
 }
 
 impl From<glib::error::BoolError> for ConnectionError {
@@ -248,6 +298,6 @@ impl From<glib::error::BoolError> for ConnectionError {
 pub type ConnectionResult = Result<(), ConnectionError>;
 
 mod deps {
-    pub use crossbeam_channel::{Receiver, Sender, TryRecvError};
     pub use crossbeam_channel::unbounded as channel;
+    pub use crossbeam_channel::{Receiver, Sender, TryRecvError};
 }

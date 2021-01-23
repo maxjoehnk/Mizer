@@ -1,5 +1,5 @@
 use mizer_node_api::*;
-use rhai::{Engine, AST, Scope, Map};
+use rhai::{Engine, Map, Scope, AST};
 
 pub struct ScriptingNode<'a> {
     engine: Engine,
@@ -29,8 +29,7 @@ impl<'a> ScriptingNode<'a> {
 
 impl<'a> ProcessingNode for ScriptingNode<'a> {
     fn get_details(&self) -> NodeDetails {
-        NodeDetails::new("ScriptingNode")
-            .with_outputs(vec![NodeOutput::numeric("value")])
+        NodeDetails::new("ScriptingNode").with_outputs(vec![NodeOutput::numeric("value")])
     }
 
     fn process(&mut self) {
@@ -41,13 +40,16 @@ impl<'a> ProcessingNode for ScriptingNode<'a> {
         if let Some(input) = input {
             self.scope.set_value("input", input);
         }
-        match self.engine.call_fn::<_, f64>(&mut self.scope, &self.ast, "main", ()) {
+        match self
+            .engine
+            .call_fn::<_, f64>(&mut self.scope, &self.ast, "main", ())
+        {
             Ok(result) => {
                 for sender in &self.outputs {
                     sender.send(result);
                 }
-            },
-            Err(e) => eprintln!("{:?}", e)
+            }
+            Err(e) => eprintln!("{:?}", e),
         }
     }
 }
@@ -58,7 +60,12 @@ impl<'a> SourceNode for ScriptingNode<'a> {
     }
 }
 impl<'a> DestinationNode for ScriptingNode<'a> {
-    fn connect_to_numeric_input(&mut self, _output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(
+        &mut self,
+        _output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         let (sender, channel) = NumericChannel::new();
         node.connect_numeric_input(input, channel)?;
         self.outputs.push(sender);

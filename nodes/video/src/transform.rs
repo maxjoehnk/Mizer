@@ -1,5 +1,5 @@
-use gstreamer::{Element, ElementFactory};
 use gstreamer::prelude::*;
+use gstreamer::{Element, ElementFactory};
 
 use mizer_node_api::*;
 
@@ -66,9 +66,11 @@ impl ProcessingNode for VideoTransformNode {
             ("scale-y", &self.scale_y),
         ];
         for (prop, channel) in props {
-            if let Some(value) = channel.iter()
+            if let Some(value) = channel
+                .iter()
                 .filter_map(|channel| channel.recv_last().ok().flatten())
-                .last() {
+                .last()
+            {
                 self.element.set_property(prop, &(value as f32)).unwrap();
             }
         }
@@ -81,36 +83,36 @@ impl SourceNode for VideoTransformNode {
             "translate-x" => {
                 self.translate_x.push(channel);
                 Ok(())
-            },
+            }
             "translate-y" => {
                 self.translate_y.push(channel);
                 Ok(())
-            },
+            }
             "translate-z" => {
                 self.translate_z.push(channel);
                 Ok(())
-            },
+            }
             "scale-x" => {
                 self.scale_x.push(channel);
                 Ok(())
-            },
+            }
             "scale-y" => {
                 self.scale_y.push(channel);
                 Ok(())
-            },
+            }
             "rotate-x" => {
                 self.rotate_x.push(channel);
                 Ok(())
-            },
+            }
             "rotate-y" => {
                 self.rotate_y.push(channel);
                 Ok(())
-            },
+            }
             "rotate-z" => {
                 self.rotate_z.push(channel);
                 Ok(())
-            },
-            _ => Err(ConnectionError::InvalidInput)
+            }
+            _ => Err(ConnectionError::InvalidInput),
         }
     }
 
@@ -125,7 +127,12 @@ impl SourceNode for VideoTransformNode {
 }
 
 impl DestinationNode for VideoTransformNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_video_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.element)
         } else {

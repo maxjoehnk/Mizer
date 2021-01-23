@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use crate::*;
+use std::collections::HashMap;
 
 #[derive(Default)]
 pub struct TestNode {
@@ -20,7 +20,10 @@ impl SourceNode for TestNode {
     }
 
     fn connect_numeric_input(&mut self, input: &str, channel: NumericChannel) -> ConnectionResult {
-        self.numeric_channels.entry(input.to_string()).or_default().push(channel);
+        self.numeric_channels
+            .entry(input.to_string())
+            .or_default()
+            .push(channel);
         Ok(())
     }
 }

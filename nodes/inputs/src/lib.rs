@@ -32,7 +32,12 @@ impl ProcessingNode for FaderNode {
 }
 impl SourceNode for FaderNode {}
 impl DestinationNode for FaderNode {
-    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "value" {
             let (sender, channel) = NumericChannel::new();
             node.connect_numeric_input(input, channel)?;

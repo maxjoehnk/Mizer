@@ -1,5 +1,5 @@
-use std::f64::consts::PI;
 use serde::{Deserialize, Serialize};
+use std::f64::consts::PI;
 
 use mizer_node_api::*;
 
@@ -54,7 +54,7 @@ impl ProcessingNode for OscillatorNode {
             "max" => self.max = value,
             "min" => self.min = value,
             "offset" => self.offset = value,
-            _ => ()
+            _ => (),
         }
     }
 }
@@ -71,13 +71,18 @@ impl SourceNode for OscillatorNode {
 }
 
 impl DestinationNode for OscillatorNode {
-    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "value" {
             let (tx, channel) = NumericChannel::new();
             node.connect_numeric_input(input, channel)?;
             self.outputs.push(tx);
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
@@ -102,9 +107,16 @@ impl OscillatorNode {
                 let value = f64::sin(
                     (3f64 / 2f64) * PI + PI * ((beat + self.offset) * 2f64) * (1f64 / self.ratio),
                 ) * offset
-                    + offset + min;
+                    + offset
+                    + min;
                 let value = value.max(min).min(max);
-                log::trace!("min: {}, max: {}, offset: {}, result: {}", min, max, offset, value);
+                log::trace!(
+                    "min: {}, max: {}, offset: {}, result: {}",
+                    min,
+                    max,
+                    offset,
+                    value
+                );
                 value
             }
             OscillatorType::Triangle => {

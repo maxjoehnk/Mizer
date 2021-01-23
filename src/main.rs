@@ -8,11 +8,11 @@ use metrics_runtime::{exporters::HttpExporter, observers::PrometheusBuilder, Rec
 use mizer_project_files::Project;
 
 use crate::flags::Flags;
-use mizer_pipeline::Pipeline;
-use mizer_fixtures::library::FixtureLibrary;
-use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
-use mizer_fixtures::manager::FixtureManager;
 use anyhow::Context;
+use mizer_fixtures::library::FixtureLibrary;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
+use mizer_pipeline::Pipeline;
 
 mod flags;
 
@@ -30,13 +30,12 @@ fn main() -> anyhow::Result<()> {
 
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
-    ofl_provider.load("fixtures/open-fixture-library/.fixtures.json")
+    ofl_provider
+        .load("fixtures/open-fixture-library/.fixtures.json")
         .context("loading open fixture library")?;
     log::info!("Loading open fixture library...Done");
 
-    let fixture_library = FixtureLibrary::new(vec![
-        Box::new(ofl_provider)
-    ]);
+    let fixture_library = FixtureLibrary::new(vec![Box::new(ofl_provider)]);
 
     let mut fixture_manager = FixtureManager::new();
 
@@ -47,7 +46,8 @@ fn main() -> anyhow::Result<()> {
         let project = Project::load_file(&file)?;
         load_fixtures(&mut fixture_manager, &fixture_library, &project);
         projects.push(project.clone());
-        pipeline.load_project(project, &fixture_manager)
+        pipeline
+            .load_project(project, &fixture_manager)
             .context("loading project")?;
     }
     log::info!("Loading projects...Done");
@@ -75,12 +75,22 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-fn load_fixtures(fixture_manager: &mut FixtureManager, library: &FixtureLibrary, project: &Project) {
+fn load_fixtures(
+    fixture_manager: &mut FixtureManager,
+    library: &FixtureLibrary,
+    project: &Project,
+) {
     for fixture in &project.fixtures {
         let def = library.get_definition(&fixture.fixture);
         if let Some(def) = def {
-            fixture_manager.add_fixture(fixture.id.clone(), def, fixture.mode.clone(), fixture.channel, fixture.universe);
-        }else {
+            fixture_manager.add_fixture(
+                fixture.id.clone(),
+                def,
+                fixture.mode.clone(),
+                fixture.channel,
+                fixture.universe,
+            );
+        } else {
             log::warn!("No fixture definition for fixture id {}", fixture.fixture);
         }
     }
@@ -88,15 +98,20 @@ fn load_fixtures(fixture_manager: &mut FixtureManager, library: &FixtureLibrary,
 
 #[cfg(feature = "export_metrics")]
 fn setup_metrics(port: u16) {
-    let receiver = Receiver::builder().build().expect("failed to create metrics receiver");
+    let receiver = Receiver::builder()
+        .build()
+        .expect("failed to create metrics receiver");
     let controller = receiver.controller();
     receiver.install();
 
     std::thread::spawn(move || {
-        smol::run(HttpExporter::new(
-            controller,
-            PrometheusBuilder::new(),
-            format!("0.0.0.0:{}", port).parse().unwrap(),
-        ).async_run())
+        smol::run(
+            HttpExporter::new(
+                controller,
+                PrometheusBuilder::new(),
+                format!("0.0.0.0:{}", port).parse().unwrap(),
+            )
+            .async_run(),
+        )
     });
 }

@@ -1,7 +1,7 @@
-use mizer_node_api::*;
-use gstreamer::{Element, ElementFactory, DebugGraphDetails};
-use gstreamer::prelude::*;
 use crate::PIPELINE;
+use gstreamer::prelude::*;
+use gstreamer::{DebugGraphDetails, Element, ElementFactory};
+use mizer_node_api::*;
 
 pub struct VideoFileNode {
     file: String,
@@ -29,7 +29,9 @@ impl VideoFileNode {
         pipeline.add(&decoder).unwrap();
         pipeline.add(&upload).unwrap();
         pipeline.add(&convert).unwrap();
-        file_src.set_property("location", &glib::Value::from(&file)).unwrap();
+        file_src
+            .set_property("location", &glib::Value::from(&file))
+            .unwrap();
         file_src.link(&decoder).unwrap();
         upload.link(&convert).unwrap();
 
@@ -60,7 +62,12 @@ impl ProcessingNode for VideoFileNode {
 }
 impl SourceNode for VideoFileNode {}
 impl DestinationNode for VideoFileNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_video_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.convert)
         } else {

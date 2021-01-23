@@ -1,10 +1,10 @@
-use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_fixtures::fixture::*;
+use mizer_fixtures::library::FixtureLibraryProvider;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 pub struct OpenFixtureLibraryProvider {
-    definitions: HashMap<String, Vec<OpenFixtureLibraryFixtureDefinition>>
+    definitions: HashMap<String, Vec<OpenFixtureLibraryFixtureDefinition>>,
 }
 
 impl OpenFixtureLibraryProvider {
@@ -26,12 +26,17 @@ impl OpenFixtureLibraryProvider {
         Ok(())
     }
 
-    fn add_fixture_definition(&mut self, manufacturer: &str, definition: OpenFixtureLibraryFixtureDefinition) {
+    fn add_fixture_definition(
+        &mut self,
+        manufacturer: &str,
+        definition: OpenFixtureLibraryFixtureDefinition,
+    ) {
         if let Some(definitions) = self.definitions.get_mut(manufacturer) {
             definitions.push(definition);
-        }else {
+        } else {
             let definitions = vec![definition];
-            self.definitions.insert(manufacturer.to_string(), definitions);
+            self.definitions
+                .insert(manufacturer.to_string(), definitions);
         }
     }
 }
@@ -43,11 +48,12 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
         }
         let id_parts = id.split(":").collect::<Vec<_>>();
         if let Some(definitions) = self.definitions.get(id_parts[1]) {
-            definitions.iter()
+            definitions
+                .iter()
                 .find(|definition| normalize_model(&definition.name) == id_parts[2])
                 .cloned()
                 .map(FixtureDefinition::from)
-        }else {
+        } else {
             None
         }
     }
@@ -59,7 +65,7 @@ fn normalize_model(model: &str) -> String {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct AgLibraryFile {
-    pub fixtures: Vec<OpenFixtureLibraryFixtureDefinition>
+    pub fixtures: Vec<OpenFixtureLibraryFixtureDefinition>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -84,9 +90,7 @@ pub struct FixtureManufacturer {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Channel {
-
-}
+pub struct Channel {}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -101,19 +105,23 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
         FixtureDefinition {
             name: def.name,
             manufacturer: def.manufacturer.name,
-            modes: def.modes.into_iter().map(|mode| {
-                FixtureMode {
+            modes: def
+                .modes
+                .into_iter()
+                .map(|mode| FixtureMode {
                     name: mode.name,
-                    channels: mode.channels.into_iter()
+                    channels: mode
+                        .channels
+                        .into_iter()
                         .filter_map(|channel| channel)
                         .enumerate()
                         .map(|(i, channel)| FixtureChannelDefinition {
                             name: channel,
                             resolution: ChannelResolution::Coarse(i as u8),
                         })
-                        .collect()
-                }
-            }).collect()
+                        .collect(),
+                })
+                .collect(),
         }
     }
 }

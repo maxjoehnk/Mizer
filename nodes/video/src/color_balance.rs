@@ -1,7 +1,7 @@
-use mizer_node_api::*;
-use gstreamer::{Element, ElementFactory};
-use gstreamer::prelude::*;
 use crate::PIPELINE;
+use gstreamer::prelude::*;
+use gstreamer::{Element, ElementFactory};
+use mizer_node_api::*;
 
 pub struct VideoColorBalanceNode {
     node: Element,
@@ -13,9 +13,7 @@ impl VideoColorBalanceNode {
         let node = ElementFactory::make("glcolorbalance", None).unwrap();
         pipeline.add(&node).unwrap();
 
-        VideoColorBalanceNode {
-            node
-        }
+        VideoColorBalanceNode { node }
     }
 }
 
@@ -59,7 +57,12 @@ impl SourceNode for VideoColorBalanceNode {
     }
 }
 impl DestinationNode for VideoColorBalanceNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_video_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.node)
         } else {

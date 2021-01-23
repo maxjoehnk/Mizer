@@ -55,10 +55,7 @@ impl ProcessingNode for ClockNode {
         }
         self.last_tick = tick;
 
-        let clock_beat = ClockBeat {
-            delta,
-            downbeat
-        };
+        let clock_beat = ClockBeat { delta, downbeat };
         for output in &self.outputs {
             output.send(clock_beat);
         }
@@ -74,7 +71,12 @@ impl ProcessingNode for ClockNode {
 impl SourceNode for ClockNode {}
 
 impl DestinationNode for ClockNode {
-    fn connect_to_clock_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_clock_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "clock" {
             let (tx, channel) = ClockChannel::new();
             node.connect_clock_input(input, channel)?;

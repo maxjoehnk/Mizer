@@ -3,14 +3,15 @@ use std::net::{SocketAddrV4, UdpSocket};
 use std::sync::Mutex;
 use std::thread;
 
-use crossbeam_channel::{Receiver, unbounded};
+use crossbeam_channel::{unbounded, Receiver};
 use lazy_static::lazy_static;
 use rosc::{OscMessage, OscPacket, OscType};
 
 use mizer_node_api::*;
 
 lazy_static! {
-    static ref OSC_THREADS: Mutex<HashMap<SocketAddrV4, Receiver<OscPacket>>> = Mutex::new(HashMap::new());
+    static ref OSC_THREADS: Mutex<HashMap<SocketAddrV4, Receiver<OscPacket>>> =
+        Mutex::new(HashMap::new());
 }
 
 fn spawn_osc_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
@@ -23,8 +24,8 @@ fn spawn_osc_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
                 Ok((size, _)) => {
                     let msg = rosc::decoder::decode(&buffer[..size]).unwrap();
                     tx.send(msg);
-                },
-                Err(e) => println!("{:?}", e)
+                }
+                Err(e) => println!("{:?}", e),
             }
         }
     });
@@ -67,7 +68,7 @@ impl OscInputNode {
         match packet {
             OscPacket::Message(msg) => {
                 self.handle_msg(msg);
-            },
+            }
             OscPacket::Bundle(bundle) => {
                 for packet in bundle.content {
                     self.handle_packet(packet);
@@ -84,7 +85,7 @@ impl OscInputNode {
                     for tx in &self.numeric_connections {
                         tx.send(*float as f64);
                     }
-                },
+                }
                 _ => {}
             }
         }
@@ -93,8 +94,7 @@ impl OscInputNode {
 
 impl ProcessingNode for OscInputNode {
     fn get_details(&self) -> NodeDetails {
-        NodeDetails::new("OscInputNode")
-            .with_outputs(vec![NodeOutput::numeric("value")])
+        NodeDetails::new("OscInputNode").with_outputs(vec![NodeOutput::numeric("value")])
     }
 
     fn process(&mut self) {
@@ -107,7 +107,12 @@ impl ProcessingNode for OscInputNode {
 impl SourceNode for OscInputNode {}
 
 impl DestinationNode for OscInputNode {
-    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "value" {
             let (tx, channel) = NumericChannel::new();
             node.connect_numeric_input(input, channel)?;

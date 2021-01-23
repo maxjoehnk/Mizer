@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use mizer_node_api::*;
+use serde::{Deserialize, Serialize};
 
 pub struct SequenceNode {
     clock: ClockChannel,
@@ -13,7 +13,7 @@ pub struct SequenceNode {
 }
 
 impl SequenceNode {
-    pub fn new(steps: Vec<SequenceStep>, default_clock: ClockChannel) -> Self{
+    pub fn new(steps: Vec<SequenceStep>, default_clock: ClockChannel) -> Self {
         SequenceNode {
             clock: default_clock,
             speed_channels: Default::default(),
@@ -52,13 +52,17 @@ impl SequenceNode {
         while self.beat > 4. {
             self.beat -= 4.;
         }
-        let first_step = self.steps.iter()
+        let first_step = self
+            .steps
+            .iter()
             .filter(|step| step.tick < self.beat)
             .last()
             .or_else(|| self.steps.last())
             .cloned()
             .unwrap();
-        let last_step = self.steps.iter()
+        let last_step = self
+            .steps
+            .iter()
             .find(|step| step.tick >= self.beat)
             .or_else(|| self.steps.first())
             .cloned()
@@ -70,7 +74,7 @@ impl SequenceNode {
         let time = self.beat - first_step.tick;
         let duration = if first_step.tick <= last_step.tick {
             last_step.tick - first_step.tick
-        }else {
+        } else {
             (last_step.tick + 4.) - first_step.tick
         };
 
@@ -93,12 +97,10 @@ impl ProcessingNode for SequenceNode {
                 NodeInput::numeric("speed"),
                 NodeInput::new("clock", NodeChannel::Clock),
                 // TODO: do we actually need this or can this be replaced with another node and a reset trigger?
-                NodeInput::new("active", NodeChannel::Boolean)
+                NodeInput::new("active", NodeChannel::Boolean),
             ])
             .with_outputs(vec![NodeOutput::numeric("value")])
-            .with_properties(vec![
-                NodeProperty::numeric("speed")
-            ])
+            .with_properties(vec![NodeProperty::numeric("speed")])
     }
 
     fn process(&mut self) {
@@ -119,7 +121,7 @@ impl SourceNode for SequenceNode {
         if input == "speed" {
             self.speed_channels.push(channel);
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidInput)
         }
     }
@@ -128,18 +130,23 @@ impl SourceNode for SequenceNode {
         if input == "clock" {
             self.clock = channel;
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidInput)
         }
     }
 }
 impl DestinationNode for SequenceNode {
-    fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_numeric_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "value" {
             let (sender, channel) = NumericChannel::new();
             self.outputs.push(sender);
             node.connect_numeric_input(input, channel)
-        }else {
+        } else {
             Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
@@ -150,5 +157,5 @@ pub struct SequenceStep {
     pub tick: f64,
     pub value: f64,
     #[serde(default)]
-    pub hold: bool
+    pub hold: bool,
 }

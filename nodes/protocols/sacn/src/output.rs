@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use sacn::DmxSource;
+use std::collections::HashMap;
 
 use mizer_node_api::*;
 
@@ -37,9 +37,9 @@ impl StreamingAcnOutputNode {
                             }
                         }
                     }
-                },
+                }
                 Ok(None) => continue,
-                Err(e) => println!("{:?}", e)
+                Err(e) => println!("{:?}", e),
             }
         }
     }
@@ -68,8 +68,7 @@ impl DestinationNode for StreamingAcnOutputNode {}
 
 impl ProcessingNode for StreamingAcnOutputNode {
     fn get_details(&self) -> NodeDetails {
-        NodeDetails::new("StreamingAcnOutputNode")
-            .with_inputs(vec![NodeInput::dmx("dmx")])
+        NodeDetails::new("StreamingAcnOutputNode").with_inputs(vec![NodeInput::dmx("dmx")])
     }
 
     fn process(&mut self) {

@@ -1,5 +1,5 @@
-use mizer_node_api::*;
 use mizer_fixtures::fixture::Fixture;
+use mizer_node_api::*;
 use std::collections::HashMap;
 
 pub struct FixtureNode {
@@ -13,7 +13,7 @@ impl FixtureNode {
         let mut node = FixtureNode {
             fixture,
             outputs: Default::default(),
-            inputs: Default::default()
+            inputs: Default::default(),
         };
         for input in node.get_inputs() {
             node.inputs.insert(input.name, Default::default());
@@ -22,7 +22,8 @@ impl FixtureNode {
     }
 
     fn get_inputs(&self) -> Vec<NodeInput> {
-        self.fixture.get_channels()
+        self.fixture
+            .get_channels()
             .into_iter()
             .map(|channel| NodeInput::numeric(channel.name))
             .collect()
@@ -56,14 +57,19 @@ impl SourceNode for FixtureNode {
         if let Some(channels) = self.inputs.get_mut(input) {
             channels.push(channel);
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidInput)
         }
     }
 }
 
 impl DestinationNode for FixtureNode {
-    fn connect_to_dmx_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_dmx_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "output" {
             let (tx, channel) = DmxChannel::batched(self.fixture.universe, 1);
             node.connect_dmx_input(input, &[channel])?;

@@ -1,7 +1,7 @@
 use crate::protos::FixturesApi;
+use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use mizer_fixtures::manager::FixtureManager;
-use grpc::{ServerHandlerContext, ServerResponseUnarySink, ServerRequestSingle};
-use mizer_proto::fixtures::{GetFixturesRequest, Fixtures, Fixture};
+use mizer_proto::fixtures::{Fixture, Fixtures, GetFixturesRequest};
 
 pub struct FixturesApiImpl {
     fixture_manager: FixtureManager,
@@ -9,14 +9,17 @@ pub struct FixturesApiImpl {
 
 impl FixturesApiImpl {
     pub fn new(fixture_manager: FixtureManager) -> Self {
-        FixturesApiImpl {
-            fixture_manager
-        }
+        FixturesApiImpl { fixture_manager }
     }
 }
 
 impl FixturesApi for FixturesApiImpl {
-    fn get_fixtures(&self, _: ServerHandlerContext, req: ServerRequestSingle<GetFixturesRequest>, resp: ServerResponseUnarySink<Fixtures>) -> grpc::Result<()> {
+    fn get_fixtures(
+        &self,
+        _: ServerHandlerContext,
+        req: ServerRequestSingle<GetFixturesRequest>,
+        resp: ServerResponseUnarySink<Fixtures>,
+    ) -> grpc::Result<()> {
         let mut fixtures = Fixtures::new();
         for fixture in self.fixture_manager.get_fixtures() {
             let fixture_model = Fixture {

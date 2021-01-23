@@ -1,5 +1,5 @@
-use crate::deps::{Receiver, channel as new_channel, TryRecvError};
-use crate::{GenericSender, GenericChannel};
+use crate::deps::{channel as new_channel, Receiver, TryRecvError};
+use crate::{GenericChannel, GenericSender};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
@@ -7,11 +7,11 @@ pub enum DmxChannel {
     Single {
         channel: u16,
         universe: u16,
-        receiver: Receiver<u8>
+        receiver: Receiver<u8>,
     },
     Batch {
-        universes: HashMap<u16, GenericChannel<Vec<u8>>>
-    }
+        universes: HashMap<u16, GenericChannel<Vec<u8>>>,
+    },
 }
 
 pub type SingleDmxSender = GenericSender<u8>;
@@ -36,9 +36,7 @@ impl DmxChannel {
             senders.push(tx);
             universes.insert(start_universe + i, rx);
         }
-        let channel = DmxChannel::Batch {
-            universes
-        };
+        let channel = DmxChannel::Batch { universes };
         (senders, channel)
     }
 
@@ -47,35 +45,30 @@ impl DmxChannel {
             DmxChannel::Single {
                 receiver,
                 universe,
-                channel
+                channel,
             } => {
                 let mut result = HashMap::new();
                 let mut channels = Vec::new();
                 for i in 0..512 {
                     if *channel - 1 == i {
                         channels.push(receiver.try_recv().ok());
-                    }else {
+                    } else {
                         channels.push(None);
                     }
                 }
                 result.insert(*universe, channels);
                 Ok(Some(result))
-            },
-            DmxChannel::Batch {
-                universes
-            } => {
+            }
+            DmxChannel::Batch { universes } => {
                 let mut result = HashMap::new();
                 for (universe, channel) in universes {
                     let channels = channel.recv_last()?;
                     if let Some(channels) = channels {
-                        let channels = channels.into_iter()
-                            .map(Option::Some)
-                            .collect();
+                        let channels = channels.into_iter().map(Option::Some).collect();
                         result.insert(*universe, channels);
-                    }else {
-                        continue
+                    } else {
+                        continue;
                     }
-
                 }
                 if universes.is_empty() {
                     Ok(None)

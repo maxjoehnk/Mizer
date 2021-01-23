@@ -1,8 +1,8 @@
-use mizer_node_api::*;
-use gstreamer::{Element, ElementFactory};
-use gstreamer::prelude::*;
-use serde::{Deserialize, Serialize};
 use crate::PIPELINE;
+use gstreamer::prelude::*;
+use gstreamer::{Element, ElementFactory};
+use mizer_node_api::*;
+use serde::{Deserialize, Serialize};
 
 pub struct VideoEffectNode {
     effect_type: VideoEffectType,
@@ -47,7 +47,7 @@ pub enum VideoEffectType {
     /// Blur with 9x9 separable convolution Effect
     Blur,
     /// Laplacian Convolution Demo Effect
-    Laplacian
+    Laplacian,
 }
 
 impl std::fmt::Display for VideoEffectType {
@@ -65,7 +65,7 @@ impl VideoEffectNode {
 
         VideoEffectNode {
             effect,
-            effect_type
+            effect_type,
         }
     }
 }
@@ -88,7 +88,12 @@ impl SourceNode for VideoEffectNode {
     }
 }
 impl DestinationNode for VideoEffectNode {
-    fn connect_to_video_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_video_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "output" {
             node.connect_video_input(input, &self.effect)
         } else {

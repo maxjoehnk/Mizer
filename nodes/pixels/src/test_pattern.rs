@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use mizer_node_api::*;
+use serde::{Deserialize, Serialize};
 
 pub struct PixelPatternGeneratorNode {
     pattern: Pattern,
@@ -10,14 +10,11 @@ pub struct PixelPatternGeneratorNode {
 #[serde(rename_all = "kebab-case")]
 pub enum Pattern {
     RgbIterate,
-    RgbSnake
+    RgbSnake,
 }
 
 enum PatternState {
-    Iterate {
-        index: usize,
-        color: Color
-    }
+    Iterate { index: usize, color: Color },
 }
 
 impl PixelPatternGeneratorNode {
@@ -52,7 +49,7 @@ impl ProcessingNode for PixelPatternGeneratorNode {
 
                     pixels[*index] = *color;
                     *index += 1;
-                },
+                }
                 _ => {}
             }
             sender.send(pixels.clone());
@@ -60,18 +57,28 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     }
 }
 
-impl SourceNode for PixelPatternGeneratorNode {
-
-}
+impl SourceNode for PixelPatternGeneratorNode {}
 
 impl DestinationNode for PixelPatternGeneratorNode {
-    fn connect_to_pixel_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+    fn connect_to_pixel_input(
+        &mut self,
+        output: &str,
+        node: &mut impl SourceNode,
+        input: &str,
+    ) -> ConnectionResult {
         if output == "output" {
             let (sender, channel) = PixelChannel::new();
             node.connect_pixel_input(input, channel)?;
-            self.sender.push((sender, Vec::new(), PatternState::Iterate { index: 0, color: Color::new(255, 0, 0) }));
+            self.sender.push((
+                sender,
+                Vec::new(),
+                PatternState::Iterate {
+                    index: 0,
+                    color: Color::new(255, 0, 0),
+                },
+            ));
             Ok(())
-        }else {
+        } else {
             Err(ConnectionError::InvalidOutput(output.to_string()))
         }
     }
@@ -86,7 +93,7 @@ fn next_color(color: &mut Color) {
         (255, 255, 0) => (0, 255, 255),
         (0, 255, 255) => (255, 255, 255),
         (255, 255, 255) => (0, 0, 0),
-        _ => unreachable!()
+        _ => unreachable!(),
     };
     color.r = r;
     color.g = g;

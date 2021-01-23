@@ -1,6 +1,6 @@
-use std::{net::ToSocketAddrs, net::UdpSocket};
 use std::collections::HashMap;
 use std::convert::TryFrom;
+use std::{net::ToSocketAddrs, net::UdpSocket};
 
 use mizer_node_api::*;
 
@@ -46,9 +46,9 @@ impl ArtnetOutputNode {
                             }
                         }
                     }
-                },
+                }
                 Ok(None) => continue,
-                Err(e) => println!("{:?}", e)
+                Err(e) => println!("{:?}", e),
             }
         }
     }
@@ -71,9 +71,7 @@ impl ArtnetOutputNode {
                 .into_buffer()
                 .unwrap();
 
-            self.socket
-                .send_to(&msg, broadcast_addr)
-                .unwrap();
+            self.socket.send_to(&msg, broadcast_addr).unwrap();
         }
     }
 }
@@ -95,8 +93,7 @@ impl DestinationNode for ArtnetOutputNode {}
 
 impl ProcessingNode for ArtnetOutputNode {
     fn get_details(&self) -> NodeDetails {
-        NodeDetails::new("ArtnetOutputNode")
-            .with_inputs(vec![NodeInput::dmx("dmx")])
+        NodeDetails::new("ArtnetOutputNode").with_inputs(vec![NodeInput::dmx("dmx")])
     }
 
     fn process(&mut self) {

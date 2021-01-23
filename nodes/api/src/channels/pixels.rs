@@ -11,7 +11,7 @@ pub struct PixelChannel {
 pub struct PixelSender {
     back_channel: GenericChannel<(u64, u64)>,
     sender: GenericSender<Pixels>,
-    dimensions: (u64, u64)
+    dimensions: (u64, u64),
 }
 
 impl PixelChannel {
@@ -21,7 +21,7 @@ impl PixelChannel {
 
         let channel = PixelChannel {
             back_channel: back_channel.0,
-            receiver: pixels.1
+            receiver: pixels.1,
         };
         let sender = PixelSender {
             back_channel: back_channel.1,

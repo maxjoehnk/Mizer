@@ -1,5 +1,5 @@
-use gstreamer::{DebugGraphDetails, Element, ElementFactory};
 use gstreamer::prelude::*;
+use gstreamer::{DebugGraphDetails, Element, ElementFactory};
 
 use mizer_node_api::*;
 
@@ -16,9 +16,7 @@ impl VideoOutputNode {
         pipeline.add(&sink).unwrap();
         gstreamer::debug_bin_to_dot_file(&*pipeline, DebugGraphDetails::ALL, "output");
 
-        VideoOutputNode {
-            sink,
-        }
+        VideoOutputNode { sink }
     }
 }
 
@@ -46,4 +44,3 @@ impl SourceNode for VideoOutputNode {
     }
 }
 impl DestinationNode for VideoOutputNode {}
-

@@ -1,5 +1,5 @@
+use bytes::{BufMut, BytesMut};
 use mizer_node_api::Color;
-use bytes::{BytesMut, BufMut};
 
 const SET_PIXEL_COLORS: u8 = 0x00;
 

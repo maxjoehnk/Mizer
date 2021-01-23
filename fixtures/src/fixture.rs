@@ -11,7 +11,13 @@ pub struct Fixture {
 }
 
 impl Fixture {
-    pub fn new(fixture_id: String, definition: FixtureDefinition, selected_mode: Option<String>, channel: u8, universe: Option<u16>) -> Self {
+    pub fn new(
+        fixture_id: String,
+        definition: FixtureDefinition,
+        selected_mode: Option<String>,
+        channel: u8,
+        universe: Option<u16>,
+    ) -> Self {
         Fixture {
             id: fixture_id,
             current_mode: get_current_mode(&definition, selected_mode),
@@ -34,13 +40,18 @@ impl Fixture {
         let mut buffer = [0; 255];
 
         for (channel_name, value) in self.channel_values.iter() {
-            if let Some(channel) = self.current_mode.channels.iter().find(|channel| &channel.name == channel_name) {
+            if let Some(channel) = self
+                .current_mode
+                .channels
+                .iter()
+                .find(|channel| &channel.name == channel_name)
+            {
                 match channel.resolution {
                     ChannelResolution::Coarse(coarse) => {
                         let channel = (self.channel + coarse - 1) as usize;
                         buffer[channel] = convert_value(*value);
                     }
-                    _ => unimplemented!("only coarse is implemented right now")
+                    _ => unimplemented!("only coarse is implemented right now"),
                 }
             }
         }
@@ -58,11 +69,13 @@ fn convert_value(input: f64) -> u8 {
 
 fn get_current_mode(definition: &FixtureDefinition, selected_mode: Option<String>) -> FixtureMode {
     if let Some(selected_mode) = selected_mode {
-        definition.modes.iter()
+        definition
+            .modes
+            .iter()
             .find(|mode| mode.name == selected_mode)
             .cloned()
             .expect("invalid fixture mode")
-    }else {
+    } else {
         definition.modes[0].clone()
     }
 }
@@ -99,5 +112,5 @@ pub enum ChannelResolution {
     /// 24 Bit
     ///
     /// coarse, fine, finest
-    Finest(u8, u8, u8)
+    Finest(u8, u8, u8),
 }

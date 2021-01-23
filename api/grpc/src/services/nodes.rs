@@ -1,22 +1,27 @@
-use mizer_project_files::{Project, NodeConfig};
 use crate::protos::NodesApi;
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
-use mizer_proto::nodes::{NodesRequest, Nodes, Node, NodeConnection, Port, Node_NodeType, ChannelProtocol};
+use mizer_project_files::{NodeConfig, Project};
+use mizer_proto::nodes::{
+    ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
+};
 
 pub struct NodesApiImpl {
-    projects: Vec<Project>
+    projects: Vec<Project>,
 }
 
 impl NodesApiImpl {
     pub fn new(projects: Vec<Project>) -> Self {
-        NodesApiImpl {
-            projects
-        }
+        NodesApiImpl { projects }
     }
 }
 
 impl NodesApi for NodesApiImpl {
-    fn get_nodes(&self, _: ServerHandlerContext, req: ServerRequestSingle<NodesRequest>, resp: ServerResponseUnarySink<Nodes>) -> grpc::Result<()> {
+    fn get_nodes(
+        &self,
+        _: ServerHandlerContext,
+        req: ServerRequestSingle<NodesRequest>,
+        resp: ServerResponseUnarySink<Nodes>,
+    ) -> grpc::Result<()> {
         let mut res = Nodes::new();
         for project in &self.projects {
             for project_node in &project.nodes {

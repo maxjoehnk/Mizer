@@ -176,6 +176,9 @@ pub trait SourceNode {
     fn connect_numeric_input(&mut self, _input: &str, _channel: NumericChannel) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
+    fn connect_bool_input(&mut self, _input: &str, _channel: BoolChannel) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
     fn connect_trigger_input(&mut self, _input: &str, _channel: TriggerChannel) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
@@ -197,6 +200,10 @@ pub trait DestinationNode {
     }
     fn connect_to_numeric_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
         log::warn!("connect_to_numeric_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
+    }
+    fn connect_to_bool_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {
+        log::warn!("connect_to_bool_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
     fn connect_to_trigger_input(&mut self, output: &str, _node: &mut impl SourceNode, _input: &str) -> ConnectionResult {

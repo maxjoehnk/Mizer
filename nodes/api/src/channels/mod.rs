@@ -1,3 +1,4 @@
+mod boolean;
 mod clock;
 mod color;
 mod dmx;
@@ -6,6 +7,7 @@ mod pixels;
 mod timecode;
 mod trigger;
 
+pub use self::boolean::*;
 pub use self::clock::*;
 pub use self::color::*;
 pub use self::dmx::*;

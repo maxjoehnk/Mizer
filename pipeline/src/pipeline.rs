@@ -37,6 +37,7 @@ impl<'a> Pipeline<'a> {
             match lhs.get_details().get_output_type(&channel.from_channel) {
                 Some(NodeChannel::Dmx) => lhs.connect_to_dmx_input(&channel.from_channel, rhs, &channel.to_channel).context(context)?,
                 Some(NodeChannel::Numeric) => lhs.connect_to_numeric_input(&channel.from_channel, rhs, &channel.to_channel).context(context)?,
+                Some(NodeChannel::Boolean) => lhs.connect_to_bool_input(&channel.from_channel, rhs, &channel.to_channel).context(context)?,
                 Some(NodeChannel::Trigger) => lhs.connect_to_trigger_input(&channel.from_channel, rhs, &channel.to_channel).context(context)?,
                 Some(NodeChannel::Clock) => lhs.connect_to_clock_input(&channel.from_channel, rhs, &channel.to_channel).context(context)?,
                 Some(NodeChannel::Video) => lhs.connect_to_video_input(&channel.from_channel, rhs, &channel.to_channel).context(context)?,

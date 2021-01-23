@@ -4,6 +4,7 @@ use mizer_node_api::*;
 pub struct SequenceNode {
     clock: ClockChannel,
     speed_channels: Vec<NumericChannel>,
+    active_channels: Vec<BoolChannel>,
     outputs: Vec<NumericSender>,
     steps: Vec<SequenceStep>,
     beat: f64,
@@ -16,6 +17,7 @@ impl SequenceNode {
         SequenceNode {
             clock: default_clock,
             speed_channels: Default::default(),
+            active_channels: Default::default(),
             outputs: Default::default(),
             steps,
             beat: 0f64,
@@ -34,6 +36,14 @@ impl SequenceNode {
         for channel in &self.speed_channels {
             if let Some(speed) = channel.recv_last().unwrap() {
                 self.speed = speed;
+            }
+        }
+    }
+
+    fn apply_active_links(&mut self) {
+        for channel in &self.active_channels {
+            if let Some(active) = channel.recv_last().unwrap() {
+                self.active = active;
             }
         }
     }
@@ -82,11 +92,11 @@ impl ProcessingNode for SequenceNode {
             .with_inputs(vec![
                 NodeInput::numeric("speed"),
                 NodeInput::new("clock", NodeChannel::Clock),
+                // TODO: do we actually need this or can this be replaced with another node and a reset trigger?
                 NodeInput::new("active", NodeChannel::Boolean)
             ])
             .with_outputs(vec![NodeOutput::numeric("value")])
             .with_properties(vec![
-                // NodeProperty::new("active", PropertyType::Bool),
                 NodeProperty::numeric("speed")
             ])
     }
@@ -97,6 +107,7 @@ impl ProcessingNode for SequenceNode {
         }
         self.apply_speed_links();
         self.apply_clock_link();
+        self.apply_active_links();
         let value = self.tick();
 
         self.send(value);

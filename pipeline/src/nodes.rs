@@ -94,6 +94,12 @@ macro_rules! derive_source {
             }
         }
 
+        fn connect_bool_input(&mut self, input: &str, channel: BoolChannel) -> ConnectionResult {
+            match self {
+                $($i(node) => node.connect_bool_input(input, channel),)*
+            }
+        }
+
         fn connect_trigger_input(&mut self, input: &str, channel: TriggerChannel) -> ConnectionResult {
             match self {
                 $($i(node) => node.connect_trigger_input(input, channel),)*
@@ -131,6 +137,12 @@ macro_rules! derive_destination {
         fn connect_to_numeric_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
             match self {
                 $($i(this) => this.connect_to_numeric_input(output, node, input),)*
+            }
+        }
+
+        fn connect_to_bool_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+            match self {
+                $($i(this) => this.connect_to_bool_input(output, node, input),)*
             }
         }
 

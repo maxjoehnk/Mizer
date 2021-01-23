@@ -71,14 +71,23 @@ impl NodesApi for NodesApiImpl {
 
 fn get_node_type(node: &mizer_project_files::Node) -> Node_NodeType {
     match &node.config {
-        NodeConfig::ArtnetOutput { .. } => Node_NodeType::ArtnetOutput,
+        NodeConfig::Fader { .. } => Node_NodeType::Fader,
         NodeConfig::ConvertToDmx { .. } => Node_NodeType::ConvertToDmx,
+        NodeConfig::ArtnetOutput { .. } => Node_NodeType::ArtnetOutput,
+        NodeConfig::SacnOutput { .. } => Node_NodeType::SacnOutput,
         NodeConfig::Oscillator { .. } => Node_NodeType::Oscillator,
         NodeConfig::Clock { .. } => Node_NodeType::Clock,
         NodeConfig::OscInput { .. } => Node_NodeType::OscInput,
-        NodeConfig::Script(_) => Node_NodeType::Script,
-        NodeConfig::SacnOutput { .. } => Node_NodeType::SacnOutput,
+        NodeConfig::VideoFile { .. } => Node_NodeType::VideoFile,
+        NodeConfig::VideoOutput { .. } => Node_NodeType::VideoOutput,
+        NodeConfig::VideoEffect { .. } => Node_NodeType::VideoEffect,
+        NodeConfig::VideoColorBalance { .. } => Node_NodeType::VideoColorBalance,
+        NodeConfig::VideoTransform { .. } => Node_NodeType::VideoTransform,
+        NodeConfig::Script { .. } => Node_NodeType::Script,
+        NodeConfig::PixelDmx { .. } => Node_NodeType::PixelToDmx,
+        NodeConfig::PixelPattern { .. } => Node_NodeType::PixelPattern,
+        NodeConfig::OpcOutput { .. } => Node_NodeType::OpcOutput,
         NodeConfig::Fixture { .. } => Node_NodeType::Fixture,
-        config => unimplemented!("{:?}", config)
+        NodeConfig::Sequence { .. } => Node_NodeType::Sequence,
     }
 }

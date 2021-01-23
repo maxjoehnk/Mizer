@@ -23,14 +23,24 @@ message NodeConnection {
 
 message Node {
   enum NodeType {
-    ArtnetOutput = 0;
+    Fader = 0;
     ConvertToDmx = 1;
-    Oscillator = 2;
-    Clock = 3;
-    OscInput = 4;
-    Script = 5;
-    SacnOutput = 6;
-    Fixture = 7;
+    ArtnetOutput = 2;
+    SacnOutput = 3;
+    Oscillator = 4;
+    Clock = 5;
+    OscInput = 6;
+    VideoFile = 7;
+    VideoOutput = 8;
+    VideoEffect = 9;
+    VideoColorBalance = 10;
+    VideoTransform = 11;
+    Script = 12;
+    PixelToDmx = 13;
+    PixelPattern = 14;
+    OpcOutput = 15;
+    Fixture = 16;
+    Sequence = 17;
   }
 
   NodeType type = 1;

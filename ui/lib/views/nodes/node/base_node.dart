@@ -3,14 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/node/artnet_output.dart';
-import 'package:mizer/views/nodes/node/clock.dart';
-import 'package:mizer/views/nodes/node/convert_to_dmx.dart';
-import 'package:mizer/views/nodes/node/fixture.dart';
-import 'package:mizer/views/nodes/node/osc_input.dart';
-import 'package:mizer/views/nodes/node/oscillator.dart';
-import 'package:mizer/views/nodes/node/sacn_output.dart';
-import 'package:mizer/views/nodes/node/script.dart';
 
 class BaseNode extends StatelessWidget {
   final Node node;
@@ -134,22 +126,6 @@ class NodePort extends StatelessWidget {
 
 Widget getChildForNode(Node node) {
   switch (node.type) {
-    case Node_NodeType.ArtnetOutput:
-      return ArtnetOutputNode(node);
-    case Node_NodeType.SacnOutput:
-      return SacnOutputNode(node);
-    case Node_NodeType.ConvertToDmx:
-      return ConvertToDmxNode(node);
-    case Node_NodeType.Oscillator:
-      return OscillatorNode(node);
-    case Node_NodeType.Clock:
-      return ClockNode(node);
-    case Node_NodeType.OscInput:
-      return OscInputNode(node);
-    case Node_NodeType.Script:
-      return ScriptNode(node);
-    case Node_NodeType.Fixture:
-      return FixtureNode(node);
     default:
       log("no child for node type ${node.type.name}");
       return Container();

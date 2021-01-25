@@ -130,6 +130,8 @@ impl NodeBuilder for mizer_project_files::Node {
             NodeConfig::Sequence { steps } => {
                 SequenceNode::new(steps, default_clock.get_clock_channel()).into()
             }
+            NodeConfig::MidiInput { .. } => MidiInputNode::new().into(),
+            NodeConfig::MidiOutput { .. } => MidiOutputNode::new().into()
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

@@ -21,6 +21,8 @@ members = [
     "nodes/video",
     "pipeline",
     "projects",
+    "protocols/midi",
+    "protocols/midi/device-profiles",
     "session"
 ]
 

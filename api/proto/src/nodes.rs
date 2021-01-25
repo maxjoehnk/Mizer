@@ -1100,6 +1100,8 @@ pub enum Node_NodeType {
     OpcOutput = 15,
     Fixture = 16,
     Sequence = 17,
+    MidiInput = 18,
+    MidiOutput = 19,
 }
 
 impl ::protobuf::ProtobufEnum for Node_NodeType {
@@ -1127,6 +1129,8 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
             15 => ::std::option::Option::Some(Node_NodeType::OpcOutput),
             16 => ::std::option::Option::Some(Node_NodeType::Fixture),
             17 => ::std::option::Option::Some(Node_NodeType::Sequence),
+            18 => ::std::option::Option::Some(Node_NodeType::MidiInput),
+            19 => ::std::option::Option::Some(Node_NodeType::MidiOutput),
             _ => ::std::option::Option::None
         }
     }
@@ -1151,6 +1155,8 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
             Node_NodeType::OpcOutput,
             Node_NodeType::Fixture,
             Node_NodeType::Sequence,
+            Node_NodeType::MidiInput,
+            Node_NodeType::MidiOutput,
         ];
         values
     }
@@ -1463,7 +1469,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Node\x12)\n\tinputPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\tinputPort\
     \x12\x1e\n\noutputNode\x18\x03\x20\x01(\tR\noutputNode\x12+\n\noutputPor\
     t\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\noutputPort\x122\n\x08protocol\
-    \x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\xc7\x04\
+    \x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\xe6\x04\
     \n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\
     \x04type\x12\x0e\n\x02id\x18\x02\x20\x01(\tR\x02id\x12\x14\n\x05title\
     \x18\x03\x20\x01(\tR\x05title\x12#\n\x06inputs\x18\x04\x20\x03(\x0b2\x0b\
@@ -1471,7 +1477,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     .PortR\x07outputs\x12;\n\nproperties\x18\x07\x20\x03(\x0b2\x1b.mizer.Nod\
     e.PropertiesEntryR\nproperties\x1a=\n\x0fPropertiesEntry\x12\x10\n\x03ke\
     y\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\
-    \x05value:\x028\x01\"\xa6\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\
+    \x05value:\x028\x01\"\xc5\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\
     \x10\n\x0cConvertToDmx\x10\x01\x12\x10\n\x0cArtnetOutput\x10\x02\x12\x0e\
     \n\nSacnOutput\x10\x03\x12\x0e\n\nOscillator\x10\x04\x12\t\n\x05Clock\
     \x10\x05\x12\x0c\n\x08OscInput\x10\x06\x12\r\n\tVideoFile\x10\x07\x12\
@@ -1479,15 +1485,16 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x11VideoColorBalance\x10\n\x12\x12\n\x0eVideoTransform\x10\x0b\x12\n\n\
     \x06Script\x10\x0c\x12\x0e\n\nPixelToDmx\x10\r\x12\x10\n\x0cPixelPattern\
     \x10\x0e\x12\r\n\tOpcOutput\x10\x0f\x12\x0b\n\x07Fixture\x10\x10\x12\x0c\
-    \n\x08Sequence\x10\x11\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\t\
-    R\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProt\
-    ocolR\x08protocol*\xa8\x01\n\x0fChannelProtocol\x12\x07\n\x03Dmx\x10\0\
-    \x12\x0b\n\x07Numeric\x10\x01\x12\x0b\n\x07Trigger\x10\x02\x12\t\n\x05Cl\
-    ock\x10\x03\x12\t\n\x05Video\x10\x04\x12\t\n\x05Color\x10\x05\x12\n\n\
-    \x06Vector\x10\x06\x12\x08\n\x04Text\x10\x07\x12\x08\n\x04Midi\x10\x08\
-    \x12\x0c\n\x08Timecode\x10\t\x12\x0b\n\x07Boolean\x10\n\x12\n\n\x06Selec\
-    t\x10\x0b\x12\n\n\x06Pixels\x10\x0c2;\n\x08NodesApi\x12/\n\x08GetNodes\
-    \x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0b\x06proto3\
+    \n\x08Sequence\x10\x11\x12\r\n\tMidiInput\x10\x12\x12\x0e\n\nMidiOutput\
+    \x10\x13\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\
+    \n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08proto\
+    col*\xa8\x01\n\x0fChannelProtocol\x12\x07\n\x03Dmx\x10\0\x12\x0b\n\x07Nu\
+    meric\x10\x01\x12\x0b\n\x07Trigger\x10\x02\x12\t\n\x05Clock\x10\x03\x12\
+    \t\n\x05Video\x10\x04\x12\t\n\x05Color\x10\x05\x12\n\n\x06Vector\x10\x06\
+    \x12\x08\n\x04Text\x10\x07\x12\x08\n\x04Midi\x10\x08\x12\x0c\n\x08Timeco\
+    de\x10\t\x12\x0b\n\x07Boolean\x10\n\x12\n\n\x06Select\x10\x0b\x12\n\n\
+    \x06Pixels\x10\x0c2;\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.Node\
+    sRequest\x1a\x0c.mizer.Nodes\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -7,6 +7,7 @@ pub use mizer_clock_nodes::*;
 pub use mizer_conversion_nodes::*;
 pub use mizer_fixture_nodes::*;
 pub use mizer_input_nodes::*;
+pub use mizer_midi_nodes::*;
 pub use mizer_opc_nodes::*;
 pub use mizer_osc_nodes::*;
 pub use mizer_oscillator_nodes::*;
@@ -36,6 +37,8 @@ pub enum Node<'a> {
     OpcOutputNode(OpcOutputNode),
     FixtureNode(FixtureNode),
     SequenceNode(SequenceNode),
+    MidiInputNode(MidiInputNode),
+    MidiOutputNode(MidiOutputNode),
 }
 
 macro_rules! derive_node {
@@ -200,5 +203,7 @@ derive_node! {
     Node::PixelPatternNode,
     Node::OpcOutputNode,
     Node::FixtureNode,
-    Node::SequenceNode
+    Node::SequenceNode,
+    Node::MidiInputNode,
+    Node::MidiOutputNode
 }

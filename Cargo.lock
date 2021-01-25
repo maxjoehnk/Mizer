@@ -10,6 +10,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "alsa"
+version = "0.4.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eb213f6b3e4b1480a60931ca2035794aa67b73103d254715b1db7b70dcb3c934"
+dependencies = [
+ "alsa-sys",
+ "bitflags",
+ "libc",
+ "nix",
+]
+
+[[package]]
+name = "alsa-sys"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "db8fee663d06c4e303404ef5f40488a53e062f89ba8bfed81f42325aafad1527"
+dependencies = [
+ "libc",
+ "pkg-config",
+]
+
+[[package]]
 name = "ansi_term"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -354,6 +376,46 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "30ed07550be01594c6026cff2a1d7fe9c8f683caa798e12b68694ac9e88286a3"
 dependencies = [
  "cache-padded",
+]
+
+[[package]]
+name = "core-foundation"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25bfd746d203017f7d5cbd31ee5d8e17f94b6521c7af77ece6c9e4b2d4b16c67"
+dependencies = [
+ "core-foundation-sys",
+ "libc",
+]
+
+[[package]]
+name = "core-foundation-sys"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "065a5d7ffdcbc8fa145d6f0746f3555025b9097a9e9cda59f7467abae670c78d"
+dependencies = [
+ "libc",
+]
+
+[[package]]
+name = "coremidi"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "99f92de5534f182bad5f91cad85611ab222cb6e237a0555e06c65a24936c3173"
+dependencies = [
+ "core-foundation",
+ "core-foundation-sys",
+ "coremidi-sys",
+ "time",
+]
+
+[[package]]
+name = "coremidi-sys"
+version = "2.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "07f05827cebb30dcd539ff1ac9bf6764f574a15fa147f8572f99d7617142f95e"
+dependencies = [
+ "core-foundation-sys",
 ]
 
 [[package]]
@@ -1236,10 +1298,11 @@ dependencies = [
 
 [[package]]
 name = "instant"
-version = "0.1.6"
+version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b141fdc7836c525d4d594027d318c84161ca17aaf8113ab1f81ab93ae897485"
+checksum = "61124eeebbd69b8190558df225adf7e4caafce0d743919e5d6b19652314ec5ec"
 dependencies = [
+ "cfg-if 1.0.0",
  "js-sys",
  "wasm-bindgen",
  "web-sys",
@@ -1375,6 +1438,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "60302e4db3a61da70c0cb7991976248362f30319e88850c487b9b95bbf059e00"
 
 [[package]]
+name = "memalloc"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df39d232f5c40b0891c10216992c2f250c054105cb1e56f0fc9032db6203ecc1"
+
+[[package]]
 name = "memchr"
 version = "2.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1491,6 +1560,24 @@ checksum = "d11f8090a8886339f9468a04eeea0711e4cf27538b134014664308041307a1c5"
 dependencies = [
  "crossbeam-epoch",
  "serde",
+]
+
+[[package]]
+name = "midir"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25df1e7836ca65078a121efed77049084a434838562b9892d0401bdfb59244cc"
+dependencies = [
+ "alsa",
+ "bitflags",
+ "coremidi",
+ "js-sys",
+ "libc",
+ "memalloc",
+ "nix",
+ "wasm-bindgen",
+ "web-sys",
+ "winapi 0.3.9",
 ]
 
 [[package]]
@@ -1621,10 +1708,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-midi-device-profiles"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-protocol-midi",
+ "rhai 0.19.10",
+ "serde",
+ "serde_yaml",
+]
+
+[[package]]
 name = "mizer-midi-nodes"
 version = "0.1.0"
 dependencies = [
  "mizer-node-api",
+ "mizer-protocol-midi",
 ]
 
 [[package]]
@@ -1741,6 +1840,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-protocol-midi"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "midir",
+]
+
+[[package]]
 name = "mizer-sacn-nodes"
 version = "0.1.0"
 dependencies = [
@@ -1754,7 +1862,7 @@ name = "mizer-scripting-nodes"
 version = "0.1.0"
 dependencies = [
  "mizer-node-api",
- "rhai",
+ "rhai 0.17.0",
 ]
 
 [[package]]
@@ -1823,6 +1931,19 @@ dependencies = [
  "cfg-if 0.1.10",
  "libc",
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "nix"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3b2e0b4f3320ed72aaedb9a5ac838690a8047c7b275da22711fddff4f8a14229"
+dependencies = [
+ "bitflags",
+ "cc",
+ "cfg-if 0.1.10",
+ "libc",
+ "void",
 ]
 
 [[package]]
@@ -2368,6 +2489,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "rhai"
+version = "0.19.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "64c10394798715bc0a4533db759db5c026eaac56b62dcb182fbd50526dfd11e4"
+dependencies = [
+ "instant",
+ "rhai_codegen",
+ "smallvec",
+]
+
+[[package]]
+name = "rhai_codegen"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4beff79f3a74ea4be07541588b2771160f226ce74281e3d24732d1cf9397b4db"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
 name = "rosc"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2527,9 +2670,9 @@ checksum = "c111b5bd5695e56cffe5129854aa230b39c93a305372fdbb2668ca2394eea9f8"
 
 [[package]]
 name = "smallvec"
-version = "1.4.1"
+version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3757cb9d89161a2f24e1cf78efa0c1fcff485d18e3f55e0aa3480824ddaa0f3f"
+checksum = "fe0f37c9e8f3c5a4a66ad655a93c74daac4ad00c441533bf5c6e7990bb42604e"
 
 [[package]]
 name = "smol"

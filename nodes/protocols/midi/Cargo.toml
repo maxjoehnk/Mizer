@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 mizer-node-api = { path = "../../api" }
+mizer-protocol-midi = { path = "../../../protocols/midi" }

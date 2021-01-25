@@ -156,6 +156,12 @@ pub enum NodeConfig {
     Sequence {
         steps: Vec<SequenceStep>,
     },
+    MidiInput {
+
+    },
+    MidiOutput {
+
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

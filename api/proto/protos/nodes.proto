@@ -41,6 +41,8 @@ message Node {
     OpcOutput = 15;
     Fixture = 16;
     Sequence = 17;
+    MidiInput = 18;
+    MidiOutput = 19;
   }
 
   NodeType type = 1;

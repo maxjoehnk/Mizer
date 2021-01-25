@@ -94,5 +94,7 @@ fn get_node_type(node: &mizer_project_files::Node) -> Node_NodeType {
         NodeConfig::OpcOutput { .. } => Node_NodeType::OpcOutput,
         NodeConfig::Fixture { .. } => Node_NodeType::Fixture,
         NodeConfig::Sequence { .. } => Node_NodeType::Sequence,
+        NodeConfig::MidiInput { .. } => Node_NodeType::MidiInput,
+        NodeConfig::MidiOutput { .. } => Node_NodeType::MidiOutput,
     }
 }

@@ -13,7 +13,6 @@ use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_pipeline::Pipeline;
-use mizer_session::Session;
 
 mod flags;
 
@@ -29,15 +28,16 @@ fn main() -> anyhow::Result<()> {
         setup_metrics(flags.metrics_port);
     }
 
-    let session = if flags.join {
-        Session::discover()?
-    } else {
-        Session::new()?
-    };
-    run(session, flags)
+    // TODO: pins cpu, reduce cpu usage
+    // let _session = if flags.join {
+    //     Session::discover()?
+    // } else {
+    //     Session::new()?
+    // };
+    run(flags)
 }
 
-fn run(_session: Session, flags: Flags) -> anyhow::Result<()> {
+fn run(flags: Flags) -> anyhow::Result<()> {
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
     ofl_provider

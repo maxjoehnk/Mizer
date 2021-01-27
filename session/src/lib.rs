@@ -8,12 +8,14 @@ use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery};
 
 const MIZER_SESSION_SERVICE: &str = "_mizer._tcp";
 
+const POLL_TIMEOUT: u64 = 10;
+
 fn announce_device() {
     thread::spawn(|| {
         let mut service = MdnsService::new(MIZER_SESSION_SERVICE, 50051);
         let event_loop = service.register().unwrap();
         loop {
-            event_loop.poll(Duration::from_secs(1)).unwrap();
+            event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
         }
     });
 }
@@ -25,7 +27,7 @@ pub fn discover_sessions() -> anyhow::Result<()> {
 
     let event_loop = browser.browse_services().unwrap();
     loop {
-        event_loop.poll(Duration::from_secs(1)).unwrap();
+        event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
     }
 }
 

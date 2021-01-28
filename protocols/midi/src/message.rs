@@ -55,7 +55,7 @@ pub enum MidiMessage {
     NoteOff(Channel, u8, u8),
     NoteOn(Channel, u8, u8),
     Sysex((u8, u8, u8), u8, Vec<u8>),
-    Unknown(Vec<u8>)
+    Unknown(Vec<u8>),
 }
 
 impl TryFrom<&[u8]> for MidiMessage {
@@ -78,9 +78,11 @@ impl TryFrom<&[u8]> for MidiMessage {
                 let channel = channel.unwrap();
                 Ok(MidiMessage::ControlChange(channel, *d1, *d2))
             }
-            [SYSEX, manu1, manu2, manu3, model, data @ .., SYSEX_EOX] => {
-                Ok(MidiMessage::Sysex((*manu1, *manu2, *manu3), *model, data.to_vec()))
-            }
+            [SYSEX, manu1, manu2, manu3, model, data @ .., SYSEX_EOX] => Ok(MidiMessage::Sysex(
+                (*manu1, *manu2, *manu3),
+                *model,
+                data.to_vec(),
+            )),
             _ => {
                 log::warn!("unimplemented: {:?}", data);
                 Ok(MidiMessage::Unknown(data.to_vec()))
@@ -102,17 +104,11 @@ impl From<MidiMessage> for Vec<u8> {
                 vec![status_byte(CONTROL_CHANGE, channel), note, value]
             }
             MidiMessage::Sysex(manufacturer, model, mut data) => {
-                let mut bytes = vec![
-                    SYSEX,
-                    manufacturer.0,
-                    manufacturer.1,
-                    manufacturer.2,
-                    model,
-                ];
+                let mut bytes = vec![SYSEX, manufacturer.0, manufacturer.1, manufacturer.2, model];
                 bytes.append(&mut data);
                 bytes.push(SYSEX_EOX);
                 bytes
-            },
+            }
             MidiMessage::Unknown(data) => data,
         }
     }

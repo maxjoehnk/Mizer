@@ -1,13 +1,13 @@
-use mongodb::{options::ClientOptions, Client, Collection};
-use crate::documents::*;
-use bson::{from_bson, Bson, to_bson, doc};
-use serde::Serialize;
 use crate::api::TagCreateModel;
+use crate::documents::*;
+use bson::{doc, from_bson, to_bson, Bson};
 use futures::prelude::*;
+use mongodb::{options::ClientOptions, Client, Collection};
+use serde::Serialize;
 
 #[derive(Clone)]
 pub struct DataAccess {
-    client: Client
+    client: Client,
 }
 
 impl DataAccess {
@@ -23,12 +23,18 @@ impl DataAccess {
     pub async fn list_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
         let cursor = self.tags_collection().find(None, None).await?;
         let tags = cursor.try_collect::<Vec<_>>().await?;
-        let tags = tags.into_iter().map(|document| from_bson(Bson::Document(document))).collect::<Result<_, _>>()?;
+        let tags = tags
+            .into_iter()
+            .map(|document| from_bson(Bson::Document(document)))
+            .collect::<Result<_, _>>()?;
 
         Ok(tags)
     }
 
-    pub async fn add_tag<D: Into<TagCreateModel>>(&self, document: D) -> anyhow::Result<TagDocument> {
+    pub async fn add_tag<D: Into<TagCreateModel>>(
+        &self,
+        document: D,
+    ) -> anyhow::Result<TagDocument> {
         let tag_document = document.into();
         let tag_document = tag_document.into();
         let document = to_document(&tag_document)?;
@@ -37,7 +43,10 @@ impl DataAccess {
         Ok(tag_document)
     }
 
-    pub async fn add_media<D: Into<MediaDocument>>(&self, document: D) -> anyhow::Result<MediaDocument> {
+    pub async fn add_media<D: Into<MediaDocument>>(
+        &self,
+        document: D,
+    ) -> anyhow::Result<MediaDocument> {
         let media_document = document.into();
         self.insert_media(&media_document).await?;
         self.update_tags(&media_document).await?;
@@ -53,19 +62,29 @@ impl DataAccess {
     }
 
     async fn update_tags(&self, document: &MediaDocument) -> anyhow::Result<()> {
-        let ids = document.tags.iter().map(|t| t.id).map(|id| Ok(to_bson(&id)?)).collect::<anyhow::Result<Vec<_>>>()?;
+        let ids = document
+            .tags
+            .iter()
+            .map(|t| t.id)
+            .map(|id| Ok(to_bson(&id)?))
+            .collect::<anyhow::Result<Vec<_>>>()?;
         let document: AttachedMediaDocument = document.into();
         let document = to_document(&document)?;
         self.tags_collection()
-            .update_many(doc!{
-                "id": {
-                    "$in": ids
-                }
-            }, doc!{
-                "$push": {
-                    "media": document
-                }
-            }, None).await?;
+            .update_many(
+                doc! {
+                    "id": {
+                        "$in": ids
+                    }
+                },
+                doc! {
+                    "$push": {
+                        "media": document
+                    }
+                },
+                None,
+            )
+            .await?;
 
         Ok(())
     }
@@ -84,7 +103,7 @@ impl DataAccess {
 fn to_document<T: Serialize>(document: &T) -> anyhow::Result<bson::Document> {
     if let Bson::Document(document) = to_bson(document)? {
         Ok(document)
-    }else {
+    } else {
         anyhow::bail!("not an document")
     }
 }

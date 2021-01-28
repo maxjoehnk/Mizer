@@ -1,24 +1,27 @@
+use crate::protos::{CreateMediaTag, GetMediaTags, GroupedMediaFiles, MediaFile, MediaTag};
 use crate::protos::{MediaApi, MediaTagWithFiles};
-use grpc::{ServerHandlerContext, ServerResponseUnarySink, ServerRequestSingle};
-use crate::protos::{MediaFile, CreateMediaTag, GetMediaTags, GroupedMediaFiles, MediaTag};
-use mizer_media::documents::{TagDocument, AttachedTag, MediaDocument, AttachedMediaDocument};
-use protobuf::SingularPtrField;
+use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use mizer_media::api::{MediaServerApi, MediaServerCommand, TagCreateModel};
+use mizer_media::documents::{AttachedMediaDocument, AttachedTag, MediaDocument, TagDocument};
+use protobuf::SingularPtrField;
 
 pub struct MediaApiImpl {
-    api: MediaServerApi
+    api: MediaServerApi,
 }
 
 impl MediaApiImpl {
     pub fn new(api: MediaServerApi) -> Self {
-        MediaApiImpl {
-            api
-        }
+        MediaApiImpl { api }
     }
 }
 
 impl MediaApi for MediaApiImpl {
-    fn create_tag(&self, o: ServerHandlerContext, req: ServerRequestSingle<CreateMediaTag>, resp: ServerResponseUnarySink<MediaTag>) -> grpc::Result<()> {
+    fn create_tag(
+        &self,
+        o: ServerHandlerContext,
+        req: ServerRequestSingle<CreateMediaTag>,
+        resp: ServerResponseUnarySink<MediaTag>,
+    ) -> grpc::Result<()> {
         let api = self.api.clone();
         o.spawn(async move {
             let (sender, receiver) = MediaServerApi::open_channel();
@@ -33,7 +36,12 @@ impl MediaApi for MediaApiImpl {
         Ok(())
     }
 
-    fn get_tags_with_media(&self, o: ServerHandlerContext, req: ServerRequestSingle<GetMediaTags>, resp: ServerResponseUnarySink<GroupedMediaFiles>) -> grpc::Result<()> {
+    fn get_tags_with_media(
+        &self,
+        o: ServerHandlerContext,
+        req: ServerRequestSingle<GetMediaTags>,
+        resp: ServerResponseUnarySink<GroupedMediaFiles>,
+    ) -> grpc::Result<()> {
         let api = self.api.clone();
         o.spawn(async move {
             let (sender, receiver) = MediaServerApi::open_channel();
@@ -41,7 +49,10 @@ impl MediaApi for MediaApiImpl {
             api.send_command(cmd);
 
             let tags = receiver.recv_async().await.unwrap();
-            let tags = tags.into_iter().map(MediaTagWithFiles::from).collect::<Vec<_>>();
+            let tags = tags
+                .into_iter()
+                .map(MediaTagWithFiles::from)
+                .collect::<Vec<_>>();
 
             resp.finish(GroupedMediaFiles {
                 tags: tags.into(),
@@ -55,9 +66,7 @@ impl MediaApi for MediaApiImpl {
 
 impl From<CreateMediaTag> for TagCreateModel {
     fn from(model: CreateMediaTag) -> Self {
-        TagCreateModel {
-            name: model.name
-        }
+        TagCreateModel { name: model.name }
     }
 }
 
@@ -76,7 +85,12 @@ impl From<MediaDocument> for MediaFile {
         MediaFile {
             id: media.id.to_string(),
             name: media.name,
-            tags: media.tags.into_iter().map(MediaTag::from).collect::<Vec<_>>().into(),
+            tags: media
+                .tags
+                .into_iter()
+                .map(MediaTag::from)
+                .collect::<Vec<_>>()
+                .into(),
             contentUrl: format!("http://localhost:50050/media/{}.mp4", media.id),
             thumbnailUrl: format!("http://localhost:50050/thumbnails/{}.png", media.id),
             ..Default::default()
@@ -111,7 +125,12 @@ impl From<TagDocument> for MediaTagWithFiles {
                 id: tag.id.to_string(),
                 ..Default::default()
             }),
-            files: tag.media.into_iter().map(MediaFile::from).collect::<Vec<_>>().into(),
+            files: tag
+                .media
+                .into_iter()
+                .map(MediaFile::from)
+                .collect::<Vec<_>>()
+                .into(),
             ..Default::default()
         }
     }

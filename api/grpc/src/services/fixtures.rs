@@ -1,7 +1,7 @@
 use crate::protos::FixturesApi;
+use crate::protos::{Fixture, Fixtures, GetFixturesRequest};
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use mizer_fixtures::manager::FixtureManager;
-use crate::protos::{Fixture, Fixtures, GetFixturesRequest};
 
 pub struct FixturesApiImpl {
     fixture_manager: FixtureManager,

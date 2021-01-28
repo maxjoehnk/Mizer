@@ -20,14 +20,15 @@ impl Laser for EtherDreamLaser {
             let device = stream::connect(&dac_broadcast, addr.ip().clone())?;
             lasers.push(EtherDreamLaser { device });
 
-            return Ok(lasers)
+            return Ok(lasers);
         }
 
         Ok(lasers)
     }
 
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()> {
-        self.device.queue_commands()
+        self.device
+            .queue_commands()
             .prepare_stream()
             .data(frame.points.into_iter().map(DacPoint::from))
             .begin(0, 30000)

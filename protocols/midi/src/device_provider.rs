@@ -49,18 +49,17 @@ impl MidiDeviceProvider {
             let name = output_provider.port_name(&output)?;
             if let Some((_, output_port)) = ports.get_mut(&name) {
                 output_port.replace(output);
-            }else {
+            } else {
                 ports.insert(name, (None, Some(output)));
             }
         }
 
-        let devices = ports.into_iter()
-            .map(|(name, (input, output))| {
-                MidiDeviceIdentifier {
-                    name,
-                    input,
-                    output
-                }
+        let devices = ports
+            .into_iter()
+            .map(|(name, (input, output))| MidiDeviceIdentifier {
+                name,
+                input,
+                output,
             })
             .collect();
 

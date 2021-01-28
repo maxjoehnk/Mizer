@@ -1,5 +1,5 @@
-mod output;
 mod input;
+mod output;
 
-pub use self::output::MidiOutputNode;
 pub use self::input::MidiInputNode;
+pub use self::output::MidiOutputNode;

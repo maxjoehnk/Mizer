@@ -1,8 +1,10 @@
-pub mod helios;
 pub mod ether_dream;
+pub mod helios;
 
 pub trait Laser {
-    fn find_devices() -> anyhow::Result<Vec<Self>> where Self: Sized;
+    fn find_devices() -> anyhow::Result<Vec<Self>>
+    where
+        Self: Sized;
 
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()>;
 }
@@ -30,4 +32,3 @@ pub struct LaserCoordinate {
     pub x: i16,
     pub y: i16,
 }
-

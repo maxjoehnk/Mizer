@@ -11,9 +11,9 @@ use crate::flags::Flags;
 use anyhow::Context;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_media::MediaServer;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_pipeline::Pipeline;
-use mizer_media::MediaServer;
 
 mod flags;
 
@@ -78,7 +78,13 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
     for project in &projects {
         pipeline2.load_project(project.clone(), &fixture_manager)?;
     }
-    let _grpc_api = mizer_grpc_api::start(handle.clone(), projects, pipeline2, fixture_manager, media_server_api.clone())?;
+    let _grpc_api = mizer_grpc_api::start(
+        handle.clone(),
+        projects,
+        pipeline2,
+        fixture_manager,
+        media_server_api.clone(),
+    )?;
     mizer_media::http_api::start(media_server_api)?;
 
     loop {

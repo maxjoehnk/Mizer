@@ -5,7 +5,9 @@ pub fn main() -> anyhow::Result<()> {
     let devices = provider.list_devices()?;
 
     let args = std::env::args().collect::<Vec<_>>();
-    let device = devices.into_iter().find(|device| device.name.contains(&args[1]));
+    let device = devices
+        .into_iter()
+        .find(|device| device.name.contains(&args[1]));
     let device = device.expect("no matching device found");
 
     let device = device.connect()?;

@@ -1,15 +1,17 @@
 use mizer_protocol_midi::*;
-use std::io::{BufRead, Write};
-use std::str::FromStr;
 use std::convert::TryFrom;
+use std::io::{BufRead, Write};
 use std::num::ParseIntError;
+use std::str::FromStr;
 
 pub fn main() -> anyhow::Result<()> {
     let provider = MidiDeviceProvider::new();
     let devices = provider.list_devices()?;
 
     let args = std::env::args().collect::<Vec<_>>();
-    let device = devices.into_iter().find(|device| device.name.contains(&args[1]));
+    let device = devices
+        .into_iter()
+        .find(|device| device.name.contains(&args[1]));
     let device = device.expect("no matching device found");
 
     let mut device = device.connect()?;
@@ -44,12 +46,15 @@ pub fn main() -> anyhow::Result<()> {
                 let manu2 = u8::from_str(manu2)?;
                 let manu3 = u8::from_str(manu3)?;
                 let model = u8::from_str(model)?;
-                let data = data.into_iter().map(|d| u8::from_str(d)).collect::<Result<Vec<_>, ParseIntError>>()?;
+                let data = data
+                    .into_iter()
+                    .map(|d| u8::from_str(d))
+                    .collect::<Result<Vec<_>, ParseIntError>>()?;
 
                 let msg = MidiMessage::Sysex((manu1, manu2, manu3), model, data);
                 device.write(msg)?;
             }
-            _ => ()
+            _ => (),
         }
         write_prompt();
     }

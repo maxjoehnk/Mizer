@@ -1,11 +1,11 @@
+use crate::laser::{LaserColor, LaserCoordinate, LaserFrame, LaserPoint};
+use ilda_idtf::layout::{Color, Coords2d, Coords2dTrueColor};
+use ilda_idtf::*;
 use std::fs::File;
 use std::path::Path;
-use ilda_idtf::*;
-use crate::laser::{LaserFrame, LaserPoint, LaserCoordinate, LaserColor};
-use ilda_idtf::layout::{Coords2dTrueColor, Coords2d, Color};
 
 pub enum IldaMediaReader {
-    FileReader(SectionReader<File>)
+    FileReader(SectionReader<File>),
 }
 
 impl IldaMediaReader {
@@ -72,7 +72,7 @@ impl From<Coords2d> for LaserCoordinate {
     fn from(coord: Coords2d) -> Self {
         LaserCoordinate {
             x: coord.x.get(),
-            y: coord.y.get()
+            y: coord.y.get(),
         }
     }
 }
@@ -82,7 +82,7 @@ impl From<Color> for LaserColor {
         LaserColor {
             red: color.red,
             green: color.green,
-            blue: color.blue
+            blue: color.blue,
         }
     }
 }

@@ -1,9 +1,7 @@
-use mizer_protocol_midi::*;
 use mizer_node_api::*;
+use mizer_protocol_midi::*;
 
-pub struct MidiInputNode {
-
-}
+pub struct MidiInputNode {}
 
 impl MidiInputNode {
     pub fn new() -> Self {
@@ -13,8 +11,7 @@ impl MidiInputNode {
 
 impl ProcessingNode for MidiInputNode {
     fn get_details(&self) -> NodeDetails {
-        NodeDetails::new("MidiInputNode")
-            .with_outputs(vec![NodeOutput::numeric("value")])
+        NodeDetails::new("MidiInputNode").with_outputs(vec![NodeOutput::numeric("value")])
     }
 }
 

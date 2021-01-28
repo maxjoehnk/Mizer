@@ -1,9 +1,9 @@
 use crate::protos::NodesApi;
-use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
-use mizer_project_files::{NodeConfig, Project};
 use crate::protos::{
     ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
 };
+use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
+use mizer_project_files::{NodeConfig, Project};
 
 pub struct NodesApiImpl {
     projects: Vec<Project>,

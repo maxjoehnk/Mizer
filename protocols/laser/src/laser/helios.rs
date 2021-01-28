@@ -2,7 +2,7 @@ use super::*;
 use ::helios_dac::NativeHeliosDac;
 
 pub struct HeliosLaser {
-    device: NativeHeliosDac
+    device: NativeHeliosDac,
 }
 
 impl Laser for HeliosLaser {
@@ -26,18 +26,20 @@ impl Laser for HeliosLaser {
 
 impl From<helios_dac::NativeHeliosDac> for HeliosLaser {
     fn from(dac: NativeHeliosDac) -> Self {
-        HeliosLaser {
-            device: dac
-        }
+        HeliosLaser { device: dac }
     }
 }
 
 impl From<LaserFrame> for helios_dac::Frame {
     fn from(frame: LaserFrame) -> Self {
         helios_dac::Frame {
-            points: frame.points.into_iter().map(helios_dac::Point::from).collect(),
+            points: frame
+                .points
+                .into_iter()
+                .map(helios_dac::Point::from)
+                .collect(),
             pps: 30000, // TODO
-            flags: helios_dac::WriteFrameFlags::empty()
+            flags: helios_dac::WriteFrameFlags::empty(),
         }
     }
 }
@@ -47,7 +49,7 @@ impl From<LaserPoint> for helios_dac::Point {
         helios_dac::Point {
             coordinate: point.coordinate.into(),
             color: point.color.into(),
-            intensity: 0xff
+            intensity: 0xff,
         }
     }
 }
@@ -66,7 +68,7 @@ impl From<LaserCoordinate> for helios_dac::Coordinate {
     fn from(coordinate: LaserCoordinate) -> Self {
         helios_dac::Coordinate {
             x: coordinate.x as u16, // TODO: calculate offset
-            y: coordinate.y as u16
+            y: coordinate.y as u16,
         }
     }
 }

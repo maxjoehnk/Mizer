@@ -1,7 +1,7 @@
-use uuid::Uuid;
 use std::fs;
-use std::path::{PathBuf, Path};
-use std::io::{Write, Read};
+use std::io::{Read, Write};
+use std::path::{Path, PathBuf};
+use uuid::Uuid;
 
 const DEFAULT_MEDIA_PATH: &str = ".storage/media";
 const DEFAULT_THUMBNAIL_PATH: &str = ".storage/thumbnails";
@@ -11,7 +11,7 @@ const DEFAULT_TMP_PATH: &str = ".storage/tmp";
 pub struct FileStorage {
     temp_path: String,
     media_path: String,
-    thumbnail_path: String
+    thumbnail_path: String,
 }
 
 impl FileStorage {

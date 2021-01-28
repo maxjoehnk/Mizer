@@ -1,10 +1,13 @@
-use flume::{Sender, Receiver};
-use crate::documents::{MediaDocument, AttachedTag};
-use std::path::PathBuf;
+use crate::documents::{AttachedTag, MediaDocument};
 use crate::file_storage::FileStorage;
+use flume::{Receiver, Sender};
+use std::path::PathBuf;
 
 #[derive(Clone)]
-pub struct MediaServerApi(pub(crate) Sender<MediaServerCommand>, pub(crate) FileStorage);
+pub struct MediaServerApi(
+    pub(crate) Sender<MediaServerCommand>,
+    pub(crate) FileStorage,
+);
 
 impl MediaServerApi {
     pub fn send_command(&self, command: MediaServerCommand) {
@@ -29,7 +32,7 @@ pub enum MediaServerCommand {
 #[derive(Debug, Clone)]
 pub struct MediaCreateModel {
     pub name: String,
-    pub tags: Vec<AttachedTag>
+    pub tags: Vec<AttachedTag>,
 }
 
 use crate::documents::TagDocument;
@@ -37,7 +40,7 @@ use uuid::Uuid;
 
 #[derive(Debug, Clone)]
 pub struct TagCreateModel {
-    pub name: String
+    pub name: String,
 }
 
 impl From<TagCreateModel> for TagDocument {

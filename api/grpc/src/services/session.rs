@@ -1,8 +1,8 @@
 use crate::protos::SessionApi;
+use crate::protos::{ClientAnnouncement, DeviceClock, Session, SessionDevice, SessionRequest};
 use grpc::{
     ServerHandlerContext, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
 };
-use crate::protos::{SessionRequest, Session, SessionDevice, DeviceClock, ClientAnnouncement};
 
 pub struct SessionApiImpl;
 

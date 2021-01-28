@@ -2,7 +2,7 @@ use crate::protos::SessionApi;
 use grpc::{
     ServerHandlerContext, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
 };
-use mizer_proto::session::*;
+use crate::protos::{SessionRequest, Session, SessionDevice, DeviceClock, ClientAnnouncement};
 
 pub struct SessionApiImpl;
 

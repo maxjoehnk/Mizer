@@ -91,6 +91,8 @@ const Node_NodeType$json = const {
     const {'1': 'OpcOutput', '2': 15},
     const {'1': 'Fixture', '2': 16},
     const {'1': 'Sequence', '2': 17},
+    const {'1': 'MidiInput', '2': 18},
+    const {'1': 'MidiOutput', '2': 19},
   ],
 };
 

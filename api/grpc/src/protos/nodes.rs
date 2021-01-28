@@ -24,12 +24,9 @@
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_1;
 
 #[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct NodesRequest {
     // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -143,15 +140,12 @@ impl ::protobuf::reflect::ProtobufValue for NodesRequest {
 }
 
 #[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Nodes {
     // message fields
     pub nodes: ::protobuf::RepeatedField<Node>,
     pub channels: ::protobuf::RepeatedField<NodeConnection>,
     // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -361,7 +355,6 @@ impl ::protobuf::reflect::ProtobufValue for Nodes {
 }
 
 #[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct NodeConnection {
     // message fields
     pub inputNode: ::std::string::String,
@@ -370,9 +363,7 @@ pub struct NodeConnection {
     pub outputPort: ::protobuf::SingularPtrField<Port>,
     pub protocol: ChannelProtocol,
     // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -710,7 +701,6 @@ impl ::protobuf::reflect::ProtobufValue for NodeConnection {
 }
 
 #[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Node {
     // message fields
     pub field_type: Node_NodeType,
@@ -720,9 +710,7 @@ pub struct Node {
     pub outputs: ::protobuf::RepeatedField<Port>,
     pub properties: ::std::collections::HashMap<::std::string::String, f64>,
     // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1080,7 +1068,6 @@ impl ::protobuf::reflect::ProtobufValue for Node {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum Node_NodeType {
     Fader = 0,
     ConvertToDmx = 1,
@@ -1185,15 +1172,12 @@ impl ::protobuf::reflect::ProtobufValue for Node_NodeType {
 }
 
 #[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Port {
     // message fields
     pub name: ::std::string::String,
     pub protocol: ChannelProtocol,
     // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
     pub cached_size: ::protobuf::CachedSize,
 }
 
@@ -1378,7 +1362,6 @@ impl ::protobuf::reflect::ProtobufValue for Port {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum ChannelProtocol {
     Dmx = 0,
     Numeric = 1,

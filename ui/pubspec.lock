@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.14.2"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   crypto:
     dependency: transitive
     description:
@@ -127,6 +134,31 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.0-nullsafety.4"
+  file_selector_linux:
+    dependency: "direct main"
+    description:
+      path: "plugins/file_selector/file_selector_linux"
+      ref: "405e6c5"
+      resolved-ref: "405e6c5476fbdfd3859cf2f8570b21afb692ea3a"
+      url: "git://github.com/google/flutter-desktop-embedding.git"
+    source: git
+    version: "0.0.1"
+  file_selector_macos:
+    dependency: "direct main"
+    description:
+      path: "plugins/file_selector/file_selector_macos"
+      ref: "405e6c5"
+      resolved-ref: "405e6c5476fbdfd3859cf2f8570b21afb692ea3a"
+      url: "git://github.com/google/flutter-desktop-embedding.git"
+    source: git
+    version: "0.0.1"
+  file_selector_platform_interface:
+    dependency: "direct main"
+    description:
+      name: file_selector_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3+1"
   fixnum:
     dependency: transitive
     description:
@@ -320,6 +352,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0-nullsafety.4"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   pool:
     dependency: transitive
     description:
@@ -481,4 +520,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  flutter: ">=1.22.0"

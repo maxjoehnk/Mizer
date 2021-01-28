@@ -13,12 +13,14 @@ use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_pipeline::Pipeline;
+use mizer_media::MediaServer;
 
 mod flags;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     env_logger::init();
     let flags = Flags::from_args();
 
@@ -34,10 +36,10 @@ fn main() -> anyhow::Result<()> {
     // } else {
     //     Session::new()?
     // };
-    run(flags)
+    run(flags).await
 }
 
-fn run(flags: Flags) -> anyhow::Result<()> {
+async fn run(flags: Flags) -> anyhow::Result<()> {
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
     ofl_provider
@@ -66,12 +68,18 @@ fn run(flags: Flags) -> anyhow::Result<()> {
         log::info!("{:#?}", pipeline);
     }
 
+    let handle = tokio::runtime::Handle::try_current()?;
+
+    let media_server = MediaServer::new().await?;
+    let media_server_api = media_server.open_api(&handle)?;
+
     // TODO: add pipeline view for api access
     let mut pipeline2 = Pipeline::default();
     for project in &projects {
         pipeline2.load_project(project.clone(), &fixture_manager)?;
     }
-    mizer_grpc_api::start(projects, pipeline2, fixture_manager);
+    let _grpc_api = mizer_grpc_api::start(handle.clone(), projects, pipeline2, fixture_manager, media_server_api.clone())?;
+    mizer_media::http_api::start(media_server_api)?;
 
     loop {
         let before = std::time::Instant::now();
@@ -80,7 +88,7 @@ fn run(flags: Flags) -> anyhow::Result<()> {
         let frame_time = after.duration_since(before);
         metrics::timing!("mizer.frame_time", frame_time);
         if frame_time <= FRAME_DELAY_60FPS {
-            std::thread::sleep(FRAME_DELAY_60FPS - frame_time);
+            tokio::time::delay_for(FRAME_DELAY_60FPS - frame_time).await;
         }
     }
 }

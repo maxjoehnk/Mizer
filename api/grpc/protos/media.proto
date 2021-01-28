@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package mizer;
+
+service MediaApi {
+  rpc CreateTag (CreateMediaTag) returns (MediaTag);
+  rpc GetTagsWithMedia (GetMediaTags) returns (GroupedMediaFiles);
+}
+
+message GetMediaTags {}
+
+message CreateMediaTag {
+  string name = 1;
+}
+
+message MediaTags {
+  repeated MediaTag tags = 1;
+}
+
+message MediaTag {
+  string id = 1;
+  string name = 2;
+}
+
+message MediaFile {
+  string id = 1;
+  string name = 2;
+  repeated MediaTag tags = 3;
+  string thumbnailUrl = 4;
+  string contentUrl = 5;
+}
+
+message GroupedMediaFiles {
+  repeated MediaTagWithFiles tags = 1;
+}
+
+message MediaTagWithFiles {
+  MediaTag tag = 1;
+  repeated MediaFile files = 2;
+}

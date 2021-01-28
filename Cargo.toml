@@ -1,9 +1,9 @@
 [workspace]
 members = [
     "api/grpc",
-    "api/proto",
     "fixtures",
     "fixtures/open-fixture-library",
+    "media",
     "nodes/api",
     "nodes/behaviors/conversion",
     "nodes/behaviors/scripting",
@@ -55,6 +55,7 @@ smol = { version = "0.3", features = ["tokio02"], optional = true }
 structopt = "0.3"
 metrics = "0.12"
 metrics-runtime = { version = "0.13", optional = true }
+mizer-media = { path = "media" }
 mizer-project-files = { path = "projects" }
 mizer-fixtures = { path = "fixtures" }
 mizer-open-fixture-library-provider = { path = "fixtures/open-fixture-library" }
@@ -63,6 +64,7 @@ mizer-grpc-api = { path = "api/grpc" }
 mizer-session = { path = "session" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"
+tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }
 
 [dev-dependencies]
 criterion = "0.3"

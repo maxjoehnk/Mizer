@@ -3,7 +3,7 @@ on: [push]
 name: Build
 
 jobs:
-  build:
+  build-server:
     runs-on: ubuntu-latest
     steps:
       - name: Install Gstreamer
@@ -36,3 +36,19 @@ jobs:
         with:
           name: mizer
           path: target/release/mizer
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: dev
+      - run: flutter config --enable-linux-desktop
+      - run: flutter pub get
+        working-directory: ui
+      - run: flutter build linux
+        working-directory: ui
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linux-client
+          path: ui/build/linux/release/bundle/

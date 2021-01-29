@@ -1,6 +1,9 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
 
 use mizer::*;
+use mizer_pipeline::Pipeline;
+use mizer_project_files::Project;
+use mizer_fixtures::manager::FixtureManager;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("pixel pipeline");
@@ -30,7 +33,8 @@ pub fn criterion_benchmark(c: &mut Criterion) {
 fn build_pipeline<'a>(dimensions: &(i64, i64)) -> Pipeline<'a> {
     let mut pipeline = Pipeline::default();
     let project = Project::load(&project_config(dimensions)).unwrap();
-    pipeline.load_project(project).unwrap();
+    let fixture_manager = FixtureManager::new();
+    pipeline.load_project(project, &fixture_manager).unwrap();
 
     pipeline
 }

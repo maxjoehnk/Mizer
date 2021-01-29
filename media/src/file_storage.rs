@@ -31,7 +31,7 @@ impl FileStorage {
         let file_path = self.get_temp_file_path(id);
         let mut file = fs::File::create(&file_path)?;
 
-        file.write(buffer)?;
+        file.write_all(buffer)?;
 
         Ok(())
     }

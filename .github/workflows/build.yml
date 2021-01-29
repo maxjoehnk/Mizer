@@ -33,6 +33,7 @@ jobs:
         uses: actions-rs/audit-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
       - name: Tests
         uses: actions-rs/tarpaulin@v0.1
         with:

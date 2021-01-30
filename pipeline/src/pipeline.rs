@@ -64,6 +64,9 @@ impl<'a> Pipeline<'a> {
                 Some(NodeChannel::Pixels) => lhs
                     .connect_to_pixel_input(&channel.from_channel, rhs, &channel.to_channel)
                     .context(context)?,
+                Some(NodeChannel::Laser) => lhs
+                    .connect_to_laser_input(&channel.from_channel, rhs, &channel.to_channel)
+                    .context(context)?,
                 Some(channel) => unimplemented!("channel not implemented {:?}", channel),
                 None => return Err(anyhow!("unknown output").context(context)),
             }
@@ -132,6 +135,8 @@ impl NodeBuilder for mizer_project_files::Node {
             }
             NodeConfig::MidiInput { .. } => MidiInputNode::new().into(),
             NodeConfig::MidiOutput { .. } => MidiOutputNode::new().into(),
+            NodeConfig::IldaFile { file } => IldaNode::new(&file).unwrap().into(),
+            NodeConfig::Laser { .. } => LaserNode::new().unwrap().into(),
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

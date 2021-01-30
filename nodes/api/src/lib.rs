@@ -71,6 +71,7 @@ pub enum NodeChannel {
     Video,
     Color,
     Vector,
+    Laser,
     Text,
     Midi,
     Timecode,
@@ -206,6 +207,9 @@ pub trait SourceNode {
     fn connect_pixel_input(&mut self, _input: &str, _channel: PixelChannel) -> ConnectionResult {
         Err(ConnectionError::InvalidInput)
     }
+    fn connect_laser_input(&mut self, _input: &str, _channel: LaserChannel) -> ConnectionResult {
+        Err(ConnectionError::InvalidInput)
+    }
 }
 
 pub trait DestinationNode {
@@ -270,6 +274,15 @@ pub trait DestinationNode {
         _input: &str,
     ) -> ConnectionResult {
         log::warn!("connect_to_pixel_input is not implemented");
+        Err(ConnectionError::InvalidOutput(output.to_string()))
+    }
+    fn connect_to_laser_input(
+        &mut self,
+        output: &str,
+        _node: &mut impl SourceNode,
+        _input: &str,
+    ) -> ConnectionResult {
+        log::warn!("connect_to_laser_input is not implemented");
         Err(ConnectionError::InvalidOutput(output.to_string()))
     }
 }

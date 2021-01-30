@@ -1,8 +1,13 @@
 use super::*;
 use ::helios_dac::NativeHeliosDac;
+use pinboard::Pinboard;
+use std::sync::{Condvar, Arc, Mutex};
+use std::thread;
+use std::time::Duration;
 
 pub struct HeliosLaser {
-    device: NativeHeliosDac,
+    current_frame: Arc<Pinboard<LaserFrame>>,
+    lock: Arc<(Mutex<bool>, Condvar)>,
 }
 
 impl Laser for HeliosLaser {
@@ -19,14 +24,63 @@ impl Laser for HeliosLaser {
     }
 
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()> {
-        self.device.write_frame(frame.into())?;
+        log::debug!("Queuing frame");
+        self.current_frame.set(frame);
+        let (lock, cvar) = &*self.lock;
+        let mut frame_available = lock.lock().unwrap();
+        *frame_available = true;
+        cvar.notify_one();
         Ok(())
+    }
+}
+
+struct HeliosLaserContext {
+    current_frame: Arc<Pinboard<LaserFrame>>,
+    lock: Arc<(Mutex<bool>, Condvar)>,
+}
+
+impl HeliosLaserContext {
+    fn new(lock: &Arc<(Mutex<bool>, Condvar)>, current_frame: &Arc<Pinboard<LaserFrame>>) -> Self {
+        HeliosLaserContext {
+            current_frame: Arc::clone(current_frame),
+            lock: Arc::clone(lock),
+        }
+    }
+
+    fn wait_for_frame(&self) -> LaserFrame {
+        let (lock, cvar) = &*self.lock;
+
+        let mut available = lock.lock().unwrap();
+        while !*available {
+            available = cvar.wait(available).unwrap();
+        }
+        let frame = self.current_frame.read().unwrap();
+        *available = false;
+
+        frame
     }
 }
 
 impl From<helios_dac::NativeHeliosDac> for HeliosLaser {
     fn from(dac: NativeHeliosDac) -> Self {
-        HeliosLaser { device: dac }
+        let lock = Arc::new((Mutex::new(false), Condvar::new()));
+        let frame_board = Arc::new(Pinboard::<LaserFrame>::new_empty());
+        let context = HeliosLaserContext::new(&lock, &frame_board);
+
+        thread::Builder::new()
+            .name("HeliosLaserWorker".to_string())
+            .spawn(move || {
+                let mut device = dac;
+
+                loop {
+                    let frame = context.wait_for_frame();
+                    log::debug!("Writing frame");
+                    device.write_frame(frame.into()).unwrap();
+                    thread::sleep(Duration::from_millis(100));
+                }
+            });
+
+        HeliosLaser { lock, current_frame: frame_board }
     }
 }
 

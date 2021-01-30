@@ -43,6 +43,8 @@ message Node {
     Sequence = 17;
     MidiInput = 18;
     MidiOutput = 19;
+    Laser = 20;
+    IldaFile = 21;
   }
 
   NodeType type = 1;

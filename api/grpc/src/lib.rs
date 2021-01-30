@@ -4,7 +4,6 @@ use crate::protos::{
 use grpc::ClientStub;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
-use mizer_pipeline::Pipeline;
 use mizer_project_files::Project;
 use std::sync::Arc;
 
@@ -14,7 +13,6 @@ mod services;
 pub fn start(
     handle: tokio::runtime::Handle,
     projects: Vec<Project>,
-    pipeline: Pipeline,
     fixture_manager: FixtureManager,
     media_server: MediaServerApi,
 ) -> anyhow::Result<grpc::Server> {

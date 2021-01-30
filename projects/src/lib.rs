@@ -158,6 +158,19 @@ pub enum NodeConfig {
     },
     MidiInput {},
     MidiOutput {},
+    IldaFile {
+        file: String,
+    },
+    Laser {
+        device: LaserDevice,
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "kebab-case")]
+pub enum LaserDevice {
+    Helios,
+    EtherDream
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

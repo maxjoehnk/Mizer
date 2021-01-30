@@ -3,6 +3,7 @@ use ilda_idtf::layout::{Color, Coords2d, Coords2dTrueColor};
 use ilda_idtf::*;
 use std::fs::File;
 use std::path::Path;
+use std::io::Read;
 
 pub enum IldaMediaReader {
     FileReader(SectionReader<File>),
@@ -22,7 +23,7 @@ impl IldaMediaReader {
         }
     }
 
-    fn read_to_frames<T>(reader: &mut SectionReader<T>) -> anyhow::Result<Vec<LaserFrame>> {
+    fn read_to_frames<T: Read>(reader: &mut SectionReader<T>) -> anyhow::Result<Vec<LaserFrame>> {
         let mut frames = vec![];
         while let Some(section) = reader.read_next()? {
             match section.reader {

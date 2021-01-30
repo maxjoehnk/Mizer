@@ -11,6 +11,7 @@ members = [
     "nodes/clock",
     "nodes/fixture",
     "nodes/inputs",
+    "nodes/laser",
     "nodes/oscillator",
     "nodes/protocols/artnet",
     "nodes/protocols/midi",

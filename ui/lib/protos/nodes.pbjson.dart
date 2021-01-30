@@ -93,6 +93,8 @@ const Node_NodeType$json = const {
     const {'1': 'Sequence', '2': 17},
     const {'1': 'MidiInput', '2': 18},
     const {'1': 'MidiOutput', '2': 19},
+    const {'1': 'Laser', '2': 20},
+    const {'1': 'IldaFile', '2': 21},
   ],
 };
 

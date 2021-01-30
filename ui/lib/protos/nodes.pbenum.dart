@@ -67,6 +67,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Sequence = Node_NodeType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
   static const Node_NodeType MidiInput = Node_NodeType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiInput');
   static const Node_NodeType MidiOutput = Node_NodeType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiOutput');
+  static const Node_NodeType Laser = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Laser');
+  static const Node_NodeType IldaFile = Node_NodeType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IldaFile');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -89,6 +91,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Sequence,
     MidiInput,
     MidiOutput,
+    Laser,
+    IldaFile,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

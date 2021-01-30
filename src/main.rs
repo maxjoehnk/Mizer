@@ -73,15 +73,9 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
     let media_server = MediaServer::new().await?;
     let media_server_api = media_server.open_api(&handle)?;
 
-    // TODO: add pipeline view for api access
-    let mut pipeline2 = Pipeline::default();
-    for project in &projects {
-        pipeline2.load_project(project.clone(), &fixture_manager)?;
-    }
     let _grpc_api = mizer_grpc_api::start(
         handle.clone(),
         projects,
-        pipeline2,
         fixture_manager,
         media_server_api.clone(),
     )?;

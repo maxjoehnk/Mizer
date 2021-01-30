@@ -16,6 +16,7 @@ pub use mizer_sacn_nodes::*;
 pub use mizer_scripting_nodes::*;
 pub use mizer_sequence_nodes::*;
 pub use mizer_video_nodes::*;
+pub use mizer_laser_nodes::*;
 
 #[derive(From)]
 pub enum Node<'a> {
@@ -39,6 +40,8 @@ pub enum Node<'a> {
     SequenceNode(SequenceNode),
     MidiInputNode(MidiInputNode),
     MidiOutputNode(MidiOutputNode),
+    LaserNode(LaserNode),
+    IldaNode(IldaNode),
 }
 
 macro_rules! derive_node {
@@ -126,6 +129,12 @@ macro_rules! derive_source {
                 $($i(node) => node.connect_pixel_input(input, channel),)*
             }
         }
+
+        fn connect_laser_input(&mut self, input: &str, channel: LaserChannel) -> ConnectionResult {
+            match self {
+                $($i(node) => node.connect_laser_input(input, channel),)*
+            }
+        }
     };
 }
 
@@ -172,6 +181,12 @@ macro_rules! derive_destination {
                 $($i(this) => this.connect_to_pixel_input(output, node, input),)*
             }
         }
+
+        fn connect_to_laser_input(&mut self, output: &str, node: &mut impl SourceNode, input: &str) -> ConnectionResult {
+            match self {
+                $($i(this) => this.connect_to_laser_input(output, node, input),)*
+            }
+        }
     };
 }
 
@@ -205,5 +220,7 @@ derive_node! {
     Node::FixtureNode,
     Node::SequenceNode,
     Node::MidiInputNode,
-    Node::MidiOutputNode
+    Node::MidiOutputNode,
+    Node::LaserNode,
+    Node::IldaNode
 }

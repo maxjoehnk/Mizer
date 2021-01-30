@@ -25,6 +25,7 @@ mizer-osc-nodes = { path = "../nodes/protocols/osc" }
 mizer-sacn-nodes = { path = "../nodes/protocols/sacn" }
 mizer-video-nodes = { path = "../nodes/video" }
 mizer-pixel-nodes = { path = "../nodes/pixels" }
+mizer-laser-nodes = { path = "../nodes/laser" }
 mizer-fixtures = { path = "../fixtures" }
 mizer-project-files = { path = "../projects" }
 # TODO: check for a better way/a maintained library

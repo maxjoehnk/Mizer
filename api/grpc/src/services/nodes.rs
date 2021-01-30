@@ -96,5 +96,7 @@ fn get_node_type(node: &mizer_project_files::Node) -> Node_NodeType {
         NodeConfig::Sequence { .. } => Node_NodeType::Sequence,
         NodeConfig::MidiInput { .. } => Node_NodeType::MidiInput,
         NodeConfig::MidiOutput { .. } => Node_NodeType::MidiOutput,
+        NodeConfig::Laser { .. } => Node_NodeType::Laser,
+        NodeConfig::IldaFile { .. } => Node_NodeType::IldaFile,
     }
 }

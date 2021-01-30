@@ -31,10 +31,12 @@ members = [
 [lib]
 name = "mizer"
 path = "src/lib.rs"
+bench = false
 
 [[bin]]
 name = "mizer"
 path = "src/main.rs"
+bench = false
 
 [package]
 name = "mizer"

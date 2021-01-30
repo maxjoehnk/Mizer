@@ -7,8 +7,7 @@ enum MediaEvent { Fetch }
 class MediaBloc extends Bloc<MediaEvent, GroupedMediaFiles> {
   final MediaApiClient client;
 
-  MediaBloc(this.client) : super(GroupedMediaFiles()) {
-  }
+  MediaBloc(this.client) : super(GroupedMediaFiles());
 
   @override
   Stream<GroupedMediaFiles> mapEventToState(MediaEvent event) async* {

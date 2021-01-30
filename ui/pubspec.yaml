@@ -12,8 +12,8 @@ dependencies:
   graphview: ^0.6.6
   protobuf: ^1.1.0
   grpc: ^2.8.0
-  bloc: ^5.0.0
-  flutter_bloc: ^5.0.0
+  bloc: ^6.0.0
+  flutter_bloc: ^6.0.0
   material_design_icons_flutter: ^4.0.0
   file_selector_platform_interface: ^1.0.2
   file_selector_linux:
@@ -32,6 +32,9 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  test: ^1.15.7
+  mockito: ^4.1.4
+  bloc_test: ^7.0.0
 
 flutter:
   uses-material-design: true

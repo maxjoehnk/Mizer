@@ -22,3 +22,14 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
+  test-client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: dev
+      - run: flutter pub get
+        working-directory: ui
+      - run: flutter test
+        working-directory: ui

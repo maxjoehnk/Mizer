@@ -1,0 +1,24 @@
+on: [push]
+
+name: Tests
+
+jobs:
+  test-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Gstreamer
+        run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@v1
+      - name: Clippy Checks
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
+      - name: Tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test

@@ -1,11 +1,7 @@
 pub mod ether_dream;
 pub mod helios;
 
-pub trait Laser {
-    fn find_devices() -> anyhow::Result<Vec<Self>>
-    where
-        Self: Sized;
-
+pub trait Laser : std::fmt::Debug {
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()>;
 }
 

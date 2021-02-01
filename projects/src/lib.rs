@@ -162,15 +162,8 @@ pub enum NodeConfig {
         file: String,
     },
     Laser {
-        device: LaserDevice,
+        device: String,
     }
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(rename_all = "kebab-case")]
-pub enum LaserDevice {
-    Helios,
-    EtherDream
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

@@ -6,5 +6,7 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1"
+log = "0.4"
 mizer-node-api = { path = "../api" }
 mizer-protocol-laser = { path = "../../protocols/laser" }
+mizer-devices = { path = "../../devices" }

@@ -14,6 +14,7 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_media::MediaServer;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_pipeline::Pipeline;
+use mizer_devices::DeviceManager;
 
 mod flags;
 
@@ -40,6 +41,8 @@ async fn main() -> anyhow::Result<()> {
 }
 
 async fn run(flags: Flags) -> anyhow::Result<()> {
+    let handle = tokio::runtime::Handle::try_current()?;
+
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
     ofl_provider
@@ -50,6 +53,9 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
     let fixture_library = FixtureLibrary::new(vec![Box::new(ofl_provider)]);
 
     let mut fixture_manager = FixtureManager::new();
+    let device_manager = DeviceManager::new();
+
+    handle.spawn(device_manager.clone().start_discovery());
 
     log::info!("Loading projects...");
     let mut pipeline = Pipeline::default();
@@ -59,7 +65,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
         load_fixtures(&mut fixture_manager, &fixture_library, &project);
         projects.push(project.clone());
         pipeline
-            .load_project(project, &fixture_manager)
+            .load_project(project, &fixture_manager, device_manager.clone())
             .context("loading project")?;
     }
     log::info!("Loading projects...Done");
@@ -67,8 +73,6 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
     if flags.print_pipeline {
         log::info!("{:#?}", pipeline);
     }
-
-    let handle = tokio::runtime::Handle::try_current()?;
 
     let media_server = MediaServer::new().await?;
     let media_server_api = media_server.open_api(&handle)?;

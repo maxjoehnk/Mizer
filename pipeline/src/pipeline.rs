@@ -4,6 +4,7 @@ use anyhow::{anyhow, Context};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node_api::*;
 use mizer_project_files::{NodeConfig, Project};
+use mizer_devices::DeviceManager;
 use multi_mut::HashMapMultiMut;
 use std::collections::HashMap;
 
@@ -27,10 +28,11 @@ impl<'a> Pipeline<'a> {
         &mut self,
         project: Project,
         fixture_manager: &FixtureManager,
+        device_manager: DeviceManager,
     ) -> anyhow::Result<()> {
         for node in project.nodes {
             let id = node.id.clone();
-            let node = node.build(fixture_manager, &mut self.default_clock);
+            let node = node.build(fixture_manager, &device_manager, &mut self.default_clock);
             self.nodes.insert(id, node);
         }
 
@@ -87,7 +89,7 @@ impl<'a> Pipeline<'a> {
 }
 
 trait NodeBuilder {
-    fn build<'a>(self, fixture_manager: &FixtureManager, default_clock: &mut ClockNode)
+    fn build<'a>(self, fixture_manager: &FixtureManager, device_manager: &DeviceManager, default_clock: &mut ClockNode)
         -> Node<'a>;
 }
 
@@ -95,6 +97,7 @@ impl NodeBuilder for mizer_project_files::Node {
     fn build<'a>(
         self,
         fixture_manager: &FixtureManager,
+        device_manager: &DeviceManager,
         default_clock: &mut ClockNode,
     ) -> Node<'a> {
         let mut node: Node = match self.config {
@@ -136,7 +139,7 @@ impl NodeBuilder for mizer_project_files::Node {
             NodeConfig::MidiInput { .. } => MidiInputNode::new().into(),
             NodeConfig::MidiOutput { .. } => MidiOutputNode::new().into(),
             NodeConfig::IldaFile { file } => IldaNode::new(&file).unwrap().into(),
-            NodeConfig::Laser { .. } => LaserNode::new().unwrap().into(),
+            NodeConfig::Laser { device } => LaserNode::new(device_manager.clone(), device).into(),
         };
         for (key, value) in self.properties {
             node.set_numeric_property(&key, value);

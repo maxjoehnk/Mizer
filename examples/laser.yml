@@ -6,6 +6,6 @@ nodes:
   - type: laser
     id: laser-0
     config:
-      device: helios
+      device: laser-0
 channels:
   - frames@ilda-file-0 -> input@laser-0

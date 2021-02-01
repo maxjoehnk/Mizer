@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "api/grpc",
+    "devices",
     "fixtures",
     "fixtures/open-fixture-library",
     "media",
@@ -65,6 +66,7 @@ mizer-open-fixture-library-provider = { path = "fixtures/open-fixture-library" }
 mizer-pipeline = { path = "pipeline" }
 mizer-grpc-api = { path = "api/grpc" }
 mizer-session = { path = "session" }
+mizer-devices = { path = "devices" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }

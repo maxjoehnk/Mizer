@@ -10,8 +10,8 @@ pub struct HeliosLaser {
     lock: Arc<(Mutex<bool>, Condvar)>,
 }
 
-impl Laser for HeliosLaser {
-    fn find_devices() -> anyhow::Result<Vec<HeliosLaser>> {
+impl HeliosLaser {
+    pub fn find_devices() -> anyhow::Result<Vec<HeliosLaser>> {
         let controller = helios_dac::NativeHeliosDacController::new()?;
         let devices = controller.list_devices()?;
         let mut lasers = vec![];
@@ -22,7 +22,9 @@ impl Laser for HeliosLaser {
 
         Ok(lasers)
     }
+}
 
+impl Laser for HeliosLaser {
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()> {
         log::debug!("Queuing frame");
         self.current_frame.set(frame);
@@ -31,6 +33,12 @@ impl Laser for HeliosLaser {
         *frame_available = true;
         cvar.notify_one();
         Ok(())
+    }
+}
+
+impl std::fmt::Debug for HeliosLaser {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.debug_struct("HeliosLaser").finish()
     }
 }
 

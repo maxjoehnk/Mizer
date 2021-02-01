@@ -1,4 +1,4 @@
-use super::Laser;
+use super::{Laser};
 use crate::laser::{LaserFrame, LaserPoint};
 use ::ether_dream::dac::stream;
 use ::ether_dream::protocol::DacPoint;
@@ -8,24 +8,24 @@ pub struct EtherDreamLaser {
     device: stream::Stream,
 }
 
-impl Laser for EtherDreamLaser {
-    fn find_devices() -> anyhow::Result<Vec<EtherDreamLaser>> {
+impl EtherDreamLaser {
+    pub fn find_devices() -> anyhow::Result<impl Iterator<Item = anyhow::Result<EtherDreamLaser>>> {
         let broadcasts = ::ether_dream::recv_dac_broadcasts()?;
-        // broadcasts.set_nonblocking(true);
         broadcasts.set_timeout(Some(Duration::from_secs(5)))?;
-        let mut lasers = vec![];
-        for dac_broadcast in broadcasts {
-            let (dac_broadcast, addr) = dac_broadcast?;
 
-            let device = stream::connect(&dac_broadcast, addr.ip().clone())?;
-            lasers.push(EtherDreamLaser { device });
+        Ok(broadcasts
+            .into_iter()
+            .map(|dac_broadcast| {
+                let (dac_broadcast, addr) = dac_broadcast?;
+                log::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
+                let device = stream::connect(&dac_broadcast, addr.ip())?;
 
-            return Ok(lasers);
-        }
-
-        Ok(lasers)
+                Ok(EtherDreamLaser { device })
+            }))
     }
+}
 
+impl Laser for EtherDreamLaser {
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()> {
         self.device
             .queue_commands()
@@ -35,6 +35,14 @@ impl Laser for EtherDreamLaser {
             .submit()?;
 
         Ok(())
+    }
+}
+
+impl std::fmt::Debug for EtherDreamLaser {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.debug_struct("EtherDreamLaser")
+            .field("dac", self.device.dac())
+            .finish()
     }
 }
 

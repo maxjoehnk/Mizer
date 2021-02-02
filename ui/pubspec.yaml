@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  graphview: ^0.6.6
   protobuf: ^1.1.0
   grpc: ^2.8.0
   bloc: ^6.0.0

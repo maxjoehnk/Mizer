@@ -53,6 +53,13 @@ message Node {
   repeated Port inputs = 4;
   repeated Port outputs = 5;
   map<string, double> properties = 7;
+  NodeDesigner designer = 8;
+}
+
+message NodeDesigner {
+  double x = 1;
+  double y = 2;
+  double scale = 3;
 }
 
 enum ChannelProtocol {

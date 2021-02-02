@@ -3,15 +3,20 @@ use crate::nodes::*;
 use anyhow::{anyhow, Context};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node_api::*;
-use mizer_project_files::{NodeConfig, Project};
+use mizer_project_files::{NodeConfig, Project, Channel};
 use mizer_devices::DeviceManager;
-use multi_mut::HashMapMultiMut;
-use std::collections::HashMap;
+use crate::node_builder::NodeBuilder;
+use crate::pipeline_view::PipelineView;
+use std::sync::Arc;
+use dashmap::DashMap;
+use crate::NodeDesigner;
 
 #[derive(Debug)]
 pub struct Pipeline<'a> {
     default_clock: ClockNode,
-    nodes: HashMap<String, Node<'a>>,
+    nodes: Arc<DashMap<String, Node<'a>>>,
+    designer: Arc<DashMap<String, NodeDesigner>>,
+    channels: Vec<Channel>,
 }
 
 impl<'a> Default for Pipeline<'a> {
@@ -19,6 +24,8 @@ impl<'a> Default for Pipeline<'a> {
         Pipeline {
             default_clock: ClockNode::new(90.),
             nodes: Default::default(),
+            designer: Default::default(),
+            channels: Default::default(),
         }
     }
 }
@@ -30,120 +37,73 @@ impl<'a> Pipeline<'a> {
         fixture_manager: &FixtureManager,
         device_manager: DeviceManager,
     ) -> anyhow::Result<()> {
-        for node in project.nodes {
-            let id = node.id.clone();
-            let node = node.build(fixture_manager, &device_manager, &mut self.default_clock);
-            self.nodes.insert(id, node);
+        for node_config in project.nodes {
+            let id = node_config.id.clone();
+            let mut node = node_config.config.build(fixture_manager, &device_manager, &mut self.default_clock);
+            for (key, value) in node_config.properties {
+                node.set_numeric_property(&key, value);
+            }
+            self.nodes.insert(id.clone(), node);
+            self.designer.insert(id, node_config.designer.into());
         }
 
         for channel in project.channels {
-            let (lhs, rhs) = self
-                .nodes
-                .get_pair_mut(&channel.from_id, &channel.to_id)
-                .ok_or_else(|| {
-                    anyhow!("unknown node {} or {}", &channel.from_id, &channel.to_id)
-                })?;
-            let context = format!("{:?}\noutput: {:?}\ninput: {:?}", &channel, lhs, rhs);
-            match lhs.get_details().get_output_type(&channel.from_channel) {
-                Some(NodeChannel::Dmx) => lhs
-                    .connect_to_dmx_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Numeric) => lhs
-                    .connect_to_numeric_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Boolean) => lhs
-                    .connect_to_bool_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Trigger) => lhs
-                    .connect_to_trigger_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Clock) => lhs
-                    .connect_to_clock_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Video) => lhs
-                    .connect_to_video_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Pixels) => lhs
-                    .connect_to_pixel_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(NodeChannel::Laser) => lhs
-                    .connect_to_laser_input(&channel.from_channel, rhs, &channel.to_channel)
-                    .context(context)?,
-                Some(channel) => unimplemented!("channel not implemented {:?}", channel),
-                None => return Err(anyhow!("unknown output").context(context)),
-            }
+            self.connect_nodes(&channel)?;
+            self.channels.push(channel);
         }
 
         Ok(())
     }
 
+    fn connect_nodes(&mut self, channel: &Channel) -> anyhow::Result<()> {
+        let mut lhs = self.nodes.get_mut(&channel.from_id).ok_or_else(|| anyhow!("unknown node {}", &channel.from_id))?;
+        let mut rhs = self.nodes.get_mut(&channel.to_id).ok_or_else(|| anyhow!("unknown node {}", &channel.to_id))?;
+        let context = format!("{:?}\noutput: {:?}\ninput: {:?}", &channel, lhs.value(), rhs.value());
+        match lhs.get_details().get_output_type(&channel.from_channel) {
+            Some(NodeChannel::Dmx) => lhs
+                .connect_to_dmx_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Numeric) => lhs
+                .connect_to_numeric_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Boolean) => lhs
+                .connect_to_bool_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Trigger) => lhs
+                .connect_to_trigger_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Clock) => lhs
+                .connect_to_clock_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Video) => lhs
+                .connect_to_video_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Pixels) => lhs
+                .connect_to_pixel_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(NodeChannel::Laser) => lhs
+                .connect_to_laser_input(&channel.from_channel, rhs.value_mut(), &channel.to_channel)
+                .context(context)?,
+            Some(channel) => unimplemented!("channel not implemented {:?}", channel),
+            None => return Err(anyhow!("unknown output").context(context)),
+        }
+        Ok(())
+    }
+
     pub fn process(&mut self) {
         self.default_clock.process();
-        for (id, node) in self.nodes.iter_mut() {
+        for mut item in self.nodes.iter_mut() {
+            let id = item.key().clone();
+            let node = item.value_mut();
             let before = std::time::Instant::now();
             node.process();
             let after = std::time::Instant::now();
-            metrics::timing!("mizer.process_time", before, after, "id" => id.clone());
+            metrics::timing!("mizer.process_time", before, after, "id" => id);
         }
+    }
+
+    pub fn view(&self) -> PipelineView {
+        PipelineView::new(&self.nodes, &self.designer, self.channels.clone())
     }
 }
 
-trait NodeBuilder {
-    fn build<'a>(self, fixture_manager: &FixtureManager, device_manager: &DeviceManager, default_clock: &mut ClockNode)
-        -> Node<'a>;
-}
-
-impl NodeBuilder for mizer_project_files::Node {
-    fn build<'a>(
-        self,
-        fixture_manager: &FixtureManager,
-        device_manager: &DeviceManager,
-        default_clock: &mut ClockNode,
-    ) -> Node<'a> {
-        let mut node: Node = match self.config {
-            NodeConfig::Fader => FaderNode::new().into(),
-            NodeConfig::ConvertToDmx { universe, channel } => {
-                ConvertToDmxNode::new(universe, channel).into()
-            }
-            NodeConfig::ArtnetOutput { host, port } => ArtnetOutputNode::new(host, port).into(),
-            NodeConfig::SacnOutput => StreamingAcnOutputNode::new().into(),
-            NodeConfig::Oscillator { oscillator_type } => {
-                OscillatorNode::new(oscillator_type, default_clock.get_clock_channel()).into()
-            }
-            NodeConfig::Clock { speed } => ClockNode::new(speed).into(),
-            NodeConfig::OscInput { host, port, path } => OscInputNode::new(host, port, path).into(),
-            NodeConfig::VideoFile { file } => VideoFileNode::new(file).into(),
-            NodeConfig::VideoOutput => VideoOutputNode::new().into(),
-            NodeConfig::VideoEffect { effect_type } => VideoEffectNode::new(effect_type).into(),
-            NodeConfig::VideoColorBalance => VideoColorBalanceNode::new().into(),
-            NodeConfig::VideoTransform => VideoTransformNode::new().into(),
-            NodeConfig::Script(script) => ScriptingNode::new(script.as_str()).into(),
-            NodeConfig::PixelPattern { pattern } => PixelPatternGeneratorNode::new(pattern).into(),
-            NodeConfig::PixelDmx {
-                width,
-                height,
-                start_universe,
-            } => PixelDmxNode::new(width, height, start_universe).into(),
-            NodeConfig::OpcOutput {
-                host,
-                port,
-                width,
-                height,
-            } => OpcOutputNode::new(host, port, (width, height)).into(),
-            NodeConfig::Fixture { fixture_id } => {
-                FixtureNode::new(fixture_manager.get_fixture(&fixture_id).cloned().unwrap()).into()
-            }
-            NodeConfig::Sequence { steps } => {
-                SequenceNode::new(steps, default_clock.get_clock_channel()).into()
-            }
-            NodeConfig::MidiInput { .. } => MidiInputNode::new().into(),
-            NodeConfig::MidiOutput { .. } => MidiOutputNode::new().into(),
-            NodeConfig::IldaFile { file } => IldaNode::new(&file).unwrap().into(),
-            NodeConfig::Laser { device } => LaserNode::new(device_manager.clone(), device).into(),
-        };
-        for (key, value) in self.properties {
-            node.set_numeric_property(&key, value);
-        }
-        node
-    }
-}

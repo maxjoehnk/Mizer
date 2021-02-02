@@ -1235,6 +1235,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "dashmap"
+version = "4.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
+dependencies = [
+ "cfg-if 1.0.0",
+ "num_cpus",
+]
+
+[[package]]
 name = "deflate"
 version = "0.8.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2920,6 +2930,7 @@ name = "mizer-pipeline"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "dashmap",
  "derive_more",
  "gstreamer",
  "log",
@@ -2943,7 +2954,6 @@ dependencies = [
  "mizer-scripting-nodes",
  "mizer-sequence-nodes",
  "mizer-video-nodes",
- "multi_mut",
 ]
 
 [[package]]

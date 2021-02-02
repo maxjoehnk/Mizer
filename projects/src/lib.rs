@@ -97,6 +97,19 @@ pub struct Node {
     pub config: NodeConfig,
     #[serde(default)]
     pub properties: HashMap<String, f64>,
+    pub designer: NodeDesignerConfig,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct NodeDesignerConfig {
+    pub position: NodePosition,
+    pub scale: f64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct NodePosition {
+    pub x: f64,
+    pub y: f64,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

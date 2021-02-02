@@ -29,5 +29,4 @@ mizer-laser-nodes = { path = "../nodes/laser" }
 mizer-fixtures = { path = "../fixtures" }
 mizer-project-files = { path = "../projects" }
 mizer-devices = { path = "../devices" }
-# TODO: check for a better way/a maintained library
-multi_mut = "0.1"
+dashmap = "4"

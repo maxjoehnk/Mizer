@@ -3,14 +3,34 @@ nodes:
     id: video-file-0
     config:
       file: /home/max/Code/0_mizer/mizer-video-projector/assets/DOC000 Alley Booze - H.264 1080p.mov
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
   - type: video-effect
     id: video-effect-0
     config:
       type: twirl
+    designer:
+      position:
+        x: 5
+        y: 0
+      scale: 1
   - type: video-transform
     id: video-transform-0
+    designer:
+      position:
+        x: 10
+        y: 2.5
+      scale: 1
   - type: video-output
     id: video-output-0
+    designer:
+      position:
+        x: 15
+        y: 2.5
+      scale: 1
   - type: oscillator
     id: oscillator-0
     config:
@@ -18,6 +38,11 @@ nodes:
     properties:
       ratio: 4
       max: 1
+    designer:
+      position:
+        x: 5
+        y: 5
+      scale: 1
 channels:
   - output@video-file-0 -> input@video-effect-0
   - output@video-effect-0 -> input@video-transform-0

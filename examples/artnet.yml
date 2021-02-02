@@ -3,14 +3,29 @@ nodes:
     id: artnet-output-0
     config:
       host: 0.0.0.0
+    designer:
+      position:
+        x: 15
+        y: 2.5
+      scale: 1
   - type: convert-to-dmx
     id: convert-to-dmx-0
     config:
       channel: 1
+    designer:
+      position:
+        x: 10
+        y: 0
+      scale: 1
   - type: convert-to-dmx
     id: convert-to-dmx-1
     config:
       channel: 18
+    designer:
+      position:
+        x: 10
+        y: 5
+      scale: 1
   - type: oscillator
     id: oscillator-1
     config:
@@ -18,11 +33,21 @@ nodes:
     properties:
       ratio: 4
       max: 1
+    designer:
+      position:
+        x: 5
+        y: 5
+      scale: 1
   - type: osc-input
     id: osc-input-0
     config:
       port: 7000
       path: /1/fader1
+    designer:
+      position:
+        x: 5
+        y: 0
+      scale: 1
   - type: script
     id: script-0
     config: |
@@ -36,6 +61,11 @@ nodes:
         }
         state.i
       }
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
 
 channels:
   - dmx@convert-to-dmx-0 -> dmx@artnet-output-0

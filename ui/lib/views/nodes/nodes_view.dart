@@ -2,17 +2,18 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graphview/GraphView.dart';
-import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/protos/nodes.pb.dart' as api;
+import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/node/base_node.dart';
+
+import 'node_selection.dart';
 
 class FetchNodesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NodesBloc, api.Nodes>(builder: (context, nodes) {
-      return DebugNodesView(nodes);
-      // return NodesView(nodes);
+      // return DebugNodesView(nodes);
+      return NodesView(nodes);
     });
   }
 }
@@ -24,46 +25,69 @@ class DebugNodesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: this.nodes.nodes.map((node) => BaseNode.fromNode(node)).toList());
+    return NodeSelectionContainer(
+      child: ListView(
+          children:
+              this.nodes.nodes.map((node) => BaseNode.fromNode(node)).toList()),
+      onSelection: (nodeType) {
+        log("adding new node with type $nodeType");
+      },
+    );
   }
 }
 
 class NodesView extends StatelessWidget {
-  final Graph _graph = Graph();
+  final api.Nodes nodes;
 
-  NodesView(api.Nodes nodes) {
-    Map<String, Node> graphNodes = Map();
-    for (var value in nodes.nodes) {
-      log("node ${value.title} ${value.type}");
-      final Node node = Node(BaseNode.fromNode(value));
-      _graph.addNode(node);
-      graphNodes[value.id] = node;
-    }
-    // for (var channel in nodes.channels) {
-    //   var lhs = graphNodes[channel.outputNode];
-    //   var rhs = graphNodes[channel.inputNode];
-    //
-    //   log("lhs: $lhs, rhs: $rhs");
-    //
-    //   _graph.addEdge(lhs, rhs);
-    // }
-  }
+  NodesView(this.nodes);
 
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
-      constrained: true,
-      boundaryMargin: EdgeInsets.all(100),
-      minScale: 0.01,
-      maxScale: 5.6,
-      child: GraphView(
-        graph: _graph,
-        algorithm: FruchtermanReingoldAlgorithm(),
-        paint: Paint()
-          ..color = Colors.green
-          ..strokeWidth = 1
-          ..style = PaintingStyle.stroke
-      )
+        constrained: true,
+        boundaryMargin: EdgeInsets.all(100),
+        minScale: 0.001,
+        maxScale: 10,
+        child: NodesViewer(this.nodes));
+  }
+}
+
+class NodesViewer extends StatelessWidget {
+  final api.Nodes nodes;
+
+  NodesViewer(this.nodes);
+
+  @override
+  Widget build(BuildContext context) {
+    return NodeSelectionContainer(
+      child: CustomMultiChildLayout(
+          delegate: NodesLayoutDelegate(this.nodes),
+          children: this.nodes.nodes.map((node) => LayoutId(id: node.id, child: BaseNode.fromNode(node))).toList()),
+      onSelection: (nodeType) {
+        log("adding new node with type $nodeType");
+      },
     );
+  }
+}
+
+const MULTIPLIER = 75;
+
+class NodesLayoutDelegate extends MultiChildLayoutDelegate {
+  final api.Nodes nodes;
+
+  NodesLayoutDelegate(this.nodes);
+
+  @override
+  void performLayout(Size size) {
+    for (var node in this.nodes.nodes) {
+      layoutChild(node.id, BoxConstraints.loose(size));
+      var offset = Offset(node.designer.x * MULTIPLIER, node.designer.y * MULTIPLIER);
+      positionChild(node.id, offset);
+    }
+  }
+
+  @override
+  bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
+    return false;
   }
 }

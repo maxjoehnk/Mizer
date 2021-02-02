@@ -4,6 +4,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
+const double BASE_WIDTH = 300;
+const double BASE_HEIGHT = 200;
+
 class BaseNode extends StatelessWidget {
   final Node node;
   final Widget child;
@@ -12,11 +15,37 @@ class BaseNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+        children: [BaseNodeView(node, child: child), NodeConnectors(node)]);
+  }
+
+  factory BaseNode.fromNode(Node node) {
+    return BaseNode(node, child: getChildForNode(node));
+  }
+}
+
+class BaseNodeView extends StatelessWidget {
+  const BaseNodeView(
+    this.node, {
+    Key key,
+    @required this.child,
+  }) : super(key: key);
+
+  final Node node;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
-    return Stack(children: [
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+    return Container(
+      width: BASE_WIDTH,
+      height: BASE_HEIGHT,
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: GestureDetector(
+        onSecondaryTap: () {
+          log("node context menu");
+        },
         child: Card(
             child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
@@ -32,7 +61,24 @@ class BaseNode extends StatelessWidget {
               ]),
         )),
       ),
-      Padding(
+    );
+  }
+}
+
+class NodeConnectors extends StatelessWidget {
+  const NodeConnectors(
+    this.node, {
+    Key key,
+  }) : super(key: key);
+
+  final Node node;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: BASE_WIDTH,
+      height: BASE_HEIGHT,
+      child: Padding(
         padding: const EdgeInsets.only(top: 16.0, left: 4, right: 4),
         child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -41,12 +87,8 @@ class BaseNode extends StatelessWidget {
               NodeInputs(this.node),
               NodeOutputs(this.node),
             ]),
-      )
-    ]);
-  }
-
-  factory BaseNode.fromNode(Node node) {
-    return BaseNode(node, child: getChildForNode(node));
+      ),
+    );
   }
 }
 

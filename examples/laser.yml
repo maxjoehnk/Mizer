@@ -3,9 +3,19 @@ nodes:
     id: ilda-file-0
     config:
       file: /home/max/Code/0_mizer/node-based-mizer/examples/media/ilda/test_pattern.ild
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
   - type: laser
     id: laser-0
     config:
       device: laser-0
+    designer:
+      position:
+        x: 5
+        y: 0
+      scale: 1
 channels:
   - frames@ilda-file-0 -> input@laser-0

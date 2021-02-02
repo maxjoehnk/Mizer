@@ -56,6 +56,7 @@ const Node$json = const {
     const {'1': 'inputs', '3': 4, '4': 3, '5': 11, '6': '.mizer.Port', '10': 'inputs'},
     const {'1': 'outputs', '3': 5, '4': 3, '5': 11, '6': '.mizer.Port', '10': 'outputs'},
     const {'1': 'properties', '3': 7, '4': 3, '5': 11, '6': '.mizer.Node.PropertiesEntry', '10': 'properties'},
+    const {'1': 'designer', '3': 8, '4': 1, '5': 11, '6': '.mizer.NodeDesigner', '10': 'designer'},
   ],
   '3': const [Node_PropertiesEntry$json],
   '4': const [Node_NodeType$json],
@@ -95,6 +96,15 @@ const Node_NodeType$json = const {
     const {'1': 'MidiOutput', '2': 19},
     const {'1': 'Laser', '2': 20},
     const {'1': 'IldaFile', '2': 21},
+  ],
+};
+
+const NodeDesigner$json = const {
+  '1': 'NodeDesigner',
+  '2': const [
+    const {'1': 'x', '3': 1, '4': 1, '5': 1, '10': 'x'},
+    const {'1': 'y', '3': 2, '4': 1, '5': 1, '10': 'y'},
+    const {'1': 'scale', '3': 3, '4': 1, '5': 1, '10': 'scale'},
   ],
 };
 

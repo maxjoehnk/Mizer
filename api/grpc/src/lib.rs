@@ -4,15 +4,16 @@ use crate::protos::{
 use grpc::ClientStub;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
-use mizer_project_files::Project;
+
 use std::sync::Arc;
+use mizer_pipeline::PipelineView;
 
 mod protos;
 mod services;
 
 pub fn start(
     handle: tokio::runtime::Handle,
-    projects: Vec<Project>,
+    pipeline_view: PipelineView,
     fixture_manager: FixtureManager,
     media_server: MediaServerApi,
 ) -> anyhow::Result<grpc::Server> {
@@ -20,7 +21,7 @@ pub fn start(
     server.http.event_loop = Some(handle);
     server.http.set_port(50051);
     server.add_service(NodesApiServer::new_service_def(
-        services::nodes::NodesApiImpl::new(projects),
+        services::nodes::NodesApiImpl::new(pipeline_view),
     ));
     server.add_service(SessionApiServer::new_service_def(
         services::session::SessionApiImpl::new(),

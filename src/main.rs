@@ -74,12 +74,14 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
         log::info!("{:#?}", pipeline);
     }
 
+    let view = pipeline.view();
+
     let media_server = MediaServer::new().await?;
     let media_server_api = media_server.open_api(&handle)?;
 
     let _grpc_api = mizer_grpc_api::start(
         handle.clone(),
-        projects,
+        view,
         fixture_manager,
         media_server_api.clone(),
     )?;

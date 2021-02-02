@@ -1,10 +1,20 @@
 nodes:
   - type: sacn-output
     id: sacn-output-0
+    designer:
+      position:
+        x: 10
+        y: 0
+      scale: 1
   - type: convert-to-dmx
     id: convert-to-dmx-0
     config:
       channel: 1
+    designer:
+      position:
+        x: 5
+        y: 0
+      scale: 1
   - type: oscillator
     id: oscillator-0
     config:
@@ -12,6 +22,11 @@ nodes:
     properties:
       ratio: 4
       max: 1
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
 
 channels:
   - dmx@convert-to-dmx-0 -> dmx@sacn-output-0

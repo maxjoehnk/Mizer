@@ -18,6 +18,10 @@ class NodesApiClient extends $grpc.Client {
       '/mizer.NodesApi/GetNodes',
       ($0.NodesRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Nodes.fromBuffer(value));
+  static final _$addNode = $grpc.ClientMethod<$0.AddNodeRequest, $0.Node>(
+      '/mizer.NodesApi/AddNode',
+      ($0.AddNodeRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
 
   NodesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -27,6 +31,11 @@ class NodesApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Nodes> getNodes($0.NodesRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$getNodes, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Node> addNode($0.AddNodeRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$addNode, request, options: options);
   }
 }
 
@@ -41,6 +50,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.NodesRequest.fromBuffer(value),
         ($0.Nodes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddNodeRequest, $0.Node>(
+        'AddNode',
+        addNode_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.AddNodeRequest.fromBuffer(value),
+        ($0.Node value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Nodes> getNodes_Pre(
@@ -48,6 +64,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return getNodes(call, await request);
   }
 
+  $async.Future<$0.Node> addNode_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.AddNodeRequest> request) async {
+    return addNode(call, await request);
+  }
+
   $async.Future<$0.Nodes> getNodes(
       $grpc.ServiceCall call, $0.NodesRequest request);
+  $async.Future<$0.Node> addNode(
+      $grpc.ServiceCall call, $0.AddNodeRequest request);
 }

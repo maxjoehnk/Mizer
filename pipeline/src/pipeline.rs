@@ -3,29 +3,55 @@ use crate::nodes::*;
 use anyhow::{anyhow, Context};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node_api::*;
-use mizer_project_files::{NodeConfig, Project, Channel};
+use mizer_project_files::{Project, Channel};
 use mizer_devices::DeviceManager;
 use crate::node_builder::NodeBuilder;
 use crate::pipeline_view::PipelineView;
 use std::sync::Arc;
 use dashmap::DashMap;
-use crate::NodeDesigner;
+use crate::{NodeDesigner, NodeTemplate, NodeDefinition, NodePortDefinition};
+use std::fmt::Formatter;
 
-#[derive(Debug)]
+pub enum PipelineCommand {
+    AddNode(NodeTemplate, flume::Sender<(String, NodeDefinition)>)
+}
+
 pub struct Pipeline<'a> {
     default_clock: ClockNode,
     nodes: Arc<DashMap<String, Node<'a>>>,
     designer: Arc<DashMap<String, NodeDesigner>>,
     channels: Vec<Channel>,
+    command_channel: (flume::Sender<PipelineCommand>, flume::Receiver<PipelineCommand>),
+    fixture_manager: FixtureManager,
+    device_manager: DeviceManager,
+    next_id: u32
 }
 
-impl<'a> Default for Pipeline<'a> {
-    fn default() -> Self {
+impl<'a> std::fmt::Debug for Pipeline<'a> {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.debug_struct("Pipeline")
+            .field("default_clock", &self.default_clock)
+            .field("nodes", &self.nodes)
+            .field("designer", &self.designer)
+            .field("channels", &self.channels)
+            .finish()
+    }
+}
+
+impl<'a> Pipeline<'a> {
+    pub fn new(
+        fixture_manager: FixtureManager,
+        device_manager: DeviceManager,
+    ) -> Self {
         Pipeline {
-            default_clock: ClockNode::new(90.),
+            default_clock: Default::default(),
             nodes: Default::default(),
             designer: Default::default(),
             channels: Default::default(),
+            command_channel: flume::unbounded(),
+            fixture_manager,
+            device_manager,
+            next_id: 0
         }
     }
 }
@@ -34,12 +60,15 @@ impl<'a> Pipeline<'a> {
     pub fn load_project(
         &mut self,
         project: Project,
-        fixture_manager: &FixtureManager,
-        device_manager: DeviceManager,
     ) -> anyhow::Result<()> {
+        let mut pipeline_context = PipelineContext {
+            clock: &mut self.default_clock,
+            fixture_manager: &self.fixture_manager,
+            device_manager: &self.device_manager
+        };
         for node_config in project.nodes {
             let id = node_config.id.clone();
-            let mut node = node_config.config.build(fixture_manager, &device_manager, &mut self.default_clock);
+            let mut node = node_config.config.build(&mut pipeline_context);
             for (key, value) in node_config.properties {
                 node.set_numeric_property(&key, value);
             }
@@ -53,6 +82,14 @@ impl<'a> Pipeline<'a> {
         }
 
         Ok(())
+    }
+
+    fn get_context(&mut self) -> PipelineContext {
+        PipelineContext {
+            clock: &mut self.default_clock,
+            fixture_manager: &self.fixture_manager,
+            device_manager: &self.device_manager,
+        }
     }
 
     fn connect_nodes(&mut self, channel: &Channel) -> anyhow::Result<()> {
@@ -91,6 +128,7 @@ impl<'a> Pipeline<'a> {
     }
 
     pub fn process(&mut self) {
+        self.work_commands();
         self.default_clock.process();
         for mut item in self.nodes.iter_mut() {
             let id = item.key().clone();
@@ -102,8 +140,51 @@ impl<'a> Pipeline<'a> {
         }
     }
 
+    fn work_commands(&mut self) {
+        match self.command_channel.1.try_recv() {
+            Ok(PipelineCommand::AddNode(template, resp)) => {
+                log::debug!("Adding node from template: {:?}", template);
+                let node = template.node_type.build(&mut self.get_context());
+                let details = node.get_details();
+                let id = format!("new-node-{}", self.next_id);
+                self.next_id += 1;
+                self.designer.insert(id.clone(), template.designer.clone());
+                let definition = NodeDefinition {
+                    node_type: (&node).into(),
+                    designer: template.designer,
+                    inputs: details.inputs.into_iter().map(NodePortDefinition::from).collect(),
+                    outputs: details.outputs.into_iter().map(NodePortDefinition::from).collect(),
+                };
+                self.nodes.insert(id.clone(), node);
+
+                resp.send((id, definition));
+            },
+            Err(flume::TryRecvError::Empty) => {},
+            Err(flume::TryRecvError::Disconnected) => unreachable!(),
+        }
+    }
+
     pub fn view(&self) -> PipelineView {
-        PipelineView::new(&self.nodes, &self.designer, self.channels.clone())
+        PipelineView::new(&self.nodes, &self.designer, self.channels.clone(), self.command_channel.0.clone())
     }
 }
 
+struct PipelineContext<'a> {
+    clock: &'a mut ClockNode,
+    fixture_manager: &'a FixtureManager,
+    device_manager: &'a DeviceManager,
+}
+
+impl<'a> NodeContext for PipelineContext<'a> {
+    fn connect_default_clock(&mut self) -> ClockChannel {
+        self.clock.get_clock_channel()
+    }
+
+    fn device_manager(&self) -> &'a DeviceManager {
+        self.device_manager
+    }
+
+    fn fixture_manager(&self) -> &'a FixtureManager {
+        self.fixture_manager
+    }
+}

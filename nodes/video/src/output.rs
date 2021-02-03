@@ -20,6 +20,12 @@ impl VideoOutputNode {
     }
 }
 
+impl Default for VideoOutputNode {
+    fn default() -> Self {
+        VideoOutputNode::new()
+    }
+}
+
 impl ProcessingNode for VideoOutputNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("VideoOutputNode")

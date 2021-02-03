@@ -6,15 +6,17 @@ pub use test_node::*;
 use thiserror::Error;
 
 pub use crate::channels::*;
+use mizer_devices::DeviceManager;
+use mizer_fixtures::manager::FixtureManager;
 
 mod channels;
 
 #[derive(Debug, Clone)]
 pub struct NodeDetails {
-    name: String,
-    inputs: Vec<NodeInput>,
-    outputs: Vec<NodeOutput>,
-    properties: Vec<NodeProperty>,
+    pub name: String,
+    pub inputs: Vec<NodeInput>,
+    pub outputs: Vec<NodeOutput>,
+    pub properties: Vec<NodeProperty>,
 }
 
 impl NodeDetails {
@@ -165,7 +167,17 @@ pub enum PropertyType {
     Numeric,
 }
 
-pub trait ProcessingNode: SourceNode + DestinationNode {
+pub trait NodeCreator {
+    fn create(context: &mut dyn NodeContext) -> Self;
+}
+
+impl<T: Default + Sized> NodeCreator for T {
+    fn create(_: &mut dyn NodeContext) -> Self {
+        Default::default()
+    }
+}
+
+pub trait ProcessingNode: SourceNode + DestinationNode + NodeCreator {
     fn get_details(&self) -> NodeDetails;
 
     fn process(&mut self) {}
@@ -309,6 +321,12 @@ impl From<glib::error::BoolError> for ConnectionError {
 }
 
 pub type ConnectionResult = Result<(), ConnectionError>;
+
+pub trait NodeContext {
+    fn connect_default_clock(&mut self) -> ClockChannel;
+    fn device_manager(&self) -> &DeviceManager;
+    fn fixture_manager(&self) -> &FixtureManager;
+}
 
 mod deps {
     pub use crossbeam_channel::unbounded as channel;

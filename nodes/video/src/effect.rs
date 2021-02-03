@@ -50,6 +50,12 @@ pub enum VideoEffectType {
     Laplacian,
 }
 
+impl Default for VideoEffectType {
+    fn default() -> Self {
+        VideoEffectType::Fisheye
+    }
+}
+
 impl std::fmt::Display for VideoEffectType {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         let name = format!("{:?}", self).to_lowercase();
@@ -67,6 +73,12 @@ impl VideoEffectNode {
             effect,
             effect_type,
         }
+    }
+}
+
+impl Default for VideoEffectNode {
+    fn default() -> Self {
+        VideoEffectNode::new(Default::default())
     }
 }
 

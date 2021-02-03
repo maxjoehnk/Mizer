@@ -37,6 +37,12 @@ impl VideoTransformNode {
     }
 }
 
+impl Default for VideoTransformNode {
+    fn default() -> Self {
+        VideoTransformNode::new()
+    }
+}
+
 impl ProcessingNode for VideoTransformNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("VideoTransformNode")

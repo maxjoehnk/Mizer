@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 const double BASE_WIDTH = 300;
-const double BASE_HEIGHT = 200;
+const double BASE_HEIGHT = 225;
 
 class BaseNode extends StatelessWidget {
   final Node node;
@@ -128,24 +128,27 @@ class NodePort extends StatelessWidget {
     var color = getColorForProtocol(port.protocol);
     return Padding(
       padding: EdgeInsets.only(bottom: 8),
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-            gradient: RadialGradient(colors: [color.shade600, color.shade500]),
-            shadows: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 2,
-                  offset: Offset(2, 2))
-            ],
-            shape: CircleBorder(
-                side: BorderSide(
-              color: Colors.white,
-              style: BorderStyle.solid,
-              width: 2,
-            ))),
-        child: Container(
-          width: 16,
-          height: 16,
+      child: Tooltip(
+        message: port.protocol.toString(),
+        child: DecoratedBox(
+          decoration: ShapeDecoration(
+              gradient: RadialGradient(colors: [color.shade600, color.shade500]),
+              shadows: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 2,
+                    offset: Offset(2, 2))
+              ],
+              shape: CircleBorder(
+                  side: BorderSide(
+                color: Colors.white,
+                style: BorderStyle.solid,
+                width: 2,
+              ))),
+          child: Container(
+            width: 16,
+            height: 16,
+          ),
         ),
       ),
     );

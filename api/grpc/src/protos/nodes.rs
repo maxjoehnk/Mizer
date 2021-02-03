@@ -24,6 +24,211 @@
 // const _PROTOBUF_VERSION_CHECK: () = ::protobuf::VERSION_2_18_1;
 
 #[derive(PartialEq,Clone,Default)]
+pub struct AddNodeRequest {
+    // message fields
+    pub field_type: Node_NodeType,
+    pub position: ::protobuf::SingularPtrField<NodePosition>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddNodeRequest {
+    fn default() -> &'a AddNodeRequest {
+        <AddNodeRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddNodeRequest {
+    pub fn new() -> AddNodeRequest {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.Node.NodeType type = 1;
+
+
+    pub fn get_field_type(&self) -> Node_NodeType {
+        self.field_type
+    }
+    pub fn clear_field_type(&mut self) {
+        self.field_type = Node_NodeType::Fader;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_type(&mut self, v: Node_NodeType) {
+        self.field_type = v;
+    }
+
+    // .mizer.NodePosition position = 2;
+
+
+    pub fn get_position(&self) -> &NodePosition {
+        self.position.as_ref().unwrap_or_else(|| <NodePosition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_position(&mut self) {
+        self.position.clear();
+    }
+
+    pub fn has_position(&self) -> bool {
+        self.position.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position(&mut self, v: NodePosition) {
+        self.position = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_position(&mut self) -> &mut NodePosition {
+        if self.position.is_none() {
+            self.position.set_default();
+        }
+        self.position.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_position(&mut self) -> NodePosition {
+        self.position.take().unwrap_or_else(|| NodePosition::new())
+    }
+}
+
+impl ::protobuf::Message for AddNodeRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.position {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 1, &mut self.unknown_fields)?
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.position)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.field_type != Node_NodeType::Fader {
+            my_size += ::protobuf::rt::enum_size(1, self.field_type);
+        }
+        if let Some(ref v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.field_type != Node_NodeType::Fader {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.field_type))?;
+        }
+        if let Some(ref v) = self.position.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddNodeRequest {
+        AddNodeRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Node_NodeType>>(
+                "type",
+                |m: &AddNodeRequest| { &m.field_type },
+                |m: &mut AddNodeRequest| { &mut m.field_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NodePosition>>(
+                "position",
+                |m: &AddNodeRequest| { &m.position },
+                |m: &mut AddNodeRequest| { &mut m.position },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddNodeRequest>(
+                "AddNodeRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddNodeRequest {
+        static instance: ::protobuf::rt::LazyV2<AddNodeRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddNodeRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddNodeRequest {
+    fn clear(&mut self) {
+        self.field_type = Node_NodeType::Fader;
+        self.position.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddNodeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddNodeRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct NodesRequest {
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1235,24 +1440,23 @@ impl ::protobuf::reflect::ProtobufValue for Node_NodeType {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct NodeDesigner {
+pub struct NodePosition {
     // message fields
     pub x: f64,
     pub y: f64,
-    pub scale: f64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a NodeDesigner {
-    fn default() -> &'a NodeDesigner {
-        <NodeDesigner as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a NodePosition {
+    fn default() -> &'a NodePosition {
+        <NodePosition as ::protobuf::Message>::default_instance()
     }
 }
 
-impl NodeDesigner {
-    pub fn new() -> NodeDesigner {
+impl NodePosition {
+    pub fn new() -> NodePosition {
         ::std::default::Default::default()
     }
 
@@ -1285,24 +1489,9 @@ impl NodeDesigner {
     pub fn set_y(&mut self, v: f64) {
         self.y = v;
     }
-
-    // double scale = 3;
-
-
-    pub fn get_scale(&self) -> f64 {
-        self.scale
-    }
-    pub fn clear_scale(&mut self) {
-        self.scale = 0.;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_scale(&mut self, v: f64) {
-        self.scale = v;
-    }
 }
 
-impl ::protobuf::Message for NodeDesigner {
+impl ::protobuf::Message for NodePosition {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -1325,13 +1514,6 @@ impl ::protobuf::Message for NodeDesigner {
                     let tmp = is.read_double()?;
                     self.y = tmp;
                 },
-                3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_double()?;
-                    self.scale = tmp;
-                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1350,9 +1532,6 @@ impl ::protobuf::Message for NodeDesigner {
         if self.y != 0. {
             my_size += 9;
         }
-        if self.scale != 0. {
-            my_size += 9;
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1365,8 +1544,214 @@ impl ::protobuf::Message for NodeDesigner {
         if self.y != 0. {
             os.write_double(2, self.y)?;
         }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> NodePosition {
+        NodePosition::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "x",
+                |m: &NodePosition| { &m.x },
+                |m: &mut NodePosition| { &mut m.x },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "y",
+                |m: &NodePosition| { &m.y },
+                |m: &mut NodePosition| { &mut m.y },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<NodePosition>(
+                "NodePosition",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static NodePosition {
+        static instance: ::protobuf::rt::LazyV2<NodePosition> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(NodePosition::new)
+    }
+}
+
+impl ::protobuf::Clear for NodePosition {
+    fn clear(&mut self) {
+        self.x = 0.;
+        self.y = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for NodePosition {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for NodePosition {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct NodeDesigner {
+    // message fields
+    pub position: ::protobuf::SingularPtrField<NodePosition>,
+    pub scale: f64,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a NodeDesigner {
+    fn default() -> &'a NodeDesigner {
+        <NodeDesigner as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl NodeDesigner {
+    pub fn new() -> NodeDesigner {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.NodePosition position = 1;
+
+
+    pub fn get_position(&self) -> &NodePosition {
+        self.position.as_ref().unwrap_or_else(|| <NodePosition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_position(&mut self) {
+        self.position.clear();
+    }
+
+    pub fn has_position(&self) -> bool {
+        self.position.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position(&mut self, v: NodePosition) {
+        self.position = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_position(&mut self) -> &mut NodePosition {
+        if self.position.is_none() {
+            self.position.set_default();
+        }
+        self.position.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_position(&mut self) -> NodePosition {
+        self.position.take().unwrap_or_else(|| NodePosition::new())
+    }
+
+    // double scale = 2;
+
+
+    pub fn get_scale(&self) -> f64 {
+        self.scale
+    }
+    pub fn clear_scale(&mut self) {
+        self.scale = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_scale(&mut self, v: f64) {
+        self.scale = v;
+    }
+}
+
+impl ::protobuf::Message for NodeDesigner {
+    fn is_initialized(&self) -> bool {
+        for v in &self.position {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.position)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.scale = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         if self.scale != 0. {
-            os.write_double(3, self.scale)?;
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.position.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.scale != 0. {
+            os.write_double(2, self.scale)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1406,15 +1791,10 @@ impl ::protobuf::Message for NodeDesigner {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
-                "x",
-                |m: &NodeDesigner| { &m.x },
-                |m: &mut NodeDesigner| { &mut m.x },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
-                "y",
-                |m: &NodeDesigner| { &m.y },
-                |m: &mut NodeDesigner| { &mut m.y },
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NodePosition>>(
+                "position",
+                |m: &NodeDesigner| { &m.position },
+                |m: &mut NodeDesigner| { &mut m.position },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
                 "scale",
@@ -1437,8 +1817,7 @@ impl ::protobuf::Message for NodeDesigner {
 
 impl ::protobuf::Clear for NodeDesigner {
     fn clear(&mut self) {
-        self.x = 0.;
-        self.y = 0.;
+        self.position.clear();
         self.scale = 0.;
         self.unknown_fields.clear();
     }
@@ -1661,6 +2040,7 @@ pub enum ChannelProtocol {
     Boolean = 10,
     Select = 11,
     Pixels = 12,
+    Laser = 13,
 }
 
 impl ::protobuf::ProtobufEnum for ChannelProtocol {
@@ -1683,6 +2063,7 @@ impl ::protobuf::ProtobufEnum for ChannelProtocol {
             10 => ::std::option::Option::Some(ChannelProtocol::Boolean),
             11 => ::std::option::Option::Some(ChannelProtocol::Select),
             12 => ::std::option::Option::Some(ChannelProtocol::Pixels),
+            13 => ::std::option::Option::Some(ChannelProtocol::Laser),
             _ => ::std::option::Option::None
         }
     }
@@ -1702,6 +2083,7 @@ impl ::protobuf::ProtobufEnum for ChannelProtocol {
             ChannelProtocol::Boolean,
             ChannelProtocol::Select,
             ChannelProtocol::Pixels,
+            ChannelProtocol::Laser,
         ];
         values
     }
@@ -1730,43 +2112,48 @@ impl ::protobuf::reflect::ProtobufValue for ChannelProtocol {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bnodes.proto\x12\x05mizer\"\x0e\n\x0cNodesRequest\"]\n\x05Nodes\x12\
-    !\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\x121\n\x08ch\
-    annels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeConnectionR\x08channels\"\xda\
-    \x01\n\x0eNodeConnection\x12\x1c\n\tinputNode\x18\x01\x20\x01(\tR\tinput\
-    Node\x12)\n\tinputPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\tinputPort\
-    \x12\x1e\n\noutputNode\x18\x03\x20\x01(\tR\noutputNode\x12+\n\noutputPor\
-    t\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\noutputPort\x122\n\x08protocol\
-    \x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\xb0\x05\
-    \n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\
-    \x04type\x12\x0e\n\x02id\x18\x02\x20\x01(\tR\x02id\x12\x14\n\x05title\
-    \x18\x03\x20\x01(\tR\x05title\x12#\n\x06inputs\x18\x04\x20\x03(\x0b2\x0b\
-    .mizer.PortR\x06inputs\x12%\n\x07outputs\x18\x05\x20\x03(\x0b2\x0b.mizer\
-    .PortR\x07outputs\x12;\n\nproperties\x18\x07\x20\x03(\x0b2\x1b.mizer.Nod\
-    e.PropertiesEntryR\nproperties\x12/\n\x08designer\x18\x08\x20\x01(\x0b2\
-    \x13.mizer.NodeDesignerR\x08designer\x1a=\n\x0fPropertiesEntry\x12\x10\n\
-    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\
-    \x01R\x05value:\x028\x01\"\xde\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\
-    \x12\x10\n\x0cConvertToDmx\x10\x01\x12\x10\n\x0cArtnetOutput\x10\x02\x12\
-    \x0e\n\nSacnOutput\x10\x03\x12\x0e\n\nOscillator\x10\x04\x12\t\n\x05Cloc\
-    k\x10\x05\x12\x0c\n\x08OscInput\x10\x06\x12\r\n\tVideoFile\x10\x07\x12\
-    \x0f\n\x0bVideoOutput\x10\x08\x12\x0f\n\x0bVideoEffect\x10\t\x12\x15\n\
-    \x11VideoColorBalance\x10\n\x12\x12\n\x0eVideoTransform\x10\x0b\x12\n\n\
-    \x06Script\x10\x0c\x12\x0e\n\nPixelToDmx\x10\r\x12\x10\n\x0cPixelPattern\
-    \x10\x0e\x12\r\n\tOpcOutput\x10\x0f\x12\x0b\n\x07Fixture\x10\x10\x12\x0c\
-    \n\x08Sequence\x10\x11\x12\r\n\tMidiInput\x10\x12\x12\x0e\n\nMidiOutput\
-    \x10\x13\x12\t\n\x05Laser\x10\x14\x12\x0c\n\x08IldaFile\x10\x15\"@\n\x0c\
-    NodeDesigner\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\
-    \x18\x02\x20\x01(\x01R\x01y\x12\x14\n\x05scale\x18\x03\x20\x01(\x01R\x05\
-    scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\
-    \x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protoco\
-    l*\xa8\x01\n\x0fChannelProtocol\x12\x07\n\x03Dmx\x10\0\x12\x0b\n\x07Nume\
-    ric\x10\x01\x12\x0b\n\x07Trigger\x10\x02\x12\t\n\x05Clock\x10\x03\x12\t\
-    \n\x05Video\x10\x04\x12\t\n\x05Color\x10\x05\x12\n\n\x06Vector\x10\x06\
-    \x12\x08\n\x04Text\x10\x07\x12\x08\n\x04Midi\x10\x08\x12\x0c\n\x08Timeco\
-    de\x10\t\x12\x0b\n\x07Boolean\x10\n\x12\n\n\x06Select\x10\x0b\x12\n\n\
-    \x06Pixels\x10\x0c2;\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.Node\
-    sRequest\x1a\x0c.mizer.Nodes\"\0b\x06proto3\
+    \n\x0bnodes.proto\x12\x05mizer\"k\n\x0eAddNodeRequest\x12(\n\x04type\x18\
+    \x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12/\n\x08position\
+    \x18\x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\"\x0e\n\x0cNo\
+    desRequest\"]\n\x05Nodes\x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer\
+    .NodeR\x05nodes\x121\n\x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeC\
+    onnectionR\x08channels\"\xda\x01\n\x0eNodeConnection\x12\x1c\n\tinputNod\
+    e\x18\x01\x20\x01(\tR\tinputNode\x12)\n\tinputPort\x18\x02\x20\x01(\x0b2\
+    \x0b.mizer.PortR\tinputPort\x12\x1e\n\noutputNode\x18\x03\x20\x01(\tR\no\
+    utputNode\x12+\n\noutputPort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\noutp\
+    utPort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtoco\
+    lR\x08protocol\"\xb0\x05\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\
+    \x14.mizer.Node.NodeTypeR\x04type\x12\x0e\n\x02id\x18\x02\x20\x01(\tR\
+    \x02id\x12\x14\n\x05title\x18\x03\x20\x01(\tR\x05title\x12#\n\x06inputs\
+    \x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07outputs\x18\
+    \x05\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12;\n\nproperties\x18\x07\
+    \x20\x03(\x0b2\x1b.mizer.Node.PropertiesEntryR\nproperties\x12/\n\x08des\
+    igner\x18\x08\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\x1a=\n\
+    \x0fPropertiesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
+    \n\x05value\x18\x02\x20\x01(\x01R\x05value:\x028\x01\"\xde\x02\n\x08Node\
+    Type\x12\t\n\x05Fader\x10\0\x12\x10\n\x0cConvertToDmx\x10\x01\x12\x10\n\
+    \x0cArtnetOutput\x10\x02\x12\x0e\n\nSacnOutput\x10\x03\x12\x0e\n\nOscill\
+    ator\x10\x04\x12\t\n\x05Clock\x10\x05\x12\x0c\n\x08OscInput\x10\x06\x12\
+    \r\n\tVideoFile\x10\x07\x12\x0f\n\x0bVideoOutput\x10\x08\x12\x0f\n\x0bVi\
+    deoEffect\x10\t\x12\x15\n\x11VideoColorBalance\x10\n\x12\x12\n\x0eVideoT\
+    ransform\x10\x0b\x12\n\n\x06Script\x10\x0c\x12\x0e\n\nPixelToDmx\x10\r\
+    \x12\x10\n\x0cPixelPattern\x10\x0e\x12\r\n\tOpcOutput\x10\x0f\x12\x0b\n\
+    \x07Fixture\x10\x10\x12\x0c\n\x08Sequence\x10\x11\x12\r\n\tMidiInput\x10\
+    \x12\x12\x0e\n\nMidiOutput\x10\x13\x12\t\n\x05Laser\x10\x14\x12\x0c\n\
+    \x08IldaFile\x10\x15\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01\
+    (\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\n\x0cNodeDesign\
+    er\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08p\
+    osition\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\"N\n\x04Port\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\
+    \x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\xb3\x01\n\x0f\
+    ChannelProtocol\x12\x07\n\x03Dmx\x10\0\x12\x0b\n\x07Numeric\x10\x01\x12\
+    \x0b\n\x07Trigger\x10\x02\x12\t\n\x05Clock\x10\x03\x12\t\n\x05Video\x10\
+    \x04\x12\t\n\x05Color\x10\x05\x12\n\n\x06Vector\x10\x06\x12\x08\n\x04Tex\
+    t\x10\x07\x12\x08\n\x04Midi\x10\x08\x12\x0c\n\x08Timecode\x10\t\x12\x0b\
+    \n\x07Boolean\x10\n\x12\n\n\x06Select\x10\x0b\x12\n\n\x06Pixels\x10\x0c\
+    \x12\t\n\x05Laser\x10\r2l\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer\
+    .NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.Ad\
+    dNodeRequest\x1a\x0b.mizer.Node\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

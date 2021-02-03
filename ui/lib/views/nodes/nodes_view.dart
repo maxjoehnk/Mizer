@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/protos/nodes.pb.dart' as api;
+import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/node/base_node.dart';
 
@@ -11,33 +11,14 @@ import 'node_selection.dart';
 class FetchNodesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NodesBloc, api.Nodes>(builder: (context, nodes) {
-      // return DebugNodesView(nodes);
+    return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
       return NodesView(nodes);
     });
   }
 }
 
-class DebugNodesView extends StatelessWidget {
-  final api.Nodes nodes;
-
-  DebugNodesView(this.nodes);
-
-  @override
-  Widget build(BuildContext context) {
-    return NodeSelectionContainer(
-      child: ListView(
-          children:
-              this.nodes.nodes.map((node) => BaseNode.fromNode(node)).toList()),
-      onSelection: (nodeType) {
-        log("adding new node with type $nodeType");
-      },
-    );
-  }
-}
-
 class NodesView extends StatelessWidget {
-  final api.Nodes nodes;
+  final Nodes nodes;
 
   NodesView(this.nodes);
 
@@ -52,28 +33,52 @@ class NodesView extends StatelessWidget {
   }
 }
 
+class BackgroundPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    for (double i = 0; i < size.height; i += MULTIPLIER) {
+      canvas.drawLine(Offset(0, i), Offset(size.width, i), Paint()..color = Colors.white10);
+    }
+    for (double i = 0; i < size.width; i += MULTIPLIER) {
+      canvas.drawLine(Offset(i, 0), Offset(i, size.height), Paint()..color = Colors.white10);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
 class NodesViewer extends StatelessWidget {
-  final api.Nodes nodes;
+  final Nodes nodes;
 
   NodesViewer(this.nodes);
 
   @override
   Widget build(BuildContext context) {
-    return NodeSelectionContainer(
-      child: CustomMultiChildLayout(
-          delegate: NodesLayoutDelegate(this.nodes),
-          children: this.nodes.nodes.map((node) => LayoutId(id: node.id, child: BaseNode.fromNode(node))).toList()),
-      onSelection: (nodeType) {
-        log("adding new node with type $nodeType");
-      },
+    return CustomPaint(
+      painter: BackgroundPainter(),
+      child: Padding(
+        padding: const EdgeInsets.all(MULTIPLIER),
+        child: NodeSelectionContainer(
+          child: CustomMultiChildLayout(
+              delegate: NodesLayoutDelegate(this.nodes),
+              children: this.nodes.nodes.map((node) => LayoutId(id: node.id, child: BaseNode.fromNode(node))).toList()),
+          onSelection: (nodeType, position) {
+            log("adding new node with type $nodeType at ${position / MULTIPLIER}");
+            context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position / MULTIPLIER));
+          },
+        ),
+      ),
     );
   }
 }
 
-const MULTIPLIER = 75;
+const double MULTIPLIER = 75;
 
 class NodesLayoutDelegate extends MultiChildLayoutDelegate {
-  final api.Nodes nodes;
+  final Nodes nodes;
 
   NodesLayoutDelegate(this.nodes);
 
@@ -81,7 +86,7 @@ class NodesLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     for (var node in this.nodes.nodes) {
       layoutChild(node.id, BoxConstraints.loose(size));
-      var offset = Offset(node.designer.x * MULTIPLIER, node.designer.y * MULTIPLIER);
+      var offset = Offset(node.designer.position.x * MULTIPLIER, node.designer.position.y * MULTIPLIER);
       positionChild(node.id, offset);
     }
   }

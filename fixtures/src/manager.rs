@@ -1,19 +1,20 @@
 use crate::fixture::{Fixture, FixtureDefinition};
-use std::collections::HashMap;
+use dashmap::DashMap;
+use std::sync::Arc;
+use std::ops::Deref;
 
+#[derive(Default, Clone)]
 pub struct FixtureManager {
-    fixtures: HashMap<String, Fixture>,
+    fixtures: Arc<DashMap<String, Fixture>>,
 }
 
 impl FixtureManager {
     pub fn new() -> Self {
-        FixtureManager {
-            fixtures: Default::default(),
-        }
+        FixtureManager::default()
     }
 
     pub fn add_fixture(
-        &mut self,
+        &self,
         fixture_id: String,
         definition: FixtureDefinition,
         mode: Option<String>,
@@ -24,11 +25,11 @@ impl FixtureManager {
         self.fixtures.insert(fixture_id, fixture);
     }
 
-    pub fn get_fixture(&self, fixture_id: &str) -> Option<&Fixture> {
+    pub fn get_fixture(& self, fixture_id: &str) -> Option<impl Deref<Target = Fixture> + '_> {
         self.fixtures.get(fixture_id)
     }
 
-    pub fn get_fixtures(&self) -> Vec<&Fixture> {
-        self.fixtures.values().collect()
+    pub fn get_fixtures(&self) -> Vec<impl Deref<Target = Fixture> + '_> {
+        self.fixtures.iter().collect()
     }
 }

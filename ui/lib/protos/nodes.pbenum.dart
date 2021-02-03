@@ -23,6 +23,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
   static const ChannelProtocol Boolean = ChannelProtocol._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Boolean');
   static const ChannelProtocol Select = ChannelProtocol._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
   static const ChannelProtocol Pixels = ChannelProtocol._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Pixels');
+  static const ChannelProtocol Laser = ChannelProtocol._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Laser');
 
   static const $core.List<ChannelProtocol> values = <ChannelProtocol> [
     Dmx,
@@ -38,6 +39,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
     Boolean,
     Select,
     Pixels,
+    Laser,
   ];
 
   static final $core.Map<$core.int, ChannelProtocol> _byValue = $pb.ProtobufEnum.initByValue(values);

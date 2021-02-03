@@ -1,6 +1,7 @@
 use mizer_node_api::*;
 use mizer_protocol_midi::*;
 
+#[derive(Default)]
 pub struct MidiOutputNode {}
 
 impl MidiOutputNode {

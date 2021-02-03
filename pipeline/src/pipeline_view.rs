@@ -1,20 +1,28 @@
 use std::sync::Arc;
 use dashmap::DashMap;
-use crate::Node;
-use std::collections::HashMap;
+use crate::{Node, PipelineCommand};
 use mizer_project_files::{Channel, NodeDesignerConfig};
+pub use mizer_node_api::NodeChannel;
+use mizer_node_api::{ProcessingNode, NodeInput, NodeOutput};
+use crate::node_builder::NodeBuilder;
+
+#[derive(Clone, Debug)]
+pub struct NodeTemplate {
+    pub designer: NodeDesigner,
+    pub node_type: NodeType,
+}
 
 #[derive(Clone, Debug)]
 pub struct PipelineView {
-    // nodes: Arc<DashMap<String, Node<'a>>>,
-    node_definitions: HashMap<String, NodeDefinition>,
+    worker_channel: flume::Sender<PipelineCommand>,
+    node_definitions: DashMap<String, NodeDefinition>,
     channels: Vec<Channel>, // TODO: these need to be shared
 }
 
 impl PipelineView {
-    pub(crate) fn new(nodes: &Arc<DashMap<String, Node>>, designer: &Arc<DashMap<String, NodeDesigner>>, channels: Vec<Channel>) -> Self {
+    pub(crate) fn new(nodes: &Arc<DashMap<String, Node>>, designer: &Arc<DashMap<String, NodeDesigner>>, channels: Vec<Channel>, worker_channel: flume::Sender<PipelineCommand>) -> Self {
         PipelineView {
-            // nodes: Arc::clone(nodes),
+            worker_channel,
             node_definitions: definitions_from_nodes(Arc::clone(nodes), designer),
             channels,
         }
@@ -23,23 +31,41 @@ impl PipelineView {
     pub fn get_nodes(&self) -> Vec<(String, NodeDefinition)> {
         self.node_definitions
             .iter()
-            .map(|(key, node)| (key.clone(), node.clone()))
+            .map(|definition| (definition.key().clone(), definition.value().clone()))
             .collect()
     }
 
     pub fn get_channels(&self) -> &[Channel] {
         &self.channels[..]
     }
+
+    pub fn add_node<T: Into<NodeTemplate>>(&self, node: T) -> anyhow::Result<(String, NodeDefinition)> {
+        let node = node.into();
+        let (sender, resp) = flume::bounded(1);
+
+        let cmd = PipelineCommand::AddNode(node, sender.clone());
+        self.worker_channel.send(cmd)?;
+        let (id, definition) = resp.recv()?;
+
+        log::debug!("received {:?}", &definition);
+
+        self.node_definitions.insert(id.clone(), definition.clone());
+
+        Ok((id, definition))
+    }
 }
 
-fn definitions_from_nodes(nodes: Arc<DashMap<String, Node>>, designer: &Arc<DashMap<String, NodeDesigner>>) -> HashMap<String, NodeDefinition> {
-    let mut definitions = HashMap::new();
+fn definitions_from_nodes(nodes: Arc<DashMap<String, Node>>, designer: &Arc<DashMap<String, NodeDesigner>>) -> DashMap<String, NodeDefinition> {
+    let definitions = DashMap::new();
     for item in nodes.iter() {
         let id = item.key();
         let node = item.value();
+        let details = node.get_details();
         definitions.insert(id.clone(), NodeDefinition {
             node_type: node.into(),
             designer: designer.get(id).unwrap().clone(),
+            inputs: details.inputs.into_iter().map(NodePortDefinition::from).collect(),
+            outputs: details.outputs.into_iter().map(NodePortDefinition::from).collect(),
         });
     }
 
@@ -50,6 +76,32 @@ fn definitions_from_nodes(nodes: Arc<DashMap<String, Node>>, designer: &Arc<Dash
 pub struct NodeDefinition {
     pub designer: NodeDesigner,
     pub node_type: NodeType,
+    pub inputs: Vec<NodePortDefinition>,
+    pub outputs: Vec<NodePortDefinition>,
+}
+
+#[derive(Clone, Debug)]
+pub struct NodePortDefinition {
+    pub name: String,
+    pub channel: NodeChannel,
+}
+
+impl From<NodeInput> for NodePortDefinition {
+    fn from(input: NodeInput) -> Self {
+        NodePortDefinition {
+            name: input.name,
+            channel: input.channel_type
+        }
+    }
+}
+
+impl From<NodeOutput> for NodePortDefinition {
+    fn from(output: NodeOutput) -> Self {
+        NodePortDefinition {
+            name: output.name,
+            channel: output.channel_type,
+        }
+    }
 }
 
 #[derive(Clone, Debug, Default)]
@@ -69,7 +121,7 @@ impl From<NodeDesignerConfig> for NodeDesigner {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Copy)]
 pub enum NodeType {
     Fader,
     ConvertToDmx,

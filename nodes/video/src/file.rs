@@ -54,6 +54,12 @@ impl VideoFileNode {
     }
 }
 
+impl Default for VideoFileNode {
+    fn default() -> Self {
+        unimplemented!()
+    }
+}
+
 impl ProcessingNode for VideoFileNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("VideoFileNode")

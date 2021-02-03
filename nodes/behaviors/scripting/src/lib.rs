@@ -27,6 +27,12 @@ impl<'a> ScriptingNode<'a> {
     }
 }
 
+impl<'a> Default for ScriptingNode<'a> {
+    fn default() -> Self {
+        ScriptingNode::new("")
+    }
+}
+
 impl<'a> ProcessingNode for ScriptingNode<'a> {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("ScriptingNode").with_outputs(vec![NodeOutput::numeric("value")])

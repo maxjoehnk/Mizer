@@ -18,6 +18,12 @@ impl IldaNode {
     }
 }
 
+impl Default for IldaNode {
+    fn default() -> Self {
+        unimplemented!()
+    }
+}
+
 impl ProcessingNode for IldaNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("IldaNode")

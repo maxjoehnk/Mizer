@@ -1,4 +1,4 @@
-use mizer_node_api::{ProcessingNode, NodeDetails, NodeInput, NodeChannel, SourceNode, DestinationNode, LaserChannel, ConnectionResult, ConnectionError};
+use mizer_node_api::{ProcessingNode, NodeDetails, NodeInput, NodeChannel, SourceNode, DestinationNode, LaserChannel, ConnectionResult, ConnectionError, NodeCreator, NodeContext};
 use mizer_protocol_laser::{Laser, LaserFrame};
 use mizer_devices::{DeviceManager};
 
@@ -19,6 +19,12 @@ impl LaserNode {
             frames: Default::default(),
             current_frame: Default::default(),
         }
+    }
+}
+
+impl NodeCreator for LaserNode {
+    fn create(context: &mut dyn NodeContext) -> Self {
+        LaserNode::new(context.device_manager().clone(), "laser-0".to_string())
     }
 }
 

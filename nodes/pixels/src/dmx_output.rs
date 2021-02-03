@@ -20,6 +20,12 @@ impl PixelDmxNode {
     }
 }
 
+impl Default for PixelDmxNode {
+    fn default() -> Self {
+        PixelDmxNode::new(100, 100, None)
+    }
+}
+
 impl ProcessingNode for PixelDmxNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("PixelDmxNode")

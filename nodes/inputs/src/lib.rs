@@ -1,5 +1,6 @@
 use mizer_node_api::*;
 
+#[derive(Default)]
 pub struct FaderNode {
     value: f64,
     outputs: Vec<NumericSender>,
@@ -7,10 +8,7 @@ pub struct FaderNode {
 
 impl FaderNode {
     pub fn new() -> Self {
-        FaderNode {
-            value: 0f64,
-            outputs: Vec::new(),
-        }
+        Default::default()
     }
 }
 

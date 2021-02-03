@@ -52,20 +52,20 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
 
     let fixture_library = FixtureLibrary::new(vec![Box::new(ofl_provider)]);
 
-    let mut fixture_manager = FixtureManager::new();
+    let fixture_manager = FixtureManager::new();
     let device_manager = DeviceManager::new();
 
     handle.spawn(device_manager.clone().start_discovery());
 
     log::info!("Loading projects...");
-    let mut pipeline = Pipeline::default();
+    let mut pipeline = Pipeline::new(fixture_manager.clone(), device_manager.clone());
     let mut projects = vec![];
     for file in flags.files {
         let project = Project::load_file(&file)?;
-        load_fixtures(&mut fixture_manager, &fixture_library, &project);
+        load_fixtures(&fixture_manager, &fixture_library, &project);
         projects.push(project.clone());
         pipeline
-            .load_project(project, &fixture_manager, device_manager.clone())
+            .load_project(project)
             .context("loading project")?;
     }
     log::info!("Loading projects...Done");
@@ -100,7 +100,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
 }
 
 fn load_fixtures(
-    fixture_manager: &mut FixtureManager,
+    fixture_manager: &FixtureManager,
     library: &FixtureLibrary,
     project: &Project,
 ) {

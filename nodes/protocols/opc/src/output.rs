@@ -48,6 +48,12 @@ impl OpcOutputNode {
     }
 }
 
+impl Default for OpcOutputNode {
+    fn default() -> Self {
+        OpcOutputNode::new("localhost", None, (100, 100))
+    }
+}
+
 impl SourceNode for OpcOutputNode {
     fn connect_pixel_input(&mut self, input: &str, channel: PixelChannel) -> ConnectionResult {
         if input == "pixels" {

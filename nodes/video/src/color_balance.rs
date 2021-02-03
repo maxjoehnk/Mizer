@@ -17,6 +17,12 @@ impl VideoColorBalanceNode {
     }
 }
 
+impl Default for VideoColorBalanceNode {
+    fn default() -> Self {
+        VideoColorBalanceNode::new()
+    }
+}
+
 impl ProcessingNode for VideoColorBalanceNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("VideoColorBalanceNode")

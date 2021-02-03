@@ -30,3 +30,4 @@ mizer-fixtures = { path = "../fixtures" }
 mizer-project-files = { path = "../projects" }
 mizer-devices = { path = "../devices" }
 dashmap = "4"
+flume = "0.10.1"

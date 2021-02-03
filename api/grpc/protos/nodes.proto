@@ -4,6 +4,12 @@ package mizer;
 
 service NodesApi {
   rpc GetNodes (NodesRequest) returns (Nodes) {}
+  rpc AddNode (AddNodeRequest) returns (Node) {}
+}
+
+message AddNodeRequest {
+  Node.NodeType type = 1;
+  NodePosition position = 2;
 }
 
 message NodesRequest {}
@@ -56,10 +62,14 @@ message Node {
   NodeDesigner designer = 8;
 }
 
-message NodeDesigner {
+message NodePosition {
   double x = 1;
   double y = 2;
-  double scale = 3;
+}
+
+message NodeDesigner {
+  NodePosition position = 1;
+  double scale = 2;
 }
 
 enum ChannelProtocol {
@@ -76,6 +86,7 @@ enum ChannelProtocol {
     Boolean = 10;
     Select = 11;
     Pixels = 12;
+    Laser = 13;
 }
 
 message Port {

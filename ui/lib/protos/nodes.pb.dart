@@ -13,6 +13,69 @@ import 'nodes.pbenum.dart';
 
 export 'nodes.pbenum.dart';
 
+class AddNodeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
+    ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddNodeRequest._() : super();
+  factory AddNodeRequest({
+    Node_NodeType type,
+    NodePosition position,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    return _result;
+  }
+  factory AddNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddNodeRequest clone() => AddNodeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddNodeRequest copyWith(void Function(AddNodeRequest) updates) => super.copyWith((message) => updates(message as AddNodeRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddNodeRequest create() => AddNodeRequest._();
+  AddNodeRequest createEmptyInstance() => create();
+  static $pb.PbList<AddNodeRequest> createRepeated() => $pb.PbList<AddNodeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddNodeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddNodeRequest>(create);
+  static AddNodeRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Node_NodeType get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(Node_NodeType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  NodePosition get position => $_getN(1);
+  @$pb.TagNumber(2)
+  set position(NodePosition v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPosition() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPosition() => clearField(2);
+  @$pb.TagNumber(2)
+  NodePosition ensurePosition() => $_ensure(1);
+}
+
 class NodesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..hasRequiredFields = false
@@ -313,19 +376,17 @@ class Node extends $pb.GeneratedMessage {
   NodeDesigner ensureDesigner() => $_ensure(6);
 }
 
-class NodeDesigner extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeDesigner', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class NodePosition extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodePosition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scale', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
-  NodeDesigner._() : super();
-  factory NodeDesigner({
+  NodePosition._() : super();
+  factory NodePosition({
     $core.double x,
     $core.double y,
-    $core.double scale,
   }) {
     final _result = create();
     if (x != null) {
@@ -333,6 +394,64 @@ class NodeDesigner extends $pb.GeneratedMessage {
     }
     if (y != null) {
       _result.y = y;
+    }
+    return _result;
+  }
+  factory NodePosition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NodePosition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NodePosition clone() => NodePosition()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NodePosition copyWith(void Function(NodePosition) updates) => super.copyWith((message) => updates(message as NodePosition)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NodePosition create() => NodePosition._();
+  NodePosition createEmptyInstance() => create();
+  static $pb.PbList<NodePosition> createRepeated() => $pb.PbList<NodePosition>();
+  @$core.pragma('dart2js:noInline')
+  static NodePosition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodePosition>(create);
+  static NodePosition _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get x => $_getN(0);
+  @$pb.TagNumber(1)
+  set x($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearX() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get y => $_getN(1);
+  @$pb.TagNumber(2)
+  set y($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearY() => clearField(2);
+}
+
+class NodeDesigner extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeDesigner', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOM<NodePosition>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scale', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  NodeDesigner._() : super();
+  factory NodeDesigner({
+    NodePosition position,
+    $core.double scale,
+  }) {
+    final _result = create();
+    if (position != null) {
+      _result.position = position;
     }
     if (scale != null) {
       _result.scale = scale;
@@ -361,31 +480,24 @@ class NodeDesigner extends $pb.GeneratedMessage {
   static NodeDesigner _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.double get x => $_getN(0);
+  NodePosition get position => $_getN(0);
   @$pb.TagNumber(1)
-  set x($core.double v) { $_setDouble(0, v); }
+  set position(NodePosition v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasX() => $_has(0);
+  $core.bool hasPosition() => $_has(0);
   @$pb.TagNumber(1)
-  void clearX() => clearField(1);
+  void clearPosition() => clearField(1);
+  @$pb.TagNumber(1)
+  NodePosition ensurePosition() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.double get y => $_getN(1);
+  $core.double get scale => $_getN(1);
   @$pb.TagNumber(2)
-  set y($core.double v) { $_setDouble(1, v); }
+  set scale($core.double v) { $_setDouble(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasY() => $_has(1);
+  $core.bool hasScale() => $_has(1);
   @$pb.TagNumber(2)
-  void clearY() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.double get scale => $_getN(2);
-  @$pb.TagNumber(3)
-  set scale($core.double v) { $_setDouble(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasScale() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearScale() => clearField(3);
+  void clearScale() => clearField(2);
 }
 
 class Port extends $pb.GeneratedMessage {

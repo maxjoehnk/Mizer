@@ -44,6 +44,12 @@ pub enum Node<'a> {
     IldaNode(IldaNode),
 }
 
+impl<'a> NodeCreator for Node<'a> {
+    fn create(context: &mut dyn NodeContext) -> Self {
+        unimplemented!()
+    }
+}
+
 macro_rules! derive_node {
     ($($i:path),*) => {
         impl<'a> ProcessingNode for Node<'a> {

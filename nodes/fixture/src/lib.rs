@@ -30,6 +30,12 @@ impl FixtureNode {
     }
 }
 
+impl NodeCreator for FixtureNode {
+    fn create(context: &mut dyn NodeContext) -> Self {
+        unimplemented!()
+    }
+}
+
 impl ProcessingNode for FixtureNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("FixtureNode")

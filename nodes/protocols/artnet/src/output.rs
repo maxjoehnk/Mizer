@@ -76,6 +76,12 @@ impl ArtnetOutputNode {
     }
 }
 
+impl Default for ArtnetOutputNode {
+    fn default() -> Self {
+        ArtnetOutputNode::new("255.255.255.255", None)
+    }
+}
+
 impl SourceNode for ArtnetOutputNode {
     fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
         if input == "dmx" {

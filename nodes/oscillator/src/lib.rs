@@ -31,6 +31,12 @@ impl OscillatorNode {
     }
 }
 
+impl NodeCreator for OscillatorNode {
+    fn create(context: &mut dyn NodeContext) -> Self {
+        OscillatorNode::new(Default::default(), context.connect_default_clock())
+    }
+}
+
 impl ProcessingNode for OscillatorNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("OscillatorNode")
@@ -153,4 +159,10 @@ pub enum OscillatorType {
     Sine,
     Saw,
     Triangle,
+}
+
+impl Default for OscillatorType {
+    fn default() -> Self {
+        OscillatorType::Sine
+    }
 }

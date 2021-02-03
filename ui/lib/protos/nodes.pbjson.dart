@@ -21,6 +21,15 @@ const ChannelProtocol$json = const {
     const {'1': 'Boolean', '2': 10},
     const {'1': 'Select', '2': 11},
     const {'1': 'Pixels', '2': 12},
+    const {'1': 'Laser', '2': 13},
+  ],
+};
+
+const AddNodeRequest$json = const {
+  '1': 'AddNodeRequest',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.mizer.Node.NodeType', '10': 'type'},
+    const {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.mizer.NodePosition', '10': 'position'},
   ],
 };
 
@@ -99,12 +108,19 @@ const Node_NodeType$json = const {
   ],
 };
 
-const NodeDesigner$json = const {
-  '1': 'NodeDesigner',
+const NodePosition$json = const {
+  '1': 'NodePosition',
   '2': const [
     const {'1': 'x', '3': 1, '4': 1, '5': 1, '10': 'x'},
     const {'1': 'y', '3': 2, '4': 1, '5': 1, '10': 'y'},
-    const {'1': 'scale', '3': 3, '4': 1, '5': 1, '10': 'scale'},
+  ],
+};
+
+const NodeDesigner$json = const {
+  '1': 'NodeDesigner',
+  '2': const [
+    const {'1': 'position', '3': 1, '4': 1, '5': 11, '6': '.mizer.NodePosition', '10': 'position'},
+    const {'1': 'scale', '3': 2, '4': 1, '5': 1, '10': 'scale'},
   ],
 };
 

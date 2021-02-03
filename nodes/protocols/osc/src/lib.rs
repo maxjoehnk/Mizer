@@ -45,8 +45,9 @@ pub struct OscInputNode {
 }
 
 impl OscInputNode {
-    pub fn new<S: Into<String>>(host: Option<String>, port: u16, path: S) -> Self {
+    pub fn new<S: Into<String>>(host: Option<String>, port: Option<u16>, path: S) -> Self {
         let host = host.unwrap_or_else(|| "0.0.0.0".into());
+        let port = port.unwrap_or(6000);
         log::trace!("New OscInputNode({}:{})", &host, port);
         let addr = host.parse().unwrap();
         let addr = SocketAddrV4::new(addr, port);
@@ -89,6 +90,12 @@ impl OscInputNode {
                 _ => {}
             }
         }
+    }
+}
+
+impl Default for OscInputNode {
+    fn default() -> Self {
+        OscInputNode::new(None, None, "/")
     }
 }
 

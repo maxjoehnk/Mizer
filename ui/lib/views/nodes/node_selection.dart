@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/available_nodes.dart';
 
 class NodeSelectionContainer extends StatefulWidget {
   final Widget child;
-  final Function(Node_NodeType) onSelection;
+  final Function(Node_NodeType, Offset) onSelection;
 
   NodeSelectionContainer({this.child, this.onSelection});
 
@@ -20,26 +18,23 @@ class _NodeSelectionContainerState extends State<NodeSelectionContainer> {
 
   @override
   Widget build(BuildContext context) {
-    var children = [this.widget.child];
+    var children = [Container(color: Colors.transparent), this.widget.child];
     if (active) {
       children.add(NodeSelection(position, onSelection: (nodeType) {
         setState(() {
           this.active = false;
         });
-        this.widget.onSelection(nodeType);
+        this.widget.onSelection(nodeType, position);
       }));
     }
-    // TODO: when combined with the proper viewer these events don't fire
     return GestureDetector(
         onSecondaryTapUp: (event) {
-          log("on context menu");
           setState(() {
             active = true;
             position = event.localPosition;
           });
         },
         onTap: () {
-          log("on tap");
           setState(() {
             active = false;
           });
@@ -70,7 +65,8 @@ class NodeSelection extends StatelessWidget {
               color: Colors.grey.shade800,
               borderRadius: BorderRadius.all(Radius.circular(2)),
               boxShadow: [
-                BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)
+                BoxShadow(
+                    color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)
               ]),
           child: Table(
               defaultColumnWidth: FixedColumnWidth(COLUMN_WIDTH),
@@ -87,11 +83,11 @@ class NodeSelection extends StatelessWidget {
     for (var _ in columns[0]) {
       var row = TableRow(
           children: columns.map((column) {
-        if (rowIndex >= column.length) {
-          return Container();
-        }
-        return column[rowIndex];
-      }).toList());
+            if (rowIndex >= column.length) {
+              return Container();
+            }
+            return column[rowIndex];
+          }).toList());
       rows.add(row);
       rowIndex++;
     }
@@ -123,7 +119,8 @@ class NodeSelection extends StatelessWidget {
     for (var category in categories) {
       widgets.add(NodeCategory(category.text));
       for (var node in category.nodes) {
-        widgets.add(NodeEntry(node.text, onTap: () => this.onSelection(node.nodeType)));
+        widgets.add(
+            NodeEntry(node.text, onTap: () => this.onSelection(node.nodeType)));
       }
     }
     return widgets;

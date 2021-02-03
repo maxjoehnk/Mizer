@@ -90,6 +90,12 @@ impl SequenceNode {
     }
 }
 
+impl NodeCreator for SequenceNode {
+    fn create(context: &mut dyn NodeContext) -> Self {
+        SequenceNode::new(Default::default(), context.connect_default_clock())
+    }
+}
+
 impl ProcessingNode for SequenceNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("SequenceNode")

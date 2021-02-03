@@ -14,3 +14,5 @@ gstreamer = "0.16"
 glib = "0.10"
 log = "0.4"
 mizer-protocol-laser = { path = "../../protocols/laser" }
+mizer-fixtures = { path = "../../fixtures" }
+mizer-devices = { path = "../../devices" }

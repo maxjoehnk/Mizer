@@ -1,6 +1,7 @@
 use mizer_node_api::*;
 use serde::{Deserialize, Serialize};
 
+#[derive(Default)]
 pub struct PixelPatternGeneratorNode {
     pattern: Pattern,
     sender: Vec<(PixelSender, Pixels, PatternState)>,
@@ -11,6 +12,12 @@ pub struct PixelPatternGeneratorNode {
 pub enum Pattern {
     RgbIterate,
     RgbSnake,
+}
+
+impl Default for Pattern {
+    fn default() -> Self {
+        Pattern::RgbIterate
+    }
 }
 
 enum PatternState {

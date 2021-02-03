@@ -51,6 +51,12 @@ impl StreamingAcnOutputNode {
     }
 }
 
+impl Default for StreamingAcnOutputNode {
+    fn default() -> Self {
+        StreamingAcnOutputNode::new()
+    }
+}
+
 impl SourceNode for StreamingAcnOutputNode {
     fn connect_dmx_input(&mut self, input: &str, channels: &[DmxChannel]) -> ConnectionResult {
         if input == "dmx" {

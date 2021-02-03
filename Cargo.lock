@@ -2793,6 +2793,7 @@ dependencies = [
 name = "mizer-fixtures"
 version = "0.1.0"
 dependencies = [
+ "dashmap",
  "log",
 ]
 
@@ -2882,6 +2883,8 @@ dependencies = [
  "glib",
  "gstreamer",
  "log",
+ "mizer-devices",
+ "mizer-fixtures",
  "mizer-protocol-laser",
  "thiserror",
 ]
@@ -2932,6 +2935,7 @@ dependencies = [
  "anyhow",
  "dashmap",
  "derive_more",
+ "flume",
  "gstreamer",
  "log",
  "metrics",

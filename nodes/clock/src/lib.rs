@@ -38,6 +38,12 @@ impl ClockNode {
     }
 }
 
+impl Default for ClockNode {
+    fn default() -> Self {
+        ClockNode::new(90.)
+    }
+}
+
 impl ProcessingNode for ClockNode {
     fn get_details(&self) -> NodeDetails {
         NodeDetails::new("ClockNode")

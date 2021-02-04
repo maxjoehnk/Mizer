@@ -141,6 +141,8 @@ impl From<AttachedMediaDocument> for MediaFile {
         let document = match media {
             AttachedMediaDocument::Video(media) => media,
             AttachedMediaDocument::Image(media) => media,
+            AttachedMediaDocument::Audio(media) => media,
+            AttachedMediaDocument::Vector(media) => media,
         };
 
         MediaFile {

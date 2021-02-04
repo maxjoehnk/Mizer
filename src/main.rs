@@ -11,7 +11,7 @@ use crate::flags::Flags;
 use anyhow::Context;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_media::MediaServer;
+use mizer_media::{MediaServer, MediaDiscovery};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_pipeline::Pipeline;
 use mizer_devices::DeviceManager;
@@ -78,6 +78,10 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
 
     let media_server = MediaServer::new().await?;
     let media_server_api = media_server.open_api(&handle)?;
+    // TODO: get paths from project file
+    let media_discovery = MediaDiscovery::new(media_server_api.clone(), "examples/media");
+    // TODO: watch path for file changes
+    media_discovery.discover().await?;
 
     let _grpc_api = mizer_grpc_api::start(
         handle.clone(),

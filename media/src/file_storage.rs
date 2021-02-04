@@ -57,6 +57,7 @@ impl FileStorage {
         target
     }
 
+    // TODO: use content hash as thumbnail filename
     pub fn get_thumbnail_path<P: AsRef<Path>>(&self, path: P) -> PathBuf {
         let mut target = PathBuf::new();
         target.push(&self.thumbnail_path);

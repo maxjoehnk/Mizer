@@ -2,36 +2,38 @@ use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
 use crate::data_access::DataAccess;
 use crate::documents::MediaDocument;
 use crate::file_storage::FileStorage;
-use crate::media_handlers::{ImageHandler, MediaHandler, VideoHandler};
-use std::path::Path;
+use crate::media_handlers::*;
+use std::path::{Path, PathBuf};
 use tokio::io::AsyncReadExt;
 use tokio::stream::StreamExt;
 use uuid::Uuid;
+
+pub use crate::discovery::MediaDiscovery;
 
 mod data_access;
 pub mod documents;
 mod file_storage;
 mod media_handlers;
+pub mod api;
+mod discovery;
+pub mod http_api;
 
 pub struct MediaServer {
     pub db: DataAccess,
     pub file_storage: FileStorage,
-    video_handler: VideoHandler,
-    image_handler: ImageHandler,
+    import_file: ImportFileHandler,
 }
 
 impl MediaServer {
     pub async fn new() -> anyhow::Result<Self> {
         let context = DataAccess::new("mongodb://localhost:27017").await?;
         let file_storage = FileStorage::new()?;
-        let video_handler = VideoHandler;
-        let image_handler = ImageHandler;
+        let import_file = ImportFileHandler::new(context.clone(), file_storage.clone());
 
         Ok(MediaServer {
             db: context,
             file_storage,
-            video_handler,
-            image_handler,
+            import_file,
         })
     }
 
@@ -43,8 +45,8 @@ impl MediaServer {
             let mut stream = rx.into_stream();
             while let Some(command) = stream.next().await {
                 match command {
-                    MediaServerCommand::UploadFile(model, file_path, resp) => {
-                        let document = self.upload_file(model, &file_path).await.unwrap();
+                    MediaServerCommand::ImportFile(model, file_path, resp) => {
+                        let document = self.import_file.import_file(model, &file_path).await.unwrap();
                         resp.send(document).unwrap();
                     }
                     MediaServerCommand::CreateTag(model, resp) => {
@@ -61,25 +63,50 @@ impl MediaServer {
 
         Ok(MediaServerApi(tx, file_storage))
     }
+}
 
-    async fn upload_file(
-        &self,
-        model: MediaCreateModel,
-        file_path: &Path,
-    ) -> anyhow::Result<MediaDocument> {
+pub struct ImportFileHandler {
+    db: DataAccess,
+    file_storage: FileStorage,
+    video_handler: VideoHandler,
+    image_handler: ImageHandler,
+    audio_handler: AudioHandler,
+    svg_handler: SvgHandler,
+}
+
+impl ImportFileHandler {
+    fn new(db: DataAccess, file_storage: FileStorage) -> Self {
+        ImportFileHandler {
+            db,
+            file_storage,
+            video_handler: VideoHandler,
+            image_handler: ImageHandler,
+            audio_handler: AudioHandler,
+            svg_handler: SvgHandler,
+        }
+    }
+
+    async fn import_file(&self, model: MediaCreateModel, file_path: &Path) -> anyhow::Result<MediaDocument> {
+        log::debug!("importing file {:?}", file_path);
         let id = Uuid::new_v4();
         let mut temp_file = tokio::fs::File::open(file_path).await?;
         let mut buffer = [0u8; 256];
         temp_file.read(&mut buffer).await?;
-        let content_type = mimesniff::detect_content_type(&buffer).to_string();
-        log::debug!("got {} content type for {:?}", &content_type, model);
+        let content_type = infer::get(&buffer).ok_or_else(|| anyhow::anyhow!("Unknown file type"))?.mime_type();
+        log::debug!("got {} content type for {:?}", content_type, model);
 
-        if content_type.starts_with("video") {
+        if VideoHandler::supported(content_type) {
             self.video_handler
-                .handle_file(file_path, &self.file_storage, &content_type)?;
-        } else if content_type.starts_with("image") {
+                .handle_file(file_path, &self.file_storage, content_type)?;
+        } else if ImageHandler::supported(content_type) {
             self.image_handler
-                .handle_file(file_path, &self.file_storage, &content_type)?;
+                .handle_file(file_path, &self.file_storage, content_type)?;
+        } else if AudioHandler::supported(content_type) {
+            self.audio_handler
+                .handle_file(file_path, &self.file_storage, content_type)?;
+        } else if SvgHandler::supported(content_type) {
+            self.svg_handler
+                .handle_file(file_path, &self.file_storage, content_type)?;
         } else {
             anyhow::bail!("unsupported file")
         };
@@ -88,7 +115,7 @@ impl MediaServer {
             .db
             .add_media(MediaDocument {
                 id,
-                content_type,
+                content_type: content_type.to_string(),
                 name: model.name,
                 tags: model.tags,
             })
@@ -98,110 +125,3 @@ impl MediaServer {
     }
 }
 
-pub mod api;
-
-pub mod http_api {
-    use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
-    use actix_files::Files;
-    use actix_multipart::{Field, Multipart};
-    use actix_web::{post, web, App, HttpServer, Responder, Result, Scope};
-    use futures::{StreamExt, TryStreamExt};
-    use tokio::io::AsyncWriteExt;
-
-    pub fn start(media_server_api: MediaServerApi) -> anyhow::Result<()> {
-        let local_set = tokio::task::LocalSet::new();
-        let system = actix_rt::System::run_in_tokio("mizer-media-api", &local_set);
-        let _server = HttpServer::new(move || {
-            App::new()
-                .data(media_server_api.clone())
-                .service(Files::new("/thumbnails", ".storage/thumbnails"))
-                .service(Files::new("/media", ".storage/media"))
-                .service(api())
-        })
-        .bind("0.0.0.0:50050")
-        .unwrap()
-        .run();
-        local_set.spawn_local(system);
-
-        Ok(())
-    }
-
-    pub fn api() -> Scope {
-        web::scope("/api/media").service(add_media)
-    }
-
-    #[post("")]
-    async fn add_media(
-        api: web::Data<MediaServerApi>,
-        mut payload: Multipart,
-    ) -> Result<impl Responder> {
-        let mut media_request = MediaCreateModel {
-            name: String::new(),
-            tags: Vec::new(),
-        };
-        let file_path = api.get_temp_path();
-        while let Ok(Some(mut field)) = payload.try_next().await {
-            if let Some(content_disposition) = field.content_disposition() {
-                match content_disposition.get_name() {
-                    Some("name") => {
-                        media_request.name = field_to_string(&mut field)
-                            .await
-                            .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-                    }
-                    Some("file") => {
-                        let filename = content_disposition
-                            .get_filename()
-                            .ok_or_else(|| actix_web::error::ParseError::Incomplete)?;
-                        if media_request.name.is_empty() {
-                            media_request.name = filename.into();
-                        }
-                        let mut file = tokio::fs::File::create(&file_path).await?;
-                        let mut stream = field.into_stream();
-                        while let Some(data) = stream.next().await {
-                            let data = data
-                                .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-                            file.write(&data).await?;
-                        }
-                    }
-                    Some("tags") => {
-                        let tags = field_to_string(&mut field)
-                            .await
-                            .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-                        media_request.tags = serde_json::from_str(&tags)?;
-                    }
-                    _ => {}
-                }
-            }
-        }
-
-        if media_request.tags.len() == 0 {
-            return Err(actix_web::error::ErrorBadRequest(
-                "At least one tag must be defined",
-            ));
-        }
-
-        let (sender, receiver) = MediaServerApi::open_channel();
-        api.send_command(MediaServerCommand::UploadFile(
-            media_request,
-            file_path,
-            sender,
-        ));
-
-        let document = receiver
-            .recv_async()
-            .await
-            .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-
-        Ok(web::Json(document))
-    }
-
-    async fn field_to_string(field: &mut Field) -> anyhow::Result<String> {
-        let bytes = field
-            .try_collect::<Vec<_>>()
-            .await
-            .map_err(|err| anyhow::anyhow!("multipart error: {:?}", err))?;
-        let name = bytes.first().ok_or_else(|| anyhow::anyhow!("No name"))?;
-
-        Ok(String::from_utf8_lossy(&name).into())
-    }
-}

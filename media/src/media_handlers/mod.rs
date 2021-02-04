@@ -2,13 +2,21 @@ use std::path::Path;
 
 pub use image_handler::ImageHandler;
 pub use video_handler::VideoHandler;
+pub use audio_handler::AudioHandler;
+pub use svg_handler::SvgHandler;
 
 use crate::file_storage::FileStorage;
 
+mod audio_handler;
 mod image_handler;
 mod video_handler;
+mod svg_handler;
+
+pub const THUMBNAIL_SIZE: u32 = 200;
 
 pub trait MediaHandler {
+    fn supported(content_type: &str) -> bool;
+
     fn generate_thumbnail<P: AsRef<Path>>(
         &self,
         file: P,

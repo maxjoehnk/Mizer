@@ -1,5 +1,6 @@
 import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/protos/media.pbgrpc.dart';
@@ -8,7 +9,7 @@ import 'package:mizer/state/media_bloc.dart';
 class MediaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.bloc<MediaBloc>().add(MediaEvent.Fetch);
+    context.read<MediaBloc>().add(MediaEvent.Fetch);
     return BlocBuilder<MediaBloc, GroupedMediaFiles>(
         builder: (context, data) =>
             ListView(children: data.tags.map((tag) => TagRow(tag)).toList()));
@@ -27,7 +28,8 @@ class TagRow extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(children: [
         TagTitle(tag.tag),
-        Row(
+        Wrap(
+          direction: Axis.horizontal,
           children: this.tag.files.map((file) => MediaFileEntry(file)).toList(),
         ),
       ], crossAxisAlignment: CrossAxisAlignment.start),
@@ -85,11 +87,10 @@ class MediaThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 200,
-      alignment: Alignment.center,
-      color: Colors.black,
-      child: Image.network(this.file.thumbnailUrl)
-    );
+        width: 200,
+        height: 200,
+        alignment: Alignment.center,
+        color: Colors.black,
+        child: Image.network(this.file.thumbnailUrl));
   }
 }

@@ -13,6 +13,8 @@ pub struct TagDocument {
 pub enum AttachedMediaDocument {
     Video(AttachedDocument),
     Image(AttachedDocument),
+    Audio(AttachedDocument),
+    Vector(AttachedDocument),
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -27,12 +29,18 @@ impl From<&MediaDocument> for AttachedMediaDocument {
             id: doc.id,
             name: doc.name.clone(),
         };
-        match &doc.content_type {
+        match doc.content_type.as_str() {
             content_type if content_type.starts_with("image") => {
                 AttachedMediaDocument::Image(document)
             }
             content_type if content_type.starts_with("video") => {
                 AttachedMediaDocument::Video(document)
+            }
+            content_type if content_type.starts_with("audio") => {
+                AttachedMediaDocument::Audio(document)
+            }
+            "text/xml" => {
+                AttachedMediaDocument::Vector(document)
             }
             _ => unimplemented!(),
         }

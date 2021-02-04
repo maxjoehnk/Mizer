@@ -24,7 +24,7 @@ impl MediaServerApi {
 }
 
 pub enum MediaServerCommand {
-    UploadFile(MediaCreateModel, PathBuf, Sender<MediaDocument>),
+    ImportFile(MediaCreateModel, PathBuf, Sender<MediaDocument>),
     CreateTag(TagCreateModel, Sender<TagDocument>),
     GetTags(Sender<Vec<TagDocument>>),
 }

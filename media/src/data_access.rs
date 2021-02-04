@@ -5,6 +5,7 @@ use futures::prelude::*;
 use mongodb::{options::ClientOptions, Client, Collection};
 use serde::Serialize;
 
+// TODO: replace mongodb with in memory or in process db
 #[derive(Clone)]
 pub struct DataAccess {
     client: Client,

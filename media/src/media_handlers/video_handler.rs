@@ -2,7 +2,7 @@ use std::path::Path;
 use std::process::{Child, Command};
 
 use crate::file_storage::FileStorage;
-use crate::media_handlers::MediaHandler;
+use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
 use std::ffi::OsStr;
 
 pub struct VideoHandler;
@@ -58,6 +58,10 @@ impl VideoHandler {
 }
 
 impl MediaHandler for VideoHandler {
+    fn supported(content_type: &str) -> bool {
+        content_type.starts_with("video")
+    }
+
     fn generate_thumbnail<P: AsRef<Path>>(
         &self,
         file: P,
@@ -71,7 +75,7 @@ impl MediaHandler for VideoHandler {
             .arg("-vframes")
             .arg("1")
             .arg("-filter:v")
-            .arg("scale=200:-1")
+            .arg(format!("scale={}:-1", THUMBNAIL_SIZE))
             .arg(&target)
             .spawn()?;
 

@@ -1,0 +1,4 @@
+examples/media/audio/** filter=lfs diff=lfs merge=lfs -text
+examples/media/ilda/** filter=lfs diff=lfs merge=lfs -text
+examples/media/image/** filter=lfs diff=lfs merge=lfs -text
+examples/media/video/** filter=lfs diff=lfs merge=lfs -text

@@ -97,8 +97,8 @@ mod tests {
 
         assert_eq!(receiver.dmx_channels.get(input).unwrap().len(), 1);
         let channel = receiver.dmx_channels.get(input).unwrap().get(0).unwrap();
-        assert_eq!(channel.universe, 1);
-        assert_eq!(channel.channel, 1);
+
+        assert!(matches!(channel, &DmxChannel::Single { channel: 1, universe: 1, .. }))
     }
 
     #[test_case(1, 2)]
@@ -121,17 +121,17 @@ mod tests {
                 channel,
                 receiver: _,
             } => {
-                assert_eq!(universe, expected_universe);
-                assert_eq!(channel, expected_channel);
+                assert_eq!(*universe, expected_universe);
+                assert_eq!(*channel, expected_channel);
             }
             _ => assert!(false, "invalid dmx channel layout"),
         }
     }
 
     #[test_case(0f64, 0u8)]
-    #[test_case(1f64, 1u8)]
-    #[test_case(255f64, 255u8)]
-    #[test_case(256f64, 255u8; "upper bound")]
+    #[test_case(1f64, 255u8)]
+    #[test_case(0.5f64, 127u8)]
+    #[test_case(2f64, 255u8; "upper bound")]
     #[test_case(-1f64, 0u8; "lower bound")]
     fn convert_numeric_to_dmx_should_emit_values(input: f64, expected: u8) {
         let mut receiver = TestNode::default();
@@ -147,6 +147,6 @@ mod tests {
 
         let values = dmx_channel.recv().unwrap().unwrap();
 
-        assert_eq!(dmx_channel.recv().unwrap(), Some(expected));
+        assert_eq!(values.get(&1).unwrap()[0], Some(expected));
     }
 }

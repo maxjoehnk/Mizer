@@ -97,16 +97,17 @@ pub struct Node {
     pub config: NodeConfig,
     #[serde(default)]
     pub properties: HashMap<String, f64>,
+    #[serde(default)]
     pub designer: NodeDesignerConfig,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NodeDesignerConfig {
     pub position: NodePosition,
     pub scale: f64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct NodePosition {
     pub x: f64,
     pub y: f64,
@@ -216,6 +217,11 @@ mod tests {
             host: 0.0.0.0
             width: 10
             height: 20
+          designer:
+            position:
+              x: 1
+              y: 2
+            scale: 3
         "#;
 
         let result = Project::load(content)?;
@@ -230,6 +236,13 @@ mod tests {
                     port: None,
                     width: 10,
                     height: 20
+                },
+                designer: NodeDesignerConfig {
+                    position: NodePosition {
+                        x: 1.,
+                        y: 2.
+                    },
+                    scale: 3.,
                 },
                 properties: HashMap::new(),
             }
@@ -266,6 +279,7 @@ mod tests {
                 config: NodeConfig::PixelPattern {
                     pattern: mizer_pixel_nodes::Pattern::RgbIterate
                 },
+                designer: Default::default(),
                 properties: HashMap::new(),
             }
         );
@@ -279,6 +293,7 @@ mod tests {
                     width: 25,
                     height: 50
                 },
+                designer: Default::default(),
                 properties: HashMap::new(),
             }
         );
@@ -336,6 +351,7 @@ mod tests {
             Node {
                 id: "fader-0".into(),
                 config: NodeConfig::Fader,
+                designer: Default::default(),
                 properties: expected,
             }
         );

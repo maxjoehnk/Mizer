@@ -107,14 +107,14 @@ mod tests {
     #[test_case("examples/media/video/file_example_MP4_1920_18MG.mp4")]
     #[test_case("examples/media/video/file_example_WEBM_1920_3_7MB.webm")]
     #[test_case("examples/media/video/file_example_WMV_1920_9_3MB.wmv")]
-    #[tokio::test]
-    async fn scan_should_list_example_files(expected: &str) {
+    fn scan_should_list_example_files(expected: &str) {
+        let mut rt = tokio::runtime::Runtime::new().unwrap();
         let path = std::env!("CARGO_MANIFEST_DIR");
         let workspace_path = Path::new(path).parent().unwrap();
         let expected = workspace_path.join(expected);
         let walker = MediaWalker::new(workspace_path.join("examples/media"));
 
-        let files = walker.scan().await.unwrap();
+        let files = rt.block_on(walker.scan()).unwrap();
 
         assert!(files.contains(&expected));
     }

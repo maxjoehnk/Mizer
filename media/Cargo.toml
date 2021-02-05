@@ -29,4 +29,3 @@ tiny-skia = "0.4"
 
 [dev-dependencies]
 test-case = "1"
-tokio = { version = "0.2", features = ["macros"] }

@@ -5,6 +5,8 @@ members = [
     "fixtures",
     "fixtures/open-fixture-library",
     "media",
+    "networking/execution-planner",
+    "networking/session",
     "nodes/api",
     "nodes/behaviors/conversion",
     "nodes/behaviors/scripting",
@@ -26,7 +28,6 @@ members = [
     "protocols/laser",
     "protocols/midi",
     "protocols/midi/device-profiles",
-    "session"
 ]
 
 [lib]
@@ -65,7 +66,7 @@ mizer-fixtures = { path = "fixtures" }
 mizer-open-fixture-library-provider = { path = "fixtures/open-fixture-library" }
 mizer-pipeline = { path = "pipeline" }
 mizer-grpc-api = { path = "api/grpc" }
-mizer-session = { path = "session" }
+mizer-session = { path = "networking/session" }
 mizer-devices = { path = "devices" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"

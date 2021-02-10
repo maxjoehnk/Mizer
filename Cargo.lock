@@ -2839,6 +2839,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-execution-planner"
+version = "0.1.0"
+dependencies = [
+ "itertools 0.10.0",
+ "serde",
+ "test-case",
+]
+
+[[package]]
 name = "mizer-fixture-nodes"
 version = "0.1.0"
 dependencies = [

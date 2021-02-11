@@ -1,0 +1,10 @@
+[package]
+name = "mizer-sacn-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+mizer-node-api = { path = "../../../node-api" }
+sacn = "0.4"
+log = "0.4"

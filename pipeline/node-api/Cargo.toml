@@ -1,0 +1,18 @@
+[package]
+name = "mizer-node-api"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[features]
+testing = []
+
+[dependencies]
+crossbeam-channel = "0.4"
+thiserror = "1"
+gstreamer = "0.16"
+glib = "0.10"
+log = "0.4"
+mizer-protocol-laser = { path = "../../protocols/laser" }
+mizer-fixtures = { path = "../../components/fixtures" }
+mizer-devices = { path = "../../components/devices" }

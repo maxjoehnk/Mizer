@@ -1,29 +1,29 @@
 [workspace]
 members = [
     "api/grpc",
-    "devices",
-    "fixtures",
-    "fixtures/open-fixture-library",
-    "media",
+    "components/devices",
+    "components/fixtures",
+    "components/fixtures/open-fixture-library",
+    "components/media",
     "networking/execution-planner",
     "networking/session",
-    "nodes/api",
-    "nodes/behaviors/conversion",
-    "nodes/behaviors/scripting",
-    "nodes/behaviors/sequence",
-    "nodes/clock",
-    "nodes/fixture",
-    "nodes/inputs",
-    "nodes/laser",
-    "nodes/oscillator",
-    "nodes/protocols/artnet",
-    "nodes/protocols/midi",
-    "nodes/protocols/opc",
-    "nodes/protocols/osc",
-    "nodes/protocols/sacn",
-    "nodes/pixels",
-    "nodes/video",
     "pipeline",
+    "pipeline/node-api",
+    "pipeline/nodes/behaviors/conversion",
+    "pipeline/nodes/behaviors/scripting",
+    "pipeline/nodes/behaviors/sequence",
+    "pipeline/nodes/clock",
+    "pipeline/nodes/fixture",
+    "pipeline/nodes/inputs",
+    "pipeline/nodes/laser",
+    "pipeline/nodes/oscillator",
+    "pipeline/nodes/protocols/artnet",
+    "pipeline/nodes/protocols/midi",
+    "pipeline/nodes/protocols/opc",
+    "pipeline/nodes/protocols/osc",
+    "pipeline/nodes/protocols/sacn",
+    "pipeline/nodes/pixels",
+    "pipeline/nodes/video",
     "projects",
     "protocols/laser",
     "protocols/midi",
@@ -60,14 +60,14 @@ smol = { version = "0.3", features = ["tokio02"], optional = true }
 structopt = "0.3"
 metrics = "0.12"
 metrics-runtime = { version = "0.13", optional = true }
-mizer-media = { path = "media" }
+mizer-media = { path = "components/media" }
 mizer-project-files = { path = "projects" }
-mizer-fixtures = { path = "fixtures" }
-mizer-open-fixture-library-provider = { path = "fixtures/open-fixture-library" }
+mizer-fixtures = { path = "components/fixtures" }
+mizer-open-fixture-library-provider = { path = "components/fixtures/open-fixture-library" }
 mizer-pipeline = { path = "pipeline" }
 mizer-grpc-api = { path = "api/grpc" }
 mizer-session = { path = "networking/session" }
-mizer-devices = { path = "devices" }
+mizer-devices = { path = "components/devices" }
 # TODO: check for a better way/a maintained library
 multi_mut = "0.1"
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }

@@ -11,10 +11,10 @@ regex = "1.3"
 lazy_static = "1.4"
 anyhow = "1"
 # These dependencies are kinda shit, but this reduces maintenance cost so for now it's okay
-mizer-video-nodes = { path = "../nodes/video" }
-mizer-oscillator-nodes = { path = "../nodes/oscillator" }
-mizer-pixel-nodes = { path = "../nodes/pixels" }
-mizer-sequence-nodes = { path = "../nodes/behaviors/sequence" }
+mizer-video-nodes = { path = "../pipeline/nodes/video" }
+mizer-oscillator-nodes = { path = "../pipeline/nodes/oscillator" }
+mizer-pixel-nodes = { path = "../pipeline/nodes/pixels" }
+mizer-sequence-nodes = { path = "../pipeline/nodes/behaviors/sequence" }
 
 [dev-dependencies]
 test-case = "1.0"

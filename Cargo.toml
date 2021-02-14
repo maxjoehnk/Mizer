@@ -24,6 +24,7 @@ members = [
     "pipeline/nodes/protocols/sacn",
     "pipeline/nodes/pixels",
     "pipeline/nodes/video",
+    "pipeline/ports",
     "projects",
     "protocols/laser",
     "protocols/midi",

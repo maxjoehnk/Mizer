@@ -1,12 +1,12 @@
 use crate::sacn::SacnOutput;
-use std::collections::HashMap;
-use mizer_processing::{Processor, Injector};
 use mizer_module::{Module, Runtime};
+use mizer_processing::{Injector, Processor};
+use std::collections::HashMap;
 use std::ops::Deref;
 
+mod buffer;
 mod sacn;
 mod stub;
-mod buffer;
 
 pub trait DmxOutput {
     fn write_single(&self, universe: u16, channel: u8, value: u8);

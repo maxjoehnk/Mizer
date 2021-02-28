@@ -1,10 +1,10 @@
-use mizer_node::*;
 use mizer_clock::ClockFrame;
-use mizer_ports::{PortId, NodePortSender, NodePortReceiver, PortValue};
-use mizer_ports::memory::{MemorySender, MemoryReceiver};
+use mizer_node::*;
+use mizer_ports::memory::{MemoryReceiver, MemorySender};
+use mizer_ports::{NodePortReceiver, NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
-use crate::ports::{NodeSenders, NodeReceivers};
+use crate::ports::{NodeReceivers, NodeSenders};
 
 pub struct PipelineContext<'a> {
     pub(crate) frame: ClockFrame,
@@ -22,11 +22,13 @@ impl<'a> NodeContext for PipelineContext<'a> {
         let port = port.into();
         let dbg_msg = format!("Trying to write to non existent port {}", &port);
         if let Some((port, _)) = self.senders.and_then(|senders| senders.get(port)) {
-            let port = port.downcast_ref::<MemorySender<V>>().expect("can't downcast sender to proper type");
+            let port = port
+                .downcast_ref::<MemorySender<V>>()
+                .expect("can't downcast sender to proper type");
             if let Err(e) = port.send(value) {
                 log::error!("Sending data via port failed: {:?}", e);
             }
-        }else {
+        } else {
             log::debug!("{}", dbg_msg);
         }
     }

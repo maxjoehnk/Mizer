@@ -9,15 +9,15 @@ use mizer_project_files::Project;
 
 use crate::flags::Flags;
 use anyhow::Context;
+use mizer_devices::DeviceModule;
 use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::{FixtureModule};
-use mizer_media::{MediaServer, MediaDiscovery};
-use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
-use mizer_devices::DeviceModule;
-use mizer_runtime::CoordinatorRuntime;
-use mizer_protocol_dmx::*;
+use mizer_fixtures::FixtureModule;
+use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_module::{Module, Runtime};
+use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
+use mizer_protocol_dmx::*;
+use mizer_runtime::CoordinatorRuntime;
 
 mod flags;
 
@@ -53,9 +53,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
         .context("loading open fixture library")?;
     log::info!("Loading open fixture library...Done");
 
-    let providers: Vec<Box<dyn FixtureLibraryProvider>> = vec![
-        Box::new(ofl_provider)
-    ];
+    let providers: Vec<Box<dyn FixtureLibraryProvider>> = vec![Box::new(ofl_provider)];
 
     let (device_module, device_manager) = DeviceModule::new();
     handle.spawn(device_manager.clone().start_discovery());
@@ -74,9 +72,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
             let library = injector.get().unwrap();
             load_fixtures(manager, library, &project);
         }
-        runtime
-            .load_project(project)
-            .context("loading project")?;
+        runtime.load_project(project).context("loading project")?;
     }
     log::info!("Loading projects...Done");
 
@@ -111,11 +107,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
     }
 }
 
-fn load_fixtures(
-    fixture_manager: &FixtureManager,
-    library: &FixtureLibrary,
-    project: &Project,
-) {
+fn load_fixtures(fixture_manager: &FixtureManager, library: &FixtureLibrary, project: &Project) {
     for fixture in &project.fixtures {
         let def = library.get_definition(&fixture.fixture);
         if let Some(def) = def {

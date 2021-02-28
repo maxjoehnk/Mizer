@@ -1,28 +1,16 @@
 use std::path::PathBuf;
 
 use async_walk::WalkBuilder;
-use futures::{StreamExt, TryStreamExt, future};
+use futures::{future, StreamExt, TryStreamExt};
 
-use crate::api::{MediaServerApi, MediaServerCommand, MediaCreateModel};
+use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
 
 const SUPPORTED_EXTENSIONS: [&str; 13] = [
     // Audio
-    "mp3",
-    "wav",
-    // Image
-    "jpg",
-    "jpeg",
-    "png",
-    "tiff",
-    "webp",
-    // Vector
-    "svg",
-    // Video
-    "avi",
-    "mov",
-    "mp4",
-    "webm",
-    "wmv"
+    "mp3", "wav", // Image
+    "jpg", "jpeg", "png", "tiff", "webp", // Vector
+    "svg", // Video
+    "avi", "mov", "mp4", "webm", "wmv",
 ];
 
 pub struct MediaDiscovery {
@@ -44,7 +32,12 @@ impl MediaDiscovery {
         for path in paths {
             let (sender, receiver) = MediaServerApi::open_channel();
             let media_create = MediaCreateModel {
-                name: path.file_name().unwrap().to_os_string().into_string().unwrap(),
+                name: path
+                    .file_name()
+                    .unwrap()
+                    .to_os_string()
+                    .into_string()
+                    .unwrap(),
                 tags: Vec::new(),
             };
             let cmd = MediaServerCommand::ImportFile(media_create, path, sender);
@@ -63,9 +56,7 @@ struct MediaWalker {
 
 impl MediaWalker {
     fn new(path: PathBuf) -> Self {
-        MediaWalker {
-            path
-        }
+        MediaWalker { path }
     }
 
     async fn scan(&self) -> anyhow::Result<Vec<PathBuf>> {
@@ -74,9 +65,11 @@ impl MediaWalker {
             .into_stream()
             .map(|entry| entry.map(|e| e.path()))
             .try_filter(|path| {
-                let supported = if let Some(extension) = path.extension().and_then(|extension| extension.to_str()) {
+                let supported = if let Some(extension) =
+                    path.extension().and_then(|extension| extension.to_str())
+                {
                     SUPPORTED_EXTENSIONS.contains(&extension)
-                }else {
+                } else {
                     false
                 };
                 future::ready(supported)
@@ -91,9 +84,9 @@ impl MediaWalker {
 
 #[cfg(test)]
 mod tests {
-    use test_case::test_case;
     use super::MediaWalker;
-    use std::path::{PathBuf, Path};
+    use std::path::{Path, PathBuf};
+    use test_case::test_case;
 
     #[test_case("examples/media/audio/file_example_MP3_5MG.mp3")]
     #[test_case("examples/media/audio/file_example_WAV_10MG.wav")]

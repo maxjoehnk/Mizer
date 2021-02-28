@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use mizer_protocol_dmx::DmxOutput;
+use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct Fixture {
@@ -121,7 +121,7 @@ impl FixtureChannelDefinition {
         match self.resolution {
             ChannelResolution::Coarse { .. } => 1,
             ChannelResolution::Fine { .. } => 2,
-            ChannelResolution::Finest { .. } => 3
+            ChannelResolution::Finest { .. } => 3,
         }
     }
 }

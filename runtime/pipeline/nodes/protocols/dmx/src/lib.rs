@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_protocol_dmx::DmxConnectionManager;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Default, Clone, PartialEq, Deserialize, Serialize)]
 pub struct DmxOutputNode {
@@ -16,7 +16,7 @@ fn default_universe() -> u16 {
 impl PipelineNode for DmxOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "DmxOutputNode".into()
+            name: "DmxOutputNode".into(),
         }
     }
 
@@ -30,7 +30,8 @@ impl ProcessingNode for DmxOutputNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let value = context.read_port::<_, f64>("value");
-        let output = context.inject::<DmxConnectionManager>()
+        let output = context
+            .inject::<DmxConnectionManager>()
             .and_then(|connection| connection.get_output("output"));
         if output.is_none() {
             anyhow::bail!("Missing dmx output {}", "output");

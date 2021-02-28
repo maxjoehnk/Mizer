@@ -7,7 +7,7 @@ pub struct MidiOutputNode {}
 impl PipelineNode for MidiOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "MidiOutputNode".into()
+            name: "MidiOutputNode".into(),
         }
     }
 

@@ -16,7 +16,10 @@ impl Default for Pattern {
 }
 
 pub enum PatternState {
-    Iterate { index: usize, color: (f64, f64, f64) },
+    Iterate {
+        index: usize,
+        color: (f64, f64, f64),
+    },
 }
 
 impl Default for PatternState {
@@ -30,7 +33,7 @@ impl Default for PatternState {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct PixelPatternGeneratorNode {
-    pub pattern: Pattern
+    pub pattern: Pattern,
 }
 
 #[derive(Default)]
@@ -80,7 +83,11 @@ impl ProcessingNode for PixelPatternGeneratorNode {
             _ => {}
         }
 
-        let data = state.pixels.iter().flat_map(|(r, g, b)| vec![*r, *g, *b]).collect();
+        let data = state
+            .pixels
+            .iter()
+            .flat_map(|(r, g, b)| vec![*r, *g, *b])
+            .collect();
         context.write_port::<_, Vec<f64>>("output", data);
 
         Ok(())
@@ -106,7 +113,5 @@ fn next_color(color: &mut (f64, f64, f64)) {
 }
 
 fn matches(color: (f64, f64, f64), expected: (f64, f64, f64)) -> bool {
-    color.0 == expected.0 &&
-        color.1 == expected.1 &&
-        color.2 == expected.2
+    color.0 == expected.0 && color.1 == expected.1 && color.2 == expected.2
 }

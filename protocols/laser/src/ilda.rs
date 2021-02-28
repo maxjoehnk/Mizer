@@ -2,8 +2,8 @@ use crate::laser::{LaserColor, LaserCoordinate, LaserFrame, LaserPoint};
 use ilda_idtf::layout::{Color, Coords2d, Coords2dTrueColor};
 use ilda_idtf::*;
 use std::fs::File;
-use std::path::Path;
 use std::io::Read;
+use std::path::Path;
 
 pub enum IldaMediaReader {
     FileReader(SectionReader<File>),

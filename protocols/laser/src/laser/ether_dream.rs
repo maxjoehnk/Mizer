@@ -1,4 +1,4 @@
-use super::{Laser};
+use super::Laser;
 use crate::laser::{LaserFrame, LaserPoint};
 use ::ether_dream::dac::stream;
 use ::ether_dream::protocol::DacPoint;
@@ -13,15 +13,13 @@ impl EtherDreamLaser {
         let broadcasts = ::ether_dream::recv_dac_broadcasts()?;
         broadcasts.set_timeout(Some(Duration::from_secs(5)))?;
 
-        Ok(broadcasts
-            .into_iter()
-            .map(|dac_broadcast| {
-                let (dac_broadcast, addr) = dac_broadcast?;
-                log::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
-                let device = stream::connect(&dac_broadcast, addr.ip())?;
+        Ok(broadcasts.into_iter().map(|dac_broadcast| {
+            let (dac_broadcast, addr) = dac_broadcast?;
+            log::debug!("Found ether dream {:?} on {:?}", &dac_broadcast, &addr);
+            let device = stream::connect(&dac_broadcast, addr.ip())?;
 
-                Ok(EtherDreamLaser { device })
-            }))
+            Ok(EtherDreamLaser { device })
+        }))
     }
 }
 

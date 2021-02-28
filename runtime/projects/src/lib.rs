@@ -1,11 +1,11 @@
 use lazy_static::lazy_static;
+use mizer_node::{NodeDesigner, NodePath, PortId};
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::fs::File;
 use std::path::Path;
-use mizer_node::{NodePath, PortId, NodeDesigner};
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -136,8 +136,8 @@ pub struct FixtureConfig {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashMap;
     use mizer_node::NodePosition;
+    use std::collections::HashMap;
 
     #[test]
     fn load_empty_project() -> anyhow::Result<()> {
@@ -182,10 +182,7 @@ mod tests {
                     height: 20
                 }),
                 designer: NodeDesigner {
-                    position: NodePosition {
-                        x: 1.,
-                        y: 2.
-                    },
+                    position: NodePosition { x: 1., y: 2. },
                     scale: 3.,
                 },
                 properties: HashMap::new(),
@@ -294,9 +291,7 @@ mod tests {
             result.nodes[0],
             Node {
                 path: "/fader-0".into(),
-                config: NodeConfig::Fader(mizer_nodes::FaderNode {
-                    value: 0.5
-                }),
+                config: NodeConfig::Fader(mizer_nodes::FaderNode { value: 0.5 }),
                 designer: Default::default(),
                 properties: Default::default(),
             }

@@ -10,13 +10,13 @@ use uuid::Uuid;
 
 pub use crate::discovery::MediaDiscovery;
 
+pub mod api;
 mod data_access;
+mod discovery;
 pub mod documents;
 mod file_storage;
-mod media_handlers;
-pub mod api;
-mod discovery;
 pub mod http_api;
+mod media_handlers;
 
 pub struct MediaServer {
     pub db: DataAccess,
@@ -46,7 +46,11 @@ impl MediaServer {
             while let Some(command) = stream.next().await {
                 match command {
                     MediaServerCommand::ImportFile(model, file_path, resp) => {
-                        let document = self.import_file.import_file(model, &file_path).await.unwrap();
+                        let document = self
+                            .import_file
+                            .import_file(model, &file_path)
+                            .await
+                            .unwrap();
                         resp.send(document).unwrap();
                     }
                     MediaServerCommand::CreateTag(model, resp) => {
@@ -86,13 +90,19 @@ impl ImportFileHandler {
         }
     }
 
-    async fn import_file(&self, model: MediaCreateModel, file_path: &Path) -> anyhow::Result<MediaDocument> {
+    async fn import_file(
+        &self,
+        model: MediaCreateModel,
+        file_path: &Path,
+    ) -> anyhow::Result<MediaDocument> {
         log::debug!("importing file {:?}", file_path);
         let id = Uuid::new_v4();
         let mut temp_file = tokio::fs::File::open(file_path).await?;
         let mut buffer = [0u8; 256];
         temp_file.read(&mut buffer).await?;
-        let content_type = infer::get(&buffer).ok_or_else(|| anyhow::anyhow!("Unknown file type"))?.mime_type();
+        let content_type = infer::get(&buffer)
+            .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?
+            .mime_type();
         log::debug!("got {} content type for {:?}", content_type, model);
 
         if VideoHandler::supported(content_type) {
@@ -124,4 +134,3 @@ impl ImportFileHandler {
         Ok(media)
     }
 }
-

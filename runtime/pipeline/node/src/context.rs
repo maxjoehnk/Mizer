@@ -1,6 +1,6 @@
+use crate::PortMetadata;
 use mizer_clock::ClockFrame;
 use mizer_ports::{PortId, PortValue};
-use crate::PortMetadata;
 
 pub trait NodeContext {
     fn clock(&self) -> ClockFrame;

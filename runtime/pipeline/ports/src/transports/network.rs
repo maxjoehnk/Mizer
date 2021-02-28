@@ -1,26 +1,28 @@
-use std::net::{UdpSocket, ToSocketAddrs};
 use crate::api::*;
-use serde::Serialize;
+use crate::swap::{Swap, SwapReadGuard};
 use serde::de::DeserializeOwned;
+use serde::Serialize;
+use std::net::{ToSocketAddrs, UdpSocket};
 use std::thread;
-use crate::swap::{SwapReadGuard, Swap};
 
 pub struct NetworkReceiver<Item>
-    where Item: PortValue + DeserializeOwned {
+where
+    Item: PortValue + DeserializeOwned,
+{
     swap: Swap<Item>,
 }
 
-impl<Item : PortValue + DeserializeOwned> NetworkReceiver<Item>
-    where Item: 'static {
+impl<Item: PortValue + DeserializeOwned> NetworkReceiver<Item>
+where
+    Item: 'static,
+{
     /// Creates a new receiver listening on the returned port
     pub fn new() -> anyhow::Result<(Self, u16)> {
         let socket = UdpSocket::bind(("0.0.0.0", 0))?;
         let addr = socket.local_addr()?;
         let swap = Swap::new();
 
-        let recv = NetworkReceiver {
-            swap: swap.clone(),
-        };
+        let recv = NetworkReceiver { swap: swap.clone() };
 
         thread::spawn(move || {
             let mut buffer = [0u8; 2048];
@@ -36,9 +38,10 @@ impl<Item : PortValue + DeserializeOwned> NetworkReceiver<Item>
     }
 }
 
-impl<'a, Item : 'a> NodePortReceiver<'a, Item> for NetworkReceiver<Item>
-    where Item: PortValue + DeserializeOwned {
-
+impl<'a, Item: 'a> NodePortReceiver<'a, Item> for NetworkReceiver<Item>
+where
+    Item: PortValue + DeserializeOwned,
+{
     type Guard = SwapReadGuard<'a, Item>;
 
     fn recv(&'a self) -> Option<Self::Guard> {
@@ -56,14 +59,14 @@ impl NetworkSender {
         let socket = UdpSocket::bind(("0.0.0.0", 0))?;
         socket.connect(addr)?;
 
-        Ok(NetworkSender {
-            socket
-        })
+        Ok(NetworkSender { socket })
     }
 }
 
 impl<Item> NodePortSender<Item> for NetworkSender
-    where Item: PortValue + Serialize {
+where
+    Item: PortValue + Serialize,
+{
     fn send(&self, port: Item) -> anyhow::Result<()> {
         let buffer = bincode::serialize(&port).unwrap();
         let expected_bytes = buffer.len();
@@ -76,8 +79,8 @@ impl<Item> NodePortSender<Item> for NetworkSender
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::time::{Instant, Duration};
     use std::ops::Deref;
+    use std::time::{Duration, Instant};
 
     #[test]
     fn it_should_connect() {

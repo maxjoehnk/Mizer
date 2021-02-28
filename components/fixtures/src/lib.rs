@@ -1,7 +1,7 @@
-use mizer_module::{Module, Runtime};
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
 use crate::manager::FixtureManager;
 use crate::processor::FixtureProcessor;
+use mizer_module::{Module, Runtime};
 
 pub mod fixture;
 pub mod library;

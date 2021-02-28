@@ -5,16 +5,19 @@ use std::ops::Deref;
 use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodePath, NodeLink, ProcessingNode};
+use mizer_node::{NodeLink, NodePath, ProcessingNode};
 
 #[derive(Debug, Clone, PartialOrd, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ExecutionPlan {
-    pub executors: Vec<PlannedExecutor>
+    pub executors: Vec<PlannedExecutor>,
 }
 
 impl ExecutionPlan {
     pub fn get_executor(&self, id: &ExecutorId) -> Option<PlannedExecutor> {
-        self.executors.iter().find(|executor| &executor.id == id).cloned()
+        self.executors
+            .iter()
+            .find(|executor| &executor.id == id)
+            .cloned()
     }
 }
 
@@ -112,16 +115,25 @@ impl ExecutionPlanner {
     }
 
     pub fn plan(&self) -> ExecutionPlan {
-        let mut executors = self.executors.values().sorted_by_key(|e| e.id.clone()).map(|executor| PlannedExecutor {
-            id: executor.id.clone(),
-            associated_nodes: Vec::new(),
-        }).collect::<Vec<_>>();
+        let mut executors = self
+            .executors
+            .values()
+            .sorted_by_key(|e| e.id.clone())
+            .map(|executor| PlannedExecutor {
+                id: executor.id.clone(),
+                associated_nodes: Vec::new(),
+            })
+            .collect::<Vec<_>>();
         let nodes = self.group_nodes();
 
         let mut i = 0;
         for linked_nodes in nodes {
             for node in linked_nodes.0 {
-                if let Some(executor) = node.attached_executor.as_ref().and_then(|id| executors.iter_mut().find(|e| &e.id == id)) {
+                if let Some(executor) = node
+                    .attached_executor
+                    .as_ref()
+                    .and_then(|id| executors.iter_mut().find(|e| &e.id == id))
+                {
                     executor.associated_nodes.push(node);
                 } else {
                     executors[i].associated_nodes.push(node);
@@ -133,15 +145,18 @@ impl ExecutionPlanner {
             }
         }
 
-        ExecutionPlan {
-            executors
-        }
+        ExecutionPlan { executors }
     }
 
     fn group_nodes(&self) -> Vec<LinkedNodes> {
         let mut nodes = vec![];
 
-        let local_links = self.links.iter().filter(|l| l.local).flat_map(|l| vec![l.source.clone(), l.target.clone()]).collect::<Vec<_>>();
+        let local_links = self
+            .links
+            .iter()
+            .filter(|l| l.local)
+            .flat_map(|l| vec![l.source.clone(), l.target.clone()])
+            .collect::<Vec<_>>();
 
         let mut node_group = LinkedNodes(Vec::new());
         for (path, node) in self.nodes.iter().sorted_by_key(|(path, _)| path.clone()) {
@@ -161,8 +176,8 @@ struct LinkedNodes(Vec<ExecutionNode>);
 
 #[cfg(test)]
 mod tests {
-    use test_case::test_case;
     use mizer_node::PortType;
+    use test_case::test_case;
 
     use super::*;
 
@@ -232,12 +247,14 @@ mod tests {
         };
         planner.add_node(node.clone());
         let executor_id: ExecutorId = executor_id.into();
-        planner.add_executor(Executor { id: executor_id.clone() });
+        planner.add_executor(Executor {
+            id: executor_id.clone(),
+        });
         let expected = ExecutionPlan {
             executors: vec![PlannedExecutor {
                 id: executor_id.clone(),
                 associated_nodes: vec![node],
-            }]
+            }],
         };
 
         let mut plan = planner.plan();
@@ -266,13 +283,16 @@ mod tests {
             id: "executor2".into(),
         });
         let expected = ExecutionPlan {
-            executors: vec![PlannedExecutor {
-                id: "executor1".into(),
-                associated_nodes: vec![node1],
-            }, PlannedExecutor {
-                id: "executor2".into(),
-                associated_nodes: vec![node2],
-            }]
+            executors: vec![
+                PlannedExecutor {
+                    id: "executor1".into(),
+                    associated_nodes: vec![node1],
+                },
+                PlannedExecutor {
+                    id: "executor2".into(),
+                    associated_nodes: vec![node2],
+                },
+            ],
         };
 
         let mut plan = planner.plan();
@@ -301,7 +321,7 @@ mod tests {
             executors: vec![PlannedExecutor {
                 id: "orchestrator".into(),
                 associated_nodes: vec![node1, node2],
-            }]
+            }],
         };
 
         let mut plan = planner.plan();
@@ -323,16 +343,23 @@ mod tests {
         };
         planner.add_node(node1.clone());
         planner.add_node(node2.clone());
-        planner.add_executor(Executor { id: "executor1".into() });
-        planner.add_executor(Executor { id: "executor2".into() });
+        planner.add_executor(Executor {
+            id: "executor1".into(),
+        });
+        planner.add_executor(Executor {
+            id: "executor2".into(),
+        });
         let expected = ExecutionPlan {
-            executors: vec![PlannedExecutor {
-                id: "executor1".into(),
-                associated_nodes: vec![node1, node2],
-            }, PlannedExecutor {
-                id: "executor2".into(),
-                associated_nodes: vec![],
-            }]
+            executors: vec![
+                PlannedExecutor {
+                    id: "executor1".into(),
+                    associated_nodes: vec![node1, node2],
+                },
+                PlannedExecutor {
+                    id: "executor2".into(),
+                    associated_nodes: vec![],
+                },
+            ],
         };
 
         let mut plan = planner.plan();
@@ -362,16 +389,23 @@ mod tests {
             local: true,
             port_type: PortType::Single,
         });
-        planner.add_executor(Executor { id: "executor1".into() });
-        planner.add_executor(Executor { id: "executor2".into() });
+        planner.add_executor(Executor {
+            id: "executor1".into(),
+        });
+        planner.add_executor(Executor {
+            id: "executor2".into(),
+        });
         let expected = ExecutionPlan {
-            executors: vec![PlannedExecutor {
-                id: "executor1".into(),
-                associated_nodes: vec![node1, node2],
-            }, PlannedExecutor {
-                id: "executor2".into(),
-                associated_nodes: vec![],
-            }]
+            executors: vec![
+                PlannedExecutor {
+                    id: "executor1".into(),
+                    associated_nodes: vec![node1, node2],
+                },
+                PlannedExecutor {
+                    id: "executor2".into(),
+                    associated_nodes: vec![],
+                },
+            ],
         };
 
         let mut plan = planner.plan();

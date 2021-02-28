@@ -39,9 +39,7 @@ impl From<&MediaDocument> for AttachedMediaDocument {
             content_type if content_type.starts_with("audio") => {
                 AttachedMediaDocument::Audio(document)
             }
-            "text/xml" => {
-                AttachedMediaDocument::Vector(document)
-            }
+            "text/xml" => AttachedMediaDocument::Vector(document),
             _ => unimplemented!(),
         }
     }

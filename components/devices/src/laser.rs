@@ -1,6 +1,6 @@
-use mizer_protocol_laser::{HeliosLaser, EtherDreamLaser, Laser, LaserFrame};
 use crate::{Device, DeviceDiscovery, DeviceStatus};
 use futures::stream::{self, BoxStream, StreamExt};
+use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser, Laser, LaserFrame};
 
 #[derive(Debug)]
 pub enum LaserDevice {
@@ -11,7 +11,10 @@ pub enum LaserDevice {
 impl LaserDevice {
     fn discover_helios() -> BoxStream<'static, LaserDevice> {
         let helios_devices = HeliosLaser::find_devices().unwrap();
-        let devices = helios_devices.into_iter().map(LaserDevice::Helios).collect::<Vec<_>>();
+        let devices = helios_devices
+            .into_iter()
+            .map(LaserDevice::Helios)
+            .collect::<Vec<_>>();
 
         stream::iter(devices).boxed()
     }
@@ -27,7 +30,7 @@ impl LaserDevice {
                     Err(err) => {
                         log::error!("ether dream discovery failed: {:?}", err);
                         return;
-                    },
+                    }
                 }
             }
         });

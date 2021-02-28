@@ -1,9 +1,9 @@
-use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
-use std::path::Path;
 use crate::file_storage::FileStorage;
+use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
+use std::io::Write;
+use std::path::Path;
 use tiny_skia::Pixmap;
 use usvg::NodeExt;
-use std::io::Write;
 
 pub struct SvgHandler;
 
@@ -24,7 +24,7 @@ impl MediaHandler for SvgHandler {
         let bounding_box = tree.root().calculate_bbox().unwrap();
         let size = if bounding_box.width() > bounding_box.height() {
             usvg::FitTo::Width(THUMBNAIL_SIZE)
-        }else {
+        } else {
             usvg::FitTo::Height(THUMBNAIL_SIZE)
         };
         resvg::render(&tree, size, pixel_buffer);

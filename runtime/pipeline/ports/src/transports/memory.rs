@@ -1,7 +1,7 @@
 use crate::api::*;
-use std::rc::Rc;
-use std::cell::{RefCell, Ref};
+use std::cell::{Ref, RefCell};
 use std::ops::Deref;
+use std::rc::Rc;
 
 pub fn channel<T: Clone + Default>() -> (MemorySender<T>, MemoryReceiver<T>) {
     let swap = Rc::new(RefCell::new(T::default()));
@@ -12,12 +12,13 @@ pub fn channel<T: Clone + Default>() -> (MemorySender<T>, MemoryReceiver<T>) {
 }
 
 pub struct MemorySender<Item> {
-    cell: Rc<RefCell<Item>>
+    cell: Rc<RefCell<Item>>,
 }
 
 impl<Item> NodePortSender<Item> for MemorySender<Item>
-    where Item: PortValue {
-
+where
+    Item: PortValue,
+{
     fn send(&self, value: Item) -> anyhow::Result<()> {
         *self.cell.borrow_mut() = value;
         Ok(())
@@ -25,11 +26,13 @@ impl<Item> NodePortSender<Item> for MemorySender<Item>
 }
 
 pub struct MemoryReceiver<T> {
-    cell: Rc<RefCell<T>>
+    cell: Rc<RefCell<T>>,
 }
 
 impl<'a, Item> NodePortReceiver<'a, Item> for MemoryReceiver<Item>
-    where Item: PortValue + 'a {
+where
+    Item: PortValue + 'a,
+{
     type Guard = Ref<'a, Item>;
 
     fn recv(&'a self) -> Option<Self::Guard> {
@@ -37,8 +40,7 @@ impl<'a, Item> NodePortReceiver<'a, Item> for MemoryReceiver<Item>
     }
 }
 
-impl<'a, Item: PortValue> ReceiverGuard<Item> for Ref<'a, Item> {
-}
+impl<'a, Item: PortValue> ReceiverGuard<Item> for Ref<'a, Item> {}
 
 #[cfg(test)]
 mod tests {

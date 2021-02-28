@@ -1,10 +1,10 @@
-use chashmap::{CHashMap, WriteGuard};
 use crate::laser::LaserDevice;
-use futures::stream::{BoxStream};
-use std::sync::Arc;
+use chashmap::{CHashMap, WriteGuard};
+use futures::stream::BoxStream;
 use futures::StreamExt;
-use std::sync::atomic::{AtomicUsize, Ordering};
 use mizer_module::{Module, Runtime};
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::Arc;
 
 pub mod laser;
 
@@ -14,11 +14,11 @@ pub trait Device {
 
 pub enum DeviceStatus {
     Connected,
-    Disconnected
+    Disconnected,
 }
 
 pub trait DeviceDiscovery {
-    type Device : Device;
+    type Device: Device;
 
     fn discover() -> BoxStream<'static, Self::Device>;
 }
@@ -26,7 +26,7 @@ pub trait DeviceDiscovery {
 #[derive(Default, Clone)]
 pub struct DeviceManager {
     laser_id_counter: Arc<AtomicUsize>,
-    lasers: Arc<CHashMap<String, LaserDevice>>
+    lasers: Arc<CHashMap<String, LaserDevice>>,
 }
 
 impl DeviceManager {

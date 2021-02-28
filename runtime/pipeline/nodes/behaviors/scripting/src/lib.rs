@@ -1,7 +1,7 @@
-use rhai::{AST, Engine, Map, Scope};
+use rhai::{Engine, Map, Scope, AST};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodeContext, NodeDetails, ProcessingNode, PipelineNode, NodeType};
+use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, ProcessingNode};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ScriptingNode {
@@ -34,7 +34,7 @@ impl ScriptingNode {}
 impl PipelineNode for ScriptingNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ScriptingNode".into()
+            name: "ScriptingNode".into(),
         }
     }
 
@@ -51,15 +51,16 @@ impl ProcessingNode for ScriptingNode {
             state.ast = state.engine.compile(&self.script)?;
             state.script = self.script.clone();
         }
-        match state.engine.call_fn::<_, f64>(&mut state.scope, &state.ast, "main", ()) {
+        match state
+            .engine
+            .call_fn::<_, f64>(&mut state.scope, &state.ast, "main", ())
+        {
             Ok(value) => {
                 context.write_port("value", value);
 
                 Ok(())
             }
-            Err(e) => {
-                Err(anyhow::anyhow!("{:?}", e))
-            }
+            Err(e) => Err(anyhow::anyhow!("{:?}", e)),
         }
     }
 

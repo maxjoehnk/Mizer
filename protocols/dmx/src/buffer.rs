@@ -1,5 +1,5 @@
-use std::sync::Mutex;
 use std::collections::HashMap;
+use std::sync::Mutex;
 
 #[derive(Default)]
 pub struct DmxBuffer {

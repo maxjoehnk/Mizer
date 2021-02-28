@@ -1,6 +1,6 @@
-use serde::{Serialize, Deserialize};
 use gstreamer::prelude::*;
 use gstreamer::{Element, ElementFactory};
+use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
@@ -26,7 +26,7 @@ impl PipelineNode for VideoColorBalanceNode {
                 port_type: PortType::Gstreamer,
                 ..Default::default()
             }
-        }else {
+        } else {
             Default::default()
         }
     }

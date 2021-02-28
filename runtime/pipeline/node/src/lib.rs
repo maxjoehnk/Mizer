@@ -1,17 +1,17 @@
 pub use mizer_ports::{PortId, PortType};
 
-pub use self::ports::*;
 pub use self::context::*;
-pub use self::path::*;
 pub use self::introspection::*;
+pub use self::path::*;
+pub use self::ports::*;
 
-mod ports;
 mod context;
 mod path;
+mod ports;
 // TODO: pick better name
 mod introspection;
 
-pub trait PipelineNode : Send + Sync {
+pub trait PipelineNode: Send + Sync {
     fn details(&self) -> NodeDetails;
 
     fn introspect_port(&self, port: &PortId) -> PortMetadata {

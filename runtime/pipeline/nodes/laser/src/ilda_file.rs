@@ -1,4 +1,4 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 use mizer_protocol_laser::ilda::IldaMediaReader;

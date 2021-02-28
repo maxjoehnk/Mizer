@@ -55,8 +55,8 @@ async fn add_media(
                     let mut file = tokio::fs::File::create(&file_path).await?;
                     let mut stream = field.into_stream();
                     while let Some(data) = stream.next().await {
-                        let data = data
-                            .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
+                        let data =
+                            data.map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
                         file.write(&data).await?;
                     }
                 }

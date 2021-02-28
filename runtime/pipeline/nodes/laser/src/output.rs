@@ -1,5 +1,5 @@
 use anyhow::Context;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use mizer_devices::DeviceManager;
 pub use mizer_node::*;
@@ -51,10 +51,12 @@ impl ProcessingNode for LaserNode {
                     state.current_frame = 0;
                 }
                 let frame = &state.frames[state.current_frame];
-                laser.write_frame(frame.clone()).context("Error writing frame to laser dac")?;
+                laser
+                    .write_frame(frame.clone())
+                    .context("Error writing frame to laser dac")?;
                 state.current_frame += 1;
             }
-        }else {
+        } else {
             log::warn!("Laser node is missing DeviceManager");
         }
         Ok(())

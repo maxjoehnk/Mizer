@@ -1,8 +1,8 @@
-use mizer_runtime::*;
-use mizer_nodes::{OscillatorNode};
-use mizer_node::{NodeLink, PortType};
 use mizer_clock::Clock;
 use mizer_module::Runtime;
+use mizer_node::{NodeLink, PortType};
+use mizer_nodes::OscillatorNode;
+use mizer_runtime::*;
 
 mod utils;
 
@@ -14,14 +14,16 @@ fn main() {
     let mut runtime = CoordinatorRuntime::with_clock(clock);
     runtime.add_node("/oscillator1".into(), OscillatorNode::default());
     runtime.add_node("/output1".into(), sink.clone());
-    runtime.add_link(NodeLink {
-        source: "/oscillator1".into(),
-        source_port: "value".into(),
-        target: "/output1".into(),
-        target_port: "input".into(),
-        local: false,
-        port_type: PortType::Single,
-    }).unwrap();
+    runtime
+        .add_link(NodeLink {
+            source: "/oscillator1".into(),
+            source_port: "value".into(),
+            target: "/output1".into(),
+            target_port: "input".into(),
+            local: false,
+            port_type: PortType::Single,
+        })
+        .unwrap();
 
     run_for_one_second(runtime);
 

@@ -1,9 +1,9 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
 
-use mizer_runtime::DefaultRuntime;
+use mizer_module::{Module, Runtime};
 use mizer_project_files::Project;
-use mizer_module::{Runtime, Module};
 use mizer_protocol_dmx::DmxModule;
+use mizer_runtime::DefaultRuntime;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("pixel pipeline");

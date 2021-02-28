@@ -1,6 +1,6 @@
-use ::sacn::DmxSource;
-use crate::DmxOutput;
 use crate::buffer::DmxBuffer;
+use crate::DmxOutput;
+use ::sacn::DmxSource;
 
 pub struct SacnOutput {
     source: DmxSource,

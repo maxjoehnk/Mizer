@@ -3,10 +3,10 @@ use std::net::{SocketAddrV4, UdpSocket};
 use std::sync::Mutex;
 use std::thread;
 
-use serde::{Deserialize, Serialize};
 use crossbeam_channel::{unbounded, Receiver};
 use lazy_static::lazy_static;
 use rosc::{OscMessage, OscPacket, OscType};
+use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 

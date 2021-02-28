@@ -19,16 +19,14 @@ impl std::fmt::Debug for ClockNode {
 
 impl Default for ClockNode {
     fn default() -> Self {
-        ClockNode {
-            speed: 90.
-        }
+        ClockNode { speed: 90. }
     }
 }
 
 impl PipelineNode for ClockNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ClockNode".into()
+            name: "ClockNode".into(),
         }
     }
 

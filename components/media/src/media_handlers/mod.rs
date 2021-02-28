@@ -1,16 +1,16 @@
 use std::path::Path;
 
-pub use image_handler::ImageHandler;
-pub use video_handler::VideoHandler;
 pub use audio_handler::AudioHandler;
+pub use image_handler::ImageHandler;
 pub use svg_handler::SvgHandler;
+pub use video_handler::VideoHandler;
 
 use crate::file_storage::FileStorage;
 
 mod audio_handler;
 mod image_handler;
-mod video_handler;
 mod svg_handler;
+mod video_handler;
 
 pub const THUMBNAIL_SIZE: u32 = 200;
 

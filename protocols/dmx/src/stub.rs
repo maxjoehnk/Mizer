@@ -1,5 +1,5 @@
-use crate::DmxOutput;
 use crate::buffer::DmxBuffer;
+use crate::DmxOutput;
 
 #[derive(Default)]
 pub struct StubOutput {

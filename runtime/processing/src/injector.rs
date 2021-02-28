@@ -1,4 +1,4 @@
-use std::any::{TypeId, Any};
+use std::any::{Any, TypeId};
 use std::collections::HashMap;
 
 #[derive(Default)]
@@ -19,7 +19,8 @@ impl Injector {
 
     pub fn get<T: 'static>(&self) -> Option<&T> {
         let id = TypeId::of::<T>();
-        self.services.get(&id)
+        self.services
+            .get(&id)
             .and_then(|service| service.downcast_ref())
     }
 }
@@ -31,7 +32,7 @@ mod tests {
     use super::*;
 
     struct TestService {
-        value: u64
+        value: u64,
     }
 
     #[test_case(1)]

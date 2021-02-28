@@ -66,7 +66,12 @@ impl VideoTransformState {
         VideoTransformState { node }
     }
 
-    fn forward_port(&self, context: &impl NodeContext, port: &str, property: &str) -> anyhow::Result<()> {
+    fn forward_port(
+        &self,
+        context: &impl NodeContext,
+        port: &str,
+        property: &str,
+    ) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>(port) {
             self.node.set_property(property, &(value as f32))?;
         }

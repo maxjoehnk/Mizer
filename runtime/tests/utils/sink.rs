@@ -1,4 +1,4 @@
-use mizer_node::{ProcessingNode, PipelineNode, NodeContext, NodeDetails, NodeType};
+use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, ProcessingNode};
 use std::sync::{Arc, Mutex};
 
 #[derive(Clone, Debug, Default)]
@@ -9,7 +9,7 @@ pub struct TestSink {
 impl PipelineNode for TestSink {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "TestSink".into()
+            name: "TestSink".into(),
         }
     }
 
@@ -25,7 +25,7 @@ impl ProcessingNode for TestSink {
         if let Some(value) = context.read_port("input") {
             let mut frames = self.frames.lock().unwrap();
             frames.push(value);
-        }else {
+        } else {
             println!("got no port");
         }
 
@@ -43,9 +43,6 @@ impl TestSink {
     }
 
     pub fn frames(&self) -> Vec<f64> {
-        self.frames
-            .lock()
-            .unwrap()
-            .clone()
+        self.frames.lock().unwrap().clone()
     }
 }

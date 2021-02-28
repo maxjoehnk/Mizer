@@ -1,5 +1,5 @@
+use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter, Result};
-use serde::{Serialize, Deserialize};
 use std::ops::Deref;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
@@ -63,7 +63,7 @@ pub enum PortType {
     /// Materials and Shaders for 3D Objects
     Material,
     /// Legacy, should be converted to texture
-    Gstreamer
+    Gstreamer,
 }
 
 impl Default for PortType {
@@ -72,21 +72,28 @@ impl Default for PortType {
     }
 }
 
-pub trait NodePortReceiver<'a, Item> where Item: PortValue {
-    type Guard : ReceiverGuard<Item>;
+pub trait NodePortReceiver<'a, Item>
+where
+    Item: PortValue,
+{
+    type Guard: ReceiverGuard<Item>;
 
     fn recv(&'a self) -> Option<Self::Guard>;
 }
 
-pub trait ReceiverGuard<Item> : Deref<Target = Item> where Item: PortValue {
+pub trait ReceiverGuard<Item>: Deref<Target = Item>
+where
+    Item: PortValue,
+{
 }
 
-pub trait NodePortSender<Item> where Item: PortValue {
+pub trait NodePortSender<Item>
+where
+    Item: PortValue,
+{
     fn send(&self, value: Item) -> anyhow::Result<()>;
 }
 
-pub trait PortValue : Debug + Clone + PartialEq + Send + Sync {}
+pub trait PortValue: Debug + Clone + PartialEq + Send + Sync {}
 
-impl<T> PortValue for T
-    where T: Debug + Clone + PartialEq + Send + Sync
-{}
+impl<T> PortValue for T where T: Debug + Clone + PartialEq + Send + Sync {}

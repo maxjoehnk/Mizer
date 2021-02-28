@@ -12,7 +12,7 @@ pub struct FixtureNode {
 impl PipelineNode for FixtureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "FixtureNode".into()
+            name: "FixtureNode".into(),
         }
     }
 

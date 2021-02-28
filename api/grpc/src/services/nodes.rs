@@ -3,10 +3,10 @@ use protobuf::SingularPtrField;
 
 use crate::protos::{AddNodeRequest, NodePosition, NodesApi};
 use crate::protos::{
-    ChannelProtocol, Node, Node_NodeType, NodeConnection, Nodes, NodesRequest, Port,
+    ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
 };
-use mizer_node::{PortType, NodeDesigner, NodeType};
-use mizer_runtime::{RuntimeApi, NodeDescriptor};
+use mizer_node::{NodeDesigner, NodeType, PortType};
+use mizer_runtime::{NodeDescriptor, RuntimeApi};
 
 pub struct NodesApiImpl {
     runtime: RuntimeApi,
@@ -14,9 +14,7 @@ pub struct NodesApiImpl {
 
 impl NodesApiImpl {
     pub fn new(runtime: RuntimeApi) -> Self {
-        NodesApiImpl {
-            runtime
-        }
+        NodesApiImpl { runtime }
     }
 }
 
@@ -58,7 +56,12 @@ impl NodesApi for NodesApiImpl {
         resp.finish(res)
     }
 
-    fn add_node(&self, _: ServerHandlerContext, req: ServerRequestSingle<AddNodeRequest>, resp: ServerResponseUnarySink<Node>) -> grpc::Result<()> {
+    fn add_node(
+        &self,
+        _: ServerHandlerContext,
+        req: ServerRequestSingle<AddNodeRequest>,
+        resp: ServerResponseUnarySink<Node>,
+    ) -> grpc::Result<()> {
         todo!()
         // let node = self.pipeline_view.add_node(req.message).unwrap();
         //

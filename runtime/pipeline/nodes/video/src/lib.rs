@@ -1,6 +1,6 @@
 use std::sync::Mutex;
 
-use gstreamer::{Pipeline, Element};
+use gstreamer::{Element, Pipeline};
 use lazy_static::lazy_static;
 
 pub use self::color_balance::*;

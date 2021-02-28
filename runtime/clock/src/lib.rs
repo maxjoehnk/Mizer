@@ -45,7 +45,7 @@ impl Clock for SystemClock {
             speed: self.speed,
             frame: self.frame,
             delta,
-            downbeat
+            downbeat,
         }
     }
 

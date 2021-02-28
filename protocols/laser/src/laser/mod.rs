@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 pub mod ether_dream;
 pub mod helios;
 
-pub trait Laser : std::fmt::Debug {
+pub trait Laser: std::fmt::Debug {
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()>;
 }
 

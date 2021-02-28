@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodeContext, NodeDetails, ProcessingNode, PipelineNode, NodeType};
+use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, ProcessingNode};
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct SequenceStep {
@@ -22,11 +22,7 @@ impl From<(f64, f64)> for SequenceStep {
 
 impl From<(f64, f64, bool)> for SequenceStep {
     fn from((tick, value, hold): (f64, f64, bool)) -> Self {
-        SequenceStep {
-            tick,
-            value,
-            hold,
-        }
+        SequenceStep { tick, value, hold }
     }
 }
 

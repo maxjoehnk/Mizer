@@ -1,10 +1,10 @@
-use std::collections::HashMap;
-use mizer_node::{NodePath, NodeLink, NodeType, NodeDesigner, PipelineNode};
-use std::sync::Arc;
-use pinboard::{Pinboard, NonEmptyPinboard};
-use dashmap::{DashMap};
-use std::ops::Deref;
 use dashmap::mapref::one::Ref;
+use dashmap::DashMap;
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode};
+use pinboard::{NonEmptyPinboard, Pinboard};
+use std::collections::HashMap;
+use std::ops::Deref;
+use std::sync::Arc;
 
 pub struct RuntimeApi {
     pub(crate) nodes: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
@@ -15,16 +15,23 @@ pub struct RuntimeApi {
 impl RuntimeApi {
     pub fn nodes(&self) -> Vec<NodeDescriptor> {
         let designer = self.designer.read();
-        let paths = self.nodes.iter()
+        let paths = self
+            .nodes
+            .iter()
             .map(|entry| entry.key().clone())
             .collect::<Vec<_>>();
 
-        paths.into_iter()
+        paths
+            .into_iter()
             .map(|path| {
                 let node = self.nodes.get(&path).unwrap();
                 let designer = designer[&path].clone();
 
-                NodeDescriptor { path, node, designer }
+                NodeDescriptor {
+                    path,
+                    node,
+                    designer,
+                }
             })
             .collect()
     }

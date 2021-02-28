@@ -1,8 +1,8 @@
 use crate::fixture::{Fixture, FixtureDefinition};
 use dashmap::DashMap;
-use std::sync::Arc;
-use std::ops::{Deref, DerefMut};
 use mizer_protocol_dmx::DmxConnectionManager;
+use std::ops::{Deref, DerefMut};
+use std::sync::Arc;
 
 #[derive(Default, Clone)]
 pub struct FixtureManager {
@@ -23,7 +23,14 @@ impl FixtureManager {
         channel: u8,
         universe: Option<u16>,
     ) {
-        let fixture = Fixture::new(fixture_id.clone(), definition, mode, output, channel, universe);
+        let fixture = Fixture::new(
+            fixture_id.clone(),
+            definition,
+            mode,
+            output,
+            channel,
+            universe,
+        );
         self.fixtures.insert(fixture_id, fixture);
     }
 
@@ -31,7 +38,10 @@ impl FixtureManager {
         self.fixtures.get(fixture_id)
     }
 
-    pub fn get_fixture_mut(&self, fixture_id: &str) -> Option<impl DerefMut<Target = Fixture> + '_> {
+    pub fn get_fixture_mut(
+        &self,
+        fixture_id: &str,
+    ) -> Option<impl DerefMut<Target = Fixture> + '_> {
         self.fixtures.get_mut(fixture_id)
     }
 
@@ -43,7 +53,7 @@ impl FixtureManager {
         for fixture in self.fixtures.iter() {
             if let Some(output) = dmx_manager.get_output(&fixture.output) {
                 fixture.flush(output);
-            }else {
+            } else {
                 log::warn!("fixture is referencing unknown output {}", fixture.output);
             }
         }

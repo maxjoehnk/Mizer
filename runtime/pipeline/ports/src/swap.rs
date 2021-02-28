@@ -1,9 +1,9 @@
+use crate::{PortValue, ReceiverGuard};
+use crossbeam::epoch;
+use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
 use std::sync::atomic::Ordering;
-use std::ops::Deref;
 use std::sync::Arc;
-use crossbeam::epoch;
-use crate::{ReceiverGuard, PortValue};
 
 #[derive(Clone)]
 pub struct Swap<T> {
@@ -27,9 +27,9 @@ impl<T> Swap<T> {
     }
 
     pub fn get(&self) -> Option<SwapReadGuard<T>> {
-        self.dirty.swap(false, Ordering::AcqRel).then(|| {
-            SwapReadGuard::new(&self.buffer)
-        })
+        self.dirty
+            .swap(false, Ordering::AcqRel)
+            .then(|| SwapReadGuard::new(&self.buffer))
     }
 }
 

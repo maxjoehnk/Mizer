@@ -27,7 +27,7 @@ impl Clock for TestClock {
             speed: self.speed,
             frame: self.frame,
             delta,
-            downbeat
+            downbeat,
         }
     }
 

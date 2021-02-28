@@ -9,7 +9,11 @@ use test_case::test_case;
 #[test_case("sequence"; "sequence")]
 #[test_case("video"; "video")]
 fn test_load_project(project: &str) {
-    let path = format!("{}/../../examples/{}.yml", env!("CARGO_MANIFEST_DIR"), project);
+    let path = format!(
+        "{}/../../examples/{}.yml",
+        env!("CARGO_MANIFEST_DIR"),
+        project
+    );
 
     let _ = Project::load_file(&path).unwrap();
 }

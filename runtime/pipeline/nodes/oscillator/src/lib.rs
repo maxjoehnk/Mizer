@@ -63,7 +63,7 @@ fn default_max() -> f64 {
 impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OscillatorNode".into()
+            name: "OscillatorNode".into(),
         }
     }
 

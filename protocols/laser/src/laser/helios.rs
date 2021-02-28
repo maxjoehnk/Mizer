@@ -1,7 +1,7 @@
 use super::*;
 use ::helios_dac::NativeHeliosDac;
 use pinboard::Pinboard;
-use std::sync::{Condvar, Arc, Mutex};
+use std::sync::{Arc, Condvar, Mutex};
 use std::thread;
 use std::time::Duration;
 
@@ -88,7 +88,10 @@ impl From<helios_dac::NativeHeliosDac> for HeliosLaser {
                 }
             });
 
-        HeliosLaser { lock, current_frame: frame_board }
+        HeliosLaser {
+            lock,
+            current_frame: frame_board,
+        }
     }
 }
 

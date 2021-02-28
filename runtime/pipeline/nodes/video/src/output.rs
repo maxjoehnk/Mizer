@@ -1,8 +1,11 @@
-use serde::{Serialize, Deserialize};
 use gstreamer::prelude::*;
 use gstreamer::{Element, ElementFactory};
+use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodeContext, NodeDetails, PortId, PortMetadata, PortType, ProcessingNode, PipelineNode, NodeType};
+use mizer_node::{
+    NodeContext, NodeDetails, NodeType, PipelineNode, PortId, PortMetadata, PortType,
+    ProcessingNode,
+};
 
 use crate::{GstreamerNode, PIPELINE};
 

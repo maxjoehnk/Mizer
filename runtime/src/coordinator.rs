@@ -1,18 +1,18 @@
-use mizer_clock::{SystemClock, Clock};
-use mizer_node::*;
-use mizer_execution_planner::*;
-use mizer_processing::*;
-use std::collections::HashMap;
-use mizer_pipeline::*;
-use mizer_project_files::{Project, NodeConfig};
-use std::io::Write;
-use mizer_module::Runtime;
 use crate::api::RuntimeApi;
-use std::sync::Arc;
-use pinboard::{NonEmptyPinboard};
-use mizer_nodes::Node;
 use dashmap::DashMap;
+use mizer_clock::{Clock, SystemClock};
+use mizer_execution_planner::*;
+use mizer_module::Runtime;
+use mizer_node::*;
+use mizer_nodes::Node;
+use mizer_pipeline::*;
+use mizer_processing::*;
+use mizer_project_files::{NodeConfig, Project};
+use pinboard::NonEmptyPinboard;
 use std::cell::RefCell;
+use std::collections::HashMap;
+use std::io::Write;
+use std::sync::Arc;
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -41,7 +41,7 @@ impl CoordinatorRuntime<SystemClock> {
             assigned_nodes: Default::default(),
             clock: SystemClock::default(),
             injector: Default::default(),
-            processors: Default::default()
+            processors: Default::default(),
         };
         runtime.bootstrap();
 
@@ -125,7 +125,11 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.designer.set(nodes);
     }
 
-    pub fn add_node<T: 'static + ProcessingNode<State = S>, S: 'static>(&mut self, path: NodePath, node: T) {
+    pub fn add_node<T: 'static + ProcessingNode<State = S>, S: 'static>(
+        &mut self,
+        path: NodePath,
+        node: T,
+    ) {
         self.nodes_view.insert(path.clone(), Box::new(node.clone()));
         let execution_node = (path.clone(), &node).into();
         // TODO: this needs to be called by plan in the future
@@ -139,7 +143,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     pub fn add_link(&mut self, mut link: NodeLink) -> anyhow::Result<()> {
         let (source_port, target_port) = self.get_ports(&link)?;
-        anyhow::ensure!(source_port.port_type == target_port.port_type, "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}", &source_port, &target_port, &link);
+        anyhow::ensure!(
+            source_port.port_type == target_port.port_type,
+            "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}",
+            &source_port,
+            &target_port,
+            &link
+        );
         link.port_type = source_port.port_type;
         let mut links = self.links.read();
         links.push(link.clone());
@@ -153,10 +163,12 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn get_ports(&self, mut link: &NodeLink) -> anyhow::Result<(PortMetadata, PortMetadata)> {
-        let source_node = self.nodes.get(&link.source)
-            .ok_or_else(|| anyhow::anyhow!("trying to add link for unknown node: {}", &link.source))?;
-        let target_node = self.nodes.get(&link.target)
-            .ok_or_else(|| anyhow::anyhow!("trying to add link for unknown node: {}", &link.target))?;
+        let source_node = self.nodes.get(&link.source).ok_or_else(|| {
+            anyhow::anyhow!("trying to add link for unknown node: {}", &link.source)
+        })?;
+        let target_node = self.nodes.get(&link.target).ok_or_else(|| {
+            anyhow::anyhow!("trying to add link for unknown node: {}", &link.target)
+        })?;
         let source_port = source_node.introspect_port(&link.source_port);
         let target_port = target_node.introspect_port(&link.target_port);
 
@@ -168,13 +180,19 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         log::trace!("{:?}", plan);
 
         let executor = plan.get_executor(&self.executor_id).unwrap();
-        self.assigned_nodes = executor.associated_nodes.into_iter().map(|node| node.path).collect();
+        self.assigned_nodes = executor
+            .associated_nodes
+            .into_iter()
+            .map(|node| node.path)
+            .collect();
     }
 
     fn process_pipeline(&mut self) {
         let frame = self.clock.tick();
 
-        let nodes = self.nodes.iter()
+        let nodes = self
+            .nodes
+            .iter()
             .filter(|(path, _)| self.assigned_nodes.contains(path))
             .collect::<Vec<_>>(); // run filter closure here so mutable and immutable borrow is okay
 
@@ -209,7 +227,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         RuntimeApi {
             nodes: self.nodes_view.clone(),
             designer: self.designer.clone(),
-            links: self.links.clone()
+            links: self.links.clone(),
         }
     }
 }
@@ -262,7 +280,7 @@ mod tests {
     impl PipelineNode for TestNode {
         fn details(&self) -> NodeDetails {
             NodeDetails {
-                name: "TestNode".into()
+                name: "TestNode".into(),
             }
         }
 

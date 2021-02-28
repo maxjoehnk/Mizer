@@ -52,20 +52,14 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
 
-[features]
-default = ["export_metrics"]
-export_metrics = ["metrics-runtime", "smol"]
-
 [dependencies]
 derive_more = "0.99"
 env_logger = "0.7"
 log = "0.4"
 anyhow = "1"
 gstreamer = "0.16"
-smol = { version = "0.3", features = ["tokio02"], optional = true }
 structopt = "0.3"
-metrics = "0.12"
-metrics-runtime = { version = "0.13", optional = true }
+metrics = "0.14"
 mizer-media = { path = "components/media" }
 mizer-project-files = { path = "runtime/projects" }
 mizer-fixtures = { path = "components/fixtures" }
@@ -80,8 +74,6 @@ mizer-node = { path = "runtime/pipeline/node" }
 mizer-protocol-dmx = { path = "protocols/dmx" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
-# TODO: check for a better way/a maintained library
-multi_mut = "0.1"
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }
 
 [dev-dependencies]

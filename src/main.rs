@@ -2,9 +2,6 @@ use std::time::Duration;
 
 use structopt::StructOpt;
 
-#[cfg(feature = "export_metrics")]
-use metrics_runtime::{exporters::HttpExporter, observers::PrometheusBuilder, Receiver};
-
 use mizer_project_files::Project;
 
 use crate::flags::Flags;
@@ -27,12 +24,6 @@ const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 async fn main() -> anyhow::Result<()> {
     env_logger::init();
     let flags = Flags::from_args();
-
-    #[cfg(feature = "export_metrics")]
-    if flags.metrics {
-        log::debug!("setting up metrics");
-        setup_metrics(flags.metrics_port);
-    }
 
     // TODO: pins cpu, reduce cpu usage
     // let _session = if flags.join {
@@ -100,7 +91,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
         runtime.process();
         let after = std::time::Instant::now();
         let frame_time = after.duration_since(before);
-        metrics::timing!("mizer.frame_time", frame_time);
+        metrics::histogram!("mizer.frame_time", frame_time);
         if frame_time <= FRAME_DELAY_60FPS {
             tokio::time::delay_for(FRAME_DELAY_60FPS - frame_time).await;
         }
@@ -123,24 +114,4 @@ fn load_fixtures(fixture_manager: &FixtureManager, library: &FixtureLibrary, pro
             log::warn!("No fixture definition for fixture id {}", fixture.fixture);
         }
     }
-}
-
-#[cfg(feature = "export_metrics")]
-fn setup_metrics(port: u16) {
-    let receiver = Receiver::builder()
-        .build()
-        .expect("failed to create metrics receiver");
-    let controller = receiver.controller();
-    receiver.install();
-
-    std::thread::spawn(move || {
-        smol::run(
-            HttpExporter::new(
-                controller,
-                PrometheusBuilder::new(),
-                format!("0.0.0.0:{}", port).parse().unwrap(),
-            )
-            .async_run(),
-        )
-    });
 }

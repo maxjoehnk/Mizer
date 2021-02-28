@@ -8,7 +8,7 @@ edition = "2018"
 log = "0.4"
 anyhow = "1"
 gstreamer = "0.16"
-metrics = "0.12"
+metrics = "0.14"
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-protocol-laser = { path = "../../protocols/laser" }
 mizer-project-files = { path = "../projects" }

@@ -15,14 +15,10 @@ pub struct RuntimeApi {
 impl RuntimeApi {
     pub fn nodes(&self) -> Vec<NodeDescriptor> {
         let designer = self.designer.read();
-        let paths = self
+        self
             .nodes
             .iter()
             .map(|entry| entry.key().clone())
-            .collect::<Vec<_>>();
-
-        paths
-            .into_iter()
             .map(|path| {
                 let node = self.nodes.get(&path).unwrap();
                 let designer = designer[&path].clone();

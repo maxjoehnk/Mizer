@@ -94,14 +94,14 @@ impl OscillatorNode {
                 let base = self.ratio * 0.5;
                 let frame = self.get_frame(beat);
                 if frame > base {
-                    self.min.clone()
+                    self.min
                 } else {
-                    self.max.clone()
+                    self.max
                 }
             }
             OscillatorType::Sine => {
-                let min = self.min.clone();
-                let max = self.max.clone();
+                let min = self.min;
+                let max = self.max;
                 let offset = (max - min) / 2f64;
                 let value = f64::sin(
                     (3f64 / 2f64) * PI + PI * ((beat + self.offset) * 2f64) * (1f64 / self.ratio),

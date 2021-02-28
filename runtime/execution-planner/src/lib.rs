@@ -159,7 +159,7 @@ impl ExecutionPlanner {
             .collect::<Vec<_>>();
 
         let mut node_group = LinkedNodes(Vec::new());
-        for (path, node) in self.nodes.iter().sorted_by_key(|(path, _)| path.clone()) {
+        for (path, node) in self.nodes.iter().sorted_by_key(|(path, _)| (*path).clone()) {
             if local_links.contains(path) {
                 node_group.0.push(node.clone());
             } else {

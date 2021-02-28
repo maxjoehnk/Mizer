@@ -135,7 +135,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         // TODO: this needs to be called by plan in the future
         self.pipeline.register_node(path.clone(), &node);
         let node = Box::new(node);
-        self.nodes.insert(path.clone(), node);
+        self.nodes.insert(path, node);
         self.planner.add_node(execution_node);
 
         self.plan();
@@ -203,11 +203,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let mut file = std::fs::File::create("pipeline.dot")?;
         writeln!(&mut file, "digraph pipeline {{")?;
         let mut node_ids = HashMap::new();
-        let mut counter = 0;
-        for (path, _) in self.nodes.iter() {
+        for (counter, (path, _)) in self.nodes.iter().enumerate() {
             node_ids.insert(path, format!("N{}", counter));
             writeln!(&mut file, "  N{}[label=\"{}\",shape=box];", counter, path)?;
-            counter += 1;
         }
         for link in self.links.read().iter() {
             let left_id = node_ids.get(&link.source).unwrap();

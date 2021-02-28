@@ -46,7 +46,7 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
         if !id.starts_with("ofl:") {
             return None;
         }
-        let id_parts = id.split(":").collect::<Vec<_>>();
+        let id_parts = id.split(':').collect::<Vec<_>>();
         if let Some(definitions) = self.definitions.get(id_parts[1]) {
             definitions
                 .iter()

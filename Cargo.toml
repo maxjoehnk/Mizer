@@ -77,7 +77,7 @@ mizer-module = { path = "runtime/module" }
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }
 
 [dev-dependencies]
-criterion = "0.3"
+criterion = { version = "0.3", features = ["html_reports"] }
 
 [[bench]]
 name = "dmx_pixel_pushing"

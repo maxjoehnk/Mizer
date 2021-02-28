@@ -1,0 +1,11 @@
+[package]
+name = "mizer-processing"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+dashmap = "4"
+
+[dev-dependencies]
+test-case = "1.1"

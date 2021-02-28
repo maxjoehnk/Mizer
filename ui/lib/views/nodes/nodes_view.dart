@@ -64,7 +64,7 @@ class NodesViewer extends StatelessWidget {
         child: NodeSelectionContainer(
           child: CustomMultiChildLayout(
               delegate: NodesLayoutDelegate(this.nodes),
-              children: this.nodes.nodes.map((node) => LayoutId(id: node.id, child: BaseNode.fromNode(node))).toList()),
+              children: this.nodes.nodes.map((node) => LayoutId(id: node.path, child: BaseNode.fromNode(node))).toList()),
           onSelection: (nodeType, position) {
             log("adding new node with type $nodeType at ${position / MULTIPLIER}");
             context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position / MULTIPLIER));
@@ -85,9 +85,9 @@ class NodesLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     for (var node in this.nodes.nodes) {
-      layoutChild(node.id, BoxConstraints.loose(size));
+      layoutChild(node.path, BoxConstraints.loose(size));
       var offset = Offset(node.designer.position.x * MULTIPLIER, node.designer.position.y * MULTIPLIER);
-      positionChild(node.id, offset);
+      positionChild(node.path, offset);
     }
   }
 

@@ -1,22 +1,16 @@
 nodes:
-  - type: sacn-output
-    id: sacn-output-0
+  - type: dmx-output
+    path: /dmx-output-0
     designer:
       position:
         x: 10
         y: 0
       scale: 1
-  - type: convert-to-dmx
-    id: convert-to-dmx-0
     config:
+      universe: 1
       channel: 1
-    designer:
-      position:
-        x: 5
-        y: 0
-      scale: 1
   - type: sequence
-    id: sequence-0
+    path: /sequence-0
     config:
       steps:
         - tick: 0
@@ -37,5 +31,4 @@ nodes:
       scale: 1
 
 channels:
-  - dmx@convert-to-dmx-0 -> dmx@sacn-output-0
-  - value@sequence-0 -> value@convert-to-dmx-0
+  - value@/sequence-0 -> value@/dmx-output-0

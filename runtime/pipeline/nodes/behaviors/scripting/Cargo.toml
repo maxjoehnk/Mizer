@@ -1,0 +1,11 @@
+[package]
+name = "mizer-scripting-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+mizer-node = { path = "../../../node" }
+rhai = "0.17"

@@ -5,7 +5,7 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 pub struct Flags {
     #[structopt(long)]
-    pub print_pipeline: bool,
+    pub generate_graph: bool,
     #[structopt(name = "FILE", parse(from_os_str))]
     pub files: Vec<PathBuf>,
     #[cfg(feature = "export_metrics")]

@@ -1,0 +1,26 @@
+[package]
+name = "mizer-runtime"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+pinboard = "2.1"
+dashmap = "4"
+mizer-clock = { path = "clock" }
+mizer-node = { path = "pipeline/node" }
+mizer-nodes = { path = "pipeline/nodes" }
+mizer-pipeline = { path = "pipeline" }
+mizer-session = { path = "session" }
+mizer-execution-planner = { path = "execution-planner" }
+mizer-ports = { path = "pipeline/ports"}
+mizer-processing = { path = "processing" }
+mizer-project-files = { path = "projects" }
+mizer-module = { path = "module" }
+
+[dev-dependencies]
+env_logger = "0.7"
+insta = { version = "1.6", features = ["backtrace"] }
+test-case = "1.1"

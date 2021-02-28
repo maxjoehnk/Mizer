@@ -1,0 +1,18 @@
+[package]
+name = "mizer-project-files"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_yaml = "0.8"
+regex = "1.3"
+lazy_static = "1.4"
+anyhow = "1"
+mizer-node = { path = "../pipeline/node" }
+mizer-nodes = { path = "../pipeline/nodes" }
+
+[dev-dependencies]
+test-case = "1.0"
+mizer-pixel-nodes = { path = "../pipeline/nodes/pixels" }

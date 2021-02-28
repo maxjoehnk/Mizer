@@ -32,6 +32,7 @@ impl FixturesApi for FixturesApiImpl {
             };
             fixtures.fixtures.push(fixture_model);
         }
+        log::trace!("GetFixtures: {:?}", fixtures);
         resp.finish(fixtures)
     }
 }

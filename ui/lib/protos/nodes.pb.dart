@@ -160,7 +160,7 @@ class NodeConnection extends $pb.GeneratedMessage {
     ..aOM<Port>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputPort', protoName: 'inputPort', subBuilder: Port.create)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputNode', protoName: 'outputNode')
     ..aOM<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputPort', protoName: 'outputPort', subBuilder: Port.create)
-    ..e<ChannelProtocol>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.Dmx, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
+    ..e<ChannelProtocol>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.Single, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
     ..hasRequiredFields = false
   ;
 
@@ -264,43 +264,33 @@ class NodeConnection extends $pb.GeneratedMessage {
 class Node extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Node', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
-    ..pc<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
-    ..pc<Port>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
-    ..m<$core.String, $core.double>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'properties', entryClassName: 'Node.PropertiesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OD, packageName: const $pb.PackageName('mizer'))
-    ..aOM<NodeDesigner>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'designer', subBuilder: NodeDesigner.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..pc<Port>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
+    ..pc<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
+    ..aOM<NodeDesigner>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'designer', subBuilder: NodeDesigner.create)
     ..hasRequiredFields = false
   ;
 
   Node._() : super();
   factory Node({
     Node_NodeType type,
-    $core.String id,
-    $core.String title,
+    $core.String path,
     $core.Iterable<Port> inputs,
     $core.Iterable<Port> outputs,
-    $core.Map<$core.String, $core.double> properties,
     NodeDesigner designer,
   }) {
     final _result = create();
     if (type != null) {
       _result.type = type;
     }
-    if (id != null) {
-      _result.id = id;
-    }
-    if (title != null) {
-      _result.title = title;
+    if (path != null) {
+      _result.path = path;
     }
     if (inputs != null) {
       _result.inputs.addAll(inputs);
     }
     if (outputs != null) {
       _result.outputs.addAll(outputs);
-    }
-    if (properties != null) {
-      _result.properties.addAll(properties);
     }
     if (designer != null) {
       _result.designer = designer;
@@ -338,42 +328,30 @@ class Node extends $pb.GeneratedMessage {
   void clearType() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get id => $_getSZ(1);
+  $core.String get path => $_getSZ(1);
   @$pb.TagNumber(2)
-  set id($core.String v) { $_setString(1, v); }
+  set path($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasId() => $_has(1);
+  $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
-  void clearId() => clearField(2);
+  void clearPath() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get title => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set title($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasTitle() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearTitle() => clearField(3);
+  $core.List<Port> get inputs => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.List<Port> get inputs => $_getList(3);
+  $core.List<Port> get outputs => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.List<Port> get outputs => $_getList(4);
-
-  @$pb.TagNumber(7)
-  $core.Map<$core.String, $core.double> get properties => $_getMap(5);
-
-  @$pb.TagNumber(8)
-  NodeDesigner get designer => $_getN(6);
-  @$pb.TagNumber(8)
-  set designer(NodeDesigner v) { setField(8, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasDesigner() => $_has(6);
-  @$pb.TagNumber(8)
-  void clearDesigner() => clearField(8);
-  @$pb.TagNumber(8)
-  NodeDesigner ensureDesigner() => $_ensure(6);
+  NodeDesigner get designer => $_getN(4);
+  @$pb.TagNumber(5)
+  set designer(NodeDesigner v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasDesigner() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDesigner() => clearField(5);
+  @$pb.TagNumber(5)
+  NodeDesigner ensureDesigner() => $_ensure(4);
 }
 
 class NodePosition extends $pb.GeneratedMessage {
@@ -503,7 +481,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
 class Port extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Port', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<ChannelProtocol>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.Dmx, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
+    ..e<ChannelProtocol>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.Single, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
     ..hasRequiredFields = false
   ;
 

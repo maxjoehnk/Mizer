@@ -1,0 +1,22 @@
+[package]
+name = "mizer-ports"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+crossbeam = "0.8"
+serde = { version = "1", features = ["derive"] }
+bincode = "1.3"
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "single_float_port"
+harness = false
+
+[[bench]]
+name = "multiple_floats_port"
+harness = false

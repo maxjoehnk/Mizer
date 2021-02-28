@@ -4,6 +4,7 @@ use futures::stream::{BoxStream};
 use std::sync::Arc;
 use futures::StreamExt;
 use std::sync::atomic::{AtomicUsize, Ordering};
+use mizer_module::{Module, Runtime};
 
 pub mod laser;
 
@@ -45,5 +46,24 @@ impl DeviceManager {
 
     pub fn get_laser_mut(&self, id: &str) -> Option<WriteGuard<String, LaserDevice>> {
         self.lasers.get_mut(id)
+    }
+}
+
+pub struct DeviceModule(DeviceManager);
+
+impl DeviceModule {
+    pub fn new() -> (Self, DeviceManager) {
+        let manager = DeviceManager::new();
+
+        (DeviceModule(manager.clone()), manager)
+    }
+}
+
+impl Module for DeviceModule {
+    fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+        let injector = runtime.injector();
+        injector.provide(self.0);
+
+        Ok(())
     }
 }

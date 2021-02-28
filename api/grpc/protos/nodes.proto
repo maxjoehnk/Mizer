@@ -30,36 +30,32 @@ message NodeConnection {
 message Node {
   enum NodeType {
     Fader = 0;
-    ConvertToDmx = 1;
-    ArtnetOutput = 2;
-    SacnOutput = 3;
-    Oscillator = 4;
-    Clock = 5;
-    OscInput = 6;
-    VideoFile = 7;
-    VideoOutput = 8;
-    VideoEffect = 9;
-    VideoColorBalance = 10;
-    VideoTransform = 11;
-    Script = 12;
-    PixelToDmx = 13;
-    PixelPattern = 14;
-    OpcOutput = 15;
-    Fixture = 16;
-    Sequence = 17;
-    MidiInput = 18;
-    MidiOutput = 19;
-    Laser = 20;
-    IldaFile = 21;
+    DmxOutput = 1;
+    Oscillator = 2;
+    Clock = 3;
+    OscInput = 4;
+    VideoFile = 5;
+    VideoOutput = 6;
+    VideoEffect = 7;
+    VideoColorBalance = 8;
+    VideoTransform = 9;
+    Script = 10;
+    PixelToDmx = 11;
+    PixelPattern = 12;
+    OpcOutput = 13;
+    Fixture = 14;
+    Sequence = 15;
+    MidiInput = 16;
+    MidiOutput = 17;
+    Laser = 18;
+    IldaFile = 19;
   }
 
   NodeType type = 1;
-  string id = 2;
-  string title = 3;
-  repeated Port inputs = 4;
-  repeated Port outputs = 5;
-  map<string, double> properties = 7;
-  NodeDesigner designer = 8;
+  string path = 2;
+  repeated Port inputs = 3;
+  repeated Port outputs = 4;
+  NodeDesigner designer = 5;
 }
 
 message NodePosition {
@@ -73,20 +69,15 @@ message NodeDesigner {
 }
 
 enum ChannelProtocol {
-    Dmx = 0;
-    Numeric = 1;
-    Trigger = 2;
-    Clock = 3;
-    Video = 4;
-    Color = 5;
-    Vector = 6;
-    Text = 7;
-    Midi = 8;
-    Timecode = 9;
-    Boolean = 10;
-    Select = 11;
-    Pixels = 12;
-    Laser = 13;
+    Single = 0;
+    Multi = 1;
+    Texture = 2;
+    Vector = 3;
+    Laser = 4;
+    Poly = 5;
+    Data = 6;
+    Material = 7;
+    Gst = 8;
 }
 
 message Port {

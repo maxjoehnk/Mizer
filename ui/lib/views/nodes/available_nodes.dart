@@ -10,9 +10,7 @@ const List<NodeCategoryData> NODES = [
   ]),
   NodeCategoryData("DMX", [
     NodeEntryData("Artnet Input", null),
-    NodeEntryData("Artnet Output", Node_NodeType.ArtnetOutput),
-    NodeEntryData("sACN Input", null),
-    NodeEntryData("sACN Output", Node_NodeType.SacnOutput),
+    NodeEntryData("DMX Output", Node_NodeType.DmxOutput),
   ]),
   NodeCategoryData("MIDI", [
     NodeEntryData("MIDI Input", Node_NodeType.MidiInput),

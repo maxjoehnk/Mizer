@@ -1,25 +1,17 @@
 nodes:
-  - type: sacn-output
-    id: sacn-output-0
+  - type: dmx-output
+    path: /output-0
     designer:
       position:
         x: 10
         y: 0
       scale: 1
-  - type: convert-to-dmx
-    id: convert-to-dmx-0
     config:
       channel: 1
-    designer:
-      position:
-        x: 5
-        y: 0
-      scale: 1
   - type: oscillator
-    id: oscillator-0
+    path: /oscillator-0
     config:
       type: sine
-    properties:
       ratio: 4
       max: 1
     designer:
@@ -29,5 +21,4 @@ nodes:
       scale: 1
 
 channels:
-  - dmx@convert-to-dmx-0 -> dmx@sacn-output-0
-  - value@oscillator-0 -> value@convert-to-dmx-0
+  - value@/oscillator-0 -> value@/output-0

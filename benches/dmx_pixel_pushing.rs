@@ -1,9 +1,9 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
 
-use mizer::*;
-use mizer_pipeline::Pipeline;
+use mizer_runtime::DefaultRuntime;
 use mizer_project_files::Project;
-use mizer_fixtures::manager::FixtureManager;
+use mizer_module::{Runtime, Module};
+use mizer_protocol_dmx::DmxModule;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
     let mut group = c.benchmark_group("pixel pipeline");
@@ -22,21 +22,21 @@ pub fn criterion_benchmark(c: &mut Criterion) {
             BenchmarkId::from_parameter(format!("({}, {})", width, height)),
             &(*width, *height),
             |b, dimensions| {
-                let mut pipeline = build_pipeline(dimensions);
-                b.iter(|| pipeline.process())
+                let mut runtime = build_runtime(dimensions);
+                b.iter(|| runtime.process())
             },
         );
     }
     group.finish();
 }
 
-fn build_pipeline<'a>(dimensions: &(i64, i64)) -> Pipeline<'a> {
-    let mut pipeline = Pipeline::default();
+fn build_runtime(dimensions: &(i64, i64)) -> DefaultRuntime {
+    let mut runtime = DefaultRuntime::new();
     let project = Project::load(&project_config(dimensions)).unwrap();
-    let fixture_manager = FixtureManager::new();
-    pipeline.load_project(project, &fixture_manager).unwrap();
+    DmxModule.register(&mut runtime).unwrap();
+    runtime.load_project(project).unwrap();
 
-    pipeline
+    runtime
 }
 
 fn project_config((width, height): &(i64, i64)) -> String {
@@ -44,16 +44,17 @@ fn project_config((width, height): &(i64, i64)) -> String {
         r#"
 nodes:
   - type: pixel-pattern
-    id: pixel-pattern-0
+    path: /pixel-pattern-0
     config:
       pattern: rgb-iterate
   - type: pixel-dmx
-    id: pixel-dmx-0
+    path: /pixel-dmx-0
     config:
+      output: output
       width: {}
       height: {}
 channels:
-  - output@pixel-pattern-0 -> input@pixel-dmx-0
+  - output@/pixel-pattern-0 -> input@/pixel-dmx-0
 "#,
         width, height
     )

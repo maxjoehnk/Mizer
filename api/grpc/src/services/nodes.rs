@@ -1,20 +1,22 @@
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use protobuf::SingularPtrField;
 
-use mizer_pipeline::{NodeChannel, NodeDefinition, NodeDesigner, NodePortDefinition, NodeTemplate, NodeType, PipelineView};
-
 use crate::protos::{AddNodeRequest, NodePosition, NodesApi};
 use crate::protos::{
     ChannelProtocol, Node, Node_NodeType, NodeConnection, Nodes, NodesRequest, Port,
 };
+use mizer_node::{PortType, NodeDesigner, NodeType};
+use mizer_runtime::{RuntimeApi, NodeDescriptor};
 
 pub struct NodesApiImpl {
-    pipeline_view: PipelineView
+    runtime: RuntimeApi,
 }
 
 impl NodesApiImpl {
-    pub fn new(pipeline_view: PipelineView) -> Self {
-        NodesApiImpl { pipeline_view }
+    pub fn new(runtime: RuntimeApi) -> Self {
+        NodesApiImpl {
+            runtime
+        }
     }
 }
 
@@ -27,27 +29,27 @@ impl NodesApi for NodesApiImpl {
     ) -> grpc::Result<()> {
         let mut res = Nodes::new();
 
-        let nodes = self.pipeline_view.get_nodes();
+        let nodes = self.runtime.nodes();
 
-        for (id, definition) in nodes {
-            let node: Node = (id, definition).into();
+        for node in nodes {
+            let node: Node = node.into();
             res.nodes.push(node);
         }
-        for channel in self.pipeline_view.get_channels() {
+        for channel in self.runtime.links() {
             let mut conn = NodeConnection {
-                inputNode: channel.from_id.clone(),
-                outputNode: channel.to_id.clone(),
+                inputNode: channel.source.to_string(),
+                outputNode: channel.target.to_string(),
                 ..Default::default()
             };
             let input_port = Port {
-                protocol: ChannelProtocol::Dmx,
-                name: channel.from_channel.clone(),
+                protocol: ChannelProtocol::Single,
+                name: channel.source_port.to_string(),
                 ..Default::default()
             };
             conn.set_inputPort(input_port);
             let output_port = Port {
-                protocol: ChannelProtocol::Dmx,
-                name: channel.to_channel.clone(),
+                protocol: ChannelProtocol::Single,
+                name: channel.target_port.to_string(),
                 ..Default::default()
             };
             conn.set_outputPort(output_port);
@@ -57,19 +59,18 @@ impl NodesApi for NodesApiImpl {
     }
 
     fn add_node(&self, _: ServerHandlerContext, req: ServerRequestSingle<AddNodeRequest>, resp: ServerResponseUnarySink<Node>) -> grpc::Result<()> {
-        let node = self.pipeline_view.add_node(req.message).unwrap();
-
-        resp.finish(node.into())
+        todo!()
+        // let node = self.pipeline_view.add_node(req.message).unwrap();
+        //
+        // resp.finish(node.into())
     }
 }
 
-impl From<&NodeType> for Node_NodeType {
-    fn from(node: &NodeType) -> Self {
-        match *node {
+impl From<NodeType> for Node_NodeType {
+    fn from(node: NodeType) -> Self {
+        match node {
             NodeType::Fader => Node_NodeType::Fader,
-            NodeType::ConvertToDmx => Node_NodeType::ConvertToDmx,
-            NodeType::ArtnetOutput => Node_NodeType::ArtnetOutput,
-            NodeType::StreamingAcnOutput => Node_NodeType::SacnOutput,
+            NodeType::DmxOutput => Node_NodeType::DmxOutput,
             NodeType::Oscillator => Node_NodeType::Oscillator,
             NodeType::Clock => Node_NodeType::Clock,
             NodeType::OscInput => Node_NodeType::OscInput,
@@ -79,7 +80,7 @@ impl From<&NodeType> for Node_NodeType {
             NodeType::VideoColorBalance => Node_NodeType::VideoColorBalance,
             NodeType::VideoTransform => Node_NodeType::VideoTransform,
             NodeType::Scripting => Node_NodeType::Script,
-            NodeType::PixelOutput => Node_NodeType::PixelToDmx,
+            NodeType::PixelDmx => Node_NodeType::PixelToDmx,
             NodeType::PixelPattern => Node_NodeType::PixelPattern,
             NodeType::OpcOutput => Node_NodeType::OpcOutput,
             NodeType::Fixture => Node_NodeType::Fixture,
@@ -87,7 +88,7 @@ impl From<&NodeType> for Node_NodeType {
             NodeType::MidiInput => Node_NodeType::MidiInput,
             NodeType::MidiOutput => Node_NodeType::MidiOutput,
             NodeType::Laser => Node_NodeType::Laser,
-            NodeType::Ilda => Node_NodeType::IldaFile,
+            NodeType::IldaFile => Node_NodeType::IldaFile,
         }
     }
 }
@@ -96,9 +97,7 @@ impl From<Node_NodeType> for NodeType {
     fn from(node: Node_NodeType) -> Self {
         match node {
             Node_NodeType::Fader => NodeType::Fader,
-            Node_NodeType::ConvertToDmx => NodeType::ConvertToDmx,
-            Node_NodeType::ArtnetOutput => NodeType::ArtnetOutput,
-            Node_NodeType::SacnOutput => NodeType::StreamingAcnOutput,
+            Node_NodeType::DmxOutput => NodeType::DmxOutput,
             Node_NodeType::Oscillator => NodeType::Oscillator,
             Node_NodeType::Clock => NodeType::Clock,
             Node_NodeType::OscInput => NodeType::OscInput,
@@ -108,7 +107,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::VideoColorBalance => NodeType::VideoColorBalance,
             Node_NodeType::VideoTransform => NodeType::VideoTransform,
             Node_NodeType::Script => NodeType::Scripting,
-            Node_NodeType::PixelToDmx => NodeType::PixelOutput,
+            Node_NodeType::PixelToDmx => NodeType::PixelDmx,
             Node_NodeType::PixelPattern => NodeType::PixelPattern,
             Node_NodeType::OpcOutput => NodeType::OpcOutput,
             Node_NodeType::Fixture => NodeType::Fixture,
@@ -116,40 +115,40 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::MidiInput => NodeType::MidiInput,
             Node_NodeType::MidiOutput => NodeType::MidiOutput,
             Node_NodeType::Laser => NodeType::Laser,
-            Node_NodeType::IldaFile => NodeType::Ilda,
+            Node_NodeType::IldaFile => NodeType::IldaFile,
         }
     }
 }
 
-impl From<AddNodeRequest> for NodeTemplate {
-    fn from(req: AddNodeRequest) -> Self {
-        let position = req.position.unwrap();
-        NodeTemplate {
-            designer: NodeDesigner {
-                x: position.x,
-                y: position.y,
-                scale: 1.
-            },
-            node_type: req.field_type.into()
-        }
-    }
-}
-
-impl From<(String, NodeDefinition)> for Node {
-    fn from((id, definition): (String, NodeDefinition)) -> Self {
+// impl From<AddNodeRequest> for NodeTemplate {
+//     fn from(req: AddNodeRequest) -> Self {
+//         let position = req.position.unwrap();
+//         NodeTemplate {
+//             designer: NodeDesigner {
+//                 x: position.x,
+//                 y: position.y,
+//                 scale: 1.
+//             },
+//             node_type: req.field_type.into()
+//         }
+//     }
+// }
+//
+impl From<NodeDescriptor<'_>> for Node {
+    fn from(descriptor: NodeDescriptor<'_>) -> Self {
+        let node_type = descriptor.node_type();
         let mut node = Node {
-            id: id.clone(),
-            title: id.clone(),
-            field_type: (&definition.node_type).into(),
-            designer: SingularPtrField::some(definition.designer.clone().into()),
+            path: descriptor.path.to_string(),
+            field_type: node_type.into(),
+            designer: SingularPtrField::some(descriptor.designer.into()),
             ..Default::default()
         };
-        for input in definition.inputs {
-            node.inputs.push(input.into());
-        }
-        for output in definition.outputs {
-            node.outputs.push(output.into());
-        }
+        // for input in definition.inputs {
+        //     node.inputs.push(input.into());
+        // }
+        // for output in definition.outputs {
+        //     node.outputs.push(output.into());
+        // }
 
         println!("{:?}", node);
 
@@ -157,13 +156,13 @@ impl From<(String, NodeDefinition)> for Node {
     }
 }
 
-impl From<mizer_pipeline::NodeDesigner> for crate::protos::NodeDesigner {
+impl From<NodeDesigner> for crate::protos::NodeDesigner {
     fn from(designer: NodeDesigner) -> Self {
         crate::protos::NodeDesigner {
             scale: designer.scale,
             position: SingularPtrField::some(NodePosition {
-                x: designer.x,
-                y: designer.y,
+                x: designer.position.x,
+                y: designer.position.y,
                 ..Default::default()
             }),
             ..Default::default()
@@ -171,33 +170,18 @@ impl From<mizer_pipeline::NodeDesigner> for crate::protos::NodeDesigner {
     }
 }
 
-impl From<NodePortDefinition> for Port {
-    fn from(port: NodePortDefinition) -> Self {
-        Port {
-            name: port.name,
-            protocol: port.channel.into(),
-            ..Default::default()
-        }
-    }
-}
-
-impl From<NodeChannel> for ChannelProtocol {
-    fn from(channel: NodeChannel) -> Self {
-        match channel {
-            NodeChannel::Dmx => ChannelProtocol::Dmx,
-            NodeChannel::Numeric => ChannelProtocol::Numeric,
-            NodeChannel::Trigger => ChannelProtocol::Trigger,
-            NodeChannel::Clock => ChannelProtocol::Clock,
-            NodeChannel::Video => ChannelProtocol::Video,
-            NodeChannel::Color => ChannelProtocol::Color,
-            NodeChannel::Vector => ChannelProtocol::Vector,
-            NodeChannel::Text => ChannelProtocol::Text,
-            NodeChannel::Midi => ChannelProtocol::Midi,
-            NodeChannel::Timecode => ChannelProtocol::Timecode,
-            NodeChannel::Boolean => ChannelProtocol::Boolean,
-            NodeChannel::Select => ChannelProtocol::Select,
-            NodeChannel::Pixels => ChannelProtocol::Pixels,
-            NodeChannel::Laser => ChannelProtocol::Laser,
+impl From<PortType> for ChannelProtocol {
+    fn from(port: PortType) -> Self {
+        match port {
+            PortType::Single => ChannelProtocol::Single,
+            PortType::Multi => ChannelProtocol::Multi,
+            PortType::Texture => ChannelProtocol::Texture,
+            PortType::Vector => ChannelProtocol::Vector,
+            PortType::Laser => ChannelProtocol::Laser,
+            PortType::Poly => ChannelProtocol::Poly,
+            PortType::Data => ChannelProtocol::Data,
+            PortType::Material => ChannelProtocol::Material,
+            PortType::Gstreamer => ChannelProtocol::Gst,
         }
     }
 }

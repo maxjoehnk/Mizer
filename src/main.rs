@@ -9,12 +9,15 @@ use mizer_project_files::Project;
 
 use crate::flags::Flags;
 use anyhow::Context;
-use mizer_fixtures::library::FixtureLibrary;
+use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::{FixtureModule};
 use mizer_media::{MediaServer, MediaDiscovery};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
-use mizer_pipeline::Pipeline;
-use mizer_devices::DeviceManager;
+use mizer_devices::DeviceModule;
+use mizer_runtime::CoordinatorRuntime;
+use mizer_protocol_dmx::*;
+use mizer_module::{Module, Runtime};
 
 mod flags;
 
@@ -46,35 +49,40 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
     ofl_provider
-        .load("fixtures/open-fixture-library/.fixtures.json")
+        .load("components/fixtures/open-fixture-library/.fixtures.json")
         .context("loading open fixture library")?;
     log::info!("Loading open fixture library...Done");
 
-    let fixture_library = FixtureLibrary::new(vec![Box::new(ofl_provider)]);
+    let providers: Vec<Box<dyn FixtureLibraryProvider>> = vec![
+        Box::new(ofl_provider)
+    ];
 
-    let fixture_manager = FixtureManager::new();
-    let device_manager = DeviceManager::new();
-
+    let (device_module, device_manager) = DeviceModule::new();
     handle.spawn(device_manager.clone().start_discovery());
 
+    let mut runtime = CoordinatorRuntime::new();
+    DmxModule.register(&mut runtime)?;
+    let (fixture_module, fixture_manager) = FixtureModule::new(providers);
+    fixture_module.register(&mut runtime)?;
+    device_module.register(&mut runtime)?;
     log::info!("Loading projects...");
-    let mut pipeline = Pipeline::new(fixture_manager.clone(), device_manager.clone());
-    let mut projects = vec![];
     for file in flags.files {
         let project = Project::load_file(&file)?;
-        load_fixtures(&fixture_manager, &fixture_library, &project);
-        projects.push(project.clone());
-        pipeline
+        {
+            let injector = runtime.injector();
+            let manager = injector.get().unwrap();
+            let library = injector.get().unwrap();
+            load_fixtures(manager, library, &project);
+        }
+        runtime
             .load_project(project)
             .context("loading project")?;
     }
     log::info!("Loading projects...Done");
 
-    if flags.print_pipeline {
-        log::info!("{:#?}", pipeline);
+    if flags.generate_graph {
+        runtime.generate_pipeline_graph()?;
     }
-
-    let view = pipeline.view();
 
     let media_server = MediaServer::new().await?;
     let media_server_api = media_server.open_api(&handle)?;
@@ -85,7 +93,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
 
     let _grpc_api = mizer_grpc_api::start(
         handle.clone(),
-        view,
+        runtime.api(),
         fixture_manager,
         media_server_api.clone(),
     )?;
@@ -93,7 +101,7 @@ async fn run(flags: Flags) -> anyhow::Result<()> {
 
     loop {
         let before = std::time::Instant::now();
-        pipeline.process();
+        runtime.process();
         let after = std::time::Instant::now();
         let frame_time = after.duration_since(before);
         metrics::timing!("mizer.frame_time", frame_time);
@@ -115,6 +123,7 @@ fn load_fixtures(
                 fixture.id.clone(),
                 def,
                 fixture.mode.clone(),
+                fixture.output.clone(),
                 fixture.channel,
                 fixture.universe,
             );

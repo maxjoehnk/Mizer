@@ -6,14 +6,13 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
 
 use std::sync::Arc;
-use mizer_pipeline::PipelineView;
 
 mod protos;
 mod services;
 
 pub fn start(
     handle: tokio::runtime::Handle,
-    pipeline_view: PipelineView,
+    mizer_runtime: mizer_runtime::RuntimeApi,
     fixture_manager: FixtureManager,
     media_server: MediaServerApi,
 ) -> anyhow::Result<grpc::Server> {
@@ -21,7 +20,7 @@ pub fn start(
     server.http.event_loop = Some(handle);
     server.http.set_port(50051);
     server.add_service(NodesApiServer::new_service_def(
-        services::nodes::NodesApiImpl::new(pipeline_view),
+        services::nodes::NodesApiImpl::new(mizer_runtime),
     ));
     server.add_service(SessionApiServer::new_service_def(
         services::session::SessionApiImpl::new(),

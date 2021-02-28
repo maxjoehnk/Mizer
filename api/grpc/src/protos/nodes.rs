@@ -708,7 +708,7 @@ impl NodeConnection {
         self.protocol
     }
     pub fn clear_protocol(&mut self) {
-        self.protocol = ChannelProtocol::Dmx;
+        self.protocol = ChannelProtocol::Single;
     }
 
     // Param is passed by value, moved
@@ -777,7 +777,7 @@ impl ::protobuf::Message for NodeConnection {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if self.protocol != ChannelProtocol::Dmx {
+        if self.protocol != ChannelProtocol::Single {
             my_size += ::protobuf::rt::enum_size(5, self.protocol);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -802,7 +802,7 @@ impl ::protobuf::Message for NodeConnection {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
-        if self.protocol != ChannelProtocol::Dmx {
+        if self.protocol != ChannelProtocol::Single {
             os.write_enum(5, ::protobuf::ProtobufEnum::value(&self.protocol))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -888,7 +888,7 @@ impl ::protobuf::Clear for NodeConnection {
         self.inputPort.clear();
         self.outputNode.clear();
         self.outputPort.clear();
-        self.protocol = ChannelProtocol::Dmx;
+        self.protocol = ChannelProtocol::Single;
         self.unknown_fields.clear();
     }
 }
@@ -909,11 +909,9 @@ impl ::protobuf::reflect::ProtobufValue for NodeConnection {
 pub struct Node {
     // message fields
     pub field_type: Node_NodeType,
-    pub id: ::std::string::String,
-    pub title: ::std::string::String,
+    pub path: ::std::string::String,
     pub inputs: ::protobuf::RepeatedField<Port>,
     pub outputs: ::protobuf::RepeatedField<Port>,
-    pub properties: ::std::collections::HashMap<::std::string::String, f64>,
     pub designer: ::protobuf::SingularPtrField<NodeDesigner>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -946,59 +944,33 @@ impl Node {
         self.field_type = v;
     }
 
-    // string id = 2;
+    // string path = 2;
 
 
-    pub fn get_id(&self) -> &str {
-        &self.id
+    pub fn get_path(&self) -> &str {
+        &self.path
     }
-    pub fn clear_id(&mut self) {
-        self.id.clear();
+    pub fn clear_path(&mut self) {
+        self.path.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_id(&mut self, v: ::std::string::String) {
-        self.id = v;
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_id(&mut self) -> &mut ::std::string::String {
-        &mut self.id
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
     }
 
     // Take field
-    pub fn take_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.id, ::std::string::String::new())
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
     }
 
-    // string title = 3;
-
-
-    pub fn get_title(&self) -> &str {
-        &self.title
-    }
-    pub fn clear_title(&mut self) {
-        self.title.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_title(&mut self, v: ::std::string::String) {
-        self.title = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_title(&mut self) -> &mut ::std::string::String {
-        &mut self.title
-    }
-
-    // Take field
-    pub fn take_title(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.title, ::std::string::String::new())
-    }
-
-    // repeated .mizer.Port inputs = 4;
+    // repeated .mizer.Port inputs = 3;
 
 
     pub fn get_inputs(&self) -> &[Port] {
@@ -1023,7 +995,7 @@ impl Node {
         ::std::mem::replace(&mut self.inputs, ::protobuf::RepeatedField::new())
     }
 
-    // repeated .mizer.Port outputs = 5;
+    // repeated .mizer.Port outputs = 4;
 
 
     pub fn get_outputs(&self) -> &[Port] {
@@ -1048,32 +1020,7 @@ impl Node {
         ::std::mem::replace(&mut self.outputs, ::protobuf::RepeatedField::new())
     }
 
-    // repeated .mizer.Node.PropertiesEntry properties = 7;
-
-
-    pub fn get_properties(&self) -> &::std::collections::HashMap<::std::string::String, f64> {
-        &self.properties
-    }
-    pub fn clear_properties(&mut self) {
-        self.properties.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_properties(&mut self, v: ::std::collections::HashMap<::std::string::String, f64>) {
-        self.properties = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_properties(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, f64> {
-        &mut self.properties
-    }
-
-    // Take field
-    pub fn take_properties(&mut self) -> ::std::collections::HashMap<::std::string::String, f64> {
-        ::std::mem::replace(&mut self.properties, ::std::collections::HashMap::new())
-    }
-
-    // .mizer.NodeDesigner designer = 8;
+    // .mizer.NodeDesigner designer = 5;
 
 
     pub fn get_designer(&self) -> &NodeDesigner {
@@ -1135,21 +1082,15 @@ impl ::protobuf::Message for Node {
                     ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 1, &mut self.unknown_fields)?
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.id)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.title)?;
-                },
-                4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.inputs)?;
                 },
-                5 => {
+                4 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.outputs)?;
                 },
-                7 => {
-                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeDouble>(wire_type, is, &mut self.properties)?;
-                },
-                8 => {
+                5 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.designer)?;
                 },
                 _ => {
@@ -1167,11 +1108,8 @@ impl ::protobuf::Message for Node {
         if self.field_type != Node_NodeType::Fader {
             my_size += ::protobuf::rt::enum_size(1, self.field_type);
         }
-        if !self.id.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.id);
-        }
-        if !self.title.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.title);
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.path);
         }
         for value in &self.inputs {
             let len = value.compute_size();
@@ -1181,7 +1119,6 @@ impl ::protobuf::Message for Node {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeDouble>(7, &self.properties);
         if let Some(ref v) = self.designer.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
@@ -1195,25 +1132,21 @@ impl ::protobuf::Message for Node {
         if self.field_type != Node_NodeType::Fader {
             os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.field_type))?;
         }
-        if !self.id.is_empty() {
-            os.write_string(2, &self.id)?;
-        }
-        if !self.title.is_empty() {
-            os.write_string(3, &self.title)?;
+        if !self.path.is_empty() {
+            os.write_string(2, &self.path)?;
         }
         for v in &self.inputs {
-            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
         for v in &self.outputs {
-            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
-        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeDouble>(7, &self.properties, os)?;
         if let Some(ref v) = self.designer.as_ref() {
-            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -1261,14 +1194,9 @@ impl ::protobuf::Message for Node {
                 |m: &mut Node| { &mut m.field_type },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "id",
-                |m: &Node| { &m.id },
-                |m: &mut Node| { &mut m.id },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "title",
-                |m: &Node| { &m.title },
-                |m: &mut Node| { &mut m.title },
+                "path",
+                |m: &Node| { &m.path },
+                |m: &mut Node| { &mut m.path },
             ));
             fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Port>>(
                 "inputs",
@@ -1279,11 +1207,6 @@ impl ::protobuf::Message for Node {
                 "outputs",
                 |m: &Node| { &m.outputs },
                 |m: &mut Node| { &mut m.outputs },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeDouble>(
-                "properties",
-                |m: &Node| { &m.properties },
-                |m: &mut Node| { &mut m.properties },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NodeDesigner>>(
                 "designer",
@@ -1307,11 +1230,9 @@ impl ::protobuf::Message for Node {
 impl ::protobuf::Clear for Node {
     fn clear(&mut self) {
         self.field_type = Node_NodeType::Fader;
-        self.id.clear();
-        self.title.clear();
+        self.path.clear();
         self.inputs.clear();
         self.outputs.clear();
-        self.properties.clear();
         self.designer.clear();
         self.unknown_fields.clear();
     }
@@ -1332,27 +1253,25 @@ impl ::protobuf::reflect::ProtobufValue for Node {
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum Node_NodeType {
     Fader = 0,
-    ConvertToDmx = 1,
-    ArtnetOutput = 2,
-    SacnOutput = 3,
-    Oscillator = 4,
-    Clock = 5,
-    OscInput = 6,
-    VideoFile = 7,
-    VideoOutput = 8,
-    VideoEffect = 9,
-    VideoColorBalance = 10,
-    VideoTransform = 11,
-    Script = 12,
-    PixelToDmx = 13,
-    PixelPattern = 14,
-    OpcOutput = 15,
-    Fixture = 16,
-    Sequence = 17,
-    MidiInput = 18,
-    MidiOutput = 19,
-    Laser = 20,
-    IldaFile = 21,
+    DmxOutput = 1,
+    Oscillator = 2,
+    Clock = 3,
+    OscInput = 4,
+    VideoFile = 5,
+    VideoOutput = 6,
+    VideoEffect = 7,
+    VideoColorBalance = 8,
+    VideoTransform = 9,
+    Script = 10,
+    PixelToDmx = 11,
+    PixelPattern = 12,
+    OpcOutput = 13,
+    Fixture = 14,
+    Sequence = 15,
+    MidiInput = 16,
+    MidiOutput = 17,
+    Laser = 18,
+    IldaFile = 19,
 }
 
 impl ::protobuf::ProtobufEnum for Node_NodeType {
@@ -1363,27 +1282,25 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
     fn from_i32(value: i32) -> ::std::option::Option<Node_NodeType> {
         match value {
             0 => ::std::option::Option::Some(Node_NodeType::Fader),
-            1 => ::std::option::Option::Some(Node_NodeType::ConvertToDmx),
-            2 => ::std::option::Option::Some(Node_NodeType::ArtnetOutput),
-            3 => ::std::option::Option::Some(Node_NodeType::SacnOutput),
-            4 => ::std::option::Option::Some(Node_NodeType::Oscillator),
-            5 => ::std::option::Option::Some(Node_NodeType::Clock),
-            6 => ::std::option::Option::Some(Node_NodeType::OscInput),
-            7 => ::std::option::Option::Some(Node_NodeType::VideoFile),
-            8 => ::std::option::Option::Some(Node_NodeType::VideoOutput),
-            9 => ::std::option::Option::Some(Node_NodeType::VideoEffect),
-            10 => ::std::option::Option::Some(Node_NodeType::VideoColorBalance),
-            11 => ::std::option::Option::Some(Node_NodeType::VideoTransform),
-            12 => ::std::option::Option::Some(Node_NodeType::Script),
-            13 => ::std::option::Option::Some(Node_NodeType::PixelToDmx),
-            14 => ::std::option::Option::Some(Node_NodeType::PixelPattern),
-            15 => ::std::option::Option::Some(Node_NodeType::OpcOutput),
-            16 => ::std::option::Option::Some(Node_NodeType::Fixture),
-            17 => ::std::option::Option::Some(Node_NodeType::Sequence),
-            18 => ::std::option::Option::Some(Node_NodeType::MidiInput),
-            19 => ::std::option::Option::Some(Node_NodeType::MidiOutput),
-            20 => ::std::option::Option::Some(Node_NodeType::Laser),
-            21 => ::std::option::Option::Some(Node_NodeType::IldaFile),
+            1 => ::std::option::Option::Some(Node_NodeType::DmxOutput),
+            2 => ::std::option::Option::Some(Node_NodeType::Oscillator),
+            3 => ::std::option::Option::Some(Node_NodeType::Clock),
+            4 => ::std::option::Option::Some(Node_NodeType::OscInput),
+            5 => ::std::option::Option::Some(Node_NodeType::VideoFile),
+            6 => ::std::option::Option::Some(Node_NodeType::VideoOutput),
+            7 => ::std::option::Option::Some(Node_NodeType::VideoEffect),
+            8 => ::std::option::Option::Some(Node_NodeType::VideoColorBalance),
+            9 => ::std::option::Option::Some(Node_NodeType::VideoTransform),
+            10 => ::std::option::Option::Some(Node_NodeType::Script),
+            11 => ::std::option::Option::Some(Node_NodeType::PixelToDmx),
+            12 => ::std::option::Option::Some(Node_NodeType::PixelPattern),
+            13 => ::std::option::Option::Some(Node_NodeType::OpcOutput),
+            14 => ::std::option::Option::Some(Node_NodeType::Fixture),
+            15 => ::std::option::Option::Some(Node_NodeType::Sequence),
+            16 => ::std::option::Option::Some(Node_NodeType::MidiInput),
+            17 => ::std::option::Option::Some(Node_NodeType::MidiOutput),
+            18 => ::std::option::Option::Some(Node_NodeType::Laser),
+            19 => ::std::option::Option::Some(Node_NodeType::IldaFile),
             _ => ::std::option::Option::None
         }
     }
@@ -1391,9 +1308,7 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
     fn values() -> &'static [Self] {
         static values: &'static [Node_NodeType] = &[
             Node_NodeType::Fader,
-            Node_NodeType::ConvertToDmx,
-            Node_NodeType::ArtnetOutput,
-            Node_NodeType::SacnOutput,
+            Node_NodeType::DmxOutput,
             Node_NodeType::Oscillator,
             Node_NodeType::Clock,
             Node_NodeType::OscInput,
@@ -1889,7 +1804,7 @@ impl Port {
         self.protocol
     }
     pub fn clear_protocol(&mut self) {
-        self.protocol = ChannelProtocol::Dmx;
+        self.protocol = ChannelProtocol::Single;
     }
 
     // Param is passed by value, moved
@@ -1928,7 +1843,7 @@ impl ::protobuf::Message for Port {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
-        if self.protocol != ChannelProtocol::Dmx {
+        if self.protocol != ChannelProtocol::Single {
             my_size += ::protobuf::rt::enum_size(2, self.protocol);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -1940,7 +1855,7 @@ impl ::protobuf::Message for Port {
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
-        if self.protocol != ChannelProtocol::Dmx {
+        if self.protocol != ChannelProtocol::Single {
             os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.protocol))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -2008,7 +1923,7 @@ impl ::protobuf::Message for Port {
 impl ::protobuf::Clear for Port {
     fn clear(&mut self) {
         self.name.clear();
-        self.protocol = ChannelProtocol::Dmx;
+        self.protocol = ChannelProtocol::Single;
         self.unknown_fields.clear();
     }
 }
@@ -2027,20 +1942,15 @@ impl ::protobuf::reflect::ProtobufValue for Port {
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum ChannelProtocol {
-    Dmx = 0,
-    Numeric = 1,
-    Trigger = 2,
-    Clock = 3,
-    Video = 4,
-    Color = 5,
-    Vector = 6,
-    Text = 7,
-    Midi = 8,
-    Timecode = 9,
-    Boolean = 10,
-    Select = 11,
-    Pixels = 12,
-    Laser = 13,
+    Single = 0,
+    Multi = 1,
+    Texture = 2,
+    Vector = 3,
+    Laser = 4,
+    Poly = 5,
+    Data = 6,
+    Material = 7,
+    Gst = 8,
 }
 
 impl ::protobuf::ProtobufEnum for ChannelProtocol {
@@ -2050,40 +1960,30 @@ impl ::protobuf::ProtobufEnum for ChannelProtocol {
 
     fn from_i32(value: i32) -> ::std::option::Option<ChannelProtocol> {
         match value {
-            0 => ::std::option::Option::Some(ChannelProtocol::Dmx),
-            1 => ::std::option::Option::Some(ChannelProtocol::Numeric),
-            2 => ::std::option::Option::Some(ChannelProtocol::Trigger),
-            3 => ::std::option::Option::Some(ChannelProtocol::Clock),
-            4 => ::std::option::Option::Some(ChannelProtocol::Video),
-            5 => ::std::option::Option::Some(ChannelProtocol::Color),
-            6 => ::std::option::Option::Some(ChannelProtocol::Vector),
-            7 => ::std::option::Option::Some(ChannelProtocol::Text),
-            8 => ::std::option::Option::Some(ChannelProtocol::Midi),
-            9 => ::std::option::Option::Some(ChannelProtocol::Timecode),
-            10 => ::std::option::Option::Some(ChannelProtocol::Boolean),
-            11 => ::std::option::Option::Some(ChannelProtocol::Select),
-            12 => ::std::option::Option::Some(ChannelProtocol::Pixels),
-            13 => ::std::option::Option::Some(ChannelProtocol::Laser),
+            0 => ::std::option::Option::Some(ChannelProtocol::Single),
+            1 => ::std::option::Option::Some(ChannelProtocol::Multi),
+            2 => ::std::option::Option::Some(ChannelProtocol::Texture),
+            3 => ::std::option::Option::Some(ChannelProtocol::Vector),
+            4 => ::std::option::Option::Some(ChannelProtocol::Laser),
+            5 => ::std::option::Option::Some(ChannelProtocol::Poly),
+            6 => ::std::option::Option::Some(ChannelProtocol::Data),
+            7 => ::std::option::Option::Some(ChannelProtocol::Material),
+            8 => ::std::option::Option::Some(ChannelProtocol::Gst),
             _ => ::std::option::Option::None
         }
     }
 
     fn values() -> &'static [Self] {
         static values: &'static [ChannelProtocol] = &[
-            ChannelProtocol::Dmx,
-            ChannelProtocol::Numeric,
-            ChannelProtocol::Trigger,
-            ChannelProtocol::Clock,
-            ChannelProtocol::Video,
-            ChannelProtocol::Color,
+            ChannelProtocol::Single,
+            ChannelProtocol::Multi,
+            ChannelProtocol::Texture,
             ChannelProtocol::Vector,
-            ChannelProtocol::Text,
-            ChannelProtocol::Midi,
-            ChannelProtocol::Timecode,
-            ChannelProtocol::Boolean,
-            ChannelProtocol::Select,
-            ChannelProtocol::Pixels,
             ChannelProtocol::Laser,
+            ChannelProtocol::Poly,
+            ChannelProtocol::Data,
+            ChannelProtocol::Material,
+            ChannelProtocol::Gst,
         ];
         values
     }
@@ -2101,7 +2001,7 @@ impl ::std::marker::Copy for ChannelProtocol {
 
 impl ::std::default::Default for ChannelProtocol {
     fn default() -> Self {
-        ChannelProtocol::Dmx
+        ChannelProtocol::Single
     }
 }
 
@@ -2122,38 +2022,32 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0b.mizer.PortR\tinputPort\x12\x1e\n\noutputNode\x18\x03\x20\x01(\tR\no\
     utputNode\x12+\n\noutputPort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\noutp\
     utPort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtoco\
-    lR\x08protocol\"\xb0\x05\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\
-    \x14.mizer.Node.NodeTypeR\x04type\x12\x0e\n\x02id\x18\x02\x20\x01(\tR\
-    \x02id\x12\x14\n\x05title\x18\x03\x20\x01(\tR\x05title\x12#\n\x06inputs\
-    \x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07outputs\x18\
-    \x05\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12;\n\nproperties\x18\x07\
-    \x20\x03(\x0b2\x1b.mizer.Node.PropertiesEntryR\nproperties\x12/\n\x08des\
-    igner\x18\x08\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\x1a=\n\
-    \x0fPropertiesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
-    \n\x05value\x18\x02\x20\x01(\x01R\x05value:\x028\x01\"\xde\x02\n\x08Node\
-    Type\x12\t\n\x05Fader\x10\0\x12\x10\n\x0cConvertToDmx\x10\x01\x12\x10\n\
-    \x0cArtnetOutput\x10\x02\x12\x0e\n\nSacnOutput\x10\x03\x12\x0e\n\nOscill\
-    ator\x10\x04\x12\t\n\x05Clock\x10\x05\x12\x0c\n\x08OscInput\x10\x06\x12\
-    \r\n\tVideoFile\x10\x07\x12\x0f\n\x0bVideoOutput\x10\x08\x12\x0f\n\x0bVi\
-    deoEffect\x10\t\x12\x15\n\x11VideoColorBalance\x10\n\x12\x12\n\x0eVideoT\
-    ransform\x10\x0b\x12\n\n\x06Script\x10\x0c\x12\x0e\n\nPixelToDmx\x10\r\
-    \x12\x10\n\x0cPixelPattern\x10\x0e\x12\r\n\tOpcOutput\x10\x0f\x12\x0b\n\
-    \x07Fixture\x10\x10\x12\x0c\n\x08Sequence\x10\x11\x12\r\n\tMidiInput\x10\
-    \x12\x12\x0e\n\nMidiOutput\x10\x13\x12\t\n\x05Laser\x10\x14\x12\x0c\n\
-    \x08IldaFile\x10\x15\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01\
-    (\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\n\x0cNodeDesign\
-    er\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08p\
-    osition\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\"N\n\x04Port\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\
-    \x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\xb3\x01\n\x0f\
-    ChannelProtocol\x12\x07\n\x03Dmx\x10\0\x12\x0b\n\x07Numeric\x10\x01\x12\
-    \x0b\n\x07Trigger\x10\x02\x12\t\n\x05Clock\x10\x03\x12\t\n\x05Video\x10\
-    \x04\x12\t\n\x05Color\x10\x05\x12\n\n\x06Vector\x10\x06\x12\x08\n\x04Tex\
-    t\x10\x07\x12\x08\n\x04Midi\x10\x08\x12\x0c\n\x08Timecode\x10\t\x12\x0b\
-    \n\x07Boolean\x10\n\x12\n\n\x06Select\x10\x0b\x12\n\n\x06Pixels\x10\x0c\
-    \x12\t\n\x05Laser\x10\r2l\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer\
-    .NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.Ad\
-    dNodeRequest\x1a\x0b.mizer.Node\"\0b\x06proto3\
+    lR\x08protocol\"\xfd\x03\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\
+    \x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\
+    \x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06input\
+    s\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12\
+    /\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designe\
+    r\"\xb9\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\r\n\tDmxOutput\x10\
+    \x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\x03\x12\x0c\n\
+    \x08OscInput\x10\x04\x12\r\n\tVideoFile\x10\x05\x12\x0f\n\x0bVideoOutput\
+    \x10\x06\x12\x0f\n\x0bVideoEffect\x10\x07\x12\x15\n\x11VideoColorBalance\
+    \x10\x08\x12\x12\n\x0eVideoTransform\x10\t\x12\n\n\x06Script\x10\n\x12\
+    \x0e\n\nPixelToDmx\x10\x0b\x12\x10\n\x0cPixelPattern\x10\x0c\x12\r\n\tOp\
+    cOutput\x10\r\x12\x0b\n\x07Fixture\x10\x0e\x12\x0c\n\x08Sequence\x10\x0f\
+    \x12\r\n\tMidiInput\x10\x10\x12\x0e\n\nMidiOutput\x10\x11\x12\t\n\x05Las\
+    er\x10\x12\x12\x0c\n\x08IldaFile\x10\x13\"*\n\x0cNodePosition\x12\x0c\n\
+    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
+    \x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.\
+    mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\
+    \x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
+    2\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08prot\
+    ocol*w\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\
+    \x01\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05L\
+    aser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\
+    \n\x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082l\n\x08NodesApi\x12/\n\
+    \x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\
+    \x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0b\x06prot\
+    o3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

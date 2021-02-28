@@ -953,6 +953,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "console"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7cc80946b3480f421c2f17ed1cb841753a371c7c5104f51d507e13f532c856aa"
+dependencies = [
+ "encode_unicode",
+ "lazy_static",
+ "libc",
+ "terminal_size",
+ "winapi 0.3.9",
+]
+
+[[package]]
 name = "const_fn"
 version = "0.4.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1424,6 +1437,12 @@ name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
+
+[[package]]
+name = "encode_unicode"
+version = "0.3.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a357d28ed41a50f9c765dbfe56cbc04a64e53e5fc58ba79fbc34c10ef3df831f"
 
 [[package]]
 name = "encoding_rs"
@@ -2324,6 +2343,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8906512588cd815b8f759fd0ac11de2a84c985c0f792f70df611e9325c270c1f"
 
 [[package]]
+name = "insta"
+version = "1.6.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fd354a2c8c8083d58414597a4ecada1984f9b82ea7e87eeabddc869eaf120992"
+dependencies = [
+ "backtrace",
+ "console",
+ "lazy_static",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "similar",
+ "uuid 0.8.2",
+]
+
+[[package]]
 name = "instant"
 version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2822,12 +2857,18 @@ dependencies = [
  "metrics",
  "metrics-runtime",
  "mizer-devices",
+ "mizer-execution-planner",
  "mizer-fixtures",
  "mizer-grpc-api",
  "mizer-media",
+ "mizer-module",
+ "mizer-node",
  "mizer-open-fixture-library-provider",
  "mizer-pipeline",
+ "mizer-processing",
  "mizer-project-files",
+ "mizer-protocol-dmx",
+ "mizer-runtime",
  "mizer-session",
  "multi_mut",
  "smol",
@@ -2836,27 +2877,23 @@ dependencies = [
 ]
 
 [[package]]
-name = "mizer-artnet-nodes"
+name = "mizer-clock"
 version = "0.1.0"
-dependencies = [
- "artnet_protocol",
- "log",
- "mizer-node-api",
-]
 
 [[package]]
 name = "mizer-clock-nodes"
 version = "0.1.0"
 dependencies = [
- "mizer-node-api",
+ "anyhow",
+ "mizer-clock",
+ "mizer-node",
+ "serde",
 ]
 
 [[package]]
-name = "mizer-conversion-nodes"
+name = "mizer-conversion"
 version = "0.1.0"
 dependencies = [
- "log",
- "mizer-node-api",
  "test-case",
 ]
 
@@ -2868,8 +2905,20 @@ dependencies = [
  "chashmap",
  "futures",
  "log",
+ "mizer-module",
+ "mizer-processing",
  "mizer-protocol-laser",
  "tokio",
+]
+
+[[package]]
+name = "mizer-dmx-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-node",
+ "mizer-protocol-dmx",
+ "serde",
 ]
 
 [[package]]
@@ -2877,6 +2926,7 @@ name = "mizer-execution-planner"
 version = "0.1.0"
 dependencies = [
  "itertools 0.10.0",
+ "mizer-node",
  "serde",
  "test-case",
 ]
@@ -2885,17 +2935,23 @@ dependencies = [
 name = "mizer-fixture-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "log",
  "mizer-fixtures",
- "mizer-node-api",
+ "mizer-node",
+ "serde",
 ]
 
 [[package]]
 name = "mizer-fixtures"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "dashmap",
  "log",
+ "mizer-module",
+ "mizer-processing",
+ "mizer-protocol-dmx",
 ]
 
 [[package]]
@@ -2909,8 +2965,9 @@ dependencies = [
  "log",
  "mizer-fixtures",
  "mizer-media",
- "mizer-pipeline",
- "mizer-project-files",
+ "mizer-node",
+ "mizer-nodes",
+ "mizer-runtime",
  "protobuf",
  "protoc-rust-grpc",
  "tokio",
@@ -2920,7 +2977,9 @@ dependencies = [
 name = "mizer-input-nodes"
 version = "0.1.0"
 dependencies = [
- "mizer-node-api",
+ "anyhow",
+ "mizer-node",
+ "serde",
 ]
 
 [[package]]
@@ -2930,8 +2989,9 @@ dependencies = [
  "anyhow",
  "log",
  "mizer-devices",
- "mizer-node-api",
+ "mizer-node",
  "mizer-protocol-laser",
+ "serde",
 ]
 
 [[package]]
@@ -2977,31 +3037,50 @@ dependencies = [
 name = "mizer-midi-nodes"
 version = "0.1.0"
 dependencies = [
- "mizer-node-api",
+ "anyhow",
+ "mizer-node",
  "mizer-protocol-midi",
+ "serde",
 ]
 
 [[package]]
-name = "mizer-node-api"
-version = "0.1.0"
-dependencies = [
- "crossbeam-channel 0.4.4",
- "glib",
- "gstreamer",
- "log",
- "mizer-devices",
- "mizer-fixtures",
- "mizer-protocol-laser",
- "thiserror",
-]
-
-[[package]]
-name = "mizer-node-ports"
+name = "mizer-module"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "bincode",
- "crossbeam 0.8.0",
+ "mizer-processing",
+]
+
+[[package]]
+name = "mizer-node"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-clock",
+ "mizer-ports",
+ "serde",
+]
+
+[[package]]
+name = "mizer-nodes"
+version = "0.1.0"
+dependencies = [
+ "derive_more",
+ "mizer-clock-nodes",
+ "mizer-dmx-nodes",
+ "mizer-fixture-nodes",
+ "mizer-input-nodes",
+ "mizer-laser-nodes",
+ "mizer-midi-nodes",
+ "mizer-node",
+ "mizer-opc-nodes",
+ "mizer-osc-nodes",
+ "mizer-oscillator-nodes",
+ "mizer-pixel-nodes",
+ "mizer-scripting-nodes",
+ "mizer-sequence-nodes",
+ "mizer-video-nodes",
  "serde",
 ]
 
@@ -3009,9 +3088,12 @@ dependencies = [
 name = "mizer-opc-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "bytes 0.5.6",
  "log",
- "mizer-node-api",
+ "mizer-conversion",
+ "mizer-node",
+ "serde",
 ]
 
 [[package]]
@@ -3028,19 +3110,22 @@ dependencies = [
 name = "mizer-osc-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "crossbeam-channel 0.4.4",
  "lazy_static",
  "log",
- "mizer-node-api",
+ "mizer-node",
  "rosc",
+ "serde",
 ]
 
 [[package]]
 name = "mizer-oscillator-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "log",
- "mizer-node-api",
+ "mizer-node",
  "serde",
 ]
 
@@ -3050,29 +3135,18 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "derive_more",
  "flume",
  "gstreamer",
  "log",
  "metrics",
- "mizer-artnet-nodes",
- "mizer-clock-nodes",
- "mizer-conversion-nodes",
+ "mizer-clock",
  "mizer-devices",
- "mizer-fixture-nodes",
  "mizer-fixtures",
- "mizer-input-nodes",
- "mizer-laser-nodes",
- "mizer-midi-nodes",
- "mizer-node-api",
- "mizer-opc-nodes",
- "mizer-osc-nodes",
- "mizer-oscillator-nodes",
- "mizer-pixel-nodes",
+ "mizer-node",
+ "mizer-ports",
+ "mizer-processing",
  "mizer-project-files",
- "mizer-sacn-nodes",
- "mizer-scripting-nodes",
- "mizer-sequence-nodes",
+ "mizer-protocol-laser",
  "mizer-video-nodes",
 ]
 
@@ -3080,9 +3154,31 @@ dependencies = [
 name = "mizer-pixel-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "log",
- "mizer-node-api",
+ "mizer-conversion",
+ "mizer-node",
+ "mizer-protocol-dmx",
  "serde",
+]
+
+[[package]]
+name = "mizer-ports"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bincode",
+ "criterion",
+ "crossbeam 0.8.0",
+ "serde",
+]
+
+[[package]]
+name = "mizer-processing"
+version = "0.1.0"
+dependencies = [
+ "dashmap",
+ "test-case",
 ]
 
 [[package]]
@@ -3091,14 +3187,25 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "lazy_static",
- "mizer-oscillator-nodes",
+ "mizer-node",
+ "mizer-nodes",
  "mizer-pixel-nodes",
- "mizer-sequence-nodes",
- "mizer-video-nodes",
  "regex",
  "serde",
  "serde_yaml",
  "test-case",
+]
+
+[[package]]
+name = "mizer-protocol-dmx"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "artnet_protocol",
+ "log",
+ "mizer-module",
+ "mizer-processing",
+ "sacn",
 ]
 
 [[package]]
@@ -3112,6 +3219,7 @@ dependencies = [
  "lasy",
  "log",
  "pinboard",
+ "serde",
 ]
 
 [[package]]
@@ -3124,27 +3232,44 @@ dependencies = [
 ]
 
 [[package]]
-name = "mizer-sacn-nodes"
+name = "mizer-runtime"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "dashmap",
+ "env_logger",
+ "insta",
  "log",
- "mizer-node-api",
- "sacn",
+ "mizer-clock",
+ "mizer-execution-planner",
+ "mizer-module",
+ "mizer-node",
+ "mizer-nodes",
+ "mizer-pipeline",
+ "mizer-ports",
+ "mizer-processing",
+ "mizer-project-files",
+ "mizer-session",
+ "pinboard",
+ "test-case",
 ]
 
 [[package]]
 name = "mizer-scripting-nodes"
 version = "0.1.0"
 dependencies = [
- "mizer-node-api",
+ "anyhow",
+ "mizer-node",
  "rhai 0.17.0",
+ "serde",
 ]
 
 [[package]]
 name = "mizer-sequence-nodes"
 version = "0.1.0"
 dependencies = [
- "mizer-node-api",
+ "anyhow",
+ "mizer-node",
  "serde",
 ]
 
@@ -3164,13 +3289,14 @@ dependencies = [
 name = "mizer-video-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "glib",
  "gstreamer",
  "gstreamer-gl",
  "gstreamer-player",
  "gstreamer-video",
  "lazy_static",
- "mizer-node-api",
+ "mizer-node",
  "serde",
 ]
 
@@ -4508,6 +4634,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "similar"
+version = "1.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a04629d2e8ecdcf30e0188e3699ed6d50d5750d0219db146a790065fe92a897"
+
+[[package]]
 name = "simplecss"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4869,6 +5001,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dfed899f0eb03f32ee8c6a0aabdb8a7949659e3466561fc0adf54e26d88c5f4"
 dependencies = [
  "winapi-util",
+]
+
+[[package]]
+name = "terminal_size"
+version = "0.1.16"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "86ca8ced750734db02076f44132d802af0b33b09942331f4459dde8636fd2406"
+dependencies = [
+ "libc",
+ "winapi 0.3.9",
 ]
 
 [[package]]

@@ -53,7 +53,7 @@ class BaseNodeView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(this.node.title, style: textTheme.headline6),
+                Text(this.node.path, style: textTheme.headline6),
                 Text(this.node.type.name,
                     style:
                         textTheme.subtitle2.copyWith(color: theme.hintColor)),
@@ -156,11 +156,11 @@ class NodePort extends StatelessWidget {
 
   MaterialColor getColorForProtocol(ChannelProtocol protocol) {
     switch (protocol) {
-      case ChannelProtocol.Dmx:
+      case ChannelProtocol.Single:
         return Colors.red;
-      case ChannelProtocol.Clock:
+      case ChannelProtocol.Multi:
         return Colors.green;
-      case ChannelProtocol.Numeric:
+      case ChannelProtocol.Gst:
         return Colors.deepOrange;
       default:
         log("no color for protocol ${protocol.name}");

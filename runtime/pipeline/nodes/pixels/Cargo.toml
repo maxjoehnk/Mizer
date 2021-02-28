@@ -1,0 +1,13 @@
+[package]
+name = "mizer-pixel-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+mizer-node = { path = "../../node" }
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+mizer-protocol-dmx = { path = "../../../../protocols/dmx" }
+mizer-conversion = { path = "../../../../conversion" }

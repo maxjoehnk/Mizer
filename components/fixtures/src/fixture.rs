@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use mizer_protocol_dmx::DmxOutput;
 
 #[derive(Debug, Clone)]
 pub struct Fixture {
@@ -7,6 +8,7 @@ pub struct Fixture {
     current_mode: FixtureMode,
     pub universe: u16,
     pub channel: u8,
+    pub output: String,
     channel_values: HashMap<String, f64>,
 }
 
@@ -15,6 +17,7 @@ impl Fixture {
         fixture_id: String,
         definition: FixtureDefinition,
         selected_mode: Option<String>,
+        output: String,
         channel: u8,
         universe: Option<u16>,
     ) -> Self {
@@ -23,6 +26,7 @@ impl Fixture {
             current_mode: get_current_mode(&definition, selected_mode),
             definition,
             channel,
+            output,
             universe: universe.unwrap_or(1),
             channel_values: Default::default(),
         }
@@ -34,6 +38,13 @@ impl Fixture {
 
     pub fn write(&mut self, name: &str, value: f64) {
         self.channel_values.insert(name.to_string(), value);
+    }
+
+    pub(crate) fn flush(&self, output: &dyn DmxOutput) {
+        let buffer = self.get_dmx_values();
+        let start = self.channel as usize;
+        let end = self.current_mode.dmx_channels() as usize;
+        output.write_bulk(self.universe, self.channel, &buffer[start..end]);
     }
 
     pub fn get_dmx_values(&self) -> [u8; 255] {
@@ -93,10 +104,26 @@ pub struct FixtureMode {
     pub channels: Vec<FixtureChannelDefinition>,
 }
 
+impl FixtureMode {
+    fn dmx_channels(&self) -> u8 {
+        self.channels.iter().map(|c| c.channels()).sum()
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureChannelDefinition {
     pub name: String,
     pub resolution: ChannelResolution,
+}
+
+impl FixtureChannelDefinition {
+    fn channels(&self) -> u8 {
+        match self.resolution {
+            ChannelResolution::Coarse { .. } => 1,
+            ChannelResolution::Fine { .. } => 2,
+            ChannelResolution::Finest { .. } => 3
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]

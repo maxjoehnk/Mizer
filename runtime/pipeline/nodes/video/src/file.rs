@@ -51,7 +51,10 @@ impl ProcessingNode for VideoFileNode {
 
 impl VideoFileState {
     fn new(file: &str) -> Self {
-        let node = VideoFileState::build(file);
+        let full_path = std::env::current_dir().unwrap_or_default();
+        let path = full_path.join(file);
+        let path = path.to_str().unwrap();
+        let node = VideoFileState::build(path);
         node.link_decoder();
 
         node
@@ -83,8 +86,14 @@ impl VideoFileState {
 
     fn link_decoder(&self) {
         let sink = self.upload.get_static_pad("sink").unwrap();
+        let video_caps: gstreamer::Caps = "video/x-raw".parse().unwrap();
         self.decoder.connect_pad_added(move |_, pad| {
-            pad.link(&sink).unwrap();
+            let caps = pad.get_current_caps().unwrap();
+            log::trace!("connect_pad_added: {:?}", caps);
+            if caps.can_intersect(&video_caps) {
+                log::trace!("connecting pads");
+                pad.link(&sink).unwrap();
+            }
         });
     }
 }

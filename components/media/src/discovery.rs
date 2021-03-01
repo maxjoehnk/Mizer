@@ -26,7 +26,9 @@ impl MediaDiscovery {
         }
     }
 
+    // TODO: watch path for file changes
     pub async fn discover(&self) -> anyhow::Result<()> {
+        log::info!("Discovering media files in {:?}", &self.walker.path);
         let paths = self.walker.scan().await?;
 
         for path in paths {

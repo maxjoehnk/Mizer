@@ -24,6 +24,8 @@ pub struct Project {
     pub channels: Vec<Channel>,
     #[serde(default)]
     pub fixtures: Vec<FixtureConfig>,
+    #[serde(default, rename = "media")]
+    pub media_paths: Vec<String>,
 }
 
 impl Project {

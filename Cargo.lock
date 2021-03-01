@@ -2768,6 +2768,7 @@ dependencies = [
  "gstreamer-player",
  "gstreamer-video",
  "lazy_static",
+ "log",
  "mizer-node",
  "serde",
 ]

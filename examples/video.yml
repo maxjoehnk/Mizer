@@ -2,7 +2,7 @@ nodes:
   - type: video-file
     path: /video-file-0
     config:
-      file: /home/max/Code/0_mizer/mizer-video-projector/assets/DOC000 Alley Booze - H.264 1080p.mov
+      file: examples/media/video/file_example_MP4_1920_18MG.mp4
     designer:
       position:
         x: 0
@@ -51,3 +51,5 @@ channels:
   - output@/video-transform-0 -> input@/video-output-0
   - value@/oscillator-0 -> rotate-x@/video-transform-0
   - value@/oscillator-0 -> rotate-y@/video-transform-0
+media:
+  - examples/media

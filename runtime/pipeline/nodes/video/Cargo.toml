@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1"
+log = "0.4"
 mizer-node = { path = "../../node" }
 gstreamer = "0.16"
 gstreamer-video = "0.16"

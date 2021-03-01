@@ -16,7 +16,7 @@ void main() {
     });
 
     test('Initial state should be empty', () {
-      expect(mediaBloc.state.tags.isEmpty, isTrue);
+      expect(mediaBloc.state.files.isEmpty, isTrue);
     });
 
     // var fetchedMedia = GroupedMediaFiles(tags: [MediaTagWithFiles(files: [], tag: MediaTag(name: "Test"))]);

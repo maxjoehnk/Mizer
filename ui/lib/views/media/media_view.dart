@@ -1,4 +1,3 @@
-import 'package:file_selector_platform_interface/file_selector_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,52 +9,12 @@ class MediaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<MediaBloc>().add(MediaEvent.Fetch);
-    return BlocBuilder<MediaBloc, GroupedMediaFiles>(
-        builder: (context, data) =>
-            ListView(children: data.tags.map((tag) => TagRow(tag)).toList()));
-  }
-}
-
-class TagRow extends StatelessWidget {
-  final MediaTagWithFiles tag;
-
-  TagRow(this.tag);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.black.withOpacity(0.2)),
-      padding: const EdgeInsets.all(8.0),
-      child: Column(children: [
-        TagTitle(tag.tag),
-        Wrap(
-          direction: Axis.horizontal,
-          children: this.tag.files.map((file) => MediaFileEntry(file)).toList(),
-        ),
-      ], crossAxisAlignment: CrossAxisAlignment.start),
-    );
-  }
-
-  // TODO: allow file upload
-  void _openFile(BuildContext context) async {
-    final List<XFile> files = await FileSelectorPlatform.instance.openFiles();
-  }
-}
-
-class TagTitle extends StatelessWidget {
-  final MediaTag tag;
-
-  const TagTitle(
-    this.tag, {
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(this.tag.name),
-    );
+    return BlocBuilder<MediaBloc, MediaFiles>(
+        builder: (context, data) => Wrap(
+              direction: Axis.horizontal,
+              children: data.files.map((file) => MediaFileEntry(file)).toList(),
+              crossAxisAlignment: WrapCrossAlignment.start,
+            ));
   }
 }
 
@@ -66,16 +25,22 @@ class MediaFileEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Tooltip(
+      message: this.file.name,
+      child: Card(
+          child: Container(
+        width: 200,
         child: Column(
-      children: [
-        MediaThumbnail(this.file),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(this.file.name),
+          children: [
+            MediaThumbnail(this.file),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(this.file.name, overflow: TextOverflow.ellipsis),
+            ),
+          ],
         ),
-      ],
-    ));
+      )),
+    );
   }
 }
 

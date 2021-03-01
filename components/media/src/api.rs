@@ -27,6 +27,7 @@ pub enum MediaServerCommand {
     ImportFile(MediaCreateModel, PathBuf, Sender<MediaDocument>),
     CreateTag(TagCreateModel, Sender<TagDocument>),
     GetTags(Sender<Vec<TagDocument>>),
+    GetMedia(Sender<Vec<MediaDocument>>),
 }
 
 #[derive(Debug, Clone)]

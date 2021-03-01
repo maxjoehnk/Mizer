@@ -1,110 +1,111 @@
 use crate::api::TagCreateModel;
 use crate::documents::*;
-use bson::{doc, from_bson, to_bson, Bson};
-use futures::prelude::*;
-use mongodb::{options::ClientOptions, Client, Collection};
-use serde::Serialize;
 
-// TODO: replace mongodb with in memory or in process db
 #[derive(Clone)]
 pub struct DataAccess {
-    client: Client,
+    db: sled::Db,
+    tags: sled::Tree,
+    media: sled::Tree,
 }
 
 impl DataAccess {
-    pub async fn new(url: &str) -> anyhow::Result<Self> {
-        let mut client_options = ClientOptions::parse(url).await?;
-        client_options.app_name = Some("Mizer Media Server".into());
+    pub fn new() -> anyhow::Result<Self> {
+        let db = sled::Config::new().create_new(true).temporary(true).open()?;
+        let tags = db.open_tree("tags")?;
+        let media = db.open_tree("media")?;
 
-        let client = Client::with_options(client_options)?;
-
-        Ok(DataAccess { client })
+        Ok(DataAccess { db, tags, media })
     }
 
-    pub async fn list_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
-        let cursor = self.tags_collection().find(None, None).await?;
-        let tags = cursor.try_collect::<Vec<_>>().await?;
-        let tags = tags
-            .into_iter()
-            .map(|document| from_bson(Bson::Document(document)))
-            .collect::<Result<_, _>>()?;
+    pub fn list_media(&self) -> anyhow::Result<Vec<MediaDocument>> {
+        let media = self.media.iter().values()
+            .map(|value| {
+                let value = value?;
+                let doc = serde_json::from_slice(&value)?;
+
+                Ok(doc)
+            })
+            .collect::<anyhow::Result<Vec<_>>>()?;
+
+        Ok(media)
+    }
+
+    pub fn list_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
+        let tags = self.tags.iter().values()
+            .map(|value| {
+                let value = value?;
+                let doc = serde_json::from_slice(&value)?;
+
+                Ok(doc)
+            })
+            .collect::<anyhow::Result<Vec<_>>>()?;
 
         Ok(tags)
     }
 
-    pub async fn add_tag<D: Into<TagCreateModel>>(
+    pub fn add_tag<D: Into<TagCreateModel>>(
         &self,
         document: D,
     ) -> anyhow::Result<TagDocument> {
         let tag_document = document.into();
-        let tag_document = tag_document.into();
-        let document = to_document(&tag_document)?;
-        self.tags_collection().insert_one(document, None).await?;
+        let tag_document: TagDocument = tag_document.into();
+        let id = tag_document.id.as_bytes();
+        let value = serde_json::to_vec(&tag_document)?;
+        self.tags.insert(id, value)?;
 
         Ok(tag_document)
     }
 
-    pub async fn add_media<D: Into<MediaDocument>>(
+    pub fn add_media<D: Into<MediaDocument>>(
         &self,
         document: D,
     ) -> anyhow::Result<MediaDocument> {
         let media_document = document.into();
-        self.insert_media(&media_document).await?;
-        self.update_tags(&media_document).await?;
+        self.insert_media(&media_document)?;
+        self.update_tags(&media_document)?;
 
         Ok(media_document)
     }
 
-    async fn insert_media(&self, document: &MediaDocument) -> anyhow::Result<()> {
-        let document = to_document(document)?;
-        self.media_collection().insert_one(document, None).await?;
+    fn insert_media(&self, document: &MediaDocument) -> anyhow::Result<()> {
+        let id = document.id.as_bytes();
+        let value = serde_json::to_vec(&document)?;
+        self.media.insert(id, value)?;
 
         Ok(())
     }
 
-    async fn update_tags(&self, document: &MediaDocument) -> anyhow::Result<()> {
+    fn update_tags(&self, document: &MediaDocument) -> anyhow::Result<()> {
+        let attached_media: AttachedMediaDocument = document.into();
         let ids = document
             .tags
             .iter()
-            .map(|t| t.id)
-            .map(|id| Ok(to_bson(&id)?))
-            .collect::<anyhow::Result<Vec<_>>>()?;
-        let document: AttachedMediaDocument = document.into();
-        let document = to_document(&document)?;
-        self.tags_collection()
-            .update_many(
-                doc! {
-                    "id": {
-                        "$in": ids
-                    }
-                },
-                doc! {
-                    "$push": {
-                        "media": document
-                    }
-                },
-                None,
-            )
-            .await?;
+            .map(|t| t.id);
+
+        for id in ids {
+            let id = id.as_bytes();
+            self.update_tag_document(id, attached_media.clone())?;
+        }
 
         Ok(())
     }
 
-    fn tags_collection(&self) -> Collection {
-        let db = self.client.database("media-server");
-        db.collection("tags")
-    }
+    fn update_tag_document(&self, id: &[u8], document: AttachedMediaDocument) -> anyhow::Result<()> {
+        self.tags.update_and_fetch(id, move |tags| {
+            let document = document.clone();
+            if let Some(tags) = tags {
+                let tags = serde_json::from_slice::<TagDocument>(tags);
+                if let Ok(mut tags) = tags {
+                    tags.media.push(document);
 
-    fn media_collection(&self) -> Collection {
-        let db = self.client.database("media-server");
-        db.collection("media")
-    }
-}
-
-fn to_document<T: Serialize>(document: &T) -> anyhow::Result<bson::Document> {
-    if let Bson::Document(document) = to_bson(document)? {
-        Ok(document)
-    } else {
-        anyhow::bail!("not an document")
+                    serde_json::to_vec(&tags).ok()
+                }else {
+                    None
+                }
+            }else {
+                None
+            }
+        })?;
+        Ok(())
     }
 }

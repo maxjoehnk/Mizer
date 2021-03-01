@@ -4,6 +4,7 @@ use uuid::Uuid;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MediaDocument {
     pub id: Uuid,
+    pub path: String,
     pub name: String,
     pub tags: Vec<AttachedTag>,
     pub content_type: String,

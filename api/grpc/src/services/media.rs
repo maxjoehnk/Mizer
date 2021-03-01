@@ -1,9 +1,10 @@
-use crate::protos::{CreateMediaTag, GetMediaTags, GroupedMediaFiles, MediaFile, MediaTag};
+use crate::protos::{CreateMediaTag, GetMediaTags, GroupedMediaFiles, MediaFile, MediaTag, MediaFiles, GetMediaRequest};
 use crate::protos::{MediaApi, MediaTagWithFiles};
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use mizer_media::api::{MediaServerApi, MediaServerCommand, TagCreateModel};
 use mizer_media::documents::{AttachedMediaDocument, AttachedTag, MediaDocument, TagDocument};
 use protobuf::SingularPtrField;
+use std::path::Path;
 
 pub struct MediaApiImpl {
     api: MediaServerApi,
@@ -62,6 +63,28 @@ impl MediaApi for MediaApiImpl {
 
         Ok(())
     }
+
+    fn get_media(&self, o: ServerHandlerContext, req: ServerRequestSingle<GetMediaRequest>, resp: ServerResponseUnarySink<MediaFiles>) -> grpc::Result<()> {
+        let api = self.api.clone();
+        o.spawn(async move {
+            let (sender, receiver) = MediaServerApi::open_channel();
+            let cmd = MediaServerCommand::GetMedia(sender);
+            api.send_command(cmd);
+
+            let files = receiver.recv_async().await.unwrap();
+            let files = files
+                .into_iter()
+                .map(MediaFile::from)
+                .collect::<Vec<_>>();
+
+            resp.finish(MediaFiles {
+                files: files.into(),
+                ..Default::default()
+            })
+        });
+
+        Ok(())
+    }
 }
 
 impl From<CreateMediaTag> for TagCreateModel {
@@ -82,6 +105,9 @@ impl From<TagDocument> for MediaTag {
 
 impl From<MediaDocument> for MediaFile {
     fn from(media: MediaDocument) -> Self {
+        let thumbnail_path = Path::new(&media.name).with_extension("png");
+        let thumbnail_path = thumbnail_path.as_os_str().to_str().unwrap();
+        let content_url = format!("http://localhost:50050/media/{}", media.name);
         MediaFile {
             id: media.id.to_string(),
             name: media.name,
@@ -91,8 +117,8 @@ impl From<MediaDocument> for MediaFile {
                 .map(MediaTag::from)
                 .collect::<Vec<_>>()
                 .into(),
-            contentUrl: format!("http://localhost:50050/media/{}.mp4", media.id),
-            thumbnailUrl: format!("http://localhost:50050/thumbnails/{}.png", media.id),
+            contentUrl: content_url,
+            thumbnailUrl: format!("http://localhost:50050/thumbnails/{}", thumbnail_path),
             ..Default::default()
         }
     }

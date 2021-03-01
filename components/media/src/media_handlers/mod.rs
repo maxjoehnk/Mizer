@@ -37,8 +37,14 @@ pub trait MediaHandler {
         storage: &FileStorage,
         content_type: &str,
     ) -> anyhow::Result<()> {
-        self.generate_thumbnail(&file_path, storage, content_type)?;
-        self.process_file(&file_path, storage)?;
+        let thumbnail_path = storage.get_thumbnail_path(&file_path);
+        if !thumbnail_path.exists() {
+            self.generate_thumbnail(&file_path, storage, content_type)?;
+        }
+        let media_path = storage.get_media_path(&file_path);
+        if !media_path.exists() {
+            self.process_file(&file_path, storage)?;
+        }
 
         Ok(())
     }

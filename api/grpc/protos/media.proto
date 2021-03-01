@@ -5,9 +5,12 @@ package mizer;
 service MediaApi {
   rpc CreateTag (CreateMediaTag) returns (MediaTag);
   rpc GetTagsWithMedia (GetMediaTags) returns (GroupedMediaFiles);
+  rpc GetMedia (GetMediaRequest) returns (MediaFiles);
 }
 
 message GetMediaTags {}
+
+message GetMediaRequest {}
 
 message CreateMediaTag {
   string name = 1;
@@ -20,6 +23,10 @@ message MediaTags {
 message MediaTag {
   string id = 1;
   string name = 2;
+}
+
+message MediaFiles {
+  repeated MediaFile files = 1;
 }
 
 message MediaFile {

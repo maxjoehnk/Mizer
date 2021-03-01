@@ -9,6 +9,10 @@ const GetMediaTags$json = const {
   '1': 'GetMediaTags',
 };
 
+const GetMediaRequest$json = const {
+  '1': 'GetMediaRequest',
+};
+
 const CreateMediaTag$json = const {
   '1': 'CreateMediaTag',
   '2': const [
@@ -28,6 +32,13 @@ const MediaTag$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+const MediaFiles$json = const {
+  '1': 'MediaFiles',
+  '2': const [
+    const {'1': 'files', '3': 1, '4': 3, '5': 11, '6': '.mizer.MediaFile', '10': 'files'},
   ],
 };
 

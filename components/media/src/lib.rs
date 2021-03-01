@@ -3,7 +3,7 @@ use crate::data_access::DataAccess;
 use crate::documents::MediaDocument;
 use crate::file_storage::FileStorage;
 use crate::media_handlers::*;
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 use tokio::io::AsyncReadExt;
 use tokio::stream::StreamExt;
 use uuid::Uuid;
@@ -26,7 +26,7 @@ pub struct MediaServer {
 
 impl MediaServer {
     pub async fn new() -> anyhow::Result<Self> {
-        let context = DataAccess::new("mongodb://localhost:27017").await?;
+        let context = DataAccess::new()?;
         let file_storage = FileStorage::new()?;
         let import_file = ImportFileHandler::new(context.clone(), file_storage.clone());
 
@@ -54,12 +54,32 @@ impl MediaServer {
                         resp.send(document).unwrap();
                     }
                     MediaServerCommand::CreateTag(model, resp) => {
-                        let document = self.db.add_tag(model).await.unwrap();
-                        resp.send(document).unwrap();
+                        match self.db.add_tag(model) {
+                            Ok(document) => resp.send(document).unwrap(),
+                            Err(err) => {
+                                log::error!("Error creating tag: {:?}", err);
+                            },
+                        }
                     }
                     MediaServerCommand::GetTags(resp) => {
-                        let documents = self.db.list_tags().await.unwrap();
-                        resp.send(documents).unwrap();
+                        match self.db.list_tags() {
+                            Ok(documents) => {
+                                resp.send(documents).unwrap();
+                            }
+                            Err(err) => {
+                                log::error!("Error listing tags: {:?}", err);
+                            }
+                        }
+                    }
+                    MediaServerCommand::GetMedia(resp) => {
+                        match self.db.list_media() {
+                            Ok(documents) => {
+                                resp.send(documents).unwrap();
+                            }
+                            Err(err) => {
+                                log::error!("Error listing tags: {:?}", err);
+                            }
+                        }
                     }
                 }
             }
@@ -125,11 +145,11 @@ impl ImportFileHandler {
             .db
             .add_media(MediaDocument {
                 id,
+                path: file_path.to_str().unwrap().to_string(),
                 content_type: content_type.to_string(),
                 name: model.name,
                 tags: model.tags,
-            })
-            .await?;
+            })?;
 
         Ok(media)
     }

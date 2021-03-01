@@ -24,6 +24,11 @@ class MediaApiClient extends $grpc.Client {
           ($0.GetMediaTags value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.GroupedMediaFiles.fromBuffer(value));
+  static final _$getMedia =
+      $grpc.ClientMethod<$0.GetMediaRequest, $0.MediaFiles>(
+          '/mizer.MediaApi/GetMedia',
+          ($0.GetMediaRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.MediaFiles.fromBuffer(value));
 
   MediaApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -39,6 +44,11 @@ class MediaApiClient extends $grpc.Client {
       $0.GetMediaTags request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$getTagsWithMedia, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.MediaFiles> getMedia($0.GetMediaRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$getMedia, request, options: options);
   }
 }
 
@@ -60,6 +70,13 @@ abstract class MediaApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetMediaTags.fromBuffer(value),
         ($0.GroupedMediaFiles value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetMediaRequest, $0.MediaFiles>(
+        'GetMedia',
+        getMedia_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.GetMediaRequest.fromBuffer(value),
+        ($0.MediaFiles value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.MediaTag> createTag_Pre(
@@ -72,8 +89,15 @@ abstract class MediaApiServiceBase extends $grpc.Service {
     return getTagsWithMedia(call, await request);
   }
 
+  $async.Future<$0.MediaFiles> getMedia_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.GetMediaRequest> request) async {
+    return getMedia(call, await request);
+  }
+
   $async.Future<$0.MediaTag> createTag(
       $grpc.ServiceCall call, $0.CreateMediaTag request);
   $async.Future<$0.GroupedMediaFiles> getTagsWithMedia(
       $grpc.ServiceCall call, $0.GetMediaTags request);
+  $async.Future<$0.MediaFiles> getMedia(
+      $grpc.ServiceCall call, $0.GetMediaRequest request);
 }

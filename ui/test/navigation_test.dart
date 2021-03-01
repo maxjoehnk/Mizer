@@ -44,7 +44,7 @@ void main() {
     });
     testNavigation('Media', Icons.perm_media_outlined, MediaView, bloc: (_) {
       MediaBloc bloc = MockMediaBloc();
-      when(bloc.state).thenReturn(GroupedMediaFiles());
+      when(bloc.state).thenReturn(MediaFiles());
 
       return bloc;
     });

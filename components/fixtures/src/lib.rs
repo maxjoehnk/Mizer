@@ -21,7 +21,7 @@ impl Module for FixtureModule {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
         let injector = runtime.injector();
         injector.provide(FixtureLibrary::new(self.0));
-        injector.provide(FixtureManager::new());
+        injector.provide(self.1);
         runtime.add_processor(FixtureProcessor.into());
         Ok(())
     }

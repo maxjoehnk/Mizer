@@ -23,6 +23,7 @@ impl FixtureManager {
         channel: u8,
         universe: Option<u16>,
     ) {
+        log::trace!("Adding fixture {}", fixture_id);
         let fixture = Fixture::new(
             fixture_id.clone(),
             definition,

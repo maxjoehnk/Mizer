@@ -10,17 +10,27 @@ const double BASE_HEIGHT = 225;
 class BaseNode extends StatelessWidget {
   final Node node;
   final Widget child;
+  final bool selected;
+  final Function onSelect;
 
-  BaseNode(this.node, {this.child});
+  BaseNode(this.node, {this.child, this.selected, this.onSelect});
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-        children: [BaseNodeView(node, child: child), NodeConnectors(node)]);
+    return Stack(children: [
+      BaseNodeView(node,
+          child: child, selected: this.selected, onSelect: this.onSelect),
+      NodeConnectors(node)
+    ]);
   }
 
-  factory BaseNode.fromNode(Node node) {
-    return BaseNode(node, child: getChildForNode(node));
+  factory BaseNode.fromNode(Node node, {Function onSelect, bool selected}) {
+    return BaseNode(
+      node,
+      child: getChildForNode(node),
+      onSelect: onSelect,
+      selected: selected,
+    );
   }
 }
 
@@ -29,10 +39,14 @@ class BaseNodeView extends StatelessWidget {
     this.node, {
     Key key,
     @required this.child,
+    this.selected = false,
+    this.onSelect,
   }) : super(key: key);
 
   final Node node;
   final Widget child;
+  final bool selected;
+  final Function onSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +60,49 @@ class BaseNodeView extends StatelessWidget {
         onSecondaryTap: () {
           log("node context menu");
         },
-        child: Card(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+        onTap: this.onSelect,
+        child: Container(
+          decoration: ShapeDecoration(
+            color: Colors.grey.shade800,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+            ),
+            shadows: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 2,
+                  offset: Offset(4, 4))
+            ],
+          ),
+          foregroundDecoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            side: selected
+                ? BorderSide(
+                    color: Colors.white,
+                    style: BorderStyle.solid,
+                    width: 2,
+                  )
+                : BorderSide(style: BorderStyle.none, width: 2),
+          )),
           child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(this.node.path, style: textTheme.headline6),
-                Text(this.node.type.name,
-                    style:
-                        textTheme.subtitle2.copyWith(color: theme.hintColor)),
+                Container(
+                  decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(4))),
+                    color: Colors.green,
+                  ),
+                  clipBehavior: Clip.none,
+                  padding: const EdgeInsets.all(4),
+                  child: Text(this.node.path, style: textTheme.bodyText2),
+                ),
                 this.child,
               ]),
-        )),
+        ),
       ),
     );
   }
@@ -132,7 +175,8 @@ class NodePort extends StatelessWidget {
         message: port.protocol.toString(),
         child: DecoratedBox(
           decoration: ShapeDecoration(
-              gradient: RadialGradient(colors: [color.shade600, color.shade500]),
+              gradient:
+                  RadialGradient(colors: [color.shade600, color.shade500]),
               shadows: [
                 BoxShadow(
                     color: Colors.black.withOpacity(0.1),

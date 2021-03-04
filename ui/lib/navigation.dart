@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/views/connections/connections_view.dart';
@@ -13,7 +14,7 @@ List<Route> routes = [
   Route(() => FetchNodesView(), Icons.account_tree_outlined, "Nodes"),
   Route(() => FixturesView(), MdiIcons.spotlight, "Fixtures"),
   Route(() => MediaView(), Icons.perm_media_outlined, "Media"),
-  Route(() => ConnectionsView(), Icons.device_hub, "Connections"),
+  Route(() => ConnectionsView(), Icons.device_hub, "Devices"),
   Route(() => SessionView(), Icons.mediation, "Session"),
   Route(() => SettingsView(), Icons.settings, "Settings"),
 ];
@@ -35,21 +36,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
-          children: [
-            NavigationRail(
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                  _updateWidget();
-                });
-              },
-              labelType: NavigationRailLabelType.selected,
-              destinations: routes.map((route) => route.toRail()).toList(),
-            ),
-            Expanded(child: _currentWidget)
-          ],
-        ));
+      children: [
+        NavigationBar(
+          selectedIndex: _selectedIndex,
+          onSelect: (index) {
+            setState(() {
+              _selectedIndex = index;
+              _updateWidget();
+            });
+          },
+          routes: routes,
+        ),
+        Expanded(child: _currentWidget)
+      ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ));
   }
 
   void _updateWidget() {
@@ -63,11 +64,75 @@ class Route {
   final String label;
 
   Route(this.view, this.icon, this.label);
-
-  NavigationRailDestination toRail() {
-    return NavigationRailDestination(
-        icon: Icon(this.icon), label: Text(this.label));
-  }
 }
 
 typedef WidgetFunction = Widget Function();
+
+class NavigationBar extends StatelessWidget {
+  final List<Route> routes;
+  final int selectedIndex;
+  final Function(int) onSelect;
+
+  NavigationBar({this.routes, this.selectedIndex, this.onSelect});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.grey.shade800,
+        child: Column(
+            children: this
+                .routes
+                .mapEnumerated((route, i) => NavigationItem(
+                    route, this.selectedIndex == i, () => this.onSelect(i)))
+                .toList()));
+  }
+}
+
+extension MapWithIndex<T> on List<T> {
+  List<R> mapEnumerated<R>(R Function(T, int i) callback) {
+    return this
+        .asMap()
+        .map((key, value) => MapEntry(key, callback(value, key)))
+        .values
+        .toList();
+  }
+}
+
+class NavigationItem extends StatelessWidget {
+  final Route route;
+  final bool selected;
+  final Function onSelect;
+
+  NavigationItem(this.route, this.selected, this.onSelect);
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var textTheme = theme.textTheme;
+    var color = this.selected ? theme.primaryColor : theme.hintColor;
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: this.onSelect,
+      child: Container(
+        width: 64,
+        height: 64,
+        color: this.selected ? Colors.black12 : null,
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        child: Column(
+          children: [
+            Icon(
+              this.route.icon,
+              color: color,
+              size: 16,
+            ),
+            Text(this.route.label,
+                style: textTheme.subtitle2.copyWith(color: color)),
+          ],
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+        ),
+      ),
+    );
+  }
+}

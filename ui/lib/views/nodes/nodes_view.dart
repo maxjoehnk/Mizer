@@ -50,10 +50,17 @@ class BackgroundPainter extends CustomPainter {
   }
 }
 
-class NodesViewer extends StatelessWidget {
+class NodesViewer extends StatefulWidget {
   final Nodes nodes;
 
   NodesViewer(this.nodes);
+
+  @override
+  _NodesViewerState createState() => _NodesViewerState();
+}
+
+class _NodesViewerState extends State<NodesViewer> {
+  Node selectedNode;
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +70,20 @@ class NodesViewer extends StatelessWidget {
         padding: const EdgeInsets.all(MULTIPLIER),
         child: NodeSelectionContainer(
           child: CustomMultiChildLayout(
-              delegate: NodesLayoutDelegate(this.nodes),
-              children: this.nodes.nodes.map((node) => LayoutId(id: node.path, child: BaseNode.fromNode(node))).toList()),
-          onSelection: (nodeType, position) {
+              delegate: NodesLayoutDelegate(this.widget.nodes),
+              children: this
+                  .widget
+                  .nodes
+                  .nodes
+                  .map((node) => LayoutId(
+                      id: node.path,
+                      child: BaseNode.fromNode(
+                        node,
+                        onSelect: () => setState(() => selectedNode = node),
+                        selected: node == selectedNode,
+                      )))
+                  .toList()),
+          onSelectNewNode: (nodeType, position) {
             log("adding new node with type $nodeType at ${position / MULTIPLIER}");
             context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position / MULTIPLIER));
           },

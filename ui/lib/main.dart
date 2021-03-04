@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
     return StateProvider(channel,
         child: MaterialApp(
           title: 'Mizer',
-          theme: ThemeData.dark(),
+          darkTheme: ThemeData.dark().copyWith(primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent),
           home: Home(),
           themeMode: ThemeMode.dark,
         ));

@@ -6,6 +6,7 @@ import 'package:mizer/protos/fixtures.pb.dart';
 class FixturesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    context.read<FixturesBloc>().add(FixturesEvent.Fetch);
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return DataTable(
           columns: const [

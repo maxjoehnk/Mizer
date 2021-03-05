@@ -133,7 +133,8 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.grey.shade800,
-        child: Column(
+        width: 64,
+        child: ListView(
             children: this
                 .routes
                 .mapEnumerated((route, i) =>
@@ -170,7 +171,6 @@ class NavigationItem extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: this.onSelect,
       child: Container(
-        width: 64,
         height: 64,
         color: this.selected ? Colors.black12 : null,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),

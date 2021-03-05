@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
@@ -24,6 +25,47 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class OpenViewIntent extends Intent {
+  final int view;
+
+  const OpenViewIntent(this.view);
+}
+
+Map<LogicalKeySet, Intent> shortcuts = {
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit1,
+  ): const OpenViewIntent(0),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit2,
+  ): const OpenViewIntent(1),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit3,
+  ): const OpenViewIntent(2),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit4,
+  ): const OpenViewIntent(3),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit5,
+  ): const OpenViewIntent(4),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit6,
+  ): const OpenViewIntent(5),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit7,
+  ): const OpenViewIntent(6),
+  LogicalKeySet(
+    LogicalKeyboardKey.alt,
+    LogicalKeyboardKey.digit8,
+  ): const OpenViewIntent(7),
+};
+
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   Widget _currentWidget;
@@ -35,26 +77,38 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(
-      children: [
-        NavigationBar(
-          selectedIndex: _selectedIndex,
-          onSelect: (index) {
-            setState(() {
-              _selectedIndex = index;
-              _updateWidget();
-            });
-          },
-          routes: routes,
-        ),
-        Expanded(child: _currentWidget)
-      ],
-      crossAxisAlignment: CrossAxisAlignment.start,
-    ));
+        body: Shortcuts(
+          shortcuts: shortcuts,
+          child: Actions(
+            actions: <Type, CallbackAction>{
+              OpenViewIntent: CallbackAction<OpenViewIntent>(
+                onInvoke: (intent) => this._selectView(intent.view),
+              )
+            },
+            child: Focus(autofocus: true, child: Row(
+              children: [
+                NavigationBar(
+                  selectedIndex: _selectedIndex,
+                  onSelect: this._selectView,
+                  routes: routes,
+                ),
+                Expanded(child: _currentWidget)
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),),
+          ),
+        ));
   }
 
   void _updateWidget() {
     _currentWidget = routes[_selectedIndex].view();
+  }
+
+  void _selectView(int index) {
+    setState(() {
+      _selectedIndex = index;
+      _updateWidget();
+    });
   }
 }
 
@@ -82,7 +136,8 @@ class NavigationBar extends StatelessWidget {
         child: Column(
             children: this
                 .routes
-                .mapEnumerated((route, i) => NavigationItem(
+                .mapEnumerated((route, i) =>
+                NavigationItem(
                     route, this.selectedIndex == i, () => this.onSelect(i)))
                 .toList()));
   }

@@ -16,7 +16,7 @@ impl SessionApi for SessionApiImpl {
     fn get_session(
         &self,
         _: ServerHandlerContext,
-        req: ServerRequestSingle<SessionRequest>,
+        _: ServerRequestSingle<SessionRequest>,
         mut resp: ServerResponseSink<Session>,
     ) -> grpc::Result<()> {
         let mut session = Session::new();
@@ -49,9 +49,9 @@ impl SessionApi for SessionApiImpl {
 
     fn join_session(
         &self,
-        o: ServerHandlerContext,
-        req: ServerRequestSingle<ClientAnnouncement>,
-        resp: ServerResponseUnarySink<Session>,
+        _: ServerHandlerContext,
+        _: ServerRequestSingle<ClientAnnouncement>,
+        _: ServerResponseUnarySink<Session>,
     ) -> grpc::Result<()> {
         unimplemented!()
     }

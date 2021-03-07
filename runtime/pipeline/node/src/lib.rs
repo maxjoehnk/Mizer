@@ -15,7 +15,7 @@ mod introspection;
 pub trait PipelineNode: Send + Sync {
     fn details(&self) -> NodeDetails;
 
-    fn introspect_port(&self, port: &PortId, injector: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
         log::trace!("Returning default port metadata for port {}", port);
         Default::default()
     }

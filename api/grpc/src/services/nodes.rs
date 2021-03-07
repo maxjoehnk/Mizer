@@ -22,7 +22,7 @@ impl NodesApi for NodesApiImpl {
     fn get_nodes(
         &self,
         _: ServerHandlerContext,
-        req: ServerRequestSingle<NodesRequest>,
+        _: ServerRequestSingle<NodesRequest>,
         resp: ServerResponseUnarySink<Nodes>,
     ) -> grpc::Result<()> {
         let mut res = Nodes::new();
@@ -59,8 +59,8 @@ impl NodesApi for NodesApiImpl {
     fn add_node(
         &self,
         _: ServerHandlerContext,
-        req: ServerRequestSingle<AddNodeRequest>,
-        resp: ServerResponseUnarySink<Node>,
+        _: ServerRequestSingle<AddNodeRequest>,
+        _: ServerResponseUnarySink<Node>,
     ) -> grpc::Result<()> {
         todo!()
         // let node = self.pipeline_view.add_node(req.message).unwrap();
@@ -140,7 +140,7 @@ impl From<Node_NodeType> for NodeType {
 impl From<NodeDescriptor<'_>> for Node {
     fn from(descriptor: NodeDescriptor<'_>) -> Self {
         let node_type = descriptor.node_type();
-        let mut node = Node {
+        let node = Node {
             path: descriptor.path.to_string(),
             field_type: node_type.into(),
             designer: SingularPtrField::some(descriptor.designer.into()),

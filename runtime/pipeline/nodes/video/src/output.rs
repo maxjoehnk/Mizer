@@ -58,7 +58,7 @@ impl ProcessingNode for VideoOutputNode {
 }
 
 impl GstreamerNode for VideoOutputState {
-    fn link_to(&self, _: &dyn GstreamerNode) {
+    fn link_to(&self, _: &dyn GstreamerNode) -> anyhow::Result<()> {
         unimplemented!()
     }
 

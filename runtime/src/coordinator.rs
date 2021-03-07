@@ -4,12 +4,10 @@ use mizer_clock::{Clock, SystemClock};
 use mizer_execution_planner::*;
 use mizer_module::Runtime;
 use mizer_node::*;
-use mizer_nodes::Node;
 use mizer_pipeline::*;
 use mizer_processing::*;
 use mizer_project_files::{NodeConfig, Project};
 use pinboard::NonEmptyPinboard;
-use std::cell::RefCell;
 use std::collections::HashMap;
 use std::io::Write;
 use std::sync::Arc;
@@ -157,12 +155,12 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.planner.add_link(link.clone());
         self.plan();
 
-        self.pipeline.connect_nodes(link, source_port, target_port);
+        self.pipeline.connect_nodes(link, source_port, target_port)?;
 
         Ok(())
     }
 
-    fn get_ports(&self, mut link: &NodeLink) -> anyhow::Result<(PortMetadata, PortMetadata)> {
+    fn get_ports(&self, link: &NodeLink) -> anyhow::Result<(PortMetadata, PortMetadata)> {
         let source_node = self.nodes.get(&link.source).ok_or_else(|| {
             anyhow::anyhow!("trying to add link for unknown node: {}", &link.source)
         })?;

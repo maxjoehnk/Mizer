@@ -90,8 +90,9 @@ impl VideoTransformState {
 }
 
 impl GstreamerNode for VideoTransformState {
-    fn link_to(&self, target: &dyn GstreamerNode) {
-        self.node.link(target.sink());
+    fn link_to(&self, target: &dyn GstreamerNode) -> anyhow::Result<()> {
+        self.node.link(target.sink())?;
+        Ok(())
     }
 
     fn sink(&self) -> &Element {

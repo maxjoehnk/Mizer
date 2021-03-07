@@ -16,7 +16,7 @@ impl MediaHandler for SvgHandler {
         &self,
         file: P,
         storage: &FileStorage,
-        content_type: &str,
+        _content_type: &str,
     ) -> anyhow::Result<()> {
         let tree = usvg::Tree::from_file(&file, &Default::default())?;
         let mut pixmap = Pixmap::new(THUMBNAIL_SIZE, THUMBNAIL_SIZE).unwrap();

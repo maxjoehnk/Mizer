@@ -1,9 +1,8 @@
 use dashmap::mapref::one::Ref;
 use dashmap::DashMap;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode};
-use pinboard::{NonEmptyPinboard, Pinboard};
+use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
-use std::ops::Deref;
 use std::sync::Arc;
 
 pub struct RuntimeApi {

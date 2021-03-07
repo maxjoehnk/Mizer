@@ -2,7 +2,7 @@ use crate::ports::{NodeReceivers, NodeSenders};
 use crate::PipelineContext;
 use mizer_clock::ClockFrame;
 use mizer_node::*;
-use mizer_ports::{PortId, PortValue};
+use mizer_ports::PortValue;
 use mizer_processing::Injector;
 use mizer_protocol_laser::LaserFrame;
 use std::any::Any;
@@ -54,9 +54,11 @@ impl PipelineWorker {
         link: NodeLink,
         source_meta: PortMetadata,
         target_meta: PortMetadata,
-    ) {
+    ) -> anyhow::Result<()> {
         self.add_dependency(link.source.clone(), link.target.clone());
-        self.connect_ports(link, source_meta, target_meta);
+        self.connect_ports(link, source_meta, target_meta)?;
+
+        Ok(())
     }
 
     fn add_dependency(&mut self, node: NodePath, dependency: NodePath) {
@@ -72,7 +74,7 @@ impl PipelineWorker {
         link: NodeLink,
         source_meta: PortMetadata,
         target_meta: PortMetadata,
-    ) {
+    ) -> anyhow::Result<()> {
         match link.port_type {
             PortType::Single => self.connect_memory_ports::<f64>(link, source_meta, target_meta),
             PortType::Multi => {
@@ -81,9 +83,10 @@ impl PipelineWorker {
             PortType::Laser => {
                 self.connect_memory_ports::<Vec<LaserFrame>>(link, source_meta, target_meta)
             }
-            PortType::Gstreamer => self.connect_gst_ports(link),
+            PortType::Gstreamer => self.connect_gst_ports(link)?,
             _ => unimplemented!(),
         }
+        Ok(())
     }
 
     fn connect_memory_ports<V: PortValue + Default + 'static>(
@@ -109,14 +112,16 @@ impl PipelineWorker {
         }
     }
 
-    fn connect_gst_ports(&self, link: NodeLink) {
+    fn connect_gst_ports(&self, link: NodeLink) -> anyhow::Result<()> {
         let source = self.states.get(&link.source).expect("invalid source path");
         let target = self.states.get(&link.target).expect("invalid target path");
 
         let gst_source = self.get_gst_node(source);
         let gst_target = self.get_gst_node(target);
 
-        gst_source.link_to(gst_target);
+        gst_source.link_to(gst_target)?;
+
+        Ok(())
     }
 
     fn get_gst_node<'a>(&self, node: &'a Box<dyn Any>) -> &'a dyn mizer_video_nodes::GstreamerNode {

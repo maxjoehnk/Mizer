@@ -17,7 +17,7 @@ impl FixturesApi for FixturesApiImpl {
     fn get_fixtures(
         &self,
         _: ServerHandlerContext,
-        req: ServerRequestSingle<GetFixturesRequest>,
+        _: ServerRequestSingle<GetFixturesRequest>,
         resp: ServerResponseUnarySink<Fixtures>,
     ) -> grpc::Result<()> {
         let mut fixtures = Fixtures::new();

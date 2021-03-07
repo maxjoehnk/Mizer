@@ -40,7 +40,7 @@ impl MediaApi for MediaApiImpl {
     fn get_tags_with_media(
         &self,
         o: ServerHandlerContext,
-        req: ServerRequestSingle<GetMediaTags>,
+        _: ServerRequestSingle<GetMediaTags>,
         resp: ServerResponseUnarySink<GroupedMediaFiles>,
     ) -> grpc::Result<()> {
         let api = self.api.clone();
@@ -64,7 +64,7 @@ impl MediaApi for MediaApiImpl {
         Ok(())
     }
 
-    fn get_media(&self, o: ServerHandlerContext, req: ServerRequestSingle<GetMediaRequest>, resp: ServerResponseUnarySink<MediaFiles>) -> grpc::Result<()> {
+    fn get_media(&self, o: ServerHandlerContext, _: ServerRequestSingle<GetMediaRequest>, resp: ServerResponseUnarySink<MediaFiles>) -> grpc::Result<()> {
         let api = self.api.clone();
         o.spawn(async move {
             let (sender, receiver) = MediaServerApi::open_channel();

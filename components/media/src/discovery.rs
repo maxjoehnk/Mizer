@@ -87,7 +87,7 @@ impl MediaWalker {
 #[cfg(test)]
 mod tests {
     use super::MediaWalker;
-    use std::path::{Path, PathBuf};
+    use std::path::Path;
     use test_case::test_case;
 
     #[test_case("examples/media/audio/file_example_MP3_5MG.mp3")]

@@ -71,17 +71,14 @@ pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
             fixture_manager,
             media_server_api.clone(),
         )?)
-    }else {
+    } else {
         None
     };
     if !flags.disable_media_api {
         mizer_media::http_api::start(media_server_api)?;
     }
 
-    Ok(Mizer {
-        runtime,
-        grpc,
-    })
+    Ok(Mizer { runtime, grpc })
 }
 
 pub struct Mizer {

@@ -1,5 +1,5 @@
-use gstreamer::{Element, ElementFactory};
 use gstreamer::prelude::*;
+use gstreamer::{Element, ElementFactory};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -32,7 +32,8 @@ impl PipelineNode for VideoTransformNode {
                 direction: PortDirection::Input,
                 ..Default::default()
             }),
-            "rotate-x" | "rotate-y" | "rotate-z" | "translate-x" | "translate-y" | "translate-z" | "scale-x" | "scale-y" => Some(PortMetadata {
+            "rotate-x" | "rotate-y" | "rotate-z" | "translate-x" | "translate-y"
+            | "translate-z" | "scale-x" | "scale-y" => Some(PortMetadata {
                 port_type: PortType::Single,
                 direction: PortDirection::Input,
                 ..Default::default()

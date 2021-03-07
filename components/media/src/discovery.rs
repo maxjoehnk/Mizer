@@ -9,7 +9,7 @@ const SUPPORTED_EXTENSIONS: [&str; 13] = [
     // Audio
     "mp3", "wav", // Image
     "jpg", "jpeg", "png", "tiff", "webp", // Vector
-    "svg", // Video
+    "svg",  // Video
     "avi", "mov", "mp4", "webm", "wmv",
 ];
 

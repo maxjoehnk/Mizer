@@ -3,7 +3,7 @@ use crate::data_access::DataAccess;
 use crate::documents::MediaDocument;
 use crate::file_storage::FileStorage;
 use crate::media_handlers::*;
-use std::path::{Path};
+use std::path::Path;
 use tokio::io::AsyncReadExt;
 use tokio::stream::StreamExt;
 use uuid::Uuid;
@@ -53,34 +53,28 @@ impl MediaServer {
                             .unwrap();
                         resp.send(document).unwrap();
                     }
-                    MediaServerCommand::CreateTag(model, resp) => {
-                        match self.db.add_tag(model) {
-                            Ok(document) => resp.send(document).unwrap(),
-                            Err(err) => {
-                                log::error!("Error creating tag: {:?}", err);
-                            },
+                    MediaServerCommand::CreateTag(model, resp) => match self.db.add_tag(model) {
+                        Ok(document) => resp.send(document).unwrap(),
+                        Err(err) => {
+                            log::error!("Error creating tag: {:?}", err);
                         }
-                    }
-                    MediaServerCommand::GetTags(resp) => {
-                        match self.db.list_tags() {
-                            Ok(documents) => {
-                                resp.send(documents).unwrap();
-                            }
-                            Err(err) => {
-                                log::error!("Error listing tags: {:?}", err);
-                            }
+                    },
+                    MediaServerCommand::GetTags(resp) => match self.db.list_tags() {
+                        Ok(documents) => {
+                            resp.send(documents).unwrap();
                         }
-                    }
-                    MediaServerCommand::GetMedia(resp) => {
-                        match self.db.list_media() {
-                            Ok(documents) => {
-                                resp.send(documents).unwrap();
-                            }
-                            Err(err) => {
-                                log::error!("Error listing tags: {:?}", err);
-                            }
+                        Err(err) => {
+                            log::error!("Error listing tags: {:?}", err);
                         }
-                    }
+                    },
+                    MediaServerCommand::GetMedia(resp) => match self.db.list_media() {
+                        Ok(documents) => {
+                            resp.send(documents).unwrap();
+                        }
+                        Err(err) => {
+                            log::error!("Error listing tags: {:?}", err);
+                        }
+                    },
                 }
             }
         });
@@ -141,15 +135,13 @@ impl ImportFileHandler {
             anyhow::bail!("unsupported file")
         };
 
-        let media = self
-            .db
-            .add_media(MediaDocument {
-                id,
-                path: file_path.to_str().unwrap().to_string(),
-                content_type: content_type.to_string(),
-                name: model.name,
-                tags: model.tags,
-            })?;
+        let media = self.db.add_media(MediaDocument {
+            id,
+            path: file_path.to_str().unwrap().to_string(),
+            content_type: content_type.to_string(),
+            name: model.name,
+            tags: model.tags,
+        })?;
 
         Ok(media)
     }

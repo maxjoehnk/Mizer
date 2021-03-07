@@ -14,8 +14,7 @@ pub struct RuntimeApi {
 impl RuntimeApi {
     pub fn nodes(&self) -> Vec<NodeDescriptor> {
         let designer = self.designer.read();
-        self
-            .nodes
+        self.nodes
             .iter()
             .map(|entry| entry.key().clone())
             .map(|path| {

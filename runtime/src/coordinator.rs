@@ -155,7 +155,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.planner.add_link(link.clone());
         self.plan();
 
-        self.pipeline.connect_nodes(link, source_port, target_port)?;
+        self.pipeline
+            .connect_nodes(link, source_port, target_port)?;
 
         Ok(())
     }
@@ -167,10 +168,24 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let target_node = self.nodes.get(&link.target).ok_or_else(|| {
             anyhow::anyhow!("trying to add link for unknown node: {}", &link.target)
         })?;
-        let source_port = source_node.introspect_port(&link.source_port, &self.injector)
-            .ok_or_else(|| anyhow::anyhow!("Unknown port '{}' on node '{}'", link.source_port, link.source))?;
-        let target_port = target_node.introspect_port(&link.target_port, &self.injector)
-            .ok_or_else(|| anyhow::anyhow!("Unknown port '{}' on node '{}'", link.target_port, link.target))?;
+        let source_port = source_node
+            .introspect_port(&link.source_port, &self.injector)
+            .ok_or_else(|| {
+                anyhow::anyhow!(
+                    "Unknown port '{}' on node '{}'",
+                    link.source_port,
+                    link.source
+                )
+            })?;
+        let target_port = target_node
+            .introspect_port(&link.target_port, &self.injector)
+            .ok_or_else(|| {
+                anyhow::anyhow!(
+                    "Unknown port '{}' on node '{}'",
+                    link.target_port,
+                    link.target
+                )
+            })?;
 
         Ok((source_port, target_port))
     }

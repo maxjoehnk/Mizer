@@ -10,7 +10,10 @@ pub struct DataAccess {
 
 impl DataAccess {
     pub fn new() -> anyhow::Result<Self> {
-        let db = sled::Config::new().create_new(true).temporary(true).open()?;
+        let db = sled::Config::new()
+            .create_new(true)
+            .temporary(true)
+            .open()?;
         let tags = db.open_tree("tags")?;
         let media = db.open_tree("media")?;
 
@@ -18,7 +21,10 @@ impl DataAccess {
     }
 
     pub fn list_media(&self) -> anyhow::Result<Vec<MediaDocument>> {
-        let media = self.media.iter().values()
+        let media = self
+            .media
+            .iter()
+            .values()
             .map(|value| {
                 let value = value?;
                 let doc = serde_json::from_slice(&value)?;
@@ -31,7 +37,10 @@ impl DataAccess {
     }
 
     pub fn list_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
-        let tags = self.tags.iter().values()
+        let tags = self
+            .tags
+            .iter()
+            .values()
             .map(|value| {
                 let value = value?;
                 let doc = serde_json::from_slice(&value)?;
@@ -43,10 +52,7 @@ impl DataAccess {
         Ok(tags)
     }
 
-    pub fn add_tag<D: Into<TagCreateModel>>(
-        &self,
-        document: D,
-    ) -> anyhow::Result<TagDocument> {
+    pub fn add_tag<D: Into<TagCreateModel>>(&self, document: D) -> anyhow::Result<TagDocument> {
         let tag_document = document.into();
         let tag_document: TagDocument = tag_document.into();
         let id = tag_document.id.as_bytes();
@@ -56,10 +62,7 @@ impl DataAccess {
         Ok(tag_document)
     }
 
-    pub fn add_media<D: Into<MediaDocument>>(
-        &self,
-        document: D,
-    ) -> anyhow::Result<MediaDocument> {
+    pub fn add_media<D: Into<MediaDocument>>(&self, document: D) -> anyhow::Result<MediaDocument> {
         let media_document = document.into();
         self.insert_media(&media_document)?;
         self.update_tags(&media_document)?;
@@ -77,10 +80,7 @@ impl DataAccess {
 
     fn update_tags(&self, document: &MediaDocument) -> anyhow::Result<()> {
         let attached_media: AttachedMediaDocument = document.into();
-        let ids = document
-            .tags
-            .iter()
-            .map(|t| t.id);
+        let ids = document.tags.iter().map(|t| t.id);
 
         for id in ids {
             let id = id.as_bytes();
@@ -90,7 +90,11 @@ impl DataAccess {
         Ok(())
     }
 
-    fn update_tag_document(&self, id: &[u8], document: AttachedMediaDocument) -> anyhow::Result<()> {
+    fn update_tag_document(
+        &self,
+        id: &[u8],
+        document: AttachedMediaDocument,
+    ) -> anyhow::Result<()> {
         self.tags.update_and_fetch(id, move |tags| {
             let document = document.clone();
             if let Some(tags) = tags {
@@ -99,10 +103,10 @@ impl DataAccess {
                     tags.media.push(document);
 
                     serde_json::to_vec(&tags).ok()
-                }else {
+                } else {
                     None
                 }
-            }else {
+            } else {
                 None
             }
         })?;

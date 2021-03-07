@@ -29,7 +29,8 @@ impl PipelineNode for VideoFileNode {
         PortMetadata {
             port_type: PortType::Gstreamer,
             ..Default::default()
-        }.into()
+        }
+        .into()
     }
 
     fn node_type(&self) -> NodeType {
@@ -99,7 +100,7 @@ impl VideoFileState {
 }
 
 impl GstreamerNode for VideoFileState {
-        fn link_to(&self, target: &dyn GstreamerNode) -> anyhow::Result<()> {
+    fn link_to(&self, target: &dyn GstreamerNode) -> anyhow::Result<()> {
         self.convert.link(target.sink())?;
         Ok(())
     }

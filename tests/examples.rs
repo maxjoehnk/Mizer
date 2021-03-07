@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use test_case::test_case;
 use mizer::{build_runtime, Flags};
+use test_case::test_case;
 
 #[test_case("artnet"; "artnet")]
 #[test_case("fixture"; "fixture")]

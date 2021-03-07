@@ -81,7 +81,8 @@ impl PipelineNode for VideoEffectNode {
         PortMetadata {
             port_type: PortType::Gstreamer,
             ..Default::default()
-        }.into()
+        }
+        .into()
     }
 
     fn node_type(&self) -> NodeType {

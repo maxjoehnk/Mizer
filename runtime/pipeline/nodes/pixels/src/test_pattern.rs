@@ -114,9 +114,9 @@ fn next_color(color: &mut (f64, f64, f64)) {
 }
 
 fn matches(color: (f64, f64, f64), expected: (f64, f64, f64)) -> bool {
-    compare_float(color.0, expected.0) &&
-        compare_float(color.1, expected.1) &&
-        compare_float(color.2, expected.2)
+    compare_float(color.0, expected.0)
+        && compare_float(color.1, expected.1)
+        && compare_float(color.2, expected.2)
 }
 
 fn compare_float(left: f64, right: f64) -> bool {

@@ -1,4 +1,7 @@
-use crate::protos::{CreateMediaTag, GetMediaTags, GroupedMediaFiles, MediaFile, MediaTag, MediaFiles, GetMediaRequest};
+use crate::protos::{
+    CreateMediaTag, GetMediaRequest, GetMediaTags, GroupedMediaFiles, MediaFile, MediaFiles,
+    MediaTag,
+};
 use crate::protos::{MediaApi, MediaTagWithFiles};
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use mizer_media::api::{MediaServerApi, MediaServerCommand, TagCreateModel};
@@ -64,7 +67,12 @@ impl MediaApi for MediaApiImpl {
         Ok(())
     }
 
-    fn get_media(&self, o: ServerHandlerContext, _: ServerRequestSingle<GetMediaRequest>, resp: ServerResponseUnarySink<MediaFiles>) -> grpc::Result<()> {
+    fn get_media(
+        &self,
+        o: ServerHandlerContext,
+        _: ServerRequestSingle<GetMediaRequest>,
+        resp: ServerResponseUnarySink<MediaFiles>,
+    ) -> grpc::Result<()> {
         let api = self.api.clone();
         o.spawn(async move {
             let (sender, receiver) = MediaServerApi::open_channel();
@@ -72,10 +80,7 @@ impl MediaApi for MediaApiImpl {
             api.send_command(cmd);
 
             let files = receiver.recv_async().await.unwrap();
-            let files = files
-                .into_iter()
-                .map(MediaFile::from)
-                .collect::<Vec<_>>();
+            let files = files.into_iter().map(MediaFile::from).collect::<Vec<_>>();
 
             resp.finish(MediaFiles {
                 files: files.into(),

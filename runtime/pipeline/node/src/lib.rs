@@ -1,5 +1,5 @@
-pub use mizer_ports::{PortId, PortType};
 pub use mizer_injector::Injector;
+pub use mizer_ports::{PortId, PortType};
 
 pub use self::context::*;
 pub use self::introspection::*;

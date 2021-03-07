@@ -21,7 +21,7 @@ members = [
     "runtime/pipeline/nodes/fixture",
     "runtime/pipeline/nodes/inputs",
     "runtime/pipeline/nodes/laser",
-    "runtime/pipeline/nodes/oscillator",
+    "runtime/pipeline/nodes/behaviors/oscillator",
     "runtime/pipeline/nodes/protocols/dmx",
     "runtime/pipeline/nodes/protocols/midi",
     "runtime/pipeline/nodes/protocols/opc",

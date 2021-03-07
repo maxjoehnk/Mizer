@@ -7,5 +7,5 @@ edition = "2018"
 [dependencies]
 anyhow = "1"
 log = "0.4"
-mizer-node = { path = "../../node" }
+mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }

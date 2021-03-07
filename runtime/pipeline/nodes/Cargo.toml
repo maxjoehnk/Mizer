@@ -8,7 +8,7 @@ edition = "2018"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../node" }
 mizer-clock-nodes = { path = "clock" }
-mizer-oscillator-nodes = { path = "oscillator" }
+mizer-oscillator-nodes = { path = "behaviors/oscillator" }
 mizer-dmx-nodes = { path = "protocols/dmx" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-sequence-nodes = { path = "behaviors/sequence" }

@@ -25,11 +25,13 @@ impl PipelineNode for PixelDmxNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId) -> PortMetadata {
-        PortMetadata {
+    fn introspect_port(&self, _: &PortId, _: &Injector) -> Option<PortMetadata> {
+        Some(PortMetadata {
             port_type: PortType::Multi,
+            direction: PortDirection::Input,
             dimensions: Some((self.width, self.height)),
-        }
+            ..Default::default()
+        })
     }
 
     fn node_type(&self) -> NodeType {

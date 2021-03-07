@@ -1,4 +1,5 @@
 pub use mizer_ports::{PortId, PortType};
+pub use mizer_injector::Injector;
 
 pub use self::context::*;
 pub use self::introspection::*;
@@ -14,7 +15,7 @@ mod introspection;
 pub trait PipelineNode: Send + Sync {
     fn details(&self) -> NodeDetails;
 
-    fn introspect_port(&self, port: &PortId) -> PortMetadata {
+    fn introspect_port(&self, port: &PortId, injector: &Injector) -> Option<PortMetadata> {
         log::trace!("Returning default port metadata for port {}", port);
         Default::default()
     }
@@ -34,7 +35,7 @@ pub trait ProcessingNode: PipelineNode + Clone {
 
     fn create_state(&self) -> Self::State;
 
-    fn introspect_port(&self, port: &PortId) -> PortMetadata {
-        PipelineNode::introspect_port(self, port)
+    fn introspect_port(&self, port: &PortId, injector: &Injector) -> Option<PortMetadata> {
+        PipelineNode::introspect_port(self, port, injector)
     }
 }

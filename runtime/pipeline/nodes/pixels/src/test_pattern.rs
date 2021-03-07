@@ -49,11 +49,12 @@ impl PipelineNode for PixelPatternGeneratorNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId) -> PortMetadata {
-        PortMetadata {
+    fn introspect_port(&self, _: &PortId, _: &Injector) -> Option<PortMetadata> {
+        Some(PortMetadata {
             port_type: PortType::Multi,
-            dimensions: None,
-        }
+            direction: PortDirection::Output,
+            ..Default::default()
+        })
     }
 
     fn node_type(&self) -> NodeType {

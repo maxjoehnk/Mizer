@@ -16,5 +16,18 @@ pub struct NodeLink {
 #[derive(Default, Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
 pub struct PortMetadata {
     pub port_type: PortType,
+    pub direction: PortDirection,
     pub dimensions: Option<(u64, u64)>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
+pub enum PortDirection {
+    Input,
+    Output,
+}
+
+impl Default for PortDirection {
+    fn default() -> Self {
+        Self::Input
+    }
 }

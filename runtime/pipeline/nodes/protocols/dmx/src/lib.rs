@@ -20,6 +20,14 @@ impl PipelineNode for DmxOutputNode {
         }
     }
 
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        (port == "value").then(|| PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Input,
+            ..Default::default()
+        })
+    }
+
     fn node_type(&self) -> NodeType {
         NodeType::DmxOutput
     }

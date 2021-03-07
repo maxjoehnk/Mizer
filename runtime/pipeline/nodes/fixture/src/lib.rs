@@ -19,6 +19,20 @@ impl PipelineNode for FixtureNode {
     fn node_type(&self) -> NodeType {
         NodeType::Fixture
     }
+
+    fn introspect_port(&self, port: &PortId, injector: &Injector) -> Option<PortMetadata> {
+        injector.get::<FixtureManager>()
+            .and_then(|manager| manager.get_fixture(&self.fixture_id))
+            .and_then(|fixture| fixture.get_channels()
+                .iter()
+                .find(|c| port == c.name)
+                .cloned())
+            .map(|_| PortMetadata {
+                direction: PortDirection::Input,
+                port_type: PortType::Single,
+                ..Default::default()
+            })
+    }
 }
 
 impl ProcessingNode for FixtureNode {

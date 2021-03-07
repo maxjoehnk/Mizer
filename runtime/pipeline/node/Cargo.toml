@@ -10,3 +10,4 @@ log = "0.4"
 serde = { version = "1", features = ["derive"] }
 mizer-clock = { path = "../../clock" }
 mizer-ports = { path = "../ports" }
+mizer-injector = { path = "../../injector" }

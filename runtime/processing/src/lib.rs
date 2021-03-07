@@ -1,6 +1,4 @@
-pub use crate::injector::Injector;
-
-mod injector;
+pub use mizer_injector::Injector;
 
 pub trait Processor {
     fn process(&self, injector: &Injector) {}

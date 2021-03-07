@@ -2,10 +2,7 @@ use gstreamer::prelude::*;
 use gstreamer::{Element, ElementFactory};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortId, PortMetadata, PortType,
-    ProcessingNode,
-};
+use mizer_node::*;
 
 use crate::{GstreamerNode, PIPELINE};
 
@@ -33,11 +30,11 @@ impl PipelineNode for VideoOutputNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId) -> PortMetadata {
+    fn introspect_port(&self, _: &PortId, _: &Injector) -> Option<PortMetadata> {
         PortMetadata {
             port_type: PortType::Gstreamer,
             ..Default::default()
-        }
+        }.into()
     }
 
     fn node_type(&self) -> NodeType {

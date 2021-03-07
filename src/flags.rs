@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use structopt::StructOpt;
 
-#[derive(StructOpt)]
+#[derive(StructOpt, Debug, Clone)]
 pub struct Flags {
     #[structopt(long)]
     pub generate_graph: bool,
@@ -17,4 +17,8 @@ pub struct Flags {
     /// Join an existing session or start a new session
     #[structopt(long)]
     pub join: bool,
+    #[structopt(long)]
+    pub disable_media_api: bool,
+    #[structopt(long)]
+    pub disable_grpc_api: bool,
 }

@@ -2346,6 +2346,7 @@ dependencies = [
  "mizer-runtime",
  "mizer-session",
  "structopt",
+ "test-case",
  "tokio",
 ]
 
@@ -2447,6 +2448,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-injector"
+version = "0.1.0"
+dependencies = [
+ "test-case",
+]
+
+[[package]]
 name = "mizer-input-nodes"
 version = "0.1.0"
 dependencies = [
@@ -2530,6 +2538,7 @@ dependencies = [
  "anyhow",
  "log",
  "mizer-clock",
+ "mizer-injector",
  "mizer-ports",
  "serde",
 ]
@@ -2650,6 +2659,7 @@ name = "mizer-processing"
 version = "0.1.0"
 dependencies = [
  "dashmap",
+ "mizer-injector",
  "test-case",
 ]
 

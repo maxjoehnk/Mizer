@@ -70,6 +70,14 @@ impl PipelineNode for OscillatorNode {
     fn node_type(&self) -> NodeType {
         NodeType::Oscillator
     }
+
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        (port == "value").then(|| PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Output,
+            ..Default::default()
+        })
+    }
 }
 
 impl ProcessingNode for OscillatorNode {

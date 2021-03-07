@@ -68,6 +68,14 @@ impl PipelineNode for OscInputNode {
     fn node_type(&self) -> NodeType {
         NodeType::OscInput
     }
+
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        (port == "value").then(|| PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Output,
+            ..Default::default()
+        })
+    }
 }
 
 impl ProcessingNode for OscInputNode {

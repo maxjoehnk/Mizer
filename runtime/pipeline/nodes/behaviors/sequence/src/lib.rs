@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, ProcessingNode};
+use mizer_node::*;
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct SequenceStep {
@@ -52,6 +52,14 @@ impl PipelineNode for SequenceNode {
         NodeDetails {
             name: "SequenceNode".into(),
         }
+    }
+
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        (port == "value").then(|| PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Output,
+            ..Default::default()
+        })
     }
 
     fn node_type(&self) -> NodeType {

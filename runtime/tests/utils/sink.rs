@@ -1,4 +1,4 @@
-use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, ProcessingNode};
+use mizer_node::*;
 use std::sync::{Arc, Mutex};
 
 #[derive(Clone, Debug, Default)]
@@ -11,6 +11,14 @@ impl PipelineNode for TestSink {
         NodeDetails {
             name: "TestSink".into(),
         }
+    }
+
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        (port == "input").then(|| PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Input,
+            ..Default::default()
+        })
     }
 
     fn node_type(&self) -> NodeType {

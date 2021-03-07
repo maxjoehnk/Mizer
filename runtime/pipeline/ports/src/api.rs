@@ -31,6 +31,18 @@ impl PartialEq<&str> for &PortId {
     }
 }
 
+impl PartialEq<String> for &PortId {
+    fn eq(&self, other: &String) -> bool {
+        &self.0 == other
+    }
+}
+
+impl PortId {
+    pub fn as_str(&self) -> &str {
+        self.0.as_str()
+    }
+}
+
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, Deserialize, Serialize)]
 pub enum PortType {
     /// Single float value

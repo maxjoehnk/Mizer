@@ -21,11 +21,11 @@ impl PipelineNode for IldaFileNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> PortMetadata {
-        PortMetadata {
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        Some(PortMetadata {
             port_type: PortType::Laser,
             ..Default::default()
-        }
+        })
     }
 
     fn node_type(&self) -> NodeType {

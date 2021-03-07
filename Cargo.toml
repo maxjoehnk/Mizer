@@ -9,6 +9,7 @@ members = [
     "runtime",
     "runtime/clock",
     "runtime/execution-planner",
+    "runtime/injector",
     "runtime/module",
     "runtime/session",
     "runtime/pipeline",
@@ -77,6 +78,7 @@ mizer-module = { path = "runtime/module" }
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }
 
 [dev-dependencies]
+test-case = "1.0"
 criterion = { version = "0.3", features = ["html_reports"] }
 
 [[bench]]

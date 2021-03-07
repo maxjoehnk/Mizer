@@ -7,6 +7,8 @@ use mizer_media::api::MediaServerApi;
 
 use std::sync::Arc;
 
+pub use grpc::Server;
+
 mod protos;
 mod services;
 

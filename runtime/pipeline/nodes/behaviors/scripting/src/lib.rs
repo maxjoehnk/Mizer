@@ -1,7 +1,7 @@
 use rhai::{Engine, Map, Scope, AST};
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, ProcessingNode};
+use mizer_node::*;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ScriptingNode {
@@ -35,6 +35,17 @@ impl PipelineNode for ScriptingNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "ScriptingNode".into(),
+        }
+    }
+
+    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+        match port.as_str() {
+            "value" => Some(PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Output,
+                ..Default::default()
+            }),
+            _ => None,
         }
     }
 

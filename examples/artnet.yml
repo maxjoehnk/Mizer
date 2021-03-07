@@ -60,5 +60,4 @@ nodes:
 
 channels:
   - value@/oscillator-1 -> value@/dmx-output-1
-  - value@/osc-input-0 -> @/script-0
   - value@/script-0 -> value@/dmx-output-0

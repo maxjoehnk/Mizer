@@ -11,6 +11,7 @@ import 'node_selection.dart';
 class FetchNodesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    context.read<NodesBloc>().add(FetchNodes());
     return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
       return NodesView(nodes);
     });

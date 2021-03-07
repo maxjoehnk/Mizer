@@ -18,9 +18,7 @@ class AddNode extends NodesEvent {
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
   final NodesApiClient client;
 
-  NodesBloc(this.client) : super(Nodes.create()) {
-    this.add(FetchNodes());
-  }
+  NodesBloc(this.client) : super(Nodes.create());
 
   @override
   Stream<Nodes> mapEventToState(NodesEvent event) async* {

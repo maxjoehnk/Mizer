@@ -5,7 +5,7 @@ use crate::protos::{AddNodeRequest, NodePosition, NodesApi};
 use crate::protos::{
     ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
 };
-use mizer_node::{NodeDesigner, NodeType, PortType};
+use mizer_node::{NodeDesigner, NodeType, PortType, PortId, PortMetadata, PortDirection};
 use mizer_runtime::{NodeDescriptor, RuntimeApi};
 
 pub struct NodesApiImpl {
@@ -136,24 +136,26 @@ impl From<Node_NodeType> for NodeType {
 //         }
 //     }
 // }
-//
+
 impl From<NodeDescriptor<'_>> for Node {
     fn from(descriptor: NodeDescriptor<'_>) -> Self {
         let node_type = descriptor.node_type();
-        let node = Node {
+        let mut node = Node {
             path: descriptor.path.to_string(),
             field_type: node_type.into(),
             designer: SingularPtrField::some(descriptor.designer.into()),
             ..Default::default()
         };
-        // for input in definition.inputs {
-        //     node.inputs.push(input.into());
-        // }
-        // for output in definition.outputs {
-        //     node.outputs.push(output.into());
-        // }
+        let (inputs, outputs) = descriptor.ports.into_iter().partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
 
-        println!("{:?}", node);
+        for input in inputs {
+            node.inputs.push(input.into());
+        }
+        for output in outputs {
+            node.outputs.push(output.into());
+        }
+
+        log::debug!("{:?}", node);
 
         node
     }
@@ -185,6 +187,16 @@ impl From<PortType> for ChannelProtocol {
             PortType::Data => ChannelProtocol::Data,
             PortType::Material => ChannelProtocol::Material,
             PortType::Gstreamer => ChannelProtocol::Gst,
+        }
+    }
+}
+
+impl From<(PortId, PortMetadata)> for Port {
+    fn from((id, metadata): (PortId, PortMetadata)) -> Self {
+        Port {
+            name: id.to_string(),
+            protocol: metadata.port_type.into(),
+            ..Default::default()
         }
     }
 }

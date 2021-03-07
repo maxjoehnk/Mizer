@@ -38,7 +38,7 @@ impl PipelineNode for ScriptingNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         match port.as_str() {
             "value" => Some(PortMetadata {
                 port_type: PortType::Single,
@@ -47,6 +47,16 @@ impl PipelineNode for ScriptingNode {
             }),
             _ => None,
         }
+    }
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![
+            ("value".into(), PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Output,
+                ..Default::default()
+            })
+        ]
     }
 
     fn node_type(&self) -> NodeType {

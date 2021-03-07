@@ -13,7 +13,7 @@ impl PipelineNode for TestSink {
         }
     }
 
-    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         (port == "input").then(|| PortMetadata {
             port_type: PortType::Single,
             direction: PortDirection::Input,

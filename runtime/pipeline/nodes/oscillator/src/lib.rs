@@ -71,12 +71,22 @@ impl PipelineNode for OscillatorNode {
         NodeType::Oscillator
     }
 
-    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         (port == "value").then(|| PortMetadata {
             port_type: PortType::Single,
             direction: PortDirection::Output,
             ..Default::default()
         })
+    }
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![
+            ("value".into(), PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Output,
+                ..Default::default()
+            })
+        ]
     }
 }
 

@@ -15,8 +15,13 @@ mod introspection;
 pub trait PipelineNode: Send + Sync {
     fn details(&self) -> NodeDetails;
 
-    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         log::trace!("Returning default port metadata for port {}", port);
+        Default::default()
+    }
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        log::trace!("Returning default ports");
         Default::default()
     }
 
@@ -34,8 +39,4 @@ pub trait ProcessingNode: PipelineNode + Clone {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()>;
 
     fn create_state(&self) -> Self::State;
-
-    fn introspect_port(&self, port: &PortId, injector: &Injector) -> Option<PortMetadata> {
-        PipelineNode::introspect_port(self, port, injector)
-    }
 }

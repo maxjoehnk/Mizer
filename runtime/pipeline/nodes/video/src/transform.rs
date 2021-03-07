@@ -20,7 +20,7 @@ impl PipelineNode for VideoTransformNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         match port.as_str() {
             "output" => Some(PortMetadata {
                 port_type: PortType::Gstreamer,
@@ -42,9 +42,49 @@ impl PipelineNode for VideoTransformNode {
         }
     }
 
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![
+            (
+                "input".into(),
+                PortMetadata {
+                    port_type: PortType::Gstreamer,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "output".into(),
+                PortMetadata {
+                    port_type: PortType::Gstreamer,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
+            control_port("rotate-x"),
+            control_port("rotate-y"),
+            control_port("rotate-z"),
+            control_port("translate-x"),
+            control_port("translate-y"),
+            control_port("translate-z"),
+            control_port("scale-x"),
+            control_port("scale-y"),
+        ]
+    }
+
     fn node_type(&self) -> NodeType {
         NodeType::VideoTransform
     }
+}
+
+fn control_port<T: Into<PortId>>(port: T) -> (PortId, PortMetadata) {
+    (
+        port.into(),
+        PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Input,
+            ..Default::default()
+        },
+    )
 }
 
 impl ProcessingNode for VideoTransformNode {

@@ -25,13 +25,21 @@ impl PipelineNode for PixelDmxNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, _: &PortId) -> Option<PortMetadata> {
         Some(PortMetadata {
             port_type: PortType::Multi,
             direction: PortDirection::Input,
             dimensions: Some((self.width, self.height)),
             ..Default::default()
         })
+    }
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![(OUTPUT_PORT.into(), PortMetadata {
+            port_type: PortType::Multi,
+            direction: PortDirection::Input,
+            ..Default::default()
+        })]
     }
 
     fn node_type(&self) -> NodeType {

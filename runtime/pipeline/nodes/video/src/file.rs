@@ -25,12 +25,20 @@ impl PipelineNode for VideoFileNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, _: &PortId) -> Option<PortMetadata> {
         PortMetadata {
             port_type: PortType::Gstreamer,
             ..Default::default()
         }
         .into()
+    }
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![("output".into(), PortMetadata {
+            port_type: PortType::Gstreamer,
+            direction: PortDirection::Output,
+            ..Default::default()
+        })]
     }
 
     fn node_type(&self) -> NodeType {

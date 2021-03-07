@@ -35,13 +35,21 @@ impl PipelineNode for OpcOutputNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId, _: &Injector) -> Option<PortMetadata> {
+    fn introspect_port(&self, _: &PortId) -> Option<PortMetadata> {
         Some(PortMetadata {
             port_type: PortType::Multi,
             dimensions: Some((self.width, self.height)),
             direction: PortDirection::Input,
             ..Default::default()
         })
+    }
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![("pixels".into(), PortMetadata {
+            port_type: PortType::Multi,
+            direction: PortDirection::Input,
+            ..Default::default()
+        })]
     }
 
     fn node_type(&self) -> NodeType {

@@ -101,7 +101,10 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             Clock(node) => self.add_node(path, node),
             Script(node) => self.add_node(path, node),
             Sequence(node) => self.add_node(path, node),
-            Fixture(node) => self.add_node(path, node),
+            Fixture(mut node) => {
+                node.fixture_manager = self.injector.get().cloned();
+                self.add_node(path, node)
+            },
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
             Fader(node) => self.add_node(path, node),
@@ -169,7 +172,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             anyhow::anyhow!("trying to add link for unknown node: {}", &link.target)
         })?;
         let source_port = source_node
-            .introspect_port(&link.source_port, &self.injector)
+            .introspect_port(&link.source_port)
             .ok_or_else(|| {
                 anyhow::anyhow!(
                     "Unknown port '{}' on node '{}'",
@@ -178,7 +181,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 )
             })?;
         let target_port = target_node
-            .introspect_port(&link.target_port, &self.injector)
+            .introspect_port(&link.target_port)
             .ok_or_else(|| {
                 anyhow::anyhow!(
                     "Unknown port '{}' on node '{}'",

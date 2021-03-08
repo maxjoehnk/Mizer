@@ -6,6 +6,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/node/base_node.dart';
 
+import 'graph_engine.dart';
 import 'node_selection.dart';
 
 class FetchNodesView extends StatelessWidget {
@@ -30,7 +31,7 @@ class NodesView extends StatelessWidget {
         boundaryMargin: EdgeInsets.all(100),
         minScale: 0.001,
         maxScale: 10,
-        child: NodesViewer(this.nodes));
+        child: OverflowBox(child: GraphEngine(nodes: this.nodes, child: NodesViewer(this.nodes))));
   }
 }
 

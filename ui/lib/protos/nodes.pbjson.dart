@@ -43,10 +43,10 @@ const Nodes$json = const {
 const NodeConnection$json = const {
   '1': 'NodeConnection',
   '2': const [
-    const {'1': 'inputNode', '3': 1, '4': 1, '5': 9, '10': 'inputNode'},
-    const {'1': 'inputPort', '3': 2, '4': 1, '5': 11, '6': '.mizer.Port', '10': 'inputPort'},
-    const {'1': 'outputNode', '3': 3, '4': 1, '5': 9, '10': 'outputNode'},
-    const {'1': 'outputPort', '3': 4, '4': 1, '5': 11, '6': '.mizer.Port', '10': 'outputPort'},
+    const {'1': 'targetNode', '3': 1, '4': 1, '5': 9, '10': 'targetNode'},
+    const {'1': 'targetPort', '3': 2, '4': 1, '5': 11, '6': '.mizer.Port', '10': 'targetPort'},
+    const {'1': 'sourceNode', '3': 3, '4': 1, '5': 9, '10': 'sourceNode'},
+    const {'1': 'sourcePort', '3': 4, '4': 1, '5': 11, '6': '.mizer.Port', '10': 'sourcePort'},
     const {'1': 'protocol', '3': 5, '4': 1, '5': 14, '6': '.mizer.ChannelProtocol', '10': 'protocol'},
   ],
 };

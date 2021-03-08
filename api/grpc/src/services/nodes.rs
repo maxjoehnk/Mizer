@@ -35,22 +35,22 @@ impl NodesApi for NodesApiImpl {
         }
         for channel in self.runtime.links() {
             let mut conn = NodeConnection {
-                inputNode: channel.source.to_string(),
-                outputNode: channel.target.to_string(),
+                sourceNode: channel.source.to_string(),
+                targetNode: channel.target.to_string(),
                 ..Default::default()
             };
-            let input_port = Port {
+            let source_port = Port {
                 protocol: ChannelProtocol::Single,
                 name: channel.source_port.to_string(),
                 ..Default::default()
             };
-            conn.set_inputPort(input_port);
-            let output_port = Port {
+            conn.set_sourcePort(source_port);
+            let target_port = Port {
                 protocol: ChannelProtocol::Single,
                 name: channel.target_port.to_string(),
                 ..Default::default()
             };
-            conn.set_outputPort(output_port);
+            conn.set_targetPort(target_port);
             res.channels.push(conn);
         }
         resp.finish(res)

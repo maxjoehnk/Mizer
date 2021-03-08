@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/node/ports.dart';
 
 const double BASE_WIDTH = 300;
 const double BASE_HEIGHT = 225;
@@ -66,8 +67,8 @@ class BaseNode extends StatelessWidget {
                   padding: const EdgeInsets.all(4),
                   child: Text(this.node.path, style: textTheme.bodyText2),
                 ),
-                NodeOutputs(this.node),
-                NodeInputs(this.node),
+                NodePortList(this.node, inputs: false),
+                NodePortList(this.node, inputs: true),
                 this.child,
               ]),
         ),
@@ -85,86 +86,6 @@ class BaseNode extends StatelessWidget {
   }
 }
 
-class NodeInputs extends StatelessWidget {
-  final Node node;
-
-  NodeInputs(this.node);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        children: this.node.inputs.map((port) => NodePort(port)).toList());
-  }
-}
-
-class NodeOutputs extends StatelessWidget {
-  final Node node;
-
-  NodeOutputs(this.node);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        children: this.node.outputs.map((port) => NodePort(port, input: false)).toList());
-  }
-}
-
-class NodePort extends StatelessWidget {
-  final Port port;
-  final bool input;
-
-  NodePort(this.port, { this.input = true });
-
-  @override
-  Widget build(BuildContext context) {
-    var color = getColorForProtocol(port.protocol);
-    return Transform(
-      transform: Matrix4.translationValues(input ? -4 : 4, 0, 0),
-      child: Row(
-        mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
-        children: input
-            ? [getDot(context, color), Container(width: 8), Text(port.name)]
-            : [Text(port.name), Container(width: 8), getDot(context, color)],
-      ),
-    );
-  }
-
-  MaterialColor getColorForProtocol(ChannelProtocol protocol) {
-    switch (protocol) {
-      case ChannelProtocol.Single:
-        return Colors.yellow;
-      case ChannelProtocol.Multi:
-        return Colors.green;
-      case ChannelProtocol.Gst:
-      case ChannelProtocol.Texture:
-        return Colors.red;
-      default:
-        log("no color for protocol ${protocol.name}");
-        return Colors.blueGrey;
-    }
-  }
-
-  Widget getDot(BuildContext context, MaterialColor color) {
-    const double DOT_SIZE = 8;
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-          gradient:
-          RadialGradient(colors: [color.shade600, color.shade500]),
-          shadows: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 2,
-                offset: Offset(2, 2))
-          ],
-          shape: CircleBorder(
-              side: BorderSide.none)),
-      child: Container(
-        width: DOT_SIZE,
-        height: DOT_SIZE,
-      ),
-    );
-  }
-}
 
 Widget getChildForNode(Node node) {
   switch (node.type) {

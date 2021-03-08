@@ -9,7 +9,7 @@ const List<NodeCategoryData> NODES = [
     NodeEntryData("Oscillator", Node_NodeType.Oscillator),
   ]),
   NodeCategoryData("DMX", [
-    NodeEntryData("Artnet Input", null),
+    NodeEntryData("DMX Input", null),
     NodeEntryData("DMX Output", Node_NodeType.DmxOutput),
   ]),
   NodeCategoryData("MIDI", [

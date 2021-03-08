@@ -562,10 +562,10 @@ impl ::protobuf::reflect::ProtobufValue for Nodes {
 #[derive(PartialEq,Clone,Default)]
 pub struct NodeConnection {
     // message fields
-    pub inputNode: ::std::string::String,
-    pub inputPort: ::protobuf::SingularPtrField<Port>,
-    pub outputNode: ::std::string::String,
-    pub outputPort: ::protobuf::SingularPtrField<Port>,
+    pub targetNode: ::std::string::String,
+    pub targetPort: ::protobuf::SingularPtrField<Port>,
+    pub sourceNode: ::std::string::String,
+    pub sourcePort: ::protobuf::SingularPtrField<Port>,
     pub protocol: ChannelProtocol,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -583,122 +583,122 @@ impl NodeConnection {
         ::std::default::Default::default()
     }
 
-    // string inputNode = 1;
+    // string targetNode = 1;
 
 
-    pub fn get_inputNode(&self) -> &str {
-        &self.inputNode
+    pub fn get_targetNode(&self) -> &str {
+        &self.targetNode
     }
-    pub fn clear_inputNode(&mut self) {
-        self.inputNode.clear();
+    pub fn clear_targetNode(&mut self) {
+        self.targetNode.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_inputNode(&mut self, v: ::std::string::String) {
-        self.inputNode = v;
+    pub fn set_targetNode(&mut self, v: ::std::string::String) {
+        self.targetNode = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_inputNode(&mut self) -> &mut ::std::string::String {
-        &mut self.inputNode
+    pub fn mut_targetNode(&mut self) -> &mut ::std::string::String {
+        &mut self.targetNode
     }
 
     // Take field
-    pub fn take_inputNode(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.inputNode, ::std::string::String::new())
+    pub fn take_targetNode(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.targetNode, ::std::string::String::new())
     }
 
-    // .mizer.Port inputPort = 2;
+    // .mizer.Port targetPort = 2;
 
 
-    pub fn get_inputPort(&self) -> &Port {
-        self.inputPort.as_ref().unwrap_or_else(|| <Port as ::protobuf::Message>::default_instance())
+    pub fn get_targetPort(&self) -> &Port {
+        self.targetPort.as_ref().unwrap_or_else(|| <Port as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_inputPort(&mut self) {
-        self.inputPort.clear();
+    pub fn clear_targetPort(&mut self) {
+        self.targetPort.clear();
     }
 
-    pub fn has_inputPort(&self) -> bool {
-        self.inputPort.is_some()
+    pub fn has_targetPort(&self) -> bool {
+        self.targetPort.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_inputPort(&mut self, v: Port) {
-        self.inputPort = ::protobuf::SingularPtrField::some(v);
+    pub fn set_targetPort(&mut self, v: Port) {
+        self.targetPort = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_inputPort(&mut self) -> &mut Port {
-        if self.inputPort.is_none() {
-            self.inputPort.set_default();
+    pub fn mut_targetPort(&mut self) -> &mut Port {
+        if self.targetPort.is_none() {
+            self.targetPort.set_default();
         }
-        self.inputPort.as_mut().unwrap()
+        self.targetPort.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_inputPort(&mut self) -> Port {
-        self.inputPort.take().unwrap_or_else(|| Port::new())
+    pub fn take_targetPort(&mut self) -> Port {
+        self.targetPort.take().unwrap_or_else(|| Port::new())
     }
 
-    // string outputNode = 3;
+    // string sourceNode = 3;
 
 
-    pub fn get_outputNode(&self) -> &str {
-        &self.outputNode
+    pub fn get_sourceNode(&self) -> &str {
+        &self.sourceNode
     }
-    pub fn clear_outputNode(&mut self) {
-        self.outputNode.clear();
+    pub fn clear_sourceNode(&mut self) {
+        self.sourceNode.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_outputNode(&mut self, v: ::std::string::String) {
-        self.outputNode = v;
+    pub fn set_sourceNode(&mut self, v: ::std::string::String) {
+        self.sourceNode = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_outputNode(&mut self) -> &mut ::std::string::String {
-        &mut self.outputNode
+    pub fn mut_sourceNode(&mut self) -> &mut ::std::string::String {
+        &mut self.sourceNode
     }
 
     // Take field
-    pub fn take_outputNode(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.outputNode, ::std::string::String::new())
+    pub fn take_sourceNode(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.sourceNode, ::std::string::String::new())
     }
 
-    // .mizer.Port outputPort = 4;
+    // .mizer.Port sourcePort = 4;
 
 
-    pub fn get_outputPort(&self) -> &Port {
-        self.outputPort.as_ref().unwrap_or_else(|| <Port as ::protobuf::Message>::default_instance())
+    pub fn get_sourcePort(&self) -> &Port {
+        self.sourcePort.as_ref().unwrap_or_else(|| <Port as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_outputPort(&mut self) {
-        self.outputPort.clear();
+    pub fn clear_sourcePort(&mut self) {
+        self.sourcePort.clear();
     }
 
-    pub fn has_outputPort(&self) -> bool {
-        self.outputPort.is_some()
+    pub fn has_sourcePort(&self) -> bool {
+        self.sourcePort.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_outputPort(&mut self, v: Port) {
-        self.outputPort = ::protobuf::SingularPtrField::some(v);
+    pub fn set_sourcePort(&mut self, v: Port) {
+        self.sourcePort = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_outputPort(&mut self) -> &mut Port {
-        if self.outputPort.is_none() {
-            self.outputPort.set_default();
+    pub fn mut_sourcePort(&mut self) -> &mut Port {
+        if self.sourcePort.is_none() {
+            self.sourcePort.set_default();
         }
-        self.outputPort.as_mut().unwrap()
+        self.sourcePort.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_outputPort(&mut self) -> Port {
-        self.outputPort.take().unwrap_or_else(|| Port::new())
+    pub fn take_sourcePort(&mut self) -> Port {
+        self.sourcePort.take().unwrap_or_else(|| Port::new())
     }
 
     // .mizer.ChannelProtocol protocol = 5;
@@ -719,12 +719,12 @@ impl NodeConnection {
 
 impl ::protobuf::Message for NodeConnection {
     fn is_initialized(&self) -> bool {
-        for v in &self.inputPort {
+        for v in &self.targetPort {
             if !v.is_initialized() {
                 return false;
             }
         };
-        for v in &self.outputPort {
+        for v in &self.sourcePort {
             if !v.is_initialized() {
                 return false;
             }
@@ -737,16 +737,16 @@ impl ::protobuf::Message for NodeConnection {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.inputNode)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.targetNode)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.inputPort)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.targetPort)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.outputNode)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.sourceNode)?;
                 },
                 4 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.outputPort)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.sourcePort)?;
                 },
                 5 => {
                     ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.protocol, 5, &mut self.unknown_fields)?
@@ -763,17 +763,17 @@ impl ::protobuf::Message for NodeConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.inputNode.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.inputNode);
+        if !self.targetNode.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.targetNode);
         }
-        if let Some(ref v) = self.inputPort.as_ref() {
+        if let Some(ref v) = self.targetPort.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if !self.outputNode.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.outputNode);
+        if !self.sourceNode.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.sourceNode);
         }
-        if let Some(ref v) = self.outputPort.as_ref() {
+        if let Some(ref v) = self.sourcePort.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
@@ -786,18 +786,18 @@ impl ::protobuf::Message for NodeConnection {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.inputNode.is_empty() {
-            os.write_string(1, &self.inputNode)?;
+        if !self.targetNode.is_empty() {
+            os.write_string(1, &self.targetNode)?;
         }
-        if let Some(ref v) = self.inputPort.as_ref() {
+        if let Some(ref v) = self.targetPort.as_ref() {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
-        if !self.outputNode.is_empty() {
-            os.write_string(3, &self.outputNode)?;
+        if !self.sourceNode.is_empty() {
+            os.write_string(3, &self.sourceNode)?;
         }
-        if let Some(ref v) = self.outputPort.as_ref() {
+        if let Some(ref v) = self.sourcePort.as_ref() {
             os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -844,24 +844,24 @@ impl ::protobuf::Message for NodeConnection {
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "inputNode",
-                |m: &NodeConnection| { &m.inputNode },
-                |m: &mut NodeConnection| { &mut m.inputNode },
+                "targetNode",
+                |m: &NodeConnection| { &m.targetNode },
+                |m: &mut NodeConnection| { &mut m.targetNode },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Port>>(
-                "inputPort",
-                |m: &NodeConnection| { &m.inputPort },
-                |m: &mut NodeConnection| { &mut m.inputPort },
+                "targetPort",
+                |m: &NodeConnection| { &m.targetPort },
+                |m: &mut NodeConnection| { &mut m.targetPort },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "outputNode",
-                |m: &NodeConnection| { &m.outputNode },
-                |m: &mut NodeConnection| { &mut m.outputNode },
+                "sourceNode",
+                |m: &NodeConnection| { &m.sourceNode },
+                |m: &mut NodeConnection| { &mut m.sourceNode },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Port>>(
-                "outputPort",
-                |m: &NodeConnection| { &m.outputPort },
-                |m: &mut NodeConnection| { &mut m.outputPort },
+                "sourcePort",
+                |m: &NodeConnection| { &m.sourcePort },
+                |m: &mut NodeConnection| { &mut m.sourcePort },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<ChannelProtocol>>(
                 "protocol",
@@ -884,10 +884,10 @@ impl ::protobuf::Message for NodeConnection {
 
 impl ::protobuf::Clear for NodeConnection {
     fn clear(&mut self) {
-        self.inputNode.clear();
-        self.inputPort.clear();
-        self.outputNode.clear();
-        self.outputPort.clear();
+        self.targetNode.clear();
+        self.targetPort.clear();
+        self.sourceNode.clear();
+        self.sourcePort.clear();
         self.protocol = ChannelProtocol::Single;
         self.unknown_fields.clear();
     }
@@ -2017,21 +2017,21 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\"\x0e\n\x0cNo\
     desRequest\"]\n\x05Nodes\x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer\
     .NodeR\x05nodes\x121\n\x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeC\
-    onnectionR\x08channels\"\xda\x01\n\x0eNodeConnection\x12\x1c\n\tinputNod\
-    e\x18\x01\x20\x01(\tR\tinputNode\x12)\n\tinputPort\x18\x02\x20\x01(\x0b2\
-    \x0b.mizer.PortR\tinputPort\x12\x1e\n\noutputNode\x18\x03\x20\x01(\tR\no\
-    utputNode\x12+\n\noutputPort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\noutp\
-    utPort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtoco\
-    lR\x08protocol\"\xfd\x03\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\
-    \x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\
-    \x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06input\
-    s\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12\
-    /\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designe\
-    r\"\xb9\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\r\n\tDmxOutput\x10\
-    \x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\x03\x12\x0c\n\
-    \x08OscInput\x10\x04\x12\r\n\tVideoFile\x10\x05\x12\x0f\n\x0bVideoOutput\
-    \x10\x06\x12\x0f\n\x0bVideoEffect\x10\x07\x12\x15\n\x11VideoColorBalance\
-    \x10\x08\x12\x12\n\x0eVideoTransform\x10\t\x12\n\n\x06Script\x10\n\x12\
+    onnectionR\x08channels\"\xde\x01\n\x0eNodeConnection\x12\x1e\n\ntargetNo\
+    de\x18\x01\x20\x01(\tR\ntargetNode\x12+\n\ntargetPort\x18\x02\x20\x01(\
+    \x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\
+    \tR\nsourceNode\x12+\n\nsourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\
+    \nsourcePort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelP\
+    rotocolR\x08protocol\"\xfd\x03\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\
+    \x0e2\x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01\
+    (\tR\x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06i\
+    nputs\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\
+    \x12/\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08des\
+    igner\"\xb9\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\r\n\tDmxOutput\
+    \x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\x03\x12\x0c\
+    \n\x08OscInput\x10\x04\x12\r\n\tVideoFile\x10\x05\x12\x0f\n\x0bVideoOutp\
+    ut\x10\x06\x12\x0f\n\x0bVideoEffect\x10\x07\x12\x15\n\x11VideoColorBalan\
+    ce\x10\x08\x12\x12\n\x0eVideoTransform\x10\t\x12\n\n\x06Script\x10\n\x12\
     \x0e\n\nPixelToDmx\x10\x0b\x12\x10\n\x0cPixelPattern\x10\x0c\x12\r\n\tOp\
     cOutput\x10\r\x12\x0b\n\x07Fixture\x10\x0e\x12\x0c\n\x08Sequence\x10\x0f\
     \x12\r\n\tMidiInput\x10\x10\x12\x0e\n\nMidiOutput\x10\x11\x12\t\n\x05Las\

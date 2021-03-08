@@ -20,10 +20,10 @@ message Nodes {
 }
 
 message NodeConnection {
-  string inputNode = 1;
-  Port inputPort = 2;
-  string outputNode = 3;
-  Port outputPort = 4;
+  string targetNode = 1;
+  Port targetPort = 2;
+  string sourceNode = 3;
+  Port sourcePort = 4;
   ChannelProtocol protocol = 5;
 }
 

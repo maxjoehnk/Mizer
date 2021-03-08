@@ -156,34 +156,34 @@ class Nodes extends $pb.GeneratedMessage {
 
 class NodeConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputNode', protoName: 'inputNode')
-    ..aOM<Port>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputPort', protoName: 'inputPort', subBuilder: Port.create)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputNode', protoName: 'outputNode')
-    ..aOM<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputPort', protoName: 'outputPort', subBuilder: Port.create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetNode', protoName: 'targetNode')
+    ..aOM<Port>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetPort', protoName: 'targetPort', subBuilder: Port.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourceNode', protoName: 'sourceNode')
+    ..aOM<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourcePort', protoName: 'sourcePort', subBuilder: Port.create)
     ..e<ChannelProtocol>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.Single, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
     ..hasRequiredFields = false
   ;
 
   NodeConnection._() : super();
   factory NodeConnection({
-    $core.String inputNode,
-    Port inputPort,
-    $core.String outputNode,
-    Port outputPort,
+    $core.String targetNode,
+    Port targetPort,
+    $core.String sourceNode,
+    Port sourcePort,
     ChannelProtocol protocol,
   }) {
     final _result = create();
-    if (inputNode != null) {
-      _result.inputNode = inputNode;
+    if (targetNode != null) {
+      _result.targetNode = targetNode;
     }
-    if (inputPort != null) {
-      _result.inputPort = inputPort;
+    if (targetPort != null) {
+      _result.targetPort = targetPort;
     }
-    if (outputNode != null) {
-      _result.outputNode = outputNode;
+    if (sourceNode != null) {
+      _result.sourceNode = sourceNode;
     }
-    if (outputPort != null) {
-      _result.outputPort = outputPort;
+    if (sourcePort != null) {
+      _result.sourcePort = sourcePort;
     }
     if (protocol != null) {
       _result.protocol = protocol;
@@ -212,44 +212,44 @@ class NodeConnection extends $pb.GeneratedMessage {
   static NodeConnection _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get inputNode => $_getSZ(0);
+  $core.String get targetNode => $_getSZ(0);
   @$pb.TagNumber(1)
-  set inputNode($core.String v) { $_setString(0, v); }
+  set targetNode($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasInputNode() => $_has(0);
+  $core.bool hasTargetNode() => $_has(0);
   @$pb.TagNumber(1)
-  void clearInputNode() => clearField(1);
+  void clearTargetNode() => clearField(1);
 
   @$pb.TagNumber(2)
-  Port get inputPort => $_getN(1);
+  Port get targetPort => $_getN(1);
   @$pb.TagNumber(2)
-  set inputPort(Port v) { setField(2, v); }
+  set targetPort(Port v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasInputPort() => $_has(1);
+  $core.bool hasTargetPort() => $_has(1);
   @$pb.TagNumber(2)
-  void clearInputPort() => clearField(2);
+  void clearTargetPort() => clearField(2);
   @$pb.TagNumber(2)
-  Port ensureInputPort() => $_ensure(1);
+  Port ensureTargetPort() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $core.String get outputNode => $_getSZ(2);
+  $core.String get sourceNode => $_getSZ(2);
   @$pb.TagNumber(3)
-  set outputNode($core.String v) { $_setString(2, v); }
+  set sourceNode($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasOutputNode() => $_has(2);
+  $core.bool hasSourceNode() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOutputNode() => clearField(3);
+  void clearSourceNode() => clearField(3);
 
   @$pb.TagNumber(4)
-  Port get outputPort => $_getN(3);
+  Port get sourcePort => $_getN(3);
   @$pb.TagNumber(4)
-  set outputPort(Port v) { setField(4, v); }
+  set sourcePort(Port v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasOutputPort() => $_has(3);
+  $core.bool hasSourcePort() => $_has(3);
   @$pb.TagNumber(4)
-  void clearOutputPort() => clearField(4);
+  void clearSourcePort() => clearField(4);
   @$pb.TagNumber(4)
-  Port ensureOutputPort() => $_ensure(3);
+  Port ensureSourcePort() => $_ensure(3);
 
   @$pb.TagNumber(5)
   ChannelProtocol get protocol => $_getN(4);

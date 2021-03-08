@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/graph_engine.dart';
+import 'package:mizer/views/nodes/graph/state.dart';
+
+import '../consts.dart';
 
 class NodePortList extends StatelessWidget {
   final Node node;
@@ -68,7 +70,6 @@ class PortDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double DOT_SIZE = 8;
     var color = getColorForProtocol(port.protocol);
 
     return DecoratedBox(

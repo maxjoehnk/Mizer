@@ -1,23 +1,32 @@
-use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
+
+use serde::{Deserialize, Serialize};
 use zeroconf::prelude::*;
-use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery};
+use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, TxtRecord};
 
 const MIZER_SESSION_SERVICE: &str = "_mizer._tcp";
 
-const POLL_TIMEOUT: u64 = 10;
+const POLL_TIMEOUT: u64 = 1;
 
 fn announce_device() {
-    thread::spawn(|| {
-        let mut service = MdnsService::new(MIZER_SESSION_SERVICE, 50051);
-        let event_loop = service.register().unwrap();
-        loop {
-            event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
-        }
-    });
+    thread::Builder::new()
+        .name("Session MDNS Broadcast".into())
+        .spawn(|| {
+            let mut service = MdnsService::new(MIZER_SESSION_SERVICE, 50051);
+            let mut txt_record = TxtRecord::new();
+            txt_record.insert("project", "video.yml");
+            service.set_txt_record(txt_record);
+            let event_loop = service.register().unwrap();
+            loop {
+                event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
+                #[cfg(target_os = "linux")]
+                // poll doesn't sleep in avahi implementation
+                thread::sleep(Duration::from_secs(POLL_TIMEOUT));
+            }
+        });
 }
 
 pub fn discover_sessions() -> anyhow::Result<()> {

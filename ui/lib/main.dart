@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:grpc/grpc.dart';
 import 'package:mizer/navigation.dart';
+import 'package:mizer/session/session_discovery.dart';
+import 'package:mizer/session/session_selector.dart';
 import 'package:mizer/state/provider.dart';
 
 void main() async {
-  final channel = ClientChannel(
-    '192.168.1.13',
-    port: 50051,
-    options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
-  );
+  final discovery = SessionDiscovery();
+  await discovery.start();
 
-  runApp(MyApp(channel));
+  runApp(MyApp(discovery));
 }
 
 class MyApp extends StatelessWidget {
-  final ClientChannel channel;
+  final SessionDiscovery discovery;
 
-  MyApp(this.channel);
+  MyApp(this.discovery);
 
   @override
   Widget build(BuildContext context) {
-    return StateProvider(channel,
-        child: MaterialApp(
-          title: 'Mizer',
-          darkTheme: ThemeData.dark().copyWith(primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent),
-          home: Home(),
-          themeMode: ThemeMode.dark,
-        ));
+    return MaterialApp(
+      title: 'Mizer',
+      darkTheme: ThemeData.dark().copyWith(
+          primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent),
+      home: SessionProvider(discovery,
+          builder: (channel) => StateProvider(channel, child: Home())),
+      themeMode: ThemeMode.dark,
+    );
   }
 }

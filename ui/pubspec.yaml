@@ -17,6 +17,7 @@ dependencies:
   file_selector_platform_interface: ^2.0.0
   file_selector_linux: ^0.0.2
   file_selector_macos: ^0.0.4
+  multicast_dns: ^0.2.2
 
 dev_dependencies:
   flutter_test:

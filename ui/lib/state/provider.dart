@@ -24,7 +24,7 @@ class StateProvider extends StatelessWidget {
           BlocProvider(create: (context) => NodesBloc(context.read())),
           BlocProvider(create: (context) => SessionBloc(_channel)),
           BlocProvider(create: (context) => FixturesBloc(_channel)),
-          BlocProvider(create: (context) => MediaBloc(context.read()))
+          BlocProvider(create: (context) => MediaBloc(context.read())),
         ],
       ),
       providers: [

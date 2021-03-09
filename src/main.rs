@@ -1,6 +1,7 @@
 use structopt::StructOpt;
 
 use mizer::{build_runtime, Flags};
+use mizer_session::Session;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -8,12 +9,9 @@ async fn main() -> anyhow::Result<()> {
     let flags = Flags::from_args();
     log::debug!("flags: {:?}", flags);
 
-    // TODO: pins cpu, reduce cpu usage
-    // let _session = if flags.join {
-    //     Session::discover()?
-    // } else {
-    //     Session::new()?
-    // };
+    // TODO: integrate discovery mode
+    Session::new()?;
+
     let mut mizer = build_runtime(flags).await?;
     mizer.run().await;
 

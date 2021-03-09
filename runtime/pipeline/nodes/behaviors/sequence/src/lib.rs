@@ -26,7 +26,7 @@ impl From<(f64, f64, bool)> for SequenceStep {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct SequenceNode {
     pub steps: Vec<SequenceStep>,
 }

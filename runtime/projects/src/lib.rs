@@ -124,6 +124,33 @@ pub enum NodeConfig {
     Laser(mizer_nodes::LaserNode),
 }
 
+impl From<NodeConfig> for mizer_nodes::Node {
+    fn from(node: NodeConfig) -> Self {
+        match node {
+            NodeConfig::Clock(node) => mizer_nodes::Node::Clock(node),
+            NodeConfig::Oscillator(node) => mizer_nodes::Node::Oscillator(node),
+            NodeConfig::DmxOutput(node) => mizer_nodes::Node::DmxOutput(node),
+            NodeConfig::Script(node) => mizer_nodes::Node::Scripting(node),
+            NodeConfig::Sequence(node) => mizer_nodes::Node::Sequence(node),
+            NodeConfig::Fixture(node) => mizer_nodes::Node::Fixture(node),
+            NodeConfig::IldaFile(node) => mizer_nodes::Node::IldaFile(node),
+            NodeConfig::Laser(node) => mizer_nodes::Node::Laser(node),
+            NodeConfig::Fader(node) => mizer_nodes::Node::Fader(node),
+            // NodeConfig::MidiInput(node) => mizer_nodes::Node::MidiInput(node),
+            // NodeConfig::MidiOutput(node) => mizer_nodes::Node::MidiOutput(node),
+            NodeConfig::OpcOutput(node) => mizer_nodes::Node::OpcOutput(node),
+            NodeConfig::PixelPattern(node) => mizer_nodes::Node::PixelPattern(node),
+            NodeConfig::PixelDmx(node) => mizer_nodes::Node::PixelDmx(node),
+            NodeConfig::OscInput(node) => mizer_nodes::Node::OscInput(node),
+            NodeConfig::VideoFile(node) => mizer_nodes::Node::VideoFile(node),
+            NodeConfig::VideoColorBalance(node) => mizer_nodes::Node::VideoColorBalance(node),
+            NodeConfig::VideoOutput(node) => mizer_nodes::Node::VideoOutput(node),
+            NodeConfig::VideoEffect(node) => mizer_nodes::Node::VideoEffect(node),
+            NodeConfig::VideoTransform(node) => mizer_nodes::Node::VideoTransform(node),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixtureConfig {
     pub id: String,

@@ -1,4 +1,4 @@
-use crate::api::RuntimeApi;
+use crate::api::{RuntimeApi, ApiCommand};
 use dashmap::DashMap;
 use mizer_clock::{Clock, SystemClock};
 use mizer_execution_planner::*;
@@ -7,6 +7,7 @@ use mizer_node::*;
 use mizer_pipeline::*;
 use mizer_processing::*;
 use mizer_project_files::{NodeConfig, Project};
+use mizer_nodes::Node;
 use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::io::Write;
@@ -24,10 +25,13 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock: TClock,
     injector: Injector,
     processors: Vec<Box<dyn Processor>>,
+    api_recv: flume::Receiver<ApiCommand>,
+    api_sender: flume::Sender<ApiCommand>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
     pub fn new() -> Self {
+        let (tx, rx) = flume::unbounded();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
             planner: Default::default(),
@@ -40,6 +44,8 @@ impl CoordinatorRuntime<SystemClock> {
             clock: SystemClock::default(),
             injector: Default::default(),
             processors: Default::default(),
+            api_recv: rx,
+            api_sender: tx,
         };
         runtime.bootstrap();
 
@@ -49,6 +55,7 @@ impl CoordinatorRuntime<SystemClock> {
 
 impl<TClock: Clock> CoordinatorRuntime<TClock> {
     pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
+        let (tx, rx) = flume::unbounded();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
             planner: Default::default(),
@@ -61,6 +68,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock,
             injector: Default::default(),
             processors: Default::default(),
+            api_recv: rx,
+            api_sender: tx,
         };
         runtime.bootstrap();
 
@@ -76,7 +85,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     pub fn load_project(&mut self, project: Project) -> anyhow::Result<()> {
         for node in project.nodes {
-            self.add_project_node(node.path.clone(), node.config);
+            self.add_project_node(node.path.clone(), node.config.into());
             self.add_designer_node(node.path, node.designer);
         }
         for link in project.channels {
@@ -93,13 +102,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         Ok(())
     }
 
-    fn add_project_node(&mut self, path: NodePath, node_config: NodeConfig) {
-        use NodeConfig::*;
-        match node_config {
+    fn add_project_node(&mut self, path: NodePath, node: Node) {
+        use Node::*;
+        match node {
             DmxOutput(node) => self.add_node(path, node),
             Oscillator(node) => self.add_node(path, node),
             Clock(node) => self.add_node(path, node),
-            Script(node) => self.add_node(path, node),
+            Scripting(node) => self.add_node(path, node),
             Sequence(node) => self.add_node(path, node),
             Fixture(mut node) => {
                 node.fixture_manager = self.injector.get().cloned();
@@ -117,6 +126,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             VideoColorBalance(node) => self.add_node(path, node),
             VideoEffect(node) => self.add_node(path, node),
             VideoOutput(node) => self.add_node(path, node),
+            MidiInput(node) => self.add_node(path, node),
+            MidiOutput(node) => self.add_node(path, node),
         }
     }
 
@@ -131,6 +142,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         path: NodePath,
         node: T,
     ) {
+        log::debug!("adding node {}: {:?}", &path, node);
         self.nodes_view.insert(path.clone(), Box::new(node.clone()));
         let execution_node = (path.clone(), &node).into();
         // TODO: this needs to be called by plan in the future
@@ -244,7 +256,24 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             nodes: self.nodes_view.clone(),
             designer: self.designer.clone(),
             links: self.links.clone(),
+            sender: self.api_sender.clone(),
         }
+    }
+
+    fn handle_api_commands(&mut self) {
+        match self.api_recv.try_recv() {
+            Ok(ApiCommand::AddNode(node_type, designer, sender)) => self.handle_add_node(node_type, designer, sender),
+            Err(flume::TryRecvError::Empty) => {},
+            Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
+        }
+    }
+
+    fn handle_add_node(&mut self, node_type: NodeType, designer: NodeDesigner, sender: flume::Sender<NodePath>) {
+        let path: NodePath = format!("/{}", node_type.get_name(1)).into();
+        self.add_project_node(path.clone(), node_type.into());
+        self.add_designer_node(path.clone(), designer);
+
+        sender.send(path);
     }
 }
 
@@ -258,6 +287,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     }
 
     fn process(&mut self) {
+        self.handle_api_commands();
         self.process_pipeline();
         for processor in self.processors.iter() {
             processor.process(&self.injector);
@@ -285,7 +315,7 @@ mod tests {
         assert_eq!(state, &TestState { counter: 1 });
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Default, Debug, Clone)]
     struct TestNode;
 
     #[derive(Debug, Default, PartialEq, Eq)]

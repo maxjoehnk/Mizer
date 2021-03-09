@@ -2,11 +2,20 @@ use mizer_node::*;
 use mizer_protocol_dmx::DmxConnectionManager;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Default, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct DmxOutputNode {
     #[serde(default = "default_universe")]
     universe: u16,
     channel: u8,
+}
+
+impl Default for DmxOutputNode {
+    fn default() -> Self {
+        Self {
+            universe: default_universe(),
+            channel: 0,
+        }
+    }
 }
 
 fn default_universe() -> u16 {

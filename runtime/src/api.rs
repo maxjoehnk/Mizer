@@ -9,6 +9,12 @@ pub struct RuntimeApi {
     pub(crate) nodes: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     pub(crate) designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
+    pub(crate) sender: flume::Sender<ApiCommand>,
+}
+
+#[derive(Debug, Clone)]
+pub enum ApiCommand {
+    AddNode(NodeType, NodeDesigner, flume::Sender<NodePath>),
 }
 
 impl RuntimeApi {
@@ -34,6 +40,23 @@ impl RuntimeApi {
 
     pub fn links(&self) -> Vec<NodeLink> {
         self.links.read()
+    }
+
+    pub fn add_node(&self, node_type: NodeType, designer: NodeDesigner) -> anyhow::Result<NodeDescriptor<'_>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::AddNode(node_type, designer.clone(), tx));
+
+        // TODO: this blocks, we should use the async method
+        let path = rx.recv()?;
+        let node = self.nodes.get(&path).unwrap();
+        let ports = node.list_ports();
+
+        Ok(NodeDescriptor {
+            path,
+            designer,
+            node,
+            ports,
+        })
     }
 }
 

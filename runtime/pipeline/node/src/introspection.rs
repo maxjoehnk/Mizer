@@ -29,6 +29,36 @@ pub enum NodeType {
     IldaFile,
 }
 
+impl NodeType {
+    pub fn get_name(&self, count: u64) -> String {
+        use NodeType::*;
+
+        let name = match self {
+            Fader => "fader",
+            DmxOutput => "dmx-output",
+            Oscillator => "oscillator",
+            Clock => "clock",
+            OscInput => "osc-input",
+            VideoFile => "video-file",
+            VideoOutput => "video-output",
+            VideoEffect => "video-effect",
+            VideoColorBalance => "video-color-balance",
+            VideoTransform => "video-transform",
+            Scripting => "scripting",
+            PixelDmx => "pixel-dmx",
+            PixelPattern => "pixel-pattern",
+            OpcOutput => "opc-output",
+            Fixture => "fixture",
+            Sequence => "sequence",
+            MidiInput => "midi-input",
+            MidiOutput => "midi-output",
+            Laser => "laser",
+            IldaFile => "ilda-file",
+        };
+        format!("{}-{}", name, count)
+    }
+}
+
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
 pub struct NodeDesigner {
     pub position: NodePosition,

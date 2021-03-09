@@ -4,7 +4,7 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
 use std::fmt::Formatter;
 
-#[derive(Clone, Deserialize, Serialize)]
+#[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {
     #[serde(rename = "fixture")]
     fixture_id: String,

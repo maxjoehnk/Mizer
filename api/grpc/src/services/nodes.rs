@@ -58,14 +58,22 @@ impl NodesApi for NodesApiImpl {
 
     fn add_node(
         &self,
-        _: ServerHandlerContext,
-        _: ServerRequestSingle<AddNodeRequest>,
-        _: ServerResponseUnarySink<Node>,
+        context: ServerHandlerContext,
+        req: ServerRequestSingle<AddNodeRequest>,
+        resp: ServerResponseUnarySink<Node>,
     ) -> grpc::Result<()> {
-        todo!()
-        // let node = self.pipeline_view.add_node(req.message).unwrap();
-        //
-        // resp.finish(node.into())
+        let position = req.message.position.unwrap();
+        let designer = NodeDesigner {
+            position: mizer_node::NodePosition {
+                x: position.x,
+                y: position.y,
+            },
+            scale: 1.
+        };
+
+        let node = self.runtime.add_node(req.message.field_type.into(), designer).unwrap();
+
+        resp.finish(node.into())
     }
 }
 
@@ -122,20 +130,6 @@ impl From<Node_NodeType> for NodeType {
         }
     }
 }
-
-// impl From<AddNodeRequest> for NodeTemplate {
-//     fn from(req: AddNodeRequest) -> Self {
-//         let position = req.position.unwrap();
-//         NodeTemplate {
-//             designer: NodeDesigner {
-//                 x: position.x,
-//                 y: position.y,
-//                 scale: 1.
-//             },
-//             node_type: req.field_type.into()
-//         }
-//     }
-// }
 
 impl From<NodeDescriptor<'_>> for Node {
     fn from(descriptor: NodeDescriptor<'_>) -> Self {

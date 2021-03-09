@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ScriptingNode {
     script: String,
 }

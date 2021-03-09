@@ -2720,6 +2720,7 @@ dependencies = [
  "anyhow",
  "dashmap",
  "env_logger",
+ "flume",
  "insta",
  "log",
  "mizer-clock",

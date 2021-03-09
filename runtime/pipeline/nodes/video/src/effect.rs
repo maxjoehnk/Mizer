@@ -60,7 +60,7 @@ impl std::fmt::Display for VideoEffectType {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct VideoEffectNode {
     #[serde(rename = "type")]
     effect_type: VideoEffectType,

@@ -5,7 +5,7 @@ use mizer_devices::DeviceManager;
 pub use mizer_node::*;
 use mizer_protocol_laser::{Laser, LaserFrame};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LaserNode {
     #[serde(rename = "device")]
     device_id: String,

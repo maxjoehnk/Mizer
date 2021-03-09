@@ -6,7 +6,7 @@ use mizer_node::*;
 
 use crate::{GstreamerNode, PIPELINE};
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct VideoColorBalanceNode;
 
 pub struct VideoColorBalanceState {

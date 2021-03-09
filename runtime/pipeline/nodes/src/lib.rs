@@ -15,6 +15,7 @@ pub use mizer_sequence_nodes::SequenceNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
+use crate::Node::{DmxOutput, OscInput, MidiInput};
 
 #[derive(Debug, Clone, From)]
 pub enum Node {
@@ -38,6 +39,33 @@ pub enum Node {
     VideoOutput(VideoOutputNode),
     VideoEffect(VideoEffectNode),
     VideoTransform(VideoTransformNode),
+}
+
+impl From<NodeType> for Node {
+    fn from(node_type: NodeType) -> Self {
+        match node_type {
+            NodeType::DmxOutput => DmxOutputNode::default().into(),
+            NodeType::Oscillator => OscillatorNode::default().into(),
+            NodeType::Clock => ClockNode::default().into(),
+            NodeType::Scripting => ScriptingNode::default().into(),
+            NodeType::Sequence => SequenceNode::default().into(),
+            NodeType::Fixture => FixtureNode::default().into(),
+            NodeType::IldaFile => IldaFileNode::default().into(),
+            NodeType::Laser => LaserNode::default().into(),
+            NodeType::Fader => FaderNode::default().into(),
+            NodeType::OpcOutput => OpcOutputNode::default().into(),
+            NodeType::PixelPattern => PixelPatternGeneratorNode::default().into(),
+            NodeType::PixelDmx => PixelDmxNode::default().into(),
+            NodeType::OscInput => OscInputNode::default().into(),
+            NodeType::VideoFile => VideoFileNode::default().into(),
+            NodeType::VideoTransform => VideoTransformNode::default().into(),
+            NodeType::VideoColorBalance => VideoColorBalanceNode::default().into(),
+            NodeType::VideoEffect => VideoEffectNode::default().into(),
+            NodeType::VideoOutput => VideoOutputNode::default().into(),
+            NodeType::MidiInput => MidiInputNode::default().into(),
+            NodeType::MidiOutput => MidiOutputNode::default().into(),
+        }
+    }
 }
 
 impl Node {

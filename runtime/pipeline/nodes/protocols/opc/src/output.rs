@@ -17,6 +17,17 @@ pub struct OpcOutputNode {
     pub height: u64,
 }
 
+impl Default for OpcOutputNode {
+    fn default() -> Self {
+        Self {
+            host: "".into(),
+            port: default_port(),
+            width: 100,
+            height: 100,
+        }
+    }
+}
+
 pub enum OpcOutputState {
     Open,
     Connected(TcpStream),

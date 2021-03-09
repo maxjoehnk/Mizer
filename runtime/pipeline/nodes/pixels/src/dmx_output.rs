@@ -16,6 +16,17 @@ pub struct PixelDmxNode {
     output: String,
 }
 
+impl Default for PixelDmxNode {
+    fn default() -> Self {
+        Self {
+            width: 100,
+            height: 100,
+            start_universe: default_universe(),
+            output: "".into(),
+        }
+    }
+}
+
 const OUTPUT_PORT: &str = "output";
 
 impl PipelineNode for PixelDmxNode {

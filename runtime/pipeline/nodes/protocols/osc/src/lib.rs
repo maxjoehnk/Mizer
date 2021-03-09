@@ -54,6 +54,16 @@ fn default_port() -> u16 {
     6000
 }
 
+impl Default for OscInputNode {
+    fn default() -> Self {
+        Self {
+            host: default_host(),
+            port: default_port(),
+            path: "".into(),
+        }
+    }
+}
+
 pub struct OscInputState {
     pub rx: Receiver<OscPacket>,
 }

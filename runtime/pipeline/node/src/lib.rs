@@ -29,7 +29,7 @@ pub trait PipelineNode: Send + Sync {
     fn node_type(&self) -> NodeType;
 }
 
-pub trait ProcessingNode: PipelineNode + Clone {
+pub trait ProcessingNode: PipelineNode + Clone + Default + std::fmt::Debug {
     type State;
 
     fn details(&self) -> NodeDetails {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/available_nodes.dart';
+import 'package:mizer/views/nodes/consts.dart';
 
 // Selector to add new nodes, might need a better name
 
@@ -26,7 +27,8 @@ class _NodeSelectionContainerState extends State<NodeSelectionContainer> {
         setState(() {
           this.active = false;
         });
-        this.widget.onSelectNewNode(nodeType, position);
+        // Positioning is still a litle bit off
+        this.widget.onSelectNewNode(nodeType, position / MULTIPLIER);
       }));
     }
     return GestureDetector(

@@ -15,8 +15,7 @@ class NodeHeader extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-            borderRadius:
-            BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
         color: Colors.green,
       ),
       clipBehavior: Clip.none,

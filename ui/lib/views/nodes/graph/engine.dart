@@ -9,11 +9,12 @@ class GraphEngine extends StatelessWidget {
   final Nodes nodes;
   final Widget child;
 
-  GraphEngine({ this.nodes, this.child });
+  GraphEngine({this.nodes, this.child});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (context) => GraphBloc(nodes), child: GraphEngineInternal(this.child, this.nodes));
+    return BlocProvider(
+        create: (context) => GraphBloc(nodes), child: GraphEngineInternal(this.child, this.nodes));
   }
 }
 

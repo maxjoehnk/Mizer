@@ -5,5 +5,4 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text("Settings");
   }
-
 }

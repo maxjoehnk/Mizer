@@ -12,7 +12,7 @@ class AddNode extends NodesEvent {
   final Node_NodeType nodeType;
   final Offset position;
 
-  AddNode({ this.nodeType, this.position });
+  AddNode({this.nodeType, this.position});
 }
 
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
@@ -26,7 +26,9 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       yield await client.getNodes(NodesRequest());
     }
     if (event is AddNode) {
-      var node = await client.addNode(AddNodeRequest(type: event.nodeType, position: NodePosition(x: event.position.dx, y: event.position.dy)));
+      var node = await client.addNode(AddNodeRequest(
+          type: event.nodeType,
+          position: NodePosition(x: event.position.dx, y: event.position.dy)));
       var nextNodes = state.nodes.sublist(0);
       nextNodes.add(node);
       yield Nodes(channels: state.channels, nodes: nextNodes);

@@ -17,17 +17,14 @@ class NodeContainer extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(OUTER_RADIUS)),
           side: selected
               ? BorderSide(
-            color: Colors.white,
-            style: BorderStyle.solid,
-            width: 2,
-          )
+                  color: Colors.white,
+                  style: BorderStyle.solid,
+                  width: 2,
+                )
               : BorderSide(style: BorderStyle.none, width: 2),
         ),
         shadows: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 2,
-              offset: Offset(4, 4))
+          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
         ],
       ),
       child: Container(
@@ -41,4 +38,3 @@ class NodeContainer extends StatelessWidget {
     );
   }
 }
-

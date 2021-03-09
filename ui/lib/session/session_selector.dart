@@ -9,13 +9,12 @@ class SessionProvider extends StatelessWidget {
   final SessionDiscovery discovery;
   final Widget Function(ClientChannel) builder;
 
-  SessionProvider(this.discovery, { this.builder });
+  SessionProvider(this.discovery, {this.builder});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (create) => SessionDiscoveryBloc(discovery),
-        child: SessionSelector(this.builder));
+        create: (create) => SessionDiscoveryBloc(discovery), child: SessionSelector(this.builder));
   }
 }
 
@@ -35,10 +34,11 @@ class _SessionSelectorState extends State<SessionSelector> {
   Widget build(BuildContext context) {
     if (this.selectedSession != null) {
       return this.widget.builder(this.selectedSession.openChannel());
-    }else {
-      return TitleScreen(selectSession: (session) => setState(() {
-        this.selectedSession = session;
-      }));
+    } else {
+      return TitleScreen(
+          selectSession: (session) => setState(() {
+                this.selectedSession = session;
+              }));
     }
   }
 }

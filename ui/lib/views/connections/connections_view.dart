@@ -5,5 +5,4 @@ class ConnectionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text("Connections");
   }
-
 }

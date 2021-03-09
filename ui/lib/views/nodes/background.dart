@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,7 +6,7 @@ import 'consts.dart';
 class NodeCanvasBackground extends StatelessWidget {
   final Widget child;
 
-  NodeCanvasBackground({ this.child });
+  NodeCanvasBackground({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -35,4 +34,3 @@ class BackgroundPainter extends CustomPainter {
     return false;
   }
 }
-

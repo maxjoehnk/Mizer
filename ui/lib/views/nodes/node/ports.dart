@@ -12,7 +12,7 @@ class NodePortList extends StatelessWidget {
   final Node node;
   final bool inputs;
 
-  NodePortList(this.node, { this.inputs });
+  NodePortList(this.node, {this.inputs});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class NodePortList extends StatelessWidget {
   List<Port> _getPorts() {
     if (this.inputs) {
       return this.node.inputs;
-    }else {
+    } else {
       return this.node.outputs;
     }
   }
@@ -38,7 +38,7 @@ class NodePort extends StatelessWidget {
   final Port port;
   final bool input;
 
-  NodePort(this.node, this.port, { this.input = true });
+  NodePort(this.node, this.port, {this.input = true});
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +52,16 @@ class NodePort extends StatelessWidget {
             mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
             children: input
                 ? [PortDot(port, input: this.input, key: key), Container(width: 8), Text(port.name)]
-                : [Text(port.name), Container(width: 8), PortDot(port, input: this.input, key: key)],
+                : [
+                    Text(port.name),
+                    Container(width: 8),
+                    PortDot(port, input: this.input, key: key)
+                  ],
           ),
         );
       },
     );
   }
-
 }
 
 class PortDot extends StatelessWidget {
@@ -66,7 +69,7 @@ class PortDot extends StatelessWidget {
   final bool input;
   final Key key;
 
-  PortDot(this.port, { this.input, this.key });
+  PortDot(this.port, {this.input, this.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,23 +77,17 @@ class PortDot extends StatelessWidget {
 
     return DecoratedBox(
       decoration: ShapeDecoration(
-          gradient:
-          RadialGradient(colors: [color.shade600, color.shade500]),
+          gradient: RadialGradient(colors: [color.shade600, color.shade500]),
           shadows: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 2,
-                offset: Offset(2, 2))
+            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
           ],
-          shape: CircleBorder(
-              side: BorderSide.none)),
+          shape: CircleBorder(side: BorderSide.none)),
       child: Container(
         width: DOT_SIZE,
         height: DOT_SIZE,
       ),
     );
   }
-
 
   MaterialColor getColorForProtocol(ChannelProtocol protocol) {
     switch (protocol) {
@@ -107,4 +104,3 @@ class PortDot extends StatelessWidget {
     }
   }
 }
-

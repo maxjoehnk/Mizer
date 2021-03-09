@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -16,7 +15,8 @@ class GraphOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GraphBloc, GraphState>(builder: (context, state) => CustomPaint(painter: GraphLinePainter(state, renderObject)));
+    return BlocBuilder<GraphBloc, GraphState>(
+        builder: (context, state) => CustomPaint(painter: GraphLinePainter(state, renderObject)));
   }
 }
 
@@ -74,14 +74,16 @@ class GraphLinePainter extends CustomPainter {
     Paint paint = _getPaint();
     if ((to.dy - from.dy).abs() < 20) {
       _drawLine(canvas, from, to, paint);
-    }else {
+    } else {
       _drawBezier(from, to, canvas, paint);
     }
-
   }
 
   Paint _getPaint() {
-    var paint = Paint()..color = Colors.purple ..strokeWidth = 2..style= PaintingStyle.stroke;
+    var paint = Paint()
+      ..color = Colors.purple
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke;
     return paint;
   }
 

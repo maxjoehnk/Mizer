@@ -5,5 +5,4 @@ class LayoutView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text("Layout");
   }
-
 }

@@ -78,26 +78,29 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Shortcuts(
-          shortcuts: shortcuts,
-          child: Actions(
-            actions: <Type, CallbackAction>{
-              OpenViewIntent: CallbackAction<OpenViewIntent>(
-                onInvoke: (intent) => this._selectView(intent.view),
-              )
-            },
-            child: Focus(autofocus: true, child: Row(
-              children: [
-                NavigationBar(
-                  selectedIndex: _selectedIndex,
-                  onSelect: this._selectView,
-                  routes: routes,
-                ),
-                Expanded(child: _currentWidget)
-              ],
-              crossAxisAlignment: CrossAxisAlignment.start,
-            ),),
+      shortcuts: shortcuts,
+      child: Actions(
+        actions: <Type, CallbackAction>{
+          OpenViewIntent: CallbackAction<OpenViewIntent>(
+            onInvoke: (intent) => this._selectView(intent.view),
+          )
+        },
+        child: Focus(
+          autofocus: true,
+          child: Row(
+            children: [
+              NavigationBar(
+                selectedIndex: _selectedIndex,
+                onSelect: this._selectView,
+                routes: routes,
+              ),
+              Expanded(child: _currentWidget)
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
           ),
-        ));
+        ),
+      ),
+    ));
   }
 
   void _updateWidget() {
@@ -138,19 +141,14 @@ class NavigationBar extends StatelessWidget {
             children: this
                 .routes
                 .mapEnumerated((route, i) =>
-                NavigationItem(
-                    route, this.selectedIndex == i, () => this.onSelect(i)))
+                    NavigationItem(route, this.selectedIndex == i, () => this.onSelect(i)))
                 .toList()));
   }
 }
 
 extension MapWithIndex<T> on List<T> {
   List<R> mapEnumerated<R>(R Function(T, int i) callback) {
-    return this
-        .asMap()
-        .map((key, value) => MapEntry(key, callback(value, key)))
-        .values
-        .toList();
+    return this.asMap().map((key, value) => MapEntry(key, callback(value, key))).values.toList();
   }
 }
 
@@ -181,8 +179,7 @@ class NavigationItem extends StatelessWidget {
               color: color,
               size: 16,
             ),
-            Text(this.route.label,
-                style: textTheme.subtitle2.copyWith(color: color)),
+            Text(this.route.label, style: textTheme.subtitle2.copyWith(color: color)),
           ],
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

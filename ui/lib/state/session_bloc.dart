@@ -9,7 +9,9 @@ class SessionBloc extends Bloc<Session, Session> {
   final SessionApiClient client;
   StreamSubscription subscription;
 
-  SessionBloc(ClientChannel channel) : client = SessionApiClient(channel), super(Session.create()) {
+  SessionBloc(ClientChannel channel)
+      : client = SessionApiClient(channel),
+        super(Session.create()) {
     this.subscription = client.getSession(SessionRequest()).listen((value) => this.add(value));
   }
 

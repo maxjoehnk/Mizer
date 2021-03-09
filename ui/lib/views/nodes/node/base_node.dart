@@ -50,4 +50,3 @@ class BaseNode extends StatelessWidget {
     );
   }
 }
-

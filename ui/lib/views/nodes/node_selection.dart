@@ -55,7 +55,7 @@ class NodeSelection extends StatelessWidget {
   final Offset offset;
   final Function(Node_NodeType) onSelection;
 
-  NodeSelection(this.offset, { this.onSelection });
+  NodeSelection(this.offset, {this.onSelection});
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +66,9 @@ class NodeSelection extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.grey.shade800,
               borderRadius: BorderRadius.all(Radius.circular(2)),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)
-              ]),
+              boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
           child: Table(
-              defaultColumnWidth: FixedColumnWidth(COLUMN_WIDTH),
-              children: mapNodeEntries(NODES))),
+              defaultColumnWidth: FixedColumnWidth(COLUMN_WIDTH), children: mapNodeEntries(NODES))),
     );
   }
 
@@ -85,11 +81,11 @@ class NodeSelection extends StatelessWidget {
     for (var _ in columns[0]) {
       var row = TableRow(
           children: columns.map((column) {
-            if (rowIndex >= column.length) {
-              return Container();
-            }
-            return column[rowIndex];
-          }).toList());
+        if (rowIndex >= column.length) {
+          return Container();
+        }
+        return column[rowIndex];
+      }).toList());
       rows.add(row);
       rowIndex++;
     }
@@ -121,8 +117,7 @@ class NodeSelection extends StatelessWidget {
     for (var category in categories) {
       widgets.add(NodeCategory(category.text));
       for (var node in category.nodes) {
-        widgets.add(
-            NodeEntry(node.text, onTap: () => this.onSelection(node.nodeType)));
+        widgets.add(NodeEntry(node.text, onTap: () => this.onSelection(node.nodeType)));
       }
     }
     return widgets;
@@ -142,9 +137,8 @@ class NodeCategory extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         color: Colors.black26,
         height: ROW_HEIGHT,
-        child: Text(this.text,
-            style: TextStyle(
-                color: Colors.white.withOpacity(0.87), fontSize: 12)));
+        child:
+            Text(this.text, style: TextStyle(color: Colors.white.withOpacity(0.87), fontSize: 12)));
   }
 }
 
@@ -152,7 +146,7 @@ class NodeEntry extends StatefulWidget {
   final String text;
   final Function() onTap;
 
-  NodeEntry(this.text, { this.onTap });
+  NodeEntry(this.text, {this.onTap});
 
   @override
   _NodeEntryState createState() => _NodeEntryState();
@@ -170,8 +164,7 @@ class _NodeEntryState extends State<NodeEntry> {
         },
         child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
-            decoration: BoxDecoration(
-                color: hover ? Colors.black12 : Colors.transparent),
+            decoration: BoxDecoration(color: hover ? Colors.black12 : Colors.transparent),
             height: ROW_HEIGHT,
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             child: Text(this.widget.text)));

@@ -29,7 +29,7 @@ class GraphState {
     var identifier = getNodePortIdentifier(node.path, port.name, input);
     if (input) {
       return this.inputs[identifier];
-    }else {
+    } else {
       return this.outputs[identifier];
     }
   }
@@ -43,7 +43,7 @@ class GraphState {
 class GraphPortKey extends LabeledGlobalKey {
   final String identifier;
 
-  GraphPortKey(this.identifier): super(identifier);
+  GraphPortKey(this.identifier) : super(identifier);
 }
 
 String getIdentifierForChannelFrom(NodeConnection connection) {
@@ -61,7 +61,7 @@ String getNodePortIdentifier(String path, String port, bool input) {
 class GraphBloc extends Cubit<GraphState> {
   Nodes nodes;
 
-  GraphBloc(this.nodes): super(GraphState(nodes));
+  GraphBloc(this.nodes) : super(GraphState(nodes));
 
   void update(Nodes nodes) {
     this.nodes = nodes;

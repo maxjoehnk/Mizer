@@ -32,8 +32,7 @@ class NodesView extends StatefulWidget {
 
 class _NodesViewState extends State<NodesView> {
   final TransformationController controller = TransformationController(
-      Matrix4.translationValues(
-          (CANVAS_SIZE / 2) * -1, (CANVAS_SIZE / 2) * -1, 0));
+      Matrix4.translationValues((CANVAS_SIZE / 2) * -1, (CANVAS_SIZE / 2) * -1, 0));
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +46,8 @@ class _NodesViewState extends State<NodesView> {
             width: CANVAS_SIZE,
             height: CANVAS_SIZE,
             child: OverflowBox(
-                child: GraphEngine(
-                    nodes: this.widget.nodes,
-                    child: NodesViewer(this.widget.nodes)))));
+                child:
+                    GraphEngine(nodes: this.widget.nodes, child: NodesViewer(this.widget.nodes)))));
   }
 }
 
@@ -79,9 +77,7 @@ class _NodesViewerState extends State<NodesViewer> {
         // TODO: translate by parent position
         Offset offset = Offset(position.dx - canvasCenter, position.dy - canvasCenter) / MULTIPLIER;
         log("adding new node with type $nodeType at $offset");
-        context
-            .read<NodesBloc>()
-            .add(AddNode(nodeType: nodeType, position: offset));
+        context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: offset));
       },
     );
   }

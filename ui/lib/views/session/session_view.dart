@@ -9,8 +9,7 @@ class SessionView extends StatelessWidget {
     return BlocBuilder<SessionBloc, Session>(
         builder: (context, session) => ListView(
             padding: const EdgeInsets.all(8.0),
-            children:
-                session.devices.map((device) => SessionCard(device)).toList()));
+            children: session.devices.map((device) => SessionCard(device)).toList()));
   }
 }
 
@@ -27,8 +26,7 @@ class SessionCard extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(device.name),
         Text(device.ips.join(", ")),
-        Text(
-            "Clock: ${device.clock.master ? "master" : "slave"} (+${device.clock.drift}ms)"),
+        Text("Clock: ${device.clock.master ? "master" : "slave"} (+${device.clock.drift}ms)"),
         Text("Ping: ${device.ping}ms")
       ]),
     ));

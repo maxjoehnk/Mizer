@@ -16,25 +16,21 @@ class SessionDiscovery {
 
   Stream<AvailableSession> discover() {
     return client
-        .lookup<PtrResourceRecord>(
-        ResourceRecordQuery.serverPointer("_mizer._tcp"))
+        .lookup<PtrResourceRecord>(ResourceRecordQuery.serverPointer("_mizer._tcp"))
         .asyncMap(this._queryPointer);
   }
 
   Future<AvailableSession> _queryPointer(PtrResourceRecord record) async {
     SrvResourceRecord serviceRecord = await client
-        .lookup<SrvResourceRecord>(
-        ResourceRecordQuery.service(record.domainName))
+        .lookup<SrvResourceRecord>(ResourceRecordQuery.service(record.domainName))
         .first;
-    TxtResourceRecord textRecord = await client
-        .lookup<TxtResourceRecord>(ResourceRecordQuery.text(record.domainName))
-        .first;
+    TxtResourceRecord textRecord =
+        await client.lookup<TxtResourceRecord>(ResourceRecordQuery.text(record.domainName)).first;
     // TODO: check key for project
     var txtRecord = textRecord.text.split("=");
     var value = txtRecord[1];
 
-    return AvailableSession(
-        host: serviceRecord.target, port: serviceRecord.port, project: value);
+    return AvailableSession(host: serviceRecord.target, port: serviceRecord.port, project: value);
   }
 }
 
@@ -61,8 +57,7 @@ class AvailableSession {
 
 abstract class SessionDiscoveryEvent {}
 
-class SessionDiscoveryBloc
-    extends Bloc<AvailableSession, List<AvailableSession>> {
+class SessionDiscoveryBloc extends Bloc<AvailableSession, List<AvailableSession>> {
   StreamSubscription subscription;
 
   SessionDiscoveryBloc(SessionDiscovery discovery) : super([]) {
@@ -77,8 +72,7 @@ class SessionDiscoveryBloc
 
   @override
   Stream<List<AvailableSession>> mapEventToState(event) async* {
-    var existingIndex = state.indexWhere((element) =>
-    element.host == event.host);
+    var existingIndex = state.indexWhere((element) => element.host == event.host);
     if (existingIndex == -1) {
       yield [...this.state, event];
     } else {

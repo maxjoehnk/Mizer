@@ -18,13 +18,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = _getTheme();
     return MaterialApp(
       title: 'Mizer',
-      darkTheme: ThemeData.dark().copyWith(
-          primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent),
-      home: SessionProvider(discovery,
-          builder: (channel) => StateProvider(channel, child: Home())),
+      darkTheme: theme,
+      home: SessionProvider(discovery, builder: (channel) => StateProvider(channel, child: Home())),
       themeMode: ThemeMode.dark,
     );
+  }
+
+  ThemeData _getTheme() {
+    return ThemeData.dark()
+        .copyWith(primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent);
   }
 }

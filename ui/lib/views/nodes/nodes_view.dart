@@ -75,10 +75,13 @@ class _NodesViewerState extends State<NodesViewer> {
         ),
       ),
       onSelectNewNode: (nodeType, position) {
-        log("adding new node with type $nodeType at ${position / MULTIPLIER}");
+        double canvasCenter = CANVAS_SIZE / 2;
+        // TODO: translate by parent position
+        Offset offset = Offset(position.dx - canvasCenter, position.dy - canvasCenter) / MULTIPLIER;
+        log("adding new node with type $nodeType at $offset");
         context
             .read<NodesBloc>()
-            .add(AddNode(nodeType: nodeType, position: position / MULTIPLIER));
+            .add(AddNode(nodeType: nodeType, position: offset));
       },
     );
   }

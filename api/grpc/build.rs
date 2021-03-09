@@ -1,4 +1,5 @@
 fn main() {
+    println!("cargo:rerun-if-changed=protos");
     protoc_rust_grpc::Codegen::new()
         .out_dir("src/protos")
         .input("./protos/fixtures.proto")

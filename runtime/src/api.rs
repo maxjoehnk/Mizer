@@ -42,9 +42,14 @@ impl RuntimeApi {
         self.links.read()
     }
 
-    pub fn add_node(&self, node_type: NodeType, designer: NodeDesigner) -> anyhow::Result<NodeDescriptor<'_>> {
+    pub fn add_node(
+        &self,
+        node_type: NodeType,
+        designer: NodeDesigner,
+    ) -> anyhow::Result<NodeDescriptor<'_>> {
         let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::AddNode(node_type, designer.clone(), tx));
+        self.sender
+            .send(ApiCommand::AddNode(node_type, designer.clone(), tx));
 
         // TODO: this blocks, we should use the async method
         let path = rx.recv()?;

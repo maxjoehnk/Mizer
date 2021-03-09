@@ -46,11 +46,14 @@ impl PipelineNode for PixelDmxNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(OUTPUT_PORT.into(), PortMetadata {
-            port_type: PortType::Multi,
-            direction: PortDirection::Input,
-            ..Default::default()
-        })]
+        vec![(
+            OUTPUT_PORT.into(),
+            PortMetadata {
+                port_type: PortType::Multi,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

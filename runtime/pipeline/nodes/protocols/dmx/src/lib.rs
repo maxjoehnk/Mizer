@@ -38,11 +38,14 @@ impl PipelineNode for DmxOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![("value".into(), PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Input,
-            ..Default::default()
-        })]
+        vec![(
+            "value".into(),
+            PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

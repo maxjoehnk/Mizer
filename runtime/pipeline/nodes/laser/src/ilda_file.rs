@@ -29,11 +29,14 @@ impl PipelineNode for IldaFileNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![("frames".into(), PortMetadata {
-            port_type: PortType::Laser,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })]
+        vec![(
+            "frames".into(),
+            PortMetadata {
+                port_type: PortType::Laser,
+                direction: PortDirection::Output,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

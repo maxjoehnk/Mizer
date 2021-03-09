@@ -1,3 +1,4 @@
+use crate::Node::{DmxOutput, MidiInput, OscInput};
 use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_dmx_nodes::DmxOutputNode;
@@ -15,7 +16,6 @@ pub use mizer_sequence_nodes::SequenceNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
-use crate::Node::{DmxOutput, OscInput, MidiInput};
 
 #[derive(Debug, Clone, From)]
 pub enum Node {

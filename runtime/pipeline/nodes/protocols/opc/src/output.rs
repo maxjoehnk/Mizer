@@ -56,11 +56,14 @@ impl PipelineNode for OpcOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![("pixels".into(), PortMetadata {
-            port_type: PortType::Multi,
-            direction: PortDirection::Input,
-            ..Default::default()
-        })]
+        vec![(
+            "pixels".into(),
+            PortMetadata {
+                port_type: PortType::Multi,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

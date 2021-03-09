@@ -5,7 +5,7 @@ use crate::protos::{AddNodeRequest, NodePosition, NodesApi};
 use crate::protos::{
     ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
 };
-use mizer_node::{NodeDesigner, NodeType, PortType, PortId, PortMetadata, PortDirection};
+use mizer_node::{NodeDesigner, NodeType, PortDirection, PortId, PortMetadata, PortType};
 use mizer_runtime::{NodeDescriptor, RuntimeApi};
 
 pub struct NodesApiImpl {
@@ -68,10 +68,13 @@ impl NodesApi for NodesApiImpl {
                 x: position.x,
                 y: position.y,
             },
-            scale: 1.
+            scale: 1.,
         };
 
-        let node = self.runtime.add_node(req.message.field_type.into(), designer).unwrap();
+        let node = self
+            .runtime
+            .add_node(req.message.field_type.into(), designer)
+            .unwrap();
 
         resp.finish(node.into())
     }
@@ -140,7 +143,10 @@ impl From<NodeDescriptor<'_>> for Node {
             designer: SingularPtrField::some(descriptor.designer.into()),
             ..Default::default()
         };
-        let (inputs, outputs) = descriptor.ports.into_iter().partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
+        let (inputs, outputs) = descriptor
+            .ports
+            .into_iter()
+            .partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
 
         for input in inputs {
             node.inputs.push(input.into());

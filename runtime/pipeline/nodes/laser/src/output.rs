@@ -32,11 +32,14 @@ impl PipelineNode for LaserNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![("input".into(), PortMetadata {
-            port_type: PortType::Laser,
-            direction: PortDirection::Input,
-            ..Default::default()
-        })]
+        vec![(
+            "input".into(),
+            PortMetadata {
+                port_type: PortType::Laser,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

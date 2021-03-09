@@ -1,13 +1,13 @@
-use crate::api::{RuntimeApi, ApiCommand};
+use crate::api::{ApiCommand, RuntimeApi};
 use dashmap::DashMap;
 use mizer_clock::{Clock, SystemClock};
 use mizer_execution_planner::*;
 use mizer_module::Runtime;
 use mizer_node::*;
+use mizer_nodes::Node;
 use mizer_pipeline::*;
 use mizer_processing::*;
 use mizer_project_files::{NodeConfig, Project};
-use mizer_nodes::Node;
 use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::io::Write;
@@ -113,7 +113,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             Fixture(mut node) => {
                 node.fixture_manager = self.injector.get().cloned();
                 self.add_node(path, node)
-            },
+            }
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
             Fader(node) => self.add_node(path, node),
@@ -262,13 +262,20 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     fn handle_api_commands(&mut self) {
         match self.api_recv.try_recv() {
-            Ok(ApiCommand::AddNode(node_type, designer, sender)) => self.handle_add_node(node_type, designer, sender),
-            Err(flume::TryRecvError::Empty) => {},
+            Ok(ApiCommand::AddNode(node_type, designer, sender)) => {
+                self.handle_add_node(node_type, designer, sender)
+            }
+            Err(flume::TryRecvError::Empty) => {}
             Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
         }
     }
 
-    fn handle_add_node(&mut self, node_type: NodeType, designer: NodeDesigner, sender: flume::Sender<NodePath>) {
+    fn handle_add_node(
+        &mut self,
+        node_type: NodeType,
+        designer: NodeDesigner,
+        sender: flume::Sender<NodePath>,
+    ) {
         let path: NodePath = format!("/{}", node_type.get_name(1)).into();
         self.add_project_node(path.clone(), node_type.into());
         self.add_designer_node(path.clone(), designer);

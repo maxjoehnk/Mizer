@@ -8,12 +8,12 @@ use mizer_devices::DeviceModule;
 use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
+use mizer_media::api::MediaServerApi;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_protocol_dmx::*;
 use mizer_runtime::DefaultRuntime;
-use mizer_media::api::MediaServerApi;
 
 mod flags;
 
@@ -38,7 +38,13 @@ pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
     let media_server_api = media_server.open_api(&handle)?;
     import_media_files(&media_paths, &media_server_api)?;
 
-    let grpc = setup_grpc_api(&flags, handle, &mut runtime, fixture_manager, &media_server_api)?;
+    let grpc = setup_grpc_api(
+        &flags,
+        handle,
+        &mut runtime,
+        fixture_manager,
+        &media_server_api,
+    )?;
     setup_media_api(flags, media_server_api)?;
 
     Ok(Mizer { runtime, grpc })
@@ -65,7 +71,10 @@ impl Mizer {
     }
 }
 
-fn register_device_module(runtime: &mut DefaultRuntime, handle: &tokio::runtime::Handle) -> anyhow::Result<()> {
+fn register_device_module(
+    runtime: &mut DefaultRuntime,
+    handle: &tokio::runtime::Handle,
+) -> anyhow::Result<()> {
     let (device_module, device_manager) = DeviceModule::new();
     handle.spawn(device_manager.clone().start_discovery());
     device_module.register(runtime)?;
@@ -98,7 +107,11 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     Ok(ofl_provider)
 }
 
-fn load_project_files(flags: &Flags, runtime: &mut DefaultRuntime, media_paths: &mut Vec<String>) -> anyhow::Result<()> {
+fn load_project_files(
+    flags: &Flags,
+    runtime: &mut DefaultRuntime,
+    media_paths: &mut Vec<String>,
+) -> anyhow::Result<()> {
     log::info!("Loading projects...");
     for file in &flags.files {
         let project = Project::load_file(&file)?;
@@ -134,7 +147,10 @@ fn load_fixtures(fixture_manager: &FixtureManager, library: &FixtureLibrary, pro
     }
 }
 
-fn import_media_files(media_paths: &[String], media_server_api: &MediaServerApi) -> anyhow::Result<()> {
+fn import_media_files(
+    media_paths: &[String],
+    media_server_api: &MediaServerApi,
+) -> anyhow::Result<()> {
     let handle = tokio::runtime::Handle::try_current()?;
     for path in media_paths {
         let media_discovery = MediaDiscovery::new(media_server_api.clone(), path);
@@ -143,7 +159,13 @@ fn import_media_files(media_paths: &[String], media_server_api: &MediaServerApi)
     Ok(())
 }
 
-fn setup_grpc_api(flags: &Flags, handle: tokio::runtime::Handle, runtime: &mut DefaultRuntime, fixture_manager: FixtureManager, media_server_api: &MediaServerApi) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
+fn setup_grpc_api(
+    flags: &Flags,
+    handle: tokio::runtime::Handle,
+    runtime: &mut DefaultRuntime,
+    fixture_manager: FixtureManager,
+    media_server_api: &MediaServerApi,
+) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
     let grpc = if !flags.disable_grpc_api {
         Some(mizer_grpc_api::start(
             handle.clone(),

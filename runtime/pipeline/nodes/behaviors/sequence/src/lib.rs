@@ -63,13 +63,14 @@ impl PipelineNode for SequenceNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            ("value".into(), PortMetadata {
+        vec![(
+            "value".into(),
+            PortMetadata {
                 port_type: PortType::Single,
                 direction: PortDirection::Output,
                 ..Default::default()
-            })
-        ]
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

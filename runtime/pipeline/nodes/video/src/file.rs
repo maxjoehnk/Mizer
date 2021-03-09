@@ -34,11 +34,14 @@ impl PipelineNode for VideoFileNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![("output".into(), PortMetadata {
-            port_type: PortType::Gstreamer,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })]
+        vec![(
+            "output".into(),
+            PortMetadata {
+                port_type: PortType::Gstreamer,
+                direction: PortDirection::Output,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

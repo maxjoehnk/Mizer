@@ -59,11 +59,16 @@ impl PipelineNode for FixtureNode {
                 fixture
                     .get_channels()
                     .iter()
-                    .map(|channel| (channel.name.as_str().into(), PortMetadata {
-                        port_type: PortType::Single,
-                        direction: PortDirection::Input,
-                        ..Default::default()
-                    }))
+                    .map(|channel| {
+                        (
+                            channel.name.as_str().into(),
+                            PortMetadata {
+                                port_type: PortType::Single,
+                                direction: PortDirection::Input,
+                                ..Default::default()
+                            },
+                        )
+                    })
                     .collect()
             })
             .unwrap_or_default()

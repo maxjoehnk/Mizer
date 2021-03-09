@@ -32,15 +32,24 @@ impl PipelineNode for VideoColorBalanceNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![("input".into(), PortMetadata {
-            port_type: PortType::Gstreamer,
-            direction: PortDirection::Input,
-            ..Default::default()
-        }), ("output".into(), PortMetadata {
-            port_type: PortType::Gstreamer,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })]
+        vec![
+            (
+                "input".into(),
+                PortMetadata {
+                    port_type: PortType::Gstreamer,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "output".into(),
+                PortMetadata {
+                    port_type: PortType::Gstreamer,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
+        ]
     }
 
     fn node_type(&self) -> NodeType {

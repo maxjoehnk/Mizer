@@ -20,8 +20,9 @@ jobs:
           args: --release --all-features
       - uses: actions/upload-artifact@v2
         with:
-          name: mizer
+          name: linux-server
           path: target/release/mizer
+          if-no-files-found: error
   build-client-linux:
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +47,7 @@ jobs:
         with:
           name: linux-client
           path: ui/build/linux/release/bundle
+          if-no-files-found: error
   build-client-android:
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +67,7 @@ jobs:
         with:
           name: android-client
           path: ui/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
   build-client-macos:
     runs-on: macos-latest
     steps:
@@ -81,3 +84,4 @@ jobs:
         with:
           name: macos-client
           path: ui/build/macos/Build/Products/Release/ui.app
+          if-no-files-found: error

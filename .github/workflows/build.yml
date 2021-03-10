@@ -93,6 +93,6 @@ jobs:
         working-directory: ui
       - uses: actions/upload-artifact@v2
         with:
-          name: macos-client
+          name: windows-client
           path: ui/build/windows/runner/release
           if-no-files-found: error

@@ -59,3 +59,20 @@ jobs:
         with:
           name: android-client
           path: ui/build/app/outputs/flutter-apk/app-release.apk
+  build-client-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: beta
+      - run: flutter config --enable-macos-desktop
+      - run: flutter pub get
+        working-directory: ui
+      - run: flutter build macos
+        working-directory: ui
+      - run: ls ui/build/macos
+      - uses: actions/upload-artifact@v2
+        with:
+          name: macos-client
+          path: ui/build/macos/Build/Products/Release

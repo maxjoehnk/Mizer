@@ -71,7 +71,6 @@ jobs:
         working-directory: ui
       - run: flutter build macos
         working-directory: ui
-      - run: ls ui/build/macos
       - uses: actions/upload-artifact@v2
         with:
           name: macos-client

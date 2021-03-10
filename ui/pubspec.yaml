@@ -18,6 +18,11 @@ dependencies:
   file_selector_linux: ^0.0.2
   file_selector_macos: ^0.0.4
   multicast_dns: ^0.2.2
+  menubar:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding
+      path: plugins/menubar
+      ref: 85dde09
 
 dev_dependencies:
   flutter_test:

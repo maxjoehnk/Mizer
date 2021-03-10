@@ -5,6 +5,7 @@ import 'package:mizer/session/session_selector.dart';
 import 'package:mizer/state/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final discovery = SessionDiscovery();
   await discovery.start();
 

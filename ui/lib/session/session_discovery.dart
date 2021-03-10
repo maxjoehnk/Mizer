@@ -16,7 +16,7 @@ class SessionDiscovery {
 
   Stream<AvailableSession> discover() {
     return client
-        .lookup<PtrResourceRecord>(ResourceRecordQuery.serverPointer("_mizer._tcp"))
+        .lookup<PtrResourceRecord>(ResourceRecordQuery.serverPointer("_mizer._tcp"), timeout: Duration(days: 1))
         .asyncMap(this._queryPointer);
   }
 

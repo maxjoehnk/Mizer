@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mizer/menu.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
@@ -10,61 +11,35 @@ import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/session/session_view.dart';
 import 'package:mizer/views/settings/settings_view.dart';
 
+import 'actions/actions.dart';
+
 List<Route> routes = [
-  Route(() => LayoutView(), Icons.view_quilt_outlined, "Layout"),
-  Route(() => FetchNodesView(), Icons.account_tree_outlined, "Nodes"),
-  Route(() => FixturesView(), MdiIcons.spotlight, "Fixtures"),
-  Route(() => MediaView(), Icons.perm_media_outlined, "Media"),
-  Route(() => ConnectionsView(), Icons.device_hub, "Devices"),
-  Route(() => SessionView(), Icons.mediation, "Session"),
-  Route(() => SettingsView(), Icons.settings, "Settings"),
+  Route(() => LayoutView(), Icons.view_quilt_outlined, "Layout", LogicalKeyboardKey.digit1, View.Layout),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, "Nodes", LogicalKeyboardKey.digit2, View.Nodes),
+  Route(() => FixturesView(), MdiIcons.spotlight, "Fixtures", LogicalKeyboardKey.digit3, View.Fixtures),
+  Route(() => MediaView(), Icons.perm_media_outlined, "Media", LogicalKeyboardKey.digit4, View.Media),
+  Route(() => ConnectionsView(), Icons.device_hub, "Devices", LogicalKeyboardKey.digit5, View.Devices),
+  Route(() => SessionView(), Icons.mediation, "Session", LogicalKeyboardKey.digit6, View.Session),
+  Route(() => SettingsView(), Icons.settings, "Settings", LogicalKeyboardKey.digit7, View.Settings),
 ];
+
+Map<LogicalKeySet, Intent> shortcuts = getShortcuts(routes);
+
+Map<LogicalKeySet, Intent> getShortcuts(List<Route> routes) {
+  Map<LogicalKeySet, Intent> shortcuts = {};
+  for (var route in routes) {
+    shortcuts[LogicalKeySet(
+      LogicalKeyboardKey.alt,
+      route.key,
+    )] = OpenViewIntent(route.viewKey);
+  }
+  return shortcuts;
+}
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-
-class OpenViewIntent extends Intent {
-  final int view;
-
-  const OpenViewIntent(this.view);
-}
-
-Map<LogicalKeySet, Intent> shortcuts = {
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit1,
-  ): const OpenViewIntent(0),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit2,
-  ): const OpenViewIntent(1),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit3,
-  ): const OpenViewIntent(2),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit4,
-  ): const OpenViewIntent(3),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit5,
-  ): const OpenViewIntent(4),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit6,
-  ): const OpenViewIntent(5),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit7,
-  ): const OpenViewIntent(6),
-  LogicalKeySet(
-    LogicalKeyboardKey.alt,
-    LogicalKeyboardKey.digit8,
-  ): const OpenViewIntent(7),
-};
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
@@ -79,24 +54,26 @@ class _HomeState extends State<Home> {
     return Scaffold(
         body: Shortcuts(
       shortcuts: shortcuts,
-      child: Actions(
-        actions: <Type, CallbackAction>{
-          OpenViewIntent: CallbackAction<OpenViewIntent>(
-            onInvoke: (intent) => this._selectView(intent.view),
-          )
-        },
-        child: Focus(
-          autofocus: true,
-          child: Row(
-            children: [
-              NavigationBar(
-                selectedIndex: _selectedIndex,
-                onSelect: this._selectView,
-                routes: routes,
-              ),
-              Expanded(child: _currentWidget)
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: ApplicationMenu(
+        child: Actions(
+          actions: <Type, CallbackAction>{
+            OpenViewIntent: CallbackAction<OpenViewIntent>(
+              onInvoke: (intent) => this._selectView(intent.view.index),
+            )
+          },
+          child: Focus(
+            autofocus: true,
+            child: Row(
+              children: [
+                NavigationBar(
+                  selectedIndex: _selectedIndex,
+                  onSelect: this._selectView,
+                  routes: routes,
+                ),
+                Expanded(child: _currentWidget)
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),
           ),
         ),
       ),
@@ -119,8 +96,10 @@ class Route {
   final WidgetFunction view;
   final IconData icon;
   final String label;
+  final LogicalKeyboardKey key;
+  final View viewKey;
 
-  Route(this.view, this.icon, this.label);
+  Route(this.view, this.icon, this.label, this.key, this.viewKey);
 }
 
 typedef WidgetFunction = Widget Function();

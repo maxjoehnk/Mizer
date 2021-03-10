@@ -37,12 +37,6 @@ jobs:
         working-directory: ui
       - run: flutter build linux
         working-directory: ui
-      - run: ls
-        working-directory: ui/build/linux
-      - run: ls
-        working-directory: ui/build/linux/release
-      - run: ls
-        working-directory: ui/build/linux/release/bundle
       - uses: actions/upload-artifact@v2
         with:
           name: linux-client

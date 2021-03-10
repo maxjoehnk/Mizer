@@ -36,10 +36,16 @@ jobs:
         working-directory: ui
       - run: flutter build linux
         working-directory: ui
+      - run: ls
+        working-directory: ui/build/linux
+      - run: ls
+        working-directory: ui/build/linux/release
+      - run: ls
+        working-directory: ui/build/linux/release/bundle
       - uses: actions/upload-artifact@v2
         with:
           name: linux-client
-          path: ui/build/linux/release/bundle/
+          path: ui/build/linux/release/bundle
   build-client-android:
     runs-on: ubuntu-latest
     steps:
@@ -74,4 +80,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: macos-client
-          path: ui/build/macos/Build/Products/Release
+          path: ui/build/macos/Build/Products/Release/ui.app

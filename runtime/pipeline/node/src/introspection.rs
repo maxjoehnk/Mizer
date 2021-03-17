@@ -8,6 +8,7 @@ pub struct NodeDetails {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
 pub enum NodeType {
     Fader,
+    Button,
     DmxOutput,
     Oscillator,
     Clock,
@@ -35,6 +36,7 @@ impl NodeType {
 
         let name = match self {
             Fader => "fader",
+            Button => "button",
             DmxOutput => "dmx-output",
             Oscillator => "oscillator",
             Clock => "clock",

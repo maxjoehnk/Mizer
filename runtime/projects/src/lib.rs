@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::fs::File;
 use std::path::Path;
+use mizer_layouts::ControlConfig;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -26,6 +27,8 @@ pub struct Project {
     pub fixtures: Vec<FixtureConfig>,
     #[serde(default, rename = "media")]
     pub media_paths: Vec<String>,
+    #[serde(default)]
+    pub layouts: HashMap<String, Vec<ControlConfig>>,
 }
 
 impl Project {
@@ -114,6 +117,7 @@ pub enum NodeConfig {
     Fixture(mizer_nodes::FixtureNode),
     OscInput(mizer_nodes::OscInputNode),
     Fader(mizer_nodes::FaderNode),
+    Button(mizer_nodes::ButtonNode),
     VideoFile(mizer_nodes::VideoFileNode),
     VideoEffect(mizer_nodes::VideoEffectNode),
     VideoTransform(mizer_nodes::VideoTransformNode),
@@ -136,6 +140,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::IldaFile(node) => mizer_nodes::Node::IldaFile(node),
             NodeConfig::Laser(node) => mizer_nodes::Node::Laser(node),
             NodeConfig::Fader(node) => mizer_nodes::Node::Fader(node),
+            NodeConfig::Button(node) => mizer_nodes::Node::Button(node),
             // NodeConfig::MidiInput(node) => mizer_nodes::Node::MidiInput(node),
             // NodeConfig::MidiOutput(node) => mizer_nodes::Node::MidiOutput(node),
             NodeConfig::OpcOutput(node) => mizer_nodes::Node::OpcOutput(node),
@@ -309,8 +314,7 @@ mod tests {
         nodes:
         - type: fader
           path: /fader-0
-          config:
-            value: 0.5
+          config: {}
         "#;
 
         let result = Project::load(content)?;
@@ -320,7 +324,7 @@ mod tests {
             result.nodes[0],
             Node {
                 path: "/fader-0".into(),
-                config: NodeConfig::Fader(mizer_nodes::FaderNode { value: 0.5 }),
+                config: NodeConfig::Fader(mizer_nodes::FaderNode {}),
                 designer: Default::default(),
                 properties: Default::default(),
             }

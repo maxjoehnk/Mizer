@@ -20,6 +20,7 @@ mizer-ports = { path = "pipeline/ports"}
 mizer-processing = { path = "processing" }
 mizer-project-files = { path = "projects" }
 mizer-module = { path = "module" }
+mizer-layouts = { path = "layouts" }
 
 [dev-dependencies]
 env_logger = "0.7"

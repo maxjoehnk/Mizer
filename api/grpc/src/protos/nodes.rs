@@ -345,6 +345,358 @@ impl ::protobuf::reflect::ProtobufValue for NodesRequest {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct WriteControl {
+    // message fields
+    pub path: ::std::string::String,
+    pub port: ::std::string::String,
+    pub value: f64,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a WriteControl {
+    fn default() -> &'a WriteControl {
+        <WriteControl as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteControl {
+    pub fn new() -> WriteControl {
+        ::std::default::Default::default()
+    }
+
+    // string path = 1;
+
+
+    pub fn get_path(&self) -> &str {
+        &self.path
+    }
+    pub fn clear_path(&mut self) {
+        self.path.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
+    }
+
+    // Take field
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
+    }
+
+    // string port = 2;
+
+
+    pub fn get_port(&self) -> &str {
+        &self.port
+    }
+    pub fn clear_port(&mut self) {
+        self.port.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_port(&mut self, v: ::std::string::String) {
+        self.port = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_port(&mut self) -> &mut ::std::string::String {
+        &mut self.port
+    }
+
+    // Take field
+    pub fn take_port(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.port, ::std::string::String::new())
+    }
+
+    // double value = 3;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+}
+
+impl ::protobuf::Message for WriteControl {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.port)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.path);
+        }
+        if !self.port.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.port);
+        }
+        if self.value != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.path.is_empty() {
+            os.write_string(1, &self.path)?;
+        }
+        if !self.port.is_empty() {
+            os.write_string(2, &self.port)?;
+        }
+        if self.value != 0. {
+            os.write_double(3, self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> WriteControl {
+        WriteControl::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "path",
+                |m: &WriteControl| { &m.path },
+                |m: &mut WriteControl| { &mut m.path },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "port",
+                |m: &WriteControl| { &m.port },
+                |m: &mut WriteControl| { &mut m.port },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &WriteControl| { &m.value },
+                |m: &mut WriteControl| { &mut m.value },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteControl>(
+                "WriteControl",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static WriteControl {
+        static instance: ::protobuf::rt::LazyV2<WriteControl> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(WriteControl::new)
+    }
+}
+
+impl ::protobuf::Clear for WriteControl {
+    fn clear(&mut self) {
+        self.path.clear();
+        self.port.clear();
+        self.value = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for WriteControl {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteControl {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct WriteResponse {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a WriteResponse {
+    fn default() -> &'a WriteResponse {
+        <WriteResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteResponse {
+    pub fn new() -> WriteResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for WriteResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> WriteResponse {
+        WriteResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteResponse>(
+                "WriteResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static WriteResponse {
+        static instance: ::protobuf::rt::LazyV2<WriteResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(WriteResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for WriteResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for WriteResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct Nodes {
     // message fields
     pub nodes: ::protobuf::RepeatedField<Node>,
@@ -1253,6 +1605,7 @@ impl ::protobuf::reflect::ProtobufValue for Node {
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum Node_NodeType {
     Fader = 0,
+    Button = 20,
     DmxOutput = 1,
     Oscillator = 2,
     Clock = 3,
@@ -1282,6 +1635,7 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
     fn from_i32(value: i32) -> ::std::option::Option<Node_NodeType> {
         match value {
             0 => ::std::option::Option::Some(Node_NodeType::Fader),
+            20 => ::std::option::Option::Some(Node_NodeType::Button),
             1 => ::std::option::Option::Some(Node_NodeType::DmxOutput),
             2 => ::std::option::Option::Some(Node_NodeType::Oscillator),
             3 => ::std::option::Option::Some(Node_NodeType::Clock),
@@ -1308,6 +1662,7 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
     fn values() -> &'static [Self] {
         static values: &'static [Node_NodeType] = &[
             Node_NodeType::Fader,
+            Node_NodeType::Button,
             Node_NodeType::DmxOutput,
             Node_NodeType::Oscillator,
             Node_NodeType::Clock,
@@ -2015,39 +2370,43 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0bnodes.proto\x12\x05mizer\"k\n\x0eAddNodeRequest\x12(\n\x04type\x18\
     \x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12/\n\x08position\
     \x18\x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\"\x0e\n\x0cNo\
-    desRequest\"]\n\x05Nodes\x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer\
-    .NodeR\x05nodes\x121\n\x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeC\
-    onnectionR\x08channels\"\xde\x01\n\x0eNodeConnection\x12\x1e\n\ntargetNo\
-    de\x18\x01\x20\x01(\tR\ntargetNode\x12+\n\ntargetPort\x18\x02\x20\x01(\
-    \x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\
-    \tR\nsourceNode\x12+\n\nsourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\
-    \nsourcePort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelP\
-    rotocolR\x08protocol\"\xfd\x03\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\
-    \x0e2\x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01\
-    (\tR\x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06i\
-    nputs\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\
-    \x12/\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08des\
-    igner\"\xb9\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\r\n\tDmxOutput\
-    \x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\x03\x12\x0c\
-    \n\x08OscInput\x10\x04\x12\r\n\tVideoFile\x10\x05\x12\x0f\n\x0bVideoOutp\
-    ut\x10\x06\x12\x0f\n\x0bVideoEffect\x10\x07\x12\x15\n\x11VideoColorBalan\
-    ce\x10\x08\x12\x12\n\x0eVideoTransform\x10\t\x12\n\n\x06Script\x10\n\x12\
-    \x0e\n\nPixelToDmx\x10\x0b\x12\x10\n\x0cPixelPattern\x10\x0c\x12\r\n\tOp\
-    cOutput\x10\r\x12\x0b\n\x07Fixture\x10\x0e\x12\x0c\n\x08Sequence\x10\x0f\
-    \x12\r\n\tMidiInput\x10\x10\x12\x0e\n\nMidiOutput\x10\x11\x12\t\n\x05Las\
-    er\x10\x12\x12\x0c\n\x08IldaFile\x10\x13\"*\n\x0cNodePosition\x12\x0c\n\
-    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
-    \x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.\
-    mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\
-    \x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
-    2\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08prot\
-    ocol*w\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\
-    \x01\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05L\
-    aser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\
-    \n\x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082l\n\x08NodesApi\x12/\n\
-    \x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\
-    \x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0b\x06prot\
-    o3\
+    desRequest\"L\n\x0cWriteControl\x12\x12\n\x04path\x18\x01\x20\x01(\tR\
+    \x04path\x12\x12\n\x04port\x18\x02\x20\x01(\tR\x04port\x12\x14\n\x05valu\
+    e\x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"]\n\x05Nodes\
+    \x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\x121\n\
+    \x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeConnectionR\x08channels\
+    \"\xde\x01\n\x0eNodeConnection\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\
+    \ntargetNode\x12+\n\ntargetPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\nt\
+    argetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\n\
+    sourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08p\
+    rotocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\
+    \x89\x04\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
+    odeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\
+    \x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07out\
+    puts\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12/\n\x08designer\
+    \x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\"\xc5\x02\n\
+    \x08NodeType\x12\t\n\x05Fader\x10\0\x12\n\n\x06Button\x10\x14\x12\r\n\tD\
+    mxOutput\x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\x03\
+    \x12\x0c\n\x08OscInput\x10\x04\x12\r\n\tVideoFile\x10\x05\x12\x0f\n\x0bV\
+    ideoOutput\x10\x06\x12\x0f\n\x0bVideoEffect\x10\x07\x12\x15\n\x11VideoCo\
+    lorBalance\x10\x08\x12\x12\n\x0eVideoTransform\x10\t\x12\n\n\x06Script\
+    \x10\n\x12\x0e\n\nPixelToDmx\x10\x0b\x12\x10\n\x0cPixelPattern\x10\x0c\
+    \x12\r\n\tOpcOutput\x10\r\x12\x0b\n\x07Fixture\x10\x0e\x12\x0c\n\x08Sequ\
+    ence\x10\x0f\x12\r\n\tMidiInput\x10\x10\x12\x0e\n\nMidiOutput\x10\x11\
+    \x12\t\n\x05Laser\x10\x12\x12\x0c\n\x08IldaFile\x10\x13\"*\n\x0cNodePosi\
+    tion\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\
+    \x20\x01(\x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\
+    \x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\
+    \x02\x20\x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.Chan\
+    nelProtocolR\x08protocol*w\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\
+    \x12\t\n\x05Multi\x10\x01\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\
+    \x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\
+    \x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082\
+    \xae\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
+    \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
+    \x0b.mizer.Node\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteContr\
+    ol\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

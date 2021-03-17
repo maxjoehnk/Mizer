@@ -1,0 +1,55 @@
+nodes:
+  - type: dmx-output
+    path: /dmx-output-0
+    config:
+      channel: 0
+    designer:
+      position:
+        x: 5
+        y: 0
+      scale: 1
+  - type: dmx-output
+    path: /dmx-output-1
+    config:
+      channel: 1
+    designer:
+      position:
+        x: 5
+        y: 5
+      scale: 1
+  - type: fader
+    path: /fader-0
+    config: {}
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
+  - type: button
+    path: /button-0
+    config: {}
+    designer:
+      position:
+        x: 0
+        y: 5
+      scale: 1
+layouts:
+  default:
+    - node: /fader-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 4
+    - node: /button-0
+      position:
+        x: 1
+        y: 0
+      size:
+        width: 1
+        height: 1
+
+channels:
+  - value@/fader-0 -> value@/dmx-output-1
+  - value@/button-0 -> value@/dmx-output-0

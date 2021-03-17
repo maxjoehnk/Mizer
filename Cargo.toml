@@ -10,6 +10,7 @@ members = [
     "runtime/clock",
     "runtime/execution-planner",
     "runtime/injector",
+    "runtime/layouts",
     "runtime/module",
     "runtime/session",
     "runtime/pipeline",

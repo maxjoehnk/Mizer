@@ -32,6 +32,19 @@ const NodesRequest$json = const {
   '1': 'NodesRequest',
 };
 
+const WriteControl$json = const {
+  '1': 'WriteControl',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'port', '3': 2, '4': 1, '5': 9, '10': 'port'},
+    const {'1': 'value', '3': 3, '4': 1, '5': 1, '10': 'value'},
+  ],
+};
+
+const WriteResponse$json = const {
+  '1': 'WriteResponse',
+};
+
 const Nodes$json = const {
   '1': 'Nodes',
   '2': const [
@@ -67,6 +80,7 @@ const Node_NodeType$json = const {
   '1': 'NodeType',
   '2': const [
     const {'1': 'Fader', '2': 0},
+    const {'1': 'Button', '2': 20},
     const {'1': 'DmxOutput', '2': 1},
     const {'1': 'Oscillator', '2': 2},
     const {'1': 'Clock', '2': 3},

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -75,16 +76,19 @@ class PortDot extends StatelessWidget {
   Widget build(BuildContext context) {
     var color = getColorForProtocol(port.protocol);
 
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-          gradient: RadialGradient(colors: [color.shade600, color.shade500]),
-          shadows: [
-            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
-          ],
-          shape: CircleBorder(side: BorderSide.none)),
-      child: Container(
-        width: DOT_SIZE,
-        height: DOT_SIZE,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+            gradient: RadialGradient(colors: [color.shade600, color.shade500]),
+            shadows: [
+              BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
+            ],
+            shape: CircleBorder(side: BorderSide.none)),
+        child: Container(
+          width: DOT_SIZE,
+          height: DOT_SIZE,
+        ),
       ),
     );
   }

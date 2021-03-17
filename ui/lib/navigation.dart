@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/menu.dart';
@@ -144,24 +145,27 @@ class NavigationItem extends StatelessWidget {
     var textTheme = theme.textTheme;
     var color = this.selected ? theme.primaryColor : theme.hintColor;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: this.onSelect,
-      child: Container(
-        height: 64,
-        color: this.selected ? Colors.black12 : null,
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-        child: Column(
-          children: [
-            Icon(
-              this.route.icon,
-              color: color,
-              size: 16,
-            ),
-            Text(this.route.label, style: textTheme.subtitle2.copyWith(color: color)),
-          ],
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: this.onSelect,
+        child: Container(
+          height: 64,
+          color: this.selected ? Colors.black12 : null,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          child: Column(
+            children: [
+              Icon(
+                this.route.icon,
+                color: color,
+                size: 16,
+              ),
+              Text(this.route.label, style: textTheme.subtitle2.copyWith(color: color)),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
         ),
       ),
     );

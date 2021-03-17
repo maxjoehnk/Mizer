@@ -1,0 +1,66 @@
+use serde::{Deserialize, Serialize};
+
+use mizer_node::*;
+
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+pub struct FaderNode {
+    // #[serde(default)]
+    // pub value: f64,
+}
+
+impl PipelineNode for FaderNode {
+    fn details(&self) -> NodeDetails {
+        NodeDetails {
+            name: "FaderNode".into(),
+        }
+    }
+
+    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
+        Some(PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Output,
+            ..Default::default()
+        })
+    }
+
+
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![(
+            "value".into(),
+            PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        ), (
+            "value".into(),
+            PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Output,
+                ..Default::default()
+            },
+        )]
+    }
+
+    fn node_type(&self) -> NodeType {
+        NodeType::Fader
+    }
+}
+
+impl ProcessingNode for FaderNode {
+    type State = f64;
+
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        if let Some(value) = context.read_port::<_, f64>("value") {
+            *state = value;
+        }
+        context.write_port("value", *state);
+
+        Ok(())
+    }
+
+    fn create_state(&self) -> Self::State {
+        Default::default()
+    }
+}
+

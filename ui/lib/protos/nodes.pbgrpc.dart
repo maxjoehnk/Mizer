@@ -22,6 +22,11 @@ class NodesApiClient extends $grpc.Client {
       '/mizer.NodesApi/AddNode',
       ($0.AddNodeRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
+  static final _$writeControlValue =
+      $grpc.ClientMethod<$0.WriteControl, $0.WriteResponse>(
+          '/mizer.NodesApi/WriteControlValue',
+          ($0.WriteControl value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.WriteResponse.fromBuffer(value));
 
   NodesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -36,6 +41,12 @@ class NodesApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Node> addNode($0.AddNodeRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$addNode, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.WriteResponse> writeControlValue(
+      $0.WriteControl request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$writeControlValue, request, options: options);
   }
 }
 
@@ -57,6 +68,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.AddNodeRequest.fromBuffer(value),
         ($0.Node value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.WriteControl, $0.WriteResponse>(
+        'WriteControlValue',
+        writeControlValue_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.WriteControl.fromBuffer(value),
+        ($0.WriteResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Nodes> getNodes_Pre(
@@ -69,8 +87,15 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return addNode(call, await request);
   }
 
+  $async.Future<$0.WriteResponse> writeControlValue_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.WriteControl> request) async {
+    return writeControlValue(call, await request);
+  }
+
   $async.Future<$0.Nodes> getNodes(
       $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Node> addNode(
       $grpc.ServiceCall call, $0.AddNodeRequest request);
+  $async.Future<$0.WriteResponse> writeControlValue(
+      $grpc.ServiceCall call, $0.WriteControl request);
 }

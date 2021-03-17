@@ -20,6 +20,17 @@ pub struct PortMetadata {
     pub dimensions: Option<(u64, u64)>,
 }
 
+impl PortMetadata {
+    pub fn is_input(&self) -> bool {
+        matches!(self.direction, PortDirection::Input)
+    }
+
+    pub fn is_output(&self) -> bool {
+        matches!(self.direction, PortDirection::Output)
+    }
+}
+
+// TODO: add passthrough/bidirectional support
 #[derive(Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
 pub enum PortDirection {
     Input,

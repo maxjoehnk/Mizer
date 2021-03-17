@@ -1,20 +1,24 @@
 use dashmap::mapref::one::Ref;
 use dashmap::DashMap;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
+use mizer_layouts::Layout;
 use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::sync::Arc;
 
+#[derive(Clone)]
 pub struct RuntimeApi {
     pub(crate) nodes: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     pub(crate) designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
+    pub(crate) layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
     pub(crate) sender: flume::Sender<ApiCommand>,
 }
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
     AddNode(NodeType, NodeDesigner, flume::Sender<NodePath>),
+    WritePort(NodePath, PortId, f64),
 }
 
 impl RuntimeApi {
@@ -42,6 +46,10 @@ impl RuntimeApi {
         self.links.read()
     }
 
+    pub fn layouts(&self) -> Vec<Layout> {
+        self.layouts.read()
+    }
+
     pub fn add_node(
         &self,
         node_type: NodeType,
@@ -62,6 +70,16 @@ impl RuntimeApi {
             node,
             ports,
         })
+    }
+
+    pub fn write_node_port(
+        &self,
+        node_path: NodePath,
+        port: PortId,
+        value: f64,
+    ) -> anyhow::Result<()> {
+        self.sender.send(ApiCommand::WritePort(node_path, port, value))?;
+        Ok(())
     }
 }
 

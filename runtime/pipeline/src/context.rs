@@ -36,17 +36,17 @@ impl<'a> NodeContext for PipelineContext<'a> {
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {
         let port = port.into();
         self.receivers
-            .and_then(|receivers| receivers.get(port))
-            .and_then(|(port, _)| port.downcast_ref::<MemoryReceiver<V>>())
-            // TODO: return reference to data
-            .and_then(|port| port.recv().map(|value| value.clone()))
+            .and_then(|receivers| receivers.get(&port))
+            .and_then(|receiver| receiver.read())
     }
 
-    fn input_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata {
+    // TODO: return as ref again?
+    fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata {
         let port = port.into();
-        let (_, metadata) = self.receivers.and_then(|ports| ports.get(port)).unwrap();
-
-        metadata
+        self.receivers
+            .and_then(|ports| ports.get(&port))
+            .map(|recv| recv.metadata.clone())
+            .unwrap()
     }
 
     fn output_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata {

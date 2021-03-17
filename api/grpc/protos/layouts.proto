@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package mizer;
+
+service LayoutsApi {
+  rpc GetLayouts (GetLayoutsRequest) returns (Layouts) {}
+}
+
+message GetLayoutsRequest {}
+
+message Layouts {
+  repeated Layout layouts = 1;
+}
+
+message Layout {
+  string id = 1;
+  repeated LayoutControl controls = 2;
+}
+
+message LayoutControl {
+  string node = 1;
+  ControlPosition position = 2;
+  ControlSize size = 3;
+}
+
+message ControlPosition {
+  uint64 x = 1;
+  uint64 y = 2;
+}
+
+message ControlSize {
+  uint64 width = 1;
+  uint64 height = 2;
+}

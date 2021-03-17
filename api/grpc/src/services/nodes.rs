@@ -1,7 +1,7 @@
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use protobuf::SingularPtrField;
 
-use crate::protos::{AddNodeRequest, NodePosition, NodesApi};
+use crate::protos::{AddNodeRequest, NodePosition, NodesApi, WriteControl, WriteResponse};
 use crate::protos::{
     ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
 };
@@ -78,12 +78,19 @@ impl NodesApi for NodesApiImpl {
 
         resp.finish(node.into())
     }
+
+    fn write_control_value(&self, o: ServerHandlerContext, req: ServerRequestSingle<WriteControl>, resp: ServerResponseUnarySink<WriteResponse>) -> grpc::Result<()> {
+        self.runtime.write_node_port(req.message.path.into(), req.message.port.into(), req.message.value);
+
+        resp.finish(WriteResponse::default())
+    }
 }
 
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
             NodeType::Fader => Node_NodeType::Fader,
+            NodeType::Button => Node_NodeType::Button,
             NodeType::DmxOutput => Node_NodeType::DmxOutput,
             NodeType::Oscillator => Node_NodeType::Oscillator,
             NodeType::Clock => Node_NodeType::Clock,
@@ -111,6 +118,7 @@ impl From<Node_NodeType> for NodeType {
     fn from(node: Node_NodeType) -> Self {
         match node {
             Node_NodeType::Fader => NodeType::Fader,
+            Node_NodeType::Button => NodeType::Button,
             Node_NodeType::DmxOutput => NodeType::DmxOutput,
             Node_NodeType::Oscillator => NodeType::Oscillator,
             Node_NodeType::Clock => NodeType::Clock,

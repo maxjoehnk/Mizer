@@ -10,6 +10,7 @@ use test_case::test_case;
 #[test_case("sacn"; "sacn")]
 #[test_case("sequence"; "sequence")]
 #[test_case("video"; "video")]
+#[test_case("inputs"; "inputs")]
 #[tokio::test]
 async fn test_build_project_pipeline(project: &str) {
     let flags = Flags {

@@ -2438,6 +2438,7 @@ dependencies = [
  "grpc-protobuf",
  "log",
  "mizer-fixtures",
+ "mizer-layouts",
  "mizer-media",
  "mizer-node",
  "mizer-nodes",
@@ -2459,6 +2460,7 @@ name = "mizer-input-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "log",
  "mizer-node",
  "serde",
 ]
@@ -2472,6 +2474,14 @@ dependencies = [
  "mizer-devices",
  "mizer-node",
  "mizer-protocol-laser",
+ "serde",
+]
+
+[[package]]
+name = "mizer-layouts"
+version = "0.1.0"
+dependencies = [
+ "mizer-node",
  "serde",
 ]
 
@@ -2669,6 +2679,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "lazy_static",
+ "mizer-layouts",
  "mizer-node",
  "mizer-nodes",
  "mizer-pixel-nodes",
@@ -2725,6 +2736,7 @@ dependencies = [
  "log",
  "mizer-clock",
  "mizer-execution-planner",
+ "mizer-layouts",
  "mizer-module",
  "mizer-node",
  "mizer-nodes",

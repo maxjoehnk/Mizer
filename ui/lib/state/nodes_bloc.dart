@@ -18,7 +18,9 @@ class AddNode extends NodesEvent {
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
   final NodesApiClient client;
 
-  NodesBloc(this.client) : super(Nodes.create());
+  NodesBloc(this.client) : super(Nodes.create()) {
+    this.add(FetchNodes());
+  }
 
   @override
   Stream<Nodes> mapEventToState(NodesEvent event) async* {
@@ -33,5 +35,9 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       nextNodes.add(node);
       yield Nodes(channels: state.channels, nodes: nextNodes);
     }
+  }
+  
+  Node getNodeByPath(String path) {
+    return this.state.nodes.firstWhere((node) => node.path == path);
   }
 }

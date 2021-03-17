@@ -40,6 +40,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
 
 class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Fader = Node_NodeType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fader');
+  static const Node_NodeType Button = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Button');
   static const Node_NodeType DmxOutput = Node_NodeType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DmxOutput');
   static const Node_NodeType Oscillator = Node_NodeType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Oscillator');
   static const Node_NodeType Clock = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Clock');
@@ -62,6 +63,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
+    Button,
     DmxOutput,
     Oscillator,
     Clock,

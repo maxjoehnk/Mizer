@@ -9,7 +9,7 @@ pub trait NodeContext {
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
 
-    fn input_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata;
+    fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata;
     fn output_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata;
 
     fn input_ports(&self) -> Vec<PortId>;

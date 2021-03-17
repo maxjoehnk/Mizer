@@ -1,13 +1,15 @@
-use crate::protos::{
-    FixturesApiServer, MediaApiServer, NodesApiServer, SessionApiClient, SessionApiServer,
-};
+use std::sync::Arc;
+
 use grpc::ClientStub;
+pub use grpc::Server;
+
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
 
-use std::sync::Arc;
-
-pub use grpc::Server;
+use crate::protos::{
+    FixturesApiServer, LayoutsApiServer, MediaApiServer, NodesApiServer, SessionApiClient,
+    SessionApiServer,
+};
 
 mod protos;
 mod services;
@@ -22,7 +24,7 @@ pub fn start(
     server.http.event_loop = Some(handle);
     server.http.set_port(50051);
     server.add_service(NodesApiServer::new_service_def(
-        services::nodes::NodesApiImpl::new(mizer_runtime),
+        services::nodes::NodesApiImpl::new(mizer_runtime.clone()),
     ));
     server.add_service(SessionApiServer::new_service_def(
         services::session::SessionApiImpl::new(),
@@ -32,6 +34,9 @@ pub fn start(
     ));
     server.add_service(MediaApiServer::new_service_def(
         services::media::MediaApiImpl::new(media_server),
+    ));
+    server.add_service(LayoutsApiServer::new_service_def(
+        services::layouts::LayoutsApiImpl::new(mizer_runtime),
     ));
     let server = server.build()?;
 

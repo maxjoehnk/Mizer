@@ -3,7 +3,7 @@ use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_fixture_nodes::FixtureNode;
-pub use mizer_input_nodes::FaderNode;
+pub use mizer_input_nodes::{FaderNode, ButtonNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_midi_nodes::{MidiInputNode, MidiOutputNode};
 use mizer_node::NodeType;
@@ -28,6 +28,7 @@ pub enum Node {
     IldaFile(IldaFileNode),
     Laser(LaserNode),
     Fader(FaderNode),
+    Button(ButtonNode),
     MidiInput(MidiInputNode),
     MidiOutput(MidiOutputNode),
     OpcOutput(OpcOutputNode),
@@ -53,6 +54,7 @@ impl From<NodeType> for Node {
             NodeType::IldaFile => IldaFileNode::default().into(),
             NodeType::Laser => LaserNode::default().into(),
             NodeType::Fader => FaderNode::default().into(),
+            NodeType::Button => ButtonNode::default().into(),
             NodeType::OpcOutput => OpcOutputNode::default().into(),
             NodeType::PixelPattern => PixelPatternGeneratorNode::default().into(),
             NodeType::PixelDmx => PixelDmxNode::default().into(),
@@ -81,6 +83,7 @@ impl Node {
             IldaFile(_) => NodeType::IldaFile,
             Laser(_) => NodeType::Laser,
             Fader(_) => NodeType::Fader,
+            Button(_) => NodeType::Button,
             MidiInput(_) => NodeType::MidiInput,
             MidiOutput(_) => NodeType::MidiOutput,
             OpcOutput(_) => NodeType::OpcOutput,

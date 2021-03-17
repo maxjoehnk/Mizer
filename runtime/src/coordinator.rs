@@ -12,6 +12,7 @@ use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::io::Write;
 use std::sync::Arc;
+use mizer_layouts::{Layout, ControlConfig};
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -20,6 +21,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     nodes_view: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
     designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
+    layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
     pipeline: PipelineWorker,
     assigned_nodes: Vec<NodePath>,
     clock: TClock,
@@ -39,6 +41,7 @@ impl CoordinatorRuntime<SystemClock> {
             nodes_view: Default::default(),
             designer: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
+            layouts: NonEmptyPinboard::new(Default::default()).into(),
             pipeline: PipelineWorker::new(),
             assigned_nodes: Default::default(),
             clock: SystemClock::default(),
@@ -63,6 +66,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             nodes_view: Default::default(),
             designer: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
+            layouts: NonEmptyPinboard::new(Default::default()).into(),
             pipeline: PipelineWorker::new(),
             assigned_nodes: Default::default(),
             clock,
@@ -99,6 +103,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             };
             self.add_link(link)?;
         }
+        self.add_layouts(project.layouts);
         Ok(())
     }
 
@@ -117,6 +122,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
             Fader(node) => self.add_node(path, node),
+            Button(node) => self.add_node(path, node),
             OpcOutput(node) => self.add_node(path, node),
             PixelPattern(node) => self.add_node(path, node),
             PixelDmx(node) => self.add_node(path, node),
@@ -205,6 +211,17 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         Ok((source_port, target_port))
     }
 
+    fn add_layouts(&self, layouts: HashMap<String, Vec<ControlConfig>>) {
+        let layouts = layouts.into_iter()
+            .map(|(id, controls)| Layout {
+                id,
+                controls
+            })
+            .collect();
+
+        self.layouts.set(layouts);
+    }
+
     fn plan(&mut self) {
         let plan = self.planner.plan();
         log::trace!("{:?}", plan);
@@ -256,6 +273,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             nodes: self.nodes_view.clone(),
             designer: self.designer.clone(),
             links: self.links.clone(),
+            layouts: self.layouts.clone(),
             sender: self.api_sender.clone(),
         }
     }
@@ -264,6 +282,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         match self.api_recv.try_recv() {
             Ok(ApiCommand::AddNode(node_type, designer, sender)) => {
                 self.handle_add_node(node_type, designer, sender)
+            }
+            Ok(ApiCommand::WritePort(path, port, value)) => {
+                self.pipeline.write_port(path, port, value)
             }
             Err(flume::TryRecvError::Empty) => {}
             Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),

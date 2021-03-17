@@ -21,6 +21,14 @@ impl PipelineNode for TestSink {
         })
     }
 
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![("input".into(), PortMetadata {
+            port_type: PortType::Single,
+            direction: PortDirection::Input,
+            ..Default::default()
+        })]
+    }
+
     fn node_type(&self) -> NodeType {
         unimplemented!()
     }

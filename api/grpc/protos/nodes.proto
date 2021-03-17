@@ -5,6 +5,7 @@ package mizer;
 service NodesApi {
   rpc GetNodes (NodesRequest) returns (Nodes) {}
   rpc AddNode (AddNodeRequest) returns (Node) {}
+  rpc WriteControlValue (WriteControl) returns (WriteResponse) {}
 }
 
 message AddNodeRequest {
@@ -13,6 +14,14 @@ message AddNodeRequest {
 }
 
 message NodesRequest {}
+
+message WriteControl {
+  string path = 1;
+  string port = 2;
+  double value = 3;
+}
+
+message WriteResponse {}
 
 message Nodes {
   repeated Node nodes = 1;
@@ -30,6 +39,7 @@ message NodeConnection {
 message Node {
   enum NodeType {
     Fader = 0;
+    Button = 20;
     DmxOutput = 1;
     Oscillator = 2;
     Clock = 3;

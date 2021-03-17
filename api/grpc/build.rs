@@ -6,6 +6,7 @@ fn main() {
         .input("./protos/nodes.proto")
         .input("./protos/session.proto")
         .input("./protos/media.proto")
+        .input("./protos/layouts.proto")
         .include("protos")
         .rust_protobuf(true)
         .run()

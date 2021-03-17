@@ -12,6 +12,7 @@ lazy_static = "1.4"
 anyhow = "1"
 mizer-node = { path = "../pipeline/node" }
 mizer-nodes = { path = "../pipeline/nodes" }
+mizer-layouts = { path = "../layouts" }
 
 [dev-dependencies]
 test-case = "1.0"

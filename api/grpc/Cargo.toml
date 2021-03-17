@@ -12,6 +12,7 @@ mizer-media = { path = "../../components/media" }
 mizer-node = { path = "../../runtime/pipeline/node" }
 mizer-nodes = { path = "../../runtime/pipeline/nodes" }
 mizer-runtime = { path = "../../runtime" }
+mizer-layouts = { path = "../../runtime/layouts" }
 grpc = { git = "https://github.com/maxjoehnk/grpc-rust.git" }
 grpc-protobuf = { git = "https://github.com/maxjoehnk/grpc-rust.git" }
 futures = "0.3"

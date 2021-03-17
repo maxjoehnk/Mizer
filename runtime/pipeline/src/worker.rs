@@ -1,4 +1,4 @@
-use crate::ports::{NodeReceivers, NodeSenders};
+use crate::ports::{NodeReceivers, NodeSenders, AnyPortReceiver};
 use crate::PipelineContext;
 use mizer_clock::ClockFrame;
 use mizer_node::*;
@@ -46,7 +46,20 @@ impl PipelineWorker {
     ) {
         let state = node.create_state();
         let state: Box<S> = Box::new(state);
-        self.states.insert(path, state);
+        self.states.insert(path.clone(), state);
+        let mut receivers = NodeReceivers::default();
+        for (port_id, metadata) in node.list_ports() {
+            if metadata.is_input() {
+                log::debug!("Registering port receiver for {:?} {:?}", &path, &port_id);
+                match metadata.port_type {
+                    PortType::Single => receivers.register::<f64>(port_id, metadata),
+                    PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
+                    PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
+                    _ => {}
+                }
+            }
+        }
+        self.receivers.insert(path, receivers);
     }
 
     pub fn connect_nodes(
@@ -193,5 +206,17 @@ impl PipelineWorker {
 
     pub fn get_state<S: 'static>(&self, path: &NodePath) -> Option<&S> {
         self.states.get(path).and_then(|state| state.downcast_ref())
+    }
+
+    pub fn write_port<V: PortValue + 'static>(&mut self, path: NodePath, port: PortId, value: V) {
+        if let Some(receivers) = self.receivers.get_mut(&path) {
+            if let Some(receiver) = receivers.get(&port) {
+                receiver.set_value(value);
+            }else {
+                log::warn!("trying to write value to unknown port {:?} on path {:?}", &port, &path);
+            }
+        }else {
+            log::warn!("trying to write value to unknown receiver for node {:?}", &path);
+        }
     }
 }

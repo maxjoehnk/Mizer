@@ -18,6 +18,7 @@ pub struct RuntimeApi {
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
     AddNode(NodeType, NodeDesigner, flume::Sender<NodePath>),
+    AddLink(NodeLink),
     WritePort(NodePath, PortId, f64),
 }
 
@@ -79,6 +80,11 @@ impl RuntimeApi {
         value: f64,
     ) -> anyhow::Result<()> {
         self.sender.send(ApiCommand::WritePort(node_path, port, value))?;
+        Ok(())
+    }
+
+    pub fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()> {
+        self.sender.send(ApiCommand::AddLink(link))?;
         Ok(())
     }
 }

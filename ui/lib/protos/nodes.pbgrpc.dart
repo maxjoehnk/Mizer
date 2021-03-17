@@ -22,6 +22,11 @@ class NodesApiClient extends $grpc.Client {
       '/mizer.NodesApi/AddNode',
       ($0.AddNodeRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
+  static final _$addLink =
+      $grpc.ClientMethod<$0.NodeConnection, $0.NodeConnection>(
+          '/mizer.NodesApi/AddLink',
+          ($0.NodeConnection value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.NodeConnection.fromBuffer(value));
   static final _$writeControlValue =
       $grpc.ClientMethod<$0.WriteControl, $0.WriteResponse>(
           '/mizer.NodesApi/WriteControlValue',
@@ -41,6 +46,11 @@ class NodesApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Node> addNode($0.AddNodeRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$addNode, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.NodeConnection> addLink($0.NodeConnection request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$addLink, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.WriteResponse> writeControlValue(
@@ -68,6 +78,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.AddNodeRequest.fromBuffer(value),
         ($0.Node value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.NodeConnection, $0.NodeConnection>(
+        'AddLink',
+        addLink_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.NodeConnection.fromBuffer(value),
+        ($0.NodeConnection value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.WriteControl, $0.WriteResponse>(
         'WriteControlValue',
         writeControlValue_Pre,
@@ -87,6 +104,11 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return addNode(call, await request);
   }
 
+  $async.Future<$0.NodeConnection> addLink_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.NodeConnection> request) async {
+    return addLink(call, await request);
+  }
+
   $async.Future<$0.WriteResponse> writeControlValue_Pre(
       $grpc.ServiceCall call, $async.Future<$0.WriteControl> request) async {
     return writeControlValue(call, await request);
@@ -96,6 +118,8 @@ abstract class NodesApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Node> addNode(
       $grpc.ServiceCall call, $0.AddNodeRequest request);
+  $async.Future<$0.NodeConnection> addLink(
+      $grpc.ServiceCall call, $0.NodeConnection request);
   $async.Future<$0.WriteResponse> writeControlValue(
       $grpc.ServiceCall call, $0.WriteControl request);
 }

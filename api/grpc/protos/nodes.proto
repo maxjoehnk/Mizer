@@ -5,6 +5,7 @@ package mizer;
 service NodesApi {
   rpc GetNodes (NodesRequest) returns (Nodes) {}
   rpc AddNode (AddNodeRequest) returns (Node) {}
+  rpc AddLink (NodeConnection) returns (NodeConnection) {}
   rpc WriteControlValue (WriteControl) returns (WriteResponse) {}
 }
 

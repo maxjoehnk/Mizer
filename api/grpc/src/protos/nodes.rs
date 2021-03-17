@@ -2403,10 +2403,11 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\t\n\x05Multi\x10\x01\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\
     \x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\
     \x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082\
-    \xae\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
+    \xe9\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
     \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
-    \x0b.mizer.Node\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteContr\
-    ol\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
+    \x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\
+    \x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.\
+    WriteControl\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

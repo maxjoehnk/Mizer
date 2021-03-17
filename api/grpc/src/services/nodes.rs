@@ -5,7 +5,7 @@ use crate::protos::{AddNodeRequest, NodePosition, NodesApi, WriteControl, WriteR
 use crate::protos::{
     ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
 };
-use mizer_node::{NodeDesigner, NodeType, PortDirection, PortId, PortMetadata, PortType};
+use mizer_node::{NodeDesigner, NodeType, PortDirection, PortId, PortMetadata, PortType, NodeLink};
 use mizer_runtime::{NodeDescriptor, RuntimeApi};
 
 pub struct NodesApiImpl {
@@ -77,6 +77,12 @@ impl NodesApi for NodesApiImpl {
             .unwrap();
 
         resp.finish(node.into())
+    }
+
+    fn add_link(&self, o: ServerHandlerContext, req: ServerRequestSingle<NodeConnection>, resp: ServerResponseUnarySink<NodeConnection>) -> grpc::Result<()> {
+        self.runtime.link_nodes(req.message.clone().into());
+
+        resp.finish(req.message)
     }
 
     fn write_control_value(&self, o: ServerHandlerContext, req: ServerRequestSingle<WriteControl>, resp: ServerResponseUnarySink<WriteResponse>) -> grpc::Result<()> {
@@ -199,12 +205,41 @@ impl From<PortType> for ChannelProtocol {
     }
 }
 
+impl From<ChannelProtocol> for PortType {
+    fn from(port: ChannelProtocol) -> Self {
+        match port {
+            ChannelProtocol::Single => PortType::Single,
+            ChannelProtocol::Multi => PortType::Multi,
+            ChannelProtocol::Texture => PortType::Texture,
+            ChannelProtocol::Vector => PortType::Vector,
+            ChannelProtocol::Laser => PortType::Laser,
+            ChannelProtocol::Poly => PortType::Poly,
+            ChannelProtocol::Data => PortType::Data,
+            ChannelProtocol::Material => PortType::Material,
+            ChannelProtocol::Gst => PortType::Gstreamer,
+        }
+    }
+}
+
 impl From<(PortId, PortMetadata)> for Port {
     fn from((id, metadata): (PortId, PortMetadata)) -> Self {
         Port {
             name: id.to_string(),
             protocol: metadata.port_type.into(),
             ..Default::default()
+        }
+    }
+}
+
+impl From<NodeConnection> for NodeLink {
+    fn from(connection: NodeConnection) -> Self {
+        NodeLink {
+            port_type: connection.protocol.into(),
+            source: connection.sourceNode.into(),
+            source_port: connection.sourcePort.unwrap().name.into(),
+            target: connection.targetNode.into(),
+            target_port: connection.targetPort.unwrap().name.into(),
+            local: true,
         }
     }
 }

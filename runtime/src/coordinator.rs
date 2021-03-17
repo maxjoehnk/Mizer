@@ -288,6 +288,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 Ok(ApiCommand::WritePort(path, port, value)) => {
                     self.pipeline.write_port(path, port, value)
                 }
+                Ok(ApiCommand::AddLink(link)) => {
+                    self.add_link(link);
+                }
                 Err(flume::TryRecvError::Empty) => break,
                 Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
             }

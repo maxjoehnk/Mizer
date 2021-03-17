@@ -15,6 +15,16 @@ class AddNode extends NodesEvent {
   AddNode({this.nodeType, this.position});
 }
 
+class LinkNodes extends NodesEvent {
+  final Node sourceNode;
+  final Port sourcePort;
+  final PortOption target;
+
+  LinkNodes(this.sourceNode, this.sourcePort, this.target);
+
+  ChannelProtocol get protocol => this.sourcePort.protocol;
+}
+
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
   final NodesApiClient client;
 
@@ -35,9 +45,40 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       nextNodes.add(node);
       yield Nodes(channels: state.channels, nodes: nextNodes);
     }
+    if (event is LinkNodes) {
+      LinkNodes request = event;
+      var connection = NodeConnection(protocol: request.protocol,
+          sourceNode: request.sourceNode.path,
+          sourcePort: request.sourcePort,
+          targetNode: request.target.node.path,
+          targetPort: request.target.port);
+      await client.addLink(connection);
+      var nextChannels = state.channels.sublist(0);
+      nextChannels.add(connection);
+      yield Nodes(channels: nextChannels, nodes: state.nodes);
+    }
   }
-  
+
   Node getNodeByPath(String path) {
     return this.state.nodes.firstWhere((node) => node.path == path);
   }
+
+  List<PortOption> getAvailablePorts(Node node, Port port) {
+    return this
+        .state
+        .nodes
+        .where((n) => n.path != node.path)
+        .expand((n) =>
+        n.inputs
+            .where((p) => p.protocol == port.protocol)
+            .map((p) => PortOption(node: n, port: p)))
+        .toList();
+  }
+}
+
+class PortOption {
+  final Node node;
+  final Port port;
+
+  PortOption({this.node, this.port});
 }

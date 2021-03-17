@@ -11,7 +11,7 @@ pub struct MediaServerApi(
 
 impl MediaServerApi {
     pub fn send_command(&self, command: MediaServerCommand) {
-        self.0.send(command);
+        self.0.send(command).expect("could not send command to media server api");
     }
 
     pub fn get_temp_path(&self) -> PathBuf {

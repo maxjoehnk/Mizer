@@ -17,9 +17,9 @@ pub struct RuntimeApi {
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
-    AddNode(NodeType, NodeDesigner, flume::Sender<NodePath>),
-    AddLink(NodeLink),
-    WritePort(NodePath, PortId, f64),
+    AddNode(NodeType, NodeDesigner, flume::Sender<anyhow::Result<NodePath>>),
+    AddLink(NodeLink, flume::Sender<anyhow::Result<()>>),
+    WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
 }
 
 impl RuntimeApi {
@@ -58,10 +58,10 @@ impl RuntimeApi {
     ) -> anyhow::Result<NodeDescriptor<'_>> {
         let (tx, rx) = flume::bounded(1);
         self.sender
-            .send(ApiCommand::AddNode(node_type, designer.clone(), tx));
+            .send(ApiCommand::AddNode(node_type, designer.clone(), tx))?;
 
         // TODO: this blocks, we should use the async method
-        let path = rx.recv()?;
+        let path = rx.recv()??;
         let node = self.nodes.get(&path).unwrap();
         let ports = node.list_ports();
 
@@ -79,13 +79,19 @@ impl RuntimeApi {
         port: PortId,
         value: f64,
     ) -> anyhow::Result<()> {
-        self.sender.send(ApiCommand::WritePort(node_path, port, value))?;
-        Ok(())
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::WritePort(node_path, port, value, tx))?;
+        let result = rx.recv()?;
+
+        result
     }
 
     pub fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()> {
-        self.sender.send(ApiCommand::AddLink(link))?;
-        Ok(())
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::AddLink(link, tx))?;
+        let result = rx.recv()?;
+
+        result
     }
 }
 

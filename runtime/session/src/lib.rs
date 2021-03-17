@@ -17,7 +17,7 @@ fn announce_device() {
         .spawn(|| {
             let mut service = MdnsService::new(MIZER_SESSION_SERVICE, 50051);
             let mut txt_record = TxtRecord::new();
-            txt_record.insert("project", "video.yml");
+            txt_record.insert("project", "video.yml").unwrap();
             service.set_txt_record(txt_record);
             let event_loop = service.register().unwrap();
             loop {
@@ -26,7 +26,8 @@ fn announce_device() {
                 // poll doesn't sleep in avahi implementation
                 thread::sleep(Duration::from_secs(POLL_TIMEOUT));
             }
-        });
+        })
+        .unwrap();
 }
 
 pub fn discover_sessions() -> anyhow::Result<()> {

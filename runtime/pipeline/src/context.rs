@@ -1,7 +1,7 @@
 use mizer_clock::ClockFrame;
 use mizer_node::*;
-use mizer_ports::memory::{MemoryReceiver, MemorySender};
-use mizer_ports::{NodePortReceiver, NodePortSender, PortId, PortValue};
+use mizer_ports::memory::MemorySender;
+use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
 use crate::ports::{NodeReceivers, NodeSenders};

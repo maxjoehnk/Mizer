@@ -58,7 +58,7 @@ impl NodesApi for NodesApiImpl {
 
     fn add_node(
         &self,
-        context: ServerHandlerContext,
+        _: ServerHandlerContext,
         req: ServerRequestSingle<AddNodeRequest>,
         resp: ServerResponseUnarySink<Node>,
     ) -> grpc::Result<()> {
@@ -79,14 +79,14 @@ impl NodesApi for NodesApiImpl {
         resp.finish(node.into())
     }
 
-    fn add_link(&self, o: ServerHandlerContext, req: ServerRequestSingle<NodeConnection>, resp: ServerResponseUnarySink<NodeConnection>) -> grpc::Result<()> {
-        self.runtime.link_nodes(req.message.clone().into());
+    fn add_link(&self, _: ServerHandlerContext, req: ServerRequestSingle<NodeConnection>, resp: ServerResponseUnarySink<NodeConnection>) -> grpc::Result<()> {
+        self.runtime.link_nodes(req.message.clone().into()).unwrap();
 
         resp.finish(req.message)
     }
 
-    fn write_control_value(&self, o: ServerHandlerContext, req: ServerRequestSingle<WriteControl>, resp: ServerResponseUnarySink<WriteResponse>) -> grpc::Result<()> {
-        self.runtime.write_node_port(req.message.path.into(), req.message.port.into(), req.message.value);
+    fn write_control_value(&self, _: ServerHandlerContext, req: ServerRequestSingle<WriteControl>, resp: ServerResponseUnarySink<WriteResponse>) -> grpc::Result<()> {
+        self.runtime.write_node_port(req.message.path.into(), req.message.port.into(), req.message.value).unwrap();
 
         resp.finish(WriteResponse::default())
     }

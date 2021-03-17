@@ -35,6 +35,7 @@ impl NodeReceivers {
         source_meta: PortMetadata,
     ) {
         if let Some(receiver) = self.0.get_mut(&port_id) {
+            assert_eq!(receiver.metadata.port_type, source_meta.port_type, "port type missmatch");
             receiver.set_transport(sender);
         }else {
             log::warn!("trying to add transport to unknown port");

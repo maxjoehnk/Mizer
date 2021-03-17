@@ -7,7 +7,7 @@ use mizer_node::*;
 use mizer_nodes::Node;
 use mizer_pipeline::*;
 use mizer_processing::*;
-use mizer_project_files::{NodeConfig, Project};
+use mizer_project_files::Project;
 use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::io::Write;
@@ -283,13 +283,19 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         loop {
             match self.api_recv.try_recv() {
                 Ok(ApiCommand::AddNode(node_type, designer, sender)) => {
-                    self.handle_add_node(node_type, designer, sender)
+                    let result = self.handle_add_node(node_type, designer);
+
+                    sender.send(result).expect("api command sender disconnected");
                 }
-                Ok(ApiCommand::WritePort(path, port, value)) => {
-                    self.pipeline.write_port(path, port, value)
+                Ok(ApiCommand::WritePort(path, port, value, sender)) => {
+                    self.pipeline.write_port(path, port, value);
+
+                    sender.send(Ok(())).expect("api command sender disconnected");
                 }
-                Ok(ApiCommand::AddLink(link)) => {
-                    self.add_link(link);
+                Ok(ApiCommand::AddLink(link, sender)) => {
+                    let result = self.add_link(link);
+
+                    sender.send(result).expect("api command sender disconnected");
                 }
                 Err(flume::TryRecvError::Empty) => break,
                 Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
@@ -301,15 +307,14 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         &mut self,
         node_type: NodeType,
         designer: NodeDesigner,
-        sender: flume::Sender<NodePath>,
-    ) {
+    ) -> anyhow::Result<NodePath> {
         let node_type_name = node_type.get_name();
         let id = self.get_next_id(node_type);
         let path: NodePath = format!("/{}-{}", node_type_name, id).into();
         self.add_project_node(path.clone(), node_type.into());
         self.add_designer_node(path.clone(), designer);
 
-        sender.send(path);
+        Ok(path)
     }
 
     fn get_next_id(&self, node_type: NodeType) -> u32 {

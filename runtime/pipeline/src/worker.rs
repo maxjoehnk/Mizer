@@ -1,4 +1,4 @@
-use crate::ports::{NodeReceivers, NodeSenders, AnyPortReceiver};
+use crate::ports::{NodeReceivers, NodeSenders};
 use crate::PipelineContext;
 use mizer_clock::ClockFrame;
 use mizer_node::*;

@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
-use std::fmt::Formatter;
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {

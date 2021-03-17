@@ -31,10 +31,10 @@ pub enum NodeType {
 }
 
 impl NodeType {
-    pub fn get_name(&self, count: u64) -> String {
+    pub fn get_name(&self) -> String {
         use NodeType::*;
 
-        let name = match self {
+        match self {
             Fader => "fader",
             Button => "button",
             DmxOutput => "dmx-output",
@@ -56,8 +56,7 @@ impl NodeType {
             MidiOutput => "midi-output",
             Laser => "laser",
             IldaFile => "ilda-file",
-        };
-        format!("{}-{}", name, count)
+        }.to_string()
     }
 }
 

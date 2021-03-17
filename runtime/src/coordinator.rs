@@ -13,6 +13,7 @@ use std::collections::HashMap;
 use std::io::Write;
 use std::sync::Arc;
 use mizer_layouts::{Layout, ControlConfig};
+use std::str::FromStr;
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -299,11 +300,24 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         designer: NodeDesigner,
         sender: flume::Sender<NodePath>,
     ) {
-        let path: NodePath = format!("/{}", node_type.get_name(1)).into();
+        let node_type_name = node_type.get_name();
+        let id = self.get_next_id(node_type);
+        let path: NodePath = format!("/{}-{}", node_type_name, id).into();
         self.add_project_node(path.clone(), node_type.into());
         self.add_designer_node(path.clone(), designer);
 
         sender.send(path);
+    }
+
+    fn get_next_id(&self, node_type: NodeType) -> u32 {
+        let node_type_prefix = format!("/{}-", node_type.get_name());
+        let mut ids = self.nodes.keys()
+            .filter_map(|path| path.0.strip_prefix(&node_type_prefix))
+            .filter_map(|suffix| u32::from_str(suffix).ok())
+            .collect::<Vec<_>>();
+        log::trace!("found ids for prefix {}: {:?}", node_type_prefix, ids);
+        ids.sort();
+        ids.last().map(|last_id| last_id + 1).unwrap_or_default()
     }
 }
 

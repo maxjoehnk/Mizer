@@ -279,15 +279,17 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn handle_api_commands(&mut self) {
-        match self.api_recv.try_recv() {
-            Ok(ApiCommand::AddNode(node_type, designer, sender)) => {
-                self.handle_add_node(node_type, designer, sender)
+        loop {
+            match self.api_recv.try_recv() {
+                Ok(ApiCommand::AddNode(node_type, designer, sender)) => {
+                    self.handle_add_node(node_type, designer, sender)
+                }
+                Ok(ApiCommand::WritePort(path, port, value)) => {
+                    self.pipeline.write_port(path, port, value)
+                }
+                Err(flume::TryRecvError::Empty) => break,
+                Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
             }
-            Ok(ApiCommand::WritePort(path, port, value)) => {
-                self.pipeline.write_port(path, port, value)
-            }
-            Err(flume::TryRecvError::Empty) => {}
-            Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
         }
     }
 

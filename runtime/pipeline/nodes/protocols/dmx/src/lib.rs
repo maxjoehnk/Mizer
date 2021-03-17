@@ -68,7 +68,7 @@ impl ProcessingNode for DmxOutputNode {
 
         if let Some(value) = value {
             let value = (value * u8::max_value() as f64).min(255.).max(0.).floor() as u8;
-            output.write_single(1, 0, value);
+            output.write_single(self.universe, self.channel, value);
         }
 
         Ok(())

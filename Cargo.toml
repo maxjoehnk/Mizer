@@ -36,6 +36,7 @@ members = [
     "protocols/laser",
     "protocols/midi",
     "protocols/midi/device-profiles",
+    "protocols/osc",
 ]
 
 [lib]

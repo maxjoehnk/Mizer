@@ -1,41 +1,8 @@
-use std::collections::HashMap;
-use std::net::{SocketAddrV4, UdpSocket};
-use std::sync::Mutex;
-use std::thread;
+use mizer_protocol_osc::{OscInput, OscMessage, OscPacket, OscType};
 
-use crossbeam_channel::{unbounded, Receiver};
-use lazy_static::lazy_static;
-use rosc::{OscMessage, OscPacket, OscType};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-
-lazy_static! {
-    static ref OSC_THREADS: Mutex<HashMap<SocketAddrV4, Receiver<OscPacket>>> =
-        Mutex::new(HashMap::new());
-}
-
-fn spawn_osc_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
-    let (tx, rx) = unbounded();
-    thread::spawn(move || {
-        let socket = UdpSocket::bind(addr).unwrap();
-        let mut buffer = [0u8; rosc::decoder::MTU];
-        loop {
-            match socket.recv_from(&mut buffer) {
-                Ok((size, _)) => {
-                    let msg = rosc::decoder::decode(&buffer[..size]).unwrap();
-                    tx.send(msg);
-                }
-                Err(e) => println!("{:?}", e),
-            }
-        }
-    });
-    {
-        let mut threads = OSC_THREADS.lock().unwrap();
-        threads.insert(addr, rx.clone());
-    }
-    rx
-}
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscInputNode {
@@ -62,10 +29,6 @@ impl Default for OscInputNode {
             path: "".into(),
         }
     }
-}
-
-pub struct OscInputState {
-    pub rx: Receiver<OscPacket>,
 }
 
 impl PipelineNode for OscInputNode {
@@ -100,17 +63,17 @@ impl PipelineNode for OscInputNode {
 }
 
 impl ProcessingNode for OscInputNode {
-    type State = OscInputState;
+    type State = OscInput;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        while let Ok(packet) = state.rx.try_recv() {
+        while let Some(packet) = state.try_recv() {
             self.handle_packet(packet, context);
         }
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
-        OscInputState::new(&self.host, self.port)
+        OscInput::new(&self.host, self.port).unwrap()
     }
 }
 
@@ -139,18 +102,5 @@ impl OscInputNode {
                 _ => {}
             }
         }
-    }
-}
-
-impl OscInputState {
-    fn new(host: &str, port: u16) -> Self {
-        let addr = host.parse().unwrap();
-        let addr = SocketAddrV4::new(addr, port);
-        let rx = {
-            let threads = OSC_THREADS.lock().unwrap();
-            threads.get(&addr).cloned()
-        };
-        let rx = rx.unwrap_or_else(|| spawn_osc_thread(addr));
-        Self { rx }
     }
 }

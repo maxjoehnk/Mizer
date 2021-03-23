@@ -2609,11 +2609,9 @@ name = "mizer-osc-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "crossbeam-channel 0.4.4",
- "lazy_static",
  "log",
  "mizer-node",
- "rosc",
+ "mizer-protocol-osc",
  "serde",
 ]
 
@@ -2729,6 +2727,17 @@ dependencies = [
  "anyhow",
  "log",
  "midir",
+]
+
+[[package]]
+name = "mizer-protocol-osc"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "crossbeam-channel 0.4.4",
+ "lazy_static",
+ "log",
+ "rosc",
 ]
 
 [[package]]

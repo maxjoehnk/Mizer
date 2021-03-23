@@ -23,6 +23,7 @@ dependencies:
       url: https://github.com/google/flutter-desktop-embedding
       path: plugins/menubar
       ref: 85dde09
+  select_form_field: ^2.0.0
 
 dev_dependencies:
   flutter_test:

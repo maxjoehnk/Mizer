@@ -5,8 +5,8 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct DmxOutputNode {
     #[serde(default = "default_universe")]
-    universe: u16,
-    channel: u8,
+    pub universe: u16,
+    pub channel: u8,
 }
 
 impl Default for DmxOutputNode {
@@ -60,6 +60,7 @@ impl ProcessingNode for DmxOutputNode {
         let value = context.read_port::<_, f64>("value");
         let output = context
             .inject::<DmxConnectionManager>()
+            // TODO: add output configuration
             .and_then(|connection| connection.get_output("output"));
         if output.is_none() {
             anyhow::bail!("Missing dmx output {}", "output");

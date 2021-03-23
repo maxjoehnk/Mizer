@@ -4,33 +4,27 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'consts.dart';
 import 'node/base_node.dart';
 
-class NodeCanvas extends StatefulWidget {
+class NodeCanvas extends StatelessWidget {
+  final List<Node> selectedNodes;
   final Nodes nodes;
+  final Function(Node) onSelect;
 
-  NodeCanvas({this.nodes});
-
-  @override
-  _NodeCanvasState createState() => _NodeCanvasState();
-}
-
-class _NodeCanvasState extends State<NodeCanvas> {
-  Node selectedNode;
+  NodeCanvas({this.nodes, this.selectedNodes, this.onSelect });
 
   @override
   Widget build(BuildContext context) {
     return CustomMultiChildLayout(
-        delegate: NodesLayoutDelegate(this.widget.nodes),
+        delegate: NodesLayoutDelegate(this.nodes),
         children: this
-            .widget
             .nodes
             .nodes
             .map((node) => LayoutId(
-                id: node.path,
-                child: BaseNode.fromNode(
-                  node,
-                  onSelect: () => setState(() => selectedNode = node),
-                  selected: node == selectedNode,
-                )))
+            id: node.path,
+            child: BaseNode.fromNode(
+              node,
+              onSelect: () => this.onSelect(node),
+              selected: this.selectedNodes.contains(node),
+            )))
             .toList());
   }
 }

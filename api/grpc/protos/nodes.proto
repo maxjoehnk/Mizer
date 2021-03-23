@@ -67,7 +67,123 @@ message Node {
   repeated Port inputs = 3;
   repeated Port outputs = 4;
   NodeDesigner designer = 5;
+  oneof NodeConfig {
+    OscillatorNodeConfig oscillatorConfig = 6;
+    ScriptingNodeConfig scriptingConfig = 7;
+    SequenceNodeConfig sequenceConfig = 8;
+    ClockNodeConfig clockConfig = 9;
+    FixtureNodeConfig fixtureConfig = 10;
+    InputNodeConfig buttonConfig = 11;
+    InputNodeConfig faderConfig = 12;
+    IldaFileNodeConfig ildaFileConfig = 15;
+    LaserNodeConfig laserConfig = 16;
+    PixelPatternNodeConfig pixelPatternConfig = 17;
+    PixelDmxNodeConfig pixelDmxConfig = 18;
+    DmxOutputNodeConfig dmxOutputConfig = 19;
+    MidiInputNodeConfig midiInputConfig = 20;
+    MidiOutputNodeConfig midiOutputConfig = 21;
+    OpcOutputNodeConfig opcOutputConfig = 22;
+    OscInputNodeConfig oscInputConfig = 23;
+    VideoColorBalanceNodeConfig videoColorBalanceConfig = 25;
+    VideoEffectNodeConfig videoEffectConfig = 26;
+    VideoFileNodeConfig videoFileConfig = 27;
+    VideoOutputNodeConfig videoOutputConfig = 28;
+    VideoTransformNodeConfig videoTransformConfig = 29;
+  }
 }
+
+message OscillatorNodeConfig {
+  enum OscillatorType {
+    Square = 0;
+    Sine = 1;
+    Saw = 2;
+    Triangle = 3;
+  }
+  OscillatorType type = 1;
+  double ratio = 2;
+  double max = 3;
+  double min = 4;
+  double offset = 5;
+  bool reverse = 6;
+}
+
+message ScriptingNodeConfig {
+  string script = 1;
+}
+
+message SequenceNodeConfig {
+  repeated SequenceStep steps = 1;
+
+  message SequenceStep {
+    double tick = 1;
+    double value = 2;
+    bool hold = 3;
+  }
+}
+
+message ClockNodeConfig {
+  double speed = 1;
+}
+
+message FixtureNodeConfig {
+  string fixture_id = 1;
+}
+
+message InputNodeConfig {}
+
+message IldaFileNodeConfig {
+  string file = 1;
+}
+
+message LaserNodeConfig {
+  string device_id = 1;
+}
+
+message PixelPatternNodeConfig {
+  enum Pattern {
+    RgbIterate = 0;
+    RgbSnake = 1;
+  }
+
+  Pattern pattern = 1;
+}
+
+message PixelDmxNodeConfig {
+  uint64 width = 1;
+  uint64 height = 2;
+  uint32 start_universe = 3;
+  string output = 4;
+}
+
+message DmxOutputNodeConfig {
+  string output = 1;
+  uint32 universe = 2;
+  uint32 channel = 3;
+}
+
+message MidiInputNodeConfig {}
+message MidiOutputNodeConfig {}
+
+message OpcOutputNodeConfig {
+  string host = 1;
+  uint32 port = 2;
+  uint64 width = 3;
+  uint64 height = 4;
+}
+
+message OscInputNodeConfig {
+  string host = 1;
+  uint32 port = 2;
+  string path = 3;
+}
+
+message VideoColorBalanceNodeConfig {}
+message VideoEffectNodeConfig {}
+message VideoFileNodeConfig {
+  string file = 1;
+}
+message VideoOutputNodeConfig {}
+message VideoTransformNodeConfig {}
 
 message NodePosition {
   double x = 1;

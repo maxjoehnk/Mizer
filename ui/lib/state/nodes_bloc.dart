@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
@@ -35,7 +36,9 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
   @override
   Stream<Nodes> mapEventToState(NodesEvent event) async* {
     if (event is FetchNodes) {
-      yield await client.getNodes(NodesRequest());
+      var nodes = await client.getNodes(NodesRequest());
+      log("$nodes", name: "NodesBloc");
+      yield nodes;
     }
     if (event is AddNode) {
       var node = await client.addNode(AddNodeRequest(

@@ -1,3 +1,5 @@
+use downcast::*;
+
 pub use mizer_injector::Injector;
 pub use mizer_ports::{PortId, PortType};
 
@@ -12,7 +14,7 @@ mod ports;
 // TODO: pick better name
 mod introspection;
 
-pub trait PipelineNode: Send + Sync {
+pub trait PipelineNode: Send + Sync + Any {
     fn details(&self) -> NodeDetails;
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
@@ -28,6 +30,8 @@ pub trait PipelineNode: Send + Sync {
     // This can't be an associated function because it has to be object safe
     fn node_type(&self) -> NodeType;
 }
+
+downcast!(PipelineNode);
 
 pub trait ProcessingNode: PipelineNode + Clone + Default + std::fmt::Debug {
     type State;

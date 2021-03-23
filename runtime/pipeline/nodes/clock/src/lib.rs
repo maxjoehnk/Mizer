@@ -6,7 +6,7 @@ use mizer_node::*;
 #[derive(Clone, Deserialize, Serialize, PartialEq)]
 pub struct ClockNode {
     /// BPM
-    speed: f64,
+    pub speed: f64,
 }
 
 impl std::fmt::Debug for ClockNode {

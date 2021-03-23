@@ -6,7 +6,7 @@ use mizer_protocol_laser::LaserFrame;
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct IldaFileNode {
-    file: String,
+    pub file: String,
 }
 
 #[derive(Default)]

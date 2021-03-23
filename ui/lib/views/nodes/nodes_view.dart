@@ -9,6 +9,7 @@ import 'background.dart';
 import 'canvas.dart';
 import 'consts.dart';
 import 'graph/engine.dart';
+import 'node_properties.dart';
 import 'node_selection.dart';
 
 class FetchNodesView extends StatelessWidget {
@@ -34,34 +35,43 @@ class _NodesViewState extends State<NodesView> {
   final TransformationController controller = TransformationController(
       Matrix4.translationValues((CANVAS_SIZE / 2) * -1, (CANVAS_SIZE / 2) * -1, 0));
 
+  Node selectedNode;
+
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-        transformationController: controller,
-        constrained: false,
-        boundaryMargin: EdgeInsets.all(0),
-        minScale: 0.001,
-        maxScale: 10,
-        child: Container(
-            width: CANVAS_SIZE,
-            height: CANVAS_SIZE,
-            child: OverflowBox(
-                child:
-                    GraphEngine(nodes: this.widget.nodes, child: NodesViewer(this.widget.nodes)))));
+    return Stack(
+      children: [
+        InteractiveViewer(
+            transformationController: controller,
+            constrained: false,
+            boundaryMargin: EdgeInsets.all(0),
+            minScale: 0.001,
+            maxScale: 10,
+            child: Container(
+                width: CANVAS_SIZE,
+                height: CANVAS_SIZE,
+                child: OverflowBox(
+                    child: GraphEngine(
+                        nodes: this.widget.nodes,
+                        child: NodesViewer(
+                          nodes: this.widget.nodes,
+                          selectedNodes: this.selectedNode == null ? [] : [this.selectedNode],
+                          onSelect: (node) => setState(() {
+                            this.selectedNode = node;
+                          }),
+                        ))))),
+        NodePropertiesPane(node: this.selectedNode),
+      ],
+    );
   }
 }
 
-class NodesViewer extends StatefulWidget {
+class NodesViewer extends StatelessWidget {
   final Nodes nodes;
+  final Function(Node) onSelect;
+  final List<Node> selectedNodes;
 
-  NodesViewer(this.nodes);
-
-  @override
-  _NodesViewerState createState() => _NodesViewerState();
-}
-
-class _NodesViewerState extends State<NodesViewer> {
-  Node selectedNode;
+  NodesViewer({this.nodes, this.onSelect, this.selectedNodes});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +79,8 @@ class _NodesViewerState extends State<NodesViewer> {
       child: NodeCanvasBackground(
         child: Padding(
           padding: const EdgeInsets.all(MULTIPLIER),
-          child: NodeCanvas(nodes: this.widget.nodes),
+          child: NodeCanvas(
+              nodes: this.nodes, onSelect: this.onSelect, selectedNodes: this.selectedNodes),
         ),
       ),
       onSelectNewNode: (nodeType, position) {

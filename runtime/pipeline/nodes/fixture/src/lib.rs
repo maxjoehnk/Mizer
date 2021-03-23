@@ -6,7 +6,7 @@ use mizer_node::*;
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {
     #[serde(rename = "fixture")]
-    fixture_id: String,
+    pub fixture_id: String,
     #[serde(skip)]
     pub fixture_manager: Option<FixtureManager>,
 }

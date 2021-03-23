@@ -91,3 +91,37 @@ class Node_NodeType extends $pb.ProtobufEnum {
   const Node_NodeType._($core.int v, $core.String n) : super(v, n);
 }
 
+class OscillatorNodeConfig_OscillatorType extends $pb.ProtobufEnum {
+  static const OscillatorNodeConfig_OscillatorType Square = OscillatorNodeConfig_OscillatorType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Square');
+  static const OscillatorNodeConfig_OscillatorType Sine = OscillatorNodeConfig_OscillatorType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sine');
+  static const OscillatorNodeConfig_OscillatorType Saw = OscillatorNodeConfig_OscillatorType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Saw');
+  static const OscillatorNodeConfig_OscillatorType Triangle = OscillatorNodeConfig_OscillatorType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Triangle');
+
+  static const $core.List<OscillatorNodeConfig_OscillatorType> values = <OscillatorNodeConfig_OscillatorType> [
+    Square,
+    Sine,
+    Saw,
+    Triangle,
+  ];
+
+  static final $core.Map<$core.int, OscillatorNodeConfig_OscillatorType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static OscillatorNodeConfig_OscillatorType valueOf($core.int value) => _byValue[value];
+
+  const OscillatorNodeConfig_OscillatorType._($core.int v, $core.String n) : super(v, n);
+}
+
+class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
+  static const PixelPatternNodeConfig_Pattern RgbIterate = PixelPatternNodeConfig_Pattern._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RgbIterate');
+  static const PixelPatternNodeConfig_Pattern RgbSnake = PixelPatternNodeConfig_Pattern._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RgbSnake');
+
+  static const $core.List<PixelPatternNodeConfig_Pattern> values = <PixelPatternNodeConfig_Pattern> [
+    RgbIterate,
+    RgbSnake,
+  ];
+
+  static final $core.Map<$core.int, PixelPatternNodeConfig_Pattern> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PixelPatternNodeConfig_Pattern valueOf($core.int value) => _byValue[value];
+
+  const PixelPatternNodeConfig_Pattern._($core.int v, $core.String n) : super(v, n);
+}
+

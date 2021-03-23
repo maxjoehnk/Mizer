@@ -1,10 +1,7 @@
 use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
 use protobuf::SingularPtrField;
 
-use crate::protos::{AddNodeRequest, NodePosition, NodesApi, WriteControl, WriteResponse};
-use crate::protos::{
-    ChannelProtocol, Node, NodeConnection, Node_NodeType, Nodes, NodesRequest, Port,
-};
+use crate::protos::*;
 use mizer_node::{NodeDesigner, NodeType, PortDirection, PortId, PortMetadata, PortType, NodeLink};
 use mizer_runtime::{NodeDescriptor, RuntimeApi};
 
@@ -154,6 +151,7 @@ impl From<NodeDescriptor<'_>> for Node {
         let mut node = Node {
             path: descriptor.path.to_string(),
             field_type: node_type.into(),
+            NodeConfig: Some(descriptor.downcast().into()),
             designer: SingularPtrField::some(descriptor.designer.into()),
             ..Default::default()
         };
@@ -174,7 +172,6 @@ impl From<NodeDescriptor<'_>> for Node {
         node
     }
 }
-
 impl From<NodeDesigner> for crate::protos::NodeDesigner {
     fn from(designer: NodeDesigner) -> Self {
         crate::protos::NodeDesigner {

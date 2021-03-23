@@ -9,11 +9,11 @@ const CHANNELS_PER_PIXEL: u64 = 3; // RGB, add configuration later
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct PixelDmxNode {
-    width: u64,
-    height: u64,
+    pub width: u64,
+    pub height: u64,
     #[serde(default = "default_universe")]
-    start_universe: u16,
-    output: String,
+    pub start_universe: u16,
+    pub output: String,
 }
 
 impl Default for PixelDmxNode {

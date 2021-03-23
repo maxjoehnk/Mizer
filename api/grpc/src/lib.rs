@@ -13,6 +13,7 @@ use crate::protos::{
 
 mod protos;
 mod services;
+mod mappings;
 
 pub fn start(
     handle: tokio::runtime::Handle,

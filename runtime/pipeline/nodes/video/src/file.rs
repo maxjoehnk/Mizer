@@ -8,7 +8,7 @@ use crate::{GstreamerNode, PIPELINE};
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct VideoFileNode {
-    file: String,
+    pub file: String,
 }
 
 pub struct VideoFileState {

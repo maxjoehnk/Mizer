@@ -5,7 +5,7 @@ use mizer_node::*;
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct ScriptingNode {
-    script: String,
+    pub script: String,
 }
 
 pub struct ScriptingNodeState<'a> {

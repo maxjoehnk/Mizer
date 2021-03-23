@@ -8,7 +8,7 @@ use mizer_protocol_laser::{Laser, LaserFrame};
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct LaserNode {
     #[serde(rename = "device")]
-    device_id: String,
+    pub device_id: String,
 }
 
 #[derive(Debug, Clone, Default)]

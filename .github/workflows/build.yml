@@ -40,7 +40,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-client
-          path: ui/build/linux/release/bundle
+          path: ui/build/linux/x64/release/bundle
           if-no-files-found: error
   build-client-android:
     runs-on: ubuntu-latest

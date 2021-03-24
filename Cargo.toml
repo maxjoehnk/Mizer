@@ -54,6 +54,7 @@ name = "mizer"
 version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
+license = "GNU AGPLv3"
 
 [dependencies]
 derive_more = "0.99"

@@ -8,6 +8,8 @@ class OpenViewIntent extends Intent {
 
 enum View {
   Layout,
+  Plan2D,
+  PreViz,
   Nodes,
   Fixtures,
   Media,

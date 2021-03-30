@@ -34,7 +34,7 @@ nodes:
         y: 5
       scale: 1
 layouts:
-  default:
+  Default:
     - node: /fader-0
       position:
         x: 0
@@ -49,7 +49,14 @@ layouts:
       size:
         width: 1
         height: 1
-
+  Busking:
+    - node: /button-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 1
 channels:
   - value@/fader-0 -> value@/dmx-output-1
   - value@/button-0 -> value@/dmx-output-0

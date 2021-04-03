@@ -6,7 +6,7 @@ use std::sync::Arc;
 
 #[derive(Default, Clone)]
 pub struct FixtureManager {
-    fixtures: Arc<DashMap<String, Fixture>>,
+    fixtures: Arc<DashMap<u32, Fixture>>,
 }
 
 impl FixtureManager {
@@ -16,7 +16,7 @@ impl FixtureManager {
 
     pub fn add_fixture(
         &self,
-        fixture_id: String,
+        fixture_id: u32,
         definition: FixtureDefinition,
         mode: Option<String>,
         output: String,
@@ -25,7 +25,7 @@ impl FixtureManager {
     ) {
         log::trace!("Adding fixture {}", fixture_id);
         let fixture = Fixture::new(
-            fixture_id.clone(),
+            fixture_id,
             definition,
             mode,
             output,
@@ -35,15 +35,15 @@ impl FixtureManager {
         self.fixtures.insert(fixture_id, fixture);
     }
 
-    pub fn get_fixture(&self, fixture_id: &str) -> Option<impl Deref<Target = Fixture> + '_> {
-        self.fixtures.get(fixture_id)
+    pub fn get_fixture(&self, fixture_id: u32) -> Option<impl Deref<Target = Fixture> + '_> {
+        self.fixtures.get(&fixture_id)
     }
 
     pub fn get_fixture_mut(
         &self,
-        fixture_id: &str,
+        fixture_id: u32,
     ) -> Option<impl DerefMut<Target = Fixture> + '_> {
-        self.fixtures.get_mut(fixture_id)
+        self.fixtures.get_mut(&fixture_id)
     }
 
     pub fn get_fixtures(&self) -> Vec<impl Deref<Target = Fixture> + '_> {

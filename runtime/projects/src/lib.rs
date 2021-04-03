@@ -158,7 +158,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixtureConfig {
-    pub id: String,
+    pub id: u32,
     pub fixture: String,
     pub channel: u8,
     pub universe: Option<u16>,
@@ -336,7 +336,7 @@ mod tests {
     fn load_fixtures() -> anyhow::Result<()> {
         let content = r#"
         fixtures:
-        - id: fixture-0
+        - id: 1
           fixture: fixture-definition-ref
           output: output
           channel: 1
@@ -348,7 +348,7 @@ mod tests {
         assert_eq!(
             result.fixtures[0],
             FixtureConfig {
-                id: "fixture-0".into(),
+                id: 1,
                 fixture: "fixture-definition-ref".into(),
                 channel: 1,
                 output: "output".into(),
@@ -363,7 +363,7 @@ mod tests {
     fn load_fixtures_with_mode() -> anyhow::Result<()> {
         let content = r#"
         fixtures:
-        - id: fixture-1
+        - id: 1
           fixture: another-fixture
           channel: 5
           mode: 2-channel
@@ -376,7 +376,7 @@ mod tests {
         assert_eq!(
             result.fixtures[0],
             FixtureConfig {
-                id: "fixture-1".into(),
+                id: 1,
                 fixture: "another-fixture".into(),
                 channel: 5,
                 output: "output".into(),
@@ -391,7 +391,7 @@ mod tests {
     fn load_fixtures_with_universe() -> anyhow::Result<()> {
         let content = r#"
         fixtures:
-        - id: fixture-1
+        - id: 1
           fixture: another-fixture
           output: output
           channel: 5
@@ -404,7 +404,7 @@ mod tests {
         assert_eq!(
             result.fixtures[0],
             FixtureConfig {
-                id: "fixture-1".into(),
+                id: 1,
                 fixture: "another-fixture".into(),
                 channel: 5,
                 output: "output".into(),

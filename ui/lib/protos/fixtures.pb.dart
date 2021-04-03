@@ -9,6 +9,150 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class AddFixturesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..pc<AddFixtureRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'requests', $pb.PbFieldType.PM, subBuilder: AddFixtureRequest.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddFixturesRequest._() : super();
+  factory AddFixturesRequest({
+    $core.Iterable<AddFixtureRequest> requests,
+  }) {
+    final _result = create();
+    if (requests != null) {
+      _result.requests.addAll(requests);
+    }
+    return _result;
+  }
+  factory AddFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddFixturesRequest clone() => AddFixturesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddFixturesRequest copyWith(void Function(AddFixturesRequest) updates) => super.copyWith((message) => updates(message as AddFixturesRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddFixturesRequest create() => AddFixturesRequest._();
+  AddFixturesRequest createEmptyInstance() => create();
+  static $pb.PbList<AddFixturesRequest> createRepeated() => $pb.PbList<AddFixturesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFixturesRequest>(create);
+  static AddFixturesRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<AddFixtureRequest> get requests => $_getList(0);
+}
+
+class AddFixtureRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFixtureRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'definitionId', protoName: 'definitionId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  AddFixtureRequest._() : super();
+  factory AddFixtureRequest({
+    $core.String definitionId,
+    $core.String mode,
+    $core.int id,
+    $core.int channel,
+    $core.int universe,
+  }) {
+    final _result = create();
+    if (definitionId != null) {
+      _result.definitionId = definitionId;
+    }
+    if (mode != null) {
+      _result.mode = mode;
+    }
+    if (id != null) {
+      _result.id = id;
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (universe != null) {
+      _result.universe = universe;
+    }
+    return _result;
+  }
+  factory AddFixtureRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddFixtureRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddFixtureRequest clone() => AddFixtureRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddFixtureRequest copyWith(void Function(AddFixtureRequest) updates) => super.copyWith((message) => updates(message as AddFixtureRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddFixtureRequest create() => AddFixtureRequest._();
+  AddFixtureRequest createEmptyInstance() => create();
+  static $pb.PbList<AddFixtureRequest> createRepeated() => $pb.PbList<AddFixtureRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddFixtureRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFixtureRequest>(create);
+  static AddFixtureRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get definitionId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set definitionId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDefinitionId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDefinitionId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get mode => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set mode($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get id => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set id($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get channel => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set channel($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasChannel() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearChannel() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get universe => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set universe($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUniverse() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUniverse() => clearField(5);
+}
+
 class GetFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..hasRequiredFields = false
@@ -81,19 +225,21 @@ class Fixtures extends $pb.GeneratedMessage {
 
 class Fixture extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Fixture', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.O3)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.O3)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   Fixture._() : super();
   factory Fixture({
-    $core.String id,
+    $core.int id,
     $core.String name,
     $core.String manufacturer,
+    $core.String mode,
     $core.int universe,
     $core.int channel,
   }) {
@@ -106,6 +252,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (manufacturer != null) {
       _result.manufacturer = manufacturer;
+    }
+    if (mode != null) {
+      _result.mode = mode;
     }
     if (universe != null) {
       _result.universe = universe;
@@ -137,6 +286,193 @@ class Fixture extends $pb.GeneratedMessage {
   static Fixture _defaultInstance;
 
   @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get manufacturer => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set manufacturer($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasManufacturer() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearManufacturer() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get mode => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set mode($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMode() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMode() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get universe => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set universe($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUniverse() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUniverse() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get channel => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set channel($core.int v) { $_setUnsignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasChannel() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearChannel() => clearField(6);
+}
+
+class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetFixtureDefinitionsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GetFixtureDefinitionsRequest._() : super();
+  factory GetFixtureDefinitionsRequest() => create();
+  factory GetFixtureDefinitionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetFixtureDefinitionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetFixtureDefinitionsRequest clone() => GetFixtureDefinitionsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetFixtureDefinitionsRequest copyWith(void Function(GetFixtureDefinitionsRequest) updates) => super.copyWith((message) => updates(message as GetFixtureDefinitionsRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetFixtureDefinitionsRequest create() => GetFixtureDefinitionsRequest._();
+  GetFixtureDefinitionsRequest createEmptyInstance() => create();
+  static $pb.PbList<GetFixtureDefinitionsRequest> createRepeated() => $pb.PbList<GetFixtureDefinitionsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetFixtureDefinitionsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetFixtureDefinitionsRequest>(create);
+  static GetFixtureDefinitionsRequest _defaultInstance;
+}
+
+class FixtureDefinitions extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureDefinitions', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..pc<FixtureDefinition>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'definitions', $pb.PbFieldType.PM, subBuilder: FixtureDefinition.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureDefinitions._() : super();
+  factory FixtureDefinitions({
+    $core.Iterable<FixtureDefinition> definitions,
+  }) {
+    final _result = create();
+    if (definitions != null) {
+      _result.definitions.addAll(definitions);
+    }
+    return _result;
+  }
+  factory FixtureDefinitions.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureDefinitions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureDefinitions clone() => FixtureDefinitions()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureDefinitions copyWith(void Function(FixtureDefinitions) updates) => super.copyWith((message) => updates(message as FixtureDefinitions)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureDefinitions create() => FixtureDefinitions._();
+  FixtureDefinitions createEmptyInstance() => create();
+  static $pb.PbList<FixtureDefinitions> createRepeated() => $pb.PbList<FixtureDefinitions>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureDefinitions getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureDefinitions>(create);
+  static FixtureDefinitions _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<FixtureDefinition> get definitions => $_getList(0);
+}
+
+class FixtureDefinition extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureDefinition', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
+    ..pc<FixtureMode>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'modes', $pb.PbFieldType.PM, subBuilder: FixtureMode.create)
+    ..aOM<FixturePhysicalData>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'physical', subBuilder: FixturePhysicalData.create)
+    ..pPS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureDefinition._() : super();
+  factory FixtureDefinition({
+    $core.String id,
+    $core.String name,
+    $core.String manufacturer,
+    $core.Iterable<FixtureMode> modes,
+    FixturePhysicalData physical,
+    $core.Iterable<$core.String> tags,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (manufacturer != null) {
+      _result.manufacturer = manufacturer;
+    }
+    if (modes != null) {
+      _result.modes.addAll(modes);
+    }
+    if (physical != null) {
+      _result.physical = physical;
+    }
+    if (tags != null) {
+      _result.tags.addAll(tags);
+    }
+    return _result;
+  }
+  factory FixtureDefinition.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureDefinition.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureDefinition clone() => FixtureDefinition()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureDefinition copyWith(void Function(FixtureDefinition) updates) => super.copyWith((message) => updates(message as FixtureDefinition)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureDefinition create() => FixtureDefinition._();
+  FixtureDefinition createEmptyInstance() => create();
+  static $pb.PbList<FixtureDefinition> createRepeated() => $pb.PbList<FixtureDefinition>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureDefinition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureDefinition>(create);
+  static FixtureDefinition _defaultInstance;
+
+  @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
   set id($core.String v) { $_setString(0, v); }
@@ -164,21 +500,459 @@ class Fixture extends $pb.GeneratedMessage {
   void clearManufacturer() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get universe => $_getIZ(3);
-  @$pb.TagNumber(4)
-  set universe($core.int v) { $_setSignedInt32(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasUniverse() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearUniverse() => clearField(4);
+  $core.List<FixtureMode> get modes => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.int get channel => $_getIZ(4);
+  FixturePhysicalData get physical => $_getN(4);
   @$pb.TagNumber(5)
-  set channel($core.int v) { $_setSignedInt32(4, v); }
+  set physical(FixturePhysicalData v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasChannel() => $_has(4);
+  $core.bool hasPhysical() => $_has(4);
   @$pb.TagNumber(5)
-  void clearChannel() => clearField(5);
+  void clearPhysical() => clearField(5);
+  @$pb.TagNumber(5)
+  FixturePhysicalData ensurePhysical() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $core.List<$core.String> get tags => $_getList(5);
+}
+
+class FixtureMode extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureMode', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<FixtureChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: FixtureChannel.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureMode._() : super();
+  factory FixtureMode({
+    $core.String name,
+    $core.Iterable<FixtureChannel> channels,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (channels != null) {
+      _result.channels.addAll(channels);
+    }
+    return _result;
+  }
+  factory FixtureMode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureMode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureMode clone() => FixtureMode()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureMode copyWith(void Function(FixtureMode) updates) => super.copyWith((message) => updates(message as FixtureMode)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureMode create() => FixtureMode._();
+  FixtureMode createEmptyInstance() => create();
+  static $pb.PbList<FixtureMode> createRepeated() => $pb.PbList<FixtureMode>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureMode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureMode>(create);
+  static FixtureMode _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<FixtureChannel> get channels => $_getList(1);
+}
+
+class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.CoarseResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel_CoarseResolution._() : super();
+  factory FixtureChannel_CoarseResolution({
+    $core.int channel,
+  }) {
+    final _result = create();
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    return _result;
+  }
+  factory FixtureChannel_CoarseResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel_CoarseResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_CoarseResolution clone() => FixtureChannel_CoarseResolution()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_CoarseResolution copyWith(void Function(FixtureChannel_CoarseResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_CoarseResolution)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_CoarseResolution create() => FixtureChannel_CoarseResolution._();
+  FixtureChannel_CoarseResolution createEmptyInstance() => create();
+  static $pb.PbList<FixtureChannel_CoarseResolution> createRepeated() => $pb.PbList<FixtureChannel_CoarseResolution>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_CoarseResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_CoarseResolution>(create);
+  static FixtureChannel_CoarseResolution _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get channel => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set channel($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasChannel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearChannel() => clearField(1);
+}
+
+class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.FineResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fineChannel', $pb.PbFieldType.OU3, protoName: 'fineChannel')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarseChannel', $pb.PbFieldType.OU3, protoName: 'coarseChannel')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel_FineResolution._() : super();
+  factory FixtureChannel_FineResolution({
+    $core.int fineChannel,
+    $core.int coarseChannel,
+  }) {
+    final _result = create();
+    if (fineChannel != null) {
+      _result.fineChannel = fineChannel;
+    }
+    if (coarseChannel != null) {
+      _result.coarseChannel = coarseChannel;
+    }
+    return _result;
+  }
+  factory FixtureChannel_FineResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel_FineResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_FineResolution clone() => FixtureChannel_FineResolution()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_FineResolution copyWith(void Function(FixtureChannel_FineResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FineResolution)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_FineResolution create() => FixtureChannel_FineResolution._();
+  FixtureChannel_FineResolution createEmptyInstance() => create();
+  static $pb.PbList<FixtureChannel_FineResolution> createRepeated() => $pb.PbList<FixtureChannel_FineResolution>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_FineResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_FineResolution>(create);
+  static FixtureChannel_FineResolution _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get fineChannel => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set fineChannel($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFineChannel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFineChannel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get coarseChannel => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set coarseChannel($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCoarseChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCoarseChannel() => clearField(2);
+}
+
+class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel.FinestResolution', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finestChannel', $pb.PbFieldType.OU3, protoName: 'finestChannel')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fineChannel', $pb.PbFieldType.OU3, protoName: 'fineChannel')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarseChannel', $pb.PbFieldType.OU3, protoName: 'coarseChannel')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel_FinestResolution._() : super();
+  factory FixtureChannel_FinestResolution({
+    $core.int finestChannel,
+    $core.int fineChannel,
+    $core.int coarseChannel,
+  }) {
+    final _result = create();
+    if (finestChannel != null) {
+      _result.finestChannel = finestChannel;
+    }
+    if (fineChannel != null) {
+      _result.fineChannel = fineChannel;
+    }
+    if (coarseChannel != null) {
+      _result.coarseChannel = coarseChannel;
+    }
+    return _result;
+  }
+  factory FixtureChannel_FinestResolution.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel_FinestResolution.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_FinestResolution clone() => FixtureChannel_FinestResolution()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureChannel_FinestResolution copyWith(void Function(FixtureChannel_FinestResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FinestResolution)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_FinestResolution create() => FixtureChannel_FinestResolution._();
+  FixtureChannel_FinestResolution createEmptyInstance() => create();
+  static $pb.PbList<FixtureChannel_FinestResolution> createRepeated() => $pb.PbList<FixtureChannel_FinestResolution>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel_FinestResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_FinestResolution>(create);
+  static FixtureChannel_FinestResolution _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get finestChannel => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set finestChannel($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFinestChannel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFinestChannel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get fineChannel => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set fineChannel($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFineChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFineChannel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get coarseChannel => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set coarseChannel($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCoarseChannel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCoarseChannel() => clearField(3);
+}
+
+enum FixtureChannel_Resolution {
+  coarse, 
+  fine, 
+  finest, 
+  notSet
+}
+
+class FixtureChannel extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, FixtureChannel_Resolution> _FixtureChannel_ResolutionByTag = {
+    2 : FixtureChannel_Resolution.coarse,
+    3 : FixtureChannel_Resolution.fine,
+    4 : FixtureChannel_Resolution.finest,
+    0 : FixtureChannel_Resolution.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [2, 3, 4])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<FixtureChannel_CoarseResolution>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'coarse', subBuilder: FixtureChannel_CoarseResolution.create)
+    ..aOM<FixtureChannel_FineResolution>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fine', subBuilder: FixtureChannel_FineResolution.create)
+    ..aOM<FixtureChannel_FinestResolution>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'finest', subBuilder: FixtureChannel_FinestResolution.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannel._() : super();
+  factory FixtureChannel({
+    $core.String name,
+    FixtureChannel_CoarseResolution coarse,
+    FixtureChannel_FineResolution fine,
+    FixtureChannel_FinestResolution finest,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (coarse != null) {
+      _result.coarse = coarse;
+    }
+    if (fine != null) {
+      _result.fine = fine;
+    }
+    if (finest != null) {
+      _result.finest = finest;
+    }
+    return _result;
+  }
+  factory FixtureChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureChannel clone() => FixtureChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureChannel copyWith(void Function(FixtureChannel) updates) => super.copyWith((message) => updates(message as FixtureChannel)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel create() => FixtureChannel._();
+  FixtureChannel createEmptyInstance() => create();
+  static $pb.PbList<FixtureChannel> createRepeated() => $pb.PbList<FixtureChannel>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel>(create);
+  static FixtureChannel _defaultInstance;
+
+  FixtureChannel_Resolution whichResolution() => _FixtureChannel_ResolutionByTag[$_whichOneof(0)];
+  void clearResolution() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  FixtureChannel_CoarseResolution get coarse => $_getN(1);
+  @$pb.TagNumber(2)
+  set coarse(FixtureChannel_CoarseResolution v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCoarse() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCoarse() => clearField(2);
+  @$pb.TagNumber(2)
+  FixtureChannel_CoarseResolution ensureCoarse() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  FixtureChannel_FineResolution get fine => $_getN(2);
+  @$pb.TagNumber(3)
+  set fine(FixtureChannel_FineResolution v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFine() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFine() => clearField(3);
+  @$pb.TagNumber(3)
+  FixtureChannel_FineResolution ensureFine() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  FixtureChannel_FinestResolution get finest => $_getN(3);
+  @$pb.TagNumber(4)
+  set finest(FixtureChannel_FinestResolution v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasFinest() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearFinest() => clearField(4);
+  @$pb.TagNumber(4)
+  FixtureChannel_FinestResolution ensureFinest() => $_ensure(3);
+}
+
+class FixturePhysicalData extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixturePhysicalData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OF)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OF)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'depth', $pb.PbFieldType.OF)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weight', $pb.PbFieldType.OF)
+    ..hasRequiredFields = false
+  ;
+
+  FixturePhysicalData._() : super();
+  factory FixturePhysicalData({
+    $core.double width,
+    $core.double height,
+    $core.double depth,
+    $core.double weight,
+  }) {
+    final _result = create();
+    if (width != null) {
+      _result.width = width;
+    }
+    if (height != null) {
+      _result.height = height;
+    }
+    if (depth != null) {
+      _result.depth = depth;
+    }
+    if (weight != null) {
+      _result.weight = weight;
+    }
+    return _result;
+  }
+  factory FixturePhysicalData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixturePhysicalData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixturePhysicalData clone() => FixturePhysicalData()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixturePhysicalData copyWith(void Function(FixturePhysicalData) updates) => super.copyWith((message) => updates(message as FixturePhysicalData)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixturePhysicalData create() => FixturePhysicalData._();
+  FixturePhysicalData createEmptyInstance() => create();
+  static $pb.PbList<FixturePhysicalData> createRepeated() => $pb.PbList<FixturePhysicalData>();
+  @$core.pragma('dart2js:noInline')
+  static FixturePhysicalData getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixturePhysicalData>(create);
+  static FixturePhysicalData _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get width => $_getN(0);
+  @$pb.TagNumber(1)
+  set width($core.double v) { $_setFloat(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasWidth() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearWidth() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get height => $_getN(1);
+  @$pb.TagNumber(2)
+  set height($core.double v) { $_setFloat(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHeight() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHeight() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get depth => $_getN(2);
+  @$pb.TagNumber(3)
+  set depth($core.double v) { $_setFloat(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDepth() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDepth() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get weight => $_getN(3);
+  @$pb.TagNumber(4)
+  set weight($core.double v) { $_setFloat(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWeight() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWeight() => clearField(4);
 }
 

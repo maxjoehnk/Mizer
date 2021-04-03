@@ -4400,7 +4400,7 @@ impl ::protobuf::reflect::ProtobufValue for ClockNodeConfig {
 #[derive(PartialEq,Clone,Default)]
 pub struct FixtureNodeConfig {
     // message fields
-    pub fixture_id: ::std::string::String,
+    pub fixture_id: u32,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -4417,30 +4417,19 @@ impl FixtureNodeConfig {
         ::std::default::Default::default()
     }
 
-    // string fixture_id = 1;
+    // uint32 fixture_id = 1;
 
 
-    pub fn get_fixture_id(&self) -> &str {
-        &self.fixture_id
+    pub fn get_fixture_id(&self) -> u32 {
+        self.fixture_id
     }
     pub fn clear_fixture_id(&mut self) {
-        self.fixture_id.clear();
+        self.fixture_id = 0;
     }
 
     // Param is passed by value, moved
-    pub fn set_fixture_id(&mut self, v: ::std::string::String) {
+    pub fn set_fixture_id(&mut self, v: u32) {
         self.fixture_id = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_fixture_id(&mut self) -> &mut ::std::string::String {
-        &mut self.fixture_id
-    }
-
-    // Take field
-    pub fn take_fixture_id(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.fixture_id, ::std::string::String::new())
     }
 }
 
@@ -4454,7 +4443,11 @@ impl ::protobuf::Message for FixtureNodeConfig {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.fixture_id)?;
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.fixture_id = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -4468,8 +4461,8 @@ impl ::protobuf::Message for FixtureNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.fixture_id.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.fixture_id);
+        if self.fixture_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.fixture_id, ::protobuf::wire_format::WireTypeVarint);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -4477,8 +4470,8 @@ impl ::protobuf::Message for FixtureNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.fixture_id.is_empty() {
-            os.write_string(1, &self.fixture_id)?;
+        if self.fixture_id != 0 {
+            os.write_uint32(1, self.fixture_id)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4518,7 +4511,7 @@ impl ::protobuf::Message for FixtureNodeConfig {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
                 "fixture_id",
                 |m: &FixtureNodeConfig| { &m.fixture_id },
                 |m: &mut FixtureNodeConfig| { &mut m.fixture_id },
@@ -4539,7 +4532,7 @@ impl ::protobuf::Message for FixtureNodeConfig {
 
 impl ::protobuf::Clear for FixtureNodeConfig {
     fn clear(&mut self) {
-        self.fixture_id.clear();
+        self.fixture_id = 0;
         self.unknown_fields.clear();
     }
 }
@@ -7764,7 +7757,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\
     \x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockNodeConfig\x12\
     \x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\
-    \x12\x1d\n\nfixture_id\x18\x01\x20\x01(\tR\tfixtureId\"\x11\n\x0fInputNo\
+    \x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInputNo\
     deConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\t\
     R\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\
     \tR\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\x07pattern\

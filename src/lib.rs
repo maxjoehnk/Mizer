@@ -25,7 +25,7 @@ pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
 
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
-    let fixture_manager = register_fixtures_module(&mut runtime)?;
+    let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime)?;
 
     let mut media_paths = Vec::new();
     load_project_files(&flags, &mut runtime, &mut media_paths)?;
@@ -43,6 +43,7 @@ pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
         handle,
         &mut runtime,
         fixture_manager,
+        fixture_library,
         &media_server_api,
     )?;
     setup_media_api(flags, media_server_api)?;
@@ -86,14 +87,14 @@ fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     DmxModule.register(runtime)
 }
 
-fn register_fixtures_module(runtime: &mut DefaultRuntime) -> anyhow::Result<FixtureManager> {
+fn register_fixtures_module(runtime: &mut DefaultRuntime) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
     let ofl_provider = load_ofl_provider()?;
     let providers: Vec<Box<dyn FixtureLibraryProvider>> = vec![Box::new(ofl_provider)];
 
-    let (fixture_module, fixture_manager) = FixtureModule::new(providers);
+    let (fixture_module, fixture_manager, fixture_library) = FixtureModule::new(providers);
     fixture_module.register(runtime)?;
 
-    Ok(fixture_manager)
+    Ok((fixture_manager, fixture_library))
 }
 
 fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
@@ -164,6 +165,7 @@ fn setup_grpc_api(
     handle: tokio::runtime::Handle,
     runtime: &mut DefaultRuntime,
     fixture_manager: FixtureManager,
+    fixture_library: FixtureLibrary,
     media_server_api: &MediaServerApi,
 ) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
     let grpc = if !flags.disable_grpc_api {
@@ -171,6 +173,7 @@ fn setup_grpc_api(
             handle.clone(),
             runtime.api(),
             fixture_manager,
+            fixture_library,
             media_server_api.clone(),
         )?)
     } else {

@@ -8,19 +8,20 @@ pub mod library;
 pub mod manager;
 mod processor;
 
-pub struct FixtureModule(Vec<Box<dyn FixtureLibraryProvider>>, FixtureManager);
+pub struct FixtureModule(FixtureLibrary, FixtureManager);
 
 impl FixtureModule {
-    pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> (Self, FixtureManager) {
+    pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> (Self, FixtureManager, FixtureLibrary) {
         let manager = FixtureManager::new();
-        (Self(providers, manager.clone()), manager)
+        let library = FixtureLibrary::new(providers);
+        (Self(library.clone(), manager.clone()), manager, library)
     }
 }
 
 impl Module for FixtureModule {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
         let injector = runtime.injector();
-        injector.provide(FixtureLibrary::new(self.0));
+        injector.provide(self.0);
         injector.provide(self.1);
         runtime.add_processor(FixtureProcessor.into());
         Ok(())

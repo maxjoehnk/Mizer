@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
+import 'package:mizer/protos/fixtures.pbgrpc.dart';
 import 'package:mizer/protos/layouts.pbgrpc.dart';
 import 'package:mizer/protos/media.pbgrpc.dart';
 import 'package:mizer/protos/nodes.pbgrpc.dart';
@@ -25,7 +26,7 @@ class StateProvider extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => NodesBloc(context.read())),
           BlocProvider(create: (context) => SessionBloc(_channel)),
-          BlocProvider(create: (context) => FixturesBloc(_channel)),
+          BlocProvider(create: (context) => FixturesBloc(context.read())),
           BlocProvider(create: (context) => MediaBloc(context.read())),
           BlocProvider(create: (context) => LayoutsBloc(context.read())),
         ],
@@ -34,6 +35,7 @@ class StateProvider extends StatelessWidget {
         RepositoryProvider(create: (context) => MediaApiClient(_channel)),
         RepositoryProvider(create: (context) => NodesApiClient(_channel)),
         RepositoryProvider(create: (context) => LayoutsApiClient(_channel)),
+        RepositoryProvider(create: (context) => FixturesApiClient(_channel)),
       ],
     );
   }

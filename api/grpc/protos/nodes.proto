@@ -126,7 +126,7 @@ message ClockNodeConfig {
 }
 
 message FixtureNodeConfig {
-  string fixture_id = 1;
+  uint32 fixture_id = 1;
 }
 
 message InputNodeConfig {}

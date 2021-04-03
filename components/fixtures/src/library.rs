@@ -1,12 +1,14 @@
 use crate::fixture::FixtureDefinition;
+use std::sync::Arc;
 
+#[derive(Clone)]
 pub struct FixtureLibrary {
-    providers: Vec<Box<dyn FixtureLibraryProvider>>,
+    providers: Arc<Vec<Box<dyn FixtureLibraryProvider>>>,
 }
 
 impl FixtureLibrary {
     pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> Self {
-        FixtureLibrary { providers }
+        FixtureLibrary { providers: Arc::new(providers) }
     }
 
     pub fn get_definition(&self, id: &str) -> Option<FixtureDefinition> {
@@ -17,8 +19,17 @@ impl FixtureLibrary {
             .first()
             .cloned()
     }
+
+    pub fn list_definitions(&self) -> Vec<FixtureDefinition> {
+        self.providers
+            .iter()
+            .flat_map(|provider| provider.list_definitions())
+            .collect()
+    }
 }
 
-pub trait FixtureLibraryProvider {
+pub trait FixtureLibraryProvider : Send + Sync {
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition>;
+
+    fn list_definitions(&self) -> Vec<FixtureDefinition>;
 }

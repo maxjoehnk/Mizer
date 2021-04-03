@@ -31,11 +31,11 @@ class _FixtureSelector extends StatelessWidget {
     return BlocBuilder<FixturesBloc, Fixtures>(
         builder: (context, fixtures) => SelectFormField(
               decoration: InputDecoration(labelText: "Fixture"),
-              initialValue: config.fixtureId,
+              initialValue: config.fixtureId.toString(),
               items: fixtures.fixtures.map((f) {
                 return {
-                  'value': f.id,
-                  'label': f.id,
+                  'value': f.id.toString(),
+                  'label': '${f.id} - ${f.name}',
                 };
               }).toList(),
             ));

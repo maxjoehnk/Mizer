@@ -3,9 +3,9 @@ use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct Fixture {
-    pub id: String,
+    pub id: u32,
     pub definition: FixtureDefinition,
-    current_mode: FixtureMode,
+    pub current_mode: FixtureMode,
     pub universe: u16,
     pub channel: u8,
     pub output: String,
@@ -14,7 +14,7 @@ pub struct Fixture {
 
 impl Fixture {
     pub fn new(
-        fixture_id: String,
+        fixture_id: u32,
         definition: FixtureDefinition,
         selected_mode: Option<String>,
         output: String,
@@ -43,7 +43,7 @@ impl Fixture {
     pub(crate) fn flush(&self, output: &dyn DmxOutput) {
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;
-        let end = self.current_mode.dmx_channels() as usize;
+        let end = start + self.current_mode.dmx_channels() as usize;
         output.write_bulk(self.universe, self.channel, &buffer[start..end]);
     }
 
@@ -93,9 +93,12 @@ fn get_current_mode(definition: &FixtureDefinition, selected_mode: Option<String
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureDefinition {
+    pub id: String,
     pub name: String,
     pub manufacturer: String,
     pub modes: Vec<FixtureMode>,
+    pub physical: PhysicalFixtureData,
+    pub tags: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -140,4 +143,17 @@ pub enum ChannelResolution {
     ///
     /// coarse, fine, finest
     Finest(u8, u8, u8),
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct PhysicalFixtureData {
+    pub dimensions: Option<FixtureDimensions>,
+    pub weight: Option<f32>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct FixtureDimensions {
+    pub width: f32,
+    pub height: f32,
+    pub depth: f32,
 }

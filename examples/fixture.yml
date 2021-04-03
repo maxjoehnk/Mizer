@@ -2,7 +2,7 @@ nodes:
   - type: fixture
     path: /fixture-0
     config:
-      fixture: hazer-0
+      fixture: 1
     designer:
       position:
         x: 5
@@ -19,12 +19,31 @@ nodes:
         x: 0
         y: 0
       scale: 1
+  - type: fader
+    path: /fader-0
+    config: {}
+    designer:
+      position:
+        x: 0
+        y: 5
+      scale: 1
+
+layouts:
+  Default:
+    - node: /fader-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 2
+        height: 4
 
 channels:
   - value@/oscillator-0 -> Fan@/fixture-0
+  - value@/fader-0 -> Haze@/fixture-0
 
 fixtures:
-  - id: hazer-0
+  - id: 1
     fixture: ofl:hazebase:base-hazer-pro
     output: output
     universe: 1

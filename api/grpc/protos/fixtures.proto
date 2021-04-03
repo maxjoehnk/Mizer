@@ -4,6 +4,20 @@ package mizer;
 
 service FixturesApi {
   rpc GetFixtures (GetFixturesRequest) returns (Fixtures) {}
+  rpc GetFixtureDefinitions (GetFixtureDefinitionsRequest) returns (FixtureDefinitions) {}
+  rpc AddFixtures (AddFixturesRequest) returns (Fixtures) {}
+}
+
+message AddFixturesRequest {
+  repeated AddFixtureRequest requests = 1;
+}
+
+message AddFixtureRequest {
+  string definitionId = 1;
+  string mode = 2;
+  uint32 id = 3;
+  uint32 channel = 4;
+  uint32 universe = 5;
 }
 
 message GetFixturesRequest {}
@@ -13,9 +27,61 @@ message Fixtures {
 }
 
 message Fixture {
+  uint32 id = 1;
+  string name = 2;
+  string manufacturer = 3;
+  string mode = 4;
+  uint32 universe = 5;
+  uint32 channel = 6;
+}
+
+message GetFixtureDefinitionsRequest {}
+
+message FixtureDefinitions {
+  repeated FixtureDefinition definitions = 1;
+}
+
+message FixtureDefinition {
   string id = 1;
   string name = 2;
   string manufacturer = 3;
-  int32 universe = 4;
-  int32 channel = 5;
+  repeated FixtureMode modes = 4;
+  FixturePhysicalData physical = 5;
+  repeated string tags = 6;
+}
+
+message FixtureMode {
+  string name = 1;
+  repeated FixtureChannel channels = 2;
+}
+
+message FixtureChannel {
+  string name = 1;
+  oneof resolution {
+    CoarseResolution coarse = 2;
+    FineResolution fine = 3;
+    FinestResolution finest = 4;
+  }
+
+  message CoarseResolution {
+    uint32 channel = 1;
+  }
+
+  message FineResolution {
+    uint32 fineChannel = 1;
+    uint32 coarseChannel = 2;
+  }
+
+  message FinestResolution {
+    uint32 finestChannel = 1;
+    uint32 fineChannel = 2;
+    uint32 coarseChannel = 3;
+  }
+}
+
+message FixturePhysicalData {
+  float width = 1;
+  float height = 2;
+  float depth = 3;
+  float weight = 4;
 }

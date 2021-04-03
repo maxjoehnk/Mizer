@@ -184,7 +184,7 @@ const ClockNodeConfig$json = const {
 const FixtureNodeConfig$json = const {
   '1': 'FixtureNodeConfig',
   '2': const [
-    const {'1': 'fixture_id', '3': 1, '4': 1, '5': 9, '10': 'fixtureId'},
+    const {'1': 'fixture_id', '3': 1, '4': 1, '5': 13, '10': 'fixtureId'},
   ],
 };
 

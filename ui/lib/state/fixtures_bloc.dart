@@ -1,29 +1,74 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:grpc/grpc.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/fixtures.pbgrpc.dart';
 
-enum FixturesEvent { Fetch }
+abstract class FixturesEvent {}
+
+class FetchFixtures extends FixturesEvent {}
+
+class AddFixtures extends FixturesEvent {
+  FixtureDefinition definition;
+  FixtureMode mode;
+  int universe;
+  int count;
+  int startId;
+  int startChannel;
+
+  AddFixtures({this.definition, this.mode, this.universe, this.count, this.startId, this.startChannel});
+
+  AddFixturesRequest _into() {
+    List<AddFixtureRequest> fixtures = [];
+    for (var i = 0; i < count; i++) {
+      var request = AddFixtureRequest(
+          definitionId: definition.id,
+          mode: mode.name,
+          universe: universe,
+          id: startId + i,
+          channel: startChannel + (mode.channels.length * i)
+      );
+      fixtures.add(request);
+    }
+    return AddFixturesRequest(requests: fixtures);
+  }
+
+  @override
+  String toString() {
+    return 'AddFixtures{definition: $definition, mode: $mode, universe: $universe, count: $count, startId: $startId, startChannel: $startChannel}';
+  }
+}
 
 class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
   final FixturesApiClient client;
 
-  FixturesBloc(ClientChannel channel)
-      : client = FixturesApiClient(channel),
-        super(Fixtures.create()) {
-    this.add(FixturesEvent.Fetch);
+  FixturesBloc(this.client) : super(Fixtures()) {
+    this.add(FetchFixtures());
   }
 
   @override
   Stream<Fixtures> mapEventToState(FixturesEvent event) async* {
-    switch (event) {
-      case FixturesEvent.Fetch:
-        log("fetching fixtures", name: "FixturesBloc");
-        yield await client.getFixtures(GetFixturesRequest());
-        log("got ${this.state.fixtures.length} fixtures", name: "FixturesBloc");
-        break;
+    if (event is FetchFixtures) {
+      yield await fetchFixtures();
     }
+    if (event is AddFixtures) {
+      yield await addFixture(event);
+    }
+  }
+
+  Future<Fixtures> fetchFixtures() async {
+    log("fetching fixtures", name: "FixturesBloc");
+    var fixtures = await client.getFixtures(GetFixturesRequest());
+    log("got ${fixtures.fixtures.length} fixtures", name: "FixturesBloc");
+
+    return fixtures;
+  }
+
+  Future<Fixtures> addFixture(AddFixtures event) async {
+    log("adding fixtures: $event", name: "FixturesBloc");
+    var request = event._into();
+    var fixtures = await client.addFixtures(request);
+
+    return fixtures;
   }
 }

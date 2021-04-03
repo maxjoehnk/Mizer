@@ -6,7 +6,7 @@ use mizer_node::*;
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {
     #[serde(rename = "fixture")]
-    pub fixture_id: String,
+    pub fixture_id: u32,
     #[serde(skip)]
     pub fixture_manager: Option<FixtureManager>,
 }
@@ -35,7 +35,7 @@ impl PipelineNode for FixtureNode {
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         self.fixture_manager
             .as_ref()
-            .and_then(|manager| manager.get_fixture(&self.fixture_id))
+            .and_then(|manager| manager.get_fixture(self.fixture_id))
             .and_then(|fixture| {
                 fixture
                     .get_channels()
@@ -53,7 +53,7 @@ impl PipelineNode for FixtureNode {
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         self.fixture_manager
             .as_ref()
-            .and_then(|manager| manager.get_fixture(&self.fixture_id))
+            .and_then(|manager| manager.get_fixture(self.fixture_id))
             .map(|fixture| {
                 fixture
                     .get_channels()
@@ -83,7 +83,7 @@ impl ProcessingNode for FixtureNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(manager) = context.inject::<FixtureManager>() {
-            if let Some(mut fixture) = manager.get_fixture_mut(&self.fixture_id) {
+            if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
                 for port in context.input_ports() {
                     if let Some(value) = context.read_port(port.clone()) {
                         fixture.write(&port.0, value);

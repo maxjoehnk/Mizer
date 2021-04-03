@@ -10,6 +10,7 @@ use crate::protos::{
     FixturesApiServer, LayoutsApiServer, MediaApiServer, NodesApiServer, SessionApiClient,
     SessionApiServer,
 };
+use mizer_fixtures::library::FixtureLibrary;
 
 mod protos;
 mod services;
@@ -19,6 +20,7 @@ pub fn start(
     handle: tokio::runtime::Handle,
     mizer_runtime: mizer_runtime::RuntimeApi,
     fixture_manager: FixtureManager,
+    fixture_library: FixtureLibrary,
     media_server: MediaServerApi,
 ) -> anyhow::Result<grpc::Server> {
     let mut server: grpc::ServerBuilder = grpc::ServerBuilder::new();
@@ -31,7 +33,7 @@ pub fn start(
         services::session::SessionApiImpl::new(),
     ));
     server.add_service(FixturesApiServer::new_service_def(
-        services::fixtures::FixturesApiImpl::new(fixture_manager),
+        services::fixtures::FixturesApiImpl::new(fixture_manager, fixture_library),
     ));
     server.add_service(MediaApiServer::new_service_def(
         services::media::MediaApiImpl::new(media_server),

@@ -19,7 +19,7 @@ impl OpenFixtureLibraryProvider {
         let ag_library: AgLibraryFile = serde_json::from_reader(&mut ag_library_file)?;
 
         for fixture in ag_library.fixtures {
-            let manufacturer = fixture.manufacturer.name.to_lowercase().replace(" ", "-");
+            let manufacturer = fixture.manufacturer.name.to_slug();
             self.add_fixture_definition(&manufacturer, fixture);
         }
 
@@ -50,17 +50,31 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
         if let Some(definitions) = self.definitions.get(id_parts[1]) {
             definitions
                 .iter()
-                .find(|definition| normalize_model(&definition.name) == id_parts[2])
+                .find(|definition| definition.name.to_slug() == id_parts[2])
                 .cloned()
                 .map(FixtureDefinition::from)
         } else {
             None
         }
     }
+
+    fn list_definitions(&self) -> Vec<FixtureDefinition> {
+        self.definitions.values()
+            .flatten()
+            .cloned()
+            .map(FixtureDefinition::from)
+            .collect()
+    }
 }
 
-fn normalize_model(model: &str) -> String {
-    model.replace("*", "-")
+trait SlugConverter {
+    fn to_slug(&self) -> String;
+}
+
+impl SlugConverter for String {
+    fn to_slug(&self) -> String {
+        self.to_lowercase().replace(" ", "-").replace("*", "-")
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -81,6 +95,8 @@ pub struct OpenFixtureLibraryFixtureDefinition {
     pub modes: Vec<Mode>,
     pub fixture_key: String,
     pub manufacturer: FixtureManufacturer,
+    #[serde(default)]
+    pub physical: Physical,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -100,9 +116,21 @@ pub struct Mode {
     pub channels: Vec<Option<String>>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+pub struct Physical {
+    #[serde(default)]
+    pub dimensions: Vec<f32>,
+    #[serde(default)]
+    pub weight: Option<f32>,
+    pub power: Option<f32>,
+    #[serde(rename = "DMXconnector", default)]
+    pub dmx_connector: Option<String>,
+}
+
 impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     fn from(def: OpenFixtureLibraryFixtureDefinition) -> Self {
         FixtureDefinition {
+            id: format!("ofl:{}:{}", def.manufacturer.name.to_slug(), def.name.to_slug()),
             name: def.name,
             manufacturer: def.manufacturer.name,
             modes: def
@@ -122,6 +150,22 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
                         .collect(),
                 })
                 .collect(),
+            tags: def.categories,
+            physical: PhysicalFixtureData {
+                weight: def.physical.weight,
+                dimensions: convert_dimensions(def.physical.dimensions),
+            }
         }
+    }
+}
+
+fn convert_dimensions(dimensions: Vec<f32>) -> Option<FixtureDimensions> {
+    match dimensions.as_slice() {
+        [width, height, depth] => Some(FixtureDimensions {
+            width: *width,
+            height: *height,
+            depth: *depth
+        }),
+        _ => None,
     }
 }

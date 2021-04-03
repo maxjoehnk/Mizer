@@ -1177,13 +1177,13 @@ class ClockNodeConfig extends $pb.GeneratedMessage {
 
 class FixtureNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId')
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   FixtureNodeConfig._() : super();
   factory FixtureNodeConfig({
-    $core.String fixtureId,
+    $core.int fixtureId,
   }) {
     final _result = create();
     if (fixtureId != null) {
@@ -1213,9 +1213,9 @@ class FixtureNodeConfig extends $pb.GeneratedMessage {
   static FixtureNodeConfig _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get fixtureId => $_getSZ(0);
+  $core.int get fixtureId => $_getIZ(0);
   @$pb.TagNumber(1)
-  set fixtureId($core.String v) { $_setString(0, v); }
+  set fixtureId($core.int v) { $_setUnsignedInt32(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasFixtureId() => $_has(0);
   @$pb.TagNumber(1)

@@ -15,12 +15,18 @@ impl OpenFixtureLibraryProvider {
     }
 
     pub fn load(&mut self, path: &str) -> anyhow::Result<()> {
-        let mut ag_library_file = std::fs::File::open(path)?;
-        let ag_library: AgLibraryFile = serde_json::from_reader(&mut ag_library_file)?;
+        let files = std::fs::read_dir(path)?;
+        for file in files {
+            let file = file?;
+            if file.metadata()?.is_file() {
+                let mut ag_library_file = std::fs::File::open(&file.path())?;
+                let ag_library: AgLibraryFile = serde_json::from_reader(&mut ag_library_file)?;
 
-        for fixture in ag_library.fixtures {
-            let manufacturer = fixture.manufacturer.name.to_slug();
-            self.add_fixture_definition(&manufacturer, fixture);
+                for fixture in ag_library.fixtures {
+                    let manufacturer = fixture.manufacturer.name.to_slug();
+                    self.add_fixture_definition(&manufacturer, fixture);
+                }
+            }
         }
 
         Ok(())

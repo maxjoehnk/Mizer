@@ -101,7 +101,7 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
     ofl_provider
-        .load("components/fixtures/open-fixture-library/.fixtures.json")
+        .load("components/fixtures/open-fixture-library/.fixtures")
         .context("loading open fixture library")?;
     log::info!("Loading open fixture library...Done");
 

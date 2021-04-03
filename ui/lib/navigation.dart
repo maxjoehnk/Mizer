@@ -10,7 +10,6 @@ import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/session/session_view.dart';
-import 'package:mizer/views/settings/settings_view.dart';
 
 import 'actions/actions.dart';
 
@@ -23,7 +22,6 @@ List<Route> routes = [
   Route(() => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit6, View.Media),
   Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit7, View.Devices),
   Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit8, View.Session),
-  Route(() => SettingsView(), Icons.settings, 'Settings', LogicalKeyboardKey.digit9, View.Settings),
 ];
 
 Map<LogicalKeySet, Intent> shortcuts = getShortcuts(routes);

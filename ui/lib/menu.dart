@@ -42,12 +42,13 @@ class ApplicationMenu extends StatelessWidget {
       ]),
       Submenu(label: "View", children: [
         MenuActionItem(label: "Layout", action: OpenViewIntent(View.Layout)),
+        MenuActionItem(label: "2D Plan", action: OpenViewIntent(View.Plan2D)),
+        MenuActionItem(label: "PreViz", action: OpenViewIntent(View.PreViz)),
         MenuActionItem(label: "Nodes", action: OpenViewIntent(View.Nodes)),
         MenuActionItem(label: "Fixtures", action: OpenViewIntent(View.Fixtures)),
         MenuActionItem(label: "Media", action: OpenViewIntent(View.Media)),
         MenuActionItem(label: "Devices", action: OpenViewIntent(View.Devices)),
         MenuActionItem(label: "Session", action: OpenViewIntent(View.Session)),
-        MenuActionItem(label: "Settings", action: OpenViewIntent(View.Settings)),
       ])
     ], child: this.child);
   }

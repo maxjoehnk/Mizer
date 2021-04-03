@@ -15,7 +15,6 @@ enum View {
   Media,
   Devices,
   Session,
-  Settings,
 }
 
 class OpenProjectIntent extends Intent {

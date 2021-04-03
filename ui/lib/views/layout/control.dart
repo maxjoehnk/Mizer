@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/inputs/button.dart';
-import 'package:mizer/inputs/fader.dart';
+import 'package:mizer/widgets/inputs/button.dart';
+import 'package:mizer/widgets/inputs/fader.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/protos/nodes.pbgrpc.dart';

@@ -18,7 +18,6 @@ import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/session/session_view.dart';
-import 'package:mizer/views/settings/settings_view.dart';
 import 'package:mockito/mockito.dart';
 
 void main() {
@@ -55,7 +54,6 @@ void main() {
 
       return bloc;
     });
-    testNavigation('Settings', Icons.settings, SettingsView);
   }, skip: "Injection of bloc and rendering of navigation bar is borked in tests");
 }
 

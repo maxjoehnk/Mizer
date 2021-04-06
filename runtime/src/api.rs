@@ -1,11 +1,13 @@
-use dashmap::mapref::one::Ref;
-use dashmap::DashMap;
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
-use mizer_nodes::Node;
-use mizer_layouts::Layout;
-use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::sync::Arc;
+
+use dashmap::mapref::one::Ref;
+use dashmap::DashMap;
+use pinboard::NonEmptyPinboard;
+
+use mizer_layouts::Layout;
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
+use mizer_nodes::{FixtureNode, Node};
 
 #[derive(Clone)]
 pub struct RuntimeApi {
@@ -18,7 +20,12 @@ pub struct RuntimeApi {
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
-    AddNode(NodeType, NodeDesigner, flume::Sender<anyhow::Result<NodePath>>),
+    AddNode(
+        NodeType,
+        NodeDesigner,
+        Option<Node>,
+        flume::Sender<anyhow::Result<NodePath>>,
+    ),
     AddLink(NodeLink, flume::Sender<anyhow::Result<()>>),
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
 }
@@ -57,9 +64,26 @@ impl RuntimeApi {
         node_type: NodeType,
         designer: NodeDesigner,
     ) -> anyhow::Result<NodeDescriptor<'_>> {
+        self.add_node_internal(node_type, designer, None)
+    }
+
+    pub fn add_node_for_fixture(&self, fixture_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
+        let node = FixtureNode {
+            fixture_id,
+            ..Default::default()
+        };
+        self.add_node_internal(NodeType::Fixture, NodeDesigner::default(), Some(node.into()))
+    }
+
+    fn add_node_internal(
+        &self,
+        node_type: NodeType,
+        designer: NodeDesigner,
+        node: Option<Node>,
+    ) -> anyhow::Result<NodeDescriptor<'_>> {
         let (tx, rx) = flume::bounded(1);
         self.sender
-            .send(ApiCommand::AddNode(node_type, designer.clone(), tx))?;
+            .send(ApiCommand::AddNode(node_type, designer.clone(), node, tx))?;
 
         // TODO: this blocks, we should use the async method
         let path = rx.recv()??;
@@ -81,7 +105,8 @@ impl RuntimeApi {
         value: f64,
     ) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::WritePort(node_path, port, value, tx))?;
+        self.sender
+            .send(ApiCommand::WritePort(node_path, port, value, tx))?;
         let result = rx.recv()?;
 
         result

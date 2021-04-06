@@ -10,6 +10,7 @@ service FixturesApi {
 
 message AddFixturesRequest {
   repeated AddFixtureRequest requests = 1;
+  bool create_nodes = 2;
 }
 
 message AddFixtureRequest {

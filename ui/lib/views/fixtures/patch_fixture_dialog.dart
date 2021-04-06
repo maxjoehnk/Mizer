@@ -19,7 +19,7 @@ class PatchFixtureDialog extends StatelessWidget {
           return Dialog(
               child: PatchFixtureDialogStepper(
             definitions: state.data,
-              bloc: fixturesBloc,
+            bloc: fixturesBloc,
           ));
         });
   }
@@ -169,7 +169,8 @@ class PatchSettings extends StatefulWidget {
   PatchSettings({this.key, this.channel, this.universe, this.id, this.count, this.onChange});
 
   @override
-  _PatchSettingsState createState() => _PatchSettingsState(universe: universe, channel: channel, id: id, count: count);
+  _PatchSettingsState createState() =>
+      _PatchSettingsState(universe: universe, channel: channel, id: id, count: count);
 }
 
 class _PatchSettingsState extends State<PatchSettings> {
@@ -177,6 +178,8 @@ class _PatchSettingsState extends State<PatchSettings> {
   final TextEditingController _channelController;
   final TextEditingController _idController;
   final TextEditingController _countController;
+
+  bool createNodes = true;
 
   _PatchSettingsState({int channel, int universe, int id, int count})
       : _universeController = TextEditingController(text: universe.toString()),
@@ -222,6 +225,19 @@ class _PatchSettingsState extends State<PatchSettings> {
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
         ),
       ),
+      PatchField(
+          child: Row(
+        children: [
+          Checkbox(
+            value: createNodes,
+            onChanged: (value) => setState(() {
+              createNodes = value;
+              this._emitUpdate();
+            }),
+          ),
+          Text("Create Nodes")
+        ],
+      ))
     ]);
   }
 
@@ -230,9 +246,9 @@ class _PatchSettingsState extends State<PatchSettings> {
     int universe = int.parse(_universeController.text);
     int channel = int.parse(_channelController.text);
     int count = int.parse(_countController.text);
-    this
-        .widget
-        .onChange(PatchSettingsEvent(id: id, universe: universe, channel: channel, count: count));
+    var event = PatchSettingsEvent(
+        id: id, universe: universe, channel: channel, count: count, createNodes: createNodes);
+    this.widget.onChange(event);
   }
 }
 
@@ -241,8 +257,9 @@ class PatchSettingsEvent {
   final int universe;
   final int channel;
   final int count;
+  final bool createNodes;
 
-  PatchSettingsEvent({this.id, this.universe, this.channel, this.count});
+  PatchSettingsEvent({this.id, this.universe, this.channel, this.count, this.createNodes});
 }
 
 class UniversePreview extends StatelessWidget {

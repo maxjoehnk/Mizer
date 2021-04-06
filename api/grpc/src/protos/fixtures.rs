@@ -27,6 +27,7 @@
 pub struct AddFixturesRequest {
     // message fields
     pub requests: ::protobuf::RepeatedField<AddFixtureRequest>,
+    pub create_nodes: bool,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -67,6 +68,21 @@ impl AddFixturesRequest {
     pub fn take_requests(&mut self) -> ::protobuf::RepeatedField<AddFixtureRequest> {
         ::std::mem::replace(&mut self.requests, ::protobuf::RepeatedField::new())
     }
+
+    // bool create_nodes = 2;
+
+
+    pub fn get_create_nodes(&self) -> bool {
+        self.create_nodes
+    }
+    pub fn clear_create_nodes(&mut self) {
+        self.create_nodes = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_create_nodes(&mut self, v: bool) {
+        self.create_nodes = v;
+    }
 }
 
 impl ::protobuf::Message for AddFixturesRequest {
@@ -86,6 +102,13 @@ impl ::protobuf::Message for AddFixturesRequest {
                 1 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.requests)?;
                 },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.create_nodes = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -102,6 +125,9 @@ impl ::protobuf::Message for AddFixturesRequest {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.create_nodes != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -113,6 +139,9 @@ impl ::protobuf::Message for AddFixturesRequest {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.create_nodes != false {
+            os.write_bool(2, self.create_nodes)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -156,6 +185,11 @@ impl ::protobuf::Message for AddFixturesRequest {
                 |m: &AddFixturesRequest| { &m.requests },
                 |m: &mut AddFixturesRequest| { &mut m.requests },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "create_nodes",
+                |m: &AddFixturesRequest| { &m.create_nodes },
+                |m: &mut AddFixturesRequest| { &mut m.create_nodes },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddFixturesRequest>(
                 "AddFixturesRequest",
                 fields,
@@ -173,6 +207,7 @@ impl ::protobuf::Message for AddFixturesRequest {
 impl ::protobuf::Clear for AddFixturesRequest {
     fn clear(&mut self) {
         self.requests.clear();
+        self.create_nodes = false;
         self.unknown_fields.clear();
     }
 }
@@ -3225,47 +3260,48 @@ impl ::protobuf::reflect::ProtobufValue for FixturePhysicalData {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0efixtures.proto\x12\x05mizer\"J\n\x12AddFixturesRequest\x124\n\x08r\
-    equests\x18\x01\x20\x03(\x0b2\x18.mizer.AddFixtureRequestR\x08requests\"\
-    \x91\x01\n\x11AddFixtureRequest\x12\"\n\x0cdefinitionId\x18\x01\x20\x01(\
-    \tR\x0cdefinitionId\x12\x12\n\x04mode\x18\x02\x20\x01(\tR\x04mode\x12\
-    \x0e\n\x02id\x18\x03\x20\x01(\rR\x02id\x12\x18\n\x07channel\x18\x04\x20\
-    \x01(\rR\x07channel\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08univers\
-    e\"\x14\n\x12GetFixturesRequest\"6\n\x08Fixtures\x12*\n\x08fixtures\x18\
-    \x01\x20\x03(\x0b2\x0e.mizer.FixtureR\x08fixtures\"\x9b\x01\n\x07Fixture\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
-    \x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufact\
-    urer\x12\x12\n\x04mode\x18\x04\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\
-    \x18\x05\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x06\x20\x01(\r\
-    R\x07channel\"\x1e\n\x1cGetFixtureDefinitionsRequest\"P\n\x12FixtureDefi\
-    nitions\x12:\n\x0bdefinitions\x18\x01\x20\x03(\x0b2\x18.mizer.FixtureDef\
-    initionR\x0bdefinitions\"\xd1\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\
-    \x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\
-    \x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12(\n\x05m\
-    odes\x18\x04\x20\x03(\x0b2\x12.mizer.FixtureModeR\x05modes\x126\n\x08phy\
-    sical\x18\x05\x20\x01(\x0b2\x1a.mizer.FixturePhysicalDataR\x08physical\
-    \x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"T\n\x0bFixtureMode\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x121\n\x08channels\x18\x02\
-    \x20\x03(\x0b2\x15.mizer.FixtureChannelR\x08channels\"\xfd\x03\n\x0eFixt\
-    ureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12@\n\x06coars\
-    e\x18\x02\x20\x01(\x0b2&.mizer.FixtureChannel.CoarseResolutionH\0R\x06co\
-    arse\x12:\n\x04fine\x18\x03\x20\x01(\x0b2$.mizer.FixtureChannel.FineReso\
-    lutionH\0R\x04fine\x12@\n\x06finest\x18\x04\x20\x01(\x0b2&.mizer.Fixture\
-    Channel.FinestResolutionH\0R\x06finest\x1a,\n\x10CoarseResolution\x12\
-    \x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x1aX\n\x0eFineResolutio\
-    n\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rco\
-    arseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestRe\
-    solution\x12$\n\rfinestChannel\x18\x01\x20\x01(\rR\rfinestChannel\x12\
-    \x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseC\
-    hannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\nresolution\"q\n\x13Fix\
-    turePhysicalData\x12\x14\n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\
-    \x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\
-    \x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\
-    \x06weight2\xe2\x01\n\x0bFixturesApi\x12;\n\x0bGetFixtures\x12\x19.mizer\
-    .GetFixturesRequest\x1a\x0f.mizer.Fixtures\"\0\x12Y\n\x15GetFixtureDefin\
-    itions\x12#.mizer.GetFixtureDefinitionsRequest\x1a\x19.mizer.FixtureDefi\
-    nitions\"\0\x12;\n\x0bAddFixtures\x12\x19.mizer.AddFixturesRequest\x1a\
-    \x0f.mizer.Fixtures\"\0b\x06proto3\
+    \n\x0efixtures.proto\x12\x05mizer\"m\n\x12AddFixturesRequest\x124\n\x08r\
+    equests\x18\x01\x20\x03(\x0b2\x18.mizer.AddFixtureRequestR\x08requests\
+    \x12!\n\x0ccreate_nodes\x18\x02\x20\x01(\x08R\x0bcreateNodes\"\x91\x01\n\
+    \x11AddFixtureRequest\x12\"\n\x0cdefinitionId\x18\x01\x20\x01(\tR\x0cdef\
+    initionId\x12\x12\n\x04mode\x18\x02\x20\x01(\tR\x04mode\x12\x0e\n\x02id\
+    \x18\x03\x20\x01(\rR\x02id\x12\x18\n\x07channel\x18\x04\x20\x01(\rR\x07c\
+    hannel\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08universe\"\x14\n\x12\
+    GetFixturesRequest\"6\n\x08Fixtures\x12*\n\x08fixtures\x18\x01\x20\x03(\
+    \x0b2\x0e.mizer.FixtureR\x08fixtures\"\x9b\x01\n\x07Fixture\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12\
+    \x12\n\x04mode\x18\x04\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\x05\
+    \x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x06\x20\x01(\rR\x07cha\
+    nnel\"\x1e\n\x1cGetFixtureDefinitionsRequest\"P\n\x12FixtureDefinitions\
+    \x12:\n\x0bdefinitions\x18\x01\x20\x03(\x0b2\x18.mizer.FixtureDefinition\
+    R\x0bdefinitions\"\xd1\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\
+    \x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\
+    \"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12(\n\x05modes\
+    \x18\x04\x20\x03(\x0b2\x12.mizer.FixtureModeR\x05modes\x126\n\x08physica\
+    l\x18\x05\x20\x01(\x0b2\x1a.mizer.FixturePhysicalDataR\x08physical\x12\
+    \x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"T\n\x0bFixtureMode\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x121\n\x08channels\x18\x02\x20\x03(\
+    \x0b2\x15.mizer.FixtureChannelR\x08channels\"\xfd\x03\n\x0eFixtureChanne\
+    l\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12@\n\x06coarse\x18\x02\
+    \x20\x01(\x0b2&.mizer.FixtureChannel.CoarseResolutionH\0R\x06coarse\x12:\
+    \n\x04fine\x18\x03\x20\x01(\x0b2$.mizer.FixtureChannel.FineResolutionH\0\
+    R\x04fine\x12@\n\x06finest\x18\x04\x20\x01(\x0b2&.mizer.FixtureChannel.F\
+    inestResolutionH\0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07ch\
+    annel\x18\x01\x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\
+    \x0bfineChannel\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\
+    \x18\x02\x20\x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\
+    \x12$\n\rfinestChannel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bf\
+    ineChannel\x18\x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\
+    \x03\x20\x01(\rR\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysic\
+    alData\x12\x14\n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06he\
+    ight\x18\x02\x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\
+    \x02R\x05depth\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight2\xe2\
+    \x01\n\x0bFixturesApi\x12;\n\x0bGetFixtures\x12\x19.mizer.GetFixturesReq\
+    uest\x1a\x0f.mizer.Fixtures\"\0\x12Y\n\x15GetFixtureDefinitions\x12#.miz\
+    er.GetFixtureDefinitionsRequest\x1a\x19.mizer.FixtureDefinitions\"\0\x12\
+    ;\n\x0bAddFixtures\x12\x19.mizer.AddFixturesRequest\x1a\x0f.mizer.Fixtur\
+    es\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

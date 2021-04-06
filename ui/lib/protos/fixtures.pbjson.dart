@@ -9,6 +9,7 @@ const AddFixturesRequest$json = const {
   '1': 'AddFixturesRequest',
   '2': const [
     const {'1': 'requests', '3': 1, '4': 3, '5': 11, '6': '.mizer.AddFixtureRequest', '10': 'requests'},
+    const {'1': 'create_nodes', '3': 2, '4': 1, '5': 8, '10': 'createNodes'},
   ],
 };
 

@@ -6,17 +6,20 @@ use mizer_fixtures::manager::FixtureManager;
 
 use crate::protos::*;
 use protobuf::SingularPtrField;
+use mizer_runtime::RuntimeApi;
 
 pub struct FixturesApiImpl {
     fixture_manager: FixtureManager,
     fixture_library: FixtureLibrary,
+    runtime: RuntimeApi,
 }
 
 impl FixturesApiImpl {
-    pub fn new(fixture_manager: FixtureManager, fixture_library: FixtureLibrary) -> Self {
+    pub fn new(fixture_manager: FixtureManager, fixture_library: FixtureLibrary, runtime: RuntimeApi) -> Self {
         FixturesApiImpl {
             fixture_manager,
             fixture_library,
+            runtime,
         }
     }
 }
@@ -56,6 +59,9 @@ impl FixturesApi for FixturesApiImpl {
         for request in req.message.requests.into_iter() {
             let definition = self.fixture_library.get_definition(&request.definitionId).unwrap();
             self.fixture_manager.add_fixture(request.id, definition, request.mode.into(), "output".into(), request.channel as u8, Some(request.universe as u16));
+            if req.message.create_nodes {
+                self.runtime.add_node_for_fixture(request.id).unwrap();
+            }
         }
 
         let fixtures = self.get_all_fixtures();

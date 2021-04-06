@@ -282,8 +282,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     fn handle_api_commands(&mut self) {
         loop {
             match self.api_recv.try_recv() {
-                Ok(ApiCommand::AddNode(node_type, designer, sender)) => {
-                    let result = self.handle_add_node(node_type, designer);
+                Ok(ApiCommand::AddNode(node_type, designer, node, sender)) => {
+                    let result = self.handle_add_node(node_type, designer, node);
 
                     sender.send(result).expect("api command sender disconnected");
                 }
@@ -307,11 +307,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         &mut self,
         node_type: NodeType,
         designer: NodeDesigner,
+        node: Option<Node>,
     ) -> anyhow::Result<NodePath> {
         let node_type_name = node_type.get_name();
         let id = self.get_next_id(node_type);
         let path: NodePath = format!("/{}-{}", node_type_name, id).into();
-        self.add_project_node(path.clone(), node_type.into());
+        let node = node.unwrap_or_else(|| node_type.into());
+        self.add_project_node(path.clone(), node);
         self.add_designer_node(path.clone(), designer);
 
         Ok(path)

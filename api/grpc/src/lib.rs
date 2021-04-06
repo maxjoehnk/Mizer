@@ -33,7 +33,7 @@ pub fn start(
         services::session::SessionApiImpl::new(),
     ));
     server.add_service(FixturesApiServer::new_service_def(
-        services::fixtures::FixturesApiImpl::new(fixture_manager, fixture_library),
+        services::fixtures::FixturesApiImpl::new(fixture_manager, fixture_library, mizer_runtime.clone()),
     ));
     server.add_service(MediaApiServer::new_service_def(
         services::media::MediaApiImpl::new(media_server),

@@ -20,6 +20,7 @@ mod flags;
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
 pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
+    log::trace!("Building mizer runtime...");
     let handle = tokio::runtime::Handle::try_current()?;
     let mut runtime = DefaultRuntime::new();
 
@@ -59,6 +60,7 @@ pub struct Mizer {
 
 impl Mizer {
     pub async fn run(&mut self) {
+        log::trace!("Entering main loop...");
         loop {
             let before = std::time::Instant::now();
             self.runtime.process();

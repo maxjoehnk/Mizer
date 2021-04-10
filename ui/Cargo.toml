@@ -1,0 +1,13 @@
+[package]
+name = "mizer-ui"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+flutter-engine = { git = "https://github.com/MGlolenstine/flutter-rs.git" }
+flutter-glfw = { git = "https://github.com/MGlolenstine/flutter-rs.git" }
+
+[build-dependencies]
+flutter-tools = { path = "../../../0_flutter/flutter-rs/flutter-tools" }
+

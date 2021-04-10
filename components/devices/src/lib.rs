@@ -61,6 +61,7 @@ impl DeviceModule {
 
 impl Module for DeviceModule {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+        log::debug!("Registering...");
         let injector = runtime.injector();
         injector.provide(self.0);
 

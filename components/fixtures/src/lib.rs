@@ -20,6 +20,7 @@ impl FixtureModule {
 
 impl Module for FixtureModule {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
+        log::debug!("Registering...");
         let injector = runtime.injector();
         injector.provide(self.0);
         injector.provide(self.1);

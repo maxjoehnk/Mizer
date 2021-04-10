@@ -37,6 +37,7 @@ members = [
     "protocols/midi",
     "protocols/midi/device-profiles",
     "protocols/osc",
+    "ui",
 ]
 
 [lib]
@@ -78,6 +79,7 @@ mizer-node = { path = "runtime/pipeline/node" }
 mizer-protocol-dmx = { path = "protocols/dmx" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
+mizer-ui = { path = "ui" }
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }
 
 [dev-dependencies]

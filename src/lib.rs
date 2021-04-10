@@ -14,14 +14,14 @@ use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_protocol_dmx::*;
 use mizer_runtime::DefaultRuntime;
+use mizer_api::handlers::Handlers;
 
 mod flags;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
-pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
+pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Result<Mizer> {
     log::trace!("Building mizer runtime...");
-    let handle = tokio::runtime::Handle::try_current()?;
     let mut runtime = DefaultRuntime::new();
 
     register_device_module(&mut runtime, &handle)?;
@@ -35,27 +35,32 @@ pub async fn build_runtime(flags: Flags) -> anyhow::Result<Mizer> {
         runtime.generate_pipeline_graph()?;
     }
 
-    let media_server = MediaServer::new().await?;
+    let media_server = MediaServer::new()?;
     let media_server_api = media_server.open_api(&handle)?;
     import_media_files(&media_paths, &media_server_api)?;
+
+    let handlers = Handlers::new(
+        runtime.api(),
+        fixture_manager,
+        fixture_library,
+        media_server_api.clone()
+    );
 
     let grpc = setup_grpc_api(
         &flags,
         handle,
-        &mut runtime,
-        fixture_manager,
-        fixture_library,
-        &media_server_api,
+        handlers.clone()
     )?;
     setup_media_api(flags, media_server_api)?;
 
-    Ok(Mizer { runtime, grpc })
+    Ok(Mizer { runtime, grpc, handlers })
 }
 
 pub struct Mizer {
     runtime: DefaultRuntime,
     #[allow(dead_code)]
     grpc: Option<mizer_grpc_api::Server>,
+    pub handlers: Handlers,
 }
 
 impl Mizer {
@@ -165,18 +170,12 @@ fn import_media_files(
 fn setup_grpc_api(
     flags: &Flags,
     handle: tokio::runtime::Handle,
-    runtime: &mut DefaultRuntime,
-    fixture_manager: FixtureManager,
-    fixture_library: FixtureLibrary,
-    media_server_api: &MediaServerApi,
+    handlers: Handlers,
 ) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
     let grpc = if !flags.disable_grpc_api {
         Some(mizer_grpc_api::start(
             handle.clone(),
-            runtime.api(),
-            fixture_manager,
-            fixture_library,
-            media_server_api.clone(),
+            handlers
         )?)
     } else {
         None

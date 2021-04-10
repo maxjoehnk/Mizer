@@ -1,6 +1,11 @@
 use std::path::{Path, PathBuf};
 
-pub fn run() {
+use mizer_api::handlers::Handlers;
+use crate::plugin::MizerPlugin;
+
+mod plugin;
+
+pub fn run(handlers: Handlers) {
     let mut args = Vec::with_capacity(3);
 
     if let Ok(observatory_port) = std::env::var("DART_OBSERVATORY_PORT") {
@@ -22,5 +27,6 @@ pub fn run() {
         mode: flutter_glfw::window::WindowMode::Windowed,
         title: "Mizer"
     }, assets_path, Vec::default()).unwrap();
+    window.add_plugin(MizerPlugin::new(handlers));
     window.run(None, None).unwrap();
 }

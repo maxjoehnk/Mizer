@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mizer/protos/fixtures.pbgrpc.dart';
+import 'package:mizer/api/contracts/fixtures.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 
 import 'fixture_selector.dart';
 
 class PatchFixtureDialog extends StatelessWidget {
-  final FixturesApiClient apiClient;
+  final FixturesApi apiClient;
   final FixturesBloc fixturesBloc;
 
   PatchFixtureDialog(this.apiClient, this.fixturesBloc);
@@ -13,7 +14,7 @@ class PatchFixtureDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: apiClient.getFixtureDefinitions(GetFixtureDefinitionsRequest()),
+        future: apiClient.getFixtureDefinitions(),
         initialData: FixtureDefinitions(),
         builder: (context, state) {
           return Dialog(

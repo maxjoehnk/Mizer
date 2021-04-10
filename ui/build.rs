@@ -21,7 +21,9 @@ fn main() {
     fetch_engine(build_dir, &target, &engine);
 
     bundle(&flutter, build, build_dir);
-    aot(&engine, out_dir);
+    if build == Build::Release {
+        aot(&engine, out_dir);
+    }
 }
 
 fn get_build() -> Build {
@@ -58,6 +60,32 @@ fn fetch_engine(build_dir: &Path, target_triple: &str, engine: &Engine) {
     }
 }
 
+pub fn bundle(flutter: &Flutter, build: Build, build_dir: &Path) {
+    let flag = match build {
+        Build::Debug => "--debug",
+        Build::Release => "--release",
+        Build::Profile => "--profile",
+    };
+    let assets_dir = build_dir.join("flutter_assets");
+    println!("cargo:rustc-env=FLUTTER_ASSET_DIR={}", assets_dir.display());
+    let status = Command::new(flutter.root_path().join("bin").join("flutter"))
+        .arg("build")
+        .arg("bundle")
+        .arg(flag)
+        .arg("--track-widget-creation")
+        .arg("--asset-dir")
+        .arg(assets_dir)
+        .arg("--depfile")
+        .arg(build_dir.join("snapshot_blob.bin.d"))
+        .arg("--target")
+        .arg("lib/integrated.dart")
+        .status()
+        .expect("flutter build bundle");
+    if status.code() != Some(0) {
+        panic!("Flutter bundle bundle failed");
+    }
+}
+
 fn aot(engine: &Engine, build_dir: &Path) {
     let host_engine_dir = engine.engine_dir();
     let target_engine_dir = engine.engine_dir();
@@ -79,7 +107,7 @@ fn aot(engine: &Engine, build_dir: &Path) {
         .arg(".packages")
         .arg("--output-dill")
         .arg(&snapshot)
-        .arg(Path::new("lib").join("main.dart"))
+        .arg(Path::new("lib").join("integrated.dart"))
         .status()
         .expect("Success");
 
@@ -113,31 +141,5 @@ fn aot(engine: &Engine, build_dir: &Path) {
 
     if status.code() != Some(0) {
         panic!("Flutter aot snapshot build failed");
-    }
-}
-
-pub fn bundle(flutter: &Flutter, build: Build, build_dir: &Path) {
-    let flag = match build {
-        Build::Debug => "--debug",
-        Build::Release => "--release",
-        Build::Profile => "--profile",
-    };
-    let assets_dir = build_dir.join("flutter_assets");
-    println!("cargo:rustc-env=FLUTTER_ASSET_DIR={}", assets_dir.display());
-    let status = Command::new(flutter.root_path().join("bin").join("flutter"))
-        .arg("build")
-        .arg("bundle")
-        .arg(flag)
-        .arg("--track-widget-creation")
-        .arg("--asset-dir")
-        .arg(assets_dir)
-        .arg("--depfile")
-        .arg(build_dir.join("snapshot_blob.bin.d"))
-        .arg("--target")
-        .arg("lib/main.dart")
-        .status()
-        .expect("flutter build bundle");
-    if status.code() != Some(0) {
-        panic!("Flutter bundle bundle failed");
     }
 }

@@ -1,4 +1,4 @@
-SRC_DIR = ../api/grpc/protos
+SRC_DIR = ../api/protos
 COMPILER = protoc -I=$(SRC_DIR) --dart_out=grpc:lib/protos
 
 proto: lib/protos/nodes.pb.dart lib/protos/session.pb.dart lib/protos/fixtures.pb.dart lib/protos/media.pb.dart lib/protos/layouts.pb.dart

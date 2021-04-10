@@ -460,6 +460,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "async-fs"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b3ca4f8ff117c37c278a2f7415ce9be55560b846b5bc4412aaa5d29c1c3dae2"
+dependencies = [
+ "async-lock",
+ "blocking",
+ "futures-lite",
+]
+
+[[package]]
 name = "async-global-executor"
 version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -511,6 +522,34 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "479db852db25d9dbf6204e6cb6253698f175c15726470f78af0d918e99d6156e"
 dependencies = [
  "event-listener",
+]
+
+[[package]]
+name = "async-net"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "06de475c85affe184648202401d7622afb32f0f74e02192857d0201a16defbe5"
+dependencies = [
+ "async-io",
+ "blocking",
+ "fastrand",
+ "futures-lite",
+]
+
+[[package]]
+name = "async-process"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef37b86e2fa961bae5a4d212708ea0154f904ce31d1a4a7f47e1bbc33a0c040b"
+dependencies = [
+ "async-io",
+ "blocking",
+ "cfg-if 1.0.0",
+ "event-listener",
+ "futures-lite",
+ "once_cell",
+ "signal-hook",
+ "winapi 0.3.9",
 ]
 
 [[package]]
@@ -1991,8 +2030,9 @@ dependencies = [
 
 [[package]]
 name = "grpc"
-version = "0.9.0-pre"
-source = "git+https://github.com/maxjoehnk/grpc-rust.git#99c8d185a711f59eaafcd87c65105ae7a7eb6132"
+version = "0.8.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "efbd563cd51f8b9d3578a8029989b090aca83b8b411bfe1c7577b8b0f92937f8"
 dependencies = [
  "base64 0.9.3",
  "bytes 0.5.6",
@@ -2007,8 +2047,9 @@ dependencies = [
 
 [[package]]
 name = "grpc-compiler"
-version = "0.9.0-pre"
-source = "git+https://github.com/maxjoehnk/grpc-rust.git#99c8d185a711f59eaafcd87c65105ae7a7eb6132"
+version = "0.8.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "45f971449e16e799ebbf106d2414c115ff46f2849689c61da3a3271be0884a34"
 dependencies = [
  "protobuf",
  "protobuf-codegen",
@@ -2016,8 +2057,9 @@ dependencies = [
 
 [[package]]
 name = "grpc-protobuf"
-version = "0.9.0-pre"
-source = "git+https://github.com/maxjoehnk/grpc-rust.git#99c8d185a711f59eaafcd87c65105ae7a7eb6132"
+version = "0.8.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b39e472b8a5bd8344d55473eabda070bc28126cec26ca6a008fa1bbc3d0c4a2"
 dependencies = [
  "bytes 0.5.6",
  "grpc",
@@ -2282,8 +2324,9 @@ checksum = "615caabe2c3160b313d52ccc905335f4ed5f10881dd63dc5699d47e90be85691"
 
 [[package]]
 name = "httpbis"
-version = "0.10.0-pre"
-source = "git+https://github.com/stepancheg/rust-http2#9a7b842aaebf70dc9ce2155daaa26c39d5aab6c3"
+version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3d3e4404f8f87938a2db89336609bde64363f5a556b15af936343e7252c9648d"
 dependencies = [
  "bytes 0.5.6",
  "futures",
@@ -2294,6 +2337,7 @@ dependencies = [
  "tls-api",
  "tls-api-stub",
  "tokio",
+ "unix_socket",
  "void",
 ]
 
@@ -2829,6 +2873,7 @@ dependencies = [
  "gstreamer",
  "log",
  "metrics",
+ "mizer-api",
  "mizer-devices",
  "mizer-execution-planner",
  "mizer-fixtures",
@@ -2847,6 +2892,23 @@ dependencies = [
  "structopt",
  "test-case",
  "tokio",
+]
+
+[[package]]
+name = "mizer-api"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-fixtures",
+ "mizer-layouts",
+ "mizer-media",
+ "mizer-node",
+ "mizer-nodes",
+ "mizer-runtime",
+ "protobuf",
+ "protoc-rust",
+ "serde",
 ]
 
 [[package]]
@@ -2936,6 +2998,7 @@ dependencies = [
  "grpc",
  "grpc-protobuf",
  "log",
+ "mizer-api",
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
@@ -3294,9 +3357,14 @@ dependencies = [
 name = "mizer-ui"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "flutter-engine",
  "flutter-glfw",
  "flutter-tools",
+ "log",
+ "mizer-api",
+ "protobuf",
+ "smol",
 ]
 
 [[package]]
@@ -3826,27 +3894,29 @@ dependencies = [
 
 [[package]]
 name = "protobuf"
-version = "2.18.1"
+version = "2.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da78e04bc0e40f36df43ecc6575e4f4b180e8156c4efd73f13d5619479b05696"
+checksum = "fe8e18df92889779cfe50ccf640173141ff73c5b2817e553d6d35230f798a036"
 dependencies = [
  "bytes 0.5.6",
+ "serde",
+ "serde_derive",
 ]
 
 [[package]]
 name = "protobuf-codegen"
-version = "2.18.1"
+version = "2.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "49b2b929363268881afe6d24351e8b711ea5a1901a5e1549d3723ebcc5d3696d"
+checksum = "f49782fe28b5ff7d5d51cbfbe8985f3ff863acea663c515ed369c53f72e1d628"
 dependencies = [
  "protobuf",
 ]
 
 [[package]]
 name = "protoc"
-version = "2.18.1"
+version = "2.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a2dbb118371acf8c4d45c23ad8852ab3abb07f45758fdfede9e37cad1570bbef"
+checksum = "d4c6edf525f5fa5a304eb9d64cd3d0c4656fd33755b49fcea145a49d131cc291"
 dependencies = [
  "log",
  "which 4.0.2",
@@ -3854,9 +3924,9 @@ dependencies = [
 
 [[package]]
 name = "protoc-rust"
-version = "2.18.1"
+version = "2.18.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "da243950eeb0d0d4893413ff7ea54aec009b3ac692cd0b3bb0884094a8a72417"
+checksum = "1463636fc5884879f810dfe1fa8e07c71fc90369553e9a572213839f175163a4"
 dependencies = [
  "protobuf",
  "protobuf-codegen",
@@ -3866,8 +3936,9 @@ dependencies = [
 
 [[package]]
 name = "protoc-rust-grpc"
-version = "0.9.0-pre"
-source = "git+https://github.com/maxjoehnk/grpc-rust.git#99c8d185a711f59eaafcd87c65105ae7a7eb6132"
+version = "0.8.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "41e2bf99ec0d82b0446a9bce1e0e69806dfff6112415c195f997e55a7afbdb6c"
 dependencies = [
  "grpc-compiler",
  "protobuf",
@@ -4444,6 +4515,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7fdf1b9db47230893d76faad238fd6097fd6d6a9245cd7a4d90dbd639536bbd2"
 
 [[package]]
+name = "signal-hook"
+version = "0.3.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef33d6d0cd06e0840fba9985aab098c147e67e05cee14d412d3345ed14ff30ac"
+dependencies = [
+ "libc",
+ "signal-hook-registry",
+]
+
+[[package]]
 name = "signal-hook-registry"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4509,6 +4590,24 @@ name = "smallvec"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fe0f37c9e8f3c5a4a66ad655a93c74daac4ad00c441533bf5c6e7990bb42604e"
+
+[[package]]
+name = "smol"
+version = "1.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "85cf3b5351f3e783c1d79ab5fc604eeed8b8ae9abd36b166e8b87a089efd85e4"
+dependencies = [
+ "async-channel",
+ "async-executor",
+ "async-fs",
+ "async-io",
+ "async-lock",
+ "async-net",
+ "async-process",
+ "blocking",
+ "futures-lite",
+ "once_cell",
+]
 
 [[package]]
 name = "socket2"
@@ -5230,6 +5329,16 @@ name = "unicode-xid"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f7fe0bb3479651439c9112f72b6c505038574c9fbb575ed1bf3b797fa39dd564"
+
+[[package]]
+name = "unix_socket"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6aa2700417c405c38f5e6902d699345241c28c0b7ade4abaad71e35a87eb1564"
+dependencies = [
+ "cfg-if 0.1.10",
+ "libc",
+]
 
 [[package]]
 name = "url"

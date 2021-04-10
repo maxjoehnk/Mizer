@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/media.pb.dart';
-import 'package:mizer/protos/media.pbgrpc.dart';
 import 'package:mizer/state/media_bloc.dart';
 
 class MediaView extends StatelessWidget {

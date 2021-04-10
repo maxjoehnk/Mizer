@@ -1,19 +1,19 @@
 import 'package:bloc/bloc.dart';
+import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/protos/media.pb.dart';
-import 'package:mizer/protos/media.pbgrpc.dart';
 
 enum MediaEvent { Fetch }
 
 class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
-  final MediaApiClient client;
+  final MediaApi api;
 
-  MediaBloc(this.client) : super(MediaFiles());
+  MediaBloc(this.api) : super(MediaFiles());
 
   @override
   Stream<MediaFiles> mapEventToState(MediaEvent event) async* {
     switch (event) {
       case MediaEvent.Fetch:
-        yield await client.getMedia(GetMediaRequest());
+        yield await api.getMedia();
         break;
     }
   }

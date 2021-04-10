@@ -25,7 +25,7 @@ pub struct MediaServer {
 }
 
 impl MediaServer {
-    pub async fn new() -> anyhow::Result<Self> {
+    pub fn new() -> anyhow::Result<Self> {
         let context = DataAccess::new()?;
         let file_storage = FileStorage::new()?;
         let import_file = ImportFileHandler::new(context.clone(), file_storage.clone());

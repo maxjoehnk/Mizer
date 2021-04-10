@@ -1,0 +1,24 @@
+[package]
+name = "mizer-api"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[features]
+default = ["with-serde"]
+with-serde = ["protobuf/with-serde"]
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+protobuf = "2.18"
+serde = { version = "1", features = ["derive"] }
+mizer-fixtures = { path = "../components/fixtures" }
+mizer-media = { path = "../components/media" }
+mizer-node = { path = "../runtime/pipeline/node" }
+mizer-nodes = { path = "../runtime/pipeline/nodes" }
+mizer-runtime = { path = "../runtime" }
+mizer-layouts = { path = "../runtime/layouts" }
+
+[build-dependencies]
+protoc-rust = "2.18"

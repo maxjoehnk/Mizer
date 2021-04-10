@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/protos/fixtures.pbgrpc.dart';
 
 abstract class FixturesEvent {}
 
@@ -41,9 +41,9 @@ class AddFixtures extends FixturesEvent {
 }
 
 class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
-  final FixturesApiClient client;
+  final FixturesApi api;
 
-  FixturesBloc(this.client) : super(Fixtures()) {
+  FixturesBloc(this.api) : super(Fixtures()) {
     this.add(FetchFixtures());
   }
 
@@ -59,7 +59,7 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
 
   Future<Fixtures> fetchFixtures() async {
     log("fetching fixtures", name: "FixturesBloc");
-    var fixtures = await client.getFixtures(GetFixturesRequest());
+    var fixtures = await api.getFixtures();
     log("got ${fixtures.fixtures.length} fixtures", name: "FixturesBloc");
 
     return fixtures;
@@ -68,7 +68,7 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
   Future<Fixtures> addFixture(AddFixtures event) async {
     log("adding fixtures: $event", name: "FixturesBloc");
     var request = event._into();
-    var fixtures = await client.addFixtures(request);
+    var fixtures = await api.addFixtures(request);
 
     return fixtures;
   }

@@ -2,8 +2,8 @@ import 'dart:developer';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
+import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/protos/nodes.pbgrpc.dart';
 
 abstract class NodesEvent {}
 
@@ -27,21 +27,21 @@ class LinkNodes extends NodesEvent {
 }
 
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
-  final NodesApiClient client;
+  final NodesApi api;
 
-  NodesBloc(this.client) : super(Nodes.create()) {
+  NodesBloc(this.api) : super(Nodes.create()) {
     this.add(FetchNodes());
   }
 
   @override
   Stream<Nodes> mapEventToState(NodesEvent event) async* {
     if (event is FetchNodes) {
-      var nodes = await client.getNodes(NodesRequest());
+      var nodes = await api.getNodes();
       log("$nodes", name: "NodesBloc");
       yield nodes;
     }
     if (event is AddNode) {
-      var node = await client.addNode(AddNodeRequest(
+      var node = await api.addNode(AddNodeRequest(
           type: event.nodeType,
           position: NodePosition(x: event.position.dx, y: event.position.dy)));
       var nextNodes = state.nodes.sublist(0);
@@ -55,7 +55,7 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
           sourcePort: request.sourcePort,
           targetNode: request.target.node.path,
           targetPort: request.target.port);
-      await client.addLink(connection);
+      await api.linkNodes(connection);
       var nextChannels = state.channels.sublist(0);
       nextChannels.add(connection);
       yield Nodes(channels: nextChannels, nodes: state.nodes);

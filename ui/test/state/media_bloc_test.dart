@@ -1,4 +1,4 @@
-import 'package:mizer/protos/media.pbgrpc.dart';
+import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
@@ -33,5 +33,5 @@ void main() {
   });
 }
 
-class MockClient extends Mock implements MediaApiClient {}
+class MockClient extends Mock implements MediaApi {}
 

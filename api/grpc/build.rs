@@ -1,14 +1,13 @@
 fn main() {
-    println!("cargo:rerun-if-changed=protos");
+    println!("cargo:rerun-if-changed=../protos");
     protoc_rust_grpc::Codegen::new()
         .out_dir("src/protos")
-        .input("./protos/fixtures.proto")
-        .input("./protos/nodes.proto")
-        .input("./protos/session.proto")
-        .input("./protos/media.proto")
-        .input("./protos/layouts.proto")
-        .include("protos")
-        .rust_protobuf(true)
+        .input("../protos/fixtures.proto")
+        .input("../protos/nodes.proto")
+        .input("../protos/session.proto")
+        .input("../protos/media.proto")
+        .input("../protos/layouts.proto")
+        .include("../protos")
         .run()
         .expect("protoc-rust-grpc");
 }

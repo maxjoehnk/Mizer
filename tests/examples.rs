@@ -13,6 +13,7 @@ use test_case::test_case;
 #[test_case("inputs"; "inputs")]
 #[tokio::test]
 async fn test_build_project_pipeline(project: &str) {
+    let handle = tokio::runtime::Handle::current();
     let flags = Flags {
         join: false,
         generate_graph: false,
@@ -21,5 +22,5 @@ async fn test_build_project_pipeline(project: &str) {
         disable_grpc_api: true,
     };
 
-    build_runtime(flags).await.unwrap();
+    build_runtime(handle, flags).unwrap();
 }

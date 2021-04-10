@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/protos/fixtures.pbgrpc.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/views/fixtures/patch_fixture_dialog.dart';
 
@@ -12,7 +12,7 @@ class FixturesView extends StatelessWidget {
   Widget build(BuildContext context) {
     var fixturesBloc = context.read<FixturesBloc>();
     fixturesBloc.add(FetchFixtures());
-    var fixturesApi = context.read<FixturesApiClient>();
+    var fixturesApi = context.read<FixturesApi>();
     return Shortcuts(
       shortcuts: {
         LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyA): AddFixture(),
@@ -51,7 +51,7 @@ class FixturesView extends StatelessWidget {
 }
 
 class AddFixturesButton extends StatelessWidget {
-  final FixturesApiClient apiClient;
+  final FixturesApi apiClient;
   final FixturesBloc fixturesBloc;
 
   AddFixturesButton({this.apiClient, this.fixturesBloc});

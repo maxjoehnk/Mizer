@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/protos/nodes.pbgrpc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/graph/state.dart';
 

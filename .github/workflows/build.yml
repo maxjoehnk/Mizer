@@ -6,8 +6,8 @@ jobs:
   build-server:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Gstreamer
-        run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler libxrandr-dev
+      - name: Install native dependencies
+        run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler xorg-dev
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:

@@ -7,8 +7,10 @@ use mizer_api::handlers::Handlers;
 
 use std::sync::mpsc;
 
+mod logger;
+
 fn main() -> anyhow::Result<()> {
-    env_logger::init();
+    logger::init();
     let flags = Flags::from_args();
     log::debug!("flags: {:?}", flags);
 

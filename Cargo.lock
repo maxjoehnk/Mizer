@@ -1442,7 +1442,7 @@ dependencies = [
 [[package]]
 name = "flutter-engine"
 version = "0.4.0"
-source = "git+https://github.com/MGlolenstine/flutter-rs.git#9325ebef0190972e42a54f6ae6a8ec0c7c3a63ad"
+source = "git+https://github.com/maxjoehnk/flutter-rs.git#7b838f121943f3eb18e361449689d0c00c31c1b9"
 dependencies = [
  "async-std",
  "crossbeam-channel 0.5.0",
@@ -1458,7 +1458,7 @@ dependencies = [
 [[package]]
 name = "flutter-engine-sys"
 version = "0.4.0"
-source = "git+https://github.com/MGlolenstine/flutter-rs.git#9325ebef0190972e42a54f6ae6a8ec0c7c3a63ad"
+source = "git+https://github.com/maxjoehnk/flutter-rs.git#7b838f121943f3eb18e361449689d0c00c31c1b9"
 dependencies = [
  "bindgen 0.56.0",
  "dirs",
@@ -1467,7 +1467,7 @@ dependencies = [
 [[package]]
 name = "flutter-glfw"
 version = "0.4.0"
-source = "git+https://github.com/MGlolenstine/flutter-rs.git#9325ebef0190972e42a54f6ae6a8ec0c7c3a63ad"
+source = "git+https://github.com/maxjoehnk/flutter-rs.git#7b838f121943f3eb18e361449689d0c00c31c1b9"
 dependencies = [
  "flutter-engine",
  "flutter-engine-sys",
@@ -1481,7 +1481,7 @@ dependencies = [
 [[package]]
 name = "flutter-plugins"
 version = "0.4.0"
-source = "git+https://github.com/MGlolenstine/flutter-rs.git#9325ebef0190972e42a54f6ae6a8ec0c7c3a63ad"
+source = "git+https://github.com/maxjoehnk/flutter-rs.git#7b838f121943f3eb18e361449689d0c00c31c1b9"
 dependencies = [
  "flutter-engine",
  "locale_config",
@@ -1496,6 +1496,7 @@ dependencies = [
 [[package]]
 name = "flutter-tools"
 version = "0.1.0"
+source = "git+https://github.com/maxjoehnk/flutter-rs.git#7b838f121943f3eb18e361449689d0c00c31c1b9"
 dependencies = [
  "curl",
  "dirs",

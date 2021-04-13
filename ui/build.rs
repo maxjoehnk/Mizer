@@ -2,6 +2,8 @@ use std::path::Path;
 use std::process::Command;
 use flutter_tools::*;
 
+const ENTRYPOINT: &str = "lib/integrated.dart";
+
 fn main() {
     println!("cargo:rerun-if-changed=lib");
     println!("cargo:rerun-if-changed=pubspec.yaml");
@@ -16,14 +18,14 @@ fn main() {
 
     let engine = Engine::new(engine_version, target.clone(), build);
 
-    println!("{:?}", flutter.root_path());
+    println!("flutter_root: {:?}", flutter.root_path());
 
     fetch_engine(build_dir, &target, &engine);
 
-    bundle(&flutter, build, build_dir);
     if build == Build::Release {
         aot(&engine, out_dir);
     }
+    bundle(&flutter, build, build_dir);
 }
 
 fn get_build() -> Build {
@@ -61,7 +63,7 @@ fn fetch_engine(build_dir: &Path, target_triple: &str, engine: &Engine) {
 }
 
 pub fn bundle(flutter: &Flutter, build: Build, build_dir: &Path) {
-    let flag = match build {
+    let build_profile = match build {
         Build::Debug => "--debug",
         Build::Release => "--release",
         Build::Profile => "--profile",
@@ -71,18 +73,20 @@ pub fn bundle(flutter: &Flutter, build: Build, build_dir: &Path) {
     let status = Command::new(flutter.root_path().join("bin").join("flutter"))
         .arg("build")
         .arg("bundle")
-        .arg(flag)
+        .arg(build_profile)
         .arg("--track-widget-creation")
+        // TODO: reenable when app.dill reference is fixed
+        .arg("--no-tree-shake-icons")
         .arg("--asset-dir")
         .arg(assets_dir)
         .arg("--depfile")
         .arg(build_dir.join("snapshot_blob.bin.d"))
         .arg("--target")
-        .arg("lib/integrated.dart")
+        .arg(ENTRYPOINT)
         .status()
         .expect("flutter build bundle");
     if status.code() != Some(0) {
-        panic!("Flutter bundle bundle failed");
+        panic!("Flutter build bundle failed");
     }
 }
 
@@ -107,7 +111,7 @@ fn aot(engine: &Engine, build_dir: &Path) {
         .arg(".packages")
         .arg("--output-dill")
         .arg(&snapshot)
-        .arg(Path::new("lib").join("integrated.dart"))
+        .arg(ENTRYPOINT)
         .status()
         .expect("Success");
 

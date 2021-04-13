@@ -82,7 +82,7 @@ mizer-protocol-dmx = { path = "protocols/dmx" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui" }
-tokio = { version = "0.2", features = ["rt-threaded", "macros", "time"] }
+tokio = { version = "0.2", features = ["rt-threaded", "macros", "time", "rt-util"] }
 
 [dev-dependencies]
 test-case = "1.0"

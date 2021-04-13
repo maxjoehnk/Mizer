@@ -36,7 +36,8 @@ pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Re
     }
 
     let media_server = MediaServer::new()?;
-    let media_server_api = media_server.open_api(&handle)?;
+    let media_server_api = media_server.get_api_handle();
+    handle.spawn(media_server.run_api());
     import_media_files(&media_paths, &media_server_api)?;
 
     let handlers = Handlers::new(
@@ -48,10 +49,10 @@ pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Re
 
     let grpc = setup_grpc_api(
         &flags,
-        handle,
+        handle.clone(),
         handlers.clone()
     )?;
-    setup_media_api(flags, media_server_api)?;
+    setup_media_api(handle, flags, media_server_api)?;
 
     Ok(Mizer { runtime, grpc, handlers })
 }
@@ -183,9 +184,9 @@ fn setup_grpc_api(
     Ok(grpc)
 }
 
-fn setup_media_api(flags: Flags, media_server_api: MediaServerApi) -> anyhow::Result<()> {
+fn setup_media_api(handle: tokio::runtime::Handle, flags: Flags, media_server_api: MediaServerApi) -> anyhow::Result<()> {
     if !flags.disable_media_api {
-        mizer_media::http_api::start(media_server_api)?;
+        handle.spawn(mizer_media::http_api::start(media_server_api));
     }
     Ok(())
 }

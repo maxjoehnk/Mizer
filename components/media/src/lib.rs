@@ -4,11 +4,12 @@ use crate::documents::MediaDocument;
 use crate::file_storage::FileStorage;
 use crate::media_handlers::*;
 use std::path::Path;
-use tokio::io::AsyncReadExt;
-use tokio::stream::StreamExt;
 use uuid::Uuid;
 
 pub use crate::discovery::MediaDiscovery;
+use flume::{Sender, Receiver};
+use futures::{StreamExt, AsyncReadExt};
+use async_std::fs;
 
 pub mod api;
 mod data_access;
@@ -22,6 +23,7 @@ pub struct MediaServer {
     pub db: DataAccess,
     pub file_storage: FileStorage,
     import_file: ImportFileHandler,
+    command_queue: (Sender<MediaServerCommand>, Receiver<MediaServerCommand>),
 }
 
 impl MediaServer {
@@ -34,52 +36,50 @@ impl MediaServer {
             db: context,
             file_storage,
             import_file,
+            command_queue: flume::unbounded(),
         })
     }
 
-    pub fn open_api(self, handle: &tokio::runtime::Handle) -> anyhow::Result<MediaServerApi> {
-        let (tx, rx) = flume::unbounded();
-        let file_storage = self.file_storage.clone();
+    pub fn get_api_handle(&self) -> MediaServerApi {
+        MediaServerApi(self.command_queue.0.clone(), self.file_storage.clone())
+    }
 
-        handle.spawn(async move {
-            let mut stream = rx.into_stream();
-            while let Some(command) = stream.next().await {
-                match command {
-                    MediaServerCommand::ImportFile(model, file_path, resp) => {
-                        let document = self
-                            .import_file
-                            .import_file(model, &file_path)
-                            .await
-                            .unwrap();
-                        resp.send(document).unwrap();
-                    }
-                    MediaServerCommand::CreateTag(model, resp) => match self.db.add_tag(model) {
-                        Ok(document) => resp.send(document).unwrap(),
-                        Err(err) => {
-                            log::error!("Error creating tag: {:?}", err);
-                        }
-                    },
-                    MediaServerCommand::GetTags(resp) => match self.db.list_tags() {
-                        Ok(documents) => {
-                            resp.send(documents).unwrap();
-                        }
-                        Err(err) => {
-                            log::error!("Error listing tags: {:?}", err);
-                        }
-                    },
-                    MediaServerCommand::GetMedia(resp) => match self.db.list_media() {
-                        Ok(documents) => {
-                            resp.send(documents).unwrap();
-                        }
-                        Err(err) => {
-                            log::error!("Error listing tags: {:?}", err);
-                        }
-                    },
+    pub async fn run_api(self) {
+        let mut stream = self.command_queue.1.into_stream();
+        while let Some(command) = stream.next().await {
+            match command {
+                MediaServerCommand::ImportFile(model, file_path, resp) => {
+                    let document = self
+                        .import_file
+                        .import_file(model, &file_path)
+                        .await
+                        .unwrap();
+                    resp.send(document).unwrap();
                 }
+                MediaServerCommand::CreateTag(model, resp) => match self.db.add_tag(model) {
+                    Ok(document) => resp.send(document).unwrap(),
+                    Err(err) => {
+                        log::error!("Error creating tag: {:?}", err);
+                    }
+                },
+                MediaServerCommand::GetTags(resp) => match self.db.list_tags() {
+                    Ok(documents) => {
+                        resp.send(documents).unwrap();
+                    }
+                    Err(err) => {
+                        log::error!("Error listing tags: {:?}", err);
+                    }
+                },
+                MediaServerCommand::GetMedia(resp) => match self.db.list_media() {
+                    Ok(documents) => {
+                        resp.send(documents).unwrap();
+                    }
+                    Err(err) => {
+                        log::error!("Error listing tags: {:?}", err);
+                    }
+                },
             }
-        });
-
-        Ok(MediaServerApi(tx, file_storage))
+        }
     }
 }
 
@@ -111,7 +111,7 @@ impl ImportFileHandler {
     ) -> anyhow::Result<MediaDocument> {
         log::debug!("importing file {:?}", file_path);
         let id = Uuid::new_v4();
-        let mut temp_file = tokio::fs::File::open(file_path).await?;
+        let mut temp_file = fs::File::open(file_path).await?;
         let mut buffer = [0u8; 256];
         temp_file.read(&mut buffer).await?;
         let content_type = infer::get(&buffer)

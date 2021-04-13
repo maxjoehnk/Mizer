@@ -1,79 +1,62 @@
 use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
-use actix_files::Files;
-use actix_multipart::{Field, Multipart};
-use actix_web::{post, web, App, HttpServer, Responder, Result, Scope};
-use futures::{StreamExt, TryStreamExt};
-use tokio::io::AsyncWriteExt;
+use futures::{TryStreamExt, StreamExt};
+use tide::{Request, StatusCode, Body};
+use multer::Multipart;
+use async_std::{fs, io};
 
-pub fn start(media_server_api: MediaServerApi) -> anyhow::Result<()> {
-    let local_set = tokio::task::LocalSet::new();
-    let system = actix_rt::System::run_in_tokio("mizer-media-api", &local_set);
-    let _server = HttpServer::new(move || {
-        App::new()
-            .data(media_server_api.clone())
-            .service(Files::new("/thumbnails", ".storage/thumbnails"))
-            .service(Files::new("/media", ".storage/media"))
-            .service(api())
-    })
-    .bind("0.0.0.0:50050")
-    .unwrap()
-    .run();
-    local_set.spawn_local(system);
+pub async fn start(media_server_api: MediaServerApi) -> anyhow::Result<()> {
+    let mut app = tide::with_state(media_server_api);
+    app.at("/thumbnails/").serve_dir(".storage/thumbnails")?;
+    app.at("/media/").serve_dir(".storage/media/")?;
+    app.at("/api/media").post(|mut req: Request<MediaServerApi>| async move {
+        let body = req.body_bytes().await;
+        // TODO: actually stream file instead copying whole file into memory
+        let body = async_std::stream::once(body);
+        // TODO: read boundary from request
+        let multipart = Multipart::new(body, "boundary");
+        add_media(req.state(), multipart).await
+    });
+
+    app.listen("0.0.0.0:50050").await?;
 
     Ok(())
 }
 
-pub fn api() -> Scope {
-    web::scope("/api/media").service(add_media)
-}
-
-#[post("")]
 async fn add_media(
-    api: web::Data<MediaServerApi>,
+    api: &MediaServerApi,
     mut payload: Multipart,
-) -> Result<impl Responder> {
+) -> tide::Result {
     let mut media_request = MediaCreateModel {
         name: String::new(),
         tags: Vec::new(),
     };
     let file_path = api.get_temp_path();
-    while let Ok(Some(mut field)) = payload.try_next().await {
-        if let Some(content_disposition) = field.content_disposition() {
-            match content_disposition.get_name() {
-                Some("name") => {
-                    media_request.name = field_to_string(&mut field)
-                        .await
-                        .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-                }
-                Some("file") => {
-                    let filename = content_disposition
-                        .get_filename()
-                        .ok_or_else(|| actix_web::error::ParseError::Incomplete)?;
-                    if media_request.name.is_empty() {
-                        media_request.name = filename.into();
-                    }
-                    let mut file = tokio::fs::File::create(&file_path).await?;
-                    let mut stream = field.into_stream();
-                    while let Some(data) = stream.next().await {
-                        let data =
-                            data.map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-                        file.write(&data).await?;
-                    }
-                }
-                Some("tags") => {
-                    let tags = field_to_string(&mut field)
-                        .await
-                        .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
-                    media_request.tags = serde_json::from_str(&tags)?;
-                }
-                _ => {}
+    while let Some(field) = payload.next_field().await? {
+        match field.name() {
+            Some("name") => {
+                media_request.name = field.text().await?;
             }
+            Some("file") => {
+                let filename = field.file_name()
+                    .ok_or_else(|| tide::Error::new(StatusCode::BadRequest, anyhow::anyhow!("Missing file name")))?;
+                if media_request.name.is_empty() {
+                    media_request.name = filename.into();
+                }
+                let file = fs::File::create(&file_path).await?;
+                let field = field.map(|chunk| chunk.map(|bytes| bytes.to_vec()).map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err))).into_async_read();
+                io::copy(field, file).await?;
+            }
+            Some("tags") => {
+                let tags = field.text().await?;
+                media_request.tags = serde_json::from_str(&tags)?;
+            }
+            _ => {}
         }
     }
 
     if media_request.tags.len() == 0 {
-        return Err(actix_web::error::ErrorBadRequest(
-            "At least one tag must be defined",
+        return Err(tide::Error::new(StatusCode::BadRequest,
+            anyhow::anyhow!("At least one tag must be defined"),
         ));
     }
 
@@ -84,20 +67,8 @@ async fn add_media(
         sender,
     ));
 
-    let document = receiver
-        .recv_async()
-        .await
-        .map_err(|err| actix_web::error::ErrorInternalServerError(err))?;
+    let document = receiver.recv_async().await?;
 
-    Ok(web::Json(document))
+    Ok(Body::from_json(&document)?.into())
 }
 
-async fn field_to_string(field: &mut Field) -> anyhow::Result<String> {
-    let bytes = field
-        .try_collect::<Vec<_>>()
-        .await
-        .map_err(|err| anyhow::anyhow!("multipart error: {:?}", err))?;
-    let name = bytes.first().ok_or_else(|| anyhow::anyhow!("No name"))?;
-
-    Ok(String::from_utf8_lossy(&name).into())
-}

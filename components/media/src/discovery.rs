@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use async_walk::WalkBuilder;
+use async_walkdir::WalkDir;
 use futures::{future, StreamExt, TryStreamExt};
 
 use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
@@ -62,7 +62,7 @@ impl MediaWalker {
     }
 
     async fn scan(&self) -> anyhow::Result<Vec<PathBuf>> {
-        let walker = WalkBuilder::new(&self.path).build();
+        let walker = WalkDir::new(&self.path);
         let paths = walker
             .into_stream()
             .map(|entry| entry.map(|e| e.path()))
@@ -103,13 +103,12 @@ mod tests {
     #[test_case("examples/media/video/file_example_WEBM_1920_3_7MB.webm")]
     #[test_case("examples/media/video/file_example_WMV_1920_9_3MB.wmv")]
     fn scan_should_list_example_files(expected: &str) {
-        let mut rt = tokio::runtime::Runtime::new().unwrap();
         let path = std::env!("CARGO_MANIFEST_DIR");
         let workspace_path = Path::new(path).parent().unwrap().parent().unwrap();
         let expected = workspace_path.join(expected);
         let walker = MediaWalker::new(workspace_path.join("examples/media"));
 
-        let files = rt.block_on(walker.scan()).unwrap();
+        let files = futures::executor::block_on(walker.scan()).unwrap();
 
         assert!(files.contains(&expected));
     }

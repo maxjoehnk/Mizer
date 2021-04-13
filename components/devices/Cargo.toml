@@ -11,5 +11,5 @@ log = "0.4"
 mizer-protocol-laser = { path = "../../protocols/laser" }
 mizer-module = { path = "../../runtime/module" }
 mizer-processing = { path = "../../runtime/processing" }
-tokio = { version = "0.2", features = ["blocking", "stream"] }
+tokio = { version = "0.2", features = ["blocking", "stream", "sync"] }
 futures = "0.3"

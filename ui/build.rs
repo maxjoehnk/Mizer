@@ -22,6 +22,7 @@ fn main() {
 
     fetch_engine(build_dir, &target, &engine);
 
+    get_deps(&flutter);
     if build == Build::Release {
         aot(&engine, out_dir);
     }
@@ -62,7 +63,18 @@ fn fetch_engine(build_dir: &Path, target_triple: &str, engine: &Engine) {
     }
 }
 
-pub fn bundle(flutter: &Flutter, build: Build, build_dir: &Path) {
+fn get_deps(flutter: &Flutter) {
+    let status = Command::new(flutter.root_path().join("bin").join("flutter"))
+        .arg("pub")
+        .arg("get")
+        .status()
+        .expect("flutter pub get");
+    if status.code() != Some(0) {
+        panic!("Flutter pub get failed");
+    }
+}
+
+fn bundle(flutter: &Flutter, build: Build, build_dir: &Path) {
     let build_profile = match build {
         Build::Debug => "--debug",
         Build::Release => "--release",

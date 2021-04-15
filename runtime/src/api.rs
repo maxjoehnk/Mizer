@@ -151,6 +151,7 @@ impl<'a> NodeDescriptor<'a> {
             NodeType::PixelPattern => Node::PixelPattern(self.downcast_node().unwrap()),
             NodeType::PixelDmx => Node::PixelDmx(self.downcast_node().unwrap()),
             NodeType::OscInput => Node::OscInput(self.downcast_node().unwrap()),
+            NodeType::OscOutput => Node::OscOutput(self.downcast_node().unwrap()),
             NodeType::VideoFile => Node::VideoFile(self.downcast_node().unwrap()),
             NodeType::VideoColorBalance => Node::VideoColorBalance(self.downcast_node().unwrap()),
             NodeType::VideoOutput => Node::VideoOutput(self.downcast_node().unwrap()),

@@ -23,6 +23,7 @@ impl From<mizer_nodes::Node> for Node_oneof_NodeConfig {
             PixelPattern(pattern) => Node_oneof_NodeConfig::pixelPatternConfig(pattern.into()),
             PixelDmx(dmx) => Node_oneof_NodeConfig::pixelDmxConfig(dmx.into()),
             OscInput(osc) => Node_oneof_NodeConfig::oscInputConfig(osc.into()),
+            OscOutput(osc) => Node_oneof_NodeConfig::oscOutputConfig(osc.into()),
             VideoFile(file) => Node_oneof_NodeConfig::videoFileConfig(file.into()),
             VideoColorBalance(color_balance) => Node_oneof_NodeConfig::videoColorBalanceConfig(color_balance.into()),
             VideoOutput(output) => Node_oneof_NodeConfig::videoOutputConfig(output.into()),
@@ -203,9 +204,20 @@ impl From<mizer_nodes::PixelDmxNode> for PixelDmxNodeConfig {
     }
 }
 
-impl From<mizer_nodes::OscInputNode> for OscInputNodeConfig {
+impl From<mizer_nodes::OscInputNode> for OscNodeConfig {
     fn from(node: mizer_nodes::OscInputNode) -> Self {
-        OscInputNodeConfig {
+        Self {
+            host: node.host,
+            port: node.port as u32,
+            path: node.path,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_nodes::OscOutputNode> for OscNodeConfig {
+    fn from(node: mizer_nodes::OscOutputNode) -> Self {
+        Self {
             host: node.host,
             port: node.port as u32,
             path: node.path,
@@ -256,6 +268,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::Oscillator => Node_NodeType::Oscillator,
             NodeType::Clock => Node_NodeType::Clock,
             NodeType::OscInput => Node_NodeType::OscInput,
+            NodeType::OscOutput => Node_NodeType::OscOutput,
             NodeType::VideoFile => Node_NodeType::VideoFile,
             NodeType::VideoOutput => Node_NodeType::VideoOutput,
             NodeType::VideoEffect => Node_NodeType::VideoEffect,
@@ -284,6 +297,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::Oscillator => NodeType::Oscillator,
             Node_NodeType::Clock => NodeType::Clock,
             Node_NodeType::OscInput => NodeType::OscInput,
+            Node_NodeType::OscOutput => NodeType::OscOutput,
             Node_NodeType::VideoFile => NodeType::VideoFile,
             Node_NodeType::VideoOutput => NodeType::VideoOutput,
             Node_NodeType::VideoEffect => NodeType::VideoEffect,

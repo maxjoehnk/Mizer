@@ -1317,7 +1317,8 @@ pub enum Node_oneof_NodeConfig {
     midiInputConfig(MidiInputNodeConfig),
     midiOutputConfig(MidiOutputNodeConfig),
     opcOutputConfig(OpcOutputNodeConfig),
-    oscInputConfig(OscInputNodeConfig),
+    oscInputConfig(OscNodeConfig),
+    oscOutputConfig(OscNodeConfig),
     videoColorBalanceConfig(VideoColorBalanceNodeConfig),
     videoEffectConfig(VideoEffectNodeConfig),
     videoFileConfig(VideoFileNodeConfig),
@@ -2189,13 +2190,13 @@ impl Node {
         }
     }
 
-    // .mizer.OscInputNodeConfig oscInputConfig = 23;
+    // .mizer.OscNodeConfig oscInputConfig = 23;
 
 
-    pub fn get_oscInputConfig(&self) -> &OscInputNodeConfig {
+    pub fn get_oscInputConfig(&self) -> &OscNodeConfig {
         match self.NodeConfig {
             ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(ref v)) => v,
-            _ => <OscInputNodeConfig as ::protobuf::Message>::default_instance(),
+            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
         }
     }
     pub fn clear_oscInputConfig(&mut self) {
@@ -2210,15 +2211,15 @@ impl Node {
     }
 
     // Param is passed by value, moved
-    pub fn set_oscInputConfig(&mut self, v: OscInputNodeConfig) {
+    pub fn set_oscInputConfig(&mut self, v: OscNodeConfig) {
         self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_oscInputConfig(&mut self) -> &mut OscInputNodeConfig {
+    pub fn mut_oscInputConfig(&mut self) -> &mut OscNodeConfig {
         if let ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(_)) = self.NodeConfig {
         } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(OscInputNodeConfig::new()));
+            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(OscNodeConfig::new()));
         }
         match self.NodeConfig {
             ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(ref mut v)) => v,
@@ -2227,14 +2228,63 @@ impl Node {
     }
 
     // Take field
-    pub fn take_oscInputConfig(&mut self) -> OscInputNodeConfig {
+    pub fn take_oscInputConfig(&mut self) -> OscNodeConfig {
         if self.has_oscInputConfig() {
             match self.NodeConfig.take() {
                 ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(v)) => v,
                 _ => panic!(),
             }
         } else {
-            OscInputNodeConfig::new()
+            OscNodeConfig::new()
+        }
+    }
+
+    // .mizer.OscNodeConfig oscOutputConfig = 24;
+
+
+    pub fn get_oscOutputConfig(&self) -> &OscNodeConfig {
+        match self.NodeConfig {
+            ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(ref v)) => v,
+            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_oscOutputConfig(&mut self) {
+        self.NodeConfig = ::std::option::Option::None;
+    }
+
+    pub fn has_oscOutputConfig(&self) -> bool {
+        match self.NodeConfig {
+            ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_oscOutputConfig(&mut self, v: OscNodeConfig) {
+        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_oscOutputConfig(&mut self) -> &mut OscNodeConfig {
+        if let ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(_)) = self.NodeConfig {
+        } else {
+            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(OscNodeConfig::new()));
+        }
+        match self.NodeConfig {
+            ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_oscOutputConfig(&mut self) -> OscNodeConfig {
+        if self.has_oscOutputConfig() {
+            match self.NodeConfig.take() {
+                ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            OscNodeConfig::new()
         }
     }
 
@@ -2581,6 +2631,11 @@ impl ::protobuf::Message for Node {
                 return false;
             }
         }
+        if let Some(Node_oneof_NodeConfig::oscOutputConfig(ref v)) = self.NodeConfig {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         if let Some(Node_oneof_NodeConfig::videoColorBalanceConfig(ref v)) = self.NodeConfig {
             if !v.is_initialized() {
                 return false;
@@ -2724,6 +2779,12 @@ impl ::protobuf::Message for Node {
                     }
                     self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(is.read_message()?));
                 },
+                24 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(is.read_message()?));
+                },
                 25 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -2847,6 +2908,10 @@ impl ::protobuf::Message for Node {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &Node_oneof_NodeConfig::oscInputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &Node_oneof_NodeConfig::oscOutputConfig(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2978,6 +3043,11 @@ impl ::protobuf::Message for Node {
                 },
                 &Node_oneof_NodeConfig::oscInputConfig(ref v) => {
                     os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Node_oneof_NodeConfig::oscOutputConfig(ref v) => {
+                    os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -3146,10 +3216,15 @@ impl ::protobuf::Message for Node {
                 Node::has_opcOutputConfig,
                 Node::get_opcOutputConfig,
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscInputNodeConfig>(
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscNodeConfig>(
                 "oscInputConfig",
                 Node::has_oscInputConfig,
                 Node::get_oscInputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscNodeConfig>(
+                "oscOutputConfig",
+                Node::has_oscOutputConfig,
+                Node::get_oscOutputConfig,
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoColorBalanceNodeConfig>(
                 "videoColorBalanceConfig",
@@ -3218,6 +3293,7 @@ impl ::protobuf::Clear for Node {
         self.NodeConfig = ::std::option::Option::None;
         self.NodeConfig = ::std::option::Option::None;
         self.NodeConfig = ::std::option::Option::None;
+        self.NodeConfig = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -3238,26 +3314,27 @@ impl ::protobuf::reflect::ProtobufValue for Node {
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub enum Node_NodeType {
     Fader = 0,
-    Button = 20,
-    DmxOutput = 1,
+    Button = 1,
     Oscillator = 2,
     Clock = 3,
-    OscInput = 4,
-    VideoFile = 5,
-    VideoOutput = 6,
-    VideoEffect = 7,
-    VideoColorBalance = 8,
-    VideoTransform = 9,
-    Script = 10,
-    PixelToDmx = 11,
-    PixelPattern = 12,
-    OpcOutput = 13,
-    Fixture = 14,
-    Sequence = 15,
-    MidiInput = 16,
-    MidiOutput = 17,
-    Laser = 18,
-    IldaFile = 19,
+    Script = 4,
+    Fixture = 6,
+    Sequence = 7,
+    DmxOutput = 11,
+    OscInput = 12,
+    OscOutput = 13,
+    MidiInput = 14,
+    MidiOutput = 15,
+    VideoFile = 20,
+    VideoOutput = 21,
+    VideoEffect = 22,
+    VideoColorBalance = 23,
+    VideoTransform = 24,
+    PixelToDmx = 30,
+    PixelPattern = 31,
+    OpcOutput = 32,
+    Laser = 40,
+    IldaFile = 41,
 }
 
 impl ::protobuf::ProtobufEnum for Node_NodeType {
@@ -3268,26 +3345,27 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
     fn from_i32(value: i32) -> ::std::option::Option<Node_NodeType> {
         match value {
             0 => ::std::option::Option::Some(Node_NodeType::Fader),
-            20 => ::std::option::Option::Some(Node_NodeType::Button),
-            1 => ::std::option::Option::Some(Node_NodeType::DmxOutput),
+            1 => ::std::option::Option::Some(Node_NodeType::Button),
             2 => ::std::option::Option::Some(Node_NodeType::Oscillator),
             3 => ::std::option::Option::Some(Node_NodeType::Clock),
-            4 => ::std::option::Option::Some(Node_NodeType::OscInput),
-            5 => ::std::option::Option::Some(Node_NodeType::VideoFile),
-            6 => ::std::option::Option::Some(Node_NodeType::VideoOutput),
-            7 => ::std::option::Option::Some(Node_NodeType::VideoEffect),
-            8 => ::std::option::Option::Some(Node_NodeType::VideoColorBalance),
-            9 => ::std::option::Option::Some(Node_NodeType::VideoTransform),
-            10 => ::std::option::Option::Some(Node_NodeType::Script),
-            11 => ::std::option::Option::Some(Node_NodeType::PixelToDmx),
-            12 => ::std::option::Option::Some(Node_NodeType::PixelPattern),
-            13 => ::std::option::Option::Some(Node_NodeType::OpcOutput),
-            14 => ::std::option::Option::Some(Node_NodeType::Fixture),
-            15 => ::std::option::Option::Some(Node_NodeType::Sequence),
-            16 => ::std::option::Option::Some(Node_NodeType::MidiInput),
-            17 => ::std::option::Option::Some(Node_NodeType::MidiOutput),
-            18 => ::std::option::Option::Some(Node_NodeType::Laser),
-            19 => ::std::option::Option::Some(Node_NodeType::IldaFile),
+            4 => ::std::option::Option::Some(Node_NodeType::Script),
+            6 => ::std::option::Option::Some(Node_NodeType::Fixture),
+            7 => ::std::option::Option::Some(Node_NodeType::Sequence),
+            11 => ::std::option::Option::Some(Node_NodeType::DmxOutput),
+            12 => ::std::option::Option::Some(Node_NodeType::OscInput),
+            13 => ::std::option::Option::Some(Node_NodeType::OscOutput),
+            14 => ::std::option::Option::Some(Node_NodeType::MidiInput),
+            15 => ::std::option::Option::Some(Node_NodeType::MidiOutput),
+            20 => ::std::option::Option::Some(Node_NodeType::VideoFile),
+            21 => ::std::option::Option::Some(Node_NodeType::VideoOutput),
+            22 => ::std::option::Option::Some(Node_NodeType::VideoEffect),
+            23 => ::std::option::Option::Some(Node_NodeType::VideoColorBalance),
+            24 => ::std::option::Option::Some(Node_NodeType::VideoTransform),
+            30 => ::std::option::Option::Some(Node_NodeType::PixelToDmx),
+            31 => ::std::option::Option::Some(Node_NodeType::PixelPattern),
+            32 => ::std::option::Option::Some(Node_NodeType::OpcOutput),
+            40 => ::std::option::Option::Some(Node_NodeType::Laser),
+            41 => ::std::option::Option::Some(Node_NodeType::IldaFile),
             _ => ::std::option::Option::None
         }
     }
@@ -3296,23 +3374,24 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
         static values: &'static [Node_NodeType] = &[
             Node_NodeType::Fader,
             Node_NodeType::Button,
-            Node_NodeType::DmxOutput,
             Node_NodeType::Oscillator,
             Node_NodeType::Clock,
+            Node_NodeType::Script,
+            Node_NodeType::Fixture,
+            Node_NodeType::Sequence,
+            Node_NodeType::DmxOutput,
             Node_NodeType::OscInput,
+            Node_NodeType::OscOutput,
+            Node_NodeType::MidiInput,
+            Node_NodeType::MidiOutput,
             Node_NodeType::VideoFile,
             Node_NodeType::VideoOutput,
             Node_NodeType::VideoEffect,
             Node_NodeType::VideoColorBalance,
             Node_NodeType::VideoTransform,
-            Node_NodeType::Script,
             Node_NodeType::PixelToDmx,
             Node_NodeType::PixelPattern,
             Node_NodeType::OpcOutput,
-            Node_NodeType::Fixture,
-            Node_NodeType::Sequence,
-            Node_NodeType::MidiInput,
-            Node_NodeType::MidiOutput,
             Node_NodeType::Laser,
             Node_NodeType::IldaFile,
         ];
@@ -6242,7 +6321,7 @@ impl ::protobuf::reflect::ProtobufValue for OpcOutputNodeConfig {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
-pub struct OscInputNodeConfig {
+pub struct OscNodeConfig {
     // message fields
     pub host: ::std::string::String,
     pub port: u32,
@@ -6254,14 +6333,14 @@ pub struct OscInputNodeConfig {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a OscInputNodeConfig {
-    fn default() -> &'a OscInputNodeConfig {
-        <OscInputNodeConfig as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a OscNodeConfig {
+    fn default() -> &'a OscNodeConfig {
+        <OscNodeConfig as ::protobuf::Message>::default_instance()
     }
 }
 
-impl OscInputNodeConfig {
-    pub fn new() -> OscInputNodeConfig {
+impl OscNodeConfig {
+    pub fn new() -> OscNodeConfig {
         ::std::default::Default::default()
     }
 
@@ -6333,7 +6412,7 @@ impl OscInputNodeConfig {
     }
 }
 
-impl ::protobuf::Message for OscInputNodeConfig {
+impl ::protobuf::Message for OscNodeConfig {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -6421,8 +6500,8 @@ impl ::protobuf::Message for OscInputNodeConfig {
         Self::descriptor_static()
     }
 
-    fn new() -> OscInputNodeConfig {
-        OscInputNodeConfig::new()
+    fn new() -> OscNodeConfig {
+        OscNodeConfig::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -6431,34 +6510,34 @@ impl ::protobuf::Message for OscInputNodeConfig {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "host",
-                |m: &OscInputNodeConfig| { &m.host },
-                |m: &mut OscInputNodeConfig| { &mut m.host },
+                |m: &OscNodeConfig| { &m.host },
+                |m: &mut OscNodeConfig| { &mut m.host },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
                 "port",
-                |m: &OscInputNodeConfig| { &m.port },
-                |m: &mut OscInputNodeConfig| { &mut m.port },
+                |m: &OscNodeConfig| { &m.port },
+                |m: &mut OscNodeConfig| { &mut m.port },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "path",
-                |m: &OscInputNodeConfig| { &m.path },
-                |m: &mut OscInputNodeConfig| { &mut m.path },
+                |m: &OscNodeConfig| { &m.path },
+                |m: &mut OscNodeConfig| { &mut m.path },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<OscInputNodeConfig>(
-                "OscInputNodeConfig",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<OscNodeConfig>(
+                "OscNodeConfig",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static OscInputNodeConfig {
-        static instance: ::protobuf::rt::LazyV2<OscInputNodeConfig> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(OscInputNodeConfig::new)
+    fn default_instance() -> &'static OscNodeConfig {
+        static instance: ::protobuf::rt::LazyV2<OscNodeConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(OscNodeConfig::new)
     }
 }
 
-impl ::protobuf::Clear for OscInputNodeConfig {
+impl ::protobuf::Clear for OscNodeConfig {
     fn clear(&mut self) {
         self.host.clear();
         self.port = 0;
@@ -6467,13 +6546,13 @@ impl ::protobuf::Clear for OscInputNodeConfig {
     }
 }
 
-impl ::std::fmt::Debug for OscInputNodeConfig {
+impl ::std::fmt::Debug for OscNodeConfig {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for OscInputNodeConfig {
+impl ::protobuf::reflect::ProtobufValue for OscNodeConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -7798,7 +7877,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     argetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\n\
     sourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08p\
     rotocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\
-    \x81\x10\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
+    \xcd\x10\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
     odeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\
     \x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07out\
     puts\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12/\n\x08designer\
@@ -7823,74 +7902,75 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     gH\0R\x0fmidiInputConfig\x12I\n\x10midiOutputConfig\x18\x15\x20\x01(\x0b\
     2\x1b.mizer.MidiOutputNodeConfigH\0R\x10midiOutputConfig\x12F\n\x0fopcOu\
     tputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer.OpcOutputNodeConfigH\0R\x0fop\
-    cOutputConfig\x12C\n\x0eoscInputConfig\x18\x17\x20\x01(\x0b2\x19.mizer.O\
-    scInputNodeConfigH\0R\x0eoscInputConfig\x12^\n\x17videoColorBalanceConfi\
-    g\x18\x19\x20\x01(\x0b2\".mizer.VideoColorBalanceNodeConfigH\0R\x17video\
-    ColorBalanceConfig\x12L\n\x11videoEffectConfig\x18\x1a\x20\x01(\x0b2\x1c\
-    .mizer.VideoEffectNodeConfigH\0R\x11videoEffectConfig\x12F\n\x0fvideoFil\
-    eConfig\x18\x1b\x20\x01(\x0b2\x1a.mizer.VideoFileNodeConfigH\0R\x0fvideo\
-    FileConfig\x12L\n\x11videoOutputConfig\x18\x1c\x20\x01(\x0b2\x1c.mizer.V\
-    ideoOutputNodeConfigH\0R\x11videoOutputConfig\x12U\n\x14videoTransformCo\
-    nfig\x18\x1d\x20\x01(\x0b2\x1f.mizer.VideoTransformNodeConfigH\0R\x14vid\
-    eoTransformConfig\"\xc5\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\n\n\
-    \x06Button\x10\x14\x12\r\n\tDmxOutput\x10\x01\x12\x0e\n\nOscillator\x10\
-    \x02\x12\t\n\x05Clock\x10\x03\x12\x0c\n\x08OscInput\x10\x04\x12\r\n\tVid\
-    eoFile\x10\x05\x12\x0f\n\x0bVideoOutput\x10\x06\x12\x0f\n\x0bVideoEffect\
-    \x10\x07\x12\x15\n\x11VideoColorBalance\x10\x08\x12\x12\n\x0eVideoTransf\
-    orm\x10\t\x12\n\n\x06Script\x10\n\x12\x0e\n\nPixelToDmx\x10\x0b\x12\x10\
-    \n\x0cPixelPattern\x10\x0c\x12\r\n\tOpcOutput\x10\r\x12\x0b\n\x07Fixture\
-    \x10\x0e\x12\x0c\n\x08Sequence\x10\x0f\x12\r\n\tMidiInput\x10\x10\x12\
-    \x0e\n\nMidiOutput\x10\x11\x12\t\n\x05Laser\x10\x12\x12\x0c\n\x08IldaFil\
-    e\x10\x13B\x0c\n\nNodeConfig\"\x81\x02\n\x14OscillatorNodeConfig\x12>\n\
-    \x04type\x18\x01\x20\x01(\x0e2*.mizer.OscillatorNodeConfig.OscillatorTyp\
-    eR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\x12\x10\n\
-    \x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\x20\x01(\
-    \x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offset\x12\x18\
-    \n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillatorType\
-    \x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Saw\x10\
-    \x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\x16\n\
-    \x06script\x18\x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12SequenceNodeConf\
-    ig\x12<\n\x05steps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeConfig.Seque\
-    nceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\x18\x01\x20\
-    \x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\
-    \x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockNodeConfig\x12\
-    \x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\
-    \x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInputNo\
-    deConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\t\
-    R\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\
-    \tR\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\x07pattern\
-    \x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\x07pattern\
-    \"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08RgbSnake\x10\
-    \x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\
-    \x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\
-    \x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\
-    \x06output\x18\x04\x20\x01(\tR\x06output\"c\n\x13DmxOutputNodeConfig\x12\
-    \x16\n\x06output\x18\x01\x20\x01(\tR\x06output\x12\x1a\n\x08universe\x18\
-    \x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\
-    \x07channel\"\x15\n\x13MidiInputNodeConfig\"\x16\n\x14MidiOutputNodeConf\
-    ig\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04\
-    host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\
-    \x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04\
-    R\x06height\"P\n\x12OscInputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01\
-    (\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04\
-    path\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBalanceNodeConfig\
-    \"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\
-    \x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\
-    \x1a\n\x18VideoTransformNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\
-    \x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\
-    \n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.No\
-    dePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scal\
-    e\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08p\
-    rotocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*w\n\
-    \x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\x01\x12\
-    \x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\
-    \x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Ma\
-    terial\x10\x07\x12\x07\n\x03Gst\x10\x082\xe9\x01\n\x08NodesApi\x12/\n\
-    \x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\
-    \x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\
-    \x07AddLink\x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\
-    \0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.\
-    WriteResponse\"\0b\x06proto3\
+    cOutputConfig\x12>\n\x0eoscInputConfig\x18\x17\x20\x01(\x0b2\x14.mizer.O\
+    scNodeConfigH\0R\x0eoscInputConfig\x12@\n\x0foscOutputConfig\x18\x18\x20\
+    \x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0foscOutputConfig\x12^\n\x17vide\
+    oColorBalanceConfig\x18\x19\x20\x01(\x0b2\".mizer.VideoColorBalanceNodeC\
+    onfigH\0R\x17videoColorBalanceConfig\x12L\n\x11videoEffectConfig\x18\x1a\
+    \x20\x01(\x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\x11videoEffectConfig\
+    \x12F\n\x0fvideoFileConfig\x18\x1b\x20\x01(\x0b2\x1a.mizer.VideoFileNode\
+    ConfigH\0R\x0fvideoFileConfig\x12L\n\x11videoOutputConfig\x18\x1c\x20\
+    \x01(\x0b2\x1c.mizer.VideoOutputNodeConfigH\0R\x11videoOutputConfig\x12U\
+    \n\x14videoTransformConfig\x18\x1d\x20\x01(\x0b2\x1f.mizer.VideoTransfor\
+    mNodeConfigH\0R\x14videoTransformConfig\"\xd4\x02\n\x08NodeType\x12\t\n\
+    \x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\
+    \x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0b\n\x07Fixture\
+    \x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\r\n\tDmxOutput\x10\x0b\x12\
+    \x0c\n\x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMidiInput\
+    \x10\x0e\x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\x12\
+    \x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\
+    \x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\
+    \x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOp\
+    cOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)B\x0c\n\
+    \nNodeConfig\"\x81\x02\n\x14OscillatorNodeConfig\x12>\n\x04type\x18\x01\
+    \x20\x01(\x0e2*.mizer.OscillatorNodeConfig.OscillatorTypeR\x04type\x12\
+    \x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\
+    \x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\
+    \x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\
+    \x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06Squa\
+    re\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Saw\x10\x02\x12\x0c\n\
+    \x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\x16\n\x06script\x18\
+    \x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12SequenceNodeConfig\x12<\n\x05s\
+    teps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeConfig.SequenceStepR\x05st\
+    eps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04ti\
+    ck\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\
+    \x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockNodeConfig\x12\x14\n\x05spee\
+    d\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\x1d\n\nfi\
+    xture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInputNodeConfig\"(\n\
+    \x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\".\
+    \n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08device\
+    Id\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\x07pattern\x18\x01\x20\
+    \x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\x07pattern\"'\n\x07Pat\
+    tern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08RgbSnake\x10\x01\"\x81\x01\
+    \n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05wid\
+    th\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0estart_u\
+    niverse\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\x18\x04\
+    \x20\x01(\tR\x06output\"c\n\x13DmxOutputNodeConfig\x12\x16\n\x06output\
+    \x18\x01\x20\x01(\tR\x06output\x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\
+    \x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\x07channel\"\x15\n\
+    \x13MidiInputNodeConfig\"\x16\n\x14MidiOutputNodeConfig\"k\n\x13OpcOutpu\
+    tNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04p\
+    ort\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\
+    \x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06height\"K\n\rOscN\
+    odeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04por\
+    t\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04p\
+    ath\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeCon\
+    fig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\
+    \x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeC\
+    onfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\
+    \x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08po\
+    sition\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\
+    \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04nam\
+    e\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\
+    \x16.mizer.ChannelProtocolR\x08protocol*w\n\x0fChannelProtocol\x12\n\n\
+    \x06Single\x10\0\x12\t\n\x05Multi\x10\x01\x12\x0b\n\x07Texture\x10\x02\
+    \x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\
+    \x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\
+    \n\x03Gst\x10\x082\xe9\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mize\
+    r.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.A\
+    ddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.Nod\
+    eConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\
+    \x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

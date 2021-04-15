@@ -7,7 +7,7 @@ pub use mizer_input_nodes::{FaderNode, ButtonNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_midi_nodes::{MidiInputNode, MidiOutputNode};
 pub use mizer_opc_nodes::OpcOutputNode;
-pub use mizer_osc_nodes::OscInputNode;
+pub use mizer_osc_nodes::{OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{PixelDmxNode, PixelPatternGeneratorNode, Pattern};
 pub use mizer_scripting_nodes::ScriptingNode;
@@ -34,6 +34,7 @@ pub enum Node {
     PixelPattern(PixelPatternGeneratorNode),
     PixelDmx(PixelDmxNode),
     OscInput(OscInputNode),
+    OscOutput(OscOutputNode),
     VideoFile(VideoFileNode),
     VideoColorBalance(VideoColorBalanceNode),
     VideoOutput(VideoOutputNode),
@@ -58,6 +59,7 @@ impl From<NodeType> for Node {
             NodeType::PixelPattern => PixelPatternGeneratorNode::default().into(),
             NodeType::PixelDmx => PixelDmxNode::default().into(),
             NodeType::OscInput => OscInputNode::default().into(),
+            NodeType::OscOutput => OscOutputNode::default().into(),
             NodeType::VideoFile => VideoFileNode::default().into(),
             NodeType::VideoTransform => VideoTransformNode::default().into(),
             NodeType::VideoColorBalance => VideoColorBalanceNode::default().into(),
@@ -89,6 +91,7 @@ impl Node {
             PixelPattern(_) => NodeType::PixelPattern,
             PixelDmx(_) => NodeType::PixelDmx,
             OscInput(_) => NodeType::OscInput,
+            OscOutput(_) => NodeType::OscOutput,
             VideoFile(_) => NodeType::VideoFile,
             VideoColorBalance(_) => NodeType::VideoColorBalance,
             VideoOutput(_) => NodeType::VideoOutput,

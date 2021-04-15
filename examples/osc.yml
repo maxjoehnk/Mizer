@@ -1,0 +1,24 @@
+nodes:
+  - type: osc-input
+    path: /osc-input-0
+    config:
+      port: 9000
+      path: /input
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
+  - type: osc-output
+    path: /osc-output-0
+    config:
+      host: 127.0.0.1
+      port: 9001
+      path: /output
+    designer:
+      position:
+        x: 5
+        y: 0
+      scale: 1
+channels:
+  - value@/osc-input-0 -> value@/osc-output-0

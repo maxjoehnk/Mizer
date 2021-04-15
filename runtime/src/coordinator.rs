@@ -128,6 +128,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             PixelPattern(node) => self.add_node(path, node),
             PixelDmx(node) => self.add_node(path, node),
             OscInput(node) => self.add_node(path, node),
+            OscOutput(node) => self.add_node(path, node),
             VideoFile(node) => self.add_node(path, node),
             VideoTransform(node) => self.add_node(path, node),
             VideoColorBalance(node) => self.add_node(path, node),

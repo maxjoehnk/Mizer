@@ -383,6 +383,7 @@ enum Node_NodeConfig {
   midiOutputConfig, 
   opcOutputConfig, 
   oscInputConfig, 
+  oscOutputConfig, 
   videoColorBalanceConfig, 
   videoEffectConfig, 
   videoFileConfig, 
@@ -409,6 +410,7 @@ class Node extends $pb.GeneratedMessage {
     21 : Node_NodeConfig.midiOutputConfig,
     22 : Node_NodeConfig.opcOutputConfig,
     23 : Node_NodeConfig.oscInputConfig,
+    24 : Node_NodeConfig.oscOutputConfig,
     25 : Node_NodeConfig.videoColorBalanceConfig,
     26 : Node_NodeConfig.videoEffectConfig,
     27 : Node_NodeConfig.videoFileConfig,
@@ -417,7 +419,7 @@ class Node extends $pb.GeneratedMessage {
     0 : Node_NodeConfig.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Node', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29])
+    ..oo(0, [6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29])
     ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..pc<Port>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
@@ -438,7 +440,8 @@ class Node extends $pb.GeneratedMessage {
     ..aOM<MidiInputNodeConfig>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', protoName: 'midiInputConfig', subBuilder: MidiInputNodeConfig.create)
     ..aOM<MidiOutputNodeConfig>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', protoName: 'midiOutputConfig', subBuilder: MidiOutputNodeConfig.create)
     ..aOM<OpcOutputNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'opcOutputConfig', protoName: 'opcOutputConfig', subBuilder: OpcOutputNodeConfig.create)
-    ..aOM<OscInputNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', protoName: 'oscInputConfig', subBuilder: OscInputNodeConfig.create)
+    ..aOM<OscNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', protoName: 'oscInputConfig', subBuilder: OscNodeConfig.create)
+    ..aOM<OscNodeConfig>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscOutputConfig', protoName: 'oscOutputConfig', subBuilder: OscNodeConfig.create)
     ..aOM<VideoColorBalanceNodeConfig>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoColorBalanceConfig', protoName: 'videoColorBalanceConfig', subBuilder: VideoColorBalanceNodeConfig.create)
     ..aOM<VideoEffectNodeConfig>(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoEffectConfig', protoName: 'videoEffectConfig', subBuilder: VideoEffectNodeConfig.create)
     ..aOM<VideoFileNodeConfig>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoFileConfig', protoName: 'videoFileConfig', subBuilder: VideoFileNodeConfig.create)
@@ -469,7 +472,8 @@ class Node extends $pb.GeneratedMessage {
     MidiInputNodeConfig midiInputConfig,
     MidiOutputNodeConfig midiOutputConfig,
     OpcOutputNodeConfig opcOutputConfig,
-    OscInputNodeConfig oscInputConfig,
+    OscNodeConfig oscInputConfig,
+    OscNodeConfig oscOutputConfig,
     VideoColorBalanceNodeConfig videoColorBalanceConfig,
     VideoEffectNodeConfig videoEffectConfig,
     VideoFileNodeConfig videoFileConfig,
@@ -539,6 +543,9 @@ class Node extends $pb.GeneratedMessage {
     }
     if (oscInputConfig != null) {
       _result.oscInputConfig = oscInputConfig;
+    }
+    if (oscOutputConfig != null) {
+      _result.oscOutputConfig = oscOutputConfig;
     }
     if (videoColorBalanceConfig != null) {
       _result.videoColorBalanceConfig = videoColorBalanceConfig;
@@ -782,70 +789,81 @@ class Node extends $pb.GeneratedMessage {
   OpcOutputNodeConfig ensureOpcOutputConfig() => $_ensure(19);
 
   @$pb.TagNumber(23)
-  OscInputNodeConfig get oscInputConfig => $_getN(20);
+  OscNodeConfig get oscInputConfig => $_getN(20);
   @$pb.TagNumber(23)
-  set oscInputConfig(OscInputNodeConfig v) { setField(23, v); }
+  set oscInputConfig(OscNodeConfig v) { setField(23, v); }
   @$pb.TagNumber(23)
   $core.bool hasOscInputConfig() => $_has(20);
   @$pb.TagNumber(23)
   void clearOscInputConfig() => clearField(23);
   @$pb.TagNumber(23)
-  OscInputNodeConfig ensureOscInputConfig() => $_ensure(20);
+  OscNodeConfig ensureOscInputConfig() => $_ensure(20);
+
+  @$pb.TagNumber(24)
+  OscNodeConfig get oscOutputConfig => $_getN(21);
+  @$pb.TagNumber(24)
+  set oscOutputConfig(OscNodeConfig v) { setField(24, v); }
+  @$pb.TagNumber(24)
+  $core.bool hasOscOutputConfig() => $_has(21);
+  @$pb.TagNumber(24)
+  void clearOscOutputConfig() => clearField(24);
+  @$pb.TagNumber(24)
+  OscNodeConfig ensureOscOutputConfig() => $_ensure(21);
 
   @$pb.TagNumber(25)
-  VideoColorBalanceNodeConfig get videoColorBalanceConfig => $_getN(21);
+  VideoColorBalanceNodeConfig get videoColorBalanceConfig => $_getN(22);
   @$pb.TagNumber(25)
   set videoColorBalanceConfig(VideoColorBalanceNodeConfig v) { setField(25, v); }
   @$pb.TagNumber(25)
-  $core.bool hasVideoColorBalanceConfig() => $_has(21);
+  $core.bool hasVideoColorBalanceConfig() => $_has(22);
   @$pb.TagNumber(25)
   void clearVideoColorBalanceConfig() => clearField(25);
   @$pb.TagNumber(25)
-  VideoColorBalanceNodeConfig ensureVideoColorBalanceConfig() => $_ensure(21);
+  VideoColorBalanceNodeConfig ensureVideoColorBalanceConfig() => $_ensure(22);
 
   @$pb.TagNumber(26)
-  VideoEffectNodeConfig get videoEffectConfig => $_getN(22);
+  VideoEffectNodeConfig get videoEffectConfig => $_getN(23);
   @$pb.TagNumber(26)
   set videoEffectConfig(VideoEffectNodeConfig v) { setField(26, v); }
   @$pb.TagNumber(26)
-  $core.bool hasVideoEffectConfig() => $_has(22);
+  $core.bool hasVideoEffectConfig() => $_has(23);
   @$pb.TagNumber(26)
   void clearVideoEffectConfig() => clearField(26);
   @$pb.TagNumber(26)
-  VideoEffectNodeConfig ensureVideoEffectConfig() => $_ensure(22);
+  VideoEffectNodeConfig ensureVideoEffectConfig() => $_ensure(23);
 
   @$pb.TagNumber(27)
-  VideoFileNodeConfig get videoFileConfig => $_getN(23);
+  VideoFileNodeConfig get videoFileConfig => $_getN(24);
   @$pb.TagNumber(27)
   set videoFileConfig(VideoFileNodeConfig v) { setField(27, v); }
   @$pb.TagNumber(27)
-  $core.bool hasVideoFileConfig() => $_has(23);
+  $core.bool hasVideoFileConfig() => $_has(24);
   @$pb.TagNumber(27)
   void clearVideoFileConfig() => clearField(27);
   @$pb.TagNumber(27)
-  VideoFileNodeConfig ensureVideoFileConfig() => $_ensure(23);
+  VideoFileNodeConfig ensureVideoFileConfig() => $_ensure(24);
 
   @$pb.TagNumber(28)
-  VideoOutputNodeConfig get videoOutputConfig => $_getN(24);
+  VideoOutputNodeConfig get videoOutputConfig => $_getN(25);
   @$pb.TagNumber(28)
   set videoOutputConfig(VideoOutputNodeConfig v) { setField(28, v); }
   @$pb.TagNumber(28)
-  $core.bool hasVideoOutputConfig() => $_has(24);
+  $core.bool hasVideoOutputConfig() => $_has(25);
   @$pb.TagNumber(28)
   void clearVideoOutputConfig() => clearField(28);
   @$pb.TagNumber(28)
-  VideoOutputNodeConfig ensureVideoOutputConfig() => $_ensure(24);
+  VideoOutputNodeConfig ensureVideoOutputConfig() => $_ensure(25);
 
   @$pb.TagNumber(29)
-  VideoTransformNodeConfig get videoTransformConfig => $_getN(25);
+  VideoTransformNodeConfig get videoTransformConfig => $_getN(26);
   @$pb.TagNumber(29)
   set videoTransformConfig(VideoTransformNodeConfig v) { setField(29, v); }
   @$pb.TagNumber(29)
-  $core.bool hasVideoTransformConfig() => $_has(25);
+  $core.bool hasVideoTransformConfig() => $_has(26);
   @$pb.TagNumber(29)
   void clearVideoTransformConfig() => clearField(29);
   @$pb.TagNumber(29)
-  VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(25);
+  VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(26);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -1703,16 +1721,16 @@ class OpcOutputNodeConfig extends $pb.GeneratedMessage {
   void clearHeight() => clearField(4);
 }
 
-class OscInputNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscInputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class OscNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..hasRequiredFields = false
   ;
 
-  OscInputNodeConfig._() : super();
-  factory OscInputNodeConfig({
+  OscNodeConfig._() : super();
+  factory OscNodeConfig({
     $core.String host,
     $core.int port,
     $core.String path,
@@ -1729,26 +1747,26 @@ class OscInputNodeConfig extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory OscInputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OscInputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory OscNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory OscNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  OscInputNodeConfig clone() => OscInputNodeConfig()..mergeFromMessage(this);
+  OscNodeConfig clone() => OscNodeConfig()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OscInputNodeConfig copyWith(void Function(OscInputNodeConfig) updates) => super.copyWith((message) => updates(message as OscInputNodeConfig)); // ignore: deprecated_member_use
+  OscNodeConfig copyWith(void Function(OscNodeConfig) updates) => super.copyWith((message) => updates(message as OscNodeConfig)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static OscInputNodeConfig create() => OscInputNodeConfig._();
-  OscInputNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<OscInputNodeConfig> createRepeated() => $pb.PbList<OscInputNodeConfig>();
+  static OscNodeConfig create() => OscNodeConfig._();
+  OscNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<OscNodeConfig> createRepeated() => $pb.PbList<OscNodeConfig>();
   @$core.pragma('dart2js:noInline')
-  static OscInputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OscInputNodeConfig>(create);
-  static OscInputNodeConfig _defaultInstance;
+  static OscNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OscNodeConfig>(create);
+  static OscNodeConfig _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get host => $_getSZ(0);

@@ -11,6 +11,7 @@ use test_case::test_case;
 #[test_case("sequence"; "sequence")]
 #[test_case("video"; "video")]
 #[test_case("inputs"; "inputs")]
+#[test_case("osc"; "osc")]
 #[tokio::test]
 async fn test_build_project_pipeline(project: &str) {
     let handle = tokio::runtime::Handle::current();

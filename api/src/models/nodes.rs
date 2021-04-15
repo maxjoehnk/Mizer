@@ -7796,6 +7796,7 @@ impl ::protobuf::reflect::ProtobufValue for Port {
 pub enum ChannelProtocol {
     Single = 0,
     Multi = 1,
+    Color = 9,
     Texture = 2,
     Vector = 3,
     Laser = 4,
@@ -7814,6 +7815,7 @@ impl ::protobuf::ProtobufEnum for ChannelProtocol {
         match value {
             0 => ::std::option::Option::Some(ChannelProtocol::Single),
             1 => ::std::option::Option::Some(ChannelProtocol::Multi),
+            9 => ::std::option::Option::Some(ChannelProtocol::Color),
             2 => ::std::option::Option::Some(ChannelProtocol::Texture),
             3 => ::std::option::Option::Some(ChannelProtocol::Vector),
             4 => ::std::option::Option::Some(ChannelProtocol::Laser),
@@ -7829,6 +7831,7 @@ impl ::protobuf::ProtobufEnum for ChannelProtocol {
         static values: &'static [ChannelProtocol] = &[
             ChannelProtocol::Single,
             ChannelProtocol::Multi,
+            ChannelProtocol::Color,
             ChannelProtocol::Texture,
             ChannelProtocol::Vector,
             ChannelProtocol::Laser,
@@ -7962,15 +7965,16 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     sition\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\
     \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04nam\
     e\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\
-    \x16.mizer.ChannelProtocolR\x08protocol*w\n\x0fChannelProtocol\x12\n\n\
-    \x06Single\x10\0\x12\t\n\x05Multi\x10\x01\x12\x0b\n\x07Texture\x10\x02\
-    \x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\
-    \x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\
-    \n\x03Gst\x10\x082\xe9\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mize\
-    r.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.A\
-    ddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.Nod\
-    eConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\
-    \x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
+    \x16.mizer.ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\
+    \x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\
+    \x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\
+    \x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\
+    \x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082\xe9\x01\n\x08NodesApi\x12\
+    /\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\
+    \n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\
+    \x07AddLink\x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\
+    \0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.\
+    WriteResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

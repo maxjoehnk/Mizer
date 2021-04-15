@@ -363,6 +363,7 @@ impl From<PortType> for ChannelProtocol {
         match port {
             PortType::Single => ChannelProtocol::Single,
             PortType::Multi => ChannelProtocol::Multi,
+            PortType::Color => ChannelProtocol::Color,
             PortType::Texture => ChannelProtocol::Texture,
             PortType::Vector => ChannelProtocol::Vector,
             PortType::Laser => ChannelProtocol::Laser,
@@ -379,6 +380,7 @@ impl From<ChannelProtocol> for PortType {
         match port {
             ChannelProtocol::Single => PortType::Single,
             ChannelProtocol::Multi => PortType::Multi,
+            ChannelProtocol::Color => PortType::Color,
             ChannelProtocol::Texture => PortType::Texture,
             ChannelProtocol::Vector => PortType::Vector,
             ChannelProtocol::Laser => PortType::Laser,

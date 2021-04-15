@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_osc::{OscInput, OscMessage, OscPacket, OscType};
+use mizer_protocol_osc::*;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscInputNode {
@@ -38,21 +38,34 @@ impl PipelineNode for OscInputNode {
     }
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        (port == "value").then(|| PortMetadata {
+        let number = (port == "number").then(|| PortMetadata {
             port_type: PortType::Single,
             direction: PortDirection::Output,
             ..Default::default()
-        })
+        });
+        let color = (port == "color").then(|| PortMetadata {
+            port_type: PortType::Color,
+            direction: PortDirection::Output,
+            ..Default::default()
+        });
+        number.or(color)
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
-            "value".into(),
+            "number".into(),
             PortMetadata {
                 port_type: PortType::Single,
                 direction: PortDirection::Output,
                 ..Default::default()
             },
+        ), (
+            "color".into(),
+            PortMetadata {
+                port_type: PortType::Color,
+                direction: PortDirection::Output,
+                ..Default::default()
+            }
         )]
     }
 
@@ -94,15 +107,25 @@ impl OscInputNode {
         log::trace!("{:?}", msg);
         if msg.addr == self.path {
             match &msg.args[0] {
-                OscType::Float(float) => {
-                    let value = *float as f64;
-                    context.write_port("value", value);
-                }
-                OscType::Double(double) => {
-                    context.write_port("value", *double);
-                }
+                OscType::Float(float) => write_number(context, *float as f64),
+                OscType::Double(double) => write_number(context, *double),
+                OscType::Int(int) => write_number(context, *int as f64),
+                OscType::Color(color) => write_color(context, color),
                 _ => {}
             }
         }
     }
+}
+
+fn write_number(context: &impl NodeContext, value: f64) {
+    context.write_port("number", value);
+}
+
+fn write_color(context: &impl NodeContext, color: &OscColor) {
+    context.write_port("color", Color {
+        red: color.red,
+        green: color.green,
+        blue: color.blue,
+        alpha: color.alpha,
+    });
 }

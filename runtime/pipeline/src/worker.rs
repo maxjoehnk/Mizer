@@ -90,6 +90,7 @@ impl PipelineWorker {
     ) -> anyhow::Result<()> {
         match link.port_type {
             PortType::Single => self.connect_memory_ports::<f64>(link, source_meta, target_meta),
+            PortType::Color => self.connect_memory_ports::<Color>(link, source_meta, target_meta),
             PortType::Multi => {
                 self.connect_memory_ports::<Vec<f64>>(link, source_meta, target_meta)
             }

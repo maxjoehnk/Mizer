@@ -120,6 +120,7 @@ class PortDot extends StatelessWidget {
         return Colors.green;
       case ChannelProtocol.Gst:
       case ChannelProtocol.Texture:
+      case ChannelProtocol.Color:
         return Colors.red;
       default:
         log("no color for protocol ${protocol.name}");

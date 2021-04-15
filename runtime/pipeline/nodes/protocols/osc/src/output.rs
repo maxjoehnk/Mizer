@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_osc::{OscMessage, OscOutput, OscPacket};
+use mizer_protocol_osc::*;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscOutputNode {
@@ -38,22 +38,35 @@ impl PipelineNode for OscOutputNode {
     }
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        (port == "value").then(|| PortMetadata {
+        let number = (port == "number").then(|| PortMetadata {
             port_type: PortType::Single,
             direction: PortDirection::Input,
             ..Default::default()
-        })
+        });
+        let color = (port == "color").then(|| PortMetadata {
+            port_type: PortType::Color,
+            direction: PortDirection::Input,
+            ..Default::default()
+        });
+        number.or(color)
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
-            "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-        )]
+             "number".into(),
+             PortMetadata {
+                 port_type: PortType::Single,
+                 direction: PortDirection::Input,
+                 ..Default::default()
+             },
+         ), (
+             "color".into(),
+             PortMetadata {
+                 port_type: PortType::Color,
+                 direction: PortDirection::Input,
+                 ..Default::default()
+             }
+         )]
     }
 
     fn node_type(&self) -> NodeType {
@@ -65,10 +78,22 @@ impl ProcessingNode for OscOutputNode {
     type State = OscOutput;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(value) = context.read_port::<_, f64>("value") {
+        if let Some(value) = context.read_port::<_, f64>("number") {
             state.send(OscPacket::Message(OscMessage {
                 addr: self.path.clone(),
                 args: vec![value.into()],
+            }))?;
+        }
+        if let Some(color) = context.read_port::<_, Color>("color") {
+            let color = OscColor {
+                red: color.red,
+                green: color.green,
+                blue: color.blue,
+                alpha: color.alpha,
+            };
+            state.send(OscPacket::Message(OscMessage {
+                addr: self.path.clone(),
+                args: vec![OscType::Color(color)]
             }))?;
         }
         Ok(())

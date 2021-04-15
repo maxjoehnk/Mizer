@@ -201,6 +201,7 @@ message NodeDesigner {
 enum ChannelProtocol {
     Single = 0;
     Multi = 1;
+    Color = 9;
     Texture = 2;
     Vector = 3;
     Laser = 4;

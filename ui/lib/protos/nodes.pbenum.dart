@@ -12,6 +12,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class ChannelProtocol extends $pb.ProtobufEnum {
   static const ChannelProtocol Single = ChannelProtocol._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Single');
   static const ChannelProtocol Multi = ChannelProtocol._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multi');
+  static const ChannelProtocol Color = ChannelProtocol._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Color');
   static const ChannelProtocol Texture = ChannelProtocol._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Texture');
   static const ChannelProtocol Vector = ChannelProtocol._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Vector');
   static const ChannelProtocol Laser = ChannelProtocol._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Laser');
@@ -23,6 +24,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
   static const $core.List<ChannelProtocol> values = <ChannelProtocol> [
     Single,
     Multi,
+    Color,
     Texture,
     Vector,
     Laser,

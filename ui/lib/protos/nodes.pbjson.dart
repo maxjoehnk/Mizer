@@ -10,6 +10,7 @@ const ChannelProtocol$json = const {
   '2': const [
     const {'1': 'Single', '2': 0},
     const {'1': 'Multi', '2': 1},
+    const {'1': 'Color', '2': 9},
     const {'1': 'Texture', '2': 2},
     const {'1': 'Vector', '2': 3},
     const {'1': 'Laser', '2': 4},

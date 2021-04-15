@@ -53,6 +53,9 @@ pub enum PortType {
     ///
     /// e.g. Audio
     Multi,
+    // TODO: should this actually be a texture?
+    /// RGBA Colors
+    Color,
     /// 2D Image and Video
     Texture,
     // TODO: maybe merge Vector and Poly?
@@ -109,3 +112,11 @@ where
 pub trait PortValue: Debug + Clone + PartialEq + Send + Sync {}
 
 impl<T> PortValue for T where T: Debug + Clone + PartialEq + Send + Sync {}
+
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
+pub struct Color {
+    pub red: u8,
+    pub green: u8,
+    pub blue: u8,
+    pub alpha: u8,
+}

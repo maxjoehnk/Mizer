@@ -5,7 +5,7 @@ use std::thread;
 
 use crossbeam_channel::{unbounded, Receiver, Sender};
 use lazy_static::lazy_static;
-pub use rosc::{OscMessage, OscPacket, OscType};
+pub use rosc::{OscMessage, OscPacket, OscType, OscColor};
 
 lazy_static! {
     static ref OSC_INPUT_THREADS: Mutex<HashMap<SocketAddrV4, Receiver<OscPacket>>> =

@@ -58,6 +58,10 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
 license = "GNU AGPLv3"
 
+[features]
+default = ["ui"]
+ui = ["mizer-ui"]
+
 [dependencies]
 derive_more = "0.99"
 env_logger = "0.7"
@@ -81,7 +85,7 @@ mizer-node = { path = "runtime/pipeline/node" }
 mizer-protocol-dmx = { path = "protocols/dmx" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
-mizer-ui = { path = "ui" }
+mizer-ui = { path = "ui", optional = true }
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time", "rt-util"] }
 
 [dev-dependencies]

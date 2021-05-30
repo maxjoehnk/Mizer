@@ -9,10 +9,19 @@ use std::sync::mpsc;
 
 mod logger;
 
+#[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
-    logger::init();
-    let flags = Flags::from_args();
-    log::debug!("flags: {:?}", flags);
+    let flags = init();
+    let runtime = build_tokio_runtime();
+
+    start_runtime(runtime, flags, None).unwrap();
+
+    Ok(())
+}
+
+#[cfg(feature = "ui")]
+fn main() -> anyhow::Result<()> {
+    let flags = init();
 
     let handlers = setup_runtime(flags)?;
 
@@ -23,31 +32,45 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+fn init() -> Flags {
+    logger::init();
+    let flags = Flags::from_args();
+    log::debug!("flags: {:?}", flags);
+
+    flags
+}
+
 fn setup_runtime(flags: Flags) -> anyhow::Result<mpsc::Receiver<Handlers>> {
     let (tx, rx) = mpsc::channel();
     std::thread::Builder::new()
         .name("Task Runtime".into())
         .spawn(move || {
-            log::trace!("Starting tokio runtime");
-            let runtime = tokio::runtime::Builder::new()
-                .enable_all()
-                .thread_name("mizer-tokio-runtime")
-                .threaded_scheduler()
-                .build()
-                .unwrap();
+            let runtime = build_tokio_runtime();
 
-            start_runtime(runtime, flags, tx).unwrap();
+            start_runtime(runtime, flags, Some(tx)).unwrap();
         })?;
     Ok(rx)
 }
 
-fn start_runtime(mut runtime: tokio::runtime::Runtime, flags: Flags, handler_out: mpsc::Sender<Handlers>) -> anyhow::Result<()> {
+fn build_tokio_runtime() -> tokio::runtime::Runtime {
+    log::trace!("Starting tokio runtime");
+    tokio::runtime::Builder::new()
+        .enable_all()
+        .thread_name("mizer-tokio-runtime")
+        .threaded_scheduler()
+        .build()
+        .unwrap()
+}
+
+fn start_runtime(mut runtime: tokio::runtime::Runtime, flags: Flags, handler_out: Option<mpsc::Sender<Handlers>>) -> anyhow::Result<()> {
     let local = LocalSet::new();
     // TODO: integrate discovery mode
     Session::new()?;
 
     let mut mizer = runtime.enter(|| build_runtime(runtime.handle().clone(), flags))?;
-    handler_out.send(mizer.handlers.clone())?;
+    if let Some(handler_out) = handler_out {
+        handler_out.send(mizer.handlers.clone())?;
+    }
     local.block_on(&mut runtime, mizer.run());
 
     Ok(())

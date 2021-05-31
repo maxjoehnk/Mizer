@@ -12,7 +12,8 @@ pub fn main() -> anyhow::Result<()> {
 
     let device = device.connect()?;
 
-    for event in device.events() {
+    let receiver = device.events();
+    for event in receiver.iter() {
         println!("{:?}", event.msg);
     }
 

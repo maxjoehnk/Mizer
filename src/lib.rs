@@ -13,6 +13,7 @@ use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_protocol_dmx::*;
+use mizer_protocol_midi::MidiModule;
 use mizer_runtime::DefaultRuntime;
 use mizer_api::handlers::Handlers;
 
@@ -26,6 +27,7 @@ pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Re
 
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
+    register_midi_module(&mut runtime)?;
     let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime)?;
 
     let mut media_paths = Vec::new();
@@ -93,6 +95,10 @@ fn register_device_module(
 
 fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     DmxModule.register(runtime)
+}
+
+fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+    MidiModule.register(runtime)
 }
 
 fn register_fixtures_module(runtime: &mut DefaultRuntime) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {

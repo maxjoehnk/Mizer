@@ -1,0 +1,61 @@
+nodes:
+  - type: midi-input
+    path: /midi-input-0
+    config:
+      device: APC MINI:APC MINI MIDI 1 32:0
+      type: cc
+      port: 48
+      range: [0, 127]
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
+  - type: dmx-output
+    path: /dmx-output-0
+    config:
+      channel: 0
+    designer:
+      position:
+        x: 10
+        y: 0
+      scale: 1
+  - type: midi-output
+    path: /midi-output-0
+    config:
+      device: APC MINI:APC MINI MIDI 1 32:0
+      type: note
+      port: 56
+      range: [0, 64]
+    designer:
+      position:
+        x: 15
+        y: 2
+      scale: 1
+
+  - type: midi-input
+    path: /midi-input-1
+    config:
+      device: APC MINI:APC MINI MIDI 1 32:0
+      type: note
+      port: 56
+      range: [0, 127]
+    designer:
+      position:
+        x: 0
+        y: -5
+      scale: 1
+  - type: dmx-output
+    path: /dmx-output-1
+    config:
+      channel: 0
+      universe: 2
+    designer:
+      position:
+        x: 10
+        y: -5
+      scale: 1
+channels:
+  - value@/midi-input-0 -> value@/dmx-output-0
+  - value@/midi-input-0 -> value@/midi-output-0
+  - value@/midi-input-1 -> value@/dmx-output-1

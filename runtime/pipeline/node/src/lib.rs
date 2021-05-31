@@ -19,7 +19,7 @@ pub trait PipelineNode: Send + Sync + Any {
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         log::trace!("Returning default port metadata for port {}", port);
-        Default::default()
+        self.list_ports().into_iter().find(|(id, _)| id == port).map(|(_, port)| port)
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {

@@ -2717,6 +2717,7 @@ dependencies = [
  "mizer-processing",
  "mizer-project-files",
  "mizer-protocol-dmx",
+ "mizer-protocol-midi",
  "mizer-runtime",
  "mizer-session",
  "mizer-ui",
@@ -2919,6 +2920,7 @@ name = "mizer-midi-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "log",
  "mizer-node",
  "mizer-protocol-midi",
  "serde",
@@ -3110,8 +3112,12 @@ name = "mizer-protocol-midi"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "crossbeam-channel 0.5.0",
+ "dashmap",
  "log",
  "midir",
+ "mizer-module",
+ "mizer-processing",
 ]
 
 [[package]]

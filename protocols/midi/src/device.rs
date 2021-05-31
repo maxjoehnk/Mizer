@@ -1,6 +1,6 @@
 use std::convert::TryFrom;
-use std::sync::mpsc;
 
+use crossbeam_channel::{Receiver, Sender};
 use midir::{MidiInput, MidiInputConnection, MidiOutput, MidiOutputConnection};
 
 use crate::device_provider::MidiDeviceIdentifier;
@@ -10,16 +10,25 @@ use crate::message::MidiMessage;
 pub struct MidiDevice {
     input: Option<MidiInputConnection<()>>,
     output: Option<MidiOutputConnection>,
-    input_buffer: mpsc::Receiver<MidiEvent>,
+    event_subscriber: Sender<Sender<MidiEvent>>,
+}
+
+pub struct MidiEventReceiver(Receiver<MidiEvent>);
+
+impl MidiEventReceiver {
+    pub fn iter(&self) -> impl Iterator<Item = MidiEvent> + '_ {
+        self.0.try_iter()
+    }
 }
 
 impl MidiDevice {
     pub(crate) fn new(identifier: MidiDeviceIdentifier) -> anyhow::Result<Self> {
-        let (tx, rx) = mpsc::channel();
+        let (subscriber_tx, subscriber_rx) = crossbeam_channel::unbounded();
+        let (event_tx, event_rx) = crossbeam_channel::unbounded();
         let mut device = MidiDevice {
             input: None,
             output: None,
-            input_buffer: rx,
+            event_subscriber: subscriber_tx,
         };
         if let Some(port) = identifier.input {
             let input = MidiInput::new("mizer")?;
@@ -28,16 +37,36 @@ impl MidiDevice {
                     &port,
                     "mizer",
                     move |time, data, _| {
-                        tx.send(MidiEvent {
+                        let event = MidiEvent {
                             timestamp: time,
                             msg: MidiMessage::try_from(data).expect("could not parse midi message"),
-                        })
-                        .expect("pushing midi event failed");
+                        };
+                        log::trace!("{:?}", event);
+                        event_tx.try_send(event).expect("pushing midi event failed");
                     },
                     (),
                 )
                 .map_err(|_| anyhow::anyhow!("opening input failed"))?;
             device.input = Some(connection);
+            std::thread::spawn(move || {
+                let mut senders = Vec::<Sender<MidiEvent>>::new();
+                loop {
+                    crossbeam_channel::select! {
+                        recv(event_rx) -> event => {
+                            if let Ok(event) = event {
+                                for sender in &senders {
+                                    sender.send(event.clone());
+                                }
+                            }
+                        },
+                        recv(subscriber_rx) -> subscriber => {
+                            if let Ok(subscriber) = subscriber {
+                                senders.push(subscriber);
+                            }
+                        }
+                    }
+                }
+            });
         }
         if let Some(port) = identifier.output {
             let output = MidiOutput::new("mizer")?;
@@ -50,13 +79,15 @@ impl MidiDevice {
         Ok(device)
     }
 
-    pub fn events(&self) -> impl Iterator<Item = MidiEvent> + '_ {
-        self.input_buffer.iter()
+    pub fn events(&self) -> MidiEventReceiver {
+        let (tx, rx) = crossbeam_channel::unbounded();
+        self.event_subscriber.send(tx);
+        MidiEventReceiver(rx)
     }
 
     pub fn write(&mut self, msg: MidiMessage) -> anyhow::Result<()> {
         if let Some(ref mut output) = self.output {
-            println!("{:?}", msg);
+            log::trace!("{:?}", msg);
             let data: Vec<u8> = msg.into();
             output.send(&data)?;
         }

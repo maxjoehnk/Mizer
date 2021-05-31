@@ -2,7 +2,7 @@ use std::convert::{TryFrom, TryInto};
 
 /// Represents a Midi channel
 ///
-/// Note than `Ch1 = 0`, `Ch2 = 1`, etc, as the actual protocol is 0-indexed.
+/// Note that `Ch1 = 0`, `Ch2 = 1`, etc, as the actual protocol is 0-indexed.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub enum Channel {
     Ch1 = 0,
@@ -23,10 +23,31 @@ pub enum Channel {
     Ch16 = 15,
 }
 
-impl TryFrom<u8> for Channel {
-    type Error = ();
+impl PartialEq<u8> for Channel {
+    fn eq(&self, other: &u8) -> bool {
+        match self {
+            Channel::Ch1 => *other == 1,
+            Channel::Ch2 => *other == 2,
+            Channel::Ch3 => *other == 3,
+            Channel::Ch4 => *other == 4,
+            Channel::Ch5 => *other == 5,
+            Channel::Ch6 => *other == 6,
+            Channel::Ch7 => *other == 7,
+            Channel::Ch8 => *other == 8,
+            Channel::Ch9 => *other == 9,
+            Channel::Ch10 => *other == 10,
+            Channel::Ch11 => *other == 11,
+            Channel::Ch12 => *other == 12,
+            Channel::Ch13 => *other == 13,
+            Channel::Ch14 => *other == 14,
+            Channel::Ch15 => *other == 15,
+            Channel::Ch16 => *other == 16,
+        }
+    }
+}
 
-    fn try_from(data: u8) -> Result<Self, Self::Error> {
+impl Channel {
+    fn try_parse(data: u8) -> Result<Self, ()> {
         match data & 0b00001111 {
             0 => Ok(Channel::Ch1),
             1 => Ok(Channel::Ch2),
@@ -49,6 +70,32 @@ impl TryFrom<u8> for Channel {
     }
 }
 
+impl TryFrom<u8> for Channel {
+    type Error = ();
+
+    fn try_from(channel: u8) -> Result<Self, Self::Error> {
+        match channel {
+            1 => Ok(Channel::Ch1),
+            2 => Ok(Channel::Ch2),
+            3 => Ok(Channel::Ch3),
+            4 => Ok(Channel::Ch4),
+            5 => Ok(Channel::Ch5),
+            6 => Ok(Channel::Ch6),
+            7 => Ok(Channel::Ch7),
+            8 => Ok(Channel::Ch8),
+            9 => Ok(Channel::Ch9),
+            10 => Ok(Channel::Ch10),
+            11 => Ok(Channel::Ch11),
+            12 => Ok(Channel::Ch12),
+            13 => Ok(Channel::Ch13),
+            14 => Ok(Channel::Ch14),
+            15 => Ok(Channel::Ch15),
+            16 => Ok(Channel::Ch16),
+            _ => Err(()),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub enum MidiMessage {
     ControlChange(Channel, u8, u8),
@@ -64,18 +111,15 @@ impl TryFrom<&[u8]> for MidiMessage {
     fn try_from(data: &[u8]) -> Result<Self, Self::Error> {
         match data {
             [status, note, value] if matches_status(status, NOTE_OFF) => {
-                let channel: Result<Channel, ()> = (*status).try_into();
-                let channel = channel.unwrap();
+                let channel = Channel::try_parse(*status).unwrap();
                 Ok(MidiMessage::NoteOff(channel, *note, *value))
             }
             [status, note, value] if matches_status(status, NOTE_ON) => {
-                let channel: Result<Channel, ()> = (*status).try_into();
-                let channel = channel.unwrap();
+                let channel = Channel::try_parse(*status).unwrap();
                 Ok(MidiMessage::NoteOn(channel, *note, *value))
             }
             [status, d1, d2] if matches_status(status, CONTROL_CHANGE) => {
-                let channel: Result<Channel, ()> = (*status).try_into();
-                let channel = channel.unwrap();
+                let channel = Channel::try_parse(*status).unwrap();
                 Ok(MidiMessage::ControlChange(channel, *d1, *d2))
             }
             [SYSEX, manu1, manu2, manu3, model, data @ .., SYSEX_EOX] => Ok(MidiMessage::Sysex(

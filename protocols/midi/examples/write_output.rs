@@ -16,7 +16,7 @@ pub fn main() -> anyhow::Result<()> {
 
     let mut device = device.connect()?;
 
-    let mut reader = std::io::stdin();
+    let reader = std::io::stdin();
 
     write_prompt();
     for line in reader.lock().lines() {

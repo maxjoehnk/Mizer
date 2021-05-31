@@ -8,3 +8,8 @@ edition = "2018"
 anyhow = "1"
 midir = "0.7"
 log = "0.4"
+dashmap = "4"
+mizer-processing = { path = "../../runtime/processing" }
+mizer-module = { path = "../../runtime/module" }
+crossbeam-channel = "0.5"
+

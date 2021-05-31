@@ -32,6 +32,12 @@ impl MidiDeviceProvider {
         MidiDeviceProvider
     }
 
+    pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {
+        let devices = self.list_devices()?;
+
+        Ok(devices.into_iter().find(|device| device.name == name))
+    }
+
     pub fn list_devices(&self) -> anyhow::Result<Vec<MidiDeviceIdentifier>> {
         let input_provider = MidiInput::new("mizer")?;
         let output_provider = MidiOutput::new("mizer")?;

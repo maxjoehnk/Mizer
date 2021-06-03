@@ -21,10 +21,20 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
+          args: --release --no-default-features
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linux-headless
+          path: target/release/mizer
+          if-no-files-found: error
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
           args: --release --all-features
       - uses: actions/upload-artifact@v2
         with:
-          name: linux-server
+          name: linux-full
           path: target/release/mizer
           if-no-files-found: error
   build-client-android:
@@ -37,7 +47,6 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: beta
-      - run: flutter config --enable-linux-desktop
       - run: flutter pub get
         working-directory: ui
       - run: flutter build apk

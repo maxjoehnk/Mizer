@@ -389,6 +389,7 @@ mod tests {
         fn details(&self) -> NodeDetails {
             NodeDetails {
                 name: "TestNode".into(),
+                preview_type: PreviewType::None,
             }
         }
 

@@ -10,6 +10,7 @@ impl PipelineNode for TestSink {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "TestSink".into(),
+            preview_type: PreviewType::None,
         }
     }
 

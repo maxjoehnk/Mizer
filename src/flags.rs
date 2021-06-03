@@ -21,4 +21,7 @@ pub struct Flags {
     pub disable_media_api: bool,
     #[structopt(long)]
     pub disable_grpc_api: bool,
+    #[cfg(feature = "ui")]
+    #[structopt(long)]
+    pub headless: bool,
 }

@@ -12,22 +12,37 @@ mod logger;
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
     let flags = init();
-    let runtime = build_tokio_runtime();
 
-    start_runtime(runtime, flags, None).unwrap();
-
-    Ok(())
+    run_headless(flags)
 }
 
 #[cfg(feature = "ui")]
 fn main() -> anyhow::Result<()> {
     let flags = init();
+    let headless = flags.headless;
 
+    if headless {
+        run_headless(flags)
+    }else {
+        run(flags)
+    }
+}
+
+#[cfg(feature = "ui")]
+fn run(flags: Flags) -> anyhow::Result<()> {
     let handlers = setup_runtime(flags)?;
 
     let handlers = handlers.recv()?;
 
     mizer_ui::run(handlers);
+
+    Ok(())
+}
+
+fn run_headless(flags: Flags) -> anyhow::Result<()> {
+    let runtime = build_tokio_runtime();
+
+    start_runtime(runtime, flags, None).unwrap();
 
     Ok(())
 }

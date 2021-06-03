@@ -28,6 +28,7 @@ pub enum ApiCommand {
     ),
     AddLink(NodeLink, flume::Sender<anyhow::Result<()>>),
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
+    GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>)
 }
 
 impl RuntimeApi {
@@ -115,6 +116,14 @@ impl RuntimeApi {
     pub fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::AddLink(link, tx))?;
+        let result = rx.recv()?;
+
+        result
+    }
+
+    pub fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::GetNodePreview(node, tx))?;
         let result = rx.recv()?;
 
         result

@@ -10,6 +10,7 @@ impl PipelineNode for ButtonNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "ButtonNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -53,6 +54,7 @@ impl ProcessingNode for ButtonNode {
             *state = value;
         }
         context.write_port("value", *state);
+        context.push_history_value(*state);
 
         Ok(())
     }

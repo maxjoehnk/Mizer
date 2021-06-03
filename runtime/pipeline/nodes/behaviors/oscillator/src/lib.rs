@@ -64,6 +64,7 @@ impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "OscillatorNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -98,6 +99,7 @@ impl ProcessingNode for OscillatorNode {
         let clock = context.clock();
         let value = self.tick(clock.frame);
         context.write_port("value", value);
+        context.push_history_value(value);
         Ok(())
     }
 

@@ -8,4 +8,8 @@ abstract class NodesApi {
   Future<void> linkNodes(NodeConnection connection);
 
   Future<void> writeControlValue({ String path, String port, double value });
+
+  Future<List<double>> getNodeHistory(String path);
+
+  Future<Map<String, List<double>>> getNodeHistories(List<String> paths);
 }

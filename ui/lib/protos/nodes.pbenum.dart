@@ -95,6 +95,27 @@ class Node_NodeType extends $pb.ProtobufEnum {
   const Node_NodeType._($core.int v, $core.String n) : super(v, n);
 }
 
+class Node_NodePreviewType extends $pb.ProtobufEnum {
+  static const Node_NodePreviewType History = Node_NodePreviewType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'History');
+  static const Node_NodePreviewType Waveform = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Waveform');
+  static const Node_NodePreviewType Multiple = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiple');
+  static const Node_NodePreviewType Texture = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Texture');
+  static const Node_NodePreviewType None = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
+
+  static const $core.List<Node_NodePreviewType> values = <Node_NodePreviewType> [
+    History,
+    Waveform,
+    Multiple,
+    Texture,
+    None,
+  ];
+
+  static final $core.Map<$core.int, Node_NodePreviewType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static Node_NodePreviewType valueOf($core.int value) => _byValue[value];
+
+  const Node_NodePreviewType._($core.int v, $core.String n) : super(v, n);
+}
+
 class OscillatorNodeConfig_OscillatorType extends $pb.ProtobufEnum {
   static const OscillatorNodeConfig_OscillatorType Square = OscillatorNodeConfig_OscillatorType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Square');
   static const OscillatorNodeConfig_OscillatorType Sine = OscillatorNodeConfig_OscillatorType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sine');

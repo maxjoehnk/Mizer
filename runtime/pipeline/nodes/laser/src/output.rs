@@ -21,6 +21,7 @@ impl PipelineNode for LaserNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "LaserNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

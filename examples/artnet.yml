@@ -28,16 +28,6 @@ nodes:
         x: 5
         y: 5
       scale: 1
-  - type: osc-input
-    path: /osc-input-0
-    config:
-      port: 7000
-      path: /1/fader1
-    designer:
-      position:
-        x: 5
-        y: 0
-      scale: 1
   - type: script
     path: /script-0
     config:

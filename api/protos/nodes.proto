@@ -64,34 +64,43 @@ message Node {
     IldaFile = 41;
   }
 
+  enum NodePreviewType {
+    History = 0;
+    Waveform = 1;
+    Multiple = 2;
+    Texture = 3;
+    None = 4;
+  }
+
   NodeType type = 1;
   string path = 2;
   repeated Port inputs = 3;
   repeated Port outputs = 4;
   NodeDesigner designer = 5;
+  NodePreviewType preview = 6;
   oneof NodeConfig {
-    OscillatorNodeConfig oscillatorConfig = 6;
-    ScriptingNodeConfig scriptingConfig = 7;
-    SequenceNodeConfig sequenceConfig = 8;
-    ClockNodeConfig clockConfig = 9;
-    FixtureNodeConfig fixtureConfig = 10;
-    InputNodeConfig buttonConfig = 11;
-    InputNodeConfig faderConfig = 12;
-    IldaFileNodeConfig ildaFileConfig = 15;
-    LaserNodeConfig laserConfig = 16;
-    PixelPatternNodeConfig pixelPatternConfig = 17;
-    PixelDmxNodeConfig pixelDmxConfig = 18;
-    DmxOutputNodeConfig dmxOutputConfig = 19;
-    MidiInputNodeConfig midiInputConfig = 20;
-    MidiOutputNodeConfig midiOutputConfig = 21;
-    OpcOutputNodeConfig opcOutputConfig = 22;
-    OscNodeConfig oscInputConfig = 23;
-    OscNodeConfig oscOutputConfig = 24;
-    VideoColorBalanceNodeConfig videoColorBalanceConfig = 25;
-    VideoEffectNodeConfig videoEffectConfig = 26;
-    VideoFileNodeConfig videoFileConfig = 27;
-    VideoOutputNodeConfig videoOutputConfig = 28;
-    VideoTransformNodeConfig videoTransformConfig = 29;
+    OscillatorNodeConfig oscillatorConfig = 10;
+    ScriptingNodeConfig scriptingConfig = 11;
+    SequenceNodeConfig sequenceConfig = 12;
+    ClockNodeConfig clockConfig = 13;
+    FixtureNodeConfig fixtureConfig = 14;
+    InputNodeConfig buttonConfig = 15;
+    InputNodeConfig faderConfig = 16;
+    IldaFileNodeConfig ildaFileConfig = 17;
+    LaserNodeConfig laserConfig = 18;
+    PixelPatternNodeConfig pixelPatternConfig = 19;
+    PixelDmxNodeConfig pixelDmxConfig = 20;
+    DmxOutputNodeConfig dmxOutputConfig = 21;
+    MidiInputNodeConfig midiInputConfig = 22;
+    MidiOutputNodeConfig midiOutputConfig = 23;
+    OpcOutputNodeConfig opcOutputConfig = 24;
+    OscNodeConfig oscInputConfig = 25;
+    OscNodeConfig oscOutputConfig = 26;
+    VideoColorBalanceNodeConfig videoColorBalanceConfig = 27;
+    VideoEffectNodeConfig videoEffectConfig = 28;
+    VideoFileNodeConfig videoFileConfig = 29;
+    VideoOutputNodeConfig videoOutputConfig = 30;
+    VideoTransformNodeConfig videoTransformConfig = 31;
   }
 }
 

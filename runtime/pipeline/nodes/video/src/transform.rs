@@ -17,6 +17,7 @@ impl PipelineNode for VideoTransformNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "VideoTransformNode".into(),
+            preview_type: PreviewType::Texture,
         }
     }
 

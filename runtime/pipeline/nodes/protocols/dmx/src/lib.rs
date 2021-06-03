@@ -26,6 +26,7 @@ impl PipelineNode for DmxOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "DmxOutputNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -68,6 +69,7 @@ impl ProcessingNode for DmxOutputNode {
         let output = output.unwrap();
 
         if let Some(value) = value {
+            context.push_history_value(value);
             let value = (value * u8::MAX as f64).min(255.).max(0.).floor() as u8;
             output.write_single(self.universe, self.channel, value);
         }
@@ -79,3 +81,4 @@ impl ProcessingNode for DmxOutputNode {
         Default::default()
     }
 }
+

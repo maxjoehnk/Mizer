@@ -43,6 +43,7 @@ impl PipelineNode for OpcOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "OpcOutputNode".into(),
+            preview_type: PreviewType::Texture,
         }
     }
 

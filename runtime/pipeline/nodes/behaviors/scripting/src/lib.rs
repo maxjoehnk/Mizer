@@ -35,6 +35,7 @@ impl PipelineNode for ScriptingNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "ScriptingNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

@@ -33,6 +33,7 @@ impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "PixelDmxNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

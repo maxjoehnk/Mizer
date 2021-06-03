@@ -1,5 +1,5 @@
 use crate::ports::{NodeReceivers, NodeSenders};
-use crate::PipelineContext;
+use crate::{PipelineContext, NodePreviewState};
 use mizer_clock::ClockFrame;
 use mizer_node::*;
 use mizer_ports::PortValue;
@@ -8,6 +8,8 @@ use mizer_protocol_laser::LaserFrame;
 use std::any::Any;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::cell::RefCell;
+use ringbuffer::RingBufferExt;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -32,6 +34,7 @@ pub struct PipelineWorker {
     senders: HashMap<NodePath, NodeSenders>,
     receivers: HashMap<NodePath, NodeReceivers>,
     dependencies: HashMap<NodePath, Vec<NodePath>>,
+    previews: HashMap<NodePath, NodePreviewState>,
 }
 
 impl PipelineWorker {
@@ -45,6 +48,14 @@ impl PipelineWorker {
         node: &T,
     ) {
         let state = node.create_state();
+        match mizer_node::ProcessingNode::details(node).preview_type {
+            PreviewType::History => {
+                self.previews.insert(path.clone(), NodePreviewState::History(Default::default()));
+            },
+            _ => {
+                self.previews.insert(path.clone(), NodePreviewState::None);
+            }
+        }
         let state: Box<S> = Box::new(state);
         self.states.insert(path.clone(), state);
         let mut receivers = NodeReceivers::default();
@@ -194,6 +205,7 @@ impl PipelineWorker {
             let context = PipelineContext {
                 frame,
                 injector,
+                preview: RefCell::new(self.previews.get_mut(path).unwrap()),
                 receivers: self.receivers.get(path),
                 senders: self.senders.get(path),
             };
@@ -218,6 +230,17 @@ impl PipelineWorker {
             }
         }else {
             log::warn!("trying to write value to unknown receiver for node {:?}", &path);
+        }
+    }
+
+    pub fn get_history(&self, path: &NodePath) -> Option<Vec<f64>> {
+        if let Some(preview) = self.previews.get(path) {
+            match preview {
+                NodePreviewState::History(vec) => Some(vec.to_vec()),
+                _ => None,
+            }
+        }else {
+            None
         }
     }
 }

@@ -73,4 +73,8 @@ impl NodesHandler {
 
         Ok(())
     }
+
+    pub fn get_node_history(&self, path: String) -> anyhow::Result<Vec<f64>> {
+        self.runtime.get_node_history(path.into())
+    }
 }

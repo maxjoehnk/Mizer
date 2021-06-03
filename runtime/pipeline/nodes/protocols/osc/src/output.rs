@@ -34,6 +34,7 @@ impl PipelineNode for OscOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "OscOutputNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -79,6 +80,7 @@ impl ProcessingNode for OscOutputNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>("number") {
+            context.push_history_value(value);
             state.send(OscPacket::Message(OscMessage {
                 addr: self.path.clone(),
                 args: vec![value.into()],

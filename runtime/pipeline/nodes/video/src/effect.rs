@@ -74,6 +74,7 @@ impl PipelineNode for VideoEffectNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "VideoEffectNode".into(),
+            preview_type: PreviewType::Texture,
         }
     }
 

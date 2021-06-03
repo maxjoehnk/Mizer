@@ -1,6 +1,6 @@
 use crate::models::nodes::*;
 use protobuf::SingularPtrField;
-use mizer_node::{NodeType, PortDirection, PortType, PortId, NodeLink, PortMetadata};
+use mizer_node::{NodeType, PortDirection, PortType, PortId, NodeLink, PortMetadata, PreviewType};
 use mizer_runtime::NodeDescriptor;
 
 impl From<mizer_nodes::Node> for Node_oneof_NodeConfig {
@@ -319,12 +319,14 @@ impl From<Node_NodeType> for NodeType {
 
 impl From<NodeDescriptor<'_>> for Node {
     fn from(descriptor: NodeDescriptor<'_>) -> Self {
+        let details = descriptor.node.value().details();
         let node_type = descriptor.node_type();
         let mut node = Node {
             path: descriptor.path.to_string(),
             field_type: node_type.into(),
             NodeConfig: Some(descriptor.downcast().into()),
             designer: SingularPtrField::some(descriptor.designer.into()),
+            preview: details.preview_type.into(),
             ..Default::default()
         };
         let (inputs, outputs) = descriptor
@@ -411,6 +413,18 @@ impl From<NodeConnection> for NodeLink {
             target: connection.targetNode.into(),
             target_port: connection.targetPort.unwrap().name.into(),
             local: true,
+        }
+    }
+}
+
+impl From<PreviewType> for Node_NodePreviewType {
+    fn from(preview: PreviewType) -> Self {
+        match preview {
+            PreviewType::History => Node_NodePreviewType::History,
+            PreviewType::Waveform => Node_NodePreviewType::Waveform,
+            PreviewType::Multiple => Node_NodePreviewType::Multiple,
+            PreviewType::Texture => Node_NodePreviewType::Texture,
+            PreviewType::None => Node_NodePreviewType::None,
         }
     }
 }

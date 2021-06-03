@@ -3,6 +3,7 @@ use flutter_engine::channel::{MethodCallHandler, MethodCall, Channel, MethodChan
 use flutter_engine::codec::STANDARD_CODEC;
 use mizer_api::models::*;
 use crate::plugin::channels::MethodCallExt;
+use std::collections::HashMap;
 
 #[derive(Clone)]
 pub struct NodesChannel {
@@ -39,6 +40,18 @@ impl MethodCallHandler for NodesChannel {
                     },
                     Err(err) => call.respond_error(err),
                 }
+            },
+            "getNodeHistory" => {
+                match self.get_node_history(call.args()) {
+                    Ok(history) => call.success(history),
+                    Err(err) => call.respond_error(err),
+                }
+            },
+            "getNodeHistories" => {
+                match self.get_node_histories(call.args()) {
+                    Ok(history) => call.success(history),
+                    Err(err) => call.respond_error(err),
+                }
             }
             _ => call.not_implemented()
         }
@@ -70,5 +83,17 @@ impl NodesChannel {
 
     fn write_control_value(&self, control: WriteControl) {
         self.handler.write_control_value(control).unwrap();
+    }
+
+    fn get_node_history(&self, path: String) -> anyhow::Result<Vec<f64>> {
+        self.handler.get_node_history(path)
+    }
+
+    fn get_node_histories(&self, paths: Vec<String>) -> anyhow::Result<HashMap<String, Vec<f64>>> {
+        let mut map = HashMap::new();
+        for path in paths {
+            map.insert(path.clone(), self.handler.get_node_history(path)?);
+        }
+        Ok(map)
     }
 }

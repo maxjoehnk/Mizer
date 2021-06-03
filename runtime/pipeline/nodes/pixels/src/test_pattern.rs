@@ -46,6 +46,7 @@ impl PipelineNode for PixelPatternGeneratorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "PixelPatternGeneratorNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

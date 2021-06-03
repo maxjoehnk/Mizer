@@ -6,6 +6,7 @@ import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/session.dart';
 
+import '../preview_handler.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
 import 'media.dart';
@@ -27,6 +28,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<MediaApi>(create: (context) => MediaPluginApi()),
         RepositoryProvider<NodesApi>(create: (context) => NodesPluginApi()),
         RepositoryProvider<SessionApi>(create: (context) => SessionPluginApi()),
+        RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );
   }

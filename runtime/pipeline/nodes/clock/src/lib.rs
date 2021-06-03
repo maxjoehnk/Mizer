@@ -27,6 +27,7 @@ impl PipelineNode for ClockNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "ClockNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

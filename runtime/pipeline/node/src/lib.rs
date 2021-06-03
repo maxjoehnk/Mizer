@@ -7,12 +7,14 @@ pub use self::context::*;
 pub use self::introspection::*;
 pub use self::path::*;
 pub use self::ports::*;
+pub use self::preview::*;
 
 mod context;
 mod path;
 mod ports;
 // TODO: pick better name
 mod introspection;
+mod preview;
 
 pub trait PipelineNode: Send + Sync + Any {
     fn details(&self) -> NodeDetails;

@@ -1,8 +1,10 @@
 use serde::{Deserialize, Serialize};
+use crate::PreviewType;
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct NodeDetails {
     pub name: String,
+    pub preview_type: PreviewType,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]

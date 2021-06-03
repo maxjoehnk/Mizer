@@ -5,12 +5,28 @@ use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
 use crate::ports::{NodeReceivers, NodeSenders};
+use ringbuffer::{ConstGenericRingBuffer, RingBufferWrite};
+use std::cell::RefCell;
 
 pub struct PipelineContext<'a> {
     pub(crate) frame: ClockFrame,
     pub(crate) senders: Option<&'a NodeSenders>,
     pub(crate) receivers: Option<&'a NodeReceivers>,
     pub(crate) injector: &'a Injector,
+    pub(crate) preview: RefCell<&'a mut NodePreviewState>,
+}
+
+pub enum NodePreviewState {
+    History(ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>),
+    None,
+}
+
+impl NodePreviewState {
+    fn push_history_value(&mut self, value: f64) {
+        if let Self::History(history) = self {
+            history.push(value);
+        }
+    }
 }
 
 impl<'a> NodeContext for PipelineContext<'a> {
@@ -64,5 +80,11 @@ impl<'a> NodeContext for PipelineContext<'a> {
 
     fn inject<T: 'static>(&self) -> Option<&T> {
         self.injector.get::<T>()
+    }
+}
+
+impl<'a> PreviewContext for PipelineContext<'a> {
+    fn push_history_value(&self, value: f64) {
+        self.preview.borrow_mut().push_history_value(value);
     }
 }

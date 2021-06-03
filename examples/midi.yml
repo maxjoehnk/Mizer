@@ -29,8 +29,8 @@ nodes:
       range: [0, 64]
     designer:
       position:
-        x: 15
-        y: 2
+        x: 10
+        y: 5
       scale: 1
 
   - type: midi-input
@@ -48,8 +48,7 @@ nodes:
   - type: dmx-output
     path: /dmx-output-1
     config:
-      channel: 0
-      universe: 2
+      channel: 1
     designer:
       position:
         x: 10

@@ -29,6 +29,7 @@ impl PipelineNode for FixtureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "FixtureNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

@@ -17,6 +17,7 @@ impl PipelineNode for VideoColorBalanceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "VideoColorBalanceNode".into(),
+            preview_type: PreviewType::Texture,
         }
     }
 

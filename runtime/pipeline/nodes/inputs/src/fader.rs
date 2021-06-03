@@ -12,6 +12,7 @@ impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "FaderNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -55,6 +56,7 @@ impl ProcessingNode for FaderNode {
             *state = value;
         }
         context.write_port("value", *state);
+        context.push_history_value(*state);
 
         Ok(())
     }
@@ -63,4 +65,3 @@ impl ProcessingNode for FaderNode {
         Default::default()
     }
 }
-

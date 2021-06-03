@@ -394,59 +394,60 @@ enum Node_NodeConfig {
 
 class Node extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, Node_NodeConfig> _Node_NodeConfigByTag = {
-    6 : Node_NodeConfig.oscillatorConfig,
-    7 : Node_NodeConfig.scriptingConfig,
-    8 : Node_NodeConfig.sequenceConfig,
-    9 : Node_NodeConfig.clockConfig,
-    10 : Node_NodeConfig.fixtureConfig,
-    11 : Node_NodeConfig.buttonConfig,
-    12 : Node_NodeConfig.faderConfig,
-    15 : Node_NodeConfig.ildaFileConfig,
-    16 : Node_NodeConfig.laserConfig,
-    17 : Node_NodeConfig.pixelPatternConfig,
-    18 : Node_NodeConfig.pixelDmxConfig,
-    19 : Node_NodeConfig.dmxOutputConfig,
-    20 : Node_NodeConfig.midiInputConfig,
-    21 : Node_NodeConfig.midiOutputConfig,
-    22 : Node_NodeConfig.opcOutputConfig,
-    23 : Node_NodeConfig.oscInputConfig,
-    24 : Node_NodeConfig.oscOutputConfig,
-    25 : Node_NodeConfig.videoColorBalanceConfig,
-    26 : Node_NodeConfig.videoEffectConfig,
-    27 : Node_NodeConfig.videoFileConfig,
-    28 : Node_NodeConfig.videoOutputConfig,
-    29 : Node_NodeConfig.videoTransformConfig,
+    10 : Node_NodeConfig.oscillatorConfig,
+    11 : Node_NodeConfig.scriptingConfig,
+    12 : Node_NodeConfig.sequenceConfig,
+    13 : Node_NodeConfig.clockConfig,
+    14 : Node_NodeConfig.fixtureConfig,
+    15 : Node_NodeConfig.buttonConfig,
+    16 : Node_NodeConfig.faderConfig,
+    17 : Node_NodeConfig.ildaFileConfig,
+    18 : Node_NodeConfig.laserConfig,
+    19 : Node_NodeConfig.pixelPatternConfig,
+    20 : Node_NodeConfig.pixelDmxConfig,
+    21 : Node_NodeConfig.dmxOutputConfig,
+    22 : Node_NodeConfig.midiInputConfig,
+    23 : Node_NodeConfig.midiOutputConfig,
+    24 : Node_NodeConfig.opcOutputConfig,
+    25 : Node_NodeConfig.oscInputConfig,
+    26 : Node_NodeConfig.oscOutputConfig,
+    27 : Node_NodeConfig.videoColorBalanceConfig,
+    28 : Node_NodeConfig.videoEffectConfig,
+    29 : Node_NodeConfig.videoFileConfig,
+    30 : Node_NodeConfig.videoOutputConfig,
+    31 : Node_NodeConfig.videoTransformConfig,
     0 : Node_NodeConfig.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Node', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [6, 7, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
     ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..pc<Port>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..pc<Port>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputs', $pb.PbFieldType.PM, subBuilder: Port.create)
     ..aOM<NodeDesigner>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'designer', subBuilder: NodeDesigner.create)
-    ..aOM<OscillatorNodeConfig>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
-    ..aOM<ScriptingNodeConfig>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
-    ..aOM<SequenceNodeConfig>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
-    ..aOM<ClockNodeConfig>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clockConfig', protoName: 'clockConfig', subBuilder: ClockNodeConfig.create)
-    ..aOM<FixtureNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureConfig', protoName: 'fixtureConfig', subBuilder: FixtureNodeConfig.create)
-    ..aOM<InputNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buttonConfig', protoName: 'buttonConfig', subBuilder: InputNodeConfig.create)
-    ..aOM<InputNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faderConfig', protoName: 'faderConfig', subBuilder: InputNodeConfig.create)
-    ..aOM<IldaFileNodeConfig>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ildaFileConfig', protoName: 'ildaFileConfig', subBuilder: IldaFileNodeConfig.create)
-    ..aOM<LaserNodeConfig>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'laserConfig', protoName: 'laserConfig', subBuilder: LaserNodeConfig.create)
-    ..aOM<PixelPatternNodeConfig>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelPatternConfig', protoName: 'pixelPatternConfig', subBuilder: PixelPatternNodeConfig.create)
-    ..aOM<PixelDmxNodeConfig>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelDmxConfig', protoName: 'pixelDmxConfig', subBuilder: PixelDmxNodeConfig.create)
-    ..aOM<DmxOutputNodeConfig>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutputConfig', protoName: 'dmxOutputConfig', subBuilder: DmxOutputNodeConfig.create)
-    ..aOM<MidiInputNodeConfig>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', protoName: 'midiInputConfig', subBuilder: MidiInputNodeConfig.create)
-    ..aOM<MidiOutputNodeConfig>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', protoName: 'midiOutputConfig', subBuilder: MidiOutputNodeConfig.create)
-    ..aOM<OpcOutputNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'opcOutputConfig', protoName: 'opcOutputConfig', subBuilder: OpcOutputNodeConfig.create)
-    ..aOM<OscNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', protoName: 'oscInputConfig', subBuilder: OscNodeConfig.create)
-    ..aOM<OscNodeConfig>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscOutputConfig', protoName: 'oscOutputConfig', subBuilder: OscNodeConfig.create)
-    ..aOM<VideoColorBalanceNodeConfig>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoColorBalanceConfig', protoName: 'videoColorBalanceConfig', subBuilder: VideoColorBalanceNodeConfig.create)
-    ..aOM<VideoEffectNodeConfig>(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoEffectConfig', protoName: 'videoEffectConfig', subBuilder: VideoEffectNodeConfig.create)
-    ..aOM<VideoFileNodeConfig>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoFileConfig', protoName: 'videoFileConfig', subBuilder: VideoFileNodeConfig.create)
-    ..aOM<VideoOutputNodeConfig>(28, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoOutputConfig', protoName: 'videoOutputConfig', subBuilder: VideoOutputNodeConfig.create)
-    ..aOM<VideoTransformNodeConfig>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoTransformConfig', protoName: 'videoTransformConfig', subBuilder: VideoTransformNodeConfig.create)
+    ..e<Node_NodePreviewType>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preview', $pb.PbFieldType.OE, defaultOrMaker: Node_NodePreviewType.History, valueOf: Node_NodePreviewType.valueOf, enumValues: Node_NodePreviewType.values)
+    ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
+    ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
+    ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
+    ..aOM<ClockNodeConfig>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clockConfig', protoName: 'clockConfig', subBuilder: ClockNodeConfig.create)
+    ..aOM<FixtureNodeConfig>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureConfig', protoName: 'fixtureConfig', subBuilder: FixtureNodeConfig.create)
+    ..aOM<InputNodeConfig>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buttonConfig', protoName: 'buttonConfig', subBuilder: InputNodeConfig.create)
+    ..aOM<InputNodeConfig>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faderConfig', protoName: 'faderConfig', subBuilder: InputNodeConfig.create)
+    ..aOM<IldaFileNodeConfig>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ildaFileConfig', protoName: 'ildaFileConfig', subBuilder: IldaFileNodeConfig.create)
+    ..aOM<LaserNodeConfig>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'laserConfig', protoName: 'laserConfig', subBuilder: LaserNodeConfig.create)
+    ..aOM<PixelPatternNodeConfig>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelPatternConfig', protoName: 'pixelPatternConfig', subBuilder: PixelPatternNodeConfig.create)
+    ..aOM<PixelDmxNodeConfig>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelDmxConfig', protoName: 'pixelDmxConfig', subBuilder: PixelDmxNodeConfig.create)
+    ..aOM<DmxOutputNodeConfig>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutputConfig', protoName: 'dmxOutputConfig', subBuilder: DmxOutputNodeConfig.create)
+    ..aOM<MidiInputNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', protoName: 'midiInputConfig', subBuilder: MidiInputNodeConfig.create)
+    ..aOM<MidiOutputNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', protoName: 'midiOutputConfig', subBuilder: MidiOutputNodeConfig.create)
+    ..aOM<OpcOutputNodeConfig>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'opcOutputConfig', protoName: 'opcOutputConfig', subBuilder: OpcOutputNodeConfig.create)
+    ..aOM<OscNodeConfig>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', protoName: 'oscInputConfig', subBuilder: OscNodeConfig.create)
+    ..aOM<OscNodeConfig>(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscOutputConfig', protoName: 'oscOutputConfig', subBuilder: OscNodeConfig.create)
+    ..aOM<VideoColorBalanceNodeConfig>(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoColorBalanceConfig', protoName: 'videoColorBalanceConfig', subBuilder: VideoColorBalanceNodeConfig.create)
+    ..aOM<VideoEffectNodeConfig>(28, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoEffectConfig', protoName: 'videoEffectConfig', subBuilder: VideoEffectNodeConfig.create)
+    ..aOM<VideoFileNodeConfig>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoFileConfig', protoName: 'videoFileConfig', subBuilder: VideoFileNodeConfig.create)
+    ..aOM<VideoOutputNodeConfig>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoOutputConfig', protoName: 'videoOutputConfig', subBuilder: VideoOutputNodeConfig.create)
+    ..aOM<VideoTransformNodeConfig>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoTransformConfig', protoName: 'videoTransformConfig', subBuilder: VideoTransformNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -457,6 +458,7 @@ class Node extends $pb.GeneratedMessage {
     $core.Iterable<Port> inputs,
     $core.Iterable<Port> outputs,
     NodeDesigner designer,
+    Node_NodePreviewType preview,
     OscillatorNodeConfig oscillatorConfig,
     ScriptingNodeConfig scriptingConfig,
     SequenceNodeConfig sequenceConfig,
@@ -495,6 +497,9 @@ class Node extends $pb.GeneratedMessage {
     }
     if (designer != null) {
       _result.designer = designer;
+    }
+    if (preview != null) {
+      _result.preview = preview;
     }
     if (oscillatorConfig != null) {
       _result.oscillatorConfig = oscillatorConfig;
@@ -624,246 +629,255 @@ class Node extends $pb.GeneratedMessage {
   NodeDesigner ensureDesigner() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  OscillatorNodeConfig get oscillatorConfig => $_getN(5);
+  Node_NodePreviewType get preview => $_getN(5);
   @$pb.TagNumber(6)
-  set oscillatorConfig(OscillatorNodeConfig v) { setField(6, v); }
+  set preview(Node_NodePreviewType v) { setField(6, v); }
   @$pb.TagNumber(6)
-  $core.bool hasOscillatorConfig() => $_has(5);
+  $core.bool hasPreview() => $_has(5);
   @$pb.TagNumber(6)
-  void clearOscillatorConfig() => clearField(6);
-  @$pb.TagNumber(6)
-  OscillatorNodeConfig ensureOscillatorConfig() => $_ensure(5);
-
-  @$pb.TagNumber(7)
-  ScriptingNodeConfig get scriptingConfig => $_getN(6);
-  @$pb.TagNumber(7)
-  set scriptingConfig(ScriptingNodeConfig v) { setField(7, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasScriptingConfig() => $_has(6);
-  @$pb.TagNumber(7)
-  void clearScriptingConfig() => clearField(7);
-  @$pb.TagNumber(7)
-  ScriptingNodeConfig ensureScriptingConfig() => $_ensure(6);
-
-  @$pb.TagNumber(8)
-  SequenceNodeConfig get sequenceConfig => $_getN(7);
-  @$pb.TagNumber(8)
-  set sequenceConfig(SequenceNodeConfig v) { setField(8, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasSequenceConfig() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearSequenceConfig() => clearField(8);
-  @$pb.TagNumber(8)
-  SequenceNodeConfig ensureSequenceConfig() => $_ensure(7);
-
-  @$pb.TagNumber(9)
-  ClockNodeConfig get clockConfig => $_getN(8);
-  @$pb.TagNumber(9)
-  set clockConfig(ClockNodeConfig v) { setField(9, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasClockConfig() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearClockConfig() => clearField(9);
-  @$pb.TagNumber(9)
-  ClockNodeConfig ensureClockConfig() => $_ensure(8);
+  void clearPreview() => clearField(6);
 
   @$pb.TagNumber(10)
-  FixtureNodeConfig get fixtureConfig => $_getN(9);
+  OscillatorNodeConfig get oscillatorConfig => $_getN(6);
   @$pb.TagNumber(10)
-  set fixtureConfig(FixtureNodeConfig v) { setField(10, v); }
+  set oscillatorConfig(OscillatorNodeConfig v) { setField(10, v); }
   @$pb.TagNumber(10)
-  $core.bool hasFixtureConfig() => $_has(9);
+  $core.bool hasOscillatorConfig() => $_has(6);
   @$pb.TagNumber(10)
-  void clearFixtureConfig() => clearField(10);
+  void clearOscillatorConfig() => clearField(10);
   @$pb.TagNumber(10)
-  FixtureNodeConfig ensureFixtureConfig() => $_ensure(9);
+  OscillatorNodeConfig ensureOscillatorConfig() => $_ensure(6);
 
   @$pb.TagNumber(11)
-  InputNodeConfig get buttonConfig => $_getN(10);
+  ScriptingNodeConfig get scriptingConfig => $_getN(7);
   @$pb.TagNumber(11)
-  set buttonConfig(InputNodeConfig v) { setField(11, v); }
+  set scriptingConfig(ScriptingNodeConfig v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasButtonConfig() => $_has(10);
+  $core.bool hasScriptingConfig() => $_has(7);
   @$pb.TagNumber(11)
-  void clearButtonConfig() => clearField(11);
+  void clearScriptingConfig() => clearField(11);
   @$pb.TagNumber(11)
-  InputNodeConfig ensureButtonConfig() => $_ensure(10);
+  ScriptingNodeConfig ensureScriptingConfig() => $_ensure(7);
 
   @$pb.TagNumber(12)
-  InputNodeConfig get faderConfig => $_getN(11);
+  SequenceNodeConfig get sequenceConfig => $_getN(8);
   @$pb.TagNumber(12)
-  set faderConfig(InputNodeConfig v) { setField(12, v); }
+  set sequenceConfig(SequenceNodeConfig v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasFaderConfig() => $_has(11);
+  $core.bool hasSequenceConfig() => $_has(8);
   @$pb.TagNumber(12)
-  void clearFaderConfig() => clearField(12);
+  void clearSequenceConfig() => clearField(12);
   @$pb.TagNumber(12)
-  InputNodeConfig ensureFaderConfig() => $_ensure(11);
+  SequenceNodeConfig ensureSequenceConfig() => $_ensure(8);
+
+  @$pb.TagNumber(13)
+  ClockNodeConfig get clockConfig => $_getN(9);
+  @$pb.TagNumber(13)
+  set clockConfig(ClockNodeConfig v) { setField(13, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasClockConfig() => $_has(9);
+  @$pb.TagNumber(13)
+  void clearClockConfig() => clearField(13);
+  @$pb.TagNumber(13)
+  ClockNodeConfig ensureClockConfig() => $_ensure(9);
+
+  @$pb.TagNumber(14)
+  FixtureNodeConfig get fixtureConfig => $_getN(10);
+  @$pb.TagNumber(14)
+  set fixtureConfig(FixtureNodeConfig v) { setField(14, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasFixtureConfig() => $_has(10);
+  @$pb.TagNumber(14)
+  void clearFixtureConfig() => clearField(14);
+  @$pb.TagNumber(14)
+  FixtureNodeConfig ensureFixtureConfig() => $_ensure(10);
 
   @$pb.TagNumber(15)
-  IldaFileNodeConfig get ildaFileConfig => $_getN(12);
+  InputNodeConfig get buttonConfig => $_getN(11);
   @$pb.TagNumber(15)
-  set ildaFileConfig(IldaFileNodeConfig v) { setField(15, v); }
+  set buttonConfig(InputNodeConfig v) { setField(15, v); }
   @$pb.TagNumber(15)
-  $core.bool hasIldaFileConfig() => $_has(12);
+  $core.bool hasButtonConfig() => $_has(11);
   @$pb.TagNumber(15)
-  void clearIldaFileConfig() => clearField(15);
+  void clearButtonConfig() => clearField(15);
   @$pb.TagNumber(15)
-  IldaFileNodeConfig ensureIldaFileConfig() => $_ensure(12);
+  InputNodeConfig ensureButtonConfig() => $_ensure(11);
 
   @$pb.TagNumber(16)
-  LaserNodeConfig get laserConfig => $_getN(13);
+  InputNodeConfig get faderConfig => $_getN(12);
   @$pb.TagNumber(16)
-  set laserConfig(LaserNodeConfig v) { setField(16, v); }
+  set faderConfig(InputNodeConfig v) { setField(16, v); }
   @$pb.TagNumber(16)
-  $core.bool hasLaserConfig() => $_has(13);
+  $core.bool hasFaderConfig() => $_has(12);
   @$pb.TagNumber(16)
-  void clearLaserConfig() => clearField(16);
+  void clearFaderConfig() => clearField(16);
   @$pb.TagNumber(16)
-  LaserNodeConfig ensureLaserConfig() => $_ensure(13);
+  InputNodeConfig ensureFaderConfig() => $_ensure(12);
 
   @$pb.TagNumber(17)
-  PixelPatternNodeConfig get pixelPatternConfig => $_getN(14);
+  IldaFileNodeConfig get ildaFileConfig => $_getN(13);
   @$pb.TagNumber(17)
-  set pixelPatternConfig(PixelPatternNodeConfig v) { setField(17, v); }
+  set ildaFileConfig(IldaFileNodeConfig v) { setField(17, v); }
   @$pb.TagNumber(17)
-  $core.bool hasPixelPatternConfig() => $_has(14);
+  $core.bool hasIldaFileConfig() => $_has(13);
   @$pb.TagNumber(17)
-  void clearPixelPatternConfig() => clearField(17);
+  void clearIldaFileConfig() => clearField(17);
   @$pb.TagNumber(17)
-  PixelPatternNodeConfig ensurePixelPatternConfig() => $_ensure(14);
+  IldaFileNodeConfig ensureIldaFileConfig() => $_ensure(13);
 
   @$pb.TagNumber(18)
-  PixelDmxNodeConfig get pixelDmxConfig => $_getN(15);
+  LaserNodeConfig get laserConfig => $_getN(14);
   @$pb.TagNumber(18)
-  set pixelDmxConfig(PixelDmxNodeConfig v) { setField(18, v); }
+  set laserConfig(LaserNodeConfig v) { setField(18, v); }
   @$pb.TagNumber(18)
-  $core.bool hasPixelDmxConfig() => $_has(15);
+  $core.bool hasLaserConfig() => $_has(14);
   @$pb.TagNumber(18)
-  void clearPixelDmxConfig() => clearField(18);
+  void clearLaserConfig() => clearField(18);
   @$pb.TagNumber(18)
-  PixelDmxNodeConfig ensurePixelDmxConfig() => $_ensure(15);
+  LaserNodeConfig ensureLaserConfig() => $_ensure(14);
 
   @$pb.TagNumber(19)
-  DmxOutputNodeConfig get dmxOutputConfig => $_getN(16);
+  PixelPatternNodeConfig get pixelPatternConfig => $_getN(15);
   @$pb.TagNumber(19)
-  set dmxOutputConfig(DmxOutputNodeConfig v) { setField(19, v); }
+  set pixelPatternConfig(PixelPatternNodeConfig v) { setField(19, v); }
   @$pb.TagNumber(19)
-  $core.bool hasDmxOutputConfig() => $_has(16);
+  $core.bool hasPixelPatternConfig() => $_has(15);
   @$pb.TagNumber(19)
-  void clearDmxOutputConfig() => clearField(19);
+  void clearPixelPatternConfig() => clearField(19);
   @$pb.TagNumber(19)
-  DmxOutputNodeConfig ensureDmxOutputConfig() => $_ensure(16);
+  PixelPatternNodeConfig ensurePixelPatternConfig() => $_ensure(15);
 
   @$pb.TagNumber(20)
-  MidiInputNodeConfig get midiInputConfig => $_getN(17);
+  PixelDmxNodeConfig get pixelDmxConfig => $_getN(16);
   @$pb.TagNumber(20)
-  set midiInputConfig(MidiInputNodeConfig v) { setField(20, v); }
+  set pixelDmxConfig(PixelDmxNodeConfig v) { setField(20, v); }
   @$pb.TagNumber(20)
-  $core.bool hasMidiInputConfig() => $_has(17);
+  $core.bool hasPixelDmxConfig() => $_has(16);
   @$pb.TagNumber(20)
-  void clearMidiInputConfig() => clearField(20);
+  void clearPixelDmxConfig() => clearField(20);
   @$pb.TagNumber(20)
-  MidiInputNodeConfig ensureMidiInputConfig() => $_ensure(17);
+  PixelDmxNodeConfig ensurePixelDmxConfig() => $_ensure(16);
 
   @$pb.TagNumber(21)
-  MidiOutputNodeConfig get midiOutputConfig => $_getN(18);
+  DmxOutputNodeConfig get dmxOutputConfig => $_getN(17);
   @$pb.TagNumber(21)
-  set midiOutputConfig(MidiOutputNodeConfig v) { setField(21, v); }
+  set dmxOutputConfig(DmxOutputNodeConfig v) { setField(21, v); }
   @$pb.TagNumber(21)
-  $core.bool hasMidiOutputConfig() => $_has(18);
+  $core.bool hasDmxOutputConfig() => $_has(17);
   @$pb.TagNumber(21)
-  void clearMidiOutputConfig() => clearField(21);
+  void clearDmxOutputConfig() => clearField(21);
   @$pb.TagNumber(21)
-  MidiOutputNodeConfig ensureMidiOutputConfig() => $_ensure(18);
+  DmxOutputNodeConfig ensureDmxOutputConfig() => $_ensure(17);
 
   @$pb.TagNumber(22)
-  OpcOutputNodeConfig get opcOutputConfig => $_getN(19);
+  MidiInputNodeConfig get midiInputConfig => $_getN(18);
   @$pb.TagNumber(22)
-  set opcOutputConfig(OpcOutputNodeConfig v) { setField(22, v); }
+  set midiInputConfig(MidiInputNodeConfig v) { setField(22, v); }
   @$pb.TagNumber(22)
-  $core.bool hasOpcOutputConfig() => $_has(19);
+  $core.bool hasMidiInputConfig() => $_has(18);
   @$pb.TagNumber(22)
-  void clearOpcOutputConfig() => clearField(22);
+  void clearMidiInputConfig() => clearField(22);
   @$pb.TagNumber(22)
-  OpcOutputNodeConfig ensureOpcOutputConfig() => $_ensure(19);
+  MidiInputNodeConfig ensureMidiInputConfig() => $_ensure(18);
 
   @$pb.TagNumber(23)
-  OscNodeConfig get oscInputConfig => $_getN(20);
+  MidiOutputNodeConfig get midiOutputConfig => $_getN(19);
   @$pb.TagNumber(23)
-  set oscInputConfig(OscNodeConfig v) { setField(23, v); }
+  set midiOutputConfig(MidiOutputNodeConfig v) { setField(23, v); }
   @$pb.TagNumber(23)
-  $core.bool hasOscInputConfig() => $_has(20);
+  $core.bool hasMidiOutputConfig() => $_has(19);
   @$pb.TagNumber(23)
-  void clearOscInputConfig() => clearField(23);
+  void clearMidiOutputConfig() => clearField(23);
   @$pb.TagNumber(23)
-  OscNodeConfig ensureOscInputConfig() => $_ensure(20);
+  MidiOutputNodeConfig ensureMidiOutputConfig() => $_ensure(19);
 
   @$pb.TagNumber(24)
-  OscNodeConfig get oscOutputConfig => $_getN(21);
+  OpcOutputNodeConfig get opcOutputConfig => $_getN(20);
   @$pb.TagNumber(24)
-  set oscOutputConfig(OscNodeConfig v) { setField(24, v); }
+  set opcOutputConfig(OpcOutputNodeConfig v) { setField(24, v); }
   @$pb.TagNumber(24)
-  $core.bool hasOscOutputConfig() => $_has(21);
+  $core.bool hasOpcOutputConfig() => $_has(20);
   @$pb.TagNumber(24)
-  void clearOscOutputConfig() => clearField(24);
+  void clearOpcOutputConfig() => clearField(24);
   @$pb.TagNumber(24)
-  OscNodeConfig ensureOscOutputConfig() => $_ensure(21);
+  OpcOutputNodeConfig ensureOpcOutputConfig() => $_ensure(20);
 
   @$pb.TagNumber(25)
-  VideoColorBalanceNodeConfig get videoColorBalanceConfig => $_getN(22);
+  OscNodeConfig get oscInputConfig => $_getN(21);
   @$pb.TagNumber(25)
-  set videoColorBalanceConfig(VideoColorBalanceNodeConfig v) { setField(25, v); }
+  set oscInputConfig(OscNodeConfig v) { setField(25, v); }
   @$pb.TagNumber(25)
-  $core.bool hasVideoColorBalanceConfig() => $_has(22);
+  $core.bool hasOscInputConfig() => $_has(21);
   @$pb.TagNumber(25)
-  void clearVideoColorBalanceConfig() => clearField(25);
+  void clearOscInputConfig() => clearField(25);
   @$pb.TagNumber(25)
-  VideoColorBalanceNodeConfig ensureVideoColorBalanceConfig() => $_ensure(22);
+  OscNodeConfig ensureOscInputConfig() => $_ensure(21);
 
   @$pb.TagNumber(26)
-  VideoEffectNodeConfig get videoEffectConfig => $_getN(23);
+  OscNodeConfig get oscOutputConfig => $_getN(22);
   @$pb.TagNumber(26)
-  set videoEffectConfig(VideoEffectNodeConfig v) { setField(26, v); }
+  set oscOutputConfig(OscNodeConfig v) { setField(26, v); }
   @$pb.TagNumber(26)
-  $core.bool hasVideoEffectConfig() => $_has(23);
+  $core.bool hasOscOutputConfig() => $_has(22);
   @$pb.TagNumber(26)
-  void clearVideoEffectConfig() => clearField(26);
+  void clearOscOutputConfig() => clearField(26);
   @$pb.TagNumber(26)
-  VideoEffectNodeConfig ensureVideoEffectConfig() => $_ensure(23);
+  OscNodeConfig ensureOscOutputConfig() => $_ensure(22);
 
   @$pb.TagNumber(27)
-  VideoFileNodeConfig get videoFileConfig => $_getN(24);
+  VideoColorBalanceNodeConfig get videoColorBalanceConfig => $_getN(23);
   @$pb.TagNumber(27)
-  set videoFileConfig(VideoFileNodeConfig v) { setField(27, v); }
+  set videoColorBalanceConfig(VideoColorBalanceNodeConfig v) { setField(27, v); }
   @$pb.TagNumber(27)
-  $core.bool hasVideoFileConfig() => $_has(24);
+  $core.bool hasVideoColorBalanceConfig() => $_has(23);
   @$pb.TagNumber(27)
-  void clearVideoFileConfig() => clearField(27);
+  void clearVideoColorBalanceConfig() => clearField(27);
   @$pb.TagNumber(27)
-  VideoFileNodeConfig ensureVideoFileConfig() => $_ensure(24);
+  VideoColorBalanceNodeConfig ensureVideoColorBalanceConfig() => $_ensure(23);
 
   @$pb.TagNumber(28)
-  VideoOutputNodeConfig get videoOutputConfig => $_getN(25);
+  VideoEffectNodeConfig get videoEffectConfig => $_getN(24);
   @$pb.TagNumber(28)
-  set videoOutputConfig(VideoOutputNodeConfig v) { setField(28, v); }
+  set videoEffectConfig(VideoEffectNodeConfig v) { setField(28, v); }
   @$pb.TagNumber(28)
-  $core.bool hasVideoOutputConfig() => $_has(25);
+  $core.bool hasVideoEffectConfig() => $_has(24);
   @$pb.TagNumber(28)
-  void clearVideoOutputConfig() => clearField(28);
+  void clearVideoEffectConfig() => clearField(28);
   @$pb.TagNumber(28)
-  VideoOutputNodeConfig ensureVideoOutputConfig() => $_ensure(25);
+  VideoEffectNodeConfig ensureVideoEffectConfig() => $_ensure(24);
 
   @$pb.TagNumber(29)
-  VideoTransformNodeConfig get videoTransformConfig => $_getN(26);
+  VideoFileNodeConfig get videoFileConfig => $_getN(25);
   @$pb.TagNumber(29)
-  set videoTransformConfig(VideoTransformNodeConfig v) { setField(29, v); }
+  set videoFileConfig(VideoFileNodeConfig v) { setField(29, v); }
   @$pb.TagNumber(29)
-  $core.bool hasVideoTransformConfig() => $_has(26);
+  $core.bool hasVideoFileConfig() => $_has(25);
   @$pb.TagNumber(29)
-  void clearVideoTransformConfig() => clearField(29);
+  void clearVideoFileConfig() => clearField(29);
   @$pb.TagNumber(29)
-  VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(26);
+  VideoFileNodeConfig ensureVideoFileConfig() => $_ensure(25);
+
+  @$pb.TagNumber(30)
+  VideoOutputNodeConfig get videoOutputConfig => $_getN(26);
+  @$pb.TagNumber(30)
+  set videoOutputConfig(VideoOutputNodeConfig v) { setField(30, v); }
+  @$pb.TagNumber(30)
+  $core.bool hasVideoOutputConfig() => $_has(26);
+  @$pb.TagNumber(30)
+  void clearVideoOutputConfig() => clearField(30);
+  @$pb.TagNumber(30)
+  VideoOutputNodeConfig ensureVideoOutputConfig() => $_ensure(26);
+
+  @$pb.TagNumber(31)
+  VideoTransformNodeConfig get videoTransformConfig => $_getN(27);
+  @$pb.TagNumber(31)
+  set videoTransformConfig(VideoTransformNodeConfig v) { setField(31, v); }
+  @$pb.TagNumber(31)
+  $core.bool hasVideoTransformConfig() => $_has(27);
+  @$pb.TagNumber(31)
+  void clearVideoTransformConfig() => clearField(31);
+  @$pb.TagNumber(31)
+  VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(27);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {

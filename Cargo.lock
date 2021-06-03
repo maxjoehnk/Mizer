@@ -133,6 +133,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "afddf7f520a80dbf76e6f50a35bca42a2331ef227a28b3b6dc5c2e2338d114b1"
 
 [[package]]
+name = "array-init"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6945cc5422176fc5e602e590c2878d2c2acd9a4fe20a4baa7c28022521698ec6"
+
+[[package]]
 name = "arrayref"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3031,6 +3037,7 @@ dependencies = [
  "mizer-project-files",
  "mizer-protocol-laser",
  "mizer-video-nodes",
+ "ringbuffer",
 ]
 
 [[package]]
@@ -4092,6 +4099,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "ringbuffer"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d32014caabacedc94e2a41552987d3edd63ad09a1d2f94cb91c183abd43288a3"
+dependencies = [
+ "array-init",
 ]
 
 [[package]]

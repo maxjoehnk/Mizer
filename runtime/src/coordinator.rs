@@ -298,6 +298,13 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
                     sender.send(result).expect("api command sender disconnected");
                 }
+                Ok(ApiCommand::GetNodePreview(path, sender)) => {
+                    if let Some(history) = self.pipeline.get_history(&path) {
+                        sender.send(Ok(history)).expect("api command sender disconnected");
+                    }else {
+                        sender.send(Err(anyhow::anyhow!("No Preview for given node"))).expect("api command sender disconnected");
+                    }
+                }
                 Err(flume::TryRecvError::Empty) => break,
                 Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
             }

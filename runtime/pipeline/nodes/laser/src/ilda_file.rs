@@ -18,6 +18,7 @@ impl PipelineNode for IldaFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "IldaFileNode".into(),
+            preview_type: PreviewType::None,
         }
     }
 

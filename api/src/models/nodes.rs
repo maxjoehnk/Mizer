@@ -1284,6 +1284,7 @@ pub struct Node {
     pub inputs: ::protobuf::RepeatedField<Port>,
     pub outputs: ::protobuf::RepeatedField<Port>,
     pub designer: ::protobuf::SingularPtrField<NodeDesigner>,
+    pub preview: Node_NodePreviewType,
     // message oneof groups
     pub NodeConfig: ::std::option::Option<Node_oneof_NodeConfig>,
     // special fields
@@ -1455,7 +1456,22 @@ impl Node {
         self.designer.take().unwrap_or_else(|| NodeDesigner::new())
     }
 
-    // .mizer.OscillatorNodeConfig oscillatorConfig = 6;
+    // .mizer.Node.NodePreviewType preview = 6;
+
+
+    pub fn get_preview(&self) -> Node_NodePreviewType {
+        self.preview
+    }
+    pub fn clear_preview(&mut self) {
+        self.preview = Node_NodePreviewType::History;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_preview(&mut self, v: Node_NodePreviewType) {
+        self.preview = v;
+    }
+
+    // .mizer.OscillatorNodeConfig oscillatorConfig = 10;
 
 
     pub fn get_oscillatorConfig(&self) -> &OscillatorNodeConfig {
@@ -1504,7 +1520,7 @@ impl Node {
         }
     }
 
-    // .mizer.ScriptingNodeConfig scriptingConfig = 7;
+    // .mizer.ScriptingNodeConfig scriptingConfig = 11;
 
 
     pub fn get_scriptingConfig(&self) -> &ScriptingNodeConfig {
@@ -1553,7 +1569,7 @@ impl Node {
         }
     }
 
-    // .mizer.SequenceNodeConfig sequenceConfig = 8;
+    // .mizer.SequenceNodeConfig sequenceConfig = 12;
 
 
     pub fn get_sequenceConfig(&self) -> &SequenceNodeConfig {
@@ -1602,7 +1618,7 @@ impl Node {
         }
     }
 
-    // .mizer.ClockNodeConfig clockConfig = 9;
+    // .mizer.ClockNodeConfig clockConfig = 13;
 
 
     pub fn get_clockConfig(&self) -> &ClockNodeConfig {
@@ -1651,7 +1667,7 @@ impl Node {
         }
     }
 
-    // .mizer.FixtureNodeConfig fixtureConfig = 10;
+    // .mizer.FixtureNodeConfig fixtureConfig = 14;
 
 
     pub fn get_fixtureConfig(&self) -> &FixtureNodeConfig {
@@ -1700,7 +1716,7 @@ impl Node {
         }
     }
 
-    // .mizer.InputNodeConfig buttonConfig = 11;
+    // .mizer.InputNodeConfig buttonConfig = 15;
 
 
     pub fn get_buttonConfig(&self) -> &InputNodeConfig {
@@ -1749,7 +1765,7 @@ impl Node {
         }
     }
 
-    // .mizer.InputNodeConfig faderConfig = 12;
+    // .mizer.InputNodeConfig faderConfig = 16;
 
 
     pub fn get_faderConfig(&self) -> &InputNodeConfig {
@@ -1798,7 +1814,7 @@ impl Node {
         }
     }
 
-    // .mizer.IldaFileNodeConfig ildaFileConfig = 15;
+    // .mizer.IldaFileNodeConfig ildaFileConfig = 17;
 
 
     pub fn get_ildaFileConfig(&self) -> &IldaFileNodeConfig {
@@ -1847,7 +1863,7 @@ impl Node {
         }
     }
 
-    // .mizer.LaserNodeConfig laserConfig = 16;
+    // .mizer.LaserNodeConfig laserConfig = 18;
 
 
     pub fn get_laserConfig(&self) -> &LaserNodeConfig {
@@ -1896,7 +1912,7 @@ impl Node {
         }
     }
 
-    // .mizer.PixelPatternNodeConfig pixelPatternConfig = 17;
+    // .mizer.PixelPatternNodeConfig pixelPatternConfig = 19;
 
 
     pub fn get_pixelPatternConfig(&self) -> &PixelPatternNodeConfig {
@@ -1945,7 +1961,7 @@ impl Node {
         }
     }
 
-    // .mizer.PixelDmxNodeConfig pixelDmxConfig = 18;
+    // .mizer.PixelDmxNodeConfig pixelDmxConfig = 20;
 
 
     pub fn get_pixelDmxConfig(&self) -> &PixelDmxNodeConfig {
@@ -1994,7 +2010,7 @@ impl Node {
         }
     }
 
-    // .mizer.DmxOutputNodeConfig dmxOutputConfig = 19;
+    // .mizer.DmxOutputNodeConfig dmxOutputConfig = 21;
 
 
     pub fn get_dmxOutputConfig(&self) -> &DmxOutputNodeConfig {
@@ -2043,7 +2059,7 @@ impl Node {
         }
     }
 
-    // .mizer.MidiInputNodeConfig midiInputConfig = 20;
+    // .mizer.MidiInputNodeConfig midiInputConfig = 22;
 
 
     pub fn get_midiInputConfig(&self) -> &MidiInputNodeConfig {
@@ -2092,7 +2108,7 @@ impl Node {
         }
     }
 
-    // .mizer.MidiOutputNodeConfig midiOutputConfig = 21;
+    // .mizer.MidiOutputNodeConfig midiOutputConfig = 23;
 
 
     pub fn get_midiOutputConfig(&self) -> &MidiOutputNodeConfig {
@@ -2141,7 +2157,7 @@ impl Node {
         }
     }
 
-    // .mizer.OpcOutputNodeConfig opcOutputConfig = 22;
+    // .mizer.OpcOutputNodeConfig opcOutputConfig = 24;
 
 
     pub fn get_opcOutputConfig(&self) -> &OpcOutputNodeConfig {
@@ -2190,7 +2206,7 @@ impl Node {
         }
     }
 
-    // .mizer.OscNodeConfig oscInputConfig = 23;
+    // .mizer.OscNodeConfig oscInputConfig = 25;
 
 
     pub fn get_oscInputConfig(&self) -> &OscNodeConfig {
@@ -2239,7 +2255,7 @@ impl Node {
         }
     }
 
-    // .mizer.OscNodeConfig oscOutputConfig = 24;
+    // .mizer.OscNodeConfig oscOutputConfig = 26;
 
 
     pub fn get_oscOutputConfig(&self) -> &OscNodeConfig {
@@ -2288,7 +2304,7 @@ impl Node {
         }
     }
 
-    // .mizer.VideoColorBalanceNodeConfig videoColorBalanceConfig = 25;
+    // .mizer.VideoColorBalanceNodeConfig videoColorBalanceConfig = 27;
 
 
     pub fn get_videoColorBalanceConfig(&self) -> &VideoColorBalanceNodeConfig {
@@ -2337,7 +2353,7 @@ impl Node {
         }
     }
 
-    // .mizer.VideoEffectNodeConfig videoEffectConfig = 26;
+    // .mizer.VideoEffectNodeConfig videoEffectConfig = 28;
 
 
     pub fn get_videoEffectConfig(&self) -> &VideoEffectNodeConfig {
@@ -2386,7 +2402,7 @@ impl Node {
         }
     }
 
-    // .mizer.VideoFileNodeConfig videoFileConfig = 27;
+    // .mizer.VideoFileNodeConfig videoFileConfig = 29;
 
 
     pub fn get_videoFileConfig(&self) -> &VideoFileNodeConfig {
@@ -2435,7 +2451,7 @@ impl Node {
         }
     }
 
-    // .mizer.VideoOutputNodeConfig videoOutputConfig = 28;
+    // .mizer.VideoOutputNodeConfig videoOutputConfig = 30;
 
 
     pub fn get_videoOutputConfig(&self) -> &VideoOutputNodeConfig {
@@ -2484,7 +2500,7 @@ impl Node {
         }
     }
 
-    // .mizer.VideoTransformNodeConfig videoTransformConfig = 29;
+    // .mizer.VideoTransformNodeConfig videoTransformConfig = 31;
 
 
     pub fn get_videoTransformConfig(&self) -> &VideoTransformNodeConfig {
@@ -2684,132 +2700,135 @@ impl ::protobuf::Message for Node {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.designer)?;
                 },
                 6 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(is.read_message()?));
-                },
-                7 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(is.read_message()?));
-                },
-                8 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(is.read_message()?));
-                },
-                9 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(is.read_message()?));
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.preview, 6, &mut self.unknown_fields)?
                 },
                 10 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(is.read_message()?));
                 },
                 11 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(is.read_message()?));
                 },
                 12 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(is.read_message()?));
+                },
+                13 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(is.read_message()?));
+                },
+                14 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(is.read_message()?));
                 },
                 15 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(is.read_message()?));
                 },
                 16 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(is.read_message()?));
                 },
                 17 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(is.read_message()?));
                 },
                 18 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(is.read_message()?));
                 },
                 19 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(is.read_message()?));
                 },
                 20 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(is.read_message()?));
                 },
                 21 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(is.read_message()?));
                 },
                 22 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(is.read_message()?));
                 },
                 23 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(is.read_message()?));
                 },
                 24 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(is.read_message()?));
                 },
                 25 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(is.read_message()?));
                 },
                 26 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(is.read_message()?));
                 },
                 27 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(is.read_message()?));
                 },
                 28 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(is.read_message()?));
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(is.read_message()?));
                 },
                 29 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(is.read_message()?));
+                },
+                30 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(is.read_message()?));
+                },
+                31 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
@@ -2845,6 +2864,9 @@ impl ::protobuf::Message for Node {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.preview != Node_NodePreviewType::History {
+            my_size += ::protobuf::rt::enum_size(6, self.preview);
+        }
         if let ::std::option::Option::Some(ref v) = self.NodeConfig {
             match v {
                 &Node_oneof_NodeConfig::oscillatorConfig(ref v) => {
@@ -2873,11 +2895,11 @@ impl ::protobuf::Message for Node {
                 },
                 &Node_oneof_NodeConfig::faderConfig(ref v) => {
                     let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &Node_oneof_NodeConfig::ildaFileConfig(ref v) => {
                     let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &Node_oneof_NodeConfig::laserConfig(ref v) => {
                     let len = v.compute_size();
@@ -2964,115 +2986,118 @@ impl ::protobuf::Message for Node {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        if self.preview != Node_NodePreviewType::History {
+            os.write_enum(6, ::protobuf::ProtobufEnum::value(&self.preview))?;
+        }
         if let ::std::option::Option::Some(ref v) = self.NodeConfig {
             match v {
                 &Node_oneof_NodeConfig::oscillatorConfig(ref v) => {
-                    os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::scriptingConfig(ref v) => {
-                    os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::sequenceConfig(ref v) => {
-                    os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::clockConfig(ref v) => {
-                    os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::fixtureConfig(ref v) => {
                     os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::buttonConfig(ref v) => {
+                &Node_oneof_NodeConfig::scriptingConfig(ref v) => {
                     os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::faderConfig(ref v) => {
+                &Node_oneof_NodeConfig::sequenceConfig(ref v) => {
                     os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::ildaFileConfig(ref v) => {
+                &Node_oneof_NodeConfig::clockConfig(ref v) => {
+                    os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Node_oneof_NodeConfig::fixtureConfig(ref v) => {
+                    os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Node_oneof_NodeConfig::buttonConfig(ref v) => {
                     os.write_tag(15, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::laserConfig(ref v) => {
+                &Node_oneof_NodeConfig::faderConfig(ref v) => {
                     os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::pixelPatternConfig(ref v) => {
+                &Node_oneof_NodeConfig::ildaFileConfig(ref v) => {
                     os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::pixelDmxConfig(ref v) => {
+                &Node_oneof_NodeConfig::laserConfig(ref v) => {
                     os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::dmxOutputConfig(ref v) => {
+                &Node_oneof_NodeConfig::pixelPatternConfig(ref v) => {
                     os.write_tag(19, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::midiInputConfig(ref v) => {
+                &Node_oneof_NodeConfig::pixelDmxConfig(ref v) => {
                     os.write_tag(20, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::midiOutputConfig(ref v) => {
+                &Node_oneof_NodeConfig::dmxOutputConfig(ref v) => {
                     os.write_tag(21, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::opcOutputConfig(ref v) => {
+                &Node_oneof_NodeConfig::midiInputConfig(ref v) => {
                     os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::oscInputConfig(ref v) => {
+                &Node_oneof_NodeConfig::midiOutputConfig(ref v) => {
                     os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::oscOutputConfig(ref v) => {
+                &Node_oneof_NodeConfig::opcOutputConfig(ref v) => {
                     os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::videoColorBalanceConfig(ref v) => {
+                &Node_oneof_NodeConfig::oscInputConfig(ref v) => {
                     os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::videoEffectConfig(ref v) => {
+                &Node_oneof_NodeConfig::oscOutputConfig(ref v) => {
                     os.write_tag(26, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::videoFileConfig(ref v) => {
+                &Node_oneof_NodeConfig::videoColorBalanceConfig(ref v) => {
                     os.write_tag(27, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::videoOutputConfig(ref v) => {
+                &Node_oneof_NodeConfig::videoEffectConfig(ref v) => {
                     os.write_tag(28, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &Node_oneof_NodeConfig::videoTransformConfig(ref v) => {
+                &Node_oneof_NodeConfig::videoFileConfig(ref v) => {
                     os.write_tag(29, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Node_oneof_NodeConfig::videoOutputConfig(ref v) => {
+                    os.write_tag(30, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Node_oneof_NodeConfig::videoTransformConfig(ref v) => {
+                    os.write_tag(31, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -3140,6 +3165,11 @@ impl ::protobuf::Message for Node {
                 "designer",
                 |m: &Node| { &m.designer },
                 |m: &mut Node| { &mut m.designer },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Node_NodePreviewType>>(
+                "preview",
+                |m: &Node| { &m.preview },
+                |m: &mut Node| { &mut m.preview },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscillatorNodeConfig>(
                 "oscillatorConfig",
@@ -3272,6 +3302,7 @@ impl ::protobuf::Clear for Node {
         self.inputs.clear();
         self.outputs.clear();
         self.designer.clear();
+        self.preview = Node_NodePreviewType::History;
         self.NodeConfig = ::std::option::Option::None;
         self.NodeConfig = ::std::option::Option::None;
         self.NodeConfig = ::std::option::Option::None;
@@ -3416,6 +3447,66 @@ impl ::std::default::Default for Node_NodeType {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Node_NodeType {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub enum Node_NodePreviewType {
+    History = 0,
+    Waveform = 1,
+    Multiple = 2,
+    Texture = 3,
+    None = 4,
+}
+
+impl ::protobuf::ProtobufEnum for Node_NodePreviewType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<Node_NodePreviewType> {
+        match value {
+            0 => ::std::option::Option::Some(Node_NodePreviewType::History),
+            1 => ::std::option::Option::Some(Node_NodePreviewType::Waveform),
+            2 => ::std::option::Option::Some(Node_NodePreviewType::Multiple),
+            3 => ::std::option::Option::Some(Node_NodePreviewType::Texture),
+            4 => ::std::option::Option::Some(Node_NodePreviewType::None),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [Node_NodePreviewType] = &[
+            Node_NodePreviewType::History,
+            Node_NodePreviewType::Waveform,
+            Node_NodePreviewType::Multiple,
+            Node_NodePreviewType::Texture,
+            Node_NodePreviewType::None,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<Node_NodePreviewType>("Node.NodePreviewType", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for Node_NodePreviewType {
+}
+
+impl ::std::default::Default for Node_NodePreviewType {
+    fn default() -> Self {
+        Node_NodePreviewType::History
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Node_NodePreviewType {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
@@ -7880,101 +7971,104 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     argetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\n\
     sourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08p\
     rotocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\
-    \xcd\x10\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
+    \xd7\x11\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
     odeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\
     \x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07out\
     puts\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12/\n\x08designer\
-    \x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\x12I\n\x10osc\
-    illatorConfig\x18\x06\x20\x01(\x0b2\x1b.mizer.OscillatorNodeConfigH\0R\
-    \x10oscillatorConfig\x12F\n\x0fscriptingConfig\x18\x07\x20\x01(\x0b2\x1a\
-    .mizer.ScriptingNodeConfigH\0R\x0fscriptingConfig\x12C\n\x0esequenceConf\
-    ig\x18\x08\x20\x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0esequenceCon\
-    fig\x12:\n\x0bclockConfig\x18\t\x20\x01(\x0b2\x16.mizer.ClockNodeConfigH\
-    \0R\x0bclockConfig\x12@\n\rfixtureConfig\x18\n\x20\x01(\x0b2\x18.mizer.F\
-    ixtureNodeConfigH\0R\rfixtureConfig\x12<\n\x0cbuttonConfig\x18\x0b\x20\
-    \x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0cbuttonConfig\x12:\n\x0bfader\
-    Config\x18\x0c\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0bfaderConfi\
-    g\x12C\n\x0eildaFileConfig\x18\x0f\x20\x01(\x0b2\x19.mizer.IldaFileNodeC\
-    onfigH\0R\x0eildaFileConfig\x12:\n\x0blaserConfig\x18\x10\x20\x01(\x0b2\
-    \x16.mizer.LaserNodeConfigH\0R\x0blaserConfig\x12O\n\x12pixelPatternConf\
-    ig\x18\x11\x20\x01(\x0b2\x1d.mizer.PixelPatternNodeConfigH\0R\x12pixelPa\
-    tternConfig\x12C\n\x0epixelDmxConfig\x18\x12\x20\x01(\x0b2\x19.mizer.Pix\
-    elDmxNodeConfigH\0R\x0epixelDmxConfig\x12F\n\x0fdmxOutputConfig\x18\x13\
-    \x20\x01(\x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12F\
-    \n\x0fmidiInputConfig\x18\x14\x20\x01(\x0b2\x1a.mizer.MidiInputNodeConfi\
-    gH\0R\x0fmidiInputConfig\x12I\n\x10midiOutputConfig\x18\x15\x20\x01(\x0b\
-    2\x1b.mizer.MidiOutputNodeConfigH\0R\x10midiOutputConfig\x12F\n\x0fopcOu\
-    tputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer.OpcOutputNodeConfigH\0R\x0fop\
-    cOutputConfig\x12>\n\x0eoscInputConfig\x18\x17\x20\x01(\x0b2\x14.mizer.O\
-    scNodeConfigH\0R\x0eoscInputConfig\x12@\n\x0foscOutputConfig\x18\x18\x20\
-    \x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0foscOutputConfig\x12^\n\x17vide\
-    oColorBalanceConfig\x18\x19\x20\x01(\x0b2\".mizer.VideoColorBalanceNodeC\
-    onfigH\0R\x17videoColorBalanceConfig\x12L\n\x11videoEffectConfig\x18\x1a\
-    \x20\x01(\x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\x11videoEffectConfig\
-    \x12F\n\x0fvideoFileConfig\x18\x1b\x20\x01(\x0b2\x1a.mizer.VideoFileNode\
-    ConfigH\0R\x0fvideoFileConfig\x12L\n\x11videoOutputConfig\x18\x1c\x20\
-    \x01(\x0b2\x1c.mizer.VideoOutputNodeConfigH\0R\x11videoOutputConfig\x12U\
-    \n\x14videoTransformConfig\x18\x1d\x20\x01(\x0b2\x1f.mizer.VideoTransfor\
-    mNodeConfigH\0R\x14videoTransformConfig\"\xd4\x02\n\x08NodeType\x12\t\n\
-    \x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\
-    \x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0b\n\x07Fixture\
-    \x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\r\n\tDmxOutput\x10\x0b\x12\
-    \x0c\n\x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMidiInput\
-    \x10\x0e\x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\x12\
-    \x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\
-    \x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\
-    \x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOp\
-    cOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)B\x0c\n\
-    \nNodeConfig\"\x81\x02\n\x14OscillatorNodeConfig\x12>\n\x04type\x18\x01\
-    \x20\x01(\x0e2*.mizer.OscillatorNodeConfig.OscillatorTypeR\x04type\x12\
-    \x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\
-    \x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\
-    \x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\
-    \x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06Squa\
-    re\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Saw\x10\x02\x12\x0c\n\
-    \x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\x16\n\x06script\x18\
-    \x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12SequenceNodeConfig\x12<\n\x05s\
-    teps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeConfig.SequenceStepR\x05st\
-    eps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04ti\
-    ck\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\
-    \x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockNodeConfig\x12\x14\n\x05spee\
-    d\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\x1d\n\nfi\
-    xture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInputNodeConfig\"(\n\
-    \x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\".\
-    \n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08device\
-    Id\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\x07pattern\x18\x01\x20\
-    \x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\x07pattern\"'\n\x07Pat\
-    tern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08RgbSnake\x10\x01\"\x81\x01\
-    \n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05wid\
-    th\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\x12%\n\x0estart_u\
-    niverse\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\x06output\x18\x04\
-    \x20\x01(\tR\x06output\"c\n\x13DmxOutputNodeConfig\x12\x16\n\x06output\
-    \x18\x01\x20\x01(\tR\x06output\x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\
-    \x08universe\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\x07channel\"\x15\n\
-    \x13MidiInputNodeConfig\"\x16\n\x14MidiOutputNodeConfig\"k\n\x13OpcOutpu\
-    tNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04p\
-    ort\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\
-    \x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06height\"K\n\rOscN\
-    odeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04por\
-    t\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04p\
-    ath\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeCon\
-    fig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\
-    \x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeC\
-    onfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\
-    \x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08po\
-    sition\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\
-    \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04nam\
-    e\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\
-    \x16.mizer.ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\
-    \x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\
-    \x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\
-    \x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\
-    \x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082\xe9\x01\n\x08NodesApi\x12\
-    /\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\
-    \n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\
-    \x07AddLink\x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\
-    \0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.\
-    WriteResponse\"\0b\x06proto3\
+    \x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\x125\n\x07pre\
+    view\x18\x06\x20\x01(\x0e2\x1b.mizer.Node.NodePreviewTypeR\x07preview\
+    \x12I\n\x10oscillatorConfig\x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNode\
+    ConfigH\0R\x10oscillatorConfig\x12F\n\x0fscriptingConfig\x18\x0b\x20\x01\
+    (\x0b2\x1a.mizer.ScriptingNodeConfigH\0R\x0fscriptingConfig\x12C\n\x0ese\
+    quenceConfig\x18\x0c\x20\x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0es\
+    equenceConfig\x12:\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x16.mizer.ClockN\
+    odeConfigH\0R\x0bclockConfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\
+    \x18.mizer.FixtureNodeConfigH\0R\rfixtureConfig\x12<\n\x0cbuttonConfig\
+    \x18\x0f\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0cbuttonConfig\x12\
+    :\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\
+    \x0bfaderConfig\x12C\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b2\x19.mizer\
+    .IldaFileNodeConfigH\0R\x0eildaFileConfig\x12:\n\x0blaserConfig\x18\x12\
+    \x20\x01(\x0b2\x16.mizer.LaserNodeConfigH\0R\x0blaserConfig\x12O\n\x12pi\
+    xelPatternConfig\x18\x13\x20\x01(\x0b2\x1d.mizer.PixelPatternNodeConfigH\
+    \0R\x12pixelPatternConfig\x12C\n\x0epixelDmxConfig\x18\x14\x20\x01(\x0b2\
+    \x19.mizer.PixelDmxNodeConfigH\0R\x0epixelDmxConfig\x12F\n\x0fdmxOutputC\
+    onfig\x18\x15\x20\x01(\x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\x0fdmxOutp\
+    utConfig\x12F\n\x0fmidiInputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer.MidiI\
+    nputNodeConfigH\0R\x0fmidiInputConfig\x12I\n\x10midiOutputConfig\x18\x17\
+    \x20\x01(\x0b2\x1b.mizer.MidiOutputNodeConfigH\0R\x10midiOutputConfig\
+    \x12F\n\x0fopcOutputConfig\x18\x18\x20\x01(\x0b2\x1a.mizer.OpcOutputNode\
+    ConfigH\0R\x0fopcOutputConfig\x12>\n\x0eoscInputConfig\x18\x19\x20\x01(\
+    \x0b2\x14.mizer.OscNodeConfigH\0R\x0eoscInputConfig\x12@\n\x0foscOutputC\
+    onfig\x18\x1a\x20\x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0foscOutputConf\
+    ig\x12^\n\x17videoColorBalanceConfig\x18\x1b\x20\x01(\x0b2\".mizer.Video\
+    ColorBalanceNodeConfigH\0R\x17videoColorBalanceConfig\x12L\n\x11videoEff\
+    ectConfig\x18\x1c\x20\x01(\x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\x11v\
+    ideoEffectConfig\x12F\n\x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x1a.miz\
+    er.VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12L\n\x11videoOutputConfi\
+    g\x18\x1e\x20\x01(\x0b2\x1c.mizer.VideoOutputNodeConfigH\0R\x11videoOutp\
+    utConfig\x12U\n\x14videoTransformConfig\x18\x1f\x20\x01(\x0b2\x1f.mizer.\
+    VideoTransformNodeConfigH\0R\x14videoTransformConfig\"\xd4\x02\n\x08Node\
+    Type\x12\t\n\x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscilla\
+    tor\x10\x02\x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0b\n\
+    \x07Fixture\x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\r\n\tDmxOutput\x10\
+    \x0b\x12\x0c\n\x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMid\
+    iInput\x10\x0e\x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\
+    \x12\x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\
+    \x15\n\x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\
+    \x12\x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\
+    \tOpcOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\"Q\
+    \n\x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\x0c\n\x08Waveform\
+    \x10\x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Texture\x10\x03\x12\
+    \x08\n\x04None\x10\x04B\x0c\n\nNodeConfig\"\x81\x02\n\x14OscillatorNodeC\
+    onfig\x12>\n\x04type\x18\x01\x20\x01(\x0e2*.mizer.OscillatorNodeConfig.O\
+    scillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\
+    \x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\
+    \x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offse\
+    t\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillat\
+    orType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Sa\
+    w\x10\x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\
+    \x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12SequenceNo\
+    deConfig\x12<\n\x05steps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeConfig\
+    .SequenceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\x18\x01\
+    \x20\x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\
+    \x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockNodeConfig\
+    \x12\x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeCo\
+    nfig\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInp\
+    utNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\
+    \x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\
+    \x20\x01(\tR\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\
+    \x07pattern\x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\
+    \x07pattern\"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08Rgb\
+    Snake\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\
+    \x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\
+    \x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUniverse\
+    \x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"c\n\x13DmxOutputNode\
+    Config\x12\x16\n\x06output\x18\x01\x20\x01(\tR\x06output\x12\x1a\n\x08un\
+    iverse\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\
+    \x01(\rR\x07channel\"\x15\n\x13MidiInputNodeConfig\"\x16\n\x14MidiOutput\
+    NodeConfig\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01\
+    (\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05\
+    width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01\
+    (\x04R\x06height\"K\n\rOscNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\
+    \tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04p\
+    ath\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\
+    \x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\
+    \x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\
+    \x1a\n\x18VideoTransformNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\
+    \x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\
+    \n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.No\
+    dePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scal\
+    e\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08p\
+    rotocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\
+    \x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\
+    \x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06\
+    Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\
+    \x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gst\
+    \x10\x082\xe9\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRe\
+    quest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeReq\
+    uest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnecti\
+    on\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.\
+    mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

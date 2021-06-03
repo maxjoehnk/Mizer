@@ -51,6 +51,7 @@ impl PipelineNode for SequenceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "SequenceNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -86,10 +87,11 @@ impl ProcessingNode for SequenceNode {
             return Ok(());
         }
         let frame = context.clock();
-        state.beat += frame.delta * state.speed;
-        let value = state.tick(&self.steps);
+        state.tick(frame);
+        let value = state.get_frame(&self.steps);
 
         context.write_port("value", value);
+        context.push_history_value(value);
 
         Ok(())
     }
@@ -100,10 +102,14 @@ impl ProcessingNode for SequenceNode {
 }
 
 impl SequenceState {
-    fn tick(&mut self, steps: &[SequenceStep]) -> f64 {
+    fn tick(&mut self, frame: ClockFrame) {
+        self.beat += frame.delta * self.speed;
         while self.beat > 4. {
             self.beat -= 4.;
         }
+    }
+
+    fn get_frame(&self, steps: &[SequenceStep]) -> f64 {
         let first_step = steps
             .iter()
             .filter(|step| step.tick < self.beat)

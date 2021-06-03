@@ -22,6 +22,7 @@ impl PipelineNode for VideoFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "VideoFileNode".into(),
+            preview_type: PreviewType::Texture,
         }
     }
 

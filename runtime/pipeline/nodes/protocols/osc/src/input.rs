@@ -34,6 +34,7 @@ impl PipelineNode for OscInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "OscInputNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -119,6 +120,7 @@ impl OscInputNode {
 
 fn write_number(context: &impl NodeContext, value: f64) {
     context.write_port("number", value);
+    context.push_history_value(value);
 }
 
 fn write_color(context: &impl NodeContext, color: &OscColor) {

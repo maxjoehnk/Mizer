@@ -7,6 +7,7 @@ import 'package:mizer/views/nodes/node/ports.dart';
 import '../consts.dart';
 import 'container.dart';
 import 'header.dart';
+import 'preview.dart';
 
 class BaseNode extends StatelessWidget {
   final Node node;
@@ -34,6 +35,7 @@ class BaseNode extends StatelessWidget {
                 NodePortList(this.node, inputs: false),
                 NodePortList(this.node, inputs: true),
                 this.child,
+                NodePreview(this.node),
               ]),
           selected: selected,
         ),

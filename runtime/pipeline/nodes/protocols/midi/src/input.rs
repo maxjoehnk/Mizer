@@ -49,6 +49,7 @@ impl PipelineNode for MidiInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "MidiInputNode".into(),
+            preview_type: PreviewType::History,
         }
     }
 
@@ -114,6 +115,7 @@ impl ProcessingNode for MidiInputNode {
                 }
                 if let Some(value) = result_value {
                     context.write_port::<_, f64>("value", value);
+                    context.push_history_value(value);
                 }
             }
         }

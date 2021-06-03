@@ -27,6 +27,7 @@ impl PipelineNode for VideoOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "VideoOutputNode".into(),
+            preview_type: PreviewType::Texture,
         }
     }
 

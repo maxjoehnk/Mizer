@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -52,5 +50,10 @@ class NodesPluginApi implements NodesApi {
 
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
+  }
+
+  @override
+  Future<void> updateNodeConfig(UpdateNodeConfigRequest request) {
+    return channel.invokeMethod("updateNodeProperty", request.writeToBuffer());
   }
 }

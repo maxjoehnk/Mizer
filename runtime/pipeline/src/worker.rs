@@ -1,3 +1,4 @@
+use downcast::*;
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{PipelineContext, NodePreviewState};
 use mizer_clock::ClockFrame;
@@ -14,6 +15,15 @@ use ringbuffer::RingBufferExt;
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
 }
+
+pub fn as_pipeline_node_mut(node: &mut dyn ProcessingNodeExt) -> &mut dyn PipelineNode {
+    unsafe {
+        // TODO: this should be possible without transmutation as ProcessingNodeExt has PipelineNode as requirement
+        std::mem::transmute(node)
+    }
+}
+
+downcast!(dyn ProcessingNodeExt);
 
 impl<T, S: 'static> ProcessingNodeExt for T
 where

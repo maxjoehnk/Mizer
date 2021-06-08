@@ -7,7 +7,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_layouts::Layout;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
-use mizer_nodes::{FixtureNode, Node};
+use mizer_nodes::{FixtureNode, Node, DmxOutputNode};
 
 #[derive(Clone)]
 pub struct RuntimeApi {
@@ -28,7 +28,8 @@ pub enum ApiCommand {
     ),
     AddLink(NodeLink, flume::Sender<anyhow::Result<()>>),
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
-    GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>)
+    GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>),
+    UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
 }
 
 impl RuntimeApi {
@@ -37,18 +38,7 @@ impl RuntimeApi {
         self.nodes
             .iter()
             .map(|entry| entry.key().clone())
-            .map(|path| {
-                let node = self.nodes.get(&path).unwrap();
-                let ports = node.list_ports();
-                let designer = designer[&path].clone();
-
-                NodeDescriptor {
-                    path,
-                    node,
-                    designer,
-                    ports,
-                }
-            })
+            .map(|path| self.get_descriptor(path, &designer))
             .collect()
     }
 
@@ -127,6 +117,27 @@ impl RuntimeApi {
         let result = rx.recv()?;
 
         result
+    }
+
+    pub fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::UpdateNode(path, config, tx))?;
+        let result = rx.recv()?;
+
+        result
+    }
+
+    fn get_descriptor(&self, path: NodePath, designer: &HashMap<NodePath, NodeDesigner>) -> NodeDescriptor {
+        let node = self.nodes.get(&path).unwrap();
+        let ports = node.list_ports();
+        let designer = designer[&path].clone();
+
+        NodeDescriptor {
+            path,
+            node,
+            designer,
+            ports,
+        }
     }
 }
 

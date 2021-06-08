@@ -7,6 +7,7 @@ service NodesApi {
   rpc AddNode (AddNodeRequest) returns (Node) {}
   rpc AddLink (NodeConnection) returns (NodeConnection) {}
   rpc WriteControlValue (WriteControl) returns (WriteResponse) {}
+  rpc UpdateNodeProperty (UpdateNodeConfigRequest) returns (UpdateNodeConfigResponse) {}
 }
 
 message AddNodeRequest {
@@ -23,6 +24,13 @@ message WriteControl {
 }
 
 message WriteResponse {}
+
+message UpdateNodeConfigRequest {
+  string path = 1;
+  NodeConfig config = 2;
+}
+
+message UpdateNodeConfigResponse {}
 
 message Nodes {
   repeated Node nodes = 1;
@@ -78,7 +86,11 @@ message Node {
   repeated Port outputs = 4;
   NodeDesigner designer = 5;
   NodePreviewType preview = 6;
-  oneof NodeConfig {
+  NodeConfig config = 7;
+}
+
+message NodeConfig {
+  oneof type {
     OscillatorNodeConfig oscillatorConfig = 10;
     ScriptingNodeConfig scriptingConfig = 11;
     SequenceNodeConfig sequenceConfig = 12;

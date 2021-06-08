@@ -32,6 +32,12 @@ class NodesApiClient extends $grpc.Client {
           '/mizer.NodesApi/WriteControlValue',
           ($0.WriteControl value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.WriteResponse.fromBuffer(value));
+  static final _$updateNodeProperty = $grpc.ClientMethod<
+          $0.UpdateNodeConfigRequest, $0.UpdateNodeConfigResponse>(
+      '/mizer.NodesApi/UpdateNodeProperty',
+      ($0.UpdateNodeConfigRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.UpdateNodeConfigResponse.fromBuffer(value));
 
   NodesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -57,6 +63,12 @@ class NodesApiClient extends $grpc.Client {
       $0.WriteControl request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$writeControlValue, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.UpdateNodeConfigResponse> updateNodeProperty(
+      $0.UpdateNodeConfigRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$updateNodeProperty, request, options: options);
   }
 }
 
@@ -92,6 +104,15 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.WriteControl.fromBuffer(value),
         ($0.WriteResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.UpdateNodeConfigRequest,
+            $0.UpdateNodeConfigResponse>(
+        'UpdateNodeProperty',
+        updateNodeProperty_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.UpdateNodeConfigRequest.fromBuffer(value),
+        ($0.UpdateNodeConfigResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Nodes> getNodes_Pre(
@@ -114,6 +135,12 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return writeControlValue(call, await request);
   }
 
+  $async.Future<$0.UpdateNodeConfigResponse> updateNodeProperty_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.UpdateNodeConfigRequest> request) async {
+    return updateNodeProperty(call, await request);
+  }
+
   $async.Future<$0.Nodes> getNodes(
       $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Node> addNode(
@@ -122,4 +149,6 @@ abstract class NodesApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.NodeConnection request);
   $async.Future<$0.WriteResponse> writeControlValue(
       $grpc.ServiceCall call, $0.WriteControl request);
+  $async.Future<$0.UpdateNodeConfigResponse> updateNodeProperty(
+      $grpc.ServiceCall call, $0.UpdateNodeConfigRequest request);
 }

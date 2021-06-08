@@ -77,4 +77,10 @@ impl NodesHandler {
     pub fn get_node_history(&self, path: String) -> anyhow::Result<Vec<f64>> {
         self.runtime.get_node_history(path.into())
     }
+
+    pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {
+        self.runtime.update_node(request.path.into(), request.config.unwrap().field_type.unwrap().into())?;
+
+        Ok(())
+    }
 }

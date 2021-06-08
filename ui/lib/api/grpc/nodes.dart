@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pbgrpc.dart';
@@ -35,5 +37,11 @@ class NodesGrpcApi implements NodesApi {
   @override
   Future<Map<String, List<double>>> getNodeHistories(List<String> paths) async {
     return Map();
+  }
+
+  @override
+  Future<void> updateNodeConfig(UpdateNodeConfigRequest request) {
+    log("updateNodeConfig $request", name: "NodesGrpcApi");
+    return this.client.updateNodeProperty(request);
   }
 }

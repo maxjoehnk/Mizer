@@ -3,48 +3,96 @@ use protobuf::SingularPtrField;
 use mizer_node::{NodeType, PortDirection, PortType, PortId, NodeLink, PortMetadata, PreviewType};
 use mizer_runtime::NodeDescriptor;
 
-impl From<mizer_nodes::Node> for Node_oneof_NodeConfig {
+impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
     fn from(node: mizer_nodes::Node) -> Self {
         use mizer_nodes::Node::*;
         match node {
-            Clock(clock) => Node_oneof_NodeConfig::clockConfig(clock.into()),
-            Oscillator(oscillator) => Node_oneof_NodeConfig::oscillatorConfig(oscillator.into()),
-            DmxOutput(dmx_output) => Node_oneof_NodeConfig::dmxOutputConfig(dmx_output.into()),
-            Scripting(scripting) => Node_oneof_NodeConfig::scriptingConfig(scripting.into()),
-            Sequence(sequence) => Node_oneof_NodeConfig::sequenceConfig(sequence.into()),
-            Fixture(fixture) => Node_oneof_NodeConfig::fixtureConfig(fixture.into()),
-            IldaFile(ilda) => Node_oneof_NodeConfig::ildaFileConfig(ilda.into()),
-            Laser(laser) => Node_oneof_NodeConfig::laserConfig(laser.into()),
-            Fader(fader) => Node_oneof_NodeConfig::faderConfig(fader.into()),
-            Button(button) => Node_oneof_NodeConfig::buttonConfig(button.into()),
-            MidiInput(midi_input) => Node_oneof_NodeConfig::midiInputConfig(midi_input.into()),
-            MidiOutput(midi_output) => Node_oneof_NodeConfig::midiOutputConfig(midi_output.into()),
-            OpcOutput(opc) => Node_oneof_NodeConfig::opcOutputConfig(opc.into()),
-            PixelPattern(pattern) => Node_oneof_NodeConfig::pixelPatternConfig(pattern.into()),
-            PixelDmx(dmx) => Node_oneof_NodeConfig::pixelDmxConfig(dmx.into()),
-            OscInput(osc) => Node_oneof_NodeConfig::oscInputConfig(osc.into()),
-            OscOutput(osc) => Node_oneof_NodeConfig::oscOutputConfig(osc.into()),
-            VideoFile(file) => Node_oneof_NodeConfig::videoFileConfig(file.into()),
-            VideoColorBalance(color_balance) => Node_oneof_NodeConfig::videoColorBalanceConfig(color_balance.into()),
-            VideoOutput(output) => Node_oneof_NodeConfig::videoOutputConfig(output.into()),
-            VideoEffect(effect) => Node_oneof_NodeConfig::videoEffectConfig(effect.into()),
-            VideoTransform(transform) => Node_oneof_NodeConfig::videoTransformConfig(transform.into()),
+            Clock(clock) => Self::clockConfig(clock.into()),
+            Oscillator(oscillator) => Self::oscillatorConfig(oscillator.into()),
+            DmxOutput(dmx_output) => Self::dmxOutputConfig(dmx_output.into()),
+            Scripting(scripting) => Self::scriptingConfig(scripting.into()),
+            Sequence(sequence) => Self::sequenceConfig(sequence.into()),
+            Fixture(fixture) => Self::fixtureConfig(fixture.into()),
+            IldaFile(ilda) => Self::ildaFileConfig(ilda.into()),
+            Laser(laser) => Self::laserConfig(laser.into()),
+            Fader(fader) => Self::faderConfig(fader.into()),
+            Button(button) => Self::buttonConfig(button.into()),
+            MidiInput(midi_input) => Self::midiInputConfig(midi_input.into()),
+            MidiOutput(midi_output) => Self::midiOutputConfig(midi_output.into()),
+            OpcOutput(opc) => Self::opcOutputConfig(opc.into()),
+            PixelPattern(pattern) => Self::pixelPatternConfig(pattern.into()),
+            PixelDmx(dmx) => Self::pixelDmxConfig(dmx.into()),
+            OscInput(osc) => Self::oscInputConfig(osc.into()),
+            OscOutput(osc) => Self::oscOutputConfig(osc.into()),
+            VideoFile(file) => Self::videoFileConfig(file.into()),
+            VideoColorBalance(color_balance) => Self::videoColorBalanceConfig(color_balance.into()),
+            VideoOutput(output) => Self::videoOutputConfig(output.into()),
+            VideoEffect(effect) => Self::videoEffectConfig(effect.into()),
+            VideoTransform(transform) => Self::videoTransformConfig(transform.into()),
+        }
+    }
+}
+
+impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
+    fn from(node_config: NodeConfig_oneof_type) -> Self {
+        match node_config {
+            NodeConfig_oneof_type::clockConfig(clock) => Self::Clock(clock.into()),
+            NodeConfig_oneof_type::oscillatorConfig(oscillator) => Self::Oscillator(oscillator.into()),
+            NodeConfig_oneof_type::dmxOutputConfig(dmx_output) => Self::DmxOutput(dmx_output.into()),
+            NodeConfig_oneof_type::scriptingConfig(scripting) => Self::Scripting(scripting.into()),
+            NodeConfig_oneof_type::sequenceConfig(sequence) => Self::Sequence(sequence.into()),
+            NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
+            NodeConfig_oneof_type::ildaFileConfig(ilda) => Self::IldaFile(ilda.into()),
+            NodeConfig_oneof_type::laserConfig(laser) => Self::Laser(laser.into()),
+            NodeConfig_oneof_type::faderConfig(fader) => Self::Fader(fader.into()),
+            NodeConfig_oneof_type::buttonConfig(button) => Self::Button(button.into()),
+            NodeConfig_oneof_type::midiInputConfig(midi_input) => Self::MidiInput(midi_input.into()),
+            NodeConfig_oneof_type::midiOutputConfig(midi_output) => Self::MidiOutput(midi_output.into()),
+            NodeConfig_oneof_type::opcOutputConfig(opc) => Self::OpcOutput(opc.into()),
+            NodeConfig_oneof_type::pixelPatternConfig(pattern) => Self::PixelPattern(pattern.into()),
+            NodeConfig_oneof_type::pixelDmxConfig(dmx) => Self::PixelDmx(dmx.into()),
+            NodeConfig_oneof_type::oscInputConfig(osc) => Self::OscInput(osc.into()),
+            NodeConfig_oneof_type::oscOutputConfig(osc) => Self::OscOutput(osc.into()),
+            NodeConfig_oneof_type::videoFileConfig(file) => Self::VideoFile(file.into()),
+            NodeConfig_oneof_type::videoColorBalanceConfig(color_balance) => Self::VideoColorBalance(color_balance.into()),
+            NodeConfig_oneof_type::videoOutputConfig(output) => Self::VideoOutput(output.into()),
+            NodeConfig_oneof_type::videoEffectConfig(effect) => Self::VideoEffect(effect.into()),
+            NodeConfig_oneof_type::videoTransformConfig(transform) => Self::VideoTransform(transform.into()),
+        }
+    }
+}
+
+
+impl From<mizer_nodes::Node> for NodeConfig {
+    fn from(node: mizer_nodes::Node) -> Self {
+        let config: NodeConfig_oneof_type = node.into();
+        NodeConfig {
+            field_type: Some(config),
+            ..Default::default()
         }
     }
 }
 
 impl From<mizer_nodes::ClockNode> for ClockNodeConfig {
     fn from(clock: mizer_nodes::ClockNode) -> Self {
-        ClockNodeConfig {
+        Self {
             speed: clock.speed,
             ..Default::default()
         }
     }
 }
 
+impl From<ClockNodeConfig> for mizer_nodes::ClockNode {
+    fn from(clock: ClockNodeConfig) -> Self {
+        Self {
+            speed: clock.speed,
+        }
+    }
+}
+
 impl From<mizer_nodes::OscillatorNode> for OscillatorNodeConfig {
     fn from(oscillator: mizer_nodes::OscillatorNode) -> Self {
-        OscillatorNodeConfig {
+        Self {
             field_type: oscillator.oscillator_type.into(),
             offset: oscillator.offset,
             min: oscillator.min,
@@ -61,17 +109,43 @@ impl From<mizer_nodes::OscillatorType> for OscillatorNodeConfig_OscillatorType {
         use mizer_nodes::OscillatorType::*;
 
         match oscillator_type {
-            Sine => OscillatorNodeConfig_OscillatorType::Sine,
-            Saw => OscillatorNodeConfig_OscillatorType::Saw,
-            Square => OscillatorNodeConfig_OscillatorType::Square,
-            Triangle => OscillatorNodeConfig_OscillatorType::Triangle,
+            Sine => Self::Sine,
+            Saw => Self::Saw,
+            Square => Self::Square,
+            Triangle => Self::Triangle,
+        }
+    }
+}
+
+impl From<OscillatorNodeConfig> for mizer_nodes::OscillatorNode {
+    fn from(oscillator: OscillatorNodeConfig) -> Self {
+        Self {
+            oscillator_type: oscillator.field_type.into(),
+            offset: oscillator.offset,
+            min: oscillator.min,
+            max: oscillator.max,
+            ratio: oscillator.ratio,
+            reverse: oscillator.reverse,
+        }
+    }
+}
+
+impl From<OscillatorNodeConfig_OscillatorType> for mizer_nodes::OscillatorType {
+    fn from(oscillator_type: OscillatorNodeConfig_OscillatorType) -> Self {
+        use OscillatorNodeConfig_OscillatorType::*;
+
+        match oscillator_type {
+            Sine => Self::Sine,
+            Saw => Self::Saw,
+            Square => Self::Square,
+            Triangle => Self::Triangle,
         }
     }
 }
 
 impl From<mizer_nodes::DmxOutputNode> for DmxOutputNodeConfig {
     fn from(output: mizer_nodes::DmxOutputNode) -> Self {
-        DmxOutputNodeConfig {
+        Self {
             channel: output.channel as u32,
             universe: output.universe as u32,
             output: "output".into(), // TODO: use output property
@@ -80,18 +154,35 @@ impl From<mizer_nodes::DmxOutputNode> for DmxOutputNodeConfig {
     }
 }
 
+impl From<DmxOutputNodeConfig> for mizer_nodes::DmxOutputNode {
+    fn from(output: DmxOutputNodeConfig) -> Self {
+        Self {
+            channel: output.channel as u8,
+            universe: output.universe as u16,
+        }
+    }
+}
+
 impl From<mizer_nodes::ScriptingNode> for ScriptingNodeConfig {
     fn from(scripting: mizer_nodes::ScriptingNode) -> Self {
-        ScriptingNodeConfig {
+        Self {
             script: scripting.script,
             ..Default::default()
         }
     }
 }
 
+impl From<ScriptingNodeConfig> for mizer_nodes::ScriptingNode {
+    fn from(scripting: ScriptingNodeConfig) -> Self {
+        Self {
+            script: scripting.script,
+        }
+    }
+}
+
 impl From<mizer_nodes::SequenceNode> for SequenceNodeConfig {
     fn from(sequence: mizer_nodes::SequenceNode) -> Self {
-        SequenceNodeConfig {
+        Self {
             steps: sequence.steps.into_iter().map(SequenceNodeConfig_SequenceStep::from).collect(),
             ..Default::default()
         }
@@ -100,7 +191,7 @@ impl From<mizer_nodes::SequenceNode> for SequenceNodeConfig {
 
 impl From<mizer_nodes::SequenceStep> for SequenceNodeConfig_SequenceStep {
     fn from(step: mizer_nodes::SequenceStep) -> Self {
-        SequenceNodeConfig_SequenceStep {
+        Self {
             value: step.value,
             hold: step.hold,
             tick: step.tick,
@@ -109,9 +200,36 @@ impl From<mizer_nodes::SequenceStep> for SequenceNodeConfig_SequenceStep {
     }
 }
 
+impl From<SequenceNodeConfig> for mizer_nodes::SequenceNode {
+    fn from(sequence: SequenceNodeConfig) -> Self {
+        Self {
+            steps: sequence.steps.into_iter().map(mizer_nodes::SequenceStep::from).collect(),
+        }
+    }
+}
+
+impl From<SequenceNodeConfig_SequenceStep> for mizer_nodes::SequenceStep {
+    fn from(step: SequenceNodeConfig_SequenceStep) -> Self {
+        Self {
+            value: step.value,
+            hold: step.hold,
+            tick: step.tick,
+        }
+    }
+}
+
 impl From<mizer_nodes::FixtureNode> for FixtureNodeConfig {
     fn from(fixture: mizer_nodes::FixtureNode) -> Self {
-        FixtureNodeConfig {
+        Self {
+            fixture_id: fixture.fixture_id,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<FixtureNodeConfig> for mizer_nodes::FixtureNode {
+    fn from(fixture: FixtureNodeConfig) -> Self {
+        Self {
             fixture_id: fixture.fixture_id,
             ..Default::default()
         }
@@ -120,43 +238,83 @@ impl From<mizer_nodes::FixtureNode> for FixtureNodeConfig {
 
 impl From<mizer_nodes::IldaFileNode> for IldaFileNodeConfig {
     fn from(ilda_file: mizer_nodes::IldaFileNode) -> Self {
-        IldaFileNodeConfig {
+        Self {
             file: ilda_file.file,
             ..Default::default()
         }
     }
 }
 
+impl From<IldaFileNodeConfig> for mizer_nodes::IldaFileNode {
+    fn from(ilda_file: IldaFileNodeConfig) -> Self {
+        Self {
+            file: ilda_file.file,
+        }
+    }
+}
+
 impl From<mizer_nodes::LaserNode> for LaserNodeConfig {
     fn from(laser: mizer_nodes::LaserNode) -> Self {
-        LaserNodeConfig {
+        Self {
             device_id: laser.device_id,
             ..Default::default()
         }
     }
 }
 
+impl From<LaserNodeConfig> for mizer_nodes::LaserNode {
+    fn from(laser: LaserNodeConfig) -> Self {
+        Self {
+            device_id: laser.device_id,
+        }
+    }
+}
+
 impl From<mizer_nodes::FaderNode> for InputNodeConfig {
     fn from(_: mizer_nodes::FaderNode) -> Self {
-        InputNodeConfig::default()
+        Default::default()
+    }
+}
+
+impl From<InputNodeConfig> for mizer_nodes::FaderNode {
+    fn from(_: InputNodeConfig) -> Self {
+        Default::default()
     }
 }
 
 impl From<mizer_nodes::ButtonNode> for InputNodeConfig {
     fn from(_: mizer_nodes::ButtonNode) -> Self {
-        InputNodeConfig::default()
+        Default::default()
+    }
+}
+
+impl From<InputNodeConfig> for mizer_nodes::ButtonNode {
+    fn from(_: InputNodeConfig) -> Self {
+        Default::default()
     }
 }
 
 impl From<mizer_nodes::MidiInputNode> for MidiInputNodeConfig {
     fn from(_: mizer_nodes::MidiInputNode) -> Self {
-        MidiInputNodeConfig::default()
+        Default::default()
+    }
+}
+
+impl From<MidiInputNodeConfig> for mizer_nodes::MidiInputNode {
+    fn from(_: MidiInputNodeConfig) -> Self {
+        Default::default()
     }
 }
 
 impl From<mizer_nodes::MidiOutputNode> for MidiOutputNodeConfig {
     fn from(_: mizer_nodes::MidiOutputNode) -> Self {
-        MidiOutputNodeConfig::default()
+        Default::default()
+    }
+}
+
+impl From<MidiOutputNodeConfig> for mizer_nodes::MidiOutputNode {
+    fn from(_: MidiOutputNodeConfig) -> Self {
+        Default::default()
     }
 }
 
@@ -172,11 +330,30 @@ impl From<mizer_nodes::OpcOutputNode> for OpcOutputNodeConfig {
     }
 }
 
+impl From<OpcOutputNodeConfig> for mizer_nodes::OpcOutputNode {
+    fn from(opc: OpcOutputNodeConfig) -> Self {
+        Self {
+            width: opc.width,
+            height: opc.height,
+            host: opc.host,
+            port: opc.port as u16,
+        }
+    }
+}
+
 impl From<mizer_nodes::PixelPatternGeneratorNode> for PixelPatternNodeConfig {
     fn from(node: mizer_nodes::PixelPatternGeneratorNode) -> Self {
-        PixelPatternNodeConfig {
+        Self {
             pattern: node.pattern.into(),
             ..Default::default()
+        }
+    }
+}
+
+impl From<PixelPatternNodeConfig> for mizer_nodes::PixelPatternGeneratorNode {
+    fn from(node: PixelPatternNodeConfig) -> Self {
+        Self {
+            pattern: node.pattern.into(),
         }
     }
 }
@@ -186,8 +363,19 @@ impl From<mizer_nodes::Pattern> for PixelPatternNodeConfig_Pattern {
         use mizer_nodes::Pattern::*;
 
         match pattern {
-            RgbIterate => PixelPatternNodeConfig_Pattern::RgbIterate,
-            RgbSnake => PixelPatternNodeConfig_Pattern::RgbSnake,
+            RgbIterate => Self::RgbIterate,
+            RgbSnake => Self::RgbSnake,
+        }
+    }
+}
+
+impl From<PixelPatternNodeConfig_Pattern> for mizer_nodes::Pattern {
+    fn from(pattern: PixelPatternNodeConfig_Pattern) -> Self {
+        use PixelPatternNodeConfig_Pattern::*;
+
+        match pattern {
+            RgbIterate => Self::RgbIterate,
+            RgbSnake => Self::RgbSnake,
         }
     }
 }
@@ -204,6 +392,17 @@ impl From<mizer_nodes::PixelDmxNode> for PixelDmxNodeConfig {
     }
 }
 
+impl From<PixelDmxNodeConfig> for mizer_nodes::PixelDmxNode {
+    fn from(node: PixelDmxNodeConfig) -> Self {
+        Self {
+            height: node.height,
+            width: node.width,
+            output: node.output,
+            start_universe: node.start_universe as u16,
+        }
+    }
+}
+
 impl From<mizer_nodes::OscInputNode> for OscNodeConfig {
     fn from(node: mizer_nodes::OscInputNode) -> Self {
         Self {
@@ -211,6 +410,16 @@ impl From<mizer_nodes::OscInputNode> for OscNodeConfig {
             port: node.port as u32,
             path: node.path,
             ..Default::default()
+        }
+    }
+}
+
+impl From<OscNodeConfig> for mizer_nodes::OscInputNode {
+    fn from(node: OscNodeConfig) -> Self {
+        Self {
+            host: node.host,
+            port: node.port as u16,
+            path: node.path,
         }
     }
 }
@@ -226,11 +435,29 @@ impl From<mizer_nodes::OscOutputNode> for OscNodeConfig {
     }
 }
 
+impl From<OscNodeConfig> for mizer_nodes::OscOutputNode {
+    fn from(node: OscNodeConfig) -> Self {
+        Self {
+            host: node.host,
+            port: node.port as u16,
+            path: node.path,
+        }
+    }
+}
+
 impl From<mizer_nodes::VideoFileNode> for VideoFileNodeConfig {
     fn from(node: mizer_nodes::VideoFileNode) -> Self {
-        VideoFileNodeConfig {
+        Self {
             file: node.file,
             ..Default::default()
+        }
+    }
+}
+
+impl From<VideoFileNodeConfig> for mizer_nodes::VideoFileNode {
+    fn from(node: VideoFileNodeConfig) -> Self {
+        Self {
+            file: node.file,
         }
     }
 }
@@ -241,8 +468,20 @@ impl From<mizer_nodes::VideoColorBalanceNode> for VideoColorBalanceNodeConfig {
     }
 }
 
+impl From<VideoColorBalanceNodeConfig> for mizer_nodes::VideoColorBalanceNode {
+    fn from(node: VideoColorBalanceNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
 impl From<mizer_nodes::VideoOutputNode> for VideoOutputNodeConfig {
     fn from(node: mizer_nodes::VideoOutputNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<VideoOutputNodeConfig> for mizer_nodes::VideoOutputNode {
+    fn from(node: VideoOutputNodeConfig) -> Self {
         Default::default()
     }
 }
@@ -253,8 +492,20 @@ impl From<mizer_nodes::VideoEffectNode> for VideoEffectNodeConfig {
     }
 }
 
+impl From<VideoEffectNodeConfig> for mizer_nodes::VideoEffectNode {
+    fn from(node: VideoEffectNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
 impl From<mizer_nodes::VideoTransformNode> for VideoTransformNodeConfig {
     fn from(node: mizer_nodes::VideoTransformNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<VideoTransformNodeConfig> for mizer_nodes::VideoTransformNode {
+    fn from(node: VideoTransformNodeConfig) -> Self {
         Default::default()
     }
 }
@@ -324,7 +575,7 @@ impl From<NodeDescriptor<'_>> for Node {
         let mut node = Node {
             path: descriptor.path.to_string(),
             field_type: node_type.into(),
-            NodeConfig: Some(descriptor.downcast().into()),
+            config: SingularPtrField::some(descriptor.downcast().into()),
             designer: SingularPtrField::some(descriptor.designer.into()),
             preview: details.preview_type.into(),
             ..Default::default()

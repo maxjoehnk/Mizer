@@ -13,7 +13,7 @@ pub struct MidiInputNode {
     pub config: MidiInputConfig,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum MidiInputConfig {
     CC {

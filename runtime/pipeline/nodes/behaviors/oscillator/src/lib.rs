@@ -19,7 +19,7 @@ impl Default for OscillatorType {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct OscillatorNode {
     #[serde(rename = "type")]
     pub oscillator_type: OscillatorType,

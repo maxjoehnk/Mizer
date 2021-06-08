@@ -46,6 +46,18 @@ const WriteResponse$json = const {
   '1': 'WriteResponse',
 };
 
+const UpdateNodeConfigRequest$json = const {
+  '1': 'UpdateNodeConfigRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'config', '3': 2, '4': 1, '5': 11, '6': '.mizer.NodeConfig', '10': 'config'},
+  ],
+};
+
+const UpdateNodeConfigResponse$json = const {
+  '1': 'UpdateNodeConfigResponse',
+};
+
 const Nodes$json = const {
   '1': 'Nodes',
   '2': const [
@@ -74,33 +86,9 @@ const Node$json = const {
     const {'1': 'outputs', '3': 4, '4': 3, '5': 11, '6': '.mizer.Port', '10': 'outputs'},
     const {'1': 'designer', '3': 5, '4': 1, '5': 11, '6': '.mizer.NodeDesigner', '10': 'designer'},
     const {'1': 'preview', '3': 6, '4': 1, '5': 14, '6': '.mizer.Node.NodePreviewType', '10': 'preview'},
-    const {'1': 'oscillatorConfig', '3': 10, '4': 1, '5': 11, '6': '.mizer.OscillatorNodeConfig', '9': 0, '10': 'oscillatorConfig'},
-    const {'1': 'scriptingConfig', '3': 11, '4': 1, '5': 11, '6': '.mizer.ScriptingNodeConfig', '9': 0, '10': 'scriptingConfig'},
-    const {'1': 'sequenceConfig', '3': 12, '4': 1, '5': 11, '6': '.mizer.SequenceNodeConfig', '9': 0, '10': 'sequenceConfig'},
-    const {'1': 'clockConfig', '3': 13, '4': 1, '5': 11, '6': '.mizer.ClockNodeConfig', '9': 0, '10': 'clockConfig'},
-    const {'1': 'fixtureConfig', '3': 14, '4': 1, '5': 11, '6': '.mizer.FixtureNodeConfig', '9': 0, '10': 'fixtureConfig'},
-    const {'1': 'buttonConfig', '3': 15, '4': 1, '5': 11, '6': '.mizer.InputNodeConfig', '9': 0, '10': 'buttonConfig'},
-    const {'1': 'faderConfig', '3': 16, '4': 1, '5': 11, '6': '.mizer.InputNodeConfig', '9': 0, '10': 'faderConfig'},
-    const {'1': 'ildaFileConfig', '3': 17, '4': 1, '5': 11, '6': '.mizer.IldaFileNodeConfig', '9': 0, '10': 'ildaFileConfig'},
-    const {'1': 'laserConfig', '3': 18, '4': 1, '5': 11, '6': '.mizer.LaserNodeConfig', '9': 0, '10': 'laserConfig'},
-    const {'1': 'pixelPatternConfig', '3': 19, '4': 1, '5': 11, '6': '.mizer.PixelPatternNodeConfig', '9': 0, '10': 'pixelPatternConfig'},
-    const {'1': 'pixelDmxConfig', '3': 20, '4': 1, '5': 11, '6': '.mizer.PixelDmxNodeConfig', '9': 0, '10': 'pixelDmxConfig'},
-    const {'1': 'dmxOutputConfig', '3': 21, '4': 1, '5': 11, '6': '.mizer.DmxOutputNodeConfig', '9': 0, '10': 'dmxOutputConfig'},
-    const {'1': 'midiInputConfig', '3': 22, '4': 1, '5': 11, '6': '.mizer.MidiInputNodeConfig', '9': 0, '10': 'midiInputConfig'},
-    const {'1': 'midiOutputConfig', '3': 23, '4': 1, '5': 11, '6': '.mizer.MidiOutputNodeConfig', '9': 0, '10': 'midiOutputConfig'},
-    const {'1': 'opcOutputConfig', '3': 24, '4': 1, '5': 11, '6': '.mizer.OpcOutputNodeConfig', '9': 0, '10': 'opcOutputConfig'},
-    const {'1': 'oscInputConfig', '3': 25, '4': 1, '5': 11, '6': '.mizer.OscNodeConfig', '9': 0, '10': 'oscInputConfig'},
-    const {'1': 'oscOutputConfig', '3': 26, '4': 1, '5': 11, '6': '.mizer.OscNodeConfig', '9': 0, '10': 'oscOutputConfig'},
-    const {'1': 'videoColorBalanceConfig', '3': 27, '4': 1, '5': 11, '6': '.mizer.VideoColorBalanceNodeConfig', '9': 0, '10': 'videoColorBalanceConfig'},
-    const {'1': 'videoEffectConfig', '3': 28, '4': 1, '5': 11, '6': '.mizer.VideoEffectNodeConfig', '9': 0, '10': 'videoEffectConfig'},
-    const {'1': 'videoFileConfig', '3': 29, '4': 1, '5': 11, '6': '.mizer.VideoFileNodeConfig', '9': 0, '10': 'videoFileConfig'},
-    const {'1': 'videoOutputConfig', '3': 30, '4': 1, '5': 11, '6': '.mizer.VideoOutputNodeConfig', '9': 0, '10': 'videoOutputConfig'},
-    const {'1': 'videoTransformConfig', '3': 31, '4': 1, '5': 11, '6': '.mizer.VideoTransformNodeConfig', '9': 0, '10': 'videoTransformConfig'},
+    const {'1': 'config', '3': 7, '4': 1, '5': 11, '6': '.mizer.NodeConfig', '10': 'config'},
   ],
   '4': const [Node_NodeType$json, Node_NodePreviewType$json],
-  '8': const [
-    const {'1': 'NodeConfig'},
-  ],
 };
 
 const Node_NodeType$json = const {
@@ -139,6 +127,37 @@ const Node_NodePreviewType$json = const {
     const {'1': 'Multiple', '2': 2},
     const {'1': 'Texture', '2': 3},
     const {'1': 'None', '2': 4},
+  ],
+};
+
+const NodeConfig$json = const {
+  '1': 'NodeConfig',
+  '2': const [
+    const {'1': 'oscillatorConfig', '3': 10, '4': 1, '5': 11, '6': '.mizer.OscillatorNodeConfig', '9': 0, '10': 'oscillatorConfig'},
+    const {'1': 'scriptingConfig', '3': 11, '4': 1, '5': 11, '6': '.mizer.ScriptingNodeConfig', '9': 0, '10': 'scriptingConfig'},
+    const {'1': 'sequenceConfig', '3': 12, '4': 1, '5': 11, '6': '.mizer.SequenceNodeConfig', '9': 0, '10': 'sequenceConfig'},
+    const {'1': 'clockConfig', '3': 13, '4': 1, '5': 11, '6': '.mizer.ClockNodeConfig', '9': 0, '10': 'clockConfig'},
+    const {'1': 'fixtureConfig', '3': 14, '4': 1, '5': 11, '6': '.mizer.FixtureNodeConfig', '9': 0, '10': 'fixtureConfig'},
+    const {'1': 'buttonConfig', '3': 15, '4': 1, '5': 11, '6': '.mizer.InputNodeConfig', '9': 0, '10': 'buttonConfig'},
+    const {'1': 'faderConfig', '3': 16, '4': 1, '5': 11, '6': '.mizer.InputNodeConfig', '9': 0, '10': 'faderConfig'},
+    const {'1': 'ildaFileConfig', '3': 17, '4': 1, '5': 11, '6': '.mizer.IldaFileNodeConfig', '9': 0, '10': 'ildaFileConfig'},
+    const {'1': 'laserConfig', '3': 18, '4': 1, '5': 11, '6': '.mizer.LaserNodeConfig', '9': 0, '10': 'laserConfig'},
+    const {'1': 'pixelPatternConfig', '3': 19, '4': 1, '5': 11, '6': '.mizer.PixelPatternNodeConfig', '9': 0, '10': 'pixelPatternConfig'},
+    const {'1': 'pixelDmxConfig', '3': 20, '4': 1, '5': 11, '6': '.mizer.PixelDmxNodeConfig', '9': 0, '10': 'pixelDmxConfig'},
+    const {'1': 'dmxOutputConfig', '3': 21, '4': 1, '5': 11, '6': '.mizer.DmxOutputNodeConfig', '9': 0, '10': 'dmxOutputConfig'},
+    const {'1': 'midiInputConfig', '3': 22, '4': 1, '5': 11, '6': '.mizer.MidiInputNodeConfig', '9': 0, '10': 'midiInputConfig'},
+    const {'1': 'midiOutputConfig', '3': 23, '4': 1, '5': 11, '6': '.mizer.MidiOutputNodeConfig', '9': 0, '10': 'midiOutputConfig'},
+    const {'1': 'opcOutputConfig', '3': 24, '4': 1, '5': 11, '6': '.mizer.OpcOutputNodeConfig', '9': 0, '10': 'opcOutputConfig'},
+    const {'1': 'oscInputConfig', '3': 25, '4': 1, '5': 11, '6': '.mizer.OscNodeConfig', '9': 0, '10': 'oscInputConfig'},
+    const {'1': 'oscOutputConfig', '3': 26, '4': 1, '5': 11, '6': '.mizer.OscNodeConfig', '9': 0, '10': 'oscOutputConfig'},
+    const {'1': 'videoColorBalanceConfig', '3': 27, '4': 1, '5': 11, '6': '.mizer.VideoColorBalanceNodeConfig', '9': 0, '10': 'videoColorBalanceConfig'},
+    const {'1': 'videoEffectConfig', '3': 28, '4': 1, '5': 11, '6': '.mizer.VideoEffectNodeConfig', '9': 0, '10': 'videoEffectConfig'},
+    const {'1': 'videoFileConfig', '3': 29, '4': 1, '5': 11, '6': '.mizer.VideoFileNodeConfig', '9': 0, '10': 'videoFileConfig'},
+    const {'1': 'videoOutputConfig', '3': 30, '4': 1, '5': 11, '6': '.mizer.VideoOutputNodeConfig', '9': 0, '10': 'videoOutputConfig'},
+    const {'1': 'videoTransformConfig', '3': 31, '4': 1, '5': 11, '6': '.mizer.VideoTransformNodeConfig', '9': 0, '10': 'videoTransformConfig'},
+  ],
+  '8': const [
+    const {'1': 'type'},
   ],
 };
 

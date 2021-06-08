@@ -4,7 +4,7 @@ use mizer_clock::{Clock, SystemClock};
 use mizer_execution_planner::*;
 use mizer_module::Runtime;
 use mizer_node::*;
-use mizer_nodes::Node;
+use mizer_nodes::*;
 use mizer_pipeline::*;
 use mizer_processing::*;
 use mizer_project_files::Project;
@@ -14,6 +14,8 @@ use std::io::Write;
 use std::sync::Arc;
 use mizer_layouts::{Layout, ControlConfig};
 use std::str::FromStr;
+use downcast::Downcast;
+use std::ops::{DerefMut, Deref};
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -305,10 +307,26 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                         sender.send(Err(anyhow::anyhow!("No Preview for given node"))).expect("api command sender disconnected");
                     }
                 }
+                Ok(ApiCommand::UpdateNode(path, config, sender)) => {
+                    sender.send(self.handle_update_node(path, config)).expect("api command sender disconnected");
+                }
                 Err(flume::TryRecvError::Empty) => break,
                 Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
             }
         }
+    }
+
+    fn handle_update_node(&mut self, path: NodePath, config: Node) -> anyhow::Result<()> {
+        log::debug!("Updating {:?} with {:?}", path, config);
+        if let Some(mut node) = self.nodes.get_mut(&path) {
+            let node = as_pipeline_node_mut(node.deref_mut());
+            update_pipeline_node(node, &config)?;
+        }
+        if let Some(mut node) = self.nodes_view.get_mut(&path) {
+            let node = node.value_mut();
+            update_pipeline_node(node.deref_mut(), &config)?;
+        }
+        Ok(())
     }
 
     fn handle_add_node(
@@ -358,6 +376,103 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
             processor.post_process(&self.injector);
         }
     }
+}
+
+fn update_pipeline_node(mut node: &mut dyn PipelineNode, config: &Node) -> anyhow::Result<()> {
+    let node_type = node.node_type();
+    match (node_type, config) {
+        (NodeType::DmxOutput, Node::DmxOutput(config)) => {
+            let node: &mut DmxOutputNode = node.downcast_mut()?;
+            node.channel = config.channel;
+            node.universe = config.universe;
+        },
+        (NodeType::Oscillator, Node::Oscillator(config)) => {
+            let node: &mut OscillatorNode = node.downcast_mut()?;
+            node.oscillator_type = config.oscillator_type;
+            node.min = config.min;
+            node.max = config.max;
+            node.offset = config.offset;
+            node.ratio = config.ratio;
+            node.reverse = config.reverse;
+        },
+        (NodeType::Clock, Node::Clock(config)) => {
+            let node: &mut ClockNode = node.downcast_mut()?;
+            node.speed = config.speed;
+        },
+        (NodeType::Fixture, Node::Fixture(config)) => {
+            let node: &mut FixtureNode = node.downcast_mut()?;
+            node.fixture_id = config.fixture_id;
+        },
+        (NodeType::OscOutput, Node::OscOutput(config)) => {
+            let node: &mut OscOutputNode = node.downcast_mut()?;
+            node.path = config.path.clone();
+            node.host = config.host.clone();
+            node.port = config.port;
+        },
+        (NodeType::OscInput, Node::OscInput(config)) => {
+            let node: &mut OscInputNode = node.downcast_mut()?;
+            node.path = config.path.clone();
+            node.host = config.host.clone();
+            node.port = config.port;
+        },
+        (NodeType::Button, Node::Button(config)) => {},
+        (NodeType::Fader, Node::Fader(config)) => {},
+        (NodeType::IldaFile, Node::IldaFile(config)) => {
+            let node: &mut IldaFileNode = node.downcast_mut()?;
+            node.file = config.file.clone();
+        },
+        (NodeType::Laser, Node::Laser(config)) => {
+            let node: &mut LaserNode = node.downcast_mut()?;
+            node.device_id = config.device_id.clone();
+        },
+        (NodeType::MidiInput, Node::MidiInput(config)) => {
+            let node: &mut MidiInputNode = node.downcast_mut()?;
+            node.device = config.device.clone();
+            node.channel = config.channel;
+            node.config = config.config;
+        },
+        (NodeType::MidiOutput, Node::MidiOutput(config)) => {
+            let node: &mut MidiOutputNode = node.downcast_mut()?;
+            node.device = config.device.clone();
+            node.channel = config.channel;
+            node.config = config.config;
+        },
+        (NodeType::OpcOutput, Node::OpcOutput(config)) => {
+            let node: &mut OpcOutputNode = node.downcast_mut()?;
+            node.host = config.host.clone();
+            node.port = config.port;
+            node.width = config.width;
+            node.height = config.height;
+        },
+        (NodeType::PixelDmx, Node::PixelDmx(config)) => {
+            let node: &mut PixelDmxNode = node.downcast_mut()?;
+            node.height = config.height;
+            node.width = config.width;
+            node.output = config.output.clone();
+            node.start_universe = config.start_universe;
+        },
+        (NodeType::PixelPattern, Node::PixelPattern(config)) => {
+            let node: &mut PixelPatternGeneratorNode = node.downcast_mut()?;
+            node.pattern = config.pattern;
+        },
+        (NodeType::Scripting, Node::Scripting(config)) => {
+            let node: &mut ScriptingNode = node.downcast_mut()?;
+            node.script = config.script.clone();
+        },
+        (NodeType::VideoColorBalance, Node::VideoColorBalance(config)) => {},
+        (NodeType::VideoEffect, Node::VideoEffect(config)) => {
+            let node: &mut VideoEffectNode = node.downcast_mut()?;
+            node.effect_type = config.effect_type;
+        },
+        (NodeType::VideoFile, Node::VideoFile(config)) => {
+            let node: &mut VideoFileNode = node.downcast_mut()?;
+            node.file = config.file.clone();
+        },
+        (NodeType::VideoOutput, Node::VideoOutput(config)) => {},
+        (NodeType::VideoTransform, Node::VideoTransform(config)) => {},
+        _ => unimplemented!()
+    }
+    Ok(())
 }
 
 #[cfg(test)]

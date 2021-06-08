@@ -5,8 +5,9 @@ import 'package:mizer/views/nodes/properties/property_group.dart';
 
 class VideoFileProperties extends StatelessWidget {
   final VideoFileNodeConfig config;
+  final Function(VideoFileNodeConfig) onUpdate;
 
-  VideoFileProperties(this.config);
+  VideoFileProperties(this.config, { @required this.onUpdate });
 
   @override
   Widget build(BuildContext context) {

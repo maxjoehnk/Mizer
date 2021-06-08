@@ -3024,6 +3024,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
+ "downcast",
  "flume",
  "gstreamer",
  "log",

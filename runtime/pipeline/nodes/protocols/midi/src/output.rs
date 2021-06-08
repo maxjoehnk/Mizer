@@ -14,7 +14,7 @@ pub struct MidiOutputNode {
     pub config: MidiOutputConfig,
 }
 
-#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum MidiOutputConfig {
     CC {

@@ -33,7 +33,7 @@ pub trait PipelineNode: Send + Sync + Any {
     fn node_type(&self) -> NodeType;
 }
 
-downcast!(PipelineNode);
+downcast!(dyn PipelineNode);
 
 pub trait ProcessingNode: PipelineNode + Clone + Default + std::fmt::Debug {
     type State;

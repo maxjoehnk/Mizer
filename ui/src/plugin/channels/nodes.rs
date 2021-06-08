@@ -52,7 +52,13 @@ impl MethodCallHandler for NodesChannel {
                     Ok(history) => call.success(history),
                     Err(err) => call.respond_error(err),
                 }
-            }
+            },
+            "updateNodeProperty" => {
+                match self.handler.update_node_property(call.args()) {
+                    Ok(()) => call.success_empty(),
+                    Err(err) => call.respond_error(err),
+                }
+            },
             _ => call.not_implemented()
         }
     }

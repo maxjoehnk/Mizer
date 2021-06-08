@@ -710,6 +710,344 @@ impl ::protobuf::reflect::ProtobufValue for WriteResponse {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct UpdateNodeConfigRequest {
+    // message fields
+    pub path: ::std::string::String,
+    pub config: ::protobuf::SingularPtrField<NodeConfig>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateNodeConfigRequest {
+    fn default() -> &'a UpdateNodeConfigRequest {
+        <UpdateNodeConfigRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateNodeConfigRequest {
+    pub fn new() -> UpdateNodeConfigRequest {
+        ::std::default::Default::default()
+    }
+
+    // string path = 1;
+
+
+    pub fn get_path(&self) -> &str {
+        &self.path
+    }
+    pub fn clear_path(&mut self) {
+        self.path.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
+    }
+
+    // Take field
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
+    }
+
+    // .mizer.NodeConfig config = 2;
+
+
+    pub fn get_config(&self) -> &NodeConfig {
+        self.config.as_ref().unwrap_or_else(|| <NodeConfig as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_config(&mut self) {
+        self.config.clear();
+    }
+
+    pub fn has_config(&self) -> bool {
+        self.config.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_config(&mut self, v: NodeConfig) {
+        self.config = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_config(&mut self) -> &mut NodeConfig {
+        if self.config.is_none() {
+            self.config.set_default();
+        }
+        self.config.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_config(&mut self) -> NodeConfig {
+        self.config.take().unwrap_or_else(|| NodeConfig::new())
+    }
+}
+
+impl ::protobuf::Message for UpdateNodeConfigRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.config {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.config)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.path);
+        }
+        if let Some(ref v) = self.config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.path.is_empty() {
+            os.write_string(1, &self.path)?;
+        }
+        if let Some(ref v) = self.config.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateNodeConfigRequest {
+        UpdateNodeConfigRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "path",
+                |m: &UpdateNodeConfigRequest| { &m.path },
+                |m: &mut UpdateNodeConfigRequest| { &mut m.path },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NodeConfig>>(
+                "config",
+                |m: &UpdateNodeConfigRequest| { &m.config },
+                |m: &mut UpdateNodeConfigRequest| { &mut m.config },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateNodeConfigRequest>(
+                "UpdateNodeConfigRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateNodeConfigRequest {
+        static instance: ::protobuf::rt::LazyV2<UpdateNodeConfigRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateNodeConfigRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateNodeConfigRequest {
+    fn clear(&mut self) {
+        self.path.clear();
+        self.config.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateNodeConfigRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateNodeConfigRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct UpdateNodeConfigResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateNodeConfigResponse {
+    fn default() -> &'a UpdateNodeConfigResponse {
+        <UpdateNodeConfigResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateNodeConfigResponse {
+    pub fn new() -> UpdateNodeConfigResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for UpdateNodeConfigResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateNodeConfigResponse {
+        UpdateNodeConfigResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateNodeConfigResponse>(
+                "UpdateNodeConfigResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateNodeConfigResponse {
+        static instance: ::protobuf::rt::LazyV2<UpdateNodeConfigResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateNodeConfigResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateNodeConfigResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateNodeConfigResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateNodeConfigResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Nodes {
     // message fields
     pub nodes: ::protobuf::RepeatedField<Node>,
@@ -1285,8 +1623,7 @@ pub struct Node {
     pub outputs: ::protobuf::RepeatedField<Port>,
     pub designer: ::protobuf::SingularPtrField<NodeDesigner>,
     pub preview: Node_NodePreviewType,
-    // message oneof groups
-    pub NodeConfig: ::std::option::Option<Node_oneof_NodeConfig>,
+    pub config: ::protobuf::SingularPtrField<NodeConfig>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1298,33 +1635,6 @@ impl<'a> ::std::default::Default for &'a Node {
     fn default() -> &'a Node {
         <Node as ::protobuf::Message>::default_instance()
     }
-}
-
-#[derive(Clone,PartialEq,Debug)]
-#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
-pub enum Node_oneof_NodeConfig {
-    oscillatorConfig(OscillatorNodeConfig),
-    scriptingConfig(ScriptingNodeConfig),
-    sequenceConfig(SequenceNodeConfig),
-    clockConfig(ClockNodeConfig),
-    fixtureConfig(FixtureNodeConfig),
-    buttonConfig(InputNodeConfig),
-    faderConfig(InputNodeConfig),
-    ildaFileConfig(IldaFileNodeConfig),
-    laserConfig(LaserNodeConfig),
-    pixelPatternConfig(PixelPatternNodeConfig),
-    pixelDmxConfig(PixelDmxNodeConfig),
-    dmxOutputConfig(DmxOutputNodeConfig),
-    midiInputConfig(MidiInputNodeConfig),
-    midiOutputConfig(MidiOutputNodeConfig),
-    opcOutputConfig(OpcOutputNodeConfig),
-    oscInputConfig(OscNodeConfig),
-    oscOutputConfig(OscNodeConfig),
-    videoColorBalanceConfig(VideoColorBalanceNodeConfig),
-    videoEffectConfig(VideoEffectNodeConfig),
-    videoFileConfig(VideoFileNodeConfig),
-    videoOutputConfig(VideoOutputNodeConfig),
-    videoTransformConfig(VideoTransformNodeConfig),
 }
 
 impl Node {
@@ -1471,1082 +1781,37 @@ impl Node {
         self.preview = v;
     }
 
-    // .mizer.OscillatorNodeConfig oscillatorConfig = 10;
+    // .mizer.NodeConfig config = 7;
 
 
-    pub fn get_oscillatorConfig(&self) -> &OscillatorNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(ref v)) => v,
-            _ => <OscillatorNodeConfig as ::protobuf::Message>::default_instance(),
-        }
+    pub fn get_config(&self) -> &NodeConfig {
+        self.config.as_ref().unwrap_or_else(|| <NodeConfig as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_oscillatorConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
+    pub fn clear_config(&mut self) {
+        self.config.clear();
     }
 
-    pub fn has_oscillatorConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(..)) => true,
-            _ => false,
-        }
+    pub fn has_config(&self) -> bool {
+        self.config.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_oscillatorConfig(&mut self, v: OscillatorNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(v))
+    pub fn set_config(&mut self, v: NodeConfig) {
+        self.config = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
-    pub fn mut_oscillatorConfig(&mut self) -> &mut OscillatorNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(OscillatorNodeConfig::new()));
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_config(&mut self) -> &mut NodeConfig {
+        if self.config.is_none() {
+            self.config.set_default();
         }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
+        self.config.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_oscillatorConfig(&mut self) -> OscillatorNodeConfig {
-        if self.has_oscillatorConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OscillatorNodeConfig::new()
-        }
-    }
-
-    // .mizer.ScriptingNodeConfig scriptingConfig = 11;
-
-
-    pub fn get_scriptingConfig(&self) -> &ScriptingNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(ref v)) => v,
-            _ => <ScriptingNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_scriptingConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_scriptingConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_scriptingConfig(&mut self, v: ScriptingNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_scriptingConfig(&mut self) -> &mut ScriptingNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(ScriptingNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_scriptingConfig(&mut self) -> ScriptingNodeConfig {
-        if self.has_scriptingConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ScriptingNodeConfig::new()
-        }
-    }
-
-    // .mizer.SequenceNodeConfig sequenceConfig = 12;
-
-
-    pub fn get_sequenceConfig(&self) -> &SequenceNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(ref v)) => v,
-            _ => <SequenceNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_sequenceConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_sequenceConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_sequenceConfig(&mut self, v: SequenceNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_sequenceConfig(&mut self) -> &mut SequenceNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(SequenceNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_sequenceConfig(&mut self) -> SequenceNodeConfig {
-        if self.has_sequenceConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            SequenceNodeConfig::new()
-        }
-    }
-
-    // .mizer.ClockNodeConfig clockConfig = 13;
-
-
-    pub fn get_clockConfig(&self) -> &ClockNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(ref v)) => v,
-            _ => <ClockNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_clockConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_clockConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_clockConfig(&mut self, v: ClockNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_clockConfig(&mut self) -> &mut ClockNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(ClockNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_clockConfig(&mut self) -> ClockNodeConfig {
-        if self.has_clockConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ClockNodeConfig::new()
-        }
-    }
-
-    // .mizer.FixtureNodeConfig fixtureConfig = 14;
-
-
-    pub fn get_fixtureConfig(&self) -> &FixtureNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(ref v)) => v,
-            _ => <FixtureNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_fixtureConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_fixtureConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_fixtureConfig(&mut self, v: FixtureNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_fixtureConfig(&mut self) -> &mut FixtureNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(FixtureNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_fixtureConfig(&mut self) -> FixtureNodeConfig {
-        if self.has_fixtureConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            FixtureNodeConfig::new()
-        }
-    }
-
-    // .mizer.InputNodeConfig buttonConfig = 15;
-
-
-    pub fn get_buttonConfig(&self) -> &InputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(ref v)) => v,
-            _ => <InputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_buttonConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_buttonConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_buttonConfig(&mut self, v: InputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_buttonConfig(&mut self) -> &mut InputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(InputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_buttonConfig(&mut self) -> InputNodeConfig {
-        if self.has_buttonConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            InputNodeConfig::new()
-        }
-    }
-
-    // .mizer.InputNodeConfig faderConfig = 16;
-
-
-    pub fn get_faderConfig(&self) -> &InputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(ref v)) => v,
-            _ => <InputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_faderConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_faderConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_faderConfig(&mut self, v: InputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_faderConfig(&mut self) -> &mut InputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(InputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_faderConfig(&mut self) -> InputNodeConfig {
-        if self.has_faderConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            InputNodeConfig::new()
-        }
-    }
-
-    // .mizer.IldaFileNodeConfig ildaFileConfig = 17;
-
-
-    pub fn get_ildaFileConfig(&self) -> &IldaFileNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(ref v)) => v,
-            _ => <IldaFileNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_ildaFileConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_ildaFileConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_ildaFileConfig(&mut self, v: IldaFileNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_ildaFileConfig(&mut self) -> &mut IldaFileNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(IldaFileNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_ildaFileConfig(&mut self) -> IldaFileNodeConfig {
-        if self.has_ildaFileConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            IldaFileNodeConfig::new()
-        }
-    }
-
-    // .mizer.LaserNodeConfig laserConfig = 18;
-
-
-    pub fn get_laserConfig(&self) -> &LaserNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(ref v)) => v,
-            _ => <LaserNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_laserConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_laserConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_laserConfig(&mut self, v: LaserNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_laserConfig(&mut self) -> &mut LaserNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(LaserNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_laserConfig(&mut self) -> LaserNodeConfig {
-        if self.has_laserConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            LaserNodeConfig::new()
-        }
-    }
-
-    // .mizer.PixelPatternNodeConfig pixelPatternConfig = 19;
-
-
-    pub fn get_pixelPatternConfig(&self) -> &PixelPatternNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(ref v)) => v,
-            _ => <PixelPatternNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_pixelPatternConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_pixelPatternConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_pixelPatternConfig(&mut self, v: PixelPatternNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_pixelPatternConfig(&mut self) -> &mut PixelPatternNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(PixelPatternNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_pixelPatternConfig(&mut self) -> PixelPatternNodeConfig {
-        if self.has_pixelPatternConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            PixelPatternNodeConfig::new()
-        }
-    }
-
-    // .mizer.PixelDmxNodeConfig pixelDmxConfig = 20;
-
-
-    pub fn get_pixelDmxConfig(&self) -> &PixelDmxNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(ref v)) => v,
-            _ => <PixelDmxNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_pixelDmxConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_pixelDmxConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_pixelDmxConfig(&mut self, v: PixelDmxNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_pixelDmxConfig(&mut self) -> &mut PixelDmxNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(PixelDmxNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_pixelDmxConfig(&mut self) -> PixelDmxNodeConfig {
-        if self.has_pixelDmxConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            PixelDmxNodeConfig::new()
-        }
-    }
-
-    // .mizer.DmxOutputNodeConfig dmxOutputConfig = 21;
-
-
-    pub fn get_dmxOutputConfig(&self) -> &DmxOutputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(ref v)) => v,
-            _ => <DmxOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_dmxOutputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_dmxOutputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_dmxOutputConfig(&mut self, v: DmxOutputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_dmxOutputConfig(&mut self) -> &mut DmxOutputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(DmxOutputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_dmxOutputConfig(&mut self) -> DmxOutputNodeConfig {
-        if self.has_dmxOutputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            DmxOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.MidiInputNodeConfig midiInputConfig = 22;
-
-
-    pub fn get_midiInputConfig(&self) -> &MidiInputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(ref v)) => v,
-            _ => <MidiInputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_midiInputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_midiInputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_midiInputConfig(&mut self, v: MidiInputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_midiInputConfig(&mut self) -> &mut MidiInputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(MidiInputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_midiInputConfig(&mut self) -> MidiInputNodeConfig {
-        if self.has_midiInputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MidiInputNodeConfig::new()
-        }
-    }
-
-    // .mizer.MidiOutputNodeConfig midiOutputConfig = 23;
-
-
-    pub fn get_midiOutputConfig(&self) -> &MidiOutputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(ref v)) => v,
-            _ => <MidiOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_midiOutputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_midiOutputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_midiOutputConfig(&mut self, v: MidiOutputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_midiOutputConfig(&mut self) -> &mut MidiOutputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(MidiOutputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_midiOutputConfig(&mut self) -> MidiOutputNodeConfig {
-        if self.has_midiOutputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            MidiOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.OpcOutputNodeConfig opcOutputConfig = 24;
-
-
-    pub fn get_opcOutputConfig(&self) -> &OpcOutputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(ref v)) => v,
-            _ => <OpcOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_opcOutputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_opcOutputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_opcOutputConfig(&mut self, v: OpcOutputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_opcOutputConfig(&mut self) -> &mut OpcOutputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(OpcOutputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_opcOutputConfig(&mut self) -> OpcOutputNodeConfig {
-        if self.has_opcOutputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OpcOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.OscNodeConfig oscInputConfig = 25;
-
-
-    pub fn get_oscInputConfig(&self) -> &OscNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(ref v)) => v,
-            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_oscInputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_oscInputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_oscInputConfig(&mut self, v: OscNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_oscInputConfig(&mut self) -> &mut OscNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(OscNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_oscInputConfig(&mut self) -> OscNodeConfig {
-        if self.has_oscInputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OscNodeConfig::new()
-        }
-    }
-
-    // .mizer.OscNodeConfig oscOutputConfig = 26;
-
-
-    pub fn get_oscOutputConfig(&self) -> &OscNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(ref v)) => v,
-            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_oscOutputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_oscOutputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_oscOutputConfig(&mut self, v: OscNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_oscOutputConfig(&mut self) -> &mut OscNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(OscNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_oscOutputConfig(&mut self) -> OscNodeConfig {
-        if self.has_oscOutputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            OscNodeConfig::new()
-        }
-    }
-
-    // .mizer.VideoColorBalanceNodeConfig videoColorBalanceConfig = 27;
-
-
-    pub fn get_videoColorBalanceConfig(&self) -> &VideoColorBalanceNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(ref v)) => v,
-            _ => <VideoColorBalanceNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_videoColorBalanceConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_videoColorBalanceConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_videoColorBalanceConfig(&mut self, v: VideoColorBalanceNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_videoColorBalanceConfig(&mut self) -> &mut VideoColorBalanceNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(VideoColorBalanceNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_videoColorBalanceConfig(&mut self) -> VideoColorBalanceNodeConfig {
-        if self.has_videoColorBalanceConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoColorBalanceNodeConfig::new()
-        }
-    }
-
-    // .mizer.VideoEffectNodeConfig videoEffectConfig = 28;
-
-
-    pub fn get_videoEffectConfig(&self) -> &VideoEffectNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(ref v)) => v,
-            _ => <VideoEffectNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_videoEffectConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_videoEffectConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_videoEffectConfig(&mut self, v: VideoEffectNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_videoEffectConfig(&mut self) -> &mut VideoEffectNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(VideoEffectNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_videoEffectConfig(&mut self) -> VideoEffectNodeConfig {
-        if self.has_videoEffectConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoEffectNodeConfig::new()
-        }
-    }
-
-    // .mizer.VideoFileNodeConfig videoFileConfig = 29;
-
-
-    pub fn get_videoFileConfig(&self) -> &VideoFileNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(ref v)) => v,
-            _ => <VideoFileNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_videoFileConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_videoFileConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_videoFileConfig(&mut self, v: VideoFileNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_videoFileConfig(&mut self) -> &mut VideoFileNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(VideoFileNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_videoFileConfig(&mut self) -> VideoFileNodeConfig {
-        if self.has_videoFileConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoFileNodeConfig::new()
-        }
-    }
-
-    // .mizer.VideoOutputNodeConfig videoOutputConfig = 30;
-
-
-    pub fn get_videoOutputConfig(&self) -> &VideoOutputNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(ref v)) => v,
-            _ => <VideoOutputNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_videoOutputConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_videoOutputConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_videoOutputConfig(&mut self, v: VideoOutputNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_videoOutputConfig(&mut self) -> &mut VideoOutputNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(VideoOutputNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_videoOutputConfig(&mut self) -> VideoOutputNodeConfig {
-        if self.has_videoOutputConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoOutputNodeConfig::new()
-        }
-    }
-
-    // .mizer.VideoTransformNodeConfig videoTransformConfig = 31;
-
-
-    pub fn get_videoTransformConfig(&self) -> &VideoTransformNodeConfig {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(ref v)) => v,
-            _ => <VideoTransformNodeConfig as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_videoTransformConfig(&mut self) {
-        self.NodeConfig = ::std::option::Option::None;
-    }
-
-    pub fn has_videoTransformConfig(&self) -> bool {
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_videoTransformConfig(&mut self, v: VideoTransformNodeConfig) {
-        self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_videoTransformConfig(&mut self) -> &mut VideoTransformNodeConfig {
-        if let ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(_)) = self.NodeConfig {
-        } else {
-            self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(VideoTransformNodeConfig::new()));
-        }
-        match self.NodeConfig {
-            ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_videoTransformConfig(&mut self) -> VideoTransformNodeConfig {
-        if self.has_videoTransformConfig() {
-            match self.NodeConfig.take() {
-                ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            VideoTransformNodeConfig::new()
-        }
+    pub fn take_config(&mut self) -> NodeConfig {
+        self.config.take().unwrap_or_else(|| NodeConfig::new())
     }
 }
 
@@ -2567,116 +1832,11 @@ impl ::protobuf::Message for Node {
                 return false;
             }
         };
-        if let Some(Node_oneof_NodeConfig::oscillatorConfig(ref v)) = self.NodeConfig {
+        for v in &self.config {
             if !v.is_initialized() {
                 return false;
             }
-        }
-        if let Some(Node_oneof_NodeConfig::scriptingConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::sequenceConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::clockConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::fixtureConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::buttonConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::faderConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::ildaFileConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::laserConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::pixelPatternConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::pixelDmxConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::dmxOutputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::midiInputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::midiOutputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::opcOutputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::oscInputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::oscOutputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::videoColorBalanceConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::videoEffectConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::videoFileConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::videoOutputConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(Node_oneof_NodeConfig::videoTransformConfig(ref v)) = self.NodeConfig {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
+        };
         true
     }
 
@@ -2702,137 +1862,8 @@ impl ::protobuf::Message for Node {
                 6 => {
                     ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.preview, 6, &mut self.unknown_fields)?
                 },
-                10 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscillatorConfig(is.read_message()?));
-                },
-                11 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::scriptingConfig(is.read_message()?));
-                },
-                12 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::sequenceConfig(is.read_message()?));
-                },
-                13 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::clockConfig(is.read_message()?));
-                },
-                14 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::fixtureConfig(is.read_message()?));
-                },
-                15 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::buttonConfig(is.read_message()?));
-                },
-                16 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::faderConfig(is.read_message()?));
-                },
-                17 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::ildaFileConfig(is.read_message()?));
-                },
-                18 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::laserConfig(is.read_message()?));
-                },
-                19 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelPatternConfig(is.read_message()?));
-                },
-                20 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::pixelDmxConfig(is.read_message()?));
-                },
-                21 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::dmxOutputConfig(is.read_message()?));
-                },
-                22 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiInputConfig(is.read_message()?));
-                },
-                23 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::midiOutputConfig(is.read_message()?));
-                },
-                24 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::opcOutputConfig(is.read_message()?));
-                },
-                25 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscInputConfig(is.read_message()?));
-                },
-                26 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::oscOutputConfig(is.read_message()?));
-                },
-                27 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoColorBalanceConfig(is.read_message()?));
-                },
-                28 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoEffectConfig(is.read_message()?));
-                },
-                29 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoFileConfig(is.read_message()?));
-                },
-                30 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoOutputConfig(is.read_message()?));
-                },
-                31 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.NodeConfig = ::std::option::Option::Some(Node_oneof_NodeConfig::videoTransformConfig(is.read_message()?));
+                7 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.config)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2867,97 +1898,9 @@ impl ::protobuf::Message for Node {
         if self.preview != Node_NodePreviewType::History {
             my_size += ::protobuf::rt::enum_size(6, self.preview);
         }
-        if let ::std::option::Option::Some(ref v) = self.NodeConfig {
-            match v {
-                &Node_oneof_NodeConfig::oscillatorConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::scriptingConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::sequenceConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::clockConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::fixtureConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::buttonConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::faderConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::ildaFileConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::laserConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::pixelPatternConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::pixelDmxConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::dmxOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::midiInputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::midiOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::opcOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::oscInputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::oscOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::videoColorBalanceConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::videoEffectConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::videoFileConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::videoOutputConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &Node_oneof_NodeConfig::videoTransformConfig(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-            };
+        if let Some(ref v) = self.config.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -2989,119 +1932,10 @@ impl ::protobuf::Message for Node {
         if self.preview != Node_NodePreviewType::History {
             os.write_enum(6, ::protobuf::ProtobufEnum::value(&self.preview))?;
         }
-        if let ::std::option::Option::Some(ref v) = self.NodeConfig {
-            match v {
-                &Node_oneof_NodeConfig::oscillatorConfig(ref v) => {
-                    os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::scriptingConfig(ref v) => {
-                    os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::sequenceConfig(ref v) => {
-                    os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::clockConfig(ref v) => {
-                    os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::fixtureConfig(ref v) => {
-                    os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::buttonConfig(ref v) => {
-                    os.write_tag(15, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::faderConfig(ref v) => {
-                    os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::ildaFileConfig(ref v) => {
-                    os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::laserConfig(ref v) => {
-                    os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::pixelPatternConfig(ref v) => {
-                    os.write_tag(19, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::pixelDmxConfig(ref v) => {
-                    os.write_tag(20, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::dmxOutputConfig(ref v) => {
-                    os.write_tag(21, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::midiInputConfig(ref v) => {
-                    os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::midiOutputConfig(ref v) => {
-                    os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::opcOutputConfig(ref v) => {
-                    os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::oscInputConfig(ref v) => {
-                    os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::oscOutputConfig(ref v) => {
-                    os.write_tag(26, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::videoColorBalanceConfig(ref v) => {
-                    os.write_tag(27, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::videoEffectConfig(ref v) => {
-                    os.write_tag(28, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::videoFileConfig(ref v) => {
-                    os.write_tag(29, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::videoOutputConfig(ref v) => {
-                    os.write_tag(30, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &Node_oneof_NodeConfig::videoTransformConfig(ref v) => {
-                    os.write_tag(31, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-            };
+        if let Some(ref v) = self.config.as_ref() {
+            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3171,115 +2005,10 @@ impl ::protobuf::Message for Node {
                 |m: &Node| { &m.preview },
                 |m: &mut Node| { &mut m.preview },
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscillatorNodeConfig>(
-                "oscillatorConfig",
-                Node::has_oscillatorConfig,
-                Node::get_oscillatorConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ScriptingNodeConfig>(
-                "scriptingConfig",
-                Node::has_scriptingConfig,
-                Node::get_scriptingConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SequenceNodeConfig>(
-                "sequenceConfig",
-                Node::has_sequenceConfig,
-                Node::get_sequenceConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ClockNodeConfig>(
-                "clockConfig",
-                Node::has_clockConfig,
-                Node::get_clockConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, FixtureNodeConfig>(
-                "fixtureConfig",
-                Node::has_fixtureConfig,
-                Node::get_fixtureConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, InputNodeConfig>(
-                "buttonConfig",
-                Node::has_buttonConfig,
-                Node::get_buttonConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, InputNodeConfig>(
-                "faderConfig",
-                Node::has_faderConfig,
-                Node::get_faderConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, IldaFileNodeConfig>(
-                "ildaFileConfig",
-                Node::has_ildaFileConfig,
-                Node::get_ildaFileConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, LaserNodeConfig>(
-                "laserConfig",
-                Node::has_laserConfig,
-                Node::get_laserConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, PixelPatternNodeConfig>(
-                "pixelPatternConfig",
-                Node::has_pixelPatternConfig,
-                Node::get_pixelPatternConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, PixelDmxNodeConfig>(
-                "pixelDmxConfig",
-                Node::has_pixelDmxConfig,
-                Node::get_pixelDmxConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, DmxOutputNodeConfig>(
-                "dmxOutputConfig",
-                Node::has_dmxOutputConfig,
-                Node::get_dmxOutputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MidiInputNodeConfig>(
-                "midiInputConfig",
-                Node::has_midiInputConfig,
-                Node::get_midiInputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MidiOutputNodeConfig>(
-                "midiOutputConfig",
-                Node::has_midiOutputConfig,
-                Node::get_midiOutputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OpcOutputNodeConfig>(
-                "opcOutputConfig",
-                Node::has_opcOutputConfig,
-                Node::get_opcOutputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscNodeConfig>(
-                "oscInputConfig",
-                Node::has_oscInputConfig,
-                Node::get_oscInputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscNodeConfig>(
-                "oscOutputConfig",
-                Node::has_oscOutputConfig,
-                Node::get_oscOutputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoColorBalanceNodeConfig>(
-                "videoColorBalanceConfig",
-                Node::has_videoColorBalanceConfig,
-                Node::get_videoColorBalanceConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoEffectNodeConfig>(
-                "videoEffectConfig",
-                Node::has_videoEffectConfig,
-                Node::get_videoEffectConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoFileNodeConfig>(
-                "videoFileConfig",
-                Node::has_videoFileConfig,
-                Node::get_videoFileConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoOutputNodeConfig>(
-                "videoOutputConfig",
-                Node::has_videoOutputConfig,
-                Node::get_videoOutputConfig,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoTransformNodeConfig>(
-                "videoTransformConfig",
-                Node::has_videoTransformConfig,
-                Node::get_videoTransformConfig,
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NodeConfig>>(
+                "config",
+                |m: &Node| { &m.config },
+                |m: &mut Node| { &mut m.config },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Node>(
                 "Node",
@@ -3303,28 +2032,7 @@ impl ::protobuf::Clear for Node {
         self.outputs.clear();
         self.designer.clear();
         self.preview = Node_NodePreviewType::History;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
-        self.NodeConfig = ::std::option::Option::None;
+        self.config.clear();
         self.unknown_fields.clear();
     }
 }
@@ -3509,6 +2217,1812 @@ impl ::std::default::Default for Node_NodePreviewType {
 impl ::protobuf::reflect::ProtobufValue for Node_NodePreviewType {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct NodeConfig {
+    // message oneof groups
+    pub field_type: ::std::option::Option<NodeConfig_oneof_type>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a NodeConfig {
+    fn default() -> &'a NodeConfig {
+        <NodeConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub enum NodeConfig_oneof_type {
+    oscillatorConfig(OscillatorNodeConfig),
+    scriptingConfig(ScriptingNodeConfig),
+    sequenceConfig(SequenceNodeConfig),
+    clockConfig(ClockNodeConfig),
+    fixtureConfig(FixtureNodeConfig),
+    buttonConfig(InputNodeConfig),
+    faderConfig(InputNodeConfig),
+    ildaFileConfig(IldaFileNodeConfig),
+    laserConfig(LaserNodeConfig),
+    pixelPatternConfig(PixelPatternNodeConfig),
+    pixelDmxConfig(PixelDmxNodeConfig),
+    dmxOutputConfig(DmxOutputNodeConfig),
+    midiInputConfig(MidiInputNodeConfig),
+    midiOutputConfig(MidiOutputNodeConfig),
+    opcOutputConfig(OpcOutputNodeConfig),
+    oscInputConfig(OscNodeConfig),
+    oscOutputConfig(OscNodeConfig),
+    videoColorBalanceConfig(VideoColorBalanceNodeConfig),
+    videoEffectConfig(VideoEffectNodeConfig),
+    videoFileConfig(VideoFileNodeConfig),
+    videoOutputConfig(VideoOutputNodeConfig),
+    videoTransformConfig(VideoTransformNodeConfig),
+}
+
+impl NodeConfig {
+    pub fn new() -> NodeConfig {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.OscillatorNodeConfig oscillatorConfig = 10;
+
+
+    pub fn get_oscillatorConfig(&self) -> &OscillatorNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(ref v)) => v,
+            _ => <OscillatorNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_oscillatorConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_oscillatorConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_oscillatorConfig(&mut self, v: OscillatorNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_oscillatorConfig(&mut self) -> &mut OscillatorNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(OscillatorNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_oscillatorConfig(&mut self) -> OscillatorNodeConfig {
+        if self.has_oscillatorConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            OscillatorNodeConfig::new()
+        }
+    }
+
+    // .mizer.ScriptingNodeConfig scriptingConfig = 11;
+
+
+    pub fn get_scriptingConfig(&self) -> &ScriptingNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(ref v)) => v,
+            _ => <ScriptingNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_scriptingConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_scriptingConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_scriptingConfig(&mut self, v: ScriptingNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_scriptingConfig(&mut self) -> &mut ScriptingNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(ScriptingNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_scriptingConfig(&mut self) -> ScriptingNodeConfig {
+        if self.has_scriptingConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ScriptingNodeConfig::new()
+        }
+    }
+
+    // .mizer.SequenceNodeConfig sequenceConfig = 12;
+
+
+    pub fn get_sequenceConfig(&self) -> &SequenceNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(ref v)) => v,
+            _ => <SequenceNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_sequenceConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_sequenceConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequenceConfig(&mut self, v: SequenceNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_sequenceConfig(&mut self) -> &mut SequenceNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(SequenceNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_sequenceConfig(&mut self) -> SequenceNodeConfig {
+        if self.has_sequenceConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            SequenceNodeConfig::new()
+        }
+    }
+
+    // .mizer.ClockNodeConfig clockConfig = 13;
+
+
+    pub fn get_clockConfig(&self) -> &ClockNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(ref v)) => v,
+            _ => <ClockNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_clockConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_clockConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_clockConfig(&mut self, v: ClockNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_clockConfig(&mut self) -> &mut ClockNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(ClockNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_clockConfig(&mut self) -> ClockNodeConfig {
+        if self.has_clockConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ClockNodeConfig::new()
+        }
+    }
+
+    // .mizer.FixtureNodeConfig fixtureConfig = 14;
+
+
+    pub fn get_fixtureConfig(&self) -> &FixtureNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(ref v)) => v,
+            _ => <FixtureNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_fixtureConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_fixtureConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixtureConfig(&mut self, v: FixtureNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_fixtureConfig(&mut self) -> &mut FixtureNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(FixtureNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_fixtureConfig(&mut self) -> FixtureNodeConfig {
+        if self.has_fixtureConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            FixtureNodeConfig::new()
+        }
+    }
+
+    // .mizer.InputNodeConfig buttonConfig = 15;
+
+
+    pub fn get_buttonConfig(&self) -> &InputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(ref v)) => v,
+            _ => <InputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_buttonConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_buttonConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_buttonConfig(&mut self, v: InputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_buttonConfig(&mut self) -> &mut InputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(InputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_buttonConfig(&mut self) -> InputNodeConfig {
+        if self.has_buttonConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            InputNodeConfig::new()
+        }
+    }
+
+    // .mizer.InputNodeConfig faderConfig = 16;
+
+
+    pub fn get_faderConfig(&self) -> &InputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(ref v)) => v,
+            _ => <InputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_faderConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_faderConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_faderConfig(&mut self, v: InputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_faderConfig(&mut self) -> &mut InputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(InputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_faderConfig(&mut self) -> InputNodeConfig {
+        if self.has_faderConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            InputNodeConfig::new()
+        }
+    }
+
+    // .mizer.IldaFileNodeConfig ildaFileConfig = 17;
+
+
+    pub fn get_ildaFileConfig(&self) -> &IldaFileNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(ref v)) => v,
+            _ => <IldaFileNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_ildaFileConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_ildaFileConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_ildaFileConfig(&mut self, v: IldaFileNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_ildaFileConfig(&mut self) -> &mut IldaFileNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(IldaFileNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_ildaFileConfig(&mut self) -> IldaFileNodeConfig {
+        if self.has_ildaFileConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            IldaFileNodeConfig::new()
+        }
+    }
+
+    // .mizer.LaserNodeConfig laserConfig = 18;
+
+
+    pub fn get_laserConfig(&self) -> &LaserNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(ref v)) => v,
+            _ => <LaserNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_laserConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_laserConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_laserConfig(&mut self, v: LaserNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_laserConfig(&mut self) -> &mut LaserNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(LaserNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_laserConfig(&mut self) -> LaserNodeConfig {
+        if self.has_laserConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            LaserNodeConfig::new()
+        }
+    }
+
+    // .mizer.PixelPatternNodeConfig pixelPatternConfig = 19;
+
+
+    pub fn get_pixelPatternConfig(&self) -> &PixelPatternNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(ref v)) => v,
+            _ => <PixelPatternNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_pixelPatternConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_pixelPatternConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pixelPatternConfig(&mut self, v: PixelPatternNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_pixelPatternConfig(&mut self) -> &mut PixelPatternNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(PixelPatternNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_pixelPatternConfig(&mut self) -> PixelPatternNodeConfig {
+        if self.has_pixelPatternConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            PixelPatternNodeConfig::new()
+        }
+    }
+
+    // .mizer.PixelDmxNodeConfig pixelDmxConfig = 20;
+
+
+    pub fn get_pixelDmxConfig(&self) -> &PixelDmxNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(ref v)) => v,
+            _ => <PixelDmxNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_pixelDmxConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_pixelDmxConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pixelDmxConfig(&mut self, v: PixelDmxNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_pixelDmxConfig(&mut self) -> &mut PixelDmxNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(PixelDmxNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_pixelDmxConfig(&mut self) -> PixelDmxNodeConfig {
+        if self.has_pixelDmxConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            PixelDmxNodeConfig::new()
+        }
+    }
+
+    // .mizer.DmxOutputNodeConfig dmxOutputConfig = 21;
+
+
+    pub fn get_dmxOutputConfig(&self) -> &DmxOutputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(ref v)) => v,
+            _ => <DmxOutputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_dmxOutputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_dmxOutputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_dmxOutputConfig(&mut self, v: DmxOutputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_dmxOutputConfig(&mut self) -> &mut DmxOutputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(DmxOutputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_dmxOutputConfig(&mut self) -> DmxOutputNodeConfig {
+        if self.has_dmxOutputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            DmxOutputNodeConfig::new()
+        }
+    }
+
+    // .mizer.MidiInputNodeConfig midiInputConfig = 22;
+
+
+    pub fn get_midiInputConfig(&self) -> &MidiInputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(ref v)) => v,
+            _ => <MidiInputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_midiInputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_midiInputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_midiInputConfig(&mut self, v: MidiInputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_midiInputConfig(&mut self) -> &mut MidiInputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(MidiInputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_midiInputConfig(&mut self) -> MidiInputNodeConfig {
+        if self.has_midiInputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MidiInputNodeConfig::new()
+        }
+    }
+
+    // .mizer.MidiOutputNodeConfig midiOutputConfig = 23;
+
+
+    pub fn get_midiOutputConfig(&self) -> &MidiOutputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(ref v)) => v,
+            _ => <MidiOutputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_midiOutputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_midiOutputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_midiOutputConfig(&mut self, v: MidiOutputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_midiOutputConfig(&mut self) -> &mut MidiOutputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(MidiOutputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_midiOutputConfig(&mut self) -> MidiOutputNodeConfig {
+        if self.has_midiOutputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MidiOutputNodeConfig::new()
+        }
+    }
+
+    // .mizer.OpcOutputNodeConfig opcOutputConfig = 24;
+
+
+    pub fn get_opcOutputConfig(&self) -> &OpcOutputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(ref v)) => v,
+            _ => <OpcOutputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_opcOutputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_opcOutputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_opcOutputConfig(&mut self, v: OpcOutputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_opcOutputConfig(&mut self) -> &mut OpcOutputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(OpcOutputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_opcOutputConfig(&mut self) -> OpcOutputNodeConfig {
+        if self.has_opcOutputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            OpcOutputNodeConfig::new()
+        }
+    }
+
+    // .mizer.OscNodeConfig oscInputConfig = 25;
+
+
+    pub fn get_oscInputConfig(&self) -> &OscNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(ref v)) => v,
+            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_oscInputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_oscInputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_oscInputConfig(&mut self, v: OscNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_oscInputConfig(&mut self) -> &mut OscNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(OscNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_oscInputConfig(&mut self) -> OscNodeConfig {
+        if self.has_oscInputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            OscNodeConfig::new()
+        }
+    }
+
+    // .mizer.OscNodeConfig oscOutputConfig = 26;
+
+
+    pub fn get_oscOutputConfig(&self) -> &OscNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(ref v)) => v,
+            _ => <OscNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_oscOutputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_oscOutputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_oscOutputConfig(&mut self, v: OscNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_oscOutputConfig(&mut self) -> &mut OscNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(OscNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_oscOutputConfig(&mut self) -> OscNodeConfig {
+        if self.has_oscOutputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            OscNodeConfig::new()
+        }
+    }
+
+    // .mizer.VideoColorBalanceNodeConfig videoColorBalanceConfig = 27;
+
+
+    pub fn get_videoColorBalanceConfig(&self) -> &VideoColorBalanceNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(ref v)) => v,
+            _ => <VideoColorBalanceNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_videoColorBalanceConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_videoColorBalanceConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_videoColorBalanceConfig(&mut self, v: VideoColorBalanceNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_videoColorBalanceConfig(&mut self) -> &mut VideoColorBalanceNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(VideoColorBalanceNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_videoColorBalanceConfig(&mut self) -> VideoColorBalanceNodeConfig {
+        if self.has_videoColorBalanceConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            VideoColorBalanceNodeConfig::new()
+        }
+    }
+
+    // .mizer.VideoEffectNodeConfig videoEffectConfig = 28;
+
+
+    pub fn get_videoEffectConfig(&self) -> &VideoEffectNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(ref v)) => v,
+            _ => <VideoEffectNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_videoEffectConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_videoEffectConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_videoEffectConfig(&mut self, v: VideoEffectNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_videoEffectConfig(&mut self) -> &mut VideoEffectNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(VideoEffectNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_videoEffectConfig(&mut self) -> VideoEffectNodeConfig {
+        if self.has_videoEffectConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            VideoEffectNodeConfig::new()
+        }
+    }
+
+    // .mizer.VideoFileNodeConfig videoFileConfig = 29;
+
+
+    pub fn get_videoFileConfig(&self) -> &VideoFileNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(ref v)) => v,
+            _ => <VideoFileNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_videoFileConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_videoFileConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_videoFileConfig(&mut self, v: VideoFileNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_videoFileConfig(&mut self) -> &mut VideoFileNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(VideoFileNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_videoFileConfig(&mut self) -> VideoFileNodeConfig {
+        if self.has_videoFileConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            VideoFileNodeConfig::new()
+        }
+    }
+
+    // .mizer.VideoOutputNodeConfig videoOutputConfig = 30;
+
+
+    pub fn get_videoOutputConfig(&self) -> &VideoOutputNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(ref v)) => v,
+            _ => <VideoOutputNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_videoOutputConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_videoOutputConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_videoOutputConfig(&mut self, v: VideoOutputNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_videoOutputConfig(&mut self) -> &mut VideoOutputNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(VideoOutputNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_videoOutputConfig(&mut self) -> VideoOutputNodeConfig {
+        if self.has_videoOutputConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            VideoOutputNodeConfig::new()
+        }
+    }
+
+    // .mizer.VideoTransformNodeConfig videoTransformConfig = 31;
+
+
+    pub fn get_videoTransformConfig(&self) -> &VideoTransformNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(ref v)) => v,
+            _ => <VideoTransformNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_videoTransformConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_videoTransformConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_videoTransformConfig(&mut self, v: VideoTransformNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_videoTransformConfig(&mut self) -> &mut VideoTransformNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(VideoTransformNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_videoTransformConfig(&mut self) -> VideoTransformNodeConfig {
+        if self.has_videoTransformConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            VideoTransformNodeConfig::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for NodeConfig {
+    fn is_initialized(&self) -> bool {
+        if let Some(NodeConfig_oneof_type::oscillatorConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::scriptingConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::sequenceConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::clockConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::fixtureConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::buttonConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::faderConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::ildaFileConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::laserConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::pixelPatternConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::pixelDmxConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::dmxOutputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::midiInputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::midiOutputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::opcOutputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::oscInputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::oscOutputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::videoColorBalanceConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::videoEffectConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::videoFileConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::videoOutputConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::videoTransformConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                10 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscillatorConfig(is.read_message()?));
+                },
+                11 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::scriptingConfig(is.read_message()?));
+                },
+                12 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::sequenceConfig(is.read_message()?));
+                },
+                13 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::clockConfig(is.read_message()?));
+                },
+                14 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::fixtureConfig(is.read_message()?));
+                },
+                15 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::buttonConfig(is.read_message()?));
+                },
+                16 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::faderConfig(is.read_message()?));
+                },
+                17 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::ildaFileConfig(is.read_message()?));
+                },
+                18 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::laserConfig(is.read_message()?));
+                },
+                19 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::pixelPatternConfig(is.read_message()?));
+                },
+                20 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::pixelDmxConfig(is.read_message()?));
+                },
+                21 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::dmxOutputConfig(is.read_message()?));
+                },
+                22 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::midiInputConfig(is.read_message()?));
+                },
+                23 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::midiOutputConfig(is.read_message()?));
+                },
+                24 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::opcOutputConfig(is.read_message()?));
+                },
+                25 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscInputConfig(is.read_message()?));
+                },
+                26 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::oscOutputConfig(is.read_message()?));
+                },
+                27 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoColorBalanceConfig(is.read_message()?));
+                },
+                28 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoEffectConfig(is.read_message()?));
+                },
+                29 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoFileConfig(is.read_message()?));
+                },
+                30 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoOutputConfig(is.read_message()?));
+                },
+                31 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(is.read_message()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.field_type {
+            match v {
+                &NodeConfig_oneof_type::oscillatorConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::scriptingConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::sequenceConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::clockConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::fixtureConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::buttonConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::faderConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::ildaFileConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::laserConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::pixelPatternConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::pixelDmxConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::dmxOutputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::midiInputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::midiOutputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::opcOutputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::oscInputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::oscOutputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::videoColorBalanceConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::videoEffectConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::videoFileConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::videoOutputConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::videoTransformConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let ::std::option::Option::Some(ref v) = self.field_type {
+            match v {
+                &NodeConfig_oneof_type::oscillatorConfig(ref v) => {
+                    os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::scriptingConfig(ref v) => {
+                    os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::sequenceConfig(ref v) => {
+                    os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::clockConfig(ref v) => {
+                    os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::fixtureConfig(ref v) => {
+                    os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::buttonConfig(ref v) => {
+                    os.write_tag(15, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::faderConfig(ref v) => {
+                    os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::ildaFileConfig(ref v) => {
+                    os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::laserConfig(ref v) => {
+                    os.write_tag(18, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::pixelPatternConfig(ref v) => {
+                    os.write_tag(19, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::pixelDmxConfig(ref v) => {
+                    os.write_tag(20, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::dmxOutputConfig(ref v) => {
+                    os.write_tag(21, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::midiInputConfig(ref v) => {
+                    os.write_tag(22, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::midiOutputConfig(ref v) => {
+                    os.write_tag(23, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::opcOutputConfig(ref v) => {
+                    os.write_tag(24, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::oscInputConfig(ref v) => {
+                    os.write_tag(25, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::oscOutputConfig(ref v) => {
+                    os.write_tag(26, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::videoColorBalanceConfig(ref v) => {
+                    os.write_tag(27, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::videoEffectConfig(ref v) => {
+                    os.write_tag(28, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::videoFileConfig(ref v) => {
+                    os.write_tag(29, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::videoOutputConfig(ref v) => {
+                    os.write_tag(30, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::videoTransformConfig(ref v) => {
+                    os.write_tag(31, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> NodeConfig {
+        NodeConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscillatorNodeConfig>(
+                "oscillatorConfig",
+                NodeConfig::has_oscillatorConfig,
+                NodeConfig::get_oscillatorConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ScriptingNodeConfig>(
+                "scriptingConfig",
+                NodeConfig::has_scriptingConfig,
+                NodeConfig::get_scriptingConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SequenceNodeConfig>(
+                "sequenceConfig",
+                NodeConfig::has_sequenceConfig,
+                NodeConfig::get_sequenceConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ClockNodeConfig>(
+                "clockConfig",
+                NodeConfig::has_clockConfig,
+                NodeConfig::get_clockConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, FixtureNodeConfig>(
+                "fixtureConfig",
+                NodeConfig::has_fixtureConfig,
+                NodeConfig::get_fixtureConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, InputNodeConfig>(
+                "buttonConfig",
+                NodeConfig::has_buttonConfig,
+                NodeConfig::get_buttonConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, InputNodeConfig>(
+                "faderConfig",
+                NodeConfig::has_faderConfig,
+                NodeConfig::get_faderConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, IldaFileNodeConfig>(
+                "ildaFileConfig",
+                NodeConfig::has_ildaFileConfig,
+                NodeConfig::get_ildaFileConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, LaserNodeConfig>(
+                "laserConfig",
+                NodeConfig::has_laserConfig,
+                NodeConfig::get_laserConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, PixelPatternNodeConfig>(
+                "pixelPatternConfig",
+                NodeConfig::has_pixelPatternConfig,
+                NodeConfig::get_pixelPatternConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, PixelDmxNodeConfig>(
+                "pixelDmxConfig",
+                NodeConfig::has_pixelDmxConfig,
+                NodeConfig::get_pixelDmxConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, DmxOutputNodeConfig>(
+                "dmxOutputConfig",
+                NodeConfig::has_dmxOutputConfig,
+                NodeConfig::get_dmxOutputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MidiInputNodeConfig>(
+                "midiInputConfig",
+                NodeConfig::has_midiInputConfig,
+                NodeConfig::get_midiInputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MidiOutputNodeConfig>(
+                "midiOutputConfig",
+                NodeConfig::has_midiOutputConfig,
+                NodeConfig::get_midiOutputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OpcOutputNodeConfig>(
+                "opcOutputConfig",
+                NodeConfig::has_opcOutputConfig,
+                NodeConfig::get_opcOutputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscNodeConfig>(
+                "oscInputConfig",
+                NodeConfig::has_oscInputConfig,
+                NodeConfig::get_oscInputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, OscNodeConfig>(
+                "oscOutputConfig",
+                NodeConfig::has_oscOutputConfig,
+                NodeConfig::get_oscOutputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoColorBalanceNodeConfig>(
+                "videoColorBalanceConfig",
+                NodeConfig::has_videoColorBalanceConfig,
+                NodeConfig::get_videoColorBalanceConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoEffectNodeConfig>(
+                "videoEffectConfig",
+                NodeConfig::has_videoEffectConfig,
+                NodeConfig::get_videoEffectConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoFileNodeConfig>(
+                "videoFileConfig",
+                NodeConfig::has_videoFileConfig,
+                NodeConfig::get_videoFileConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoOutputNodeConfig>(
+                "videoOutputConfig",
+                NodeConfig::has_videoOutputConfig,
+                NodeConfig::get_videoOutputConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, VideoTransformNodeConfig>(
+                "videoTransformConfig",
+                NodeConfig::has_videoTransformConfig,
+                NodeConfig::get_videoTransformConfig,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<NodeConfig>(
+                "NodeConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static NodeConfig {
+        static instance: ::protobuf::rt::LazyV2<NodeConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(NodeConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for NodeConfig {
+    fn clear(&mut self) {
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for NodeConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for NodeConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
@@ -7963,112 +8477,118 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\"\x0e\n\x0cNo\
     desRequest\"L\n\x0cWriteControl\x12\x12\n\x04path\x18\x01\x20\x01(\tR\
     \x04path\x12\x12\n\x04port\x18\x02\x20\x01(\tR\x04port\x12\x14\n\x05valu\
-    e\x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"]\n\x05Nodes\
-    \x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\x121\n\
-    \x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeConnectionR\x08channels\
-    \"\xde\x01\n\x0eNodeConnection\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\
-    \ntargetNode\x12+\n\ntargetPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\nt\
-    argetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\n\
-    sourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08p\
-    rotocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\
-    \xd7\x11\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
-    odeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\
-    \x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07out\
-    puts\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12/\n\x08designer\
-    \x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\x125\n\x07pre\
-    view\x18\x06\x20\x01(\x0e2\x1b.mizer.Node.NodePreviewTypeR\x07preview\
-    \x12I\n\x10oscillatorConfig\x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNode\
-    ConfigH\0R\x10oscillatorConfig\x12F\n\x0fscriptingConfig\x18\x0b\x20\x01\
-    (\x0b2\x1a.mizer.ScriptingNodeConfigH\0R\x0fscriptingConfig\x12C\n\x0ese\
-    quenceConfig\x18\x0c\x20\x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0es\
-    equenceConfig\x12:\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x16.mizer.ClockN\
-    odeConfigH\0R\x0bclockConfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\
-    \x18.mizer.FixtureNodeConfigH\0R\rfixtureConfig\x12<\n\x0cbuttonConfig\
-    \x18\x0f\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0cbuttonConfig\x12\
-    :\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\
-    \x0bfaderConfig\x12C\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b2\x19.mizer\
-    .IldaFileNodeConfigH\0R\x0eildaFileConfig\x12:\n\x0blaserConfig\x18\x12\
-    \x20\x01(\x0b2\x16.mizer.LaserNodeConfigH\0R\x0blaserConfig\x12O\n\x12pi\
-    xelPatternConfig\x18\x13\x20\x01(\x0b2\x1d.mizer.PixelPatternNodeConfigH\
-    \0R\x12pixelPatternConfig\x12C\n\x0epixelDmxConfig\x18\x14\x20\x01(\x0b2\
-    \x19.mizer.PixelDmxNodeConfigH\0R\x0epixelDmxConfig\x12F\n\x0fdmxOutputC\
-    onfig\x18\x15\x20\x01(\x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\x0fdmxOutp\
-    utConfig\x12F\n\x0fmidiInputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer.MidiI\
-    nputNodeConfigH\0R\x0fmidiInputConfig\x12I\n\x10midiOutputConfig\x18\x17\
-    \x20\x01(\x0b2\x1b.mizer.MidiOutputNodeConfigH\0R\x10midiOutputConfig\
-    \x12F\n\x0fopcOutputConfig\x18\x18\x20\x01(\x0b2\x1a.mizer.OpcOutputNode\
-    ConfigH\0R\x0fopcOutputConfig\x12>\n\x0eoscInputConfig\x18\x19\x20\x01(\
-    \x0b2\x14.mizer.OscNodeConfigH\0R\x0eoscInputConfig\x12@\n\x0foscOutputC\
-    onfig\x18\x1a\x20\x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0foscOutputConf\
-    ig\x12^\n\x17videoColorBalanceConfig\x18\x1b\x20\x01(\x0b2\".mizer.Video\
-    ColorBalanceNodeConfigH\0R\x17videoColorBalanceConfig\x12L\n\x11videoEff\
-    ectConfig\x18\x1c\x20\x01(\x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\x11v\
-    ideoEffectConfig\x12F\n\x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x1a.miz\
-    er.VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12L\n\x11videoOutputConfi\
-    g\x18\x1e\x20\x01(\x0b2\x1c.mizer.VideoOutputNodeConfigH\0R\x11videoOutp\
-    utConfig\x12U\n\x14videoTransformConfig\x18\x1f\x20\x01(\x0b2\x1f.mizer.\
-    VideoTransformNodeConfigH\0R\x14videoTransformConfig\"\xd4\x02\n\x08Node\
-    Type\x12\t\n\x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscilla\
-    tor\x10\x02\x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0b\n\
-    \x07Fixture\x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\r\n\tDmxOutput\x10\
-    \x0b\x12\x0c\n\x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMid\
-    iInput\x10\x0e\x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\
-    \x12\x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\
-    \x15\n\x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\
-    \x12\x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\
-    \tOpcOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\"Q\
-    \n\x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\x0c\n\x08Waveform\
-    \x10\x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Texture\x10\x03\x12\
-    \x08\n\x04None\x10\x04B\x0c\n\nNodeConfig\"\x81\x02\n\x14OscillatorNodeC\
-    onfig\x12>\n\x04type\x18\x01\x20\x01(\x0e2*.mizer.OscillatorNodeConfig.O\
-    scillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\
-    \x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\
-    \x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offse\
-    t\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillat\
-    orType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Sa\
-    w\x10\x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\
-    \x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12SequenceNo\
-    deConfig\x12<\n\x05steps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeConfig\
-    .SequenceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\x18\x01\
-    \x20\x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\
-    \x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockNodeConfig\
-    \x12\x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeCo\
-    nfig\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInp\
-    utNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\
-    \x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\
-    \x20\x01(\tR\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\
-    \x07pattern\x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\
-    \x07pattern\"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08Rgb\
-    Snake\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\
-    \x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\
-    \x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUniverse\
-    \x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"c\n\x13DmxOutputNode\
-    Config\x12\x16\n\x06output\x18\x01\x20\x01(\tR\x06output\x12\x1a\n\x08un\
-    iverse\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x03\x20\
-    \x01(\rR\x07channel\"\x15\n\x13MidiInputNodeConfig\"\x16\n\x14MidiOutput\
-    NodeConfig\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01\
-    (\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05\
-    width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01\
-    (\x04R\x06height\"K\n\rOscNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\
-    \tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04p\
-    ath\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\
-    \x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\
-    \x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\
-    \x1a\n\x18VideoTransformNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\
-    \x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\
-    \n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.No\
-    dePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scal\
-    e\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08p\
-    rotocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\
-    \x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\
-    \x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06\
-    Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\
-    \x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gst\
-    \x10\x082\xe9\x01\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRe\
-    quest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeReq\
-    uest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnecti\
-    on\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.\
-    mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0b\x06proto3\
+    e\x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"X\n\x17UpdateNo\
+    deConfigRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12)\n\x06\
+    config\x18\x02\x20\x01(\x0b2\x11.mizer.NodeConfigR\x06config\"\x1a\n\x18\
+    UpdateNodeConfigResponse\"]\n\x05Nodes\x12!\n\x05nodes\x18\x01\x20\x03(\
+    \x0b2\x0b.mizer.NodeR\x05nodes\x121\n\x08channels\x18\x02\x20\x03(\x0b2\
+    \x15.mizer.NodeConnectionR\x08channels\"\xde\x01\n\x0eNodeConnection\x12\
+    \x1e\n\ntargetNode\x18\x01\x20\x01(\tR\ntargetNode\x12+\n\ntargetPort\
+    \x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\nsourceNode\
+    \x18\x03\x20\x01(\tR\nsourceNode\x12+\n\nsourcePort\x18\x04\x20\x01(\x0b\
+    2\x0b.mizer.PortR\nsourcePort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\
+    \x16.mizer.ChannelProtocolR\x08protocol\"\xcd\x05\n\x04Node\x12(\n\x04ty\
+    pe\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04p\
+    ath\x18\x02\x20\x01(\tR\x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\
+    \x0b.mizer.PortR\x06inputs\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.m\
+    izer.PortR\x07outputs\x12/\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer\
+    .NodeDesignerR\x08designer\x125\n\x07preview\x18\x06\x20\x01(\x0e2\x1b.m\
+    izer.Node.NodePreviewTypeR\x07preview\x12)\n\x06config\x18\x07\x20\x01(\
+    \x0b2\x11.mizer.NodeConfigR\x06config\"\xd4\x02\n\x08NodeType\x12\t\n\
+    \x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\
+    \x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0b\n\x07Fixture\
+    \x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\r\n\tDmxOutput\x10\x0b\x12\
+    \x0c\n\x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMidiInput\
+    \x10\x0e\x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\x12\
+    \x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\
+    \x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\
+    \x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOp\
+    cOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\"Q\n\
+    \x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\x0c\n\x08Waveform\x10\
+    \x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Texture\x10\x03\x12\x08\
+    \n\x04None\x10\x04\"\xbb\x0c\n\nNodeConfig\x12I\n\x10oscillatorConfig\
+    \x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNodeConfigH\0R\x10oscillatorCon\
+    fig\x12F\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x1a.mizer.ScriptingN\
+    odeConfigH\0R\x0fscriptingConfig\x12C\n\x0esequenceConfig\x18\x0c\x20\
+    \x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0esequenceConfig\x12:\n\x0b\
+    clockConfig\x18\r\x20\x01(\x0b2\x16.mizer.ClockNodeConfigH\0R\x0bclockCo\
+    nfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x18.mizer.FixtureNodeCo\
+    nfigH\0R\rfixtureConfig\x12<\n\x0cbuttonConfig\x18\x0f\x20\x01(\x0b2\x16\
+    .mizer.InputNodeConfigH\0R\x0cbuttonConfig\x12:\n\x0bfaderConfig\x18\x10\
+    \x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0bfaderConfig\x12C\n\x0eil\
+    daFileConfig\x18\x11\x20\x01(\x0b2\x19.mizer.IldaFileNodeConfigH\0R\x0ei\
+    ldaFileConfig\x12:\n\x0blaserConfig\x18\x12\x20\x01(\x0b2\x16.mizer.Lase\
+    rNodeConfigH\0R\x0blaserConfig\x12O\n\x12pixelPatternConfig\x18\x13\x20\
+    \x01(\x0b2\x1d.mizer.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\
+    \x12C\n\x0epixelDmxConfig\x18\x14\x20\x01(\x0b2\x19.mizer.PixelDmxNodeCo\
+    nfigH\0R\x0epixelDmxConfig\x12F\n\x0fdmxOutputConfig\x18\x15\x20\x01(\
+    \x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12F\n\x0fmid\
+    iInputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer.MidiInputNodeConfigH\0R\x0f\
+    midiInputConfig\x12I\n\x10midiOutputConfig\x18\x17\x20\x01(\x0b2\x1b.miz\
+    er.MidiOutputNodeConfigH\0R\x10midiOutputConfig\x12F\n\x0fopcOutputConfi\
+    g\x18\x18\x20\x01(\x0b2\x1a.mizer.OpcOutputNodeConfigH\0R\x0fopcOutputCo\
+    nfig\x12>\n\x0eoscInputConfig\x18\x19\x20\x01(\x0b2\x14.mizer.OscNodeCon\
+    figH\0R\x0eoscInputConfig\x12@\n\x0foscOutputConfig\x18\x1a\x20\x01(\x0b\
+    2\x14.mizer.OscNodeConfigH\0R\x0foscOutputConfig\x12^\n\x17videoColorBal\
+    anceConfig\x18\x1b\x20\x01(\x0b2\".mizer.VideoColorBalanceNodeConfigH\0R\
+    \x17videoColorBalanceConfig\x12L\n\x11videoEffectConfig\x18\x1c\x20\x01(\
+    \x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\x11videoEffectConfig\x12F\n\
+    \x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x1a.mizer.VideoFileNodeConfigH\
+    \0R\x0fvideoFileConfig\x12L\n\x11videoOutputConfig\x18\x1e\x20\x01(\x0b2\
+    \x1c.mizer.VideoOutputNodeConfigH\0R\x11videoOutputConfig\x12U\n\x14vide\
+    oTransformConfig\x18\x1f\x20\x01(\x0b2\x1f.mizer.VideoTransformNodeConfi\
+    gH\0R\x14videoTransformConfigB\x06\n\x04type\"\x81\x02\n\x14OscillatorNo\
+    deConfig\x12>\n\x04type\x18\x01\x20\x01(\x0e2*.mizer.OscillatorNodeConfi\
+    g.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ra\
+    tio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\
+    \x04\x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06o\
+    ffset\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOsci\
+    llatorType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\
+    \x03Saw\x10\x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfi\
+    g\x12\x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12Seque\
+    nceNodeConfig\x12<\n\x05steps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeC\
+    onfig.SequenceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\
+    \x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\
+    \x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\"'\n\x0fClockN\
+    odeConfig\x12\x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11Fixt\
+    ureNodeConfig\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\
+    \n\x0fInputNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\
+    \x01\x20\x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\
+    \x18\x01\x20\x01(\tR\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\
+    \x12?\n\x07pattern\x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.P\
+    atternR\x07pattern\"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\
+    \x08RgbSnake\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05widt\
+    h\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\
+    \x04R\x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUnive\
+    rse\x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"c\n\x13DmxOutputN\
+    odeConfig\x12\x16\n\x06output\x18\x01\x20\x01(\tR\x06output\x12\x1a\n\
+    \x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\
+    \x03\x20\x01(\rR\x07channel\"\x15\n\x13MidiInputNodeConfig\"\x16\n\x14Mi\
+    diOutputNodeConfig\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\
+    \x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\
+    \x14\n\x05width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\
+    \x04\x20\x01(\x04R\x06height\"K\n\rOscNodeConfig\x12\x12\n\x04host\x18\
+    \x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\
+    \x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBala\
+    nceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConf\
+    ig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputN\
+    odeConfig\"\x1a\n\x18VideoTransformNodeConfig\"*\n\x0cNodePosition\x12\
+    \x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\
+    \x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\
+    \x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\
+    \x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04nam\
+    e\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\
+    \x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\
+    \n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\
+    \x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\
+    \x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\
+    \n\x03Gst\x10\x082\xc2\x02\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mize\
+    r.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.A\
+    ddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.Nod\
+    eConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\
+    \x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12Up\
+    dateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.Upd\
+    ateNodeConfigResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

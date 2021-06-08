@@ -21,3 +21,4 @@ mizer-processing = { path = "../processing" }
 dashmap = "4"
 flume = "0.10"
 ringbuffer = "0.7"
+downcast = "0.10"

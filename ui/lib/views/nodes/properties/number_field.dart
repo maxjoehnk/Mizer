@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 class NumberField extends StatefulWidget {
   final String label;
@@ -9,8 +12,7 @@ class NumberField extends StatefulWidget {
   num minHint;
   num maxHint;
   final bool fractions;
-
-  final TextEditingController controller = TextEditingController();
+  final Function(num) onUpdate;
 
   NumberField(
       {@required this.label,
@@ -19,8 +21,8 @@ class NumberField extends StatefulWidget {
       this.max,
       this.minHint,
       this.maxHint,
-      this.fractions = false}) {
-    this.controller.text = this.value.toString();
+      this.fractions = false,
+      this.onUpdate}) {
     this.minHint = this.minHint ?? this.min ?? 0;
     this.maxHint = this.maxHint ?? this.max ?? 1;
   }
@@ -31,6 +33,7 @@ class NumberField extends StatefulWidget {
 
 class _NumberFieldState extends State<NumberField> {
   final FocusNode focusNode = FocusNode(debugLabel: "NumberField");
+  final TextEditingController controller = TextEditingController();
 
   num value;
   bool isEditing = false;
@@ -40,12 +43,16 @@ class _NumberFieldState extends State<NumberField> {
   @override
   void initState() {
     super.initState();
+    _setValue(value);
     this.focusNode.addListener(() {
       if (!focusNode.hasFocus) {
         setState(() {
           this.isEditing = false;
         });
       }
+    });
+    controller.addListener(() {
+      this._setValue(num.parse(controller.text));
     });
   }
 
@@ -92,7 +99,7 @@ class _NumberFieldState extends State<NumberField> {
             label: this.widget.label,
             value: this._valueHint,
             child: Text(
-              widget.controller.text,
+              controller.text,
               style: textStyle,
               textAlign: TextAlign.center,
             )),
@@ -110,18 +117,21 @@ class _NumberFieldState extends State<NumberField> {
           value: this._valueHint,
           child: EditableText(
             focusNode: focusNode,
-            controller: widget.controller,
+            controller: controller,
             cursorColor: Colors.black87,
             backgroundCursorColor: Colors.black12,
             style: textStyle,
             textAlign: TextAlign.center,
             selectionColor: Colors.black38,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly, FilteringTextInputFormatter.singleLineFormatter],
           ),
         ));
   }
 
   void _setValue(num value) {
-    if (widget.min != null && widget.max != null) {
+    log("setValue $value", name: "NumberField");
+    if (widget?.min != null && widget?.max != null) {
       value = value.clamp(widget.min, widget.max);
     }
     if (!this.widget.fractions) {
@@ -129,8 +139,11 @@ class _NumberFieldState extends State<NumberField> {
     }
     setState(() {
       this.value = value;
-      this.widget.controller.text = this.value.toString();
+      this.controller.text = this.value.toString();
     });
+    if (widget.value != value) {
+      widget.onUpdate(value);
+    }
   }
 }
 

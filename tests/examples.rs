@@ -21,6 +21,7 @@ async fn test_build_project_pipeline(project: &str) {
         files: vec![PathBuf::from(format!("examples/{}.yml", project))],
         disable_media_api: true,
         disable_grpc_api: true,
+        headless: true,
     };
 
     build_runtime(handle, flags).unwrap();

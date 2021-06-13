@@ -4,11 +4,13 @@ pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
+pub use self::transport::*;
 
 mod fixtures;
 mod layouts;
 mod media;
 mod nodes;
+mod transport;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;

@@ -6,6 +6,7 @@ import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/session.dart';
+import 'package:mizer/api/contracts/transport.dart';
 
 import '../preview_handler.dart';
 import 'fixtures.dart';
@@ -13,6 +14,7 @@ import 'layouts.dart';
 import 'media.dart';
 import 'nodes.dart';
 import 'session.dart';
+import 'transport.dart';
 
 class GrpcApiProvider extends StatelessWidget {
   final ClientChannel _channel;
@@ -30,6 +32,7 @@ class GrpcApiProvider extends StatelessWidget {
         RepositoryProvider<NodesApi>(create: (context) => NodesGrpcApi(_channel)),
         RepositoryProvider<LayoutsApi>(create: (context) => LayoutsGrpcApi(_channel)),
         RepositoryProvider<FixturesApi>(create: (context) => FixturesGrpcApi(_channel)),
+        RepositoryProvider<TransportApi>(create: (context) => TransportGrpcApi(_channel)),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );

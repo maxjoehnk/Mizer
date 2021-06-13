@@ -27,5 +27,6 @@ impl Plugin for MizerPlugin {
         engine.register_channel(NodesChannel::new(self.handlers.nodes.clone()).channel());
         engine.register_channel(LayoutsChannel::new(self.handlers.layouts.clone()).channel());
         engine.register_channel(MediaChannel::new(self.handlers.media.clone()).channel());
+        engine.register_channel(TransportChannel::new(self.handlers.transport.clone()).channel());
     }
 }

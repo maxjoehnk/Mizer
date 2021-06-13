@@ -2737,7 +2737,10 @@ name = "mizer-api"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "flume",
+ "futures",
  "log",
+ "mizer-clock",
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",

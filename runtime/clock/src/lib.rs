@@ -14,7 +14,11 @@ pub struct SystemClock {
     /// BPM
     speed: f64,
     last_tick: u128,
+    /// Frame per beat
     frame: f64,
+    /// Time in seconds
+    time: f64,
+    state: ClockState,
 }
 
 impl Default for SystemClock {
@@ -23,6 +27,8 @@ impl Default for SystemClock {
             speed: 90.,
             last_tick: 0,
             frame: 0.,
+            time: 0.,
+            state: ClockState::Playing,
         }
     }
 }
@@ -32,14 +38,18 @@ impl Clock for SystemClock {
         if self.last_tick == 0 {
             self.last_tick = now();
         }
-        let tick = now();
-        let delta: f64 = (tick - self.last_tick) as f64 * (self.speed / 60000f64);
-        self.frame += delta;
-        let downbeat = self.frame > 4f64;
-        while self.frame > 4f64 {
-            self.frame -= 4f64;
+        let mut delta: f64 = 0.;
+        if self.state == ClockState::Playing {
+            let tick = now();
+            delta = (tick - self.last_tick) as f64 * (self.speed / 60000f64);
+            self.frame += delta;
+            self.time += (tick - self.last_tick) as f64 / 1_000f64;
+            while self.frame > 4f64 {
+                self.frame -= 4f64;
+            }
+            self.last_tick = tick;
         }
-        self.last_tick = tick;
+        let downbeat = self.frame > 4f64;
 
         ClockFrame {
             speed: self.speed,
@@ -56,6 +66,24 @@ impl Clock for SystemClock {
     fn speed_mut(&mut self) -> &mut f64 {
         &mut self.speed
     }
+
+    fn snapshot(&self) -> ClockSnapshot {
+        ClockSnapshot {
+            speed: self.speed,
+            state: self.state,
+            frames: 0,
+            time: self.time,
+        }
+    }
+
+    fn set_state(&mut self, state: ClockState) {
+        self.state = state;
+        self.last_tick = 0;
+        if state == ClockState::Stopped {
+            self.frame = 0.;
+            self.time = 0.;
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -71,4 +99,23 @@ pub trait Clock {
 
     fn speed(&self) -> f64;
     fn speed_mut(&mut self) -> &mut f64;
+
+    fn snapshot(&self) -> ClockSnapshot;
+
+    fn set_state(&mut self, state: ClockState);
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum ClockState {
+    Stopped,
+    Paused,
+    Playing,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct ClockSnapshot {
+    pub speed: f64,
+    pub frames: u64,
+    pub time: f64,
+    pub state: ClockState,
 }

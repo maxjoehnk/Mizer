@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
@@ -11,6 +12,7 @@ import 'consts.dart';
 import 'graph/engine.dart';
 import 'node_properties.dart';
 import 'node_selection.dart';
+import 'transport_controls.dart';
 
 class FetchNodesView extends StatelessWidget {
   @override
@@ -60,7 +62,17 @@ class _NodesViewState extends State<NodesView> {
                             this.selectedNode = node;
                           }),
                         ))))),
-        NodePropertiesPane(node: this.selectedNode),
+        Positioned(
+            top: 16,
+            right: 16,
+            bottom: 16 + TRANSPORT_CONTROLS_HEIGHT,
+            width: 256,
+            child: NodePropertiesPane(node: this.selectedNode)),
+        Positioned(
+          left: 0,
+            right: 0,
+            bottom: 0,
+            child: TransportControls()),
       ],
     );
   }

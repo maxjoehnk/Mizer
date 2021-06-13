@@ -19,26 +19,21 @@ class NodePropertiesPane extends StatelessWidget {
       return Container();
     }
     var nodesApi = context.read<NodesApi>();
-    return Positioned(
-        top: 16,
-        right: 16,
-        bottom: 16,
-        width: 256,
-        child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: Colors.grey.shade800,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
-                ]),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(this.node.path),
-              ),
-              ..._getPropertyPanes(nodesApi),
-            ])));
+    return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.grey.shade800,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
+            ]),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(this.node.path),
+          ),
+          ..._getPropertyPanes(nodesApi),
+        ]));
   }
 
   List<Widget> _getPropertyPanes(NodesApi nodesApi) {

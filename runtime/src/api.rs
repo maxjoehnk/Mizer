@@ -8,6 +8,7 @@ use pinboard::NonEmptyPinboard;
 use mizer_layouts::Layout;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
 use mizer_nodes::{FixtureNode, Node, DmxOutputNode};
+use mizer_clock::{ClockSnapshot, ClockState};
 
 #[derive(Clone)]
 pub struct RuntimeApi {
@@ -16,6 +17,8 @@ pub struct RuntimeApi {
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     pub(crate) layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
     pub(crate) sender: flume::Sender<ApiCommand>,
+    // TODO: make broadcast
+    pub clock_recv: flume::Receiver<ClockSnapshot>,
 }
 
 #[derive(Debug, Clone)]
@@ -30,6 +33,7 @@ pub enum ApiCommand {
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
     GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>),
     UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
+    SetClockState(ClockState),
 }
 
 impl RuntimeApi {
@@ -125,6 +129,12 @@ impl RuntimeApi {
         let result = rx.recv()?;
 
         result
+    }
+
+    pub fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
+        self.sender.send(ApiCommand::SetClockState(state))?;
+
+        Ok(())
     }
 
     fn get_descriptor(&self, path: NodePath, designer: &HashMap<NodePath, NodeDesigner>) -> NodeDescriptor {

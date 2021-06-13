@@ -3,6 +3,7 @@ pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::session::*;
+pub use self::transport::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_media::api::MediaServerApi;
@@ -13,6 +14,7 @@ mod layouts;
 mod media;
 mod nodes;
 mod session;
+mod transport;
 
 #[derive(Clone)]
 pub struct Handlers {
@@ -21,6 +23,7 @@ pub struct Handlers {
     pub media: MediaHandler,
     pub nodes: NodesHandler,
     pub session: SessionHandler,
+    pub transport: TransportHandler,
 }
 
 impl Handlers {
@@ -34,8 +37,9 @@ impl Handlers {
             fixtures: FixturesHandler::new(fixture_manager, fixture_library, runtime.clone()),
             layouts: LayoutsHandler::new(runtime.clone()),
             media: MediaHandler::new(media_server),
-            nodes: NodesHandler::new(runtime),
+            nodes: NodesHandler::new(runtime.clone()),
             session: SessionHandler::new(),
+            transport: TransportHandler::new(runtime),
         }
     }
 }

@@ -1,6 +1,6 @@
 use crate::api::{ApiCommand, RuntimeApi};
 use dashmap::DashMap;
-use mizer_clock::{Clock, SystemClock};
+use mizer_clock::{Clock, SystemClock, ClockSnapshot};
 use mizer_execution_planner::*;
 use mizer_module::Runtime;
 use mizer_node::*;
@@ -32,11 +32,14 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     processors: Vec<Box<dyn Processor>>,
     api_recv: flume::Receiver<ApiCommand>,
     api_sender: flume::Sender<ApiCommand>,
+    clock_recv: flume::Receiver<ClockSnapshot>,
+    clock_sender: flume::Sender<ClockSnapshot>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
     pub fn new() -> Self {
-        let (tx, rx) = flume::unbounded();
+        let (api_tx, api_rx) = flume::unbounded();
+        let (clock_tx, clock_rx) = flume::unbounded();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
             planner: Default::default(),
@@ -50,8 +53,10 @@ impl CoordinatorRuntime<SystemClock> {
             clock: SystemClock::default(),
             injector: Default::default(),
             processors: Default::default(),
-            api_recv: rx,
-            api_sender: tx,
+            api_recv: api_rx,
+            api_sender: api_tx,
+            clock_recv: clock_rx,
+            clock_sender: clock_tx,
         };
         runtime.bootstrap();
 
@@ -61,7 +66,8 @@ impl CoordinatorRuntime<SystemClock> {
 
 impl<TClock: Clock> CoordinatorRuntime<TClock> {
     pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
-        let (tx, rx) = flume::unbounded();
+        let (api_tx, api_rx) = flume::unbounded();
+        let (clock_tx, clock_rx) = flume::unbounded();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
             planner: Default::default(),
@@ -75,8 +81,10 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock,
             injector: Default::default(),
             processors: Default::default(),
-            api_recv: rx,
-            api_sender: tx,
+            api_recv: api_rx,
+            api_sender: api_tx,
+            clock_recv: clock_rx,
+            clock_sender: clock_tx,
         };
         runtime.bootstrap();
 
@@ -279,6 +287,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             links: self.links.clone(),
             layouts: self.layouts.clone(),
             sender: self.api_sender.clone(),
+            clock_recv: self.clock_recv.clone(),
         }
     }
 
@@ -309,6 +318,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 }
                 Ok(ApiCommand::UpdateNode(path, config, sender)) => {
                     sender.send(self.handle_update_node(path, config)).expect("api command sender disconnected");
+                }
+                Ok(ApiCommand::SetClockState(state)) => {
+                    self.clock.set_state(state);
                 }
                 Err(flume::TryRecvError::Empty) => break,
                 Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
@@ -367,6 +379,9 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     }
 
     fn process(&mut self) {
+        if let Err(err) = self.clock_sender.send(self.clock.snapshot()) {
+            log::error!("Could not send clock snapshot {:?}", err);
+        }
         self.handle_api_commands();
         self.process_pipeline();
         for processor in self.processors.iter() {

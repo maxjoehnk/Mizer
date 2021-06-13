@@ -1,19 +1,11 @@
 SRC_DIR = ../api/protos
-COMPILER = protoc -I=$(SRC_DIR) --dart_out=grpc:lib/protos
+OUT_DIR = lib/protos
+COMPILER = protoc -I=$(SRC_DIR) --dart_out=grpc:$(OUT_DIR)
 
-proto: lib/protos/nodes.pb.dart lib/protos/session.pb.dart lib/protos/fixtures.pb.dart lib/protos/media.pb.dart lib/protos/layouts.pb.dart
+SRCS := $(shell find $(SRC_DIR) -name *.proto)
+PROTOS := $(SRCS:$(SRC_DIR)/%.proto=$(OUT_DIR)/%.pb.dart)
 
-lib/protos/nodes.pb.dart: $(SRC_DIR)/nodes.proto
-	$(COMPILER) $(SRC_DIR)/nodes.proto
+proto: $(PROTOS)
 
-lib/protos/session.pb.dart: $(SRC_DIR)/session.proto
-	$(COMPILER) $(SRC_DIR)/session.proto
-
-lib/protos/fixtures.pb.dart: $(SRC_DIR)/fixtures.proto
-	$(COMPILER) $(SRC_DIR)/fixtures.proto
-
-lib/protos/media.pb.dart: $(SRC_DIR)/media.proto
-	$(COMPILER) $(SRC_DIR)/media.proto
-
-lib/protos/layouts.pb.dart: $(SRC_DIR)/layouts.proto
-	$(COMPILER) $(SRC_DIR)/layouts.proto
+$(OUT_DIR)/%.pb.dart : $(SRC_DIR)/%.proto
+	$(COMPILER) $<

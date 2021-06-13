@@ -10,6 +10,7 @@ fn main() {
             "protos/media.proto",
             "protos/nodes.proto",
             "protos/session.proto",
+            "protos/transport.proto",
         ])
         .include("protos")
         .customize(Customize {

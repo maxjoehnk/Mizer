@@ -37,7 +37,7 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
   Stream<Nodes> mapEventToState(NodesEvent event) async* {
     if (event is FetchNodes) {
       var nodes = await api.getNodes();
-      log("$nodes", name: "NodesBloc");
+      // log("$nodes", name: "NodesBloc");
       yield nodes;
     }
     if (event is AddNode) {

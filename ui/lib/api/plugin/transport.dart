@@ -14,7 +14,7 @@ class TransportPluginApi implements TransportApi {
 
   @override
   Future<void> setState(TransportState state) async {
-    await channel.invokeMethod("setState", state);
+    await channel.invokeMethod("setState", state.value);
   }
 
   @override

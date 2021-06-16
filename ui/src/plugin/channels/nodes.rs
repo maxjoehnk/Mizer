@@ -1,9 +1,10 @@
 use mizer_api::handlers::NodesHandler;
-use flutter_engine::channel::{MethodCallHandler, MethodCall, Channel, MethodChannel};
-use flutter_engine::codec::STANDARD_CODEC;
 use mizer_api::models::*;
-use crate::plugin::channels::MethodCallExt;
+use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
 use std::collections::HashMap;
+use nativeshell::codec::{MethodCall, Value, MethodCallReply};
+use nativeshell::shell::{MethodChannel, Context, EngineHandle, MethodCallHandler};
+use std::rc::Rc;
 
 #[derive(Clone)]
 pub struct NodesChannel {
@@ -11,55 +12,73 @@ pub struct NodesChannel {
 }
 
 impl MethodCallHandler for NodesChannel {
-    fn on_method_call(&mut self, call: MethodCall) {
-        match call.method().as_str() {
+    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
+        match call.method.as_str() {
             "addNode" => {
                 let response = call.arguments().map(|args| self.add_node(args));
 
-                call.respond_result(response);
+                resp.respond_result(response);
             },
             "getNodes" => {
                 let response = self.get_nodes();
 
-                call.respond_msg(response);
+                resp.respond_msg(response);
             },
             "linkNodes" => {
                 match call.arguments() {
                     Ok(args) => {
                         self.link_nodes(args);
-                        call.success_empty();
+                        resp.send_ok(Value::Null);
                     },
-                    Err(err) => call.respond_error(err),
+                    Err(err) => resp.respond_error(err),
                 }
             },
             "writeControlValue" => {
                 match call.arguments() {
                     Ok(args) => {
                         self.write_control_value(args);
-                        call.success_empty();
+                        resp.send_ok(Value::Null);
                     },
-                    Err(err) => call.respond_error(err),
+                    Err(err) => resp.respond_error(err),
                 }
             },
             "getNodeHistory" => {
-                match self.get_node_history(call.args()) {
-                    Ok(history) => call.success(history),
-                    Err(err) => call.respond_error(err),
+                if let Value::String(path) = call.args {
+                    match self.get_node_history(path) {
+                        Ok(history) => resp.send_ok(history.into()),
+                        Err(err) => resp.respond_error(err),
+                    }
                 }
             },
             "getNodeHistories" => {
-                match self.get_node_histories(call.args()) {
-                    Ok(history) => call.success(history),
-                    Err(err) => call.respond_error(err),
+                if let Value::List(vec) = call.args {
+                    let paths = vec.into_iter().filter_map(|path| {
+                        if let Value::String(path) = path {
+                            Some(path)
+                        }else {
+                            None
+                        }
+                    }).collect();
+                    match self.get_node_histories(paths) {
+                        Ok(history) => {
+                            // resp.send_ok(history.into())
+                        },
+                        Err(err) => resp.respond_error(err),
+                    }
                 }
             },
             "updateNodeProperty" => {
-                match self.handler.update_node_property(call.args()) {
-                    Ok(()) => call.success_empty(),
-                    Err(err) => call.respond_error(err),
+                match call.arguments() {
+                    Ok(args) => {
+                        match self.handler.update_node_property(args) {
+                            Ok(()) => resp.send_ok(Value::Null),
+                            Err(err) => resp.respond_error(err),
+                        }
+                    },
+                    Err(err) => resp.respond_error(err),
                 }
             },
-            _ => call.not_implemented()
+            _ => resp.not_implemented()
         }
     }
 }
@@ -71,8 +90,8 @@ impl NodesChannel {
         }
     }
 
-    pub fn channel(self) -> impl Channel {
-        MethodChannel::new("mizer.live/nodes", self, &STANDARD_CODEC)
+    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+        MethodChannel::new(context, "mizer.live/nodes", self)
     }
 
     fn add_node(&self, request: AddNodeRequest) -> Node {

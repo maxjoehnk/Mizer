@@ -1,32 +1,35 @@
 use mizer_api::handlers::MediaHandler;
-use flutter_engine::channel::*;
-use flutter_engine::codec::STANDARD_CODEC;
-use crate::plugin::channels::MethodCallExt;
+use crate::plugin::channels::MethodReplyExt;
 use mizer_api::models::*;
+use nativeshell::codec::{MethodCall, Value, MethodCallReply};
+use nativeshell::shell::{MethodChannel, Context, EngineHandle, MethodCallHandler};
+use std::rc::Rc;
 
 pub struct MediaChannel {
     handler: MediaHandler,
 }
 
 impl MethodCallHandler for MediaChannel {
-    fn on_method_call(&mut self, call: MethodCall) {
-        match call.method().as_str() {
+    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
+        match call.method.as_str() {
             "createTag" => {
-                let response = self.create_tag(call.args());
+                if let Value::String(name) = call.args {
+                    let response = self.create_tag(name);
 
-                call.respond_result(response);
+                    resp.respond_result(response);
+                }
             }
             "getMedia" => {
                 let response = self.get_media();
 
-                call.respond_result(response);
+                resp.respond_result(response);
             }
             "getTagsWithMedia" => {
                 let response = self.get_tags_with_media();
 
-                call.respond_result(response);
+                resp.respond_result(response);
             }
-            _ => call.not_implemented()
+            _ => resp.not_implemented()
         }
     }
 }
@@ -38,8 +41,8 @@ impl MediaChannel {
         }
     }
 
-    pub fn channel(self) -> impl Channel {
-        MethodChannel::new("mizer.live/media", self, &STANDARD_CODEC)
+    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+        MethodChannel::new(context, "mizer.live/media", self)
     }
 
     fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {

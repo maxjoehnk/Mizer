@@ -8,11 +8,9 @@ edition = "2018"
 anyhow = "1"
 log = "0.4"
 mizer-api = { path = "../api" }
-flutter-engine = { git = "https://github.com/maxjoehnk/flutter-rs.git" }
-flutter-glfw = { git = "https://github.com/maxjoehnk/flutter-rs.git" }
 protobuf = "2.18"
 smol = "1.2"
+nativeshell = "0.1.5"
 
 [build-dependencies]
-flutter-tools = { git = "https://github.com/maxjoehnk/flutter-rs.git" }
-
+nativeshell_build = "0.1"

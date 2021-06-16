@@ -34,7 +34,7 @@ fn run(flags: Flags) -> anyhow::Result<()> {
 
     let handlers = handlers.recv()?;
 
-    mizer_ui::run(handlers);
+    mizer_ui::run(handlers)?;
 
     Ok(())
 }

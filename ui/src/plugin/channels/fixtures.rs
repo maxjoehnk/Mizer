@@ -1,8 +1,9 @@
 use mizer_api::handlers::FixturesHandler;
-use flutter_engine::channel::{MethodCallHandler, MethodCall, Channel, MethodChannel};
-use flutter_engine::codec::STANDARD_CODEC;
 use mizer_api::models::*;
-use crate::plugin::channels::MethodCallExt;
+use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
+use nativeshell::codec::{MethodCallReply, MethodCall, Value};
+use nativeshell::shell::{MethodChannel, MethodCallHandler, EngineHandle, Context};
+use std::rc::Rc;
 
 #[derive(Clone)]
 pub struct FixturesChannel {
@@ -10,24 +11,24 @@ pub struct FixturesChannel {
 }
 
 impl MethodCallHandler for FixturesChannel {
-    fn on_method_call(&mut self, call: MethodCall) {
-        match call.method().as_str() {
+    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
+        match call.method.as_str() {
             "addFixtures" => {
                 let response = call.arguments().map(|args| self.add_fixtures(args));
 
-                call.respond_result(response);
+                resp.respond_result(response);
             }
             "getFixtures" => {
                 let response = self.get_fixtures();
 
-                call.respond_msg(response);
+                resp.respond_msg(response);
             }
             "getFixtureDefinitions" => {
                 let response = self.get_fixture_definitions();
 
-                call.respond_msg(response);
+                resp.respond_msg(response);
             }
-            _ => call.not_implemented()
+            _ => resp.not_implemented()
         }
     }
 }
@@ -39,8 +40,8 @@ impl FixturesChannel {
         }
     }
 
-    pub fn channel(self) -> impl Channel {
-        MethodChannel::new("mizer.live/fixtures", self, &STANDARD_CODEC)
+    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+        MethodChannel::new(context, "mizer.live/fixtures", self)
     }
 
     fn add_fixtures(&self, request: AddFixturesRequest) -> Fixtures {

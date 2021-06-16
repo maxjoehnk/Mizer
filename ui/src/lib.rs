@@ -1,32 +1,37 @@
-use std::path::{Path, PathBuf};
+use nativeshell::{
+    codec::Value,
+    shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
+};
 
 use mizer_api::handlers::Handlers;
-use crate::plugin::MizerPlugin;
+use nativeshell::shell::MessageManager;
+use crate::plugin::channels::*;
 
 mod plugin;
 
-pub fn run(handlers: Handlers) {
-    let mut args = Vec::with_capacity(3);
+nativeshell::include_flutter_plugins!();
 
-    if let Ok(observatory_port) = std::env::var("DART_OBSERVATORY_PORT") {
-        args.push("--disable-service-auth-codes".to_string());
-        args.push(format!("--observatory-port={}", observatory_port));
-    }
+pub fn run(handlers: Handlers) -> anyhow::Result<()> {
+    exec_bundle();
+    register_observatory_listener("mizer".into());
 
-    if let Ok(snapshot) = std::env::var("FLUTTER_AOT_SNAPSHOT") {
-        if Path::new(&snapshot).exists() {
-            args.push(format!("--aot-shared-library-name={}", snapshot));
-        }
-    }
+    let context = Context::new(ContextOptions {
+        app_namespace: "Mizer".into(),
+        flutter_plugins: flutter_get_plugins(),
+        ..Default::default()
+    })?;
 
-    let mut desktop = flutter_glfw::init().unwrap();
-    let assets_path = PathBuf::from(env!("FLUTTER_ASSET_DIR"));
-    let window = desktop.create_window(&flutter_glfw::window::WindowArgs {
-        height: 200,
-        width: 200,
-        mode: flutter_glfw::window::WindowMode::Windowed,
-        title: "Mizer"
-    }, assets_path, Vec::default()).unwrap();
-    window.add_plugin(MizerPlugin::new(handlers));
-    window.run(None, None).unwrap();
+    let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.clone());
+    let _nodes = NodesChannel::new(handlers.nodes).channel(context.clone());
+    let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.clone());
+    let _media = MediaChannel::new(handlers.media).channel(context.clone());
+    let _transport = TransportChannel::new(handlers.transport).channel(context.clone());
+
+    context
+        .window_manager
+        .borrow_mut()
+        .create_window(Value::Null, None);
+    context.run_loop.borrow().run();
+
+    Ok(())
 }

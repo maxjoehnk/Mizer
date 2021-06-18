@@ -1,0 +1,107 @@
+nodes:
+  - type: dmx-output
+    path: /dmx-output-0
+    config:
+      channel: 1
+    designer:
+      position:
+        x: 10
+        y: 0
+      scale: 1
+  - type: fader
+    path: /fader-0
+    config: {}
+    designer:
+      position:
+        x: 0
+        y: 0
+      scale: 1
+  - type: oscillator
+    path: /oscillator-0
+    config:
+      type: sine
+      ratio: 4
+      max: 1
+    designer:
+      position:
+        x: 0
+        y: 5
+      scale: 1
+  - type: oscillator
+    path: /oscillator-1
+    config:
+      type: square
+      ratio: 4
+      max: 1
+    designer:
+      position:
+        x: 0
+        y: 10
+      scale: 1
+  - type: select
+    path: /select-0
+    config: {}
+    designer:
+      position:
+        x: 5
+        y: 5
+      scale: 1
+  - type: dmx-output
+    path: /dmx-output-1
+    config:
+      channel: 2
+    designer:
+      position:
+        x: 10
+        y: 20
+      scale: 1
+  - type: oscillator
+    path: /oscillator-2
+    config:
+      type: sine
+      ratio: 4
+      max: 1
+    designer:
+      position:
+        x: 0
+        y: 20
+      scale: 1
+  - type: oscillator
+    path: /oscillator-3
+    config:
+      type: square
+      ratio: 4
+      max: 1
+    designer:
+      position:
+        x: 0
+        y: 25
+      scale: 1
+  - type: merge
+    path: /merge-0
+    config:
+      mode: highest
+    designer:
+      position:
+        x: 5
+        y: 20
+      scale: 1
+
+channels:
+  - value@/fader-0 -> channel@/select-0
+  - value@/oscillator-0 -> input@/select-0
+  - value@/oscillator-1 -> input@/select-0
+  - output@/select-0 -> value@/dmx-output-0
+  - value@/oscillator-2 -> input@/merge-0
+  - value@/oscillator-3 -> input@/merge-0
+  - output@/merge-0 -> value@/dmx-output-1
+
+layouts:
+  Default:
+    - node: /fader-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 4

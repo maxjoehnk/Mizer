@@ -15,6 +15,7 @@ pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
+pub use mizer_port_operation_nodes::{MergeNode, SelectNode};
 
 #[derive(Debug, Clone, From)]
 pub enum Node {
@@ -23,6 +24,8 @@ pub enum Node {
     DmxOutput(DmxOutputNode),
     Scripting(ScriptingNode),
     Sequence(SequenceNode),
+    Merge(MergeNode),
+    Select(SelectNode),
     Fixture(FixtureNode),
     IldaFile(IldaFileNode),
     Laser(LaserNode),
@@ -50,6 +53,8 @@ impl From<NodeType> for Node {
             NodeType::Clock => ClockNode::default().into(),
             NodeType::Scripting => ScriptingNode::default().into(),
             NodeType::Sequence => SequenceNode::default().into(),
+            NodeType::Merge => MergeNode::default().into(),
+            NodeType::Select => SelectNode::default().into(),
             NodeType::Fixture => FixtureNode::default().into(),
             NodeType::IldaFile => IldaFileNode::default().into(),
             NodeType::Laser => LaserNode::default().into(),
@@ -80,6 +85,8 @@ impl Node {
             DmxOutput(_) => NodeType::DmxOutput,
             Scripting(_) => NodeType::Scripting,
             Sequence(_) => NodeType::Sequence,
+            Merge(_) => NodeType::Merge,
+            Select(_) => NodeType::Select,
             Fixture(_) => NodeType::Fixture,
             IldaFile(_) => NodeType::IldaFile,
             Laser(_) => NodeType::Laser,

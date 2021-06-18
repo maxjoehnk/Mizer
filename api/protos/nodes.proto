@@ -54,6 +54,8 @@ message Node {
     Script = 4;
     Fixture = 6;
     Sequence = 7;
+    Select = 8;
+    Merge = 9;
 //    DmxInput = 10;
     DmxOutput = 11;
     OscInput = 12;
@@ -113,6 +115,8 @@ message NodeConfig {
     VideoFileNodeConfig videoFileConfig = 29;
     VideoOutputNodeConfig videoOutputConfig = 30;
     VideoTransformNodeConfig videoTransformConfig = 31;
+    SelectNodeConfig selectConfig = 32;
+    MergeNodeConfig mergeConfig = 33;
   }
 }
 
@@ -208,6 +212,9 @@ message VideoFileNodeConfig {
 }
 message VideoOutputNodeConfig {}
 message VideoTransformNodeConfig {}
+
+message SelectNodeConfig {}
+message MergeNodeConfig {}
 
 message NodePosition {
   double x = 1;

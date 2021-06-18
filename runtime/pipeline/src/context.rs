@@ -4,7 +4,7 @@ use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
-use crate::ports::{NodeReceivers, NodeSenders};
+use crate::ports::{NodeReceivers, NodeSenders, AnyPortReceiverPort};
 use ringbuffer::{ConstGenericRingBuffer, RingBufferWrite};
 use std::cell::RefCell;
 
@@ -56,6 +56,14 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .and_then(|receiver| receiver.read())
     }
 
+    fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+        let port = port.into();
+        self.receivers
+            .and_then(|receivers| receivers.get(&port))
+            .map(|receiver| receiver.read_multiple())
+            .unwrap_or_default()
+    }
+
     // TODO: return as ref again?
     fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata {
         let port = port.into();
@@ -70,6 +78,19 @@ impl<'a> NodeContext for PipelineContext<'a> {
         let (_, metadata) = self.senders.and_then(|ports| ports.get(port)).unwrap();
 
         metadata
+    }
+
+    fn input_port_count<P: Into<PortId>>(&self, port: P) -> usize {
+        let port = port.into();
+        self.receivers
+            .and_then(|recv| recv.get(&port))
+            .map(|recv| {
+                match &recv.port {
+                    AnyPortReceiverPort::Single(_) => 1,
+                    AnyPortReceiverPort::Multiple(ports) => ports.borrow().len(),
+                }
+            })
+            .unwrap_or_default()
     }
 
     fn input_ports(&self) -> Vec<PortId> {

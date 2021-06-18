@@ -31,6 +31,8 @@ pub enum NodeType {
     MidiOutput,
     Laser,
     IldaFile,
+    Select,
+    Merge,
 }
 
 impl NodeType {
@@ -60,6 +62,8 @@ impl NodeType {
             MidiOutput => "midi-output",
             Laser => "laser",
             IldaFile => "ilda-file",
+            Select => "select",
+            Merge => "merge",
         }.to_string()
     }
 }

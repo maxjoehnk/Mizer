@@ -604,6 +604,8 @@ enum NodeConfig_Type {
   videoFileConfig, 
   videoOutputConfig, 
   videoTransformConfig, 
+  selectConfig, 
+  mergeConfig, 
   notSet
 }
 
@@ -631,10 +633,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     29 : NodeConfig_Type.videoFileConfig,
     30 : NodeConfig_Type.videoOutputConfig,
     31 : NodeConfig_Type.videoTransformConfig,
+    32 : NodeConfig_Type.selectConfig,
+    33 : NodeConfig_Type.mergeConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -657,6 +661,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<VideoFileNodeConfig>(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoFileConfig', protoName: 'videoFileConfig', subBuilder: VideoFileNodeConfig.create)
     ..aOM<VideoOutputNodeConfig>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoOutputConfig', protoName: 'videoOutputConfig', subBuilder: VideoOutputNodeConfig.create)
     ..aOM<VideoTransformNodeConfig>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoTransformConfig', protoName: 'videoTransformConfig', subBuilder: VideoTransformNodeConfig.create)
+    ..aOM<SelectNodeConfig>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selectConfig', protoName: 'selectConfig', subBuilder: SelectNodeConfig.create)
+    ..aOM<MergeNodeConfig>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mergeConfig', protoName: 'mergeConfig', subBuilder: MergeNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -684,6 +690,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     VideoFileNodeConfig videoFileConfig,
     VideoOutputNodeConfig videoOutputConfig,
     VideoTransformNodeConfig videoTransformConfig,
+    SelectNodeConfig selectConfig,
+    MergeNodeConfig mergeConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -751,6 +759,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (videoTransformConfig != null) {
       _result.videoTransformConfig = videoTransformConfig;
+    }
+    if (selectConfig != null) {
+      _result.selectConfig = selectConfig;
+    }
+    if (mergeConfig != null) {
+      _result.mergeConfig = mergeConfig;
     }
     return _result;
   }
@@ -1019,6 +1033,28 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearVideoTransformConfig() => clearField(31);
   @$pb.TagNumber(31)
   VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(21);
+
+  @$pb.TagNumber(32)
+  SelectNodeConfig get selectConfig => $_getN(22);
+  @$pb.TagNumber(32)
+  set selectConfig(SelectNodeConfig v) { setField(32, v); }
+  @$pb.TagNumber(32)
+  $core.bool hasSelectConfig() => $_has(22);
+  @$pb.TagNumber(32)
+  void clearSelectConfig() => clearField(32);
+  @$pb.TagNumber(32)
+  SelectNodeConfig ensureSelectConfig() => $_ensure(22);
+
+  @$pb.TagNumber(33)
+  MergeNodeConfig get mergeConfig => $_getN(23);
+  @$pb.TagNumber(33)
+  set mergeConfig(MergeNodeConfig v) { setField(33, v); }
+  @$pb.TagNumber(33)
+  $core.bool hasMergeConfig() => $_has(23);
+  @$pb.TagNumber(33)
+  void clearMergeConfig() => clearField(33);
+  @$pb.TagNumber(33)
+  MergeNodeConfig ensureMergeConfig() => $_ensure(23);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -2112,6 +2148,64 @@ class VideoTransformNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static VideoTransformNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoTransformNodeConfig>(create);
   static VideoTransformNodeConfig _defaultInstance;
+}
+
+class SelectNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  SelectNodeConfig._() : super();
+  factory SelectNodeConfig() => create();
+  factory SelectNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SelectNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SelectNodeConfig clone() => SelectNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SelectNodeConfig copyWith(void Function(SelectNodeConfig) updates) => super.copyWith((message) => updates(message as SelectNodeConfig)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SelectNodeConfig create() => SelectNodeConfig._();
+  SelectNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<SelectNodeConfig> createRepeated() => $pb.PbList<SelectNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static SelectNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectNodeConfig>(create);
+  static SelectNodeConfig _defaultInstance;
+}
+
+class MergeNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MergeNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  MergeNodeConfig._() : super();
+  factory MergeNodeConfig() => create();
+  factory MergeNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MergeNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MergeNodeConfig clone() => MergeNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MergeNodeConfig copyWith(void Function(MergeNodeConfig) updates) => super.copyWith((message) => updates(message as MergeNodeConfig)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MergeNodeConfig create() => MergeNodeConfig._();
+  MergeNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<MergeNodeConfig> createRepeated() => $pb.PbList<MergeNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static MergeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MergeNodeConfig>(create);
+  static MergeNodeConfig _defaultInstance;
 }
 
 class NodePosition extends $pb.GeneratedMessage {

@@ -101,6 +101,8 @@ const Node_NodeType$json = const {
     const {'1': 'Script', '2': 4},
     const {'1': 'Fixture', '2': 6},
     const {'1': 'Sequence', '2': 7},
+    const {'1': 'Select', '2': 8},
+    const {'1': 'Merge', '2': 9},
     const {'1': 'DmxOutput', '2': 11},
     const {'1': 'OscInput', '2': 12},
     const {'1': 'OscOutput', '2': 13},
@@ -155,6 +157,8 @@ const NodeConfig$json = const {
     const {'1': 'videoFileConfig', '3': 29, '4': 1, '5': 11, '6': '.mizer.VideoFileNodeConfig', '9': 0, '10': 'videoFileConfig'},
     const {'1': 'videoOutputConfig', '3': 30, '4': 1, '5': 11, '6': '.mizer.VideoOutputNodeConfig', '9': 0, '10': 'videoOutputConfig'},
     const {'1': 'videoTransformConfig', '3': 31, '4': 1, '5': 11, '6': '.mizer.VideoTransformNodeConfig', '9': 0, '10': 'videoTransformConfig'},
+    const {'1': 'selectConfig', '3': 32, '4': 1, '5': 11, '6': '.mizer.SelectNodeConfig', '9': 0, '10': 'selectConfig'},
+    const {'1': 'mergeConfig', '3': 33, '4': 1, '5': 11, '6': '.mizer.MergeNodeConfig', '9': 0, '10': 'mergeConfig'},
   ],
   '8': const [
     const {'1': 'type'},
@@ -323,6 +327,14 @@ const VideoOutputNodeConfig$json = const {
 
 const VideoTransformNodeConfig$json = const {
   '1': 'VideoTransformNodeConfig',
+};
+
+const SelectNodeConfig$json = const {
+  '1': 'SelectNodeConfig',
+};
+
+const MergeNodeConfig$json = const {
+  '1': 'MergeNodeConfig',
 };
 
 const NodePosition$json = const {

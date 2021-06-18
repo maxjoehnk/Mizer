@@ -170,6 +170,8 @@ impl<'a> NodeDescriptor<'a> {
             NodeType::DmxOutput => Node::DmxOutput(self.downcast_node().unwrap()),
             NodeType::Scripting => Node::Scripting(self.downcast_node().unwrap()),
             NodeType::Sequence => Node::Sequence(self.downcast_node().unwrap()),
+            NodeType::Select => Node::Select(self.downcast_node().unwrap()),
+            NodeType::Merge => Node::Merge(self.downcast_node().unwrap()),
             NodeType::Fixture => Node::Fixture(self.downcast_node().unwrap()),
             NodeType::IldaFile => Node::IldaFile(self.downcast_node().unwrap()),
             NodeType::Laser => Node::Laser(self.downcast_node().unwrap()),

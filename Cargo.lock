@@ -3144,6 +3144,7 @@ dependencies = [
  "mizer-osc-nodes",
  "mizer-oscillator-nodes",
  "mizer-pixel-nodes",
+ "mizer-port-operation-nodes",
  "mizer-scripting-nodes",
  "mizer-sequence-nodes",
  "mizer-video-nodes",
@@ -3225,6 +3226,16 @@ dependencies = [
  "mizer-conversion",
  "mizer-node",
  "mizer-protocol-dmx",
+ "serde",
+]
+
+[[package]]
+name = "mizer-port-operation-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-node",
  "serde",
 ]
 

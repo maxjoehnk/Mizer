@@ -12,6 +12,8 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             DmxOutput(dmx_output) => Self::dmxOutputConfig(dmx_output.into()),
             Scripting(scripting) => Self::scriptingConfig(scripting.into()),
             Sequence(sequence) => Self::sequenceConfig(sequence.into()),
+            Select(select) => Self::selectConfig(select.into()),
+            Merge(merge) => Self::mergeConfig(merge.into()),
             Fixture(fixture) => Self::fixtureConfig(fixture.into()),
             IldaFile(ilda) => Self::ildaFileConfig(ilda.into()),
             Laser(laser) => Self::laserConfig(laser.into()),
@@ -41,6 +43,8 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::dmxOutputConfig(dmx_output) => Self::DmxOutput(dmx_output.into()),
             NodeConfig_oneof_type::scriptingConfig(scripting) => Self::Scripting(scripting.into()),
             NodeConfig_oneof_type::sequenceConfig(sequence) => Self::Sequence(sequence.into()),
+            NodeConfig_oneof_type::selectConfig(select) => Self::Select(select.into()),
+            NodeConfig_oneof_type::mergeConfig(merge) => Self::Merge(merge.into()),
             NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
             NodeConfig_oneof_type::ildaFileConfig(ilda) => Self::IldaFile(ilda.into()),
             NodeConfig_oneof_type::laserConfig(laser) => Self::Laser(laser.into()),
@@ -510,6 +514,30 @@ impl From<VideoTransformNodeConfig> for mizer_nodes::VideoTransformNode {
     }
 }
 
+impl From<mizer_nodes::SelectNode> for SelectNodeConfig {
+    fn from(node: mizer_nodes::SelectNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<SelectNodeConfig> for mizer_nodes::SelectNode {
+    fn from(node: SelectNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
+impl From<mizer_nodes::MergeNode> for MergeNodeConfig {
+    fn from(node: mizer_nodes::MergeNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<MergeNodeConfig> for mizer_nodes::MergeNode {
+    fn from(node: MergeNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -531,6 +559,8 @@ impl From<NodeType> for Node_NodeType {
             NodeType::OpcOutput => Node_NodeType::OpcOutput,
             NodeType::Fixture => Node_NodeType::Fixture,
             NodeType::Sequence => Node_NodeType::Sequence,
+            NodeType::Select => Node_NodeType::Select,
+            NodeType::Merge => Node_NodeType::Merge,
             NodeType::MidiInput => Node_NodeType::MidiInput,
             NodeType::MidiOutput => Node_NodeType::MidiOutput,
             NodeType::Laser => Node_NodeType::Laser,
@@ -560,6 +590,8 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::OpcOutput => NodeType::OpcOutput,
             Node_NodeType::Fixture => NodeType::Fixture,
             Node_NodeType::Sequence => NodeType::Sequence,
+            Node_NodeType::Select => NodeType::Select,
+            Node_NodeType::Merge => NodeType::Merge,
             Node_NodeType::MidiInput => NodeType::MidiInput,
             Node_NodeType::MidiOutput => NodeType::MidiOutput,
             Node_NodeType::Laser => NodeType::Laser,

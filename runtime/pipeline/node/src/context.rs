@@ -9,8 +9,11 @@ pub trait NodeContext : PreviewContext {
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
 
+    fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>>;
+
     fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata;
     fn output_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata;
+    fn input_port_count<P: Into<PortId>>(&self, port: P) -> usize;
 
     fn input_ports(&self) -> Vec<PortId>;
 

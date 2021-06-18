@@ -1,9 +1,10 @@
+use std::any::Any;
+use std::cell::RefCell;
+use std::collections::HashMap;
+
 use mizer_node::PortMetadata;
 use mizer_ports::memory::{MemoryReceiver, MemorySender};
-use mizer_ports::{PortId, PortValue, NodePortReceiver};
-use std::any::Any;
-use std::collections::HashMap;
-use std::cell::RefCell;
+use mizer_ports::{NodePortReceiver, PortId, PortValue};
 
 #[derive(Default)]
 pub struct NodeSenders(HashMap<PortId, (Box<dyn Any>, PortMetadata)>);
@@ -35,9 +36,12 @@ impl NodeReceivers {
         source_meta: PortMetadata,
     ) {
         if let Some(receiver) = self.0.get_mut(&port_id) {
-            assert_eq!(receiver.metadata.port_type, source_meta.port_type, "port type missmatch");
+            assert_eq!(
+                receiver.metadata.port_type, source_meta.port_type,
+                "port type missmatch"
+            );
             receiver.set_transport(sender);
-        }else {
+        } else {
             log::warn!("trying to add transport to unknown port");
         }
     }
@@ -58,47 +62,106 @@ impl NodeReceivers {
 
 pub struct AnyPortReceiver {
     pub metadata: PortMetadata,
-    port: Box<dyn Any>,
+    pub(crate) port: AnyPortReceiverPort,
+}
+
+pub enum AnyPortReceiverPort {
+    Single(Box<dyn Any>),
+    Multiple(RefCell<Vec<Box<dyn Any>>>),
 }
 
 impl AnyPortReceiver {
     pub fn new<V: PortValue + 'static>(meta: PortMetadata) -> Self {
         let recv = NodeReceiver::<V>::default();
+        let port = if meta.multiple == Some(true) {
+            AnyPortReceiverPort::Multiple(Default::default())
+        } else {
+            AnyPortReceiverPort::Single(Box::new(recv))
+        };
 
         AnyPortReceiver {
             metadata: meta,
-            port: Box::new(recv),
+            port,
         }
     }
 
     pub fn read<V: PortValue + 'static>(&self) -> Option<V> {
-        self.receiver::<V>()
-            .and_then(|recv| {
+        self.receiver::<V>().and_then(|recv| {
+            let mut value_store = recv.value.borrow_mut();
+            let value = value_store.take();
+
+            value.or_else(|| {
+                recv.transport
+                    .borrow()
+                    .as_ref()
+                    // TODO: return reference to data
+                    .and_then(|port| port.recv().map(|value| value.clone()))
+            })
+        })
+    }
+
+    pub fn read_multiple<V: PortValue + 'static>(&self) -> Vec<Option<V>> {
+        if let AnyPortReceiverPort::Multiple(ports) = &self.port {
+            let ports = ports.borrow();
+            let mut values = Vec::new();
+            for port in ports.iter() {
+                let recv: &NodeReceiver<V> = port.downcast_ref().unwrap();
+
                 let mut value_store = recv.value.borrow_mut();
                 let value = value_store.take();
 
-                value.or_else(|| {
-                    recv.transport.borrow().as_ref()
+                let value = value.or_else(|| {
+                    recv.transport
+                        .borrow()
+                        .as_ref()
                         // TODO: return reference to data
                         .and_then(|port| port.recv().map(|value| value.clone()))
-                })
-            })
+                });
+                values.push(value);
+            }
+            values
+        }else {
+            Default::default()
+        }
     }
 
     pub fn set_transport<V: PortValue + 'static>(&self, transport: MemoryReceiver<V>) {
-        let receiver = self.receiver::<V>().expect("Tried to add transport with invalid port value");
-        let mut transport_store = receiver.transport.borrow_mut();
-        transport_store.replace(transport.into());
+        match self.metadata.multiple {
+            Some(true) => {
+                self.push_receiver(transport);
+            },
+            _ => {
+                let receiver = self
+                    .receiver::<V>()
+                    .expect("Tried to add transport with invalid port value");
+                let mut transport_store = receiver.transport.borrow_mut();
+                transport_store.replace(transport.into());
+            }
+        }
+    }
+
+    fn push_receiver<V: PortValue + 'static>(&self, transport: MemoryReceiver<V>) {
+        if let AnyPortReceiverPort::Multiple(port) = &self.port {
+            let recv = NodeReceiver::<V>::default();
+            recv.transport.replace(transport.into());
+            let mut port = port.borrow_mut();
+            port.push(Box::new(recv));
+        }
     }
 
     pub fn set_value<V: PortValue + 'static>(&self, value: V) {
-        let receiver = self.receiver::<V>().expect("Tried to add transport with invalid port value");
+        let receiver = self
+            .receiver::<V>()
+            .expect("Tried to add transport with invalid port value");
         let mut value_store = receiver.value.borrow_mut();
         value_store.replace(value);
     }
 
     fn receiver<V: PortValue + 'static>(&self) -> Option<&NodeReceiver<V>> {
-        self.port.downcast_ref()
+        match &self.port {
+            AnyPortReceiverPort::Single(port) => port.downcast_ref(),
+            _ => None,
+        }
     }
 }
 

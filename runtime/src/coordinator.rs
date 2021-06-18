@@ -126,6 +126,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             Clock(node) => self.add_node(path, node),
             Scripting(node) => self.add_node(path, node),
             Sequence(node) => self.add_node(path, node),
+            Merge(node) => self.add_node(path, node),
+            Select(node) => self.add_node(path, node),
             Fixture(mut node) => {
                 node.fixture_manager = self.injector.get().cloned();
                 self.add_node(path, node)

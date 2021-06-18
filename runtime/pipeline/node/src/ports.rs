@@ -17,6 +17,7 @@ pub struct NodeLink {
 pub struct PortMetadata {
     pub port_type: PortType,
     pub direction: PortDirection,
+    pub multiple: Option<bool>,
     pub dimensions: Option<(u64, u64)>,
 }
 

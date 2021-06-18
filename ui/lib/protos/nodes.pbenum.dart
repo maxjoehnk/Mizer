@@ -48,6 +48,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Script = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Script');
   static const Node_NodeType Fixture = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fixture');
   static const Node_NodeType Sequence = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
+  static const Node_NodeType Select = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
+  static const Node_NodeType Merge = Node_NodeType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');
   static const Node_NodeType DmxOutput = Node_NodeType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DmxOutput');
   static const Node_NodeType OscInput = Node_NodeType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscInput');
   static const Node_NodeType OscOutput = Node_NodeType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscOutput');
@@ -72,6 +74,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Script,
     Fixture,
     Sequence,
+    Select,
+    Merge,
     DmxOutput,
     OscInput,
     OscOutput,

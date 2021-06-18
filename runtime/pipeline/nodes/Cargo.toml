@@ -9,6 +9,7 @@ serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../node" }
 mizer-clock-nodes = { path = "clock" }
 mizer-oscillator-nodes = { path = "behaviors/oscillator" }
+mizer-port-operation-nodes = { path = "behaviors/port-operations" }
 mizer-dmx-nodes = { path = "protocols/dmx" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-sequence-nodes = { path = "behaviors/sequence" }

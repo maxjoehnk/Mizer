@@ -2059,6 +2059,8 @@ pub enum Node_NodeType {
     Script = 4,
     Fixture = 6,
     Sequence = 7,
+    Select = 8,
+    Merge = 9,
     DmxOutput = 11,
     OscInput = 12,
     OscOutput = 13,
@@ -2090,6 +2092,8 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
             4 => ::std::option::Option::Some(Node_NodeType::Script),
             6 => ::std::option::Option::Some(Node_NodeType::Fixture),
             7 => ::std::option::Option::Some(Node_NodeType::Sequence),
+            8 => ::std::option::Option::Some(Node_NodeType::Select),
+            9 => ::std::option::Option::Some(Node_NodeType::Merge),
             11 => ::std::option::Option::Some(Node_NodeType::DmxOutput),
             12 => ::std::option::Option::Some(Node_NodeType::OscInput),
             13 => ::std::option::Option::Some(Node_NodeType::OscOutput),
@@ -2118,6 +2122,8 @@ impl ::protobuf::ProtobufEnum for Node_NodeType {
             Node_NodeType::Script,
             Node_NodeType::Fixture,
             Node_NodeType::Sequence,
+            Node_NodeType::Select,
+            Node_NodeType::Merge,
             Node_NodeType::DmxOutput,
             Node_NodeType::OscInput,
             Node_NodeType::OscOutput,
@@ -2263,6 +2269,8 @@ pub enum NodeConfig_oneof_type {
     videoFileConfig(VideoFileNodeConfig),
     videoOutputConfig(VideoOutputNodeConfig),
     videoTransformConfig(VideoTransformNodeConfig),
+    selectConfig(SelectNodeConfig),
+    mergeConfig(MergeNodeConfig),
 }
 
 impl NodeConfig {
@@ -3347,6 +3355,104 @@ impl NodeConfig {
             VideoTransformNodeConfig::new()
         }
     }
+
+    // .mizer.SelectNodeConfig selectConfig = 32;
+
+
+    pub fn get_selectConfig(&self) -> &SelectNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(ref v)) => v,
+            _ => <SelectNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_selectConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_selectConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_selectConfig(&mut self, v: SelectNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_selectConfig(&mut self) -> &mut SelectNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(SelectNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_selectConfig(&mut self) -> SelectNodeConfig {
+        if self.has_selectConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            SelectNodeConfig::new()
+        }
+    }
+
+    // .mizer.MergeNodeConfig mergeConfig = 33;
+
+
+    pub fn get_mergeConfig(&self) -> &MergeNodeConfig {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(ref v)) => v,
+            _ => <MergeNodeConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_mergeConfig(&mut self) {
+        self.field_type = ::std::option::Option::None;
+    }
+
+    pub fn has_mergeConfig(&self) -> bool {
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_mergeConfig(&mut self, v: MergeNodeConfig) {
+        self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_mergeConfig(&mut self) -> &mut MergeNodeConfig {
+        if let ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(_)) = self.field_type {
+        } else {
+            self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(MergeNodeConfig::new()));
+        }
+        match self.field_type {
+            ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_mergeConfig(&mut self) -> MergeNodeConfig {
+        if self.has_mergeConfig() {
+            match self.field_type.take() {
+                ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MergeNodeConfig::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for NodeConfig {
@@ -3457,6 +3563,16 @@ impl ::protobuf::Message for NodeConfig {
             }
         }
         if let Some(NodeConfig_oneof_type::videoTransformConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::selectConfig(ref v)) = self.field_type {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(NodeConfig_oneof_type::mergeConfig(ref v)) = self.field_type {
             if !v.is_initialized() {
                 return false;
             }
@@ -3600,6 +3716,18 @@ impl ::protobuf::Message for NodeConfig {
                     }
                     self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::videoTransformConfig(is.read_message()?));
                 },
+                32 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::selectConfig(is.read_message()?));
+                },
+                33 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.field_type = ::std::option::Option::Some(NodeConfig_oneof_type::mergeConfig(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3699,6 +3827,14 @@ impl ::protobuf::Message for NodeConfig {
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &NodeConfig_oneof_type::videoTransformConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::selectConfig(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &NodeConfig_oneof_type::mergeConfig(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -3819,6 +3955,16 @@ impl ::protobuf::Message for NodeConfig {
                 },
                 &NodeConfig_oneof_type::videoTransformConfig(ref v) => {
                     os.write_tag(31, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::selectConfig(ref v) => {
+                    os.write_tag(32, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &NodeConfig_oneof_type::mergeConfig(ref v) => {
+                    os.write_tag(33, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -3972,6 +4118,16 @@ impl ::protobuf::Message for NodeConfig {
                 NodeConfig::has_videoTransformConfig,
                 NodeConfig::get_videoTransformConfig,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SelectNodeConfig>(
+                "selectConfig",
+                NodeConfig::has_selectConfig,
+                NodeConfig::get_selectConfig,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MergeNodeConfig>(
+                "mergeConfig",
+                NodeConfig::has_mergeConfig,
+                NodeConfig::get_mergeConfig,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<NodeConfig>(
                 "NodeConfig",
                 fields,
@@ -3988,6 +4144,8 @@ impl ::protobuf::Message for NodeConfig {
 
 impl ::protobuf::Clear for NodeConfig {
     fn clear(&mut self) {
+        self.field_type = ::std::option::Option::None;
+        self.field_type = ::std::option::Option::None;
         self.field_type = ::std::option::Option::None;
         self.field_type = ::std::option::Option::None;
         self.field_type = ::std::option::Option::None;
@@ -7803,6 +7961,244 @@ impl ::protobuf::reflect::ProtobufValue for VideoTransformNodeConfig {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct SelectNodeConfig {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SelectNodeConfig {
+    fn default() -> &'a SelectNodeConfig {
+        <SelectNodeConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SelectNodeConfig {
+    pub fn new() -> SelectNodeConfig {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for SelectNodeConfig {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SelectNodeConfig {
+        SelectNodeConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SelectNodeConfig>(
+                "SelectNodeConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SelectNodeConfig {
+        static instance: ::protobuf::rt::LazyV2<SelectNodeConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SelectNodeConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for SelectNodeConfig {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SelectNodeConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SelectNodeConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct MergeNodeConfig {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MergeNodeConfig {
+    fn default() -> &'a MergeNodeConfig {
+        <MergeNodeConfig as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MergeNodeConfig {
+    pub fn new() -> MergeNodeConfig {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for MergeNodeConfig {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MergeNodeConfig {
+        MergeNodeConfig::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MergeNodeConfig>(
+                "MergeNodeConfig",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MergeNodeConfig {
+        static instance: ::protobuf::rt::LazyV2<MergeNodeConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MergeNodeConfig::new)
+    }
+}
+
+impl ::protobuf::Clear for MergeNodeConfig {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MergeNodeConfig {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MergeNodeConfig {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct NodePosition {
     // message fields
     pub x: f64,
@@ -8487,60 +8883,63 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\nsourceNode\
     \x18\x03\x20\x01(\tR\nsourceNode\x12+\n\nsourcePort\x18\x04\x20\x01(\x0b\
     2\x0b.mizer.PortR\nsourcePort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\
-    \x16.mizer.ChannelProtocolR\x08protocol\"\xcd\x05\n\x04Node\x12(\n\x04ty\
+    \x16.mizer.ChannelProtocolR\x08protocol\"\xe4\x05\n\x04Node\x12(\n\x04ty\
     pe\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04p\
     ath\x18\x02\x20\x01(\tR\x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\
     \x0b.mizer.PortR\x06inputs\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.m\
     izer.PortR\x07outputs\x12/\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer\
     .NodeDesignerR\x08designer\x125\n\x07preview\x18\x06\x20\x01(\x0e2\x1b.m\
     izer.Node.NodePreviewTypeR\x07preview\x12)\n\x06config\x18\x07\x20\x01(\
-    \x0b2\x11.mizer.NodeConfigR\x06config\"\xd4\x02\n\x08NodeType\x12\t\n\
+    \x0b2\x11.mizer.NodeConfigR\x06config\"\xeb\x02\n\x08NodeType\x12\t\n\
     \x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\
     \x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0b\n\x07Fixture\
-    \x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\r\n\tDmxOutput\x10\x0b\x12\
-    \x0c\n\x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMidiInput\
-    \x10\x0e\x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\x12\
-    \x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\
-    \x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\
-    \x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOp\
-    cOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\"Q\n\
-    \x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\x0c\n\x08Waveform\x10\
-    \x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Texture\x10\x03\x12\x08\
-    \n\x04None\x10\x04\"\xbb\x0c\n\nNodeConfig\x12I\n\x10oscillatorConfig\
-    \x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNodeConfigH\0R\x10oscillatorCon\
-    fig\x12F\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x1a.mizer.ScriptingN\
-    odeConfigH\0R\x0fscriptingConfig\x12C\n\x0esequenceConfig\x18\x0c\x20\
-    \x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0esequenceConfig\x12:\n\x0b\
-    clockConfig\x18\r\x20\x01(\x0b2\x16.mizer.ClockNodeConfigH\0R\x0bclockCo\
-    nfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x18.mizer.FixtureNodeCo\
-    nfigH\0R\rfixtureConfig\x12<\n\x0cbuttonConfig\x18\x0f\x20\x01(\x0b2\x16\
-    .mizer.InputNodeConfigH\0R\x0cbuttonConfig\x12:\n\x0bfaderConfig\x18\x10\
-    \x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0bfaderConfig\x12C\n\x0eil\
-    daFileConfig\x18\x11\x20\x01(\x0b2\x19.mizer.IldaFileNodeConfigH\0R\x0ei\
-    ldaFileConfig\x12:\n\x0blaserConfig\x18\x12\x20\x01(\x0b2\x16.mizer.Lase\
-    rNodeConfigH\0R\x0blaserConfig\x12O\n\x12pixelPatternConfig\x18\x13\x20\
-    \x01(\x0b2\x1d.mizer.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\
-    \x12C\n\x0epixelDmxConfig\x18\x14\x20\x01(\x0b2\x19.mizer.PixelDmxNodeCo\
-    nfigH\0R\x0epixelDmxConfig\x12F\n\x0fdmxOutputConfig\x18\x15\x20\x01(\
-    \x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12F\n\x0fmid\
-    iInputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer.MidiInputNodeConfigH\0R\x0f\
-    midiInputConfig\x12I\n\x10midiOutputConfig\x18\x17\x20\x01(\x0b2\x1b.miz\
-    er.MidiOutputNodeConfigH\0R\x10midiOutputConfig\x12F\n\x0fopcOutputConfi\
-    g\x18\x18\x20\x01(\x0b2\x1a.mizer.OpcOutputNodeConfigH\0R\x0fopcOutputCo\
-    nfig\x12>\n\x0eoscInputConfig\x18\x19\x20\x01(\x0b2\x14.mizer.OscNodeCon\
-    figH\0R\x0eoscInputConfig\x12@\n\x0foscOutputConfig\x18\x1a\x20\x01(\x0b\
-    2\x14.mizer.OscNodeConfigH\0R\x0foscOutputConfig\x12^\n\x17videoColorBal\
-    anceConfig\x18\x1b\x20\x01(\x0b2\".mizer.VideoColorBalanceNodeConfigH\0R\
-    \x17videoColorBalanceConfig\x12L\n\x11videoEffectConfig\x18\x1c\x20\x01(\
-    \x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\x11videoEffectConfig\x12F\n\
-    \x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x1a.mizer.VideoFileNodeConfigH\
-    \0R\x0fvideoFileConfig\x12L\n\x11videoOutputConfig\x18\x1e\x20\x01(\x0b2\
-    \x1c.mizer.VideoOutputNodeConfigH\0R\x11videoOutputConfig\x12U\n\x14vide\
-    oTransformConfig\x18\x1f\x20\x01(\x0b2\x1f.mizer.VideoTransformNodeConfi\
-    gH\0R\x14videoTransformConfigB\x06\n\x04type\"\x81\x02\n\x14OscillatorNo\
-    deConfig\x12>\n\x04type\x18\x01\x20\x01(\x0e2*.mizer.OscillatorNodeConfi\
-    g.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ra\
-    tio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\
+    \x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\n\n\x06Select\x10\x08\x12\t\n\
+    \x05Merge\x10\t\x12\r\n\tDmxOutput\x10\x0b\x12\x0c\n\x08OscInput\x10\x0c\
+    \x12\r\n\tOscOutput\x10\r\x12\r\n\tMidiInput\x10\x0e\x12\x0e\n\nMidiOutp\
+    ut\x10\x0f\x12\r\n\tVideoFile\x10\x14\x12\x0f\n\x0bVideoOutput\x10\x15\
+    \x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\x11VideoColorBalance\x10\x17\
+    \x12\x12\n\x0eVideoTransform\x10\x18\x12\x0e\n\nPixelToDmx\x10\x1e\x12\
+    \x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOpcOutput\x10\x20\x12\t\n\x05Las\
+    er\x10(\x12\x0c\n\x08IldaFile\x10)\"Q\n\x0fNodePreviewType\x12\x0b\n\x07\
+    History\x10\0\x12\x0c\n\x08Waveform\x10\x01\x12\x0c\n\x08Multiple\x10\
+    \x02\x12\x0b\n\x07Texture\x10\x03\x12\x08\n\x04None\x10\x04\"\xb6\r\n\nN\
+    odeConfig\x12I\n\x10oscillatorConfig\x18\n\x20\x01(\x0b2\x1b.mizer.Oscil\
+    latorNodeConfigH\0R\x10oscillatorConfig\x12F\n\x0fscriptingConfig\x18\
+    \x0b\x20\x01(\x0b2\x1a.mizer.ScriptingNodeConfigH\0R\x0fscriptingConfig\
+    \x12C\n\x0esequenceConfig\x18\x0c\x20\x01(\x0b2\x19.mizer.SequenceNodeCo\
+    nfigH\0R\x0esequenceConfig\x12:\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x16\
+    .mizer.ClockNodeConfigH\0R\x0bclockConfig\x12@\n\rfixtureConfig\x18\x0e\
+    \x20\x01(\x0b2\x18.mizer.FixtureNodeConfigH\0R\rfixtureConfig\x12<\n\x0c\
+    buttonConfig\x18\x0f\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0cbutt\
+    onConfig\x12:\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x16.mizer.InputNode\
+    ConfigH\0R\x0bfaderConfig\x12C\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b2\
+    \x19.mizer.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12:\n\x0blaserConfi\
+    g\x18\x12\x20\x01(\x0b2\x16.mizer.LaserNodeConfigH\0R\x0blaserConfig\x12\
+    O\n\x12pixelPatternConfig\x18\x13\x20\x01(\x0b2\x1d.mizer.PixelPatternNo\
+    deConfigH\0R\x12pixelPatternConfig\x12C\n\x0epixelDmxConfig\x18\x14\x20\
+    \x01(\x0b2\x19.mizer.PixelDmxNodeConfigH\0R\x0epixelDmxConfig\x12F\n\x0f\
+    dmxOutputConfig\x18\x15\x20\x01(\x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\
+    \x0fdmxOutputConfig\x12F\n\x0fmidiInputConfig\x18\x16\x20\x01(\x0b2\x1a.\
+    mizer.MidiInputNodeConfigH\0R\x0fmidiInputConfig\x12I\n\x10midiOutputCon\
+    fig\x18\x17\x20\x01(\x0b2\x1b.mizer.MidiOutputNodeConfigH\0R\x10midiOutp\
+    utConfig\x12F\n\x0fopcOutputConfig\x18\x18\x20\x01(\x0b2\x1a.mizer.OpcOu\
+    tputNodeConfigH\0R\x0fopcOutputConfig\x12>\n\x0eoscInputConfig\x18\x19\
+    \x20\x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0eoscInputConfig\x12@\n\x0fo\
+    scOutputConfig\x18\x1a\x20\x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0foscO\
+    utputConfig\x12^\n\x17videoColorBalanceConfig\x18\x1b\x20\x01(\x0b2\".mi\
+    zer.VideoColorBalanceNodeConfigH\0R\x17videoColorBalanceConfig\x12L\n\
+    \x11videoEffectConfig\x18\x1c\x20\x01(\x0b2\x1c.mizer.VideoEffectNodeCon\
+    figH\0R\x11videoEffectConfig\x12F\n\x0fvideoFileConfig\x18\x1d\x20\x01(\
+    \x0b2\x1a.mizer.VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12L\n\x11vid\
+    eoOutputConfig\x18\x1e\x20\x01(\x0b2\x1c.mizer.VideoOutputNodeConfigH\0R\
+    \x11videoOutputConfig\x12U\n\x14videoTransformConfig\x18\x1f\x20\x01(\
+    \x0b2\x1f.mizer.VideoTransformNodeConfigH\0R\x14videoTransformConfig\x12\
+    =\n\x0cselectConfig\x18\x20\x20\x01(\x0b2\x17.mizer.SelectNodeConfigH\0R\
+    \x0cselectConfig\x12:\n\x0bmergeConfig\x18!\x20\x01(\x0b2\x16.mizer.Merg\
+    eNodeConfigH\0R\x0bmergeConfigB\x06\n\x04type\"\x81\x02\n\x14OscillatorN\
+    odeConfig\x12>\n\x04type\x18\x01\x20\x01(\x0e2*.mizer.OscillatorNodeConf\
+    ig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05r\
+    atio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\
     \x04\x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06o\
     ffset\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOsci\
     llatorType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\
@@ -8572,23 +8971,24 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBala\
     nceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConf\
     ig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputN\
-    odeConfig\"\x1a\n\x18VideoTransformNodeConfig\"*\n\x0cNodePosition\x12\
-    \x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\
-    \x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\
-    \x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\
-    \x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04nam\
-    e\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\
-    \x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\
-    \n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\
-    \x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\
-    \x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\
-    \n\x03Gst\x10\x082\xc2\x02\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mize\
-    r.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.A\
-    ddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.Nod\
-    eConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\
-    \x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12Up\
-    dateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.Upd\
-    ateNodeConfigResponse\"\0b\x06proto3\
+    odeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10SelectNodeConfi\
+    g\"\x11\n\x0fMergeNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\
+    \x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\n\x0cNo\
+    deDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositi\
+    onR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\"N\n\
+    \x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08protoco\
+    l\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\x01\
+    \n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\x01\
+    \x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vector\
+    \x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\
+    \x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082\
+    \xc2\x02\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
+    \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
+    \x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\
+    \x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.\
+    WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodePropert\
+    y\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigRe\
+    sponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

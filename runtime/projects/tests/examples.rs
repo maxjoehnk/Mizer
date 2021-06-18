@@ -11,6 +11,7 @@ use test_case::test_case;
 #[test_case("inputs"; "inputs")]
 #[test_case("osc"; "osc")]
 #[test_case("midi"; "midi")]
+#[test_case("operations"; "operations")]
 fn test_load_project(project: &str) {
     let path = format!(
         "{}/../../examples/{}.yml",

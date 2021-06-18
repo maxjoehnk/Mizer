@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/preview_handler.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
@@ -17,10 +14,8 @@ class NodePreview extends StatelessWidget {
       return Container();
     }
 
-    // TODO: compare performance in release mode
-    // var previewHandler = context.read<PreviewHandler>();
-    var previewHandler = context.read<NodesApi>();
-    var history$ = Stream.periodic(Duration(milliseconds: 50))
+    var previewHandler = context.read<PreviewHandler>();
+    var history$ = Stream.periodic(Duration(milliseconds: 32))
         .asyncMap((event) => previewHandler.getNodeHistory(node.path));
     return StreamBuilder(
         stream: history$,

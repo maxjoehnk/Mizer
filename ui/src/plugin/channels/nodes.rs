@@ -61,7 +61,11 @@ impl MethodCallHandler for NodesChannel {
                     }).collect();
                     match self.get_node_histories(paths) {
                         Ok(history) => {
-                            // resp.send_ok(history.into())
+                            let mut result = HashMap::new();
+                            for (key, value) in history {
+                                result.insert(Value::String(key), Value::F64List(value));
+                            }
+                            resp.send_ok(Value::Map(result));
                         },
                         Err(err) => resp.respond_error(err),
                     }

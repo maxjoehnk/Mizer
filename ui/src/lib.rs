@@ -4,7 +4,6 @@ use nativeshell::{
 };
 
 use mizer_api::handlers::Handlers;
-use nativeshell::shell::MessageManager;
 use crate::plugin::channels::*;
 
 mod plugin;

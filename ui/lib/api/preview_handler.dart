@@ -22,7 +22,7 @@ class PreviewHandler {
     if (isScheduled) {
       return;
     }
-    scheduleMicrotask(_runQuery);
+    new Timer(Duration(milliseconds: 10), _runQuery);
     isScheduled = true;
   }
 

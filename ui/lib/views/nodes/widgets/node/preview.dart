@@ -51,6 +51,9 @@ class HistoryRendererPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (history == null) {
+      return;
+    }
     Paint historyPaint = Paint()
       ..color = Color(0xffffffff)
       ..style = PaintingStyle.stroke;

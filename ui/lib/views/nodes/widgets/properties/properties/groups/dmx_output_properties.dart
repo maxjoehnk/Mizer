@@ -3,8 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/properties/number_field.dart';
-import 'package:mizer/views/nodes/properties/property_group.dart';
+
+import '../number_field.dart';
+import '../property_group.dart';
 
 class DmxOutputProperties extends StatefulWidget {
   final DmxOutputNodeConfig config;

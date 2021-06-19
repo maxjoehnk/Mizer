@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'consts.dart';
+import '../../consts.dart';
 
-class NodeCanvasBackground extends StatelessWidget {
+class CanvasBackgroundLayer extends StatelessWidget {
   final Widget child;
 
-  NodeCanvasBackground({this.child});
+  CanvasBackgroundLayer({this.child});
 
   @override
   Widget build(BuildContext context) {

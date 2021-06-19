@@ -16,6 +16,9 @@ class TransportControls extends StatelessWidget {
         stream: api.watchTransport(),
         initialData: Transport(),
         builder: (context, snapshot) {
+          if (snapshot.data == null) {
+            return Container();
+          }
           return Container(
               height: TRANSPORT_CONTROLS_HEIGHT,
               color: Colors.grey.shade800,

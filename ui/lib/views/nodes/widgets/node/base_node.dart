@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/node/ports.dart';
 
-import '../consts.dart';
+import '../../consts.dart';
 import 'container.dart';
 import 'header.dart';
+import 'ports.dart';
 import 'preview.dart';
 
 class BaseNode extends StatelessWidget {
@@ -15,7 +15,7 @@ class BaseNode extends StatelessWidget {
   final bool selected;
   final Function onSelect;
 
-  BaseNode(this.node, {this.child, this.selected, this.onSelect});
+  BaseNode(this.node, {this.child, this.selected, this.onSelect, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +43,13 @@ class BaseNode extends StatelessWidget {
     );
   }
 
-  factory BaseNode.fromNode(Node node, {Function onSelect, bool selected}) {
+  factory BaseNode.fromNode(Node node, {Function onSelect, bool selected, Key key}) {
     return BaseNode(
       node,
       child: Container(),
       onSelect: onSelect,
       selected: selected,
+      key: key,
     );
   }
 }

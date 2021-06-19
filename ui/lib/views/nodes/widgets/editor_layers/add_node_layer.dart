@@ -1,61 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/available_nodes.dart';
-
-// Selector to add new nodes, might need a better name
-
-class NodeSelectionContainer extends StatefulWidget {
-  final Widget child;
-  final Function(Node_NodeType, Offset) onSelectNewNode;
-
-  NodeSelectionContainer({this.child, this.onSelectNewNode});
-
-  @override
-  _NodeSelectionContainerState createState() => _NodeSelectionContainerState();
-}
-
-class _NodeSelectionContainerState extends State<NodeSelectionContainer> {
-  bool active = false;
-  Offset position;
-
-  @override
-  Widget build(BuildContext context) {
-    var children = [Container(color: Colors.transparent), this.widget.child];
-    if (active) {
-      children.add(NodeSelection(position, onSelection: (nodeType) {
-        setState(() {
-          this.active = false;
-        });
-        this.widget.onSelectNewNode(nodeType, position);
-      }));
-    }
-    return GestureDetector(
-        onSecondaryTapUp: (event) {
-          setState(() {
-            active = true;
-            position = event.localPosition;
-          });
-        },
-        onTap: () {
-          setState(() {
-            active = false;
-          });
-        },
-        child: Stack(
-          children: children,
-          clipBehavior: Clip.none,
-        ));
-  }
-}
+import 'package:mizer/available_nodes.dart';
 
 const MAX_ROWS = 15;
 const double COLUMN_WIDTH = 150;
 
-class NodeSelection extends StatelessWidget {
+class AddNodeMenu extends StatelessWidget {
   final Offset offset;
   final Function(Node_NodeType) onSelection;
 
-  NodeSelection(this.offset, {this.onSelection});
+  AddNodeMenu(this.offset, {this.onSelection});
 
   @override
   Widget build(BuildContext context) {

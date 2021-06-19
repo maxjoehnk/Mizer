@@ -13,6 +13,7 @@ dependencies:
   grpc: ^3.0.0
   bloc: ^7.0.0-nullsafety.3
   flutter_bloc: ^7.0.0-nullsafety.3
+  provider: ^5.0.0
   material_design_icons_flutter: ^4.0.0
   file_selector_platform_interface: ^2.0.0
   file_selector_linux: ^0.0.2

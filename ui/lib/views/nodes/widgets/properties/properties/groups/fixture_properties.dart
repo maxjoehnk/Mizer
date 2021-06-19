@@ -6,8 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
-import 'package:mizer/views/nodes/properties/enum_field.dart';
-import 'package:mizer/views/nodes/properties/property_group.dart';
+
+import '../enum_field.dart';
+import '../property_group.dart';
 
 class FixtureProperties extends StatefulWidget {
   final FixtureNodeConfig config;

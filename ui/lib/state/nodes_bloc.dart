@@ -63,7 +63,7 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
   }
 
   Node getNodeByPath(String path) {
-    return this.state.nodes.firstWhere((node) => node.path == path);
+    return this.state.nodes.firstWhere((node) => node.path == path, orElse: () => null);
   }
 
   List<PortOption> getAvailablePorts(Node node, Port port) {

@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
                   onSelect: this._selectView,
                   routes: routes,
                 ),
-                Expanded(child: _currentWidget)
+                Expanded(child: Container(child: _currentWidget, clipBehavior: Clip.antiAlias, decoration: BoxDecoration()))
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),

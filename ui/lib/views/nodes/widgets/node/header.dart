@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../consts.dart';
+import '../../consts.dart';
 
 class NodeHeader extends StatelessWidget {
   final String name;

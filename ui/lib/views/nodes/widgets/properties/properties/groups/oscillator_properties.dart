@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/properties/enum_field.dart';
-import 'package:mizer/views/nodes/properties/number_field.dart';
 
+import '../enum_field.dart';
+import '../number_field.dart';
 import '../property_group.dart';
 
 class OscillatorProperties extends StatefulWidget {

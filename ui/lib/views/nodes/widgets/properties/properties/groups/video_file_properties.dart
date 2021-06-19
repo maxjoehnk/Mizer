@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/properties/property_group.dart';
+
+import '../property_group.dart';
 
 class VideoFileProperties extends StatelessWidget {
   final VideoFileNodeConfig config;

@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/properties/groups/dmx_output_properties.dart';
-import 'package:mizer/views/nodes/properties/groups/fixture_properties.dart';
-import 'package:mizer/views/nodes/properties/groups/oscillator_properties.dart';
-import 'package:mizer/views/nodes/properties/groups/video_file_properties.dart';
+
+import 'properties/groups/dmx_output_properties.dart';
+import 'properties/groups/fixture_properties.dart';
+import 'properties/groups/oscillator_properties.dart';
+import 'properties/groups/video_file_properties.dart';
 
 class NodePropertiesPane extends StatelessWidget {
   final Node node;

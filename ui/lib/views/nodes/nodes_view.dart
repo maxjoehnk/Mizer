@@ -5,103 +5,128 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/views/layout/layout_view.dart';
+import 'package:mizer/views/nodes/widgets/editor_layers/add_node_layer.dart';
+import 'package:provider/provider.dart';
 
-import 'background.dart';
-import 'canvas.dart';
-import 'consts.dart';
-import 'graph/engine.dart';
-import 'node_properties.dart';
-import 'node_selection.dart';
-import 'transport_controls.dart';
+import 'widgets/editor_layers/canvas_drop_layer.dart';
+import 'widgets/editor_layers/graph_paint_layer.dart';
+import 'models/node_editor_model.dart';
+import 'widgets/editor_layers/nodes_layer.dart';
+import 'widgets/editor_layers/background_layer.dart';
+import 'widgets/properties/node_properties.dart';
+import 'widgets/transport/transport_controls.dart';
 
 class FetchNodesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<NodesBloc>().add(FetchNodes());
     return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
-      return NodesView(nodes);
+      return SizeChangedLayoutNotifier(
+        child: ChangeNotifierProvider<NodeEditorModel>.value(
+            value: NodeEditorModel(nodes), // TODO: update existing NodeModels
+            builder: (context, _) => SizedBox.expand(child: NodesView())),
+      );
     });
   }
 }
 
 class NodesView extends StatefulWidget {
-  final Nodes nodes;
-
-  NodesView(this.nodes);
-
   @override
   _NodesViewState createState() => _NodesViewState();
 }
 
-class _NodesViewState extends State<NodesView> {
-  final TransformationController controller = TransformationController(
-      Matrix4.translationValues((CANVAS_SIZE / 2) * -1, (CANVAS_SIZE / 2) * -1, 0));
-
-  Node selectedNode;
+class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
+  Offset addMenuPosition;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        InteractiveViewer(
-            transformationController: controller,
-            constrained: false,
-            boundaryMargin: EdgeInsets.all(0),
-            minScale: 0.001,
-            maxScale: 10,
-            child: Container(
-                width: CANVAS_SIZE,
-                height: CANVAS_SIZE,
-                child: OverflowBox(
-                    child: GraphEngine(
-                        nodes: this.widget.nodes,
-                        child: NodesViewer(
-                          nodes: this.widget.nodes,
-                          selectedNodes: this.selectedNode == null ? [] : [this.selectedNode],
-                          onSelect: (node) => setState(() {
-                            this.selectedNode = node;
-                          }),
-                        ))))),
-        Positioned(
-            top: 16,
-            right: 16,
-            bottom: 16 + TRANSPORT_CONTROLS_HEIGHT,
-            width: 256,
-            child: NodePropertiesPane(node: this.selectedNode)),
-        Positioned(
-          left: 0,
-            right: 0,
-            bottom: 0,
-            child: TransportControls()),
-      ],
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      afterLayout(context);
+    });
+
+    return Consumer<NodeEditorModel>(
+      builder: (context, model, _) => Stack(
+        children: [
+          GestureDetector(
+            onSecondaryTapUp: (event) {
+              setState(() {
+                addMenuPosition = event.localPosition;
+              });
+              log("right click");
+            },
+            onTap: () {
+              setState(() {
+                addMenuPosition = null;
+              });
+            },
+            child: Stack(children: [
+              SizedBox.expand(
+                  child: InteractiveViewer(
+                      transformationController: model.transformationController,
+                      boundaryMargin: EdgeInsets.all(double.infinity),
+                      minScale: 0.1,
+                      maxScale: 10.0,
+                      child: SizedBox.expand())),
+              Transform(
+                transform: model.transformationController.value,
+                child: IgnorePointer(child: CanvasBackgroundLayer(child: SizedBox.expand())),
+              ),
+              Transform(
+                  transform: model.transformationController.value,
+                  child: IgnorePointer(
+                      child: GraphPaintLayer(model: model))),
+              NodesTarget(),
+              CanvasDropLayer(),
+              if (addMenuPosition != null)
+                AddNodeMenu(addMenuPosition, onSelection: (nodeType) => _addNode(model, nodeType)),
+            ]),
+          ),
+          Positioned(
+              top: 16,
+              right: 16,
+              bottom: 16 + TRANSPORT_CONTROLS_HEIGHT,
+              width: 256,
+              child: NodePropertiesPane(node: model.selectedNode?.node)),
+          Positioned(left: 0, right: 0, bottom: 0, child: TransportControls()),
+        ],
+      ),
     );
   }
-}
-
-class NodesViewer extends StatelessWidget {
-  final Nodes nodes;
-  final Function(Node) onSelect;
-  final List<Node> selectedNodes;
-
-  NodesViewer({this.nodes, this.onSelect, this.selectedNodes});
 
   @override
-  Widget build(BuildContext context) {
-    return NodeSelectionContainer(
-      child: NodeCanvasBackground(
-        child: Padding(
-          padding: const EdgeInsets.all(MULTIPLIER),
-          child: NodeCanvas(
-              nodes: this.nodes, onSelect: this.onSelect, selectedNodes: this.selectedNodes),
-        ),
-      ),
-      onSelectNewNode: (nodeType, position) {
-        double canvasCenter = CANVAS_SIZE / 2;
-        // TODO: translate by parent position
-        Offset offset = Offset(position.dx - canvasCenter, position.dy - canvasCenter) / MULTIPLIER;
-        log("adding new node with type $nodeType at $offset");
-        context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: offset));
-      },
-    );
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addObserver(this);
+      afterLayout(context);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void afterLayout(BuildContext context) {
+    NodeEditorModel model = Provider.of<NodeEditorModel>(context, listen: false);
+    model.updateNodes();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    setState(() {});
+  }
+
+  void _addNode(NodeEditorModel model, Node_NodeType nodeType) {
+    var nodes = context.read<NodesBloc>();
+    var transformedPosition = model.transformationController.toScene(addMenuPosition);
+    var position = transformedPosition / MULTIPLIER;
+    nodes.add(AddNode(nodeType: nodeType, position: position));
+    setState(() {
+      addMenuPosition = null;
+    });
   }
 }

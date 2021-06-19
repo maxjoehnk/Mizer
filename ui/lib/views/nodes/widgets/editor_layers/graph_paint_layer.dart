@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/views/nodes/models/port_model.dart';
 
 class GraphPaintLayer extends StatelessWidget {
   final NodeEditorModel model;
@@ -18,7 +19,6 @@ class GraphPaintLayer extends StatelessWidget {
       willChange: true,
     );
   }
-
 }
 
 class GraphLinePainter extends CustomPainter {
@@ -33,8 +33,13 @@ class GraphLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (var channel in model.channels) {
-      Offset fromPosition = _getFromPosition(channel);
-      Offset toPosition = _getToPosition(channel);
+      var fromPort = model.getPortModel(model.getNode(channel.sourceNode), channel.sourcePort, false);
+      var toPort = model.getPortModel(model.getNode(channel.targetNode), channel.targetPort, true);
+      if (fromPort == null || toPort == null) {
+        continue;
+      }
+      Offset fromPosition = _getPosition(fromPort);
+      Offset toPosition = _getPosition(toPort);
       draw(canvas, fromPosition, toPosition, channel);
     }
   }
@@ -44,15 +49,7 @@ class GraphLinePainter extends CustomPainter {
     return true;
   }
 
-  Offset _getFromPosition(NodeConnection channel) {
-    var port = model.getPortModel(model.getNode(channel.sourceNode), channel.sourcePort, false);
-
-    return port.offset + Offset(port.size.width / 2, port.size.height / 2);
-  }
-
-  Offset _getToPosition(NodeConnection channel) {
-    var port = model.getPortModel(model.getNode(channel.targetNode), channel.targetPort, true);
-
+  Offset _getPosition(PortModel port) {
     return port.offset + Offset(port.size.width / 2, port.size.height / 2);
   }
 

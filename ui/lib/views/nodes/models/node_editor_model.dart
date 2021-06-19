@@ -34,10 +34,10 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   PortModel getPortModel(Node node, Port port, bool input) {
-    var nodeModel = this.nodes.firstWhere((nodeModel) => nodeModel.node == node);
+    var nodeModel = this.nodes.firstWhere((nodeModel) => nodeModel.node == node, orElse: () => null);
 
-    return nodeModel.ports
-        .firstWhere((portModel) => portModel.port == port && portModel.input == input);
+    return nodeModel?.ports
+        .firstWhere((portModel) => portModel.port.name == port.name && portModel.input == input, orElse: () => null);
   }
 
   Node getNode(String path) {

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -82,7 +80,7 @@ class PortDot extends StatelessWidget {
 
     return DecoratedBox(
       decoration: ShapeDecoration(
-          gradient: RadialGradient(colors: [color.shade800, color.shade500]),
+          gradient: RadialGradient(colors: [color.shade400, color.shade700]),
           shadows: [
             BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
           ],

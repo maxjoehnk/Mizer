@@ -24,16 +24,17 @@ impl NodesHandler {
             let mut conn = NodeConnection {
                 sourceNode: channel.source.to_string(),
                 targetNode: channel.target.to_string(),
+                protocol: channel.port_type.into(),
                 ..Default::default()
             };
             let source_port = Port {
-                protocol: ChannelProtocol::Single,
+                protocol: channel.port_type.into(),
                 name: channel.source_port.to_string(),
                 ..Default::default()
             };
             conn.set_sourcePort(source_port);
             let target_port = Port {
-                protocol: ChannelProtocol::Single,
+                protocol: channel.port_type.into(),
                 name: channel.target_port.to_string(),
                 ..Default::default()
             };

@@ -1,4 +1,4 @@
-use mizer_clock::{Clock, ClockFrame};
+use mizer_clock::*;
 
 pub struct TestClock {
     speed: f64,
@@ -37,5 +37,18 @@ impl Clock for TestClock {
 
     fn speed_mut(&mut self) -> &mut f64 {
         &mut self.speed
+    }
+    
+    fn snapshot(&self) -> ClockSnapshot {
+        ClockSnapshot {
+            speed: 1.0,
+            frames: 1,
+            time: 1.,
+            state: ClockState::Playing
+        }
+    }
+
+    fn set_state(&mut self, state: ClockState) {
+        unimplemented!()
     }
 }

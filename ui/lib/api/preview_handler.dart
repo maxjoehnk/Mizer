@@ -28,7 +28,6 @@ class PreviewHandler {
 
   _runQuery() {
     var tasks = this.tasks;
-    log("batched ${tasks.length} history queries");
     this.tasks = [];
     isScheduled = false;
     nodesApi

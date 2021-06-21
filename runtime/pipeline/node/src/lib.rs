@@ -8,6 +8,7 @@ pub use self::introspection::*;
 pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
+use std::fmt::Debug;
 
 mod context;
 mod path;
@@ -16,7 +17,7 @@ mod ports;
 mod introspection;
 mod preview;
 
-pub trait PipelineNode: Send + Sync + Any {
+pub trait PipelineNode: Debug + Send + Sync + Any {
     fn details(&self) -> NodeDetails;
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {

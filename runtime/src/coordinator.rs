@@ -14,8 +14,7 @@ use std::io::Write;
 use std::sync::Arc;
 use mizer_layouts::{Layout, ControlConfig};
 use std::str::FromStr;
-use downcast::Downcast;
-use std::ops::{DerefMut, Deref};
+use std::ops::DerefMut;
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -332,9 +331,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     fn handle_update_node(&mut self, path: NodePath, config: Node) -> anyhow::Result<()> {
         log::debug!("Updating {:?} with {:?}", path, config);
-        if let Some(mut node) = self.nodes.get_mut(&path) {
-            let node = as_pipeline_node_mut(node.deref_mut());
-            update_pipeline_node(node, &config)?;
+        if let Some(node) = self.nodes.get_mut(&path) {
+            let node: &mut dyn ProcessingNodeExt = node.deref_mut();
+            update_pipeline_node(node.as_pipeline_node_mut(), &config)?;
         }
         if let Some(mut node) = self.nodes_view.get_mut(&path) {
             let node = node.value_mut();
@@ -395,7 +394,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     }
 }
 
-fn update_pipeline_node(mut node: &mut dyn PipelineNode, config: &Node) -> anyhow::Result<()> {
+fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::Result<()> {
     let node_type = node.node_type();
     match (node_type, config) {
         (NodeType::DmxOutput, Node::DmxOutput(config)) => {
@@ -487,7 +486,7 @@ fn update_pipeline_node(mut node: &mut dyn PipelineNode, config: &Node) -> anyho
         },
         (NodeType::VideoOutput, Node::VideoOutput(config)) => {},
         (NodeType::VideoTransform, Node::VideoTransform(config)) => {},
-        _ => unimplemented!()
+        (node_type, node) => log::warn!("invalid node type {:?} for given update {:?}", node_type, node),
     }
     Ok(())
 }

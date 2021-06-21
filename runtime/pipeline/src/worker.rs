@@ -14,13 +14,8 @@ use ringbuffer::RingBufferExt;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
-}
 
-pub fn as_pipeline_node_mut(node: &mut dyn ProcessingNodeExt) -> &mut dyn PipelineNode {
-    unsafe {
-        // TODO: this should be possible without transmutation as ProcessingNodeExt has PipelineNode as requirement
-        std::mem::transmute(node)
-    }
+    fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode;
 }
 
 downcast!(dyn ProcessingNodeExt);
@@ -35,6 +30,10 @@ where
         } else {
             unreachable!()
         }
+    }
+
+    fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode {
+        self
     }
 }
 

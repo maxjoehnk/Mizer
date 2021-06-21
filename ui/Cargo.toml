@@ -10,7 +10,7 @@ log = "0.4"
 mizer-api = { path = "../api" }
 protobuf = "2.18"
 smol = "1.2"
-nativeshell = "0.1.5"
+nativeshell = "0.1.6"
 
 [build-dependencies]
 nativeshell_build = "0.1"

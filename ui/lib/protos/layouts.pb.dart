@@ -39,6 +39,53 @@ class GetLayoutsRequest extends $pb.GeneratedMessage {
   static GetLayoutsRequest _defaultInstance;
 }
 
+class AddLayoutRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  AddLayoutRequest._() : super();
+  factory AddLayoutRequest({
+    $core.String name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory AddLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddLayoutRequest clone() => AddLayoutRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddLayoutRequest copyWith(void Function(AddLayoutRequest) updates) => super.copyWith((message) => updates(message as AddLayoutRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddLayoutRequest create() => AddLayoutRequest._();
+  AddLayoutRequest createEmptyInstance() => create();
+  static $pb.PbList<AddLayoutRequest> createRepeated() => $pb.PbList<AddLayoutRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddLayoutRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddLayoutRequest>(create);
+  static AddLayoutRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+}
+
 class Layouts extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layouts', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..pc<Layout>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layouts', $pb.PbFieldType.PM, subBuilder: Layout.create)

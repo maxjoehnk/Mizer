@@ -54,6 +54,15 @@ impl RuntimeApi {
         self.layouts.read()
     }
 
+    pub fn add_layout(&self, name: String) {
+        let mut layouts = self.layouts.read();
+        layouts.push(Layout {
+            id: name,
+            controls: Default::default(),
+        });
+        self.layouts.set(layouts);
+    }
+
     pub fn add_node(
         &self,
         node_type: NodeType,

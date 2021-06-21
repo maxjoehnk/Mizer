@@ -1,6 +1,6 @@
 use mizer_api::handlers::LayoutsHandler;
 use mizer_api::models::*;
-use crate::plugin::channels::MethodReplyExt;
+use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
 use nativeshell::codec::{MethodCall, Value, MethodCallReply};
 use nativeshell::shell::{MethodCallHandler, EngineHandle, MethodChannel, Context};
 use std::rc::Rc;
@@ -17,6 +17,13 @@ impl MethodCallHandler for LayoutsChannel {
                 let response = self.get_layouts();
 
                 resp.respond_msg(response);
+            }
+            "addLayout" => {
+                if let Value::String(name) = call.args {
+                    let response = self.add_layout(name);
+
+                    resp.respond_msg(response);
+                }
             }
             _ => resp.not_implemented()
         }
@@ -36,5 +43,9 @@ impl LayoutsChannel {
 
     fn get_layouts(&self) -> Layouts {
         self.handler.get_layouts()
+    }
+
+    fn add_layout(&self, name: String) -> Layouts {
+        self.handler.add_layout(name)
     }
 }

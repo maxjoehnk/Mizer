@@ -11,4 +11,9 @@ class LayoutsGrpcApi implements LayoutsApi {
   Future<Layouts> getLayouts() {
     return this.client.getLayouts(GetLayoutsRequest());
   }
+
+  @override
+  Future<Layouts> addLayout(String name) {
+    return this.client.addLayout(AddLayoutRequest(name: name));
+  }
 }

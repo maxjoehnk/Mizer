@@ -4,9 +4,14 @@ package mizer;
 
 service LayoutsApi {
   rpc GetLayouts (GetLayoutsRequest) returns (Layouts) {}
+  rpc AddLayout (AddLayoutRequest) returns (Layouts) {}
 }
 
 message GetLayoutsRequest {}
+
+message AddLayoutRequest {
+  string name = 1;
+}
 
 message Layouts {
   repeated Layout layouts = 1;

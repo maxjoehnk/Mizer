@@ -23,6 +23,8 @@
 
 pub trait LayoutsApi {
     fn get_layouts(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::GetLayoutsRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
+
+    fn add_layout(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::AddLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -43,6 +45,16 @@ impl LayoutsApiClient {
     pub fn get_layouts(&self, o: ::grpc::RequestOptions, req: super::layouts::GetLayoutsRequest) -> ::grpc::SingleResponse<super::layouts::Layouts> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/GetLayouts"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn add_layout(&self, o: ::grpc::RequestOptions, req: super::layouts::AddLayoutRequest) -> ::grpc::SingleResponse<super::layouts::Layouts> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/AddLayout"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -71,6 +83,18 @@ impl LayoutsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_layouts(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/AddLayout"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).add_layout(ctx, req, resp))
                     },
                 ),
             ],

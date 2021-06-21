@@ -13,21 +13,46 @@ const double MULTIPLIER = 75;
 class LayoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    context.read<LayoutsBloc>().add(LayoutsEvent.Fetch);
+    var layoutsBloc = context.read<LayoutsBloc>();
+    layoutsBloc.add(FetchLayouts());
     return BlocBuilder<LayoutsBloc, Layouts>(builder: (context, layouts) {
-      if (layouts.layouts.isEmpty) {
-        return Container();
-      }
       log("${layouts.layouts}");
       return tabs.Tabs(
-          children: layouts.layouts
-              .map((l) => tabs.Tab(
-                  label: l.id,
-                  child: ControlLayout(
-                    layout: l,
-                  )))
-              .toList());
+        children: layouts.layouts
+            .map((l) => tabs.Tab(
+                label: l.id,
+                child: ControlLayout(
+                  layout: l,
+                )))
+            .toList(),
+        onAdd: () => showDialog(
+          context: context,
+          useRootNavigator: false,
+          builder: (_) => NameLayoutDialog(),
+        ).then((name) => layoutsBloc.add(AddLayout(name: name))),
+      );
     });
+  }
+}
+
+class NameLayoutDialog extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+
+  NameLayoutDialog({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        title: Text("Add Layout"),
+        actions: [
+          ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(nameController.text), child: Text("Add"))
+        ],
+        content: TextField(
+          controller: nameController,
+          autofocus: true,
+          decoration: InputDecoration(labelText: "Name"),
+        ));
   }
 }
 

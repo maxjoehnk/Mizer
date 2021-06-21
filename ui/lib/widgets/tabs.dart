@@ -1,39 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mizer/widgets/controls/button.dart';
+import 'package:mizer/widgets/controls/icon_button.dart';
 
 class Tabs extends StatefulWidget {
   final List<Tab> children;
+  final Function onAdd;
 
-  Tabs({this.children});
+  bool get canAdd {
+    return onAdd != null;
+  }
+
+  Tabs({this.children, this.onAdd});
 
   @override
-  _TabsState createState() => _TabsState(this.children[0].child);
+  _TabsState createState() => _TabsState();
 }
 
 class _TabsState extends State<Tabs> {
-  Widget active;
+  int activeIndex = 0;
 
-  _TabsState(this.active);
+  _TabsState();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-            children: this
+        Container(
+          color: Colors.grey.shade800,
+          height: 32,
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            ...this
                 .widget
                 .children
-                .map((e) => TabHeader(e.label,
-                    selected: this.active == e.child,
-                    onSelect: () => setState(() {
-                          this.active = e.child;
-                        })))
-                .toList()),
-        this.active,
+                .asMap()
+                .map((i, e) => MapEntry(
+                    i,
+                    TabHeader(e.label,
+                        selected: this.activeIndex == i,
+                        onSelect: () => setState(() {
+                              this.activeIndex = i;
+                            }))))
+                .values,
+            if (widget.canAdd) AddTabButton(onClick: widget.onAdd),
+          ]),
+        ),
+        if (this.active != null) this.active,
       ],
     );
+  }
+
+  Widget get active {
+    return widget.children[activeIndex]?.child;
   }
 }
 
@@ -53,17 +73,24 @@ class TabHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: this.onSelect,
-        child: Container(
-          color: this.selected ? Colors.grey.shade800 : Colors.transparent,
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: Text(this.label),
-        ),
+    return MizerButton(
+      active: selected,
+      onClick: onSelect,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+        child: Text(this.label),
       ),
     );
+  }
+}
+
+class AddTabButton extends StatelessWidget {
+  final Function onClick;
+
+  AddTabButton({this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return MizerIconButton(icon: Icons.add, onClick: this.onClick);
   }
 }

@@ -19,6 +19,11 @@ class LayoutsApiClient extends $grpc.Client {
           '/mizer.LayoutsApi/GetLayouts',
           ($0.GetLayoutsRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Layouts.fromBuffer(value));
+  static final _$addLayout =
+      $grpc.ClientMethod<$0.AddLayoutRequest, $0.Layouts>(
+          '/mizer.LayoutsApi/AddLayout',
+          ($0.AddLayoutRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Layouts.fromBuffer(value));
 
   LayoutsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -28,6 +33,11 @@ class LayoutsApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Layouts> getLayouts($0.GetLayoutsRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$getLayouts, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Layouts> addLayout($0.AddLayoutRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$addLayout, request, options: options);
   }
 }
 
@@ -42,6 +52,13 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetLayoutsRequest.fromBuffer(value),
         ($0.Layouts value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddLayoutRequest, $0.Layouts>(
+        'AddLayout',
+        addLayout_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.AddLayoutRequest.fromBuffer(value),
+        ($0.Layouts value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Layouts> getLayouts_Pre($grpc.ServiceCall call,
@@ -49,6 +66,13 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
     return getLayouts(call, await request);
   }
 
+  $async.Future<$0.Layouts> addLayout_Pre($grpc.ServiceCall call,
+      $async.Future<$0.AddLayoutRequest> request) async {
+    return addLayout(call, await request);
+  }
+
   $async.Future<$0.Layouts> getLayouts(
       $grpc.ServiceCall call, $0.GetLayoutsRequest request);
+  $async.Future<$0.Layouts> addLayout(
+      $grpc.ServiceCall call, $0.AddLayoutRequest request);
 }

@@ -15,4 +15,11 @@ class LayoutsPluginApi implements LayoutsApi {
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
+
+  @override
+  Future<Layouts> addLayout(String name) async {
+    var response = await channel.invokeMethod("addLayout", name);
+
+    return Layouts.fromBuffer(_convertBuffer(response));
+  }
 }

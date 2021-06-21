@@ -23,4 +23,10 @@ impl LayoutsHandler {
 
         result
     }
+
+    pub fn add_layout(&self, name: String) -> Layouts {
+        self.runtime.add_layout(name);
+
+        self.get_layouts()
+    }
 }

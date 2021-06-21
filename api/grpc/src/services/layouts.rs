@@ -16,4 +16,10 @@ impl LayoutsApi for LayoutsHandler {
 
         resp.finish(layouts)
     }
+
+    fn add_layout(&self, o: ServerHandlerContext, req: ServerRequestSingle<AddLayoutRequest>, resp: ServerResponseUnarySink<Layouts>) -> grpc::Result<()> {
+        let layouts = self.add_layout(req.message.name);
+
+        resp.finish(layouts)
+    }
 }

@@ -9,6 +9,13 @@ const GetLayoutsRequest$json = const {
   '1': 'GetLayoutsRequest',
 };
 
+const AddLayoutRequest$json = const {
+  '1': 'AddLayoutRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
 const Layouts$json = const {
   '1': 'Layouts',
   '2': const [

@@ -18,10 +18,11 @@ List<Route> routes = [
   Route(() => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.digit2, View.Plan2D),
   Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.digit3, View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.digit4, View.Nodes),
-  Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit5, View.Fixtures),
-  Route(() => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit6, View.Media),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit7, View.Devices),
-  Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit8, View.Session),
+  Route(() => Container(), MdiIcons.animationPlayOutline, 'Sequences', LogicalKeyboardKey.digit5, View.Sequences),
+  Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit6, View.Fixtures),
+  Route(() => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit7, View.Media),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit8, View.Devices),
+  Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit9, View.Session),
 ];
 
 Map<LogicalKeySet, Intent> shortcuts = getShortcuts(routes);

@@ -11,6 +11,7 @@ enum View {
   Plan2D,
   PreViz,
   Nodes,
+  Sequences,
   Fixtures,
   Media,
   Devices,

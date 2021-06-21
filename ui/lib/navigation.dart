@@ -132,7 +132,7 @@ extension MapWithIndex<T> on List<T> {
   }
 }
 
-class NavigationItem extends StatelessWidget {
+class NavigationItem extends StatefulWidget {
   final Route route;
   final bool selected;
   final Function onSelect;
@@ -140,28 +140,37 @@ class NavigationItem extends StatelessWidget {
   NavigationItem(this.route, this.selected, this.onSelect);
 
   @override
+  _NavigationItemState createState() => _NavigationItemState();
+}
+
+class _NavigationItemState extends State<NavigationItem> {
+  bool hovering = false;
+
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
-    var color = this.selected ? theme.primaryColor : theme.hintColor;
+    var color = this.widget.selected ? theme.accentColor : theme.hintColor;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
+      onExit: (e) => setState(() => hovering = false),
+      onHover: (e) => setState(() => hovering = true),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: this.onSelect,
+        onTap: this.widget.onSelect,
         child: Container(
           height: 64,
-          color: this.selected ? Colors.black12 : null,
+          color: backgroundColor,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           child: Column(
             children: [
               Icon(
-                this.route.icon,
+                this.widget.route.icon,
                 color: color,
-                size: 16,
+                size: 24,
               ),
-              Text(this.route.label, style: textTheme.subtitle2.copyWith(color: color)),
+              Text(this.widget.route.label, style: textTheme.subtitle2.copyWith(color: color, fontSize: 10)),
             ],
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,5 +178,15 @@ class NavigationItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color get backgroundColor {
+    if (widget.selected) {
+      return Colors.black26;
+    }
+    if (hovering) {
+      return Colors.black12;
+    }
+    return null;
   }
 }

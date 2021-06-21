@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/widgets/controls/select.dart';
 
 import '../enum_field.dart';
 import '../property_group.dart';
@@ -62,7 +63,7 @@ class _FixtureSelector extends StatelessWidget {
               initialValue: config.fixtureId,
               onUpdate: onUpdate,
               items: fixtures.fixtures
-                  .map((f) => EnumItem(value: f.id, label: '${f.id} - ${f.name}'))
+                  .map((f) => SelectOption(value: f.id, label: '${f.id} - ${f.name}'))
                   .toList(),
             ));
   }

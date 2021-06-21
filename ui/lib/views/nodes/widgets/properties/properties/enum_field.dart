@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:select_form_field/select_form_field.dart';
+import 'package:mizer/widgets/controls/select.dart';
+
+import 'field.dart';
 
 class EnumField extends StatelessWidget {
   final String label;
-  final List<EnumItem<int>> items;
+  final List<SelectOption<int>> items;
   final int initialValue;
   final Function(int) onUpdate;
 
@@ -11,16 +13,13 @@ class EnumField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectFormField(
-      decoration: InputDecoration(labelText: label),
-      initialValue: this.initialValue.toString(),
-      onChanged: (value) => onUpdate(int.parse(value)),
-      items: this.items.map((item) {
-        return {
-          'value': item.value.toString(),
-          'label': item.label,
-        };
-      }).toList(),
+    return Field(
+      label: label,
+      child: MizerSelect(
+        value: this.initialValue,
+        options: this.items,
+        onChanged: (value) => onUpdate(value),
+      ),
     );
   }
 }

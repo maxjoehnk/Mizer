@@ -14,7 +14,7 @@ class PropertyGroup extends StatelessWidget {
           padding: EdgeInsets.all(4),
           color: Colors.black.withOpacity(0.2),
           child: Text(this.title)),
-      ...children
+      ...children.map((w) => Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: w)).toList(),
     ]);
   }
 }

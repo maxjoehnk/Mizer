@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/widgets/controls/select.dart';
 
 import '../enum_field.dart';
 import '../number_field.dart';
@@ -36,7 +37,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
           label: "Type",
           initialValue: widget.config.type.value,
           items: OscillatorNodeConfig_OscillatorType.values
-              .map((e) => EnumItem(value: e.value, label: e.name))
+              .map((e) => SelectOption(value: e.value, label: e.name))
               .toList(),
           onUpdate: _updateType),
       NumberField(

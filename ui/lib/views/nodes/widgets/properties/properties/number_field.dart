@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import 'field.dart';
+
 class NumberField extends StatefulWidget {
   final String label;
   final num value;
@@ -95,14 +97,16 @@ class _NumberFieldState extends State<NumberField> {
       child: GestureDetector(
         onHorizontalDragUpdate: (update) => _setValue(this.value + update.primaryDelta),
         onTap: () => setState(() => this.isEditing = true),
-        child: _Field(
-            label: this.widget.label,
-            value: this._valueHint,
-            child: Text(
-              controller.text,
-              style: textStyle,
-              textAlign: TextAlign.center,
-            )),
+        child: Field(
+          label: this.widget.label,
+          child: _Bar(
+              value: this._valueHint,
+              child: Text(
+                controller.text,
+                style: textStyle,
+                textAlign: TextAlign.center,
+              )),
+        ),
       ),
     );
   }
@@ -112,19 +116,24 @@ class _NumberFieldState extends State<NumberField> {
 
     return MouseRegion(
         cursor: SystemMouseCursors.resizeLeftRight,
-        child: _Field(
+        child: Field(
           label: this.widget.label,
-          value: this._valueHint,
-          child: EditableText(
-            focusNode: focusNode,
-            controller: controller,
-            cursorColor: Colors.black87,
-            backgroundCursorColor: Colors.black12,
-            style: textStyle,
-            textAlign: TextAlign.center,
-            selectionColor: Colors.black38,
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly, FilteringTextInputFormatter.singleLineFormatter],
+          child: _Bar(
+            value: this._valueHint,
+            child: EditableText(
+              focusNode: focusNode,
+              controller: controller,
+              cursorColor: Colors.black87,
+              backgroundCursorColor: Colors.black12,
+              style: textStyle,
+              textAlign: TextAlign.center,
+              selectionColor: Colors.black38,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.singleLineFormatter
+              ],
+            ),
           ),
         ));
   }
@@ -147,43 +156,30 @@ class _NumberFieldState extends State<NumberField> {
   }
 }
 
-class _Field extends StatelessWidget {
-  final String label;
+class _Bar extends StatelessWidget {
   final Widget child;
   final double value;
 
-  _Field({this.label, this.child, this.value});
+  _Bar({this.child, this.value});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Flexible(flex: 1, fit: FlexFit.tight, child: Text(this.label)),
-        Flexible(
-            flex: 2,
-            fit: FlexFit.tight,
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(2)),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.grey.shade700,
-                      Colors.grey.shade700,
-                      Colors.grey.shade800,
-                      Colors.grey.shade800,
-                    ],
-                    stops: [
-                      0,
-                      this.value,
-                      this.value,
-                      1,
-                    ]
-                  ),
-                ),
-                child: child))
-      ],
-    );
+    return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(2)),
+          gradient: LinearGradient(colors: [
+            Colors.grey.shade700,
+            Colors.grey.shade700,
+            Colors.grey.shade800,
+            Colors.grey.shade800,
+          ], stops: [
+            0,
+            this.value,
+            this.value,
+            1,
+          ]),
+        ),
+        child: child);
   }
 }
 

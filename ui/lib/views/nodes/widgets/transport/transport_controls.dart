@@ -12,25 +12,19 @@ class TransportControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var api = context.read<TransportApi>();
-    return StreamBuilder<Transport>(
-        stream: api.watchTransport(),
-        initialData: Transport(),
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            return Container();
-          }
-          return Container(
-              height: TRANSPORT_CONTROLS_HEIGHT,
-              color: Colors.grey.shade800,
-              child: Row(children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TimeControl(snapshot.data),
-                ),
-                SpeedControl(snapshot.data.speed),
-                TransportControl(snapshot.data.state),
-              ]));
-        });
+    var stream = api.watchTransport().asBroadcastStream();
+
+    return Container(
+        height: TRANSPORT_CONTROLS_HEIGHT,
+        color: Colors.grey.shade800,
+        child: Row(children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RepaintBoundary(child: TimeControl(stream)),
+          ),
+          RepaintBoundary(child: SpeedControl(stream.map((event) => event.speed).distinct())),
+          RepaintBoundary(child: TransportControl(stream.map((event) => event.state).distinct())),
+        ]));
   }
 }
 
@@ -38,7 +32,7 @@ const MINUTE = 60;
 const HOUR = 60 * MINUTE;
 
 class TimeControl extends StatelessWidget {
-  final Transport transport;
+  final Stream<Transport> transport;
 
   TimeControl(this.transport);
 
@@ -49,10 +43,14 @@ class TimeControl extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         color: Colors.grey.shade900,
         width: 160,
-        child: Text(_formatTime(), textAlign: TextAlign.center, style: style.headline5));
+        child: StreamBuilder(
+          stream: transport,
+          initialData: Transport(),
+          builder: (context, snapshot) => Text(_formatTime(snapshot.data), textAlign: TextAlign.center, style: style.headline5)
+        ));
   }
 
-  String _formatTime() {
+  String _formatTime(Transport transport) {
     var hours = (transport.time / HOUR).floor();
     var minutes = (transport.time / MINUTE).floor() - hours * HOUR;
     var seconds = transport.time.floor() - minutes * MINUTE;
@@ -67,7 +65,7 @@ class TimeControl extends StatelessWidget {
 }
 
 class SpeedControl extends StatelessWidget {
-  final double bpm;
+  final Stream<double> bpm;
 
   SpeedControl(this.bpm);
 
@@ -78,34 +76,42 @@ class SpeedControl extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         width: 96,
         color: Colors.grey.shade900,
-        child: Text(bpm.toString(), textAlign: TextAlign.center, style: style.headline5));
+        child: StreamBuilder(
+          stream: bpm,
+          initialData: 0,
+          builder: (context, snapshot) => Text(snapshot.data.toString(), textAlign: TextAlign.center, style: style.headline5)
+        ));
   }
 }
 
 class TransportControl extends StatelessWidget {
-  final TransportState state;
+  final Stream<TransportState> state;
 
   TransportControl(this.state);
 
   @override
   Widget build(BuildContext context) {
     var api = context.read<TransportApi>();
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(children: [
-        Container(
-            margin: const EdgeInsets.only(left: 4),
-            color: state == TransportState.Stopped ? Colors.deepOrange : null,
-            child: IconButton(onPressed: () => api.setState(TransportState.Stopped), icon: Icon(Icons.stop))),
-        Container(
-            margin: const EdgeInsets.only(left: 4),
-            color: state == TransportState.Paused ? Colors.deepOrange : null,
-            child: IconButton(onPressed: () => api.setState(TransportState.Paused), icon: Icon(Icons.pause))),
-        Container(
-            margin: const EdgeInsets.only(left: 4),
-            color: state == TransportState.Playing ? Colors.deepOrange : null,
-            child: IconButton(onPressed: () => api.setState(TransportState.Playing), icon: Icon(Icons.play_arrow))),
-      ]),
+    return StreamBuilder(
+      stream: state,
+      initialData: TransportState.Playing,
+      builder: (context, snapshot) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(children: [
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              color: snapshot.data == TransportState.Stopped ? Colors.deepOrange : null,
+              child: IconButton(onPressed: () => api.setState(TransportState.Stopped), icon: Icon(Icons.stop))),
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              color: snapshot.data == TransportState.Paused ? Colors.deepOrange : null,
+              child: IconButton(onPressed: () => api.setState(TransportState.Paused), icon: Icon(Icons.pause))),
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              color: snapshot.data == TransportState.Playing ? Colors.deepOrange : null,
+              child: IconButton(onPressed: () => api.setState(TransportState.Playing), icon: Icon(Icons.play_arrow))),
+        ]),
+      )
     );
   }
 }

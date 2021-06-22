@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   protobuf: ^2.0.0
   grpc: ^3.0.0
+  fixnum: ^1.0.0
   bloc: ^7.0.0-nullsafety.3
   flutter_bloc: ^7.0.0-nullsafety.3
   provider: ^5.0.0

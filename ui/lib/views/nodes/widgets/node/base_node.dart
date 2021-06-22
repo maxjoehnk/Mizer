@@ -27,16 +27,19 @@ class BaseNode extends StatelessWidget {
         },
         onTap: this.onSelect,
         child: NodeContainer(
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                NodeHeader(this.node.path),
-                NodePortList(this.node, inputs: false),
-                NodePortList(this.node, inputs: true),
-                this.child,
-                NodePreview(this.node),
-              ]),
+          child: DefaultTextStyle(
+            style: Theme.of(context).textTheme.bodyText2,
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  NodeHeader(this.node.path),
+                  NodePortList(this.node, inputs: false),
+                  NodePortList(this.node, inputs: true),
+                  this.child,
+                  NodePreview(this.node),
+                ]),
+          ),
           selected: selected,
         ),
       ),

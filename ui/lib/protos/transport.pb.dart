@@ -47,8 +47,7 @@ class Transport extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Transport', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..e<TransportState>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: TransportState.Stopped, valueOf: TransportState.valueOf, enumValues: TransportState.values)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'speed', $pb.PbFieldType.OD)
-    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frames')
-    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', $pb.PbFieldType.OD)
+    ..aOM<Timecode>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecode', subBuilder: Timecode.create)
     ..hasRequiredFields = false
   ;
 
@@ -56,8 +55,7 @@ class Transport extends $pb.GeneratedMessage {
   factory Transport({
     TransportState state,
     $core.double speed,
-    $fixnum.Int64 frames,
-    $core.double time,
+    Timecode timecode,
   }) {
     final _result = create();
     if (state != null) {
@@ -66,11 +64,8 @@ class Transport extends $pb.GeneratedMessage {
     if (speed != null) {
       _result.speed = speed;
     }
-    if (frames != null) {
-      _result.frames = frames;
-    }
-    if (time != null) {
-      _result.time = time;
+    if (timecode != null) {
+      _result.timecode = timecode;
     }
     return _result;
   }
@@ -114,22 +109,104 @@ class Transport extends $pb.GeneratedMessage {
   void clearSpeed() => clearField(2);
 
   @$pb.TagNumber(3)
-  $fixnum.Int64 get frames => $_getI64(2);
+  Timecode get timecode => $_getN(2);
   @$pb.TagNumber(3)
-  set frames($fixnum.Int64 v) { $_setInt64(2, v); }
+  set timecode(Timecode v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasFrames() => $_has(2);
+  $core.bool hasTimecode() => $_has(2);
   @$pb.TagNumber(3)
-  void clearFrames() => clearField(3);
+  void clearTimecode() => clearField(3);
+  @$pb.TagNumber(3)
+  Timecode ensureTimecode() => $_ensure(2);
+}
+
+class Timecode extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Timecode', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frames', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'seconds', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minutes', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hours', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  Timecode._() : super();
+  factory Timecode({
+    $fixnum.Int64 frames,
+    $fixnum.Int64 seconds,
+    $fixnum.Int64 minutes,
+    $fixnum.Int64 hours,
+  }) {
+    final _result = create();
+    if (frames != null) {
+      _result.frames = frames;
+    }
+    if (seconds != null) {
+      _result.seconds = seconds;
+    }
+    if (minutes != null) {
+      _result.minutes = minutes;
+    }
+    if (hours != null) {
+      _result.hours = hours;
+    }
+    return _result;
+  }
+  factory Timecode.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Timecode.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Timecode clone() => Timecode()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Timecode copyWith(void Function(Timecode) updates) => super.copyWith((message) => updates(message as Timecode)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Timecode create() => Timecode._();
+  Timecode createEmptyInstance() => create();
+  static $pb.PbList<Timecode> createRepeated() => $pb.PbList<Timecode>();
+  @$core.pragma('dart2js:noInline')
+  static Timecode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Timecode>(create);
+  static Timecode _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get frames => $_getI64(0);
+  @$pb.TagNumber(1)
+  set frames($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFrames() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFrames() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get seconds => $_getI64(1);
+  @$pb.TagNumber(2)
+  set seconds($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSeconds() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSeconds() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get minutes => $_getI64(2);
+  @$pb.TagNumber(3)
+  set minutes($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMinutes() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMinutes() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.double get time => $_getN(3);
+  $fixnum.Int64 get hours => $_getI64(3);
   @$pb.TagNumber(4)
-  set time($core.double v) { $_setDouble(3, v); }
+  set hours($fixnum.Int64 v) { $_setInt64(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasTime() => $_has(3);
+  $core.bool hasHours() => $_has(3);
   @$pb.TagNumber(4)
-  void clearTime() => clearField(4);
+  void clearHours() => clearField(4);
 }
 
 class SetTransportRequest extends $pb.GeneratedMessage {

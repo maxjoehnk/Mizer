@@ -13,8 +13,14 @@ message SubscribeTransportRequest {}
 message Transport {
   TransportState state = 1;
   double speed = 2;
-  int64 frames = 3;
-  double time = 4;
+  Timecode timecode = 3;
+}
+
+message Timecode {
+  uint64 frames = 1;
+  uint64 seconds = 2;
+  uint64 minutes = 3;
+  uint64 hours = 4;
 }
 
 message SetTransportRequest {

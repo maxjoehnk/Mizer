@@ -148,8 +148,7 @@ pub struct Transport {
     // message fields
     pub state: TransportState,
     pub speed: f64,
-    pub frames: i64,
-    pub time: f64,
+    pub timecode: ::protobuf::SingularPtrField<Timecode>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -198,39 +197,47 @@ impl Transport {
         self.speed = v;
     }
 
-    // int64 frames = 3;
+    // .mizer.Timecode timecode = 3;
 
 
-    pub fn get_frames(&self) -> i64 {
-        self.frames
+    pub fn get_timecode(&self) -> &Timecode {
+        self.timecode.as_ref().unwrap_or_else(|| <Timecode as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_frames(&mut self) {
-        self.frames = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_frames(&mut self, v: i64) {
-        self.frames = v;
+    pub fn clear_timecode(&mut self) {
+        self.timecode.clear();
     }
 
-    // double time = 4;
-
-
-    pub fn get_time(&self) -> f64 {
-        self.time
-    }
-    pub fn clear_time(&mut self) {
-        self.time = 0.;
+    pub fn has_timecode(&self) -> bool {
+        self.timecode.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_time(&mut self, v: f64) {
-        self.time = v;
+    pub fn set_timecode(&mut self, v: Timecode) {
+        self.timecode = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_timecode(&mut self) -> &mut Timecode {
+        if self.timecode.is_none() {
+            self.timecode.set_default();
+        }
+        self.timecode.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_timecode(&mut self) -> Timecode {
+        self.timecode.take().unwrap_or_else(|| Timecode::new())
     }
 }
 
 impl ::protobuf::Message for Transport {
     fn is_initialized(&self) -> bool {
+        for v in &self.timecode {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -249,18 +256,7 @@ impl ::protobuf::Message for Transport {
                     self.speed = tmp;
                 },
                 3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_int64()?;
-                    self.frames = tmp;
-                },
-                4 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_double()?;
-                    self.time = tmp;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.timecode)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -280,11 +276,9 @@ impl ::protobuf::Message for Transport {
         if self.speed != 0. {
             my_size += 9;
         }
-        if self.frames != 0 {
-            my_size += ::protobuf::rt::value_size(3, self.frames, ::protobuf::wire_format::WireTypeVarint);
-        }
-        if self.time != 0. {
-            my_size += 9;
+        if let Some(ref v) = self.timecode.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -298,11 +292,10 @@ impl ::protobuf::Message for Transport {
         if self.speed != 0. {
             os.write_double(2, self.speed)?;
         }
-        if self.frames != 0 {
-            os.write_int64(3, self.frames)?;
-        }
-        if self.time != 0. {
-            os.write_double(4, self.time)?;
+        if let Some(ref v) = self.timecode.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -352,15 +345,10 @@ impl ::protobuf::Message for Transport {
                 |m: &Transport| { &m.speed },
                 |m: &mut Transport| { &mut m.speed },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt64>(
-                "frames",
-                |m: &Transport| { &m.frames },
-                |m: &mut Transport| { &mut m.frames },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
-                "time",
-                |m: &Transport| { &m.time },
-                |m: &mut Transport| { &mut m.time },
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Timecode>>(
+                "timecode",
+                |m: &Transport| { &m.timecode },
+                |m: &mut Transport| { &mut m.timecode },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Transport>(
                 "Transport",
@@ -380,8 +368,7 @@ impl ::protobuf::Clear for Transport {
     fn clear(&mut self) {
         self.state = TransportState::Stopped;
         self.speed = 0.;
-        self.frames = 0;
-        self.time = 0.;
+        self.timecode.clear();
         self.unknown_fields.clear();
     }
 }
@@ -393,6 +380,266 @@ impl ::std::fmt::Debug for Transport {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Transport {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct Timecode {
+    // message fields
+    pub frames: u64,
+    pub seconds: u64,
+    pub minutes: u64,
+    pub hours: u64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Timecode {
+    fn default() -> &'a Timecode {
+        <Timecode as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Timecode {
+    pub fn new() -> Timecode {
+        ::std::default::Default::default()
+    }
+
+    // uint64 frames = 1;
+
+
+    pub fn get_frames(&self) -> u64 {
+        self.frames
+    }
+    pub fn clear_frames(&mut self) {
+        self.frames = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_frames(&mut self, v: u64) {
+        self.frames = v;
+    }
+
+    // uint64 seconds = 2;
+
+
+    pub fn get_seconds(&self) -> u64 {
+        self.seconds
+    }
+    pub fn clear_seconds(&mut self) {
+        self.seconds = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_seconds(&mut self, v: u64) {
+        self.seconds = v;
+    }
+
+    // uint64 minutes = 3;
+
+
+    pub fn get_minutes(&self) -> u64 {
+        self.minutes
+    }
+    pub fn clear_minutes(&mut self) {
+        self.minutes = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_minutes(&mut self, v: u64) {
+        self.minutes = v;
+    }
+
+    // uint64 hours = 4;
+
+
+    pub fn get_hours(&self) -> u64 {
+        self.hours
+    }
+    pub fn clear_hours(&mut self) {
+        self.hours = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_hours(&mut self, v: u64) {
+        self.hours = v;
+    }
+}
+
+impl ::protobuf::Message for Timecode {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.frames = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.seconds = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.minutes = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.hours = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.frames != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.frames, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.seconds != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.seconds, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.minutes != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.minutes, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.hours != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.hours, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.frames != 0 {
+            os.write_uint64(1, self.frames)?;
+        }
+        if self.seconds != 0 {
+            os.write_uint64(2, self.seconds)?;
+        }
+        if self.minutes != 0 {
+            os.write_uint64(3, self.minutes)?;
+        }
+        if self.hours != 0 {
+            os.write_uint64(4, self.hours)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Timecode {
+        Timecode::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "frames",
+                |m: &Timecode| { &m.frames },
+                |m: &mut Timecode| { &mut m.frames },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "seconds",
+                |m: &Timecode| { &m.seconds },
+                |m: &mut Timecode| { &mut m.seconds },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "minutes",
+                |m: &Timecode| { &m.minutes },
+                |m: &mut Timecode| { &mut m.minutes },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "hours",
+                |m: &Timecode| { &m.hours },
+                |m: &mut Timecode| { &mut m.hours },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Timecode>(
+                "Timecode",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Timecode {
+        static instance: ::protobuf::rt::LazyV2<Timecode> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Timecode::new)
+    }
+}
+
+impl ::protobuf::Clear for Timecode {
+    fn clear(&mut self) {
+        self.frames = 0;
+        self.seconds = 0;
+        self.minutes = 0;
+        self.hours = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Timecode {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Timecode {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -760,18 +1007,21 @@ impl ::protobuf::reflect::ProtobufValue for TransportState {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0ftransport.proto\x12\x05mizer\"\x1b\n\x19SubscribeTransportRequest\
-    \"z\n\tTransport\x12+\n\x05state\x18\x01\x20\x01(\x0e2\x15.mizer.Transpo\
-    rtStateR\x05state\x12\x14\n\x05speed\x18\x02\x20\x01(\x01R\x05speed\x12\
-    \x16\n\x06frames\x18\x03\x20\x01(\x03R\x06frames\x12\x12\n\x04time\x18\
-    \x04\x20\x01(\x01R\x04time\"B\n\x13SetTransportRequest\x12+\n\x05state\
-    \x18\x01\x20\x01(\x0e2\x15.mizer.TransportStateR\x05state\"!\n\rSetBpmRe\
-    quest\x12\x10\n\x03bpm\x18\x01\x20\x01(\x01R\x03bpm*6\n\x0eTransportStat\
-    e\x12\x0b\n\x07Stopped\x10\0\x12\n\n\x06Paused\x10\x01\x12\x0b\n\x07Play\
-    ing\x10\x022\xcc\x01\n\x0cTransportApi\x12L\n\x12SubscribeTransport\x12\
-    \x20.mizer.SubscribeTransportRequest\x1a\x10.mizer.Transport\"\00\x01\
-    \x12:\n\x08SetState\x12\x1a.mizer.SetTransportRequest\x1a\x10.mizer.Tran\
-    sport\"\0\x122\n\x06SetBpm\x12\x14.mizer.SetBpmRequest\x1a\x10.mizer.Tra\
-    nsport\"\0b\x06proto3\
+    \"{\n\tTransport\x12+\n\x05state\x18\x01\x20\x01(\x0e2\x15.mizer.Transpo\
+    rtStateR\x05state\x12\x14\n\x05speed\x18\x02\x20\x01(\x01R\x05speed\x12+\
+    \n\x08timecode\x18\x03\x20\x01(\x0b2\x0f.mizer.TimecodeR\x08timecode\"l\
+    \n\x08Timecode\x12\x16\n\x06frames\x18\x01\x20\x01(\x04R\x06frames\x12\
+    \x18\n\x07seconds\x18\x02\x20\x01(\x04R\x07seconds\x12\x18\n\x07minutes\
+    \x18\x03\x20\x01(\x04R\x07minutes\x12\x14\n\x05hours\x18\x04\x20\x01(\
+    \x04R\x05hours\"B\n\x13SetTransportRequest\x12+\n\x05state\x18\x01\x20\
+    \x01(\x0e2\x15.mizer.TransportStateR\x05state\"!\n\rSetBpmRequest\x12\
+    \x10\n\x03bpm\x18\x01\x20\x01(\x01R\x03bpm*6\n\x0eTransportState\x12\x0b\
+    \n\x07Stopped\x10\0\x12\n\n\x06Paused\x10\x01\x12\x0b\n\x07Playing\x10\
+    \x022\xcc\x01\n\x0cTransportApi\x12L\n\x12SubscribeTransport\x12\x20.miz\
+    er.SubscribeTransportRequest\x1a\x10.mizer.Transport\"\00\x01\x12:\n\x08\
+    SetState\x12\x1a.mizer.SetTransportRequest\x1a\x10.mizer.Transport\"\0\
+    \x122\n\x06SetBpm\x12\x14.mizer.SetBpmRequest\x1a\x10.mizer.Transport\"\
+    \0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -1,12 +1,25 @@
 use mizer_clock::{ClockSnapshot, ClockState};
-use crate::models::{Transport, TransportState};
+use crate::models::{Transport, TransportState, Timecode};
+use protobuf::SingularPtrField;
 
 impl From<ClockSnapshot> for Transport {
     fn from(snapshot: ClockSnapshot) -> Self {
         Transport {
             speed: snapshot.speed,
             state: snapshot.state.into(),
-            time: snapshot.time,
+            timecode: SingularPtrField::some(snapshot.time.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_clock::Timecode> for Timecode {
+    fn from(timecode: mizer_clock::Timecode) -> Self {
+        Self {
+            frames: timecode.frames,
+            hours: timecode.hours,
+            minutes: timecode.minutes,
+            seconds: timecode.seconds,
             ..Default::default()
         }
     }

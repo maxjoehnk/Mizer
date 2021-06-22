@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,9 +26,6 @@ class TransportControls extends StatelessWidget {
   }
 }
 
-const MINUTE = 60;
-const HOUR = 60 * MINUTE;
-
 class TimeControl extends StatelessWidget {
   final Stream<Transport> transport;
 
@@ -51,12 +46,12 @@ class TimeControl extends StatelessWidget {
   }
 
   String _formatTime(Transport transport) {
-    var hours = (transport.time / HOUR).floor();
-    var minutes = (transport.time / MINUTE).floor() - hours * HOUR;
-    var seconds = transport.time.floor() - minutes * MINUTE;
-    var millis = ((transport.time - transport.time.floor()) * 10).floor();
+    int hours = transport.timecode.hours.toInt();
+    int minutes = transport.timecode.minutes.toInt();
+    int seconds = transport.timecode.seconds.toInt();
+    int frames = transport.timecode.frames.toInt();
 
-    return "${_pad(hours)}:${_pad(minutes)}:${_pad(seconds)}.$millis";
+    return "${_pad(hours)}:${_pad(minutes)}:${_pad(seconds)}.${_pad(frames)}";
   }
 
   String _pad(int number) {

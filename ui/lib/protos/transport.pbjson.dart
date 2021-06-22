@@ -23,8 +23,17 @@ const Transport$json = const {
   '2': const [
     const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.mizer.TransportState', '10': 'state'},
     const {'1': 'speed', '3': 2, '4': 1, '5': 1, '10': 'speed'},
-    const {'1': 'frames', '3': 3, '4': 1, '5': 3, '10': 'frames'},
-    const {'1': 'time', '3': 4, '4': 1, '5': 1, '10': 'time'},
+    const {'1': 'timecode', '3': 3, '4': 1, '5': 11, '6': '.mizer.Timecode', '10': 'timecode'},
+  ],
+};
+
+const Timecode$json = const {
+  '1': 'Timecode',
+  '2': const [
+    const {'1': 'frames', '3': 1, '4': 1, '5': 4, '10': 'frames'},
+    const {'1': 'seconds', '3': 2, '4': 1, '5': 4, '10': 'seconds'},
+    const {'1': 'minutes', '3': 3, '4': 1, '5': 4, '10': 'minutes'},
+    const {'1': 'hours', '3': 4, '4': 1, '5': 4, '10': 'hours'},
   ],
 };
 

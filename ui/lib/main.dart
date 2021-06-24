@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/app.dart';
 import 'package:mizer/navigation.dart';
+import 'package:mizer/platform/platform.dart';
+import 'package:mizer/platform/standalone/platform.dart';
 import 'package:mizer/session/session_discovery.dart';
 import 'package:mizer/session/session_selector.dart';
 import 'package:mizer/state/provider.dart';
+import 'package:provider/provider.dart';
 
 import 'api/demo/provider.dart';
 import 'api/grpc/provider.dart';
@@ -24,8 +27,11 @@ class MizerRemoteApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MizerApp(
-        child: SessionProvider(discovery,
-            builder: (channel) => GrpcApiProvider(channel, child: StateProvider(child: Home())),
-            demo: () => DemoApiProvider(child: StateProvider(child: Home()))));
+        child: Provider<Platform>(
+          create: (_) => StandalonePlatform(),
+          child: SessionProvider(discovery,
+              builder: (channel) => GrpcApiProvider(channel, child: StateProvider(child: Home())),
+              demo: () => DemoApiProvider(child: StateProvider(child: Home()))),
+        ));
   }
 }

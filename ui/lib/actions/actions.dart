@@ -14,7 +14,7 @@ enum View {
   Sequences,
   Fixtures,
   Media,
-  Devices,
+  Connections,
   Session,
 }
 

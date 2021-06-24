@@ -91,6 +91,6 @@ class AddTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MizerIconButton(icon: Icons.add, onClick: this.onClick);
+    return MizerIconButton(icon: Icons.add, onClick: this.onClick, label: "Add Tab",);
   }
 }

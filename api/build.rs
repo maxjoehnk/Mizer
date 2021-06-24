@@ -5,6 +5,7 @@ fn main() {
     protoc_rust::Codegen::new()
         .out_dir("src/models")
         .inputs(&[
+            "protos/connections.proto",
             "protos/fixtures.proto",
             "protos/layouts.proto",
             "protos/media.proto",

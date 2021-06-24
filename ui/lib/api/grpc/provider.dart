@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
+import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
@@ -9,6 +10,7 @@ import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
 
 import '../preview_handler.dart';
+import 'connections.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
 import 'media.dart';
@@ -33,6 +35,7 @@ class GrpcApiProvider extends StatelessWidget {
         RepositoryProvider<LayoutsApi>(create: (context) => LayoutsGrpcApi(_channel)),
         RepositoryProvider<FixturesApi>(create: (context) => FixturesGrpcApi(_channel)),
         RepositoryProvider<TransportApi>(create: (context) => TransportGrpcApi(_channel)),
+        RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsGrpcApi(_channel)),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );

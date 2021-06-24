@@ -47,7 +47,7 @@ class ApplicationMenu extends StatelessWidget {
         MenuActionItem(label: "Nodes", action: OpenViewIntent(View.Nodes)),
         MenuActionItem(label: "Fixtures", action: OpenViewIntent(View.Fixtures)),
         MenuActionItem(label: "Media", action: OpenViewIntent(View.Media)),
-        MenuActionItem(label: "Devices", action: OpenViewIntent(View.Devices)),
+        MenuActionItem(label: "Devices", action: OpenViewIntent(View.Connections)),
         MenuActionItem(label: "Session", action: OpenViewIntent(View.Session)),
       ])
     ], child: this.child);

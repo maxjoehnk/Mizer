@@ -22,7 +22,18 @@ class NodesDemoApi implements NodesApi {
 
   @override
   Future<Nodes> getNodes() async {
-    return Nodes();
+    return Nodes(nodes: [
+      Node(
+        type: Node_NodeType.DmxOutput,
+        path: '/dmx-output-0',
+        config: NodeConfig(dmxOutputConfig: DmxOutputNodeConfig()),
+        designer: NodeDesigner(
+          position: NodePosition(x: 0, y: 0),
+          scale: 1
+        ),
+        preview: Node_NodePreviewType.None,
+      )
+    ]);
   }
 
   @override

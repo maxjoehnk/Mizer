@@ -28,6 +28,7 @@ dependencies:
   select_form_field: ^2.0.0
   collection: 1.15.0
   nativeshell: 0.1.6
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -38,3 +39,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/

@@ -21,7 +21,7 @@ List<Route> routes = [
   Route(() => Container(), MdiIcons.animationPlayOutline, 'Sequences', LogicalKeyboardKey.digit5, View.Sequences),
   Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit6, View.Fixtures),
   Route(() => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit7, View.Media),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit8, View.Devices),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit8, View.Connections),
   Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit9, View.Session),
 ];
 

@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/demo/connections.dart';
 
 import '../preview_handler.dart';
 import 'fixtures.dart';
@@ -31,6 +33,7 @@ class DemoApiProvider extends StatelessWidget {
         RepositoryProvider<NodesApi>(create: (context) => NodesDemoApi()),
         RepositoryProvider<TransportApi>(create: (context) => TransportDemoApi()),
         RepositoryProvider<SessionApi>(create: (context) => SessionDemoApi()),
+        RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsDemoApi()),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ]
     );

@@ -20,6 +20,7 @@ pub fn run(handlers: Handlers) -> anyhow::Result<()> {
         ..Default::default()
     })?;
 
+    let _connections = ConnectionsChannel::new(handlers.connections).channel(context.clone());
     let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.clone());
     let _nodes = NodesChannel::new(handlers.nodes).channel(context.clone());
     let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.clone());

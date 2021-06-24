@@ -1,3 +1,4 @@
+pub mod connections;
 pub mod fixtures;
 pub mod media;
 pub mod nodes;

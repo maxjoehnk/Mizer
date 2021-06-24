@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package mizer;
+
+service ConnectionsApi {
+  rpc GetConnections (GetConnectionsRequest) returns (Connections) {}
+}
+
+message GetConnectionsRequest {}
+
+message Connections {
+  repeated Connection connections = 1;
+}
+
+message Connection {
+  string name = 1;
+  oneof connection {
+    DmxConnection dmx = 10;
+    MidiConnection midi = 11;
+    OscConnection osc = 12;
+    ProDjLinkConnection proDJLink = 13;
+    HeliosConnection helios = 14;
+  }
+}
+
+message DmxConnection {
+
+}
+
+message HeliosConnection {
+  string name = 1;
+  string firmware = 2;
+}
+
+message MidiConnection {
+
+}
+
+message OscConnection {
+  uint32 input_port = 1;
+  uint32 output_port = 2;
+  string output_address = 3;
+}
+
+message ProDjLinkConnection {
+  string address = 1;
+  string model = 2;
+  uint32 playerNumber = 3;
+  CdjPlayback playback = 5;
+}
+
+message CdjPlayback {
+  bool live = 1;
+  double bpm = 2;
+  uint32 frame = 3;
+  State playback = 4;
+  Track track = 5;
+
+  enum State {
+    Loading = 0;
+    Playing = 1;
+    Cued = 2;
+    Cueing = 3;
+  }
+
+  message Track {
+    string artist = 1;
+    string title = 2;
+  }
+}

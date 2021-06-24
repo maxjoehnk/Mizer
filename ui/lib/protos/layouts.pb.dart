@@ -86,6 +86,114 @@ class AddLayoutRequest extends $pb.GeneratedMessage {
   void clearName() => clearField(1);
 }
 
+class RemoveLayoutRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  RemoveLayoutRequest._() : super();
+  factory RemoveLayoutRequest({
+    $core.String id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory RemoveLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RemoveLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RemoveLayoutRequest clone() => RemoveLayoutRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RemoveLayoutRequest copyWith(void Function(RemoveLayoutRequest) updates) => super.copyWith((message) => updates(message as RemoveLayoutRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RemoveLayoutRequest create() => RemoveLayoutRequest._();
+  RemoveLayoutRequest createEmptyInstance() => create();
+  static $pb.PbList<RemoveLayoutRequest> createRepeated() => $pb.PbList<RemoveLayoutRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RemoveLayoutRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveLayoutRequest>(create);
+  static RemoveLayoutRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
+class RenameLayoutRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameLayoutRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  RenameLayoutRequest._() : super();
+  factory RenameLayoutRequest({
+    $core.String id,
+    $core.String name,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory RenameLayoutRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RenameLayoutRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RenameLayoutRequest clone() => RenameLayoutRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RenameLayoutRequest copyWith(void Function(RenameLayoutRequest) updates) => super.copyWith((message) => updates(message as RenameLayoutRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RenameLayoutRequest create() => RenameLayoutRequest._();
+  RenameLayoutRequest createEmptyInstance() => create();
+  static $pb.PbList<RenameLayoutRequest> createRepeated() => $pb.PbList<RenameLayoutRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RenameLayoutRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenameLayoutRequest>(create);
+  static RenameLayoutRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+}
+
 class Layouts extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Layouts', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..pc<Layout>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layouts', $pb.PbFieldType.PM, subBuilder: Layout.create)

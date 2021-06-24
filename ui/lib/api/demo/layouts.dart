@@ -13,4 +13,14 @@ class LayoutsDemoApi implements LayoutsApi {
       id: "Default"
     )]);
   }
+
+  @override
+  Future<Layouts> removeLayout(String id) async {
+    return Layouts();
+  }
+
+  @override
+  Future<Layouts> renameLayout(String id, String name) async {
+    return Layouts();
+  }
 }

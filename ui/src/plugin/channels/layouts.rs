@@ -25,6 +25,18 @@ impl MethodCallHandler for LayoutsChannel {
                     resp.respond_msg(response);
                 }
             }
+            "removeLayout" => {
+                if let Value::String(id) = call.args {
+                    let response = self.remove_layout(id);
+
+                    resp.respond_msg(response);
+                }
+            }
+            "renameLayout" => {
+                let response = call.arguments().map(|req: RenameLayoutRequest| self.rename_layout(req.id, req.name));
+
+                resp.respond_result(response);
+            }
             _ => resp.not_implemented()
         }
     }
@@ -47,5 +59,13 @@ impl LayoutsChannel {
 
     fn add_layout(&self, name: String) -> Layouts {
         self.handler.add_layout(name)
+    }
+
+    fn remove_layout(&self, id: String) -> Layouts {
+        self.handler.remove_layout(id)
+    }
+
+    fn rename_layout(&self, id: String, name: String) -> Layouts {
+        self.handler.rename_layout(id, name)
     }
 }

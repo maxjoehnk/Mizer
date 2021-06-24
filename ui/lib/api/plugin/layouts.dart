@@ -22,4 +22,19 @@ class LayoutsPluginApi implements LayoutsApi {
 
     return Layouts.fromBuffer(_convertBuffer(response));
   }
+
+  @override
+  Future<Layouts> removeLayout(String id) async {
+    var response = await channel.invokeMethod("removeLayout", id);
+
+    return Layouts.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<Layouts> renameLayout(String id, String name) async {
+    var request = RenameLayoutRequest(id: id, name: name);
+    var response = await channel.invokeMethod("renameLayout", request.writeToBuffer());
+
+    return Layouts.fromBuffer(_convertBuffer(response));
+  }
 }

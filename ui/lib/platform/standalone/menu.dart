@@ -47,7 +47,7 @@ class MenuContainer extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.grey.shade800,
           borderRadius: BorderRadius.circular(4),
-          boxShadow: [BoxShadow(blurRadius: 2, offset: Offset(2, 2), color: Colors.black26)]),
+          boxShadow: [BoxShadow(blurRadius: 4, offset: Offset(2, 2), color: Colors.black26)]),
       width: 150,
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
@@ -66,8 +66,8 @@ class MenuRowItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hoverable(
       onClick: () {
-        item.action();
         Navigator.of(context).pop();
+        item.action();
       },
       builder: (hovered) => Container(
         color: hovered ? Colors.grey.shade700 : null,

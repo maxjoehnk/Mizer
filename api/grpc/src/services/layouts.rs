@@ -22,4 +22,16 @@ impl LayoutsApi for LayoutsHandler {
 
         resp.finish(layouts)
     }
+
+    fn remove_layout(&self, o: ServerHandlerContext, req: ServerRequestSingle<RemoveLayoutRequest>, resp: ServerResponseUnarySink<Layouts>) -> grpc::Result<()> {
+        let layouts = self.remove_layout(req.message.id);
+
+        resp.finish(layouts)
+    }
+
+    fn rename_layout(&self, o: ServerHandlerContext, req: ServerRequestSingle<RenameLayoutRequest>, resp: ServerResponseUnarySink<Layouts>) -> grpc::Result<()> {
+        let layouts = self.rename_layout(req.message.id, req.message.name);
+
+        resp.finish(layouts)
+    }
 }

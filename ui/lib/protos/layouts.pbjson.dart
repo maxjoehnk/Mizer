@@ -16,6 +16,21 @@ const AddLayoutRequest$json = const {
   ],
 };
 
+const RemoveLayoutRequest$json = const {
+  '1': 'RemoveLayoutRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+  ],
+};
+
+const RenameLayoutRequest$json = const {
+  '1': 'RenameLayoutRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
 const Layouts$json = const {
   '1': 'Layouts',
   '2': const [

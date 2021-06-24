@@ -306,6 +306,372 @@ impl ::protobuf::reflect::ProtobufValue for AddLayoutRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct RemoveLayoutRequest {
+    // message fields
+    pub id: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a RemoveLayoutRequest {
+    fn default() -> &'a RemoveLayoutRequest {
+        <RemoveLayoutRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RemoveLayoutRequest {
+    pub fn new() -> RemoveLayoutRequest {
+        ::std::default::Default::default()
+    }
+
+    // string id = 1;
+
+
+    pub fn get_id(&self) -> &str {
+        &self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: ::std::string::String) {
+        self.id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut ::std::string::String {
+        &mut self.id
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.id, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for RemoveLayoutRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.id)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RemoveLayoutRequest {
+        RemoveLayoutRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "id",
+                |m: &RemoveLayoutRequest| { &m.id },
+                |m: &mut RemoveLayoutRequest| { &mut m.id },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<RemoveLayoutRequest>(
+                "RemoveLayoutRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static RemoveLayoutRequest {
+        static instance: ::protobuf::rt::LazyV2<RemoveLayoutRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(RemoveLayoutRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for RemoveLayoutRequest {
+    fn clear(&mut self) {
+        self.id.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RemoveLayoutRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RemoveLayoutRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct RenameLayoutRequest {
+    // message fields
+    pub id: ::std::string::String,
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a RenameLayoutRequest {
+    fn default() -> &'a RenameLayoutRequest {
+        <RenameLayoutRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl RenameLayoutRequest {
+    pub fn new() -> RenameLayoutRequest {
+        ::std::default::Default::default()
+    }
+
+    // string id = 1;
+
+
+    pub fn get_id(&self) -> &str {
+        &self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: ::std::string::String) {
+        self.id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut ::std::string::String {
+        &mut self.id
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.id, ::std::string::String::new())
+    }
+
+    // string name = 2;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for RenameLayoutRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> RenameLayoutRequest {
+        RenameLayoutRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "id",
+                |m: &RenameLayoutRequest| { &m.id },
+                |m: &mut RenameLayoutRequest| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &RenameLayoutRequest| { &m.name },
+                |m: &mut RenameLayoutRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<RenameLayoutRequest>(
+                "RenameLayoutRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static RenameLayoutRequest {
+        static instance: ::protobuf::rt::LazyV2<RenameLayoutRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(RenameLayoutRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for RenameLayoutRequest {
+    fn clear(&mut self) {
+        self.id.clear();
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for RenameLayoutRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for RenameLayoutRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct Layouts {
     // message fields
     pub layouts: ::protobuf::RepeatedField<Layout>,
@@ -1342,19 +1708,24 @@ impl ::protobuf::reflect::ProtobufValue for ControlSize {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rlayouts.proto\x12\x05mizer\"\x13\n\x11GetLayoutsRequest\"&\n\x10AddL\
-    ayoutRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"2\n\x07Layou\
-    ts\x12'\n\x07layouts\x18\x01\x20\x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\
-    \n\x06Layout\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x120\n\x08control\
-    s\x18\x02\x20\x03(\x0b2\x14.mizer.LayoutControlR\x08controls\"\x7f\n\rLa\
-    youtControl\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\x122\n\x08posi\
-    tion\x18\x02\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\x12&\n\
-    \x04size\x18\x03\x20\x01(\x0b2\x12.mizer.ControlSizeR\x04size\"-\n\x0fCo\
-    ntrolPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\x01y\
-    \x18\x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05width\x18\
-    \x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\
-    \x06height2~\n\nLayoutsApi\x128\n\nGetLayouts\x12\x18.mizer.GetLayoutsRe\
-    quest\x1a\x0e.mizer.Layouts\"\0\x126\n\tAddLayout\x12\x17.mizer.AddLayou\
-    tRequest\x1a\x0e.mizer.Layouts\"\0b\x06proto3\
+    ayoutRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"%\n\x13Remov\
+    eLayoutRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"9\n\x13RenameL\
+    ayoutRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\"2\n\x07Layouts\x12'\n\x07layouts\x18\x01\
+    \x20\x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\n\x06Layout\x12\x0e\n\x02id\
+    \x18\x01\x20\x01(\tR\x02id\x120\n\x08controls\x18\x02\x20\x03(\x0b2\x14.\
+    mizer.LayoutControlR\x08controls\"\x7f\n\rLayoutControl\x12\x12\n\x04nod\
+    e\x18\x01\x20\x01(\tR\x04node\x122\n\x08position\x18\x02\x20\x01(\x0b2\
+    \x16.mizer.ControlPositionR\x08position\x12&\n\x04size\x18\x03\x20\x01(\
+    \x0b2\x12.mizer.ControlSizeR\x04size\"-\n\x0fControlPosition\x12\x0c\n\
+    \x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x04R\
+    \x01y\";\n\x0bControlSize\x12\x14\n\x05width\x18\x01\x20\x01(\x04R\x05wi\
+    dth\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height2\xfa\x01\n\nLayo\
+    utsApi\x128\n\nGetLayouts\x12\x18.mizer.GetLayoutsRequest\x1a\x0e.mizer.\
+    Layouts\"\0\x126\n\tAddLayout\x12\x17.mizer.AddLayoutRequest\x1a\x0e.miz\
+    er.Layouts\"\0\x12<\n\x0cRemoveLayout\x12\x1a.mizer.RemoveLayoutRequest\
+    \x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cRenameLayout\x12\x1a.mizer.RenameLa\
+    youtRequest\x1a\x0e.mizer.Layouts\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

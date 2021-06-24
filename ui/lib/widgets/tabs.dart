@@ -38,9 +38,9 @@ class _TabsState extends State<Tabs> {
                 .asMap()
                 .map((i, e) => MapEntry(
                     i,
-                    TabHeader(e.label,
-                        selected: this.activeIndex == i,
-                        onSelect: () => setState(() {
+                    e.header(
+                        this.activeIndex == i,
+                        () => setState(() {
                               this.activeIndex = i;
                             }))))
                 .values,
@@ -53,6 +53,9 @@ class _TabsState extends State<Tabs> {
   }
 
   Widget get active {
+    if (widget.children.isEmpty) {
+      return null;
+    }
     return widget.children[activeIndex]?.child;
   }
 }
@@ -60,8 +63,11 @@ class _TabsState extends State<Tabs> {
 class Tab {
   final String label;
   final Widget child;
+  Widget Function(bool, Function()) header;
 
-  Tab({this.label, this.child});
+  Tab({this.label, this.child, this.header}) {
+    header ??= (active, setActive) => TabHeader(label, selected: active, onSelect: setActive);
+  }
 }
 
 class TabHeader extends StatelessWidget {
@@ -91,6 +97,10 @@ class AddTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MizerIconButton(icon: Icons.add, onClick: this.onClick, label: "Add Tab",);
+    return MizerIconButton(
+      icon: Icons.add,
+      onClick: this.onClick,
+      label: "Add Tab",
+    );
   }
 }

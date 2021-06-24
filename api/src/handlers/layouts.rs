@@ -29,4 +29,16 @@ impl LayoutsHandler {
 
         self.get_layouts()
     }
+
+    pub fn remove_layout(&self, id: String) -> Layouts {
+        self.runtime.remove_layout(id);
+
+        self.get_layouts()
+    }
+
+    pub fn rename_layout(&self, id: String, name: String) -> Layouts {
+        self.runtime.rename_layout(id, name);
+
+        self.get_layouts()
+    }
 }

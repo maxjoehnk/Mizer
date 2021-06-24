@@ -63,6 +63,20 @@ impl RuntimeApi {
         self.layouts.set(layouts);
     }
 
+    pub fn remove_layout(&self, id: String) {
+        let mut layouts = self.layouts.read();
+        layouts.retain(|layout| layout.id != id);
+        self.layouts.set(layouts);
+    }
+
+    pub fn rename_layout(&self, id: String, name: String) {
+        let mut layouts = self.layouts.read();
+        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == id) {
+            layout.id = name;
+        }
+        self.layouts.set(layouts);
+    }
+
     pub fn add_node(
         &self,
         node_type: NodeType,

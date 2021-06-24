@@ -5,12 +5,23 @@ package mizer;
 service LayoutsApi {
   rpc GetLayouts (GetLayoutsRequest) returns (Layouts) {}
   rpc AddLayout (AddLayoutRequest) returns (Layouts) {}
+  rpc RemoveLayout (RemoveLayoutRequest) returns (Layouts) {}
+  rpc RenameLayout (RenameLayoutRequest) returns (Layouts) {}
 }
 
 message GetLayoutsRequest {}
 
 message AddLayoutRequest {
   string name = 1;
+}
+
+message RemoveLayoutRequest {
+  string id = 1;
+}
+
+message RenameLayoutRequest {
+  string id = 1;
+  string name = 2;
 }
 
 message Layouts {

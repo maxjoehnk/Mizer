@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/state/layouts_bloc.dart';
+import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
 import 'control.dart';
@@ -16,13 +18,20 @@ class LayoutView extends StatelessWidget {
     var layoutsBloc = context.read<LayoutsBloc>();
     layoutsBloc.add(FetchLayouts());
     return BlocBuilder<LayoutsBloc, Layouts>(builder: (context, layouts) {
-      log("${layouts.layouts}");
+      log("${layouts.layouts}", name: "LayoutView");
       return tabs.Tabs(
         children: layouts.layouts
-            .map((l) => tabs.Tab(
-                label: l.id,
+            .map((layout) => tabs.Tab(
+                header: (active, setActive) => ContextMenu(
+                    menu: Menu(items: [
+                      MenuItem(
+                          title: "Rename", action: () => _onRename(context, layout, layoutsBloc)),
+                      MenuItem(
+                          title: "Delete", action: () => _onDelete(context, layout, layoutsBloc)),
+                    ]),
+                    child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
                 child: ControlLayout(
-                  layout: l,
+                  layout: layout,
                 )))
             .toList(),
         onAdd: () => showDialog(
@@ -33,20 +42,57 @@ class LayoutView extends StatelessWidget {
       );
     });
   }
+
+  void _onDelete(BuildContext context, Layout layout, LayoutsBloc bloc) async {
+    bool result = await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+              title: Text("Delete Layout"),
+              content: SingleChildScrollView(
+                child: Text("Delete Layout ${layout.id}?"),
+              ),
+              actions: [
+                TextButton(
+                  child: Text("Cancel"),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+                TextButton(
+                  autofocus: true,
+                  child: Text("Delete"),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ],
+            ));
+    if (result) {
+      bloc.add(RemoveLayout(id: layout.id));
+    }
+  }
+
+  void _onRename(BuildContext context, Layout layout, LayoutsBloc bloc) async {
+    String result =
+        await showDialog(context: context, builder: (context) => NameLayoutDialog(name: layout.id));
+    if (result != null) {
+      bloc.add(RenameLayout(id: layout.id, name: result));
+    }
+  }
 }
 
 class NameLayoutDialog extends StatelessWidget {
-  final TextEditingController nameController = TextEditingController();
+  final String name;
+  final TextEditingController nameController;
 
-  NameLayoutDialog({Key key}) : super(key: key);
+  NameLayoutDialog({this.name, Key key})
+      : nameController = TextEditingController(text: name),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: Text("Add Layout"),
+        title: Text(name != null ? "Rename Layout" : "Add Layout"),
         actions: [
           ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(nameController.text), child: Text("Add"))
+              onPressed: () => Navigator.of(context).pop(nameController.text),
+              child: Text(name != null ? "Rename" : "Add"))
         ],
         content: TextField(
           controller: nameController,

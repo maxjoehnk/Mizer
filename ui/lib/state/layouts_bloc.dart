@@ -10,6 +10,17 @@ class AddLayout implements LayoutsEvent {
 
   AddLayout({ this.name });
 }
+class RemoveLayout implements LayoutsEvent {
+  final String id;
+
+  RemoveLayout({ this.id });
+}
+class RenameLayout implements LayoutsEvent {
+  final String id;
+  final String name;
+
+  RenameLayout({ this.id, this.name });
+}
 
 class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {
   final LayoutsApi api;
@@ -23,6 +34,12 @@ class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {
     }
     if (event is AddLayout) {
       yield await api.addLayout(event.name);
+    }
+    if (event is RemoveLayout) {
+      yield await api.removeLayout(event.id);
+    }
+    if (event is RenameLayout) {
+      yield await api.renameLayout(event.id, event.name);
     }
   }
 }

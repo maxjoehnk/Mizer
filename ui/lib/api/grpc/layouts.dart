@@ -16,4 +16,14 @@ class LayoutsGrpcApi implements LayoutsApi {
   Future<Layouts> addLayout(String name) {
     return this.client.addLayout(AddLayoutRequest(name: name));
   }
+
+  @override
+  Future<Layouts> removeLayout(String id) {
+    return this.client.removeLayout(RemoveLayoutRequest(id: id));
+  }
+
+  @override
+  Future<Layouts> renameLayout(String id, String name) {
+    return this.client.renameLayout(RenameLayoutRequest(id: id, name: name));
+  }
 }

@@ -45,7 +45,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
                 log::error!("Sending data via port failed: {:?}", e);
             }
         } else {
-            log::debug!("{}", dbg_msg);
+            log::trace!("{}", dbg_msg);
         }
     }
 

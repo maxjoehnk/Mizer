@@ -16,4 +16,10 @@ class FixturesDemoApi implements FixturesApi {
   Future<Fixtures> getFixtures() async {
     return Fixtures();
   }
+
+  @override
+  Future<Fixtures> writeFixtureChannel(WriteFixtureChannelRequest request) {
+    // TODO: implement writeFixtureChannel
+    throw UnimplementedError();
+  }
 }

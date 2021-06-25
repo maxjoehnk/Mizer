@@ -6,4 +6,6 @@ abstract class FixturesApi {
   Future<Fixtures> getFixtures();
 
   Future<FixtureDefinitions> getFixtureDefinitions();
+
+  Future<Fixtures> writeFixtureChannel(WriteFixtureChannelRequest request);
 }

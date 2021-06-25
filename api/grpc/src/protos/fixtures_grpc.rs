@@ -27,6 +27,8 @@ pub trait FixturesApi {
     fn get_fixture_definitions(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixtureDefinitionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::FixtureDefinitions>) -> ::grpc::Result<()>;
 
     fn add_fixtures(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::AddFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
+
+    fn write_fixture_channel(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::WriteFixtureChannelRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -67,6 +69,16 @@ impl FixturesApiClient {
     pub fn add_fixtures(&self, o: ::grpc::RequestOptions, req: super::fixtures::AddFixturesRequest) -> ::grpc::SingleResponse<super::fixtures::Fixtures> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.FixturesApi/AddFixtures"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn write_fixture_channel(&self, o: ::grpc::RequestOptions, req: super::fixtures::WriteFixtureChannelRequest) -> ::grpc::SingleResponse<super::fixtures::Fixtures> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.FixturesApi/WriteFixtureChannel"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -119,6 +131,18 @@ impl FixturesApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).add_fixtures(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.FixturesApi/WriteFixtureChannel"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).write_fixture_channel(ctx, req, resp))
                     },
                 ),
             ],

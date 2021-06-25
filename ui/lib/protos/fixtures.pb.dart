@@ -196,6 +196,106 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
   static GetFixturesRequest _defaultInstance;
 }
 
+enum WriteFixtureChannelRequest_Value {
+  fader, 
+  color, 
+  notSet
+}
+
+class WriteFixtureChannelRequest extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, WriteFixtureChannelRequest_Value> _WriteFixtureChannelRequest_ValueByTag = {
+    3 : WriteFixtureChannelRequest_Value.fader,
+    4 : WriteFixtureChannelRequest_Value.color,
+    0 : WriteFixtureChannelRequest_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteFixtureChannelRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [3, 4])
+    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ids', $pb.PbFieldType.PU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel')
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
+    ..aOM<ColorChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: ColorChannel.create)
+    ..hasRequiredFields = false
+  ;
+
+  WriteFixtureChannelRequest._() : super();
+  factory WriteFixtureChannelRequest({
+    $core.Iterable<$core.int> ids,
+    $core.String channel,
+    $core.double fader,
+    ColorChannel color,
+  }) {
+    final _result = create();
+    if (ids != null) {
+      _result.ids.addAll(ids);
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (fader != null) {
+      _result.fader = fader;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    return _result;
+  }
+  factory WriteFixtureChannelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteFixtureChannelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WriteFixtureChannelRequest clone() => WriteFixtureChannelRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WriteFixtureChannelRequest copyWith(void Function(WriteFixtureChannelRequest) updates) => super.copyWith((message) => updates(message as WriteFixtureChannelRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WriteFixtureChannelRequest create() => WriteFixtureChannelRequest._();
+  WriteFixtureChannelRequest createEmptyInstance() => create();
+  static $pb.PbList<WriteFixtureChannelRequest> createRepeated() => $pb.PbList<WriteFixtureChannelRequest>();
+  @$core.pragma('dart2js:noInline')
+  static WriteFixtureChannelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteFixtureChannelRequest>(create);
+  static WriteFixtureChannelRequest _defaultInstance;
+
+  WriteFixtureChannelRequest_Value whichValue() => _WriteFixtureChannelRequest_ValueByTag[$_whichOneof(0)];
+  void clearValue() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get ids => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.String get channel => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set channel($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChannel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get fader => $_getN(2);
+  @$pb.TagNumber(3)
+  set fader($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFader() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFader() => clearField(3);
+
+  @$pb.TagNumber(4)
+  ColorChannel get color => $_getN(3);
+  @$pb.TagNumber(4)
+  set color(ColorChannel v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasColor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearColor() => clearField(4);
+  @$pb.TagNumber(4)
+  ColorChannel ensureColor() => $_ensure(3);
+}
+
 class Fixtures extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Fixtures', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..pc<Fixture>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: Fixture.create)
@@ -245,6 +345,7 @@ class Fixture extends $pb.GeneratedMessage {
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
     ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..pc<FixtureChannelGroup>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: FixtureChannelGroup.create)
     ..hasRequiredFields = false
   ;
 
@@ -256,6 +357,7 @@ class Fixture extends $pb.GeneratedMessage {
     $core.String mode,
     $core.int universe,
     $core.int channel,
+    $core.Iterable<FixtureChannelGroup> channels,
   }) {
     final _result = create();
     if (id != null) {
@@ -275,6 +377,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (channel != null) {
       _result.channel = channel;
+    }
+    if (channels != null) {
+      _result.channels.addAll(channels);
     }
     return _result;
   }
@@ -352,6 +457,336 @@ class Fixture extends $pb.GeneratedMessage {
   $core.bool hasChannel() => $_has(5);
   @$pb.TagNumber(6)
   void clearChannel() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.List<FixtureChannelGroup> get channels => $_getList(6);
+}
+
+enum FixtureChannelGroup_Channel {
+  generic, 
+  color, 
+  pan, 
+  tilt, 
+  notSet
+}
+
+class FixtureChannelGroup extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, FixtureChannelGroup_Channel> _FixtureChannelGroup_ChannelByTag = {
+    2 : FixtureChannelGroup_Channel.generic,
+    3 : FixtureChannelGroup_Channel.color,
+    4 : FixtureChannelGroup_Channel.pan,
+    5 : FixtureChannelGroup_Channel.tilt,
+    0 : FixtureChannelGroup_Channel.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannelGroup', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [2, 3, 4, 5])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<GenericChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
+    ..aOM<ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: ColorChannel.create)
+    ..aOM<AxisChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pan', subBuilder: AxisChannel.create)
+    ..aOM<AxisChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tilt', subBuilder: AxisChannel.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureChannelGroup._() : super();
+  factory FixtureChannelGroup({
+    $core.String name,
+    GenericChannel generic,
+    ColorChannel color,
+    AxisChannel pan,
+    AxisChannel tilt,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (generic != null) {
+      _result.generic = generic;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    if (pan != null) {
+      _result.pan = pan;
+    }
+    if (tilt != null) {
+      _result.tilt = tilt;
+    }
+    return _result;
+  }
+  factory FixtureChannelGroup.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureChannelGroup.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureChannelGroup clone() => FixtureChannelGroup()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureChannelGroup copyWith(void Function(FixtureChannelGroup) updates) => super.copyWith((message) => updates(message as FixtureChannelGroup)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannelGroup create() => FixtureChannelGroup._();
+  FixtureChannelGroup createEmptyInstance() => create();
+  static $pb.PbList<FixtureChannelGroup> createRepeated() => $pb.PbList<FixtureChannelGroup>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureChannelGroup getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannelGroup>(create);
+  static FixtureChannelGroup _defaultInstance;
+
+  FixtureChannelGroup_Channel whichChannel() => _FixtureChannelGroup_ChannelByTag[$_whichOneof(0)];
+  void clearChannel() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  GenericChannel get generic => $_getN(1);
+  @$pb.TagNumber(2)
+  set generic(GenericChannel v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGeneric() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGeneric() => clearField(2);
+  @$pb.TagNumber(2)
+  GenericChannel ensureGeneric() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  ColorChannel get color => $_getN(2);
+  @$pb.TagNumber(3)
+  set color(ColorChannel v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasColor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearColor() => clearField(3);
+  @$pb.TagNumber(3)
+  ColorChannel ensureColor() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  AxisChannel get pan => $_getN(3);
+  @$pb.TagNumber(4)
+  set pan(AxisChannel v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPan() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPan() => clearField(4);
+  @$pb.TagNumber(4)
+  AxisChannel ensurePan() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  AxisChannel get tilt => $_getN(4);
+  @$pb.TagNumber(5)
+  set tilt(AxisChannel v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasTilt() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearTilt() => clearField(5);
+  @$pb.TagNumber(5)
+  AxisChannel ensureTilt() => $_ensure(4);
+}
+
+class GenericChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GenericChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  GenericChannel._() : super();
+  factory GenericChannel({
+    $core.double value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory GenericChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GenericChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GenericChannel clone() => GenericChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GenericChannel copyWith(void Function(GenericChannel) updates) => super.copyWith((message) => updates(message as GenericChannel)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GenericChannel create() => GenericChannel._();
+  GenericChannel createEmptyInstance() => create();
+  static $pb.PbList<GenericChannel> createRepeated() => $pb.PbList<GenericChannel>();
+  @$core.pragma('dart2js:noInline')
+  static GenericChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GenericChannel>(create);
+  static GenericChannel _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
+  set value($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+}
+
+class ColorChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  ColorChannel._() : super();
+  factory ColorChannel({
+    $core.double red,
+    $core.double green,
+    $core.double blue,
+  }) {
+    final _result = create();
+    if (red != null) {
+      _result.red = red;
+    }
+    if (green != null) {
+      _result.green = green;
+    }
+    if (blue != null) {
+      _result.blue = blue;
+    }
+    return _result;
+  }
+  factory ColorChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ColorChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ColorChannel clone() => ColorChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ColorChannel copyWith(void Function(ColorChannel) updates) => super.copyWith((message) => updates(message as ColorChannel)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ColorChannel create() => ColorChannel._();
+  ColorChannel createEmptyInstance() => create();
+  static $pb.PbList<ColorChannel> createRepeated() => $pb.PbList<ColorChannel>();
+  @$core.pragma('dart2js:noInline')
+  static ColorChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorChannel>(create);
+  static ColorChannel _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get red => $_getN(0);
+  @$pb.TagNumber(1)
+  set red($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRed() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRed() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get green => $_getN(1);
+  @$pb.TagNumber(2)
+  set green($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGreen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGreen() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get blue => $_getN(2);
+  @$pb.TagNumber(3)
+  set blue($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBlue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBlue() => clearField(3);
+}
+
+class AxisChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AxisChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'angleFrom', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'angleTo', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  AxisChannel._() : super();
+  factory AxisChannel({
+    $core.double value,
+    $core.double angleFrom,
+    $core.double angleTo,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (angleFrom != null) {
+      _result.angleFrom = angleFrom;
+    }
+    if (angleTo != null) {
+      _result.angleTo = angleTo;
+    }
+    return _result;
+  }
+  factory AxisChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AxisChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AxisChannel clone() => AxisChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AxisChannel copyWith(void Function(AxisChannel) updates) => super.copyWith((message) => updates(message as AxisChannel)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AxisChannel create() => AxisChannel._();
+  AxisChannel createEmptyInstance() => create();
+  static $pb.PbList<AxisChannel> createRepeated() => $pb.PbList<AxisChannel>();
+  @$core.pragma('dart2js:noInline')
+  static AxisChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AxisChannel>(create);
+  static AxisChannel _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
+  set value($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get angleFrom => $_getN(1);
+  @$pb.TagNumber(2)
+  set angleFrom($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasAngleFrom() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAngleFrom() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get angleTo => $_getN(2);
+  @$pb.TagNumber(3)
+  set angleTo($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasAngleTo() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAngleTo() => clearField(3);
 }
 
 class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {

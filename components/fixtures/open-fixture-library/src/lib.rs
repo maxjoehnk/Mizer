@@ -112,7 +112,122 @@ pub struct FixtureManufacturer {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Channel {}
+pub struct Channel {
+    pub default_value: Option<Value>,
+    pub capabilities: Vec<Capability>
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum Value {
+    Dmx(u32),
+    Percentage(String),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum CapabilityChannel {
+    Single(SingleCapabilityChannel),
+    Multi(MultiCapabilityChannel),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SingleCapabilityChannel {
+    #[serde(flatten)]
+    pub capability: Capability,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MultiCapabilityChannel {
+    pub dmx_range: (u8, u8),
+    #[serde(flatten)]
+    pub capability: Capability,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type")]
+pub enum Capability {
+    Generic,
+    Fog,
+    FogOutput,
+    FogType,
+    Intensity,
+    NoFunction,
+    Maintenance,
+    ColorIntensity { color: String },
+    ColorPreset {
+        #[serde(default)]
+        colors: Vec<String>,
+    },
+    ColorTemperature,
+    Effect,
+    EffectSpeed,
+    EffectParameter,
+    EffectDuration,
+    ShutterStrobe {
+        #[serde(rename = "shutterEffect")]
+        shutter_effect: String,
+        // #[serde(rename = "speedStart")]
+        // speed_start: Option<u8>,
+        // #[serde(rename = "speedEnd")]
+        // speed_end: Option<u8>,
+    },
+    StrobeDuration,
+    StrobeSpeed,
+    SoundSensitivity,
+    Pan {
+        #[serde(rename = "angleStart")]
+        angle_start: f32,
+        #[serde(rename = "angleEnd")]
+        angle_end: f32,
+    },
+    PanContinuous,
+    Tilt {
+        #[serde(rename = "angleStart")]
+        angle_start: f32,
+        #[serde(rename = "angleEnd")]
+        angle_end: f32,
+    },
+    TiltContinuous,
+    PanTiltSpeed,
+    Rotation,
+    WheelSlot(WheelSlot),
+    WheelRotation,
+    WheelSlotRotation,
+    WheelShake,
+    Prism,
+    PrismRotation,
+    Focus,
+    Zoom,
+    Iris,
+    IrisEffect,
+    Frost,
+    FrostEffect,
+    BladeRotation,
+    BladeInsertion,
+    BladeSystemRotation,
+    Speed,
+    Time,
+    BeamPosition,
+    BeamAngle,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum WheelSlot {
+    Single {
+        #[serde(rename = "slotNumber")]
+        slot_number: f32,
+    },
+    Range {
+        #[serde(rename = "slotNumberStart")]
+        slot_number_start: f32,
+        #[serde(rename = "slotNumberEnd")]
+        slot_number_end: f32,
+    }
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -135,6 +250,7 @@ pub struct Physical {
 
 impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     fn from(def: OpenFixtureLibraryFixtureDefinition) -> Self {
+        let available_channels = def.available_channels;
         FixtureDefinition {
             id: format!("ofl:{}:{}", def.manufacturer.name.to_slug(), def.name.to_slug()),
             name: def.name,
@@ -142,18 +258,20 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
             modes: def
                 .modes
                 .into_iter()
-                .map(|mode| FixtureMode {
-                    name: mode.name,
-                    channels: mode
-                        .channels
-                        .into_iter()
-                        .filter_map(|channel| channel)
-                        .enumerate()
-                        .map(|(i, channel)| FixtureChannelDefinition {
-                            name: channel,
-                            resolution: ChannelResolution::Coarse(i as u8),
-                        })
-                        .collect(),
+                .map(|mode| {
+                    let channels = mode.channels.into_iter().filter_map(|channel| channel).collect::<Vec<_>>();
+                    FixtureMode {
+                        name: mode.name,
+                        groups: group_channels(&available_channels, &channels),
+                        channels: channels
+                            .into_iter()
+                            .enumerate()
+                            .map(|(i, channel)| FixtureChannelDefinition {
+                                name: channel,
+                                resolution: ChannelResolution::Coarse(i as u8),
+                            })
+                            .collect(),
+                    }
                 })
                 .collect(),
             tags: def.categories,
@@ -173,5 +291,161 @@ fn convert_dimensions(dimensions: Vec<f32>) -> Option<FixtureDimensions> {
             depth: *depth
         }),
         _ => None,
+    }
+}
+
+fn group_channels(available_channels: &HashMap<String, Channel>, enabled_channels: &[String]) -> Vec<FixtureChannelGroup> {
+    let channels = enabled_channels.iter()
+        .filter_map(|name| available_channels.get(name).map(|channel| (name.clone(), channel)))
+        .collect::<Vec<_>>();
+
+    log::debug!("{:?}", channels);
+
+    let mut color_group = ColorGroupBuilder::new();
+    let mut groups = Vec::new();
+
+    for (name, channel) in channels {
+        match channel.capabilities.first() {
+            // TODO: reenable when color support in ui is working properly
+            // Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
+            //     color_group.red(name.clone());
+            // },
+            // Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
+            //     color_group.green(name.clone());
+            // },
+            // Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
+            //     color_group.blue(name.clone());
+            // },
+            Some(_) => {
+                groups.push(FixtureChannelGroup {
+                    name: name.clone(),
+                    group_type: FixtureChannelGroupType::Generic(name.clone()),
+                })
+            }
+            _ => {}
+        }
+    }
+
+    if let Some(color_group) = color_group.build() {
+        groups.push(FixtureChannelGroup {
+            name: "Color".into(),
+            group_type: FixtureChannelGroupType::Color(color_group),
+        });
+    }
+
+    log::debug!("in: {:?}, out: {:?}", enabled_channels, groups);
+
+    groups
+}
+
+#[derive(Default)]
+struct ColorGroupBuilder {
+    red: Option<String>,
+    green: Option<String>,
+    blue: Option<String>,
+}
+
+impl ColorGroupBuilder {
+    fn new() -> Self {
+        Default::default()
+    }
+
+    fn red(&mut self, channel: String) {
+        self.red = channel.into();
+    }
+
+    fn green(&mut self, channel: String) {
+        self.green = channel.into();
+    }
+
+    fn blue(&mut self, channel: String) {
+        self.blue = channel.into();
+    }
+
+    fn build(self) -> Option<ColorGroup> {
+        match (self.red, self.green, self.blue) {
+            (Some(red), Some(green), Some(blue)) => ColorGroup {
+                red,
+                green,
+                blue,
+            }.into(),
+            _ => None,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::collections::HashMap;
+    use crate::{Channel, Capability};
+    use super::group_channels;
+    use mizer_fixtures::fixture::{FixtureChannelGroup, FixtureChannelGroupType, ColorGroup};
+
+    #[test]
+    fn group_channels_should_group_color_channels() {
+        let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into()];
+        let mut available_channels = HashMap::new();
+        available_channels.insert("Red".into(), Channel {
+            default_value: None,
+            capabilities: vec![
+                Capability::ColorIntensity {
+                    color: "#ff0000".into()
+                },
+            ]
+        });
+        available_channels.insert("Green".into(), Channel {
+            default_value: None,
+            capabilities: vec![
+                Capability::ColorIntensity {
+                    color: "#00ff00".into()
+                },
+            ]
+        });
+        available_channels.insert("Blue".into(), Channel {
+            default_value: None,
+            capabilities: vec![
+                Capability::ColorIntensity {
+                    color: "#0000ff".into()
+                },
+            ]
+        });
+
+        let groups = group_channels(&available_channels, &enabled_channels);
+
+        assert_eq!(groups, vec![FixtureChannelGroup {
+            name: "Color".into(),
+            group_type: FixtureChannelGroupType::Color(ColorGroup {
+                red: "Red".into(),
+                green: "Green".into(),
+                blue: "Blue".into(),
+            })
+        }]);
+    }
+
+    #[test]
+    fn group_channels_should_return_empty_list_for_fixture_without_channels() {
+        let enabled_channels = Vec::new();
+        let available_channels = HashMap::new();
+
+        let groups = group_channels(&available_channels, &enabled_channels);
+
+        assert!(groups.is_empty());
+    }
+
+    #[test]
+    fn group_channels_should_map_generic_channels() {
+        let enabled_channels = vec!["Channel".into()];
+        let mut available_channels = HashMap::new();
+        available_channels.insert("Channel".into(), Channel {
+            default_value: None,
+            capabilities: vec![Capability::Generic],
+        });
+
+        let groups = group_channels(&available_channels, &enabled_channels);
+
+        assert_eq!(groups, vec![FixtureChannelGroup {
+            name: "Channel".into(),
+            group_type: FixtureChannelGroupType::Generic("Channel".into()),
+        }]);
     }
 }

@@ -1,6 +1,7 @@
 use crate::models::fixtures::*;
 use protobuf::SingularPtrField;
-use mizer_fixtures::fixture::{PhysicalFixtureData, ChannelResolution};
+use mizer_fixtures::fixture::{PhysicalFixtureData, ChannelResolution, FixtureChannelGroupType};
+use std::collections::HashMap;
 
 impl From<mizer_fixtures::fixture::FixtureDefinition> for FixtureDefinition {
     fn from(definition: mizer_fixtures::fixture::FixtureDefinition) -> Self {
@@ -87,6 +88,34 @@ impl From<mizer_fixtures::fixture::ChannelResolution> for FixtureChannel_oneof_r
                     ..Default::default()
                 })
             }
+        }
+    }
+}
+
+impl FixtureChannelGroup {
+    pub fn with_values(group: &mizer_fixtures::fixture::FixtureChannelGroup, values: &HashMap<String, f64>) -> Self {
+        Self {
+            name: group.name.clone(),
+            channel: Some(FixtureChannelGroup_oneof_channel::with_values(&group.group_type, values)),
+            ..Default::default()
+        }
+    }
+}
+
+impl FixtureChannelGroup_oneof_channel {
+    pub fn with_values(group_type: &mizer_fixtures::fixture::FixtureChannelGroupType, values: &HashMap<String, f64>) -> Self {
+        use mizer_fixtures::fixture::FixtureChannelGroupType::*;
+        match group_type {
+            Color(color) => Self::color(ColorChannel {
+                red: values.get(&color.red).copied().unwrap_or_default(),
+                green: values.get(&color.green).copied().unwrap_or_default(),
+                blue: values.get(&color.blue).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Generic(channel) => Self::generic(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
         }
     }
 }

@@ -29,6 +29,9 @@ impl FixturesHandler {
                 name: fixture.definition.name.clone(),
                 manufacturer: fixture.definition.manufacturer.clone(),
                 mode: fixture.current_mode.name.clone(),
+                channels: fixture.current_mode.groups.iter()
+                    .map(|group| FixtureChannelGroup::with_values(group, &fixture.channel_values))
+                    .collect(),
                 ..Default::default()
             };
             fixtures.fixtures.push(fixture_model);
@@ -56,6 +59,22 @@ impl FixturesHandler {
             self.fixture_manager.add_fixture(request.id, definition, request.mode.into(), "output".into(), request.channel as u8, Some(request.universe as u16));
             if add_fixtures.create_nodes {
                 self.runtime.add_node_for_fixture(request.id).unwrap();
+            }
+        }
+    }
+
+    pub fn write_fixture_channel(&self, request: WriteFixtureChannelRequest) {
+        let value = request.value.unwrap();
+        for fixture_id in request.ids {
+            if let Some(mut fixture) = self.fixture_manager.get_fixture_mut(fixture_id) {
+                match &value {
+                    WriteFixtureChannelRequest_oneof_value::color(color) => {
+                        todo!()
+                    },
+                    WriteFixtureChannelRequest_oneof_value::fader(value) => {
+                        fixture.write(&request.channel, *value);
+                    }
+                }
             }
         }
     }

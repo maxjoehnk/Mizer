@@ -40,4 +40,11 @@ impl FixturesApi for FixturesHandler {
 
         resp.finish(fixtures)
     }
+
+    fn write_fixture_channel(&self, o: ServerHandlerContext, req: ServerRequestSingle<WriteFixtureChannelRequest>, resp: ServerResponseUnarySink<Fixtures>) -> grpc::Result<()> {
+        self.write_fixture_channel(req.message);
+        let fixtures = self.get_fixtures();
+
+        resp.finish(fixtures)
+    }
 }

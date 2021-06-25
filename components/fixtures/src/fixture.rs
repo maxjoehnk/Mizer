@@ -9,7 +9,7 @@ pub struct Fixture {
     pub universe: u16,
     pub channel: u8,
     pub output: String,
-    channel_values: HashMap<String, f64>,
+    pub channel_values: HashMap<String, f64>,
 }
 
 impl Fixture {
@@ -37,6 +37,7 @@ impl Fixture {
     }
 
     pub fn write(&mut self, name: &str, value: f64) {
+        log::debug!("write {} -> {}", name, value);
         self.channel_values.insert(name.to_string(), value);
     }
 
@@ -59,7 +60,7 @@ impl Fixture {
             {
                 match channel.resolution {
                     ChannelResolution::Coarse(coarse) => {
-                        let channel = (self.channel + coarse - 1) as usize;
+                        let channel = (self.channel + coarse) as usize;
                         buffer[channel] = convert_value(*value);
                     }
                     _ => unimplemented!("only coarse is implemented right now"),
@@ -105,6 +106,32 @@ pub struct FixtureDefinition {
 pub struct FixtureMode {
     pub name: String,
     pub channels: Vec<FixtureChannelDefinition>,
+    pub groups: Vec<FixtureChannelGroup>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct FixtureChannelGroup {
+    pub name: String,
+    pub group_type: FixtureChannelGroupType,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum FixtureChannelGroupType {
+    Generic(String),
+    Color(ColorGroup),
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct ColorGroup {
+    pub red: String,
+    pub green: String,
+    pub blue: String,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Angle {
+    pub from: f32,
+    pub to: f32,
 }
 
 impl FixtureMode {

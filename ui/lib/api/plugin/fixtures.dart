@@ -9,7 +9,7 @@ class FixturesPluginApi implements FixturesApi {
   Future<Fixtures> addFixtures(AddFixturesRequest request) async {
     var response = await channel.invokeMethod("addFixtures", request.writeToBuffer());
 
-    return Fixtures.fromBuffer(_convertBuffer(response));
+    return _parseResponse(response);
   }
 
   @override
@@ -23,10 +23,21 @@ class FixturesPluginApi implements FixturesApi {
   Future<Fixtures> getFixtures() async {
     var response = await channel.invokeMethod("getFixtures");
 
-    return Fixtures.fromBuffer(_convertBuffer(response));
+    return _parseResponse(response);
+  }
+
+  @override
+  Future<Fixtures> writeFixtureChannel(WriteFixtureChannelRequest request) async {
+    var response = await channel.invokeMethod("writeFixtureChannel", request.writeToBuffer());
+
+    return _parseResponse(response);
   }
 
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
+  }
+
+  static Fixtures _parseResponse(List<Object> response) {
+    return Fixtures.fromBuffer(_convertBuffer(response));
   }
 }

@@ -4,8 +4,9 @@ use mizer_api::handlers::LayoutsHandler;
 use mizer_api::models::*;
 
 use crate::protos::*;
+use mizer_api::RuntimeApi;
 
-impl LayoutsApi for LayoutsHandler {
+impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
     fn get_layouts(
         &self,
         _: ServerHandlerContext,

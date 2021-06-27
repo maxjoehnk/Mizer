@@ -4,8 +4,9 @@ use mizer_api::models::*;
 
 use crate::protos::*;
 use grpc::Metadata;
+use mizer_api::RuntimeApi;
 
-impl TransportApi for TransportHandler {
+impl<R: RuntimeApi> TransportApi for TransportHandler<R> {
     fn subscribe_transport(&self,
                            o: ::grpc::ServerHandlerContext,
                            _: ::grpc::ServerRequestSingle<super::transport::SubscribeTransportRequest>,

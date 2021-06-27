@@ -1,4 +1,5 @@
 export 'contracts/menu.dart';
+export 'contracts/menu_bar.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';

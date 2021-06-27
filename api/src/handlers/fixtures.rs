@@ -1,17 +1,17 @@
 use crate::models::fixtures::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::library::FixtureLibrary;
-use mizer_runtime::RuntimeApi;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
-pub struct FixturesHandler {
+pub struct FixturesHandler<R: RuntimeApi> {
     fixture_manager: FixtureManager,
     fixture_library: FixtureLibrary,
-    runtime: RuntimeApi,
+    runtime: R,
 }
 
-impl FixturesHandler {
-    pub fn new(fixture_manager: FixtureManager, fixture_library: FixtureLibrary, runtime: RuntimeApi) -> Self {
+impl<R: RuntimeApi> FixturesHandler<R> {
+    pub fn new(fixture_manager: FixtureManager, fixture_library: FixtureLibrary, runtime: R) -> Self {
         Self {
             fixture_manager,
             fixture_library,

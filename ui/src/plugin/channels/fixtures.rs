@@ -4,13 +4,14 @@ use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
 use nativeshell::codec::{MethodCallReply, MethodCall, Value};
 use nativeshell::shell::{MethodChannel, MethodCallHandler, EngineHandle, Context};
 use std::rc::Rc;
+use mizer_api::RuntimeApi;
 
 #[derive(Clone)]
-pub struct FixturesChannel {
-    handler: FixturesHandler,
+pub struct FixturesChannel<R: RuntimeApi> {
+    handler: FixturesHandler<R>,
 }
 
-impl MethodCallHandler for FixturesChannel {
+impl<R: RuntimeApi + 'static> MethodCallHandler for FixturesChannel<R> {
     fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
         match call.method.as_str() {
             "addFixtures" => {
@@ -38,8 +39,8 @@ impl MethodCallHandler for FixturesChannel {
     }
 }
 
-impl FixturesChannel {
-    pub fn new(handler: FixturesHandler) -> Self {
+impl<R: RuntimeApi + 'static> FixturesChannel<R> {
+    pub fn new(handler: FixturesHandler<R>) -> Self {
         Self {
             handler
         }

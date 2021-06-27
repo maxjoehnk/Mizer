@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
           actions: <Type, CallbackAction>{
             OpenViewIntent: CallbackAction<OpenViewIntent>(
               onInvoke: (intent) => this._selectView(intent.view.index),
-            )
+            ),
           },
           child: Focus(
             autofocus: true,

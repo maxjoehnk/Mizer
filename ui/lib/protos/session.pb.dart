@@ -9,6 +9,111 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class ProjectRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProjectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ProjectRequest._() : super();
+  factory ProjectRequest() => create();
+  factory ProjectRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProjectRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProjectRequest clone() => ProjectRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProjectRequest copyWith(void Function(ProjectRequest) updates) => super.copyWith((message) => updates(message as ProjectRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProjectRequest create() => ProjectRequest._();
+  ProjectRequest createEmptyInstance() => create();
+  static $pb.PbList<ProjectRequest> createRepeated() => $pb.PbList<ProjectRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ProjectRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProjectRequest>(create);
+  static ProjectRequest _defaultInstance;
+}
+
+class OpenProjectRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OpenProjectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
+  OpenProjectRequest._() : super();
+  factory OpenProjectRequest({
+    $core.String path,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    return _result;
+  }
+  factory OpenProjectRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory OpenProjectRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  OpenProjectRequest clone() => OpenProjectRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  OpenProjectRequest copyWith(void Function(OpenProjectRequest) updates) => super.copyWith((message) => updates(message as OpenProjectRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static OpenProjectRequest create() => OpenProjectRequest._();
+  OpenProjectRequest createEmptyInstance() => create();
+  static $pb.PbList<OpenProjectRequest> createRepeated() => $pb.PbList<OpenProjectRequest>();
+  @$core.pragma('dart2js:noInline')
+  static OpenProjectRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OpenProjectRequest>(create);
+  static OpenProjectRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+}
+
+class ProjectResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProjectResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ProjectResponse._() : super();
+  factory ProjectResponse() => create();
+  factory ProjectResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProjectResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProjectResponse clone() => ProjectResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProjectResponse copyWith(void Function(ProjectResponse) updates) => super.copyWith((message) => updates(message as ProjectResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProjectResponse create() => ProjectResponse._();
+  ProjectResponse createEmptyInstance() => create();
+  static $pb.PbList<ProjectResponse> createRepeated() => $pb.PbList<ProjectResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ProjectResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProjectResponse>(create);
+  static ProjectResponse _defaultInstance;
+}
+
 class ClientAnnouncement extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClientAnnouncement', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')

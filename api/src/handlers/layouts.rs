@@ -1,13 +1,13 @@
-use mizer_runtime::RuntimeApi;
+use crate::RuntimeApi;
 use crate::models::*;
 
 #[derive(Clone)]
-pub struct LayoutsHandler {
-    runtime: RuntimeApi,
+pub struct LayoutsHandler<R: RuntimeApi> {
+    runtime: R,
 }
 
-impl LayoutsHandler {
-    pub fn new(runtime: RuntimeApi) -> Self {
+impl<R: RuntimeApi> LayoutsHandler<R> {
+    pub fn new(runtime: R) -> Self {
         Self { runtime }
     }
 

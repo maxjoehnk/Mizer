@@ -4,8 +4,9 @@ use mizer_api::handlers::FixturesHandler;
 use mizer_api::models::*;
 
 use crate::protos::*;
+use mizer_api::RuntimeApi;
 
-impl FixturesApi for FixturesHandler {
+impl<R: RuntimeApi> FixturesApi for FixturesHandler<R> {
     fn get_fixtures(
         &self,
         _: ServerHandlerContext,

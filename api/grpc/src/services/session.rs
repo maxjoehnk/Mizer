@@ -4,8 +4,9 @@ use grpc::{
     ServerHandlerContext, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
 };
 use mizer_api::handlers::SessionHandler;
+use mizer_api::RuntimeApi;
 
-impl SessionApi for SessionHandler {
+impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
     fn get_session(
         &self,
         _: ServerHandlerContext,
@@ -24,5 +25,29 @@ impl SessionApi for SessionHandler {
         _: ServerResponseUnarySink<Session>,
     ) -> grpc::Result<()> {
         unimplemented!()
+    }
+
+    fn close_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.close_project();
+
+        resp.finish(Default::default())
+    }
+
+    fn new_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.new_project();
+
+        resp.finish(Default::default())
+    }
+
+    fn open_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<OpenProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.open_project(req.message.path);
+
+        resp.finish(Default::default())
+    }
+
+    fn save_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.save_project();
+
+        resp.finish(Default::default())
     }
 }

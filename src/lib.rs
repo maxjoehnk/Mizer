@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use mizer_project_files::Project;
+use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 
 pub use crate::flags::Flags;
 use anyhow::Context;
@@ -16,34 +16,32 @@ use mizer_protocol_dmx::*;
 use mizer_protocol_midi::MidiModule;
 use mizer_runtime::DefaultRuntime;
 use mizer_api::handlers::Handlers;
+use std::path::PathBuf;
+
+pub use crate::api::*;
 
 mod flags;
+mod api;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
-pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Result<Mizer> {
+pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Result<(Mizer, ApiHandler)> {
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
+    let (api_handler, api) = Api::setup(&runtime);
 
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
     register_midi_module(&mut runtime)?;
     let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime)?;
 
-    let mut media_paths = Vec::new();
-    load_project_files(&flags, &mut runtime, &mut media_paths)?;
-
-    if flags.generate_graph {
-        runtime.generate_pipeline_graph()?;
-    }
-
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
     handle.spawn(media_server.run_api());
-    import_media_files(&media_paths, &media_server_api)?;
+    // import_media_files(&media_paths, &media_server_api)?;
 
     let handlers = Handlers::new(
-        runtime.api(),
+        api,
         fixture_manager,
         fixture_library,
         media_server_api.clone()
@@ -54,23 +52,28 @@ pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Re
         handle.clone(),
         handlers.clone()
     )?;
-    setup_media_api(handle, flags, media_server_api)?;
+    setup_media_api(handle, &flags, media_server_api)?;
+    let mut mizer = Mizer { project_path: flags.file.clone(), flags, runtime, grpc, handlers };
+    mizer.load_project()?;
 
-    Ok(Mizer { runtime, grpc, handlers })
+    Ok((mizer, api_handler))
 }
 
 pub struct Mizer {
+    flags: Flags,
     runtime: DefaultRuntime,
     #[allow(dead_code)]
     grpc: Option<mizer_grpc_api::Server>,
-    pub handlers: Handlers,
+    pub handlers: Handlers<Api>,
+    project_path: Option<PathBuf>
 }
 
 impl Mizer {
-    pub async fn run(&mut self) {
+    pub async fn run(&mut self, api_handler: &ApiHandler) {
         log::trace!("Entering main loop...");
         loop {
             let before = std::time::Instant::now();
+            api_handler.handle(self);
             self.runtime.process();
             let after = std::time::Instant::now();
             let frame_time = after.duration_since(before);
@@ -79,6 +82,60 @@ impl Mizer {
                 tokio::time::delay_for(FRAME_DELAY_60FPS - frame_time).await;
             }
         }
+    }
+
+    fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
+        self.project_path = Some(path);
+        self.load_project()
+    }
+
+    fn load_project(&mut self) -> anyhow::Result<()> {
+        self.close_project();
+        if let Some(ref path) = self.project_path {
+            let mut media_paths = Vec::new();
+            log::info!("Loading project {:?}...", path);
+            let project = Project::load_file(path)?;
+            media_paths.extend(project.media_paths.clone());
+            {
+                let injector = self.runtime.injector();
+                let manager: &FixtureManager = injector.get().unwrap();
+                manager.load(&project).context("loading fixtures")?;
+            }
+            self.runtime.load(&project).context("loading project")?;
+            log::info!("Loading project...Done");
+
+            if self.flags.generate_graph {
+                self.runtime.generate_pipeline_graph()?;
+            }
+        }
+
+        Ok(())
+    }
+
+    fn save_project_as(&mut self, path: PathBuf) -> anyhow::Result<()> {
+        self.project_path = Some(path);
+        self.save_project()
+    }
+
+    fn save_project(&self) -> anyhow::Result<()> {
+        if let Some(ref file) = self.project_path {
+            log::info!("Saving project to {:?}...", file);
+            let mut project = Project::new();
+            self.runtime.save(&mut project);
+            let injector = self.runtime.injector();
+            let fixture_manager = injector.get::<FixtureManager>().unwrap();
+            fixture_manager.save(&mut project);
+            project.save_file(file)?;
+            log::info!("Saving project...Done");
+        }
+        Ok(())
+    }
+
+    fn close_project(&mut self) {
+        self.runtime.clear();
+        let injector = self.runtime.injector();
+        let fixture_manager = injector.get::<FixtureManager>().unwrap();
+        fixture_manager.clear();
     }
 }
 
@@ -122,46 +179,6 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     Ok(ofl_provider)
 }
 
-fn load_project_files(
-    flags: &Flags,
-    runtime: &mut DefaultRuntime,
-    media_paths: &mut Vec<String>,
-) -> anyhow::Result<()> {
-    log::info!("Loading projects...");
-    for file in &flags.files {
-        let project = Project::load_file(&file)?;
-        media_paths.extend(project.media_paths.clone());
-        {
-            let injector = runtime.injector();
-            let manager = injector.get().unwrap();
-            let library = injector.get().unwrap();
-            load_fixtures(manager, library, &project);
-        }
-        runtime.load_project(project).context("loading project")?;
-    }
-    log::info!("Loading projects...Done");
-
-    Ok(())
-}
-
-fn load_fixtures(fixture_manager: &FixtureManager, library: &FixtureLibrary, project: &Project) {
-    for fixture in &project.fixtures {
-        let def = library.get_definition(&fixture.fixture);
-        if let Some(def) = def {
-            fixture_manager.add_fixture(
-                fixture.id.clone(),
-                def,
-                fixture.mode.clone(),
-                fixture.output.clone(),
-                fixture.channel,
-                fixture.universe,
-            );
-        } else {
-            log::warn!("No fixture definition for fixture id {}", fixture.fixture);
-        }
-    }
-}
-
 fn import_media_files(
     media_paths: &[String],
     media_server_api: &MediaServerApi,
@@ -177,7 +194,7 @@ fn import_media_files(
 fn setup_grpc_api(
     flags: &Flags,
     handle: tokio::runtime::Handle,
-    handlers: Handlers,
+    handlers: Handlers<Api>,
 ) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
     let grpc = if !flags.disable_grpc_api {
         Some(mizer_grpc_api::start(
@@ -190,7 +207,7 @@ fn setup_grpc_api(
     Ok(grpc)
 }
 
-fn setup_media_api(handle: tokio::runtime::Handle, flags: Flags, media_server_api: MediaServerApi) -> anyhow::Result<()> {
+fn setup_media_api(handle: tokio::runtime::Handle, flags: &Flags, media_server_api: MediaServerApi) -> anyhow::Result<()> {
     if !flags.disable_media_api {
         handle.spawn(mizer_media::http_api::start(media_server_api));
     }

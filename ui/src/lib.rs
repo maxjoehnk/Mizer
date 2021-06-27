@@ -5,12 +5,13 @@ use nativeshell::{
 
 use mizer_api::handlers::Handlers;
 use crate::plugin::channels::*;
+use mizer_api::RuntimeApi;
 
 mod plugin;
 
 nativeshell::include_flutter_plugins!();
 
-pub fn run(handlers: Handlers) -> anyhow::Result<()> {
+pub fn run<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyhow::Result<()> {
     exec_bundle();
     register_observatory_listener("mizer".into());
 
@@ -26,6 +27,7 @@ pub fn run(handlers: Handlers) -> anyhow::Result<()> {
     let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.clone());
     let _media = MediaChannel::new(handlers.media).channel(context.clone());
     let _transport = TransportChannel::new(handlers.transport).channel(context.clone());
+    let _session = SessionChannel::new(handlers.session).channel(context.clone());
 
     context
         .window_manager

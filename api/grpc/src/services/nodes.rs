@@ -4,8 +4,9 @@ use mizer_api::handlers::NodesHandler;
 use mizer_api::models::*;
 
 use crate::protos::*;
+use mizer_api::RuntimeApi;
 
-impl NodesApi for NodesHandler {
+impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
     fn get_nodes(
         &self,
         _: ServerHandlerContext,

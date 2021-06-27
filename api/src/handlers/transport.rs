@@ -1,4 +1,4 @@
-use mizer_runtime::RuntimeApi;
+use crate::RuntimeApi;
 use futures::stream::Stream;
 use futures::StreamExt;
 use crate::models::transport::Transport;
@@ -6,17 +6,17 @@ use mizer_clock::ClockSnapshot;
 use crate::models::TransportState;
 
 #[derive(Clone)]
-pub struct TransportHandler {
-    runtime: RuntimeApi,
+pub struct TransportHandler<R: RuntimeApi> {
+    runtime: R,
 }
 
-impl TransportHandler {
-    pub fn new(runtime: RuntimeApi) -> Self {
+impl<R: RuntimeApi> TransportHandler<R> {
+    pub fn new(runtime: R) -> Self {
         Self { runtime }
     }
 
     pub fn transport_stream(&self) -> TransportStream {
-        TransportStream(self.runtime.clock_recv.clone())
+        TransportStream(self.runtime.transport_recv())
     }
 
     pub fn set_state(&self, state: TransportState) {

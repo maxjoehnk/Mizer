@@ -25,6 +25,406 @@
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct ProjectRequest {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ProjectRequest {
+    fn default() -> &'a ProjectRequest {
+        <ProjectRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProjectRequest {
+    pub fn new() -> ProjectRequest {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for ProjectRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ProjectRequest {
+        ProjectRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ProjectRequest>(
+                "ProjectRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ProjectRequest {
+        static instance: ::protobuf::rt::LazyV2<ProjectRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ProjectRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for ProjectRequest {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ProjectRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProjectRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct OpenProjectRequest {
+    // message fields
+    pub path: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a OpenProjectRequest {
+    fn default() -> &'a OpenProjectRequest {
+        <OpenProjectRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl OpenProjectRequest {
+    pub fn new() -> OpenProjectRequest {
+        ::std::default::Default::default()
+    }
+
+    // string path = 1;
+
+
+    pub fn get_path(&self) -> &str {
+        &self.path
+    }
+    pub fn clear_path(&mut self) {
+        self.path.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
+    }
+
+    // Take field
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for OpenProjectRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.path);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.path.is_empty() {
+            os.write_string(1, &self.path)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> OpenProjectRequest {
+        OpenProjectRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "path",
+                |m: &OpenProjectRequest| { &m.path },
+                |m: &mut OpenProjectRequest| { &mut m.path },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<OpenProjectRequest>(
+                "OpenProjectRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static OpenProjectRequest {
+        static instance: ::protobuf::rt::LazyV2<OpenProjectRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(OpenProjectRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for OpenProjectRequest {
+    fn clear(&mut self) {
+        self.path.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for OpenProjectRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for OpenProjectRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct ProjectResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ProjectResponse {
+    fn default() -> &'a ProjectResponse {
+        <ProjectResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProjectResponse {
+    pub fn new() -> ProjectResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for ProjectResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ProjectResponse {
+        ProjectResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ProjectResponse>(
+                "ProjectResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ProjectResponse {
+        static instance: ::protobuf::rt::LazyV2<ProjectResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ProjectResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for ProjectResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ProjectResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProjectResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct ClientAnnouncement {
     // message fields
     pub name: ::std::string::String,
@@ -959,17 +1359,24 @@ impl ::protobuf::reflect::ProtobufValue for DeviceClock {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\rsession.proto\x12\x05mizer\"(\n\x12ClientAnnouncement\x12\x12\n\x04n\
-    ame\x18\x01\x20\x01(\tR\x04name\"\x10\n\x0eSessionRequest\"9\n\x07Sessio\
-    n\x12.\n\x07devices\x18\x01\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07de\
-    vices\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\
-    \x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\
-    \x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\
-    \x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\
-    \x81\x01\n\nSessionApi\x127\n\nGetSession\x12\x15.mizer.SessionRequest\
-    \x1a\x0e.mizer.Session\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.Clie\
-    ntAnnouncement\x1a\x0e.mizer.Session\"\0b\x06proto3\
+    \n\rsession.proto\x12\x05mizer\"\x10\n\x0eProjectRequest\"(\n\x12OpenPro\
+    jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0fPro\
+    jectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"9\n\x07Session\x12.\n\x07dev\
+    ices\x18\x01\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devices\"s\n\rSes\
+    sionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x10\n\x03ip\
+    s\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\x01(\x0b2\x12.m\
+    izer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\x01(\x01R\x04pi\
+    ng\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\x01(\x08R\x06mast\
+    er\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\x85\x03\n\nSession\
+    Api\x127\n\nGetSession\x12\x15.mizer.SessionRequest\x1a\x0e.mizer.Sessio\
+    n\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.ClientAnnouncement\x1a\
+    \x0e.mizer.Session\"\0\x12?\n\x0cCloseProject\x12\x15.mizer.ProjectReque\
+    st\x1a\x16.mizer.ProjectResponse\"\0\x12=\n\nNewProject\x12\x15.mizer.Pr\
+    ojectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bOpenProject\x12\
+    \x19.mizer.OpenProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12>\n\
+    \x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectRespon\
+    se\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

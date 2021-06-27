@@ -7,7 +7,7 @@ pub struct Flags {
     #[structopt(long)]
     pub generate_graph: bool,
     #[structopt(name = "FILE", parse(from_os_str))]
-    pub files: Vec<PathBuf>,
+    pub file: Option<PathBuf>,
     #[cfg(feature = "export_metrics")]
     #[structopt(long)]
     pub metrics: bool,

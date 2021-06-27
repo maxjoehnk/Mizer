@@ -5,13 +5,14 @@ use nativeshell::codec::{MethodCall, Value, MethodCallReply};
 use protobuf::ProtobufEnum;
 use nativeshell::shell::{MethodChannel, Context, MethodCallHandler, EngineHandle};
 use std::rc::Rc;
+use mizer_api::RuntimeApi;
 
 #[derive(Clone)]
-pub struct TransportChannel {
-    handler: TransportHandler
+pub struct TransportChannel<R: RuntimeApi> {
+    handler: TransportHandler<R>
 }
 
-impl MethodCallHandler for TransportChannel {
+impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
     fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
         match call.method.as_str() {
             "setState" => {
@@ -29,8 +30,8 @@ impl MethodCallHandler for TransportChannel {
     }
 }
 
-impl TransportChannel {
-    pub fn new(handler: TransportHandler) -> Self {
+impl<R: RuntimeApi + 'static> TransportChannel<R> {
+    pub fn new(handler: TransportHandler<R>) -> Self {
         Self {
             handler
         }

@@ -54,7 +54,7 @@ impl Module for DmxModule {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
         log::debug!("Registering...");
         let dmx_manager = DmxConnectionManager::new();
-        runtime.injector().provide(dmx_manager);
+        runtime.injector_mut().provide(dmx_manager);
         runtime.add_processor(DmxProcessor.into());
 
         Ok(())

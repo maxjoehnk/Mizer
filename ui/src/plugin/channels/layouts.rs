@@ -4,13 +4,14 @@ use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
 use nativeshell::codec::{MethodCall, Value, MethodCallReply};
 use nativeshell::shell::{MethodCallHandler, EngineHandle, MethodChannel, Context};
 use std::rc::Rc;
+use mizer_api::RuntimeApi;
 
 #[derive(Clone)]
-pub struct LayoutsChannel {
-    handler: LayoutsHandler,
+pub struct LayoutsChannel<R: RuntimeApi> {
+    handler: LayoutsHandler<R>,
 }
 
-impl MethodCallHandler for LayoutsChannel {
+impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
     fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
         match call.method.as_str() {
             "getLayouts" => {
@@ -42,8 +43,8 @@ impl MethodCallHandler for LayoutsChannel {
     }
 }
 
-impl LayoutsChannel {
-    pub fn new(handler: LayoutsHandler) -> Self {
+impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
+    pub fn new(handler: LayoutsHandler<R>) -> Self {
         Self {
             handler
         }

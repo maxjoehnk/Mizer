@@ -1,92 +1,106 @@
+---
 nodes:
-  - type: dmx-output
-    path: /dmx-output-0
-    config:
-      channel: 1
-    designer:
-      position:
-        x: 10
-        y: 0
-      scale: 1
-  - type: fader
-    path: /fader-0
-    config: {}
-    designer:
-      position:
-        x: 0
-        y: 0
-      scale: 1
-  - type: oscillator
-    path: /oscillator-0
-    config:
-      type: sine
-      ratio: 4
-      max: 1
-    designer:
-      position:
-        x: 0
-        y: 5
-      scale: 1
-  - type: oscillator
-    path: /oscillator-1
+  - path: /oscillator-3
+    type: oscillator
     config:
       type: square
-      ratio: 4
-      max: 1
+      ratio: 4.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
     designer:
       position:
-        x: 0
-        y: 10
-      scale: 1
-  - type: select
-    path: /select-0
-    config: {}
-    designer:
-      position:
-        x: 5
-        y: 5
-      scale: 1
-  - type: dmx-output
-    path: /dmx-output-1
+        x: 0.0
+        y: 25.0
+      scale: 1.0
+  - path: /oscillator-1
+    type: oscillator
     config:
+      type: square
+      ratio: 4.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: 0.0
+        y: 10.0
+      scale: 1.0
+  - path: /oscillator-2
+    type: oscillator
+    config:
+      type: sine
+      ratio: 4.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: 0.0
+        y: 20.0
+      scale: 1.0
+  - path: /oscillator-0
+    type: oscillator
+    config:
+      type: sine
+      ratio: 4.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: 0.0
+        y: 5.0
+      scale: 1.0
+  - path: /dmx-output-1
+    type: dmx-output
+    config:
+      universe: 1
       channel: 2
     designer:
       position:
-        x: 10
-        y: 20
-      scale: 1
-  - type: oscillator
-    path: /oscillator-2
+        x: 10.0
+        y: 20.0
+      scale: 1.0
+  - path: /dmx-output-0
+    type: dmx-output
     config:
-      type: sine
-      ratio: 4
-      max: 1
+      universe: 1
+      channel: 1
     designer:
       position:
-        x: 0
-        y: 20
-      scale: 1
-  - type: oscillator
-    path: /oscillator-3
-    config:
-      type: square
-      ratio: 4
-      max: 1
-    designer:
-      position:
-        x: 0
-        y: 25
-      scale: 1
-  - type: merge
-    path: /merge-0
+        x: 10.0
+        y: 0.0
+      scale: 1.0
+  - path: /merge-0
+    type: merge
     config:
       mode: highest
     designer:
       position:
-        x: 5
-        y: 20
-      scale: 1
-
+        x: 5.0
+        y: 20.0
+      scale: 1.0
+  - path: /select-0
+    type: select
+    config: {}
+    designer:
+      position:
+        x: 5.0
+        y: 5.0
+      scale: 1.0
+  - path: /fader-0
+    type: fader
+    config: {}
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 1.0
 channels:
   - value@/fader-0 -> channel@/select-0
   - value@/oscillator-0 -> input@/select-0
@@ -95,7 +109,8 @@ channels:
   - value@/oscillator-2 -> input@/merge-0
   - value@/oscillator-3 -> input@/merge-0
   - output@/merge-0 -> value@/dmx-output-1
-
+fixtures: []
+media: []
 layouts:
   Default:
     - node: /fader-0

@@ -1,12 +1,16 @@
 use crate::models::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
-pub struct SessionHandler {
+pub struct SessionHandler<R: RuntimeApi> {
+    runtime: R
 }
 
-impl SessionHandler {
-    pub fn new() -> Self {
-        SessionHandler {}
+impl<R: RuntimeApi> SessionHandler<R> {
+    pub fn new(runtime: R) -> Self {
+        Self {
+            runtime
+        }
     }
 
     pub fn get_session(&self) -> Session {
@@ -36,5 +40,18 @@ impl SessionHandler {
         session.set_devices(vec![desktop, dmx_node].into());
 
         session
+    }
+
+    pub fn new_project(&self) {
+    }
+
+    pub fn open_project(&self, path: String) {
+    }
+
+    pub fn save_project(&self) -> anyhow::Result<()> {
+        self.runtime.save_project()
+    }
+
+    pub fn close_project(&self) {
     }
 }

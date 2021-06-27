@@ -4,6 +4,7 @@ pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::transport::*;
+pub use self::session::*;
 use nativeshell::codec::{MethodCallReply, Value, MethodCall};
 use anyhow::Error;
 
@@ -13,6 +14,7 @@ mod layouts;
 mod media;
 mod nodes;
 mod transport;
+mod session;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;

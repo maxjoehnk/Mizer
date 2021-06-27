@@ -5,6 +5,21 @@
 // @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
+const ProjectRequest$json = const {
+  '1': 'ProjectRequest',
+};
+
+const OpenProjectRequest$json = const {
+  '1': 'OpenProjectRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+const ProjectResponse$json = const {
+  '1': 'ProjectResponse',
+};
+
 const ClientAnnouncement$json = const {
   '1': 'ClientAnnouncement',
   '2': const [

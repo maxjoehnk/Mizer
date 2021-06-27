@@ -1,13 +1,13 @@
-use mizer_runtime::RuntimeApi;
+use crate::RuntimeApi;
 use crate::models::*;
 
 #[derive(Clone)]
-pub struct NodesHandler {
-    runtime: RuntimeApi,
+pub struct NodesHandler<R: RuntimeApi> {
+    runtime: R,
 }
 
-impl NodesHandler {
-    pub fn new(runtime: RuntimeApi) -> Self {
+impl<R: RuntimeApi> NodesHandler<R> {
+    pub fn new(runtime: R) -> Self {
         Self { runtime }
     }
 

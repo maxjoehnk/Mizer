@@ -25,9 +25,9 @@ class LayoutView extends StatelessWidget {
                 header: (active, setActive) => ContextMenu(
                     menu: Menu(items: [
                       MenuItem(
-                          title: "Rename", action: () => _onRename(context, layout, layoutsBloc)),
+                          label: "Rename", action: () => _onRename(context, layout, layoutsBloc)),
                       MenuItem(
-                          title: "Delete", action: () => _onDelete(context, layout, layoutsBloc)),
+                          label: "Delete", action: () => _onDelete(context, layout, layoutsBloc)),
                     ]),
                     child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
                 child: ControlLayout(

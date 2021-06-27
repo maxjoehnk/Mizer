@@ -5,13 +5,14 @@ use std::collections::HashMap;
 use nativeshell::codec::{MethodCall, Value, MethodCallReply};
 use nativeshell::shell::{MethodChannel, Context, EngineHandle, MethodCallHandler};
 use std::rc::Rc;
+use mizer_api::RuntimeApi;
 
 #[derive(Clone)]
-pub struct NodesChannel {
-    handler: NodesHandler,
+pub struct NodesChannel<R: RuntimeApi> {
+    handler: NodesHandler<R>,
 }
 
-impl MethodCallHandler for NodesChannel {
+impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
     fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
         match call.method.as_str() {
             "addNode" => {
@@ -87,8 +88,8 @@ impl MethodCallHandler for NodesChannel {
     }
 }
 
-impl NodesChannel {
-    pub fn new(handler: NodesHandler) -> Self {
+impl<R: RuntimeApi + 'static> NodesChannel<R> {
+    pub fn new(handler: NodesHandler<R>) -> Self {
         Self {
             handler
         }

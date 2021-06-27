@@ -1,177 +1,22 @@
-use std::collections::HashMap;
-use std::sync::Arc;
-
 use dashmap::mapref::one::Ref;
+
+use mizer_node::{NodeDesigner, NodePath, NodeType, PipelineNode, PortId, PortMetadata, NodeLink};
+use mizer_nodes::{Node};
+use std::sync::Arc;
 use dashmap::DashMap;
 use pinboard::NonEmptyPinboard;
-
+use std::collections::HashMap;
 use mizer_layouts::Layout;
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
-use mizer_nodes::{FixtureNode, Node, DmxOutputNode};
-use mizer_clock::{ClockSnapshot, ClockState};
+use mizer_clock::ClockSnapshot;
 
 #[derive(Clone)]
-pub struct RuntimeApi {
-    pub(crate) nodes: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
-    pub(crate) designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
-    pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
-    pub(crate) layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
-    pub(crate) sender: flume::Sender<ApiCommand>,
+pub struct RuntimeAccess {
+    pub nodes: Arc<DashMap<NodePath, Box<dyn PipelineNode>>>,
+    pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
+    pub links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
+    pub layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
     // TODO: make broadcast
     pub clock_recv: flume::Receiver<ClockSnapshot>,
-}
-
-#[derive(Debug, Clone)]
-pub enum ApiCommand {
-    AddNode(
-        NodeType,
-        NodeDesigner,
-        Option<Node>,
-        flume::Sender<anyhow::Result<NodePath>>,
-    ),
-    AddLink(NodeLink, flume::Sender<anyhow::Result<()>>),
-    WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
-    GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>),
-    UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
-    SetClockState(ClockState),
-}
-
-impl RuntimeApi {
-    pub fn nodes(&self) -> Vec<NodeDescriptor> {
-        let designer = self.designer.read();
-        self.nodes
-            .iter()
-            .map(|entry| entry.key().clone())
-            .map(|path| self.get_descriptor(path, &designer))
-            .collect()
-    }
-
-    pub fn links(&self) -> Vec<NodeLink> {
-        self.links.read()
-    }
-
-    pub fn layouts(&self) -> Vec<Layout> {
-        self.layouts.read()
-    }
-
-    pub fn add_layout(&self, name: String) {
-        let mut layouts = self.layouts.read();
-        layouts.push(Layout {
-            id: name,
-            controls: Default::default(),
-        });
-        self.layouts.set(layouts);
-    }
-
-    pub fn remove_layout(&self, id: String) {
-        let mut layouts = self.layouts.read();
-        layouts.retain(|layout| layout.id != id);
-        self.layouts.set(layouts);
-    }
-
-    pub fn rename_layout(&self, id: String, name: String) {
-        let mut layouts = self.layouts.read();
-        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == id) {
-            layout.id = name;
-        }
-        self.layouts.set(layouts);
-    }
-
-    pub fn add_node(
-        &self,
-        node_type: NodeType,
-        designer: NodeDesigner,
-    ) -> anyhow::Result<NodeDescriptor<'_>> {
-        self.add_node_internal(node_type, designer, None)
-    }
-
-    pub fn add_node_for_fixture(&self, fixture_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
-        let node = FixtureNode {
-            fixture_id,
-            ..Default::default()
-        };
-        self.add_node_internal(NodeType::Fixture, NodeDesigner::default(), Some(node.into()))
-    }
-
-    fn add_node_internal(
-        &self,
-        node_type: NodeType,
-        designer: NodeDesigner,
-        node: Option<Node>,
-    ) -> anyhow::Result<NodeDescriptor<'_>> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::AddNode(node_type, designer.clone(), node, tx))?;
-
-        // TODO: this blocks, we should use the async method
-        let path = rx.recv()??;
-        let node = self.nodes.get(&path).unwrap();
-        let ports = node.list_ports();
-
-        Ok(NodeDescriptor {
-            path,
-            designer,
-            node,
-            ports,
-        })
-    }
-
-    pub fn write_node_port(
-        &self,
-        node_path: NodePath,
-        port: PortId,
-        value: f64,
-    ) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::WritePort(node_path, port, value, tx))?;
-        let result = rx.recv()?;
-
-        result
-    }
-
-    pub fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::AddLink(link, tx))?;
-        let result = rx.recv()?;
-
-        result
-    }
-
-    pub fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::GetNodePreview(node, tx))?;
-        let result = rx.recv()?;
-
-        result
-    }
-
-    pub fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::UpdateNode(path, config, tx))?;
-        let result = rx.recv()?;
-
-        result
-    }
-
-    pub fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
-        self.sender.send(ApiCommand::SetClockState(state))?;
-
-        Ok(())
-    }
-
-    fn get_descriptor(&self, path: NodePath, designer: &HashMap<NodePath, NodeDesigner>) -> NodeDescriptor {
-        let node = self.nodes.get(&path).unwrap();
-        let ports = node.list_ports();
-        let designer = designer[&path].clone();
-
-        NodeDescriptor {
-            path,
-            node,
-            designer,
-            ports,
-        }
-    }
 }
 
 pub struct NodeDescriptor<'a> {

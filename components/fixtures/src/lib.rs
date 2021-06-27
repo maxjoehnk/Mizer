@@ -12,8 +12,8 @@ pub struct FixtureModule(FixtureLibrary, FixtureManager);
 
 impl FixtureModule {
     pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> (Self, FixtureManager, FixtureLibrary) {
-        let manager = FixtureManager::new();
         let library = FixtureLibrary::new(providers);
+        let manager = FixtureManager::new(library.clone());
         (Self(library.clone(), manager.clone()), manager, library)
     }
 }
@@ -21,7 +21,7 @@ impl FixtureModule {
 impl Module for FixtureModule {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()> {
         log::debug!("Registering...");
-        let injector = runtime.injector();
+        let injector = runtime.injector_mut();
         injector.provide(self.0);
         injector.provide(self.1);
         runtime.add_processor(FixtureProcessor.into());

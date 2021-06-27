@@ -18,7 +18,7 @@ async fn test_build_project_pipeline(project: &str) {
     let flags = Flags {
         join: false,
         generate_graph: false,
-        files: vec![PathBuf::from(format!("examples/{}.yml", project))],
+        file: Some(PathBuf::from(format!("examples/{}.yml", project))),
         disable_media_api: true,
         disable_grpc_api: true,
         headless: true,

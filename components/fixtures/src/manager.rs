@@ -3,15 +3,24 @@ use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
 use std::sync::Arc;
+use crate::library::FixtureLibrary;
 
-#[derive(Default, Clone)]
+#[derive(Clone)]
 pub struct FixtureManager {
-    fixtures: Arc<DashMap<u32, Fixture>>,
+    library: FixtureLibrary,
+    pub fixtures: Arc<DashMap<u32, Fixture>>,
 }
 
 impl FixtureManager {
-    pub fn new() -> Self {
-        FixtureManager::default()
+    pub fn new(library: FixtureLibrary) -> Self {
+        Self {
+            library,
+            fixtures: Default::default()
+        }
+    }
+
+    pub fn get_definition(&self, id: &str) -> Option<FixtureDefinition> {
+        self.library.get_definition(id)
     }
 
     pub fn add_fixture(

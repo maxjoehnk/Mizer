@@ -23,7 +23,7 @@ class BaseNode extends StatelessWidget {
   Widget build(BuildContext context) {
     return ContextMenu(
       menu: Menu(items: [
-        MenuItem(title: "Delete", action: () => log("delete node $node"))
+        MenuItem(label: "Delete", action: () => log("delete node $node"))
       ]),
       child: Container(
         width: NODE_BASE_WIDTH,

@@ -5,7 +5,9 @@ pub trait Module {
 }
 
 pub trait Runtime {
-    fn injector(&mut self) -> &mut Injector;
+    fn injector_mut(&mut self) -> &mut Injector;
+
+    fn injector(&self) -> &Injector;
 
     fn add_processor(&mut self, processor: Box<dyn Processor>);
 

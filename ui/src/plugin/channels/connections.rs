@@ -1,5 +1,4 @@
 use mizer_api::handlers::ConnectionsHandler;
-use mizer_api::models::*;
 use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
 use nativeshell::codec::{MethodCallReply, MethodCall, Value};
 use nativeshell::shell::{MethodChannel, MethodCallHandler, EngineHandle, Context};

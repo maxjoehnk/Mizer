@@ -1,20 +1,23 @@
-use crate::api::{ApiCommand, RuntimeApi};
+use std::collections::HashMap;
+use std::io::Write;
+use std::ops::DerefMut;
+use std::str::FromStr;
+use std::sync::Arc;
+
 use dashmap::DashMap;
-use mizer_clock::{Clock, SystemClock, ClockSnapshot};
+use pinboard::NonEmptyPinboard;
+
+use mizer_clock::{Clock, ClockSnapshot, SystemClock};
 use mizer_execution_planner::*;
+use mizer_layouts::{ControlConfig, Layout};
 use mizer_module::Runtime;
 use mizer_node::*;
 use mizer_nodes::*;
 use mizer_pipeline::*;
 use mizer_processing::*;
-use mizer_project_files::Project;
-use pinboard::NonEmptyPinboard;
-use std::collections::HashMap;
-use std::io::Write;
-use std::sync::Arc;
-use mizer_layouts::{Layout, ControlConfig};
-use std::str::FromStr;
-use std::ops::DerefMut;
+use mizer_project_files::{Channel, Project, ProjectManagerMut};
+
+use crate::api::RuntimeAccess;
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -24,20 +27,18 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
-    pipeline: PipelineWorker,
+    // TODO: this should not be pub
+    pub pipeline: PipelineWorker,
+    pub clock: TClock,
     assigned_nodes: Vec<NodePath>,
-    clock: TClock,
     injector: Injector,
     processors: Vec<Box<dyn Processor>>,
-    api_recv: flume::Receiver<ApiCommand>,
-    api_sender: flume::Sender<ApiCommand>,
     clock_recv: flume::Receiver<ClockSnapshot>,
     clock_sender: flume::Sender<ClockSnapshot>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
     pub fn new() -> Self {
-        let (api_tx, api_rx) = flume::unbounded();
         let (clock_tx, clock_rx) = flume::unbounded();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
@@ -52,8 +53,6 @@ impl CoordinatorRuntime<SystemClock> {
             clock: SystemClock::default(),
             injector: Default::default(),
             processors: Default::default(),
-            api_recv: api_rx,
-            api_sender: api_tx,
             clock_recv: clock_rx,
             clock_sender: clock_tx,
         };
@@ -65,7 +64,6 @@ impl CoordinatorRuntime<SystemClock> {
 
 impl<TClock: Clock> CoordinatorRuntime<TClock> {
     pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
-        let (api_tx, api_rx) = flume::unbounded();
         let (clock_tx, clock_rx) = flume::unbounded();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
@@ -80,8 +78,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock,
             injector: Default::default(),
             processors: Default::default(),
-            api_recv: api_rx,
-            api_sender: api_tx,
             clock_recv: clock_rx,
             clock_sender: clock_tx,
         };
@@ -95,26 +91,6 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             id: self.executor_id.clone(),
         };
         self.planner.add_executor(executor);
-    }
-
-    pub fn load_project(&mut self, project: Project) -> anyhow::Result<()> {
-        for node in project.nodes {
-            self.add_project_node(node.path.clone(), node.config.into());
-            self.add_designer_node(node.path, node.designer);
-        }
-        for link in project.channels {
-            let link = NodeLink {
-                source: link.from_path,
-                source_port: link.from_channel,
-                target: link.to_path,
-                target_port: link.to_channel,
-                port_type: PortType::Single,
-                local: true,
-            };
-            self.add_link(link)?;
-        }
-        self.add_layouts(project.layouts);
-        Ok(())
     }
 
     fn add_project_node(&mut self, path: NodePath, node: Node) {
@@ -225,11 +201,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn add_layouts(&self, layouts: HashMap<String, Vec<ControlConfig>>) {
-        let layouts = layouts.into_iter()
-            .map(|(id, controls)| Layout {
-                id,
-                controls
-            })
+        let layouts = layouts
+            .into_iter()
+            .map(|(id, controls)| Layout { id, controls })
             .collect();
 
         self.layouts.set(layouts);
@@ -281,55 +255,17 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.injector.provide(service);
     }
 
-    pub fn api(&self) -> RuntimeApi {
-        RuntimeApi {
+    pub fn access(&self) -> RuntimeAccess {
+        RuntimeAccess {
             nodes: self.nodes_view.clone(),
             designer: self.designer.clone(),
             links: self.links.clone(),
             layouts: self.layouts.clone(),
-            sender: self.api_sender.clone(),
             clock_recv: self.clock_recv.clone(),
         }
     }
 
-    fn handle_api_commands(&mut self) {
-        loop {
-            match self.api_recv.try_recv() {
-                Ok(ApiCommand::AddNode(node_type, designer, node, sender)) => {
-                    let result = self.handle_add_node(node_type, designer, node);
-
-                    sender.send(result).expect("api command sender disconnected");
-                }
-                Ok(ApiCommand::WritePort(path, port, value, sender)) => {
-                    self.pipeline.write_port(path, port, value);
-
-                    sender.send(Ok(())).expect("api command sender disconnected");
-                }
-                Ok(ApiCommand::AddLink(link, sender)) => {
-                    let result = self.add_link(link);
-
-                    sender.send(result).expect("api command sender disconnected");
-                }
-                Ok(ApiCommand::GetNodePreview(path, sender)) => {
-                    if let Some(history) = self.pipeline.get_history(&path) {
-                        sender.send(Ok(history)).expect("api command sender disconnected");
-                    }else {
-                        sender.send(Err(anyhow::anyhow!("No Preview for given node"))).expect("api command sender disconnected");
-                    }
-                }
-                Ok(ApiCommand::UpdateNode(path, config, sender)) => {
-                    sender.send(self.handle_update_node(path, config)).expect("api command sender disconnected");
-                }
-                Ok(ApiCommand::SetClockState(state)) => {
-                    self.clock.set_state(state);
-                }
-                Err(flume::TryRecvError::Empty) => break,
-                Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
-            }
-        }
-    }
-
-    fn handle_update_node(&mut self, path: NodePath, config: Node) -> anyhow::Result<()> {
+    pub fn handle_update_node(&mut self, path: NodePath, config: Node) -> anyhow::Result<()> {
         log::debug!("Updating {:?} with {:?}", path, config);
         if let Some(node) = self.nodes.get_mut(&path) {
             let node: &mut dyn ProcessingNodeExt = node.deref_mut();
@@ -342,7 +278,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         Ok(())
     }
 
-    fn handle_add_node(
+    pub fn handle_add_node(
         &mut self,
         node_type: NodeType,
         designer: NodeDesigner,
@@ -360,7 +296,9 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     fn get_next_id(&self, node_type: NodeType) -> u32 {
         let node_type_prefix = format!("/{}-", node_type.get_name());
-        let mut ids = self.nodes.keys()
+        let mut ids = self
+            .nodes
+            .keys()
             .filter_map(|path| path.0.strip_prefix(&node_type_prefix))
             .filter_map(|suffix| u32::from_str(suffix).ok())
             .collect::<Vec<_>>();
@@ -371,8 +309,12 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 }
 
 impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
-    fn injector(&mut self) -> &mut Injector {
+    fn injector_mut(&mut self) -> &mut Injector {
         &mut self.injector
+    }
+
+    fn injector(&self) -> &Injector {
+        &self.injector
     }
 
     fn add_processor(&mut self, processor: Box<dyn Processor>) {
@@ -383,7 +325,6 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         if let Err(err) = self.clock_sender.send(self.clock.snapshot()) {
             log::error!("Could not send clock snapshot {:?}", err);
         }
-        self.handle_api_commands();
         self.process_pipeline();
         for processor in self.processors.iter() {
             processor.process(&self.injector);
@@ -394,6 +335,69 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
     }
 }
 
+impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
+    fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        for node in &project.nodes {
+            self.add_project_node(node.path.clone(), node.config.clone().into());
+            self.add_designer_node(node.path.clone(), node.designer.clone());
+        }
+        for link in &project.channels {
+            let link = NodeLink {
+                source: link.from_path.clone(),
+                source_port: link.from_channel.clone(),
+                target: link.to_path.clone(),
+                target_port: link.to_channel.clone(),
+                port_type: PortType::Single,
+                local: true,
+            };
+            self.add_link(link)?;
+        }
+        self.add_layouts(project.layouts.clone());
+        Ok(())
+    }
+
+    fn save(&self, project: &mut Project) {
+        project.channels = self
+            .links
+            .read()
+            .into_iter()
+            .map(|link| Channel {
+                from_channel: link.source_port,
+                from_path: link.source,
+                to_channel: link.target_port,
+                to_path: link.target,
+            })
+            .collect();
+        project.layouts = self
+            .layouts
+            .read()
+            .into_iter()
+            .map(|layout| (layout.id, layout.controls))
+            .collect();
+        let designer = self.designer.read();
+        project.nodes = self.nodes
+            .iter()
+            .map(|(name, node)| {
+                let node = downcast(&node);
+                mizer_project_files::Node {
+                    designer: designer[name].clone(),
+                    path: name.clone(),
+                    config: node.into(),
+                }
+            })
+            .collect()
+     }
+
+    fn clear(&mut self) {
+        self.designer.set(Default::default());
+        self.nodes.clear();
+        self.layouts.set(Default::default());
+        self.links.set(Default::default());
+        self.nodes_view.clear();
+        self.plan();
+    }
+}
+
 fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::Result<()> {
     let node_type = node.node_type();
     match (node_type, config) {
@@ -401,7 +405,7 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut DmxOutputNode = node.downcast_mut()?;
             node.channel = config.channel;
             node.universe = config.universe;
-        },
+        }
         (NodeType::Oscillator, Node::Oscillator(config)) => {
             let node: &mut OscillatorNode = node.downcast_mut()?;
             node.oscillator_type = config.oscillator_type;
@@ -410,85 +414,122 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.offset = config.offset;
             node.ratio = config.ratio;
             node.reverse = config.reverse;
-        },
+        }
         (NodeType::Clock, Node::Clock(config)) => {
             let node: &mut ClockNode = node.downcast_mut()?;
             node.speed = config.speed;
-        },
+        }
         (NodeType::Fixture, Node::Fixture(config)) => {
             let node: &mut FixtureNode = node.downcast_mut()?;
             node.fixture_id = config.fixture_id;
-        },
+        }
         (NodeType::OscOutput, Node::OscOutput(config)) => {
             let node: &mut OscOutputNode = node.downcast_mut()?;
             node.path = config.path.clone();
             node.host = config.host.clone();
             node.port = config.port;
-        },
+        }
         (NodeType::OscInput, Node::OscInput(config)) => {
             let node: &mut OscInputNode = node.downcast_mut()?;
             node.path = config.path.clone();
             node.host = config.host.clone();
             node.port = config.port;
-        },
-        (NodeType::Button, Node::Button(config)) => {},
-        (NodeType::Fader, Node::Fader(config)) => {},
+        }
+        (NodeType::Button, Node::Button(config)) => {}
+        (NodeType::Fader, Node::Fader(config)) => {}
         (NodeType::IldaFile, Node::IldaFile(config)) => {
             let node: &mut IldaFileNode = node.downcast_mut()?;
             node.file = config.file.clone();
-        },
+        }
         (NodeType::Laser, Node::Laser(config)) => {
             let node: &mut LaserNode = node.downcast_mut()?;
             node.device_id = config.device_id.clone();
-        },
+        }
         (NodeType::MidiInput, Node::MidiInput(config)) => {
             let node: &mut MidiInputNode = node.downcast_mut()?;
             node.device = config.device.clone();
             node.channel = config.channel;
             node.config = config.config;
-        },
+        }
         (NodeType::MidiOutput, Node::MidiOutput(config)) => {
             let node: &mut MidiOutputNode = node.downcast_mut()?;
             node.device = config.device.clone();
             node.channel = config.channel;
             node.config = config.config;
-        },
+        }
         (NodeType::OpcOutput, Node::OpcOutput(config)) => {
             let node: &mut OpcOutputNode = node.downcast_mut()?;
             node.host = config.host.clone();
             node.port = config.port;
             node.width = config.width;
             node.height = config.height;
-        },
+        }
         (NodeType::PixelDmx, Node::PixelDmx(config)) => {
             let node: &mut PixelDmxNode = node.downcast_mut()?;
             node.height = config.height;
             node.width = config.width;
             node.output = config.output.clone();
             node.start_universe = config.start_universe;
-        },
+        }
         (NodeType::PixelPattern, Node::PixelPattern(config)) => {
             let node: &mut PixelPatternGeneratorNode = node.downcast_mut()?;
             node.pattern = config.pattern;
-        },
+        }
         (NodeType::Scripting, Node::Scripting(config)) => {
             let node: &mut ScriptingNode = node.downcast_mut()?;
             node.script = config.script.clone();
-        },
-        (NodeType::VideoColorBalance, Node::VideoColorBalance(config)) => {},
+        }
+        (NodeType::VideoColorBalance, Node::VideoColorBalance(config)) => {}
         (NodeType::VideoEffect, Node::VideoEffect(config)) => {
             let node: &mut VideoEffectNode = node.downcast_mut()?;
             node.effect_type = config.effect_type;
-        },
+        }
         (NodeType::VideoFile, Node::VideoFile(config)) => {
             let node: &mut VideoFileNode = node.downcast_mut()?;
             node.file = config.file.clone();
-        },
-        (NodeType::VideoOutput, Node::VideoOutput(config)) => {},
-        (NodeType::VideoTransform, Node::VideoTransform(config)) => {},
-        (node_type, node) => log::warn!("invalid node type {:?} for given update {:?}", node_type, node),
+        }
+        (NodeType::VideoOutput, Node::VideoOutput(config)) => {}
+        (NodeType::VideoTransform, Node::VideoTransform(config)) => {}
+        (node_type, node) => log::warn!(
+            "invalid node type {:?} for given update {:?}",
+            node_type,
+            node
+        ),
     }
     Ok(())
+}
+
+pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
+    match node.node_type() {
+        NodeType::Clock => Node::Clock(downcast_node(node).unwrap()),
+        NodeType::Oscillator => Node::Oscillator(downcast_node(node).unwrap()),
+        NodeType::DmxOutput => Node::DmxOutput(downcast_node(node).unwrap()),
+        NodeType::Scripting => Node::Scripting(downcast_node(node).unwrap()),
+        NodeType::Sequence => Node::Sequence(downcast_node(node).unwrap()),
+        NodeType::Select => Node::Select(downcast_node(node).unwrap()),
+        NodeType::Merge => Node::Merge(downcast_node(node).unwrap()),
+        NodeType::Fixture => Node::Fixture(downcast_node(node).unwrap()),
+        NodeType::IldaFile => Node::IldaFile(downcast_node(node).unwrap()),
+        NodeType::Laser => Node::Laser(downcast_node(node).unwrap()),
+        NodeType::Fader => Node::Fader(downcast_node(node).unwrap()),
+        NodeType::Button => Node::Button(downcast_node(node).unwrap()),
+        NodeType::MidiInput => Node::MidiInput(downcast_node(node).unwrap()),
+        NodeType::MidiOutput => Node::MidiOutput(downcast_node(node).unwrap()),
+        NodeType::OpcOutput => Node::OpcOutput(downcast_node(node).unwrap()),
+        NodeType::PixelPattern => Node::PixelPattern(downcast_node(node).unwrap()),
+        NodeType::PixelDmx => Node::PixelDmx(downcast_node(node).unwrap()),
+        NodeType::OscInput => Node::OscInput(downcast_node(node).unwrap()),
+        NodeType::OscOutput => Node::OscOutput(downcast_node(node).unwrap()),
+        NodeType::VideoFile => Node::VideoFile(downcast_node(node).unwrap()),
+        NodeType::VideoColorBalance => Node::VideoColorBalance(downcast_node(node).unwrap()),
+        NodeType::VideoOutput => Node::VideoOutput(downcast_node(node).unwrap()),
+        NodeType::VideoEffect => Node::VideoEffect(downcast_node(node).unwrap()),
+        NodeType::VideoTransform => Node::VideoTransform(downcast_node(node).unwrap()),
+    }
+}
+
+fn downcast_node<T: Clone + 'static>(node: &Box<dyn ProcessingNodeExt>) -> Option<T> {
+    node.downcast_ref().ok().cloned()
 }
 
 #[cfg(test)]

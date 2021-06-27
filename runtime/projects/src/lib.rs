@@ -8,6 +8,8 @@ use std::fs::File;
 use std::path::Path;
 use mizer_layouts::ControlConfig;
 
+mod fixtures;
+
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
         r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-/]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-/]*)$"
@@ -17,7 +19,7 @@ lazy_static! {
     .unwrap();
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Project {
     #[serde(default)]
     pub nodes: Vec<Node>,
@@ -32,6 +34,10 @@ pub struct Project {
 }
 
 impl Project {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
         let file = File::open(path)?;
         let project = serde_yaml::from_reader(file)?;
@@ -44,6 +50,26 @@ impl Project {
 
         Ok(project)
     }
+
+    // TODO: do file persistance on background thread
+    pub fn save_file<P: AsRef<Path>>(&self, path: P) -> anyhow::Result<()> {
+        let file = File::create(path)?;
+        serde_yaml::to_writer(file, &self)?;
+
+        Ok(())
+    }
+}
+
+pub trait ProjectManagerMut {
+    fn load(&mut self, project: &Project) -> anyhow::Result<()>;
+    fn save(&self, project: &mut Project);
+    fn clear(&mut self);
+}
+
+pub trait ProjectManager {
+    fn load(&self, project: &Project) -> anyhow::Result<()>;
+    fn save(&self, project: &mut Project);
+    fn clear(&self);
 }
 
 #[derive(Clone, Serialize, Deserialize, PartialEq)]
@@ -99,8 +125,6 @@ pub struct Node {
     #[serde(flatten)]
     pub config: NodeConfig,
     #[serde(default)]
-    pub properties: HashMap<String, f64>,
-    #[serde(default)]
     pub designer: NodeDesigner,
 }
 
@@ -136,30 +160,61 @@ pub enum NodeConfig {
 impl From<NodeConfig> for mizer_nodes::Node {
     fn from(node: NodeConfig) -> Self {
         match node {
-            NodeConfig::Clock(node) => mizer_nodes::Node::Clock(node),
-            NodeConfig::Oscillator(node) => mizer_nodes::Node::Oscillator(node),
-            NodeConfig::DmxOutput(node) => mizer_nodes::Node::DmxOutput(node),
-            NodeConfig::Script(node) => mizer_nodes::Node::Scripting(node),
-            NodeConfig::Sequence(node) => mizer_nodes::Node::Sequence(node),
-            NodeConfig::Fixture(node) => mizer_nodes::Node::Fixture(node),
-            NodeConfig::Select(node) => mizer_nodes::Node::Select(node),
-            NodeConfig::Merge(node) => mizer_nodes::Node::Merge(node),
-            NodeConfig::IldaFile(node) => mizer_nodes::Node::IldaFile(node),
-            NodeConfig::Laser(node) => mizer_nodes::Node::Laser(node),
-            NodeConfig::Fader(node) => mizer_nodes::Node::Fader(node),
-            NodeConfig::Button(node) => mizer_nodes::Node::Button(node),
-            NodeConfig::MidiInput(node) => mizer_nodes::Node::MidiInput(node),
-            NodeConfig::MidiOutput(node) => mizer_nodes::Node::MidiOutput(node),
-            NodeConfig::OpcOutput(node) => mizer_nodes::Node::OpcOutput(node),
-            NodeConfig::PixelPattern(node) => mizer_nodes::Node::PixelPattern(node),
-            NodeConfig::PixelDmx(node) => mizer_nodes::Node::PixelDmx(node),
-            NodeConfig::OscInput(node) => mizer_nodes::Node::OscInput(node),
-            NodeConfig::OscOutput(node) => mizer_nodes::Node::OscOutput(node),
-            NodeConfig::VideoFile(node) => mizer_nodes::Node::VideoFile(node),
-            NodeConfig::VideoColorBalance(node) => mizer_nodes::Node::VideoColorBalance(node),
-            NodeConfig::VideoOutput(node) => mizer_nodes::Node::VideoOutput(node),
-            NodeConfig::VideoEffect(node) => mizer_nodes::Node::VideoEffect(node),
-            NodeConfig::VideoTransform(node) => mizer_nodes::Node::VideoTransform(node),
+            NodeConfig::Clock(node) => Self::Clock(node),
+            NodeConfig::Oscillator(node) => Self::Oscillator(node),
+            NodeConfig::DmxOutput(node) => Self::DmxOutput(node),
+            NodeConfig::Script(node) => Self::Scripting(node),
+            NodeConfig::Sequence(node) => Self::Sequence(node),
+            NodeConfig::Fixture(node) => Self::Fixture(node),
+            NodeConfig::Select(node) => Self::Select(node),
+            NodeConfig::Merge(node) => Self::Merge(node),
+            NodeConfig::IldaFile(node) => Self::IldaFile(node),
+            NodeConfig::Laser(node) => Self::Laser(node),
+            NodeConfig::Fader(node) => Self::Fader(node),
+            NodeConfig::Button(node) => Self::Button(node),
+            NodeConfig::MidiInput(node) => Self::MidiInput(node),
+            NodeConfig::MidiOutput(node) => Self::MidiOutput(node),
+            NodeConfig::OpcOutput(node) => Self::OpcOutput(node),
+            NodeConfig::PixelPattern(node) => Self::PixelPattern(node),
+            NodeConfig::PixelDmx(node) => Self::PixelDmx(node),
+            NodeConfig::OscInput(node) => Self::OscInput(node),
+            NodeConfig::OscOutput(node) => Self::OscOutput(node),
+            NodeConfig::VideoFile(node) => Self::VideoFile(node),
+            NodeConfig::VideoColorBalance(node) => Self::VideoColorBalance(node),
+            NodeConfig::VideoOutput(node) => Self::VideoOutput(node),
+            NodeConfig::VideoEffect(node) => Self::VideoEffect(node),
+            NodeConfig::VideoTransform(node) => Self::VideoTransform(node),
+        }
+    }
+}
+
+impl From<mizer_nodes::Node> for NodeConfig {
+    fn from(node: mizer_nodes::Node) -> Self {
+        match node {
+            mizer_nodes::Node::Clock(node) => Self::Clock(node),
+            mizer_nodes::Node::Oscillator(node) => Self::Oscillator(node),
+            mizer_nodes::Node::DmxOutput(node) => Self::DmxOutput(node),
+            mizer_nodes::Node::Scripting(node) => Self::Script(node),
+            mizer_nodes::Node::Sequence(node) => Self::Sequence(node),
+            mizer_nodes::Node::Fixture(node) => Self::Fixture(node),
+            mizer_nodes::Node::Select(node) => Self::Select(node),
+            mizer_nodes::Node::Merge(node) => Self::Merge(node),
+            mizer_nodes::Node::IldaFile(node) => Self::IldaFile(node),
+            mizer_nodes::Node::Laser(node) => Self::Laser(node),
+            mizer_nodes::Node::Fader(node) => Self::Fader(node),
+            mizer_nodes::Node::Button(node) => Self::Button(node),
+            mizer_nodes::Node::MidiInput(node) => Self::MidiInput(node),
+            mizer_nodes::Node::MidiOutput(node) => Self::MidiOutput(node),
+            mizer_nodes::Node::OpcOutput(node) => Self::OpcOutput(node),
+            mizer_nodes::Node::PixelPattern(node) => Self::PixelPattern(node),
+            mizer_nodes::Node::PixelDmx(node) => Self::PixelDmx(node),
+            mizer_nodes::Node::OscInput(node) => Self::OscInput(node),
+            mizer_nodes::Node::OscOutput(node) => Self::OscOutput(node),
+            mizer_nodes::Node::VideoFile(node) => Self::VideoFile(node),
+            mizer_nodes::Node::VideoColorBalance(node) => Self::VideoColorBalance(node),
+            mizer_nodes::Node::VideoOutput(node) => Self::VideoOutput(node),
+            mizer_nodes::Node::VideoEffect(node) => Self::VideoEffect(node),
+            mizer_nodes::Node::VideoTransform(node) => Self::VideoTransform(node),
         }
     }
 }
@@ -227,7 +282,6 @@ mod tests {
                     position: NodePosition { x: 1., y: 2. },
                     scale: 3.,
                 },
-                properties: HashMap::new(),
             }
         );
         Ok(())
@@ -263,7 +317,6 @@ mod tests {
                     pattern: mizer_pixel_nodes::Pattern::RgbIterate
                 }),
                 designer: Default::default(),
-                properties: HashMap::new(),
             }
         );
         assert_eq!(
@@ -277,7 +330,6 @@ mod tests {
                     height: 50
                 }),
                 designer: Default::default(),
-                properties: Default::default(),
             }
         );
         assert_eq!(
@@ -334,7 +386,6 @@ mod tests {
                 path: "/fader-0".into(),
                 config: NodeConfig::Fader(mizer_nodes::FaderNode {}),
                 designer: Default::default(),
-                properties: Default::default(),
             }
         );
         Ok(())

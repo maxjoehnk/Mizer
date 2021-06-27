@@ -72,7 +72,7 @@ class MenuRowItem extends StatelessWidget {
       builder: (hovered) => Container(
         color: hovered ? Colors.grey.shade700 : null,
         padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        child: Text(item.title),
+        child: Text(item.label),
       ),
     );
   }

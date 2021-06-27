@@ -83,12 +83,18 @@ mizer-devices = { path = "components/devices" }
 mizer-runtime = { path = "runtime" }
 mizer-execution-planner = { path = "runtime/execution-planner" }
 mizer-node = { path = "runtime/pipeline/node" }
+mizer-nodes = { path = "runtime/pipeline/nodes" }
+mizer-layouts = { path = "runtime/layouts" }
+mizer-clock = { path = "runtime/clock" }
 mizer-protocol-dmx = { path = "protocols/dmx" }
 mizer-protocol-midi = { path = "protocols/midi" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }
 tokio = { version = "0.2", features = ["rt-threaded", "macros", "time", "rt-util"] }
+pinboard = "2.1"
+dashmap = "4"
+flume = "0.10"
 
 [dev-dependencies]
 test-case = "1.0"

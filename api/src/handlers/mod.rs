@@ -8,7 +8,7 @@ pub use self::connections::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_media::api::MediaServerApi;
-use mizer_runtime::RuntimeApi;
+use crate::RuntimeApi;
 
 mod connections;
 mod fixtures;
@@ -19,19 +19,19 @@ mod session;
 mod transport;
 
 #[derive(Clone)]
-pub struct Handlers {
+pub struct Handlers<R: RuntimeApi> {
     pub connections: ConnectionsHandler,
-    pub fixtures: FixturesHandler,
-    pub layouts: LayoutsHandler,
+    pub fixtures: FixturesHandler<R>,
+    pub layouts: LayoutsHandler<R>,
     pub media: MediaHandler,
-    pub nodes: NodesHandler,
-    pub session: SessionHandler,
-    pub transport: TransportHandler,
+    pub nodes: NodesHandler<R>,
+    pub session: SessionHandler<R>,
+    pub transport: TransportHandler<R>,
 }
 
-impl Handlers {
+impl<R: RuntimeApi> Handlers<R> {
     pub fn new(
-        runtime: RuntimeApi,
+        runtime: R,
         fixture_manager: FixtureManager,
         fixture_library: FixtureLibrary,
         media_server: MediaServerApi,
@@ -42,7 +42,7 @@ impl Handlers {
             layouts: LayoutsHandler::new(runtime.clone()),
             media: MediaHandler::new(media_server),
             nodes: NodesHandler::new(runtime.clone()),
-            session: SessionHandler::new(),
+            session: SessionHandler::new(runtime.clone()),
             transport: TransportHandler::new(runtime),
         }
     }

@@ -8,13 +8,14 @@ use crate::protos::{
     SessionApiServer, TransportApiServer,
 };
 use mizer_api::handlers::*;
+use mizer_api::RuntimeApi;
 
 mod protos;
 mod services;
 
-pub fn start(
+pub fn start<R: RuntimeApi + 'static>(
     handle: tokio::runtime::Handle,
-    handlers: Handlers,
+    handlers: Handlers<R>,
 ) -> anyhow::Result<grpc::Server> {
     let mut server: grpc::ServerBuilder = grpc::ServerBuilder::new();
     server.http.event_loop = Some(handle);

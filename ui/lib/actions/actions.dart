@@ -19,9 +19,4 @@ enum View {
 }
 
 class OpenProjectIntent extends Intent {
-
-}
-
-class NewProjectIntent extends Intent {
-
 }

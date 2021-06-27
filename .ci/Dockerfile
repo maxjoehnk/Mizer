@@ -2,7 +2,7 @@ FROM ubuntu:latest as deps
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt update -y && apt upgrade -y && apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler xorg-dev libgtk-3-dev wget curl libclang-dev
+RUN apt update -y && apt upgrade -y && apt install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler xorg-dev libgtk-3-dev wget curl libclang-dev cmake
 
 FROM deps as local
 

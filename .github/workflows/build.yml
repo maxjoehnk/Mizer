@@ -5,19 +5,18 @@ name: Build
 jobs:
   build-linux:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/maxjoehnk/node-based-mizer/build-image:latest
     steps:
-      - name: Install native dependencies
-        run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler xorg-dev libpango-1.0-0
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
       - uses: subosito/flutter-action@v1
         with:
-          channel: beta
-          flutter-version: '2.2.2'
+          channel: master
       - uses: Swatinem/rust-cache@v1
-      - name: Build
+      - name: Build Headless
         uses: actions-rs/cargo@v1
         with:
           command: build
@@ -27,6 +26,9 @@ jobs:
           name: linux-headless
           path: target/release/mizer
           if-no-files-found: error
+      - name: Get flutter deps
+        run: flutter pub get
+        working-directory: ui
       - name: Build
         uses: actions-rs/cargo@v1
         with:
@@ -37,7 +39,39 @@ jobs:
           name: linux-full
           path: target/release/mizer
           if-no-files-found: error
-  build-client-android:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Install build dependencies
+        run: brew install protobuf gstreamer gst-plugins-base gst-plugins-bad
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: master
+      - uses: Swatinem/rust-cache@v1
+      - name: Get flutter deps
+        run: flutter pub get
+        working-directory: ui
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --all-features
+      - uses: actions/upload-artifact@v2
+        with:
+          name: macos-full
+          path: |
+            target/release/
+            !target/release/deps/**
+            !target/release/build/**
+            !target/release/incremental/**
+            !target/release/examples/**
+            !target/release/libmizer*
+          if-no-files-found: error
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -46,7 +80,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          channel: beta
+          channel: master
       - run: flutter pub get
         working-directory: ui
       - run: flutter build apk

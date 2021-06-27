@@ -31,7 +31,7 @@ impl MethodCallHandler for FixturesChannel {
             "writeFixtureChannel" => {
                 let response = call.arguments().map(|args| self.write_fixture_channel(args));
 
-                resp.respond_msg(response);
+                resp.respond_result(response);
             }
             _ => resp.not_implemented()
         }

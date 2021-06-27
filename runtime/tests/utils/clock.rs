@@ -42,8 +42,7 @@ impl Clock for TestClock {
     fn snapshot(&self) -> ClockSnapshot {
         ClockSnapshot {
             speed: 1.0,
-            frames: 1,
-            time: 1.,
+            time: Timecode::new(1),
             state: ClockState::Playing
         }
     }

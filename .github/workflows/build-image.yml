@@ -12,6 +12,7 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
+          context: .ci
           push: true
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}

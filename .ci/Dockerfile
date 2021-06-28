@@ -6,8 +6,10 @@ RUN apt update -y && apt upgrade -y && apt install -y libgstreamer1.0-dev libgst
 
 RUN apt install -y git unzip
 
+ENV PATH=$PATH:/root/.cargo/bin:/flutter/bin
+
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 RUN git clone -b master https://github.com/flutter/flutter.git && /flutter/bin/flutter precache && /flutter/bin/flutter config --enable-linux-desktop
 
-ENV PATH=$PATH:/root/.cargo/bin:/flutter/bin
+RUN rustup override set stable

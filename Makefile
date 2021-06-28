@@ -11,4 +11,4 @@ build-headless:
 
 build:
 	cd ui && flutter pub get
-	cargo build --release --all-features
+	cargo build --all-features

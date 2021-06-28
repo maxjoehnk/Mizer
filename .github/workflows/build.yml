@@ -9,6 +9,9 @@ jobs:
       image: ghcr.io/maxjoehnk/node-based-mizer/build-image:latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - uses: Swatinem/rust-cache@v1
       - name: Build Headless
         run: make build-headless

@@ -44,17 +44,17 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --all-features
+          args: --all-features
       - uses: actions/upload-artifact@v2
         with:
           name: macos-full
           path: |
-            target/release/
-            !target/release/deps/**
-            !target/release/build/**
-            !target/release/incremental/**
-            !target/release/examples/**
-            !target/release/libmizer*
+            target/debug/
+            !target/debug/deps/**
+            !target/debug/build/**
+            !target/debug/incremental/**
+            !target/debug/examples/**
+            !target/debug/libmizer*
           if-no-files-found: error
   build-android:
     runs-on: ubuntu-latest

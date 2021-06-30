@@ -28,7 +28,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-full
-          path: target/release/mizer
+          path: target/debug/mizer
           if-no-files-found: error
   build-macos:
     runs-on: macos-latest

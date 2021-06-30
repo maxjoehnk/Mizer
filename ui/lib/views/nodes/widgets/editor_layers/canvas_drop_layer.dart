@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:mizer/protos/nodes.pb.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/node_editor_model.dart';
@@ -12,9 +13,7 @@ class CanvasDropLayer extends StatelessWidget {
           builder: (context, candidates, rejects) {
             return SizedBox.expand();
           },
-          onWillAccept: (data) {
-            return true;
-          },
+          onWillAccept: (data) => data is Node,
           onAccept: (data) {
             RenderBox canvasBox = context.findRenderObject();
             RenderBox elementBox = data.key.currentContext.findRenderObject();

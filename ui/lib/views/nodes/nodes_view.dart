@@ -76,8 +76,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                   transform: model.transformationController.value,
                   child: IgnorePointer(
                       child: GraphPaintLayer(model: model))),
-              NodesTarget(),
               CanvasDropLayer(),
+              NodesTarget(),
               if (addMenuPosition != null)
                 AddNodeMenu(addMenuPosition, onSelection: (nodeType) => _addNode(model, nodeType)),
             ]),

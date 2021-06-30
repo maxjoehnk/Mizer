@@ -11,8 +11,10 @@ class NodeEditorModel extends ChangeNotifier {
   final List<NodeModel> nodes;
   final List<NodeConnection> channels;
   final GlobalKey painterKey = GlobalKey();
+
   TransformationController transformationController;
   NodeModel selectedNode;
+  NewConnectionModel connecting;
 
   NodeEditorModel(Nodes nodes)
       : this.nodes = nodes.nodes
@@ -47,5 +49,36 @@ class NodeEditorModel extends ChangeNotifier {
   selectNode(NodeModel nodeModel) {
     this.selectedNode = nodeModel;
     this.update();
+  }
+
+  dragNewConnection(NewConnectionModel model) {
+    connecting = model;
+    this.updateNewConnection();
+  }
+
+  dropNewConnection() {
+    connecting = null;
+    this.updateNewConnection();
+  }
+
+  updateNewConnection() {
+    connecting?.update(painterKey);
+    this.update();
+  }
+}
+
+class NewConnectionModel {
+  Port port;
+  Node node;
+  Offset offset;
+  GlobalKey key;
+
+  NewConnectionModel({ this.port, this.node, this.offset = Offset.zero, this.key });
+
+  void update(GlobalKey key) {
+    if (key.currentContext == null || this.key.currentContext == null) return;
+    RenderBox thisBox = this.key.currentContext.findRenderObject();
+    RenderBox thatBox = key.currentContext.findRenderObject();
+    this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
   }
 }

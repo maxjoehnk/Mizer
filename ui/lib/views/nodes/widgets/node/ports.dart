@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:provider/provider.dart';
 
@@ -53,11 +56,11 @@ class NodePort extends StatelessWidget {
             child: Row(
               mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
               children: input
-                  ? [PortDot(port, input: this.input, key: key), Container(width: 8), Text(port.name)]
+                  ? [PortDot(port, input: this.input, key: key, node: node), Container(width: 8), Text(port.name)]
                   : [
                       Text(port.name),
                       Container(width: 8),
-                      PortDot(port, input: this.input, key: key)
+                      PortDot(port, input: this.input, key: key, node: node)
                     ],
             ),
           ),
@@ -70,25 +73,62 @@ class NodePort extends StatelessWidget {
 class PortDot extends StatelessWidget {
   final Port port;
   final bool input;
+  final Node node;
   final Key key;
+  final GlobalKey dragKey = GlobalKey();
 
-  PortDot(this.port, {this.input, this.key});
+  PortDot(this.port, {this.input, this.key, this.node});
 
   @override
   Widget build(BuildContext context) {
     var color = getColorForProtocol(port.protocol);
 
-    return DecoratedBox(
-      decoration: ShapeDecoration(
-          gradient: RadialGradient(colors: [color.shade400, color.shade700]),
-          shadows: [
-            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
-          ],
-          shape: CircleBorder(side: BorderSide.none)),
-      child: Container(
-        width: DOT_SIZE,
-        height: DOT_SIZE,
+    return Consumer<NodeEditorModel>(
+      builder: (context, model, _) => DragTarget(
+        hitTestBehavior: HitTestBehavior.translucent,
+        onWillAccept: (d) => d is ConnectionRequest && d.input != input,
+        onAccept: (d) {
+          NodesBloc bloc = context.read();
+          bloc.add(LinkNodes(
+            d.node,
+            d.port,
+            PortOption(
+              node: node,
+              port: port,
+            )
+          ));
+        },
+        builder: (BuildContext context, List<Object> candidateData, List<dynamic> rejectedData) => Draggable(
+          hitTestBehavior: HitTestBehavior.translucent,
+          data: ConnectionRequest(node: node, port: port, input: input),
+          feedback: Container(key: dragKey, width: 8, height: 8),
+          onDragStarted: () {
+            model.dragNewConnection(NewConnectionModel(node: node, port: port, key: dragKey));
+          },
+          onDragUpdate: (_) => model.updateNewConnection(),
+          onDragEnd: (_) => model.dropNewConnection(),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+                gradient: RadialGradient(colors: [color.shade400, color.shade700]),
+                shadows: [
+                  BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
+                ],
+                shape: CircleBorder(side: BorderSide.none)),
+            child: Container(
+              width: DOT_SIZE,
+              height: DOT_SIZE,
+            ),
+          ),
+        ),
       ),
     );
   }
+}
+
+class ConnectionRequest {
+  Port port;
+  Node node;
+  bool input;
+
+  ConnectionRequest({ this.port, this.node, this.input });
 }

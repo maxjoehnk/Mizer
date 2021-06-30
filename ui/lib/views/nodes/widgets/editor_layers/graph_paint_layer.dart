@@ -40,7 +40,16 @@ class GraphLinePainter extends CustomPainter {
       }
       Offset fromPosition = _getPosition(fromPort);
       Offset toPosition = _getPosition(toPort);
-      draw(canvas, fromPosition, toPosition, channel);
+      draw(canvas, fromPosition, toPosition, channel.protocol);
+    }
+    if (model.connecting != null) {
+      var fromPort = model.getPortModel(model.connecting.node, model.connecting.port, false);
+      if (fromPort == null) {
+        return;
+      }
+      Offset fromPosition = _getPosition(fromPort);
+      Offset toPosition = model.connecting.offset;
+      draw(canvas, fromPosition, toPosition, model.connecting.port.protocol);
     }
   }
 
@@ -53,9 +62,9 @@ class GraphLinePainter extends CustomPainter {
     return port.offset + Offset(port.size.width / 2, port.size.height / 2);
   }
 
-  void draw(Canvas canvas, Offset from, Offset to, NodeConnection channel) {
+  void draw(Canvas canvas, Offset from, Offset to, ChannelProtocol protocol) {
     var paint = painter
-      ..color = getColorForProtocol(channel.protocol).shade800;
+      ..color = getColorForProtocol(protocol).shade800;
     Path path = new Path()
       ..moveTo(from.dx, from.dy)
       ..cubicTo(from.dx + 0.6 * (to.dx - from.dx), from.dy, to.dx + 0.6 * (from.dx - to.dx), to.dy, to.dx, to.dy);

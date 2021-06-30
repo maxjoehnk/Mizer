@@ -68,10 +68,10 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                       minScale: 0.1,
                       maxScale: 10.0,
                       child: SizedBox.expand())),
-              Transform(
-                transform: model.transformationController.value,
-                child: IgnorePointer(child: CanvasBackgroundLayer(child: SizedBox.expand())),
-              ),
+              // Transform(
+              //   transform: model.transformationController.value,
+              //   child: IgnorePointer(child: CanvasBackgroundLayer(child: SizedBox.expand())),
+              // ),
               Transform(
                   transform: model.transformationController.value,
                   child: IgnorePointer(

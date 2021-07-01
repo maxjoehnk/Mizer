@@ -21,7 +21,9 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-headless
-          path: target/release/mizer
+          path: |
+            target/release/mizer
+            components/fixtures/open-fixture-library/.fixtures
           if-no-files-found: error
       - name: Build
         run: make build
@@ -32,6 +34,7 @@ jobs:
             target/debug/mizer
             target/debug/lib
             target/debug/data
+            components/fixtures/open-fixture-library/.fixtures
           if-no-files-found: error
   build-macos:
     runs-on: macos-latest
@@ -61,6 +64,7 @@ jobs:
             !target/debug/incremental/**
             !target/debug/examples/**
             !target/debug/libmizer*
+            components/fixtures/open-fixture-library/.fixtures
           if-no-files-found: error
   build-android:
     runs-on: ubuntu-latest

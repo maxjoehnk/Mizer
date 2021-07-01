@@ -1,4 +1,5 @@
 use crate::{ApiCommand, Mizer};
+use std::path::PathBuf;
 use mizer_clock::Clock;
 
 pub struct ApiHandler {
@@ -63,6 +64,21 @@ impl ApiHandler {
                 sender.send(result)
                     .expect("api command sender disconnected");
 
+            }
+            ApiCommand::SaveProjectAs(path, sender) => {
+                let result = mizer.save_project_as(PathBuf::from(&path));
+                sender.send(result)
+                    .expect("api command sender disconnected");
+            }
+            ApiCommand::NewProject(sender) => {
+                let result = mizer.close_project();
+                sender.send(Ok(()))
+                    .expect("api command sender disconnected");
+            }
+            ApiCommand::LoadProject(path, sender) => {
+                let result = mizer.load_project_from(PathBuf::from(&path));
+                sender.send(result)
+                    .expect("api command sender disconnected");
             }
         }
     }

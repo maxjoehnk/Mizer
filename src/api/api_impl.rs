@@ -113,9 +113,25 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn new_project(&self) -> anyhow::Result<()> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::NewProject(tx))?;
+        let result = rx.recv()?;
+
+        result
+    }
+
     fn save_project(&self) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::SaveProject(tx))?;
+        let result = rx.recv()?;
+
+        result
+    }
+
+    fn load_project(&self, path: String) -> anyhow::Result<()> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::LoadProject(path, tx))?;
         let result = rx.recv()?;
 
         result

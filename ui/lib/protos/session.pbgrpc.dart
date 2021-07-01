@@ -35,10 +35,10 @@ class SessionApiClient extends $grpc.Client {
           ($0.ProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ProjectResponse.fromBuffer(value));
-  static final _$openProject =
-      $grpc.ClientMethod<$0.OpenProjectRequest, $0.ProjectResponse>(
-          '/mizer.SessionApi/OpenProject',
-          ($0.OpenProjectRequest value) => value.writeToBuffer(),
+  static final _$loadProject =
+      $grpc.ClientMethod<$0.LoadProjectRequest, $0.ProjectResponse>(
+          '/mizer.SessionApi/LoadProject',
+          ($0.LoadProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ProjectResponse.fromBuffer(value));
   static final _$saveProject =
@@ -76,10 +76,10 @@ class SessionApiClient extends $grpc.Client {
     return $createUnaryCall(_$newProject, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.ProjectResponse> openProject(
-      $0.OpenProjectRequest request,
+  $grpc.ResponseFuture<$0.ProjectResponse> loadProject(
+      $0.LoadProjectRequest request,
       {$grpc.CallOptions options}) {
-    return $createUnaryCall(_$openProject, request, options: options);
+    return $createUnaryCall(_$loadProject, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ProjectResponse> saveProject(
@@ -122,13 +122,13 @@ abstract class SessionApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ProjectRequest.fromBuffer(value),
         ($0.ProjectResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.OpenProjectRequest, $0.ProjectResponse>(
-        'OpenProject',
-        openProject_Pre,
+    $addMethod($grpc.ServiceMethod<$0.LoadProjectRequest, $0.ProjectResponse>(
+        'LoadProject',
+        loadProject_Pre,
         false,
         false,
         ($core.List<$core.int> value) =>
-            $0.OpenProjectRequest.fromBuffer(value),
+            $0.LoadProjectRequest.fromBuffer(value),
         ($0.ProjectResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.ProjectRequest, $0.ProjectResponse>(
         'SaveProject',
@@ -159,9 +159,9 @@ abstract class SessionApiServiceBase extends $grpc.Service {
     return newProject(call, await request);
   }
 
-  $async.Future<$0.ProjectResponse> openProject_Pre($grpc.ServiceCall call,
-      $async.Future<$0.OpenProjectRequest> request) async {
-    return openProject(call, await request);
+  $async.Future<$0.ProjectResponse> loadProject_Pre($grpc.ServiceCall call,
+      $async.Future<$0.LoadProjectRequest> request) async {
+    return loadProject(call, await request);
   }
 
   $async.Future<$0.ProjectResponse> saveProject_Pre(
@@ -177,8 +177,8 @@ abstract class SessionApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.ProjectRequest request);
   $async.Future<$0.ProjectResponse> newProject(
       $grpc.ServiceCall call, $0.ProjectRequest request);
-  $async.Future<$0.ProjectResponse> openProject(
-      $grpc.ServiceCall call, $0.OpenProjectRequest request);
+  $async.Future<$0.ProjectResponse> loadProject(
+      $grpc.ServiceCall call, $0.LoadProjectRequest request);
   $async.Future<$0.ProjectResponse> saveProject(
       $grpc.ServiceCall call, $0.ProjectRequest request);
 }

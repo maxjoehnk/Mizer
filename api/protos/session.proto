@@ -5,14 +5,13 @@ package mizer;
 service SessionApi {
   rpc GetSession (SessionRequest) returns (stream Session) {}
   rpc JoinSession (ClientAnnouncement) returns (Session) {}
-  rpc CloseProject (ProjectRequest) returns (ProjectResponse) {}
   rpc NewProject (ProjectRequest) returns (ProjectResponse) {}
-  rpc OpenProject (OpenProjectRequest) returns (ProjectResponse) {}
+  rpc LoadProject (LoadProjectRequest) returns (ProjectResponse) {}
   rpc SaveProject (ProjectRequest) returns (ProjectResponse) {}
 }
 
 message ProjectRequest {}
-message OpenProjectRequest {
+message LoadProjectRequest {
   string path = 1;
 }
 message ProjectResponse {}

@@ -38,14 +38,14 @@ class ProjectRequest extends $pb.GeneratedMessage {
   static ProjectRequest _defaultInstance;
 }
 
-class OpenProjectRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OpenProjectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class LoadProjectRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LoadProjectRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..hasRequiredFields = false
   ;
 
-  OpenProjectRequest._() : super();
-  factory OpenProjectRequest({
+  LoadProjectRequest._() : super();
+  factory LoadProjectRequest({
     $core.String path,
   }) {
     final _result = create();
@@ -54,26 +54,26 @@ class OpenProjectRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory OpenProjectRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory OpenProjectRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory LoadProjectRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LoadProjectRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  OpenProjectRequest clone() => OpenProjectRequest()..mergeFromMessage(this);
+  LoadProjectRequest clone() => LoadProjectRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OpenProjectRequest copyWith(void Function(OpenProjectRequest) updates) => super.copyWith((message) => updates(message as OpenProjectRequest)); // ignore: deprecated_member_use
+  LoadProjectRequest copyWith(void Function(LoadProjectRequest) updates) => super.copyWith((message) => updates(message as LoadProjectRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static OpenProjectRequest create() => OpenProjectRequest._();
-  OpenProjectRequest createEmptyInstance() => create();
-  static $pb.PbList<OpenProjectRequest> createRepeated() => $pb.PbList<OpenProjectRequest>();
+  static LoadProjectRequest create() => LoadProjectRequest._();
+  LoadProjectRequest createEmptyInstance() => create();
+  static $pb.PbList<LoadProjectRequest> createRepeated() => $pb.PbList<LoadProjectRequest>();
   @$core.pragma('dart2js:noInline')
-  static OpenProjectRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OpenProjectRequest>(create);
-  static OpenProjectRequest _defaultInstance;
+  static LoadProjectRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoadProjectRequest>(create);
+  static LoadProjectRequest _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get path => $_getSZ(0);

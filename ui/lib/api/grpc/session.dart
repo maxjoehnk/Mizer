@@ -13,18 +13,13 @@ class SessionGrpcApi implements SessionApi {
   }
 
   @override
-  Future<void> closeProject() async {
-    await this.client.closeProject(ProjectRequest());
-  }
-
-  @override
   Future<void> newProject() async {
     await client.newProject(ProjectRequest());
   }
 
   @override
-  Future<void> openProject(String path) async {
-    await client.openProject(OpenProjectRequest(path: path));
+  Future<void> loadProject(String path) async {
+    await client.loadProject(LoadProjectRequest(path: path));
   }
 
   @override

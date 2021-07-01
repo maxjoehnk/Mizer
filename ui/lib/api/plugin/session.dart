@@ -13,18 +13,13 @@ class SessionPluginApi implements SessionApi {
   }
 
   @override
-  Future<void> closeProject() async {
-    await channel.invokeMethod("closeProject");
-  }
-
-  @override
   Future<void> newProject() async {
     await channel.invokeMethod("newProject");
   }
 
   @override
-  Future<void> openProject(String path) async {
-    await channel.invokeMethod("openProject", path);
+  Future<void> loadProject(String path) async {
+    await channel.invokeMethod("loadProject", path);
   }
 
   @override

@@ -8,19 +8,13 @@ class SessionDemoApi implements SessionApi {
   }
 
   @override
-  Future<void> closeProject() {
-    // TODO: implement closeProject
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> newProject() {
     // TODO: implement newProject
     throw UnimplementedError();
   }
 
   @override
-  Future<void> openProject(String path) {
+  Future<void> loadProject(String path) {
     // TODO: implement openProject
     throw UnimplementedError();
   }

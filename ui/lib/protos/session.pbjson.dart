@@ -9,8 +9,8 @@ const ProjectRequest$json = const {
   '1': 'ProjectRequest',
 };
 
-const OpenProjectRequest$json = const {
-  '1': 'OpenProjectRequest',
+const LoadProjectRequest$json = const {
+  '1': 'LoadProjectRequest',
   '2': const [
     const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
   ],

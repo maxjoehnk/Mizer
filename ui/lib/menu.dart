@@ -1,3 +1,4 @@
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -22,15 +23,14 @@ class ApplicationMenu extends StatelessWidget {
                 label: "New Project",
                 action: () => context.read<SessionApi>().newProject(),
                 shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
-            MenuActionItem(
+            MenuItem(
                 label: "Open Project",
-                action: OpenProjectIntent(),
+                action: () => _openProject(context.read()),
                 shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyO)),
             MenuItem(
                 label: 'Save Project',
                 action: () => context.read<SessionApi>().saveProject(),
                 shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyS)),
-            MenuItem(label: 'Close Project', action: () => context.read<SessionApi>().closeProject()),
             MenuDivider(),
             MenuItem(label: 'Preferences'),
             MenuItem(
@@ -49,5 +49,11 @@ class ApplicationMenu extends StatelessWidget {
             MenuActionItem(label: "Session", action: OpenViewIntent(View.Session)),
           ])
         ]));
+  }
+
+  Future<void> _openProject(SessionApi api) async {
+    final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
+    final file = await openFile(acceptedTypeGroups: [typeGroup]);
+    await api.loadProject(file.path);
   }
 }

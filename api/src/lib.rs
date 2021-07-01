@@ -47,7 +47,9 @@ pub trait RuntimeApi : Clone + Send + Sync {
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
 
+    fn new_project(&self) -> anyhow::Result<()>;
     fn save_project(&self) -> anyhow::Result<()>;
+    fn load_project(&self, path: String) -> anyhow::Result<()>;
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;
 }

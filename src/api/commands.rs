@@ -16,5 +16,8 @@ pub enum ApiCommand {
     UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
     SetClockState(ClockState),
     SaveProject(flume::Sender<anyhow::Result<()>>),
+    SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
+    NewProject(flume::Sender<anyhow::Result<()>>),
+    LoadProject(String, flume::Sender<anyhow::Result<()>>),
 }
 

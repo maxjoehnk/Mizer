@@ -42,16 +42,17 @@ impl<R: RuntimeApi> SessionHandler<R> {
         session
     }
 
-    pub fn new_project(&self) {
+    pub fn new_project(&self) -> anyhow::Result<()> {
+        self.runtime.new_project();
+
+        Ok(())
     }
 
-    pub fn open_project(&self, path: String) {
+    pub fn load_project(&self, path: String) -> anyhow::Result<()> {
+        self.runtime.load_project(path)
     }
 
     pub fn save_project(&self) -> anyhow::Result<()> {
         self.runtime.save_project()
-    }
-
-    pub fn close_project(&self) {
     }
 }

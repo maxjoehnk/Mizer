@@ -144,7 +144,7 @@ impl ::protobuf::reflect::ProtobufValue for ProjectRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
-pub struct OpenProjectRequest {
+pub struct LoadProjectRequest {
     // message fields
     pub path: ::std::string::String,
     // special fields
@@ -154,14 +154,14 @@ pub struct OpenProjectRequest {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a OpenProjectRequest {
-    fn default() -> &'a OpenProjectRequest {
-        <OpenProjectRequest as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a LoadProjectRequest {
+    fn default() -> &'a LoadProjectRequest {
+        <LoadProjectRequest as ::protobuf::Message>::default_instance()
     }
 }
 
-impl OpenProjectRequest {
-    pub fn new() -> OpenProjectRequest {
+impl LoadProjectRequest {
+    pub fn new() -> LoadProjectRequest {
         ::std::default::Default::default()
     }
 
@@ -192,7 +192,7 @@ impl OpenProjectRequest {
     }
 }
 
-impl ::protobuf::Message for OpenProjectRequest {
+impl ::protobuf::Message for LoadProjectRequest {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -258,8 +258,8 @@ impl ::protobuf::Message for OpenProjectRequest {
         Self::descriptor_static()
     }
 
-    fn new() -> OpenProjectRequest {
-        OpenProjectRequest::new()
+    fn new() -> LoadProjectRequest {
+        LoadProjectRequest::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -268,37 +268,37 @@ impl ::protobuf::Message for OpenProjectRequest {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "path",
-                |m: &OpenProjectRequest| { &m.path },
-                |m: &mut OpenProjectRequest| { &mut m.path },
+                |m: &LoadProjectRequest| { &m.path },
+                |m: &mut LoadProjectRequest| { &mut m.path },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<OpenProjectRequest>(
-                "OpenProjectRequest",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<LoadProjectRequest>(
+                "LoadProjectRequest",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static OpenProjectRequest {
-        static instance: ::protobuf::rt::LazyV2<OpenProjectRequest> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(OpenProjectRequest::new)
+    fn default_instance() -> &'static LoadProjectRequest {
+        static instance: ::protobuf::rt::LazyV2<LoadProjectRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(LoadProjectRequest::new)
     }
 }
 
-impl ::protobuf::Clear for OpenProjectRequest {
+impl ::protobuf::Clear for LoadProjectRequest {
     fn clear(&mut self) {
         self.path.clear();
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for OpenProjectRequest {
+impl ::std::fmt::Debug for LoadProjectRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for OpenProjectRequest {
+impl ::protobuf::reflect::ProtobufValue for LoadProjectRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -1359,7 +1359,7 @@ impl ::protobuf::reflect::ProtobufValue for DeviceClock {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\rsession.proto\x12\x05mizer\"\x10\n\x0eProjectRequest\"(\n\x12OpenPro\
+    \n\rsession.proto\x12\x05mizer\"\x10\n\x0eProjectRequest\"(\n\x12LoadPro\
     jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0fPro\
     jectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
     \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"9\n\x07Session\x12.\n\x07dev\
@@ -1368,15 +1368,14 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     s\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\x01(\x0b2\x12.m\
     izer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\x01(\x01R\x04pi\
     ng\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\x01(\x08R\x06mast\
-    er\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\x85\x03\n\nSession\
+    er\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\xc4\x02\n\nSession\
     Api\x127\n\nGetSession\x12\x15.mizer.SessionRequest\x1a\x0e.mizer.Sessio\
     n\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.ClientAnnouncement\x1a\
-    \x0e.mizer.Session\"\0\x12?\n\x0cCloseProject\x12\x15.mizer.ProjectReque\
-    st\x1a\x16.mizer.ProjectResponse\"\0\x12=\n\nNewProject\x12\x15.mizer.Pr\
-    ojectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bOpenProject\x12\
-    \x19.mizer.OpenProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12>\n\
-    \x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectRespon\
-    se\"\0b\x06proto3\
+    \x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\x15.mizer.ProjectRequest\
+    \x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLoadProject\x12\x19.mizer.L\
+    oadProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12>\n\x0bSaveProjec\
+    t\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0b\x06pro\
+    to3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

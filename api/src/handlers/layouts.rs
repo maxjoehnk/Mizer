@@ -41,4 +41,20 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
 
         self.get_layouts()
     }
+
+    pub fn remove_control(&self, layout_id: String, control_id: String) {
+        log::debug!("Removing control {} in layout {}", control_id, layout_id);
+        self.runtime.delete_layout_control(layout_id, control_id);
+    }
+
+    pub fn move_control(&self, layout_id: String, control_id: String, position: ControlPosition) {
+        let position = position.into();
+        log::debug!("Moving control {} in layout {} to {:?}", control_id, layout_id, position);
+        self.runtime.update_layout_control(layout_id, control_id, |control| control.position = position);
+    }
+
+    pub fn rename_control(&self, layout_id: String, control_id: String, name: String) {
+        log::debug!("Renaming control {} in layout {} to {}", control_id, layout_id, name);
+        self.runtime.update_layout_control(layout_id, control_id, |control| control.label = name.into());
+    }
 }

@@ -115,7 +115,7 @@ class ControlLayout extends StatelessWidget {
       child: CustomMultiChildLayout(
           delegate: ControlsLayoutDelegate(layout),
           children: layout.controls
-              .map((e) => LayoutId(id: e.node, child: LayoutControlView(e)))
+              .map((e) => LayoutId(id: e.node, child: LayoutControlView(layout.id, e)))
               .toList()),
     );
   }

@@ -32,3 +32,9 @@ impl Deref for NodePath {
         &self.0
     }
 }
+
+impl PartialEq<String> for NodePath {
+    fn eq(&self, other: &String) -> bool {
+        &self.0 == other
+    }
+}

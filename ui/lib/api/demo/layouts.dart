@@ -23,4 +23,22 @@ class LayoutsDemoApi implements LayoutsApi {
   Future<Layouts> renameLayout(String id, String name) async {
     return Layouts();
   }
+
+  @override
+  Future<void> deleteControl(String layoutId, String id) {
+    // TODO: implement deleteControl
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> moveControl(String layoutId, String id, ControlPosition position) {
+    // TODO: implement moveControl
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> renameControl(String layoutId, String id, String name) {
+    // TODO: implement renameControl
+    throw UnimplementedError();
+  }
 }

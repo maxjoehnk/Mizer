@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-ShapeDecoration ControlDecoration() {
+ShapeDecoration ControlDecoration({ Color color, Gradient gradient }) {
   return ShapeDecoration(
     shape: RoundedRectangleBorder(
       side: BorderSide(
@@ -11,6 +11,7 @@ ShapeDecoration ControlDecoration() {
       ),
       borderRadius: BorderRadius.all(Radius.circular(4)),
     ),
-    color: Colors.grey.shade700,
+    color: gradient == null ? (color ?? Colors.grey.shade700) : null,
+    gradient: gradient,
   );
 }

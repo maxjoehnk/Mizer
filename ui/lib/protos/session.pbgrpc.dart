@@ -23,12 +23,6 @@ class SessionApiClient extends $grpc.Client {
           '/mizer.SessionApi/JoinSession',
           ($0.ClientAnnouncement value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Session.fromBuffer(value));
-  static final _$closeProject =
-      $grpc.ClientMethod<$0.ProjectRequest, $0.ProjectResponse>(
-          '/mizer.SessionApi/CloseProject',
-          ($0.ProjectRequest value) => value.writeToBuffer(),
-          ($core.List<$core.int> value) =>
-              $0.ProjectResponse.fromBuffer(value));
   static final _$newProject =
       $grpc.ClientMethod<$0.ProjectRequest, $0.ProjectResponse>(
           '/mizer.SessionApi/NewProject',
@@ -63,12 +57,6 @@ class SessionApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Session> joinSession($0.ClientAnnouncement request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$joinSession, request, options: options);
-  }
-
-  $grpc.ResponseFuture<$0.ProjectResponse> closeProject(
-      $0.ProjectRequest request,
-      {$grpc.CallOptions options}) {
-    return $createUnaryCall(_$closeProject, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ProjectResponse> newProject($0.ProjectRequest request,
@@ -109,13 +97,6 @@ abstract class SessionApiServiceBase extends $grpc.Service {
             $0.ClientAnnouncement.fromBuffer(value),
         ($0.Session value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.ProjectRequest, $0.ProjectResponse>(
-        'CloseProject',
-        closeProject_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.ProjectRequest.fromBuffer(value),
-        ($0.ProjectResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.ProjectRequest, $0.ProjectResponse>(
         'NewProject',
         newProject_Pre,
         false,
@@ -149,11 +130,6 @@ abstract class SessionApiServiceBase extends $grpc.Service {
     return joinSession(call, await request);
   }
 
-  $async.Future<$0.ProjectResponse> closeProject_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.ProjectRequest> request) async {
-    return closeProject(call, await request);
-  }
-
   $async.Future<$0.ProjectResponse> newProject_Pre(
       $grpc.ServiceCall call, $async.Future<$0.ProjectRequest> request) async {
     return newProject(call, await request);
@@ -173,8 +149,6 @@ abstract class SessionApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.SessionRequest request);
   $async.Future<$0.Session> joinSession(
       $grpc.ServiceCall call, $0.ClientAnnouncement request);
-  $async.Future<$0.ProjectResponse> closeProject(
-      $grpc.ServiceCall call, $0.ProjectRequest request);
   $async.Future<$0.ProjectResponse> newProject(
       $grpc.ServiceCall call, $0.ProjectRequest request);
   $async.Future<$0.ProjectResponse> loadProject(

@@ -13,6 +13,7 @@ pub struct LayoutsChannel<R: RuntimeApi> {
 
 impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
     fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
+        log::debug!("mizer.live/layouts -> {}", call.method);
         match call.method.as_str() {
             "getLayouts" => {
                 let response = self.get_layouts();
@@ -37,6 +38,27 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                 let response = call.arguments().map(|req: RenameLayoutRequest| self.rename_layout(req.id, req.name));
 
                 resp.respond_result(response);
+            }
+            "removeControl" => {
+                if let Err(err) = call.arguments().map(|req| self.remove_control(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "moveControl" => {
+                if let Err(err) = call.arguments().map(|req| self.move_control(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "renameControl" => {
+                if let Err(err) = call.arguments().map(|req| self.rename_control(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
             }
             _ => resp.not_implemented()
         }
@@ -68,5 +90,17 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
 
     fn rename_layout(&self, id: String, name: String) -> Layouts {
         self.handler.rename_layout(id, name)
+    }
+
+    fn remove_control(&self, req: RemoveControlRequest) {
+        self.handler.remove_control(req.layout_id, req.control_id);
+    }
+
+    fn move_control(&self, req: MoveControlRequest) {
+        self.handler.move_control(req.layout_id, req.control_id, req.position.unwrap());
+    }
+
+    fn rename_control(&self, req: RenameControlRequest) {
+        self.handler.rename_control(req.layout_id, req.control_id, req.name);
     }
 }

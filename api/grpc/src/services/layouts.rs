@@ -35,4 +35,18 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
         resp.finish(layouts)
     }
+
+    fn rename_control(&self, o: ServerHandlerContext, req: ServerRequestSingle<RenameControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
+        todo!()
+    }
+
+    fn move_control(&self, o: ServerHandlerContext, req: ServerRequestSingle<MoveControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
+        todo!()
+    }
+
+    fn remove_control(&self, o: ServerHandlerContext, req: ServerRequestSingle<RemoveControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
+        self.remove_control(req.message.layout_id, req.message.control_id);
+
+        resp.finish(LayoutResponse::new())
+    }
 }

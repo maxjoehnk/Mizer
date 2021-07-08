@@ -29,6 +29,12 @@ pub trait LayoutsApi {
     fn remove_layout(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RemoveLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
 
     fn rename_layout(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RenameLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
+
+    fn rename_control(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RenameControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+
+    fn move_control(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::MoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+
+    fn remove_control(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RemoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -79,6 +85,36 @@ impl LayoutsApiClient {
     pub fn rename_layout(&self, o: ::grpc::RequestOptions, req: super::layouts::RenameLayoutRequest) -> ::grpc::SingleResponse<super::layouts::Layouts> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/RenameLayout"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn rename_control(&self, o: ::grpc::RequestOptions, req: super::layouts::RenameControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/RenameControl"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn move_control(&self, o: ::grpc::RequestOptions, req: super::layouts::MoveControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/MoveControl"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn remove_control(&self, o: ::grpc::RequestOptions, req: super::layouts::RemoveControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/RemoveControl"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -143,6 +179,42 @@ impl LayoutsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).rename_layout(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/RenameControl"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).rename_control(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/MoveControl"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).move_control(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/RemoveControl"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).remove_control(ctx, req, resp))
                     },
                 ),
             ],

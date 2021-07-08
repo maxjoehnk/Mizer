@@ -37,4 +37,22 @@ class LayoutsPluginApi implements LayoutsApi {
 
     return Layouts.fromBuffer(_convertBuffer(response));
   }
+
+  @override
+  Future<void> deleteControl(String layoutId, String id) async {
+    var request = RemoveControlRequest(controlId: id, layoutId: layoutId);
+    await channel.invokeMethod("removeControl", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> moveControl(String layoutId, String id, ControlPosition position) async {
+    var request = MoveControlRequest(layoutId: layoutId, controlId: id, position: position);
+    await channel.invokeMethod("moveControl", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> renameControl(String layoutId, String id, String name) async {
+    var request = RenameControlRequest(layoutId: layoutId, controlId: id, name: name);
+    await channel.invokeMethod("renameControl", request.writeToBuffer());
+  }
 }

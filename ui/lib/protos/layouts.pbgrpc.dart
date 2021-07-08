@@ -34,6 +34,21 @@ class LayoutsApiClient extends $grpc.Client {
           '/mizer.LayoutsApi/RenameLayout',
           ($0.RenameLayoutRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Layouts.fromBuffer(value));
+  static final _$renameControl =
+      $grpc.ClientMethod<$0.RenameControlRequest, $0.LayoutResponse>(
+          '/mizer.LayoutsApi/RenameControl',
+          ($0.RenameControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.LayoutResponse.fromBuffer(value));
+  static final _$moveControl =
+      $grpc.ClientMethod<$0.MoveControlRequest, $0.LayoutResponse>(
+          '/mizer.LayoutsApi/MoveControl',
+          ($0.MoveControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.LayoutResponse.fromBuffer(value));
+  static final _$removeControl =
+      $grpc.ClientMethod<$0.RemoveControlRequest, $0.LayoutResponse>(
+          '/mizer.LayoutsApi/RemoveControl',
+          ($0.RemoveControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.LayoutResponse.fromBuffer(value));
 
   LayoutsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -58,6 +73,24 @@ class LayoutsApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Layouts> renameLayout($0.RenameLayoutRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$renameLayout, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.LayoutResponse> renameControl(
+      $0.RenameControlRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$renameControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.LayoutResponse> moveControl(
+      $0.MoveControlRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$moveControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.LayoutResponse> removeControl(
+      $0.RemoveControlRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$removeControl, request, options: options);
   }
 }
 
@@ -95,6 +128,30 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.RenameLayoutRequest.fromBuffer(value),
         ($0.Layouts value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RenameControlRequest, $0.LayoutResponse>(
+        'RenameControl',
+        renameControl_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.RenameControlRequest.fromBuffer(value),
+        ($0.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.MoveControlRequest, $0.LayoutResponse>(
+        'MoveControl',
+        moveControl_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.MoveControlRequest.fromBuffer(value),
+        ($0.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RemoveControlRequest, $0.LayoutResponse>(
+        'RemoveControl',
+        removeControl_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.RemoveControlRequest.fromBuffer(value),
+        ($0.LayoutResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Layouts> getLayouts_Pre($grpc.ServiceCall call,
@@ -117,6 +174,21 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
     return renameLayout(call, await request);
   }
 
+  $async.Future<$0.LayoutResponse> renameControl_Pre($grpc.ServiceCall call,
+      $async.Future<$0.RenameControlRequest> request) async {
+    return renameControl(call, await request);
+  }
+
+  $async.Future<$0.LayoutResponse> moveControl_Pre($grpc.ServiceCall call,
+      $async.Future<$0.MoveControlRequest> request) async {
+    return moveControl(call, await request);
+  }
+
+  $async.Future<$0.LayoutResponse> removeControl_Pre($grpc.ServiceCall call,
+      $async.Future<$0.RemoveControlRequest> request) async {
+    return removeControl(call, await request);
+  }
+
   $async.Future<$0.Layouts> getLayouts(
       $grpc.ServiceCall call, $0.GetLayoutsRequest request);
   $async.Future<$0.Layouts> addLayout(
@@ -125,4 +197,10 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.RemoveLayoutRequest request);
   $async.Future<$0.Layouts> renameLayout(
       $grpc.ServiceCall call, $0.RenameLayoutRequest request);
+  $async.Future<$0.LayoutResponse> renameControl(
+      $grpc.ServiceCall call, $0.RenameControlRequest request);
+  $async.Future<$0.LayoutResponse> moveControl(
+      $grpc.ServiceCall call, $0.MoveControlRequest request);
+  $async.Future<$0.LayoutResponse> removeControl(
+      $grpc.ServiceCall call, $0.RemoveControlRequest request);
 }

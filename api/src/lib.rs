@@ -3,7 +3,7 @@ extern crate serde;
 
 use mizer_runtime::NodeDescriptor;
 use mizer_node::{NodeLink, NodeType, NodeDesigner, NodePath, PortId};
-use mizer_layouts::Layout;
+use mizer_layouts::{Layout, ControlPosition, ControlConfig};
 use mizer_nodes::Node;
 use mizer_clock::{ClockState, ClockSnapshot};
 
@@ -23,6 +23,9 @@ pub trait RuntimeApi : Clone + Send + Sync {
     fn remove_layout(&self, id: String);
 
     fn rename_layout(&self, id: String, name: String);
+
+    fn delete_layout_control(&self, layout_id: String, control_id: String);
+    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(&self, layout_id: String, control_id: String, update: F);
 
     fn add_node(
         &self,

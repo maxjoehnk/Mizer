@@ -35,14 +35,16 @@ nodes:
       scale: 1
 layouts:
   Default:
-    - node: /fader-0
+    - label: Master
+      node: /fader-0
       position:
         x: 0
         y: 0
       size:
         width: 1
         height: 4
-    - node: /button-0
+    - label: Strobe
+      node: /button-0
       position:
         x: 1
         y: 0
@@ -50,7 +52,8 @@ layouts:
         width: 1
         height: 1
   Busking:
-    - node: /button-0
+    - label: Strobe
+      node: /button-0
       position:
         x: 0
         y: 0

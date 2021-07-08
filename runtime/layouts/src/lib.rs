@@ -9,6 +9,8 @@ pub struct Layout {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ControlConfig {
+    #[serde(default)]
+    pub label: Option<String>,
     pub node: NodePath,
     pub position: ControlPosition,
     pub size: ControlSize,

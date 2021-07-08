@@ -6,8 +6,9 @@ import 'decoration.dart';
 
 class ButtonInput extends StatefulWidget {
   final Function(double) onValue;
+  final String label;
 
-  ButtonInput({ this.onValue });
+  ButtonInput({ this.label, this.onValue });
 
   @override
   _ButtonInputState createState() => _ButtonInputState();
@@ -33,6 +34,7 @@ class _ButtonInputState extends State<ButtonInput> {
                 this.widget.onValue(0);
               },
               child: Container(
+                child: widget.label == null ? null : Text(widget.label),
                 decoration: ShapeDecoration(
                   color: this.pressed ? Colors.grey.shade800 : Colors.transparent,
                   shape: RoundedRectangleBorder(

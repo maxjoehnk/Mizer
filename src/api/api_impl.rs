@@ -2,7 +2,7 @@ use mizer_runtime::{RuntimeAccess, NodeDescriptor, DefaultRuntime};
 use crate::{ApiCommand, ApiHandler};
 use mizer_api::RuntimeApi;
 use mizer_node::{NodeLink, NodeType, NodeDesigner, NodePath, PortId};
-use mizer_layouts::Layout;
+use mizer_layouts::{Layout, ControlPosition, ControlConfig};
 use mizer_nodes::{FixtureNode, Node};
 use mizer_clock::{ClockState, ClockSnapshot};
 use std::collections::HashMap;
@@ -50,6 +50,26 @@ impl RuntimeApi for Api {
         let mut layouts = self.access.layouts.read();
         if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == id) {
             layout.id = name;
+        }
+        self.access.layouts.set(layouts);
+    }
+
+    fn delete_layout_control(&self, layout_id: String, control_id: String) {
+        let mut layouts = self.access.layouts.read();
+        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
+            if let Some(index) = layout.controls.iter().position(|control| control.node == control_id) {
+                layout.controls.remove(index);
+            }
+        }
+        self.access.layouts.set(layouts);
+    }
+
+    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(&self, layout_id: String, control_id: String, update: F) {
+        let mut layouts = self.access.layouts.read();
+        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
+            if let Some(control) = layout.controls.iter_mut().find(|control| control.node == control_id) {
+                update(control);
+            }
         }
         self.access.layouts.set(layouts);
     }

@@ -19,6 +19,7 @@ impl From<mizer_layouts::ControlConfig> for LayoutControl {
     fn from(config: mizer_layouts::ControlConfig) -> Self {
         LayoutControl {
             node: config.node.0,
+            label: config.label.unwrap_or_default(),
             position: SingularPtrField::some(config.position.into()),
             size: SingularPtrField::some(config.size.into()),
             ..Default::default()
@@ -28,10 +29,19 @@ impl From<mizer_layouts::ControlConfig> for LayoutControl {
 
 impl From<mizer_layouts::ControlPosition> for ControlPosition {
     fn from(position: mizer_layouts::ControlPosition) -> Self {
-        ControlPosition {
+        Self {
             x: position.x,
             y: position.y,
             ..Default::default()
+        }
+    }
+}
+
+impl From<ControlPosition> for mizer_layouts::ControlPosition {
+    fn from(position: ControlPosition) -> Self {
+        Self {
+            x: position.x,
+            y: position.y,
         }
     }
 }

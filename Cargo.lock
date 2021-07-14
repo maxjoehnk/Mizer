@@ -2978,6 +2978,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-envelope-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-node",
+ "mizer-util",
+ "serde",
+ "test-case",
+]
+
+[[package]]
 name = "mizer-execution-planner"
 version = "0.1.0"
 dependencies = [
@@ -3112,6 +3123,7 @@ dependencies = [
  "log",
  "mizer-node",
  "mizer-protocol-midi",
+ "mizer-util",
  "serde",
 ]
 
@@ -3140,9 +3152,12 @@ dependencies = [
 name = "mizer-nodes"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "derive_more",
+ "insta",
  "mizer-clock-nodes",
  "mizer-dmx-nodes",
+ "mizer-envelope-nodes",
  "mizer-fixture-nodes",
  "mizer-input-nodes",
  "mizer-laser-nodes",
@@ -3155,8 +3170,10 @@ dependencies = [
  "mizer-port-operation-nodes",
  "mizer-scripting-nodes",
  "mizer-sequence-nodes",
+ "mizer-util",
  "mizer-video-nodes",
  "serde",
+ "test-case",
 ]
 
 [[package]]
@@ -3358,6 +3375,7 @@ dependencies = [
  "mizer-processing",
  "mizer-project-files",
  "mizer-session",
+ "mizer-util",
  "pinboard",
  "test-case",
 ]
@@ -3404,6 +3422,16 @@ dependencies = [
  "nativeshell_build",
  "protobuf",
  "smol",
+]
+
+[[package]]
+name = "mizer-util"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-clock",
+ "test-case",
 ]
 
 [[package]]
@@ -5012,9 +5040,9 @@ dependencies = [
 
 [[package]]
 name = "test-case"
-version = "1.1.0"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "956044ef122917dde830c19dec5f76d0670329fde4104836d62ebcb14f4865f1"
+checksum = "3b114ece25254e97bf48dd4bfc2a12bad0647adacfe4cae1247a9ca6ad302cec"
 dependencies = [
  "cfg-if 1.0.0",
  "proc-macro2",

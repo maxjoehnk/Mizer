@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
 
+[features]
+test = []
+
 [dependencies]
 anyhow = "1"
 log = "0.4"

@@ -52,6 +52,7 @@ message Node {
     Oscillator = 2;
     Clock = 3;
     Script = 4;
+    Envelope = 5;
     Fixture = 6;
     Sequence = 7;
     Select = 8;
@@ -117,6 +118,7 @@ message NodeConfig {
     VideoTransformNodeConfig videoTransformConfig = 31;
     SelectNodeConfig selectConfig = 32;
     MergeNodeConfig mergeConfig = 33;
+    EnvelopeNodeConfig envelopeConfig = 34;
   }
 }
 
@@ -147,6 +149,13 @@ message SequenceNodeConfig {
     double value = 2;
     bool hold = 3;
   }
+}
+
+message EnvelopeNodeConfig {
+  double attack = 1;
+  double decay = 2;
+  double sustain = 3;
+  double release = 4;
 }
 
 message ClockNodeConfig {

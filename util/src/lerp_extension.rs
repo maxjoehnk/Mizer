@@ -4,9 +4,10 @@ pub trait LerpExt<To: Sized = Self> {
     fn lerp(self, from: (Self, Self), to: (To, To)) -> To where Self: Sized;
 }
 
-impl<T: Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> + Copy> LerpExt for T {
+impl<T: Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> + Copy + std::fmt::Debug> LerpExt for T {
+    // TODO: measure whether we should inline this
     fn lerp(self, from: (Self, Self), to: (Self, Self)) -> Self where Self: Sized {
-        (self - from.0) * ((to.1 - to.0) / (from.1 - from.0)) + to.0
+        ((self - from.0) * (to.1 - to.0)) / (from.1 - from.0) + to.0
     }
 }
 

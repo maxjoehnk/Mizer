@@ -8,7 +8,8 @@ const List<NodeCategoryData> NODES = [
     NodeEntryData("Sequence", Node_NodeType.Sequence),
     NodeEntryData("Oscillator", Node_NodeType.Oscillator),
     NodeEntryData("Merge", Node_NodeType.Merge),
-    NodeEntryData("Select", Node_NodeType.Select)
+    NodeEntryData("Select", Node_NodeType.Select),
+    NodeEntryData("Envelope", Node_NodeType.Envelope),
   ]),
   NodeCategoryData("DMX", [
     NodeEntryData("DMX Input", null),

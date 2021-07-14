@@ -101,6 +101,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             Clock(node) => self.add_node(path, node),
             Scripting(node) => self.add_node(path, node),
             Sequence(node) => self.add_node(path, node),
+            Envelope(node) => self.add_node(path, node),
             Merge(node) => self.add_node(path, node),
             Select(node) => self.add_node(path, node),
             Fixture(mut node) => {
@@ -506,6 +507,7 @@ pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
         NodeType::DmxOutput => Node::DmxOutput(downcast_node(node).unwrap()),
         NodeType::Scripting => Node::Scripting(downcast_node(node).unwrap()),
         NodeType::Sequence => Node::Sequence(downcast_node(node).unwrap()),
+        NodeType::Envelope => Node::Envelope(downcast_node(node).unwrap()),
         NodeType::Select => Node::Select(downcast_node(node).unwrap()),
         NodeType::Merge => Node::Merge(downcast_node(node).unwrap()),
         NodeType::Fixture => Node::Fixture(downcast_node(node).unwrap()),

@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::ops::Deref;
+use std::any::Any;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[repr(transparent)]
@@ -109,9 +110,9 @@ where
     fn send(&self, value: Item) -> anyhow::Result<()>;
 }
 
-pub trait PortValue: Debug + Clone + PartialEq + Send + Sync {}
+pub trait PortValue: Debug + Clone + PartialEq + Send + Sync + Any {}
 
-impl<T> PortValue for T where T: Debug + Clone + PartialEq + Send + Sync {}
+impl<T> PortValue for T where T: Debug + Clone + PartialEq + Send + Sync + Any {}
 
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct Color {

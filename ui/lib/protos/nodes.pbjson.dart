@@ -99,6 +99,7 @@ const Node_NodeType$json = const {
     const {'1': 'Oscillator', '2': 2},
     const {'1': 'Clock', '2': 3},
     const {'1': 'Script', '2': 4},
+    const {'1': 'Envelope', '2': 5},
     const {'1': 'Fixture', '2': 6},
     const {'1': 'Sequence', '2': 7},
     const {'1': 'Select', '2': 8},
@@ -159,6 +160,7 @@ const NodeConfig$json = const {
     const {'1': 'videoTransformConfig', '3': 31, '4': 1, '5': 11, '6': '.mizer.VideoTransformNodeConfig', '9': 0, '10': 'videoTransformConfig'},
     const {'1': 'selectConfig', '3': 32, '4': 1, '5': 11, '6': '.mizer.SelectNodeConfig', '9': 0, '10': 'selectConfig'},
     const {'1': 'mergeConfig', '3': 33, '4': 1, '5': 11, '6': '.mizer.MergeNodeConfig', '9': 0, '10': 'mergeConfig'},
+    const {'1': 'envelopeConfig', '3': 34, '4': 1, '5': 11, '6': '.mizer.EnvelopeNodeConfig', '9': 0, '10': 'envelopeConfig'},
   ],
   '8': const [
     const {'1': 'type'},
@@ -209,6 +211,16 @@ const SequenceNodeConfig_SequenceStep$json = const {
     const {'1': 'tick', '3': 1, '4': 1, '5': 1, '10': 'tick'},
     const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
     const {'1': 'hold', '3': 3, '4': 1, '5': 8, '10': 'hold'},
+  ],
+};
+
+const EnvelopeNodeConfig$json = const {
+  '1': 'EnvelopeNodeConfig',
+  '2': const [
+    const {'1': 'attack', '3': 1, '4': 1, '5': 1, '10': 'attack'},
+    const {'1': 'decay', '3': 2, '4': 1, '5': 1, '10': 'decay'},
+    const {'1': 'sustain', '3': 3, '4': 1, '5': 1, '10': 'sustain'},
+    const {'1': 'release', '3': 4, '4': 1, '5': 1, '10': 'release'},
   ],
 };
 

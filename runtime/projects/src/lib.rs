@@ -153,6 +153,7 @@ pub enum NodeConfig {
     VideoColorBalance(mizer_nodes::VideoColorBalanceNode),
     VideoOutput(mizer_nodes::VideoOutputNode),
     Sequence(mizer_nodes::SequenceNode),
+    Envelope(mizer_nodes::EnvelopeNode),
     IldaFile(mizer_nodes::IldaFileNode),
     Laser(mizer_nodes::LaserNode),
 }
@@ -165,6 +166,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::DmxOutput(node) => Self::DmxOutput(node),
             NodeConfig::Script(node) => Self::Scripting(node),
             NodeConfig::Sequence(node) => Self::Sequence(node),
+            NodeConfig::Envelope(node) => Self::Envelope(node),
             NodeConfig::Fixture(node) => Self::Fixture(node),
             NodeConfig::Select(node) => Self::Select(node),
             NodeConfig::Merge(node) => Self::Merge(node),
@@ -196,6 +198,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::DmxOutput(node) => Self::DmxOutput(node),
             mizer_nodes::Node::Scripting(node) => Self::Script(node),
             mizer_nodes::Node::Sequence(node) => Self::Sequence(node),
+            mizer_nodes::Node::Envelope(node) => Self::Envelope(node),
             mizer_nodes::Node::Fixture(node) => Self::Fixture(node),
             mizer_nodes::Node::Select(node) => Self::Select(node),
             mizer_nodes::Node::Merge(node) => Self::Merge(node),

@@ -1,5 +1,5 @@
-mod clock;
-mod sink;
+pub use mizer_util::clock::*;
 
-pub use self::clock::*;
 pub use self::sink::*;
+
+mod sink;

@@ -606,6 +606,7 @@ enum NodeConfig_Type {
   videoTransformConfig, 
   selectConfig, 
   mergeConfig, 
+  envelopeConfig, 
   notSet
 }
 
@@ -635,10 +636,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     31 : NodeConfig_Type.videoTransformConfig,
     32 : NodeConfig_Type.selectConfig,
     33 : NodeConfig_Type.mergeConfig,
+    34 : NodeConfig_Type.envelopeConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -663,6 +665,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<VideoTransformNodeConfig>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoTransformConfig', protoName: 'videoTransformConfig', subBuilder: VideoTransformNodeConfig.create)
     ..aOM<SelectNodeConfig>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selectConfig', protoName: 'selectConfig', subBuilder: SelectNodeConfig.create)
     ..aOM<MergeNodeConfig>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mergeConfig', protoName: 'mergeConfig', subBuilder: MergeNodeConfig.create)
+    ..aOM<EnvelopeNodeConfig>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'envelopeConfig', protoName: 'envelopeConfig', subBuilder: EnvelopeNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -692,6 +695,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     VideoTransformNodeConfig videoTransformConfig,
     SelectNodeConfig selectConfig,
     MergeNodeConfig mergeConfig,
+    EnvelopeNodeConfig envelopeConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -765,6 +769,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (mergeConfig != null) {
       _result.mergeConfig = mergeConfig;
+    }
+    if (envelopeConfig != null) {
+      _result.envelopeConfig = envelopeConfig;
     }
     return _result;
   }
@@ -1055,6 +1062,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearMergeConfig() => clearField(33);
   @$pb.TagNumber(33)
   MergeNodeConfig ensureMergeConfig() => $_ensure(23);
+
+  @$pb.TagNumber(34)
+  EnvelopeNodeConfig get envelopeConfig => $_getN(24);
+  @$pb.TagNumber(34)
+  set envelopeConfig(EnvelopeNodeConfig v) { setField(34, v); }
+  @$pb.TagNumber(34)
+  $core.bool hasEnvelopeConfig() => $_has(24);
+  @$pb.TagNumber(34)
+  void clearEnvelopeConfig() => clearField(34);
+  @$pb.TagNumber(34)
+  EnvelopeNodeConfig ensureEnvelopeConfig() => $_ensure(24);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -1335,6 +1353,95 @@ class SequenceNodeConfig extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<SequenceNodeConfig_SequenceStep> get steps => $_getList(0);
+}
+
+class EnvelopeNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EnvelopeNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attack', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'decay', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sustain', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'release', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  EnvelopeNodeConfig._() : super();
+  factory EnvelopeNodeConfig({
+    $core.double attack,
+    $core.double decay,
+    $core.double sustain,
+    $core.double release,
+  }) {
+    final _result = create();
+    if (attack != null) {
+      _result.attack = attack;
+    }
+    if (decay != null) {
+      _result.decay = decay;
+    }
+    if (sustain != null) {
+      _result.sustain = sustain;
+    }
+    if (release != null) {
+      _result.release = release;
+    }
+    return _result;
+  }
+  factory EnvelopeNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EnvelopeNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EnvelopeNodeConfig clone() => EnvelopeNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EnvelopeNodeConfig copyWith(void Function(EnvelopeNodeConfig) updates) => super.copyWith((message) => updates(message as EnvelopeNodeConfig)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EnvelopeNodeConfig create() => EnvelopeNodeConfig._();
+  EnvelopeNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<EnvelopeNodeConfig> createRepeated() => $pb.PbList<EnvelopeNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static EnvelopeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EnvelopeNodeConfig>(create);
+  static EnvelopeNodeConfig _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get attack => $_getN(0);
+  @$pb.TagNumber(1)
+  set attack($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAttack() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAttack() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get decay => $_getN(1);
+  @$pb.TagNumber(2)
+  set decay($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDecay() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDecay() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get sustain => $_getN(2);
+  @$pb.TagNumber(3)
+  set sustain($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSustain() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSustain() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get release => $_getN(3);
+  @$pb.TagNumber(4)
+  set release($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRelease() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRelease() => clearField(4);
 }
 
 class ClockNodeConfig extends $pb.GeneratedMessage {

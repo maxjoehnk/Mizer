@@ -93,6 +93,17 @@ pub struct ClockFrame {
     pub downbeat: bool,
 }
 
+impl Default for ClockFrame {
+    fn default() -> Self {
+        Self {
+            speed: 90.,
+            frame: 0.,
+            delta: 0.,
+            downbeat: false,
+        }
+    }
+}
+
 pub trait Clock {
     fn tick(&mut self) -> ClockFrame;
 

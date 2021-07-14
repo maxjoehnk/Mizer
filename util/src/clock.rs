@@ -1,4 +1,4 @@
-use mizer_clock::*;
+pub use mizer_clock::*;
 
 pub struct TestClock {
     speed: f64,

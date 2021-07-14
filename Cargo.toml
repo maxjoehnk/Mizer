@@ -17,6 +17,7 @@ members = [
     "runtime/pipeline",
     "runtime/pipeline/node",
     "runtime/pipeline/nodes",
+    "runtime/pipeline/nodes/behaviors/envelope",
     "runtime/pipeline/nodes/behaviors/oscillator",
     "runtime/pipeline/nodes/behaviors/port-operations",
     "runtime/pipeline/nodes/behaviors/scripting",
@@ -40,6 +41,7 @@ members = [
     "protocols/midi/device-profiles",
     "protocols/osc",
     "ui",
+    "util",
 ]
 
 [lib]

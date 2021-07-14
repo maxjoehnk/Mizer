@@ -12,6 +12,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             DmxOutput(dmx_output) => Self::dmxOutputConfig(dmx_output.into()),
             Scripting(scripting) => Self::scriptingConfig(scripting.into()),
             Sequence(sequence) => Self::sequenceConfig(sequence.into()),
+            Envelope(envelope) => Self::envelopeConfig(envelope.into()),
             Select(select) => Self::selectConfig(select.into()),
             Merge(merge) => Self::mergeConfig(merge.into()),
             Fixture(fixture) => Self::fixtureConfig(fixture.into()),
@@ -43,6 +44,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::dmxOutputConfig(dmx_output) => Self::DmxOutput(dmx_output.into()),
             NodeConfig_oneof_type::scriptingConfig(scripting) => Self::Scripting(scripting.into()),
             NodeConfig_oneof_type::sequenceConfig(sequence) => Self::Sequence(sequence.into()),
+            NodeConfig_oneof_type::envelopeConfig(envelope) => Self::Envelope(envelope.into()),
             NodeConfig_oneof_type::selectConfig(select) => Self::Select(select.into()),
             NodeConfig_oneof_type::mergeConfig(merge) => Self::Merge(merge.into()),
             NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
@@ -218,6 +220,29 @@ impl From<SequenceNodeConfig_SequenceStep> for mizer_nodes::SequenceStep {
             value: step.value,
             hold: step.hold,
             tick: step.tick,
+        }
+    }
+}
+
+impl From<mizer_nodes::EnvelopeNode> for EnvelopeNodeConfig {
+    fn from(envelope: mizer_nodes::EnvelopeNode) -> Self {
+        Self {
+            attack: envelope.attack,
+            decay: envelope.decay,
+            sustain: envelope.sustain,
+            release: envelope.release,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<EnvelopeNodeConfig> for mizer_nodes::EnvelopeNode {
+    fn from(envelope: EnvelopeNodeConfig) -> Self {
+        Self {
+            attack: envelope.attack,
+            decay: envelope.decay,
+            sustain: envelope.sustain,
+            release: envelope.release,
         }
     }
 }
@@ -559,6 +584,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::OpcOutput => Node_NodeType::OpcOutput,
             NodeType::Fixture => Node_NodeType::Fixture,
             NodeType::Sequence => Node_NodeType::Sequence,
+            NodeType::Envelope => Node_NodeType::Envelope,
             NodeType::Select => Node_NodeType::Select,
             NodeType::Merge => Node_NodeType::Merge,
             NodeType::MidiInput => Node_NodeType::MidiInput,
@@ -590,6 +616,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::OpcOutput => NodeType::OpcOutput,
             Node_NodeType::Fixture => NodeType::Fixture,
             Node_NodeType::Sequence => NodeType::Sequence,
+            Node_NodeType::Envelope => NodeType::Envelope,
             Node_NodeType::Select => NodeType::Select,
             Node_NodeType::Merge => NodeType::Merge,
             Node_NodeType::MidiInput => NodeType::MidiInput,

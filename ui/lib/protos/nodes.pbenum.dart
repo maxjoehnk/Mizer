@@ -46,6 +46,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Oscillator = Node_NodeType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Oscillator');
   static const Node_NodeType Clock = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Clock');
   static const Node_NodeType Script = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Script');
+  static const Node_NodeType Envelope = Node_NodeType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Envelope');
   static const Node_NodeType Fixture = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fixture');
   static const Node_NodeType Sequence = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
   static const Node_NodeType Select = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
@@ -72,6 +73,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Oscillator,
     Clock,
     Script,
+    Envelope,
     Fixture,
     Sequence,
     Select,

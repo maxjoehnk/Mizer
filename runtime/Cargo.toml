@@ -27,3 +27,4 @@ mizer-layouts = { path = "layouts" }
 env_logger = "0.7"
 insta = { version = "1.6", features = ["backtrace"] }
 test-case = "1.1"
+mizer-util = { path = "../util", features = ["test"] }

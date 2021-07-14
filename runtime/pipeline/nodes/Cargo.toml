@@ -5,9 +5,11 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../node" }
 mizer-clock-nodes = { path = "clock" }
+mizer-envelope-nodes = { path = "behaviors/envelope" }
 mizer-oscillator-nodes = { path = "behaviors/oscillator" }
 mizer-port-operation-nodes = { path = "behaviors/port-operations" }
 mizer-dmx-nodes = { path = "protocols/dmx" }
@@ -22,3 +24,9 @@ mizer-opc-nodes = { path = "protocols/opc" }
 mizer-osc-nodes = { path ="protocols/osc" }
 mizer-video-nodes = { path = "video" }
 derive_more = "0.99"
+
+[dev-dependencies]
+mizer-node = { path = "../node", features = ["test"] }
+mizer-util = { path = "../../../util", features = ["test"] }
+test-case = "1.2"
+insta = "1.7"

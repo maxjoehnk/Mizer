@@ -16,6 +16,7 @@ pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
 pub use mizer_port_operation_nodes::{MergeNode, SelectNode};
+pub use mizer_envelope_nodes::EnvelopeNode;
 
 #[derive(Debug, Clone, From)]
 pub enum Node {
@@ -24,6 +25,7 @@ pub enum Node {
     DmxOutput(DmxOutputNode),
     Scripting(ScriptingNode),
     Sequence(SequenceNode),
+    Envelope(EnvelopeNode),
     Merge(MergeNode),
     Select(SelectNode),
     Fixture(FixtureNode),
@@ -52,6 +54,7 @@ impl From<NodeType> for Node {
             NodeType::Oscillator => OscillatorNode::default().into(),
             NodeType::Clock => ClockNode::default().into(),
             NodeType::Scripting => ScriptingNode::default().into(),
+            NodeType::Envelope => EnvelopeNode::default().into(),
             NodeType::Sequence => SequenceNode::default().into(),
             NodeType::Merge => MergeNode::default().into(),
             NodeType::Select => SelectNode::default().into(),
@@ -85,6 +88,7 @@ impl Node {
             DmxOutput(_) => NodeType::DmxOutput,
             Scripting(_) => NodeType::Scripting,
             Sequence(_) => NodeType::Sequence,
+            Envelope(_) => NodeType::Envelope,
             Merge(_) => NodeType::Merge,
             Select(_) => NodeType::Select,
             Fixture(_) => NodeType::Fixture,

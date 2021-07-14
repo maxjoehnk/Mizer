@@ -2,7 +2,7 @@ use mizer_node::*;
 use mizer_protocol_midi::*;
 use serde::{Deserialize, Serialize};
 use std::ops::Deref;
-use crate::lerp_extension::LerpExt;
+use mizer_util::LerpExt;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiInputNode {

@@ -1,4 +1,5 @@
 use lazy_static::lazy_static;
+use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
@@ -6,7 +7,6 @@ use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::fs::File;
 use std::path::Path;
-use mizer_layouts::ControlConfig;
 
 mod fixtures;
 

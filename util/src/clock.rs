@@ -38,12 +38,12 @@ impl Clock for TestClock {
     fn speed_mut(&mut self) -> &mut f64 {
         &mut self.speed
     }
-    
+
     fn snapshot(&self) -> ClockSnapshot {
         ClockSnapshot {
             speed: 1.0,
             time: Timecode::new(1),
-            state: ClockState::Playing
+            state: ClockState::Playing,
         }
     }
 

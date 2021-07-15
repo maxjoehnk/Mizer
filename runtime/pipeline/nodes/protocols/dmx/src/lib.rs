@@ -81,4 +81,3 @@ impl ProcessingNode for DmxOutputNode {
         Default::default()
     }
 }
-

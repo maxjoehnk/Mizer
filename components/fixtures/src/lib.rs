@@ -11,7 +11,9 @@ mod processor;
 pub struct FixtureModule(FixtureLibrary, FixtureManager);
 
 impl FixtureModule {
-    pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> (Self, FixtureManager, FixtureLibrary) {
+    pub fn new(
+        providers: Vec<Box<dyn FixtureLibraryProvider>>,
+    ) -> (Self, FixtureManager, FixtureLibrary) {
         let library = FixtureLibrary::new(providers);
         let manager = FixtureManager::new(library.clone());
         (Self(library.clone(), manager.clone()), manager, library)

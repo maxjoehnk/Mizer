@@ -3,18 +3,18 @@ pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
-pub use self::transport::*;
 pub use self::session::*;
-use nativeshell::codec::{MethodCallReply, Value, MethodCall};
+pub use self::transport::*;
 use anyhow::Error;
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
 mod connections;
 mod fixtures;
 mod layouts;
 mod media;
 mod nodes;
-mod transport;
 mod session;
+mod transport;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;
@@ -36,7 +36,7 @@ impl MethodCallExt for MethodCall<Value> {
             let arg = protobuf::parse_from_bytes::<T>(buffer)?;
 
             Ok(arg)
-        }else {
+        } else {
             Err(anyhow::anyhow!("Invalid arguments"))
         }
     }
@@ -44,7 +44,8 @@ impl MethodCallExt for MethodCall<Value> {
 
 impl MethodReplyExt for MethodCallReply<Value> {
     fn respond_result<M: protobuf::Message>(self, response: anyhow::Result<M>) {
-        let response: anyhow::Result<_> = response.and_then(|msg| msg.write_to_bytes().map_err(anyhow::Error::from));
+        let response: anyhow::Result<_> =
+            response.and_then(|msg| msg.write_to_bytes().map_err(anyhow::Error::from));
 
         match response {
             Ok(response) => self.send_ok(Value::U8List(response)),

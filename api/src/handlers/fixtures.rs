@@ -1,7 +1,7 @@
 use crate::models::fixtures::*;
-use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::library::FixtureLibrary;
 use crate::RuntimeApi;
+use mizer_fixtures::library::FixtureLibrary;
+use mizer_fixtures::manager::FixtureManager;
 
 #[derive(Clone)]
 pub struct FixturesHandler<R: RuntimeApi> {
@@ -11,7 +11,11 @@ pub struct FixturesHandler<R: RuntimeApi> {
 }
 
 impl<R: RuntimeApi> FixturesHandler<R> {
-    pub fn new(fixture_manager: FixtureManager, fixture_library: FixtureLibrary, runtime: R) -> Self {
+    pub fn new(
+        fixture_manager: FixtureManager,
+        fixture_library: FixtureLibrary,
+        runtime: R,
+    ) -> Self {
         Self {
             fixture_manager,
             fixture_library,
@@ -29,7 +33,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 name: fixture.definition.name.clone(),
                 manufacturer: fixture.definition.manufacturer.clone(),
                 mode: fixture.current_mode.name.clone(),
-                channels: fixture.current_mode.groups.iter()
+                channels: fixture
+                    .current_mode
+                    .groups
+                    .iter()
                     .map(|group| FixtureChannelGroup::with_values(group, &fixture.channel_values))
                     .collect(),
                 ..Default::default()
@@ -55,8 +62,18 @@ impl<R: RuntimeApi> FixturesHandler<R> {
 
     pub fn add_fixtures(&self, add_fixtures: AddFixturesRequest) {
         for request in add_fixtures.requests.into_iter() {
-            let definition = self.fixture_library.get_definition(&request.definitionId).unwrap();
-            self.fixture_manager.add_fixture(request.id, definition, request.mode.into(), "output".into(), request.channel as u8, Some(request.universe as u16));
+            let definition = self
+                .fixture_library
+                .get_definition(&request.definitionId)
+                .unwrap();
+            self.fixture_manager.add_fixture(
+                request.id,
+                definition,
+                request.mode.into(),
+                "output".into(),
+                request.channel as u8,
+                Some(request.universe as u16),
+            );
             if add_fixtures.create_nodes {
                 self.runtime.add_node_for_fixture(request.id).unwrap();
             }
@@ -70,7 +87,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 match &value {
                     WriteFixtureChannelRequest_oneof_value::color(_) => {
                         todo!()
-                    },
+                    }
                     WriteFixtureChannelRequest_oneof_value::fader(value) => {
                         fixture.write(&request.channel, *value);
                     }

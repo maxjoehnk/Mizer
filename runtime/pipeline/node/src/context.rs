@@ -2,7 +2,7 @@ use crate::{PortMetadata, PreviewContext};
 pub use mizer_clock::ClockFrame;
 use mizer_ports::{PortId, PortValue};
 
-pub trait NodeContext : PreviewContext {
+pub trait NodeContext: PreviewContext {
     fn clock(&self) -> ClockFrame;
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V);

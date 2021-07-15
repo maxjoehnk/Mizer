@@ -21,18 +21,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SessionChannel<R> {
         _: EngineHandle,
     ) {
         match call.method.as_str() {
-            "saveProject" => {
-                match self.save_project() {
-                    Ok(()) => resp.send_ok(Value::Null),
-                    Err(e) => resp.respond_error(e),
-                }
-            }
-            "newProject" => {
-                match self.new_project() {
-                    Ok(()) => resp.send_ok(Value::Null),
-                    Err(e) => resp.respond_error(e),
-                }
-            }
+            "saveProject" => match self.save_project() {
+                Ok(()) => resp.send_ok(Value::Null),
+                Err(e) => resp.respond_error(e),
+            },
+            "newProject" => match self.new_project() {
+                Ok(()) => resp.send_ok(Value::Null),
+                Err(e) => resp.respond_error(e),
+            },
             "loadProject" => {
                 if let Value::String(path) = call.args {
                     match self.load_project(path) {

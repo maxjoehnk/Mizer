@@ -1,10 +1,10 @@
-use mizer_runtime::{RuntimeAccess, NodeDescriptor, DefaultRuntime};
 use crate::{ApiCommand, ApiHandler};
 use mizer_api::RuntimeApi;
-use mizer_node::{NodeLink, NodeType, NodeDesigner, NodePath, PortId};
-use mizer_layouts::{Layout, ControlConfig};
+use mizer_clock::{ClockSnapshot, ClockState};
+use mizer_layouts::{ControlConfig, Layout};
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::{FixtureNode, Node};
-use mizer_clock::{ClockState, ClockSnapshot};
+use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 use std::collections::HashMap;
 
 #[derive(Clone)]
@@ -16,7 +16,8 @@ pub struct Api {
 impl RuntimeApi for Api {
     fn nodes(&self) -> Vec<NodeDescriptor> {
         let designer = self.access.designer.read();
-        self.access.nodes
+        self.access
+            .nodes
             .iter()
             .map(|entry| entry.key().clone())
             .map(|path| self.get_descriptor(path, &designer))
@@ -57,17 +58,30 @@ impl RuntimeApi for Api {
     fn delete_layout_control(&self, layout_id: String, control_id: String) {
         let mut layouts = self.access.layouts.read();
         if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
-            if let Some(index) = layout.controls.iter().position(|control| control.node == control_id) {
+            if let Some(index) = layout
+                .controls
+                .iter()
+                .position(|control| control.node == control_id)
+            {
                 layout.controls.remove(index);
             }
         }
         self.access.layouts.set(layouts);
     }
 
-    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(&self, layout_id: String, control_id: String, update: F) {
+    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(
+        &self,
+        layout_id: String,
+        control_id: String,
+        update: F,
+    ) {
         let mut layouts = self.access.layouts.read();
         if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
-            if let Some(control) = layout.controls.iter_mut().find(|control| control.node == control_id) {
+            if let Some(control) = layout
+                .controls
+                .iter_mut()
+                .find(|control| control.node == control_id)
+            {
                 update(control);
             }
         }
@@ -160,12 +174,7 @@ impl Api {
         let (tx, rx) = flume::unbounded();
         let access = runtime.access();
 
-        (ApiHandler {
-            recv: rx
-        }, Api {
-            sender: tx,
-            access
-        })
+        (ApiHandler { recv: rx }, Api { sender: tx, access })
     }
 
     fn add_node_internal(

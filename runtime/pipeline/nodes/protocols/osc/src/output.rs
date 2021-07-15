@@ -53,21 +53,24 @@ impl PipelineNode for OscOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-             "number".into(),
-             PortMetadata {
-                 port_type: PortType::Single,
-                 direction: PortDirection::Input,
-                 ..Default::default()
-             },
-         ), (
-             "color".into(),
-             PortMetadata {
-                 port_type: PortType::Color,
-                 direction: PortDirection::Input,
-                 ..Default::default()
-             }
-         )]
+        vec![
+            (
+                "number".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "color".into(),
+                PortMetadata {
+                    port_type: PortType::Color,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -95,7 +98,7 @@ impl ProcessingNode for OscOutputNode {
             };
             state.send(OscPacket::Message(OscMessage {
                 addr: self.path.clone(),
-                args: vec![OscType::Color(color)]
+                args: vec![OscType::Color(color)],
             }))?;
         }
         Ok(())

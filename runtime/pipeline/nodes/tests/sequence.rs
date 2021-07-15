@@ -1,4 +1,4 @@
-use mizer_nodes::{SequenceNode};
+use mizer_nodes::SequenceNode;
 
 mod node_grapher;
 

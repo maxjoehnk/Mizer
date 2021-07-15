@@ -2,9 +2,7 @@ use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq)]
-pub struct SelectNode {
-
-}
+pub struct SelectNode {}
 
 impl PipelineNode for SelectNode {
     fn details(&self) -> NodeDetails {
@@ -16,22 +14,31 @@ impl PipelineNode for SelectNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            ("channel".into(), PortMetadata {
-                direction: PortDirection::Input,
-                port_type: PortType::Single,
-                ..PortMetadata::default()
-            }),
-            ("input".into(), PortMetadata {
-                direction: PortDirection::Input,
-                port_type: PortType::Single,
-                multiple: true.into(),
-                ..PortMetadata::default()
-            }),
-            ("output".into(), PortMetadata {
-                direction: PortDirection::Output,
-                port_type: PortType::Single,
-                ..PortMetadata::default()
-            })
+            (
+                "channel".into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..PortMetadata::default()
+                },
+            ),
+            (
+                "input".into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    multiple: true.into(),
+                    ..PortMetadata::default()
+                },
+            ),
+            (
+                "output".into(),
+                PortMetadata {
+                    direction: PortDirection::Output,
+                    port_type: PortType::Single,
+                    ..PortMetadata::default()
+                },
+            ),
         ]
     }
 

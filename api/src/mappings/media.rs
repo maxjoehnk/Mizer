@@ -1,8 +1,8 @@
 use crate::models::media::*;
-use std::path::Path;
-use protobuf::SingularPtrField;
-use mizer_media::documents::*;
 use mizer_media::api::TagCreateModel;
+use mizer_media::documents::*;
+use protobuf::SingularPtrField;
+use std::path::Path;
 
 impl From<CreateMediaTag> for TagCreateModel {
     fn from(model: CreateMediaTag) -> Self {

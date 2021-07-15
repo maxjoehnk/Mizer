@@ -1,7 +1,7 @@
 use downcast::*;
 
 pub use mizer_injector::Injector;
-pub use mizer_ports::{PortId, PortType, Color};
+pub use mizer_ports::{Color, PortId, PortType};
 
 pub use self::context::*;
 pub use self::introspection::*;
@@ -25,7 +25,10 @@ pub trait PipelineNode: Debug + Send + Sync + Any {
 
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         log::trace!("Returning default port metadata for port {}", port);
-        self.list_ports().into_iter().find(|(id, _)| id == port).map(|(_, port)| port)
+        self.list_ports()
+            .into_iter()
+            .find(|(id, _)| id == port)
+            .map(|(_, port)| port)
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {

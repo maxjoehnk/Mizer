@@ -1,5 +1,5 @@
-use crate::RuntimeApi;
 use crate::models::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct NodesHandler<R: RuntimeApi> {
@@ -70,7 +70,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     pub fn write_control_value(&self, control: WriteControl) -> anyhow::Result<()> {
-        self.runtime.write_node_port(control.path.into(), control.port.into(), control.value)?;
+        self.runtime
+            .write_node_port(control.path.into(), control.port.into(), control.value)?;
 
         Ok(())
     }
@@ -80,7 +81,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {
-        self.runtime.update_node(request.path.into(), request.config.unwrap().field_type.unwrap().into())?;
+        self.runtime.update_node(
+            request.path.into(),
+            request.config.unwrap().field_type.unwrap().into(),
+        )?;
 
         Ok(())
     }

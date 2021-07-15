@@ -19,7 +19,10 @@ impl MidiConnectionManager {
         }
     }
 
-    pub fn request_device<'a>(&'a self, name: &str) -> anyhow::Result<Option<impl DerefMut<Target=MidiDevice> + 'a>> {
+    pub fn request_device<'a>(
+        &'a self,
+        name: &str,
+    ) -> anyhow::Result<Option<impl DerefMut<Target = MidiDevice> + 'a>> {
         if !self.devices.contains_key(name) {
             if let Some(device) = self.provider.find_device(name)? {
                 self.devices.insert(name.to_string(), device.connect()?);
@@ -27,7 +30,7 @@ impl MidiConnectionManager {
         }
         if let Some(device) = self.devices.get_mut::<'a>(name) {
             Ok(Some(device))
-        }else {
+        } else {
             Ok(None)
         }
     }

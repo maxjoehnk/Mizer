@@ -1,9 +1,9 @@
+use crate::models::transport::Transport;
+use crate::models::TransportState;
 use crate::RuntimeApi;
 use futures::stream::Stream;
 use futures::StreamExt;
-use crate::models::transport::Transport;
 use mizer_clock::ClockSnapshot;
-use crate::models::TransportState;
 
 #[derive(Clone)]
 pub struct TransportHandler<R: RuntimeApi> {

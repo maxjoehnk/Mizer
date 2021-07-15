@@ -4,7 +4,7 @@ use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
-use crate::ports::{NodeReceivers, NodeSenders, AnyPortReceiverPort};
+use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 use ringbuffer::{ConstGenericRingBuffer, RingBufferWrite};
 use std::cell::RefCell;
 
@@ -84,11 +84,9 @@ impl<'a> NodeContext for PipelineContext<'a> {
         let port = port.into();
         self.receivers
             .and_then(|recv| recv.get(&port))
-            .map(|recv| {
-                match &recv.port {
-                    AnyPortReceiverPort::Single(_) => 1,
-                    AnyPortReceiverPort::Multiple(ports) => ports.borrow().len(),
-                }
+            .map(|recv| match &recv.port {
+                AnyPortReceiverPort::Single(_) => 1,
+                AnyPortReceiverPort::Multiple(ports) => ports.borrow().len(),
             })
             .unwrap_or_default()
     }

@@ -6,10 +6,20 @@ pub fn init() {
             let style = buf.style();
             let timestamp = buf.timestamp();
             let thread = std::thread::current().id();
-            writeln!(buf, "[{} {} {}] {:?}: {}", timestamp, record.level(), record.target(), thread, style.value(record.args()))?;
+            writeln!(
+                buf,
+                "[{} {} {}] {:?}: {}",
+                timestamp,
+                record.level(),
+                record.target(),
+                thread,
+                style.value(record.args())
+            )?;
 
             if record.key_values().count() > 0 {
-                let arguments = LogArgs { source: record.key_values() };
+                let arguments = LogArgs {
+                    source: record.key_values(),
+                };
                 writeln!(buf, "{:?}", arguments)?;
             }
 
@@ -19,7 +29,7 @@ pub fn init() {
 }
 
 struct LogArgs<T: log::kv::Source> {
-    source: T
+    source: T,
 }
 
 impl<T: log::kv::Source> std::fmt::Debug for LogArgs<T> {

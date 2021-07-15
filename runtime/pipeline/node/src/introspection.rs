@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::PreviewType;
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct NodeDetails {
@@ -66,7 +66,8 @@ impl NodeType {
             IldaFile => "ilda-file",
             Select => "select",
             Merge => "merge",
-        }.to_string()
+        }
+        .to_string()
     }
 }
 

@@ -4,6 +4,7 @@ use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 
 pub use crate::flags::Flags;
 use anyhow::Context;
+use mizer_api::handlers::Handlers;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
 use mizer_fixtures::manager::FixtureManager;
@@ -15,17 +16,19 @@ use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::MidiModule;
 use mizer_runtime::DefaultRuntime;
-use mizer_api::handlers::Handlers;
 use std::path::PathBuf;
 
 pub use crate::api::*;
 
-mod flags;
 mod api;
+mod flags;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 
-pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Result<(Mizer, ApiHandler)> {
+pub fn build_runtime(
+    handle: tokio::runtime::Handle,
+    flags: Flags,
+) -> anyhow::Result<(Mizer, ApiHandler)> {
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
     let (api_handler, api) = Api::setup(&runtime);
@@ -44,16 +47,18 @@ pub fn build_runtime(handle: tokio::runtime::Handle, flags: Flags) -> anyhow::Re
         api,
         fixture_manager,
         fixture_library,
-        media_server_api.clone()
+        media_server_api.clone(),
     );
 
-    let grpc = setup_grpc_api(
-        &flags,
-        handle.clone(),
-        handlers.clone()
-    )?;
+    let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
     setup_media_api(handle, &flags, media_server_api)?;
-    let mut mizer = Mizer { project_path: flags.file.clone(), flags, runtime, grpc, handlers };
+    let mut mizer = Mizer {
+        project_path: flags.file.clone(),
+        flags,
+        runtime,
+        grpc,
+        handlers,
+    };
     mizer.load_project()?;
 
     Ok((mizer, api_handler))
@@ -65,7 +70,7 @@ pub struct Mizer {
     #[allow(dead_code)]
     grpc: Option<mizer_grpc_api::Server>,
     pub handlers: Handlers<Api>,
-    project_path: Option<PathBuf>
+    project_path: Option<PathBuf>,
 }
 
 impl Mizer {
@@ -158,7 +163,9 @@ fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     MidiModule.register(runtime)
 }
 
-fn register_fixtures_module(runtime: &mut DefaultRuntime) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
+fn register_fixtures_module(
+    runtime: &mut DefaultRuntime,
+) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
     let ofl_provider = load_ofl_provider()?;
     let providers: Vec<Box<dyn FixtureLibraryProvider>> = vec![Box::new(ofl_provider)];
 
@@ -173,7 +180,7 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     let mut ofl_provider = OpenFixtureLibraryProvider::new();
     if let Err(err) = ofl_provider.load("components/fixtures/open-fixture-library/.fixtures") {
         log::warn!("Could not load open fixture library {:?}", err);
-    }else {
+    } else {
         log::info!("Loading open fixture library...Done");
     }
 
@@ -199,17 +206,18 @@ fn setup_grpc_api(
     handlers: Handlers<Api>,
 ) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
     let grpc = if !flags.disable_grpc_api {
-        Some(mizer_grpc_api::start(
-            handle,
-            handlers
-        )?)
+        Some(mizer_grpc_api::start(handle, handlers)?)
     } else {
         None
     };
     Ok(grpc)
 }
 
-fn setup_media_api(handle: tokio::runtime::Handle, flags: &Flags, media_server_api: MediaServerApi) -> anyhow::Result<()> {
+fn setup_media_api(
+    handle: tokio::runtime::Handle,
+    flags: &Flags,
+    media_server_api: MediaServerApi,
+) -> anyhow::Result<()> {
     if !flags.disable_media_api {
         handle.spawn(mizer_media::http_api::start(media_server_api));
     }

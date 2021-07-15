@@ -1,9 +1,9 @@
 use crate::{ApiCommand, Mizer};
-use std::path::PathBuf;
 use mizer_clock::Clock;
+use std::path::PathBuf;
 
 pub struct ApiHandler {
-    pub(super) recv: flume::Receiver<ApiCommand>
+    pub(super) recv: flume::Receiver<ApiCommand>,
 }
 
 impl ApiHandler {
@@ -12,7 +12,9 @@ impl ApiHandler {
             match self.recv.try_recv() {
                 Ok(cmd) => self.handle_command(cmd, mizer),
                 Err(flume::TryRecvError::Empty) => break,
-                Err(flume::TryRecvError::Disconnected) => panic!("api command receiver disconnected"),
+                Err(flume::TryRecvError::Disconnected) => {
+                    panic!("api command receiver disconnected")
+                }
             }
         }
     }
@@ -61,26 +63,28 @@ impl ApiHandler {
             }
             ApiCommand::SaveProject(sender) => {
                 let result = mizer.save_project();
-                sender.send(result)
+                sender
+                    .send(result)
                     .expect("api command sender disconnected");
-
             }
             ApiCommand::SaveProjectAs(path, sender) => {
                 let result = mizer.save_project_as(PathBuf::from(&path));
-                sender.send(result)
+                sender
+                    .send(result)
                     .expect("api command sender disconnected");
             }
             ApiCommand::NewProject(sender) => {
                 mizer.close_project();
-                sender.send(Ok(()))
+                sender
+                    .send(Ok(()))
                     .expect("api command sender disconnected");
             }
             ApiCommand::LoadProject(path, sender) => {
                 let result = mizer.load_project_from(PathBuf::from(&path));
-                sender.send(result)
+                sender
+                    .send(result)
                     .expect("api command sender disconnected");
             }
         }
     }
 }
-

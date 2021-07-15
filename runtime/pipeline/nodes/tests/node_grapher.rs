@@ -4,7 +4,7 @@ use std::path::Path;
 
 use mizer_node::mocks::NodeContextMock;
 use mizer_node::ProcessingNode;
-use mizer_util::clock::{TestClock, Clock};
+use mizer_util::clock::{Clock, TestClock};
 
 const FRAMES: usize = 60 * 4;
 
@@ -12,7 +12,11 @@ pub fn graph_node<P: ProcessingNode>(node: P, name: &str) -> anyhow::Result<()> 
     graph_node_with_inputs(node, name, |_| 0.)
 }
 
-pub fn graph_node_with_inputs<P: ProcessingNode, I: Fn(usize) -> f64>(node: P, name: &str, input: I) -> anyhow::Result<()> {
+pub fn graph_node_with_inputs<P: ProcessingNode, I: Fn(usize) -> f64>(
+    node: P,
+    name: &str,
+    input: I,
+) -> anyhow::Result<()> {
     let mut context = NodeContextMock::new();
     let mut state = node.create_state();
     let mut clock = TestClock::default();
@@ -44,7 +48,12 @@ fn generate_script_file(dir: &Path, name: &str) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn generate_data_file(dir: &Path, name: &str, values: &[f64], frames: &[f64]) -> anyhow::Result<()> {
+fn generate_data_file(
+    dir: &Path,
+    name: &str,
+    values: &[f64],
+    frames: &[f64],
+) -> anyhow::Result<()> {
     assert_eq!(values.len(), frames.len());
 
     let data = values

@@ -1,8 +1,7 @@
 use crate::models::*;
 
 #[derive(Clone, Default)]
-pub struct ConnectionsHandler {
-}
+pub struct ConnectionsHandler {}
 
 impl ConnectionsHandler {
     pub fn new() -> Self {

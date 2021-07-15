@@ -1,5 +1,5 @@
-use test_case::test_case;
 use mizer_nodes::{OscillatorNode, OscillatorType};
+use test_case::test_case;
 
 mod node_grapher;
 

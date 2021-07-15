@@ -1,12 +1,25 @@
-use std::ops::{Add, Sub, Mul, Div};
+use std::ops::{Add, Div, Mul, Sub};
 
 pub trait LerpExt<To: Sized = Self> {
-    fn lerp(self, from: (Self, Self), to: (To, To)) -> To where Self: Sized;
+    fn lerp(self, from: (Self, Self), to: (To, To)) -> To
+    where
+        Self: Sized;
 }
 
-impl<T: Add<Output = Self> + Sub<Output = Self> + Mul<Output = Self> + Div<Output = Self> + Copy + std::fmt::Debug> LerpExt for T {
+impl<
+        T: Add<Output = Self>
+            + Sub<Output = Self>
+            + Mul<Output = Self>
+            + Div<Output = Self>
+            + Copy
+            + std::fmt::Debug,
+    > LerpExt for T
+{
     // TODO: measure whether we should inline this
-    fn lerp(self, from: (Self, Self), to: (Self, Self)) -> Self where Self: Sized {
+    fn lerp(self, from: (Self, Self), to: (Self, Self)) -> Self
+    where
+        Self: Sized,
+    {
         ((self - from.0) * (to.1 - to.0)) / (from.1 - from.0) + to.0
     }
 }

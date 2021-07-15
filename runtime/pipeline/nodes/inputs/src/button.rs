@@ -3,8 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
-pub struct ButtonNode {
-}
+pub struct ButtonNode {}
 
 impl PipelineNode for ButtonNode {
     fn details(&self) -> NodeDetails {
@@ -15,21 +14,24 @@ impl PipelineNode for ButtonNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-             "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-         ), (
-             "value".into(),
-             PortMetadata {
-                 port_type: PortType::Single,
-                 direction: PortDirection::Output,
-                 ..Default::default()
-             },
-         )]
+        vec![
+            (
+                "value".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "value".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -54,4 +56,3 @@ impl ProcessingNode for ButtonNode {
         Default::default()
     }
 }
-

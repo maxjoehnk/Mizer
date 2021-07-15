@@ -24,7 +24,7 @@ impl std::fmt::Debug for WritePortCall {
         builder.field("port", &self.port);
         if let Some(value) = self.value.downcast_ref::<f64>() {
             builder.field("value", value);
-        }else {
+        } else {
             builder.field("value", &self.value);
         }
 

@@ -7,9 +7,9 @@ use std::path::Path;
 use uuid::Uuid;
 
 pub use crate::discovery::MediaDiscovery;
-use flume::{Sender, Receiver};
-use futures::{StreamExt, AsyncReadExt};
 use async_std::fs;
+use flume::{Receiver, Sender};
+use futures::{AsyncReadExt, StreamExt};
 
 pub mod api;
 mod data_access;

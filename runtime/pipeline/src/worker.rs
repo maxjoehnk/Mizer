@@ -1,16 +1,16 @@
-use downcast::*;
 use crate::ports::{NodeReceivers, NodeSenders};
-use crate::{PipelineContext, NodePreviewState};
+use crate::{NodePreviewState, PipelineContext};
+use downcast::*;
 use mizer_clock::ClockFrame;
 use mizer_node::*;
 use mizer_ports::PortValue;
 use mizer_processing::Injector;
 use mizer_protocol_laser::LaserFrame;
+use ringbuffer::RingBufferExt;
 use std::any::Any;
+use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::cell::RefCell;
-use ringbuffer::RingBufferExt;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -59,8 +59,9 @@ impl PipelineWorker {
         let state = node.create_state();
         match mizer_node::ProcessingNode::details(node).preview_type {
             PreviewType::History => {
-                self.previews.insert(path.clone(), NodePreviewState::History(Default::default()));
-            },
+                self.previews
+                    .insert(path.clone(), NodePreviewState::History(Default::default()));
+            }
             _ => {
                 self.previews.insert(path.clone(), NodePreviewState::None);
             }
@@ -234,11 +235,18 @@ impl PipelineWorker {
         if let Some(receivers) = self.receivers.get_mut(&path) {
             if let Some(receiver) = receivers.get(&port) {
                 receiver.set_value(value);
-            }else {
-                log::warn!("trying to write value to unknown port {:?} on path {:?}", &port, &path);
+            } else {
+                log::warn!(
+                    "trying to write value to unknown port {:?} on path {:?}",
+                    &port,
+                    &path
+                );
             }
-        }else {
-            log::warn!("trying to write value to unknown receiver for node {:?}", &path);
+        } else {
+            log::warn!(
+                "trying to write value to unknown receiver for node {:?}",
+                &path
+            );
         }
     }
 
@@ -248,7 +256,7 @@ impl PipelineWorker {
                 NodePreviewState::History(vec) => Some(vec.to_vec()),
                 _ => None,
             }
-        }else {
+        } else {
             None
         }
     }

@@ -1,8 +1,8 @@
-use mizer_api::handlers::MediaHandler;
 use crate::plugin::channels::MethodReplyExt;
+use mizer_api::handlers::MediaHandler;
 use mizer_api::models::*;
-use nativeshell::codec::{MethodCall, Value, MethodCallReply};
-use nativeshell::shell::{MethodChannel, Context, EngineHandle, MethodCallHandler};
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::rc::Rc;
 
 pub struct MediaChannel {
@@ -10,7 +10,12 @@ pub struct MediaChannel {
 }
 
 impl MethodCallHandler for MediaChannel {
-    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
+    fn on_method_call(
+        &mut self,
+        call: MethodCall<Value>,
+        resp: MethodCallReply<Value>,
+        _: EngineHandle,
+    ) {
         match call.method.as_str() {
             "createTag" => {
                 if let Value::String(name) = call.args {
@@ -29,16 +34,14 @@ impl MethodCallHandler for MediaChannel {
 
                 resp.respond_result(response);
             }
-            _ => resp.not_implemented()
+            _ => resp.not_implemented(),
         }
     }
 }
 
 impl MediaChannel {
     pub fn new(handler: MediaHandler) -> Self {
-        Self {
-            handler
-        }
+        Self { handler }
     }
 
     pub fn channel(self, context: Rc<Context>) -> MethodChannel {

@@ -1,9 +1,9 @@
 use structopt::StructOpt;
 use tokio::task::LocalSet;
 
-use mizer::{build_runtime, Flags, Api};
-use mizer_session::Session;
+use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
+use mizer_session::Session;
 
 use std::sync::mpsc;
 
@@ -23,7 +23,7 @@ fn main() -> anyhow::Result<()> {
 
     if headless {
         run_headless(flags)
-    }else {
+    } else {
         run(flags)
     }
 }
@@ -78,12 +78,17 @@ fn build_tokio_runtime() -> tokio::runtime::Runtime {
         .unwrap()
 }
 
-fn start_runtime(mut runtime: tokio::runtime::Runtime, flags: Flags, handler_out: Option<mpsc::Sender<Handlers<Api>>>) -> anyhow::Result<()> {
+fn start_runtime(
+    mut runtime: tokio::runtime::Runtime,
+    flags: Flags,
+    handler_out: Option<mpsc::Sender<Handlers<Api>>>,
+) -> anyhow::Result<()> {
     let local = LocalSet::new();
     // TODO: integrate discovery mode
     Session::new()?;
 
-    let (mut mizer, api_handler) = runtime.enter(|| build_runtime(runtime.handle().clone(), flags))?;
+    let (mut mizer, api_handler) =
+        runtime.enter(|| build_runtime(runtime.handle().clone(), flags))?;
     if let Some(handler_out) = handler_out {
         handler_out.send(mizer.handlers.clone())?;
     }

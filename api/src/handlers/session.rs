@@ -3,14 +3,12 @@ use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct SessionHandler<R: RuntimeApi> {
-    runtime: R
+    runtime: R,
 }
 
 impl<R: RuntimeApi> SessionHandler<R> {
     pub fn new(runtime: R) -> Self {
-        Self {
-            runtime
-        }
+        Self { runtime }
     }
 
     pub fn get_session(&self) -> Session {

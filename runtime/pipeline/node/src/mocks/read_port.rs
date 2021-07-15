@@ -35,8 +35,10 @@ impl ReadPortMock {
     fn call<V: PortValue + 'static>(&self, port: PortId) -> Option<V> {
         if self.port != port {
             None
-        }else {
-            self.value.as_ref().and_then(|value| value.downcast_ref().cloned())
+        } else {
+            self.value
+                .as_ref()
+                .and_then(|value| value.downcast_ref().cloned())
         }
     }
 }
@@ -50,7 +52,7 @@ impl ReadPortFunction {
     pub fn call<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {
         if let Some(ref mock) = self.mock {
             mock.call(port.into())
-        }else {
+        } else {
             unimplemented!()
         }
     }

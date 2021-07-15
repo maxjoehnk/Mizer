@@ -1,14 +1,14 @@
+pub use self::connections::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::session::*;
 pub use self::transport::*;
-pub use self::connections::*;
-use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::library::FixtureLibrary;
-use mizer_media::api::MediaServerApi;
 use crate::RuntimeApi;
+use mizer_fixtures::library::FixtureLibrary;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_media::api::MediaServerApi;
 
 mod connections;
 mod fixtures;

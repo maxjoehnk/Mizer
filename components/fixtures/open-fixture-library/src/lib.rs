@@ -64,7 +64,8 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
     }
 
     fn list_definitions(&self) -> Vec<FixtureDefinition> {
-        self.definitions.values()
+        self.definitions
+            .values()
             .flatten()
             .cloned()
             .map(FixtureDefinition::from)
@@ -113,7 +114,7 @@ pub struct FixtureManufacturer {
 #[serde(rename_all = "camelCase")]
 pub struct Channel {
     pub default_value: Option<Value>,
-    pub capabilities: Vec<Capability>
+    pub capabilities: Vec<Capability>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -155,7 +156,9 @@ pub enum Capability {
     Intensity,
     NoFunction,
     Maintenance,
-    ColorIntensity { color: String },
+    ColorIntensity {
+        color: String,
+    },
     ColorPreset {
         #[serde(default)]
         colors: Vec<String>,
@@ -225,7 +228,7 @@ pub enum WheelSlot {
         slot_number_start: f32,
         #[serde(rename = "slotNumberEnd")]
         slot_number_end: f32,
-    }
+    },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -251,7 +254,11 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     fn from(def: OpenFixtureLibraryFixtureDefinition) -> Self {
         let available_channels = def.available_channels;
         FixtureDefinition {
-            id: format!("ofl:{}:{}", def.manufacturer.name.to_slug(), def.name.to_slug()),
+            id: format!(
+                "ofl:{}:{}",
+                def.manufacturer.name.to_slug(),
+                def.name.to_slug()
+            ),
             name: def.name,
             manufacturer: def.manufacturer.name,
             modes: def
@@ -277,7 +284,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
             physical: PhysicalFixtureData {
                 weight: def.physical.weight,
                 dimensions: convert_dimensions(def.physical.dimensions),
-            }
+            },
         }
     }
 }
@@ -287,15 +294,23 @@ fn convert_dimensions(dimensions: Vec<f32>) -> Option<FixtureDimensions> {
         [width, height, depth] => Some(FixtureDimensions {
             width: *width,
             height: *height,
-            depth: *depth
+            depth: *depth,
         }),
         _ => None,
     }
 }
 
-fn group_channels(available_channels: &HashMap<String, Channel>, enabled_channels: &[String]) -> Vec<FixtureChannelGroup> {
-    let channels = enabled_channels.iter()
-        .filter_map(|name| available_channels.get(name).map(|channel| (name.clone(), channel)))
+fn group_channels(
+    available_channels: &HashMap<String, Channel>,
+    enabled_channels: &[String],
+) -> Vec<FixtureChannelGroup> {
+    let channels = enabled_channels
+        .iter()
+        .filter_map(|name| {
+            available_channels
+                .get(name)
+                .map(|channel| (name.clone(), channel))
+        })
         .collect::<Vec<_>>();
 
     log::debug!("{:?}", channels);
@@ -315,12 +330,10 @@ fn group_channels(available_channels: &HashMap<String, Channel>, enabled_channel
             // Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
             //     color_group.blue(name.clone());
             // },
-            Some(_) => {
-                groups.push(FixtureChannelGroup {
-                    name: name.clone(),
-                    group_type: FixtureChannelGroupType::Generic(name.clone()),
-                })
-            }
+            Some(_) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Generic(name.clone()),
+            }),
             _ => {}
         }
     }
@@ -363,11 +376,7 @@ impl ColorGroupBuilder {
 
     fn build(self) -> Option<ColorGroup> {
         match (self.red, self.green, self.blue) {
-            (Some(red), Some(green), Some(blue)) => ColorGroup {
-                red,
-                green,
-                blue,
-            }.into(),
+            (Some(red), Some(green), Some(blue)) => ColorGroup { red, green, blue }.into(),
             _ => None,
         }
     }
@@ -375,10 +384,10 @@ impl ColorGroupBuilder {
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashMap;
-    use crate::{Channel, Capability};
     use super::group_channels;
-    use mizer_fixtures::fixture::{FixtureChannelGroup, FixtureChannelGroupType, ColorGroup};
+    use crate::{Capability, Channel};
+    use mizer_fixtures::fixture::{ColorGroup, FixtureChannelGroup, FixtureChannelGroupType};
+    use std::collections::HashMap;
 
     // TODO: reenable when color support in ui is working properly
     #[test]
@@ -386,41 +395,47 @@ mod tests {
     fn group_channels_should_group_color_channels() {
         let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into()];
         let mut available_channels = HashMap::new();
-        available_channels.insert("Red".into(), Channel {
-            default_value: None,
-            capabilities: vec![
-                Capability::ColorIntensity {
-                    color: "#ff0000".into()
-                },
-            ]
-        });
-        available_channels.insert("Green".into(), Channel {
-            default_value: None,
-            capabilities: vec![
-                Capability::ColorIntensity {
-                    color: "#00ff00".into()
-                },
-            ]
-        });
-        available_channels.insert("Blue".into(), Channel {
-            default_value: None,
-            capabilities: vec![
-                Capability::ColorIntensity {
-                    color: "#0000ff".into()
-                },
-            ]
-        });
+        available_channels.insert(
+            "Red".into(),
+            Channel {
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#ff0000".into(),
+                }],
+            },
+        );
+        available_channels.insert(
+            "Green".into(),
+            Channel {
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#00ff00".into(),
+                }],
+            },
+        );
+        available_channels.insert(
+            "Blue".into(),
+            Channel {
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#0000ff".into(),
+                }],
+            },
+        );
 
         let groups = group_channels(&available_channels, &enabled_channels);
 
-        assert_eq!(groups, vec![FixtureChannelGroup {
-            name: "Color".into(),
-            group_type: FixtureChannelGroupType::Color(ColorGroup {
-                red: "Red".into(),
-                green: "Green".into(),
-                blue: "Blue".into(),
-            })
-        }]);
+        assert_eq!(
+            groups,
+            vec![FixtureChannelGroup {
+                name: "Color".into(),
+                group_type: FixtureChannelGroupType::Color(ColorGroup {
+                    red: "Red".into(),
+                    green: "Green".into(),
+                    blue: "Blue".into(),
+                })
+            }]
+        );
     }
 
     #[test]
@@ -437,16 +452,22 @@ mod tests {
     fn group_channels_should_map_generic_channels() {
         let enabled_channels = vec!["Channel".into()];
         let mut available_channels = HashMap::new();
-        available_channels.insert("Channel".into(), Channel {
-            default_value: None,
-            capabilities: vec![Capability::Generic],
-        });
+        available_channels.insert(
+            "Channel".into(),
+            Channel {
+                default_value: None,
+                capabilities: vec![Capability::Generic],
+            },
+        );
 
         let groups = group_channels(&available_channels, &enabled_channels);
 
-        assert_eq!(groups, vec![FixtureChannelGroup {
-            name: "Channel".into(),
-            group_type: FixtureChannelGroupType::Generic("Channel".into()),
-        }]);
+        assert_eq!(
+            groups,
+            vec![FixtureChannelGroup {
+                name: "Channel".into(),
+                group_type: FixtureChannelGroupType::Generic("Channel".into()),
+            }]
+        );
     }
 }

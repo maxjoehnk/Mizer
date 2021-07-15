@@ -1,6 +1,6 @@
 use crate::models::fixtures::*;
+use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData};
 use protobuf::SingularPtrField;
-use mizer_fixtures::fixture::{PhysicalFixtureData, ChannelResolution};
 use std::collections::HashMap;
 
 impl From<mizer_fixtures::fixture::FixtureDefinition> for FixtureDefinition {
@@ -93,17 +93,26 @@ impl From<mizer_fixtures::fixture::ChannelResolution> for FixtureChannel_oneof_r
 }
 
 impl FixtureChannelGroup {
-    pub fn with_values(group: &mizer_fixtures::fixture::FixtureChannelGroup, values: &HashMap<String, f64>) -> Self {
+    pub fn with_values(
+        group: &mizer_fixtures::fixture::FixtureChannelGroup,
+        values: &HashMap<String, f64>,
+    ) -> Self {
         Self {
             name: group.name.clone(),
-            channel: Some(FixtureChannelGroup_oneof_channel::with_values(&group.group_type, values)),
+            channel: Some(FixtureChannelGroup_oneof_channel::with_values(
+                &group.group_type,
+                values,
+            )),
             ..Default::default()
         }
     }
 }
 
 impl FixtureChannelGroup_oneof_channel {
-    pub fn with_values(group_type: &mizer_fixtures::fixture::FixtureChannelGroupType, values: &HashMap<String, f64>) -> Self {
+    pub fn with_values(
+        group_type: &mizer_fixtures::fixture::FixtureChannelGroupType,
+        values: &HashMap<String, f64>,
+    ) -> Self {
         use mizer_fixtures::fixture::FixtureChannelGroupType::*;
         match group_type {
             Color(color) => Self::color(ColorChannel {

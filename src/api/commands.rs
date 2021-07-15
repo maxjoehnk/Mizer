@@ -1,6 +1,6 @@
-use mizer_node::{NodeType, NodeDesigner, NodePath, NodeLink, PortId};
-use mizer_nodes::Node;
 use mizer_clock::ClockState;
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
+use mizer_nodes::Node;
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
@@ -20,4 +20,3 @@ pub enum ApiCommand {
     NewProject(flume::Sender<anyhow::Result<()>>),
     LoadProject(String, flume::Sender<anyhow::Result<()>>),
 }
-

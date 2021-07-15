@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
+use std::any::Any;
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::ops::Deref;
-use std::any::Any;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[repr(transparent)]

@@ -1,9 +1,9 @@
 use crate::protos::SessionApi;
-use mizer_api::models::*;
 use grpc::{
     ServerHandlerContext, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
 };
 use mizer_api::handlers::SessionHandler;
+use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 
 impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
@@ -27,19 +27,34 @@ impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
         unimplemented!()
     }
 
-    fn new_project(&self, _: ServerHandlerContext, _: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+    fn new_project(
+        &self,
+        _: ServerHandlerContext,
+        _: ServerRequestSingle<ProjectRequest>,
+        resp: ServerResponseUnarySink<ProjectResponse>,
+    ) -> grpc::Result<()> {
         self.new_project().unwrap();
 
         resp.finish(Default::default())
     }
 
-    fn load_project(&self, _: ServerHandlerContext, req: ServerRequestSingle<LoadProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+    fn load_project(
+        &self,
+        _: ServerHandlerContext,
+        req: ServerRequestSingle<LoadProjectRequest>,
+        resp: ServerResponseUnarySink<ProjectResponse>,
+    ) -> grpc::Result<()> {
         self.load_project(req.message.path).unwrap();
 
         resp.finish(Default::default())
     }
 
-    fn save_project(&self, _: ServerHandlerContext, _: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+    fn save_project(
+        &self,
+        _: ServerHandlerContext,
+        _: ServerRequestSingle<ProjectRequest>,
+        resp: ServerResponseUnarySink<ProjectResponse>,
+    ) -> grpc::Result<()> {
         self.save_project().unwrap();
 
         resp.finish(Default::default())

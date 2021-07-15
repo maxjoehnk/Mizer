@@ -1,5 +1,5 @@
+use crate::{FixtureConfig, Project, ProjectManager};
 use mizer_fixtures::manager::FixtureManager;
-use crate::{ProjectManager, Project, FixtureConfig};
 
 impl ProjectManager for FixtureManager {
     fn load(&self, project: &Project) -> anyhow::Result<()> {

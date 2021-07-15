@@ -11,7 +11,7 @@ pub struct MergeNode {
 pub enum MergeMode {
     Latest,
     Highest,
-    Lowest
+    Lowest,
 }
 
 impl Default for MergeMode {
@@ -30,17 +30,23 @@ impl PipelineNode for MergeNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            ("input".into(), PortMetadata {
-                direction: PortDirection::Input,
-                port_type: PortType::Single,
-                multiple: true.into(),
-                ..PortMetadata::default()
-            }),
-            ("output".into(), PortMetadata {
-                direction: PortDirection::Output,
-                port_type: PortType::Single,
-                ..PortMetadata::default()
-            })
+            (
+                "input".into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    multiple: true.into(),
+                    ..PortMetadata::default()
+                },
+            ),
+            (
+                "output".into(),
+                PortMetadata {
+                    direction: PortDirection::Output,
+                    port_type: PortType::Single,
+                    ..PortMetadata::default()
+                },
+            ),
         ]
     }
 
@@ -72,4 +78,3 @@ impl ProcessingNode for MergeNode {
         Default::default()
     }
 }
-

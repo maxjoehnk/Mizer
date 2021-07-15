@@ -1,10 +1,10 @@
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::LayoutsHandler;
 use mizer_api::models::*;
-use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
-use nativeshell::codec::{MethodCall, Value, MethodCallReply};
-use nativeshell::shell::{MethodCallHandler, EngineHandle, MethodChannel, Context};
-use std::rc::Rc;
 use mizer_api::RuntimeApi;
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+use std::rc::Rc;
 
 #[derive(Clone)]
 pub struct LayoutsChannel<R: RuntimeApi> {
@@ -12,7 +12,12 @@ pub struct LayoutsChannel<R: RuntimeApi> {
 }
 
 impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
-    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
+    fn on_method_call(
+        &mut self,
+        call: MethodCall<Value>,
+        resp: MethodCallReply<Value>,
+        _: EngineHandle,
+    ) {
         log::debug!("mizer.live/layouts -> {}", call.method);
         match call.method.as_str() {
             "getLayouts" => {
@@ -35,41 +40,41 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                 }
             }
             "renameLayout" => {
-                let response = call.arguments().map(|req: RenameLayoutRequest| self.rename_layout(req.id, req.name));
+                let response = call
+                    .arguments()
+                    .map(|req: RenameLayoutRequest| self.rename_layout(req.id, req.name));
 
                 resp.respond_result(response);
             }
             "removeControl" => {
                 if let Err(err) = call.arguments().map(|req| self.remove_control(req)) {
                     resp.respond_error(err);
-                }else {
+                } else {
                     resp.send_ok(Value::Null);
                 }
             }
             "moveControl" => {
                 if let Err(err) = call.arguments().map(|req| self.move_control(req)) {
                     resp.respond_error(err);
-                }else {
+                } else {
                     resp.send_ok(Value::Null);
                 }
             }
             "renameControl" => {
                 if let Err(err) = call.arguments().map(|req| self.rename_control(req)) {
                     resp.respond_error(err);
-                }else {
+                } else {
                     resp.send_ok(Value::Null);
                 }
             }
-            _ => resp.not_implemented()
+            _ => resp.not_implemented(),
         }
     }
 }
 
 impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     pub fn new(handler: LayoutsHandler<R>) -> Self {
-        Self {
-            handler
-        }
+        Self { handler }
     }
 
     pub fn channel(self, context: Rc<Context>) -> MethodChannel {
@@ -97,10 +102,12 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     }
 
     fn move_control(&self, req: MoveControlRequest) {
-        self.handler.move_control(req.layout_id, req.control_id, req.position.unwrap());
+        self.handler
+            .move_control(req.layout_id, req.control_id, req.position.unwrap());
     }
 
     fn rename_control(&self, req: RenameControlRequest) {
-        self.handler.rename_control(req.layout_id, req.control_id, req.name);
+        self.handler
+            .rename_control(req.layout_id, req.control_id, req.name);
     }
 }

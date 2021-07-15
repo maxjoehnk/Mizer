@@ -144,7 +144,6 @@ impl EnvelopeState {
                 // TODO: this is dangerous as it may discard frames which can cause drifting over time
                 self.beat = delta;
             }
-
         }
     }
 }

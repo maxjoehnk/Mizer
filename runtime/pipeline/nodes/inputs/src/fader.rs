@@ -14,21 +14,24 @@ impl PipelineNode for FaderNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-        ), (
-            "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![
+            (
+                "value".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "value".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
+        ]
     }
 
     fn node_type(&self) -> NodeType {

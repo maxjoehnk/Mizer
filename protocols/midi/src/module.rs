@@ -1,5 +1,5 @@
-use mizer_module::{Runtime, Module};
 use crate::connections::MidiConnectionManager;
+use mizer_module::{Module, Runtime};
 
 pub struct MidiModule;
 

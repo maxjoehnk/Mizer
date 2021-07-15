@@ -1,9 +1,9 @@
 use crate::fixture::{Fixture, FixtureDefinition};
+use crate::library::FixtureLibrary;
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
 use std::sync::Arc;
-use crate::library::FixtureLibrary;
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -15,7 +15,7 @@ impl FixtureManager {
     pub fn new(library: FixtureLibrary) -> Self {
         Self {
             library,
-            fixtures: Default::default()
+            fixtures: Default::default(),
         }
     }
 
@@ -33,14 +33,7 @@ impl FixtureManager {
         universe: Option<u16>,
     ) {
         log::trace!("Adding fixture {}", fixture_id);
-        let fixture = Fixture::new(
-            fixture_id,
-            definition,
-            mode,
-            output,
-            channel,
-            universe,
-        );
+        let fixture = Fixture::new(fixture_id, definition, mode, output, channel, universe);
         self.fixtures.insert(fixture_id, fixture);
     }
 
@@ -48,10 +41,7 @@ impl FixtureManager {
         self.fixtures.get(&fixture_id)
     }
 
-    pub fn get_fixture_mut(
-        &self,
-        fixture_id: u32,
-    ) -> Option<impl DerefMut<Target = Fixture> + '_> {
+    pub fn get_fixture_mut(&self, fixture_id: u32) -> Option<impl DerefMut<Target = Fixture> + '_> {
         self.fixtures.get_mut(&fixture_id)
     }
 

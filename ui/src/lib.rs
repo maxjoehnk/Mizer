@@ -3,8 +3,8 @@ use nativeshell::{
     shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
 };
 
-use mizer_api::handlers::Handlers;
 use crate::plugin::channels::*;
+use mizer_api::handlers::Handlers;
 use mizer_api::RuntimeApi;
 
 mod plugin;

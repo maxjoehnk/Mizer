@@ -53,21 +53,24 @@ impl PipelineNode for OscInputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "number".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        ), (
-            "color".into(),
-            PortMetadata {
-                port_type: PortType::Color,
-                direction: PortDirection::Output,
-                ..Default::default()
-            }
-        )]
+        vec![
+            (
+                "number".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
+            (
+                "color".into(),
+                PortMetadata {
+                    port_type: PortType::Color,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -124,10 +127,13 @@ fn write_number(context: &impl NodeContext, value: f64) {
 }
 
 fn write_color(context: &impl NodeContext, color: &OscColor) {
-    context.write_port("color", Color {
-        red: color.red,
-        green: color.green,
-        blue: color.blue,
-        alpha: color.alpha,
-    });
+    context.write_port(
+        "color",
+        Color {
+            red: color.red,
+            green: color.green,
+            blue: color.blue,
+            alpha: color.alpha,
+        },
+    );
 }

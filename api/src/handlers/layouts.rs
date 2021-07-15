@@ -1,5 +1,5 @@
-use crate::RuntimeApi;
 use crate::models::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct LayoutsHandler<R: RuntimeApi> {
@@ -49,12 +49,24 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
 
     pub fn move_control(&self, layout_id: String, control_id: String, position: ControlPosition) {
         let position = position.into();
-        log::debug!("Moving control {} in layout {} to {:?}", control_id, layout_id, position);
-        self.runtime.update_layout_control(layout_id, control_id, |control| control.position = position);
+        log::debug!(
+            "Moving control {} in layout {} to {:?}",
+            control_id,
+            layout_id,
+            position
+        );
+        self.runtime
+            .update_layout_control(layout_id, control_id, |control| control.position = position);
     }
 
     pub fn rename_control(&self, layout_id: String, control_id: String, name: String) {
-        log::debug!("Renaming control {} in layout {} to {}", control_id, layout_id, name);
-        self.runtime.update_layout_control(layout_id, control_id, |control| control.label = name.into());
+        log::debug!(
+            "Renaming control {} in layout {} to {}",
+            control_id,
+            layout_id,
+            name
+        );
+        self.runtime
+            .update_layout_control(layout_id, control_id, |control| control.label = name.into());
     }
 }

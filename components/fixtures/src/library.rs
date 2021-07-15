@@ -8,7 +8,9 @@ pub struct FixtureLibrary {
 
 impl FixtureLibrary {
     pub fn new(providers: Vec<Box<dyn FixtureLibraryProvider>>) -> Self {
-        FixtureLibrary { providers: Arc::new(providers) }
+        FixtureLibrary {
+            providers: Arc::new(providers),
+        }
     }
 
     pub fn get_definition(&self, id: &str) -> Option<FixtureDefinition> {
@@ -28,7 +30,7 @@ impl FixtureLibrary {
     }
 }
 
-pub trait FixtureLibraryProvider : Send + Sync {
+pub trait FixtureLibraryProvider: Send + Sync {
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition>;
 
     fn list_definitions(&self) -> Vec<FixtureDefinition>;

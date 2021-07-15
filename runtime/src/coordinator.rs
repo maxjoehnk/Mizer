@@ -376,7 +376,8 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
             .map(|layout| (layout.id, layout.controls))
             .collect();
         let designer = self.designer.read();
-        project.nodes = self.nodes
+        project.nodes = self
+            .nodes
             .iter()
             .map(|(name, node)| {
                 let node = downcast(&node);
@@ -387,7 +388,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
                 }
             })
             .collect()
-     }
+    }
 
     fn clear(&mut self) {
         self.designer.set(Default::default());

@@ -1,5 +1,5 @@
+use crate::models::{Timecode, Transport, TransportState};
 use mizer_clock::{ClockSnapshot, ClockState};
-use crate::models::{Transport, TransportState, Timecode};
 use protobuf::SingularPtrField;
 
 impl From<ClockSnapshot> for Transport {

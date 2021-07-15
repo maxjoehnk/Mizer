@@ -1,9 +1,9 @@
 use mizer_node::*;
 use mizer_protocol_midi::*;
-use serde::{Deserialize, Serialize};
-use std::ops::DerefMut;
-use std::convert::TryInto;
 use mizer_util::LerpExt;
+use serde::{Deserialize, Serialize};
+use std::convert::TryInto;
+use std::ops::DerefMut;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiOutputNode {
@@ -26,15 +26,14 @@ pub enum MidiOutputConfig {
         port: u8,
         #[serde(default = "default_midi_range")]
         range: (u8, u8),
-    }
+    },
 }
-
 
 impl Default for MidiOutputConfig {
     fn default() -> Self {
         MidiOutputConfig::Note {
             port: 1,
-            range: default_midi_range()
+            range: default_midi_range(),
         }
     }
 }
@@ -56,13 +55,14 @@ impl PipelineNode for MidiOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            ("value".into(), PortMetadata {
+        vec![(
+            "value".into(),
+            PortMetadata {
                 direction: PortDirection::Input,
                 port_type: PortType::Single,
                 ..Default::default()
-            })
-        ]
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {
@@ -81,12 +81,12 @@ impl ProcessingNode for MidiOutputNode {
                 let device: &mut MidiDevice = device.deref_mut();
                 let channel = self.channel.try_into().unwrap();
                 let msg = match &self.config {
-                    MidiOutputConfig::CC { port, range} => {
+                    MidiOutputConfig::CC { port, range } => {
                         MidiMessage::ControlChange(channel, *port, value.lerp((0f64, 1f64), *range))
-                    },
+                    }
                     MidiOutputConfig::Note { port, range } => {
                         MidiMessage::NoteOn(channel, *port, value.lerp((0f64, 1f64), *range))
-                    },
+                    }
                 };
 
                 device.write(msg)?;

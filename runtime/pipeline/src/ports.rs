@@ -120,7 +120,7 @@ impl AnyPortReceiver {
                 values.push(value);
             }
             values
-        }else {
+        } else {
             Default::default()
         }
     }
@@ -129,7 +129,7 @@ impl AnyPortReceiver {
         match self.metadata.multiple {
             Some(true) => {
                 self.push_receiver(transport);
-            },
+            }
             _ => {
                 let receiver = self
                     .receiver::<V>()

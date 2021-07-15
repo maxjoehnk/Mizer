@@ -1,13 +1,13 @@
-use crate::{NodeContext, PreviewContext, ClockFrame, PortId, PortMetadata};
+use self::clock::ClockFunction;
+use self::read_port::ReadPortFunction;
+use self::write_port::WritePortFunction;
+use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
 use mizer_ports::PortValue;
 use std::cell::RefCell;
-use self::write_port::WritePortFunction;
-use self::read_port::ReadPortFunction;
-use self::clock::ClockFunction;
 
-mod write_port;
-mod read_port;
 mod clock;
+mod read_port;
+mod write_port;
 
 #[derive(Default)]
 pub struct NodeContextMock {
@@ -21,7 +21,6 @@ impl NodeContextMock {
     pub fn new() -> Self {
         Self::default()
     }
-
 }
 
 impl NodeContext for NodeContextMock {

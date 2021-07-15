@@ -1,17 +1,17 @@
 #[macro_use]
 extern crate serde;
 
-use mizer_runtime::NodeDescriptor;
-use mizer_node::{NodeLink, NodeType, NodeDesigner, NodePath, PortId};
-use mizer_layouts::{Layout, ControlConfig};
+use mizer_clock::{ClockSnapshot, ClockState};
+use mizer_layouts::{ControlConfig, Layout};
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
-use mizer_clock::{ClockState, ClockSnapshot};
+use mizer_runtime::NodeDescriptor;
 
 pub mod handlers;
-pub mod models;
 mod mappings;
+pub mod models;
 
-pub trait RuntimeApi : Clone + Send + Sync {
+pub trait RuntimeApi: Clone + Send + Sync {
     fn nodes(&self) -> Vec<NodeDescriptor>;
 
     fn links(&self) -> Vec<NodeLink>;
@@ -25,7 +25,12 @@ pub trait RuntimeApi : Clone + Send + Sync {
     fn rename_layout(&self, id: String, name: String);
 
     fn delete_layout_control(&self, layout_id: String, control_id: String);
-    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(&self, layout_id: String, control_id: String, update: F);
+    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(
+        &self,
+        layout_id: String,
+        control_id: String,
+        update: F,
+    );
 
     fn add_node(
         &self,
@@ -35,12 +40,7 @@ pub trait RuntimeApi : Clone + Send + Sync {
 
     fn add_node_for_fixture(&self, fixture_id: u32) -> anyhow::Result<NodeDescriptor<'_>>;
 
-    fn write_node_port(
-        &self,
-        node_path: NodePath,
-        port: PortId,
-        value: f64,
-    ) -> anyhow::Result<()>;
+    fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()>;
 
     fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()>;
 

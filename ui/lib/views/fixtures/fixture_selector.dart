@@ -1,13 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/extensions/map_extensions.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 
 class FixtureSelector extends StatefulWidget {
   final FixtureDefinitions definitions;
   final Function(FixtureDefinition, FixtureMode) onSelect;
 
-  FixtureSelector(this.definitions, { this.onSelect });
+  FixtureSelector(this.definitions, {this.onSelect});
 
   @override
   _FixtureSelectorState createState() => _FixtureSelectorState();
@@ -28,21 +28,22 @@ class _FixtureSelectorState extends State<FixtureSelector> {
             children: widget.definitions
                 .groupByManufacturer()
                 .sortedBy((element) => element.name)
-                .map(manufacturerItem)
+                .map(_manufacturerItem)
                 .toList()),
         _FixtureSelectorColumn(
             label: "Fixtures",
-            children: manufacturer?.definitions?.map(definitionItem)?.toList() ?? []),
+            children: manufacturer?.definitions?.map(_definitionItem)?.toList() ?? []),
         _FixtureSelectorColumn(
-            label: "Modes", children: definition?.modes?.map(modeItem)?.toList() ?? []),
+            label: "Modes", children: definition?.modes?.map(_modeItem)?.toList() ?? []),
         _SelectedFixtureMode(definition, mode)
       ],
     );
   }
 
-  Widget manufacturerItem(_ManufacturerGroup manufacturer) {
-    return ListTile(
-      title: Text(manufacturer.name),
+  FixtureColumnEntry _manufacturerItem(_ManufacturerGroup manufacturer) {
+    var text = manufacturer.name;
+    var child = ListTile(
+      title: Text(text),
       selected: manufacturer.name == this.manufacturer?.name,
       onTap: () => setState(() {
         this.manufacturer = manufacturer;
@@ -50,49 +51,92 @@ class _FixtureSelectorState extends State<FixtureSelector> {
         definition = null;
       }),
     );
+
+    return FixtureColumnEntry(child: child, text: text);
   }
 
-  Widget definitionItem(FixtureDefinition definition) {
-    return ListTile(
+  FixtureColumnEntry _definitionItem(FixtureDefinition definition) {
+    var text = definition.name;
+    var child = ListTile(
         onTap: () => setState(() {
-          this.definition = definition;
-          mode = null;
-        }),
+              this.definition = definition;
+              mode = null;
+            }),
         selected: definition.id == this.definition?.id,
-        title: Text(definition.name));
+        title: Text(text));
+
+    return FixtureColumnEntry(child: child, text: text);
   }
 
-  Widget modeItem(FixtureMode mode) {
-    return ListTile(
-      title: Text(mode.name),
+  FixtureColumnEntry _modeItem(FixtureMode mode) {
+    var text = mode.name;
+    var child = ListTile(
+      title: Text(text),
       onTap: () {
         setState(() => this.mode = mode);
         widget.onSelect(this.definition, mode);
       },
       selected: this.mode?.name == mode.name,
     );
+
+    return FixtureColumnEntry(child: child, text: text);
   }
 }
 
-class _FixtureSelectorColumn extends StatelessWidget {
+class FixtureColumnEntry {
+  final Widget child;
+  final String text;
+
+  FixtureColumnEntry({this.child, this.text});
+}
+
+class _FixtureSelectorColumn extends StatefulWidget {
   final String label;
-  final List<Widget> children;
+  final List<FixtureColumnEntry> children;
 
   _FixtureSelectorColumn({this.label, this.children});
 
   @override
+  State<_FixtureSelectorColumn> createState() => _FixtureSelectorColumnState();
+}
+
+class _FixtureSelectorColumnState extends State<_FixtureSelectorColumn> {
+  String _query = "";
+
+  List<Widget> get _children {
+    return widget.children
+        .where((e) => e.text.toLowerCase().contains(_query))
+        .map((e) => e.child)
+        .toList(growable: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    return Container(
-      width: 256,
-      child: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(label, style: textTheme.subtitle2),
+    return FocusTraversalGroup(
+      child: Container(
+        width: 256,
+        padding: const EdgeInsets.all(4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.label, style: textTheme.subtitle2),
+            TextField(
+              decoration: InputDecoration(labelText: "Search"),
+              autofocus: true,
+              onChanged: _updateSearch,
+            ),
+            Expanded(
+              child: ListView(children: _children),
+            ),
+          ],
         ),
-        ...children
-      ]),
+      ),
     );
+  }
+
+  void _updateSearch(String query) {
+    setState(() => _query = query.toLowerCase());
   }
 }
 

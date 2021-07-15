@@ -226,19 +226,6 @@ class _PatchSettingsState extends State<PatchSettings> {
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
         ),
       ),
-      PatchField(
-          child: Row(
-        children: [
-          Checkbox(
-            value: createNodes,
-            onChanged: (value) => setState(() {
-              createNodes = value;
-              this._emitUpdate();
-            }),
-          ),
-          Text("Create Nodes")
-        ],
-      ))
     ]);
   }
 

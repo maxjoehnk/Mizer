@@ -12,21 +12,16 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class AddFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..pc<AddFixtureRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'requests', $pb.PbFieldType.PM, subBuilder: AddFixtureRequest.create)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createNodes')
     ..hasRequiredFields = false
   ;
 
   AddFixturesRequest._() : super();
   factory AddFixturesRequest({
     $core.Iterable<AddFixtureRequest> requests,
-    $core.bool createNodes,
   }) {
     final _result = create();
     if (requests != null) {
       _result.requests.addAll(requests);
-    }
-    if (createNodes != null) {
-      _result.createNodes = createNodes;
     }
     return _result;
   }
@@ -53,15 +48,6 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<AddFixtureRequest> get requests => $_getList(0);
-
-  @$pb.TagNumber(2)
-  $core.bool get createNodes => $_getBF(1);
-  @$pb.TagNumber(2)
-  set createNodes($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasCreateNodes() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearCreateNodes() => clearField(2);
 }
 
 class AddFixtureRequest extends $pb.GeneratedMessage {

@@ -15,9 +15,8 @@ class AddFixtures extends FixturesEvent {
   int count;
   int startId;
   int startChannel;
-  bool createNodes;
 
-  AddFixtures({this.definition, this.mode, this.universe, this.count, this.startId, this.startChannel, this.createNodes});
+  AddFixtures({this.definition, this.mode, this.universe, this.count, this.startId, this.startChannel});
 
   AddFixturesRequest _into() {
     List<AddFixtureRequest> fixtures = [];
@@ -31,12 +30,12 @@ class AddFixtures extends FixturesEvent {
       );
       fixtures.add(request);
     }
-    return AddFixturesRequest(requests: fixtures, createNodes: createNodes);
+    return AddFixturesRequest(requests: fixtures);
   }
 
   @override
   String toString() {
-    return 'AddFixtures{definition: $definition, mode: $mode, universe: $universe, count: $count, startId: $startId, startChannel: $startChannel, createNodes: $createNodes}';
+    return 'AddFixtures{definition: $definition, mode: $mode, universe: $universe, count: $count, startId: $startId, startChannel: $startChannel}';
   }
 }
 

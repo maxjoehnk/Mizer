@@ -74,9 +74,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 request.channel as u8,
                 Some(request.universe as u16),
             );
-            if add_fixtures.create_nodes {
-                self.runtime.add_node_for_fixture(request.id).unwrap();
-            }
+            self.runtime.add_node_for_fixture(request.id).unwrap();
         }
     }
 

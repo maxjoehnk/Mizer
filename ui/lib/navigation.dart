@@ -14,14 +14,21 @@ import 'package:mizer/views/session/session_view.dart';
 import 'actions/actions.dart';
 
 List<Route> routes = [
-  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', LogicalKeyboardKey.digit1, View.Layout),
-  Route(() => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.digit2, View.Plan2D),
+  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', LogicalKeyboardKey.digit1,
+      View.Layout),
+  Route(
+      () => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.digit2, View.Plan2D),
   Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.digit3, View.PreViz),
-  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.digit4, View.Nodes),
-  Route(() => Container(), MdiIcons.animationPlayOutline, 'Sequences', LogicalKeyboardKey.digit5, View.Sequences),
-  Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit6, View.Fixtures),
-  Route(() => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit7, View.Media),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit8, View.Connections),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.digit4,
+      View.Nodes),
+  Route(() => Container(), MdiIcons.animationPlayOutline, 'Sequences', LogicalKeyboardKey.digit5,
+      View.Sequences),
+  Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit6,
+      View.Fixtures),
+  Route(
+      () => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit7, View.Media),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit8,
+      View.Connections),
   Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit9, View.Session),
 ];
 
@@ -72,7 +79,11 @@ class _HomeState extends State<Home> {
                   onSelect: this._selectView,
                   routes: routes,
                 ),
-                Expanded(child: Container(child: _currentWidget, clipBehavior: Clip.antiAlias, decoration: BoxDecoration()))
+                Expanded(
+                    child: Container(
+                        child: _currentWidget,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration()))
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
@@ -164,17 +175,25 @@ class _NavigationItemState extends State<NavigationItem> {
           height: 64,
           color: backgroundColor,
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-          child: Column(
+          child: Stack(
             children: [
-              Icon(
-                this.widget.route.icon,
-                color: color,
-                size: 24,
+              Center(
+                child: Column(
+                  children: [
+                    Icon(
+                      this.widget.route.icon,
+                      color: color,
+                      size: 24,
+                    ),
+                    Text(this.widget.route.label,
+                        style: textTheme.subtitle2.copyWith(color: color, fontSize: 10)),
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
               ),
-              Text(this.widget.route.label, style: textTheme.subtitle2.copyWith(color: color, fontSize: 10)),
+              Align(alignment: Alignment.topRight, child: Text(widget.route.key.keyLabel, style: textTheme.caption.copyWith(fontSize: 9))),
             ],
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
           ),
         ),
       ),

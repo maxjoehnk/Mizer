@@ -28,7 +28,7 @@ impl DmxOutput for SacnOutput {
     fn flush(&self) {
         let universe_buffer = self.buffer.buffers.lock().unwrap();
         for (universe, buffer) in universe_buffer.iter() {
-            self.source.send(*universe, buffer);
+            self.source.send(*universe, buffer).unwrap();
         }
     }
 }

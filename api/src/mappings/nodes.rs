@@ -492,73 +492,73 @@ impl From<VideoFileNodeConfig> for mizer_nodes::VideoFileNode {
 }
 
 impl From<mizer_nodes::VideoColorBalanceNode> for VideoColorBalanceNodeConfig {
-    fn from(node: mizer_nodes::VideoColorBalanceNode) -> Self {
+    fn from(_: mizer_nodes::VideoColorBalanceNode) -> Self {
         Default::default()
     }
 }
 
 impl From<VideoColorBalanceNodeConfig> for mizer_nodes::VideoColorBalanceNode {
-    fn from(node: VideoColorBalanceNodeConfig) -> Self {
+    fn from(_: VideoColorBalanceNodeConfig) -> Self {
         Default::default()
     }
 }
 
 impl From<mizer_nodes::VideoOutputNode> for VideoOutputNodeConfig {
-    fn from(node: mizer_nodes::VideoOutputNode) -> Self {
+    fn from(_: mizer_nodes::VideoOutputNode) -> Self {
         Default::default()
     }
 }
 
 impl From<VideoOutputNodeConfig> for mizer_nodes::VideoOutputNode {
-    fn from(node: VideoOutputNodeConfig) -> Self {
+    fn from(_: VideoOutputNodeConfig) -> Self {
         Default::default()
     }
 }
 
 impl From<mizer_nodes::VideoEffectNode> for VideoEffectNodeConfig {
-    fn from(node: mizer_nodes::VideoEffectNode) -> Self {
+    fn from(_: mizer_nodes::VideoEffectNode) -> Self {
         Default::default()
     }
 }
 
 impl From<VideoEffectNodeConfig> for mizer_nodes::VideoEffectNode {
-    fn from(node: VideoEffectNodeConfig) -> Self {
+    fn from(_: VideoEffectNodeConfig) -> Self {
         Default::default()
     }
 }
 
 impl From<mizer_nodes::VideoTransformNode> for VideoTransformNodeConfig {
-    fn from(node: mizer_nodes::VideoTransformNode) -> Self {
+    fn from(_: mizer_nodes::VideoTransformNode) -> Self {
         Default::default()
     }
 }
 
 impl From<VideoTransformNodeConfig> for mizer_nodes::VideoTransformNode {
-    fn from(node: VideoTransformNodeConfig) -> Self {
+    fn from(_: VideoTransformNodeConfig) -> Self {
         Default::default()
     }
 }
 
 impl From<mizer_nodes::SelectNode> for SelectNodeConfig {
-    fn from(node: mizer_nodes::SelectNode) -> Self {
+    fn from(_: mizer_nodes::SelectNode) -> Self {
         Default::default()
     }
 }
 
 impl From<SelectNodeConfig> for mizer_nodes::SelectNode {
-    fn from(node: SelectNodeConfig) -> Self {
+    fn from(_: SelectNodeConfig) -> Self {
         Default::default()
     }
 }
 
 impl From<mizer_nodes::MergeNode> for MergeNodeConfig {
-    fn from(node: mizer_nodes::MergeNode) -> Self {
+    fn from(_: mizer_nodes::MergeNode) -> Self {
         Default::default()
     }
 }
 
 impl From<MergeNodeConfig> for mizer_nodes::MergeNode {
-    fn from(node: MergeNodeConfig) -> Self {
+    fn from(_: MergeNodeConfig) -> Self {
         Default::default()
     }
 }

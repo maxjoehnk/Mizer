@@ -27,20 +27,20 @@ impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
         unimplemented!()
     }
 
-    fn new_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
-        self.new_project();
+    fn new_project(&self, _: ServerHandlerContext, _: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.new_project().unwrap();
 
         resp.finish(Default::default())
     }
 
-    fn load_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<LoadProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
-        self.load_project(req.message.path);
+    fn load_project(&self, _: ServerHandlerContext, req: ServerRequestSingle<LoadProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.load_project(req.message.path).unwrap();
 
         resp.finish(Default::default())
     }
 
-    fn save_project(&self, o: ServerHandlerContext, req: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
-        self.save_project();
+    fn save_project(&self, _: ServerHandlerContext, _: ServerRequestSingle<ProjectRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+        self.save_project().unwrap();
 
         resp.finish(Default::default())
     }

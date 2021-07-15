@@ -69,7 +69,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
         let port = port.into();
         self.receivers
             .and_then(|ports| ports.get(&port))
-            .map(|recv| recv.metadata.clone())
+            .map(|recv| recv.metadata)
             .unwrap()
     }
 

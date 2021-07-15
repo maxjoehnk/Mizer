@@ -1,6 +1,6 @@
 use crate::models::fixtures::*;
 use protobuf::SingularPtrField;
-use mizer_fixtures::fixture::{PhysicalFixtureData, ChannelResolution, FixtureChannelGroupType};
+use mizer_fixtures::fixture::{PhysicalFixtureData, ChannelResolution};
 use std::collections::HashMap;
 
 impl From<mizer_fixtures::fixture::FixtureDefinition> for FixtureDefinition {

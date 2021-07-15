@@ -148,10 +148,10 @@ impl Timecode {
         let minutes = minutes - (hours * 60);
 
         Self {
-            frames,
-            seconds,
-            minutes,
             hours,
+            minutes,
+            seconds,
+            frames,
         }
     }
 }

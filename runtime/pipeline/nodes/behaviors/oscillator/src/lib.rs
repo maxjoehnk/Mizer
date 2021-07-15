@@ -147,8 +147,7 @@ impl OscillatorNode {
                 let low = self.min;
                 let value = ((high - low) / self.ratio) * time + low;
                 if frame > base {
-                    let value = high - value;
-                    value
+                    high - value
                 } else {
                     value
                 }

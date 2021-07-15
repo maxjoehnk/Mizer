@@ -2,10 +2,8 @@ use std::rc::Rc;
 
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use protobuf::ProtobufEnum;
 
 use mizer_api::handlers::SessionHandler;
-use mizer_api::models::TransportState;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;

@@ -304,7 +304,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .filter_map(|suffix| u32::from_str(suffix).ok())
             .collect::<Vec<_>>();
         log::trace!("found ids for prefix {}: {:?}", node_type_prefix, ids);
-        ids.sort();
+        ids.sort_unstable();
         ids.last().map(|last_id| last_id + 1).unwrap_or_default()
     }
 }
@@ -436,8 +436,8 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.host = config.host.clone();
             node.port = config.port;
         }
-        (NodeType::Button, Node::Button(config)) => {}
-        (NodeType::Fader, Node::Fader(config)) => {}
+        (NodeType::Button, Node::Button(_)) => {}
+        (NodeType::Fader, Node::Fader(_)) => {}
         (NodeType::IldaFile, Node::IldaFile(config)) => {
             let node: &mut IldaFileNode = node.downcast_mut()?;
             node.file = config.file.clone();
@@ -480,7 +480,7 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut ScriptingNode = node.downcast_mut()?;
             node.script = config.script.clone();
         }
-        (NodeType::VideoColorBalance, Node::VideoColorBalance(config)) => {}
+        (NodeType::VideoColorBalance, Node::VideoColorBalance(_)) => {}
         (NodeType::VideoEffect, Node::VideoEffect(config)) => {
             let node: &mut VideoEffectNode = node.downcast_mut()?;
             node.effect_type = config.effect_type;
@@ -489,8 +489,8 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut VideoFileNode = node.downcast_mut()?;
             node.file = config.file.clone();
         }
-        (NodeType::VideoOutput, Node::VideoOutput(config)) => {}
-        (NodeType::VideoTransform, Node::VideoTransform(config)) => {}
+        (NodeType::VideoOutput, Node::VideoOutput(_)) => {}
+        (NodeType::VideoTransform, Node::VideoTransform(_)) => {}
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,

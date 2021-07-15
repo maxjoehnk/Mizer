@@ -54,7 +54,7 @@ async fn add_media(
         }
     }
 
-    if media_request.tags.len() == 0 {
+    if media_request.tags.is_empty() {
         return Err(tide::Error::new(StatusCode::BadRequest,
             anyhow::anyhow!("At least one tag must be defined"),
         ));

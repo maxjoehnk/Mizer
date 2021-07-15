@@ -88,6 +88,7 @@ impl SessionClient {
     }
 }
 
+#[allow(dead_code)]
 enum ClientRole {
     Orchestrator, // single point of truth, only client which can directly modify session
     Replica,      // may take over the orchestrator role when it leaves the session

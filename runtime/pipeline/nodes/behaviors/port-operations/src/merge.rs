@@ -52,9 +52,9 @@ impl PipelineNode for MergeNode {
 impl ProcessingNode for MergeNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let ports = context.read_ports::<_, f64>("input");
-        let ports_with_value = ports.into_iter().filter_map(|v| v);
+        let ports_with_value = ports.into_iter().flatten();
         let value: Option<f64> = match self.mode {
             MergeMode::Latest => ports_with_value.last(),
             MergeMode::Highest => ports_with_value.max_by(|lhs, rhs| lhs.partial_cmp(rhs).unwrap()),

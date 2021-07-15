@@ -144,7 +144,7 @@ fn register_device_module(
     handle: &tokio::runtime::Handle,
 ) -> anyhow::Result<()> {
     let (device_module, device_manager) = DeviceModule::new();
-    handle.spawn(device_manager.clone().start_discovery());
+    handle.spawn(device_manager.start_discovery());
     device_module.register(runtime)?;
 
     Ok(())
@@ -180,6 +180,7 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     Ok(ofl_provider)
 }
 
+// TODO: combine with project loading/saving
 fn import_media_files(
     media_paths: &[String],
     media_server_api: &MediaServerApi,
@@ -199,7 +200,7 @@ fn setup_grpc_api(
 ) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
     let grpc = if !flags.disable_grpc_api {
         Some(mizer_grpc_api::start(
-            handle.clone(),
+            handle,
             handlers
         )?)
     } else {

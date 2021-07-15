@@ -1,6 +1,5 @@
 use crate::{NodeContext, PreviewContext, ClockFrame, PortId, PortMetadata};
 use mizer_ports::PortValue;
-use std::any::Any;
 use std::cell::RefCell;
 use self::write_port::WritePortFunction;
 use self::read_port::ReadPortFunction;
@@ -38,19 +37,19 @@ impl NodeContext for NodeContextMock {
         self.read_port_fn.call(port)
     }
 
-    fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+    fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, _: P) -> Vec<Option<V>> {
         todo!()
     }
 
-    fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata {
+    fn input_port<P: Into<PortId>>(&self, _: P) -> PortMetadata {
         todo!()
     }
 
-    fn output_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata {
+    fn output_port<P: Into<PortId>>(&self, _: P) -> &PortMetadata {
         todo!()
     }
 
-    fn input_port_count<P: Into<PortId>>(&self, port: P) -> usize {
+    fn input_port_count<P: Into<PortId>>(&self, _: P) -> usize {
         todo!()
     }
 

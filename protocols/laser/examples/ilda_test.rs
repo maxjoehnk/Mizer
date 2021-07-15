@@ -8,7 +8,7 @@ pub fn main() {
     let frames = media_reader.read_frames().unwrap();
 
     let mut devices = EtherDreamLaser::find_devices().unwrap();
-    if let Some(mut device) = devices.next() {
+    if let Some(device) = devices.next() {
         let mut device = device.unwrap();
         println!("sending frames");
         for frame in &frames {

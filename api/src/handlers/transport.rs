@@ -19,9 +19,11 @@ impl<R: RuntimeApi> TransportHandler<R> {
         TransportStream(self.runtime.transport_recv())
     }
 
-    pub fn set_state(&self, state: TransportState) {
+    pub fn set_state(&self, state: TransportState) -> anyhow::Result<()> {
         let clock_state = state.into();
-        self.runtime.set_clock_state(clock_state);
+        self.runtime.set_clock_state(clock_state)?;
+
+        Ok(())
     }
 }
 

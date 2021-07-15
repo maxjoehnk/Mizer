@@ -43,9 +43,7 @@ impl<R: RuntimeApi> SessionHandler<R> {
     }
 
     pub fn new_project(&self) -> anyhow::Result<()> {
-        self.runtime.new_project();
-
-        Ok(())
+        self.runtime.new_project()
     }
 
     pub fn load_project(&self, path: String) -> anyhow::Result<()> {

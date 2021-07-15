@@ -7,4 +7,3 @@ pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
 
 mod api;
 mod coordinator;
-mod worker;

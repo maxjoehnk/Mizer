@@ -1,13 +1,12 @@
 use crate::models::*;
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct ConnectionsHandler {
-
 }
 
 impl ConnectionsHandler {
     pub fn new() -> Self {
-        Self {}
+        Self::default()
     }
 
     pub fn get_connections(&self) -> Connections {

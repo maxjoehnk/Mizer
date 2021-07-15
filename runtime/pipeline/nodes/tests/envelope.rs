@@ -1,4 +1,4 @@
-use mizer_nodes::{EnvelopeNode, SequenceNode};
+use mizer_nodes::EnvelopeNode;
 
 mod node_grapher;
 

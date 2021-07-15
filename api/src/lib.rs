@@ -3,7 +3,7 @@ extern crate serde;
 
 use mizer_runtime::NodeDescriptor;
 use mizer_node::{NodeLink, NodeType, NodeDesigner, NodePath, PortId};
-use mizer_layouts::{Layout, ControlPosition, ControlConfig};
+use mizer_layouts::{Layout, ControlConfig};
 use mizer_nodes::Node;
 use mizer_clock::{ClockState, ClockSnapshot};
 

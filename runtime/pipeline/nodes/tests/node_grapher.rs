@@ -1,10 +1,9 @@
 use std::fs;
 use std::ops::Add;
 use std::path::Path;
-use std::time::Duration;
 
 use mizer_node::mocks::NodeContextMock;
-use mizer_node::{ClockFrame, ProcessingNode};
+use mizer_node::ProcessingNode;
 use mizer_util::clock::{TestClock, Clock};
 
 const FRAMES: usize = 60 * 4;

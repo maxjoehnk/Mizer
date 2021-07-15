@@ -86,7 +86,8 @@ impl From<helios_dac::NativeHeliosDac> for HeliosLaser {
                     device.write_frame(frame.into()).unwrap();
                     thread::sleep(Duration::from_millis(100));
                 }
-            });
+            })
+            .unwrap();
 
         HeliosLaser {
             lock,

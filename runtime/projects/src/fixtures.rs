@@ -1,6 +1,5 @@
 use mizer_fixtures::manager::FixtureManager;
 use crate::{ProjectManager, Project, FixtureConfig};
-use mizer_fixtures::library::FixtureLibrary;
 
 impl ProjectManager for FixtureManager {
     fn load(&self, project: &Project) -> anyhow::Result<()> {
@@ -8,7 +7,7 @@ impl ProjectManager for FixtureManager {
             let def = self.get_definition(&fixture.fixture);
             if let Some(def) = def {
                 self.add_fixture(
-                    fixture.id.clone(),
+                    fixture.id,
                     def,
                     fixture.mode.clone(),
                     fixture.output.clone(),

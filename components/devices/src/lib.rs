@@ -34,7 +34,7 @@ impl DeviceManager {
         Default::default()
     }
 
-    pub async fn start_discovery(self) -> () {
+    pub async fn start_discovery(self) {
         let mut lasers = LaserDevice::discover();
         while let Some(laser) = lasers.next().await {
             let id = self.laser_id_counter.fetch_add(1, Ordering::Relaxed);

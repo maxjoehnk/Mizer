@@ -14,15 +14,6 @@ impl PipelineNode for ButtonNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        Some(PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })
-    }
-
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
              "value".into(),

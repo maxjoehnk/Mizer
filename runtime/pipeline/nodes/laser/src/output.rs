@@ -25,13 +25,6 @@ impl PipelineNode for LaserNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        Some(PortMetadata {
-            port_type: PortType::Laser,
-            ..Default::default()
-        })
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
             "input".into(),

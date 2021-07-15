@@ -2,7 +2,7 @@ use mizer_runtime::{RuntimeAccess, NodeDescriptor, DefaultRuntime};
 use crate::{ApiCommand, ApiHandler};
 use mizer_api::RuntimeApi;
 use mizer_node::{NodeLink, NodeType, NodeDesigner, NodePath, PortId};
-use mizer_layouts::{Layout, ControlPosition, ControlConfig};
+use mizer_layouts::{Layout, ControlConfig};
 use mizer_nodes::{FixtureNode, Node};
 use mizer_clock::{ClockState, ClockSnapshot};
 use std::collections::HashMap;
@@ -98,33 +98,29 @@ impl RuntimeApi for Api {
         let (tx, rx) = flume::bounded(1);
         self.sender
             .send(ApiCommand::WritePort(node_path, port, value, tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::AddLink(link, tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetNodePreview(node, tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::UpdateNode(path, config, tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
@@ -136,25 +132,22 @@ impl RuntimeApi for Api {
     fn new_project(&self) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::NewProject(tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn save_project(&self) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::SaveProject(tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn load_project(&self, path: String) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::LoadProject(path, tx))?;
-        let result = rx.recv()?;
 
-        result
+        rx.recv()?
     }
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot> {
@@ -192,8 +185,8 @@ impl Api {
 
         Ok(NodeDescriptor {
             path,
-            designer,
             node,
+            designer,
             ports,
         })
     }

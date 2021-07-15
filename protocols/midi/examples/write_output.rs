@@ -64,5 +64,5 @@ pub fn main() -> anyhow::Result<()> {
 
 fn write_prompt() {
     print!("> ");
-    std::io::stdout().flush();
+    std::io::stdout().flush().unwrap();
 }

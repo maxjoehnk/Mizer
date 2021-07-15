@@ -3,10 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
-pub struct FaderNode {
-    // #[serde(default)]
-    // pub value: f64,
-}
+pub struct FaderNode {}
 
 impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
@@ -15,15 +12,6 @@ impl PipelineNode for FaderNode {
             preview_type: PreviewType::History,
         }
     }
-
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        Some(PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })
-    }
-
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(

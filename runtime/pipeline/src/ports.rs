@@ -135,7 +135,7 @@ impl AnyPortReceiver {
                     .receiver::<V>()
                     .expect("Tried to add transport with invalid port value");
                 let mut transport_store = receiver.transport.borrow_mut();
-                transport_store.replace(transport.into());
+                transport_store.replace(transport);
             }
         }
     }

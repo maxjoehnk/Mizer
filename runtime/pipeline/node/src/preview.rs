@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use crate::ProcessingNode;
 
 pub const HISTORY_PREVIEW_SIZE: usize = 128;
 

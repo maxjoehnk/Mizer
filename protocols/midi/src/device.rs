@@ -55,7 +55,7 @@ impl MidiDevice {
                         recv(event_rx) -> event => {
                             if let Ok(event) = event {
                                 for sender in &senders {
-                                    sender.send(event.clone());
+                                    sender.send(event.clone()).unwrap();
                                 }
                             }
                         },
@@ -81,7 +81,7 @@ impl MidiDevice {
 
     pub fn events(&self) -> MidiEventReceiver {
         let (tx, rx) = crossbeam_channel::unbounded();
-        self.event_subscriber.send(tx);
+        self.event_subscriber.send(tx).unwrap();
         MidiEventReceiver(rx)
     }
 

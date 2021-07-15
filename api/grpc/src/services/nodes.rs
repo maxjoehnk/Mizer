@@ -51,7 +51,7 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
         resp.finish(WriteResponse::default())
     }
 
-    fn update_node_property(&self, o: ServerHandlerContext, req: ServerRequestSingle<UpdateNodeConfigRequest>, resp: ServerResponseUnarySink<UpdateNodeConfigResponse>) -> grpc::Result<()> {
+    fn update_node_property(&self, _: ServerHandlerContext, req: ServerRequestSingle<UpdateNodeConfigRequest>, resp: ServerResponseUnarySink<UpdateNodeConfigResponse>) -> grpc::Result<()> {
         self.update_node_property(req.message).unwrap();
 
         resp.finish(UpdateNodeConfigResponse::default())

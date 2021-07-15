@@ -23,13 +23,13 @@ impl<R: RuntimeApi> TransportApi for TransportHandler<R> {
         Ok(())
     }
 
-    fn set_state(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::transport::SetTransportRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()> {
-        self.set_state(req.message.state);
+    fn set_state(&self, _: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::transport::SetTransportRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()> {
+        self.set_state(req.message.state).unwrap();
 
         resp.finish(Default::default())
     }
 
-    fn set_bpm(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::transport::SetBpmRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()> {
+    fn set_bpm(&self, _: ::grpc::ServerHandlerContext, _: ::grpc::ServerRequestSingle<super::transport::SetBpmRequest>, _: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()> {
         unimplemented!()
     }
 }

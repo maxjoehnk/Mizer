@@ -61,13 +61,13 @@ impl ProcessingNode for EnvelopeNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let clock = context.clock();
-        state.beat = state.beat + clock.delta;
+        state.beat += clock.delta;
 
         if let Some(value) = context.read_port("value") {
             state.calculate_phase(self, value, clock.delta);
         }
         let value = match state.phase {
-            EnvelopePhase::Attack { from, to } => {
+            EnvelopePhase::Attack { to, .. } => {
                 let attack = if self.attack == 0. {
                     1.0
                 } else {
@@ -83,7 +83,7 @@ impl ProcessingNode for EnvelopeNode {
                 };
                 from * release
             }
-            EnvelopePhase::Decay { from, to } => {
+            EnvelopePhase::Decay { to, .. } => {
                 if self.decay == 0. {
                     to
                 } else {
@@ -115,7 +115,7 @@ pub struct EnvelopeState {
 
 impl EnvelopeState {
     fn calculate_phase(&mut self, config: &EnvelopeNode, value: f64, delta: f64) {
-        if value != self.previous_target {
+        if (value - self.previous_target).abs() > f64::EPSILON {
             self.beat = delta;
         }
         self.previous_target = value;
@@ -161,7 +161,7 @@ impl EnvelopePhase {
     fn is_same_phase(&self, other: &Self) -> bool {
         match (self, other) {
             (EnvelopePhase::Attack { to: lhs, .. }, EnvelopePhase::Attack { to: rhs, .. }) => {
-                lhs == rhs
+                (lhs - rhs).abs() < f64::EPSILON
             }
             (EnvelopePhase::Decay { .. }, EnvelopePhase::Decay { .. }) => true,
             (EnvelopePhase::Release { .. }, EnvelopePhase::Release { .. }) => true,

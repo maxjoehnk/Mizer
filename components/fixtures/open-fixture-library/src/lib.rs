@@ -3,15 +3,14 @@ use mizer_fixtures::library::FixtureLibraryProvider;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+#[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
     definitions: HashMap<String, Vec<OpenFixtureLibraryFixtureDefinition>>,
 }
 
 impl OpenFixtureLibraryProvider {
     pub fn new() -> Self {
-        OpenFixtureLibraryProvider {
-            definitions: Default::default(),
-        }
+        Default::default()
     }
 
     pub fn load(&mut self, path: &str) -> anyhow::Result<()> {
@@ -259,7 +258,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
                 .modes
                 .into_iter()
                 .map(|mode| {
-                    let channels = mode.channels.into_iter().filter_map(|channel| channel).collect::<Vec<_>>();
+                    let channels = mode.channels.into_iter().flatten().collect::<Vec<_>>();
                     FixtureMode {
                         name: mode.name,
                         groups: group_channels(&available_channels, &channels),

@@ -1,5 +1,5 @@
 use mizer_api::handlers::ConnectionsHandler;
-use crate::plugin::channels::{MethodReplyExt, MethodCallExt};
+use crate::plugin::channels::MethodReplyExt;
 use nativeshell::codec::{MethodCallReply, MethodCall, Value};
 use nativeshell::shell::{MethodChannel, MethodCallHandler, EngineHandle, Context};
 use std::rc::Rc;
@@ -10,7 +10,7 @@ pub struct ConnectionsChannel {
 }
 
 impl MethodCallHandler for ConnectionsChannel {
-    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, engine: EngineHandle) {
+    fn on_method_call(&mut self, call: MethodCall<Value>, resp: MethodCallReply<Value>, _: EngineHandle) {
         match call.method.as_str() {
             "getConnections" => {
                 let response = self.handler.get_connections();

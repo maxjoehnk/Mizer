@@ -42,7 +42,7 @@ impl<R: RuntimeApi + 'static> TransportChannel<R> {
     }
 
     fn set_state(&self, state: TransportState) -> anyhow::Result<()> {
-        self.handler.set_state(state);
+        self.handler.set_state(state)?;
         Ok(())
     }
 }

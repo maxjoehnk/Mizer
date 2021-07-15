@@ -68,7 +68,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         for fixture_id in request.ids {
             if let Some(mut fixture) = self.fixture_manager.get_fixture_mut(fixture_id) {
                 match &value {
-                    WriteFixtureChannelRequest_oneof_value::color(color) => {
+                    WriteFixtureChannelRequest_oneof_value::color(_) => {
                         todo!()
                     },
                     WriteFixtureChannelRequest_oneof_value::fader(value) => {

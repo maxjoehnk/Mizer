@@ -1,6 +1,7 @@
 use mizer_clock::ClockState;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
+use mizer_connections::Connection;
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
@@ -15,6 +16,7 @@ pub enum ApiCommand {
     GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>),
     UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
     SetClockState(ClockState),
+    GetConnections(flume::Sender<Vec<Connection>>),
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),

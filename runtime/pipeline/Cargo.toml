@@ -10,9 +10,9 @@ anyhow = "1"
 gstreamer = "0.16"
 metrics = "0.14"
 mizer-fixtures = { path = "../../components/fixtures" }
-mizer-protocol-laser = { path = "../../protocols/laser" }
+mizer-protocol-laser = { path = "../../components/connections/protocols/laser" }
 mizer-project-files = { path = "../projects" }
-mizer-devices = { path = "../../components/devices" }
+mizer-devices = { path = "../../components/connections/devices" }
 mizer-node = { path = "node" }
 mizer-video-nodes = { path = "nodes/video" }
 mizer-clock = { path = "../clock" }

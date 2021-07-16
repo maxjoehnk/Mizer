@@ -6,6 +6,7 @@ use mizer_layouts::{ControlConfig, Layout};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use mizer_runtime::NodeDescriptor;
+use mizer_connections::Connection;
 
 pub mod handlers;
 mod mappings;
@@ -55,4 +56,6 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn load_project(&self, path: String) -> anyhow::Result<()>;
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;
+
+    fn get_connections(&self) -> Vec<Connection>;
 }

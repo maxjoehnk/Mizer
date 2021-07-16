@@ -2888,6 +2888,7 @@ dependencies = [
  "metrics",
  "mizer-api",
  "mizer-clock",
+ "mizer-connections",
  "mizer-devices",
  "mizer-execution-planner",
  "mizer-fixtures",
@@ -2921,6 +2922,7 @@ dependencies = [
  "futures",
  "log",
  "mizer-clock",
+ "mizer-connections",
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
@@ -2944,6 +2946,18 @@ dependencies = [
  "mizer-clock",
  "mizer-node",
  "serde",
+]
+
+[[package]]
+name = "mizer-connections"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "dashmap",
+ "derive_more",
+ "log",
+ "mizer-protocol-dmx",
+ "mizer-protocol-midi",
 ]
 
 [[package]]

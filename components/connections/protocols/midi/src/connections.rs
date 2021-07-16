@@ -1,6 +1,6 @@
-use crate::{MidiDevice, MidiDeviceProvider};
+use crate::{MidiDevice, MidiDeviceProvider, MidiDeviceIdentifier};
 use dashmap::DashMap;
-use std::ops::DerefMut;
+use std::ops::{Deref, DerefMut};
 
 pub struct MidiConnectionManager {
     provider: MidiDeviceProvider,
@@ -33,5 +33,9 @@ impl MidiConnectionManager {
         } else {
             Ok(None)
         }
+    }
+
+    pub fn list_available_devices(&self) -> Vec<MidiDeviceIdentifier> {
+        self.provider.list_devices().unwrap()
     }
 }

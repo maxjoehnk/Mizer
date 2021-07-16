@@ -3,13 +3,14 @@ use mizer_api::handlers::ConnectionsHandler;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::rc::Rc;
+use mizer_api::RuntimeApi;
 
 #[derive(Clone)]
-pub struct ConnectionsChannel {
-    handler: ConnectionsHandler,
+pub struct ConnectionsChannel<R: RuntimeApi> {
+    handler: ConnectionsHandler<R>,
 }
 
-impl MethodCallHandler for ConnectionsChannel {
+impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
     fn on_method_call(
         &mut self,
         call: MethodCall<Value>,
@@ -27,8 +28,8 @@ impl MethodCallHandler for ConnectionsChannel {
     }
 }
 
-impl ConnectionsChannel {
-    pub fn new(handler: ConnectionsHandler) -> Self {
+impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
+    pub fn new(handler: ConnectionsHandler<R>) -> Self {
         Self { handler }
     }
 

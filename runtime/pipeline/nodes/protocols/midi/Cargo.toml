@@ -9,5 +9,5 @@ log = "0.4"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../node" }
-mizer-protocol-midi = { path = "../../../../../protocols/midi" }
+mizer-protocol-midi = { path = "../../../../../components/connections/protocols/midi" }
 mizer-util = { path = "../../../../../util" }

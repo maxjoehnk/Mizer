@@ -8,5 +8,5 @@ edition = "2018"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../node" }
-mizer-protocol-osc = { path = "../../../../../protocols/osc" }
+mizer-protocol-osc = { path = "../../../../../components/connections/protocols/osc" }
 log = "0.4"

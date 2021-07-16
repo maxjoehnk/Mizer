@@ -2,7 +2,13 @@
 members = [
     "api",
     "api/grpc",
-    "components/devices",
+    "components/connections",
+    "components/connections/devices",
+    "components/connections/protocols/dmx",
+    "components/connections/protocols/laser",
+    "components/connections/protocols/midi",
+    "components/connections/protocols/midi/device-profiles",
+    "components/connections/protocols/osc",
     "components/fixtures",
     "components/fixtures/open-fixture-library",
     "components/media",
@@ -34,11 +40,6 @@ members = [
     "runtime/pipeline/ports",
     "runtime/processing",
     "runtime/projects",
-    "protocols/dmx",
-    "protocols/laser",
-    "protocols/midi",
-    "protocols/midi/device-profiles",
-    "protocols/osc",
     "ui",
     "util",
 ]
@@ -80,15 +81,16 @@ mizer-pipeline = { path = "runtime/pipeline" }
 mizer-api = { path = "api" }
 mizer-grpc-api = { path = "api/grpc" }
 mizer-session = { path = "runtime/session" }
-mizer-devices = { path = "components/devices" }
+mizer-connections = { path = "components/connections" }
+mizer-devices = { path = "components/connections/devices" }
 mizer-runtime = { path = "runtime" }
 mizer-execution-planner = { path = "runtime/execution-planner" }
 mizer-node = { path = "runtime/pipeline/node" }
 mizer-nodes = { path = "runtime/pipeline/nodes" }
 mizer-layouts = { path = "runtime/layouts" }
 mizer-clock = { path = "runtime/clock" }
-mizer-protocol-dmx = { path = "protocols/dmx" }
-mizer-protocol-midi = { path = "protocols/midi" }
+mizer-protocol-dmx = { path = "components/connections/protocols/dmx" }
+mizer-protocol-midi = { path = "components/connections/protocols/midi" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }

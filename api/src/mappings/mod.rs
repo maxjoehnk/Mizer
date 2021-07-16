@@ -1,3 +1,4 @@
+mod connections;
 mod fixtures;
 mod layouts;
 mod media;

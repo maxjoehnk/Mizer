@@ -9,5 +9,5 @@ anyhow = "1"
 mizer-node = { path = "../../node" }
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
-mizer-protocol-dmx = { path = "../../../../protocols/dmx" }
+mizer-protocol-dmx = { path = "../../../../components/connections/protocols/dmx" }
 mizer-util = { path = "../../../../util" }

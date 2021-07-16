@@ -20,7 +20,7 @@ mod transport;
 
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
-    pub connections: ConnectionsHandler,
+    pub connections: ConnectionsHandler<R>,
     pub fixtures: FixturesHandler<R>,
     pub layouts: LayoutsHandler<R>,
     pub media: MediaHandler,
@@ -37,7 +37,7 @@ impl<R: RuntimeApi> Handlers<R> {
         media_server: MediaServerApi,
     ) -> Self {
         Handlers {
-            connections: ConnectionsHandler::new(),
+            connections: ConnectionsHandler::new(runtime.clone()),
             fixtures: FixturesHandler::new(fixture_manager, fixture_library, runtime.clone()),
             layouts: LayoutsHandler::new(runtime.clone()),
             media: MediaHandler::new(media_server),

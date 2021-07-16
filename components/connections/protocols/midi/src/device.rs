@@ -8,6 +8,7 @@ use crate::event::MidiEvent;
 use crate::message::MidiMessage;
 
 pub struct MidiDevice {
+    pub name: String,
     input: Option<MidiInputConnection<()>>,
     output: Option<MidiOutputConnection>,
     event_subscriber: Sender<Sender<MidiEvent>>,
@@ -26,6 +27,7 @@ impl MidiDevice {
         let (subscriber_tx, subscriber_rx) = crossbeam_channel::unbounded();
         let (event_tx, event_rx) = crossbeam_channel::unbounded();
         let mut device = MidiDevice {
+            name: identifier.name.clone(),
             input: None,
             output: None,
             event_subscriber: subscriber_tx,

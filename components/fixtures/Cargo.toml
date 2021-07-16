@@ -10,4 +10,4 @@ log = "0.4"
 dashmap = "4"
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
-mizer-protocol-dmx = { path = "../../protocols/dmx" }
+mizer-protocol-dmx = { path = "../connections/protocols/dmx" }

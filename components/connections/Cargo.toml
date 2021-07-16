@@ -1,0 +1,13 @@
+[package]
+name = "mizer-connections"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+dashmap = "4"
+derive_more = "0.99"
+mizer-protocol-dmx = { path = "./protocols/dmx" }
+mizer-protocol-midi = { path = "./protocols/midi" }

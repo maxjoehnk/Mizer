@@ -6,6 +6,7 @@ use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::{FixtureNode, Node};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 use std::collections::HashMap;
+use mizer_connections::Connection;
 
 #[derive(Clone)]
 pub struct Api {
@@ -166,6 +167,13 @@ impl RuntimeApi for Api {
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot> {
         self.access.clock_recv.clone()
+    }
+
+    fn get_connections(&self) -> Vec<Connection> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::GetConnections(tx)).unwrap();
+
+        rx.recv().unwrap()
     }
 }
 

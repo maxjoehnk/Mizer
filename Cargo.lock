@@ -2947,13 +2947,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mizer-conversion"
-version = "0.1.0"
-dependencies = [
- "test-case",
-]
-
-[[package]]
 name = "mizer-devices"
 version = "0.1.0"
 dependencies = [
@@ -3183,8 +3176,8 @@ dependencies = [
  "anyhow",
  "bytes 0.5.6",
  "log",
- "mizer-conversion",
  "mizer-node",
+ "mizer-util",
  "serde",
 ]
 
@@ -3250,9 +3243,9 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "log",
- "mizer-conversion",
  "mizer-node",
  "mizer-protocol-dmx",
+ "mizer-util",
  "serde",
 ]
 

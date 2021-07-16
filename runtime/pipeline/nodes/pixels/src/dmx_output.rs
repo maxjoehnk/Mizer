@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_conversion::ConvertToDmx;
+use mizer_util::ConvertToDmx;
 use mizer_node::*;
 use mizer_protocol_dmx::DmxConnectionManager;
 

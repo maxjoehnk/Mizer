@@ -6,7 +6,6 @@ members = [
     "components/fixtures",
     "components/fixtures/open-fixture-library",
     "components/media",
-    "conversion",
     "runtime",
     "runtime/clock",
     "runtime/execution-planner",

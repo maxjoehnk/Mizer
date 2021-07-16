@@ -6,7 +6,7 @@ use mizer_node::PortMetadata;
 use mizer_ports::memory::{MemoryReceiver, MemorySender};
 use mizer_ports::{NodePortReceiver, PortId, PortValue};
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct NodeSenders(HashMap<PortId, (Box<dyn Any>, PortMetadata)>);
 
 impl NodeSenders {
@@ -25,7 +25,7 @@ impl NodeSenders {
     }
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct NodeReceivers(HashMap<PortId, AnyPortReceiver>);
 
 impl NodeReceivers {
@@ -60,11 +60,13 @@ impl NodeReceivers {
     }
 }
 
+#[derive(Debug)]
 pub struct AnyPortReceiver {
     pub metadata: PortMetadata,
     pub(crate) port: AnyPortReceiverPort,
 }
 
+#[derive(Debug)]
 pub enum AnyPortReceiverPort {
     Single(Box<dyn Any>),
     Multiple(RefCell<Vec<Box<dyn Any>>>),
@@ -166,7 +168,9 @@ impl AnyPortReceiver {
 }
 
 pub struct NodeReceiver<V: PortValue + 'static> {
+    /// Used for communication inside the pipeline
     transport: RefCell<Option<MemoryReceiver<V>>>,
+    /// Used to set values from outside the pipeline
     value: RefCell<Option<V>>,
 }
 

@@ -1,16 +1,20 @@
-use crate::ports::{NodeReceivers, NodeSenders};
-use crate::{NodePreviewState, PipelineContext};
-use downcast::*;
-use mizer_clock::ClockFrame;
-use mizer_node::*;
-use mizer_ports::PortValue;
-use mizer_processing::Injector;
-use mizer_protocol_laser::LaserFrame;
-use ringbuffer::RingBufferExt;
 use std::any::Any;
 use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+
+use downcast::*;
+use ringbuffer::RingBufferExt;
+
+use mizer_clock::ClockFrame;
+use mizer_node::*;
+use mizer_ports::memory::MemorySender;
+use mizer_ports::PortValue;
+use mizer_processing::Injector;
+use mizer_protocol_laser::LaserFrame;
+
+use crate::ports::{NodeReceivers, NodeSenders};
+use crate::{NodePreviewState, PipelineContext};
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -130,21 +134,28 @@ impl PipelineWorker {
         source_meta: PortMetadata,
         target_meta: PortMetadata,
     ) {
-        let (tx, rx) = mizer_ports::memory::channel::<V>();
-        if !self.senders.contains_key(&link.source) {
-            self.senders
-                .insert(link.source.clone(), NodeSenders::default());
-        }
-        if let Some(senders) = self.senders.get_mut(&link.source) {
+        let senders = self
+            .senders
+            .entry(link.source)
+            .or_insert(NodeSenders::default());
+        let rx = if let Some((port, _)) = senders.get(link.source_port.clone()) {
+            let port = port
+                .downcast_ref::<MemorySender<V>>()
+                .expect("port is not a memory port");
+
+            // TODO: this may cause problems with ports reading the target metadata
+            port.add_destination()
+        } else {
+            let (tx, rx) = mizer_ports::memory::channel::<V>();
             senders.add(link.source_port, tx, target_meta);
-        }
-        if !self.receivers.contains_key(&link.target) {
-            self.receivers
-                .insert(link.target.clone(), NodeReceivers::default());
-        }
-        if let Some(receivers) = self.receivers.get_mut(&link.target) {
-            receivers.add(link.target_port, rx, source_meta);
-        }
+
+            rx
+        };
+        let receivers = self
+            .receivers
+            .entry(link.target)
+            .or_insert(NodeReceivers::default());
+        receivers.add(link.target_port, rx, source_meta);
     }
 
     fn connect_gst_ports(&self, link: NodeLink) -> anyhow::Result<()> {
@@ -259,5 +270,141 @@ impl PipelineWorker {
         } else {
             None
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use test_case::test_case;
+
+    use mizer_node::{NodeLink, NodePath, PortDirection, PortId, PortMetadata, PortType};
+    use mizer_ports::memory::MemorySender;
+    use mizer_ports::NodePortSender;
+
+    use crate::ports::NodeReceivers;
+
+    use super::PipelineWorker;
+
+    #[test_case(1.)]
+    #[test_case(0.)]
+    fn should_connect_two_nodes(value: f64) -> anyhow::Result<()> {
+        let source_path: NodePath = "/source".into();
+        let dest_path: NodePath = "/dest".into();
+        let port_id: PortId = "value".into();
+        let mut worker = PipelineWorker::new();
+        let source = PortMetadata {
+            port_type: PortType::Single,
+            multiple: None,
+            direction: PortDirection::Output,
+            dimensions: None,
+        };
+        let dest = PortMetadata {
+            port_type: PortType::Single,
+            multiple: None,
+            direction: PortDirection::Input,
+            dimensions: None,
+        };
+        let link = NodeLink {
+            port_type: PortType::Single,
+            source_port: port_id.clone(),
+            source: source_path.clone(),
+            target: dest_path.clone(),
+            target_port: port_id.clone(),
+            local: true,
+        };
+        register_receiver(
+            &mut worker,
+            dest_path.clone(),
+            port_id.clone(),
+            dest.clone(),
+        );
+
+        worker.connect_nodes(link, source, dest)?;
+
+        send_value(&worker, &source_path, port_id.clone(), value)?;
+        let result = recv_value(&worker, &dest_path, &port_id);
+        assert_eq!(value, result);
+        Ok(())
+    }
+
+    #[test_case(1.)]
+    #[test_case(0.)]
+    fn should_write_from_one_output_to_multiple_inputs(value: f64) -> anyhow::Result<()> {
+        let mut worker = PipelineWorker::new();
+        let source = PortMetadata {
+            port_type: PortType::Single,
+            multiple: None,
+            direction: PortDirection::Output,
+            dimensions: None,
+        };
+        let dest = PortMetadata {
+            port_type: PortType::Single,
+            multiple: None,
+            direction: PortDirection::Input,
+            dimensions: None,
+        };
+        let source_path: NodePath = "/source".into();
+        let dest1: NodePath = "/dest1".into();
+        let dest2: NodePath = "/dest2".into();
+        let port_id: PortId = "value".into();
+        let link1 = NodeLink {
+            port_type: PortType::Single,
+            source_port: port_id.clone(),
+            source: source_path.clone(),
+            target: dest1.clone(),
+            target_port: port_id.clone(),
+            local: true,
+        };
+        let link2 = NodeLink {
+            port_type: PortType::Single,
+            source_port: port_id.clone(),
+            source: source_path.clone(),
+            target: dest2.clone(),
+            target_port: port_id.clone(),
+            local: true,
+        };
+        register_receiver(&mut worker, dest1.clone(), port_id.clone(), dest.clone());
+        register_receiver(&mut worker, dest2.clone(), port_id.clone(), dest.clone());
+
+        worker.connect_nodes(link1, source, dest)?;
+        worker.connect_nodes(link2, source, dest)?;
+
+        send_value(&worker, &source_path, port_id.clone(), value)?;
+        let result1 = recv_value(&worker, &dest1, &port_id);
+        let result2 = recv_value(&worker, &dest2, &port_id);
+        assert_eq!(value, result1);
+        assert_eq!(value, result2);
+        Ok(())
+    }
+
+    fn register_receiver(
+        worker: &mut PipelineWorker,
+        path: NodePath,
+        port: PortId,
+        meta: PortMetadata,
+    ) {
+        let mut recvs = NodeReceivers::default();
+        recvs.register::<f64>(port, meta);
+        worker.receivers.insert(path, recvs);
+    }
+
+    fn send_value(
+        worker: &PipelineWorker,
+        path: &NodePath,
+        port: PortId,
+        value: f64,
+    ) -> anyhow::Result<()> {
+        let sender = worker.senders.get(path).unwrap();
+        let (port, _) = sender.get(port).unwrap();
+        let port = port.downcast_ref::<MemorySender<f64>>().unwrap();
+
+        port.send(value)
+    }
+
+    fn recv_value(worker: &PipelineWorker, path: &NodePath, port: &PortId) -> f64 {
+        let recv = worker.receivers.get(path).unwrap();
+        let port = recv.get(port).unwrap();
+
+        port.read().unwrap()
     }
 }

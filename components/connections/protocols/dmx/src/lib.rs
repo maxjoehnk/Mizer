@@ -9,6 +9,7 @@ mod sacn;
 mod stub;
 
 pub trait DmxOutput {
+    fn name(&self) -> String;
     fn write_single(&self, universe: u16, channel: u8, value: u8);
     fn write_bulk(&self, universe: u16, channel: u8, values: &[u8]);
     fn flush(&self);
@@ -35,6 +36,10 @@ impl DmxConnectionManager {
         for (_, output) in self.outputs.iter() {
             output.flush();
         }
+    }
+
+    pub fn list_outputs<'a>(&'a self) -> Vec<&'a Box<dyn DmxOutput>> {
+        self.outputs.values().collect()
     }
 }
 

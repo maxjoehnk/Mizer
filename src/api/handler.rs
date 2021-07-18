@@ -1,11 +1,11 @@
 use std::path::PathBuf;
-use std::ops::Deref;
 
 use crate::{ApiCommand, Mizer};
 use mizer_clock::Clock;
-use mizer_connections::{Connection, MidiView};
+use mizer_connections::{Connection, MidiView, DmxView};
 use mizer_module::Runtime;
-use mizer_protocol_midi::{MidiDeviceProvider, MidiConnectionManager, MidiDevice};
+use mizer_protocol_midi::{MidiConnectionManager};
+use mizer_protocol_dmx::DmxConnectionManager;
 
 pub struct ApiHandler {
     pub(super) recv: flume::Receiver<ApiCommand>,
@@ -99,12 +99,24 @@ impl ApiHandler {
 
     fn get_connections(&self, mizer: &mut Mizer) -> Vec<Connection> {
         let manager = mizer.runtime.injector().get::<MidiConnectionManager>().unwrap();
-        manager.list_available_devices()
+        let midi_connections = manager.list_available_devices()
             .into_iter()
             .map(|device| MidiView {
                 name: device.name
             })
-            .map(Connection::from)
-            .collect()
+            .map(Connection::from);
+        let dmx_manager = mizer.runtime.injector().get::<DmxConnectionManager>().unwrap();
+        let dmx_connections = dmx_manager.list_outputs()
+            .into_iter()
+            .map(|connection| DmxView {
+                name: connection.name(),
+            })
+            .map(Connection::from);
+
+        let mut connections = Vec::new();
+        connections.extend(midi_connections);
+        connections.extend(dmx_connections);
+
+        connections
     }
 }

@@ -13,6 +13,10 @@ impl StubOutput {
 }
 
 impl DmxOutput for StubOutput {
+    fn name(&self) -> String {
+        "Stub".into()
+    }
+
     fn write_single(&self, universe: u16, channel: u8, value: u8) {
         self.buffer.write_single(universe, channel, value)
     }

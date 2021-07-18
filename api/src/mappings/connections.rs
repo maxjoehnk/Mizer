@@ -1,4 +1,5 @@
 use crate::models::{Connection, Connection_oneof_connection, MidiConnection};
+use crate::models::connections::DmxConnection;
 
 impl From<mizer_connections::Connection> for Connection {
     fn from(connection: mizer_connections::Connection) -> Self {
@@ -14,7 +15,8 @@ impl From<mizer_connections::Connection> for Connection_oneof_connection {
     fn from(connection: mizer_connections::Connection) -> Self {
         use mizer_connections::Connection::*;
         match connection {
-            Midi(_) => Self::midi(MidiConnection::default())
+            Midi(_) => Self::midi(MidiConnection::default()),
+            Dmx(_) => Self::dmx(DmxConnection::default()),
         }
     }
 }

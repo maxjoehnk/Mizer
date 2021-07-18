@@ -17,6 +17,10 @@ impl SacnOutput {
 }
 
 impl DmxOutput for SacnOutput {
+    fn name(&self) -> String {
+        format!("sACN ({})", self.source.name())
+    }
+
     fn write_single(&self, universe: u16, channel: u8, value: u8) {
         self.buffer.write_single(universe, channel, value)
     }

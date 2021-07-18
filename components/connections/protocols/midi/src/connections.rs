@@ -1,6 +1,6 @@
 use crate::{MidiDevice, MidiDeviceProvider, MidiDeviceIdentifier};
 use dashmap::DashMap;
-use std::ops::{Deref, DerefMut};
+use std::ops::DerefMut;
 
 pub struct MidiConnectionManager {
     provider: MidiDeviceProvider,

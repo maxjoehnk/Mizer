@@ -27,7 +27,7 @@ List<Route> routes = [
       View.Fixtures),
   Route(
       () => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit7, View.Media),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Devices', LogicalKeyboardKey.digit8,
+  Route(() => ConnectionsView(), Icons.device_hub, 'Connections', LogicalKeyboardKey.digit8,
       View.Connections),
   Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit9, View.Session),
 ];
@@ -174,7 +174,7 @@ class _NavigationItemState extends State<NavigationItem> {
         child: Container(
           height: 64,
           color: backgroundColor,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Stack(
             children: [
               Center(

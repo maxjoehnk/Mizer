@@ -37,7 +37,7 @@ impl Fixture {
     }
 
     pub fn write(&mut self, name: &str, value: f64) {
-        log::debug!("write {} -> {}", name, value);
+        log::trace!("write {} -> {}", name, value);
         self.channel_values.insert(name.to_string(), value);
     }
 

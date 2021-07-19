@@ -8,7 +8,7 @@ pub struct Fixture {
     pub current_mode: FixtureMode,
     pub universe: u16,
     pub channel: u8,
-    pub output: String,
+    pub output: Option<String>,
     pub channel_values: HashMap<String, f64>,
 }
 
@@ -17,7 +17,7 @@ impl Fixture {
         fixture_id: u32,
         definition: FixtureDefinition,
         selected_mode: Option<String>,
-        output: String,
+        output: Option<String>,
         channel: u8,
         universe: Option<u16>,
     ) -> Self {

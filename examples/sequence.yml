@@ -32,3 +32,8 @@ nodes:
 
 channels:
   - value@/sequence-0 -> value@/dmx-output-0
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

@@ -1,7 +1,9 @@
-use crate::models::nodes::*;
+use protobuf::SingularPtrField;
+
 use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
 use mizer_runtime::NodeDescriptor;
-use protobuf::SingularPtrField;
+
+use crate::models::nodes::*;
 
 impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
     fn from(node: mizer_nodes::Node) -> Self {
@@ -162,12 +164,16 @@ impl From<OscillatorNodeConfig_OscillatorType> for mizer_nodes::OscillatorType {
 
 impl From<mizer_nodes::DmxOutputNode> for DmxOutputNodeConfig {
     fn from(output: mizer_nodes::DmxOutputNode) -> Self {
-        Self {
+        let mut result = Self {
             channel: output.channel as u32,
             universe: output.universe as u32,
-            output: "output".into(), // TODO: use output property
             ..Default::default()
+        };
+        if let Some(output) = output.output {
+            result.set_output(output);
         }
+
+        result
     }
 }
 
@@ -176,6 +182,9 @@ impl From<DmxOutputNodeConfig> for mizer_nodes::DmxOutputNode {
         Self {
             channel: output.channel as u8,
             universe: output.universe as u16,
+            output: output._output.map(|o| match o {
+                DmxOutputNodeConfig_oneof__output::output(output) => output,
+            }),
         }
     }
 }

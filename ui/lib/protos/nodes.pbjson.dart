@@ -285,9 +285,12 @@ const PixelDmxNodeConfig$json = const {
 const DmxOutputNodeConfig$json = const {
   '1': 'DmxOutputNodeConfig',
   '2': const [
-    const {'1': 'output', '3': 1, '4': 1, '5': 9, '10': 'output'},
+    const {'1': 'output', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'output', '17': true},
     const {'1': 'universe', '3': 2, '4': 1, '5': 13, '10': 'universe'},
     const {'1': 'channel', '3': 3, '4': 1, '5': 13, '10': 'channel'},
+  ],
+  '8': const [
+    const {'1': '_output'},
   ],
 };
 

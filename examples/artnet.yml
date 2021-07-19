@@ -51,3 +51,8 @@ nodes:
 channels:
   - value@/oscillator-1 -> value@/dmx-output-1
   - value@/script-0 -> value@/dmx-output-0
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

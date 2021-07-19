@@ -9,6 +9,7 @@ use std::fs::File;
 use std::path::Path;
 
 mod fixtures;
+mod connections;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -31,6 +32,8 @@ pub struct Project {
     pub media_paths: Vec<String>,
     #[serde(default)]
     pub layouts: HashMap<String, Vec<ControlConfig>>,
+    #[serde(default)]
+    pub connections: Vec<ConnectionConfig>,
 }
 
 impl Project {
@@ -230,7 +233,21 @@ pub struct FixtureConfig {
     pub universe: Option<u16>,
     #[serde(default)]
     pub mode: Option<String>,
-    pub output: String,
+    pub output: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct ConnectionConfig {
+    pub id: String,
+    pub name: String,
+    #[serde(flatten)]
+    pub config: ConnectionTypes,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(tag = "type", rename_all = "kebab-case")]
+pub enum ConnectionTypes {
+    Sacn
 }
 
 #[cfg(test)]
@@ -413,7 +430,7 @@ mod tests {
                 id: 1,
                 fixture: "fixture-definition-ref".into(),
                 channel: 1,
-                output: "output".into(),
+                output: Some("output".into()),
                 universe: None,
                 mode: None,
             }
@@ -429,7 +446,6 @@ mod tests {
           fixture: another-fixture
           channel: 5
           mode: 2-channel
-          output: output
         "#;
 
         let result = Project::load(content)?;
@@ -441,7 +457,7 @@ mod tests {
                 id: 1,
                 fixture: "another-fixture".into(),
                 channel: 5,
-                output: "output".into(),
+                output: None,
                 universe: None,
                 mode: Some("2-channel".into()),
             }
@@ -455,7 +471,6 @@ mod tests {
         fixtures:
         - id: 1
           fixture: another-fixture
-          output: output
           channel: 5
           universe: 1
         "#;
@@ -469,7 +484,7 @@ mod tests {
                 id: 1,
                 fixture: "another-fixture".into(),
                 channel: 5,
-                output: "output".into(),
+                output: None,
                 universe: Some(1),
                 mode: None,
             }

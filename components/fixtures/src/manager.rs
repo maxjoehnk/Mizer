@@ -1,7 +1,7 @@
 use crate::fixture::{Fixture, FixtureDefinition};
 use crate::library::FixtureLibrary;
 use dashmap::DashMap;
-use mizer_protocol_dmx::DmxConnectionManager;
+use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 use std::ops::{Deref, DerefMut};
 use std::sync::Arc;
 
@@ -28,7 +28,7 @@ impl FixtureManager {
         fixture_id: u32,
         definition: FixtureDefinition,
         mode: Option<String>,
-        output: String,
+        output: Option<String>,
         channel: u8,
         universe: Option<u16>,
     ) {
@@ -51,10 +51,12 @@ impl FixtureManager {
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
         for fixture in self.fixtures.iter() {
-            if let Some(output) = dmx_manager.get_output(&fixture.output) {
+            if let Some(output) = fixture.output.as_ref().and_then(|output| dmx_manager.get_output(output)) {
                 fixture.flush(output);
-            } else {
-                log::warn!("fixture is referencing unknown output {}", fixture.output);
+            }else {
+                for (_, output) in dmx_manager.list_outputs() {
+                    fixture.flush(output.as_ref());
+                }
             }
         }
     }

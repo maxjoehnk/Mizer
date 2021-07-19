@@ -45,7 +45,11 @@ channels:
 fixtures:
   - id: 1
     fixture: ofl:hazebase:base-hazer-pro
-    output: output
     universe: 1
     channel: 1
     mode: 2-channel
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

@@ -23,6 +23,13 @@ impl Injector {
             .get(&id)
             .and_then(|service| service.downcast_ref())
     }
+
+    pub fn get_mut<T: 'static>(&mut self) -> Option<&mut T> {
+        let id = TypeId::of::<T>();
+        self.services
+            .get_mut(&id)
+            .and_then(|service| service.downcast_mut())
+    }
 }
 
 #[cfg(test)]
@@ -45,5 +52,19 @@ mod tests {
         let service = injector.get::<TestService>().unwrap();
 
         assert_eq!(value, service.value);
+    }
+
+    #[test_case(1, 2)]
+    #[test_case(5, 0)]
+    fn get_mut_should_return_provided_service_as_mutable(value: u64, next: u64) {
+        let mut injector = Injector::new();
+        let service = TestService { value };
+        injector.provide(service);
+
+        let service = injector.get_mut::<TestService>().unwrap();
+        service.value = next;
+
+        let service = injector.get::<TestService>().unwrap();
+        assert_eq!(next, service.value);
     }
 }

@@ -63,3 +63,8 @@ layouts:
 channels:
   - value@/fader-0 -> value@/dmx-output-1
   - value@/button-0 -> value@/dmx-output-0
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

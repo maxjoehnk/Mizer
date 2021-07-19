@@ -193,7 +193,7 @@ message PixelDmxNodeConfig {
 }
 
 message DmxOutputNodeConfig {
-  string output = 1;
+  optional string output = 1;
   uint32 universe = 2;
   uint32 channel = 3;
 }

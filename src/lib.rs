@@ -106,6 +106,11 @@ impl Mizer {
                 let manager: &FixtureManager = injector.get().unwrap();
                 manager.load(&project).context("loading fixtures")?;
             }
+            {
+                let injector = self.runtime.injector_mut();
+                let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
+                dmx_manager.load(&project);
+            }
             self.runtime.load(&project).context("loading project")?;
             log::info!("Loading project...Done");
 
@@ -130,6 +135,8 @@ impl Mizer {
             let injector = self.runtime.injector();
             let fixture_manager = injector.get::<FixtureManager>().unwrap();
             fixture_manager.save(&mut project);
+            let dmx_manager = injector.get::<DmxConnectionManager>().unwrap();
+            dmx_manager.save(&mut project);
             project.save_file(file)?;
             log::info!("Saving project...Done");
         }

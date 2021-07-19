@@ -58,3 +58,8 @@ channels:
   - value@/midi-input-0 -> value@/dmx-output-0
   - value@/midi-input-0 -> value@/midi-output-0
   - value@/midi-input-1 -> value@/dmx-output-1
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

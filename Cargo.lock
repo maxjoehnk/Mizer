@@ -3305,6 +3305,7 @@ dependencies = [
  "mizer-node",
  "mizer-nodes",
  "mizer-pixel-nodes",
+ "mizer-protocol-dmx",
  "regex",
  "serde",
  "serde_yaml",

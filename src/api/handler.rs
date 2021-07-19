@@ -108,8 +108,8 @@ impl ApiHandler {
         let dmx_manager = mizer.runtime.injector().get::<DmxConnectionManager>().unwrap();
         let dmx_connections = dmx_manager.list_outputs()
             .into_iter()
-            .map(|connection| DmxView {
-                name: connection.name(),
+            .map(|(_, output)| DmxView {
+                name: output.name(),
             })
             .map(Connection::from);
 

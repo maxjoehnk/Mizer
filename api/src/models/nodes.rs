@@ -6688,9 +6688,10 @@ impl ::protobuf::reflect::ProtobufValue for PixelDmxNodeConfig {
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct DmxOutputNodeConfig {
     // message fields
-    pub output: ::std::string::String,
     pub universe: u32,
     pub channel: u32,
+    // message oneof groups
+    pub _output: ::std::option::Option<DmxOutputNodeConfig_oneof__output>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -6704,6 +6705,12 @@ impl<'a> ::std::default::Default for &'a DmxOutputNodeConfig {
     }
 }
 
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub enum DmxOutputNodeConfig_oneof__output {
+    output(::std::string::String),
+}
+
 impl DmxOutputNodeConfig {
     pub fn new() -> DmxOutputNodeConfig {
         ::std::default::Default::default()
@@ -6713,26 +6720,49 @@ impl DmxOutputNodeConfig {
 
 
     pub fn get_output(&self) -> &str {
-        &self.output
+        match self._output {
+            ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(ref v)) => v,
+            _ => "",
+        }
     }
     pub fn clear_output(&mut self) {
-        self.output.clear();
+        self._output = ::std::option::Option::None;
+    }
+
+    pub fn has_output(&self) -> bool {
+        match self._output {
+            ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(..)) => true,
+            _ => false,
+        }
     }
 
     // Param is passed by value, moved
     pub fn set_output(&mut self, v: ::std::string::String) {
-        self.output = v;
+        self._output = ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(v))
     }
 
     // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
     pub fn mut_output(&mut self) -> &mut ::std::string::String {
-        &mut self.output
+        if let ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(_)) = self._output {
+        } else {
+            self._output = ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(::std::string::String::new()));
+        }
+        match self._output {
+            ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(ref mut v)) => v,
+            _ => panic!(),
+        }
     }
 
     // Take field
     pub fn take_output(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.output, ::std::string::String::new())
+        if self.has_output() {
+            match self._output.take() {
+                ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
     }
 
     // uint32 universe = 2;
@@ -6776,7 +6806,10 @@ impl ::protobuf::Message for DmxOutputNodeConfig {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.output)?;
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._output = ::std::option::Option::Some(DmxOutputNodeConfig_oneof__output::output(is.read_string()?));
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
@@ -6804,14 +6837,18 @@ impl ::protobuf::Message for DmxOutputNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.output.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.output);
-        }
         if self.universe != 0 {
             my_size += ::protobuf::rt::value_size(2, self.universe, ::protobuf::wire_format::WireTypeVarint);
         }
         if self.channel != 0 {
             my_size += ::protobuf::rt::value_size(3, self.channel, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let ::std::option::Option::Some(ref v) = self._output {
+            match v {
+                &DmxOutputNodeConfig_oneof__output::output(ref v) => {
+                    my_size += ::protobuf::rt::string_size(1, &v);
+                },
+            };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -6819,14 +6856,18 @@ impl ::protobuf::Message for DmxOutputNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.output.is_empty() {
-            os.write_string(1, &self.output)?;
-        }
         if self.universe != 0 {
             os.write_uint32(2, self.universe)?;
         }
         if self.channel != 0 {
             os.write_uint32(3, self.channel)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._output {
+            match v {
+                &DmxOutputNodeConfig_oneof__output::output(ref v) => {
+                    os.write_string(1, v)?;
+                },
+            };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -6866,10 +6907,10 @@ impl ::protobuf::Message for DmxOutputNodeConfig {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
                 "output",
-                |m: &DmxOutputNodeConfig| { &m.output },
-                |m: &mut DmxOutputNodeConfig| { &mut m.output },
+                DmxOutputNodeConfig::has_output,
+                DmxOutputNodeConfig::get_output,
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
                 "universe",
@@ -6897,7 +6938,7 @@ impl ::protobuf::Message for DmxOutputNodeConfig {
 
 impl ::protobuf::Clear for DmxOutputNodeConfig {
     fn clear(&mut self) {
-        self.output.clear();
+        self._output = ::std::option::Option::None;
         self.universe = 0;
         self.channel = 0;
         self.unknown_fields.clear();
@@ -9303,36 +9344,36 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x0c\n\x08RgbSnake\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\
     \n\x05width\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\
     \x20\x01(\x04R\x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rs\
-    tartUniverse\x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"c\n\x13D\
-    mxOutputNodeConfig\x12\x16\n\x06output\x18\x01\x20\x01(\tR\x06output\x12\
-    \x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\
-    \x18\x03\x20\x01(\rR\x07channel\"\x15\n\x13MidiInputNodeConfig\"\x16\n\
-    \x14MidiOutputNodeConfig\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\
-    \x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04po\
-    rt\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\
-    \x18\x04\x20\x01(\x04R\x06height\"K\n\rOscNodeConfig\x12\x12\n\x04host\
-    \x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04po\
-    rt\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBa\
-    lanceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeCo\
-    nfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutpu\
-    tNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10SelectNodeCon\
-    fig\"\x11\n\x0fMergeNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\
-    \x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"U\n\
-    \x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.Node\
-    PositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\
-    \"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08pr\
-    otocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\
-    \x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Multi\x10\
-    \x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\x12\n\n\x06Vect\
-    or\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\x12\x08\n\
-    \x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gst\x10\x082\
-    \xc2\x02\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
-    \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
-    \x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\
-    \x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.\
-    WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodePropert\
-    y\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigRe\
-    sponse\"\0b\x06proto3\
+    tartUniverse\x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"s\n\x13D\
+    mxOutputNodeConfig\x12\x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06output\
+    \x88\x01\x01\x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\x12\
+    \x18\n\x07channel\x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\x15\n\
+    \x13MidiInputNodeConfig\"\x16\n\x14MidiOutputNodeConfig\"k\n\x13OpcOutpu\
+    tNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04p\
+    ort\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\
+    \x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06height\"K\n\rOscN\
+    odeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04por\
+    t\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04p\
+    ath\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeCon\
+    fig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\
+    \x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeC\
+    onfig\"\x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeConfig\"*\n\x0cNod\
+    ePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\
+    \x02\x20\x01(\x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\
+    \x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\
+    \x18\x02\x20\x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.\
+    ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06Si\
+    ngle\x10\0\x12\t\n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07\
+    Texture\x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\
+    \x08\n\x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\
+    \x10\x07\x12\x07\n\x03Gst\x10\x082\xc2\x02\n\x08NodesApi\x12/\n\x08GetNo\
+    des\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\
+    \x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\
+    \x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\
+    \x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResp\
+    onse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequ\
+    est\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

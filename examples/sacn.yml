@@ -22,3 +22,8 @@ nodes:
 
 channels:
   - value@/oscillator-0 -> value@/output-0
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

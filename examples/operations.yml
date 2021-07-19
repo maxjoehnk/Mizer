@@ -120,3 +120,8 @@ layouts:
       size:
         width: 1
         height: 4
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

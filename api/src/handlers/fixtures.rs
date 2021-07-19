@@ -70,7 +70,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 request.id,
                 definition,
                 request.mode.into(),
-                "output".into(),
+                None,
                 request.channel as u8,
                 Some(request.universe as u16),
             );

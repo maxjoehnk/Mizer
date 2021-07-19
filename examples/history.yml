@@ -143,3 +143,8 @@ channels:
   - value@/oscillator-0 -> value@/dmx-output-2
   - value@/fader-0 -> value@/dmx-output-3
   - value@/sequence-0 -> value@/dmx-output-4
+
+connections:
+  - type: sacn
+    id: dmx-0
+    name: sACN

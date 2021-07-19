@@ -1,4 +1,4 @@
-use crate::sacn::SacnOutput;
+pub use crate::sacn::SacnOutput;
 use mizer_module::{Module, Runtime};
 use mizer_processing::{Injector, Processor};
 use std::collections::HashMap;
@@ -22,10 +22,11 @@ pub struct DmxConnectionManager {
 
 impl DmxConnectionManager {
     pub fn new() -> Self {
-        let mut manager = DmxConnectionManager::default();
-        let output = SacnOutput::new();
-        manager.outputs.insert("output".into(), Box::new(output));
-        manager
+        DmxConnectionManager::default()
+    }
+
+    pub fn add_output(&mut self, id: String, output: impl DmxOutput + 'static) {
+        self.outputs.insert(id, Box::new(output));
     }
 
     pub fn get_output(&self, name: &str) -> Option<&dyn DmxOutput> {
@@ -38,8 +39,12 @@ impl DmxConnectionManager {
         }
     }
 
-    pub fn list_outputs<'a>(&'a self) -> Vec<&'a Box<dyn DmxOutput>> {
-        self.outputs.values().collect()
+    pub fn list_outputs<'a>(&'a self) -> Vec<(&'a String, &'a Box<dyn DmxOutput>)> {
+        self.outputs.iter().collect()
+    }
+
+    pub fn clear(&mut self) {
+        self.outputs.clear();
     }
 }
 

@@ -21,17 +21,6 @@ impl PipelineNode for VideoColorBalanceNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        if port == "output" || port == "input" {
-            Some(PortMetadata {
-                port_type: PortType::Gstreamer,
-                ..Default::default()
-            })
-        } else {
-            Default::default()
-        }
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             (

@@ -21,28 +21,6 @@ impl PipelineNode for VideoTransformNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        match port.as_str() {
-            "output" => Some(PortMetadata {
-                port_type: PortType::Gstreamer,
-                direction: PortDirection::Output,
-                ..Default::default()
-            }),
-            "input" => Some(PortMetadata {
-                port_type: PortType::Gstreamer,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            "rotate-x" | "rotate-y" | "rotate-z" | "translate-x" | "translate-y"
-            | "translate-z" | "scale-x" | "scale-y" => Some(PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            _ => None,
-        }
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             (

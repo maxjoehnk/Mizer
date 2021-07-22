@@ -78,14 +78,6 @@ impl PipelineNode for VideoEffectNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId) -> Option<PortMetadata> {
-        PortMetadata {
-            port_type: PortType::Gstreamer,
-            ..Default::default()
-        }
-        .into()
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             (

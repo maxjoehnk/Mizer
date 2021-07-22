@@ -53,6 +53,7 @@ channels:
   - value@/script-0 -> value@/dmx-output-0
 
 connections:
-  - type: sacn
+  - type: artnet
     id: dmx-0
-    name: sACN
+    name: Artnet
+    host: 0.0.0.0

@@ -5,10 +5,12 @@ use mizer_module::{Module, Runtime};
 use mizer_processing::{Injector, Processor};
 
 pub use crate::sacn::SacnOutput;
+pub use crate::artnet::ArtnetOutput;
 
 mod buffer;
 mod sacn;
 mod stub;
+mod artnet;
 
 pub trait DmxOutput {
     fn name(&self) -> String;

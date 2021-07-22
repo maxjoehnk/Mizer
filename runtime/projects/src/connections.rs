@@ -1,4 +1,4 @@
-use mizer_protocol_dmx::{DmxConnectionManager, SacnOutput};
+use mizer_protocol_dmx::{DmxConnectionManager, SacnOutput, ArtnetOutput};
 
 use crate::{Project, ProjectManagerMut, ConnectionTypes, ConnectionConfig};
 
@@ -9,9 +9,9 @@ impl ProjectManagerMut for DmxConnectionManager {
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         for connection in &project.connections {
-            match connection.config {
+            match &connection.config {
                 ConnectionTypes::Sacn => self.add_output(connection.id.clone(), SacnOutput::new()),
-                _ => continue,
+                ConnectionTypes::Artnet { port, host } => self.add_output(connection.id.clone(), ArtnetOutput::new(host.clone(), *port)?)
             }
         }
 

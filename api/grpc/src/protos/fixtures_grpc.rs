@@ -22,13 +22,13 @@
 // server interface
 
 pub trait FixturesApi {
-    fn get_fixtures(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
+    fn get_fixtures(&self, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
 
-    fn get_fixture_definitions(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixtureDefinitionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::FixtureDefinitions>) -> ::grpc::Result<()>;
+    fn get_fixture_definitions(&self, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixtureDefinitionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::FixtureDefinitions>) -> ::grpc::Result<()>;
 
-    fn add_fixtures(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::AddFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
+    fn add_fixtures(&self, req: ::grpc::ServerRequestSingle<super::fixtures::AddFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
 
-    fn write_fixture_channel(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::fixtures::WriteFixtureChannelRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
+    fn write_fixture_channel(&self, req: ::grpc::ServerRequestSingle<super::fixtures::WriteFixtureChannelRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -106,7 +106,7 @@ impl FixturesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_fixtures(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_fixtures(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -118,7 +118,7 @@ impl FixturesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_fixture_definitions(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_fixture_definitions(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -130,7 +130,7 @@ impl FixturesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).add_fixtures(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_fixtures(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -142,7 +142,7 @@ impl FixturesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).write_fixture_channel(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).write_fixture_channel(req, resp))
                     },
                 ),
             ],

@@ -1,5 +1,3 @@
-use std::rc::Rc;
-
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
@@ -55,7 +53,7 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
         Self { handler }
     }
 
-    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+    pub fn channel(self, context: Context) -> MethodChannel {
         MethodChannel::new(context, "mizer.live/connections", self)
     }
 }

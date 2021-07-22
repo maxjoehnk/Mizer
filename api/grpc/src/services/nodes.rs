@@ -1,4 +1,4 @@
-use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
+use grpc::{ServerRequestSingle, ServerResponseUnarySink};
 
 use mizer_api::handlers::NodesHandler;
 use mizer_api::models::*;
@@ -9,7 +9,6 @@ use mizer_api::RuntimeApi;
 impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
     fn get_nodes(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<NodesRequest>,
         resp: ServerResponseUnarySink<Nodes>,
     ) -> grpc::Result<()> {
@@ -20,7 +19,6 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
     fn add_node(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<AddNodeRequest>,
         resp: ServerResponseUnarySink<Node>,
     ) -> grpc::Result<()> {
@@ -31,7 +29,6 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
     fn add_link(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<NodeConnection>,
         resp: ServerResponseUnarySink<NodeConnection>,
     ) -> grpc::Result<()> {
@@ -42,7 +39,6 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
     fn write_control_value(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<WriteControl>,
         resp: ServerResponseUnarySink<WriteResponse>,
     ) -> grpc::Result<()> {
@@ -53,7 +49,6 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
     fn update_node_property(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<UpdateNodeConfigRequest>,
         resp: ServerResponseUnarySink<UpdateNodeConfigResponse>,
     ) -> grpc::Result<()> {

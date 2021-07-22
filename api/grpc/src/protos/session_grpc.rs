@@ -22,15 +22,15 @@
 // server interface
 
 pub trait SessionApi {
-    fn get_session(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::SessionRequest>, resp: ::grpc::ServerResponseSink<super::session::Session>) -> ::grpc::Result<()>;
+    fn get_session(&self, req: ::grpc::ServerRequestSingle<super::session::SessionRequest>, resp: ::grpc::ServerResponseSink<super::session::Session>) -> ::grpc::Result<()>;
 
-    fn join_session(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::ClientAnnouncement>, resp: ::grpc::ServerResponseUnarySink<super::session::Session>) -> ::grpc::Result<()>;
+    fn join_session(&self, req: ::grpc::ServerRequestSingle<super::session::ClientAnnouncement>, resp: ::grpc::ServerResponseUnarySink<super::session::Session>) -> ::grpc::Result<()>;
 
-    fn new_project(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::ProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
+    fn new_project(&self, req: ::grpc::ServerRequestSingle<super::session::ProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
 
-    fn load_project(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::LoadProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
+    fn load_project(&self, req: ::grpc::ServerRequestSingle<super::session::LoadProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
 
-    fn save_project(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::session::ProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
+    fn save_project(&self, req: ::grpc::ServerRequestSingle<super::session::ProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -118,7 +118,7 @@ impl SessionApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerServerStreaming::new(move |ctx, req, resp| (*handler_copy).get_session(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerServerStreaming::new(move |req, resp| (*handler_copy).get_session(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -130,7 +130,7 @@ impl SessionApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).join_session(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).join_session(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -142,7 +142,7 @@ impl SessionApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).new_project(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).new_project(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -154,7 +154,7 @@ impl SessionApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).load_project(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).load_project(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -166,7 +166,7 @@ impl SessionApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).save_project(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).save_project(req, resp))
                     },
                 ),
             ],

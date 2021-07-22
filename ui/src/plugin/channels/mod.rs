@@ -33,7 +33,7 @@ pub trait MethodReplyExt {
 impl MethodCallExt for MethodCall<Value> {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T> {
         if let Value::U8List(ref buffer) = self.args {
-            let arg = protobuf::parse_from_bytes::<T>(buffer)?;
+            let arg = T::parse_from_bytes(buffer)?;
 
             Ok(arg)
         } else {

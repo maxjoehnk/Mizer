@@ -22,11 +22,11 @@
 // server interface
 
 pub trait TransportApi {
-    fn subscribe_transport(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::transport::SubscribeTransportRequest>, resp: ::grpc::ServerResponseSink<super::transport::Transport>) -> ::grpc::Result<()>;
+    fn subscribe_transport(&self, req: ::grpc::ServerRequestSingle<super::transport::SubscribeTransportRequest>, resp: ::grpc::ServerResponseSink<super::transport::Transport>) -> ::grpc::Result<()>;
 
-    fn set_state(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::transport::SetTransportRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()>;
+    fn set_state(&self, req: ::grpc::ServerRequestSingle<super::transport::SetTransportRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()>;
 
-    fn set_bpm(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::transport::SetBpmRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()>;
+    fn set_bpm(&self, req: ::grpc::ServerRequestSingle<super::transport::SetBpmRequest>, resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -94,7 +94,7 @@ impl TransportApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerServerStreaming::new(move |ctx, req, resp| (*handler_copy).subscribe_transport(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerServerStreaming::new(move |req, resp| (*handler_copy).subscribe_transport(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -106,7 +106,7 @@ impl TransportApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).set_state(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).set_state(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -118,7 +118,7 @@ impl TransportApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).set_bpm(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).set_bpm(req, resp))
                     },
                 ),
             ],

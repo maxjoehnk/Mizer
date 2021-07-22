@@ -70,7 +70,7 @@ derive_more = "0.99"
 env_logger = "0.7"
 log = "0.4"
 anyhow = "1"
-gstreamer = "0.16"
+gstreamer = "0.17"
 structopt = "0.3"
 metrics = "0.14"
 mizer-media = { path = "components/media" }
@@ -94,7 +94,7 @@ mizer-protocol-midi = { path = "components/connections/protocols/midi" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }
-tokio = { version = "0.2", features = ["rt-threaded", "macros", "time", "rt-util"] }
+tokio = { version = "1.8", features = ["rt-multi-thread", "macros", "time", "rt"] }
 pinboard = "2.1"
 dashmap = "4"
 flume = "0.10"

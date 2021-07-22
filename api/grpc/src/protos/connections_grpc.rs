@@ -22,9 +22,9 @@
 // server interface
 
 pub trait ConnectionsApi {
-    fn get_connections(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::connections::GetConnectionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
+    fn get_connections(&self, req: ::grpc::ServerRequestSingle<super::connections::GetConnectionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
 
-    fn monitor_dmx(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::connections::MonitorDmxRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::MonitorDmxResponse>) -> ::grpc::Result<()>;
+    fn monitor_dmx(&self, req: ::grpc::ServerRequestSingle<super::connections::MonitorDmxRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::MonitorDmxResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -82,7 +82,7 @@ impl ConnectionsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_connections(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_connections(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -94,7 +94,7 @@ impl ConnectionsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).monitor_dmx(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).monitor_dmx(req, resp))
                     },
                 ),
             ],

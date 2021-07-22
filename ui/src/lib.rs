@@ -21,18 +21,18 @@ pub fn run<R: RuntimeApi + 'static>(handlers: Handlers<R>) -> anyhow::Result<()>
         ..Default::default()
     })?;
 
-    let _connections = ConnectionsChannel::new(handlers.connections).channel(context.clone());
-    let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.clone());
-    let _nodes = NodesChannel::new(handlers.nodes).channel(context.clone());
-    let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.clone());
-    let _media = MediaChannel::new(handlers.media).channel(context.clone());
-    let _transport = TransportChannel::new(handlers.transport).channel(context.clone());
-    let _session = SessionChannel::new(handlers.session).channel(context.clone());
+    let _connections = ConnectionsChannel::new(handlers.connections).channel(context.weak());
+    let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.weak());
+    let _nodes = NodesChannel::new(handlers.nodes).channel(context.weak());
+    let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.weak());
+    let _media = MediaChannel::new(handlers.media).channel(context.weak());
+    let _transport = TransportChannel::new(handlers.transport).channel(context.weak());
+    let _session = SessionChannel::new(handlers.session).channel(context.weak());
 
     context
         .window_manager
         .borrow_mut()
-        .create_window(Value::Null, None);
+        .create_window(Value::Null, None)?;
     context.run_loop.borrow().run();
 
     Ok(())

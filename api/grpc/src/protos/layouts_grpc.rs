@@ -22,19 +22,19 @@
 // server interface
 
 pub trait LayoutsApi {
-    fn get_layouts(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::GetLayoutsRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
+    fn get_layouts(&self, req: ::grpc::ServerRequestSingle<super::layouts::GetLayoutsRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
 
-    fn add_layout(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::AddLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
+    fn add_layout(&self, req: ::grpc::ServerRequestSingle<super::layouts::AddLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
 
-    fn remove_layout(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RemoveLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
+    fn remove_layout(&self, req: ::grpc::ServerRequestSingle<super::layouts::RemoveLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
 
-    fn rename_layout(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RenameLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
+    fn rename_layout(&self, req: ::grpc::ServerRequestSingle<super::layouts::RenameLayoutRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::Layouts>) -> ::grpc::Result<()>;
 
-    fn rename_control(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RenameControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+    fn rename_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::RenameControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 
-    fn move_control(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::MoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+    fn move_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::MoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 
-    fn remove_control(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::layouts::RemoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+    fn remove_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::RemoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -142,7 +142,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_layouts(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_layouts(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -154,7 +154,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).add_layout(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_layout(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -166,7 +166,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).remove_layout(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).remove_layout(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -178,7 +178,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).rename_layout(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).rename_layout(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -190,7 +190,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).rename_control(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).rename_control(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -202,7 +202,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).move_control(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).move_control(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -214,7 +214,7 @@ impl LayoutsApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).remove_control(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).remove_control(req, resp))
                     },
                 ),
             ],

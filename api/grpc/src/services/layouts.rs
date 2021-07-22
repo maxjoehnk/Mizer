@@ -1,4 +1,4 @@
-use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
+use grpc::{ServerRequestSingle, ServerResponseUnarySink};
 
 use mizer_api::handlers::LayoutsHandler;
 use mizer_api::models::*;
@@ -9,7 +9,6 @@ use mizer_api::RuntimeApi;
 impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
     fn get_layouts(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<GetLayoutsRequest>,
         resp: ServerResponseUnarySink<Layouts>,
     ) -> grpc::Result<()> {
@@ -20,7 +19,6 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
     fn add_layout(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<AddLayoutRequest>,
         resp: ServerResponseUnarySink<Layouts>,
     ) -> grpc::Result<()> {
@@ -31,7 +29,6 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
     fn remove_layout(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<RemoveLayoutRequest>,
         resp: ServerResponseUnarySink<Layouts>,
     ) -> grpc::Result<()> {
@@ -42,7 +39,6 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
     fn rename_layout(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<RenameLayoutRequest>,
         resp: ServerResponseUnarySink<Layouts>,
     ) -> grpc::Result<()> {
@@ -53,7 +49,6 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
     fn rename_control(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<RenameControlRequest>,
         _: ServerResponseUnarySink<LayoutResponse>,
     ) -> grpc::Result<()> {
@@ -62,7 +57,6 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
     fn move_control(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<MoveControlRequest>,
         _: ServerResponseUnarySink<LayoutResponse>,
     ) -> grpc::Result<()> {
@@ -71,7 +65,6 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
     fn remove_control(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<RemoveControlRequest>,
         resp: ServerResponseUnarySink<LayoutResponse>,
     ) -> grpc::Result<()> {

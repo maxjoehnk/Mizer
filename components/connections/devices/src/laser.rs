@@ -21,7 +21,7 @@ impl LaserDevice {
 
     fn discover_ether_dream() -> BoxStream<'static, LaserDevice> {
         let handle = tokio::runtime::Handle::current();
-        let (mut sender, receiver) = tokio::sync::mpsc::channel(5);
+        let (sender, receiver) = tokio::sync::mpsc::channel(5);
         handle.spawn_blocking(move || {
             let ether_dreams = EtherDreamLaser::find_devices().unwrap();
             for device in ether_dreams {
@@ -35,7 +35,7 @@ impl LaserDevice {
             }
         });
 
-        receiver.boxed()
+        tokio_stream::wrappers::ReceiverStream::new(receiver).boxed()
     }
 }
 

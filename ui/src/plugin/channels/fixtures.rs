@@ -4,7 +4,6 @@ use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::rc::Rc;
 
 #[derive(Clone)]
 pub struct FixturesChannel<R: RuntimeApi> {
@@ -51,7 +50,7 @@ impl<R: RuntimeApi + 'static> FixturesChannel<R> {
         Self { handler }
     }
 
-    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+    pub fn channel(self, context: Context) -> MethodChannel {
         MethodChannel::new(context, "mizer.live/fixtures", self)
     }
 

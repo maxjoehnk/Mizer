@@ -1,6 +1,6 @@
 use crate::protos::SessionApi;
 use grpc::{
-    ServerHandlerContext, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
+    ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
 };
 use mizer_api::handlers::SessionHandler;
 use mizer_api::models::*;
@@ -9,7 +9,6 @@ use mizer_api::RuntimeApi;
 impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
     fn get_session(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<SessionRequest>,
         mut resp: ServerResponseSink<Session>,
     ) -> grpc::Result<()> {
@@ -20,7 +19,6 @@ impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
 
     fn join_session(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<ClientAnnouncement>,
         _: ServerResponseUnarySink<Session>,
     ) -> grpc::Result<()> {
@@ -29,7 +27,6 @@ impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
 
     fn new_project(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<ProjectRequest>,
         resp: ServerResponseUnarySink<ProjectResponse>,
     ) -> grpc::Result<()> {
@@ -40,7 +37,6 @@ impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
 
     fn load_project(
         &self,
-        _: ServerHandlerContext,
         req: ServerRequestSingle<LoadProjectRequest>,
         resp: ServerResponseUnarySink<ProjectResponse>,
     ) -> grpc::Result<()> {
@@ -51,7 +47,6 @@ impl<R: RuntimeApi> SessionApi for SessionHandler<R> {
 
     fn save_project(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<ProjectRequest>,
         resp: ServerResponseUnarySink<ProjectResponse>,
     ) -> grpc::Result<()> {

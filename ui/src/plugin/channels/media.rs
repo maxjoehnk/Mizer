@@ -3,7 +3,6 @@ use mizer_api::handlers::MediaHandler;
 use mizer_api::models::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::rc::Rc;
 
 pub struct MediaChannel {
     handler: MediaHandler,
@@ -44,7 +43,7 @@ impl MediaChannel {
         Self { handler }
     }
 
-    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+    pub fn channel(self, context: Context) -> MethodChannel {
         MethodChannel::new(context, "mizer.live/media", self)
     }
 

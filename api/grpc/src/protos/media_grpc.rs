@@ -22,11 +22,11 @@
 // server interface
 
 pub trait MediaApi {
-    fn create_tag(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::media::CreateMediaTag>, resp: ::grpc::ServerResponseUnarySink<super::media::MediaTag>) -> ::grpc::Result<()>;
+    fn create_tag(&self, req: ::grpc::ServerRequestSingle<super::media::CreateMediaTag>, resp: ::grpc::ServerResponseUnarySink<super::media::MediaTag>) -> ::grpc::Result<()>;
 
-    fn get_tags_with_media(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::media::GetMediaTags>, resp: ::grpc::ServerResponseUnarySink<super::media::GroupedMediaFiles>) -> ::grpc::Result<()>;
+    fn get_tags_with_media(&self, req: ::grpc::ServerRequestSingle<super::media::GetMediaTags>, resp: ::grpc::ServerResponseUnarySink<super::media::GroupedMediaFiles>) -> ::grpc::Result<()>;
 
-    fn get_media(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::media::GetMediaRequest>, resp: ::grpc::ServerResponseUnarySink<super::media::MediaFiles>) -> ::grpc::Result<()>;
+    fn get_media(&self, req: ::grpc::ServerRequestSingle<super::media::GetMediaRequest>, resp: ::grpc::ServerResponseUnarySink<super::media::MediaFiles>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -94,7 +94,7 @@ impl MediaApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).create_tag(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).create_tag(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -106,7 +106,7 @@ impl MediaApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_tags_with_media(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_tags_with_media(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -118,7 +118,7 @@ impl MediaApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_media(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_media(req, resp))
                     },
                 ),
             ],

@@ -89,7 +89,7 @@ impl Mizer {
             let frame_time = after.duration_since(before);
             metrics::histogram!("mizer.frame_time", frame_time);
             if frame_time <= FRAME_DELAY_60FPS {
-                tokio::time::delay_for(FRAME_DELAY_60FPS - frame_time).await;
+                tokio::time::sleep(FRAME_DELAY_60FPS - frame_time).await;
             }
         }
     }

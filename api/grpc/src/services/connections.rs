@@ -1,4 +1,4 @@
-use grpc::{ServerHandlerContext, ServerRequestSingle, ServerResponseUnarySink};
+use grpc::{ServerRequestSingle, ServerResponseUnarySink};
 
 use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::models::*;
@@ -9,7 +9,6 @@ use crate::protos::{Connections, ConnectionsApi, GetConnectionsRequest};
 impl<R: RuntimeApi> ConnectionsApi for ConnectionsHandler<R> {
     fn get_connections(
         &self,
-        _: ServerHandlerContext,
         _: ServerRequestSingle<GetConnectionsRequest>,
         resp: ServerResponseUnarySink<Connections>,
     ) -> grpc::Result<()> {
@@ -20,7 +19,6 @@ impl<R: RuntimeApi> ConnectionsApi for ConnectionsHandler<R> {
 
     fn monitor_dmx(
         &self,
-        o: ServerHandlerContext,
         req: ServerRequestSingle<MonitorDmxRequest>,
         resp: ServerResponseUnarySink<MonitorDmxResponse>,
     ) -> grpc::Result<()> {

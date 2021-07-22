@@ -22,15 +22,15 @@
 // server interface
 
 pub trait NodesApi {
-    fn get_nodes(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::nodes::NodesRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::Nodes>) -> ::grpc::Result<()>;
+    fn get_nodes(&self, req: ::grpc::ServerRequestSingle<super::nodes::NodesRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::Nodes>) -> ::grpc::Result<()>;
 
-    fn add_node(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::nodes::AddNodeRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::Node>) -> ::grpc::Result<()>;
+    fn add_node(&self, req: ::grpc::ServerRequestSingle<super::nodes::AddNodeRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::Node>) -> ::grpc::Result<()>;
 
-    fn add_link(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::nodes::NodeConnection>, resp: ::grpc::ServerResponseUnarySink<super::nodes::NodeConnection>) -> ::grpc::Result<()>;
+    fn add_link(&self, req: ::grpc::ServerRequestSingle<super::nodes::NodeConnection>, resp: ::grpc::ServerResponseUnarySink<super::nodes::NodeConnection>) -> ::grpc::Result<()>;
 
-    fn write_control_value(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::nodes::WriteControl>, resp: ::grpc::ServerResponseUnarySink<super::nodes::WriteResponse>) -> ::grpc::Result<()>;
+    fn write_control_value(&self, req: ::grpc::ServerRequestSingle<super::nodes::WriteControl>, resp: ::grpc::ServerResponseUnarySink<super::nodes::WriteResponse>) -> ::grpc::Result<()>;
 
-    fn update_node_property(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::nodes::UpdateNodeConfigRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::UpdateNodeConfigResponse>) -> ::grpc::Result<()>;
+    fn update_node_property(&self, req: ::grpc::ServerRequestSingle<super::nodes::UpdateNodeConfigRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::UpdateNodeConfigResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -118,7 +118,7 @@ impl NodesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_nodes(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_nodes(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -130,7 +130,7 @@ impl NodesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).add_node(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_node(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -142,7 +142,7 @@ impl NodesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).add_link(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_link(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -154,7 +154,7 @@ impl NodesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).write_control_value(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).write_control_value(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
@@ -166,7 +166,7 @@ impl NodesApiServer {
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).update_node_property(ctx, req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_node_property(req, resp))
                     },
                 ),
             ],

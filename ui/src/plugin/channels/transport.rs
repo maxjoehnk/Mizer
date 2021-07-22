@@ -5,7 +5,6 @@ use mizer_api::RuntimeApi;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use protobuf::ProtobufEnum;
-use std::rc::Rc;
 
 #[derive(Clone)]
 pub struct TransportChannel<R: RuntimeApi> {
@@ -40,7 +39,7 @@ impl<R: RuntimeApi + 'static> TransportChannel<R> {
         Self { handler }
     }
 
-    pub fn channel(self, context: Rc<Context>) -> MethodChannel {
+    pub fn channel(self, context: Context) -> MethodChannel {
         MethodChannel::new(context, "mizer.live/transport", self)
     }
 

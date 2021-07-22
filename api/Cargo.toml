@@ -11,7 +11,7 @@ with-serde = ["protobuf/with-serde"]
 [dependencies]
 anyhow = "1"
 log = "0.4"
-protobuf = "2.18"
+protobuf = "2.24"
 serde = { version = "1", features = ["derive"] }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-media = { path = "../components/media" }
@@ -25,4 +25,4 @@ flume = "0.10"
 futures = "0.3"
 
 [build-dependencies]
-protoc-rust = "2.18"
+protoc-rust = "2.24"

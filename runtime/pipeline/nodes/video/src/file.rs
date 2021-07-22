@@ -98,10 +98,10 @@ impl VideoFileState {
     }
 
     fn link_decoder(&self) {
-        let sink = self.upload.get_static_pad("sink").unwrap();
+        let sink = self.upload.static_pad("sink").unwrap();
         let video_caps: gstreamer::Caps = "video/x-raw".parse().unwrap();
         self.decoder.connect_pad_added(move |_, pad| {
-            let caps = pad.get_current_caps().unwrap();
+            let caps = pad.current_caps().unwrap();
             log::trace!("connect_pad_added: {:?}", caps);
             if caps.can_intersect(&video_caps) {
                 log::trace!("connecting pads");

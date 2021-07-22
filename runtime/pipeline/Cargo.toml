@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 log = "0.4"
 anyhow = "1"
-gstreamer = "0.16"
+gstreamer = "0.17"
 metrics = "0.14"
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-protocol-laser = { path = "../../components/connections/protocols/laser" }

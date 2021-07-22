@@ -1,5 +1,5 @@
 use structopt::StructOpt;
-use tokio::task::LocalSet;
+use anyhow::Context;
 
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
@@ -32,7 +32,7 @@ fn main() -> anyhow::Result<()> {
 fn run(flags: Flags) -> anyhow::Result<()> {
     let handlers = setup_runtime(flags)?;
 
-    let handlers = handlers.recv()?;
+    let handlers = handlers.recv().context("internal api setup")?;
 
     mizer_ui::run(handlers)?;
 
@@ -63,36 +63,38 @@ fn setup_runtime(flags: Flags) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> 
         .spawn(move || {
             let runtime = build_tokio_runtime();
 
-            start_runtime(runtime, flags, Some(tx)).unwrap();
+            if let Err(err) = start_runtime(runtime, flags, Some(tx)) {
+                log::error!("{}", err);
+                std::process::exit(1);
+            }
         })?;
     Ok(rx)
 }
 
 fn build_tokio_runtime() -> tokio::runtime::Runtime {
     log::trace!("Starting tokio runtime");
-    tokio::runtime::Builder::new()
+    tokio::runtime::Builder::new_multi_thread()
         .enable_all()
         .thread_name("mizer-tokio-runtime")
-        .threaded_scheduler()
         .build()
         .unwrap()
 }
 
 fn start_runtime(
-    mut runtime: tokio::runtime::Runtime,
+    runtime: tokio::runtime::Runtime,
     flags: Flags,
     handler_out: Option<mpsc::Sender<Handlers<Api>>>,
 ) -> anyhow::Result<()> {
-    let local = LocalSet::new();
     // TODO: integrate discovery mode
     Session::new()?;
 
-    let (mut mizer, api_handler) =
-        runtime.enter(|| build_runtime(runtime.handle().clone(), flags))?;
+    let _guard = runtime.enter();
+
+    let (mut mizer, api_handler) = build_runtime(runtime.handle().clone(), flags)?;
     if let Some(handler_out) = handler_out {
         handler_out.send(mizer.handlers.clone())?;
     }
-    local.block_on(&mut runtime, mizer.run(&api_handler));
+    runtime.block_on(mizer.run(&api_handler));
 
     Ok(())
 }

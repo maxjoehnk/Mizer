@@ -1,9 +1,8 @@
+use std::path::PathBuf;
 use std::time::Duration;
 
-use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
-
-pub use crate::flags::Flags;
 use anyhow::Context;
+
 use mizer_api::handlers::Handlers;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
@@ -13,12 +12,13 @@ use mizer_media::api::MediaServerApi;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
+use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::MidiModule;
 use mizer_runtime::DefaultRuntime;
-use std::path::PathBuf;
 
 pub use crate::api::*;
+pub use crate::flags::Flags;
 
 mod api;
 mod flags;
@@ -109,7 +109,7 @@ impl Mizer {
             {
                 let injector = self.runtime.injector_mut();
                 let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
-                dmx_manager.load(&project);
+                dmx_manager.load(&project)?;
             }
             self.runtime.load(&project).context("loading project")?;
             log::info!("Loading project...Done");

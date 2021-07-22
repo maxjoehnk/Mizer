@@ -23,6 +23,8 @@
 
 pub trait ConnectionsApi {
     fn get_connections(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::connections::GetConnectionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
+
+    fn monitor_dmx(&self, o: ::grpc::ServerHandlerContext, req: ::grpc::ServerRequestSingle<super::connections::MonitorDmxRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::MonitorDmxResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -43,6 +45,16 @@ impl ConnectionsApiClient {
     pub fn get_connections(&self, o: ::grpc::RequestOptions, req: super::connections::GetConnectionsRequest) -> ::grpc::SingleResponse<super::connections::Connections> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/GetConnections"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn monitor_dmx(&self, o: ::grpc::RequestOptions, req: super::connections::MonitorDmxRequest) -> ::grpc::SingleResponse<super::connections::MonitorDmxResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/MonitorDmx"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -71,6 +83,18 @@ impl ConnectionsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).get_connections(ctx, req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/MonitorDmx"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |ctx, req, resp| (*handler_copy).monitor_dmx(ctx, req, resp))
                     },
                 ),
             ],

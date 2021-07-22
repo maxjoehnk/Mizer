@@ -12,4 +12,11 @@ class ConnectionsGrpcApi implements ConnectionsApi {
   Future<Connections> getConnections() {
     return client.getConnections(GetConnectionsRequest());
   }
+
+  @override
+  Future<Map<int, List<int>>> monitorDmxConnection(String outputId) async {
+    var res = await this.client.monitorDmx(MonitorDmxRequest(outputId: outputId));
+    return res.universes.asMap()
+        .map((_, universe) => MapEntry(universe.universe, universe.channels));
+  }
 }

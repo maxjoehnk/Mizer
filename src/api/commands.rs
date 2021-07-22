@@ -1,7 +1,9 @@
+use std::collections::HashMap;
+
 use mizer_clock::ClockState;
+use mizer_connections::Connection;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
-use mizer_connections::Connection;
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
@@ -17,6 +19,10 @@ pub enum ApiCommand {
     UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
     SetClockState(ClockState),
     GetConnections(flume::Sender<Vec<Connection>>),
+    GetDmxMonitor(
+        String,
+        flume::Sender<anyhow::Result<HashMap<u16, [u8; 512]>>>,
+    ),
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),

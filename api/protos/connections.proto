@@ -4,6 +4,21 @@ package mizer;
 
 service ConnectionsApi {
   rpc GetConnections (GetConnectionsRequest) returns (Connections) {}
+
+  rpc MonitorDmx (MonitorDmxRequest) returns (MonitorDmxResponse) {}
+}
+
+message MonitorDmxRequest {
+  string outputId = 1;
+}
+
+message MonitorDmxResponse {
+  repeated MonitorDmxUniverse universes = 1;
+}
+
+message MonitorDmxUniverse {
+  uint32 universe = 1;
+  bytes channels = 2;
 }
 
 message GetConnectionsRequest {}
@@ -24,7 +39,7 @@ message Connection {
 }
 
 message DmxConnection {
-
+  string outputId = 1;
 }
 
 message HeliosConnection {

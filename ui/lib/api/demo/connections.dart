@@ -42,4 +42,10 @@ class ConnectionsDemoApi implements ConnectionsApi {
       )
     ]);
   }
+
+  @override
+  Future<Map<int, List<int>>> monitorDmxConnection(String outputId) {
+    // TODO: implement monitorDmxConnection
+    throw UnimplementedError();
+  }
 }

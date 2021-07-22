@@ -1,11 +1,13 @@
+use std::collections::HashMap;
 use std::path::PathBuf;
 
-use crate::{ApiCommand, Mizer};
 use mizer_clock::Clock;
-use mizer_connections::{Connection, MidiView, DmxView};
+use mizer_connections::{Connection, DmxView, MidiView};
 use mizer_module::Runtime;
-use mizer_protocol_midi::{MidiConnectionManager};
 use mizer_protocol_dmx::DmxConnectionManager;
+use mizer_protocol_midi::MidiConnectionManager;
+
+use crate::{ApiCommand, Mizer};
 
 pub struct ApiHandler {
     pub(super) recv: flume::Receiver<ApiCommand>,
@@ -92,23 +94,40 @@ impl ApiHandler {
             }
             ApiCommand::GetConnections(sender) => {
                 let connections = self.get_connections(mizer);
-                sender.send(connections).expect("api command sender disconnected");
+                sender
+                    .send(connections)
+                    .expect("api command sender disconnected");
+            }
+            ApiCommand::GetDmxMonitor(output_id, sender) => {
+                let result = self.monitor_dmx(mizer, output_id);
+                sender
+                    .send(result)
+                    .expect("api command sender disconnected");
             }
         }
     }
 
     fn get_connections(&self, mizer: &mut Mizer) -> Vec<Connection> {
-        let manager = mizer.runtime.injector().get::<MidiConnectionManager>().unwrap();
-        let midi_connections = manager.list_available_devices()
+        let manager = mizer
+            .runtime
+            .injector()
+            .get::<MidiConnectionManager>()
+            .unwrap();
+        let midi_connections = manager
+            .list_available_devices()
             .into_iter()
-            .map(|device| MidiView {
-                name: device.name
-            })
+            .map(|device| MidiView { name: device.name })
             .map(Connection::from);
-        let dmx_manager = mizer.runtime.injector().get::<DmxConnectionManager>().unwrap();
-        let dmx_connections = dmx_manager.list_outputs()
+        let dmx_manager = mizer
+            .runtime
+            .injector()
+            .get::<DmxConnectionManager>()
+            .unwrap();
+        let dmx_connections = dmx_manager
+            .list_outputs()
             .into_iter()
-            .map(|(_, output)| DmxView {
+            .map(|(id, output)| DmxView {
+                output_id: id.clone(),
                 name: output.name(),
             })
             .map(Connection::from);
@@ -118,5 +137,21 @@ impl ApiHandler {
         connections.extend(dmx_connections);
 
         connections
+    }
+
+    fn monitor_dmx(
+        &self,
+        mizer: &mut Mizer,
+        output_id: String,
+    ) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
+        let dmx_manager = mizer
+            .runtime
+            .injector()
+            .get::<DmxConnectionManager>()
+            .unwrap();
+        let dmx_connection = dmx_manager.get_output(&output_id).unwrap();
+        let buffer = dmx_connection.read_buffer();
+
+        Ok(buffer)
     }
 }

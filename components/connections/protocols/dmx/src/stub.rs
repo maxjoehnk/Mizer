@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::buffer::DmxBuffer;
 use crate::DmxOutput;
 
@@ -26,4 +28,9 @@ impl DmxOutput for StubOutput {
     }
 
     fn flush(&self) {}
+
+    fn read_buffer(&self) -> HashMap<u16, [u8; 512]> {
+        let buffer = self.buffer.buffers.lock().unwrap();
+        buffer.clone()
+    }
 }

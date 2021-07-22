@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::models::*;
 use crate::RuntimeApi;
 
@@ -23,5 +25,9 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             connections,
             ..Default::default()
         }
+    }
+
+    pub fn monitor_dmx(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
+        self.runtime.get_dmx_monitor(output_id)
     }
 }

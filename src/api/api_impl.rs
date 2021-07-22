@@ -1,12 +1,14 @@
-use crate::{ApiCommand, ApiHandler};
+use std::collections::HashMap;
+
 use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
+use mizer_connections::Connection;
 use mizer_layouts::{ControlConfig, Layout};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::{FixtureNode, Node};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
-use std::collections::HashMap;
-use mizer_connections::Connection;
+
+use crate::{ApiCommand, ApiHandler};
 
 #[derive(Clone)]
 pub struct Api {
@@ -172,6 +174,15 @@ impl RuntimeApi for Api {
     fn get_connections(&self) -> Vec<Connection> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetConnections(tx)).unwrap();
+
+        rx.recv().unwrap()
+    }
+
+    fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender
+            .send(ApiCommand::GetDmxMonitor(output_id, tx))
+            .unwrap();
 
         rx.recv().unwrap()
     }

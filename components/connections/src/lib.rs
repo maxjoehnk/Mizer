@@ -17,10 +17,11 @@ impl Connection {
 
 #[derive(Debug, Clone)]
 pub struct MidiView {
-    pub name: String
+    pub name: String,
 }
 
 #[derive(Debug, Clone)]
 pub struct DmxView {
-    pub name: String
+    pub name: String,
+    pub output_id: String,
 }

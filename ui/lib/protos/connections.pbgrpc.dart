@@ -19,6 +19,12 @@ class ConnectionsApiClient extends $grpc.Client {
           '/mizer.ConnectionsApi/GetConnections',
           ($0.GetConnectionsRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
+  static final _$monitorDmx =
+      $grpc.ClientMethod<$0.MonitorDmxRequest, $0.MonitorDmxResponse>(
+          '/mizer.ConnectionsApi/MonitorDmx',
+          ($0.MonitorDmxRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.MonitorDmxResponse.fromBuffer(value));
 
   ConnectionsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -29,6 +35,12 @@ class ConnectionsApiClient extends $grpc.Client {
       $0.GetConnectionsRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$getConnections, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.MonitorDmxResponse> monitorDmx(
+      $0.MonitorDmxRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$monitorDmx, request, options: options);
   }
 }
 
@@ -44,6 +56,13 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.GetConnectionsRequest.fromBuffer(value),
         ($0.Connections value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.MonitorDmxRequest, $0.MonitorDmxResponse>(
+        'MonitorDmx',
+        monitorDmx_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.MonitorDmxRequest.fromBuffer(value),
+        ($0.MonitorDmxResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Connections> getConnections_Pre($grpc.ServiceCall call,
@@ -51,6 +70,13 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
     return getConnections(call, await request);
   }
 
+  $async.Future<$0.MonitorDmxResponse> monitorDmx_Pre($grpc.ServiceCall call,
+      $async.Future<$0.MonitorDmxRequest> request) async {
+    return monitorDmx(call, await request);
+  }
+
   $async.Future<$0.Connections> getConnections(
       $grpc.ServiceCall call, $0.GetConnectionsRequest request);
+  $async.Future<$0.MonitorDmxResponse> monitorDmx(
+      $grpc.ServiceCall call, $0.MonitorDmxRequest request);
 }

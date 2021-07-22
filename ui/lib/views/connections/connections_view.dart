@@ -48,7 +48,12 @@ class ConnectionsView extends StatelessWidget {
 
   List<Widget> _buildActions(BuildContext context, Connection connection) {
     if (connection.hasDmx()) {
-      return [MizerIconButton(icon: MdiIcons.chartBar, label: "Monitor", onClick: () => _showDmxMonitor(context))];
+      return [
+        MizerIconButton(
+            icon: MdiIcons.chartBar,
+            label: "Monitor",
+            onClick: () => _showDmxMonitor(context, connection))
+      ];
     }
     if (connection.hasOsc()) {
       return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor")];
@@ -75,8 +80,8 @@ class ConnectionsView extends StatelessWidget {
     return Container();
   }
 
-  _showDmxMonitor(BuildContext context) {
-    openDialog(context, (context) => DmxMonitor());
+  _showDmxMonitor(BuildContext context, Connection connection) {
+    openDialog(context, DmxMonitorDialog(connection));
   }
 }
 

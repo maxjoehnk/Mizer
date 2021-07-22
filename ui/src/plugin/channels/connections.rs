@@ -1,9 +1,12 @@
-use crate::plugin::channels::MethodReplyExt;
-use mizer_api::handlers::ConnectionsHandler;
+use std::rc::Rc;
+
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::rc::Rc;
+
+use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::RuntimeApi;
+
+use crate::plugin::channels::MethodReplyExt;
 
 #[derive(Clone)]
 pub struct ConnectionsChannel<R: RuntimeApi> {
@@ -22,6 +25,25 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                 let response = self.handler.get_connections();
 
                 resp.respond_msg(response);
+            }
+            "monitorDmx" => {
+                if let Value::String(outputId) = call.args {
+                    match self.handler.monitor_dmx(outputId) {
+                        Ok(values) => {
+                            let values = values
+                                .into_iter()
+                                .map(|(universe, channels)| {
+                                    (
+                                        Value::I64(universe as i64),
+                                        Value::U8List(channels.to_vec()),
+                                    )
+                                })
+                                .collect();
+                            resp.send_ok(Value::Map(values));
+                        }
+                        Err(err) => resp.respond_error(err),
+                    }
+                }
             }
             _ => resp.not_implemented(),
         }

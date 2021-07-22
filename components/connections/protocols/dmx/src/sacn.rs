@@ -1,6 +1,9 @@
+use std::collections::HashMap;
+
+use ::sacn::DmxSource;
+
 use crate::buffer::DmxBuffer;
 use crate::DmxOutput;
-use ::sacn::DmxSource;
 
 pub struct SacnOutput {
     source: DmxSource,
@@ -34,5 +37,10 @@ impl DmxOutput for SacnOutput {
         for (universe, buffer) in universe_buffer.iter() {
             self.source.send(*universe, buffer).unwrap();
         }
+    }
+
+    fn read_buffer(&self) -> HashMap<u16, [u8; 512]> {
+        let buffers = self.buffer.buffers.lock().unwrap();
+        buffers.clone()
     }
 }

@@ -4,7 +4,7 @@ import 'package:nativeshell/nativeshell.dart' as nativeshell;
 import '../platform.dart';
 import 'menu.dart';
 
-class IntegratedPlatform implements Platform {
+class IntegratedPlatform extends Platform {
   @override
   showContextMenu({ BuildContext context, Menu menu, Offset position }) {
     nativeshell.Window.of(context).showPopupMenu(menu.toNative(), position);

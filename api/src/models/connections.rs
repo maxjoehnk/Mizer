@@ -25,6 +25,534 @@
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct MonitorDmxRequest {
+    // message fields
+    pub outputId: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorDmxRequest {
+    fn default() -> &'a MonitorDmxRequest {
+        <MonitorDmxRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorDmxRequest {
+    pub fn new() -> MonitorDmxRequest {
+        ::std::default::Default::default()
+    }
+
+    // string outputId = 1;
+
+
+    pub fn get_outputId(&self) -> &str {
+        &self.outputId
+    }
+    pub fn clear_outputId(&mut self) {
+        self.outputId.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_outputId(&mut self, v: ::std::string::String) {
+        self.outputId = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_outputId(&mut self) -> &mut ::std::string::String {
+        &mut self.outputId
+    }
+
+    // Take field
+    pub fn take_outputId(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.outputId, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for MonitorDmxRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.outputId)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.outputId.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.outputId);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.outputId.is_empty() {
+            os.write_string(1, &self.outputId)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorDmxRequest {
+        MonitorDmxRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "outputId",
+                |m: &MonitorDmxRequest| { &m.outputId },
+                |m: &mut MonitorDmxRequest| { &mut m.outputId },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorDmxRequest>(
+                "MonitorDmxRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorDmxRequest {
+        static instance: ::protobuf::rt::LazyV2<MonitorDmxRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorDmxRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorDmxRequest {
+    fn clear(&mut self) {
+        self.outputId.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorDmxRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorDmxRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct MonitorDmxResponse {
+    // message fields
+    pub universes: ::protobuf::RepeatedField<MonitorDmxUniverse>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorDmxResponse {
+    fn default() -> &'a MonitorDmxResponse {
+        <MonitorDmxResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorDmxResponse {
+    pub fn new() -> MonitorDmxResponse {
+        ::std::default::Default::default()
+    }
+
+    // repeated .mizer.MonitorDmxUniverse universes = 1;
+
+
+    pub fn get_universes(&self) -> &[MonitorDmxUniverse] {
+        &self.universes
+    }
+    pub fn clear_universes(&mut self) {
+        self.universes.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_universes(&mut self, v: ::protobuf::RepeatedField<MonitorDmxUniverse>) {
+        self.universes = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_universes(&mut self) -> &mut ::protobuf::RepeatedField<MonitorDmxUniverse> {
+        &mut self.universes
+    }
+
+    // Take field
+    pub fn take_universes(&mut self) -> ::protobuf::RepeatedField<MonitorDmxUniverse> {
+        ::std::mem::replace(&mut self.universes, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for MonitorDmxResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.universes {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.universes)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.universes {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.universes {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorDmxResponse {
+        MonitorDmxResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MonitorDmxUniverse>>(
+                "universes",
+                |m: &MonitorDmxResponse| { &m.universes },
+                |m: &mut MonitorDmxResponse| { &mut m.universes },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorDmxResponse>(
+                "MonitorDmxResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorDmxResponse {
+        static instance: ::protobuf::rt::LazyV2<MonitorDmxResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorDmxResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorDmxResponse {
+    fn clear(&mut self) {
+        self.universes.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorDmxResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorDmxResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
+pub struct MonitorDmxUniverse {
+    // message fields
+    pub universe: u32,
+    pub channels: ::std::vec::Vec<u8>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorDmxUniverse {
+    fn default() -> &'a MonitorDmxUniverse {
+        <MonitorDmxUniverse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorDmxUniverse {
+    pub fn new() -> MonitorDmxUniverse {
+        ::std::default::Default::default()
+    }
+
+    // uint32 universe = 1;
+
+
+    pub fn get_universe(&self) -> u32 {
+        self.universe
+    }
+    pub fn clear_universe(&mut self) {
+        self.universe = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_universe(&mut self, v: u32) {
+        self.universe = v;
+    }
+
+    // bytes channels = 2;
+
+
+    pub fn get_channels(&self) -> &[u8] {
+        &self.channels
+    }
+    pub fn clear_channels(&mut self) {
+        self.channels.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_channels(&mut self, v: ::std::vec::Vec<u8>) {
+        self.channels = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_channels(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.channels
+    }
+
+    // Take field
+    pub fn take_channels(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.channels, ::std::vec::Vec::new())
+    }
+}
+
+impl ::protobuf::Message for MonitorDmxUniverse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.universe = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.channels)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.universe != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.universe, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.channels.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(2, &self.channels);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.universe != 0 {
+            os.write_uint32(1, self.universe)?;
+        }
+        if !self.channels.is_empty() {
+            os.write_bytes(2, &self.channels)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorDmxUniverse {
+        MonitorDmxUniverse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "universe",
+                |m: &MonitorDmxUniverse| { &m.universe },
+                |m: &mut MonitorDmxUniverse| { &mut m.universe },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                "channels",
+                |m: &MonitorDmxUniverse| { &m.channels },
+                |m: &mut MonitorDmxUniverse| { &mut m.channels },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorDmxUniverse>(
+                "MonitorDmxUniverse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorDmxUniverse {
+        static instance: ::protobuf::rt::LazyV2<MonitorDmxUniverse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorDmxUniverse::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorDmxUniverse {
+    fn clear(&mut self) {
+        self.universe = 0;
+        self.channels.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorDmxUniverse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorDmxUniverse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct GetConnectionsRequest {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -871,6 +1399,8 @@ impl ::protobuf::reflect::ProtobufValue for Connection {
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(Serialize, Deserialize))]
 pub struct DmxConnection {
+    // message fields
+    pub outputId: ::std::string::String,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -888,6 +1418,32 @@ impl DmxConnection {
     pub fn new() -> DmxConnection {
         ::std::default::Default::default()
     }
+
+    // string outputId = 1;
+
+
+    pub fn get_outputId(&self) -> &str {
+        &self.outputId
+    }
+    pub fn clear_outputId(&mut self) {
+        self.outputId.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_outputId(&mut self, v: ::std::string::String) {
+        self.outputId = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_outputId(&mut self) -> &mut ::std::string::String {
+        &mut self.outputId
+    }
+
+    // Take field
+    pub fn take_outputId(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.outputId, ::std::string::String::new())
+    }
 }
 
 impl ::protobuf::Message for DmxConnection {
@@ -899,6 +1455,9 @@ impl ::protobuf::Message for DmxConnection {
         while !is.eof()? {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.outputId)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -911,12 +1470,18 @@ impl ::protobuf::Message for DmxConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
+        if !self.outputId.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.outputId);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.outputId.is_empty() {
+            os.write_string(1, &self.outputId)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -954,7 +1519,12 @@ impl ::protobuf::Message for DmxConnection {
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
-            let fields = ::std::vec::Vec::new();
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "outputId",
+                |m: &DmxConnection| { &m.outputId },
+                |m: &mut DmxConnection| { &mut m.outputId },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<DmxConnection>(
                 "DmxConnection",
                 fields,
@@ -971,6 +1541,7 @@ impl ::protobuf::Message for DmxConnection {
 
 impl ::protobuf::Clear for DmxConnection {
     fn clear(&mut self) {
+        self.outputId.clear();
         self.unknown_fields.clear();
     }
 }
@@ -2413,34 +2984,41 @@ impl ::protobuf::reflect::ProtobufValue for CdjPlayback_State {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x11connections.proto\x12\x05mizer\"\x17\n\x15GetConnectionsRequest\"B\
-    \n\x0bConnections\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.\
-    ConnectionR\x0bconnections\"\x9e\x02\n\nConnection\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.Dmx\
-    ConnectionH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.Mid\
-    iConnectionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.Os\
-    cConnectionH\0R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.P\
-    roDjLinkConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\
-    \x17.mizer.HeliosConnectionH\0R\x06heliosB\x0c\n\nconnection\"\x0f\n\rDm\
-    xConnection\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\x20\x01(\
-    \tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\tR\x08firmware\"\x10\
-    \n\x0eMidiConnection\"v\n\rOscConnection\x12\x1d\n\ninput_port\x18\x01\
-    \x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x02\x20\x01(\rR\nou\
-    tputPort\x12%\n\x0eoutput_address\x18\x03\x20\x01(\tR\routputAddress\"\
-    \x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\x01(\
-    \tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12\"\n\
-    \x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playback\
-    \x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\
-    \x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\
-    \n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\
-    \x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.Cdj\
-    Playback.StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mi\
-    zer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\
-    \x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05tit\
-    le\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\
-    \x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x032V\n\x0eConnectionsA\
-    pi\x12D\n\x0eGetConnections\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.\
-    mizer.Connections\"\0b\x06proto3\
+    \n\x11connections.proto\x12\x05mizer\"/\n\x11MonitorDmxRequest\x12\x1a\n\
+    \x08outputId\x18\x01\x20\x01(\tR\x08outputId\"M\n\x12MonitorDmxResponse\
+    \x127\n\tuniverses\x18\x01\x20\x03(\x0b2\x19.mizer.MonitorDmxUniverseR\t\
+    universes\"L\n\x12MonitorDmxUniverse\x12\x1a\n\x08universe\x18\x01\x20\
+    \x01(\rR\x08universe\x12\x1a\n\x08channels\x18\x02\x20\x01(\x0cR\x08chan\
+    nels\"\x17\n\x15GetConnectionsRequest\"B\n\x0bConnections\x123\n\x0bconn\
+    ections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\x9e\
+    \x02\n\nConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\
+    \x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\
+    \x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\
+    \n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12:\
+    \n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tpro\
+    DJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnection\
+    H\0R\x06heliosB\x0c\n\nconnection\"+\n\rDmxConnection\x12\x1a\n\x08outpu\
+    tId\x18\x01\x20\x01(\tR\x08outputId\"B\n\x10HeliosConnection\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\
+    \x01(\tR\x08firmware\"\x10\n\x0eMidiConnection\"v\n\rOscConnection\x12\
+    \x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_po\
+    rt\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\
+    \x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07\
+    address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\
+    \x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerN\
+    umber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\
+    \x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\
+    \x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\
+    \n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\
+    \x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\
+    \x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\
+    \x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\
+    \x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\
+    \x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cuein\
+    g\x10\x032\x9b\x01\n\x0eConnectionsApi\x12D\n\x0eGetConnections\x12\x1c.\
+    mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\x12C\n\nMonito\
+    rDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\"\
+    \0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

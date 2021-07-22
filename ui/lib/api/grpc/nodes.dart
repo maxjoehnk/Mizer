@@ -26,7 +26,7 @@ class NodesGrpcApi implements NodesApi {
 
   @override
   Future<void> writeControlValue({ String path, String port, double value }) {
-    return this.client.writeControlValue(WriteControl(path: path, port: port, value: value ));
+    return this.client.writeControlValue(WriteControl(path: path, port: port, value: value));
   }
 
   @override

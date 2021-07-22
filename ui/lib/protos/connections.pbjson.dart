@@ -5,6 +5,28 @@
 // @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
+const MonitorDmxRequest$json = const {
+  '1': 'MonitorDmxRequest',
+  '2': const [
+    const {'1': 'outputId', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
+  ],
+};
+
+const MonitorDmxResponse$json = const {
+  '1': 'MonitorDmxResponse',
+  '2': const [
+    const {'1': 'universes', '3': 1, '4': 3, '5': 11, '6': '.mizer.MonitorDmxUniverse', '10': 'universes'},
+  ],
+};
+
+const MonitorDmxUniverse$json = const {
+  '1': 'MonitorDmxUniverse',
+  '2': const [
+    const {'1': 'universe', '3': 1, '4': 1, '5': 13, '10': 'universe'},
+    const {'1': 'channels', '3': 2, '4': 1, '5': 12, '10': 'channels'},
+  ],
+};
+
 const GetConnectionsRequest$json = const {
   '1': 'GetConnectionsRequest',
 };
@@ -33,6 +55,9 @@ const Connection$json = const {
 
 const DmxConnection$json = const {
   '1': 'DmxConnection',
+  '2': const [
+    const {'1': 'outputId', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
+  ],
 };
 
 const HeliosConnection$json = const {

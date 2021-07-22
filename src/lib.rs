@@ -52,6 +52,7 @@ pub fn build_runtime(
 
     let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
     setup_media_api(handle, &flags, media_server_api)?;
+    let has_project_file = flags.file.is_some();
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
         flags,
@@ -59,7 +60,11 @@ pub fn build_runtime(
         grpc,
         handlers,
     };
-    mizer.load_project()?;
+    if has_project_file {
+        mizer.load_project()?;
+    }else {
+        mizer.new_project();
+    }
 
     Ok((mizer, api_handler))
 }
@@ -87,6 +92,15 @@ impl Mizer {
                 tokio::time::delay_for(FRAME_DELAY_60FPS - frame_time).await;
             }
         }
+    }
+
+    fn new_project(&mut self) {
+        self.close_project();
+        let injector = self.runtime.injector_mut();
+        let fixture_manager = injector.get::<FixtureManager>().unwrap();
+        fixture_manager.new();
+        let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
+        dmx_manager.new();
     }
 
     fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
@@ -145,9 +159,11 @@ impl Mizer {
 
     fn close_project(&mut self) {
         self.runtime.clear();
-        let injector = self.runtime.injector();
+        let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
         fixture_manager.clear();
+        let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
+        dmx_manager.clear();
     }
 }
 

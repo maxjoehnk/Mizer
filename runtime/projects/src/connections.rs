@@ -3,6 +3,10 @@ use mizer_protocol_dmx::{DmxConnectionManager, SacnOutput};
 use crate::{Project, ProjectManagerMut, ConnectionTypes, ConnectionConfig};
 
 impl ProjectManagerMut for DmxConnectionManager {
+    fn new(&mut self) {
+        self.add_output("dmx-0".into(), SacnOutput::new());
+    }
+
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         for connection in &project.connections {
             match connection.config {

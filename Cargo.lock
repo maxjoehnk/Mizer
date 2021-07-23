@@ -3599,6 +3599,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-package"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer",
+]
+
+[[package]]
 name = "mizer-pipeline"
 version = "0.1.0"
 dependencies = [

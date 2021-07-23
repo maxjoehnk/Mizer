@@ -53,7 +53,8 @@ members = [
     "ui",
     "ui/ffi",
     "util",
-    "util/bus"
+    "util/bus",
+    "util/package"
 ]
 
 [lib]

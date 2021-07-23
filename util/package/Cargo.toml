@@ -1,0 +1,11 @@
+[package]
+name = "mizer-package"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+mizer = { path = "../../", default-features = false }
+
+[build-dependencies]
+anyhow = "1"

@@ -27,7 +27,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-headless
-          path: target/release/artifact
+          path: target/release/mizer
           if-no-files-found: error
       - name: Build
         run: make build

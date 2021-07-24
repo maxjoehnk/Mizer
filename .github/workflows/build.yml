@@ -34,7 +34,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-full
-          path: target/debug/artifact
+          path: target/release/artifact
           if-no-files-found: error
   build-macos:
     runs-on: macos-latest
@@ -56,7 +56,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: macos-full
-          path: target/debug/artifact
+          path: target/release/artifact
           if-no-files-found: error
 
   build-windows:

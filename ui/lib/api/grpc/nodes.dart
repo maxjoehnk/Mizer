@@ -44,4 +44,9 @@ class NodesGrpcApi implements NodesApi {
     log("updateNodeConfig $request", name: "NodesGrpcApi");
     return this.client.updateNodeProperty(request);
   }
+
+  @override
+  Future<void> moveNode(MoveNodeRequest request) {
+    return this.client.moveNode(request);
+  }
 }

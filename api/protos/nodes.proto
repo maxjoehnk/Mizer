@@ -8,6 +8,7 @@ service NodesApi {
   rpc AddLink (NodeConnection) returns (NodeConnection) {}
   rpc WriteControlValue (WriteControl) returns (WriteResponse) {}
   rpc UpdateNodeProperty (UpdateNodeConfigRequest) returns (UpdateNodeConfigResponse) {}
+  rpc MoveNode (MoveNodeRequest) returns (MoveNodeResponse) {}
 }
 
 message AddNodeRequest {
@@ -31,6 +32,13 @@ message UpdateNodeConfigRequest {
 }
 
 message UpdateNodeConfigResponse {}
+
+message MoveNodeRequest {
+  string path = 1;
+  NodePosition position = 2;
+}
+
+message MoveNodeResponse {}
 
 message Nodes {
   repeated Node nodes = 1;

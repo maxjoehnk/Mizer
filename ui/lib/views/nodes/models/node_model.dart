@@ -4,26 +4,15 @@ import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
 class NodeModel {
-  final Node node;
+  Node node;
   final GlobalKey key;
   final List<PortModel> ports;
   Offset offset = Offset.infinite;
   Size size = Size.zero;
 
   NodeModel({@required this.key, @required this.node}) : this.ports = [] {
-    offset = Offset(node.designer.position.x * MULTIPLIER, node.designer.position.y * MULTIPLIER);
-    for (var input in node.inputs) {
-      ports.add(PortModel(
-          key: GlobalKey(debugLabel: "Node: ${node.path}, Input: ${input.name}"),
-          port: input,
-          input: true));
-    }
-    for (var output in node.outputs) {
-      ports.add(PortModel(
-          key: GlobalKey(debugLabel: "Node: ${node.path}, Output: ${output.name}"),
-          port: output,
-          input: false));
-    }
+    _applyOffset(node);
+    _buildPorts();
   }
 
   void update(GlobalKey key) {
@@ -38,5 +27,34 @@ class NodeModel {
     for (var port in ports) {
       port.update(key);
     }
+  }
+
+  void refresh(Node node) {
+    this.node = node;
+    _applyOffset(node);
+    _buildPorts();
+  }
+
+  void _applyOffset(Node node) {
+    offset = Offset(node.designer.position.x * MULTIPLIER, node.designer.position.y * MULTIPLIER);
+  }
+
+  void _buildPorts() {
+    for (var input in node.inputs) {
+      ports.add(PortModel(
+          key: GlobalKey(debugLabel: "Node: ${node.path}, Input: ${input.name}"),
+          port: input,
+          input: true));
+    }
+    for (var output in node.outputs) {
+      ports.add(PortModel(
+          key: GlobalKey(debugLabel: "Node: ${node.path}, Output: ${output.name}"),
+          port: output,
+          input: false));
+    }
+  }
+
+  Offset getPosition() {
+    return Offset(offset.dx / MULTIPLIER, offset.dy / MULTIPLIER);
   }
 }

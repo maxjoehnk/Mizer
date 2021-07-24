@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/node_editor_model.dart';
@@ -13,8 +14,8 @@ class CanvasDropLayer extends StatelessWidget {
           builder: (context, candidates, rejects) {
             return SizedBox.expand();
           },
-          onWillAccept: (data) => data is Node,
-          onAccept: (data) {
+          onWillAccept: (data) => data is NodeModel,
+          onAccept: (NodeModel data) {
             RenderBox canvasBox = context.findRenderObject();
             RenderBox elementBox = data.key.currentContext.findRenderObject();
             Offset off = model.transformationController.toScene(
@@ -25,6 +26,8 @@ class CanvasDropLayer extends StatelessWidget {
             data.offset = off;
             model.updateNodes();
             model.update();
+            NodesBloc bloc = context.read();
+            bloc.add(MoveNode(data.node.path, data.getPosition()));
           },
           onMove: (_) {
             model.updateNodes();

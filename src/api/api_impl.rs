@@ -4,7 +4,7 @@ use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::Connection;
 use mizer_layouts::{ControlConfig, Layout};
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId, NodePosition};
 use mizer_nodes::{FixtureNode, Node};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 
@@ -138,6 +138,16 @@ impl RuntimeApi for Api {
         self.sender.send(ApiCommand::UpdateNode(path, config, tx))?;
 
         rx.recv()?
+    }
+
+    fn update_node_position(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()> {
+        let mut nodes = self.access.designer.read();
+        if let Some(designer) = nodes.get_mut(&path) {
+            designer.position = position;
+        }// TODO: else return err?
+        self.access.designer.set(nodes);
+
+        Ok(())
     }
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {

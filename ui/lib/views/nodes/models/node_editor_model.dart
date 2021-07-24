@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -8,8 +6,8 @@ import 'package:mizer/views/nodes/models/port_model.dart';
 import 'node_model.dart';
 
 class NodeEditorModel extends ChangeNotifier {
-  final List<NodeModel> nodes;
-  final List<NodeConnection> channels;
+  List<NodeModel> nodes;
+  List<NodeConnection> channels;
   final GlobalKey painterKey = GlobalKey();
 
   TransformationController transformationController;
@@ -22,6 +20,26 @@ class NodeEditorModel extends ChangeNotifier {
             .toList(),
         this.channels = nodes.channels {
     transformationController = TransformationController()..addListener(update);
+  }
+
+  void refresh(Nodes nodes) {
+    this.channels = nodes.channels;
+    for (var existingNode in this.nodes) {
+      var matchingNode = nodes.nodes.firstWhere((node) => node.path == existingNode.node.path, orElse: () => null);
+
+      if (matchingNode != null) {
+        existingNode.refresh(matchingNode);
+      }else {
+        this.nodes.remove(existingNode);
+      }
+    }
+    for (var newNode in nodes.nodes) {
+      var hasNode = this.nodes.any((node) => node.node.path == newNode.path);
+      if (!hasNode) {
+        this.nodes.add(NodeModel(node: newNode, key: GlobalKey(debugLabel: "Node ${newNode.path}")));
+      }
+    }
+    this.updateNodes();
   }
 
   void updateNodes() {

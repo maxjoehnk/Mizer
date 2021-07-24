@@ -88,4 +88,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         Ok(())
     }
+
+    pub fn move_node(&self, request: MoveNodeRequest) -> anyhow::Result<()> {
+        self.runtime.update_node_position(
+            request.path.into(),
+            request.position.unwrap().into(),
+        )?;
+
+        Ok(())
+    }
 }

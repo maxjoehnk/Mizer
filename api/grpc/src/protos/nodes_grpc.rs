@@ -31,6 +31,8 @@ pub trait NodesApi {
     fn write_control_value(&self, req: ::grpc::ServerRequestSingle<super::nodes::WriteControl>, resp: ::grpc::ServerResponseUnarySink<super::nodes::WriteResponse>) -> ::grpc::Result<()>;
 
     fn update_node_property(&self, req: ::grpc::ServerRequestSingle<super::nodes::UpdateNodeConfigRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::UpdateNodeConfigResponse>) -> ::grpc::Result<()>;
+
+    fn move_node(&self, req: ::grpc::ServerRequestSingle<super::nodes::MoveNodeRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::MoveNodeResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -91,6 +93,16 @@ impl NodesApiClient {
     pub fn update_node_property(&self, o: ::grpc::RequestOptions, req: super::nodes::UpdateNodeConfigRequest) -> ::grpc::SingleResponse<super::nodes::UpdateNodeConfigResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/UpdateNodeProperty"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn move_node(&self, o: ::grpc::RequestOptions, req: super::nodes::MoveNodeRequest) -> ::grpc::SingleResponse<super::nodes::MoveNodeResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/MoveNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -167,6 +179,18 @@ impl NodesApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_node_property(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/MoveNode"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).move_node(req, resp))
                     },
                 ),
             ],

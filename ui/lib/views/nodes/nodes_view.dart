@@ -13,21 +13,36 @@ import 'widgets/editor_layers/canvas_drop_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'models/node_editor_model.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
-import 'widgets/editor_layers/background_layer.dart';
 import 'widgets/properties/node_properties.dart';
 import 'widgets/transport/transport_controls.dart';
 
-class FetchNodesView extends StatelessWidget {
+class FetchNodesView extends StatefulWidget {
+  @override
+  State<FetchNodesView> createState() => _FetchNodesViewState();
+}
+
+class _FetchNodesViewState extends State<FetchNodesView> {
+  NodeEditorModel model;
+
   @override
   Widget build(BuildContext context) {
     context.read<NodesBloc>().add(FetchNodes());
     return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
+      _updateModel(nodes);
       return SizeChangedLayoutNotifier(
         child: ChangeNotifierProvider<NodeEditorModel>.value(
-            value: NodeEditorModel(nodes), // TODO: update existing NodeModels
+            value: model,
             builder: (context, _) => SizedBox.expand(child: NodesView())),
       );
     });
+  }
+
+  _updateModel(Nodes nodes) {
+    if (model == null) {
+      model = NodeEditorModel(nodes);
+    }else {
+      model.refresh(nodes);
+    }
   }
 }
 
@@ -53,7 +68,6 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
               setState(() {
                 addMenuPosition = event.localPosition;
               });
-              log("right click");
             },
             onTap: () {
               setState(() {

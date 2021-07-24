@@ -14,4 +14,6 @@ abstract class NodesApi {
   Future<Map<String, List<double>>> getNodeHistories(List<String> paths);
 
   Future<void> updateNodeConfig(UpdateNodeConfigRequest request);
+
+  Future<void> moveNode(MoveNodeRequest request);
 }

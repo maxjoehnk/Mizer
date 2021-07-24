@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::Connection;
 use mizer_layouts::{ControlConfig, Layout};
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
+use mizer_node::{NodeDesigner, NodePosition, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use mizer_runtime::NodeDescriptor;
 
@@ -49,6 +49,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>>;
 
     fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()>;
+    fn update_node_position(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()>;
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
 

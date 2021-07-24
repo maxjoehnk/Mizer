@@ -82,6 +82,16 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 },
                 Err(err) => resp.respond_error(err),
             },
+            "moveNode" => match call.arguments() {
+                Ok(args) => {
+                    log::debug!("moveNode {:?}", args);
+                    match self.handler.move_node(args) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
+                },
+                Err(err) => resp.respond_error(err),
+            }
             _ => resp.not_implemented(),
         }
     }

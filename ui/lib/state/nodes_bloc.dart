@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
@@ -26,6 +25,23 @@ class LinkNodes extends NodesEvent {
   ChannelProtocol get protocol => this.sourcePort.protocol;
 }
 
+class MoveNode extends NodesEvent {
+  final String node;
+  final Offset position;
+
+  MoveNode(this.node, this.position);
+
+  MoveNodeRequest into() {
+    return MoveNodeRequest(
+      path: node,
+      position: NodePosition(
+        x: position.dx,
+        y: position.dy,
+      ),
+    );
+  }
+}
+
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
   final NodesApi api;
 
@@ -50,7 +66,8 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
     }
     if (event is LinkNodes) {
       LinkNodes request = event;
-      var connection = NodeConnection(protocol: request.protocol,
+      var connection = NodeConnection(
+          protocol: request.protocol,
           sourceNode: request.sourceNode.path,
           sourcePort: request.sourcePort,
           targetNode: request.target.node.path,
@@ -59,6 +76,13 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       var nextChannels = state.channels.sublist(0);
       nextChannels.add(connection);
       yield Nodes(channels: nextChannels, nodes: state.nodes);
+    }
+    if (event is MoveNode) {
+      var request = event.into();
+      await api.moveNode(request);
+      var node = state.nodes.firstWhere((element) => element.path == event.node);
+      node.designer.position = request.position;
+      yield state;
     }
   }
 
@@ -71,8 +95,7 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
         .state
         .nodes
         .where((n) => n.path != node.path)
-        .expand((n) =>
-        n.inputs
+        .expand((n) => n.inputs
             .where((p) => p.protocol == port.protocol)
             .map((p) => PortOption(node: n, port: p)))
         .toList();

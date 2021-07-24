@@ -696,6 +696,23 @@ impl From<mizer_node::NodeDesigner> for NodeDesigner {
     }
 }
 
+impl From<NodeDesigner> for mizer_node::NodeDesigner {
+    fn from(designer: NodeDesigner) -> Self {
+        Self {
+            scale: designer.scale,
+            position: designer.position.unwrap().into(),
+        }
+    }
+}
+
+impl From<NodePosition> for mizer_node::NodePosition {
+    fn from(position: NodePosition) -> Self {
+        Self {
+            x: position.x,
+            y: position.y,
+        }
+    }
+}
 impl From<PortType> for ChannelProtocol {
     fn from(port: PortType) -> Self {
         match port {

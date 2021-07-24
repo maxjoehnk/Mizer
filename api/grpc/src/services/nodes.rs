@@ -56,4 +56,10 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
         resp.finish(UpdateNodeConfigResponse::default())
     }
+
+    fn move_node(&self, req: ServerRequestSingle<MoveNodeRequest>, resp: ServerResponseUnarySink<MoveNodeResponse>) -> grpc::Result<()> {
+        self.move_node(req.message).unwrap();
+
+        resp.finish(MoveNodeResponse::default())
+    }
 }

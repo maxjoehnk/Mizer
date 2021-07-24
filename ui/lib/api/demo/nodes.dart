@@ -54,4 +54,9 @@ class NodesDemoApi implements NodesApi {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> moveNode(MoveNodeRequest request) {
+    // TODO: implement moveNode
+    throw UnimplementedError();
+  }
 }

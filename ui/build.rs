@@ -13,6 +13,8 @@ fn build_flutter() -> BuildResult<()> {
             bundle_name: "Mizer.app".into(),
             bundle_display_name: "Mizer".into(),
             icon_file: "icons/AppIcon.icns".into(),
+            executable_path: "mizer".into(),
+            bundle_identifier: "live.mizer".into(),
             ..Default::default()
         };
         let resources = MacOSBundle::build(options)?;

@@ -71,6 +71,7 @@ impl Artifact {
 
         #[cfg(target_family = "unix")]
         {
+            println!("Linking from {:?} to {:?}", from, to);
             std::os::unix::fs::symlink(&from, &to)?;
         }
 
@@ -95,6 +96,7 @@ impl Artifact {
                     .unwrap_or_default()
                     .ends_with(suffix);
 
+                println!("Matching {:?} with suffix {} = {}", &file, suffix, is_file && filename_matches);
                 if is_file && filename_matches {
                     Ok(Some(file))
                 } else {

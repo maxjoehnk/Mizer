@@ -1,5 +1,5 @@
 use gstreamer::prelude::*;
-use gstreamer::{Element, ElementFactory};
+use gstreamer::{Element, ElementFactory, MessageType, SeekFlags, SeekType, State, ClockTime};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -45,7 +45,17 @@ impl PipelineNode for VideoFileNode {
 impl ProcessingNode for VideoFileNode {
     type State = VideoFileState;
 
-    fn process(&self, _: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, _: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        let pipeline = PIPELINE.lock().unwrap();
+        let bus = pipeline.bus().unwrap();
+        if let Some(msg) = bus.pop() {
+            log::trace!("pipeline {:?}", msg);
+            if msg.type_() == MessageType::Eos {
+                pipeline.seek(1.0, SeekFlags::FLUSH, SeekType::Set, Some(ClockTime::ZERO), SeekType::None, ClockTime::NONE)?;
+                pipeline.set_state(State::Playing)?;
+            }
+        }
+
         Ok(())
     }
 

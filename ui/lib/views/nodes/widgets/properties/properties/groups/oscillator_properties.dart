@@ -44,21 +44,25 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
         label: "Min",
         value: this.widget.config.min,
         onUpdate: _updateMin,
+        fractions: true,
       ),
       NumberField(
         label: "Max",
         value: this.widget.config.max,
         onUpdate: _updateMax,
+        fractions: true,
       ),
       NumberField(
         label: "Ratio",
         value: this.widget.config.ratio,
         onUpdate: _updateRatio,
+        fractions: true,
       ),
       NumberField(
         label: "Offset",
         value: this.widget.config.offset,
         onUpdate: _updateOffset,
+        fractions: true,
       ),
     ]);
   }
@@ -74,7 +78,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
   void _updateMin(num min) {
     log("_updateMin $min", name: "OscillatorProperties");
     setState(() {
-      state.min = min;
+      state.min = min.toDouble();
       widget.onUpdate(state);
     });
   }
@@ -82,7 +86,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
   void _updateMax(num max) {
     log("_updateMax $max", name: "OscillatorProperties");
     setState(() {
-      state.max = max;
+      state.max = max.toDouble();
       widget.onUpdate(state);
     });
   }
@@ -90,7 +94,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
   void _updateRatio(num ratio) {
     log("_updateRatio $ratio", name: "OscillatorProperties");
     setState(() {
-      state.ratio = ratio;
+      state.ratio = ratio.toDouble();
       widget.onUpdate(state);
     });
   }
@@ -98,7 +102,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
   void _updateOffset(num offset) {
     log("_updateOffset $offset", name: "OscillatorProperties");
     setState(() {
-      state.offset = offset;
+      state.offset = offset.toDouble();
       widget.onUpdate(state);
     });
   }

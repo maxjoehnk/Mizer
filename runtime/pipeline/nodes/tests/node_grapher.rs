@@ -8,6 +8,10 @@ use mizer_util::clock::{Clock, TestClock};
 
 const FRAMES: usize = 60 * 4;
 
+pub fn graph_node_with_frames<P: ProcessingNode>(node: P, name: &str, frames: usize) -> anyhow::Result<()> {
+    graph_node_internal(node, name, |_| 0., frames)
+}
+
 pub fn graph_node<P: ProcessingNode>(node: P, name: &str) -> anyhow::Result<()> {
     graph_node_with_inputs(node, name, |_| 0.)
 }
@@ -17,12 +21,21 @@ pub fn graph_node_with_inputs<P: ProcessingNode, I: Fn(usize) -> f64>(
     name: &str,
     input: I,
 ) -> anyhow::Result<()> {
+    graph_node_internal(node, name, input, FRAMES)
+}
+
+fn graph_node_internal<P: ProcessingNode, I: Fn(usize) -> f64>(
+    node: P,
+    name: &str,
+    input: I,
+    frames: usize,
+) -> anyhow::Result<()> {
     let mut context = NodeContextMock::new();
     let mut state = node.create_state();
     let mut clock = TestClock::default();
     let mut history_ticks = Vec::new();
 
-    for i in 0..FRAMES {
+    for i in 0..frames {
         let frame = clock.tick();
         history_ticks.push(frame.frame);
         context.when_clock().returns(frame);
@@ -42,7 +55,7 @@ pub fn graph_node_with_inputs<P: ProcessingNode, I: Fn(usize) -> f64>(
 }
 
 fn generate_script_file(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let script = format!("set xlabel 'Frames'\nset ylabel 'Value'\nset xrange[*:4]\nset yrange[0:1]\nunset key\nset term svg enhanced\nset output '{}.svg'\nplot '{}.dat' with filledcurves x1\n", name, name);
+    let script = format!("set xlabel 'Frames'\nset ylabel 'Value'\nset yrange[0:1]\nunset key\nset term svg enhanced\nset output '{}.svg'\nplot '{}.dat' with filledcurves x1\n", name, name);
     fs::write(dir.join(format!("{}.gnu", name)), script)?;
 
     Ok(())

@@ -3,6 +3,7 @@ pub use mizer_clock::*;
 pub struct TestClock {
     speed: f64,
     frame: f64,
+    beat: f64,
 }
 
 impl Default for TestClock {
@@ -10,6 +11,7 @@ impl Default for TestClock {
         TestClock {
             speed: 60.,
             frame: 0.,
+            beat: 0.
         }
     }
 }
@@ -18,14 +20,16 @@ impl Clock for TestClock {
     fn tick(&mut self) -> ClockFrame {
         let delta: f64 = 16.6f64 * (self.speed / 60000f64);
         self.frame += delta;
-        let downbeat = self.frame > 4f64;
-        while self.frame > 4f64 {
-            self.frame -= 4f64;
+        self.beat += delta;
+        let mut downbeat = self.beat > 4f64;
+        while self.beat > 4f64 {
+            self.beat -= 4f64;
         }
 
         ClockFrame {
             speed: self.speed,
             frame: self.frame,
+            beat: self.beat,
             delta,
             downbeat,
         }

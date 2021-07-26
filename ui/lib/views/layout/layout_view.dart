@@ -98,6 +98,7 @@ class NameLayoutDialog extends StatelessWidget {
           controller: nameController,
           autofocus: true,
           decoration: InputDecoration(labelText: "Name"),
+          onSubmitted: (text) => Navigator.of(context).pop(text),
         ));
   }
 }

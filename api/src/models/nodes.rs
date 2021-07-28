@@ -1386,6 +1386,287 @@ impl ::protobuf::reflect::ProtobufValue for MoveNodeResponse {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct DeleteNodeRequest {
+    // message fields
+    pub path: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteNodeRequest {
+    fn default() -> &'a DeleteNodeRequest {
+        <DeleteNodeRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteNodeRequest {
+    pub fn new() -> DeleteNodeRequest {
+        ::std::default::Default::default()
+    }
+
+    // string path = 1;
+
+
+    pub fn get_path(&self) -> &str {
+        &self.path
+    }
+    pub fn clear_path(&mut self) {
+        self.path.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
+    }
+
+    // Take field
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for DeleteNodeRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.path);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.path.is_empty() {
+            os.write_string(1, &self.path)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DeleteNodeRequest {
+        DeleteNodeRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "path",
+                |m: &DeleteNodeRequest| { &m.path },
+                |m: &mut DeleteNodeRequest| { &mut m.path },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DeleteNodeRequest>(
+                "DeleteNodeRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DeleteNodeRequest {
+        static instance: ::protobuf::rt::LazyV2<DeleteNodeRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DeleteNodeRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for DeleteNodeRequest {
+    fn clear(&mut self) {
+        self.path.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteNodeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteNodeRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct DeleteNodeResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteNodeResponse {
+    fn default() -> &'a DeleteNodeResponse {
+        <DeleteNodeResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteNodeResponse {
+    pub fn new() -> DeleteNodeResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for DeleteNodeResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DeleteNodeResponse {
+        DeleteNodeResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DeleteNodeResponse>(
+                "DeleteNodeResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DeleteNodeResponse {
+        static instance: ::protobuf::rt::LazyV2<DeleteNodeResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DeleteNodeResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for DeleteNodeResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteNodeResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteNodeResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Nodes {
     // message fields
     pub nodes: ::protobuf::RepeatedField<Node>,
@@ -9596,126 +9877,129 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     config\x18\x02\x20\x01(\x0b2\x11.mizer.NodeConfigR\x06config\"\x1a\n\x18\
     UpdateNodeConfigResponse\"V\n\x0fMoveNodeRequest\x12\x12\n\x04path\x18\
     \x01\x20\x01(\tR\x04path\x12/\n\x08position\x18\x02\x20\x01(\x0b2\x13.mi\
-    zer.NodePositionR\x08position\"\x12\n\x10MoveNodeResponse\"]\n\x05Nodes\
-    \x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\x121\n\
-    \x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.NodeConnectionR\x08channels\
-    \"\xde\x01\n\x0eNodeConnection\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\
-    \ntargetNode\x12+\n\ntargetPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\nt\
-    argetPort\x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\n\
-    sourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08p\
-    rotocol\x18\x05\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\
-    \xf2\x05\n\x04Node\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.N\
-    odeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\
-    \x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07out\
-    puts\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\x07outputs\x12/\n\x08designer\
-    \x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesignerR\x08designer\x125\n\x07pre\
-    view\x18\x06\x20\x01(\x0e2\x1b.mizer.Node.NodePreviewTypeR\x07preview\
-    \x12)\n\x06config\x18\x07\x20\x01(\x0b2\x11.mizer.NodeConfigR\x06config\
-    \"\xf9\x02\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\n\n\x06Button\x10\
-    \x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\x03\x12\n\n\x06S\
-    cript\x10\x04\x12\x0c\n\x08Envelope\x10\x05\x12\x0b\n\x07Fixture\x10\x06\
-    \x12\x0c\n\x08Sequence\x10\x07\x12\n\n\x06Select\x10\x08\x12\t\n\x05Merg\
-    e\x10\t\x12\r\n\tDmxOutput\x10\x0b\x12\x0c\n\x08OscInput\x10\x0c\x12\r\n\
-    \tOscOutput\x10\r\x12\r\n\tMidiInput\x10\x0e\x12\x0e\n\nMidiOutput\x10\
-    \x0f\x12\r\n\tVideoFile\x10\x14\x12\x0f\n\x0bVideoOutput\x10\x15\x12\x0f\
-    \n\x0bVideoEffect\x10\x16\x12\x15\n\x11VideoColorBalance\x10\x17\x12\x12\
-    \n\x0eVideoTransform\x10\x18\x12\x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0c\
-    PixelPattern\x10\x1f\x12\r\n\tOpcOutput\x10\x20\x12\t\n\x05Laser\x10(\
-    \x12\x0c\n\x08IldaFile\x10)\"Q\n\x0fNodePreviewType\x12\x0b\n\x07History\
-    \x10\0\x12\x0c\n\x08Waveform\x10\x01\x12\x0c\n\x08Multiple\x10\x02\x12\
-    \x0b\n\x07Texture\x10\x03\x12\x08\n\x04None\x10\x04\"\xfb\r\n\nNodeConfi\
-    g\x12I\n\x10oscillatorConfig\x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNod\
-    eConfigH\0R\x10oscillatorConfig\x12F\n\x0fscriptingConfig\x18\x0b\x20\
-    \x01(\x0b2\x1a.mizer.ScriptingNodeConfigH\0R\x0fscriptingConfig\x12C\n\
-    \x0esequenceConfig\x18\x0c\x20\x01(\x0b2\x19.mizer.SequenceNodeConfigH\0\
-    R\x0esequenceConfig\x12:\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x16.mizer.\
-    ClockNodeConfigH\0R\x0bclockConfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01\
-    (\x0b2\x18.mizer.FixtureNodeConfigH\0R\rfixtureConfig\x12<\n\x0cbuttonCo\
-    nfig\x18\x0f\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\0R\x0cbuttonConfig\
-    \x12:\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x16.mizer.InputNodeConfigH\
-    \0R\x0bfaderConfig\x12C\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b2\x19.mi\
-    zer.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12:\n\x0blaserConfig\x18\
-    \x12\x20\x01(\x0b2\x16.mizer.LaserNodeConfigH\0R\x0blaserConfig\x12O\n\
-    \x12pixelPatternConfig\x18\x13\x20\x01(\x0b2\x1d.mizer.PixelPatternNodeC\
-    onfigH\0R\x12pixelPatternConfig\x12C\n\x0epixelDmxConfig\x18\x14\x20\x01\
-    (\x0b2\x19.mizer.PixelDmxNodeConfigH\0R\x0epixelDmxConfig\x12F\n\x0fdmxO\
-    utputConfig\x18\x15\x20\x01(\x0b2\x1a.mizer.DmxOutputNodeConfigH\0R\x0fd\
-    mxOutputConfig\x12F\n\x0fmidiInputConfig\x18\x16\x20\x01(\x0b2\x1a.mizer\
-    .MidiInputNodeConfigH\0R\x0fmidiInputConfig\x12I\n\x10midiOutputConfig\
-    \x18\x17\x20\x01(\x0b2\x1b.mizer.MidiOutputNodeConfigH\0R\x10midiOutputC\
-    onfig\x12F\n\x0fopcOutputConfig\x18\x18\x20\x01(\x0b2\x1a.mizer.OpcOutpu\
-    tNodeConfigH\0R\x0fopcOutputConfig\x12>\n\x0eoscInputConfig\x18\x19\x20\
-    \x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0eoscInputConfig\x12@\n\x0foscOu\
-    tputConfig\x18\x1a\x20\x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0foscOutpu\
-    tConfig\x12^\n\x17videoColorBalanceConfig\x18\x1b\x20\x01(\x0b2\".mizer.\
-    VideoColorBalanceNodeConfigH\0R\x17videoColorBalanceConfig\x12L\n\x11vid\
-    eoEffectConfig\x18\x1c\x20\x01(\x0b2\x1c.mizer.VideoEffectNodeConfigH\0R\
-    \x11videoEffectConfig\x12F\n\x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\
-    \x1a.mizer.VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12L\n\x11videoOut\
-    putConfig\x18\x1e\x20\x01(\x0b2\x1c.mizer.VideoOutputNodeConfigH\0R\x11v\
-    ideoOutputConfig\x12U\n\x14videoTransformConfig\x18\x1f\x20\x01(\x0b2\
-    \x1f.mizer.VideoTransformNodeConfigH\0R\x14videoTransformConfig\x12=\n\
-    \x0cselectConfig\x18\x20\x20\x01(\x0b2\x17.mizer.SelectNodeConfigH\0R\
-    \x0cselectConfig\x12:\n\x0bmergeConfig\x18!\x20\x01(\x0b2\x16.mizer.Merg\
-    eNodeConfigH\0R\x0bmergeConfig\x12C\n\x0eenvelopeConfig\x18\"\x20\x01(\
-    \x0b2\x19.mizer.EnvelopeNodeConfigH\0R\x0eenvelopeConfigB\x06\n\x04type\
-    \"\x81\x02\n\x14OscillatorNodeConfig\x12>\n\x04type\x18\x01\x20\x01(\x0e\
-    2*.mizer.OscillatorNodeConfig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\
-    \x18\x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\
-    \x03max\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\x16\n\x06offse\
-    t\x18\x05\x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\x18\x06\x20\x01(\
-    \x08R\x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06Square\x10\0\x12\x08\
-    \n\x04Sine\x10\x01\x12\x07\n\x03Saw\x10\x02\x12\x0c\n\x08Triangle\x10\
-    \x03\"-\n\x13ScriptingNodeConfig\x12\x16\n\x06script\x18\x01\x20\x01(\tR\
-    \x06script\"\xa0\x01\n\x12SequenceNodeConfig\x12<\n\x05steps\x18\x01\x20\
-    \x03(\x0b2&.mizer.SequenceNodeConfig.SequenceStepR\x05steps\x1aL\n\x0cSe\
-    quenceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05\
-    value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\
-    \x08R\x04hold\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06attack\x18\x01\x20\
-    \x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01(\x01R\x05decay\
-    \x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07rele\
-    ase\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNodeConfig\x12\x14\n\
-    \x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\
-    \x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\x0fInputNodeCo\
-    nfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\
-    \x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\t\
-    R\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\x07pattern\
-    \x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\x07pattern\
-    \"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08RgbSnake\x10\
-    \x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\x20\
-    \x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06height\
-    \x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\n\
-    \x06output\x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOutputNodeConfig\x12\
-    \x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06output\x88\x01\x01\x12\x1a\n\
-    \x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\
-    \x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\x15\n\x13MidiInputNodeConf\
-    ig\"\x16\n\x14MidiOutputNodeConfig\"k\n\x13OpcOutputNodeConfig\x12\x12\n\
-    \x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\
-    \rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\
-    \x06height\x18\x04\x20\x01(\x04R\x06height\"K\n\rOscNodeConfig\x12\x12\n\
-    \x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\
-    \rR\x04port\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\"\x1d\n\x1bVid\
-    eoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoF\
-    ileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15V\
-    ideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10Sele\
-    ctNodeConfig\"\x11\n\x0fMergeNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\
-    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
-    \x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.\
-    mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\
-    \x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
-    2\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08prot\
-    ocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\x12\t\n\x05Mu\
-    lti\x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\x10\x02\x12\n\n\
-    \x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\x04Poly\x10\x05\
-    \x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\x12\x07\n\x03Gs\
-    t\x10\x082\x81\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesR\
-    equest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRe\
-    quest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnect\
-    ion\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13\
-    .mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNode\
-    Property\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeC\
-    onfigResponse\"\0\x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeRequest\x1a\
-    \x17.mizer.MoveNodeResponse\"\0b\x06proto3\
+    zer.NodePositionR\x08position\"\x12\n\x10MoveNodeResponse\"'\n\x11Delete\
+    NodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x14\n\x12Del\
+    eteNodeResponse\"]\n\x05Nodes\x12!\n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.\
+    mizer.NodeR\x05nodes\x121\n\x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.\
+    NodeConnectionR\x08channels\"\xde\x01\n\x0eNodeConnection\x12\x1e\n\ntar\
+    getNode\x18\x01\x20\x01(\tR\ntargetNode\x12+\n\ntargetPort\x18\x02\x20\
+    \x01(\x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\nsourceNode\x18\x03\x20\
+    \x01(\tR\nsourceNode\x12+\n\nsourcePort\x18\x04\x20\x01(\x0b2\x0b.mizer.\
+    PortR\nsourcePort\x122\n\x08protocol\x18\x05\x20\x01(\x0e2\x16.mizer.Cha\
+    nnelProtocolR\x08protocol\"\xf2\x05\n\x04Node\x12(\n\x04type\x18\x01\x20\
+    \x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\
+    \x20\x01(\tR\x04path\x12#\n\x06inputs\x18\x03\x20\x03(\x0b2\x0b.mizer.Po\
+    rtR\x06inputs\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\x0b.mizer.PortR\
+    \x07outputs\x12/\n\x08designer\x18\x05\x20\x01(\x0b2\x13.mizer.NodeDesig\
+    nerR\x08designer\x125\n\x07preview\x18\x06\x20\x01(\x0e2\x1b.mizer.Node.\
+    NodePreviewTypeR\x07preview\x12)\n\x06config\x18\x07\x20\x01(\x0b2\x11.m\
+    izer.NodeConfigR\x06config\"\xf9\x02\n\x08NodeType\x12\t\n\x05Fader\x10\
+    \0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Cl\
+    ock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0c\n\x08Envelope\x10\x05\x12\
+    \x0b\n\x07Fixture\x10\x06\x12\x0c\n\x08Sequence\x10\x07\x12\n\n\x06Selec\
+    t\x10\x08\x12\t\n\x05Merge\x10\t\x12\r\n\tDmxOutput\x10\x0b\x12\x0c\n\
+    \x08OscInput\x10\x0c\x12\r\n\tOscOutput\x10\r\x12\r\n\tMidiInput\x10\x0e\
+    \x12\x0e\n\nMidiOutput\x10\x0f\x12\r\n\tVideoFile\x10\x14\x12\x0f\n\x0bV\
+    ideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\x11VideoCo\
+    lorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\x0e\n\nPixelT\
+    oDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOpcOutput\x10\
+    \x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\"Q\n\x0fNodePrevie\
+    wType\x12\x0b\n\x07History\x10\0\x12\x0c\n\x08Waveform\x10\x01\x12\x0c\n\
+    \x08Multiple\x10\x02\x12\x0b\n\x07Texture\x10\x03\x12\x08\n\x04None\x10\
+    \x04\"\xfb\r\n\nNodeConfig\x12I\n\x10oscillatorConfig\x18\n\x20\x01(\x0b\
+    2\x1b.mizer.OscillatorNodeConfigH\0R\x10oscillatorConfig\x12F\n\x0fscrip\
+    tingConfig\x18\x0b\x20\x01(\x0b2\x1a.mizer.ScriptingNodeConfigH\0R\x0fsc\
+    riptingConfig\x12C\n\x0esequenceConfig\x18\x0c\x20\x01(\x0b2\x19.mizer.S\
+    equenceNodeConfigH\0R\x0esequenceConfig\x12:\n\x0bclockConfig\x18\r\x20\
+    \x01(\x0b2\x16.mizer.ClockNodeConfigH\0R\x0bclockConfig\x12@\n\rfixtureC\
+    onfig\x18\x0e\x20\x01(\x0b2\x18.mizer.FixtureNodeConfigH\0R\rfixtureConf\
+    ig\x12<\n\x0cbuttonConfig\x18\x0f\x20\x01(\x0b2\x16.mizer.InputNodeConfi\
+    gH\0R\x0cbuttonConfig\x12:\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x16.mi\
+    zer.InputNodeConfigH\0R\x0bfaderConfig\x12C\n\x0eildaFileConfig\x18\x11\
+    \x20\x01(\x0b2\x19.mizer.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12:\n\
+    \x0blaserConfig\x18\x12\x20\x01(\x0b2\x16.mizer.LaserNodeConfigH\0R\x0bl\
+    aserConfig\x12O\n\x12pixelPatternConfig\x18\x13\x20\x01(\x0b2\x1d.mizer.\
+    PixelPatternNodeConfigH\0R\x12pixelPatternConfig\x12C\n\x0epixelDmxConfi\
+    g\x18\x14\x20\x01(\x0b2\x19.mizer.PixelDmxNodeConfigH\0R\x0epixelDmxConf\
+    ig\x12F\n\x0fdmxOutputConfig\x18\x15\x20\x01(\x0b2\x1a.mizer.DmxOutputNo\
+    deConfigH\0R\x0fdmxOutputConfig\x12F\n\x0fmidiInputConfig\x18\x16\x20\
+    \x01(\x0b2\x1a.mizer.MidiInputNodeConfigH\0R\x0fmidiInputConfig\x12I\n\
+    \x10midiOutputConfig\x18\x17\x20\x01(\x0b2\x1b.mizer.MidiOutputNodeConfi\
+    gH\0R\x10midiOutputConfig\x12F\n\x0fopcOutputConfig\x18\x18\x20\x01(\x0b\
+    2\x1a.mizer.OpcOutputNodeConfigH\0R\x0fopcOutputConfig\x12>\n\x0eoscInpu\
+    tConfig\x18\x19\x20\x01(\x0b2\x14.mizer.OscNodeConfigH\0R\x0eoscInputCon\
+    fig\x12@\n\x0foscOutputConfig\x18\x1a\x20\x01(\x0b2\x14.mizer.OscNodeCon\
+    figH\0R\x0foscOutputConfig\x12^\n\x17videoColorBalanceConfig\x18\x1b\x20\
+    \x01(\x0b2\".mizer.VideoColorBalanceNodeConfigH\0R\x17videoColorBalanceC\
+    onfig\x12L\n\x11videoEffectConfig\x18\x1c\x20\x01(\x0b2\x1c.mizer.VideoE\
+    ffectNodeConfigH\0R\x11videoEffectConfig\x12F\n\x0fvideoFileConfig\x18\
+    \x1d\x20\x01(\x0b2\x1a.mizer.VideoFileNodeConfigH\0R\x0fvideoFileConfig\
+    \x12L\n\x11videoOutputConfig\x18\x1e\x20\x01(\x0b2\x1c.mizer.VideoOutput\
+    NodeConfigH\0R\x11videoOutputConfig\x12U\n\x14videoTransformConfig\x18\
+    \x1f\x20\x01(\x0b2\x1f.mizer.VideoTransformNodeConfigH\0R\x14videoTransf\
+    ormConfig\x12=\n\x0cselectConfig\x18\x20\x20\x01(\x0b2\x17.mizer.SelectN\
+    odeConfigH\0R\x0cselectConfig\x12:\n\x0bmergeConfig\x18!\x20\x01(\x0b2\
+    \x16.mizer.MergeNodeConfigH\0R\x0bmergeConfig\x12C\n\x0eenvelopeConfig\
+    \x18\"\x20\x01(\x0b2\x19.mizer.EnvelopeNodeConfigH\0R\x0eenvelopeConfigB\
+    \x06\n\x04type\"\x81\x02\n\x14OscillatorNodeConfig\x12>\n\x04type\x18\
+    \x01\x20\x01(\x0e2*.mizer.OscillatorNodeConfig.OscillatorTypeR\x04type\
+    \x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\x05ratio\x12\x10\n\x03max\x18\
+    \x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\
+    \x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\x06offset\x12\x18\n\x07revers\
+    e\x18\x06\x20\x01(\x08R\x07reverse\"=\n\x0eOscillatorType\x12\n\n\x06Squ\
+    are\x10\0\x12\x08\n\x04Sine\x10\x01\x12\x07\n\x03Saw\x10\x02\x12\x0c\n\
+    \x08Triangle\x10\x03\"-\n\x13ScriptingNodeConfig\x12\x16\n\x06script\x18\
+    \x01\x20\x01(\tR\x06script\"\xa0\x01\n\x12SequenceNodeConfig\x12<\n\x05s\
+    teps\x18\x01\x20\x03(\x0b2&.mizer.SequenceNodeConfig.SequenceStepR\x05st\
+    eps\x1aL\n\x0cSequenceStep\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04ti\
+    ck\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\
+    \x18\x03\x20\x01(\x08R\x04hold\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06a\
+    ttack\x18\x01\x20\x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01\
+    (\x01R\x05decay\x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\
+    \x12\x18\n\x07release\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNode\
+    Config\x12\x14\n\x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11Fixture\
+    NodeConfig\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"\x11\n\
+    \x0fInputNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\x18\x01\
+    \x20\x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_id\x18\
+    \x01\x20\x01(\tR\x08deviceId\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\
+    \n\x07pattern\x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.Patter\
+    nR\x07pattern\"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08R\
+    gbSnake\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\
+    \x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\
+    \x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUniverse\
+    \x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOutputNode\
+    Config\x12\x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06output\x88\x01\x01\
+    \x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07chan\
+    nel\x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\x15\n\x13MidiInputN\
+    odeConfig\"\x16\n\x14MidiOutputNodeConfig\"k\n\x13OpcOutputNodeConfig\
+    \x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\
+    \x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\x05width\
+    \x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06height\"K\n\rOscNodeConfig\
+    \x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\
+    \x20\x01(\rR\x04port\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\"\x1d\
+    \n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\
+    \x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\
+    \x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\
+    \x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeConfig\"*\n\x0cNodePositi\
+    on\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\
+    \x01(\x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\
+    \x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\
+    \x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProto\
+    colR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\
+    \x12\t\n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\
+    \x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\
+    \x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\
+    \x12\x07\n\x03Gst\x10\x082\xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\
+    \x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\
+    \x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\
+    \x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11Wri\
+    teControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\
+    \0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequest\
+    \x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\x16.m\
+    izer.MoveNodeRequest\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDeleteNo\
+    de\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeResponse\"\0b\
+    \x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -65,6 +65,11 @@ impl ApiHandler {
                     .send(mizer.runtime.handle_update_node(path, config))
                     .expect("api command sender disconnected");
             }
+            ApiCommand::DeleteNode(path, sender) => {
+                sender
+                    .send(mizer.runtime.delete_node(path))
+                    .expect("api command sender disconnected");
+            }
             ApiCommand::SetClockState(state) => {
                 mizer.runtime.clock.set_state(state);
             }

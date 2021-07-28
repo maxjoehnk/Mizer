@@ -62,4 +62,10 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
         resp.finish(MoveNodeResponse::default())
     }
+
+    fn delete_node(&self, req: ServerRequestSingle<DeleteNodeRequest>, resp: ServerResponseUnarySink<DeleteNodeResponse>) -> grpc::Result<()> {
+        self.delete_node(req.message.path.into()).unwrap();
+
+        resp.finish(DeleteNodeResponse::default())
+    }
 }

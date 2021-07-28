@@ -115,6 +115,10 @@ impl GstreamerNode for VideoTransformState {
         Ok(())
     }
 
+    fn unlink_from(&self, target: &dyn GstreamerNode) {
+        self.node.unlink(target.sink());
+    }
+
     fn sink(&self) -> &Element {
         &self.node
     }

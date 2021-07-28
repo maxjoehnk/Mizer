@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -23,22 +25,10 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   void refresh(Nodes nodes) {
+    this.nodes = nodes.nodes
+        .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
+        .toList();
     this.channels = nodes.channels;
-    for (var existingNode in this.nodes) {
-      var matchingNode = nodes.nodes.firstWhere((node) => node.path == existingNode.node.path, orElse: () => null);
-
-      if (matchingNode != null) {
-        existingNode.refresh(matchingNode);
-      }else {
-        this.nodes.remove(existingNode);
-      }
-    }
-    for (var newNode in nodes.nodes) {
-      var hasNode = this.nodes.any((node) => node.node.path == newNode.path);
-      if (!hasNode) {
-        this.nodes.add(NodeModel(node: newNode, key: GlobalKey(debugLabel: "Node ${newNode.path}")));
-      }
-    }
     this.updateNodes();
   }
 

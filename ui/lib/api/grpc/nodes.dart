@@ -49,4 +49,9 @@ class NodesGrpcApi implements NodesApi {
   Future<void> moveNode(MoveNodeRequest request) {
     return this.client.moveNode(request);
   }
+
+  @override
+  Future<void> deleteNode(String path) {
+    return this.client.deleteNode(DeleteNodeRequest(path: path));
+  }
 }

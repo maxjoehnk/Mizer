@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -135,10 +133,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   }
 
   void _addNode(NodeEditorModel model, Node_NodeType nodeType) {
-    var nodes = context.read<NodesBloc>();
     var transformedPosition = model.transformationController.toScene(addMenuPosition);
     var position = transformedPosition / MULTIPLIER;
-    nodes.add(AddNode(nodeType: nodeType, position: position));
+    context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position));
     setState(() {
       addMenuPosition = null;
     });

@@ -50,6 +50,17 @@ pub struct PipelineWorker {
     previews: HashMap<NodePath, NodePreviewState>,
 }
 
+impl std::fmt::Debug for PipelineWorker {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.debug_struct("PipelineWorker")
+            .field("senders", &self.senders)
+            .field("receivers", &self.receivers)
+            .field("dependencies", &self.dependencies)
+            .field("previews", &self.previews)
+            .finish()
+    }
+}
+
 impl PipelineWorker {
     pub fn new() -> Self {
         Self::default()
@@ -85,6 +96,15 @@ impl PipelineWorker {
             }
         }
         self.receivers.insert(path, receivers);
+    }
+
+    pub fn remove_node(&mut self, path: &NodePath, links: &[NodeLink]) {
+        self.disconnect_ports(path, links);
+        self.states.remove(path);
+        self.receivers.remove(path);
+        self.senders.remove(path);
+        self.previews.remove(path);
+        self.dependencies.remove(path);
     }
 
     pub fn connect_nodes(
@@ -128,6 +148,23 @@ impl PipelineWorker {
         Ok(())
     }
 
+    fn disconnect_ports(&mut self, path: &NodePath, links: &[NodeLink]) {
+        for link in links {
+            match link.port_type {
+                PortType::Single => self.disconnect_memory_ports::<f64>(path, link),
+                PortType::Color => self.disconnect_memory_ports::<Color>(path, link),
+                PortType::Multi => {
+                    self.disconnect_memory_ports::<Vec<f64>>(path, link)
+                }
+                PortType::Laser => {
+                    self.disconnect_memory_ports::<Vec<LaserFrame>>(path, link)
+                }
+                PortType::Gstreamer => self.disconnect_gst_ports(link),
+                _ => unimplemented!(),
+            }
+        }
+    }
+
     fn connect_memory_ports<V: PortValue + Default + 'static>(
         &mut self,
         link: NodeLink,
@@ -158,6 +195,12 @@ impl PipelineWorker {
         receivers.add(link.target_port, rx, source_meta);
     }
 
+    fn disconnect_memory_ports<V: PortValue + Default + 'static>(&mut self, path: &NodePath, link: &NodeLink) {
+        if let Some(receivers) = self.receivers.get_mut(&link.target) {
+            receivers.remove(&link.target_port);
+        }
+    }
+
     fn connect_gst_ports(&self, link: NodeLink) -> anyhow::Result<()> {
         let source = self.states.get(&link.source).expect("invalid source path");
         let target = self.states.get(&link.target).expect("invalid target path");
@@ -170,19 +213,30 @@ impl PipelineWorker {
         Ok(())
     }
 
-    fn get_gst_node<'a>(&self, node: &'a Box<dyn Any>) -> &'a dyn mizer_video_nodes::GstreamerNode {
+    fn disconnect_gst_ports(&mut self, link: &NodeLink) {
+        let source = self.states.get(&link.source).expect("invalid source path");
+        let target = self.states.get(&link.target).expect("invalid target path");
+
+        let gst_source = self.get_gst_node(source);
+        let gst_target = self.get_gst_node(target);
+
+        gst_source.unlink_from(gst_target);
+    }
+
+
+    fn get_gst_node<'a>(&self, node_state: &'a Box<dyn Any>) -> &'a dyn mizer_video_nodes::GstreamerNode {
         use mizer_video_nodes::*;
 
-        if let Some(node) = node.downcast_ref::<VideoColorBalanceState>() {
-            node as &dyn GstreamerNode
-        } else if let Some(node) = node.downcast_ref::<VideoOutputState>() {
-            node as &dyn GstreamerNode
-        } else if let Some(node) = node.downcast_ref::<VideoEffectState>() {
-            node as &dyn GstreamerNode
-        } else if let Some(node) = node.downcast_ref::<VideoTransformState>() {
-            node as &dyn GstreamerNode
-        } else if let Some(node) = node.downcast_ref::<VideoFileState>() {
-            node as &dyn GstreamerNode
+        if let Some(node_state) = node_state.downcast_ref::<VideoColorBalanceState>() {
+            node_state as &dyn GstreamerNode
+        } else if let Some(node_state) = node_state.downcast_ref::<VideoOutputState>() {
+            node_state as &dyn GstreamerNode
+        } else if let Some(node_state) = node_state.downcast_ref::<VideoEffectState>() {
+            node_state as &dyn GstreamerNode
+        } else if let Some(node_state) = node_state.downcast_ref::<VideoTransformState>() {
+            node_state as &dyn GstreamerNode
+        } else if let Some(node_state) = node_state.downcast_ref::<VideoFileState>() {
+            node_state as &dyn GstreamerNode
         } else {
             unreachable!()
         }

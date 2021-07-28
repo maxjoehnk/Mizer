@@ -59,4 +59,10 @@ class NodesDemoApi implements NodesApi {
     // TODO: implement moveNode
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> deleteNode(String path) {
+    // TODO: implement deleteNode
+    throw UnimplementedError();
+  }
 }

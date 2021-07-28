@@ -16,4 +16,6 @@ abstract class NodesApi {
   Future<void> updateNodeConfig(UpdateNodeConfigRequest request);
 
   Future<void> moveNode(MoveNodeRequest request);
+
+  Future<void> deleteNode(String path);
 }

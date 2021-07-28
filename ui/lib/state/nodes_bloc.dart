@@ -42,6 +42,12 @@ class MoveNode extends NodesEvent {
   }
 }
 
+class DeleteNode extends NodesEvent {
+  final String node;
+
+  DeleteNode(this.node);
+}
+
 class NodesBloc extends Bloc<NodesEvent, Nodes> {
   final NodesApi api;
 
@@ -83,6 +89,12 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       var node = state.nodes.firstWhere((element) => element.path == event.node);
       node.designer.position = request.position;
       yield state;
+    }
+    if (event is DeleteNode) {
+      await api.deleteNode(event.node);
+      var nodes = state.nodes.where((element) => element.path != event.node).toList();
+      var channels = state.channels.where((channel) => channel.sourceNode != event.node && channel.targetNode != event.node).toList();
+      yield Nodes(channels: channels, nodes: nodes);
     }
   }
 

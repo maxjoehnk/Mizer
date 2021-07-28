@@ -61,4 +61,9 @@ class NodesPluginApi implements NodesApi {
   Future<void> moveNode(MoveNodeRequest request) {
     return channel.invokeMethod("moveNode", request.writeToBuffer());
   }
+
+  @override
+  Future<void> deleteNode(String path) {
+    return channel.invokeMethod("deleteNode", path);
+  }
 }

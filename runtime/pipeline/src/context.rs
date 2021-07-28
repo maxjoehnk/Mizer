@@ -16,6 +16,7 @@ pub struct PipelineContext<'a> {
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
 }
 
+#[derive(Debug)]
 pub enum NodePreviewState {
     History(ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>),
     None,

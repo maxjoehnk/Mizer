@@ -295,6 +295,22 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         Ok(path)
     }
 
+    pub fn delete_node(&mut self, path: NodePath) {
+        self.nodes.remove(&path);
+        self.nodes_view.remove(&path);
+        let mut designer = self.designer.read();
+        designer.remove(&path);
+        self.designer.set(designer);
+        self.planner.remove_node(&path);
+        let links = self.links.read();
+        let (node_links, links) = links.into_iter()
+            .partition(|link| link.source != path && link.target != path);
+        self.links.set(links);
+        self.pipeline.remove_node(&path, &node_links);
+        log::debug!("Pipeline {:?}", self.pipeline);
+        self.plan();
+    }
+
     fn get_next_id(&self, node_type: NodeType) -> u32 {
         let node_type_prefix = format!("/{}-", node_type.get_name());
         let mut ids = self
@@ -396,6 +412,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
         self.layouts.set(Default::default());
         self.links.set(Default::default());
         self.nodes_view.clear();
+        self.pipeline = PipelineWorker::new();
         self.plan();
     }
 }

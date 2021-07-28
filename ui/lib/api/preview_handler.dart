@@ -36,6 +36,12 @@ class PreviewHandler {
         for (var task in tasks) {
           task.complete(histories[task.path]);
         }
+      })
+      .catchError((err) {
+        log("$err");
+        for (var task in tasks) {
+          task.complete(List.empty());
+        }
       });
   }
 }

@@ -70,6 +70,17 @@ const MoveNodeResponse$json = const {
   '1': 'MoveNodeResponse',
 };
 
+const DeleteNodeRequest$json = const {
+  '1': 'DeleteNodeRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+const DeleteNodeResponse$json = const {
+  '1': 'DeleteNodeResponse',
+};
+
 const Nodes$json = const {
   '1': 'Nodes',
   '2': const [

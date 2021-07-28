@@ -119,6 +119,10 @@ impl GstreamerNode for VideoFileState {
         Ok(())
     }
 
+    fn unlink_from(&self, target: &dyn GstreamerNode) {
+        self.convert.unlink(target.sink());
+    }
+
     fn sink(&self) -> &Element {
         unimplemented!()
     }

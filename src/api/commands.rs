@@ -17,6 +17,7 @@ pub enum ApiCommand {
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
     GetNodePreview(NodePath, flume::Sender<anyhow::Result<Vec<f64>>>),
     UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
+    DeleteNode(NodePath, flume::Sender<()>),
     SetClockState(ClockState),
     GetConnections(flume::Sender<Vec<Connection>>),
     GetDmxMonitor(

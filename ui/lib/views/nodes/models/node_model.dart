@@ -4,7 +4,7 @@ import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
 class NodeModel {
-  Node node;
+  final Node node;
   final GlobalKey key;
   final List<PortModel> ports;
   Offset offset = Offset.infinite;
@@ -27,12 +27,6 @@ class NodeModel {
     for (var port in ports) {
       port.update(key);
     }
-  }
-
-  void refresh(Node node) {
-    this.node = node;
-    _applyOffset(node);
-    _buildPorts();
   }
 
   void _applyOffset(Node node) {

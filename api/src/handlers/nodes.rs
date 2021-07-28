@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::RuntimeApi;
+use mizer_node::NodePath;
 
 #[derive(Clone)]
 pub struct NodesHandler<R: RuntimeApi> {
@@ -96,5 +97,9 @@ impl<R: RuntimeApi> NodesHandler<R> {
         )?;
 
         Ok(())
+    }
+
+    pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
+        self.runtime.delete_node(path)
     }
 }

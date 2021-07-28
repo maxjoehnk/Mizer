@@ -9,6 +9,7 @@ service NodesApi {
   rpc WriteControlValue (WriteControl) returns (WriteResponse) {}
   rpc UpdateNodeProperty (UpdateNodeConfigRequest) returns (UpdateNodeConfigResponse) {}
   rpc MoveNode (MoveNodeRequest) returns (MoveNodeResponse) {}
+  rpc DeleteNode (DeleteNodeRequest) returns (DeleteNodeResponse) {}
 }
 
 message AddNodeRequest {
@@ -39,6 +40,12 @@ message MoveNodeRequest {
 }
 
 message MoveNodeResponse {}
+
+message DeleteNodeRequest {
+  string path = 1;
+}
+
+message DeleteNodeResponse {}
 
 message Nodes {
   repeated Node nodes = 1;

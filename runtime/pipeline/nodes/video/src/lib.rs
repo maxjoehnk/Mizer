@@ -25,6 +25,7 @@ lazy_static! {
 
 pub trait GstreamerNode {
     fn link_to(&self, target: &dyn GstreamerNode) -> anyhow::Result<()>;
+    fn unlink_from(&self, target: &dyn GstreamerNode);
 
     fn sink(&self) -> &Element;
 }

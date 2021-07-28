@@ -31,15 +31,19 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
             }
             "linkNodes" => match call.arguments() {
                 Ok(args) => {
-                    self.link_nodes(args);
-                    resp.send_ok(Value::Null);
+                    match self.link_nodes(args) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
                 }
                 Err(err) => resp.respond_error(err),
             },
             "writeControlValue" => match call.arguments() {
                 Ok(args) => {
-                    self.write_control_value(args);
-                    resp.send_ok(Value::Null);
+                    match self.write_control_value(args) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
                 }
                 Err(err) => resp.respond_error(err),
             },
@@ -92,6 +96,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 },
                 Err(err) => resp.respond_error(err),
             }
+            "deleteNode" => if let Value::String(path) = call.args {
+                match self.handler.delete_node(path.into()) {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -114,12 +124,12 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
         self.handler.get_nodes()
     }
 
-    fn link_nodes(&self, link: NodeConnection) {
-        self.handler.add_link(link).unwrap();
+    fn link_nodes(&self, link: NodeConnection) -> anyhow::Result<()> {
+        self.handler.add_link(link)
     }
 
-    fn write_control_value(&self, control: WriteControl) {
-        self.handler.write_control_value(control).unwrap();
+    fn write_control_value(&self, control: WriteControl) -> anyhow::Result<()> {
+        self.handler.write_control_value(control)
     }
 
     fn get_node_history(&self, path: String) -> anyhow::Result<Vec<f64>> {

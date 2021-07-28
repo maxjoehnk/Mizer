@@ -58,6 +58,10 @@ impl NodeReceivers {
     pub fn ports(&self) -> Vec<PortId> {
         self.0.keys().cloned().collect()
     }
+
+    pub fn remove(&mut self, port_id: &PortId) {
+        self.0.remove(&port_id);
+    }
 }
 
 #[derive(Debug)]

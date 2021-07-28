@@ -1,9 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
+import 'package:provider/provider.dart';
 
 import '../../consts.dart';
 import 'container.dart';
@@ -23,7 +23,7 @@ class BaseNode extends StatelessWidget {
   Widget build(BuildContext context) {
     return ContextMenu(
       menu: Menu(items: [
-        MenuItem(label: "Delete", action: () => log("delete node $node"))
+        MenuItem(label: "Delete", action: () => _onDeleteNode(context))
       ]),
       child: Container(
         width: NODE_BASE_WIDTH,
@@ -58,5 +58,30 @@ class BaseNode extends StatelessWidget {
       selected: selected,
       key: key,
     );
+  }
+
+  void _onDeleteNode(BuildContext context) async {
+    bool result = await showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text("Node"),
+          content: SingleChildScrollView(
+            child: Text("Delete Node '${node.path}'?"),
+          ),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+            TextButton(
+              autofocus: true,
+              child: Text("Delete"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+          ],
+        ));
+    if (result) {
+      context.read<NodesBloc>().add(DeleteNode(node.path));
+    }
   }
 }

@@ -150,6 +150,14 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::DeleteNode(path, tx))?;
+        rx.recv()?;
+
+        Ok(())
+    }
+
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
         self.sender.send(ApiCommand::SetClockState(state))?;
 

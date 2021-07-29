@@ -30,7 +30,7 @@ impl<R: RuntimeApi> TransportHandler<R> {
 pub struct TransportStream(flume::Receiver<ClockSnapshot>);
 
 impl TransportStream {
-    pub fn stream(&self) -> impl Stream<Item = Transport> + '_ {
-        self.0.stream().map(Transport::from)
+    pub fn stream(self) -> impl Stream<Item = Transport> + 'static {
+        self.0.into_stream().map(Transport::from)
     }
 }

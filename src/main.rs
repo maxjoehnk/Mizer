@@ -4,10 +4,12 @@ use anyhow::Context;
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
 use mizer_session::Session;
+use crate::async_runtime::TokioRuntime;
 
 use std::sync::mpsc;
 
 mod logger;
+mod async_runtime;
 
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
@@ -30,11 +32,14 @@ fn main() -> anyhow::Result<()> {
 
 #[cfg(feature = "ui")]
 fn run(flags: Flags) -> anyhow::Result<()> {
-    let handlers = setup_runtime(flags)?;
+    let tokio = build_tokio_runtime();
+    let handlers = setup_runtime(tokio.handle(), flags)?;
 
     let handlers = handlers.recv().context("internal api setup")?;
 
-    mizer_ui::run(handlers)?;
+    let runtime = TokioRuntime::new(tokio.handle());
+
+    mizer_ui::run(handlers, runtime)?;
 
     Ok(())
 }
@@ -42,7 +47,7 @@ fn run(flags: Flags) -> anyhow::Result<()> {
 fn run_headless(flags: Flags) -> anyhow::Result<()> {
     let runtime = build_tokio_runtime();
 
-    start_runtime(runtime, flags, None).unwrap();
+    start_runtime(runtime.handle(), flags, None).unwrap();
 
     Ok(())
 }
@@ -56,14 +61,13 @@ fn init() -> Flags {
 }
 
 #[cfg(feature = "ui")]
-fn setup_runtime(flags: Flags) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
+fn setup_runtime(handle: &tokio::runtime::Handle, flags: Flags) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
     let (tx, rx) = mpsc::channel();
+    let handle = handle.clone();
     std::thread::Builder::new()
         .name("Task Runtime".into())
         .spawn(move || {
-            let runtime = build_tokio_runtime();
-
-            if let Err(err) = start_runtime(runtime, flags, Some(tx)) {
+            if let Err(err) = start_runtime(&handle, flags, Some(tx)) {
                 log::error!("{}", err);
                 std::process::exit(1);
             }
@@ -81,7 +85,7 @@ fn build_tokio_runtime() -> tokio::runtime::Runtime {
 }
 
 fn start_runtime(
-    runtime: tokio::runtime::Runtime,
+    runtime: &tokio::runtime::Handle,
     flags: Flags,
     handler_out: Option<mpsc::Sender<Handlers<Api>>>,
 ) -> anyhow::Result<()> {
@@ -90,7 +94,7 @@ fn start_runtime(
 
     let _guard = runtime.enter();
 
-    let (mut mizer, api_handler) = build_runtime(runtime.handle().clone(), flags)?;
+    let (mut mizer, api_handler) = build_runtime(runtime.clone(), flags)?;
     if let Some(handler_out) = handler_out {
         handler_out.send(mizer.handlers.clone())?;
     }

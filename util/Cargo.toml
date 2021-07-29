@@ -11,6 +11,7 @@ test = ["mizer-clock"]
 anyhow = "1"
 log = "0.4"
 mizer-clock = { path = "../runtime/clock", optional = true }
+futures = "0.3"
 
 [dev-dependencies]
 test-case = "1.1"

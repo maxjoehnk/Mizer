@@ -2854,6 +2854,7 @@ dependencies = [
  "derive_more",
  "env_logger 0.7.1",
  "flume",
+ "futures",
  "gstreamer",
  "log",
  "metrics",
@@ -2878,6 +2879,7 @@ dependencies = [
  "mizer-runtime",
  "mizer-session",
  "mizer-ui",
+ "mizer-util",
  "pinboard",
  "structopt",
  "test-case",
@@ -3397,8 +3399,10 @@ name = "mizer-ui"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "futures",
  "log",
  "mizer-api",
+ "mizer-util",
  "nativeshell",
  "nativeshell_build",
  "protobuf",
@@ -3410,6 +3414,7 @@ name = "mizer-util"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "futures",
  "log",
  "mizer-clock",
  "test-case",
@@ -3478,14 +3483,15 @@ dependencies = [
 [[package]]
 name = "nativeshell"
 version = "0.1.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "610ae95f3b9bfe3c68a63c054b7fc4008e3bb77ef197daa9b296c8bad543d08c"
+source = "git+https://github.com/nativeshell/nativeshell?rev=f7af23f#f7af23face6fd3df2047e403ae696242d89b4ff9"
 dependencies = [
  "anyhow",
+ "base64 0.13.0",
  "block",
  "byte-slice-cast",
  "cairo-rs",
  "cargo-emit",
+ "cc",
  "cocoa",
  "const-cstr",
  "core-foundation 0.9.1",
@@ -3523,8 +3529,7 @@ dependencies = [
 [[package]]
 name = "nativeshell_build"
 version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "23bd5d015121ffdfce6c44e7a1fafc914349d5ac6c9d4d94f63ea2aa6b5e1514"
+source = "git+https://github.com/nativeshell/nativeshell?rev=f7af23f#f7af23face6fd3df2047e403ae696242d89b4ff9"
 dependencies = [
  "cargo-emit",
  "cmake",
@@ -5885,9 +5890,9 @@ checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
 
 [[package]]
 name = "windows"
-version = "0.13.0"
+version = "0.17.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d21e80c408bb5609db1c24323a942d34bc573178b5ab2d386b981bd3ed07122d"
+checksum = "5f1c7f11b289e450f78d55dd9dc09ae91c6ae8faed980bbf3e3a4c8f166ac259"
 dependencies = [
  "const-sha1",
  "windows_gen",
@@ -5896,15 +5901,15 @@ dependencies = [
 
 [[package]]
 name = "windows_gen"
-version = "0.13.0"
+version = "0.17.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6471156e3821094bf99528667c498b36eb58a092b187e9a03324d72744cf3646"
+checksum = "57f5facfb04bc84b5fcd27018266d90ce272e11f8b91745dfdd47282e8e0607e"
 
 [[package]]
 name = "windows_macros"
-version = "0.13.0"
+version = "0.17.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12cd9926fdba87226d95e0ec872736934f9df405cede2ca546e307e0d5d4b973"
+checksum = "7c32753c378262520a4fa70c2e4389f4649e751faab2a887090567cff192d299"
 dependencies = [
  "syn",
  "windows_gen",

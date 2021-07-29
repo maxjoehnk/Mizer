@@ -1,8 +1,8 @@
-use nativeshell_build::{AppBundleOptions, BuildResult, Flutter, FlutterOptions, MacOSBundle};
+use nativeshell_build::{AppBundleOptions, BuildResult, Flutter, FlutterOptions, MacOSBundle, AsPath};
 
 fn build_flutter() -> BuildResult<()> {
     Flutter::build(FlutterOptions {
-        target_file: "lib/integrated.dart".into(),
+        target_file: "lib/integrated.dart".as_path(),
         ..Default::default()
     })?;
 

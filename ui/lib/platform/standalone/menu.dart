@@ -4,38 +4,6 @@ import 'package:mizer/widgets/hoverable.dart';
 
 import '../platform.dart';
 
-class MenuRoute extends PopupRoute {
-  final Offset position;
-  final Menu menu;
-
-  MenuRoute({@required this.position, this.menu});
-
-  @override
-  Color get barrierColor => null;
-
-  @override
-  bool get barrierDismissible => true;
-
-  @override
-  String get barrierLabel => null;
-
-  @override
-  Widget buildPage(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-    var theme = Theme.of(context).textTheme;
-    return Stack(children: [
-      Positioned(
-        top: position.dy,
-        left: position.dx,
-        child: DefaultTextStyle(style: theme.bodyText2, child: MenuContainer(menu: menu)),
-      )
-    ]);
-  }
-
-  @override
-  Duration get transitionDuration => Duration.zero;
-}
-
 class MenuContainer extends StatelessWidget {
   final Menu menu;
 

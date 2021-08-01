@@ -8,6 +8,7 @@ use mizer_layouts::{ControlConfig, Layout};
 use mizer_node::{NodeDesigner, NodePosition, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use mizer_runtime::NodeDescriptor;
+use mizer_layouts::{ControlPosition, ControlSize};
 
 pub mod handlers;
 mod mappings;
@@ -26,6 +27,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn rename_layout(&self, id: String, name: String);
 
+    fn add_layout_control(&self, layout_id: String, path: NodePath, position: ControlPosition, size: ControlSize);
     fn delete_layout_control(&self, layout_id: String, control_id: String);
     fn update_layout_control<F: FnOnce(&mut ControlConfig)>(
         &self,
@@ -48,6 +50,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>>;
 
+    fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor>;
     fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()>;
     fn update_node_position(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()>;
     fn delete_node(&self, path: NodePath) -> anyhow::Result<()>;

@@ -1,5 +1,6 @@
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/protos/layouts.pb.dart';
+import 'package:mizer/protos/nodes.pbenum.dart';
 
 class LayoutsDemoApi implements LayoutsApi {
   @override
@@ -39,6 +40,18 @@ class LayoutsDemoApi implements LayoutsApi {
   @override
   Future<void> renameControl(String layoutId, String id, String name) {
     // TODO: implement renameControl
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> addControl(String layoutId, Node_NodeType nodeType, ControlPosition position) {
+    // TODO: implement addControl
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> addControlForNode(String layoutId, String nodeId, ControlPosition position) {
+    // TODO: implement addControlForNode
     throw UnimplementedError();
   }
 }

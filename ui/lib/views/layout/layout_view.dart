@@ -1,13 +1,18 @@
 import 'dart:developer';
 
+import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
+import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/layouts_bloc.dart';
+import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
+import 'package:mizer/widgets/popup_menu/popup_menu_route.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
+import 'add_control_popup.dart';
 import 'control.dart';
 
 const double MULTIPLIER = 75;
@@ -19,6 +24,7 @@ class LayoutView extends StatelessWidget {
     layoutsBloc.add(FetchLayouts());
     return BlocBuilder<LayoutsBloc, Layouts>(builder: (context, layouts) {
       log("${layouts.layouts}", name: "LayoutView");
+      context.read<NodesBloc>().add(FetchNodes());
       return tabs.Tabs(
         children: layouts.layouts
             .map((layout) => tabs.Tab(
@@ -110,15 +116,34 @@ class ControlLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 20 * MULTIPLIER,
-      height: 10 * MULTIPLIER,
-      child: CustomMultiChildLayout(
-          delegate: ControlsLayoutDelegate(layout),
-          children: layout.controls
-              .map((e) => LayoutId(id: e.node, child: LayoutControlView(layout.id, e)))
-              .toList()),
-    );
+    LayoutsBloc bloc = context.read();
+    return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
+      return GestureDetector(
+        onSecondaryTapDown: (details) {
+          int x = (details.localPosition.dx / MULTIPLIER).floor();
+          int y = (details.localPosition.dy / MULTIPLIER).floor();
+          var position = ControlPosition(x: Int64(x), y: Int64(y));
+          Navigator.of(context).push(PopupMenuRoute(
+              position: details.globalPosition,
+              child: AddControlPopup(
+                  nodes: nodes,
+                  onCreateControl: (nodeType) => bloc
+                      .add(AddControl(layoutId: layout.id, nodeType: nodeType, position: position)),
+                  onAddControlForExisting: (node) => bloc.add(
+                      AddExistingControl(layoutId: layout.id, node: node, position: position)))));
+        },
+        behavior: HitTestBehavior.translucent,
+        child: Container(
+          width: 20 * MULTIPLIER,
+          height: 10 * MULTIPLIER,
+          child: CustomMultiChildLayout(
+              delegate: ControlsLayoutDelegate(layout),
+              children: layout.controls
+                  .map((e) => LayoutId(id: e.node, child: LayoutControlView(layout.id, e)))
+                  .toList()),
+        ),
+      );
+    });
   }
 }
 

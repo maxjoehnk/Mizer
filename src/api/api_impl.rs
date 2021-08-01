@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::Connection;
-use mizer_layouts::{ControlConfig, Layout};
+use mizer_layouts::{ControlConfig, Layout, ControlPosition, ControlSize};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId, NodePosition};
 use mizer_nodes::{FixtureNode, Node};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
@@ -51,16 +51,25 @@ impl RuntimeApi for Api {
     }
 
     fn rename_layout(&self, id: String, name: String) {
-        let mut layouts = self.access.layouts.read();
-        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == id) {
+        self.update_layout(id, |layout| {
             layout.id = name;
-        }
-        self.access.layouts.set(layouts);
+        });
+    }
+
+    fn add_layout_control(&self, layout_id: String, path: NodePath, position: ControlPosition, size: ControlSize) {
+        log::debug!("add_layout_control {} {:?} {:?} {:?}", layout_id, path, position, size);
+        self.update_layout(layout_id, |layout| {
+            layout.controls.push(ControlConfig {
+                node: path,
+                label: None,
+                position,
+                size,
+            });
+        });
     }
 
     fn delete_layout_control(&self, layout_id: String, control_id: String) {
-        let mut layouts = self.access.layouts.read();
-        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
+        self.update_layout(layout_id, |layout| {
             if let Some(index) = layout
                 .controls
                 .iter()
@@ -68,8 +77,7 @@ impl RuntimeApi for Api {
             {
                 layout.controls.remove(index);
             }
-        }
-        self.access.layouts.set(layouts);
+        });
     }
 
     fn update_layout_control<F: FnOnce(&mut ControlConfig)>(
@@ -78,8 +86,7 @@ impl RuntimeApi for Api {
         control_id: String,
         update: F,
     ) {
-        let mut layouts = self.access.layouts.read();
-        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
+        self.update_layout(layout_id, |layout| {
             if let Some(control) = layout
                 .controls
                 .iter_mut()
@@ -87,8 +94,7 @@ impl RuntimeApi for Api {
             {
                 update(control);
             }
-        }
-        self.access.layouts.set(layouts);
+        });
     }
 
     fn add_node(
@@ -131,6 +137,14 @@ impl RuntimeApi for Api {
         self.sender.send(ApiCommand::GetNodePreview(node, tx))?;
 
         rx.recv()?
+    }
+
+    fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
+        let designer = self.access.designer.read();
+        self.access.nodes.iter()
+            .map(|entry| entry.key().clone())
+            .find(|node_path| node_path == path)
+            .map(|path| self.get_descriptor(path, &designer))
     }
 
     fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()> {
@@ -252,5 +266,13 @@ impl Api {
             designer,
             ports,
         }
+    }
+
+    fn update_layout<Cb: FnOnce(&mut Layout)>(&self, layout_id: String, update: Cb) {
+        let mut layouts = self.access.layouts.read();
+        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
+            update(layout);
+        }
+        self.access.layouts.set(layouts);
     }
 }

@@ -1502,6 +1502,517 @@ impl ::protobuf::reflect::ProtobufValue for RemoveControlRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AddControlRequest {
+    // message fields
+    pub layout_id: ::std::string::String,
+    pub node_type: super::nodes::Node_NodeType,
+    pub position: ::protobuf::SingularPtrField<ControlPosition>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddControlRequest {
+    fn default() -> &'a AddControlRequest {
+        <AddControlRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddControlRequest {
+    pub fn new() -> AddControlRequest {
+        ::std::default::Default::default()
+    }
+
+    // string layout_id = 1;
+
+
+    pub fn get_layout_id(&self) -> &str {
+        &self.layout_id
+    }
+    pub fn clear_layout_id(&mut self) {
+        self.layout_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_layout_id(&mut self, v: ::std::string::String) {
+        self.layout_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_layout_id(&mut self) -> &mut ::std::string::String {
+        &mut self.layout_id
+    }
+
+    // Take field
+    pub fn take_layout_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.layout_id, ::std::string::String::new())
+    }
+
+    // .mizer.Node.NodeType node_type = 2;
+
+
+    pub fn get_node_type(&self) -> super::nodes::Node_NodeType {
+        self.node_type
+    }
+    pub fn clear_node_type(&mut self) {
+        self.node_type = super::nodes::Node_NodeType::Fader;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node_type(&mut self, v: super::nodes::Node_NodeType) {
+        self.node_type = v;
+    }
+
+    // .mizer.ControlPosition position = 3;
+
+
+    pub fn get_position(&self) -> &ControlPosition {
+        self.position.as_ref().unwrap_or_else(|| <ControlPosition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_position(&mut self) {
+        self.position.clear();
+    }
+
+    pub fn has_position(&self) -> bool {
+        self.position.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position(&mut self, v: ControlPosition) {
+        self.position = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_position(&mut self) -> &mut ControlPosition {
+        if self.position.is_none() {
+            self.position.set_default();
+        }
+        self.position.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_position(&mut self) -> ControlPosition {
+        self.position.take().unwrap_or_else(|| ControlPosition::new())
+    }
+}
+
+impl ::protobuf::Message for AddControlRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.position {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.layout_id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.node_type, 2, &mut self.unknown_fields)?
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.position)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.layout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.layout_id);
+        }
+        if self.node_type != super::nodes::Node_NodeType::Fader {
+            my_size += ::protobuf::rt::enum_size(2, self.node_type);
+        }
+        if let Some(ref v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.layout_id.is_empty() {
+            os.write_string(1, &self.layout_id)?;
+        }
+        if self.node_type != super::nodes::Node_NodeType::Fader {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.node_type))?;
+        }
+        if let Some(ref v) = self.position.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddControlRequest {
+        AddControlRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "layout_id",
+                |m: &AddControlRequest| { &m.layout_id },
+                |m: &mut AddControlRequest| { &mut m.layout_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::nodes::Node_NodeType>>(
+                "node_type",
+                |m: &AddControlRequest| { &m.node_type },
+                |m: &mut AddControlRequest| { &mut m.node_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ControlPosition>>(
+                "position",
+                |m: &AddControlRequest| { &m.position },
+                |m: &mut AddControlRequest| { &mut m.position },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddControlRequest>(
+                "AddControlRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddControlRequest {
+        static instance: ::protobuf::rt::LazyV2<AddControlRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddControlRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddControlRequest {
+    fn clear(&mut self) {
+        self.layout_id.clear();
+        self.node_type = super::nodes::Node_NodeType::Fader;
+        self.position.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddControlRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddControlRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AddExistingControlRequest {
+    // message fields
+    pub layout_id: ::std::string::String,
+    pub node: ::std::string::String,
+    pub position: ::protobuf::SingularPtrField<ControlPosition>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddExistingControlRequest {
+    fn default() -> &'a AddExistingControlRequest {
+        <AddExistingControlRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddExistingControlRequest {
+    pub fn new() -> AddExistingControlRequest {
+        ::std::default::Default::default()
+    }
+
+    // string layout_id = 1;
+
+
+    pub fn get_layout_id(&self) -> &str {
+        &self.layout_id
+    }
+    pub fn clear_layout_id(&mut self) {
+        self.layout_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_layout_id(&mut self, v: ::std::string::String) {
+        self.layout_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_layout_id(&mut self) -> &mut ::std::string::String {
+        &mut self.layout_id
+    }
+
+    // Take field
+    pub fn take_layout_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.layout_id, ::std::string::String::new())
+    }
+
+    // string node = 2;
+
+
+    pub fn get_node(&self) -> &str {
+        &self.node
+    }
+    pub fn clear_node(&mut self) {
+        self.node.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node(&mut self, v: ::std::string::String) {
+        self.node = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_node(&mut self) -> &mut ::std::string::String {
+        &mut self.node
+    }
+
+    // Take field
+    pub fn take_node(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.node, ::std::string::String::new())
+    }
+
+    // .mizer.ControlPosition position = 3;
+
+
+    pub fn get_position(&self) -> &ControlPosition {
+        self.position.as_ref().unwrap_or_else(|| <ControlPosition as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_position(&mut self) {
+        self.position.clear();
+    }
+
+    pub fn has_position(&self) -> bool {
+        self.position.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position(&mut self, v: ControlPosition) {
+        self.position = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_position(&mut self) -> &mut ControlPosition {
+        if self.position.is_none() {
+            self.position.set_default();
+        }
+        self.position.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_position(&mut self) -> ControlPosition {
+        self.position.take().unwrap_or_else(|| ControlPosition::new())
+    }
+}
+
+impl ::protobuf::Message for AddExistingControlRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.position {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.layout_id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.node)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.position)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.layout_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.layout_id);
+        }
+        if !self.node.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.node);
+        }
+        if let Some(ref v) = self.position.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.layout_id.is_empty() {
+            os.write_string(1, &self.layout_id)?;
+        }
+        if !self.node.is_empty() {
+            os.write_string(2, &self.node)?;
+        }
+        if let Some(ref v) = self.position.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddExistingControlRequest {
+        AddExistingControlRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "layout_id",
+                |m: &AddExistingControlRequest| { &m.layout_id },
+                |m: &mut AddExistingControlRequest| { &mut m.layout_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "node",
+                |m: &AddExistingControlRequest| { &m.node },
+                |m: &mut AddExistingControlRequest| { &mut m.node },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ControlPosition>>(
+                "position",
+                |m: &AddExistingControlRequest| { &m.position },
+                |m: &mut AddExistingControlRequest| { &mut m.position },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddExistingControlRequest>(
+                "AddExistingControlRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddExistingControlRequest {
+        static instance: ::protobuf::rt::LazyV2<AddExistingControlRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddExistingControlRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddExistingControlRequest {
+    fn clear(&mut self) {
+        self.layout_id.clear();
+        self.node.clear();
+        self.position.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddExistingControlRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddExistingControlRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Layouts {
     // message fields
     pub layouts: ::protobuf::RepeatedField<Layout>,
@@ -2579,38 +3090,47 @@ impl ::protobuf::reflect::ProtobufValue for ControlSize {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\rlayouts.proto\x12\x05mizer\"\x10\n\x0eLayoutResponse\"\x13\n\x11GetL\
-    ayoutsRequest\"&\n\x10AddLayoutRequest\x12\x12\n\x04name\x18\x01\x20\x01\
-    (\tR\x04name\"%\n\x13RemoveLayoutRequest\x12\x0e\n\x02id\x18\x01\x20\x01\
-    (\tR\x02id\"9\n\x13RenameLayoutRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\
-    \tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"f\n\x14RenameCo\
-    ntrolRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\
-    \x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12\x12\n\x04name\x18\
-    \x03\x20\x01(\tR\x04name\"\x84\x01\n\x12MoveControlRequest\x12\x1b\n\tla\
-    yout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\
-    \x20\x01(\tR\tcontrolId\x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.miz\
-    er.ControlPositionR\x08position\"R\n\x14RemoveControlRequest\x12\x1b\n\t\
-    layout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\
-    \x20\x01(\tR\tcontrolId\"2\n\x07Layouts\x12'\n\x07layouts\x18\x01\x20\
-    \x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\n\x06Layout\x12\x0e\n\x02id\x18\
-    \x01\x20\x01(\tR\x02id\x120\n\x08controls\x18\x02\x20\x03(\x0b2\x14.mize\
-    r.LayoutControlR\x08controls\"\x95\x01\n\rLayoutControl\x12\x12\n\x04nod\
-    e\x18\x01\x20\x01(\tR\x04node\x122\n\x08position\x18\x02\x20\x01(\x0b2\
-    \x16.mizer.ControlPositionR\x08position\x12&\n\x04size\x18\x03\x20\x01(\
-    \x0b2\x12.mizer.ControlSizeR\x04size\x12\x14\n\x05label\x18\x04\x20\x01(\
-    \tR\x05label\"-\n\x0fControlPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04\
-    R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\
-    \x14\n\x05width\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\
-    \x02\x20\x01(\x04R\x06height2\xcb\x03\n\nLayoutsApi\x128\n\nGetLayouts\
-    \x12\x18.mizer.GetLayoutsRequest\x1a\x0e.mizer.Layouts\"\0\x126\n\tAddLa\
-    yout\x12\x17.mizer.AddLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0c\
-    RemoveLayout\x12\x1a.mizer.RemoveLayoutRequest\x1a\x0e.mizer.Layouts\"\0\
-    \x12<\n\x0cRenameLayout\x12\x1a.mizer.RenameLayoutRequest\x1a\x0e.mizer.\
-    Layouts\"\0\x12E\n\rRenameControl\x12\x1b.mizer.RenameControlRequest\x1a\
-    \x15.mizer.LayoutResponse\"\0\x12A\n\x0bMoveControl\x12\x19.mizer.MoveCo\
-    ntrolRequest\x1a\x15.mizer.LayoutResponse\"\0\x12E\n\rRemoveControl\x12\
-    \x1b.mizer.RemoveControlRequest\x1a\x15.mizer.LayoutResponse\"\0b\x06pro\
-    to3\
+    \n\rlayouts.proto\x12\x05mizer\x1a\x0bnodes.proto\"\x10\n\x0eLayoutRespo\
+    nse\"\x13\n\x11GetLayoutsRequest\"&\n\x10AddLayoutRequest\x12\x12\n\x04n\
+    ame\x18\x01\x20\x01(\tR\x04name\"%\n\x13RemoveLayoutRequest\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\tR\x02id\"9\n\x13RenameLayoutRequest\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\"f\n\x14RenameControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\
+    \x01(\tR\x08layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolI\
+    d\x12\x12\n\x04name\x18\x03\x20\x01(\tR\x04name\"\x84\x01\n\x12MoveContr\
+    olRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\n\
+    \ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x122\n\x08position\x18\x03\
+    \x20\x01(\x0b2\x16.mizer.ControlPositionR\x08position\"R\n\x14RemoveCont\
+    rolRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x1d\
+    \n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\"\x97\x01\n\x11AddControlR\
+    equest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x121\n\tnode\
+    _type\x18\x02\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x08nodeType\x122\n\
+    \x08position\x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08positio\
+    n\"\x80\x01\n\x19AddExistingControlRequest\x12\x1b\n\tlayout_id\x18\x01\
+    \x20\x01(\tR\x08layoutId\x12\x12\n\x04node\x18\x02\x20\x01(\tR\x04node\
+    \x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.mizer.ControlPositionR\x08\
+    position\"2\n\x07Layouts\x12'\n\x07layouts\x18\x01\x20\x03(\x0b2\r.mizer\
+    .LayoutR\x07layouts\"J\n\x06Layout\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
+    \x02id\x120\n\x08controls\x18\x02\x20\x03(\x0b2\x14.mizer.LayoutControlR\
+    \x08controls\"\x95\x01\n\rLayoutControl\x12\x12\n\x04node\x18\x01\x20\
+    \x01(\tR\x04node\x122\n\x08position\x18\x02\x20\x01(\x0b2\x16.mizer.Cont\
+    rolPositionR\x08position\x12&\n\x04size\x18\x03\x20\x01(\x0b2\x12.mizer.\
+    ControlSizeR\x04size\x12\x14\n\x05label\x18\x04\x20\x01(\tR\x05label\"-\
+    \n\x0fControlPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\
+    \n\x01y\x18\x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05widt\
+    h\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\
+    \x04R\x06height2\xdd\x04\n\nLayoutsApi\x128\n\nGetLayouts\x12\x18.mizer.\
+    GetLayoutsRequest\x1a\x0e.mizer.Layouts\"\0\x126\n\tAddLayout\x12\x17.mi\
+    zer.AddLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cRemoveLayout\
+    \x12\x1a.mizer.RemoveLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cR\
+    enameLayout\x12\x1a.mizer.RenameLayoutRequest\x1a\x0e.mizer.Layouts\"\0\
+    \x12E\n\rRenameControl\x12\x1b.mizer.RenameControlRequest\x1a\x15.mizer.\
+    LayoutResponse\"\0\x12A\n\x0bMoveControl\x12\x19.mizer.MoveControlReques\
+    t\x1a\x15.mizer.LayoutResponse\"\0\x12E\n\rRemoveControl\x12\x1b.mizer.R\
+    emoveControlRequest\x1a\x15.mizer.LayoutResponse\"\0\x12?\n\nAddControl\
+    \x12\x18.mizer.AddControlRequest\x1a\x15.mizer.LayoutResponse\"\0\x12O\n\
+    \x12AddExistingControl\x12\x20.mizer.AddExistingControlRequest\x1a\x15.m\
+    izer.LayoutResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

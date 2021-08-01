@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::RuntimeApi;
+use mizer_node::NodePath;
 
 #[derive(Clone)]
 pub struct LayoutsHandler<R: RuntimeApi> {
@@ -68,5 +69,30 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         );
         self.runtime
             .update_layout_control(layout_id, control_id, |control| control.label = name.into());
+    }
+
+    pub fn add_control(&self, layout_id: String, node_type: Node_NodeType, position: ControlPosition) -> anyhow::Result<()> {
+        let node = self.runtime.add_node(node_type.into(), mizer_node::NodeDesigner::default())?;
+        let size = Self::get_default_size_for_node_type(node_type);
+        self.runtime.add_layout_control(layout_id, node.path, position.into(), size.into());
+
+        Ok(())
+    }
+
+    pub fn add_control_for_node(&self, layout_id: String, node_path: NodePath, position: ControlPosition) -> anyhow::Result<()> {
+        if let Some(node) = self.runtime.get_node(&node_path) {
+            let size = Self::get_default_size_for_node_type(node.node_type().into());
+            self.runtime.add_layout_control(layout_id, node_path, position.into(), size.into());
+        }
+
+        Ok(())
+    }
+
+    fn get_default_size_for_node_type(node_type: Node_NodeType) -> ControlSize {
+        match node_type {
+            Node_NodeType::Fader => ControlSize { height: 4, width: 1, ..Default::default() },
+            Node_NodeType::Button => ControlSize { height: 1, width: 1, ..Default::default() },
+            _ => ControlSize::default(),
+        }
     }
 }

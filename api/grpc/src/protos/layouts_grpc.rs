@@ -35,6 +35,10 @@ pub trait LayoutsApi {
     fn move_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::MoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 
     fn remove_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::RemoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+
+    fn add_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::AddControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+
+    fn add_existing_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::AddExistingControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -115,6 +119,26 @@ impl LayoutsApiClient {
     pub fn remove_control(&self, o: ::grpc::RequestOptions, req: super::layouts::RemoveControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/RemoveControl"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn add_control(&self, o: ::grpc::RequestOptions, req: super::layouts::AddControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/AddControl"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn add_existing_control(&self, o: ::grpc::RequestOptions, req: super::layouts::AddExistingControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/AddExistingControl"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -215,6 +239,30 @@ impl LayoutsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).remove_control(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/AddControl"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_control(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/AddExistingControl"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_existing_control(req, resp))
                     },
                 ),
             ],

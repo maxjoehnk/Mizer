@@ -72,4 +72,16 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
 
         resp.finish(LayoutResponse::new())
     }
+
+    fn add_control(&self, req: ServerRequestSingle<AddControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
+        self.add_control(req.message.layout_id, req.message.node_type, req.message.position.unwrap()).unwrap();
+
+        resp.finish(Default::default())
+    }
+
+    fn add_existing_control(&self, req: ServerRequestSingle<AddExistingControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
+        self.add_control_for_node(req.message.layout_id, req.message.node.into(), req.message.position.unwrap()).unwrap();
+
+        resp.finish(Default::default())
+    }
 }

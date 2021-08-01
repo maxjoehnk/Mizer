@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/protos/layouts.pb.dart';
+import 'package:mizer/protos/nodes.pb.dart';
 
 abstract class LayoutsEvent {}
 
@@ -42,6 +43,22 @@ class DeleteControl implements LayoutsEvent {
   DeleteControl({ this.layoutId, this.controlId });
 }
 
+class AddControl implements LayoutsEvent {
+  final String layoutId;
+  final Node_NodeType nodeType;
+  final ControlPosition position;
+
+  AddControl({ this.layoutId, this.nodeType, this.position });
+}
+
+class AddExistingControl implements LayoutsEvent {
+  final String layoutId;
+  final ControlPosition position;
+  final Node node;
+
+  AddExistingControl({ this.layoutId, this.node, this.position });
+}
+
 class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {
   final LayoutsApi api;
 
@@ -71,6 +88,14 @@ class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {
     }
     if (event is DeleteControl) {
       await api.deleteControl(event.layoutId, event.controlId);
+      yield await api.getLayouts();
+    }
+    if (event is AddControl) {
+      await api.addControl(event.layoutId, event.nodeType, event.position);
+      yield await api.getLayouts();
+    }
+    if (event is AddExistingControl) {
+      await api.addControlForNode(event.layoutId, event.node.path, event.position);
       yield await api.getLayouts();
     }
   }

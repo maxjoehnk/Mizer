@@ -66,6 +66,20 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "addControl" => {
+                if let Err(err) = call.arguments().map(|req| self.add_control(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "addExistingControl" => {
+                if let Err(err) = call.arguments().map(|req| self.add_control_for_node(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -108,5 +122,13 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     fn rename_control(&self, req: RenameControlRequest) {
         self.handler
             .rename_control(req.layout_id, req.control_id, req.name);
+    }
+
+    fn add_control(&self, req: AddControlRequest) -> anyhow::Result<()> {
+        self.handler.add_control(req.layout_id, req.node_type, req.position.unwrap())
+    }
+
+    fn add_control_for_node(&self, req: AddExistingControlRequest) -> anyhow::Result<()> {
+        self.handler.add_control_for_node(req.layout_id, req.node.into(), req.position.unwrap())
     }
 }

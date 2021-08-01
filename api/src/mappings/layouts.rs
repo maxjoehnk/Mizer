@@ -3,7 +3,7 @@ use protobuf::SingularPtrField;
 
 impl From<mizer_layouts::Layout> for Layout {
     fn from(layout: mizer_layouts::Layout) -> Self {
-        Layout {
+        Self {
             id: layout.id,
             controls: layout
                 .controls
@@ -17,7 +17,7 @@ impl From<mizer_layouts::Layout> for Layout {
 
 impl From<mizer_layouts::ControlConfig> for LayoutControl {
     fn from(config: mizer_layouts::ControlConfig) -> Self {
-        LayoutControl {
+        Self {
             node: config.node.0,
             label: config.label.unwrap_or_default(),
             position: SingularPtrField::some(config.position.into()),
@@ -48,10 +48,19 @@ impl From<ControlPosition> for mizer_layouts::ControlPosition {
 
 impl From<mizer_layouts::ControlSize> for ControlSize {
     fn from(size: mizer_layouts::ControlSize) -> Self {
-        ControlSize {
+        Self {
             width: size.width,
             height: size.height,
             ..Default::default()
+        }
+    }
+}
+
+impl From<ControlSize> for mizer_layouts::ControlSize {
+    fn from(size: ControlSize) -> Self {
+        Self {
+            width: size.width,
+            height: size.height,
         }
     }
 }

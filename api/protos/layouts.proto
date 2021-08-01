@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package mizer;
 
+import "nodes.proto";
+
 service LayoutsApi {
   rpc GetLayouts (GetLayoutsRequest) returns (Layouts) {}
   rpc AddLayout (AddLayoutRequest) returns (Layouts) {}
@@ -11,6 +13,8 @@ service LayoutsApi {
   rpc RenameControl(RenameControlRequest) returns (LayoutResponse) {}
   rpc MoveControl(MoveControlRequest) returns (LayoutResponse) {}
   rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
+  rpc AddControl (AddControlRequest) returns (LayoutResponse) {}
+  rpc AddExistingControl (AddExistingControlRequest) returns (LayoutResponse) {}
 }
 
 message LayoutResponse {}
@@ -45,6 +49,18 @@ message MoveControlRequest {
 message RemoveControlRequest {
   string layout_id = 1;
   string control_id = 2;
+}
+
+message AddControlRequest {
+  string layout_id = 1;
+  Node.NodeType node_type = 2;
+  ControlPosition position = 3;
+}
+
+message AddExistingControlRequest {
+  string layout_id = 1;
+  string node = 2;
+  ControlPosition position = 3;
 }
 
 message Layouts {

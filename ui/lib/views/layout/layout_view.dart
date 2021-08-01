@@ -116,34 +116,36 @@ class ControlLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LayoutsBloc bloc = context.read();
-    return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
-      return GestureDetector(
-        onSecondaryTapDown: (details) {
-          int x = (details.localPosition.dx / MULTIPLIER).floor();
-          int y = (details.localPosition.dy / MULTIPLIER).floor();
-          var position = ControlPosition(x: Int64(x), y: Int64(y));
-          Navigator.of(context).push(PopupMenuRoute(
-              position: details.globalPosition,
-              child: AddControlPopup(
-                  nodes: nodes,
-                  onCreateControl: (nodeType) => bloc
-                      .add(AddControl(layoutId: layout.id, nodeType: nodeType, position: position)),
-                  onAddControlForExisting: (node) => bloc.add(
-                      AddExistingControl(layoutId: layout.id, node: node, position: position)))));
-        },
-        behavior: HitTestBehavior.translucent,
-        child: Container(
-          width: 20 * MULTIPLIER,
-          height: 10 * MULTIPLIER,
-          child: CustomMultiChildLayout(
-              delegate: ControlsLayoutDelegate(layout),
-              children: layout.controls
-                  .map((e) => LayoutId(id: e.node, child: LayoutControlView(layout.id, e)))
-                  .toList()),
-        ),
-      );
-    });
+    return BlocBuilder<NodesBloc, Nodes>(
+        builder: (context, nodes) => Container(
+              width: 20 * MULTIPLIER,
+              height: 10 * MULTIPLIER,
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onSecondaryTapDown: (details) {
+                      LayoutsBloc bloc = context.read();
+                      int x = (details.localPosition.dx / MULTIPLIER).floor();
+                      int y = (details.localPosition.dy / MULTIPLIER).floor();
+                      var position = ControlPosition(x: Int64(x), y: Int64(y));
+                      Navigator.of(context).push(PopupMenuRoute(
+                          position: details.globalPosition,
+                          child: AddControlPopup(
+                              nodes: nodes,
+                              onCreateControl: (nodeType) => bloc.add(AddControl(
+                                  layoutId: layout.id, nodeType: nodeType, position: position)),
+                              onAddControlForExisting: (node) => bloc.add(AddExistingControl(
+                                  layoutId: layout.id, node: node, position: position)))));
+                    },
+                  ),
+                  CustomMultiChildLayout(
+                      delegate: ControlsLayoutDelegate(layout),
+                      children: layout.controls
+                          .map((e) => LayoutId(id: e.node, child: LayoutControlView(layout.id, e)))
+                          .toList()),
+                ],
+              ),
+            ));
   }
 }
 

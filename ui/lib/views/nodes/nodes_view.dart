@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
-import 'package:mizer/views/nodes/widgets/editor_layers/add_node_layer.dart';
+import 'package:mizer/widgets/popup_menu/popup_menu.dart';
+import 'package:mizer/widgets/popup_menu/popup_menu_route.dart';
 import 'package:provider/provider.dart';
 
+import 'models/node_editor_model.dart';
 import 'widgets/editor_layers/canvas_drop_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
-import 'models/node_editor_model.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/properties/node_properties.dart';
 import 'widgets/transport/transport_controls.dart';
@@ -29,8 +31,7 @@ class _FetchNodesViewState extends State<FetchNodesView> {
       _updateModel(nodes);
       return SizeChangedLayoutNotifier(
         child: ChangeNotifierProvider<NodeEditorModel>.value(
-            value: model,
-            builder: (context, _) => SizedBox.expand(child: NodesView())),
+            value: model, builder: (context, _) => SizedBox.expand(child: NodesView())),
       );
     });
   }
@@ -38,7 +39,7 @@ class _FetchNodesViewState extends State<FetchNodesView> {
   _updateModel(Nodes nodes) {
     if (model == null) {
       model = NodeEditorModel(nodes);
-    }else {
+    } else {
       model.refresh(nodes);
     }
   }
@@ -63,13 +64,12 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         children: [
           GestureDetector(
             onSecondaryTapUp: (event) {
+              Navigator.of(context).push(PopupMenuRoute(
+                  position: event.globalPosition,
+                  child: PopupMenu(
+                      categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
               setState(() {
                 addMenuPosition = event.localPosition;
-              });
-            },
-            onTap: () {
-              setState(() {
-                addMenuPosition = null;
               });
             },
             child: Stack(children: [
@@ -86,12 +86,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
               // ),
               Transform(
                   transform: model.transformationController.value,
-                  child: IgnorePointer(
-                      child: GraphPaintLayer(model: model))),
+                  child: IgnorePointer(child: GraphPaintLayer(model: model))),
               CanvasDropLayer(),
               NodesTarget(),
-              if (addMenuPosition != null)
-                AddNodeMenu(addMenuPosition, onSelection: (nodeType) => _addNode(model, nodeType)),
             ]),
           ),
           Positioned(

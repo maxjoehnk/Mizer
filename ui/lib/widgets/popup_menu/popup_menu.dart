@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/controls/button.dart';
 
-const MAX_ROWS = 15;
-const double COLUMN_WIDTH = 150;
+const MAX_ROWS = 10;
+const double COLUMN_WIDTH = 175;
 const double ROW_HEIGHT = 26;
 
 class PopupItem<T> {
   final String label;
   final T value;
 
-  PopupItem(this.value, this.label);
+  const PopupItem(this.value, this.label);
 }
 
 class PopupCategory<T> {
   final String label;
   final List<PopupItem<T>> items;
 
-  PopupCategory({this.label, this.items});
+  const PopupCategory({this.label, this.items});
 }
 
 class PopupMenu<T> extends StatefulWidget {
@@ -36,27 +36,31 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey.shade800,
-            borderRadius: BorderRadius.all(Radius.circular(2)),
-            boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
-        child: Column(children: [
-          Row(
-              children: widget.categories
-                  .map((c) => MizerButton(
-                      active: c == selected,
-                      onClick: () => setState(() => selected = c),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Text(c.label),
-                      )))
-                  .toList()),
-          Table(
-            defaultColumnWidth: FixedColumnWidth(COLUMN_WIDTH),
-            children: mapNodeEntries(selected.items),
-          )
-        ]));
+    return FocusScope(
+      debugLabel: "PopupMenu",
+      autofocus: true,
+      child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey.shade800,
+              borderRadius: BorderRadius.all(Radius.circular(2)),
+              boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(2, 2), blurRadius: 4)]),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+                children: widget.categories
+                    .map((c) => MizerButton(
+                        active: c == selected,
+                        onClick: () => setState(() => selected = c),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Text(c.label),
+                        )))
+                    .toList()),
+            Table(
+              defaultColumnWidth: FixedColumnWidth(COLUMN_WIDTH),
+              children: mapNodeEntries(selected.items),
+            )
+          ])),
+    );
   }
 
   List<TableRow> mapNodeEntries(List<PopupItem<T>> items) {
@@ -68,11 +72,11 @@ class _PopupMenuState<T> extends State<PopupMenu<T>> {
     for (var _ in columns[0]) {
       var row = TableRow(
           children: columns.map((column) {
-            if (rowIndex >= column.length) {
-              return Container();
-            }
-            return column[rowIndex];
-          }).toList());
+        if (rowIndex >= column.length) {
+          return Container();
+        }
+        return column[rowIndex];
+      }).toList());
       rows.add(row);
       rowIndex++;
     }
@@ -123,6 +127,7 @@ class PopupItemButton extends StatefulWidget {
 
 class _PopupItemButtonState extends State<PopupItemButton> {
   bool hover = false;
+  bool focus = false;
 
   @override
   Widget build(BuildContext context) {
@@ -131,9 +136,11 @@ class _PopupItemButtonState extends State<PopupItemButton> {
         onHover: (isHovering) {
           setState(() => hover = isHovering);
         },
+        canRequestFocus: true,
+        onFocusChange: (hasFocus) => setState(() => focus = hasFocus),
         child: AnimatedContainer(
             duration: Duration(milliseconds: 100),
-            decoration: BoxDecoration(color: hover ? Colors.black12 : Colors.transparent),
+            decoration: BoxDecoration(color: (hover || focus) ? Colors.black12 : Colors.transparent),
             height: ROW_HEIGHT,
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
             child: Text(this.widget.text)));

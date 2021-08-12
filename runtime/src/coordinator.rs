@@ -409,7 +409,10 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn clear(&mut self) {
         self.designer.set(Default::default());
         self.nodes.clear();
-        self.layouts.set(Default::default());
+        self.layouts.set(vec![Layout {
+            id: "Default".into(),
+            controls: Vec::new(),
+        }]);
         self.links.set(Default::default());
         self.nodes_view.clear();
         self.pipeline = PipelineWorker::new();

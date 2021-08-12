@@ -7,26 +7,31 @@ class AddControlPopup extends StatelessWidget {
   final Function(Node_NodeType) onCreateControl;
   final Function(Node) onAddControlForExisting;
 
-  const AddControlPopup({this.nodes, Key key, this.onCreateControl, this.onAddControlForExisting}) : super(key: key);
+  const AddControlPopup({this.nodes, Key key, this.onCreateControl, this.onAddControlForExisting})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenu(categories: [
-      PopupCategory(label: "Controls", items: [
-        PopupItem(Node_NodeType.Button, "Button"),
-        PopupItem(Node_NodeType.Fader, "Fader"),
-      ]),
-      PopupCategory(label: "Nodes", items: nodes.nodes
-          .where((node) => isControlNode(node))
-          .map((node) => PopupItem(node, node.path))
-          .toList())
-    ], onSelect: (value) {
-      if (value is Node_NodeType) {
-        this.onCreateControl(value);
-      }else {
-        this.onAddControlForExisting(value);
-      }
-    });
+    var compatibleNodes = nodes.nodes.where((node) => isControlNode(node));
+
+    return PopupMenu(
+        categories: [
+          PopupCategory(label: "Controls", items: [
+            PopupItem(Node_NodeType.Button, "Button"),
+            PopupItem(Node_NodeType.Fader, "Fader"),
+          ]),
+          if (compatibleNodes.isNotEmpty)
+            PopupCategory(
+                label: "Nodes",
+                items: compatibleNodes.map((node) => PopupItem(node, node.path)).toList())
+        ],
+        onSelect: (value) {
+          if (value is Node_NodeType) {
+            this.onCreateControl(value);
+          } else {
+            this.onAddControlForExisting(value);
+          }
+        });
   }
 }
 

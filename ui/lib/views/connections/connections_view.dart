@@ -10,6 +10,7 @@ import 'package:mizer/views/connections/types/osc_connection.dart';
 import 'package:mizer/views/connections/types/prodjlink_connection.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
+import 'package:mizer/widgets/panel.dart';
 
 class ConnectionsView extends StatelessWidget {
   @override
@@ -20,29 +21,36 @@ class ConnectionsView extends StatelessWidget {
         initialData: Connections(),
         builder: (context, snapshot) {
           Connections connections = snapshot.data;
-          return ListView.builder(
-              itemCount: connections.connections.length,
-              itemBuilder: (context, index) {
-                var connection = connections.connections[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ConnectionTag(connection),
-                        ),
-                        Expanded(child: DeviceTitle(connection)),
-                        ..._buildActions(context, connection),
-                      ],
-                    ),
-                    _buildConnection(connection),
-                    Divider(),
-                  ],
-                );
-              });
+          return Panel(
+            label: "Connections",
+            child: ListView.builder(
+                itemCount: connections.connections.length,
+                itemBuilder: (context, index) {
+                  var connection = connections.connections[index];
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: ConnectionTag(connection),
+                          ),
+                          Expanded(child: DeviceTitle(connection)),
+                          ..._buildActions(context, connection),
+                        ],
+                      ),
+                      _buildConnection(connection),
+                      Divider(),
+                    ],
+                  );
+                }),
+            actions: [
+              PanelAction(label: "Add sACN"),
+              PanelAction(label: "Add Artnet"),
+            ]
+          );
         });
   }
 

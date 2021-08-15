@@ -11,8 +11,9 @@ class FaderInput extends StatefulWidget {
   final String label;
   final Gradient gradient;
   final Color color;
+  final bool highlight;
 
-  FaderInput({this.onValue, this.value, this.label, this.color, this.gradient});
+  FaderInput({this.onValue, this.value, this.label, this.color, this.gradient, this.highlight});
 
   @override
   _FaderInputState createState() => _FaderInputState(value ?? 0);
@@ -39,13 +40,14 @@ class _FaderInputState extends State<FaderInput> {
               onVerticalDragUpdate: (update) => _onInput(constraints, update.localPosition),
               onTapDown: (update) => _onInput(constraints, update.localPosition),
               child: Container(
-                decoration: ControlDecoration(gradient: widget.gradient, color: widget.color),
+
+                decoration: ControlDecoration(gradient: widget.gradient, color: widget.color, highlight: widget.highlight),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (widget.label != null)
                       Container(
-                          color: Colors.grey.shade800,
+                          color: widget.highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
                           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
                           child: Text(widget.label, textAlign: TextAlign.center)),
                     Expanded(
@@ -54,7 +56,7 @@ class _FaderInputState extends State<FaderInput> {
                         child: Align(
                             alignment: AlignmentDirectional(0, y),
                             child: Container(
-                                color: Colors.grey.shade800,
+                                color: widget.highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
                                 alignment: AlignmentDirectional.center,
                                 constraints: BoxConstraints.expand(height: 32),
                                 child: Text("$percentage%", textAlign: TextAlign.center))),

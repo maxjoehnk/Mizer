@@ -332,6 +332,7 @@ class Fixture extends $pb.GeneratedMessage {
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
     ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..pc<FixtureChannelGroup>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: FixtureChannelGroup.create)
+    ..pc<DmxChannel>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxChannels', $pb.PbFieldType.PM, protoName: 'dmxChannels', subBuilder: DmxChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -344,6 +345,7 @@ class Fixture extends $pb.GeneratedMessage {
     $core.int universe,
     $core.int channel,
     $core.Iterable<FixtureChannelGroup> channels,
+    $core.Iterable<DmxChannel> dmxChannels,
   }) {
     final _result = create();
     if (id != null) {
@@ -366,6 +368,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (channels != null) {
       _result.channels.addAll(channels);
+    }
+    if (dmxChannels != null) {
+      _result.dmxChannels.addAll(dmxChannels);
     }
     return _result;
   }
@@ -446,6 +451,9 @@ class Fixture extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.List<FixtureChannelGroup> get channels => $_getList(6);
+
+  @$pb.TagNumber(8)
+  $core.List<DmxChannel> get dmxChannels => $_getList(7);
 }
 
 enum FixtureChannelGroup_Channel {
@@ -576,6 +584,67 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
   void clearTilt() => clearField(5);
   @$pb.TagNumber(5)
   AxisChannel ensureTilt() => $_ensure(4);
+}
+
+class DmxChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  DmxChannel._() : super();
+  factory DmxChannel({
+    $core.String name,
+    $core.double value,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory DmxChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DmxChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DmxChannel clone() => DmxChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DmxChannel copyWith(void Function(DmxChannel) updates) => super.copyWith((message) => updates(message as DmxChannel)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DmxChannel create() => DmxChannel._();
+  DmxChannel createEmptyInstance() => create();
+  static $pb.PbList<DmxChannel> createRepeated() => $pb.PbList<DmxChannel>();
+  @$core.pragma('dart2js:noInline')
+  static DmxChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxChannel>(create);
+  static DmxChannel _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
 }
 
 class GenericChannel extends $pb.GeneratedMessage {

@@ -1,5 +1,5 @@
 use crate::models::fixtures::*;
-use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData};
+use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData, FixtureChannelDefinition};
 use protobuf::SingularPtrField;
 use std::collections::HashMap;
 
@@ -125,6 +125,19 @@ impl FixtureChannelGroup_oneof_channel {
                 value: values.get(channel).copied().unwrap_or_default(),
                 ..Default::default()
             }),
+        }
+    }
+}
+
+impl DmxChannel {
+    pub fn with_value(
+        channel: &mizer_fixtures::fixture::FixtureChannelDefinition,
+        value: f64,
+    ) -> Self {
+        Self {
+            name: channel.name.clone(),
+            value,
+            ..Default::default()
         }
     }
 }

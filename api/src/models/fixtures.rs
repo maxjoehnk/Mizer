@@ -1138,6 +1138,7 @@ pub struct Fixture {
     pub universe: u32,
     pub channel: u32,
     pub channels: ::protobuf::RepeatedField<FixtureChannelGroup>,
+    pub dmxChannels: ::protobuf::RepeatedField<DmxChannel>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1303,11 +1304,41 @@ impl Fixture {
     pub fn take_channels(&mut self) -> ::protobuf::RepeatedField<FixtureChannelGroup> {
         ::std::mem::replace(&mut self.channels, ::protobuf::RepeatedField::new())
     }
+
+    // repeated .mizer.DmxChannel dmxChannels = 8;
+
+
+    pub fn get_dmxChannels(&self) -> &[DmxChannel] {
+        &self.dmxChannels
+    }
+    pub fn clear_dmxChannels(&mut self) {
+        self.dmxChannels.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_dmxChannels(&mut self, v: ::protobuf::RepeatedField<DmxChannel>) {
+        self.dmxChannels = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_dmxChannels(&mut self) -> &mut ::protobuf::RepeatedField<DmxChannel> {
+        &mut self.dmxChannels
+    }
+
+    // Take field
+    pub fn take_dmxChannels(&mut self) -> ::protobuf::RepeatedField<DmxChannel> {
+        ::std::mem::replace(&mut self.dmxChannels, ::protobuf::RepeatedField::new())
+    }
 }
 
 impl ::protobuf::Message for Fixture {
     fn is_initialized(&self) -> bool {
         for v in &self.channels {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.dmxChannels {
             if !v.is_initialized() {
                 return false;
             }
@@ -1352,6 +1383,9 @@ impl ::protobuf::Message for Fixture {
                 7 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.channels)?;
                 },
+                8 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.dmxChannels)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1386,6 +1420,10 @@ impl ::protobuf::Message for Fixture {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        for value in &self.dmxChannels {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1412,6 +1450,11 @@ impl ::protobuf::Message for Fixture {
         }
         for v in &self.channels {
             os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.dmxChannels {
+            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
@@ -1488,6 +1531,11 @@ impl ::protobuf::Message for Fixture {
                 |m: &Fixture| { &m.channels },
                 |m: &mut Fixture| { &mut m.channels },
             ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<DmxChannel>>(
+                "dmxChannels",
+                |m: &Fixture| { &m.dmxChannels },
+                |m: &mut Fixture| { &mut m.dmxChannels },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Fixture>(
                 "Fixture",
                 fields,
@@ -1511,6 +1559,7 @@ impl ::protobuf::Clear for Fixture {
         self.universe = 0;
         self.channel = 0;
         self.channels.clear();
+        self.dmxChannels.clear();
         self.unknown_fields.clear();
     }
 }
@@ -2003,6 +2052,203 @@ impl ::std::fmt::Debug for FixtureChannelGroup {
 }
 
 impl ::protobuf::reflect::ProtobufValue for FixtureChannelGroup {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct DmxChannel {
+    // message fields
+    pub name: ::std::string::String,
+    pub value: f64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DmxChannel {
+    fn default() -> &'a DmxChannel {
+        <DmxChannel as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DmxChannel {
+    pub fn new() -> DmxChannel {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // double value = 2;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+}
+
+impl ::protobuf::Message for DmxChannel {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.value != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.value != 0. {
+            os.write_double(2, self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DmxChannel {
+        DmxChannel::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &DmxChannel| { &m.name },
+                |m: &mut DmxChannel| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &DmxChannel| { &m.value },
+                |m: &mut DmxChannel| { &mut m.value },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DmxChannel>(
+                "DmxChannel",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DmxChannel {
+        static instance: ::protobuf::rt::LazyV2<DmxChannel> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DmxChannel::new)
+    }
+}
+
+impl ::protobuf::Clear for DmxChannel {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.value = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DmxChannel {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DmxChannel {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -4752,54 +4998,56 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x02\x20\x01(\tR\x07channel\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\
     \x05fader\x12+\n\x05color\x18\x04\x20\x01(\x0b2\x13.mizer.ColorChannelH\
     \0R\x05colorB\x07\n\x05value\"6\n\x08Fixtures\x12*\n\x08fixtures\x18\x01\
-    \x20\x03(\x0b2\x0e.mizer.FixtureR\x08fixtures\"\xd3\x01\n\x07Fixture\x12\
+    \x20\x03(\x0b2\x0e.mizer.FixtureR\x08fixtures\"\x88\x02\n\x07Fixture\x12\
     \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
     (\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\
     \x12\x12\n\x04mode\x18\x04\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\
     \x05\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x06\x20\x01(\rR\
     \x07channel\x126\n\x08channels\x18\x07\x20\x03(\x0b2\x1a.mizer.FixtureCh\
-    annelGroupR\x08channels\"\xe6\x01\n\x13FixtureChannelGroup\x12\x12\n\x04\
-    name\x18\x01\x20\x01(\tR\x04name\x121\n\x07generic\x18\x02\x20\x01(\x0b2\
-    \x15.mizer.GenericChannelH\0R\x07generic\x12+\n\x05color\x18\x03\x20\x01\
-    (\x0b2\x13.mizer.ColorChannelH\0R\x05color\x12&\n\x03pan\x18\x04\x20\x01\
-    (\x0b2\x12.mizer.AxisChannelH\0R\x03pan\x12(\n\x04tilt\x18\x05\x20\x01(\
-    \x0b2\x12.mizer.AxisChannelH\0R\x04tiltB\t\n\x07channel\"&\n\x0eGenericC\
-    hannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\"J\n\x0cColorCh\
-    annel\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\
-    \x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\
-    \x04blue\"]\n\x0bAxisChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\
-    \x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\
-    \n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\"\x1e\n\x1cGetFixtureDef\
-    initionsRequest\"P\n\x12FixtureDefinitions\x12:\n\x0bdefinitions\x18\x01\
-    \x20\x03(\x0b2\x18.mizer.FixtureDefinitionR\x0bdefinitions\"\xd1\x01\n\
-    \x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
-    \n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\
-    \x20\x01(\tR\x0cmanufacturer\x12(\n\x05modes\x18\x04\x20\x03(\x0b2\x12.m\
-    izer.FixtureModeR\x05modes\x126\n\x08physical\x18\x05\x20\x01(\x0b2\x1a.\
-    mizer.FixturePhysicalDataR\x08physical\x12\x12\n\x04tags\x18\x06\x20\x03\
-    (\tR\x04tags\"T\n\x0bFixtureMode\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x121\n\x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.FixtureChann\
-    elR\x08channels\"\xfd\x03\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12@\n\x06coarse\x18\x02\x20\x01(\x0b2&.mizer.Fixtu\
-    reChannel.CoarseResolutionH\0R\x06coarse\x12:\n\x04fine\x18\x03\x20\x01(\
-    \x0b2$.mizer.FixtureChannel.FineResolutionH\0R\x04fine\x12@\n\x06finest\
-    \x18\x04\x20\x01(\x0b2&.mizer.FixtureChannel.FinestResolutionH\0R\x06fin\
-    est\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\
-    \x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\
-    \x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rc\
-    oarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\
-    \x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01\
-    (\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseCha\
-    nnelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\
-    \x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02\
-    R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\
-    \x06weight\x18\x04\x20\x01(\x02R\x06weight2\xaf\x02\n\x0bFixturesApi\x12\
-    ;\n\x0bGetFixtures\x12\x19.mizer.GetFixturesRequest\x1a\x0f.mizer.Fixtur\
-    es\"\0\x12Y\n\x15GetFixtureDefinitions\x12#.mizer.GetFixtureDefinitionsR\
-    equest\x1a\x19.mizer.FixtureDefinitions\"\0\x12;\n\x0bAddFixtures\x12\
-    \x19.mizer.AddFixturesRequest\x1a\x0f.mizer.Fixtures\"\0\x12K\n\x13Write\
-    FixtureChannel\x12!.mizer.WriteFixtureChannelRequest\x1a\x0f.mizer.Fixtu\
-    res\"\0b\x06proto3\
+    annelGroupR\x08channels\x123\n\x0bdmxChannels\x18\x08\x20\x03(\x0b2\x11.\
+    mizer.DmxChannelR\x0bdmxChannels\"\xe6\x01\n\x13FixtureChannelGroup\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x121\n\x07generic\x18\x02\x20\
+    \x01(\x0b2\x15.mizer.GenericChannelH\0R\x07generic\x12+\n\x05color\x18\
+    \x03\x20\x01(\x0b2\x13.mizer.ColorChannelH\0R\x05color\x12&\n\x03pan\x18\
+    \x04\x20\x01(\x0b2\x12.mizer.AxisChannelH\0R\x03pan\x12(\n\x04tilt\x18\
+    \x05\x20\x01(\x0b2\x12.mizer.AxisChannelH\0R\x04tiltB\t\n\x07channel\"6\
+    \n\nDmxChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\
+    \x05value\x18\x02\x20\x01(\x01R\x05value\"&\n\x0eGenericChannel\x12\x14\
+    \n\x05value\x18\x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\
+    \n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\
+    \x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\
+    \x0bAxisChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\
+    \x1d\n\nangle_from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_t\
+    o\x18\x03\x20\x01(\x01R\x07angleTo\"\x1e\n\x1cGetFixtureDefinitionsReque\
+    st\"P\n\x12FixtureDefinitions\x12:\n\x0bdefinitions\x18\x01\x20\x03(\x0b\
+    2\x18.mizer.FixtureDefinitionR\x0bdefinitions\"\xd1\x01\n\x11FixtureDefi\
+    nition\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\
+    \x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0c\
+    manufacturer\x12(\n\x05modes\x18\x04\x20\x03(\x0b2\x12.mizer.FixtureMode\
+    R\x05modes\x126\n\x08physical\x18\x05\x20\x01(\x0b2\x1a.mizer.FixturePhy\
+    sicalDataR\x08physical\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"T\
+    \n\x0bFixtureMode\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x121\n\
+    \x08channels\x18\x02\x20\x03(\x0b2\x15.mizer.FixtureChannelR\x08channels\
+    \"\xfd\x03\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04\
+    name\x12@\n\x06coarse\x18\x02\x20\x01(\x0b2&.mizer.FixtureChannel.Coarse\
+    ResolutionH\0R\x06coarse\x12:\n\x04fine\x18\x03\x20\x01(\x0b2$.mizer.Fix\
+    tureChannel.FineResolutionH\0R\x04fine\x12@\n\x06finest\x18\x04\x20\x01(\
+    \x0b2&.mizer.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\x10Coa\
+    rseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x1aX\n\
+    \x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\x0bfineC\
+    hannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\x1a\x80\
+    \x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\x01\x20\x01(\rR\rfi\
+    nestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfineChannel\
+    \x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\nresolu\
+    tion\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\x01(\x02\
+    R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\x12\x14\n\
+    \x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\x18\x04\x20\
+    \x01(\x02R\x06weight2\xaf\x02\n\x0bFixturesApi\x12;\n\x0bGetFixtures\x12\
+    \x19.mizer.GetFixturesRequest\x1a\x0f.mizer.Fixtures\"\0\x12Y\n\x15GetFi\
+    xtureDefinitions\x12#.mizer.GetFixtureDefinitionsRequest\x1a\x19.mizer.F\
+    ixtureDefinitions\"\0\x12;\n\x0bAddFixtures\x12\x19.mizer.AddFixturesReq\
+    uest\x1a\x0f.mizer.Fixtures\"\0\x12K\n\x13WriteFixtureChannel\x12!.mizer\
+    .WriteFixtureChannelRequest\x1a\x0f.mizer.Fixtures\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

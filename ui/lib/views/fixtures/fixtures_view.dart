@@ -2,16 +2,19 @@ import 'dart:developer';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/views/fixtures/patch_fixture_dialog.dart';
-import 'package:mizer/widgets/inputs/color.dart';
-import 'package:mizer/widgets/inputs/fader.dart';
+import 'package:mizer/widgets/panel.dart';
+
+import 'fixture_sheet.dart';
 
 const double SHEET_SIZE = 320;
+const double SHEET_PADDING = 16;
+const double TAB_STRIP_HEIGHT = 32;
+const double SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
 
 class FixturesView extends StatefulWidget {
   @override
@@ -26,116 +29,115 @@ class _FixturesViewState extends State<FixturesView> {
     FixturesBloc fixturesBloc = context.read();
     fixturesBloc.add(FetchFixtures());
     var fixturesApi = context.read<FixturesApi>();
-    return Shortcuts(
-      shortcuts: {
-        LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyA): AddFixture(),
-      },
-      child: BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
-        return Stack(
-          fit: StackFit.expand,
-          children: [
-            DataTable(
-                showCheckboxColumn: false,
-                columns: const [
-                  DataColumn(label: Text("Id")),
-                  DataColumn(label: Text("Manufacturer")),
-                  DataColumn(label: Text("Model")),
-                  DataColumn(label: Text("Mode")),
-                  DataColumn(label: Text("Address"))
-                ],
-                rows: fixtures.fixtures
-                    .sortedByCompare((fixture) => fixture.id, (lhs, rhs) => lhs - rhs)
-                    .map((fixture) => DataRow(
-                            cells: [
-                              DataCell(Text(fixture.id.toString())),
-                              DataCell(Text(fixture.manufacturer)),
-                              DataCell(Text(fixture.name)),
-                              DataCell(Text(fixture.mode)),
-                              DataCell(Text("${fixture.universe}:${fixture.channel}"))
-                            ],
-                            onSelectChanged: (selected) {
-                              setState(() {
-                                if (selected) {
-                                  this.selectedIds.add(fixture.id);
-                                } else {
-                                  this.selectedIds.remove(fixture.id);
-                                }
-                              });
-                            },
-                            selected: selectedIds.contains(fixture.id)))
-                    .toList()),
-            Positioned(
-              bottom: bottomOffset,
-              right: 0,
-              child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: AddFixturesButton(apiClient: fixturesApi, fixturesBloc: fixturesBloc)),
+    return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
+      return Column(
+        children: [
+          Expanded(
+            child: Panel(
+              label: "Fixtures",
+              child: FixtureTable(
+                  fixtures: fixtures.fixtures,
+                  selectedIds: selectedIds,
+                  onSelect: (id, selected) {
+                    setState(() {
+                      log("$id => $selected");
+                      if (selected) {
+                        this.selectedIds.add(id);
+                      } else {
+                        this.selectedIds.remove(id);
+                      }
+                    });
+                  }),
+              actions: [
+                PanelAction(
+                    label: "Add Fixture",
+                    onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
+                PanelAction(label: "Select All", onClick: () => _selectAll(fixtures.fixtures)),
+                PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
+                PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
+                PanelAction(label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty)
+              ],
             ),
-            if (selectedIds.isNotEmpty) FixtureSheet(fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(), api: fixturesApi),
-          ],
-        );
-      }),
-    );
+          ),
+          if (selectedIds.isNotEmpty)
+            SizedBox(
+              height: SHEET_CONTAINER_HEIGHT,
+              child: FixtureSheet(
+                  fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(),
+                  api: fixturesApi),
+            ),
+        ],
+      );
+    });
   }
 
   double get bottomOffset {
     if (selectedIds.isEmpty) {
       return 0;
     }
-    return SHEET_SIZE;
+    return SHEET_CONTAINER_HEIGHT;
+  }
+
+  _addFixture(BuildContext context, FixturesApi apiClient, FixturesBloc fixturesBloc) {
+    showDialog(context: context, builder: (context) => PatchFixtureDialog(apiClient, fixturesBloc));
+  }
+
+  _selectAll(List<Fixture> fixtures) {
+    setState(() {
+      selectedIds = fixtures.map((f) => f.id).toList();
+    });
+  }
+
+  _selectEven(List<Fixture> fixtures) {
+    setState(() {
+      selectedIds = fixtures.map((f) => f.id).where((id) => id.isEven).toList();
+    });
+  }
+
+  _selectOdd(List<Fixture> fixtures) {
+    setState(() {
+      selectedIds = fixtures.map((f) => f.id).where((id) => id.isOdd).toList();
+    });
+  }
+
+  _clear() {
+    setState(() => selectedIds = []);
   }
 }
 
-class FixtureSheet extends StatelessWidget {
+class FixtureTable extends StatelessWidget {
   final List<Fixture> fixtures;
-  final FixturesApi api;
+  final List<int> selectedIds;
+  final Function(int, bool) onSelect;
 
-  const FixtureSheet({this.fixtures, this.api, Key key}) : super(key: key);
+  const FixtureTable(
+      {@required this.fixtures, @required this.selectedIds, @required this.onSelect, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: SHEET_SIZE,
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.grey.shade900,
-            boxShadow: [BoxShadow(offset: Offset(0, -2), blurRadius: 4, color: Colors.black26)]),
-        padding: const EdgeInsets.all(8),
-        child: groups.isNotEmpty
-            ? Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: groups.map(_buildFixtureGroup).toList())
-            : null,
-      ),
-    );
-  }
-
-  List<FixtureChannelGroup> get groups {
-    log("$fixtures");
-    return fixtures.first.channels;
-  }
-
-  Widget _buildFixtureGroup(FixtureChannelGroup group) {
-    Widget widget = Container();
-    if (group.hasGeneric()) {
-      widget = Container(width: 64, child: FaderInput(value: group.generic.value, onValue: (v) {
-        api.writeFixtureChannel(WriteFixtureChannelRequest(
-          ids: fixtures.map((f) => f.id).toList(),
-          channel: group.name,
-          fader: v,
-        ));
-      }));
-    }
-    if (group.hasColor()) {
-      widget = ColorInput();
-    }
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(children: [Text(group.name), Expanded(child: widget)]),
-    );
+    return DataTable(
+        showCheckboxColumn: false,
+        columns: const [
+          DataColumn(label: Text("Id")),
+          DataColumn(label: Text("Manufacturer")),
+          DataColumn(label: Text("Model")),
+          DataColumn(label: Text("Mode")),
+          DataColumn(label: Text("Address"))
+        ],
+        rows: fixtures
+            .sortedByCompare((fixture) => fixture.id, (lhs, rhs) => lhs - rhs)
+            .map((fixture) => DataRow(
+                    cells: [
+                      DataCell(Text(fixture.id.toString())),
+                      DataCell(Text(fixture.manufacturer)),
+                      DataCell(Text(fixture.name)),
+                      DataCell(Text(fixture.mode)),
+                      DataCell(Text("${fixture.universe}:${fixture.channel}"))
+                    ],
+                    onSelectChanged: (selected) => onSelect(fixture.id, selected),
+                    selected: selectedIds.contains(fixture.id)))
+            .toList());
   }
 }
 

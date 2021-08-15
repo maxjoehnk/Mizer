@@ -26,6 +26,7 @@ class LayoutView extends StatelessWidget {
       log("${layouts.layouts}", name: "LayoutView");
       context.read<NodesBloc>().add(FetchNodes());
       return tabs.Tabs(
+        padding: false,
         children: layouts.layouts
             .map((layout) => tabs.Tab(
                 header: (active, setActive) => ContextMenu(

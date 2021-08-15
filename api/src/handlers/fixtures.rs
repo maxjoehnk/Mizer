@@ -1,7 +1,9 @@
-use crate::models::fixtures::*;
-use crate::RuntimeApi;
+use mizer_fixtures::fixture::FixtureChannelGroupType;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
+
+use crate::models::fixtures::*;
+use crate::RuntimeApi;
 
 #[derive(Clone)]
 pub struct FixturesHandler<R: RuntimeApi> {
@@ -38,6 +40,21 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                     .groups
                     .iter()
                     .map(|group| FixtureChannelGroup::with_values(group, &fixture.channel_values))
+                    .collect(),
+                dmxChannels: fixture
+                    .current_mode
+                    .channels
+                    .iter()
+                    .map(|channel| {
+                        DmxChannel::with_value(
+                            channel,
+                            fixture
+                                .channel_values
+                                .get(&channel.name)
+                                .copied()
+                                .unwrap_or_default(),
+                        )
+                    })
                     .collect(),
                 ..Default::default()
             };
@@ -80,11 +97,25 @@ impl<R: RuntimeApi> FixturesHandler<R> {
 
     pub fn write_fixture_channel(&self, request: WriteFixtureChannelRequest) {
         let value = request.value.unwrap();
+        let channel = request.channel.as_str();
         for fixture_id in request.ids {
             if let Some(mut fixture) = self.fixture_manager.get_fixture_mut(fixture_id) {
                 match &value {
-                    WriteFixtureChannelRequest_oneof_value::color(_) => {
-                        todo!()
+                    WriteFixtureChannelRequest_oneof_value::color(value) => {
+                        if let Some(color_group) = fixture
+                            .current_mode
+                            .groups
+                            .iter()
+                            .find(|g| g.name == channel)
+                        {
+                            if let FixtureChannelGroupType::Color(color_group) =
+                                color_group.group_type.clone()
+                            {
+                                fixture.write(&color_group.red, value.red);
+                                fixture.write(&color_group.green, value.green);
+                                fixture.write(&color_group.blue, value.blue);
+                            }
+                        }
                     }
                     WriteFixtureChannelRequest_oneof_value::fader(value) => {
                         fixture.write(&request.channel, *value);

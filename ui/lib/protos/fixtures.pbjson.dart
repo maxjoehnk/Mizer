@@ -57,6 +57,7 @@ const Fixture$json = const {
     const {'1': 'universe', '3': 5, '4': 1, '5': 13, '10': 'universe'},
     const {'1': 'channel', '3': 6, '4': 1, '5': 13, '10': 'channel'},
     const {'1': 'channels', '3': 7, '4': 3, '5': 11, '6': '.mizer.FixtureChannelGroup', '10': 'channels'},
+    const {'1': 'dmxChannels', '3': 8, '4': 3, '5': 11, '6': '.mizer.DmxChannel', '10': 'dmxChannels'},
   ],
 };
 
@@ -71,6 +72,14 @@ const FixtureChannelGroup$json = const {
   ],
   '8': const [
     const {'1': 'channel'},
+  ],
+};
+
+const DmxChannel$json = const {
+  '1': 'DmxChannel',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
   ],
 };
 

@@ -320,16 +320,15 @@ fn group_channels(
 
     for (name, channel) in channels {
         match channel.capabilities.first() {
-            // TODO: reenable when color support in ui is working properly
-            // Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
-            //     color_group.red(name.clone());
-            // },
-            // Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
-            //     color_group.green(name.clone());
-            // },
-            // Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
-            //     color_group.blue(name.clone());
-            // },
+            Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
+                color_group.red(name.clone());
+            },
+            Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
+                color_group.green(name.clone());
+            },
+            Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
+                color_group.blue(name.clone());
+            },
             Some(_) => groups.push(FixtureChannelGroup {
                 name: name.clone(),
                 group_type: FixtureChannelGroupType::Generic(name.clone()),

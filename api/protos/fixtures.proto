@@ -44,6 +44,7 @@ message Fixture {
   uint32 universe = 5;
   uint32 channel = 6;
   repeated FixtureChannelGroup channels = 7;
+  repeated DmxChannel dmxChannels = 8;
 }
 
 message FixtureChannelGroup {
@@ -54,6 +55,11 @@ message FixtureChannelGroup {
     AxisChannel pan = 4;
     AxisChannel tilt = 5;
   }
+}
+
+message DmxChannel {
+  string name = 1;
+  double value = 2;
 }
 
 message GenericChannel {

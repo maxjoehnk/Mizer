@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-ShapeDecoration ControlDecoration({ Color color, Gradient gradient }) {
+var HIGHLIGHT_CONTROL_COLOR = Colors.grey.shade900;
+var DEFAULT_CONTROL_COLOR = Colors.grey.shade800;
+var DEFAULT_CONTROL_BACKGROUND = Colors.grey.shade700;
+
+ShapeDecoration ControlDecoration({ Color color, Gradient gradient, bool highlight }) {
   return ShapeDecoration(
     shape: RoundedRectangleBorder(
       side: BorderSide(
-        color: Colors.grey.shade800,
+        color: highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
         width: 4,
         style: BorderStyle.solid,
       ),
       borderRadius: BorderRadius.all(Radius.circular(4)),
     ),
-    color: gradient == null ? (color ?? Colors.grey.shade700) : null,
+    color: gradient == null ? (color ?? DEFAULT_CONTROL_BACKGROUND) : null,
     gradient: gradient,
   );
 }

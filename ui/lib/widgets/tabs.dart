@@ -7,12 +7,13 @@ import 'package:mizer/widgets/controls/icon_button.dart';
 class Tabs extends StatefulWidget {
   final List<Tab> children;
   final Function onAdd;
+  final bool padding;
 
   bool get canAdd {
     return onAdd != null;
   }
 
-  Tabs({this.children, this.onAdd});
+  Tabs({this.children, this.onAdd, this.padding = true});
 
   @override
   _TabsState createState() => _TabsState();
@@ -47,7 +48,10 @@ class _TabsState extends State<Tabs> {
             if (widget.canAdd) AddTabButton(onClick: widget.onAdd),
           ]),
         ),
-        if (this.active != null) this.active,
+        if (this.active != null) Expanded(child: Padding(
+          padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
+          child: this.active,
+        )),
       ],
     );
   }

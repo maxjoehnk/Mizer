@@ -6,8 +6,10 @@ import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/grpc/sequencer.dart';
 
 import '../preview_handler.dart';
 import 'connections.dart';
@@ -36,6 +38,7 @@ class GrpcApiProvider extends StatelessWidget {
         RepositoryProvider<FixturesApi>(create: (context) => FixturesGrpcApi(_channel)),
         RepositoryProvider<TransportApi>(create: (context) => TransportGrpcApi(_channel)),
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsGrpcApi(_channel)),
+        RepositoryProvider<SequencerApi>(create: (context) => SequencerGrpcApi(_channel)),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );

@@ -5,6 +5,7 @@ import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
 
@@ -14,6 +15,7 @@ import 'fixtures.dart';
 import 'layouts.dart';
 import 'media.dart';
 import 'nodes.dart';
+import 'sequencer.dart';
 import 'session.dart';
 import 'transport.dart';
 
@@ -34,6 +36,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<NodesApi>(create: (context) => NodesPluginApi()),
         RepositoryProvider<SessionApi>(create: (context) => SessionPluginApi()),
         RepositoryProvider<TransportApi>(create: (context) => TransportPluginApi()),
+        RepositoryProvider<SequencerApi>(create: (_) => SequencerPluginApi()),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );

@@ -5,10 +5,12 @@ pub use self::media::*;
 pub use self::nodes::*;
 pub use self::session::*;
 pub use self::transport::*;
+pub use self::sequencer::*;
 use crate::RuntimeApi;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
+use mizer_sequencer::Sequencer;
 
 mod connections;
 mod fixtures;
@@ -17,6 +19,7 @@ mod media;
 mod nodes;
 mod session;
 mod transport;
+mod sequencer;
 
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
@@ -27,6 +30,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub nodes: NodesHandler<R>,
     pub session: SessionHandler<R>,
     pub transport: TransportHandler<R>,
+    pub sequencer: SequencerHandler,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -35,6 +39,7 @@ impl<R: RuntimeApi> Handlers<R> {
         fixture_manager: FixtureManager,
         fixture_library: FixtureLibrary,
         media_server: MediaServerApi,
+        sequencer: Sequencer,
     ) -> Self {
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -44,6 +49,7 @@ impl<R: RuntimeApi> Handlers<R> {
             nodes: NodesHandler::new(runtime.clone()),
             session: SessionHandler::new(runtime.clone()),
             transport: TransportHandler::new(runtime),
+            sequencer: SequencerHandler::new(sequencer),
         }
     }
 }

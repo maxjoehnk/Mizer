@@ -9,6 +9,7 @@ fn main() {
         .input("../protos/media.proto")
         .input("../protos/layouts.proto")
         .input("../protos/transport.proto")
+        .input("../protos/sequencer.proto")
         .include("../protos")
         .run()
         .expect("protoc-rust-grpc");

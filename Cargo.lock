@@ -2862,6 +2862,7 @@ dependencies = [
  "mizer-protocol-dmx",
  "mizer-protocol-midi",
  "mizer-runtime",
+ "mizer-sequencer",
  "mizer-session",
  "mizer-ui",
  "mizer-util",
@@ -2887,6 +2888,7 @@ dependencies = [
  "mizer-node",
  "mizer-nodes",
  "mizer-runtime",
+ "mizer-sequencer",
  "protobuf",
  "protoc-rust",
  "serde",
@@ -3265,6 +3267,7 @@ dependencies = [
  "mizer-nodes",
  "mizer-pixel-nodes",
  "mizer-protocol-dmx",
+ "mizer-sequencer",
  "regex",
  "serde",
  "serde_yaml",
@@ -3365,6 +3368,20 @@ dependencies = [
  "anyhow",
  "mizer-node",
  "serde",
+]
+
+[[package]]
+name = "mizer-sequencer"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-fixtures",
+ "mizer-module",
+ "mizer-util",
+ "pinboard",
+ "serde",
+ "test-case",
 ]
 
 [[package]]

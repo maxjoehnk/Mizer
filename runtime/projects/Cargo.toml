@@ -15,6 +15,7 @@ mizer-node = { path = "../pipeline/node" }
 mizer-nodes = { path = "../pipeline/nodes" }
 mizer-layouts = { path = "../layouts" }
 mizer-fixtures = { path = "../../components/fixtures" }
+mizer-sequencer = { path = "../../components/sequencer" }
 mizer-protocol-dmx = { path = "../../components/connections/protocols/dmx" }
 
 [dev-dependencies]

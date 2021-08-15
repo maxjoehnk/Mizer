@@ -11,6 +11,7 @@ fn main() {
             "protos/media.proto",
             "protos/nodes.proto",
             "protos/session.proto",
+            "protos/sequencer.proto",
             "protos/transport.proto",
         ])
         .include("protos")

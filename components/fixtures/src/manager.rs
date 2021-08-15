@@ -8,6 +8,7 @@ use std::sync::Arc;
 #[derive(Clone)]
 pub struct FixtureManager {
     library: FixtureLibrary,
+    // TODO: this is only public for project loading/saving
     pub fixtures: Arc<DashMap<u32, Fixture>>,
 }
 

@@ -1,0 +1,79 @@
+---
+nodes:
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+  - path: /fixture-1
+    type: fixture
+    config:
+      fixture: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+channels: []
+fixtures:
+  - id: 2
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 11
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 1
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 1
+    universe: 1
+    mode: 10-channel
+    output: ~
+media: []
+layouts: {}
+sequences:
+  - id: 1
+    name: Sequence 1
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        channels:
+          - fixtures: [1, 2]
+            channel: Dimmer
+            value: 1
+            fade:
+              - unit: seconds
+                value: 0
+              - unit: seconds
+                value: 1
+          - fixtures: [1, 2]
+            channel: White
+            value: 1
+      - id: 2
+        name: Cue 2
+        trigger: Go
+        channels:
+          - fixtures: [1]
+            channel: Red
+            value: 1
+            fade:
+              unit: seconds
+              value: 1
+          - fixtures: [1, 2]
+            channel: White
+            value: 0
+            delay:
+              - unit: seconds
+                value: 0
+              - unit: seconds
+                value: 1
+
+connections:
+  - type: artnet
+    id: dmx-0
+    name: Artnet
+    host: 0.0.0.0

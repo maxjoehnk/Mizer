@@ -12,6 +12,7 @@ members = [
     "components/fixtures",
     "components/fixtures/open-fixture-library",
     "components/media",
+    "components/sequencer",
     "runtime",
     "runtime/clock",
     "runtime/execution-planner",
@@ -83,6 +84,7 @@ mizer-grpc-api = { path = "api/grpc" }
 mizer-session = { path = "runtime/session" }
 mizer-connections = { path = "components/connections" }
 mizer-devices = { path = "components/connections/devices" }
+mizer-sequencer = { path = "components/sequencer" }
 mizer-runtime = { path = "runtime" }
 mizer-execution-planner = { path = "runtime/execution-planner" }
 mizer-node = { path = "runtime/pipeline/node" }

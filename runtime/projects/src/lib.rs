@@ -1,6 +1,7 @@
 use lazy_static::lazy_static;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
+use mizer_sequencer::Sequence;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -10,6 +11,7 @@ use std::path::Path;
 
 mod fixtures;
 mod connections;
+mod sequencer;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -34,6 +36,8 @@ pub struct Project {
     pub layouts: HashMap<String, Vec<ControlConfig>>,
     #[serde(default)]
     pub connections: Vec<ConnectionConfig>,
+    #[serde(default)]
+    pub sequences: Vec<Sequence>,
 }
 
 impl Project {

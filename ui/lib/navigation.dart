@@ -9,6 +9,7 @@ import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
+import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
 
 import 'actions/actions.dart';
@@ -21,7 +22,7 @@ List<Route> routes = [
   Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.digit3, View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.digit4,
       View.Nodes),
-  Route(() => Container(), MdiIcons.animationPlayOutline, 'Sequences', LogicalKeyboardKey.digit5,
+  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', LogicalKeyboardKey.digit5,
       View.Sequences),
   Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit6,
       View.Fixtures),

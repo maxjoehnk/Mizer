@@ -4,6 +4,7 @@ pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::session::*;
+pub use self::sequencer::*;
 pub use self::transport::*;
 use anyhow::Error;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
@@ -14,6 +15,7 @@ mod layouts;
 mod media;
 mod nodes;
 mod session;
+mod sequencer;
 mod transport;
 
 pub trait MethodCallExt {

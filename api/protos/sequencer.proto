@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package mizer;
+
+service SequencerApi {
+  rpc GetSequences (GetSequencesRequest) returns (Sequences) {}
+  rpc AddSequence (AddSequenceRequest) returns (Sequence) {}
+  rpc SequenceGo (SequenceGoRequest) returns (EmptyResponse) {}
+}
+
+message GetSequencesRequest {}
+
+message AddSequenceRequest {
+}
+
+message SequenceGoRequest {
+  uint32 sequence = 1;
+}
+
+message EmptyResponse {}
+
+message Sequences {
+  repeated Sequence sequences = 1;
+}
+
+message Sequence {
+  uint32 id = 1;
+  string name = 2;
+  repeated Cue cues = 3;
+}
+
+message Cue {
+  uint32 id = 1;
+  string name = 2;
+  CueTrigger trigger = 3;
+  bool loop = 4;
+  repeated CueChannel channels = 5;
+}
+
+enum CueTrigger {
+  GO = 0;
+  FOLLOW = 1;
+  BEATS = 2;
+  TIMECODE = 3;
+}
+
+message CueChannel {
+  uint32 fixture = 1;
+  string channel = 2;
+}

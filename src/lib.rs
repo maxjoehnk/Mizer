@@ -19,6 +19,7 @@ use mizer_runtime::DefaultRuntime;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
+use mizer_sequencer::{SequencerModule, Sequencer};
 
 mod api;
 mod flags;
@@ -33,6 +34,7 @@ pub fn build_runtime(
     let mut runtime = DefaultRuntime::new();
     let (api_handler, api) = Api::setup(&runtime);
 
+    let sequencer = register_sequencer_module(&mut runtime)?;
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
     register_midi_module(&mut runtime)?;
@@ -48,6 +50,7 @@ pub fn build_runtime(
         fixture_manager,
         fixture_library,
         media_server_api.clone(),
+        sequencer,
     );
 
     let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
@@ -116,12 +119,11 @@ impl Mizer {
             let project = Project::load_file(path)?;
             media_paths.extend(project.media_paths.clone());
             {
-                let injector = self.runtime.injector();
+                let injector = self.runtime.injector_mut();
                 let manager: &FixtureManager = injector.get().unwrap();
                 manager.load(&project).context("loading fixtures")?;
-            }
-            {
-                let injector = self.runtime.injector_mut();
+                let sequencer = injector.get::<Sequencer>().unwrap();
+                sequencer.load(&project)?;
                 let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
                 dmx_manager.load(&project)?;
             }
@@ -151,6 +153,8 @@ impl Mizer {
             fixture_manager.save(&mut project);
             let dmx_manager = injector.get::<DmxConnectionManager>().unwrap();
             dmx_manager.save(&mut project);
+            let sequencer = injector.get::<Sequencer>().unwrap();
+            sequencer.save(&mut project);
             project.save_file(file)?;
             log::info!("Saving project...Done");
         }
@@ -164,7 +168,18 @@ impl Mizer {
         fixture_manager.clear();
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
         dmx_manager.clear();
+        let sequencer = injector.get::<Sequencer>().unwrap();
+        sequencer.clear();
     }
+}
+
+fn register_sequencer_module(
+    runtime: &mut DefaultRuntime
+) -> anyhow::Result<Sequencer> {
+    let (module, sequencer) = SequencerModule::new();
+    module.register(runtime)?;
+
+    Ok(sequencer)
 }
 
 fn register_device_module(

@@ -29,6 +29,15 @@ class RenameControl implements LayoutsEvent {
 
   RenameControl({ this.layoutId, this.controlId, this.name });
 }
+
+class UpdateControl implements LayoutsEvent {
+  final String layoutId;
+  final String controlId;
+  final ControlDecorations decorations;
+
+  UpdateControl({ this.layoutId, this.controlId, this.decorations });
+}
+
 class MoveControl implements LayoutsEvent {
   final String layoutId;
   final String controlId;
@@ -96,6 +105,10 @@ class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {
     }
     if (event is AddExistingControl) {
       await api.addControlForNode(event.layoutId, event.node.path, event.position);
+      yield await api.getLayouts();
+    }
+    if (event is UpdateControl) {
+      await api.updateControl(event.layoutId, event.controlId, event.decorations);
       yield await api.getLayouts();
     }
   }

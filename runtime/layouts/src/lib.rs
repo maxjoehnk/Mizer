@@ -1,4 +1,4 @@
-use mizer_node::NodePath;
+use mizer_node::{NodePath, Color};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -14,6 +14,8 @@ pub struct ControlConfig {
     pub node: NodePath,
     pub position: ControlPosition,
     pub size: ControlSize,
+    #[serde(default)]
+    pub decoration: ControlDecorations,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -26,4 +28,9 @@ pub struct ControlPosition {
 pub struct ControlSize {
     pub width: u64,
     pub height: u64,
+}
+
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct ControlDecorations {
+    pub color: Option<Color>
 }

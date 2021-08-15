@@ -57,4 +57,10 @@ class LayoutsGrpcApi implements LayoutsApi {
     var request = AddExistingControlRequest(layoutId: layoutId, node: nodeId, position: position);
     await this.client.addExistingControl(request);
   }
+
+  @override
+  Future<void> updateControl(String layoutId, String id, ControlDecorations decoration) async {
+    var request = UpdateControlRequest(layoutId: layoutId, controlId: id, decorations: decoration);
+    await this.client.updateControl(request);
+  }
 }

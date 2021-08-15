@@ -64,6 +64,7 @@ impl RuntimeApi for Api {
                 label: None,
                 position,
                 size,
+                decoration: Default::default()
             });
         });
     }

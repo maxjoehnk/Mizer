@@ -716,16 +716,16 @@ impl From<NodePosition> for mizer_node::NodePosition {
 impl From<PortType> for ChannelProtocol {
     fn from(port: PortType) -> Self {
         match port {
-            PortType::Single => ChannelProtocol::Single,
-            PortType::Multi => ChannelProtocol::Multi,
-            PortType::Color => ChannelProtocol::Color,
-            PortType::Texture => ChannelProtocol::Texture,
-            PortType::Vector => ChannelProtocol::Vector,
-            PortType::Laser => ChannelProtocol::Laser,
-            PortType::Poly => ChannelProtocol::Poly,
-            PortType::Data => ChannelProtocol::Data,
-            PortType::Material => ChannelProtocol::Material,
-            PortType::Gstreamer => ChannelProtocol::Gst,
+            PortType::Single => ChannelProtocol::SINGLE,
+            PortType::Multi => ChannelProtocol::MULTI,
+            PortType::Color => ChannelProtocol::COLOR,
+            PortType::Texture => ChannelProtocol::TEXTURE,
+            PortType::Vector => ChannelProtocol::VECTOR,
+            PortType::Laser => ChannelProtocol::LASER,
+            PortType::Poly => ChannelProtocol::POLY,
+            PortType::Data => ChannelProtocol::DATA,
+            PortType::Material => ChannelProtocol::MATERIAL,
+            PortType::Gstreamer => ChannelProtocol::GST,
         }
     }
 }
@@ -733,16 +733,16 @@ impl From<PortType> for ChannelProtocol {
 impl From<ChannelProtocol> for PortType {
     fn from(port: ChannelProtocol) -> Self {
         match port {
-            ChannelProtocol::Single => PortType::Single,
-            ChannelProtocol::Multi => PortType::Multi,
-            ChannelProtocol::Color => PortType::Color,
-            ChannelProtocol::Texture => PortType::Texture,
-            ChannelProtocol::Vector => PortType::Vector,
-            ChannelProtocol::Laser => PortType::Laser,
-            ChannelProtocol::Poly => PortType::Poly,
-            ChannelProtocol::Data => PortType::Data,
-            ChannelProtocol::Material => PortType::Material,
-            ChannelProtocol::Gst => PortType::Gstreamer,
+            ChannelProtocol::SINGLE => PortType::Single,
+            ChannelProtocol::MULTI => PortType::Multi,
+            ChannelProtocol::COLOR => PortType::Color,
+            ChannelProtocol::TEXTURE => PortType::Texture,
+            ChannelProtocol::VECTOR => PortType::Vector,
+            ChannelProtocol::LASER => PortType::Laser,
+            ChannelProtocol::POLY => PortType::Poly,
+            ChannelProtocol::DATA => PortType::Data,
+            ChannelProtocol::MATERIAL => PortType::Material,
+            ChannelProtocol::GST => PortType::Gstreamer,
         }
     }
 }

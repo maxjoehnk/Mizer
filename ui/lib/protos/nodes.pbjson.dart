@@ -8,16 +8,16 @@
 const ChannelProtocol$json = const {
   '1': 'ChannelProtocol',
   '2': const [
-    const {'1': 'Single', '2': 0},
-    const {'1': 'Multi', '2': 1},
-    const {'1': 'Color', '2': 9},
-    const {'1': 'Texture', '2': 2},
-    const {'1': 'Vector', '2': 3},
-    const {'1': 'Laser', '2': 4},
-    const {'1': 'Poly', '2': 5},
-    const {'1': 'Data', '2': 6},
-    const {'1': 'Material', '2': 7},
-    const {'1': 'Gst', '2': 8},
+    const {'1': 'SINGLE', '2': 0},
+    const {'1': 'MULTI', '2': 1},
+    const {'1': 'COLOR', '2': 9},
+    const {'1': 'TEXTURE', '2': 2},
+    const {'1': 'VECTOR', '2': 3},
+    const {'1': 'LASER', '2': 4},
+    const {'1': 'POLY', '2': 5},
+    const {'1': 'DATA', '2': 6},
+    const {'1': 'MATERIAL', '2': 7},
+    const {'1': 'GST', '2': 8},
   ],
 };
 

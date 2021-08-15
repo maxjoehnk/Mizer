@@ -251,16 +251,16 @@ message NodeDesigner {
 }
 
 enum ChannelProtocol {
-    Single = 0;
-    Multi = 1;
-    Color = 9;
-    Texture = 2;
-    Vector = 3;
-    Laser = 4;
-    Poly = 5;
-    Data = 6;
-    Material = 7;
-    Gst = 8;
+    SINGLE = 0;
+    MULTI = 1;
+    COLOR = 9;
+    TEXTURE = 2;
+    VECTOR = 3;
+    LASER = 4;
+    POLY = 5;
+    DATA = 6;
+    MATERIAL = 7;
+    GST = 8;
 }
 
 message Port {

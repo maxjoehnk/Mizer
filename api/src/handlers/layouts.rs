@@ -60,6 +60,18 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .update_layout_control(layout_id, control_id, |control| control.position = position);
     }
 
+    pub fn update_control(&self, layout_id: String, control_id: String, decorations: ControlDecorations) {
+        let decorations = decorations.into();
+        log::debug!(
+            "Updating control {} in layout {} with {:?}",
+            control_id,
+            layout_id,
+            decorations
+        );
+        self.runtime
+            .update_layout_control(layout_id, control_id, |control| control.decoration = decorations);
+    }
+
     pub fn rename_control(&self, layout_id: String, control_id: String, name: String) {
         log::debug!(
             "Renaming control {} in layout {} to {}",

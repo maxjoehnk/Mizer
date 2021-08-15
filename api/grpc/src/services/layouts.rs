@@ -63,6 +63,12 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
         todo!()
     }
 
+    fn update_control(&self, req: ServerRequestSingle<UpdateControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
+        self.update_control(req.message.layout_id, req.message.control_id, req.message.decorations.unwrap());
+
+        resp.finish(Default::default())
+    }
+
     fn remove_control(
         &self,
         req: ServerRequestSingle<RemoveControlRequest>,
@@ -70,7 +76,7 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
     ) -> grpc::Result<()> {
         self.remove_control(req.message.layout_id, req.message.control_id);
 
-        resp.finish(LayoutResponse::new())
+        resp.finish(Default::default())
     }
 
     fn add_control(&self, req: ServerRequestSingle<AddControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {

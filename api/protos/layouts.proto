@@ -12,6 +12,7 @@ service LayoutsApi {
 
   rpc RenameControl(RenameControlRequest) returns (LayoutResponse) {}
   rpc MoveControl(MoveControlRequest) returns (LayoutResponse) {}
+  rpc UpdateControl(UpdateControlRequest) returns (LayoutResponse) {}
   rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
   rpc AddControl (AddControlRequest) returns (LayoutResponse) {}
   rpc AddExistingControl (AddExistingControlRequest) returns (LayoutResponse) {}
@@ -46,6 +47,12 @@ message MoveControlRequest {
   ControlPosition position = 3;
 }
 
+message UpdateControlRequest {
+  string layout_id = 1;
+  string control_id = 2;
+  ControlDecorations decorations = 3;
+}
+
 message RemoveControlRequest {
   string layout_id = 1;
   string control_id = 2;
@@ -77,6 +84,7 @@ message LayoutControl {
   ControlPosition position = 2;
   ControlSize size = 3;
   string label = 4;
+  ControlDecorations decoration = 5;
 }
 
 message ControlPosition {
@@ -87,4 +95,15 @@ message ControlPosition {
 message ControlSize {
   uint64 width = 1;
   uint64 height = 2;
+}
+
+message ControlDecorations {
+  bool hasColor = 1;
+  Color color = 2;
+}
+
+message Color {
+  double red = 1;
+  double green = 2;
+  double blue = 3;
 }

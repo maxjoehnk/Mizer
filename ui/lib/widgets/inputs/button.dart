@@ -7,8 +7,9 @@ import 'decoration.dart';
 class ButtonInput extends StatefulWidget {
   final Function(double) onValue;
   final String label;
+  final Color color;
 
-  ButtonInput({ this.label, this.onValue });
+  ButtonInput({ this.label, this.onValue, this.color });
 
   @override
   _ButtonInputState createState() => _ButtonInputState();
@@ -20,7 +21,7 @@ class _ButtonInputState extends State<ButtonInput> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: ControlDecoration(),
+        decoration: ControlDecoration(color: widget.color),
         padding: const EdgeInsets.all(4),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -36,7 +37,7 @@ class _ButtonInputState extends State<ButtonInput> {
               child: Container(
                 child: widget.label == null ? null : Text(widget.label),
                 decoration: ShapeDecoration(
-                  color: this.pressed ? Colors.grey.shade800 : Colors.transparent,
+                  color: this.pressed ? Colors.black45 : Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),

@@ -54,4 +54,10 @@ class LayoutsDemoApi implements LayoutsApi {
     // TODO: implement addControlForNode
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> updateControl(String layoutId, String id, ControlDecorations decoration) {
+    // TODO: implement updateControl
+    throw UnimplementedError();
+  }
 }

@@ -377,6 +377,83 @@ class MoveControlRequest extends $pb.GeneratedMessage {
   ControlPosition ensurePosition() => $_ensure(2);
 }
 
+class UpdateControlRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId')
+    ..aOM<ControlDecorations>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'decorations', subBuilder: ControlDecorations.create)
+    ..hasRequiredFields = false
+  ;
+
+  UpdateControlRequest._() : super();
+  factory UpdateControlRequest({
+    $core.String layoutId,
+    $core.String controlId,
+    ControlDecorations decorations,
+  }) {
+    final _result = create();
+    if (layoutId != null) {
+      _result.layoutId = layoutId;
+    }
+    if (controlId != null) {
+      _result.controlId = controlId;
+    }
+    if (decorations != null) {
+      _result.decorations = decorations;
+    }
+    return _result;
+  }
+  factory UpdateControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateControlRequest clone() => UpdateControlRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateControlRequest copyWith(void Function(UpdateControlRequest) updates) => super.copyWith((message) => updates(message as UpdateControlRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UpdateControlRequest create() => UpdateControlRequest._();
+  UpdateControlRequest createEmptyInstance() => create();
+  static $pb.PbList<UpdateControlRequest> createRepeated() => $pb.PbList<UpdateControlRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateControlRequest>(create);
+  static UpdateControlRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get layoutId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set layoutId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLayoutId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLayoutId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get controlId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set controlId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControlId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearControlId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  ControlDecorations get decorations => $_getN(2);
+  @$pb.TagNumber(3)
+  set decorations(ControlDecorations v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDecorations() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDecorations() => clearField(3);
+  @$pb.TagNumber(3)
+  ControlDecorations ensureDecorations() => $_ensure(2);
+}
+
 class RemoveControlRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
@@ -694,6 +771,7 @@ class LayoutControl extends $pb.GeneratedMessage {
     ..aOM<ControlPosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
     ..aOM<ControlSize>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'size', subBuilder: ControlSize.create)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..aOM<ControlDecorations>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'decoration', subBuilder: ControlDecorations.create)
     ..hasRequiredFields = false
   ;
 
@@ -703,6 +781,7 @@ class LayoutControl extends $pb.GeneratedMessage {
     ControlPosition position,
     ControlSize size,
     $core.String label,
+    ControlDecorations decoration,
   }) {
     final _result = create();
     if (node != null) {
@@ -716,6 +795,9 @@ class LayoutControl extends $pb.GeneratedMessage {
     }
     if (label != null) {
       _result.label = label;
+    }
+    if (decoration != null) {
+      _result.decoration = decoration;
     }
     return _result;
   }
@@ -779,6 +861,17 @@ class LayoutControl extends $pb.GeneratedMessage {
   $core.bool hasLabel() => $_has(3);
   @$pb.TagNumber(4)
   void clearLabel() => clearField(4);
+
+  @$pb.TagNumber(5)
+  ControlDecorations get decoration => $_getN(4);
+  @$pb.TagNumber(5)
+  set decoration(ControlDecorations v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasDecoration() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDecoration() => clearField(5);
+  @$pb.TagNumber(5)
+  ControlDecorations ensureDecoration() => $_ensure(4);
 }
 
 class ControlPosition extends $pb.GeneratedMessage {
@@ -901,5 +994,143 @@ class ControlSize extends $pb.GeneratedMessage {
   $core.bool hasHeight() => $_has(1);
   @$pb.TagNumber(2)
   void clearHeight() => clearField(2);
+}
+
+class ControlDecorations extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlDecorations', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasColor', protoName: 'hasColor')
+    ..aOM<Color>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Color.create)
+    ..hasRequiredFields = false
+  ;
+
+  ControlDecorations._() : super();
+  factory ControlDecorations({
+    $core.bool hasColor,
+    Color color_2,
+  }) {
+    final _result = create();
+    if (hasColor != null) {
+      _result.hasColor = hasColor;
+    }
+    if (color_2 != null) {
+      _result.color_2 = color_2;
+    }
+    return _result;
+  }
+  factory ControlDecorations.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ControlDecorations.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ControlDecorations clone() => ControlDecorations()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ControlDecorations copyWith(void Function(ControlDecorations) updates) => super.copyWith((message) => updates(message as ControlDecorations)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ControlDecorations create() => ControlDecorations._();
+  ControlDecorations createEmptyInstance() => create();
+  static $pb.PbList<ControlDecorations> createRepeated() => $pb.PbList<ControlDecorations>();
+  @$core.pragma('dart2js:noInline')
+  static ControlDecorations getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ControlDecorations>(create);
+  static ControlDecorations _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get hasColor => $_getBF(0);
+  @$pb.TagNumber(1)
+  set hasColor($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHasColor() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHasColor() => clearField(1);
+
+  @$pb.TagNumber(2)
+  Color get color_2 => $_getN(1);
+  @$pb.TagNumber(2)
+  set color_2(Color v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasColor_2() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearColor_2() => clearField(2);
+  @$pb.TagNumber(2)
+  Color ensureColor_2() => $_ensure(1);
+}
+
+class Color extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Color', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  Color._() : super();
+  factory Color({
+    $core.double red,
+    $core.double green,
+    $core.double blue,
+  }) {
+    final _result = create();
+    if (red != null) {
+      _result.red = red;
+    }
+    if (green != null) {
+      _result.green = green;
+    }
+    if (blue != null) {
+      _result.blue = blue;
+    }
+    return _result;
+  }
+  factory Color.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Color.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Color clone() => Color()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Color copyWith(void Function(Color) updates) => super.copyWith((message) => updates(message as Color)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Color create() => Color._();
+  Color createEmptyInstance() => create();
+  static $pb.PbList<Color> createRepeated() => $pb.PbList<Color>();
+  @$core.pragma('dart2js:noInline')
+  static Color getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Color>(create);
+  static Color _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get red => $_getN(0);
+  @$pb.TagNumber(1)
+  set red($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRed() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRed() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get green => $_getN(1);
+  @$pb.TagNumber(2)
+  set green($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGreen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGreen() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get blue => $_getN(2);
+  @$pb.TagNumber(3)
+  set blue($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBlue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBlue() => clearField(3);
 }
 

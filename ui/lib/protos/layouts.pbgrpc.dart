@@ -44,6 +44,11 @@ class LayoutsApiClient extends $grpc.Client {
           '/mizer.LayoutsApi/MoveControl',
           ($1.MoveControlRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.LayoutResponse.fromBuffer(value));
+  static final _$updateControl =
+      $grpc.ClientMethod<$1.UpdateControlRequest, $1.LayoutResponse>(
+          '/mizer.LayoutsApi/UpdateControl',
+          ($1.UpdateControlRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.LayoutResponse.fromBuffer(value));
   static final _$removeControl =
       $grpc.ClientMethod<$1.RemoveControlRequest, $1.LayoutResponse>(
           '/mizer.LayoutsApi/RemoveControl',
@@ -95,6 +100,12 @@ class LayoutsApiClient extends $grpc.Client {
       $1.MoveControlRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$moveControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.LayoutResponse> updateControl(
+      $1.UpdateControlRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$updateControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> removeControl(
@@ -166,6 +177,14 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.MoveControlRequest.fromBuffer(value),
         ($1.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.UpdateControlRequest, $1.LayoutResponse>(
+        'UpdateControl',
+        updateControl_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.UpdateControlRequest.fromBuffer(value),
+        ($1.LayoutResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.RemoveControlRequest, $1.LayoutResponse>(
         'RemoveControl',
         removeControl_Pre,
@@ -222,6 +241,11 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
     return moveControl(call, await request);
   }
 
+  $async.Future<$1.LayoutResponse> updateControl_Pre($grpc.ServiceCall call,
+      $async.Future<$1.UpdateControlRequest> request) async {
+    return updateControl(call, await request);
+  }
+
   $async.Future<$1.LayoutResponse> removeControl_Pre($grpc.ServiceCall call,
       $async.Future<$1.RemoveControlRequest> request) async {
     return removeControl(call, await request);
@@ -250,6 +274,8 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.RenameControlRequest request);
   $async.Future<$1.LayoutResponse> moveControl(
       $grpc.ServiceCall call, $1.MoveControlRequest request);
+  $async.Future<$1.LayoutResponse> updateControl(
+      $grpc.ServiceCall call, $1.UpdateControlRequest request);
   $async.Future<$1.LayoutResponse> removeControl(
       $grpc.ServiceCall call, $1.RemoveControlRequest request);
   $async.Future<$1.LayoutResponse> addControl(

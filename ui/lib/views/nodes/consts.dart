@@ -16,13 +16,13 @@ const double DOT_SIZE = 12;
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {
-    case ChannelProtocol.Single:
+    case ChannelProtocol.SINGLE:
       return Colors.yellow;
-    case ChannelProtocol.Multi:
+    case ChannelProtocol.MULTI:
       return Colors.green;
-    case ChannelProtocol.Gst:
-    case ChannelProtocol.Texture:
-    case ChannelProtocol.Color:
+    case ChannelProtocol.GST:
+    case ChannelProtocol.TEXTURE:
+    case ChannelProtocol.COLOR:
       return Colors.red;
     default:
       log("no color for protocol ${protocol.name}");

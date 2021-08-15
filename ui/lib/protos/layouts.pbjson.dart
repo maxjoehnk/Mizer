@@ -53,6 +53,15 @@ const MoveControlRequest$json = const {
   ],
 };
 
+const UpdateControlRequest$json = const {
+  '1': 'UpdateControlRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'control_id', '3': 2, '4': 1, '5': 9, '10': 'controlId'},
+    const {'1': 'decorations', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlDecorations', '10': 'decorations'},
+  ],
+};
+
 const RemoveControlRequest$json = const {
   '1': 'RemoveControlRequest',
   '2': const [
@@ -101,6 +110,7 @@ const LayoutControl$json = const {
     const {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.mizer.ControlPosition', '10': 'position'},
     const {'1': 'size', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlSize', '10': 'size'},
     const {'1': 'label', '3': 4, '4': 1, '5': 9, '10': 'label'},
+    const {'1': 'decoration', '3': 5, '4': 1, '5': 11, '6': '.mizer.ControlDecorations', '10': 'decoration'},
   ],
 };
 
@@ -117,6 +127,23 @@ const ControlSize$json = const {
   '2': const [
     const {'1': 'width', '3': 1, '4': 1, '5': 4, '10': 'width'},
     const {'1': 'height', '3': 2, '4': 1, '5': 4, '10': 'height'},
+  ],
+};
+
+const ControlDecorations$json = const {
+  '1': 'ControlDecorations',
+  '2': const [
+    const {'1': 'hasColor', '3': 1, '4': 1, '5': 8, '10': 'hasColor'},
+    const {'1': 'color', '3': 2, '4': 1, '5': 11, '6': '.mizer.Color', '10': 'color'},
+  ],
+};
+
+const Color$json = const {
+  '1': 'Color',
+  '2': const [
+    const {'1': 'red', '3': 1, '4': 1, '5': 1, '10': 'red'},
+    const {'1': 'green', '3': 2, '4': 1, '5': 1, '10': 'green'},
+    const {'1': 'blue', '3': 3, '4': 1, '5': 1, '10': 'blue'},
   ],
 };
 

@@ -66,6 +66,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "updateControl" => {
+                if let Err(err) = call.arguments().map(|req| self.update_control(req)) {
+                    resp.respond_error(err);
+                }else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "addControl" => {
                 if let Err(err) = call.arguments().map(|req| self.add_control(req)) {
                     resp.respond_error(err);
@@ -122,6 +129,11 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     fn rename_control(&self, req: RenameControlRequest) {
         self.handler
             .rename_control(req.layout_id, req.control_id, req.name);
+    }
+
+    fn update_control(&self, req: UpdateControlRequest) {
+        self.handler
+            .update_control(req.layout_id, req.control_id, req.decorations.unwrap());
     }
 
     fn add_control(&self, req: AddControlRequest) -> anyhow::Result<()> {

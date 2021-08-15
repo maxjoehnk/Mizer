@@ -4,7 +4,7 @@ pub trait ConvertToDmx {
 
 impl ConvertToDmx for f64 {
     fn to_8bit(self) -> u8 {
-        (self * u8::max_value() as f64).min(255.).max(0.).floor() as u8
+        (self * u8::MAX as f64).min(255.).max(0.).floor() as u8
     }
 }
 

@@ -34,6 +34,8 @@ pub trait LayoutsApi {
 
     fn move_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::MoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 
+    fn update_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::UpdateControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
+
     fn remove_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::RemoveControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
 
     fn add_control(&self, req: ::grpc::ServerRequestSingle<super::layouts::AddControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::layouts::LayoutResponse>) -> ::grpc::Result<()>;
@@ -109,6 +111,16 @@ impl LayoutsApiClient {
     pub fn move_control(&self, o: ::grpc::RequestOptions, req: super::layouts::MoveControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/MoveControl"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn update_control(&self, o: ::grpc::RequestOptions, req: super::layouts::UpdateControlRequest) -> ::grpc::SingleResponse<super::layouts::LayoutResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/UpdateControl"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -227,6 +239,18 @@ impl LayoutsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).move_control(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.LayoutsApi/UpdateControl"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_control(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(

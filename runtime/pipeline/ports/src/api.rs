@@ -114,7 +114,7 @@ pub trait PortValue: Debug + Clone + PartialEq + Send + Sync + Any {}
 
 impl<T> PortValue for T where T: Debug + Clone + PartialEq + Send + Sync + Any {}
 
-#[derive(Debug, Default, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Color {
     pub red: u8,
     pub green: u8,

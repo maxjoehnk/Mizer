@@ -2035,7 +2035,7 @@ impl NodeConnection {
         self.protocol
     }
     pub fn clear_protocol(&mut self) {
-        self.protocol = ChannelProtocol::Single;
+        self.protocol = ChannelProtocol::SINGLE;
     }
 
     // Param is passed by value, moved
@@ -2104,7 +2104,7 @@ impl ::protobuf::Message for NodeConnection {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if self.protocol != ChannelProtocol::Single {
+        if self.protocol != ChannelProtocol::SINGLE {
             my_size += ::protobuf::rt::enum_size(5, self.protocol);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -2129,7 +2129,7 @@ impl ::protobuf::Message for NodeConnection {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
-        if self.protocol != ChannelProtocol::Single {
+        if self.protocol != ChannelProtocol::SINGLE {
             os.write_enum(5, ::protobuf::ProtobufEnum::value(&self.protocol))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -2215,7 +2215,7 @@ impl ::protobuf::Clear for NodeConnection {
         self.targetPort.clear();
         self.sourceNode.clear();
         self.sourcePort.clear();
-        self.protocol = ChannelProtocol::Single;
+        self.protocol = ChannelProtocol::SINGLE;
         self.unknown_fields.clear();
     }
 }
@@ -9655,7 +9655,7 @@ impl Port {
         self.protocol
     }
     pub fn clear_protocol(&mut self) {
-        self.protocol = ChannelProtocol::Single;
+        self.protocol = ChannelProtocol::SINGLE;
     }
 
     // Param is passed by value, moved
@@ -9694,7 +9694,7 @@ impl ::protobuf::Message for Port {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
-        if self.protocol != ChannelProtocol::Single {
+        if self.protocol != ChannelProtocol::SINGLE {
             my_size += ::protobuf::rt::enum_size(2, self.protocol);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -9706,7 +9706,7 @@ impl ::protobuf::Message for Port {
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
-        if self.protocol != ChannelProtocol::Single {
+        if self.protocol != ChannelProtocol::SINGLE {
             os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.protocol))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -9774,7 +9774,7 @@ impl ::protobuf::Message for Port {
 impl ::protobuf::Clear for Port {
     fn clear(&mut self) {
         self.name.clear();
-        self.protocol = ChannelProtocol::Single;
+        self.protocol = ChannelProtocol::SINGLE;
         self.unknown_fields.clear();
     }
 }
@@ -9794,16 +9794,16 @@ impl ::protobuf::reflect::ProtobufValue for Port {
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum ChannelProtocol {
-    Single = 0,
-    Multi = 1,
-    Color = 9,
-    Texture = 2,
-    Vector = 3,
-    Laser = 4,
-    Poly = 5,
-    Data = 6,
-    Material = 7,
-    Gst = 8,
+    SINGLE = 0,
+    MULTI = 1,
+    COLOR = 9,
+    TEXTURE = 2,
+    VECTOR = 3,
+    LASER = 4,
+    POLY = 5,
+    DATA = 6,
+    MATERIAL = 7,
+    GST = 8,
 }
 
 impl ::protobuf::ProtobufEnum for ChannelProtocol {
@@ -9813,32 +9813,32 @@ impl ::protobuf::ProtobufEnum for ChannelProtocol {
 
     fn from_i32(value: i32) -> ::std::option::Option<ChannelProtocol> {
         match value {
-            0 => ::std::option::Option::Some(ChannelProtocol::Single),
-            1 => ::std::option::Option::Some(ChannelProtocol::Multi),
-            9 => ::std::option::Option::Some(ChannelProtocol::Color),
-            2 => ::std::option::Option::Some(ChannelProtocol::Texture),
-            3 => ::std::option::Option::Some(ChannelProtocol::Vector),
-            4 => ::std::option::Option::Some(ChannelProtocol::Laser),
-            5 => ::std::option::Option::Some(ChannelProtocol::Poly),
-            6 => ::std::option::Option::Some(ChannelProtocol::Data),
-            7 => ::std::option::Option::Some(ChannelProtocol::Material),
-            8 => ::std::option::Option::Some(ChannelProtocol::Gst),
+            0 => ::std::option::Option::Some(ChannelProtocol::SINGLE),
+            1 => ::std::option::Option::Some(ChannelProtocol::MULTI),
+            9 => ::std::option::Option::Some(ChannelProtocol::COLOR),
+            2 => ::std::option::Option::Some(ChannelProtocol::TEXTURE),
+            3 => ::std::option::Option::Some(ChannelProtocol::VECTOR),
+            4 => ::std::option::Option::Some(ChannelProtocol::LASER),
+            5 => ::std::option::Option::Some(ChannelProtocol::POLY),
+            6 => ::std::option::Option::Some(ChannelProtocol::DATA),
+            7 => ::std::option::Option::Some(ChannelProtocol::MATERIAL),
+            8 => ::std::option::Option::Some(ChannelProtocol::GST),
             _ => ::std::option::Option::None
         }
     }
 
     fn values() -> &'static [Self] {
         static values: &'static [ChannelProtocol] = &[
-            ChannelProtocol::Single,
-            ChannelProtocol::Multi,
-            ChannelProtocol::Color,
-            ChannelProtocol::Texture,
-            ChannelProtocol::Vector,
-            ChannelProtocol::Laser,
-            ChannelProtocol::Poly,
-            ChannelProtocol::Data,
-            ChannelProtocol::Material,
-            ChannelProtocol::Gst,
+            ChannelProtocol::SINGLE,
+            ChannelProtocol::MULTI,
+            ChannelProtocol::COLOR,
+            ChannelProtocol::TEXTURE,
+            ChannelProtocol::VECTOR,
+            ChannelProtocol::LASER,
+            ChannelProtocol::POLY,
+            ChannelProtocol::DATA,
+            ChannelProtocol::MATERIAL,
+            ChannelProtocol::GST,
         ];
         values
     }
@@ -9856,7 +9856,7 @@ impl ::std::marker::Copy for ChannelProtocol {
 
 impl ::std::default::Default for ChannelProtocol {
     fn default() -> Self {
-        ChannelProtocol::Single
+        ChannelProtocol::SINGLE
     }
 }
 
@@ -9986,11 +9986,11 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\
     \x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
     \x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProto\
-    colR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06Single\x10\0\
-    \x12\t\n\x05Multi\x10\x01\x12\t\n\x05Color\x10\t\x12\x0b\n\x07Texture\
-    \x10\x02\x12\n\n\x06Vector\x10\x03\x12\t\n\x05Laser\x10\x04\x12\x08\n\
-    \x04Poly\x10\x05\x12\x08\n\x04Data\x10\x06\x12\x0c\n\x08Material\x10\x07\
-    \x12\x07\n\x03Gst\x10\x082\xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\
+    colR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\
+    \x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\
+    \x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\
+    \x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\
+    \x12\x07\n\x03GST\x10\x082\xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\
     \x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\
     \x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\
     \x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11Wri\

@@ -29,6 +29,7 @@ dependencies:
   collection: 1.15.0
   nativeshell: 0.1.6
   flutter_svg: ^0.22.0
+  flex_color_picker: ^2.1.2
 
 dev_dependencies:
   flutter_test:

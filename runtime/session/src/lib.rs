@@ -4,12 +4,6 @@ use std::thread;
 use std::time::Duration;
 
 use serde::{Deserialize, Serialize};
-use zeroconf::prelude::*;
-use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, TxtRecord};
-
-const MIZER_SESSION_SERVICE: &str = "_mizer._tcp";
-
-const POLL_TIMEOUT: u64 = 1;
 
 #[cfg(unix)]
 mod discovery;

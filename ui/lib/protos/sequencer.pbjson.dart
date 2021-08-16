@@ -64,8 +64,61 @@ const Cue$json = const {
 const CueChannel$json = const {
   '1': 'CueChannel',
   '2': const [
-    const {'1': 'fixture', '3': 1, '4': 1, '5': 13, '10': 'fixture'},
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 13, '10': 'fixtures'},
     const {'1': 'channel', '3': 2, '4': 1, '5': 9, '10': 'channel'},
+    const {'1': 'value', '3': 3, '4': 1, '5': 11, '6': '.mizer.CueValue', '10': 'value'},
+    const {'1': 'fade', '3': 4, '4': 1, '5': 11, '6': '.mizer.CueTimer', '10': 'fade'},
+    const {'1': 'delay', '3': 5, '4': 1, '5': 11, '6': '.mizer.CueTimer', '10': 'delay'},
+  ],
+};
+
+const CueValue$json = const {
+  '1': 'CueValue',
+  '2': const [
+    const {'1': 'direct', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'direct'},
+    const {'1': 'range', '3': 4, '4': 1, '5': 11, '6': '.mizer.CueValueRange', '9': 0, '10': 'range'},
+  ],
+  '8': const [
+    const {'1': 'value'},
+  ],
+};
+
+const CueTimer$json = const {
+  '1': 'CueTimer',
+  '2': const [
+    const {'1': 'hasTimer', '3': 1, '4': 1, '5': 8, '10': 'hasTimer'},
+    const {'1': 'direct', '3': 2, '4': 1, '5': 11, '6': '.mizer.CueTime', '9': 0, '10': 'direct'},
+    const {'1': 'range', '3': 3, '4': 1, '5': 11, '6': '.mizer.CueTimerRange', '9': 0, '10': 'range'},
+  ],
+  '8': const [
+    const {'1': 'timer'},
+  ],
+};
+
+const CueValueRange$json = const {
+  '1': 'CueValueRange',
+  '2': const [
+    const {'1': 'from', '3': 1, '4': 1, '5': 1, '10': 'from'},
+    const {'1': 'to', '3': 2, '4': 1, '5': 1, '10': 'to'},
+  ],
+};
+
+const CueTime$json = const {
+  '1': 'CueTime',
+  '2': const [
+    const {'1': 'seconds', '3': 1, '4': 1, '5': 1, '9': 0, '10': 'seconds'},
+    const {'1': 'beats', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'beats'},
+  ],
+  '8': const [
+    const {'1': 'time'},
+  ],
+};
+
+const CueTimerRange$json = const {
+  '1': 'CueTimerRange',
+  '2': const [
+    const {'1': 'from', '3': 1, '4': 1, '5': 11, '6': '.mizer.CueTime', '10': 'from'},
+    const {'1': 'to', '3': 2, '4': 1, '5': 11, '6': '.mizer.CueTime', '10': 'to'},
   ],
 };
 

@@ -49,14 +49,14 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
   @override
   Stream<Fixtures> mapEventToState(FixturesEvent event) async* {
     if (event is FetchFixtures) {
-      yield await fetchFixtures();
+      yield await _fetchFixtures();
     }
     if (event is AddFixtures) {
-      yield await addFixture(event);
+      yield await _addFixture(event);
     }
   }
 
-  Future<Fixtures> fetchFixtures() async {
+  Future<Fixtures> _fetchFixtures() async {
     log("fetching fixtures", name: "FixturesBloc");
     var fixtures = await api.getFixtures();
     log("got ${fixtures.fixtures.length} fixtures", name: "FixturesBloc");
@@ -64,7 +64,7 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     return fixtures;
   }
 
-  Future<Fixtures> addFixture(AddFixtures event) async {
+  Future<Fixtures> _addFixture(AddFixtures event) async {
     log("adding fixtures: $event", name: "FixturesBloc");
     var request = event._into();
     var fixtures = await api.addFixtures(request);

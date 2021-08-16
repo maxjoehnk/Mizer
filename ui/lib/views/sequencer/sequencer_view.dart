@@ -4,6 +4,10 @@ import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
+import 'cue_contents.dart';
+import 'cue_list.dart';
+import 'sequence_list.dart';
+
 class SequencerView extends StatefulWidget {
   const SequencerView({Key key}) : super(key: key);
 
@@ -13,6 +17,7 @@ class SequencerView extends StatefulWidget {
 
 class _SequencerViewState extends State<SequencerView> {
   Sequence _sequence;
+  Cue _cue;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +26,7 @@ class _SequencerViewState extends State<SequencerView> {
         Expanded(
           child: Panel(
             label: "Sequences",
-            child: FutureBuilder(
-                future: context.read<SequencerApi>().getSequences(),
-                builder: (context, AsyncSnapshot<Sequences> data) {
-                  if (data.hasData) {
-                    return ListView(children: data.data.sequences.map(_sequenceRow).toList());
-                  }
-                  return Container();
-                }),
+            child: SequenceList(selectSequence: _selectSequence, selectedSequence: _sequence),
             actions: [PanelAction(label: "Add", onClick: () => _addSequence())],
           ),
         ),
@@ -36,12 +34,15 @@ class _SequencerViewState extends State<SequencerView> {
           Expanded(
             child: Panel(
               label: "Cue List - ${_sequence.name}",
-              child: CueList(sequence: _sequence),
+              child: CueList(sequence: _sequence, onSelectCue: _selectCue, selectedCue: _cue),
               actions: [
                 PanelAction(label: "Go", onClick: () => _sequenceGo()),
               ],
             ),
-          )
+          ),
+        if (_cue != null)
+          Expanded(
+              child: Panel(label: "Cue Contents - ${_cue.name}", child: CueContents(cue: _cue)))
       ],
     );
   }
@@ -52,42 +53,14 @@ class _SequencerViewState extends State<SequencerView> {
     context.read<SequencerApi>().sequenceGo(_sequence.id);
   }
 
-  Widget _sequenceRow(Sequence sequence) {
-    return ListTile(
-      title: Text(sequence.name),
-      subtitle: Text(sequence.cues.length == 1 ? "1 Cue" : "${sequence.cues.length} Cues"),
-      onTap: () => _selectSequence(sequence),
-    );
-  }
-
   _selectSequence(Sequence sequence) {
-    setState(() => _sequence = sequence);
+    setState(() {
+      _sequence = sequence;
+      _cue = null;
+    });
   }
-}
 
-class CueList extends StatelessWidget {
-  final Sequence sequence;
-
-  const CueList({this.sequence, Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DataTable(
-        headingRowHeight: 40,
-        dataRowHeight: 40,
-        columns: const [
-          DataColumn(label: Text("ID")),
-          DataColumn(label: Text("Name")),
-          DataColumn(label: Text("Trigger")),
-          DataColumn(label: Text("Loop"))
-        ],
-        rows: sequence.cues
-            .map((cue) => DataRow(cells: [
-                  DataCell(Text(cue.id.toString())),
-                  DataCell(Text(cue.name)),
-                  DataCell(Text(cue.trigger.toLabel())),
-                  DataCell(Text(cue.loop ? "Loop" : ""))
-                ]))
-            .toList());
+  _selectCue(Cue cue) {
+    setState(() => _cue = cue);
   }
 }

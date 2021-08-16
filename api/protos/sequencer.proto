@@ -45,6 +45,42 @@ enum CueTrigger {
 }
 
 message CueChannel {
-  uint32 fixture = 1;
+  repeated uint32 fixtures = 1;
   string channel = 2;
+  CueValue value = 3;
+  CueTimer fade = 4;
+  CueTimer delay = 5;
 }
+
+message CueValue {
+  oneof value {
+    double direct = 3;
+    CueValueRange range = 4;
+  }
+}
+
+message CueTimer {
+  bool hasTimer = 1;
+  oneof timer {
+    CueTime direct = 2;
+    CueTimerRange range = 3;
+  }
+}
+
+message CueValueRange {
+  double from = 1;
+  double to = 2;
+}
+
+message CueTime {
+  oneof time {
+    double seconds = 1;
+    double beats = 2;
+  }
+}
+
+message CueTimerRange {
+  CueTime from = 1;
+  CueTime to = 2;
+}
+

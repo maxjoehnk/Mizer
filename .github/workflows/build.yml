@@ -75,7 +75,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Install build dependencies
-        run: choco install protoc gstreamer gstreamer-devel make wget
+        run: choco install protoc gstreamer gstreamer-devel make wget gtk-runtime
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:

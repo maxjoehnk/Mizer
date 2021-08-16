@@ -147,7 +147,7 @@ jobs:
       gvsbuildref: 4330ae8d249f58ed69e67baa9e77de46ee0676b6
 
       # bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
+      gvsbuildupdate: 2
 
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}

@@ -93,6 +93,8 @@ jobs:
         run: |
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+          ls "C:\gtk-build\gtk\x64\release"
+          ls "C:\gtk-build\gtk\x64\release\bin"
         shell: bash
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1

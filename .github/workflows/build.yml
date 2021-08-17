@@ -106,6 +106,9 @@ jobs:
         working-directory: ui
       - name: Build
         run: make build
+      - name: Copy gtk dlls to artifact
+        run: cp C:\gtk-build\gtk\x64\release\bin\*.dll target/debug/
+        shell: bash
       - uses: actions/upload-artifact@v2
         with:
           name: windows-full
@@ -118,7 +121,6 @@ jobs:
             !target/debug/libmizer*
             !target/debug/.fingerprint/**
             components/fixtures/open-fixture-library/.fixtures
-            C:\gtk-build\gtk\x64\release\bin\*.dll
           if-no-files-found: error
   build-android:
     runs-on: ubuntu-latest

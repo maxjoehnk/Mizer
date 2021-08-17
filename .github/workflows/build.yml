@@ -107,7 +107,7 @@ jobs:
       - name: Build
         run: make build
       - name: Copy gtk dlls to artifact
-        run: cp C:\gtk-build\gtk\x64\release\bin\*.dll target/debug/
+        run: cp C:\\gtk-build\\gtk\\x64\\release\\bin\\*.dll target/debug/
         shell: bash
       - uses: actions/upload-artifact@v2
         with:

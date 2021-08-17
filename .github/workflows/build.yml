@@ -93,8 +93,6 @@ jobs:
         run: |
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
-          ls "C:\gtk-build\gtk\x64\release"
-          ls "C:\gtk-build\gtk\x64\release\bin"
         shell: bash
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -120,6 +118,7 @@ jobs:
             !target/debug/libmizer*
             !target/debug/.fingerprint/**
             components/fixtures/open-fixture-library/.fixtures
+            C:\gtk-build\gtk\x64\release\bin\*.dll
           if-no-files-found: error
   build-android:
     runs-on: ubuntu-latest

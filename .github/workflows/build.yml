@@ -88,6 +88,11 @@ jobs:
         with:
           path: C:\gtk-build\gtk\x64\release\**
           key: ${{needs.gvsbuild.outputs.cachekey}}
+      - name: Copy gtk dlls to artifact
+        run: |
+          mkdir -p target/debug
+          cp C:\\gtk-build\\gtk\\x64\\release\\bin\\*.dll target/debug/
+        shell: bash
 
       - name: Set up env
         run: |
@@ -106,9 +111,6 @@ jobs:
         working-directory: ui
       - name: Build
         run: make build
-      - name: Copy gtk dlls to artifact
-        run: cp C:\\gtk-build\\gtk\\x64\\release\\bin\\*.dll target/debug/
-        shell: bash
       - uses: actions/upload-artifact@v2
         with:
           name: windows-full

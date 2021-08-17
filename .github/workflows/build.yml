@@ -69,6 +69,7 @@ jobs:
             !target/debug/incremental/**
             !target/debug/examples/**
             !target/debug/libmizer*
+            !target/debug/.fingerprint/**
             components/fixtures/open-fixture-library/.fixtures
           if-no-files-found: error
 
@@ -115,6 +116,7 @@ jobs:
             !target/debug/incremental/**
             !target/debug/examples/**
             !target/debug/libmizer*
+            !target/debug/.fingerprint/**
             components/fixtures/open-fixture-library/.fixtures
           if-no-files-found: error
   build-android:

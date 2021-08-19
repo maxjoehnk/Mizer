@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/extensions/map_extensions.dart';
@@ -57,8 +55,10 @@ class _DmxMonitorState extends State<DmxMonitor> {
             children: [
               LimitedBox(
                   maxWidth: 144,
-                  child:
-                      UniverseSelector(universes: universes, universe: universe, onSelect: (u) => setState(() => universe = u))),
+                  child: UniverseSelector(
+                      universes: universes,
+                      universe: universe,
+                      onSelect: (u) => setState(() => universe = u))),
               Expanded(child: AddressObserver(channels: snapshot.data[universe])),
               LimitedBox(maxWidth: 250, child: AddressHistory()),
             ],
@@ -79,9 +79,8 @@ class UniverseSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MonitorGroup(
-      title: "Universes",
-      children: [
-        Padding(
+        title: "Universes",
+        child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Wrap(
             spacing: 4,
@@ -94,9 +93,7 @@ class UniverseSelector extends StatelessWidget {
                     ))
                 .toList(),
           ),
-        )
-      ],
-    );
+        ));
   }
 }
 
@@ -128,31 +125,31 @@ class AddressObserver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MonitorGroup(title: "DMX", children: [
-      Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Wrap(
-            spacing: 4,
-            runSpacing: 4,
-            children: channels.asMap().mapToList((index, value) {
-              var percentage = value / 255;
-              log("$percentage%");
-              return Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                    Colors.deepOrangeAccent,
-                    Colors.black12,
-                  ], stops: [
-                    percentage,
-                    percentage,
-                  ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  child: Text("${index + 1}"));
-            })),
-      )
-    ]);
+    return MonitorGroup(
+        title: "DMX",
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 4,
+              runSpacing: 4,
+              children: (channels ?? []).asMap().mapToList((index, value) {
+                var percentage = value / 255;
+                return Container(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                      Colors.deepOrangeAccent,
+                      Colors.black12,
+                    ], stops: [
+                      percentage,
+                      percentage,
+                    ], begin: Alignment.bottomCenter, end: Alignment.topCenter)),
+                    width: 40,
+                    height: 40,
+                    alignment: Alignment.center,
+                    child: Text("${index + 1}"));
+              })),
+        ));
   }
 }
 
@@ -161,18 +158,15 @@ class AddressHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MonitorGroup(
-      title: "History",
-      children: [],
-    );
+    return MonitorGroup(title: "History", child: Container());
   }
 }
 
 class MonitorGroup extends StatelessWidget {
   final String title;
-  final List<Widget> children;
+  final Widget child;
 
-  const MonitorGroup({this.title, this.children, Key key}) : super(key: key);
+  const MonitorGroup({this.title, this.child, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +180,7 @@ class MonitorGroup extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(child: Text(title), color: Colors.black87, padding: const EdgeInsets.all(4)),
-          ...children,
+          Expanded(child: SingleChildScrollView(child: child, scrollDirection: Axis.vertical)),
         ],
       ),
     );

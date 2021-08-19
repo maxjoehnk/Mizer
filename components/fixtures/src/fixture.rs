@@ -1,6 +1,8 @@
 use mizer_protocol_dmx::DmxOutput;
 use std::collections::HashMap;
 
+const U24_MAX: u32 = 16_777_215;
+
 #[derive(Debug, Clone)]
 pub struct Fixture {
     pub id: u32,
@@ -63,7 +65,27 @@ impl Fixture {
                         let channel = (self.channel + coarse) as usize;
                         buffer[channel] = convert_value(*value);
                     }
-                    _ => unimplemented!("only coarse is implemented right now"),
+                    ChannelResolution::Fine(coarse, fine) => {
+                        let value = convert_value_16bit(*value);
+                        let coarse_value = (value >> 0) & 0xff;
+                        let fine_value = (value >> 8) & 0xff;
+                        let coarse_channel = (self.channel + coarse) as usize;
+                        let fine_channel = (self.channel + fine) as usize;
+                        buffer[coarse_channel] = coarse_value as u8;
+                        buffer[fine_channel] = fine_value as u8;
+                    }
+                    ChannelResolution::Finest(coarse, fine, finest) => {
+                        let value = convert_value_24bit(*value);
+                        let coarse_value = (value >> 0) & 0xff;
+                        let fine_value = (value >> 8) & 0xff;
+                        let finest_value = (value >> 16) & 0xff;
+                        let coarse_channel = (self.channel + coarse) as usize;
+                        let fine_channel = (self.channel + fine) as usize;
+                        let finest_channel = (self.channel + finest) as usize;
+                        buffer[coarse_channel] = coarse_value as u8;
+                        buffer[fine_channel] = fine_value as u8;
+                        buffer[finest_channel] = finest_value as u8;
+                    }
                 }
             }
         }
@@ -77,6 +99,20 @@ fn convert_value(input: f64) -> u8 {
     let channel = clamped * (u8::MAX as f64);
 
     channel.floor() as u8
+}
+
+fn convert_value_16bit(input: f64) -> u16 {
+    let clamped = input.min(1.0).max(0.0);
+    let channel = clamped * (u16::MAX as f64);
+
+    channel.floor() as u16
+}
+
+fn convert_value_24bit(input: f64) -> u32 {
+    let clamped = input.min(1.0).max(0.0);
+    let channel = clamped * (U24_MAX as f64);
+
+    channel.floor() as u32
 }
 
 fn get_current_mode(definition: &FixtureDefinition, selected_mode: Option<String>) -> FixtureMode {
@@ -183,4 +219,37 @@ pub struct FixtureDimensions {
     pub width: f32,
     pub height: f32,
     pub depth: f32,
+}
+
+#[cfg(test)]
+mod tests {
+    use test_case::test_case;
+    use super::{convert_value, convert_value_16bit, convert_value_24bit};
+
+    #[test_case(0.0, 0)]
+    #[test_case(1.0, 255)]
+    #[test_case(0.5, 127)]
+    fn convert_value_should_convert_to_8_bit(input: f64, expected: u8) {
+        let result = convert_value(input);
+
+        assert_eq!(result, expected);
+    }
+
+    #[test_case(0.0, 0)]
+    #[test_case(1.0, 65_535)]
+    #[test_case(0.5, 32_767)]
+    fn convert_value_should_convert_to_16_bit(input: f64, expected: u16) {
+        let result = convert_value_16bit(input);
+
+        assert_eq!(result, expected);
+    }
+
+    #[test_case(0.0, 0)]
+    #[test_case(1.0, 16_777_215)]
+    #[test_case(0.5, 8_388_607)]
+    fn convert_value_should_convert_to_24_bit(input: f64, expected: u32) {
+        let result = convert_value_24bit(input);
+
+        assert_eq!(result, expected);
+    }
 }

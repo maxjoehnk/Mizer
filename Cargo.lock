@@ -2987,6 +2987,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "test-case",
 ]
 
 [[package]]

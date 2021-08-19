@@ -1,7 +1,9 @@
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
+
 use mizer_fixtures::fixture::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
@@ -113,6 +115,8 @@ pub struct FixtureManufacturer {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Channel {
+    #[serde(default)]
+    pub fine_channel_aliases: Vec<String>,
     pub default_value: Option<Value>,
     pub capabilities: Vec<Capability>,
 }
@@ -266,15 +270,72 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
                 .into_iter()
                 .map(|mode| {
                     let channels = mode.channels.into_iter().flatten().collect::<Vec<_>>();
+                    let channels_2 = channels.clone();
                     FixtureMode {
                         name: mode.name,
                         groups: group_channels(&available_channels, &channels),
                         channels: channels
                             .into_iter()
                             .enumerate()
-                            .map(|(i, channel)| FixtureChannelDefinition {
-                                name: channel,
-                                resolution: ChannelResolution::Coarse(i as u8),
+                            .map(|(i, channel)| {
+                                let fine_channels = available_channels
+                                    .get(&channel)
+                                    .map(|c| &c.fine_channel_aliases[..]);
+                                match fine_channels {
+                                    Some(&[ref fine]) => {
+                                        let fine_channel =
+                                            channels_2.iter().position(|c| c == fine);
+                                        if let Some(fine_channel) = fine_channel {
+                                            FixtureChannelDefinition {
+                                                name: channel,
+                                                resolution: ChannelResolution::Fine(
+                                                    i as u8,
+                                                    fine_channel as u8,
+                                                ),
+                                            }
+                                        } else {
+                                            FixtureChannelDefinition {
+                                                name: channel,
+                                                resolution: ChannelResolution::Coarse(i as u8),
+                                            }
+                                        }
+                                    }
+                                    Some(&[ref fine, ref finest]) => {
+                                        let fine_channel =
+                                            channels_2.iter().position(|c| c == fine);
+                                        let finest_channel =
+                                            channels_2.iter().position(|c| c == fine);
+                                        if let Some(fine_channel) = fine_channel {
+                                            if let Some(finest_channel) = finest_channel {
+                                                FixtureChannelDefinition {
+                                                    name: channel,
+                                                    resolution: ChannelResolution::Finest(
+                                                        i as u8,
+                                                        fine_channel as u8,
+                                                        finest_channel as u8,
+                                                    ),
+                                                }
+                                            } else {
+                                                FixtureChannelDefinition {
+                                                    name: channel,
+                                                    resolution: ChannelResolution::Fine(
+                                                        i as u8,
+                                                        fine_channel as u8,
+                                                    ),
+                                                }
+                                            }
+                                        } else {
+                                            FixtureChannelDefinition {
+                                                name: channel,
+                                                resolution: ChannelResolution::Coarse(i as u8),
+                                            }
+                                        }
+                                    }
+                                    _ => FixtureChannelDefinition {
+                                        name: channel,
+                                        resolution: ChannelResolution::Coarse(i as u8),
+                                    },
+                                }
                             })
                             .collect(),
                     }
@@ -383,10 +444,13 @@ impl ColorGroupBuilder {
 
 #[cfg(test)]
 mod tests {
-    use super::group_channels;
-    use crate::{Capability, Channel};
-    use mizer_fixtures::fixture::{ColorGroup, FixtureChannelGroup, FixtureChannelGroupType};
     use std::collections::HashMap;
+
+    use mizer_fixtures::fixture::{ColorGroup, FixtureChannelGroup, FixtureChannelGroupType};
+
+    use crate::{Capability, Channel};
+
+    use super::group_channels;
 
     // TODO: reenable when color support in ui is working properly
     #[test]
@@ -397,6 +461,7 @@ mod tests {
         available_channels.insert(
             "Red".into(),
             Channel {
+                fine_channel_aliases: Vec::default(),
                 default_value: None,
                 capabilities: vec![Capability::ColorIntensity {
                     color: "#ff0000".into(),
@@ -406,6 +471,7 @@ mod tests {
         available_channels.insert(
             "Green".into(),
             Channel {
+                fine_channel_aliases: Vec::default(),
                 default_value: None,
                 capabilities: vec![Capability::ColorIntensity {
                     color: "#00ff00".into(),
@@ -415,6 +481,7 @@ mod tests {
         available_channels.insert(
             "Blue".into(),
             Channel {
+                fine_channel_aliases: Vec::default(),
                 default_value: None,
                 capabilities: vec![Capability::ColorIntensity {
                     color: "#0000ff".into(),
@@ -454,6 +521,7 @@ mod tests {
         available_channels.insert(
             "Channel".into(),
             Channel {
+                fine_channel_aliases: Vec::default(),
                 default_value: None,
                 capabilities: vec![Capability::Generic],
             },

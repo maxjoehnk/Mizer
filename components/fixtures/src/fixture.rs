@@ -155,6 +155,11 @@ pub struct FixtureChannelGroup {
 pub enum FixtureChannelGroupType {
     Generic(String),
     Color(ColorGroup),
+    Pan(AxisGroup),
+    Tilt(AxisGroup),
+    Focus(String),
+    Zoom(String),
+    Prism(String),
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -165,6 +170,12 @@ pub struct ColorGroup {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+pub struct AxisGroup {
+    pub channel: String,
+    pub angle: Option<Angle>
+}
+
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Angle {
     pub from: f32,
     pub to: f32,

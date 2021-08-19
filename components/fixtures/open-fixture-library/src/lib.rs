@@ -374,22 +374,64 @@ fn group_channels(
         })
         .collect::<Vec<_>>();
 
-    log::debug!("{:?}", channels);
+    log::trace!("{:?}", channels);
 
     let mut color_group = ColorGroupBuilder::new();
     let mut groups = Vec::new();
 
     for (name, channel) in channels {
+        if channel.capabilities.iter().all(|c| matches!(c, Capability::NoFunction)) {
+            log::trace!("skipping capability {} as it has no functions", name);
+            continue;
+        }
         match channel.capabilities.first() {
             Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
                 color_group.red(name.clone());
-            },
+            }
             Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
                 color_group.green(name.clone());
-            },
+            }
             Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
                 color_group.blue(name.clone());
-            },
+            }
+            Some(Capability::Pan {
+                angle_start,
+                angle_end,
+            }) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Pan(AxisGroup {
+                    channel: name.clone(),
+                    angle: Some(Angle {
+                        from: *angle_start,
+                        to: *angle_end,
+                    }),
+                }),
+            }),
+            Some(Capability::Tilt {
+                angle_start,
+                angle_end,
+            }) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Tilt(AxisGroup {
+                    channel: name.clone(),
+                    angle: Some(Angle {
+                        from: *angle_start,
+                        to: *angle_end,
+                    }),
+                }),
+            }),
+            Some(Capability::Focus) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Focus(name.clone()),
+            }),
+            Some(Capability::Zoom) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Zoom(name.clone()),
+            }),
+            Some(Capability::Prism | Capability::PrismRotation) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Prism(name.clone()),
+            }),
             Some(_) => groups.push(FixtureChannelGroup {
                 name: name.clone(),
                 group_type: FixtureChannelGroupType::Generic(name.clone()),
@@ -405,7 +447,7 @@ fn group_channels(
         });
     }
 
-    log::debug!("in: {:?}, out: {:?}", enabled_channels, groups);
+    log::trace!("in: {:?}, out: {:?}", enabled_channels, groups);
 
     groups
 }

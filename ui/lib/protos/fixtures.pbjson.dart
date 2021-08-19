@@ -69,6 +69,9 @@ const FixtureChannelGroup$json = const {
     const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.ColorChannel', '9': 0, '10': 'color'},
     const {'1': 'pan', '3': 4, '4': 1, '5': 11, '6': '.mizer.AxisChannel', '9': 0, '10': 'pan'},
     const {'1': 'tilt', '3': 5, '4': 1, '5': 11, '6': '.mizer.AxisChannel', '9': 0, '10': 'tilt'},
+    const {'1': 'focus', '3': 6, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'focus'},
+    const {'1': 'zoom', '3': 7, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'zoom'},
+    const {'1': 'prism', '3': 8, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'prism'},
   ],
   '8': const [
     const {'1': 'channel'},

@@ -16,9 +16,8 @@ class DMXSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: channels.isNotEmpty
-          ? Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: channels.map(_buildChannelFader).toList())
+          ? ListView(
+              scrollDirection: Axis.horizontal, children: channels.map(_buildChannelFader).toList())
           : null,
     );
   }

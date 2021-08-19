@@ -4,15 +4,11 @@ import 'package:mizer/protos/fixtures.pb.dart';
 
 import 'fixture_group_control.dart';
 
-class ChannelSheet extends StatelessWidget {
+class PositionSheet extends StatelessWidget {
   final List<Fixture> fixtures;
   final FixturesApi api;
-  final List<String> modifiedChannels;
-  final Function(FixtureChannelGroup) onModifyChannel;
 
-  const ChannelSheet(
-      {this.fixtures, this.api, this.modifiedChannels, this.onModifyChannel, Key key})
-      : super(key: key);
+  const PositionSheet({this.fixtures, this.api, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +23,7 @@ class ChannelSheet extends StatelessWidget {
     );
   }
 
-  List<FixtureChannelGroup> get groups {
-    return fixtures.first.channels;
+  Iterable<FixtureChannelGroup> get groups {
+    return fixtures.first.channels.where((element) => element.hasPan() || element.hasTilt());
   }
 }

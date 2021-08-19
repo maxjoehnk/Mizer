@@ -461,6 +461,9 @@ enum FixtureChannelGroup_Channel {
   color, 
   pan, 
   tilt, 
+  focus, 
+  zoom, 
+  prism, 
   notSet
 }
 
@@ -470,15 +473,21 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     3 : FixtureChannelGroup_Channel.color,
     4 : FixtureChannelGroup_Channel.pan,
     5 : FixtureChannelGroup_Channel.tilt,
+    6 : FixtureChannelGroup_Channel.focus,
+    7 : FixtureChannelGroup_Channel.zoom,
+    8 : FixtureChannelGroup_Channel.prism,
     0 : FixtureChannelGroup_Channel.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannelGroup', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5])
+    ..oo(0, [2, 3, 4, 5, 6, 7, 8])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<GenericChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
     ..aOM<ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: ColorChannel.create)
     ..aOM<AxisChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pan', subBuilder: AxisChannel.create)
     ..aOM<AxisChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tilt', subBuilder: AxisChannel.create)
+    ..aOM<GenericChannel>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'focus', subBuilder: GenericChannel.create)
+    ..aOM<GenericChannel>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'zoom', subBuilder: GenericChannel.create)
+    ..aOM<GenericChannel>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prism', subBuilder: GenericChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -489,6 +498,9 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     ColorChannel color,
     AxisChannel pan,
     AxisChannel tilt,
+    GenericChannel focus,
+    GenericChannel zoom,
+    GenericChannel prism,
   }) {
     final _result = create();
     if (name != null) {
@@ -505,6 +517,15 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     }
     if (tilt != null) {
       _result.tilt = tilt;
+    }
+    if (focus != null) {
+      _result.focus = focus;
+    }
+    if (zoom != null) {
+      _result.zoom = zoom;
+    }
+    if (prism != null) {
+      _result.prism = prism;
     }
     return _result;
   }
@@ -584,6 +605,39 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
   void clearTilt() => clearField(5);
   @$pb.TagNumber(5)
   AxisChannel ensureTilt() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  GenericChannel get focus => $_getN(5);
+  @$pb.TagNumber(6)
+  set focus(GenericChannel v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasFocus() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearFocus() => clearField(6);
+  @$pb.TagNumber(6)
+  GenericChannel ensureFocus() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  GenericChannel get zoom => $_getN(6);
+  @$pb.TagNumber(7)
+  set zoom(GenericChannel v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasZoom() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearZoom() => clearField(7);
+  @$pb.TagNumber(7)
+  GenericChannel ensureZoom() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  GenericChannel get prism => $_getN(7);
+  @$pb.TagNumber(8)
+  set prism(GenericChannel v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasPrism() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPrism() => clearField(8);
+  @$pb.TagNumber(8)
+  GenericChannel ensurePrism() => $_ensure(7);
 }
 
 class DmxChannel extends $pb.GeneratedMessage {

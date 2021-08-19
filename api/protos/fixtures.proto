@@ -54,6 +54,9 @@ message FixtureChannelGroup {
     ColorChannel color = 3;
     AxisChannel pan = 4;
     AxisChannel tilt = 5;
+    GenericChannel focus = 6;
+    GenericChannel zoom = 7;
+    GenericChannel prism = 8;
   }
 }
 

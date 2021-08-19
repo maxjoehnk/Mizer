@@ -1,5 +1,5 @@
 use crate::models::fixtures::*;
-use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData, FixtureChannelDefinition};
+use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData};
 use protobuf::SingularPtrField;
 use std::collections::HashMap;
 
@@ -122,6 +122,30 @@ impl FixtureChannelGroup_oneof_channel {
                 ..Default::default()
             }),
             Generic(channel) => Self::generic(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Pan(axis) => Self::pan(AxisChannel {
+                value: values.get(&axis.channel).copied().unwrap_or_default(),
+                angle_from: axis.angle.map(|angle| angle.from as f64).unwrap_or_default(),
+                angle_to: axis.angle.map(|angle| angle.to as f64).unwrap_or_default(),
+                ..Default::default()
+            }),
+            Tilt(axis) => Self::tilt(AxisChannel {
+                value: values.get(&axis.channel).copied().unwrap_or_default(),
+                angle_from: axis.angle.map(|angle| angle.from as f64).unwrap_or_default(),
+                angle_to: axis.angle.map(|angle| angle.to as f64).unwrap_or_default(),
+                ..Default::default()
+            }),
+            Focus(channel) => Self::focus(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Zoom(channel) => Self::zoom(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Prism(channel) => Self::prism(GenericChannel {
                 value: values.get(channel).copied().unwrap_or_default(),
                 ..Default::default()
             }),

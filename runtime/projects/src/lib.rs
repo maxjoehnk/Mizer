@@ -1,21 +1,23 @@
-use lazy_static::lazy_static;
-use mizer_layouts::ControlConfig;
-use mizer_node::{NodeDesigner, NodePath, PortId};
-use mizer_sequencer::Sequence;
-use regex::{Regex, RegexBuilder};
-use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::convert::TryFrom;
 use std::fs::File;
 use std::path::Path;
 
-mod fixtures;
+use lazy_static::lazy_static;
+use regex::{Regex, RegexBuilder};
+use serde::{Deserialize, Serialize};
+
+use mizer_layouts::ControlConfig;
+use mizer_node::{NodeDesigner, NodePath, PortId};
+use mizer_sequencer::Sequence;
+
 mod connections;
+mod fixtures;
 mod sequencer;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
-        r"^(?P<fc>[a-z\-]*)@(?P<fi>[a-z0-9\-/]*)\s->\s(?P<tc>[a-z\-]*)@(?P<ti>[a-z0-9\-/]*)$"
+        r"^(?P<fc>[a-z0-9\- ]*)@(?P<fi>[a-z0-9\-/]*)\s->\s(?P<tc>[a-z0-9\- ]*)@(?P<ti>[a-z0-9\-/]*)$"
     )
     .case_insensitive(true)
     .build()
@@ -254,17 +256,16 @@ pub struct ConnectionConfig {
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ConnectionTypes {
     Sacn,
-    Artnet {
-        host: String,
-        port: Option<u16>
-    }
+    Artnet { host: String, port: Option<u16> },
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use mizer_node::NodePosition;
     use std::collections::HashMap;
+
+    use mizer_node::NodePosition;
+
+    use super::*;
 
     #[test]
     fn load_empty_project() -> anyhow::Result<()> {

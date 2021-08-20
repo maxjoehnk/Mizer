@@ -57,6 +57,10 @@ message FixtureChannelGroup {
     GenericChannel focus = 6;
     GenericChannel zoom = 7;
     GenericChannel prism = 8;
+    GenericChannel intensity = 9;
+    GenericChannel shutter = 10;
+    GenericChannel iris = 11;
+    GenericChannel frost = 12;
   }
 }
 

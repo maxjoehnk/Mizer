@@ -149,6 +149,22 @@ impl FixtureChannelGroup_oneof_channel {
                 value: values.get(channel).copied().unwrap_or_default(),
                 ..Default::default()
             }),
+            Intensity(channel) => Self::intensity(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Shutter(channel) => Self::shutter(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Frost(channel) => Self::frost(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
+            Iris(channel) => Self::iris(GenericChannel {
+                value: values.get(channel).copied().unwrap_or_default(),
+                ..Default::default()
+            }),
         }
     }
 }

@@ -61,7 +61,7 @@ class PanelActions extends StatelessWidget {
       children: actions
           .map((a) => Hoverable(
                 disabled: a.disabled,
-                onClick: a.onClick,
+                onTap: a.onClick,
                 builder: (hovered) => Container(
                   color: _getColor(a, hovered),
                   height: 64,

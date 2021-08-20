@@ -160,6 +160,10 @@ pub enum FixtureChannelGroupType {
     Focus(String),
     Zoom(String),
     Prism(String),
+    Intensity(String),
+    Shutter(String),
+    Iris(String),
+    Frost(String),
 }
 
 #[derive(Debug, Clone, PartialEq)]

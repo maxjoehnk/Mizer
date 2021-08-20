@@ -384,7 +384,7 @@ fn group_channels(
             log::trace!("skipping capability {} as it has no functions", name);
             continue;
         }
-        match channel.capabilities.first() {
+        match channel.capabilities.iter().find(|c| !matches!(c, Capability::NoFunction)) {
             Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
                 color_group.red(name.clone());
             }
@@ -431,6 +431,22 @@ fn group_channels(
             Some(Capability::Prism | Capability::PrismRotation) => groups.push(FixtureChannelGroup {
                 name: name.clone(),
                 group_type: FixtureChannelGroupType::Prism(name.clone()),
+            }),
+            Some(Capability::Iris) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Iris(name.clone()),
+            }),
+            Some(Capability::Frost) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Frost(name.clone()),
+            }),
+            Some(Capability::Intensity) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Intensity(name.clone()),
+            }),
+            Some(Capability::ShutterStrobe { .. }) => groups.push(FixtureChannelGroup {
+                name: name.clone(),
+                group_type: FixtureChannelGroupType::Shutter(name.clone()),
             }),
             Some(_) => groups.push(FixtureChannelGroup {
                 name: name.clone(),

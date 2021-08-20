@@ -464,6 +464,10 @@ enum FixtureChannelGroup_Channel {
   focus, 
   zoom, 
   prism, 
+  intensity, 
+  shutter, 
+  iris, 
+  frost, 
   notSet
 }
 
@@ -476,10 +480,14 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     6 : FixtureChannelGroup_Channel.focus,
     7 : FixtureChannelGroup_Channel.zoom,
     8 : FixtureChannelGroup_Channel.prism,
+    9 : FixtureChannelGroup_Channel.intensity,
+    10 : FixtureChannelGroup_Channel.shutter,
+    11 : FixtureChannelGroup_Channel.iris,
+    12 : FixtureChannelGroup_Channel.frost,
     0 : FixtureChannelGroup_Channel.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureChannelGroup', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6, 7, 8])
+    ..oo(0, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<GenericChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
     ..aOM<ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: ColorChannel.create)
@@ -488,6 +496,10 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     ..aOM<GenericChannel>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'focus', subBuilder: GenericChannel.create)
     ..aOM<GenericChannel>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'zoom', subBuilder: GenericChannel.create)
     ..aOM<GenericChannel>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prism', subBuilder: GenericChannel.create)
+    ..aOM<GenericChannel>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'intensity', subBuilder: GenericChannel.create)
+    ..aOM<GenericChannel>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shutter', subBuilder: GenericChannel.create)
+    ..aOM<GenericChannel>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iris', subBuilder: GenericChannel.create)
+    ..aOM<GenericChannel>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frost', subBuilder: GenericChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -501,6 +513,10 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     GenericChannel focus,
     GenericChannel zoom,
     GenericChannel prism,
+    GenericChannel intensity,
+    GenericChannel shutter,
+    GenericChannel iris,
+    GenericChannel frost,
   }) {
     final _result = create();
     if (name != null) {
@@ -526,6 +542,18 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
     }
     if (prism != null) {
       _result.prism = prism;
+    }
+    if (intensity != null) {
+      _result.intensity = intensity;
+    }
+    if (shutter != null) {
+      _result.shutter = shutter;
+    }
+    if (iris != null) {
+      _result.iris = iris;
+    }
+    if (frost != null) {
+      _result.frost = frost;
     }
     return _result;
   }
@@ -638,6 +666,50 @@ class FixtureChannelGroup extends $pb.GeneratedMessage {
   void clearPrism() => clearField(8);
   @$pb.TagNumber(8)
   GenericChannel ensurePrism() => $_ensure(7);
+
+  @$pb.TagNumber(9)
+  GenericChannel get intensity => $_getN(8);
+  @$pb.TagNumber(9)
+  set intensity(GenericChannel v) { setField(9, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasIntensity() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearIntensity() => clearField(9);
+  @$pb.TagNumber(9)
+  GenericChannel ensureIntensity() => $_ensure(8);
+
+  @$pb.TagNumber(10)
+  GenericChannel get shutter => $_getN(9);
+  @$pb.TagNumber(10)
+  set shutter(GenericChannel v) { setField(10, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasShutter() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearShutter() => clearField(10);
+  @$pb.TagNumber(10)
+  GenericChannel ensureShutter() => $_ensure(9);
+
+  @$pb.TagNumber(11)
+  GenericChannel get iris => $_getN(10);
+  @$pb.TagNumber(11)
+  set iris(GenericChannel v) { setField(11, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasIris() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearIris() => clearField(11);
+  @$pb.TagNumber(11)
+  GenericChannel ensureIris() => $_ensure(10);
+
+  @$pb.TagNumber(12)
+  GenericChannel get frost => $_getN(11);
+  @$pb.TagNumber(12)
+  set frost(GenericChannel v) { setField(12, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasFrost() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearFrost() => clearField(12);
+  @$pb.TagNumber(12)
+  GenericChannel ensureFrost() => $_ensure(11);
 }
 
 class DmxChannel extends $pb.GeneratedMessage {

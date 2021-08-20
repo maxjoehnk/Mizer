@@ -33,7 +33,7 @@ class MenuRowItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hoverable(
-      onClick: () {
+      onTap: () {
         Navigator.of(context).pop();
         item.action();
       },

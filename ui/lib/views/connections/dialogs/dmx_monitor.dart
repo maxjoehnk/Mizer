@@ -107,7 +107,7 @@ class Universe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hoverable(
-      onClick: onClick,
+      onTap: onClick,
       builder: (hovered) => Container(
           alignment: Alignment.center,
           width: 40,

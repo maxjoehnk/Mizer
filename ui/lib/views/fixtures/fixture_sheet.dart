@@ -10,6 +10,7 @@ import 'package:mizer/widgets/tabs.dart';
 import 'beam_sheet.dart';
 import 'channel_sheet.dart';
 import 'color_sheet.dart';
+import 'dimmer_sheet.dart';
 import 'dmx_sheet.dart';
 import 'gobo_sheet.dart';
 
@@ -33,6 +34,7 @@ class _FixtureSheetState extends State<FixtureSheet> {
     return Panel(
         child: Tabs(
           children: [
+            Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, api: widget.api)),
             Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, api: widget.api)),
             Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, api: widget.api)),
             Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, api: widget.api)),

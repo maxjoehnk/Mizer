@@ -50,8 +50,8 @@ impl Fixture {
         output.write_bulk(self.universe, self.channel, &buffer[start..end]);
     }
 
-    pub fn get_dmx_values(&self) -> [u8; 255] {
-        let mut buffer = [0; 255];
+    pub fn get_dmx_values(&self) -> [u8; 512] {
+        let mut buffer = [0; 512];
 
         for (channel_name, value) in self.channel_values.iter() {
             if let Some(channel) = self

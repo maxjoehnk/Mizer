@@ -94,6 +94,7 @@ impl Mizer {
             if frame_time <= FRAME_DELAY_60FPS {
                 tokio::time::sleep(FRAME_DELAY_60FPS - frame_time).await;
             }
+            profiling::finish_frame!();
         }
     }
 

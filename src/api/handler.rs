@@ -14,6 +14,7 @@ pub struct ApiHandler {
 }
 
 impl ApiHandler {
+    #[profiling::function]
     pub fn handle(&self, mizer: &mut Mizer) {
         loop {
             match self.recv.try_recv() {

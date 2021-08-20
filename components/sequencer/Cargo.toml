@@ -12,6 +12,7 @@ mizer-module = { path = "../../runtime/module" }
 mizer-fixtures = { path = "../fixtures" }
 mizer-util = { path = "../../util" }
 pinboard = "2.1"
+profiling = "1"
 
 [dev-dependencies]
 test-case = "1"

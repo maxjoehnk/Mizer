@@ -2867,6 +2867,7 @@ dependencies = [
  "mizer-ui",
  "mizer-util",
  "pinboard",
+ "profiling",
  "structopt",
  "test-case",
  "tokio",
@@ -2889,6 +2890,7 @@ dependencies = [
  "mizer-nodes",
  "mizer-runtime",
  "mizer-sequencer",
+ "profiling",
  "protobuf",
  "protoc-rust",
  "serde",
@@ -2987,6 +2989,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "profiling",
  "test-case",
 ]
 
@@ -3209,6 +3212,7 @@ dependencies = [
  "mizer-project-files",
  "mizer-protocol-laser",
  "mizer-video-nodes",
+ "profiling",
  "ringbuffer",
  "test-case",
 ]
@@ -3284,6 +3288,7 @@ dependencies = [
  "log",
  "mizer-module",
  "mizer-processing",
+ "profiling",
  "sacn",
 ]
 
@@ -3349,6 +3354,7 @@ dependencies = [
  "mizer-session",
  "mizer-util",
  "pinboard",
+ "profiling",
  "test-case",
 ]
 
@@ -3381,6 +3387,7 @@ dependencies = [
  "mizer-module",
  "mizer-util",
  "pinboard",
+ "profiling",
  "serde",
  "test-case",
 ]
@@ -4046,6 +4053,26 @@ checksum = "abe7f344db15ba012152680e204d5869ec60cb0d8acfda230069484f4fa3811b"
 dependencies = [
  "libc",
  "winapi 0.3.9",
+]
+
+[[package]]
+name = "profiling"
+version = "1.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "87dfd5592a8eed7e74f56ad7b125f8234763b805c30f0c7c95c486920026a6ec"
+dependencies = [
+ "profiling-procmacros",
+ "tracy-client",
+]
+
+[[package]]
+name = "profiling-procmacros"
+version = "1.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9dc92bed14cc1433694b0ee18dfb3c219bf182019b0daf7b017f7a9f1e280ac"
+dependencies = [
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -5403,6 +5430,24 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a31142970826733df8241ef35dc040ef98c679ab14d7c3e54d827099b3acecaa"
 dependencies = [
  "serde",
+]
+
+[[package]]
+name = "tracy-client"
+version = "0.12.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c444a124cacac6811008dd67cd76af8af2f0c48dfd61e734f9e537bcfb5ff4e2"
+dependencies = [
+ "tracy-client-sys",
+]
+
+[[package]]
+name = "tracy-client-sys"
+version = "0.16.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6226e4e77f0d46ce7ebb0a4b1daa82790035248b75bbf605b932a1d7b3b22b6d"
+dependencies = [
+ "cc",
 ]
 
 [[package]]

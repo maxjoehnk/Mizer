@@ -11,3 +11,4 @@ sacn = "0.4"
 log = "0.4"
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
+profiling = "1"

@@ -57,6 +57,7 @@ struct DmxProcessor;
 
 impl Processor for DmxProcessor {
     fn post_process(&self, injector: &Injector) {
+        profiling::scope!("DmxProcessor::post_process");
         if let Some(dmx) = injector.get::<DmxConnectionManager>() {
             dmx.flush();
         }

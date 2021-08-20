@@ -65,6 +65,7 @@ license = "GNU AGPLv3"
 [features]
 default = ["ui"]
 ui = ["mizer-ui"]
+tracy = ["profiling/profile-with-tracy"]
 
 [dependencies]
 derive_more = "0.99"
@@ -102,6 +103,7 @@ futures = "0.3"
 pinboard = "2.1"
 dashmap = "4"
 flume = "0.10"
+profiling = "1.0"
 
 [dev-dependencies]
 test-case = "1.0"

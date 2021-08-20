@@ -11,6 +11,7 @@ dashmap = "4"
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
 mizer-protocol-dmx = { path = "../connections/protocols/dmx" }
+profiling = "1"
 
 [dev-dependencies]
 test-case = "1.2"

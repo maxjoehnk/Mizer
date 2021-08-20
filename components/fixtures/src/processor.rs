@@ -6,6 +6,7 @@ pub struct FixtureProcessor;
 
 impl Processor for FixtureProcessor {
     fn process(&self, injector: &Injector) {
+        profiling::scope!("FixtureProcessor::process");
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");

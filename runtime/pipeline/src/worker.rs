@@ -248,6 +248,7 @@ impl PipelineWorker {
         frame: ClockFrame,
         injector: &Injector,
     ) {
+        profiling::scope!("PipelineWorker::process");
         self.order_nodes_by_dependencies(&mut nodes);
         self.process_nodes(&mut nodes, frame, &injector)
     }

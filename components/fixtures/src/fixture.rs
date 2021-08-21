@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 
-const U24_MAX: u32 = 16_777_215;
-
 use mizer_protocol_dmx::DmxOutput;
+
+const U24_MAX: u32 = 16_777_215;
 
 #[derive(Debug, Clone)]
 pub struct Fixture {
@@ -48,6 +48,11 @@ impl Fixture {
         log::trace!("Highlighting FID {}", self.id);
         if let Some(channel) = self.current_mode.intensity() {
             self.write(&channel.name, 1f64);
+        }
+        if let Some(color_group) = self.current_mode.color() {
+            self.write(&color_group.red, 1f64);
+            self.write(&color_group.green, 1f64);
+            self.write(&color_group.blue, 1f64);
         }
     }
 
@@ -190,7 +195,7 @@ pub struct ColorGroup {
 #[derive(Debug, Clone, PartialEq)]
 pub struct AxisGroup {
     pub channel: String,
-    pub angle: Option<Angle>
+    pub angle: Option<Angle>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -216,6 +221,19 @@ impl FixtureMode {
                 }
             })
             .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
+    }
+
+    pub fn color(&self) -> Option<ColorGroup> {
+        self.groups
+            .iter()
+            .filter_map(|g| {
+                if let FixtureChannelGroupType::Color(g) = &g.group_type {
+                    Some(g.clone())
+                } else {
+                    None
+                }
+            })
+            .next()
     }
 }
 
@@ -267,6 +285,7 @@ pub struct FixtureDimensions {
 #[cfg(test)]
 mod tests {
     use test_case::test_case;
+
     use super::{convert_value, convert_value_16bit, convert_value_24bit};
 
     #[test_case(0.0, 0)]

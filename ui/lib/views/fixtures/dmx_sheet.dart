@@ -23,6 +23,9 @@ class DMXSheet extends StatelessWidget {
   }
 
   List<DmxChannel> get channels {
+    if (fixtures.isEmpty) {
+      return [];
+    }
     return fixtures.first.dmxChannels;
   }
 

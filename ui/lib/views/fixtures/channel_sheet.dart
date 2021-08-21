@@ -26,6 +26,9 @@ class ChannelSheet extends StatelessWidget {
   }
 
   List<FixtureChannelGroup> get groups {
+    if (fixtures.isEmpty) {
+      return [];
+    }
     return fixtures.first.channels;
   }
 }

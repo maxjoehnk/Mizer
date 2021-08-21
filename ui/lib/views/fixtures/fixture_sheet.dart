@@ -31,7 +31,6 @@ class _FixtureSheetState extends State<FixtureSheet> {
 
   @override
   Widget build(BuildContext context) {
-    log("${widget.fixtures.first.channels}");
     return Panel(
         child: Tabs(
           children: [
@@ -59,14 +58,14 @@ class _FixtureSheetState extends State<FixtureSheet> {
           ],
         ),
         actions: [
-          PanelAction(label: "Highlight", onClick: () {
+          PanelAction(label: "Highlight", activated: highlight, onClick: () {
             setState(() {
               highlight = !highlight;
               widget.api.highlight(highlight);
             });
-          }),
+          }, disabled: widget.fixtures.isEmpty),
           // PanelAction(label: "Store"),
-          PanelAction(label: "Clear", onClick: () => widget.api.clear()),
+          PanelAction(label: "Clear", onClick: () => widget.api.clear(), disabled: widget.fixtures.isEmpty),
         ]);
   }
 }

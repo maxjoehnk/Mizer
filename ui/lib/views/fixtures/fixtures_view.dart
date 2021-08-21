@@ -66,13 +66,12 @@ class _FixturesViewState extends State<FixturesView> {
               ],
             ),
           ),
-          if (selectedIds.isNotEmpty)
-            SizedBox(
-              height: SHEET_CONTAINER_HEIGHT,
-              child: FixtureSheet(
-                  fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(),
-                  api: programmerApi),
-            ),
+          SizedBox(
+            height: SHEET_CONTAINER_HEIGHT,
+            child: FixtureSheet(
+                fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(),
+                api: programmerApi),
+          ),
         ],
       );
     });

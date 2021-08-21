@@ -22,6 +22,9 @@ class BeamSheet extends StatelessWidget {
   }
 
   Iterable<FixtureChannelGroup> get groups {
+    if (fixtures.isEmpty) {
+      return [];
+    }
     return fixtures.first.channels.where((element) => element.hasZoom() || element.hasFocus() || element.hasPrism() || element.hasFrost() || element.hasIris());
   }
 }

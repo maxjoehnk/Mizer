@@ -22,6 +22,9 @@ class ColorSheet extends StatelessWidget {
   }
 
   Iterable<FixtureChannelGroup> get groups {
+    if (fixtures.isEmpty) {
+      return [];
+    }
     return fixtures.first.channels.where((element) => element.hasColor());
   }
 }

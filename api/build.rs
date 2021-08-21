@@ -13,6 +13,7 @@ fn main() {
             "protos/session.proto",
             "protos/sequencer.proto",
             "protos/transport.proto",
+            "protos/programmer.proto",
         ])
         .include("protos")
         .customize(Customize {

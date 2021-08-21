@@ -26,13 +26,6 @@ class FixturesPluginApi implements FixturesApi {
     return _parseResponse(response);
   }
 
-  @override
-  Future<Fixtures> writeFixtureChannel(WriteFixtureChannelRequest request) async {
-    var response = await channel.invokeMethod("writeFixtureChannel", request.writeToBuffer());
-
-    return _parseResponse(response);
-  }
-
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

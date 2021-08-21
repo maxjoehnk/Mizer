@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/views/fixtures/patch_fixture_dialog.dart';
@@ -28,6 +29,7 @@ class _FixturesViewState extends State<FixturesView> {
     FixturesBloc fixturesBloc = context.read();
     fixturesBloc.add(FetchFixtures());
     var fixturesApi = context.read<FixturesApi>();
+    var programmerApi = context.read<ProgrammerApi>();
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return Column(
         children: [
@@ -37,21 +39,21 @@ class _FixturesViewState extends State<FixturesView> {
               child: FixtureTable(
                   fixtures: fixtures.fixtures,
                   selectedIds: selectedIds,
+                  // TODO: use setSelectedIds instead of manually calling programmerApi
                   onSelect: (id, selected) => setState(() {
                         if (selected) {
                           this.selectedIds.add(id);
                         } else {
                           this.selectedIds.remove(id);
                         }
+                        programmerApi.selectFixtures(this.selectedIds);
                       }),
                   onSelectSimilar: (fixture) {
-                    setState(() {
-                      this.selectedIds = fixtures.fixtures
-                          .where((f) =>
-                              f.manufacturer == fixture.manufacturer && f.name == fixture.name)
-                          .map((f) => f.id)
-                          .toList();
-                    });
+                    _setSelectedIds(fixtures.fixtures
+                        .where((f) =>
+                    f.manufacturer == fixture.manufacturer && f.name == fixture.name)
+                        .map((f) => f.id)
+                        .toList());
                   }),
               actions: [
                 PanelAction(
@@ -69,7 +71,7 @@ class _FixturesViewState extends State<FixturesView> {
               height: SHEET_CONTAINER_HEIGHT,
               child: FixtureSheet(
                   fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(),
-                  api: fixturesApi),
+                  api: programmerApi),
             ),
         ],
       );
@@ -88,25 +90,26 @@ class _FixturesViewState extends State<FixturesView> {
   }
 
   _selectAll(List<Fixture> fixtures) {
-    setState(() {
-      selectedIds = fixtures.map((f) => f.id).toList();
-    });
+    _setSelectedIds(fixtures.map((f) => f.id).toList());
   }
 
   _selectEven(List<Fixture> fixtures) {
-    setState(() {
-      selectedIds = fixtures.map((f) => f.id).where((id) => id.isEven).toList();
-    });
+    _setSelectedIds(fixtures.map((f) => f.id).where((id) => id.isEven).toList());
   }
 
   _selectOdd(List<Fixture> fixtures) {
-    setState(() {
-      selectedIds = fixtures.map((f) => f.id).where((id) => id.isOdd).toList();
-    });
+    _setSelectedIds(fixtures.map((f) => f.id).where((id) => id.isOdd).toList());
   }
 
   _clear() {
-    setState(() => selectedIds = []);
+    _setSelectedIds([]);
+  }
+
+  _setSelectedIds(List<int> ids) {
+    setState(() {
+      selectedIds = ids;
+      context.read<ProgrammerApi>().selectFixtures(ids);
+    });
   }
 }
 

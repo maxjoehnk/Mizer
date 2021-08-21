@@ -7,6 +7,8 @@ pub mod fixture;
 pub mod library;
 pub mod manager;
 mod processor;
+// TODO: should probably find a better name
+pub mod programmer;
 
 pub struct FixtureModule(FixtureLibrary, FixtureManager);
 

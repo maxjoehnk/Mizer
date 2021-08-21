@@ -6,6 +6,7 @@ pub mod nodes;
 pub mod session;
 pub mod sequencer;
 pub mod transport;
+pub mod programmer;
 
 pub use self::connections::*;
 pub use self::fixtures::*;
@@ -15,3 +16,4 @@ pub use self::nodes::*;
 pub use self::session::*;
 pub use self::sequencer::*;
 pub use self::transport::*;
+pub use self::programmer::*;

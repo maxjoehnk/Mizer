@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package mizer;
+
+import "fixtures.proto";
+
+service ProgrammerApi {
+  rpc SubscribeToProgrammer (SubscribeProgrammerRequest) returns (stream ProgrammerState) {}
+  rpc WriteChannels (WriteChannelsRequest) returns (WriteChannelsResponse) {}
+  rpc SelectFixtures (SelectFixturesRequest) returns (SelectFixturesResponse) {}
+  rpc Clear (ClearRequest) returns (ClearResponse) {}
+  rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
+}
+
+message SubscribeProgrammerRequest {}
+
+message ProgrammerState {
+  repeated uint32 fixtures = 1;
+}
+
+message WriteChannelsRequest {
+  string channel = 1;
+  oneof value {
+    double fader = 2;
+    ColorChannel color = 3;
+  }
+}
+
+message WriteChannelsResponse {}
+
+message SelectFixturesRequest {
+  repeated uint32 fixtures = 1;
+}
+
+message SelectFixturesResponse {}
+
+message ClearRequest {}
+message ClearResponse {}
+
+message HighlightRequest {
+  bool highlight = 1;
+}
+
+message HighlightResponse {}

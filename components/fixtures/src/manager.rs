@@ -3,20 +3,24 @@ use crate::library::FixtureLibrary;
 use dashmap::DashMap;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 use std::ops::{Deref, DerefMut};
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
+use crate::programmer::Programmer;
 
 #[derive(Clone)]
 pub struct FixtureManager {
     library: FixtureLibrary,
     // TODO: this is only public for project loading/saving
     pub fixtures: Arc<DashMap<u32, Fixture>>,
+    programmer: Arc<Mutex<Programmer>>,
 }
 
 impl FixtureManager {
     pub fn new(library: FixtureLibrary) -> Self {
+        let fixtures = Default::default();
         Self {
             library,
-            fixtures: Default::default(),
+            programmer: Arc::new(Mutex::new(Programmer::new(Arc::clone(&fixtures)))),
+            fixtures,
         }
     }
 
@@ -59,6 +63,22 @@ impl FixtureManager {
                     fixture.flush(output.as_ref());
                 }
             }
+        }
+    }
+
+    pub fn get_programmer<'a>(&'a self) -> impl DerefMut<Target = Programmer> + 'a {
+        let mut programmer = self.programmer.lock().unwrap();
+        programmer
+    }
+
+    pub(crate) fn execute_programmers(&self) {
+        let mut programmer = self.programmer.lock().unwrap();
+        programmer.run();
+    }
+
+    pub(crate) fn default_fixtures(&self) {
+        for mut fixture in self.fixtures.iter_mut() {
+            fixture.set_to_default();
         }
     }
 }

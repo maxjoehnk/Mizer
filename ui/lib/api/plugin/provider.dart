@@ -5,9 +5,11 @@ import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/plugin/programmer.dart';
 
 import '../preview_handler.dart';
 import 'connections.dart';
@@ -37,6 +39,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<SessionApi>(create: (context) => SessionPluginApi()),
         RepositoryProvider<TransportApi>(create: (context) => TransportPluginApi()),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerPluginApi()),
+        RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerPluginApi()),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );

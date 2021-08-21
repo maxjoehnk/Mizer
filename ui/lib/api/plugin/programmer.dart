@@ -1,0 +1,39 @@
+import 'package:flutter/services.dart';
+import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/protos/programmer.pb.dart';
+
+class ProgrammerPluginApi implements ProgrammerApi {
+  final MethodChannel channel = const MethodChannel("mizer.live/programmer");
+  final EventChannel stateEvents = const EventChannel("mizer.live/");
+
+  @override
+  Future<void> writeChannels(WriteChannelsRequest request) async {
+    await channel.invokeMethod("writeChannels", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> selectFixtures(List<int> fixtureIds) async {
+    await channel.invokeMethod("selectFixtures", fixtureIds);
+  }
+
+  @override
+  Future<void> clear() async {
+    await channel.invokeMethod("clear");
+  }
+
+  @override
+  Future<void> highlight(bool highlight) async {
+    await channel.invokeMethod("highlight", highlight);
+  }
+
+  @override
+  Stream<ProgrammerState> observe() {
+    return stateEvents
+        .receiveBroadcastStream()
+        .map((buffer) => ProgrammerState.fromBuffer(_convertBuffer(buffer)));
+  }
+
+  static List<int> _convertBuffer(List<Object> response) {
+    return response.map((dynamic e) => e as int).toList();
+  }
+}

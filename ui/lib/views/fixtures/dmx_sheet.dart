@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
-import 'package:mizer/api/contracts/fixtures.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/inputs/fader.dart';
 
 class DMXSheet extends StatelessWidget {
   final List<Fixture> fixtures;
-  final FixturesApi api;
+  final ProgrammerApi api;
   final List<String> modifiedChannels;
   final Function(DmxChannel) onModifyChannel;
 
@@ -36,8 +36,7 @@ class DMXSheet extends StatelessWidget {
             value: channel.value,
             onValue: (v) {
               onModifyChannel(channel);
-              api.writeFixtureChannel(WriteFixtureChannelRequest(
-                ids: fixtures.map((f) => f.id).toList(),
+              api.writeChannels(WriteChannelsRequest(
                 channel: channel.name,
                 fader: v,
               ));

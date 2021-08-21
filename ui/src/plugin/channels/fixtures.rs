@@ -33,13 +33,6 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for FixturesChannel<R> {
 
                 resp.respond_msg(response);
             }
-            "writeFixtureChannel" => {
-                let response = call
-                    .arguments()
-                    .map(|args| self.write_fixture_channel(args));
-
-                resp.respond_result(response);
-            }
             _ => resp.not_implemented(),
         }
     }
@@ -65,10 +58,5 @@ impl<R: RuntimeApi + 'static> FixturesChannel<R> {
 
     fn get_fixture_definitions(&self) -> FixtureDefinitions {
         self.handler.get_fixture_definitions()
-    }
-
-    fn write_fixture_channel(&self, request: WriteFixtureChannelRequest) -> Fixtures {
-        self.handler.write_fixture_channel(request);
-        self.handler.get_fixtures()
     }
 }

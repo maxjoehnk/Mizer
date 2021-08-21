@@ -1,7 +1,8 @@
-use mizer_protocol_dmx::DmxOutput;
 use std::collections::HashMap;
 
 const U24_MAX: u32 = 16_777_215;
+
+use mizer_protocol_dmx::DmxOutput;
 
 #[derive(Debug, Clone)]
 pub struct Fixture {
@@ -41,6 +42,19 @@ impl Fixture {
     pub fn write(&mut self, name: &str, value: f64) {
         log::trace!("write {} -> {}", name, value);
         self.channel_values.insert(name.to_string(), value);
+    }
+
+    pub fn highlight(&mut self) {
+        log::trace!("Highlighting FID {}", self.id);
+        if let Some(channel) = self.current_mode.intensity() {
+            self.write(&channel.name, 1f64);
+        }
+    }
+
+    pub(crate) fn set_to_default(&mut self) {
+        for channel in self.current_mode.channels.iter() {
+            self.channel_values.insert(channel.name.clone(), 0f64);
+        }
     }
 
     pub(crate) fn flush(&self, output: &dyn DmxOutput) {
@@ -188,6 +202,20 @@ pub struct Angle {
 impl FixtureMode {
     fn dmx_channels(&self) -> u8 {
         self.channels.iter().map(|c| c.channels()).sum()
+    }
+
+    pub fn intensity(&self) -> Option<FixtureChannelDefinition> {
+        self.groups
+            .iter()
+            .find(|g| matches!(g.group_type, FixtureChannelGroupType::Intensity(_)))
+            .map(|group| {
+                if let FixtureChannelGroupType::Intensity(channel) = &group.group_type {
+                    channel
+                } else {
+                    unreachable!()
+                }
+            })
+            .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
     }
 }
 

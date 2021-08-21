@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
-import 'package:mizer/api/contracts/fixtures.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/views/fixtures/position_sheet.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -16,7 +16,7 @@ import 'gobo_sheet.dart';
 
 class FixtureSheet extends StatefulWidget {
   final List<Fixture> fixtures;
-  final FixturesApi api;
+  final ProgrammerApi api;
 
   const FixtureSheet({this.fixtures, this.api, Key key}) : super(key: key);
 
@@ -27,6 +27,7 @@ class FixtureSheet extends StatefulWidget {
 class _FixtureSheetState extends State<FixtureSheet> {
   Set<String> modifiedChannels = Set();
   Set<String> modifiedDmxChannels = Set();
+  bool highlight = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +35,15 @@ class _FixtureSheetState extends State<FixtureSheet> {
     return Panel(
         child: Tabs(
           children: [
-            Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, api: widget.api)),
-            Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, api: widget.api)),
-            Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, api: widget.api)),
-            Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, api: widget.api)),
-            Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, api: widget.api)),
+            Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures)),
+            Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures)),
+            Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures)),
+            Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures)),
+            Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures)),
             Tab(
                 label: "Channels",
                 child: ChannelSheet(
                     fixtures: widget.fixtures,
-                    api: widget.api,
                     // TODO: implement when store is implemented
                     modifiedChannels: [],
                     onModifyChannel: (group) => setState(() => modifiedChannels.add(group.name)))),
@@ -51,7 +51,6 @@ class _FixtureSheetState extends State<FixtureSheet> {
                 label: "DMX",
                 child: DMXSheet(
                   fixtures: widget.fixtures,
-                  api: widget.api,
                   // TODO: implement when store is implemented
                   modifiedChannels: [],
                   onModifyChannel: (channel) =>
@@ -60,13 +59,14 @@ class _FixtureSheetState extends State<FixtureSheet> {
           ],
         ),
         actions: [
-          // TODO: implement
+          PanelAction(label: "Highlight", onClick: () {
+            setState(() {
+              highlight = !highlight;
+              widget.api.highlight(highlight);
+            });
+          }),
           // PanelAction(label: "Store"),
-          // TODO: I'm not quite sure how this should be implemented
-          // I could force the fixture sheet to override all other commands from nodes and sequences and remove this override with the clear button
-          // I could remember the previous value when a fader is first touched and reset to it
-          // I could reset to the default value
-          // PanelAction(label: "Clear", disabled: !_hasModifications),
+          PanelAction(label: "Clear", onClick: () => widget.api.clear()),
         ]);
   }
 }

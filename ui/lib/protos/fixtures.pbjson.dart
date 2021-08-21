@@ -27,19 +27,6 @@ const GetFixturesRequest$json = const {
   '1': 'GetFixturesRequest',
 };
 
-const WriteFixtureChannelRequest$json = const {
-  '1': 'WriteFixtureChannelRequest',
-  '2': const [
-    const {'1': 'ids', '3': 1, '4': 3, '5': 13, '10': 'ids'},
-    const {'1': 'channel', '3': 2, '4': 1, '5': 9, '10': 'channel'},
-    const {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.ColorChannel', '9': 0, '10': 'color'},
-  ],
-  '8': const [
-    const {'1': 'value'},
-  ],
-};
-
 const Fixtures$json = const {
   '1': 'Fixtures',
   '2': const [

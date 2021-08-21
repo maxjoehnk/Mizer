@@ -6,7 +6,6 @@ service FixturesApi {
   rpc GetFixtures (GetFixturesRequest) returns (Fixtures) {}
   rpc GetFixtureDefinitions (GetFixtureDefinitionsRequest) returns (FixtureDefinitions) {}
   rpc AddFixtures (AddFixturesRequest) returns (Fixtures) {}
-  rpc WriteFixtureChannel (WriteFixtureChannelRequest) returns (Fixtures) {}
 }
 
 message AddFixturesRequest {
@@ -22,15 +21,6 @@ message AddFixtureRequest {
 }
 
 message GetFixturesRequest {}
-
-message WriteFixtureChannelRequest {
-  repeated uint32 ids = 1;
-  string channel = 2;
-  oneof value {
-    double fader = 3;
-    ColorChannel color = 4;
-  }
-}
 
 message Fixtures {
   repeated Fixture fixtures = 1;

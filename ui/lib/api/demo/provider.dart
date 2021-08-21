@@ -5,10 +5,12 @@ import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/demo/connections.dart';
+import 'package:mizer/api/demo/programmer.dart';
 
 import '../preview_handler.dart';
 import 'fixtures.dart';
@@ -37,6 +39,7 @@ class DemoApiProvider extends StatelessWidget {
         RepositoryProvider<SessionApi>(create: (context) => SessionDemoApi()),
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsDemoApi()),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerDemoApi()),
+        RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerDemoApi()),
         RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ]
     );

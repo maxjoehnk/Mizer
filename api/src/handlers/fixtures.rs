@@ -94,34 +94,4 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             self.runtime.add_node_for_fixture(request.id).unwrap();
         }
     }
-
-    pub fn write_fixture_channel(&self, request: WriteFixtureChannelRequest) {
-        let value = request.value.unwrap();
-        let channel = request.channel.as_str();
-        for fixture_id in request.ids {
-            if let Some(mut fixture) = self.fixture_manager.get_fixture_mut(fixture_id) {
-                match &value {
-                    WriteFixtureChannelRequest_oneof_value::color(value) => {
-                        if let Some(color_group) = fixture
-                            .current_mode
-                            .groups
-                            .iter()
-                            .find(|g| g.name == channel)
-                        {
-                            if let FixtureChannelGroupType::Color(color_group) =
-                                color_group.group_type.clone()
-                            {
-                                fixture.write(&color_group.red, value.red);
-                                fixture.write(&color_group.green, value.green);
-                                fixture.write(&color_group.blue, value.blue);
-                            }
-                        }
-                    }
-                    WriteFixtureChannelRequest_oneof_value::fader(value) => {
-                        fixture.write(&request.channel, *value);
-                    }
-                }
-            }
-        }
-    }
 }

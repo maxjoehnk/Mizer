@@ -6,6 +6,7 @@ mod nodes_grpc;
 mod session_grpc;
 mod sequencer_grpc;
 mod transport_grpc;
+mod programmer_grpc;
 
 pub use self::connections_grpc::*;
 pub use self::fixtures_grpc::*;
@@ -15,4 +16,5 @@ pub use self::nodes_grpc::*;
 pub use self::session_grpc::*;
 pub use self::sequencer_grpc::*;
 pub use self::transport_grpc::*;
+pub use self::programmer_grpc::*;
 pub use mizer_api::models::*;

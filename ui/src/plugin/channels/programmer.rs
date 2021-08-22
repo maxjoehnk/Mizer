@@ -2,7 +2,7 @@ use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::ProgrammerHandler;
-use mizer_api::models::WriteChannelsRequest;
+use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
@@ -56,6 +56,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null)
                 }
             }
+            "store" => {
+                if let Err(err) = call.arguments().map(|req| self.store(req)) {
+                    reply.respond_error(err)
+                } else {
+                    reply.send_ok(Value::Null)
+                }
+            }
             _ => reply.not_implemented(),
         }
     }
@@ -88,5 +95,10 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     fn highlight(&self, highlight: bool) {
         log::trace!("ProgrammerChannel::highlight({})", highlight);
         self.handler.highlight(highlight);
+    }
+
+    fn store(&self, req: StoreRequest) {
+        log::trace!("ProgrammerChannel::store({:?})", req);
+        self.handler.store(req.sequence_id, req.store_mode);
     }
 }

@@ -31,6 +31,8 @@ pub trait ProgrammerApi {
     fn clear(&self, req: ::grpc::ServerRequestSingle<super::programmer::ClearRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::ClearResponse>) -> ::grpc::Result<()>;
 
     fn highlight(&self, req: ::grpc::ServerRequestSingle<super::programmer::HighlightRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::HighlightResponse>) -> ::grpc::Result<()>;
+
+    fn store(&self, req: ::grpc::ServerRequestSingle<super::programmer::StoreRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::StoreResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -91,6 +93,16 @@ impl ProgrammerApiClient {
     pub fn highlight(&self, o: ::grpc::RequestOptions, req: super::programmer::HighlightRequest) -> ::grpc::SingleResponse<super::programmer::HighlightResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Highlight"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn store(&self, o: ::grpc::RequestOptions, req: super::programmer::StoreRequest) -> ::grpc::SingleResponse<super::programmer::StoreResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Store"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -167,6 +179,18 @@ impl ProgrammerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).highlight(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Store"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).store(req, resp))
                     },
                 ),
             ],

@@ -31,4 +31,9 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   Future<void> highlight(bool highlight) async {
     await this.client.highlight(HighlightRequest(highlight: highlight));
   }
+
+  @override
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode) async {
+    await this.client.store(StoreRequest(sequenceId: sequenceId, storeMode: storeMode));
+  }
 }

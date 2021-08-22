@@ -17,12 +17,19 @@ pub struct FixtureProgrammer {
     channels: HashMap<String, f64>,
 }
 
+#[derive(Debug, Default)]
+pub struct ProgrammerChannel {
+    pub fixtures: Vec<u32>,
+    pub channel: String,
+    pub value: f64,
+}
+
 impl Programmer {
     pub fn new(fixtures: Arc<DashMap<u32, Fixture>>) -> Self {
         Self {
             fixtures,
             highlight: false,
-            selected_fixtures: Default::default()
+            selected_fixtures: Default::default(),
         }
     }
 
@@ -85,6 +92,30 @@ impl Programmer {
                 }
             }
         }
+    }
+
+    pub fn get_channels(&self) -> Vec<ProgrammerChannel> {
+        let mut channels: HashMap<String, (Vec<u32>, f64)> = HashMap::new();
+        for (fixture_id, state) in self.selected_fixtures.iter() {
+            for (channel, value) in state.channels.iter() {
+                let entry = channels
+                    .entry(channel.clone())
+                    .or_insert((Vec::new(), *value));
+                if entry.1 == *value {
+                    entry.0.push(*fixture_id);
+                } else {
+                    channels.insert(channel.clone(), (vec![*fixture_id], *value));
+                }
+            }
+        }
+        channels
+            .into_iter()
+            .map(|(channel, (fixtures, value))| ProgrammerChannel {
+                value,
+                channel,
+                fixtures,
+            })
+            .collect()
     }
 }
 

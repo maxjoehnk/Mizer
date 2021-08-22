@@ -52,8 +52,8 @@ impl<R: RuntimeApi> Handlers<R> {
             nodes: NodesHandler::new(runtime.clone()),
             session: SessionHandler::new(runtime.clone()),
             transport: TransportHandler::new(runtime.clone()),
-            sequencer: SequencerHandler::new(sequencer),
-            programmer: ProgrammerHandler::new(fixture_manager, runtime),
+            sequencer: SequencerHandler::new(sequencer.clone()),
+            programmer: ProgrammerHandler::new(fixture_manager, sequencer, runtime),
         }
     }
 }

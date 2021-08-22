@@ -11,5 +11,7 @@ abstract class ProgrammerApi {
 
   Future<void> highlight(bool highlight);
 
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode);
+
   Stream<ProgrammerState> observe();
 }

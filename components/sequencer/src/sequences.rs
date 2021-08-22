@@ -31,6 +31,20 @@ impl Sequence {
             }
         }
     }
+
+    /// Returns cue id
+    pub fn add_cue(&mut self) -> u32 {
+        let id = self.cues.len() as u32 + 1;
+        let cue = Cue {
+            id,
+            name: format!("Cue {}", id),
+            channels: Vec::new(),
+            trigger: CueTrigger::Go,
+        };
+        self.cues.push(cue);
+
+        id
+    }
 }
 
 impl PartialOrd for Sequence {
@@ -45,6 +59,18 @@ pub struct Cue {
     pub name: String,
     pub trigger: CueTrigger,
     pub channels: Vec<CueChannel>,
+}
+
+impl Cue {
+    pub fn merge(&mut self, channels: Vec<CueChannel>) {
+        for channel in channels {
+            if let Some(target) = self.channels.iter_mut().find(|c| c.channel == channel.channel && c.fixtures.overlaps(&channel.fixtures)) {
+                target.fixtures.retain(|fixture_id| !channel.fixtures.contains(fixture_id));
+            }
+            self.channels.push(channel);
+        }
+        self.channels.retain(|c| !c.fixtures.is_empty());
+    }
 }
 
 impl PartialOrd for Cue {
@@ -167,5 +193,20 @@ pub enum SequencerTime {
 impl Default for SequencerValue<SequencerTime> {
     fn default() -> Self {
         Self::Direct(SequencerTime::Seconds(0.))
+    }
+}
+
+trait VecExtension {
+    fn overlaps(&self, other: &Self) -> bool;
+}
+
+impl<T: PartialEq> VecExtension for Vec<T> {
+    fn overlaps(&self, other: &Self) -> bool {
+        for item in other.iter() {
+            if self.contains(item) {
+                return true;
+            }
+        }
+        false
     }
 }

@@ -11,6 +11,10 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'fixtures.pb.dart' as $0;
 
+import 'programmer.pbenum.dart';
+
+export 'programmer.pbenum.dart';
+
 class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubscribeProgrammerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..hasRequiredFields = false
@@ -404,5 +408,95 @@ class HighlightResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static HighlightResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HighlightResponse>(create);
   static HighlightResponse _defaultInstance;
+}
+
+class StoreRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..e<StoreRequest_Mode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'storeMode', $pb.PbFieldType.OE, defaultOrMaker: StoreRequest_Mode.Overwrite, valueOf: StoreRequest_Mode.valueOf, enumValues: StoreRequest_Mode.values)
+    ..hasRequiredFields = false
+  ;
+
+  StoreRequest._() : super();
+  factory StoreRequest({
+    $core.int sequenceId,
+    StoreRequest_Mode storeMode,
+  }) {
+    final _result = create();
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    if (storeMode != null) {
+      _result.storeMode = storeMode;
+    }
+    return _result;
+  }
+  factory StoreRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StoreRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StoreRequest clone() => StoreRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StoreRequest copyWith(void Function(StoreRequest) updates) => super.copyWith((message) => updates(message as StoreRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StoreRequest create() => StoreRequest._();
+  StoreRequest createEmptyInstance() => create();
+  static $pb.PbList<StoreRequest> createRepeated() => $pb.PbList<StoreRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StoreRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StoreRequest>(create);
+  static StoreRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequenceId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequenceId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequenceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequenceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  StoreRequest_Mode get storeMode => $_getN(1);
+  @$pb.TagNumber(2)
+  set storeMode(StoreRequest_Mode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStoreMode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStoreMode() => clearField(2);
+}
+
+class StoreResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  StoreResponse._() : super();
+  factory StoreResponse() => create();
+  factory StoreResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StoreResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StoreResponse clone() => StoreResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StoreResponse copyWith(void Function(StoreResponse) updates) => super.copyWith((message) => updates(message as StoreResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static StoreResponse create() => StoreResponse._();
+  StoreResponse createEmptyInstance() => create();
+  static $pb.PbList<StoreResponse> createRepeated() => $pb.PbList<StoreResponse>();
+  @$core.pragma('dart2js:noInline')
+  static StoreResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StoreResponse>(create);
+  static StoreResponse _defaultInstance;
 }
 

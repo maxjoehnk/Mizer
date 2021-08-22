@@ -42,6 +42,10 @@ class ProgrammerApiClient extends $grpc.Client {
           ($1.HighlightRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $1.HighlightResponse.fromBuffer(value));
+  static final _$store = $grpc.ClientMethod<$1.StoreRequest, $1.StoreResponse>(
+      '/mizer.ProgrammerApi/Store',
+      ($1.StoreRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.StoreResponse.fromBuffer(value));
 
   ProgrammerApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -77,6 +81,11 @@ class ProgrammerApiClient extends $grpc.Client {
       $1.HighlightRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$highlight, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.StoreResponse> store($1.StoreRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$store, request, options: options);
   }
 }
 
@@ -125,6 +134,13 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.HighlightRequest.fromBuffer(value),
         ($1.HighlightResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.StoreRequest, $1.StoreResponse>(
+        'Store',
+        store_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.StoreRequest.fromBuffer(value),
+        ($1.StoreResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer_Pre(
@@ -155,6 +171,11 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return highlight(call, await request);
   }
 
+  $async.Future<$1.StoreResponse> store_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.StoreRequest> request) async {
+    return store(call, await request);
+  }
+
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer(
       $grpc.ServiceCall call, $1.SubscribeProgrammerRequest request);
   $async.Future<$1.WriteChannelsResponse> writeChannels(
@@ -165,4 +186,6 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.ClearRequest request);
   $async.Future<$1.HighlightResponse> highlight(
       $grpc.ServiceCall call, $1.HighlightRequest request);
+  $async.Future<$1.StoreResponse> store(
+      $grpc.ServiceCall call, $1.StoreRequest request);
 }

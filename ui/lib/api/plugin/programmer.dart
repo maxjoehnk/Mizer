@@ -27,6 +27,12 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode) async {
+    var request = StoreRequest(sequenceId: sequenceId, storeMode: storeMode);
+    await channel.invokeMethod("store", request.writeToBuffer());
+  }
+
+  @override
   Stream<ProgrammerState> observe() {
     return stateEvents
         .receiveBroadcastStream()

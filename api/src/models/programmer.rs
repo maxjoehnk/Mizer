@@ -1511,6 +1511,365 @@ impl ::protobuf::reflect::ProtobufValue for HighlightResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct StoreRequest {
+    // message fields
+    pub sequence_id: u32,
+    pub store_mode: StoreRequest_Mode,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StoreRequest {
+    fn default() -> &'a StoreRequest {
+        <StoreRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StoreRequest {
+    pub fn new() -> StoreRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 sequence_id = 1;
+
+
+    pub fn get_sequence_id(&self) -> u32 {
+        self.sequence_id
+    }
+    pub fn clear_sequence_id(&mut self) {
+        self.sequence_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequence_id(&mut self, v: u32) {
+        self.sequence_id = v;
+    }
+
+    // .mizer.StoreRequest.Mode store_mode = 2;
+
+
+    pub fn get_store_mode(&self) -> StoreRequest_Mode {
+        self.store_mode
+    }
+    pub fn clear_store_mode(&mut self) {
+        self.store_mode = StoreRequest_Mode::Overwrite;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_store_mode(&mut self, v: StoreRequest_Mode) {
+        self.store_mode = v;
+    }
+}
+
+impl ::protobuf::Message for StoreRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.sequence_id = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.store_mode, 2, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.sequence_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.sequence_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.store_mode != StoreRequest_Mode::Overwrite {
+            my_size += ::protobuf::rt::enum_size(2, self.store_mode);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.sequence_id != 0 {
+            os.write_uint32(1, self.sequence_id)?;
+        }
+        if self.store_mode != StoreRequest_Mode::Overwrite {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.store_mode))?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StoreRequest {
+        StoreRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "sequence_id",
+                |m: &StoreRequest| { &m.sequence_id },
+                |m: &mut StoreRequest| { &mut m.sequence_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<StoreRequest_Mode>>(
+                "store_mode",
+                |m: &StoreRequest| { &m.store_mode },
+                |m: &mut StoreRequest| { &mut m.store_mode },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StoreRequest>(
+                "StoreRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StoreRequest {
+        static instance: ::protobuf::rt::LazyV2<StoreRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StoreRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for StoreRequest {
+    fn clear(&mut self) {
+        self.sequence_id = 0;
+        self.store_mode = StoreRequest_Mode::Overwrite;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StoreRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StoreRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum StoreRequest_Mode {
+    Overwrite = 0,
+    Merge = 1,
+    AddCue = 2,
+}
+
+impl ::protobuf::ProtobufEnum for StoreRequest_Mode {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<StoreRequest_Mode> {
+        match value {
+            0 => ::std::option::Option::Some(StoreRequest_Mode::Overwrite),
+            1 => ::std::option::Option::Some(StoreRequest_Mode::Merge),
+            2 => ::std::option::Option::Some(StoreRequest_Mode::AddCue),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [StoreRequest_Mode] = &[
+            StoreRequest_Mode::Overwrite,
+            StoreRequest_Mode::Merge,
+            StoreRequest_Mode::AddCue,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<StoreRequest_Mode>("StoreRequest.Mode", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for StoreRequest_Mode {
+}
+
+impl ::std::default::Default for StoreRequest_Mode {
+    fn default() -> Self {
+        StoreRequest_Mode::Overwrite
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StoreRequest_Mode {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct StoreResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a StoreResponse {
+    fn default() -> &'a StoreResponse {
+        <StoreResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl StoreResponse {
+    pub fn new() -> StoreResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for StoreResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> StoreResponse {
+        StoreResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<StoreResponse>(
+                "StoreResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static StoreResponse {
+        static instance: ::protobuf::rt::LazyV2<StoreResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(StoreResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for StoreResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for StoreResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for StoreResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10programmer.proto\x12\x05mizer\x1a\x0efixtures.proto\"\x1c\n\x1aSub\
     scribeProgrammerRequest\"-\n\x0fProgrammerState\x12\x1a\n\x08fixtures\
@@ -1521,14 +1880,19 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ponse\"3\n\x15SelectFixturesRequest\x12\x1a\n\x08fixtures\x18\x01\x20\
     \x03(\rR\x08fixtures\"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearR\
     equest\"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighli\
-    ght\x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse2\xfe\
-    \x02\n\rProgrammerApi\x12V\n\x15SubscribeToProgrammer\x12!.mizer.Subscri\
-    beProgrammerRequest\x1a\x16.mizer.ProgrammerState\"\00\x01\x12L\n\rWrite\
-    Channels\x12\x1b.mizer.WriteChannelsRequest\x1a\x1c.mizer.WriteChannelsR\
-    esponse\"\0\x12O\n\x0eSelectFixtures\x12\x1c.mizer.SelectFixturesRequest\
-    \x1a\x1d.mizer.SelectFixturesResponse\"\0\x124\n\x05Clear\x12\x13.mizer.\
-    ClearRequest\x1a\x14.mizer.ClearResponse\"\0\x12@\n\tHighlight\x12\x17.m\
-    izer.HighlightRequest\x1a\x18.mizer.HighlightResponse\"\0b\x06proto3\
+    ght\x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\x96\
+    \x01\n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nseq\
+    uenceId\x127\n\nstore_mode\x18\x02\x20\x01(\x0e2\x18.mizer.StoreRequest.\
+    ModeR\tstoreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\
+    \x10\x01\x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse2\xb4\x03\n\rPr\
+    ogrammerApi\x12V\n\x15SubscribeToProgrammer\x12!.mizer.SubscribeProgramm\
+    erRequest\x1a\x16.mizer.ProgrammerState\"\00\x01\x12L\n\rWriteChannels\
+    \x12\x1b.mizer.WriteChannelsRequest\x1a\x1c.mizer.WriteChannelsResponse\
+    \"\0\x12O\n\x0eSelectFixtures\x12\x1c.mizer.SelectFixturesRequest\x1a\
+    \x1d.mizer.SelectFixturesResponse\"\0\x124\n\x05Clear\x12\x13.mizer.Clea\
+    rRequest\x1a\x14.mizer.ClearResponse\"\0\x12@\n\tHighlight\x12\x17.mizer\
+    .HighlightRequest\x1a\x18.mizer.HighlightResponse\"\0\x124\n\x05Store\
+    \x12\x13.mizer.StoreRequest\x1a\x14.mizer.StoreResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

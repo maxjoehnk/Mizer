@@ -10,6 +10,7 @@ service ProgrammerApi {
   rpc SelectFixtures (SelectFixturesRequest) returns (SelectFixturesResponse) {}
   rpc Clear (ClearRequest) returns (ClearResponse) {}
   rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
+  rpc Store (StoreRequest) returns (StoreResponse) {}
 }
 
 message SubscribeProgrammerRequest {}
@@ -42,3 +43,15 @@ message HighlightRequest {
 }
 
 message HighlightResponse {}
+
+message StoreRequest {
+  uint32 sequence_id = 1;
+  Mode store_mode = 2;
+
+  enum Mode {
+    Overwrite = 0;
+    Merge = 1;
+    AddCue = 2;
+  }
+}
+message StoreResponse {}

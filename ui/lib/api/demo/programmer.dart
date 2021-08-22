@@ -31,4 +31,10 @@ class ProgrammerDemoApi implements ProgrammerApi {
     // TODO: implement highlight
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode) {
+    // TODO: implement store
+    throw UnimplementedError();
+  }
 }

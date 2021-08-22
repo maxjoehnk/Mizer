@@ -1,5 +1,5 @@
 use mizer_api::RuntimeApi;
-use crate::protos::{ProgrammerApi, SubscribeProgrammerRequest, ProgrammerState, WriteChannelsRequest, WriteChannelsResponse, SelectFixturesRequest, SelectFixturesResponse, ClearRequest, ClearResponse, HighlightRequest, HighlightResponse};
+use crate::protos::*;
 use mizer_api::handlers::ProgrammerHandler;
 use grpc::{ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink};
 
@@ -28,6 +28,12 @@ impl<R: RuntimeApi> ProgrammerApi for ProgrammerHandler<R> {
 
     fn highlight(&self, req: ServerRequestSingle<HighlightRequest>, resp: ServerResponseUnarySink<HighlightResponse>) -> grpc::Result<()> {
         self.highlight(req.message.highlight);
+
+        resp.finish(Default::default())
+    }
+
+    fn store(&self, req: ServerRequestSingle<StoreRequest>, resp: ServerResponseUnarySink<super::programmer::StoreResponse>) -> grpc::Result<()> {
+        self.store(req.message.sequence_id, req.message.store_mode);
 
         resp.finish(Default::default())
     }

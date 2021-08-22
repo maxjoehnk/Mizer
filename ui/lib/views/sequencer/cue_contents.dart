@@ -13,15 +13,17 @@ class CueContents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FixturesBloc, Fixtures>(
-      builder: (context, fixtures) => DataTable(
-          headingRowHeight: 40,
-          dataRowHeight: 40,
-          columns: [
-            DataColumn(label: Text("Fixture ID")),
-            DataColumn(label: Text("Name")),
-            ..._channels.map((c) => DataColumn(label: Text(c)))
-          ],
-          rows: _buildRows(fixtures.fixtures)),
+      builder: (context, fixtures) => SingleChildScrollView(
+        child: DataTable(
+            headingRowHeight: 40,
+            dataRowHeight: 40,
+            columns: [
+              DataColumn(label: Text("Fixture ID")),
+              DataColumn(label: Text("Name")),
+              ..._channels.map((c) => DataColumn(label: Text(c)))
+            ],
+            rows: _buildRows(fixtures.fixtures)),
+      ),
     );
   }
 

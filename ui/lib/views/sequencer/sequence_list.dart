@@ -22,10 +22,12 @@ class SequenceList extends StatelessWidget {
   }
 
   Widget _list(List<Sequence> sequences) {
-    return DataTable(
-      showCheckboxColumn: false,
-      columns: [DataColumn(label: Text("Name")), DataColumn(label: Text("Cues"))],
-      rows: sequences.map(_sequenceRow).toList(),
+    return SingleChildScrollView(
+      child: DataTable(
+        showCheckboxColumn: false,
+        columns: [DataColumn(label: Text("Name")), DataColumn(label: Text("Cues"))],
+        rows: sequences.map(_sequenceRow).toList(),
+      ),
     );
   }
 

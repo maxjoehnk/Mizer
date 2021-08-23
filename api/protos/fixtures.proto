@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.fixtures;
 
 service FixturesApi {
   rpc GetFixtures (GetFixturesRequest) returns (Fixtures) {}
@@ -33,33 +33,34 @@ message Fixture {
   string mode = 4;
   uint32 universe = 5;
   uint32 channel = 6;
-  repeated FixtureChannelGroup channels = 7;
-  repeated DmxChannel dmxChannels = 8;
+  repeated FixtureControls controls = 7;
 }
 
-message FixtureChannelGroup {
-  string name = 1;
-  oneof channel {
-    GenericChannel generic = 2;
+enum FixtureControl {
+  INTENSITY = 0;
+  SHUTTER = 1;
+  COLOR = 2;
+  PAN = 3;
+  TILT = 4;
+  FOCUS = 5;
+  ZOOM = 6;
+  PRISM = 7;
+  IRIS = 8;
+  FROST = 9;
+  GENERIC = 10;
+}
+
+message FixtureControls {
+  FixtureControl control = 1;
+  oneof value {
+    FaderChannel fader = 2;
     ColorChannel color = 3;
-    AxisChannel pan = 4;
-    AxisChannel tilt = 5;
-    GenericChannel focus = 6;
-    GenericChannel zoom = 7;
-    GenericChannel prism = 8;
-    GenericChannel intensity = 9;
-    GenericChannel shutter = 10;
-    GenericChannel iris = 11;
-    GenericChannel frost = 12;
+    AxisChannel axis = 4;
+    GenericChannel generic = 5;
   }
 }
 
-message DmxChannel {
-  string name = 1;
-  double value = 2;
-}
-
-message GenericChannel {
+message FaderChannel {
   double value = 1;
 }
 
@@ -73,6 +74,11 @@ message AxisChannel {
   double value = 1;
   double angle_from = 2;
   double angle_to = 3;
+}
+
+message GenericChannel {
+  double value = 1;
+  string name = 2;
 }
 
 message GetFixtureDefinitionsRequest {}

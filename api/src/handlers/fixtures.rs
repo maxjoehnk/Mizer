@@ -1,4 +1,3 @@
-use mizer_fixtures::fixture::FixtureChannelGroupType;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 
@@ -35,27 +34,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 name: fixture.definition.name.clone(),
                 manufacturer: fixture.definition.manufacturer.clone(),
                 mode: fixture.current_mode.name.clone(),
-                channels: fixture
-                    .current_mode
-                    .groups
-                    .iter()
-                    .map(|group| FixtureChannelGroup::with_values(group, &fixture.channel_values))
-                    .collect(),
-                dmxChannels: fixture
-                    .current_mode
-                    .channels
-                    .iter()
-                    .map(|channel| {
-                        DmxChannel::with_value(
-                            channel,
-                            fixture
-                                .channel_values
-                                .get(&channel.name)
-                                .copied()
-                                .unwrap_or_default(),
-                        )
-                    })
-                    .collect(),
+                controls: FixtureControls::with_values(
+                    fixture.current_mode.controls.clone(),
+                    &fixture.channel_values,
+                ).into(),
                 ..Default::default()
             };
             fixtures.fixtures.push(fixture_model);

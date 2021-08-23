@@ -1,6 +1,8 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.sequencer;
+
+import "fixtures.proto";
 
 service SequencerApi {
   rpc GetSequences (GetSequencesRequest) returns (Sequences) {}
@@ -46,10 +48,26 @@ enum CueTrigger {
 
 message CueChannel {
   repeated uint32 fixtures = 1;
-  string channel = 2;
+  CueControl control = 2;
   CueValue value = 3;
   CueTimer fade = 4;
   CueTimer delay = 5;
+}
+
+enum CueControl {
+  INTENSITY = 0;
+  SHUTTER = 1;
+  COLOR_RED = 2;
+  COLOR_GREEN = 3;
+  COLOR_BLUE = 4;
+  PAN = 5;
+  TILT = 6;
+  FOCUS = 7;
+  ZOOM = 8;
+  PRISM = 9;
+  IRIS = 10;
+  FROST = 11;
+  GENERIC = 12;
 }
 
 message CueValue {

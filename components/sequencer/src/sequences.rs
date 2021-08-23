@@ -6,6 +6,7 @@ use crate::state::SequenceState;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_util::LerpExt;
 use std::time::Duration;
+use mizer_fixtures::fixture::{FixtureControl};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -25,7 +26,7 @@ impl Sequence {
             for (fixture_id, value) in channel.values(&state) {
                 if let Some(value) = value {
                     if let Some(mut fixture) = fixture_manager.get_fixture_mut(fixture_id) {
-                        fixture.write(&channel.channel, value);
+                        fixture.write_control(channel.control.clone(), value);
                     }
                 }
             }
@@ -64,7 +65,7 @@ pub struct Cue {
 impl Cue {
     pub fn merge(&mut self, channels: Vec<CueChannel>) {
         for channel in channels {
-            if let Some(target) = self.channels.iter_mut().find(|c| c.channel == channel.channel && c.fixtures.overlaps(&channel.fixtures)) {
+            if let Some(target) = self.channels.iter_mut().find(|c| c.control == channel.control && c.fixtures.overlaps(&channel.fixtures)) {
                 target.fixtures.retain(|fixture_id| !channel.fixtures.contains(fixture_id));
             }
             self.channels.push(channel);
@@ -90,7 +91,7 @@ pub enum CueTrigger {
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct CueChannel {
     pub fixtures: Vec<u32>,
-    pub channel: String,
+    pub control: FixtureControl,
     pub value: SequencerValue<f64>,
     #[serde(default)]
     pub fade: Option<SequencerValue<SequencerTime>>,
@@ -153,7 +154,7 @@ impl CueChannel {
                 let time = state.get_timer().as_secs_f64();
                 for i in 0..self.fixtures.len() {
                     if let Some(value) = &mut values[i] {
-                        let previous_value = state.get_fixture_value(self.fixtures[i], &self.channel).unwrap_or_default();
+                        let previous_value = state.get_fixture_value(self.fixtures[i], &self.control).unwrap_or_default();
                         values[i] = Some(time.lerp((0., duration), (previous_value, *value)));
                     }
                 }
@@ -163,7 +164,7 @@ impl CueChannel {
                 for i in 0..self.fixtures.len() {
                     let duration: f64 = (i as f64).lerp((0., self.fixtures.len() as f64), (from, to));
                     if let Some(value) = &mut values[i] {
-                        let previous_value = state.get_fixture_value(self.fixtures[i], &self.channel).unwrap_or_default();
+                        let previous_value = state.get_fixture_value(self.fixtures[i], &self.control).unwrap_or_default();
                         values[i] = Some(time.lerp((0., duration), (previous_value, *value)));
                     }
                 }

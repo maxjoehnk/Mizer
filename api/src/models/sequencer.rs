@@ -558,7 +558,7 @@ impl Sequences {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.Sequence sequences = 1;
+    // repeated .mizer.sequencer.Sequence sequences = 1;
 
 
     pub fn get_sequences(&self) -> &[Sequence] {
@@ -770,7 +770,7 @@ impl Sequence {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // repeated .mizer.Cue cues = 3;
+    // repeated .mizer.sequencer.Cue cues = 3;
 
 
     pub fn get_cues(&self) -> &[Cue] {
@@ -1018,7 +1018,7 @@ impl Cue {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // .mizer.CueTrigger trigger = 3;
+    // .mizer.sequencer.CueTrigger trigger = 3;
 
 
     pub fn get_trigger(&self) -> CueTrigger {
@@ -1048,7 +1048,7 @@ impl Cue {
         self.field_loop = v;
     }
 
-    // repeated .mizer.CueChannel channels = 5;
+    // repeated .mizer.sequencer.CueChannel channels = 5;
 
 
     pub fn get_channels(&self) -> &[CueChannel] {
@@ -1267,7 +1267,7 @@ impl ::protobuf::reflect::ProtobufValue for Cue {
 pub struct CueChannel {
     // message fields
     pub fixtures: ::std::vec::Vec<u32>,
-    pub channel: ::std::string::String,
+    pub control: CueControl,
     pub value: ::protobuf::SingularPtrField<CueValue>,
     pub fade: ::protobuf::SingularPtrField<CueTimer>,
     pub delay: ::protobuf::SingularPtrField<CueTimer>,
@@ -1314,33 +1314,22 @@ impl CueChannel {
         ::std::mem::replace(&mut self.fixtures, ::std::vec::Vec::new())
     }
 
-    // string channel = 2;
+    // .mizer.sequencer.CueControl control = 2;
 
 
-    pub fn get_channel(&self) -> &str {
-        &self.channel
+    pub fn get_control(&self) -> CueControl {
+        self.control
     }
-    pub fn clear_channel(&mut self) {
-        self.channel.clear();
+    pub fn clear_control(&mut self) {
+        self.control = CueControl::INTENSITY;
     }
 
     // Param is passed by value, moved
-    pub fn set_channel(&mut self, v: ::std::string::String) {
-        self.channel = v;
+    pub fn set_control(&mut self, v: CueControl) {
+        self.control = v;
     }
 
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_channel(&mut self) -> &mut ::std::string::String {
-        &mut self.channel
-    }
-
-    // Take field
-    pub fn take_channel(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.channel, ::std::string::String::new())
-    }
-
-    // .mizer.CueValue value = 3;
+    // .mizer.sequencer.CueValue value = 3;
 
 
     pub fn get_value(&self) -> &CueValue {
@@ -1373,7 +1362,7 @@ impl CueChannel {
         self.value.take().unwrap_or_else(|| CueValue::new())
     }
 
-    // .mizer.CueTimer fade = 4;
+    // .mizer.sequencer.CueTimer fade = 4;
 
 
     pub fn get_fade(&self) -> &CueTimer {
@@ -1406,7 +1395,7 @@ impl CueChannel {
         self.fade.take().unwrap_or_else(|| CueTimer::new())
     }
 
-    // .mizer.CueTimer delay = 5;
+    // .mizer.sequencer.CueTimer delay = 5;
 
 
     pub fn get_delay(&self) -> &CueTimer {
@@ -1468,7 +1457,7 @@ impl ::protobuf::Message for CueChannel {
                     ::protobuf::rt::read_repeated_uint32_into(wire_type, is, &mut self.fixtures)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.channel)?;
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 2, &mut self.unknown_fields)?
                 },
                 3 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.value)?;
@@ -1494,8 +1483,8 @@ impl ::protobuf::Message for CueChannel {
         for value in &self.fixtures {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
-        if !self.channel.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.channel);
+        if self.control != CueControl::INTENSITY {
+            my_size += ::protobuf::rt::enum_size(2, self.control);
         }
         if let Some(ref v) = self.value.as_ref() {
             let len = v.compute_size();
@@ -1518,8 +1507,8 @@ impl ::protobuf::Message for CueChannel {
         for v in &self.fixtures {
             os.write_uint32(1, *v)?;
         };
-        if !self.channel.is_empty() {
-            os.write_string(2, &self.channel)?;
+        if self.control != CueControl::INTENSITY {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.control))?;
         }
         if let Some(ref v) = self.value.as_ref() {
             os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
@@ -1579,10 +1568,10 @@ impl ::protobuf::Message for CueChannel {
                 |m: &CueChannel| { &m.fixtures },
                 |m: &mut CueChannel| { &mut m.fixtures },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "channel",
-                |m: &CueChannel| { &m.channel },
-                |m: &mut CueChannel| { &mut m.channel },
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueControl>>(
+                "control",
+                |m: &CueChannel| { &m.control },
+                |m: &mut CueChannel| { &mut m.control },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueValue>>(
                 "value",
@@ -1616,7 +1605,7 @@ impl ::protobuf::Message for CueChannel {
 impl ::protobuf::Clear for CueChannel {
     fn clear(&mut self) {
         self.fixtures.clear();
-        self.channel.clear();
+        self.control = CueControl::INTENSITY;
         self.value.clear();
         self.fade.clear();
         self.delay.clear();
@@ -1691,7 +1680,7 @@ impl CueValue {
         self.value = ::std::option::Option::Some(CueValue_oneof_value::direct(v))
     }
 
-    // .mizer.CueValueRange range = 4;
+    // .mizer.sequencer.CueValueRange range = 4;
 
 
     pub fn get_range(&self) -> &CueValueRange {
@@ -1937,7 +1926,7 @@ impl CueTimer {
         self.hasTimer = v;
     }
 
-    // .mizer.CueTime direct = 2;
+    // .mizer.sequencer.CueTime direct = 2;
 
 
     pub fn get_direct(&self) -> &CueTime {
@@ -1986,7 +1975,7 @@ impl CueTimer {
         }
     }
 
-    // .mizer.CueTimerRange range = 3;
+    // .mizer.sequencer.CueTimerRange range = 3;
 
 
     pub fn get_range(&self) -> &CueTimerRange {
@@ -2648,7 +2637,7 @@ impl CueTimerRange {
         ::std::default::Default::default()
     }
 
-    // .mizer.CueTime from = 1;
+    // .mizer.sequencer.CueTime from = 1;
 
 
     pub fn get_from(&self) -> &CueTime {
@@ -2681,7 +2670,7 @@ impl CueTimerRange {
         self.from.take().unwrap_or_else(|| CueTime::new())
     }
 
-    // .mizer.CueTime to = 2;
+    // .mizer.sequencer.CueTime to = 2;
 
 
     pub fn get_to(&self) -> &CueTime {
@@ -2915,40 +2904,132 @@ impl ::protobuf::reflect::ProtobufValue for CueTrigger {
     }
 }
 
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum CueControl {
+    INTENSITY = 0,
+    SHUTTER = 1,
+    COLOR_RED = 2,
+    COLOR_GREEN = 3,
+    COLOR_BLUE = 4,
+    PAN = 5,
+    TILT = 6,
+    FOCUS = 7,
+    ZOOM = 8,
+    PRISM = 9,
+    IRIS = 10,
+    FROST = 11,
+    GENERIC = 12,
+}
+
+impl ::protobuf::ProtobufEnum for CueControl {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<CueControl> {
+        match value {
+            0 => ::std::option::Option::Some(CueControl::INTENSITY),
+            1 => ::std::option::Option::Some(CueControl::SHUTTER),
+            2 => ::std::option::Option::Some(CueControl::COLOR_RED),
+            3 => ::std::option::Option::Some(CueControl::COLOR_GREEN),
+            4 => ::std::option::Option::Some(CueControl::COLOR_BLUE),
+            5 => ::std::option::Option::Some(CueControl::PAN),
+            6 => ::std::option::Option::Some(CueControl::TILT),
+            7 => ::std::option::Option::Some(CueControl::FOCUS),
+            8 => ::std::option::Option::Some(CueControl::ZOOM),
+            9 => ::std::option::Option::Some(CueControl::PRISM),
+            10 => ::std::option::Option::Some(CueControl::IRIS),
+            11 => ::std::option::Option::Some(CueControl::FROST),
+            12 => ::std::option::Option::Some(CueControl::GENERIC),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [CueControl] = &[
+            CueControl::INTENSITY,
+            CueControl::SHUTTER,
+            CueControl::COLOR_RED,
+            CueControl::COLOR_GREEN,
+            CueControl::COLOR_BLUE,
+            CueControl::PAN,
+            CueControl::TILT,
+            CueControl::FOCUS,
+            CueControl::ZOOM,
+            CueControl::PRISM,
+            CueControl::IRIS,
+            CueControl::FROST,
+            CueControl::GENERIC,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<CueControl>("CueControl", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for CueControl {
+}
+
+impl ::std::default::Default for CueControl {
+    fn default() -> Self {
+        CueControl::INTENSITY
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueControl {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0fsequencer.proto\x12\x05mizer\"\x15\n\x13GetSequencesRequest\"\x14\
-    \n\x12AddSequenceRequest\"/\n\x11SequenceGoRequest\x12\x1a\n\x08sequence\
-    \x18\x01\x20\x01(\rR\x08sequence\"\x0f\n\rEmptyResponse\":\n\tSequences\
-    \x12-\n\tsequences\x18\x01\x20\x03(\x0b2\x0f.mizer.SequenceR\tsequences\
-    \"N\n\x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
-    \x04name\x18\x02\x20\x01(\tR\x04name\x12\x1e\n\x04cues\x18\x03\x20\x03(\
-    \x0b2\n.mizer.CueR\x04cues\"\x99\x01\n\x03Cue\x12\x0e\n\x02id\x18\x01\
-    \x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12+\n\
-    \x07trigger\x18\x03\x20\x01(\x0e2\x11.mizer.CueTriggerR\x07trigger\x12\
-    \x12\n\x04loop\x18\x04\x20\x01(\x08R\x04loop\x12-\n\x08channels\x18\x05\
-    \x20\x03(\x0b2\x11.mizer.CueChannelR\x08channels\"\xb5\x01\n\nCueChannel\
-    \x12\x1a\n\x08fixtures\x18\x01\x20\x03(\rR\x08fixtures\x12\x18\n\x07chan\
-    nel\x18\x02\x20\x01(\tR\x07channel\x12%\n\x05value\x18\x03\x20\x01(\x0b2\
-    \x0f.mizer.CueValueR\x05value\x12#\n\x04fade\x18\x04\x20\x01(\x0b2\x0f.m\
-    izer.CueTimerR\x04fade\x12%\n\x05delay\x18\x05\x20\x01(\x0b2\x0f.mizer.C\
-    ueTimerR\x05delay\"[\n\x08CueValue\x12\x18\n\x06direct\x18\x03\x20\x01(\
-    \x01H\0R\x06direct\x12,\n\x05range\x18\x04\x20\x01(\x0b2\x14.mizer.CueVa\
-    lueRangeH\0R\x05rangeB\x07\n\x05value\"\x87\x01\n\x08CueTimer\x12\x1a\n\
-    \x08hasTimer\x18\x01\x20\x01(\x08R\x08hasTimer\x12(\n\x06direct\x18\x02\
-    \x20\x01(\x0b2\x0e.mizer.CueTimeH\0R\x06direct\x12,\n\x05range\x18\x03\
-    \x20\x01(\x0b2\x14.mizer.CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\
-    \rCueValueRange\x12\x12\n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\
-    \n\x02to\x18\x02\x20\x01(\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07second\
-    s\x18\x01\x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01\
-    (\x01H\0R\x05beatsB\x06\n\x04time\"S\n\rCueTimerRange\x12\"\n\x04from\
-    \x18\x01\x20\x01(\x0b2\x0e.mizer.CueTimeR\x04from\x12\x1e\n\x02to\x18\
-    \x02\x20\x01(\x0b2\x0e.mizer.CueTimeR\x02to*9\n\nCueTrigger\x12\x06\n\
-    \x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\t\n\x05BEATS\x10\x02\x12\x0c\
-    \n\x08TIMECODE\x10\x032\xcb\x01\n\x0cSequencerApi\x12>\n\x0cGetSequences\
-    \x12\x1a.mizer.GetSequencesRequest\x1a\x10.mizer.Sequences\"\0\x12;\n\
-    \x0bAddSequence\x12\x19.mizer.AddSequenceRequest\x1a\x0f.mizer.Sequence\
-    \"\0\x12>\n\nSequenceGo\x12\x18.mizer.SequenceGoRequest\x1a\x14.mizer.Em\
-    ptyResponse\"\0b\x06proto3\
+    \n\x0fsequencer.proto\x12\x0fmizer.sequencer\x1a\x0efixtures.proto\"\x15\
+    \n\x13GetSequencesRequest\"\x14\n\x12AddSequenceRequest\"/\n\x11Sequence\
+    GoRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\"\x0f\n\
+    \rEmptyResponse\"D\n\tSequences\x127\n\tsequences\x18\x01\x20\x03(\x0b2\
+    \x19.mizer.sequencer.SequenceR\tsequences\"X\n\x08Sequence\x12\x0e\n\x02\
+    id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04na\
+    me\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mizer.sequencer.CueR\x04cues\
+    \"\xad\x01\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\x20\x01(\
+    \x0e2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x12\x12\n\x04loop\x18\
+    \x04\x20\x01(\x08R\x04loop\x127\n\x08channels\x18\x05\x20\x03(\x0b2\x1b.\
+    mizer.sequencer.CueChannelR\x08channels\"\xf0\x01\n\nCueChannel\x12\x1a\
+    \n\x08fixtures\x18\x01\x20\x03(\rR\x08fixtures\x125\n\x07control\x18\x02\
+    \x20\x01(\x0e2\x1b.mizer.sequencer.CueControlR\x07control\x12/\n\x05valu\
+    e\x18\x03\x20\x01(\x0b2\x19.mizer.sequencer.CueValueR\x05value\x12-\n\
+    \x04fade\x18\x04\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12\
+    /\n\x05delay\x18\x05\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05dela\
+    y\"e\n\x08CueValue\x12\x18\n\x06direct\x18\x03\x20\x01(\x01H\0R\x06direc\
+    t\x126\n\x05range\x18\x04\x20\x01(\x0b2\x1e.mizer.sequencer.CueValueRang\
+    eH\0R\x05rangeB\x07\n\x05value\"\x9b\x01\n\x08CueTimer\x12\x1a\n\x08hasT\
+    imer\x18\x01\x20\x01(\x08R\x08hasTimer\x122\n\x06direct\x18\x02\x20\x01(\
+    \x0b2\x18.mizer.sequencer.CueTimeH\0R\x06direct\x126\n\x05range\x18\x03\
+    \x20\x01(\x0b2\x1e.mizer.sequencer.CueTimerRangeH\0R\x05rangeB\x07\n\x05\
+    timer\"3\n\rCueValueRange\x12\x12\n\x04from\x18\x01\x20\x01(\x01R\x04fro\
+    m\x12\x0e\n\x02to\x18\x02\x20\x01(\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\
+    \x07seconds\x18\x01\x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05beats\x18\
+    \x02\x20\x01(\x01H\0R\x05beatsB\x06\n\x04time\"g\n\rCueTimerRange\x12,\n\
+    \x04from\x18\x01\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x04from\x12(\
+    \n\x02to\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02to*9\n\nC\
+    ueTrigger\x12\x06\n\x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\t\n\x05BEA\
+    TS\x10\x02\x12\x0c\n\x08TIMECODE\x10\x03*\xad\x01\n\nCueControl\x12\r\n\
+    \tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\
+    \x02\x12\x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\
+    \x07\n\x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\x07\
+    \x12\x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\x10\
+    \n\x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x87\x02\n\x0cS\
+    equencerApi\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequencesRequ\
+    est\x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bAddSequence\x12#.miz\
+    er.sequencer.AddSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\0\x12\
+    R\n\nSequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.se\
+    quencer.EmptyResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -24,7 +24,7 @@
 pub trait ProgrammerApi {
     fn subscribe_to_programmer(&self, req: ::grpc::ServerRequestSingle<super::programmer::SubscribeProgrammerRequest>, resp: ::grpc::ServerResponseSink<super::programmer::ProgrammerState>) -> ::grpc::Result<()>;
 
-    fn write_channels(&self, req: ::grpc::ServerRequestSingle<super::programmer::WriteChannelsRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::WriteChannelsResponse>) -> ::grpc::Result<()>;
+    fn write_control(&self, req: ::grpc::ServerRequestSingle<super::programmer::WriteControlRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::WriteControlResponse>) -> ::grpc::Result<()>;
 
     fn select_fixtures(&self, req: ::grpc::ServerRequestSingle<super::programmer::SelectFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::SelectFixturesResponse>) -> ::grpc::Result<()>;
 
@@ -52,7 +52,7 @@ impl ::grpc::ClientStub for ProgrammerApiClient {
 impl ProgrammerApiClient {
     pub fn subscribe_to_programmer(&self, o: ::grpc::RequestOptions, req: super::programmer::SubscribeProgrammerRequest) -> ::grpc::StreamingResponse<super::programmer::ProgrammerState> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/SubscribeToProgrammer"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SubscribeToProgrammer"),
             streaming: ::grpc::rt::GrpcStreaming::ServerStreaming,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -60,9 +60,9 @@ impl ProgrammerApiClient {
         self.grpc_client.call_server_streaming(o, req, descriptor)
     }
 
-    pub fn write_channels(&self, o: ::grpc::RequestOptions, req: super::programmer::WriteChannelsRequest) -> ::grpc::SingleResponse<super::programmer::WriteChannelsResponse> {
+    pub fn write_control(&self, o: ::grpc::RequestOptions, req: super::programmer::WriteControlRequest) -> ::grpc::SingleResponse<super::programmer::WriteControlResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/WriteChannels"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/WriteControl"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -72,7 +72,7 @@ impl ProgrammerApiClient {
 
     pub fn select_fixtures(&self, o: ::grpc::RequestOptions, req: super::programmer::SelectFixturesRequest) -> ::grpc::SingleResponse<super::programmer::SelectFixturesResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/SelectFixtures"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SelectFixtures"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -82,7 +82,7 @@ impl ProgrammerApiClient {
 
     pub fn clear(&self, o: ::grpc::RequestOptions, req: super::programmer::ClearRequest) -> ::grpc::SingleResponse<super::programmer::ClearResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Clear"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Clear"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -92,7 +92,7 @@ impl ProgrammerApiClient {
 
     pub fn highlight(&self, o: ::grpc::RequestOptions, req: super::programmer::HighlightRequest) -> ::grpc::SingleResponse<super::programmer::HighlightResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Highlight"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Highlight"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -102,7 +102,7 @@ impl ProgrammerApiClient {
 
     pub fn store(&self, o: ::grpc::RequestOptions, req: super::programmer::StoreRequest) -> ::grpc::SingleResponse<super::programmer::StoreResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Store"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Store"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -119,11 +119,11 @@ pub struct ProgrammerApiServer;
 impl ProgrammerApiServer {
     pub fn new_service_def<H : ProgrammerApi + 'static + Sync + Send + 'static>(handler: H) -> ::grpc::rt::ServerServiceDefinition {
         let handler_arc = ::std::sync::Arc::new(handler);
-        ::grpc::rt::ServerServiceDefinition::new("/mizer.ProgrammerApi",
+        ::grpc::rt::ServerServiceDefinition::new("/mizer.programmer.ProgrammerApi",
             vec![
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/SubscribeToProgrammer"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SubscribeToProgrammer"),
                         streaming: ::grpc::rt::GrpcStreaming::ServerStreaming,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -135,19 +135,19 @@ impl ProgrammerApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/WriteChannels"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/WriteControl"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                     }),
                     {
                         let handler_copy = handler_arc.clone();
-                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).write_channels(req, resp))
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).write_control(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/SelectFixtures"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SelectFixtures"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -159,7 +159,7 @@ impl ProgrammerApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Clear"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Clear"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -171,7 +171,7 @@ impl ProgrammerApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Highlight"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Highlight"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -183,7 +183,7 @@ impl ProgrammerApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ProgrammerApi/Store"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Store"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),

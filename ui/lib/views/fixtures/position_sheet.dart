@@ -1,7 +1,18 @@
 import 'package:flutter/widgets.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
 import 'fixture_group_control.dart';
+
+const CONTROLS = [
+  FixtureControl.PAN,
+  FixtureControl.TILT,
+];
+
+const NAMES = {
+  FixtureControl.PAN: "Pan",
+  FixtureControl.TILT: "Tilt",
+};
 
 class PositionSheet extends StatelessWidget {
   final List<Fixture> fixtures;
@@ -11,20 +22,26 @@ class PositionSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: groups.isNotEmpty
+      child: controls.isNotEmpty
           ? ListView(
               scrollDirection: Axis.horizontal,
-              children: groups
-                  .map((group) => FixtureGroupControl(group, fixtures: fixtures))
-                  .toList())
+              children:
+                  controls.map((control) => FixtureGroupControl(control, fixtures: fixtures)).toList())
           : null,
     );
   }
 
-  Iterable<FixtureChannelGroup> get groups {
+  Iterable<Control> get controls {
     if (fixtures.isEmpty) {
       return [];
     }
-    return fixtures.first.channels.where((element) => element.hasPan() || element.hasTilt());
+    return fixtures.first.controls
+        .where((e) => CONTROLS.contains(e.control))
+        .map((control) => Control(NAMES[control.control],
+            fader: control.fader,
+            update: (v) => WriteControlRequest(
+                  control: control.control,
+                  fader: v,
+                )));
   }
 }

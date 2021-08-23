@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.programmer;
 
 import "fixtures.proto";
 
 service ProgrammerApi {
   rpc SubscribeToProgrammer (SubscribeProgrammerRequest) returns (stream ProgrammerState) {}
-  rpc WriteChannels (WriteChannelsRequest) returns (WriteChannelsResponse) {}
+  rpc WriteControl (WriteControlRequest) returns (WriteControlResponse) {}
   rpc SelectFixtures (SelectFixturesRequest) returns (SelectFixturesResponse) {}
   rpc Clear (ClearRequest) returns (ClearResponse) {}
   rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
@@ -19,15 +19,21 @@ message ProgrammerState {
   repeated uint32 fixtures = 1;
 }
 
-message WriteChannelsRequest {
-  string channel = 1;
+message WriteControlRequest {
+  mizer.fixtures.FixtureControl control = 1;
   oneof value {
     double fader = 2;
-    ColorChannel color = 3;
+    mizer.fixtures.ColorChannel color = 3;
+    GenericValue generic = 4;
+  }
+
+  message GenericValue {
+    string name = 1;
+    double value = 2;
   }
 }
 
-message WriteChannelsResponse {}
+message WriteControlResponse {}
 
 message SelectFixturesRequest {
   repeated uint32 fixtures = 1;

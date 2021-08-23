@@ -12,6 +12,7 @@ mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
 mizer-protocol-dmx = { path = "../connections/protocols/dmx" }
 profiling = "1"
+serde = { version = "1", features = ["derive"] }
 
 [dev-dependencies]
 test-case = "1.2"

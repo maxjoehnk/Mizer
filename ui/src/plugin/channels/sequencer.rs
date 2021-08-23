@@ -15,7 +15,7 @@ impl MethodCallHandler for SequencerChannel {
         &mut self,
         call: MethodCall<Value>,
         resp: MethodCallReply<Value>,
-        engine: EngineHandle,
+        _: EngineHandle,
     ) {
         match call.method.as_str() {
             "getSequences" => {

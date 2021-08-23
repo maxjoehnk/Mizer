@@ -11,17 +11,17 @@ class GoboSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: groups.isNotEmpty
+      child: controls.isNotEmpty
           ? ListView(
               scrollDirection: Axis.horizontal,
-              children: groups
-                  .map((group) => FixtureGroupControl(group, fixtures: fixtures))
+              children: controls
+                  .map((control) => FixtureGroupControl(control, fixtures: fixtures))
                   .toList())
           : null,
     );
   }
 
-  Iterable<FixtureChannelGroup> get groups {
+  Iterable<Control> get controls {
     return [];
   }
 }

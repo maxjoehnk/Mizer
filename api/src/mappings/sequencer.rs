@@ -1,7 +1,6 @@
 use mizer_sequencer::{SequencerTime, SequencerValue};
 
 use crate::models::*;
-use crate::models::CueTime_oneof_time::seconds;
 use protobuf::SingularPtrField;
 
 impl From<mizer_sequencer::Sequence> for Sequence {
@@ -60,7 +59,7 @@ impl From<mizer_sequencer::CueChannel> for CueChannel {
 
         Self {
             fixtures: channel.fixtures,
-            channel: channel.channel,
+            control: channel.control.into(),
             value: SingularPtrField::some(value),
             fade: SingularPtrField::some(CueTimer::from(channel.fade)),
             delay: SingularPtrField::some(CueTimer::from(channel.delay)),
@@ -129,6 +128,29 @@ impl From<Option<SequencerValue<SequencerTime>>> for CueTimer {
                 }
             }
             _ => unreachable!("invalid combination of beats and seconds in range"),
+        }
+    }
+}
+
+impl From<mizer_fixtures::fixture::FixtureControl> for CueControl {
+    fn from(fixture_control: mizer_fixtures::fixture::FixtureControl) -> Self {
+        use mizer_fixtures::fixture::FixtureControl::*;
+        use mizer_fixtures::fixture::ColorChannel;
+
+        match fixture_control {
+            Intensity => Self::INTENSITY,
+            Shutter => Self::SHUTTER,
+            Focus => Self::FOCUS,
+            Zoom => Self::ZOOM,
+            Iris => Self::IRIS,
+            Prism => Self::PRISM,
+            Frost => Self::FROST,
+            Pan => Self::PAN,
+            Tilt => Self::TILT,
+            Color(ColorChannel::Red) => Self::COLOR_RED,
+            Color(ColorChannel::Green) => Self::COLOR_GREEN,
+            Color(ColorChannel::Blue) => Self::COLOR_BLUE,
+            Generic(_) => Self::GENERIC,
         }
     }
 }

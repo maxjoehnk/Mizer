@@ -16,34 +16,34 @@ export 'programmer.pb.dart';
 class ProgrammerApiClient extends $grpc.Client {
   static final _$subscribeToProgrammer =
       $grpc.ClientMethod<$1.SubscribeProgrammerRequest, $1.ProgrammerState>(
-          '/mizer.ProgrammerApi/SubscribeToProgrammer',
+          '/mizer.programmer.ProgrammerApi/SubscribeToProgrammer',
           ($1.SubscribeProgrammerRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $1.ProgrammerState.fromBuffer(value));
-  static final _$writeChannels =
-      $grpc.ClientMethod<$1.WriteChannelsRequest, $1.WriteChannelsResponse>(
-          '/mizer.ProgrammerApi/WriteChannels',
-          ($1.WriteChannelsRequest value) => value.writeToBuffer(),
+  static final _$writeControl =
+      $grpc.ClientMethod<$1.WriteControlRequest, $1.WriteControlResponse>(
+          '/mizer.programmer.ProgrammerApi/WriteControl',
+          ($1.WriteControlRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
-              $1.WriteChannelsResponse.fromBuffer(value));
+              $1.WriteControlResponse.fromBuffer(value));
   static final _$selectFixtures =
       $grpc.ClientMethod<$1.SelectFixturesRequest, $1.SelectFixturesResponse>(
-          '/mizer.ProgrammerApi/SelectFixtures',
+          '/mizer.programmer.ProgrammerApi/SelectFixtures',
           ($1.SelectFixturesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $1.SelectFixturesResponse.fromBuffer(value));
   static final _$clear = $grpc.ClientMethod<$1.ClearRequest, $1.ClearResponse>(
-      '/mizer.ProgrammerApi/Clear',
+      '/mizer.programmer.ProgrammerApi/Clear',
       ($1.ClearRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.ClearResponse.fromBuffer(value));
   static final _$highlight =
       $grpc.ClientMethod<$1.HighlightRequest, $1.HighlightResponse>(
-          '/mizer.ProgrammerApi/Highlight',
+          '/mizer.programmer.ProgrammerApi/Highlight',
           ($1.HighlightRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $1.HighlightResponse.fromBuffer(value));
   static final _$store = $grpc.ClientMethod<$1.StoreRequest, $1.StoreResponse>(
-      '/mizer.ProgrammerApi/Store',
+      '/mizer.programmer.ProgrammerApi/Store',
       ($1.StoreRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.StoreResponse.fromBuffer(value));
 
@@ -60,10 +60,10 @@ class ProgrammerApiClient extends $grpc.Client {
         options: options);
   }
 
-  $grpc.ResponseFuture<$1.WriteChannelsResponse> writeChannels(
-      $1.WriteChannelsRequest request,
+  $grpc.ResponseFuture<$1.WriteControlResponse> writeControl(
+      $1.WriteControlRequest request,
       {$grpc.CallOptions options}) {
-    return $createUnaryCall(_$writeChannels, request, options: options);
+    return $createUnaryCall(_$writeControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.SelectFixturesResponse> selectFixtures(
@@ -90,7 +90,7 @@ class ProgrammerApiClient extends $grpc.Client {
 }
 
 abstract class ProgrammerApiServiceBase extends $grpc.Service {
-  $core.String get $name => 'mizer.ProgrammerApi';
+  $core.String get $name => 'mizer.programmer.ProgrammerApi';
 
   ProgrammerApiServiceBase() {
     $addMethod(
@@ -103,14 +103,14 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
                 $1.SubscribeProgrammerRequest.fromBuffer(value),
             ($1.ProgrammerState value) => value.writeToBuffer()));
     $addMethod(
-        $grpc.ServiceMethod<$1.WriteChannelsRequest, $1.WriteChannelsResponse>(
-            'WriteChannels',
-            writeChannels_Pre,
+        $grpc.ServiceMethod<$1.WriteControlRequest, $1.WriteControlResponse>(
+            'WriteControl',
+            writeControl_Pre,
             false,
             false,
             ($core.List<$core.int> value) =>
-                $1.WriteChannelsRequest.fromBuffer(value),
-            ($1.WriteChannelsResponse value) => value.writeToBuffer()));
+                $1.WriteControlRequest.fromBuffer(value),
+            ($1.WriteControlResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.SelectFixturesRequest,
             $1.SelectFixturesResponse>(
         'SelectFixtures',
@@ -149,10 +149,10 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     yield* subscribeToProgrammer(call, await request);
   }
 
-  $async.Future<$1.WriteChannelsResponse> writeChannels_Pre(
+  $async.Future<$1.WriteControlResponse> writeControl_Pre(
       $grpc.ServiceCall call,
-      $async.Future<$1.WriteChannelsRequest> request) async {
-    return writeChannels(call, await request);
+      $async.Future<$1.WriteControlRequest> request) async {
+    return writeControl(call, await request);
   }
 
   $async.Future<$1.SelectFixturesResponse> selectFixtures_Pre(
@@ -178,8 +178,8 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
 
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer(
       $grpc.ServiceCall call, $1.SubscribeProgrammerRequest request);
-  $async.Future<$1.WriteChannelsResponse> writeChannels(
-      $grpc.ServiceCall call, $1.WriteChannelsRequest request);
+  $async.Future<$1.WriteControlResponse> writeControl(
+      $grpc.ServiceCall call, $1.WriteControlRequest request);
   $async.Future<$1.SelectFixturesResponse> selectFixtures(
       $grpc.ServiceCall call, $1.SelectFixturesRequest request);
   $async.Future<$1.ClearResponse> clear(

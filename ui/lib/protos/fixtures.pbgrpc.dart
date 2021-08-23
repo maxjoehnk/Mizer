@@ -16,17 +16,17 @@ export 'fixtures.pb.dart';
 class FixturesApiClient extends $grpc.Client {
   static final _$getFixtures =
       $grpc.ClientMethod<$0.GetFixturesRequest, $0.Fixtures>(
-          '/mizer.FixturesApi/GetFixtures',
+          '/mizer.fixtures.FixturesApi/GetFixtures',
           ($0.GetFixturesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Fixtures.fromBuffer(value));
   static final _$getFixtureDefinitions = $grpc.ClientMethod<
           $0.GetFixtureDefinitionsRequest, $0.FixtureDefinitions>(
-      '/mizer.FixturesApi/GetFixtureDefinitions',
+      '/mizer.fixtures.FixturesApi/GetFixtureDefinitions',
       ($0.GetFixtureDefinitionsRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.FixtureDefinitions.fromBuffer(value));
   static final _$addFixtures =
       $grpc.ClientMethod<$0.AddFixturesRequest, $0.Fixtures>(
-          '/mizer.FixturesApi/AddFixtures',
+          '/mizer.fixtures.FixturesApi/AddFixtures',
           ($0.AddFixturesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Fixtures.fromBuffer(value));
 
@@ -53,7 +53,7 @@ class FixturesApiClient extends $grpc.Client {
 }
 
 abstract class FixturesApiServiceBase extends $grpc.Service {
-  $core.String get $name => 'mizer.FixturesApi';
+  $core.String get $name => 'mizer.fixtures.FixturesApi';
 
   FixturesApiServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.GetFixturesRequest, $0.Fixtures>(

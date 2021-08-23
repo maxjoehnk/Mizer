@@ -46,7 +46,7 @@ impl AddFixturesRequest {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.AddFixtureRequest requests = 1;
+    // repeated .mizer.fixtures.AddFixtureRequest requests = 1;
 
 
     pub fn get_requests(&self) -> &[AddFixtureRequest] {
@@ -643,7 +643,7 @@ impl Fixtures {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.Fixture fixtures = 1;
+    // repeated .mizer.fixtures.Fixture fixtures = 1;
 
 
     pub fn get_fixtures(&self) -> &[Fixture] {
@@ -799,8 +799,7 @@ pub struct Fixture {
     pub mode: ::std::string::String,
     pub universe: u32,
     pub channel: u32,
-    pub channels: ::protobuf::RepeatedField<FixtureChannelGroup>,
-    pub dmxChannels: ::protobuf::RepeatedField<DmxChannel>,
+    pub controls: ::protobuf::RepeatedField<FixtureControls>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -942,65 +941,35 @@ impl Fixture {
         self.channel = v;
     }
 
-    // repeated .mizer.FixtureChannelGroup channels = 7;
+    // repeated .mizer.fixtures.FixtureControls controls = 7;
 
 
-    pub fn get_channels(&self) -> &[FixtureChannelGroup] {
-        &self.channels
+    pub fn get_controls(&self) -> &[FixtureControls] {
+        &self.controls
     }
-    pub fn clear_channels(&mut self) {
-        self.channels.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_channels(&mut self, v: ::protobuf::RepeatedField<FixtureChannelGroup>) {
-        self.channels = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_channels(&mut self) -> &mut ::protobuf::RepeatedField<FixtureChannelGroup> {
-        &mut self.channels
-    }
-
-    // Take field
-    pub fn take_channels(&mut self) -> ::protobuf::RepeatedField<FixtureChannelGroup> {
-        ::std::mem::replace(&mut self.channels, ::protobuf::RepeatedField::new())
-    }
-
-    // repeated .mizer.DmxChannel dmxChannels = 8;
-
-
-    pub fn get_dmxChannels(&self) -> &[DmxChannel] {
-        &self.dmxChannels
-    }
-    pub fn clear_dmxChannels(&mut self) {
-        self.dmxChannels.clear();
+    pub fn clear_controls(&mut self) {
+        self.controls.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_dmxChannels(&mut self, v: ::protobuf::RepeatedField<DmxChannel>) {
-        self.dmxChannels = v;
+    pub fn set_controls(&mut self, v: ::protobuf::RepeatedField<FixtureControls>) {
+        self.controls = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_dmxChannels(&mut self) -> &mut ::protobuf::RepeatedField<DmxChannel> {
-        &mut self.dmxChannels
+    pub fn mut_controls(&mut self) -> &mut ::protobuf::RepeatedField<FixtureControls> {
+        &mut self.controls
     }
 
     // Take field
-    pub fn take_dmxChannels(&mut self) -> ::protobuf::RepeatedField<DmxChannel> {
-        ::std::mem::replace(&mut self.dmxChannels, ::protobuf::RepeatedField::new())
+    pub fn take_controls(&mut self) -> ::protobuf::RepeatedField<FixtureControls> {
+        ::std::mem::replace(&mut self.controls, ::protobuf::RepeatedField::new())
     }
 }
 
 impl ::protobuf::Message for Fixture {
     fn is_initialized(&self) -> bool {
-        for v in &self.channels {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
-        for v in &self.dmxChannels {
+        for v in &self.controls {
             if !v.is_initialized() {
                 return false;
             }
@@ -1043,10 +1012,7 @@ impl ::protobuf::Message for Fixture {
                     self.channel = tmp;
                 },
                 7 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.channels)?;
-                },
-                8 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.dmxChannels)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.controls)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -1078,11 +1044,7 @@ impl ::protobuf::Message for Fixture {
         if self.channel != 0 {
             my_size += ::protobuf::rt::value_size(6, self.channel, ::protobuf::wire_format::WireTypeVarint);
         }
-        for value in &self.channels {
-            let len = value.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        };
-        for value in &self.dmxChannels {
+        for value in &self.controls {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -1110,13 +1072,8 @@ impl ::protobuf::Message for Fixture {
         if self.channel != 0 {
             os.write_uint32(6, self.channel)?;
         }
-        for v in &self.channels {
+        for v in &self.controls {
             os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        };
-        for v in &self.dmxChannels {
-            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
@@ -1188,15 +1145,10 @@ impl ::protobuf::Message for Fixture {
                 |m: &Fixture| { &m.channel },
                 |m: &mut Fixture| { &mut m.channel },
             ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<FixtureChannelGroup>>(
-                "channels",
-                |m: &Fixture| { &m.channels },
-                |m: &mut Fixture| { &mut m.channels },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<DmxChannel>>(
-                "dmxChannels",
-                |m: &Fixture| { &m.dmxChannels },
-                |m: &mut Fixture| { &mut m.dmxChannels },
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<FixtureControls>>(
+                "controls",
+                |m: &Fixture| { &m.controls },
+                |m: &mut Fixture| { &mut m.controls },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Fixture>(
                 "Fixture",
@@ -1220,8 +1172,7 @@ impl ::protobuf::Clear for Fixture {
         self.mode.clear();
         self.universe = 0;
         self.channel = 0;
-        self.channels.clear();
-        self.dmxChannels.clear();
+        self.controls.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1240,11 +1191,11 @@ impl ::protobuf::reflect::ProtobufValue for Fixture {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct FixtureChannelGroup {
+pub struct FixtureControls {
     // message fields
-    pub name: ::std::string::String,
+    pub control: FixtureControl,
     // message oneof groups
-    pub channel: ::std::option::Option<FixtureChannelGroup_oneof_channel>,
+    pub value: ::std::option::Option<FixtureControls_oneof_value>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1252,141 +1203,123 @@ pub struct FixtureChannelGroup {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a FixtureChannelGroup {
-    fn default() -> &'a FixtureChannelGroup {
-        <FixtureChannelGroup as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a FixtureControls {
+    fn default() -> &'a FixtureControls {
+        <FixtureControls as ::protobuf::Message>::default_instance()
     }
 }
 
 #[derive(Clone,PartialEq,Debug)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum FixtureChannelGroup_oneof_channel {
-    generic(GenericChannel),
+pub enum FixtureControls_oneof_value {
+    fader(FaderChannel),
     color(ColorChannel),
-    pan(AxisChannel),
-    tilt(AxisChannel),
-    focus(GenericChannel),
-    zoom(GenericChannel),
-    prism(GenericChannel),
-    intensity(GenericChannel),
-    shutter(GenericChannel),
-    iris(GenericChannel),
-    frost(GenericChannel),
+    axis(AxisChannel),
+    generic(GenericChannel),
 }
 
-impl FixtureChannelGroup {
-    pub fn new() -> FixtureChannelGroup {
+impl FixtureControls {
+    pub fn new() -> FixtureControls {
         ::std::default::Default::default()
     }
 
-    // string name = 1;
+    // .mizer.fixtures.FixtureControl control = 1;
 
 
-    pub fn get_name(&self) -> &str {
-        &self.name
+    pub fn get_control(&self) -> FixtureControl {
+        self.control
     }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
+    pub fn clear_control(&mut self) {
+        self.control = FixtureControl::INTENSITY;
     }
 
     // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
+    pub fn set_control(&mut self, v: FixtureControl) {
+        self.control = v;
     }
 
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
-    }
-
-    // .mizer.GenericChannel generic = 2;
+    // .mizer.fixtures.FaderChannel fader = 2;
 
 
-    pub fn get_generic(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
+    pub fn get_fader(&self) -> &FaderChannel {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::fader(ref v)) => v,
+            _ => <FaderChannel as ::protobuf::Message>::default_instance(),
         }
     }
-    pub fn clear_generic(&mut self) {
-        self.channel = ::std::option::Option::None;
+    pub fn clear_fader(&mut self) {
+        self.value = ::std::option::Option::None;
     }
 
-    pub fn has_generic(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(..)) => true,
+    pub fn has_fader(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::fader(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_generic(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(v))
+    pub fn set_fader(&mut self, v: FaderChannel) {
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::fader(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_generic(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(_)) = self.channel {
+    pub fn mut_fader(&mut self) -> &mut FaderChannel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::fader(_)) = self.value {
         } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(GenericChannel::new()));
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::fader(FaderChannel::new()));
         }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(ref mut v)) => v,
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::fader(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_generic(&mut self) -> GenericChannel {
-        if self.has_generic() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(v)) => v,
+    pub fn take_fader(&mut self) -> FaderChannel {
+        if self.has_fader() {
+            match self.value.take() {
+                ::std::option::Option::Some(FixtureControls_oneof_value::fader(v)) => v,
                 _ => panic!(),
             }
         } else {
-            GenericChannel::new()
+            FaderChannel::new()
         }
     }
 
-    // .mizer.ColorChannel color = 3;
+    // .mizer.fixtures.ColorChannel color = 3;
 
 
     pub fn get_color(&self) -> &ColorChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(ref v)) => v,
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::color(ref v)) => v,
             _ => <ColorChannel as ::protobuf::Message>::default_instance(),
         }
     }
     pub fn clear_color(&mut self) {
-        self.channel = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
     }
 
     pub fn has_color(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(..)) => true,
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::color(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
     pub fn set_color(&mut self, v: ColorChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(v))
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color(v))
     }
 
     // Mutable pointer to the field.
     pub fn mut_color(&mut self) -> &mut ColorChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(_)) = self.channel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::color(_)) = self.value {
         } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(ColorChannel::new()));
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color(ColorChannel::new()));
         }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(ref mut v)) => v,
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::color(ref mut v)) => v,
             _ => panic!(),
         }
     }
@@ -1394,8 +1327,8 @@ impl FixtureChannelGroup {
     // Take field
     pub fn take_color(&mut self) -> ColorChannel {
         if self.has_color() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(v)) => v,
+            match self.value.take() {
+                ::std::option::Option::Some(FixtureControls_oneof_value::color(v)) => v,
                 _ => panic!(),
             }
         } else {
@@ -1403,48 +1336,48 @@ impl FixtureChannelGroup {
         }
     }
 
-    // .mizer.AxisChannel pan = 4;
+    // .mizer.fixtures.AxisChannel axis = 4;
 
 
-    pub fn get_pan(&self) -> &AxisChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(ref v)) => v,
+    pub fn get_axis(&self) -> &AxisChannel {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::axis(ref v)) => v,
             _ => <AxisChannel as ::protobuf::Message>::default_instance(),
         }
     }
-    pub fn clear_pan(&mut self) {
-        self.channel = ::std::option::Option::None;
+    pub fn clear_axis(&mut self) {
+        self.value = ::std::option::Option::None;
     }
 
-    pub fn has_pan(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(..)) => true,
+    pub fn has_axis(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::axis(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_pan(&mut self, v: AxisChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(v))
+    pub fn set_axis(&mut self, v: AxisChannel) {
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::axis(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_pan(&mut self) -> &mut AxisChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(_)) = self.channel {
+    pub fn mut_axis(&mut self) -> &mut AxisChannel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::axis(_)) = self.value {
         } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(AxisChannel::new()));
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::axis(AxisChannel::new()));
         }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(ref mut v)) => v,
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::axis(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_pan(&mut self) -> AxisChannel {
-        if self.has_pan() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(v)) => v,
+    pub fn take_axis(&mut self) -> AxisChannel {
+        if self.has_axis() {
+            match self.value.take() {
+                ::std::option::Option::Some(FixtureControls_oneof_value::axis(v)) => v,
                 _ => panic!(),
             }
         } else {
@@ -1452,391 +1385,48 @@ impl FixtureChannelGroup {
         }
     }
 
-    // .mizer.AxisChannel tilt = 5;
+    // .mizer.fixtures.GenericChannel generic = 5;
 
 
-    pub fn get_tilt(&self) -> &AxisChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(ref v)) => v,
-            _ => <AxisChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_tilt(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_tilt(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_tilt(&mut self, v: AxisChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_tilt(&mut self) -> &mut AxisChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(AxisChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_tilt(&mut self) -> AxisChannel {
-        if self.has_tilt() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            AxisChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel focus = 6;
-
-
-    pub fn get_focus(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(ref v)) => v,
+    pub fn get_generic(&self) -> &GenericChannel {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::generic(ref v)) => v,
             _ => <GenericChannel as ::protobuf::Message>::default_instance(),
         }
     }
-    pub fn clear_focus(&mut self) {
-        self.channel = ::std::option::Option::None;
+    pub fn clear_generic(&mut self) {
+        self.value = ::std::option::Option::None;
     }
 
-    pub fn has_focus(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(..)) => true,
+    pub fn has_generic(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::generic(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_focus(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(v))
+    pub fn set_generic(&mut self, v: GenericChannel) {
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::generic(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_focus(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(_)) = self.channel {
+    pub fn mut_generic(&mut self) -> &mut GenericChannel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::generic(_)) = self.value {
         } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(GenericChannel::new()));
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::generic(GenericChannel::new()));
         }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(ref mut v)) => v,
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::generic(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_focus(&mut self) -> GenericChannel {
-        if self.has_focus() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GenericChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel zoom = 7;
-
-
-    pub fn get_zoom(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_zoom(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_zoom(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_zoom(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_zoom(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(GenericChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_zoom(&mut self) -> GenericChannel {
-        if self.has_zoom() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GenericChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel prism = 8;
-
-
-    pub fn get_prism(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_prism(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_prism(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_prism(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_prism(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(GenericChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_prism(&mut self) -> GenericChannel {
-        if self.has_prism() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GenericChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel intensity = 9;
-
-
-    pub fn get_intensity(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_intensity(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_intensity(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_intensity(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_intensity(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(GenericChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_intensity(&mut self) -> GenericChannel {
-        if self.has_intensity() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GenericChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel shutter = 10;
-
-
-    pub fn get_shutter(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_shutter(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_shutter(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_shutter(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_shutter(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(GenericChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_shutter(&mut self) -> GenericChannel {
-        if self.has_shutter() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GenericChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel iris = 11;
-
-
-    pub fn get_iris(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_iris(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_iris(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_iris(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_iris(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(GenericChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_iris(&mut self) -> GenericChannel {
-        if self.has_iris() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            GenericChannel::new()
-        }
-    }
-
-    // .mizer.GenericChannel frost = 12;
-
-
-    pub fn get_frost(&self) -> &GenericChannel {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(ref v)) => v,
-            _ => <GenericChannel as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_frost(&mut self) {
-        self.channel = ::std::option::Option::None;
-    }
-
-    pub fn has_frost(&self) -> bool {
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_frost(&mut self, v: GenericChannel) {
-        self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_frost(&mut self) -> &mut GenericChannel {
-        if let ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(_)) = self.channel {
-        } else {
-            self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(GenericChannel::new()));
-        }
-        match self.channel {
-            ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_frost(&mut self) -> GenericChannel {
-        if self.has_frost() {
-            match self.channel.take() {
-                ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(v)) => v,
+    pub fn take_generic(&mut self) -> GenericChannel {
+        if self.has_generic() {
+            match self.value.take() {
+                ::std::option::Option::Some(FixtureControls_oneof_value::generic(v)) => v,
                 _ => panic!(),
             }
         } else {
@@ -1845,59 +1435,24 @@ impl FixtureChannelGroup {
     }
 }
 
-impl ::protobuf::Message for FixtureChannelGroup {
+impl ::protobuf::Message for FixtureControls {
     fn is_initialized(&self) -> bool {
-        if let Some(FixtureChannelGroup_oneof_channel::generic(ref v)) = self.channel {
+        if let Some(FixtureControls_oneof_value::fader(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
             }
         }
-        if let Some(FixtureChannelGroup_oneof_channel::color(ref v)) = self.channel {
+        if let Some(FixtureControls_oneof_value::color(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
             }
         }
-        if let Some(FixtureChannelGroup_oneof_channel::pan(ref v)) = self.channel {
+        if let Some(FixtureControls_oneof_value::axis(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
             }
         }
-        if let Some(FixtureChannelGroup_oneof_channel::tilt(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::focus(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::zoom(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::prism(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::intensity(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::shutter(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::iris(ref v)) = self.channel {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(FixtureChannelGroup_oneof_channel::frost(ref v)) = self.channel {
+        if let Some(FixtureControls_oneof_value::generic(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
             }
@@ -1910,73 +1465,31 @@ impl ::protobuf::Message for FixtureChannelGroup {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 1, &mut self.unknown_fields)?
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::generic(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::fader(is.read_message()?));
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::color(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color(is.read_message()?));
                 },
                 4 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::pan(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::axis(is.read_message()?));
                 },
                 5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::tilt(is.read_message()?));
-                },
-                6 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::focus(is.read_message()?));
-                },
-                7 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::zoom(is.read_message()?));
-                },
-                8 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::prism(is.read_message()?));
-                },
-                9 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::intensity(is.read_message()?));
-                },
-                10 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::shutter(is.read_message()?));
-                },
-                11 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::iris(is.read_message()?));
-                },
-                12 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.channel = ::std::option::Option::Some(FixtureChannelGroup_oneof_channel::frost(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::generic(is.read_message()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -1990,52 +1503,24 @@ impl ::protobuf::Message for FixtureChannelGroup {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.name.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.name);
+        if self.control != FixtureControl::INTENSITY {
+            my_size += ::protobuf::rt::enum_size(1, self.control);
         }
-        if let ::std::option::Option::Some(ref v) = self.channel {
+        if let ::std::option::Option::Some(ref v) = self.value {
             match v {
-                &FixtureChannelGroup_oneof_channel::generic(ref v) => {
+                &FixtureControls_oneof_value::fader(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
-                &FixtureChannelGroup_oneof_channel::color(ref v) => {
+                &FixtureControls_oneof_value::color(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
-                &FixtureChannelGroup_oneof_channel::pan(ref v) => {
+                &FixtureControls_oneof_value::axis(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
-                &FixtureChannelGroup_oneof_channel::tilt(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::focus(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::zoom(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::prism(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::intensity(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::shutter(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::iris(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &FixtureChannelGroup_oneof_channel::frost(ref v) => {
+                &FixtureControls_oneof_value::generic(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2047,66 +1532,31 @@ impl ::protobuf::Message for FixtureChannelGroup {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.name.is_empty() {
-            os.write_string(1, &self.name)?;
+        if self.control != FixtureControl::INTENSITY {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.control))?;
         }
-        if let ::std::option::Option::Some(ref v) = self.channel {
+        if let ::std::option::Option::Some(ref v) = self.value {
             match v {
-                &FixtureChannelGroup_oneof_channel::generic(ref v) => {
+                &FixtureControls_oneof_value::fader(ref v) => {
                     os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureChannelGroup_oneof_channel::color(ref v) => {
+                &FixtureControls_oneof_value::color(ref v) => {
                     os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureChannelGroup_oneof_channel::pan(ref v) => {
+                &FixtureControls_oneof_value::axis(ref v) => {
                     os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureChannelGroup_oneof_channel::tilt(ref v) => {
+                &FixtureControls_oneof_value::generic(ref v) => {
                     os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureChannelGroup_oneof_channel::focus(ref v) => {
-                    os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &FixtureChannelGroup_oneof_channel::zoom(ref v) => {
-                    os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &FixtureChannelGroup_oneof_channel::prism(ref v) => {
-                    os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &FixtureChannelGroup_oneof_channel::intensity(ref v) => {
-                    os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &FixtureChannelGroup_oneof_channel::shutter(ref v) => {
-                    os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &FixtureChannelGroup_oneof_channel::iris(ref v) => {
-                    os.write_tag(11, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &FixtureChannelGroup_oneof_channel::frost(ref v) => {
-                    os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
             };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -2139,113 +1589,71 @@ impl ::protobuf::Message for FixtureChannelGroup {
         Self::descriptor_static()
     }
 
-    fn new() -> FixtureChannelGroup {
-        FixtureChannelGroup::new()
+    fn new() -> FixtureControls {
+        FixtureControls::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &FixtureChannelGroup| { &m.name },
-                |m: &mut FixtureChannelGroup| { &mut m.name },
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<FixtureControl>>(
+                "control",
+                |m: &FixtureControls| { &m.control },
+                |m: &mut FixtureControls| { &mut m.control },
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "generic",
-                FixtureChannelGroup::has_generic,
-                FixtureChannelGroup::get_generic,
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, FaderChannel>(
+                "fader",
+                FixtureControls::has_fader,
+                FixtureControls::get_fader,
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ColorChannel>(
                 "color",
-                FixtureChannelGroup::has_color,
-                FixtureChannelGroup::get_color,
+                FixtureControls::has_color,
+                FixtureControls::get_color,
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, AxisChannel>(
-                "pan",
-                FixtureChannelGroup::has_pan,
-                FixtureChannelGroup::get_pan,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, AxisChannel>(
-                "tilt",
-                FixtureChannelGroup::has_tilt,
-                FixtureChannelGroup::get_tilt,
+                "axis",
+                FixtureControls::has_axis,
+                FixtureControls::get_axis,
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "focus",
-                FixtureChannelGroup::has_focus,
-                FixtureChannelGroup::get_focus,
+                "generic",
+                FixtureControls::has_generic,
+                FixtureControls::get_generic,
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "zoom",
-                FixtureChannelGroup::has_zoom,
-                FixtureChannelGroup::get_zoom,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "prism",
-                FixtureChannelGroup::has_prism,
-                FixtureChannelGroup::get_prism,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "intensity",
-                FixtureChannelGroup::has_intensity,
-                FixtureChannelGroup::get_intensity,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "shutter",
-                FixtureChannelGroup::has_shutter,
-                FixtureChannelGroup::get_shutter,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "iris",
-                FixtureChannelGroup::has_iris,
-                FixtureChannelGroup::get_iris,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
-                "frost",
-                FixtureChannelGroup::has_frost,
-                FixtureChannelGroup::get_frost,
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<FixtureChannelGroup>(
-                "FixtureChannelGroup",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<FixtureControls>(
+                "FixtureControls",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static FixtureChannelGroup {
-        static instance: ::protobuf::rt::LazyV2<FixtureChannelGroup> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(FixtureChannelGroup::new)
+    fn default_instance() -> &'static FixtureControls {
+        static instance: ::protobuf::rt::LazyV2<FixtureControls> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(FixtureControls::new)
     }
 }
 
-impl ::protobuf::Clear for FixtureChannelGroup {
+impl ::protobuf::Clear for FixtureControls {
     fn clear(&mut self) {
-        self.name.clear();
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
-        self.channel = ::std::option::Option::None;
+        self.control = FixtureControl::INTENSITY;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for FixtureChannelGroup {
+impl ::std::fmt::Debug for FixtureControls {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for FixtureChannelGroup {
+impl ::protobuf::reflect::ProtobufValue for FixtureControls {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -2253,204 +1661,7 @@ impl ::protobuf::reflect::ProtobufValue for FixtureChannelGroup {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct DmxChannel {
-    // message fields
-    pub name: ::std::string::String,
-    pub value: f64,
-    // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
-    pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
-    pub cached_size: ::protobuf::CachedSize,
-}
-
-impl<'a> ::std::default::Default for &'a DmxChannel {
-    fn default() -> &'a DmxChannel {
-        <DmxChannel as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl DmxChannel {
-    pub fn new() -> DmxChannel {
-        ::std::default::Default::default()
-    }
-
-    // string name = 1;
-
-
-    pub fn get_name(&self) -> &str {
-        &self.name
-    }
-    pub fn clear_name(&mut self) {
-        self.name.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_name(&mut self, v: ::std::string::String) {
-        self.name = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_name(&mut self) -> &mut ::std::string::String {
-        &mut self.name
-    }
-
-    // Take field
-    pub fn take_name(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.name, ::std::string::String::new())
-    }
-
-    // double value = 2;
-
-
-    pub fn get_value(&self) -> f64 {
-        self.value
-    }
-    pub fn clear_value(&mut self) {
-        self.value = 0.;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_value(&mut self, v: f64) {
-        self.value = v;
-    }
-}
-
-impl ::protobuf::Message for DmxChannel {
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
-            match field_number {
-                1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
-                },
-                2 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_double()?;
-                    self.value = tmp;
-                },
-                _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u32 {
-        let mut my_size = 0;
-        if !self.name.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.name);
-        }
-        if self.value != 0. {
-            my_size += 9;
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
-        self.cached_size.set(my_size);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.name.is_empty() {
-            os.write_string(1, &self.name)?;
-        }
-        if self.value != 0. {
-            os.write_double(2, self.value)?;
-        }
-        os.write_unknown_fields(self.get_unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn get_cached_size(&self) -> u32 {
-        self.cached_size.get()
-    }
-
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        &self.unknown_fields
-    }
-
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        &mut self.unknown_fields
-    }
-
-    fn as_any(&self) -> &dyn (::std::any::Any) {
-        self as &dyn (::std::any::Any)
-    }
-    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
-        self as &mut dyn (::std::any::Any)
-    }
-    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
-        self
-    }
-
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-
-    fn new() -> DmxChannel {
-        DmxChannel::new()
-    }
-
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "name",
-                |m: &DmxChannel| { &m.name },
-                |m: &mut DmxChannel| { &mut m.name },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
-                "value",
-                |m: &DmxChannel| { &m.value },
-                |m: &mut DmxChannel| { &mut m.value },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DmxChannel>(
-                "DmxChannel",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
-    fn default_instance() -> &'static DmxChannel {
-        static instance: ::protobuf::rt::LazyV2<DmxChannel> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(DmxChannel::new)
-    }
-}
-
-impl ::protobuf::Clear for DmxChannel {
-    fn clear(&mut self) {
-        self.name.clear();
-        self.value = 0.;
-        self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for DmxChannel {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for DmxChannel {
-    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
-        ::protobuf::reflect::ReflectValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct GenericChannel {
+pub struct FaderChannel {
     // message fields
     pub value: f64,
     // special fields
@@ -2460,14 +1671,14 @@ pub struct GenericChannel {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a GenericChannel {
-    fn default() -> &'a GenericChannel {
-        <GenericChannel as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a FaderChannel {
+    fn default() -> &'a FaderChannel {
+        <FaderChannel as ::protobuf::Message>::default_instance()
     }
 }
 
-impl GenericChannel {
-    pub fn new() -> GenericChannel {
+impl FaderChannel {
+    pub fn new() -> FaderChannel {
         ::std::default::Default::default()
     }
 
@@ -2487,7 +1698,7 @@ impl GenericChannel {
     }
 }
 
-impl ::protobuf::Message for GenericChannel {
+impl ::protobuf::Message for FaderChannel {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -2557,8 +1768,8 @@ impl ::protobuf::Message for GenericChannel {
         Self::descriptor_static()
     }
 
-    fn new() -> GenericChannel {
-        GenericChannel::new()
+    fn new() -> FaderChannel {
+        FaderChannel::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -2567,37 +1778,37 @@ impl ::protobuf::Message for GenericChannel {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
                 "value",
-                |m: &GenericChannel| { &m.value },
-                |m: &mut GenericChannel| { &mut m.value },
+                |m: &FaderChannel| { &m.value },
+                |m: &mut FaderChannel| { &mut m.value },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GenericChannel>(
-                "GenericChannel",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<FaderChannel>(
+                "FaderChannel",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static GenericChannel {
-        static instance: ::protobuf::rt::LazyV2<GenericChannel> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(GenericChannel::new)
+    fn default_instance() -> &'static FaderChannel {
+        static instance: ::protobuf::rt::LazyV2<FaderChannel> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(FaderChannel::new)
     }
 }
 
-impl ::protobuf::Clear for GenericChannel {
+impl ::protobuf::Clear for FaderChannel {
     fn clear(&mut self) {
         self.value = 0.;
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for GenericChannel {
+impl ::std::fmt::Debug for FaderChannel {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for GenericChannel {
+impl ::protobuf::reflect::ProtobufValue for FaderChannel {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -3055,6 +2266,203 @@ impl ::protobuf::reflect::ProtobufValue for AxisChannel {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct GenericChannel {
+    // message fields
+    pub value: f64,
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GenericChannel {
+    fn default() -> &'a GenericChannel {
+        <GenericChannel as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GenericChannel {
+    pub fn new() -> GenericChannel {
+        ::std::default::Default::default()
+    }
+
+    // double value = 1;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+
+    // string name = 2;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for GenericChannel {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.value != 0. {
+            my_size += 9;
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.value != 0. {
+            os.write_double(1, self.value)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GenericChannel {
+        GenericChannel::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &GenericChannel| { &m.value },
+                |m: &mut GenericChannel| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &GenericChannel| { &m.name },
+                |m: &mut GenericChannel| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GenericChannel>(
+                "GenericChannel",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GenericChannel {
+        static instance: ::protobuf::rt::LazyV2<GenericChannel> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GenericChannel::new)
+    }
+}
+
+impl ::protobuf::Clear for GenericChannel {
+    fn clear(&mut self) {
+        self.value = 0.;
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GenericChannel {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GenericChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct GetFixtureDefinitionsRequest {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -3195,7 +2603,7 @@ impl FixtureDefinitions {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.FixtureDefinition definitions = 1;
+    // repeated .mizer.fixtures.FixtureDefinition definitions = 1;
 
 
     pub fn get_definitions(&self) -> &[FixtureDefinition] {
@@ -3447,7 +2855,7 @@ impl FixtureDefinition {
         ::std::mem::replace(&mut self.manufacturer, ::std::string::String::new())
     }
 
-    // repeated .mizer.FixtureMode modes = 4;
+    // repeated .mizer.fixtures.FixtureMode modes = 4;
 
 
     pub fn get_modes(&self) -> &[FixtureMode] {
@@ -3472,7 +2880,7 @@ impl FixtureDefinition {
         ::std::mem::replace(&mut self.modes, ::protobuf::RepeatedField::new())
     }
 
-    // .mizer.FixturePhysicalData physical = 5;
+    // .mizer.fixtures.FixturePhysicalData physical = 5;
 
 
     pub fn get_physical(&self) -> &FixturePhysicalData {
@@ -3784,7 +3192,7 @@ impl FixtureMode {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // repeated .mizer.FixtureChannel channels = 2;
+    // repeated .mizer.fixtures.FixtureChannel channels = 2;
 
 
     pub fn get_channels(&self) -> &[FixtureChannel] {
@@ -4004,7 +3412,7 @@ impl FixtureChannel {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // .mizer.FixtureChannel.CoarseResolution coarse = 2;
+    // .mizer.fixtures.FixtureChannel.CoarseResolution coarse = 2;
 
 
     pub fn get_coarse(&self) -> &FixtureChannel_CoarseResolution {
@@ -4053,7 +3461,7 @@ impl FixtureChannel {
         }
     }
 
-    // .mizer.FixtureChannel.FineResolution fine = 3;
+    // .mizer.fixtures.FixtureChannel.FineResolution fine = 3;
 
 
     pub fn get_fine(&self) -> &FixtureChannel_FineResolution {
@@ -4102,7 +3510,7 @@ impl FixtureChannel {
         }
     }
 
-    // .mizer.FixtureChannel.FinestResolution finest = 4;
+    // .mizer.fixtures.FixtureChannel.FinestResolution finest = 4;
 
 
     pub fn get_finest(&self) -> &FixtureChannel_FinestResolution {
@@ -5180,71 +4588,147 @@ impl ::protobuf::reflect::ProtobufValue for FixturePhysicalData {
     }
 }
 
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum FixtureControl {
+    INTENSITY = 0,
+    SHUTTER = 1,
+    COLOR = 2,
+    PAN = 3,
+    TILT = 4,
+    FOCUS = 5,
+    ZOOM = 6,
+    PRISM = 7,
+    IRIS = 8,
+    FROST = 9,
+    GENERIC = 10,
+}
+
+impl ::protobuf::ProtobufEnum for FixtureControl {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<FixtureControl> {
+        match value {
+            0 => ::std::option::Option::Some(FixtureControl::INTENSITY),
+            1 => ::std::option::Option::Some(FixtureControl::SHUTTER),
+            2 => ::std::option::Option::Some(FixtureControl::COLOR),
+            3 => ::std::option::Option::Some(FixtureControl::PAN),
+            4 => ::std::option::Option::Some(FixtureControl::TILT),
+            5 => ::std::option::Option::Some(FixtureControl::FOCUS),
+            6 => ::std::option::Option::Some(FixtureControl::ZOOM),
+            7 => ::std::option::Option::Some(FixtureControl::PRISM),
+            8 => ::std::option::Option::Some(FixtureControl::IRIS),
+            9 => ::std::option::Option::Some(FixtureControl::FROST),
+            10 => ::std::option::Option::Some(FixtureControl::GENERIC),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [FixtureControl] = &[
+            FixtureControl::INTENSITY,
+            FixtureControl::SHUTTER,
+            FixtureControl::COLOR,
+            FixtureControl::PAN,
+            FixtureControl::TILT,
+            FixtureControl::FOCUS,
+            FixtureControl::ZOOM,
+            FixtureControl::PRISM,
+            FixtureControl::IRIS,
+            FixtureControl::FROST,
+            FixtureControl::GENERIC,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<FixtureControl>("FixtureControl", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for FixtureControl {
+}
+
+impl ::std::default::Default for FixtureControl {
+    fn default() -> Self {
+        FixtureControl::INTENSITY
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for FixtureControl {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0efixtures.proto\x12\x05mizer\"J\n\x12AddFixturesRequest\x124\n\x08r\
-    equests\x18\x01\x20\x03(\x0b2\x18.mizer.AddFixtureRequestR\x08requests\"\
-    \x91\x01\n\x11AddFixtureRequest\x12\"\n\x0cdefinitionId\x18\x01\x20\x01(\
-    \tR\x0cdefinitionId\x12\x12\n\x04mode\x18\x02\x20\x01(\tR\x04mode\x12\
-    \x0e\n\x02id\x18\x03\x20\x01(\rR\x02id\x12\x18\n\x07channel\x18\x04\x20\
-    \x01(\rR\x07channel\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08univers\
-    e\"\x14\n\x12GetFixturesRequest\"6\n\x08Fixtures\x12*\n\x08fixtures\x18\
-    \x01\x20\x03(\x0b2\x0e.mizer.FixtureR\x08fixtures\"\x88\x02\n\x07Fixture\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
-    \x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufact\
-    urer\x12\x12\n\x04mode\x18\x04\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\
-    \x18\x05\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x06\x20\x01(\r\
-    R\x07channel\x126\n\x08channels\x18\x07\x20\x03(\x0b2\x1a.mizer.FixtureC\
-    hannelGroupR\x08channels\x123\n\x0bdmxChannels\x18\x08\x20\x03(\x0b2\x11\
-    .mizer.DmxChannelR\x0bdmxChannels\"\xb7\x04\n\x13FixtureChannelGroup\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x121\n\x07generic\x18\x02\x20\
-    \x01(\x0b2\x15.mizer.GenericChannelH\0R\x07generic\x12+\n\x05color\x18\
-    \x03\x20\x01(\x0b2\x13.mizer.ColorChannelH\0R\x05color\x12&\n\x03pan\x18\
-    \x04\x20\x01(\x0b2\x12.mizer.AxisChannelH\0R\x03pan\x12(\n\x04tilt\x18\
-    \x05\x20\x01(\x0b2\x12.mizer.AxisChannelH\0R\x04tilt\x12-\n\x05focus\x18\
-    \x06\x20\x01(\x0b2\x15.mizer.GenericChannelH\0R\x05focus\x12+\n\x04zoom\
-    \x18\x07\x20\x01(\x0b2\x15.mizer.GenericChannelH\0R\x04zoom\x12-\n\x05pr\
-    ism\x18\x08\x20\x01(\x0b2\x15.mizer.GenericChannelH\0R\x05prism\x125\n\t\
-    intensity\x18\t\x20\x01(\x0b2\x15.mizer.GenericChannelH\0R\tintensity\
-    \x121\n\x07shutter\x18\n\x20\x01(\x0b2\x15.mizer.GenericChannelH\0R\x07s\
-    hutter\x12+\n\x04iris\x18\x0b\x20\x01(\x0b2\x15.mizer.GenericChannelH\0R\
-    \x04iris\x12-\n\x05frost\x18\x0c\x20\x01(\x0b2\x15.mizer.GenericChannelH\
-    \0R\x05frostB\t\n\x07channel\"6\n\nDmxChannel\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\"\
-    &\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
-    \"J\n\x0cColorChannel\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\
-    \x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\
-    \x20\x01(\x01R\x04blue\"]\n\x0bAxisChannel\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01(\x01R\tang\
-    leFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\"\x1e\n\
-    \x1cGetFixtureDefinitionsRequest\"P\n\x12FixtureDefinitions\x12:\n\x0bde\
-    finitions\x18\x01\x20\x03(\x0b2\x18.mizer.FixtureDefinitionR\x0bdefiniti\
-    ons\"\xd1\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufact\
-    urer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12(\n\x05modes\x18\x04\x20\x03\
-    (\x0b2\x12.mizer.FixtureModeR\x05modes\x126\n\x08physical\x18\x05\x20\
-    \x01(\x0b2\x1a.mizer.FixturePhysicalDataR\x08physical\x12\x12\n\x04tags\
-    \x18\x06\x20\x03(\tR\x04tags\"T\n\x0bFixtureMode\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\x121\n\x08channels\x18\x02\x20\x03(\x0b2\x15.mi\
-    zer.FixtureChannelR\x08channels\"\xfd\x03\n\x0eFixtureChannel\x12\x12\n\
-    \x04name\x18\x01\x20\x01(\tR\x04name\x12@\n\x06coarse\x18\x02\x20\x01(\
-    \x0b2&.mizer.FixtureChannel.CoarseResolutionH\0R\x06coarse\x12:\n\x04fin\
-    e\x18\x03\x20\x01(\x0b2$.mizer.FixtureChannel.FineResolutionH\0R\x04fine\
-    \x12@\n\x06finest\x18\x04\x20\x01(\x0b2&.mizer.FixtureChannel.FinestReso\
-    lutionH\0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\
-    \x01\x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineCh\
-    annel\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\
-    \x20\x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfi\
-    nestChannel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\
-    \x18\x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\
-    \x01(\rR\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\
-    \x12\x14\n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\
-    \x18\x02\x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02\
-    R\x05depth\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight2\xe2\x01\
-    \n\x0bFixturesApi\x12;\n\x0bGetFixtures\x12\x19.mizer.GetFixturesRequest\
-    \x1a\x0f.mizer.Fixtures\"\0\x12Y\n\x15GetFixtureDefinitions\x12#.mizer.G\
-    etFixtureDefinitionsRequest\x1a\x19.mizer.FixtureDefinitions\"\0\x12;\n\
-    \x0bAddFixtures\x12\x19.mizer.AddFixturesRequest\x1a\x0f.mizer.Fixtures\
-    \"\0b\x06proto3\
+    \n\x0efixtures.proto\x12\x0emizer.fixtures\"S\n\x12AddFixturesRequest\
+    \x12=\n\x08requests\x18\x01\x20\x03(\x0b2!.mizer.fixtures.AddFixtureRequ\
+    estR\x08requests\"\x91\x01\n\x11AddFixtureRequest\x12\"\n\x0cdefinitionI\
+    d\x18\x01\x20\x01(\tR\x0cdefinitionId\x12\x12\n\x04mode\x18\x02\x20\x01(\
+    \tR\x04mode\x12\x0e\n\x02id\x18\x03\x20\x01(\rR\x02id\x12\x18\n\x07chann\
+    el\x18\x04\x20\x01(\rR\x07channel\x12\x1a\n\x08universe\x18\x05\x20\x01(\
+    \rR\x08universe\"\x14\n\x12GetFixturesRequest\"?\n\x08Fixtures\x123\n\
+    \x08fixtures\x18\x01\x20\x03(\x0b2\x17.mizer.fixtures.FixtureR\x08fixtur\
+    es\"\xd8\x01\n\x07Fixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
+    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\
+    \x03\x20\x01(\tR\x0cmanufacturer\x12\x12\n\x04mode\x18\x04\x20\x01(\tR\
+    \x04mode\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08universe\x12\x18\n\
+    \x07channel\x18\x06\x20\x01(\rR\x07channel\x12;\n\x08controls\x18\x07\
+    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xaf\x02\
+    \n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.\
+    fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\x02\x20\x01(\x0b\
+    2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x124\n\x05color\x18\x03\
+    \x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannelH\0R\x05color\x121\n\x04ax\
+    is\x18\x04\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x12:\
+    \n\x07generic\x18\x05\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChannelH\0\
+    R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05value\x18\
+    \x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\n\x03red\x18\
+    \x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05gr\
+    een\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\x0bAxisChannel\
+    \x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\
+    \x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\
+    \x01R\x07angleTo\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\
+    \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
+    \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
+    definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
+    definitions\"\xe3\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
+    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
+    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
+    \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
+    al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
+    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"]\n\x0bFixtureMode\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\
+    \x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\
+    \n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\
+    \n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.Coarse\
+    ResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fix\
+    tures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\
+    \x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06fi\
+    nest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\
+    \x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\
+    \x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rc\
+    oarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\
+    \x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01\
+    (\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseCha\
+    nnelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\
+    \x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02\
+    R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\
+    \x06weight\x18\x04\x20\x01(\x02R\x06weight*\x8c\x01\n\x0eFixtureControl\
+    \x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\n\x05COLOR\
+    \x10\x02\x12\x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\x12\t\n\x05F\
+    OCUS\x10\x05\x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\x07\x12\x08\
+    \n\x04IRIS\x10\x08\x12\t\n\x05FROST\x10\t\x12\x0b\n\x07GENERIC\x10\n2\
+    \x98\x02\n\x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.Get\
+    FixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixture\
+    Definitions\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer\
+    .fixtures.FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtu\
+    res.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -16,20 +16,30 @@ const ProgrammerState$json = const {
   ],
 };
 
-const WriteChannelsRequest$json = const {
-  '1': 'WriteChannelsRequest',
+const WriteControlRequest$json = const {
+  '1': 'WriteControlRequest',
   '2': const [
-    const {'1': 'channel', '3': 1, '4': 1, '5': 9, '10': 'channel'},
+    const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
     const {'1': 'fader', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.ColorChannel', '9': 0, '10': 'color'},
+    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
+    const {'1': 'generic', '3': 4, '4': 1, '5': 11, '6': '.mizer.programmer.WriteControlRequest.GenericValue', '9': 0, '10': 'generic'},
   ],
+  '3': const [WriteControlRequest_GenericValue$json],
   '8': const [
     const {'1': 'value'},
   ],
 };
 
-const WriteChannelsResponse$json = const {
-  '1': 'WriteChannelsResponse',
+const WriteControlRequest_GenericValue$json = const {
+  '1': 'GenericValue',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
+  ],
+};
+
+const WriteControlResponse$json = const {
+  '1': 'WriteControlResponse',
 };
 
 const SelectFixturesRequest$json = const {
@@ -66,7 +76,7 @@ const StoreRequest$json = const {
   '1': 'StoreRequest',
   '2': const [
     const {'1': 'sequence_id', '3': 1, '4': 1, '5': 13, '10': 'sequenceId'},
-    const {'1': 'store_mode', '3': 2, '4': 1, '5': 14, '6': '.mizer.StoreRequest.Mode', '10': 'storeMode'},
+    const {'1': 'store_mode', '3': 2, '4': 1, '5': 14, '6': '.mizer.programmer.StoreRequest.Mode', '10': 'storeMode'},
   ],
   '4': const [StoreRequest_Mode$json],
 };

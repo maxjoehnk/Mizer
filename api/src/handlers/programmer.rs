@@ -1,7 +1,7 @@
 use crate::RuntimeApi;
 use mizer_fixtures::manager::FixtureManager;
 use crate::models::programmer::*;
-use mizer_sequencer::{Sequencer, Cue, CueChannel, SequencerValue};
+use mizer_sequencer::{Sequencer, CueChannel, SequencerValue};
 
 #[derive(Clone)]
 pub struct ProgrammerHandler<R> {
@@ -23,10 +23,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         }
     }
 
-    pub fn write_channels(&self, request: WriteChannelsRequest) {
-        let value = request.value.unwrap();
+    pub fn write_control(&self, request: WriteControlRequest) {
         let mut programmer = self.fixture_manager.get_programmer();
-        programmer.write_channels(request.channel, value.into());
+        for (control, value) in request.as_controls() {
+            programmer.write_control(control, value);
+        }
     }
 
     pub fn select_fixtures(&self, fixture_ids: Vec<u32>) {
@@ -45,8 +46,8 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     pub fn store(&self, sequence_id: u32, store_mode: StoreRequest_Mode) {
-        let mut programmer = self.fixture_manager.get_programmer();
-        let channels = programmer.get_channels();
+        let programmer = self.fixture_manager.get_programmer();
+        let controls = programmer.get_controls();
         self.sequencer.update_sequence(sequence_id, |sequence| {
             let cue = if store_mode == StoreRequest_Mode::AddCue || sequence.cues.is_empty() {
                 let cue_id = sequence.add_cue();
@@ -54,11 +55,11 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             }else {
                 sequence.cues.last_mut()
             }.unwrap();
-            let cue_channels = channels.into_iter()
-                .map(|channel| CueChannel {
-                    channel: channel.channel,
-                    fixtures: channel.fixtures,
-                    value: SequencerValue::Direct(channel.value),
+            let cue_channels = controls.into_iter()
+                .map(|control| CueChannel {
+                    control: control.control,
+                    fixtures: control.fixtures,
+                    value: SequencerValue::Direct(control.value),
                     fade: None,
                     delay: None,
                 })

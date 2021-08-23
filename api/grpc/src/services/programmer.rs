@@ -4,12 +4,12 @@ use mizer_api::handlers::ProgrammerHandler;
 use grpc::{ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink};
 
 impl<R: RuntimeApi> ProgrammerApi for ProgrammerHandler<R> {
-    fn subscribe_to_programmer(&self, req: ServerRequestSingle<SubscribeProgrammerRequest>, resp: ServerResponseSink<ProgrammerState>) -> grpc::Result<()> {
+    fn subscribe_to_programmer(&self, _: ServerRequestSingle<SubscribeProgrammerRequest>, _: ServerResponseSink<ProgrammerState>) -> grpc::Result<()> {
         todo!()
     }
 
-    fn write_channels(&self, req: ServerRequestSingle<WriteChannelsRequest>, resp: ServerResponseUnarySink<WriteChannelsResponse>) -> grpc::Result<()> {
-        self.write_channels(req.message);
+    fn write_control(&self, req: ServerRequestSingle<WriteControlRequest>, resp: ServerResponseUnarySink<WriteControlResponse>) -> grpc::Result<()> {
+        self.write_control(req.message);
 
         resp.finish(Default::default())
     }
@@ -20,7 +20,7 @@ impl<R: RuntimeApi> ProgrammerApi for ProgrammerHandler<R> {
         resp.finish(Default::default())
     }
 
-    fn clear(&self, req: ServerRequestSingle<ClearRequest>, resp: ServerResponseUnarySink<ClearResponse>) -> grpc::Result<()> {
+    fn clear(&self, _: ServerRequestSingle<ClearRequest>, resp: ServerResponseUnarySink<ClearResponse>) -> grpc::Result<()> {
         self.clear();
 
         resp.finish(Default::default())

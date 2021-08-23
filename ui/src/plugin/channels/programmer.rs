@@ -16,12 +16,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
         &mut self,
         call: MethodCall<Value>,
         reply: MethodCallReply<Value>,
-        engine: EngineHandle,
+        _: EngineHandle,
     ) {
         log::trace!("ProgrammerChannel::{} ({:?})", call.method, call.args);
         match call.method.as_str() {
-            "writeChannels" => {
-                if let Err(err) = call.arguments().map(|req| self.write_channels(req)) {
+            "writeControl" => {
+                if let Err(err) = call.arguments().map(|req| self.write_control(req)) {
                     reply.respond_error(err);
                 } else {
                     reply.send_ok(Value::Null)
@@ -77,9 +77,9 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
         MethodChannel::new(context, "mizer.live/programmer", self)
     }
 
-    fn write_channels(&self, req: WriteChannelsRequest) {
-        log::trace!("ProgrammerChannel::write_channels({:?})", req);
-        self.handler.write_channels(req);
+    fn write_control(&self, req: WriteControlRequest) {
+        log::trace!("ProgrammerChannel::write_control({:?})", req);
+        self.handler.write_control(req);
     }
 
     fn select_fixtures(&self, fixture_ids: Vec<u32>) {

@@ -305,11 +305,11 @@ impl ::protobuf::reflect::ProtobufValue for ProgrammerState {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct WriteChannelsRequest {
+pub struct WriteControlRequest {
     // message fields
-    pub channel: ::std::string::String,
+    pub control: super::fixtures::FixtureControl,
     // message oneof groups
-    pub value: ::std::option::Option<WriteChannelsRequest_oneof_value>,
+    pub value: ::std::option::Option<WriteControlRequest_oneof_value>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -317,48 +317,38 @@ pub struct WriteChannelsRequest {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a WriteChannelsRequest {
-    fn default() -> &'a WriteChannelsRequest {
-        <WriteChannelsRequest as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a WriteControlRequest {
+    fn default() -> &'a WriteControlRequest {
+        <WriteControlRequest as ::protobuf::Message>::default_instance()
     }
 }
 
 #[derive(Clone,PartialEq,Debug)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum WriteChannelsRequest_oneof_value {
+pub enum WriteControlRequest_oneof_value {
     fader(f64),
     color(super::fixtures::ColorChannel),
+    generic(WriteControlRequest_GenericValue),
 }
 
-impl WriteChannelsRequest {
-    pub fn new() -> WriteChannelsRequest {
+impl WriteControlRequest {
+    pub fn new() -> WriteControlRequest {
         ::std::default::Default::default()
     }
 
-    // string channel = 1;
+    // .mizer.fixtures.FixtureControl control = 1;
 
 
-    pub fn get_channel(&self) -> &str {
-        &self.channel
+    pub fn get_control(&self) -> super::fixtures::FixtureControl {
+        self.control
     }
-    pub fn clear_channel(&mut self) {
-        self.channel.clear();
+    pub fn clear_control(&mut self) {
+        self.control = super::fixtures::FixtureControl::INTENSITY;
     }
 
     // Param is passed by value, moved
-    pub fn set_channel(&mut self, v: ::std::string::String) {
-        self.channel = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_channel(&mut self) -> &mut ::std::string::String {
-        &mut self.channel
-    }
-
-    // Take field
-    pub fn take_channel(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.channel, ::std::string::String::new())
+    pub fn set_control(&mut self, v: super::fixtures::FixtureControl) {
+        self.control = v;
     }
 
     // double fader = 2;
@@ -366,7 +356,7 @@ impl WriteChannelsRequest {
 
     pub fn get_fader(&self) -> f64 {
         match self.value {
-            ::std::option::Option::Some(WriteChannelsRequest_oneof_value::fader(v)) => v,
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::fader(v)) => v,
             _ => 0.,
         }
     }
@@ -376,22 +366,22 @@ impl WriteChannelsRequest {
 
     pub fn has_fader(&self) -> bool {
         match self.value {
-            ::std::option::Option::Some(WriteChannelsRequest_oneof_value::fader(..)) => true,
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::fader(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
     pub fn set_fader(&mut self, v: f64) {
-        self.value = ::std::option::Option::Some(WriteChannelsRequest_oneof_value::fader(v))
+        self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::fader(v))
     }
 
-    // .mizer.ColorChannel color = 3;
+    // .mizer.fixtures.ColorChannel color = 3;
 
 
     pub fn get_color(&self) -> &super::fixtures::ColorChannel {
         match self.value {
-            ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(ref v)) => v,
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::color(ref v)) => v,
             _ => <super::fixtures::ColorChannel as ::protobuf::Message>::default_instance(),
         }
     }
@@ -401,24 +391,24 @@ impl WriteChannelsRequest {
 
     pub fn has_color(&self) -> bool {
         match self.value {
-            ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(..)) => true,
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::color(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
     pub fn set_color(&mut self, v: super::fixtures::ColorChannel) {
-        self.value = ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(v))
+        self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::color(v))
     }
 
     // Mutable pointer to the field.
     pub fn mut_color(&mut self) -> &mut super::fixtures::ColorChannel {
-        if let ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(_)) = self.value {
+        if let ::std::option::Option::Some(WriteControlRequest_oneof_value::color(_)) = self.value {
         } else {
-            self.value = ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(super::fixtures::ColorChannel::new()));
+            self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::color(super::fixtures::ColorChannel::new()));
         }
         match self.value {
-            ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(ref mut v)) => v,
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::color(ref mut v)) => v,
             _ => panic!(),
         }
     }
@@ -427,18 +417,72 @@ impl WriteChannelsRequest {
     pub fn take_color(&mut self) -> super::fixtures::ColorChannel {
         if self.has_color() {
             match self.value.take() {
-                ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(v)) => v,
+                ::std::option::Option::Some(WriteControlRequest_oneof_value::color(v)) => v,
                 _ => panic!(),
             }
         } else {
             super::fixtures::ColorChannel::new()
         }
     }
+
+    // .mizer.programmer.WriteControlRequest.GenericValue generic = 4;
+
+
+    pub fn get_generic(&self) -> &WriteControlRequest_GenericValue {
+        match self.value {
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(ref v)) => v,
+            _ => <WriteControlRequest_GenericValue as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_generic(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_generic(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_generic(&mut self, v: WriteControlRequest_GenericValue) {
+        self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_generic(&mut self) -> &mut WriteControlRequest_GenericValue {
+        if let ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(WriteControlRequest_GenericValue::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_generic(&mut self) -> WriteControlRequest_GenericValue {
+        if self.has_generic() {
+            match self.value.take() {
+                ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            WriteControlRequest_GenericValue::new()
+        }
+    }
 }
 
-impl ::protobuf::Message for WriteChannelsRequest {
+impl ::protobuf::Message for WriteControlRequest {
     fn is_initialized(&self) -> bool {
-        if let Some(WriteChannelsRequest_oneof_value::color(ref v)) = self.value {
+        if let Some(WriteControlRequest_oneof_value::color(ref v)) = self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(WriteControlRequest_oneof_value::generic(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
             }
@@ -451,19 +495,25 @@ impl ::protobuf::Message for WriteChannelsRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.channel)?;
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 1, &mut self.unknown_fields)?
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.value = ::std::option::Option::Some(WriteChannelsRequest_oneof_value::fader(is.read_double()?));
+                    self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::fader(is.read_double()?));
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.value = ::std::option::Option::Some(WriteChannelsRequest_oneof_value::color(is.read_message()?));
+                    self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::color(is.read_message()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::generic(is.read_message()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -477,15 +527,19 @@ impl ::protobuf::Message for WriteChannelsRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.channel.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.channel);
+        if self.control != super::fixtures::FixtureControl::INTENSITY {
+            my_size += ::protobuf::rt::enum_size(1, self.control);
         }
         if let ::std::option::Option::Some(ref v) = self.value {
             match v {
-                &WriteChannelsRequest_oneof_value::fader(v) => {
+                &WriteControlRequest_oneof_value::fader(v) => {
                     my_size += 9;
                 },
-                &WriteChannelsRequest_oneof_value::color(ref v) => {
+                &WriteControlRequest_oneof_value::color(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &WriteControlRequest_oneof_value::generic(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -497,16 +551,21 @@ impl ::protobuf::Message for WriteChannelsRequest {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if !self.channel.is_empty() {
-            os.write_string(1, &self.channel)?;
+        if self.control != super::fixtures::FixtureControl::INTENSITY {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.control))?;
         }
         if let ::std::option::Option::Some(ref v) = self.value {
             match v {
-                &WriteChannelsRequest_oneof_value::fader(v) => {
+                &WriteControlRequest_oneof_value::fader(v) => {
                     os.write_double(2, v)?;
                 },
-                &WriteChannelsRequest_oneof_value::color(ref v) => {
+                &WriteControlRequest_oneof_value::color(ref v) => {
                     os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &WriteControlRequest_oneof_value::generic(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -542,59 +601,65 @@ impl ::protobuf::Message for WriteChannelsRequest {
         Self::descriptor_static()
     }
 
-    fn new() -> WriteChannelsRequest {
-        WriteChannelsRequest::new()
+    fn new() -> WriteControlRequest {
+        WriteControlRequest::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                "channel",
-                |m: &WriteChannelsRequest| { &m.channel },
-                |m: &mut WriteChannelsRequest| { &mut m.channel },
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<super::fixtures::FixtureControl>>(
+                "control",
+                |m: &WriteControlRequest| { &m.control },
+                |m: &mut WriteControlRequest| { &mut m.control },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_f64_accessor::<_>(
                 "fader",
-                WriteChannelsRequest::has_fader,
-                WriteChannelsRequest::get_fader,
+                WriteControlRequest::has_fader,
+                WriteControlRequest::get_fader,
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::fixtures::ColorChannel>(
                 "color",
-                WriteChannelsRequest::has_color,
-                WriteChannelsRequest::get_color,
+                WriteControlRequest::has_color,
+                WriteControlRequest::get_color,
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteChannelsRequest>(
-                "WriteChannelsRequest",
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, WriteControlRequest_GenericValue>(
+                "generic",
+                WriteControlRequest::has_generic,
+                WriteControlRequest::get_generic,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteControlRequest>(
+                "WriteControlRequest",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static WriteChannelsRequest {
-        static instance: ::protobuf::rt::LazyV2<WriteChannelsRequest> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(WriteChannelsRequest::new)
+    fn default_instance() -> &'static WriteControlRequest {
+        static instance: ::protobuf::rt::LazyV2<WriteControlRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(WriteControlRequest::new)
     }
 }
 
-impl ::protobuf::Clear for WriteChannelsRequest {
+impl ::protobuf::Clear for WriteControlRequest {
     fn clear(&mut self) {
-        self.channel.clear();
+        self.control = super::fixtures::FixtureControl::INTENSITY;
+        self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for WriteChannelsRequest {
+impl ::std::fmt::Debug for WriteControlRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for WriteChannelsRequest {
+impl ::protobuf::reflect::ProtobufValue for WriteControlRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -602,7 +667,10 @@ impl ::protobuf::reflect::ProtobufValue for WriteChannelsRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct WriteChannelsResponse {
+pub struct WriteControlRequest_GenericValue {
+    // message fields
+    pub name: ::std::string::String,
+    pub value: f64,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -610,19 +678,213 @@ pub struct WriteChannelsResponse {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a WriteChannelsResponse {
-    fn default() -> &'a WriteChannelsResponse {
-        <WriteChannelsResponse as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a WriteControlRequest_GenericValue {
+    fn default() -> &'a WriteControlRequest_GenericValue {
+        <WriteControlRequest_GenericValue as ::protobuf::Message>::default_instance()
     }
 }
 
-impl WriteChannelsResponse {
-    pub fn new() -> WriteChannelsResponse {
+impl WriteControlRequest_GenericValue {
+    pub fn new() -> WriteControlRequest_GenericValue {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // double value = 2;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+}
+
+impl ::protobuf::Message for WriteControlRequest_GenericValue {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.value != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.value != 0. {
+            os.write_double(2, self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> WriteControlRequest_GenericValue {
+        WriteControlRequest_GenericValue::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &WriteControlRequest_GenericValue| { &m.name },
+                |m: &mut WriteControlRequest_GenericValue| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &WriteControlRequest_GenericValue| { &m.value },
+                |m: &mut WriteControlRequest_GenericValue| { &mut m.value },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteControlRequest_GenericValue>(
+                "WriteControlRequest.GenericValue",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static WriteControlRequest_GenericValue {
+        static instance: ::protobuf::rt::LazyV2<WriteControlRequest_GenericValue> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(WriteControlRequest_GenericValue::new)
+    }
+}
+
+impl ::protobuf::Clear for WriteControlRequest_GenericValue {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.value = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for WriteControlRequest_GenericValue {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteControlRequest_GenericValue {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct WriteControlResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a WriteControlResponse {
+    fn default() -> &'a WriteControlResponse {
+        <WriteControlResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteControlResponse {
+    pub fn new() -> WriteControlResponse {
         ::std::default::Default::default()
     }
 }
 
-impl ::protobuf::Message for WriteChannelsResponse {
+impl ::protobuf::Message for WriteControlResponse {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -679,41 +941,41 @@ impl ::protobuf::Message for WriteChannelsResponse {
         Self::descriptor_static()
     }
 
-    fn new() -> WriteChannelsResponse {
-        WriteChannelsResponse::new()
+    fn new() -> WriteControlResponse {
+        WriteControlResponse::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let fields = ::std::vec::Vec::new();
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteChannelsResponse>(
-                "WriteChannelsResponse",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<WriteControlResponse>(
+                "WriteControlResponse",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static WriteChannelsResponse {
-        static instance: ::protobuf::rt::LazyV2<WriteChannelsResponse> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(WriteChannelsResponse::new)
+    fn default_instance() -> &'static WriteControlResponse {
+        static instance: ::protobuf::rt::LazyV2<WriteControlResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(WriteControlResponse::new)
     }
 }
 
-impl ::protobuf::Clear for WriteChannelsResponse {
+impl ::protobuf::Clear for WriteControlResponse {
     fn clear(&mut self) {
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for WriteChannelsResponse {
+impl ::std::fmt::Debug for WriteControlResponse {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for WriteChannelsResponse {
+impl ::protobuf::reflect::ProtobufValue for WriteControlResponse {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -1550,7 +1812,7 @@ impl StoreRequest {
         self.sequence_id = v;
     }
 
-    // .mizer.StoreRequest.Mode store_mode = 2;
+    // .mizer.programmer.StoreRequest.Mode store_mode = 2;
 
 
     pub fn get_store_mode(&self) -> StoreRequest_Mode {
@@ -1871,28 +2133,34 @@ impl ::protobuf::reflect::ProtobufValue for StoreResponse {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x10programmer.proto\x12\x05mizer\x1a\x0efixtures.proto\"\x1c\n\x1aSub\
-    scribeProgrammerRequest\"-\n\x0fProgrammerState\x12\x1a\n\x08fixtures\
-    \x18\x01\x20\x03(\rR\x08fixtures\"~\n\x14WriteChannelsRequest\x12\x18\n\
-    \x07channel\x18\x01\x20\x01(\tR\x07channel\x12\x16\n\x05fader\x18\x02\
-    \x20\x01(\x01H\0R\x05fader\x12+\n\x05color\x18\x03\x20\x01(\x0b2\x13.miz\
-    er.ColorChannelH\0R\x05colorB\x07\n\x05value\"\x17\n\x15WriteChannelsRes\
-    ponse\"3\n\x15SelectFixturesRequest\x12\x1a\n\x08fixtures\x18\x01\x20\
-    \x03(\rR\x08fixtures\"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearR\
-    equest\"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighli\
-    ght\x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\x96\
-    \x01\n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nseq\
-    uenceId\x127\n\nstore_mode\x18\x02\x20\x01(\x0e2\x18.mizer.StoreRequest.\
-    ModeR\tstoreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\
-    \x10\x01\x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse2\xb4\x03\n\rPr\
-    ogrammerApi\x12V\n\x15SubscribeToProgrammer\x12!.mizer.SubscribeProgramm\
-    erRequest\x1a\x16.mizer.ProgrammerState\"\00\x01\x12L\n\rWriteChannels\
-    \x12\x1b.mizer.WriteChannelsRequest\x1a\x1c.mizer.WriteChannelsResponse\
-    \"\0\x12O\n\x0eSelectFixtures\x12\x1c.mizer.SelectFixturesRequest\x1a\
-    \x1d.mizer.SelectFixturesResponse\"\0\x124\n\x05Clear\x12\x13.mizer.Clea\
-    rRequest\x1a\x14.mizer.ClearResponse\"\0\x12@\n\tHighlight\x12\x17.mizer\
-    .HighlightRequest\x1a\x18.mizer.HighlightResponse\"\0\x124\n\x05Store\
-    \x12\x13.mizer.StoreRequest\x1a\x14.mizer.StoreResponse\"\0b\x06proto3\
+    \n\x10programmer.proto\x12\x10mizer.programmer\x1a\x0efixtures.proto\"\
+    \x1c\n\x1aSubscribeProgrammerRequest\"-\n\x0fProgrammerState\x12\x1a\n\
+    \x08fixtures\x18\x01\x20\x03(\rR\x08fixtures\"\xb0\x02\n\x13WriteControl\
+    Request\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.Fixtu\
+    reControlR\x07control\x12\x16\n\x05fader\x18\x02\x20\x01(\x01H\0R\x05fad\
+    er\x124\n\x05color\x18\x03\x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannel\
+    H\0R\x05color\x12N\n\x07generic\x18\x04\x20\x01(\x0b22.mizer.programmer.\
+    WriteControlRequest.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\x01R\x05valueB\x07\n\x05value\"\x16\n\x14WriteControlRespo\
+    nse\"3\n\x15SelectFixturesRequest\x12\x1a\n\x08fixtures\x18\x01\x20\x03(\
+    \rR\x08fixtures\"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearReques\
+    t\"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\
+    \x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\
+    \n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenc\
+    eId\x12B\n\nstore_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequ\
+    est.ModeR\tstoreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Me\
+    rge\x10\x01\x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse2\xb5\x04\n\
+    \rProgrammerApi\x12l\n\x15SubscribeToProgrammer\x12,.mizer.programmer.Su\
+    bscribeProgrammerRequest\x1a!.mizer.programmer.ProgrammerState\"\00\x01\
+    \x12_\n\x0cWriteControl\x12%.mizer.programmer.WriteControlRequest\x1a&.m\
+    izer.programmer.WriteControlResponse\"\0\x12e\n\x0eSelectFixtures\x12'.m\
+    izer.programmer.SelectFixturesRequest\x1a(.mizer.programmer.SelectFixtur\
+    esResponse\"\0\x12J\n\x05Clear\x12\x1e.mizer.programmer.ClearRequest\x1a\
+    \x1f.mizer.programmer.ClearResponse\"\0\x12V\n\tHighlight\x12\".mizer.pr\
+    ogrammer.HighlightRequest\x1a#.mizer.programmer.HighlightResponse\"\0\
+    \x12J\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.pro\
+    grammer.StoreResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

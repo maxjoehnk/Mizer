@@ -1,7 +1,10 @@
-use crate::models::fixtures::*;
-use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData};
-use protobuf::SingularPtrField;
 use std::collections::HashMap;
+
+use protobuf::SingularPtrField;
+
+use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData};
+
+use crate::models::fixtures::*;
 
 impl From<mizer_fixtures::fixture::FixtureDefinition> for FixtureDefinition {
     fn from(definition: mizer_fixtures::fixture::FixtureDefinition) -> Self {
@@ -92,91 +95,130 @@ impl From<mizer_fixtures::fixture::ChannelResolution> for FixtureChannel_oneof_r
     }
 }
 
-impl FixtureChannelGroup {
+impl FixtureControls {
+    fn fader(control: FixtureControl, value: Option<f64>) -> Self {
+        FixtureControls {
+            control,
+            value: value
+                .map(|value| {
+                    FixtureControls_oneof_value::fader(FaderChannel {
+                        value,
+                        ..Default::default()
+                    })
+                })
+                .into(),
+            ..Default::default()
+        }
+    }
+
     pub fn with_values(
-        group: &mizer_fixtures::fixture::FixtureChannelGroup,
+        fixture_controls: mizer_fixtures::fixture::FixtureControls,
         values: &HashMap<String, f64>,
-    ) -> Self {
+    ) -> Vec<Self> {
+        let mut controls = Vec::new();
+        if let Some(channel) = fixture_controls.intensity {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::INTENSITY, value));
+        }
+        if let Some(channel) = fixture_controls.shutter {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::SHUTTER, value));
+        }
+        if let Some(channel) = fixture_controls.iris {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::IRIS, value));
+        }
+        if let Some(channel) = fixture_controls.zoom {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::ZOOM, value));
+        }
+        if let Some(channel) = fixture_controls.frost {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::FROST, value));
+        }
+        if let Some(channel) = fixture_controls.prism {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::PRISM, value));
+        }
+        if let Some(channel) = fixture_controls.focus {
+            let value = values.get(&channel).copied();
+            controls.push(FixtureControls::fader(FixtureControl::FOCUS, value));
+        }
+        if let Some(channel) = fixture_controls.pan {
+            controls.push(FixtureControls {
+                control: FixtureControl::PAN,
+                value: Some(FixtureControls_oneof_value::axis(AxisChannel::with_value(
+                    &channel, values,
+                )))
+                .into(),
+                ..Default::default()
+            });
+        }
+        if let Some(channel) = fixture_controls.tilt {
+            controls.push(FixtureControls {
+                control: FixtureControl::TILT,
+                value: Some(FixtureControls_oneof_value::axis(AxisChannel::with_value(
+                    &channel, values,
+                )))
+                .into(),
+                ..Default::default()
+            });
+        }
+        if let Some(color) = fixture_controls.color {
+            controls.push(FixtureControls {
+                control: FixtureControl::COLOR,
+                value: Some(FixtureControls_oneof_value::color(ColorChannel {
+                    red: values.get(&color.red).copied().unwrap_or_default(),
+                    green: values.get(&color.green).copied().unwrap_or_default(),
+                    blue: values.get(&color.blue).copied().unwrap_or_default(),
+                    ..Default::default()
+                }))
+                .into(),
+                ..Default::default()
+            })
+        }
+        for channel in fixture_controls.generic {
+            let value = values.get(&channel.channel).copied();
+            controls.push(FixtureControls {
+                control: FixtureControl::GENERIC,
+                value: value
+                    .map(|value| {
+                        FixtureControls_oneof_value::generic(GenericChannel {
+                            name: channel.label,
+                            value,
+                            ..Default::default()
+                        })
+                    })
+                    .into(),
+                ..Default::default()
+            });
+        }
+
+        controls
+    }
+}
+
+impl From<f64> for GenericChannel {
+    fn from(value: f64) -> Self {
         Self {
-            name: group.name.clone(),
-            channel: Some(FixtureChannelGroup_oneof_channel::with_values(
-                &group.group_type,
-                values,
-            )),
+            value,
             ..Default::default()
         }
     }
 }
 
-impl FixtureChannelGroup_oneof_channel {
-    pub fn with_values(
-        group_type: &mizer_fixtures::fixture::FixtureChannelGroupType,
+impl AxisChannel {
+    fn with_value(
+        axis: &mizer_fixtures::fixture::AxisGroup,
         values: &HashMap<String, f64>,
     ) -> Self {
-        use mizer_fixtures::fixture::FixtureChannelGroupType::*;
-        match group_type {
-            Color(color) => Self::color(ColorChannel {
-                red: values.get(&color.red).copied().unwrap_or_default(),
-                green: values.get(&color.green).copied().unwrap_or_default(),
-                blue: values.get(&color.blue).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Generic(channel) => Self::generic(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Pan(axis) => Self::pan(AxisChannel {
-                value: values.get(&axis.channel).copied().unwrap_or_default(),
-                angle_from: axis.angle.map(|angle| angle.from as f64).unwrap_or_default(),
-                angle_to: axis.angle.map(|angle| angle.to as f64).unwrap_or_default(),
-                ..Default::default()
-            }),
-            Tilt(axis) => Self::tilt(AxisChannel {
-                value: values.get(&axis.channel).copied().unwrap_or_default(),
-                angle_from: axis.angle.map(|angle| angle.from as f64).unwrap_or_default(),
-                angle_to: axis.angle.map(|angle| angle.to as f64).unwrap_or_default(),
-                ..Default::default()
-            }),
-            Focus(channel) => Self::focus(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Zoom(channel) => Self::zoom(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Prism(channel) => Self::prism(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Intensity(channel) => Self::intensity(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Shutter(channel) => Self::shutter(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Frost(channel) => Self::frost(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-            Iris(channel) => Self::iris(GenericChannel {
-                value: values.get(channel).copied().unwrap_or_default(),
-                ..Default::default()
-            }),
-        }
-    }
-}
-
-impl DmxChannel {
-    pub fn with_value(
-        channel: &mizer_fixtures::fixture::FixtureChannelDefinition,
-        value: f64,
-    ) -> Self {
-        Self {
-            name: channel.name.clone(),
-            value,
+        AxisChannel {
+            value: values.get(&axis.channel).copied().unwrap_or_default(),
+            angle_from: axis
+                .angle
+                .map(|angle| angle.from as f64)
+                .unwrap_or_default(),
+            angle_to: axis.angle.map(|angle| angle.to as f64).unwrap_or_default(),
             ..Default::default()
         }
     }

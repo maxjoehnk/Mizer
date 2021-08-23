@@ -1,7 +1,7 @@
 use crate::fixture::{Fixture, FixtureDefinition};
 use crate::library::FixtureLibrary;
 use dashmap::DashMap;
-use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
+use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex};
 use crate::programmer::Programmer;
@@ -67,12 +67,12 @@ impl FixtureManager {
     }
 
     pub fn get_programmer<'a>(&'a self) -> impl DerefMut<Target = Programmer> + 'a {
-        let mut programmer = self.programmer.lock().unwrap();
+        let programmer = self.programmer.lock().unwrap();
         programmer
     }
 
     pub(crate) fn execute_programmers(&self) {
-        let mut programmer = self.programmer.lock().unwrap();
+        let programmer = self.programmer.lock().unwrap();
         programmer.run();
     }
 

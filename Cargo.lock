@@ -2990,6 +2990,7 @@ dependencies = [
  "mizer-processing",
  "mizer-protocol-dmx",
  "profiling",
+ "serde",
  "test-case",
 ]
 

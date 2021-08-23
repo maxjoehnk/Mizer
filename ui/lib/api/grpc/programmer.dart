@@ -8,8 +8,8 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   ProgrammerGrpcApi(ClientChannel channel) : client = ProgrammerApiClient(channel);
 
   @override
-  Future<void> writeChannels(WriteChannelsRequest request) async {
-    await this.client.writeChannels(request);
+  Future<void> writeControl(WriteControlRequest request) async {
+    await this.client.writeControl(request);
   }
 
   @override

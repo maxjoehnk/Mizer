@@ -5,10 +5,27 @@
 // @dart = 2.7
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
+const FixtureControl$json = const {
+  '1': 'FixtureControl',
+  '2': const [
+    const {'1': 'INTENSITY', '2': 0},
+    const {'1': 'SHUTTER', '2': 1},
+    const {'1': 'COLOR', '2': 2},
+    const {'1': 'PAN', '2': 3},
+    const {'1': 'TILT', '2': 4},
+    const {'1': 'FOCUS', '2': 5},
+    const {'1': 'ZOOM', '2': 6},
+    const {'1': 'PRISM', '2': 7},
+    const {'1': 'IRIS', '2': 8},
+    const {'1': 'FROST', '2': 9},
+    const {'1': 'GENERIC', '2': 10},
+  ],
+};
+
 const AddFixturesRequest$json = const {
   '1': 'AddFixturesRequest',
   '2': const [
-    const {'1': 'requests', '3': 1, '4': 3, '5': 11, '6': '.mizer.AddFixtureRequest', '10': 'requests'},
+    const {'1': 'requests', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.AddFixtureRequest', '10': 'requests'},
   ],
 };
 
@@ -30,7 +47,7 @@ const GetFixturesRequest$json = const {
 const Fixtures$json = const {
   '1': 'Fixtures',
   '2': const [
-    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.Fixture', '10': 'fixtures'},
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.Fixture', '10': 'fixtures'},
   ],
 };
 
@@ -43,42 +60,26 @@ const Fixture$json = const {
     const {'1': 'mode', '3': 4, '4': 1, '5': 9, '10': 'mode'},
     const {'1': 'universe', '3': 5, '4': 1, '5': 13, '10': 'universe'},
     const {'1': 'channel', '3': 6, '4': 1, '5': 13, '10': 'channel'},
-    const {'1': 'channels', '3': 7, '4': 3, '5': 11, '6': '.mizer.FixtureChannelGroup', '10': 'channels'},
-    const {'1': 'dmxChannels', '3': 8, '4': 3, '5': 11, '6': '.mizer.DmxChannel', '10': 'dmxChannels'},
+    const {'1': 'controls', '3': 7, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureControls', '10': 'controls'},
   ],
 };
 
-const FixtureChannelGroup$json = const {
-  '1': 'FixtureChannelGroup',
+const FixtureControls$json = const {
+  '1': 'FixtureControls',
   '2': const [
-    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'generic', '3': 2, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'generic'},
-    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.ColorChannel', '9': 0, '10': 'color'},
-    const {'1': 'pan', '3': 4, '4': 1, '5': 11, '6': '.mizer.AxisChannel', '9': 0, '10': 'pan'},
-    const {'1': 'tilt', '3': 5, '4': 1, '5': 11, '6': '.mizer.AxisChannel', '9': 0, '10': 'tilt'},
-    const {'1': 'focus', '3': 6, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'focus'},
-    const {'1': 'zoom', '3': 7, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'zoom'},
-    const {'1': 'prism', '3': 8, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'prism'},
-    const {'1': 'intensity', '3': 9, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'intensity'},
-    const {'1': 'shutter', '3': 10, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'shutter'},
-    const {'1': 'iris', '3': 11, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'iris'},
-    const {'1': 'frost', '3': 12, '4': 1, '5': 11, '6': '.mizer.GenericChannel', '9': 0, '10': 'frost'},
+    const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
+    const {'1': 'fader', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FaderChannel', '9': 0, '10': 'fader'},
+    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
+    const {'1': 'axis', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.AxisChannel', '9': 0, '10': 'axis'},
+    const {'1': 'generic', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.GenericChannel', '9': 0, '10': 'generic'},
   ],
   '8': const [
-    const {'1': 'channel'},
+    const {'1': 'value'},
   ],
 };
 
-const DmxChannel$json = const {
-  '1': 'DmxChannel',
-  '2': const [
-    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
-  ],
-};
-
-const GenericChannel$json = const {
-  '1': 'GenericChannel',
+const FaderChannel$json = const {
+  '1': 'FaderChannel',
   '2': const [
     const {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
   ],
@@ -102,6 +103,14 @@ const AxisChannel$json = const {
   ],
 };
 
+const GenericChannel$json = const {
+  '1': 'GenericChannel',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
 const GetFixtureDefinitionsRequest$json = const {
   '1': 'GetFixtureDefinitionsRequest',
 };
@@ -109,7 +118,7 @@ const GetFixtureDefinitionsRequest$json = const {
 const FixtureDefinitions$json = const {
   '1': 'FixtureDefinitions',
   '2': const [
-    const {'1': 'definitions', '3': 1, '4': 3, '5': 11, '6': '.mizer.FixtureDefinition', '10': 'definitions'},
+    const {'1': 'definitions', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureDefinition', '10': 'definitions'},
   ],
 };
 
@@ -119,8 +128,8 @@ const FixtureDefinition$json = const {
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'manufacturer', '3': 3, '4': 1, '5': 9, '10': 'manufacturer'},
-    const {'1': 'modes', '3': 4, '4': 3, '5': 11, '6': '.mizer.FixtureMode', '10': 'modes'},
-    const {'1': 'physical', '3': 5, '4': 1, '5': 11, '6': '.mizer.FixturePhysicalData', '10': 'physical'},
+    const {'1': 'modes', '3': 4, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureMode', '10': 'modes'},
+    const {'1': 'physical', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixturePhysicalData', '10': 'physical'},
     const {'1': 'tags', '3': 6, '4': 3, '5': 9, '10': 'tags'},
   ],
 };
@@ -129,7 +138,7 @@ const FixtureMode$json = const {
   '1': 'FixtureMode',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'channels', '3': 2, '4': 3, '5': 11, '6': '.mizer.FixtureChannel', '10': 'channels'},
+    const {'1': 'channels', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureChannel', '10': 'channels'},
   ],
 };
 
@@ -137,9 +146,9 @@ const FixtureChannel$json = const {
   '1': 'FixtureChannel',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'coarse', '3': 2, '4': 1, '5': 11, '6': '.mizer.FixtureChannel.CoarseResolution', '9': 0, '10': 'coarse'},
-    const {'1': 'fine', '3': 3, '4': 1, '5': 11, '6': '.mizer.FixtureChannel.FineResolution', '9': 0, '10': 'fine'},
-    const {'1': 'finest', '3': 4, '4': 1, '5': 11, '6': '.mizer.FixtureChannel.FinestResolution', '9': 0, '10': 'finest'},
+    const {'1': 'coarse', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.CoarseResolution', '9': 0, '10': 'coarse'},
+    const {'1': 'fine', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.FineResolution', '9': 0, '10': 'fine'},
+    const {'1': 'finest', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureChannel.FinestResolution', '9': 0, '10': 'finest'},
   ],
   '3': const [FixtureChannel_CoarseResolution$json, FixtureChannel_FineResolution$json, FixtureChannel_FinestResolution$json],
   '8': const [

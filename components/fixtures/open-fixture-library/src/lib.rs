@@ -274,6 +274,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
                     FixtureMode {
                         name: mode.name,
                         groups: group_channels(&available_channels, &channels),
+                        controls: group_controls(&available_channels, &channels),
                         channels: channels
                             .into_iter()
                             .enumerate()
@@ -380,11 +381,19 @@ fn group_channels(
     let mut groups = Vec::new();
 
     for (name, channel) in channels {
-        if channel.capabilities.iter().all(|c| matches!(c, Capability::NoFunction)) {
+        if channel
+            .capabilities
+            .iter()
+            .all(|c| matches!(c, Capability::NoFunction))
+        {
             log::trace!("skipping capability {} as it has no functions", name);
             continue;
         }
-        match channel.capabilities.iter().find(|c| !matches!(c, Capability::NoFunction)) {
+        match channel
+            .capabilities
+            .iter()
+            .find(|c| !matches!(c, Capability::NoFunction))
+        {
             Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
                 color_group.red(name.clone());
             }
@@ -428,10 +437,12 @@ fn group_channels(
                 name: name.clone(),
                 group_type: FixtureChannelGroupType::Zoom(name.clone()),
             }),
-            Some(Capability::Prism | Capability::PrismRotation) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Prism(name.clone()),
-            }),
+            Some(Capability::Prism | Capability::PrismRotation) => {
+                groups.push(FixtureChannelGroup {
+                    name: name.clone(),
+                    group_type: FixtureChannelGroupType::Prism(name.clone()),
+                })
+            }
             Some(Capability::Iris) => groups.push(FixtureChannelGroup {
                 name: name.clone(),
                 group_type: FixtureChannelGroupType::Iris(name.clone()),
@@ -466,6 +477,103 @@ fn group_channels(
     log::trace!("in: {:?}, out: {:?}", enabled_channels, groups);
 
     groups
+}
+
+fn group_controls(
+    available_channels: &HashMap<String, Channel>,
+    enabled_channels: &[String],
+) -> FixtureControls {
+    let channels = enabled_channels
+        .iter()
+        .filter_map(|name| {
+            available_channels
+                .get(name)
+                .map(|channel| (name.clone(), channel))
+        })
+        .collect::<Vec<_>>();
+
+    let mut color_group = ColorGroupBuilder::new();
+    let mut controls = FixtureControls::default();
+
+    for (name, channel) in channels {
+        if channel
+            .capabilities
+            .iter()
+            .all(|c| matches!(c, Capability::NoFunction))
+        {
+            log::trace!("skipping capability {} as it has no functions", name);
+            continue;
+        }
+        match channel
+            .capabilities
+            .iter()
+            .find(|c| !matches!(c, Capability::NoFunction))
+        {
+            Some(Capability::Intensity) => {
+                controls.intensity = Some(name);
+            },
+            Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
+                color_group.red(name.clone());
+            }
+            Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
+                color_group.green(name.clone());
+            }
+            Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
+                color_group.blue(name.clone());
+            }
+            Some(Capability::Pan {
+                angle_start,
+                angle_end,
+            }) => {
+                controls.pan = Some(AxisGroup {
+                    channel: name,
+                    angle: Some(Angle {
+                        from: *angle_start,
+                        to: *angle_end,
+                    }),
+                })
+            }
+            Some(Capability::Tilt {
+                angle_start,
+                angle_end,
+            }) => {
+                controls.tilt = Some(AxisGroup {
+                    channel: name.clone(),
+                    angle: Some(Angle {
+                        from: *angle_start,
+                        to: *angle_end,
+                    }),
+                })
+            }
+            Some(Capability::Focus) => {
+                controls.focus = Some(name);
+            },
+            Some(Capability::Zoom) => {
+                controls.zoom = Some(name);
+            },
+            Some(Capability::Prism) => {
+                controls.prism = Some(name);
+            },
+            Some(Capability::Iris) => {
+                controls.iris = Some(name);
+            },
+            Some(Capability::Frost) => {
+                controls.frost = Some(name);
+            },
+            Some(Capability::ShutterStrobe { .. }) => {
+                controls.shutter = Some(name);
+            },
+            Some(_) => controls.generic.push(GenericControl {
+                label: name.clone(),
+                channel: name,
+            }),
+            _ => {}
+        }
+    }
+
+    controls.color = color_group.build();
+
+    controls
 }
 
 #[derive(Default)]
@@ -512,7 +620,6 @@ mod tests {
 
     // TODO: reenable when color support in ui is working properly
     #[test]
-    #[ignore]
     fn group_channels_should_group_color_channels() {
         let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into()];
         let mut available_channels = HashMap::new();

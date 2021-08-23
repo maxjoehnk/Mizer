@@ -14,7 +14,6 @@ import 'beam_sheet.dart';
 import 'channel_sheet.dart';
 import 'color_sheet.dart';
 import 'dimmer_sheet.dart';
-import 'dmx_sheet.dart';
 import 'gobo_sheet.dart';
 
 class FixtureSheet extends StatefulWidget {
@@ -28,8 +27,6 @@ class FixtureSheet extends StatefulWidget {
 }
 
 class _FixtureSheetState extends State<FixtureSheet> {
-  Set<String> modifiedChannels = Set();
-  Set<String> modifiedDmxChannels = Set();
   bool highlight = false;
 
   @override
@@ -42,22 +39,7 @@ class _FixtureSheetState extends State<FixtureSheet> {
             Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures)),
             Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures)),
             Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures)),
-            Tab(
-                label: "Channels",
-                child: ChannelSheet(
-                    fixtures: widget.fixtures,
-                    // TODO: implement when store is implemented
-                    modifiedChannels: [],
-                    onModifyChannel: (group) => setState(() => modifiedChannels.add(group.name)))),
-            Tab(
-                label: "DMX",
-                child: DMXSheet(
-                  fixtures: widget.fixtures,
-                  // TODO: implement when store is implemented
-                  modifiedChannels: [],
-                  onModifyChannel: (channel) =>
-                      setState(() => modifiedDmxChannels.add(channel.name)),
-                )),
+            Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures)),
           ],
         ),
         actions: [
@@ -92,11 +74,11 @@ class _FixtureSheetState extends State<FixtureSheet> {
     widget.api.store(sequence.id, storeMode);
   }
 
-   _getStoreMode(Sequence sequence) async {
-     if (sequence.cues.isEmpty) {
-       return StoreRequest_Mode.Overwrite;
-     }
+  _getStoreMode(Sequence sequence) async {
+    if (sequence.cues.isEmpty) {
+      return StoreRequest_Mode.Overwrite;
+    }
 
-     return await showDialog(context: context, builder: (context) => StoreModeDialog());
+    return await showDialog(context: context, builder: (context) => StoreModeDialog());
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/programmer.pb.dart';
@@ -7,8 +9,8 @@ class ProgrammerPluginApi implements ProgrammerApi {
   final EventChannel stateEvents = const EventChannel("mizer.live/");
 
   @override
-  Future<void> writeChannels(WriteChannelsRequest request) async {
-    await channel.invokeMethod("writeChannels", request.writeToBuffer());
+  Future<void> writeControl(WriteControlRequest request) async {
+    await channel.invokeMethod("writeControl", request.writeToBuffer());
   }
 
   @override

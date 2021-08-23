@@ -11,12 +11,13 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'fixtures.pb.dart' as $0;
 
+import 'fixtures.pbenum.dart' as $0;
 import 'programmer.pbenum.dart';
 
 export 'programmer.pbenum.dart';
 
 class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubscribeProgrammerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubscribeProgrammerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -45,7 +46,7 @@ class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
 }
 
 class ProgrammerState extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PU3)
     ..hasRequiredFields = false
   ;
@@ -85,35 +86,100 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.List<$core.int> get fixtures => $_getList(0);
 }
 
-enum WriteChannelsRequest_Value {
-  fader, 
-  color, 
-  notSet
-}
-
-class WriteChannelsRequest extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, WriteChannelsRequest_Value> _WriteChannelsRequest_ValueByTag = {
-    2 : WriteChannelsRequest_Value.fader,
-    3 : WriteChannelsRequest_Value.color,
-    0 : WriteChannelsRequest_Value.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteChannelsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [2, 3])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel')
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
-    ..aOM<$0.ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorChannel.create)
+class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteControlRequest.GenericValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
-  WriteChannelsRequest._() : super();
-  factory WriteChannelsRequest({
-    $core.String channel,
-    $core.double fader,
-    $0.ColorChannel color,
+  WriteControlRequest_GenericValue._() : super();
+  factory WriteControlRequest_GenericValue({
+    $core.String name,
+    $core.double value,
   }) {
     final _result = create();
-    if (channel != null) {
-      _result.channel = channel;
+    if (name != null) {
+      _result.name = name;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory WriteControlRequest_GenericValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteControlRequest_GenericValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WriteControlRequest_GenericValue clone() => WriteControlRequest_GenericValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WriteControlRequest_GenericValue copyWith(void Function(WriteControlRequest_GenericValue) updates) => super.copyWith((message) => updates(message as WriteControlRequest_GenericValue)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static WriteControlRequest_GenericValue create() => WriteControlRequest_GenericValue._();
+  WriteControlRequest_GenericValue createEmptyInstance() => create();
+  static $pb.PbList<WriteControlRequest_GenericValue> createRepeated() => $pb.PbList<WriteControlRequest_GenericValue>();
+  @$core.pragma('dart2js:noInline')
+  static WriteControlRequest_GenericValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlRequest_GenericValue>(create);
+  static WriteControlRequest_GenericValue _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
+}
+
+enum WriteControlRequest_Value {
+  fader, 
+  color, 
+  generic, 
+  notSet
+}
+
+class WriteControlRequest extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, WriteControlRequest_Value> _WriteControlRequest_ValueByTag = {
+    2 : WriteControlRequest_Value.fader,
+    3 : WriteControlRequest_Value.color,
+    4 : WriteControlRequest_Value.generic,
+    0 : WriteControlRequest_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..oo(0, [2, 3, 4])
+    ..e<$0.FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
+    ..aOM<$0.ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorChannel.create)
+    ..aOM<WriteControlRequest_GenericValue>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: WriteControlRequest_GenericValue.create)
+    ..hasRequiredFields = false
+  ;
+
+  WriteControlRequest._() : super();
+  factory WriteControlRequest({
+    $0.FixtureControl control,
+    $core.double fader,
+    $0.ColorChannel color,
+    WriteControlRequest_GenericValue generic,
+  }) {
+    final _result = create();
+    if (control != null) {
+      _result.control = control;
     }
     if (fader != null) {
       _result.fader = fader;
@@ -121,40 +187,43 @@ class WriteChannelsRequest extends $pb.GeneratedMessage {
     if (color != null) {
       _result.color = color;
     }
+    if (generic != null) {
+      _result.generic = generic;
+    }
     return _result;
   }
-  factory WriteChannelsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory WriteChannelsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory WriteControlRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteControlRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  WriteChannelsRequest clone() => WriteChannelsRequest()..mergeFromMessage(this);
+  WriteControlRequest clone() => WriteControlRequest()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteChannelsRequest copyWith(void Function(WriteChannelsRequest) updates) => super.copyWith((message) => updates(message as WriteChannelsRequest)); // ignore: deprecated_member_use
+  WriteControlRequest copyWith(void Function(WriteControlRequest) updates) => super.copyWith((message) => updates(message as WriteControlRequest)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static WriteChannelsRequest create() => WriteChannelsRequest._();
-  WriteChannelsRequest createEmptyInstance() => create();
-  static $pb.PbList<WriteChannelsRequest> createRepeated() => $pb.PbList<WriteChannelsRequest>();
+  static WriteControlRequest create() => WriteControlRequest._();
+  WriteControlRequest createEmptyInstance() => create();
+  static $pb.PbList<WriteControlRequest> createRepeated() => $pb.PbList<WriteControlRequest>();
   @$core.pragma('dart2js:noInline')
-  static WriteChannelsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteChannelsRequest>(create);
-  static WriteChannelsRequest _defaultInstance;
+  static WriteControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlRequest>(create);
+  static WriteControlRequest _defaultInstance;
 
-  WriteChannelsRequest_Value whichValue() => _WriteChannelsRequest_ValueByTag[$_whichOneof(0)];
+  WriteControlRequest_Value whichValue() => _WriteControlRequest_ValueByTag[$_whichOneof(0)];
   void clearValue() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $core.String get channel => $_getSZ(0);
+  $0.FixtureControl get control => $_getN(0);
   @$pb.TagNumber(1)
-  set channel($core.String v) { $_setString(0, v); }
+  set control($0.FixtureControl v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasChannel() => $_has(0);
+  $core.bool hasControl() => $_has(0);
   @$pb.TagNumber(1)
-  void clearChannel() => clearField(1);
+  void clearControl() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.double get fader => $_getN(1);
@@ -175,39 +244,50 @@ class WriteChannelsRequest extends $pb.GeneratedMessage {
   void clearColor() => clearField(3);
   @$pb.TagNumber(3)
   $0.ColorChannel ensureColor() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  WriteControlRequest_GenericValue get generic => $_getN(3);
+  @$pb.TagNumber(4)
+  set generic(WriteControlRequest_GenericValue v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasGeneric() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearGeneric() => clearField(4);
+  @$pb.TagNumber(4)
+  WriteControlRequest_GenericValue ensureGeneric() => $_ensure(3);
 }
 
-class WriteChannelsResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteChannelsResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class WriteControlResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'WriteControlResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  WriteChannelsResponse._() : super();
-  factory WriteChannelsResponse() => create();
-  factory WriteChannelsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory WriteChannelsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  WriteControlResponse._() : super();
+  factory WriteControlResponse() => create();
+  factory WriteControlResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WriteControlResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  WriteChannelsResponse clone() => WriteChannelsResponse()..mergeFromMessage(this);
+  WriteControlResponse clone() => WriteControlResponse()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteChannelsResponse copyWith(void Function(WriteChannelsResponse) updates) => super.copyWith((message) => updates(message as WriteChannelsResponse)); // ignore: deprecated_member_use
+  WriteControlResponse copyWith(void Function(WriteControlResponse) updates) => super.copyWith((message) => updates(message as WriteControlResponse)); // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static WriteChannelsResponse create() => WriteChannelsResponse._();
-  WriteChannelsResponse createEmptyInstance() => create();
-  static $pb.PbList<WriteChannelsResponse> createRepeated() => $pb.PbList<WriteChannelsResponse>();
+  static WriteControlResponse create() => WriteControlResponse._();
+  WriteControlResponse createEmptyInstance() => create();
+  static $pb.PbList<WriteControlResponse> createRepeated() => $pb.PbList<WriteControlResponse>();
   @$core.pragma('dart2js:noInline')
-  static WriteChannelsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteChannelsResponse>(create);
-  static WriteChannelsResponse _defaultInstance;
+  static WriteControlResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlResponse>(create);
+  static WriteControlResponse _defaultInstance;
 }
 
 class SelectFixturesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PU3)
     ..hasRequiredFields = false
   ;
@@ -248,7 +328,7 @@ class SelectFixturesRequest extends $pb.GeneratedMessage {
 }
 
 class SelectFixturesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -277,7 +357,7 @@ class SelectFixturesResponse extends $pb.GeneratedMessage {
 }
 
 class ClearRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -306,7 +386,7 @@ class ClearRequest extends $pb.GeneratedMessage {
 }
 
 class ClearResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -335,7 +415,7 @@ class ClearResponse extends $pb.GeneratedMessage {
 }
 
 class HighlightRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HighlightRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HighlightRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
     ..hasRequiredFields = false
   ;
@@ -382,7 +462,7 @@ class HighlightRequest extends $pb.GeneratedMessage {
 }
 
 class HighlightResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HighlightResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HighlightResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -411,7 +491,7 @@ class HighlightResponse extends $pb.GeneratedMessage {
 }
 
 class StoreRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
     ..e<StoreRequest_Mode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'storeMode', $pb.PbFieldType.OE, defaultOrMaker: StoreRequest_Mode.Overwrite, valueOf: StoreRequest_Mode.valueOf, enumValues: StoreRequest_Mode.values)
     ..hasRequiredFields = false
@@ -472,7 +552,7 @@ class StoreRequest extends $pb.GeneratedMessage {
 }
 
 class StoreResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 

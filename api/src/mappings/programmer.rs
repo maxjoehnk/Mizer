@@ -1,12 +1,48 @@
+use mizer_fixtures::fixture::{ColorChannel, FixtureControl};
+
 use crate::models::programmer::*;
 
-impl From<WriteChannelsRequest_oneof_value> for mizer_fixtures::programmer::FixtureValue {
-    fn from(value: WriteChannelsRequest_oneof_value) -> Self {
-        match value {
-            WriteChannelsRequest_oneof_value::color(color) => {
-                Self::Color(color.red, color.green, color.blue)
+impl WriteControlRequest {
+    pub fn as_controls(self) -> Vec<(FixtureControl, f64)> {
+        use crate::models::FixtureControl::*;
+
+        match (self.control, self.value) {
+            (INTENSITY, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Intensity, value)]
             }
-            WriteChannelsRequest_oneof_value::fader(value) => Self::Fader(value),
+            (SHUTTER, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Shutter, value)]
+            }
+            (FOCUS, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Focus, value)]
+            }
+            (ZOOM, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Zoom, value)]
+            }
+            (PRISM, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Iris, value)]
+            }
+            (IRIS, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Iris, value)]
+            }
+            (FROST, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Frost, value)]
+            }
+            (PAN, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Pan, value)]
+            }
+            (TILT, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                vec![(FixtureControl::Tilt, value)]
+            }
+            (COLOR, Some(WriteControlRequest_oneof_value::color(value))) => vec![
+                (FixtureControl::Color(ColorChannel::Red), value.red),
+                (FixtureControl::Color(ColorChannel::Green), value.green),
+                (FixtureControl::Color(ColorChannel::Blue), value.blue),
+            ],
+            (GENERIC, Some(WriteControlRequest_oneof_value::generic(value))) => {
+                vec![(FixtureControl::Generic(value.name), value.value)]
+            }
+            _ => unreachable!(),
         }
     }
 }

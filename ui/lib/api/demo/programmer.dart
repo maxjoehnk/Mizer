@@ -3,8 +3,8 @@ import 'package:mizer/protos/programmer.pb.dart';
 
 class ProgrammerDemoApi implements ProgrammerApi {
   @override
-  Future<void> writeChannels(WriteChannelsRequest request) {
-    // TODO: implement writeChannels
+  Future<void> writeControl(WriteControlRequest request) {
+    // TODO: implement writeControl
     throw UnimplementedError();
   }
 

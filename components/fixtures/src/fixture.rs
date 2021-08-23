@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use serde::{Deserialize, Serialize};
+
 use mizer_protocol_dmx::DmxOutput;
 
 const U24_MAX: u32 = 16_777_215;
@@ -42,6 +44,48 @@ impl Fixture {
     pub fn write(&mut self, name: &str, value: f64) {
         log::trace!("write {} -> {}", name, value);
         self.channel_values.insert(name.to_string(), value);
+    }
+
+    pub fn write_control(&mut self, control: FixtureControl, value: f64) {
+        match control {
+            FixtureControl::Intensity => if let Some(channel) = self.current_mode.controls.intensity.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Shutter => if let Some(channel) = self.current_mode.controls.shutter.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Zoom => if let Some(channel) = self.current_mode.controls.zoom.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Focus => if let Some(channel) = self.current_mode.controls.focus.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Iris => if let Some(channel) = self.current_mode.controls.iris.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Prism => if let Some(channel) = self.current_mode.controls.prism.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Frost => if let Some(channel) = self.current_mode.controls.frost.clone() {
+                self.write(&channel, value)
+            }
+            FixtureControl::Color(ColorChannel::Red) => if let Some(color_group) = self.current_mode.controls.color.clone() {
+                self.write(&color_group.red, value);
+            }
+            FixtureControl::Color(ColorChannel::Green) => if let Some(color_group) = self.current_mode.controls.color.clone() {
+                self.write(&color_group.green, value);
+            }
+            FixtureControl::Color(ColorChannel::Blue) => if let Some(color_group) = self.current_mode.controls.color.clone() {
+                self.write(&color_group.blue, value);
+            }
+            FixtureControl::Pan => if let Some(axis) = self.current_mode.controls.pan.clone() {
+                self.write(&axis.channel, value)
+            }
+            FixtureControl::Tilt => if let Some(axis) = self.current_mode.controls.tilt.clone() {
+                self.write(&axis.channel, value)
+            }
+            FixtureControl::Generic(channel) => self.write(&channel, value),
+        }
     }
 
     pub fn highlight(&mut self) {
@@ -161,7 +205,23 @@ pub struct FixtureDefinition {
 pub struct FixtureMode {
     pub name: String,
     pub channels: Vec<FixtureChannelDefinition>,
+    pub controls: FixtureControls,
     pub groups: Vec<FixtureChannelGroup>,
+}
+
+#[derive(Debug, Clone, PartialEq, Default)]
+pub struct FixtureControls {
+    pub intensity: Option<String>,
+    pub shutter: Option<String>,
+    pub color: Option<ColorGroup>,
+    pub pan: Option<AxisGroup>,
+    pub tilt: Option<AxisGroup>,
+    pub focus: Option<String>,
+    pub zoom: Option<String>,
+    pub prism: Option<String>,
+    pub iris: Option<String>,
+    pub frost: Option<String>,
+    pub generic: Vec<GenericControl>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -204,36 +264,48 @@ pub struct Angle {
     pub to: f32,
 }
 
+#[derive(Debug, Clone, PartialEq)]
+pub struct GenericControl {
+    pub label: String,
+    pub channel: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
+pub enum FixtureControl {
+    Intensity,
+    Shutter,
+    Color(ColorChannel),
+    Pan,
+    Tilt,
+    Focus,
+    Zoom,
+    Prism,
+    Iris,
+    Frost,
+    Generic(String),
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
+pub enum ColorChannel {
+    Red,
+    Green,
+    Blue
+}
+
 impl FixtureMode {
     fn dmx_channels(&self) -> u8 {
         self.channels.iter().map(|c| c.channels()).sum()
     }
 
     pub fn intensity(&self) -> Option<FixtureChannelDefinition> {
-        self.groups
-            .iter()
-            .find(|g| matches!(g.group_type, FixtureChannelGroupType::Intensity(_)))
-            .map(|group| {
-                if let FixtureChannelGroupType::Intensity(channel) = &group.group_type {
-                    channel
-                } else {
-                    unreachable!()
-                }
-            })
+        self.controls
+            .intensity
+            .as_ref()
             .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
     }
 
     pub fn color(&self) -> Option<ColorGroup> {
-        self.groups
-            .iter()
-            .filter_map(|g| {
-                if let FixtureChannelGroupType::Color(g) = &g.group_type {
-                    Some(g.clone())
-                } else {
-                    None
-                }
-            })
-            .next()
+        self.controls.color.clone()
     }
 }
 

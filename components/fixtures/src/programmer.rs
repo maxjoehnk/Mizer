@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use dashmap::{DashMap, Map};
+use dashmap::{DashMap};
 
-use crate::fixture::{Fixture, FixtureChannelGroupType};
+use crate::fixture::{Fixture, FixtureControl};
 
 #[derive(Debug)]
 pub struct Programmer {
@@ -14,13 +14,13 @@ pub struct Programmer {
 
 #[derive(Debug, Default)]
 pub struct FixtureProgrammer {
-    channels: HashMap<String, f64>,
+    controls: HashMap<FixtureControl, f64>,
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub struct ProgrammerChannel {
     pub fixtures: Vec<u32>,
-    pub channel: String,
+    pub control: FixtureControl,
     pub value: f64,
 }
 
@@ -38,8 +38,8 @@ impl Programmer {
         for (fixture_id, state) in self.selected_fixtures.iter() {
             log::trace!("{} => {:?}", fixture_id, state);
             if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                for (channel, value) in state.channels.iter() {
-                    fixture.write(channel, *value);
+                for (control, value) in state.controls.iter() {
+                    fixture.write_control(control.clone(), *value);
                 }
                 if self.highlight {
                     fixture.highlight();
@@ -50,7 +50,7 @@ impl Programmer {
 
     pub fn clear(&mut self) {
         for (_, state) in self.selected_fixtures.iter_mut() {
-            state.channels.clear();
+            state.controls.clear();
         }
     }
 
@@ -66,61 +66,33 @@ impl Programmer {
         }
     }
 
-    pub fn write_channels(&mut self, channel: String, value: FixtureValue) {
-        for (fixture_id, programmer) in self.selected_fixtures.iter_mut() {
-            if let Some(fixture) = self.fixtures._get_mut(fixture_id) {
-                match &value {
-                    FixtureValue::Color(r, g, b) => {
-                        if let Some(color_group) = fixture
-                            .current_mode
-                            .groups
-                            .iter()
-                            .find(|g| g.name == channel)
-                        {
-                            if let FixtureChannelGroupType::Color(color_group) =
-                                color_group.group_type.clone()
-                            {
-                                programmer.channels.insert(color_group.red.clone(), *r);
-                                programmer.channels.insert(color_group.green.clone(), *g);
-                                programmer.channels.insert(color_group.blue.clone(), *b);
-                            }
-                        }
-                    }
-                    FixtureValue::Fader(value) => {
-                        programmer.channels.insert(channel.clone(), *value);
-                    }
-                }
-            }
+    pub fn write_control(&mut self, control: FixtureControl, value: f64) {
+        for (_, programmer) in self.selected_fixtures.iter_mut() {
+            programmer.controls.insert(control.clone(), value);
         }
     }
 
-    pub fn get_channels(&self) -> Vec<ProgrammerChannel> {
-        let mut channels: HashMap<String, (Vec<u32>, f64)> = HashMap::new();
+    pub fn get_controls(&self) -> Vec<ProgrammerChannel> {
+        let mut controls: HashMap<FixtureControl, (Vec<u32>, f64)> = HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
-            for (channel, value) in state.channels.iter() {
-                let entry = channels
-                    .entry(channel.clone())
+            for (control, value) in state.controls.iter() {
+                let entry = controls
+                    .entry(control.clone())
                     .or_insert((Vec::new(), *value));
                 if entry.1 == *value {
                     entry.0.push(*fixture_id);
                 } else {
-                    channels.insert(channel.clone(), (vec![*fixture_id], *value));
+                    controls.insert(control.clone(), (vec![*fixture_id], *value));
                 }
             }
         }
-        channels
+        controls
             .into_iter()
-            .map(|(channel, (fixtures, value))| ProgrammerChannel {
+            .map(|(control, (fixtures, value))| ProgrammerChannel {
                 value,
-                channel,
+                control,
                 fixtures,
             })
             .collect()
     }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum FixtureValue {
-    Fader(f64),
-    Color(f64, f64, f64),
 }

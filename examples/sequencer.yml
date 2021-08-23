@@ -43,7 +43,7 @@ sequences:
         trigger: Go
         channels:
           - fixtures: [1, 2]
-            channel: Dimmer
+            control: Intensity
             value: 1
             fade:
               - unit: seconds
@@ -51,20 +51,23 @@ sequences:
               - unit: seconds
                 value: 1
           - fixtures: [1, 2]
-            channel: White
+            control:
+              Generic: White
             value: 1
       - id: 2
         name: Cue 2
         trigger: Go
         channels:
           - fixtures: [1]
-            channel: Red
+            control:
+              Color: Red
             value: 1
             fade:
               unit: seconds
               value: 1
           - fixtures: [1, 2]
-            channel: White
+            control:
+              Generic: White
             value: 0
             delay:
               - unit: seconds

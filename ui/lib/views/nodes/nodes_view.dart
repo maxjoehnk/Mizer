@@ -16,7 +16,6 @@ import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/node_properties.dart';
-import 'widgets/transport/transport_controls.dart';
 
 class FetchNodesView extends StatefulWidget {
   @override
@@ -106,16 +105,15 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           if (!showHiddenNodes) Positioned(
               top: 16 + TOOLBAR_HEIGHT,
               right: 16,
-              bottom: 16 + TRANSPORT_CONTROLS_HEIGHT,
+              bottom: 16,
               width: 256,
               child: NodePropertiesPane(node: model.selectedNode?.node)),
           if (showHiddenNodes) Positioned(
               top: TOOLBAR_HEIGHT,
               right: 0,
-              bottom: TRANSPORT_CONTROLS_HEIGHT,
+              bottom: 0,
               width: 256,
               child: HiddenNodeList(nodes: model.hidden)),
-          Positioned(left: 0, right: 0, bottom: 0, child: TransportControls()),
         ],
       ),
     );

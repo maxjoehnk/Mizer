@@ -9,6 +9,7 @@ import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
+import 'package:mizer/views/nodes/widgets/transport/transport_controls.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
 
@@ -81,10 +82,17 @@ class _HomeState extends State<Home> {
                   routes: routes,
                 ),
                 Expanded(
-                    child: Container(
-                        child: _currentWidget,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration()))
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              child: _currentWidget,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration()),
+                        ),
+                        TransportControls()
+                      ],
+                    ))
               ],
               crossAxisAlignment: CrossAxisAlignment.start,
             ),

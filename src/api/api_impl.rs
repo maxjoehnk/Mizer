@@ -113,7 +113,10 @@ impl RuntimeApi for Api {
         };
         self.add_node_internal(
             NodeType::Fixture,
-            NodeDesigner::default(),
+            NodeDesigner {
+                hidden: true,
+                ..Default::default()
+            },
             Some(node.into()),
         )
     }

@@ -75,6 +75,8 @@ impl NodeType {
 pub struct NodeDesigner {
     pub position: NodePosition,
     pub scale: f64,
+    #[serde(default)]
+    pub hidden: bool,
 }
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]

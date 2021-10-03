@@ -15,7 +15,7 @@ class NodeContainer extends StatelessWidget {
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(OUTER_RADIUS)),
-          side: selected
+          side: selected == true
               ? BorderSide(
                   color: Colors.white,
                   style: BorderStyle.solid,
@@ -29,7 +29,7 @@ class NodeContainer extends StatelessWidget {
       ),
       child: Container(
         decoration: ShapeDecoration(
-            color: Colors.grey.shade800,
+            color: Colors.grey.shade900,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(INNER_RADIUS)),
             )),

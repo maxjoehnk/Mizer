@@ -54,6 +54,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
                 y: position.y,
             },
             scale: 1.,
+            hidden: false,
         };
 
         let node = self

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -8,6 +6,7 @@ import 'package:mizer/views/nodes/models/port_model.dart';
 import 'node_model.dart';
 
 class NodeEditorModel extends ChangeNotifier {
+  List<Node> hidden;
   List<NodeModel> nodes;
   List<NodeConnection> channels;
   final GlobalKey painterKey = GlobalKey();
@@ -18,16 +17,20 @@ class NodeEditorModel extends ChangeNotifier {
 
   NodeEditorModel(Nodes nodes)
       : this.nodes = nodes.nodes
+            .where((node) => !node.designer.hidden)
             .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
             .toList(),
+        this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList(),
         this.channels = nodes.channels {
     transformationController = TransformationController()..addListener(update);
   }
 
   void refresh(Nodes nodes) {
     this.nodes = nodes.nodes
+        .where((node) => !node.designer.hidden)
         .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
         .toList();
+    this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList();
     this.channels = nodes.channels;
     this.updateNodes();
   }
@@ -45,6 +48,10 @@ class NodeEditorModel extends ChangeNotifier {
 
   PortModel getPortModel(Node node, Port port, bool input) {
     var nodeModel = this.nodes.firstWhere((nodeModel) => nodeModel.node == node, orElse: () => null);
+
+    if (nodeModel == null) {
+      return null;
+    }
 
     return nodeModel?.ports
         .firstWhere((portModel) => portModel.port.name == port.name && portModel.input == input, orElse: () => null);

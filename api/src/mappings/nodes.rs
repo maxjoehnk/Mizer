@@ -691,6 +691,7 @@ impl From<mizer_node::NodeDesigner> for NodeDesigner {
                 y: designer.position.y,
                 ..Default::default()
             }),
+            hidden: designer.hidden,
             ..Default::default()
         }
     }
@@ -701,6 +702,7 @@ impl From<NodeDesigner> for mizer_node::NodeDesigner {
         Self {
             scale: designer.scale,
             position: designer.position.unwrap().into(),
+            hidden: designer.hidden,
         }
     }
 }

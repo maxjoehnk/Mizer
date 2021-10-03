@@ -2548,6 +2548,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeDesigner', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOM<NodePosition>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scale', $pb.PbFieldType.OD)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hidden')
     ..hasRequiredFields = false
   ;
 
@@ -2555,6 +2556,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
   factory NodeDesigner({
     NodePosition position,
     $core.double scale,
+    $core.bool hidden,
   }) {
     final _result = create();
     if (position != null) {
@@ -2562,6 +2564,9 @@ class NodeDesigner extends $pb.GeneratedMessage {
     }
     if (scale != null) {
       _result.scale = scale;
+    }
+    if (hidden != null) {
+      _result.hidden = hidden;
     }
     return _result;
   }
@@ -2605,6 +2610,15 @@ class NodeDesigner extends $pb.GeneratedMessage {
   $core.bool hasScale() => $_has(1);
   @$pb.TagNumber(2)
   void clearScale() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get hidden => $_getBF(2);
+  @$pb.TagNumber(3)
+  set hidden($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHidden() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHidden() => clearField(3);
 }
 
 class Port extends $pb.GeneratedMessage {

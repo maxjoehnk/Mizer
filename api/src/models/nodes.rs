@@ -9392,6 +9392,7 @@ pub struct NodeDesigner {
     // message fields
     pub position: ::protobuf::SingularPtrField<NodePosition>,
     pub scale: f64,
+    pub hidden: bool,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -9457,6 +9458,21 @@ impl NodeDesigner {
     pub fn set_scale(&mut self, v: f64) {
         self.scale = v;
     }
+
+    // bool hidden = 3;
+
+
+    pub fn get_hidden(&self) -> bool {
+        self.hidden
+    }
+    pub fn clear_hidden(&mut self) {
+        self.hidden = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_hidden(&mut self, v: bool) {
+        self.hidden = v;
+    }
 }
 
 impl ::protobuf::Message for NodeDesigner {
@@ -9483,6 +9499,13 @@ impl ::protobuf::Message for NodeDesigner {
                     let tmp = is.read_double()?;
                     self.scale = tmp;
                 },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.hidden = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -9502,6 +9525,9 @@ impl ::protobuf::Message for NodeDesigner {
         if self.scale != 0. {
             my_size += 9;
         }
+        if self.hidden != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9515,6 +9541,9 @@ impl ::protobuf::Message for NodeDesigner {
         }
         if self.scale != 0. {
             os.write_double(2, self.scale)?;
+        }
+        if self.hidden != false {
+            os.write_bool(3, self.hidden)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9564,6 +9593,11 @@ impl ::protobuf::Message for NodeDesigner {
                 |m: &NodeDesigner| { &m.scale },
                 |m: &mut NodeDesigner| { &mut m.scale },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "hidden",
+                |m: &NodeDesigner| { &m.hidden },
+                |m: &mut NodeDesigner| { &mut m.hidden },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<NodeDesigner>(
                 "NodeDesigner",
                 fields,
@@ -9582,6 +9616,7 @@ impl ::protobuf::Clear for NodeDesigner {
     fn clear(&mut self) {
         self.position.clear();
         self.scale = 0.;
+        self.hidden = false;
         self.unknown_fields.clear();
     }
 }
@@ -9982,24 +10017,24 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\
     \x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeConfig\"*\n\x0cNodePositi\
     on\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\
-    \x01(\x01R\x01y\"U\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\
+    \x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\
     \x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\
-    \x01(\x01R\x05scale\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProto\
-    colR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\
-    \x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\
-    \x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\
-    \x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\
-    \x12\x07\n\x03GST\x10\x082\xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\
-    \x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\
-    \x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\
-    \x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11Wri\
-    teControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\
-    \0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequest\
-    \x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\x16.m\
-    izer.MoveNodeRequest\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDeleteNo\
-    de\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeResponse\"\0b\
-    \x06proto3\
+    \x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\
+    \"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08pr\
+    otocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\
+    \x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\
+    \x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECT\
+    OR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\
+    \x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\
+    \xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
+    \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
+    \x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\
+    \x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.\
+    WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodePropert\
+    y\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigRe\
+    sponse\"\0\x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeRequest\x1a\x17.mize\
+    r.MoveNodeResponse\"\0\x12C\n\nDeleteNode\x12\x18.mizer.DeleteNodeReques\
+    t\x1a\x19.mizer.DeleteNodeResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

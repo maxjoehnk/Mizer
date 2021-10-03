@@ -388,6 +388,7 @@ const NodeDesigner$json = const {
   '2': const [
     const {'1': 'position', '3': 1, '4': 1, '5': 11, '6': '.mizer.NodePosition', '10': 'position'},
     const {'1': 'scale', '3': 2, '4': 1, '5': 1, '10': 'scale'},
+    const {'1': 'hidden', '3': 3, '4': 1, '5': 8, '10': 'hidden'},
   ],
 };
 

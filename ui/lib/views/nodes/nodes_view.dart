@@ -5,6 +5,7 @@ import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
+import 'package:mizer/views/nodes/widgets/toolbar.dart';
 import 'package:mizer/widgets/popup_menu/popup_menu.dart';
 import 'package:mizer/widgets/popup_menu/popup_menu_route.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ import 'models/node_editor_model.dart';
 import 'widgets/editor_layers/canvas_drop_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
+import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/node_properties.dart';
 import 'widgets/transport/transport_controls.dart';
 
@@ -52,6 +54,7 @@ class NodesView extends StatefulWidget {
 
 class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   Offset addMenuPosition;
+  bool showHiddenNodes = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +95,26 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
             ]),
           ),
           Positioned(
-              top: 16,
+            top: 0,
+            right: 0,
+            left: 0,
+            child: NodesToolbar(
+              onToggleHidden: () => setState(() => showHiddenNodes = !showHiddenNodes),
+              showHiddenNodes: showHiddenNodes,
+            )
+          ),
+          if (!showHiddenNodes) Positioned(
+              top: 16 + TOOLBAR_HEIGHT,
               right: 16,
               bottom: 16 + TRANSPORT_CONTROLS_HEIGHT,
               width: 256,
               child: NodePropertiesPane(node: model.selectedNode?.node)),
+          if (showHiddenNodes) Positioned(
+              top: TOOLBAR_HEIGHT,
+              right: 0,
+              bottom: TRANSPORT_CONTROLS_HEIGHT,
+              width: 256,
+              child: HiddenNodeList(nodes: model.hidden)),
           Positioned(left: 0, right: 0, bottom: 0, child: TransportControls()),
         ],
       ),

@@ -248,6 +248,7 @@ message NodePosition {
 message NodeDesigner {
   NodePosition position = 1;
   double scale = 2;
+  bool hidden = 3;
 }
 
 enum ChannelProtocol {

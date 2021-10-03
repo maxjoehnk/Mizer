@@ -47,7 +47,7 @@ class NodePort extends StatelessWidget {
     return Consumer<NodeEditorModel>(
       builder: (context, state, _) {
         var model = state.getPortModel(this.node, port, this.input);
-        var key = model.key;
+        var key = model?.key;
 
         return Transform(
           transform: Matrix4.translationValues(input ? -4 : 4, 0, 0),

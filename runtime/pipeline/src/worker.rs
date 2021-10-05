@@ -4,7 +4,6 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 
 use downcast::*;
-use ringbuffer::RingBufferExt;
 
 use mizer_clock::ClockFrame;
 use mizer_node::*;

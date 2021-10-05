@@ -4,10 +4,8 @@ use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::collections::HashMap;
 use std::sync::Arc;
 use mizer_ui_ffi::{NodeHistory, FFIPointer};
-use pinboard::NonEmptyPinboard;
 
 #[derive(Clone)]
 pub struct NodesChannel<R: RuntimeApi> {

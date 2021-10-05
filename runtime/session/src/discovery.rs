@@ -3,7 +3,6 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 
-use serde::{Deserialize, Serialize};
 use zeroconf::prelude::*;
 use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, TxtRecord};
 

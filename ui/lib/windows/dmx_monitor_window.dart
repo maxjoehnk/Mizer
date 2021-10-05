@@ -14,7 +14,7 @@ class DmxMonitorWindow extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(child: Scaffold(body: DmxMonitor(connection)));
+    return BaseWindowState(child: WindowLayoutProbe(child: Scaffold(body: DmxMonitor(connection))));
   }
 
   @override

@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/node/base_node.dart';

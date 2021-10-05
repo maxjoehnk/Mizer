@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'dart:developer';
 
 import 'package:grpc/grpc.dart';
@@ -27,16 +28,6 @@ class NodesGrpcApi implements NodesApi {
   @override
   Future<void> writeControlValue({ String path, String port, double value }) {
     return this.client.writeControlValue(WriteControl(path: path, port: port, value: value));
-  }
-
-  @override
-  Future<List<double>> getNodeHistory(String path) async {
-    return [];
-  }
-
-  @override
-  Future<Map<String, List<double>>> getNodeHistories(List<String> paths) async {
-    return Map();
   }
 
   @override

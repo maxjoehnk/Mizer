@@ -1,7 +1,8 @@
+// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/preview_handler.dart';
+import 'package:mizer/api/contracts/nodes.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/node_editor_model.dart';
@@ -28,15 +29,15 @@ class _NodeControlState extends State<NodeControl> {
 
   @override
   Widget build(BuildContext context) {
-    var handler = context.read<PreviewHandler>();
+    var nodesApi = context.read<NodesApi>();
     var node = _buildNode();
     return Consumer<NodeEditorModel>(
       builder: (context, model, _) => Draggable(
         data: widget.nodeModel,
         child: node,
         childWhenDragging: Container(),
-        feedback: RepositoryProvider<PreviewHandler>.value(
-          value: handler,
+        feedback: RepositoryProvider<NodesApi>.value(
+          value: nodesApi,
           child: ChangeNotifierProvider<NodeEditorModel>.value(
               value: model,
               builder: (context, child) {

@@ -5,6 +5,9 @@ use mizer_api::RuntimeApi;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::collections::HashMap;
+use std::sync::Arc;
+use mizer_ui_ffi::{NodeHistory, FFIPointer};
+use pinboard::NonEmptyPinboard;
 
 #[derive(Clone)]
 pub struct NodesChannel<R: RuntimeApi> {
@@ -47,34 +50,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 }
                 Err(err) => resp.respond_error(err),
             },
-            "getNodeHistory" => {
+            "getHistoryPointer" => {
                 if let Value::String(path) = call.args {
-                    match self.get_node_history(path) {
-                        Ok(history) => resp.send_ok(history.into()),
-                        Err(err) => resp.respond_error(err),
-                    }
-                }
-            }
-            "getNodeHistories" => {
-                if let Value::List(vec) = call.args {
-                    let paths = vec
-                        .into_iter()
-                        .filter_map(|path| {
-                            if let Value::String(path) = path {
-                                Some(path)
-                            } else {
-                                None
-                            }
-                        })
-                        .collect();
-                    match self.get_node_histories(paths) {
-                        Ok(history) => {
-                            let mut result = HashMap::new();
-                            for (key, value) in history {
-                                result.insert(Value::String(key), Value::F64List(value));
-                            }
-                            resp.send_ok(Value::Map(result));
-                        }
+                    match self.get_history_pointer(path) {
+                        Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                         Err(err) => resp.respond_error(err),
                     }
                 }
@@ -132,15 +111,17 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
         self.handler.write_control_value(control)
     }
 
-    fn get_node_history(&self, path: String) -> anyhow::Result<Vec<f64>> {
-        self.handler.get_node_history(path)
-    }
+    fn get_history_pointer(&self, path: String) -> anyhow::Result<i64> {
+        let err_msg = format!("Missing preview for node {}", path);
+        if let Some(history) = self.handler.get_node_history_ref(path)? {
+            let history = NodeHistory {
+                history
+            };
+            let history = Arc::new(history);
 
-    fn get_node_histories(&self, paths: Vec<String>) -> anyhow::Result<HashMap<String, Vec<f64>>> {
-        let mut map = HashMap::new();
-        for path in paths {
-            map.insert(path.clone(), self.handler.get_node_history(path)?);
+            Ok(history.to_pointer() as i64)
+        }else {
+            anyhow::bail!("{}", err_msg)
         }
-        Ok(map)
     }
 }

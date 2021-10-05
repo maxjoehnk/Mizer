@@ -9,10 +9,6 @@ abstract class NodesApi {
 
   Future<void> writeControlValue({ String path, String port, double value });
 
-  Future<List<double>> getNodeHistory(String path);
-
-  Future<Map<String, List<double>>> getNodeHistories(List<String> paths);
-
   Future<void> updateNodeConfig(UpdateNodeConfigRequest request);
 
   Future<void> moveNode(MoveNodeRequest request);

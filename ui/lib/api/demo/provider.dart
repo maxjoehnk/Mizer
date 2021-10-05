@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
@@ -12,7 +13,6 @@ import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/demo/connections.dart';
 import 'package:mizer/api/demo/programmer.dart';
 
-import '../preview_handler.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
 import 'media.dart';
@@ -40,7 +40,6 @@ class DemoApiProvider extends StatelessWidget {
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsDemoApi()),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerDemoApi()),
         RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerDemoApi()),
-        RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ]
     );
   }

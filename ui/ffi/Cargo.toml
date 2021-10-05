@@ -1,0 +1,11 @@
+[package]
+name = "mizer-ui-ffi"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+name = "mizer_ui_ffi"
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+pinboard = "2.1"

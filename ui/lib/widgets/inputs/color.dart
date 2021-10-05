@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';

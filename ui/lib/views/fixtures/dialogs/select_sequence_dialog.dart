@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';

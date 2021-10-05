@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/platform/integrated/menu_bar.dart';
 import 'package:mizer/platform/standalone/menu_bar.dart';

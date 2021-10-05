@@ -23,7 +23,7 @@ class DmxMonitorWindow extends WindowState {
   static dynamic toInitData(Connection connection) =>
       {'class': windowClass, 'connection': connection.writeToBuffer()};
 
-  static DmxMonitorWindow fromInitData(dynamic initData) {
+  static DmxMonitorWindow? fromInitData(dynamic initData) {
     if (initData is Map && initData['class'] == windowClass) {
       return DmxMonitorWindow(Connection.fromBuffer(initData['connection']));
     }

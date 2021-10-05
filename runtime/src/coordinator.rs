@@ -323,6 +323,10 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         ids.sort_unstable();
         ids.last().map(|last_id| last_id + 1).unwrap_or_default()
     }
+
+    pub fn get_history_ref(&self, path: &NodePath) -> Option<Arc<NonEmptyPinboard<Vec<f64>>>> {
+        self.pipeline.get_history_ref(path)
+    }
 }
 
 impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {

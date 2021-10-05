@@ -11,7 +11,7 @@ import 'api/contracts/session.dart';
 class ApplicationMenu extends StatelessWidget {
   final Widget child;
 
-  ApplicationMenu({@required this.child});
+  ApplicationMenu({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +54,6 @@ class ApplicationMenu extends StatelessWidget {
   Future<void> _openProject(SessionApi api) async {
     final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
-    await api.loadProject(file.path);
+    await api.loadProject(file!.path);
   }
 }

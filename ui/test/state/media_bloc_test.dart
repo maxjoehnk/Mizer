@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mockito/mockito.dart';

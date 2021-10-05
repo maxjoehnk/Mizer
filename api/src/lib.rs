@@ -9,6 +9,8 @@ use mizer_node::{NodeDesigner, NodePosition, NodeLink, NodePath, NodeType, PortI
 use mizer_nodes::Node;
 use mizer_runtime::NodeDescriptor;
 use mizer_layouts::{ControlPosition, ControlSize};
+use std::sync::Arc;
+use pinboard::NonEmptyPinboard;
 
 pub mod handlers;
 mod mappings;
@@ -48,7 +50,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()>;
 
-    fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>>;
+    fn get_node_history_ref(&self, node: NodePath) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>>;
 
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor>;
     fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()>;

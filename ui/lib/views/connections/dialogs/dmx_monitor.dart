@@ -47,7 +47,7 @@ class _DmxMonitorState extends State<DmxMonitor> {
         if (snapshot.hasError) {
           return Text("Error loading dmx monitor ${snapshot.error}");
         }
-        var universes = snapshot.data.keys.toList();
+        var universes = snapshot.data?.keys.toList() ?? [];
         universes.sort();
         return Padding(
           padding: const EdgeInsets.all(4.0),
@@ -59,7 +59,7 @@ class _DmxMonitorState extends State<DmxMonitor> {
                       universes: universes,
                       universe: universe,
                       onSelect: (u) => setState(() => universe = u))),
-              Expanded(child: AddressObserver(channels: snapshot.data[universe])),
+              Expanded(child: AddressObserver(channels: snapshot.data?[universe] ?? [])),
               LimitedBox(maxWidth: 250, child: AddressHistory()),
             ],
           ),
@@ -74,7 +74,7 @@ class UniverseSelector extends StatelessWidget {
   final List<int> universes;
   final Function(int) onSelect;
 
-  const UniverseSelector({Key key, this.universes, this.universe, this.onSelect}) : super(key: key);
+  const UniverseSelector({Key? key, required this.universes, required this.universe, required this.onSelect}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class Universe extends StatelessWidget {
   final bool selected;
   final Function() onClick;
 
-  const Universe({Key key, this.universe, this.selected, this.onClick}) : super(key: key);
+  const Universe({Key? key, required this.universe, required this.selected, required this.onClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +121,7 @@ class Universe extends StatelessWidget {
 class AddressObserver extends StatelessWidget {
   final List<int> channels;
 
-  const AddressObserver({Key key, this.channels}) : super(key: key);
+  const AddressObserver({Key? key, required this.channels}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +133,7 @@ class AddressObserver extends StatelessWidget {
               alignment: WrapAlignment.center,
               spacing: 4,
               runSpacing: 4,
-              children: (channels ?? []).asMap().mapToList((index, value) {
+              children: channels.asMap().mapToList((index, value) {
                 var percentage = value / 255;
                 return Container(
                     decoration: BoxDecoration(
@@ -154,7 +154,7 @@ class AddressObserver extends StatelessWidget {
 }
 
 class AddressHistory extends StatelessWidget {
-  const AddressHistory({Key key}) : super(key: key);
+  const AddressHistory({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class MonitorGroup extends StatelessWidget {
   final String title;
   final Widget child;
 
-  const MonitorGroup({this.title, this.child, Key key}) : super(key: key);
+  const MonitorGroup({required this.title, required this.child, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

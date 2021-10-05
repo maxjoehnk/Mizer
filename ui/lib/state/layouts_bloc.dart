@@ -9,25 +9,25 @@ class FetchLayouts implements LayoutsEvent {}
 class AddLayout implements LayoutsEvent {
   final String name;
 
-  AddLayout({ this.name });
+  AddLayout({ required this.name });
 }
 class RemoveLayout implements LayoutsEvent {
   final String id;
 
-  RemoveLayout({ this.id });
+  RemoveLayout({ required this.id });
 }
 class RenameLayout implements LayoutsEvent {
   final String id;
   final String name;
 
-  RenameLayout({ this.id, this.name });
+  RenameLayout({ required this.id, required this.name });
 }
 class RenameControl implements LayoutsEvent {
   final String layoutId;
   final String controlId;
   final String name;
 
-  RenameControl({ this.layoutId, this.controlId, this.name });
+  RenameControl({ required this.layoutId, required this.controlId, required this.name });
 }
 
 class UpdateControl implements LayoutsEvent {
@@ -35,7 +35,7 @@ class UpdateControl implements LayoutsEvent {
   final String controlId;
   final ControlDecorations decorations;
 
-  UpdateControl({ this.layoutId, this.controlId, this.decorations });
+  UpdateControl({ required this.layoutId, required this.controlId, required this.decorations });
 }
 
 class MoveControl implements LayoutsEvent {
@@ -43,13 +43,13 @@ class MoveControl implements LayoutsEvent {
   final String controlId;
   final ControlPosition position;
 
-  MoveControl({ this.layoutId, this.controlId, this.position });
+  MoveControl({ required this.layoutId, required this.controlId, required this.position });
 }
 class DeleteControl implements LayoutsEvent {
   final String layoutId;
   final String controlId;
 
-  DeleteControl({ this.layoutId, this.controlId });
+  DeleteControl({ required this.layoutId, required this.controlId });
 }
 
 class AddControl implements LayoutsEvent {
@@ -57,7 +57,7 @@ class AddControl implements LayoutsEvent {
   final Node_NodeType nodeType;
   final ControlPosition position;
 
-  AddControl({ this.layoutId, this.nodeType, this.position });
+  AddControl({ required this.layoutId, required this.nodeType, required this.position });
 }
 
 class AddExistingControl implements LayoutsEvent {
@@ -65,7 +65,7 @@ class AddExistingControl implements LayoutsEvent {
   final ControlPosition position;
   final Node node;
 
-  AddExistingControl({ this.layoutId, this.node, this.position });
+  AddExistingControl({ required this.layoutId, required this.node, required this.position });
 }
 
 class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {

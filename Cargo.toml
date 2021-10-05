@@ -42,6 +42,7 @@ members = [
     "runtime/processing",
     "runtime/projects",
     "ui",
+    "ui/ffi",
     "util",
 ]
 

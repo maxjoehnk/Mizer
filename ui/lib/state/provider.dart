@@ -10,7 +10,7 @@ import 'session_bloc.dart';
 class StateProvider extends StatelessWidget {
   final Widget child;
 
-  StateProvider({ @required this.child });
+  StateProvider({ required this.child });
 
   @override
   Widget build(BuildContext context) {

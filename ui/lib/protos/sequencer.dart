@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'sequencer.pb.dart';
 
 export 'sequencer.pb.dart';

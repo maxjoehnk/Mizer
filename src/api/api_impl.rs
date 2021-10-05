@@ -9,6 +9,8 @@ use mizer_nodes::{FixtureNode, Node};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 
 use crate::{ApiCommand, ApiHandler};
+use std::sync::Arc;
+use pinboard::NonEmptyPinboard;
 
 #[derive(Clone)]
 pub struct Api {
@@ -136,11 +138,13 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
-    fn get_node_history(&self, node: NodePath) -> anyhow::Result<Vec<f64>> {
+    fn get_node_history_ref(&self, node: NodePath) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
         let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::GetNodePreview(node, tx))?;
+        self.sender.send(ApiCommand::GetNodePreviewRef(node, tx))?;
 
-        rx.recv()?
+        let value = rx.recv()?;
+
+        Ok(value)
     }
 
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {

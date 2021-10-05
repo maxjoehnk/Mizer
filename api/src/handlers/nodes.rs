@@ -1,6 +1,8 @@
 use crate::models::*;
 use crate::RuntimeApi;
 use mizer_node::NodePath;
+use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct NodesHandler<R: RuntimeApi> {
@@ -78,8 +80,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
-    pub fn get_node_history(&self, path: String) -> anyhow::Result<Vec<f64>> {
-        self.runtime.get_node_history(path.into())
+    pub fn get_node_history_ref(&self, path: String) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
+        self.runtime.get_node_history_ref(path.into())
     }
 
     pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {

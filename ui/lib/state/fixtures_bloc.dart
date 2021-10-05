@@ -16,7 +16,7 @@ class AddFixtures extends FixturesEvent {
   int startId;
   int startChannel;
 
-  AddFixtures({this.definition, this.mode, this.universe, this.count, this.startId, this.startChannel});
+  AddFixtures({required this.definition, required this.mode, required this.universe, required this.count, required this.startId, required this.startChannel});
 
   AddFixturesRequest _into() {
     List<AddFixtureRequest> fixtures = [];

@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/app.dart';
 import 'package:mizer/windows/dmx_monitor_window.dart';

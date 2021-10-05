@@ -2890,6 +2890,7 @@ dependencies = [
  "mizer-nodes",
  "mizer-runtime",
  "mizer-sequencer",
+ "pinboard",
  "profiling",
  "protobuf",
  "protoc-rust",
@@ -3213,6 +3214,7 @@ dependencies = [
  "mizer-project-files",
  "mizer-protocol-laser",
  "mizer-video-nodes",
+ "pinboard",
  "profiling",
  "ringbuffer",
  "test-case",
@@ -3413,11 +3415,20 @@ dependencies = [
  "futures",
  "log",
  "mizer-api",
+ "mizer-ui-ffi",
  "mizer-util",
  "nativeshell",
  "nativeshell_build",
+ "pinboard",
  "protobuf",
  "smol",
+]
+
+[[package]]
+name = "mizer-ui-ffi"
+version = "0.1.0"
+dependencies = [
+ "pinboard",
 ]
 
 [[package]]

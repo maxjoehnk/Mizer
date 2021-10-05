@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
@@ -11,7 +12,6 @@ import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/plugin/programmer.dart';
 
-import '../preview_handler.dart';
 import 'connections.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
@@ -40,7 +40,6 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<TransportApi>(create: (context) => TransportPluginApi()),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerPluginApi()),
         RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerPluginApi()),
-        RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );
   }

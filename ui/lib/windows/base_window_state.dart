@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 class BaseWindowState extends StatelessWidget {
   final Widget child;
 
-  const BaseWindowState({Key key, this.child}) : super(key: key);
+  const BaseWindowState({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

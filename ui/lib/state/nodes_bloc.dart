@@ -12,7 +12,7 @@ class AddNode extends NodesEvent {
   final Node_NodeType nodeType;
   final Offset position;
 
-  AddNode({this.nodeType, this.position});
+  AddNode({required this.nodeType, required this.position});
 }
 
 class LinkNodes extends NodesEvent {
@@ -118,5 +118,5 @@ class PortOption {
   final Node node;
   final Port port;
 
-  PortOption({this.node, this.port});
+  PortOption({required this.node, required this.port});
 }

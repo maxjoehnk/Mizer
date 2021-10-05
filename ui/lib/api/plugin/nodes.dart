@@ -1,6 +1,10 @@
+// @dart=2.11
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/plugin/ffi.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+
+export 'ffi.dart' show NodeHistoryPointer;
 
 class NodesPluginApi implements NodesApi {
   final MethodChannel channel = const MethodChannel("mizer.live/nodes");
@@ -30,24 +34,6 @@ class NodesPluginApi implements NodesApi {
         "writeControlValue", WriteControl(path: path, port: port, value: value).writeToBuffer());
   }
 
-  @override
-  Future<List<double>> getNodeHistory(String path) {
-    return channel.invokeListMethod(
-        "getNodeHistory",
-        path
-    );
-  }
-
-  @override
-  Future<Map<String, List<double>>> getNodeHistories(List<String> paths) async {
-    Map<String, List<dynamic>> result = await channel.invokeMapMethod(
-      "getNodeHistories",
-      paths
-    );
-    Map<String, List<double>> map = result.map((key, value) => MapEntry(key, value.map((dynamic e) => e as double).toList()));
-    return map;
-  }
-
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
@@ -65,5 +51,11 @@ class NodesPluginApi implements NodesApi {
   @override
   Future<void> deleteNode(String path) {
     return channel.invokeMethod("deleteNode", path);
+  }
+
+  Future<NodeHistoryPointer> getHistoryPointer(String path) async {
+    int pointer = await channel.invokeMethod("getHistoryPointer", path);
+
+    return NodeHistoryPointer(pointer);
   }
 }

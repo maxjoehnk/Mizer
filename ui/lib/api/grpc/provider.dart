@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
@@ -13,7 +14,6 @@ import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/grpc/programmer.dart';
 import 'package:mizer/api/grpc/sequencer.dart';
 
-import '../preview_handler.dart';
 import 'connections.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
@@ -42,7 +42,6 @@ class GrpcApiProvider extends StatelessWidget {
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsGrpcApi(_channel)),
         RepositoryProvider<SequencerApi>(create: (context) => SequencerGrpcApi(_channel)),
         RepositoryProvider<ProgrammerApi>(create: (context) => ProgrammerGrpcApi(_channel)),
-        RepositoryProvider(create: (context) => PreviewHandler(context.read())),
       ],
     );
   }

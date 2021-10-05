@@ -50,17 +50,8 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
-            ApiCommand::GetNodePreview(path, sender) => {
-                if let Some(history) = mizer.runtime.pipeline.get_history(&path) {
-                    sender
-                        .send(Ok(history))
-                        .expect("api command sender disconnected");
-                } else {
-                    sender
-                        .send(Err(anyhow::anyhow!("No Preview for given node")))
-                        .expect("api command sender disconnected");
-                }
-            }
+            ApiCommand::GetNodePreviewRef(path, sender) => sender.send(mizer.runtime.get_history_ref(&path))
+                .expect("api command sender disconnected"),
             ApiCommand::UpdateNode(path, config, sender) => {
                 sender
                     .send(mizer.runtime.handle_update_node(path, config))

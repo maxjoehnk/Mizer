@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';

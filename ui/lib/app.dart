@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class MizerApp extends StatelessWidget {
   final Widget child;
 
-  MizerApp({@required this.child});
+  MizerApp({required this.child});
 
   @override
   Widget build(BuildContext context) {

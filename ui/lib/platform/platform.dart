@@ -1,3 +1,4 @@
+// @dart=2.11
 export 'contracts/menu.dart';
 export 'contracts/menu_bar.dart';
 

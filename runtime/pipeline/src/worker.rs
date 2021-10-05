@@ -15,6 +15,8 @@ use mizer_protocol_laser::LaserFrame;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodePreviewState, PipelineContext};
+use std::sync::Arc;
+use pinboard::NonEmptyPinboard;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -75,7 +77,7 @@ impl PipelineWorker {
         match mizer_node::ProcessingNode::details(node).preview_type {
             PreviewType::History => {
                 self.previews
-                    .insert(path.clone(), NodePreviewState::History(Default::default()));
+                    .insert(path.clone(), NodePreviewState::History(Default::default(), NonEmptyPinboard::new(Vec::new()).into()));
             }
             _ => {
                 self.previews.insert(path.clone(), NodePreviewState::None);
@@ -316,10 +318,10 @@ impl PipelineWorker {
         }
     }
 
-    pub fn get_history(&self, path: &NodePath) -> Option<Vec<f64>> {
+    pub fn get_history_ref(&self, path: &NodePath) -> Option<Arc<NonEmptyPinboard<Vec<f64>>>> {
         if let Some(preview) = self.previews.get(path) {
             match preview {
-                NodePreviewState::History(vec) => Some(vec.to_vec()),
+                NodePreviewState::History(_, buf) => Some(buf.clone()),
                 _ => None,
             }
         } else {

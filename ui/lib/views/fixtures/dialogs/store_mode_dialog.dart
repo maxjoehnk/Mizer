@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/programmer.pb.dart';

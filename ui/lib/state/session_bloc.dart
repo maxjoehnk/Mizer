@@ -6,7 +6,7 @@ import 'package:mizer/protos/session.pb.dart';
 
 class SessionBloc extends Bloc<Session, Session> {
   final SessionApi api;
-  StreamSubscription subscription;
+  StreamSubscription? subscription;
 
   SessionBloc(this.api) : super(Session.create()) {
     this.subscription = api.watchSession().listen((value) => this.add(value));
@@ -14,7 +14,7 @@ class SessionBloc extends Bloc<Session, Session> {
 
   @override
   Future<void> close() {
-    this.subscription.cancel();
+    this.subscription!.cancel();
     return super.close();
   }
 

@@ -38,6 +38,7 @@ jobs:
           name: linux-full
           path: |
             target/debug/mizer
+            target/debug/libmizer_ui_ffi.so
             target/debug/lib
             target/debug/data
             components/fixtures/open-fixture-library/.fixtures

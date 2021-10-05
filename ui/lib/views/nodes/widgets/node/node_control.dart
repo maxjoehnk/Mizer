@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +18,7 @@ class NodeControl extends StatefulWidget {
 }
 
 class _NodeControlState extends State<NodeControl> {
-  Widget node;
+  Widget? node;
 
   @override
   void initState() {

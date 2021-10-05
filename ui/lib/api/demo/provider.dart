@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
@@ -24,7 +23,7 @@ import 'transport.dart';
 class DemoApiProvider extends StatelessWidget {
   final Widget child;
 
-  DemoApiProvider({@required this.child});
+  DemoApiProvider({required this.child});
 
   @override
   Widget build(BuildContext context) {

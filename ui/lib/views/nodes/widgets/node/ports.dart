@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +12,7 @@ class NodePortList extends StatelessWidget {
   final Node node;
   final bool inputs;
 
-  NodePortList(this.node, {this.inputs});
+  NodePortList(this.node, {this.inputs = false});
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +72,17 @@ class PortDot extends StatelessWidget {
   final Port port;
   final bool input;
   final Node node;
-  final Key key;
+  final Key? key;
   final GlobalKey dragKey = GlobalKey();
 
-  PortDot(this.port, {this.input, this.key, this.node});
+  PortDot(this.port, {this.input = false, this.key, required this.node});
 
   @override
   Widget build(BuildContext context) {
     var color = getColorForProtocol(port.protocol);
 
     return Consumer<NodeEditorModel>(
-      builder: (context, model, _) => DragTarget(
+      builder: (context, model, _) => DragTarget<ConnectionRequest>(
         hitTestBehavior: HitTestBehavior.translucent,
         onWillAccept: (d) => d is ConnectionRequest && d.input != input,
         onAccept: (d) {
@@ -97,7 +96,7 @@ class PortDot extends StatelessWidget {
             )
           ));
         },
-        builder: (BuildContext context, List<Object> candidateData, List<dynamic> rejectedData) => Draggable(
+        builder: (BuildContext context, List<ConnectionRequest?> candidateData, List<dynamic> rejectedData) => Draggable<ConnectionRequest>(
           hitTestBehavior: HitTestBehavior.translucent,
           data: ConnectionRequest(node: node, port: port, input: input),
           feedback: Container(key: dragKey, width: 8, height: 8),
@@ -129,5 +128,5 @@ class ConnectionRequest {
   Node node;
   bool input;
 
-  ConnectionRequest({ this.port, this.node, this.input });
+  ConnectionRequest({ required this.port, required this.node, required this.input });
 }

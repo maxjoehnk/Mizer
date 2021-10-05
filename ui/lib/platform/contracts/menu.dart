@@ -10,7 +10,7 @@ abstract class MenuBaseItem {}
 
 class MenuItem extends MenuBaseItem {
   final String label;
-  final Function? action;
+  final Function()? action;
   final LogicalKeySet? shortcut;
 
   MenuItem({ required this.label, this.action, this.shortcut });

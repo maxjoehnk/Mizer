@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
@@ -17,8 +16,8 @@ class CanvasDropLayer extends StatelessWidget {
           },
           onWillAccept: (data) => data is NodeModel,
           onAccept: (NodeModel data) {
-            RenderBox canvasBox = context.findRenderObject();
-            RenderBox elementBox = data.key.currentContext.findRenderObject();
+            RenderBox canvasBox = context.findRenderObject() as RenderBox;
+            RenderBox elementBox = data.key.currentContext!.findRenderObject() as RenderBox;
             Offset off = model.transformationController.toScene(
               canvasBox.globalToLocal(
                 elementBox.localToGlobal(Offset.zero),

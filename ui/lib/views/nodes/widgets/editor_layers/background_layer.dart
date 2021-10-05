@@ -1,11 +1,10 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../consts.dart';
 
 class CanvasBackgroundLayer extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
   CanvasBackgroundLayer({this.child});
 

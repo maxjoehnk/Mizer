@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
@@ -7,7 +6,7 @@ import 'fixture_group_control.dart';
 class GoboSheet extends StatelessWidget {
   final List<Fixture> fixtures;
 
-  const GoboSheet({this.fixtures, Key key}) : super(key: key);
+  const GoboSheet({required this.fixtures, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

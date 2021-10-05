@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/plugin/ffi.dart';
@@ -29,7 +28,7 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
-  Future<void> writeControlValue({String path, String port, double value}) {
+  Future<void> writeControlValue({required String path, required String port, required double value}) {
     return channel.invokeMethod(
         "writeControlValue", WriteControl(path: path, port: port, value: value).writeToBuffer());
   }

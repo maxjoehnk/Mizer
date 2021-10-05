@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +23,7 @@ class FetchNodesView extends StatefulWidget {
 }
 
 class _FetchNodesViewState extends State<FetchNodesView> {
-  NodeEditorModel model;
+  NodeEditorModel? model;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class _FetchNodesViewState extends State<FetchNodesView> {
       _updateModel(nodes);
       return SizeChangedLayoutNotifier(
         child: ChangeNotifierProvider<NodeEditorModel>.value(
-            value: model, builder: (context, _) => SizedBox.expand(child: NodesView())),
+            value: model!, builder: (context, _) => SizedBox.expand(child: NodesView())),
       );
     });
   }
@@ -42,7 +41,7 @@ class _FetchNodesViewState extends State<FetchNodesView> {
     if (model == null) {
       model = NodeEditorModel(nodes);
     } else {
-      model.refresh(nodes);
+      model!.refresh(nodes);
     }
   }
 }
@@ -53,12 +52,12 @@ class NodesView extends StatefulWidget {
 }
 
 class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
-  Offset addMenuPosition;
+  Offset? addMenuPosition;
   bool showHiddenNodes = false;
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       afterLayout(context);
     });
 
@@ -69,7 +68,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
             onSecondaryTapUp: (event) {
               Navigator.of(context).push(PopupMenuRoute(
                   position: event.globalPosition,
-                  child: PopupMenu(
+                  child: PopupMenu<Node_NodeType>(
                       categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
               setState(() {
                 addMenuPosition = event.localPosition;
@@ -122,8 +121,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance!.addObserver(this);
       afterLayout(context);
     });
     super.initState();
@@ -131,7 +130,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -147,7 +146,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   }
 
   void _addNode(NodeEditorModel model, Node_NodeType nodeType) {
-    var transformedPosition = model.transformationController.toScene(addMenuPosition);
+    var transformedPosition = model.transformationController.toScene(addMenuPosition!);
     var position = transformedPosition / MULTIPLIER;
     context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position));
     setState(() {

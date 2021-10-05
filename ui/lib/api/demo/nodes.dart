@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
@@ -38,7 +37,7 @@ class NodesDemoApi implements NodesApi {
   }
 
   @override
-  Future<void> writeControlValue({String path, String port, double value}) {
+  Future<void> writeControlValue({required String path, required String port, required double value}) {
     // TODO: implement writeControlValue
     throw UnimplementedError();
   }

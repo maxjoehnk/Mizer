@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grpc/grpc.dart';
@@ -26,7 +25,7 @@ class GrpcApiProvider extends StatelessWidget {
   final ClientChannel _channel;
   final Widget child;
 
-  GrpcApiProvider(this._channel, {@required this.child});
+  GrpcApiProvider(this._channel, {required this.child});
 
   @override
   Widget build(BuildContext context) {

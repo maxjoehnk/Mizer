@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'dart:developer';
 
 import 'package:fixnum/fixnum.dart';
@@ -77,7 +76,7 @@ class LayoutView extends StatelessWidget {
   }
 
   void _onRename(BuildContext context, Layout layout, LayoutsBloc bloc) async {
-    String result =
+    String? result =
         await showDialog(context: context, builder: (context) => NameLayoutDialog(name: layout.id));
     if (result != null) {
       bloc.add(RenameLayout(id: layout.id, name: result));
@@ -86,10 +85,10 @@ class LayoutView extends StatelessWidget {
 }
 
 class NameLayoutDialog extends StatelessWidget {
-  final String name;
+  final String? name;
   final TextEditingController nameController;
 
-  NameLayoutDialog({this.name, Key key})
+  NameLayoutDialog({this.name, Key? key})
       : nameController = TextEditingController(text: name),
         super(key: key);
 
@@ -114,7 +113,7 @@ class NameLayoutDialog extends StatelessWidget {
 class ControlLayout extends StatelessWidget {
   final Layout layout;
 
-  ControlLayout({this.layout});
+  ControlLayout({required this.layout});
 
   @override
   Widget build(BuildContext context) {

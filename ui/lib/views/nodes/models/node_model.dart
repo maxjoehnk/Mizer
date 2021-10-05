@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/layout/layout_view.dart';
@@ -11,15 +10,15 @@ class NodeModel {
   Offset offset = Offset.infinite;
   Size size = Size.zero;
 
-  NodeModel({@required this.key, @required this.node}) : this.ports = [] {
+  NodeModel({required this.key, required this.node}) : this.ports = [] {
     _applyOffset(node);
     _buildPorts();
   }
 
   void update(GlobalKey key) {
     if (key.currentContext == null || this.key.currentContext == null) return;
-    RenderBox thisBox = this.key.currentContext.findRenderObject();
-    RenderBox thatBox = key.currentContext.findRenderObject();
+    RenderBox thisBox = this.key.currentContext!.findRenderObject() as RenderBox;
+    RenderBox thatBox = key.currentContext!.findRenderObject() as RenderBox;
     this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
     size = thisBox.size;
   }

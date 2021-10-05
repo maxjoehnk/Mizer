@@ -7,7 +7,7 @@ abstract class NodesApi {
 
   Future<void> linkNodes(NodeConnection connection);
 
-  Future<void> writeControlValue({ String path, String port, double value });
+  Future<void> writeControlValue({ required String path, required String port, required double value });
 
   Future<void> updateNodeConfig(UpdateNodeConfigRequest request);
 

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
@@ -10,15 +9,15 @@ import 'cue_list.dart';
 import 'sequence_list.dart';
 
 class SequencerView extends StatefulWidget {
-  const SequencerView({Key key}) : super(key: key);
+  const SequencerView({Key? key}) : super(key: key);
 
   @override
   State<SequencerView> createState() => _SequencerViewState();
 }
 
 class _SequencerViewState extends State<SequencerView> {
-  Sequence _sequence;
-  Cue _cue;
+  Sequence? _sequence;
+  Cue? _cue;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +33,8 @@ class _SequencerViewState extends State<SequencerView> {
         if (_sequence != null)
           Expanded(
             child: Panel(
-              label: "Cue List - ${_sequence.name}",
-              child: CueList(sequence: _sequence, onSelectCue: _selectCue, selectedCue: _cue),
+              label: "Cue List - ${_sequence!.name}",
+              child: CueList(sequence: _sequence!, onSelectCue: _selectCue, selectedCue: _cue),
               actions: [
                 PanelAction(label: "Go", onClick: () => _sequenceGo()),
               ],
@@ -43,7 +42,7 @@ class _SequencerViewState extends State<SequencerView> {
           ),
         if (_cue != null)
           Expanded(
-              child: Panel(label: "Cue Contents - ${_cue.name}", child: CueContents(cue: _cue)))
+              child: Panel(label: "Cue Contents - ${_cue!.name}", child: CueContents(cue: _cue!)))
       ],
     );
   }
@@ -51,7 +50,7 @@ class _SequencerViewState extends State<SequencerView> {
   _addSequence() {}
 
   _sequenceGo() {
-    context.read<SequencerApi>().sequenceGo(_sequence.id);
+    context.read<SequencerApi>().sequenceGo(_sequence!.id);
   }
 
   _selectSequence(Sequence sequence) {

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:menubar/menubar.dart' as menubar;
 
@@ -8,7 +7,7 @@ class StandaloneMenuBar extends StatelessWidget {
   final Widget child;
   final Menu menu;
 
-  const StandaloneMenuBar({this.child, this.menu, Key key}) : super(key: key);
+  const StandaloneMenuBar({required this.child, required this.menu, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,7 @@ class StandaloneMenuBar extends StatelessWidget {
                   shortcut: i.shortcut,
                 );
               }
+              throw new AssertionError("Invalid menu item");
             }).toList()))
         .toList();
 

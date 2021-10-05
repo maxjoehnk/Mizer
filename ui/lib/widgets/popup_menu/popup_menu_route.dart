@@ -1,22 +1,21 @@
-// @dart=2.11
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PopupMenuRoute extends PopupRoute {
   final Offset position;
-  final Widget child;
+  final Widget? child;
 
-  PopupMenuRoute({@required this.position, this.child});
+  PopupMenuRoute({required this.position, this.child});
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
   bool get barrierDismissible => true;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   Widget buildPage(

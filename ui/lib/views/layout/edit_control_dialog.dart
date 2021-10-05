@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/color_extensions.dart';
@@ -7,7 +6,7 @@ import 'package:mizer/protos/layouts.pb.dart' hide Color;
 class EditControlDialog extends StatefulWidget {
   final LayoutControl control;
 
-  const EditControlDialog({this.control, Key key}) : super(key: key);
+  const EditControlDialog({required this.control, Key? key}) : super(key: key);
 
   @override
   State<EditControlDialog> createState() => _EditControlDialogState(control.decoration);
@@ -33,7 +32,7 @@ class _EditControlDialogState extends State<EditControlDialog> {
         children: [
           Row(children: [
             Expanded(child: Text("Color", textAlign: TextAlign.start)),
-            Checkbox(value: decorations.hasColor, onChanged: (enabled) => setState(() => decorations.hasColor = enabled)),
+            Checkbox(value: decorations.hasColor, onChanged: (enabled) => setState(() => decorations.hasColor = enabled!)),
           ]),
           SizedBox(
             height: 256,

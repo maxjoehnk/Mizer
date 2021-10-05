@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: layouts.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
@@ -66,63 +66,63 @@ class LayoutsApiClient extends $grpc.Client {
           ($core.List<$core.int> value) => $1.LayoutResponse.fromBuffer(value));
 
   LayoutsApiClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions options,
-      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$1.Layouts> getLayouts($1.GetLayoutsRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getLayouts, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Layouts> addLayout($1.AddLayoutRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addLayout, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Layouts> removeLayout($1.RemoveLayoutRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$removeLayout, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Layouts> renameLayout($1.RenameLayoutRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$renameLayout, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> renameControl(
       $1.RenameControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$renameControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> moveControl(
       $1.MoveControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$moveControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> updateControl(
       $1.UpdateControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> removeControl(
       $1.RemoveControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$removeControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> addControl(
       $1.AddControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.LayoutResponse> addExistingControl(
       $1.AddExistingControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addExistingControl, request, options: options);
   }
 }

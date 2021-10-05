@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +41,7 @@ class TimeControl extends StatelessWidget {
         child: StreamBuilder(
           stream: transport,
           initialData: Transport(),
-          builder: (context, snapshot) => Text(_formatTime(snapshot.data), textAlign: TextAlign.center, style: style.headline5)
+          builder: (context, AsyncSnapshot<Transport> snapshot) => Text(_formatTime(snapshot.data!), textAlign: TextAlign.center, style: style.headline5)
         ));
   }
 

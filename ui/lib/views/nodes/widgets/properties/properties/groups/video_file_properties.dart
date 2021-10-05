@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -9,7 +8,7 @@ class VideoFileProperties extends StatelessWidget {
   final VideoFileNodeConfig config;
   final Function(VideoFileNodeConfig) onUpdate;
 
-  VideoFileProperties(this.config, { @required this.onUpdate });
+  VideoFileProperties(this.config, { required this.onUpdate });
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,11 +119,11 @@ class FixtureTable extends StatelessWidget {
   final Function(Fixture) onSelectSimilar;
 
   const FixtureTable(
-      {@required this.fixtures,
-      @required this.selectedIds,
-      @required this.onSelect,
-      this.onSelectSimilar,
-      Key key})
+      {required this.fixtures,
+      required this.selectedIds,
+      required this.onSelect,
+      required this.onSelectSimilar,
+      Key? key})
       : super(key: key);
 
   @override
@@ -139,7 +138,7 @@ class FixtureTable extends StatelessWidget {
           Text("Address")
         ],
         rows: fixtures
-            .sortedByCompare((fixture) => fixture.id, (lhs, rhs) => lhs - rhs)
+            .sortedByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs)
             .map((fixture) {
           var selected = selectedIds.contains(fixture.id);
           return MizerTableRow(
@@ -163,7 +162,7 @@ class AddFixturesButton extends StatelessWidget {
   final FixturesApi apiClient;
   final FixturesBloc fixturesBloc;
 
-  AddFixturesButton({this.apiClient, this.fixturesBloc});
+  AddFixturesButton({required this.apiClient, required this.fixturesBloc});
 
   @override
   Widget build(BuildContext context) {

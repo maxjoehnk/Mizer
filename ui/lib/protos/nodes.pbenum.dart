@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: nodes.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
@@ -35,7 +35,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, ChannelProtocol> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static ChannelProtocol valueOf($core.int value) => _byValue[value];
+  static ChannelProtocol? valueOf($core.int value) => _byValue[value];
 
   const ChannelProtocol._($core.int v, $core.String n) : super(v, n);
 }
@@ -96,7 +96,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Node_NodeType valueOf($core.int value) => _byValue[value];
+  static Node_NodeType? valueOf($core.int value) => _byValue[value];
 
   const Node_NodeType._($core.int v, $core.String n) : super(v, n);
 }
@@ -117,7 +117,7 @@ class Node_NodePreviewType extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, Node_NodePreviewType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Node_NodePreviewType valueOf($core.int value) => _byValue[value];
+  static Node_NodePreviewType? valueOf($core.int value) => _byValue[value];
 
   const Node_NodePreviewType._($core.int v, $core.String n) : super(v, n);
 }
@@ -136,7 +136,7 @@ class OscillatorNodeConfig_OscillatorType extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, OscillatorNodeConfig_OscillatorType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static OscillatorNodeConfig_OscillatorType valueOf($core.int value) => _byValue[value];
+  static OscillatorNodeConfig_OscillatorType? valueOf($core.int value) => _byValue[value];
 
   const OscillatorNodeConfig_OscillatorType._($core.int v, $core.String n) : super(v, n);
 }
@@ -151,7 +151,7 @@ class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
   ];
 
   static final $core.Map<$core.int, PixelPatternNodeConfig_Pattern> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static PixelPatternNodeConfig_Pattern valueOf($core.int value) => _byValue[value];
+  static PixelPatternNodeConfig_Pattern? valueOf($core.int value) => _byValue[value];
 
   const PixelPatternNodeConfig_Pattern._($core.int v, $core.String n) : super(v, n);
 }

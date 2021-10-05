@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: media.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -27,7 +27,7 @@ class GetMediaTags extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetMediaTags copyWith(void Function(GetMediaTags) updates) => super.copyWith((message) => updates(message as GetMediaTags)); // ignore: deprecated_member_use
+  GetMediaTags copyWith(void Function(GetMediaTags) updates) => super.copyWith((message) => updates(message as GetMediaTags)) as GetMediaTags; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetMediaTags create() => GetMediaTags._();
@@ -35,7 +35,7 @@ class GetMediaTags extends $pb.GeneratedMessage {
   static $pb.PbList<GetMediaTags> createRepeated() => $pb.PbList<GetMediaTags>();
   @$core.pragma('dart2js:noInline')
   static GetMediaTags getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetMediaTags>(create);
-  static GetMediaTags _defaultInstance;
+  static GetMediaTags? _defaultInstance;
 }
 
 class GetMediaRequest extends $pb.GeneratedMessage {
@@ -56,7 +56,7 @@ class GetMediaRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetMediaRequest copyWith(void Function(GetMediaRequest) updates) => super.copyWith((message) => updates(message as GetMediaRequest)); // ignore: deprecated_member_use
+  GetMediaRequest copyWith(void Function(GetMediaRequest) updates) => super.copyWith((message) => updates(message as GetMediaRequest)) as GetMediaRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetMediaRequest create() => GetMediaRequest._();
@@ -64,7 +64,7 @@ class GetMediaRequest extends $pb.GeneratedMessage {
   static $pb.PbList<GetMediaRequest> createRepeated() => $pb.PbList<GetMediaRequest>();
   @$core.pragma('dart2js:noInline')
   static GetMediaRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetMediaRequest>(create);
-  static GetMediaRequest _defaultInstance;
+  static GetMediaRequest? _defaultInstance;
 }
 
 class CreateMediaTag extends $pb.GeneratedMessage {
@@ -75,7 +75,7 @@ class CreateMediaTag extends $pb.GeneratedMessage {
 
   CreateMediaTag._() : super();
   factory CreateMediaTag({
-    $core.String name,
+    $core.String? name,
   }) {
     final _result = create();
     if (name != null) {
@@ -94,7 +94,7 @@ class CreateMediaTag extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CreateMediaTag copyWith(void Function(CreateMediaTag) updates) => super.copyWith((message) => updates(message as CreateMediaTag)); // ignore: deprecated_member_use
+  CreateMediaTag copyWith(void Function(CreateMediaTag) updates) => super.copyWith((message) => updates(message as CreateMediaTag)) as CreateMediaTag; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CreateMediaTag create() => CreateMediaTag._();
@@ -102,7 +102,7 @@ class CreateMediaTag extends $pb.GeneratedMessage {
   static $pb.PbList<CreateMediaTag> createRepeated() => $pb.PbList<CreateMediaTag>();
   @$core.pragma('dart2js:noInline')
   static CreateMediaTag getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CreateMediaTag>(create);
-  static CreateMediaTag _defaultInstance;
+  static CreateMediaTag? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -122,7 +122,7 @@ class MediaTags extends $pb.GeneratedMessage {
 
   MediaTags._() : super();
   factory MediaTags({
-    $core.Iterable<MediaTag> tags,
+    $core.Iterable<MediaTag>? tags,
   }) {
     final _result = create();
     if (tags != null) {
@@ -141,7 +141,7 @@ class MediaTags extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaTags copyWith(void Function(MediaTags) updates) => super.copyWith((message) => updates(message as MediaTags)); // ignore: deprecated_member_use
+  MediaTags copyWith(void Function(MediaTags) updates) => super.copyWith((message) => updates(message as MediaTags)) as MediaTags; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MediaTags create() => MediaTags._();
@@ -149,7 +149,7 @@ class MediaTags extends $pb.GeneratedMessage {
   static $pb.PbList<MediaTags> createRepeated() => $pb.PbList<MediaTags>();
   @$core.pragma('dart2js:noInline')
   static MediaTags getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaTags>(create);
-  static MediaTags _defaultInstance;
+  static MediaTags? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<MediaTag> get tags => $_getList(0);
@@ -164,8 +164,8 @@ class MediaTag extends $pb.GeneratedMessage {
 
   MediaTag._() : super();
   factory MediaTag({
-    $core.String id,
-    $core.String name,
+    $core.String? id,
+    $core.String? name,
   }) {
     final _result = create();
     if (id != null) {
@@ -187,7 +187,7 @@ class MediaTag extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaTag copyWith(void Function(MediaTag) updates) => super.copyWith((message) => updates(message as MediaTag)); // ignore: deprecated_member_use
+  MediaTag copyWith(void Function(MediaTag) updates) => super.copyWith((message) => updates(message as MediaTag)) as MediaTag; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MediaTag create() => MediaTag._();
@@ -195,7 +195,7 @@ class MediaTag extends $pb.GeneratedMessage {
   static $pb.PbList<MediaTag> createRepeated() => $pb.PbList<MediaTag>();
   @$core.pragma('dart2js:noInline')
   static MediaTag getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaTag>(create);
-  static MediaTag _defaultInstance;
+  static MediaTag? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -224,7 +224,7 @@ class MediaFiles extends $pb.GeneratedMessage {
 
   MediaFiles._() : super();
   factory MediaFiles({
-    $core.Iterable<MediaFile> files,
+    $core.Iterable<MediaFile>? files,
   }) {
     final _result = create();
     if (files != null) {
@@ -243,7 +243,7 @@ class MediaFiles extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaFiles copyWith(void Function(MediaFiles) updates) => super.copyWith((message) => updates(message as MediaFiles)); // ignore: deprecated_member_use
+  MediaFiles copyWith(void Function(MediaFiles) updates) => super.copyWith((message) => updates(message as MediaFiles)) as MediaFiles; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MediaFiles create() => MediaFiles._();
@@ -251,7 +251,7 @@ class MediaFiles extends $pb.GeneratedMessage {
   static $pb.PbList<MediaFiles> createRepeated() => $pb.PbList<MediaFiles>();
   @$core.pragma('dart2js:noInline')
   static MediaFiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaFiles>(create);
-  static MediaFiles _defaultInstance;
+  static MediaFiles? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<MediaFile> get files => $_getList(0);
@@ -269,11 +269,11 @@ class MediaFile extends $pb.GeneratedMessage {
 
   MediaFile._() : super();
   factory MediaFile({
-    $core.String id,
-    $core.String name,
-    $core.Iterable<MediaTag> tags,
-    $core.String thumbnailUrl,
-    $core.String contentUrl,
+    $core.String? id,
+    $core.String? name,
+    $core.Iterable<MediaTag>? tags,
+    $core.String? thumbnailUrl,
+    $core.String? contentUrl,
   }) {
     final _result = create();
     if (id != null) {
@@ -304,7 +304,7 @@ class MediaFile extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaFile copyWith(void Function(MediaFile) updates) => super.copyWith((message) => updates(message as MediaFile)); // ignore: deprecated_member_use
+  MediaFile copyWith(void Function(MediaFile) updates) => super.copyWith((message) => updates(message as MediaFile)) as MediaFile; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MediaFile create() => MediaFile._();
@@ -312,7 +312,7 @@ class MediaFile extends $pb.GeneratedMessage {
   static $pb.PbList<MediaFile> createRepeated() => $pb.PbList<MediaFile>();
   @$core.pragma('dart2js:noInline')
   static MediaFile getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaFile>(create);
-  static MediaFile _defaultInstance;
+  static MediaFile? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -362,7 +362,7 @@ class GroupedMediaFiles extends $pb.GeneratedMessage {
 
   GroupedMediaFiles._() : super();
   factory GroupedMediaFiles({
-    $core.Iterable<MediaTagWithFiles> tags,
+    $core.Iterable<MediaTagWithFiles>? tags,
   }) {
     final _result = create();
     if (tags != null) {
@@ -381,7 +381,7 @@ class GroupedMediaFiles extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GroupedMediaFiles copyWith(void Function(GroupedMediaFiles) updates) => super.copyWith((message) => updates(message as GroupedMediaFiles)); // ignore: deprecated_member_use
+  GroupedMediaFiles copyWith(void Function(GroupedMediaFiles) updates) => super.copyWith((message) => updates(message as GroupedMediaFiles)) as GroupedMediaFiles; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GroupedMediaFiles create() => GroupedMediaFiles._();
@@ -389,7 +389,7 @@ class GroupedMediaFiles extends $pb.GeneratedMessage {
   static $pb.PbList<GroupedMediaFiles> createRepeated() => $pb.PbList<GroupedMediaFiles>();
   @$core.pragma('dart2js:noInline')
   static GroupedMediaFiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupedMediaFiles>(create);
-  static GroupedMediaFiles _defaultInstance;
+  static GroupedMediaFiles? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<MediaTagWithFiles> get tags => $_getList(0);
@@ -404,8 +404,8 @@ class MediaTagWithFiles extends $pb.GeneratedMessage {
 
   MediaTagWithFiles._() : super();
   factory MediaTagWithFiles({
-    MediaTag tag,
-    $core.Iterable<MediaFile> files,
+    MediaTag? tag,
+    $core.Iterable<MediaFile>? files,
   }) {
     final _result = create();
     if (tag != null) {
@@ -427,7 +427,7 @@ class MediaTagWithFiles extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MediaTagWithFiles copyWith(void Function(MediaTagWithFiles) updates) => super.copyWith((message) => updates(message as MediaTagWithFiles)); // ignore: deprecated_member_use
+  MediaTagWithFiles copyWith(void Function(MediaTagWithFiles) updates) => super.copyWith((message) => updates(message as MediaTagWithFiles)) as MediaTagWithFiles; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MediaTagWithFiles create() => MediaTagWithFiles._();
@@ -435,7 +435,7 @@ class MediaTagWithFiles extends $pb.GeneratedMessage {
   static $pb.PbList<MediaTagWithFiles> createRepeated() => $pb.PbList<MediaTagWithFiles>();
   @$core.pragma('dart2js:noInline')
   static MediaTagWithFiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaTagWithFiles>(create);
-  static MediaTagWithFiles _defaultInstance;
+  static MediaTagWithFiles? _defaultInstance;
 
   @$pb.TagNumber(1)
   MediaTag get tag => $_getN(0);

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -20,8 +19,8 @@ class ConnectionsView extends StatelessWidget {
     return FutureBuilder(
         future: api.getConnections(),
         initialData: Connections(),
-        builder: (context, snapshot) {
-          Connections connections = snapshot.data;
+        builder: (context, AsyncSnapshot<Connections> snapshot) {
+          Connections connections = snapshot.data!;
           return Panel(
             label: "Connections",
             child: ListView.builder(

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -12,7 +11,7 @@ class DmxOutputProperties extends StatefulWidget {
   final DmxOutputNodeConfig config;
   final Function(DmxOutputNodeConfig) onUpdate;
 
-  DmxOutputProperties(this.config, {@required this.onUpdate});
+  DmxOutputProperties(this.config, {required this.onUpdate});
 
   @override
   _DmxOutputPropertiesState createState() => _DmxOutputPropertiesState(config);
@@ -53,7 +52,7 @@ class _DmxOutputPropertiesState extends State<DmxOutputProperties> {
   void _updateUniverse(num universe) {
     log("_updateUniverse $universe", name: "DmxOutputProperties");
     setState(() {
-      state.universe = universe;
+      state.universe = universe.toInt();
       widget.onUpdate(state);
     });
   }
@@ -61,7 +60,7 @@ class _DmxOutputPropertiesState extends State<DmxOutputProperties> {
   void _updateChannel(num channel) {
     log("_updateChannel $channel", name: "DmxOutputProperties");
     setState(() {
-      state.channel = channel;
+      state.channel = channel.toInt();
       widget.onUpdate(state);
     });
   }

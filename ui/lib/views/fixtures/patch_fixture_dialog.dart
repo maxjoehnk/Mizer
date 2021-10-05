@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -17,10 +16,10 @@ class PatchFixtureDialog extends StatelessWidget {
     return FutureBuilder(
         future: apiClient.getFixtureDefinitions(),
         initialData: FixtureDefinitions(),
-        builder: (context, state) {
+        builder: (context, AsyncSnapshot<FixtureDefinitions> state) {
           return Dialog(
               child: PatchFixtureDialogStepper(
-            definitions: state.data,
+            definitions: state.data!,
             bloc: fixturesBloc,
           ));
         });
@@ -31,7 +30,7 @@ class PatchFixtureDialogStepper extends StatefulWidget {
   final FixtureDefinitions definitions;
   final FixturesBloc bloc;
 
-  PatchFixtureDialogStepper({this.definitions, this.bloc});
+  PatchFixtureDialogStepper({required this.definitions, required this.bloc});
 
   @override
   _PatchFixtureDialogStepperState createState() => _PatchFixtureDialogStepperState();
@@ -39,8 +38,8 @@ class PatchFixtureDialogStepper extends StatefulWidget {
 
 class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
   int step = 0;
-  FixtureDefinition definition;
-  FixtureMode mode;
+  FixtureDefinition? definition;
+  FixtureMode? mode;
   int universe = 1;
   int channel = 1;
   int id = 1;
@@ -73,7 +72,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
               }));
     }
     if (step == 1) {
-      return FixturePatch(this.mode,
+      return FixturePatch(this.mode!,
           onChange: (event) => setState(() {
                 universe = event.universe;
                 channel = event.channel;
@@ -81,7 +80,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
                 count = event.count;
               }));
     }
-    return null;
+    return Container();
   }
 
   List<Widget> _getActions(BuildContext context) {
@@ -109,8 +108,8 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
 
   Future addFixture(BuildContext context) async {
     widget.bloc.add(AddFixtures(
-        definition: definition,
-        mode: mode,
+        definition: definition!,
+        mode: mode!,
         startId: id,
         universe: universe,
         startChannel: channel,
@@ -123,7 +122,7 @@ class FixturePatch extends StatefulWidget {
   final FixtureMode mode;
   final Function(PatchSettingsEvent) onChange;
 
-  FixturePatch(this.mode, {this.onChange});
+  FixturePatch(this.mode, {required this.onChange});
 
   @override
   _FixturePatchState createState() => _FixturePatchState();
@@ -161,14 +160,13 @@ class _FixturePatchState extends State<FixturePatch> {
 }
 
 class PatchSettings extends StatefulWidget {
-  final Key key;
   final Function(PatchSettingsEvent) onChange;
   final int universe;
   final int channel;
   final int id;
   final int count;
 
-  PatchSettings({this.key, this.channel, this.universe, this.id, this.count, this.onChange});
+  PatchSettings({Key? key, required this.channel, required this.universe, required this.id, required this.count, required this.onChange}) : super(key: key);
 
   @override
   _PatchSettingsState createState() =>
@@ -183,7 +181,7 @@ class _PatchSettingsState extends State<PatchSettings> {
 
   bool createNodes = true;
 
-  _PatchSettingsState({int channel, int universe, int id, int count})
+  _PatchSettingsState({required int channel, required int universe, required int id, required int count})
       : _universeController = TextEditingController(text: universe.toString()),
         _channelController = TextEditingController(text: channel.toString()),
         _idController = TextEditingController(text: id.toString()),
@@ -248,7 +246,7 @@ class PatchSettingsEvent {
   final int count;
   final bool createNodes;
 
-  PatchSettingsEvent({this.id, this.universe, this.channel, this.count, this.createNodes});
+  PatchSettingsEvent({required this.id, required this.universe, required this.channel, required this.count, required this.createNodes});
 }
 
 class UniversePreview extends StatelessWidget {
@@ -261,7 +259,7 @@ class UniversePreview extends StatelessWidget {
 class PatchField extends StatelessWidget {
   final Widget child;
 
-  PatchField({@required this.child});
+  PatchField({required this.child});
 
   @override
   Widget build(BuildContext context) {

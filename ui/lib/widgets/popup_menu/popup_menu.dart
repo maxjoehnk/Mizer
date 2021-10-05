@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/controls/button.dart';
 
@@ -17,14 +16,14 @@ class PopupCategory<T> {
   final String label;
   final List<PopupItem<T>> items;
 
-  const PopupCategory({this.label, this.items});
+  const PopupCategory({required this.label, required this.items});
 }
 
 class PopupMenu<T> extends StatefulWidget {
   final List<PopupCategory<T>> categories;
   final Function(T) onSelect;
 
-  PopupMenu({this.categories, this.onSelect});
+  PopupMenu({required this.categories, required this.onSelect});
 
   @override
   State<PopupMenu<T>> createState() => _PopupMenuState<T>(categories.first);
@@ -120,7 +119,7 @@ class PopupItemButton extends StatefulWidget {
   final String text;
   final Function() onTap;
 
-  PopupItemButton(this.text, {this.onTap});
+  PopupItemButton(this.text, {required this.onTap});
 
   @override
   _PopupItemButtonState createState() => _PopupItemButtonState();

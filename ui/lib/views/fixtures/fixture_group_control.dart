@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -7,14 +6,14 @@ import 'package:mizer/widgets/inputs/fader.dart';
 import 'package:provider/provider.dart';
 
 class Control {
-  final String label;
+  final String? label;
   final WriteControlRequest Function(dynamic) update;
-  final FaderChannel fader;
-  final ColorChannel color;
-  final AxisChannel axis;
-  final GenericChannel generic;
+  final FaderChannel? fader;
+  final ColorChannel? color;
+  final AxisChannel? axis;
+  final GenericChannel? generic;
 
-  Control(this.label, { this.update, this.fader, this.generic, this.color, this.axis });
+  Control(this.label, { required this.update, this.fader, this.generic, this.color, this.axis });
 
   bool get hasFader {
     return fader != null;
@@ -35,10 +34,10 @@ class Control {
 
 class FixtureGroupControl extends StatelessWidget {
   final Control control;
-  final String label;
+  final String? label;
   final List<Fixture> fixtures;
 
-  const FixtureGroupControl(this.control, {this.label, this.fixtures, Key key}) : super(key: key);
+  const FixtureGroupControl(this.control, {this.label, required this.fixtures, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +49,13 @@ class FixtureGroupControl extends StatelessWidget {
           child: FaderInput(
             // highlight: modifiedChannels.contains(group.name),
               label: control.label,
-              value: control.fader?.value ?? control.generic.value,
+              value: control.fader?.value ?? control.generic!.value,
               onValue: (v) => api.writeControl(control.update(v))));
     }
     if (control.hasColor) {
       widget = ColorInput(
         label: control.label,
-        value: ColorValue(red: control.color.red, green: control.color.green, blue: control.color.blue),
+        value: ColorValue(red: control.color!.red, green: control.color!.green, blue: control.color!.blue),
         onChange: (v) => api.writeControl(control.update(v)),
       );
     }

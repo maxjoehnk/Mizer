@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -8,7 +7,7 @@ import '../platform.dart';
 class MenuContainer extends StatelessWidget {
   final Menu menu;
 
-  const MenuContainer({this.menu, Key key}) : super(key: key);
+  const MenuContainer({required this.menu, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class MenuContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: menu.items.map((e) => MenuRowItem(item: e)).toList()),
+          children: menu.items.map((e) => MenuRowItem(item: e as MenuItem)).toList()),
     );
   }
 }
@@ -29,14 +28,16 @@ class MenuContainer extends StatelessWidget {
 class MenuRowItem extends StatelessWidget {
   final MenuItem item;
 
-  const MenuRowItem({this.item, Key key}) : super(key: key);
+  const MenuRowItem({required this.item, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Hoverable(
       onTap: () {
         Navigator.of(context).pop();
-        item.action();
+        if (item.action != null) {
+          item.action!();
+        }
       },
       builder: (hovered) => Container(
         color: hovered ? Colors.grey.shade700 : null,

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
@@ -9,7 +8,7 @@ import 'menu.dart';
 
 class StandalonePlatform extends Platform {
   @override
-  showContextMenu({BuildContext context, Menu menu, Offset position}) {
+  showContextMenu({required BuildContext context, required Menu menu, required Offset position}) {
     Navigator.of(context)
         .push(PopupMenuRoute(position: position, child: MenuContainer(menu: menu)));
   }

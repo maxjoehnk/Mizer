@@ -1,13 +1,12 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/sequencer.dart';
 
 class CueList extends StatelessWidget {
   final Sequence sequence;
   final Function(Cue) onSelectCue;
-  final Cue selectedCue;
+  final Cue? selectedCue;
 
-  const CueList({this.sequence, this.onSelectCue, this.selectedCue, Key key}) : super(key: key);
+  const CueList({required this.sequence, required this.onSelectCue, this.selectedCue, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class CueList extends StatelessWidget {
                       ],
                       selected: cue == selectedCue,
                       onSelectChanged: (selected) {
-                        if (selected) {
+                        if (selected!) {
                           this.onSelectCue(cue);
                         }
                       }))

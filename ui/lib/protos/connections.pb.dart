@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: connections.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -21,7 +21,7 @@ class MonitorDmxRequest extends $pb.GeneratedMessage {
 
   MonitorDmxRequest._() : super();
   factory MonitorDmxRequest({
-    $core.String outputId,
+    $core.String? outputId,
   }) {
     final _result = create();
     if (outputId != null) {
@@ -40,7 +40,7 @@ class MonitorDmxRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorDmxRequest copyWith(void Function(MonitorDmxRequest) updates) => super.copyWith((message) => updates(message as MonitorDmxRequest)); // ignore: deprecated_member_use
+  MonitorDmxRequest copyWith(void Function(MonitorDmxRequest) updates) => super.copyWith((message) => updates(message as MonitorDmxRequest)) as MonitorDmxRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MonitorDmxRequest create() => MonitorDmxRequest._();
@@ -48,7 +48,7 @@ class MonitorDmxRequest extends $pb.GeneratedMessage {
   static $pb.PbList<MonitorDmxRequest> createRepeated() => $pb.PbList<MonitorDmxRequest>();
   @$core.pragma('dart2js:noInline')
   static MonitorDmxRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorDmxRequest>(create);
-  static MonitorDmxRequest _defaultInstance;
+  static MonitorDmxRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get outputId => $_getSZ(0);
@@ -68,7 +68,7 @@ class MonitorDmxResponse extends $pb.GeneratedMessage {
 
   MonitorDmxResponse._() : super();
   factory MonitorDmxResponse({
-    $core.Iterable<MonitorDmxUniverse> universes,
+    $core.Iterable<MonitorDmxUniverse>? universes,
   }) {
     final _result = create();
     if (universes != null) {
@@ -87,7 +87,7 @@ class MonitorDmxResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorDmxResponse copyWith(void Function(MonitorDmxResponse) updates) => super.copyWith((message) => updates(message as MonitorDmxResponse)); // ignore: deprecated_member_use
+  MonitorDmxResponse copyWith(void Function(MonitorDmxResponse) updates) => super.copyWith((message) => updates(message as MonitorDmxResponse)) as MonitorDmxResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MonitorDmxResponse create() => MonitorDmxResponse._();
@@ -95,7 +95,7 @@ class MonitorDmxResponse extends $pb.GeneratedMessage {
   static $pb.PbList<MonitorDmxResponse> createRepeated() => $pb.PbList<MonitorDmxResponse>();
   @$core.pragma('dart2js:noInline')
   static MonitorDmxResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorDmxResponse>(create);
-  static MonitorDmxResponse _defaultInstance;
+  static MonitorDmxResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<MonitorDmxUniverse> get universes => $_getList(0);
@@ -110,8 +110,8 @@ class MonitorDmxUniverse extends $pb.GeneratedMessage {
 
   MonitorDmxUniverse._() : super();
   factory MonitorDmxUniverse({
-    $core.int universe,
-    $core.List<$core.int> channels,
+    $core.int? universe,
+    $core.List<$core.int>? channels,
   }) {
     final _result = create();
     if (universe != null) {
@@ -133,7 +133,7 @@ class MonitorDmxUniverse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MonitorDmxUniverse copyWith(void Function(MonitorDmxUniverse) updates) => super.copyWith((message) => updates(message as MonitorDmxUniverse)); // ignore: deprecated_member_use
+  MonitorDmxUniverse copyWith(void Function(MonitorDmxUniverse) updates) => super.copyWith((message) => updates(message as MonitorDmxUniverse)) as MonitorDmxUniverse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MonitorDmxUniverse create() => MonitorDmxUniverse._();
@@ -141,7 +141,7 @@ class MonitorDmxUniverse extends $pb.GeneratedMessage {
   static $pb.PbList<MonitorDmxUniverse> createRepeated() => $pb.PbList<MonitorDmxUniverse>();
   @$core.pragma('dart2js:noInline')
   static MonitorDmxUniverse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorDmxUniverse>(create);
-  static MonitorDmxUniverse _defaultInstance;
+  static MonitorDmxUniverse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get universe => $_getIZ(0);
@@ -180,7 +180,7 @@ class GetConnectionsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetConnectionsRequest copyWith(void Function(GetConnectionsRequest) updates) => super.copyWith((message) => updates(message as GetConnectionsRequest)); // ignore: deprecated_member_use
+  GetConnectionsRequest copyWith(void Function(GetConnectionsRequest) updates) => super.copyWith((message) => updates(message as GetConnectionsRequest)) as GetConnectionsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetConnectionsRequest create() => GetConnectionsRequest._();
@@ -188,7 +188,7 @@ class GetConnectionsRequest extends $pb.GeneratedMessage {
   static $pb.PbList<GetConnectionsRequest> createRepeated() => $pb.PbList<GetConnectionsRequest>();
   @$core.pragma('dart2js:noInline')
   static GetConnectionsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetConnectionsRequest>(create);
-  static GetConnectionsRequest _defaultInstance;
+  static GetConnectionsRequest? _defaultInstance;
 }
 
 class Connections extends $pb.GeneratedMessage {
@@ -199,7 +199,7 @@ class Connections extends $pb.GeneratedMessage {
 
   Connections._() : super();
   factory Connections({
-    $core.Iterable<Connection> connections,
+    $core.Iterable<Connection>? connections,
   }) {
     final _result = create();
     if (connections != null) {
@@ -218,7 +218,7 @@ class Connections extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Connections copyWith(void Function(Connections) updates) => super.copyWith((message) => updates(message as Connections)); // ignore: deprecated_member_use
+  Connections copyWith(void Function(Connections) updates) => super.copyWith((message) => updates(message as Connections)) as Connections; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Connections create() => Connections._();
@@ -226,7 +226,7 @@ class Connections extends $pb.GeneratedMessage {
   static $pb.PbList<Connections> createRepeated() => $pb.PbList<Connections>();
   @$core.pragma('dart2js:noInline')
   static Connections getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Connections>(create);
-  static Connections _defaultInstance;
+  static Connections? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Connection> get connections => $_getList(0);
@@ -263,12 +263,12 @@ class Connection extends $pb.GeneratedMessage {
 
   Connection._() : super();
   factory Connection({
-    $core.String name,
-    DmxConnection dmx,
-    MidiConnection midi,
-    OscConnection osc,
-    ProDjLinkConnection proDJLink,
-    HeliosConnection helios,
+    $core.String? name,
+    DmxConnection? dmx,
+    MidiConnection? midi,
+    OscConnection? osc,
+    ProDjLinkConnection? proDJLink,
+    HeliosConnection? helios,
   }) {
     final _result = create();
     if (name != null) {
@@ -302,7 +302,7 @@ class Connection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Connection copyWith(void Function(Connection) updates) => super.copyWith((message) => updates(message as Connection)); // ignore: deprecated_member_use
+  Connection copyWith(void Function(Connection) updates) => super.copyWith((message) => updates(message as Connection)) as Connection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Connection create() => Connection._();
@@ -310,9 +310,9 @@ class Connection extends $pb.GeneratedMessage {
   static $pb.PbList<Connection> createRepeated() => $pb.PbList<Connection>();
   @$core.pragma('dart2js:noInline')
   static Connection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Connection>(create);
-  static Connection _defaultInstance;
+  static Connection? _defaultInstance;
 
-  Connection_Connection whichConnection() => _Connection_ConnectionByTag[$_whichOneof(0)];
+  Connection_Connection whichConnection() => _Connection_ConnectionByTag[$_whichOneof(0)]!;
   void clearConnection() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -388,7 +388,7 @@ class DmxConnection extends $pb.GeneratedMessage {
 
   DmxConnection._() : super();
   factory DmxConnection({
-    $core.String outputId,
+    $core.String? outputId,
   }) {
     final _result = create();
     if (outputId != null) {
@@ -407,7 +407,7 @@ class DmxConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DmxConnection copyWith(void Function(DmxConnection) updates) => super.copyWith((message) => updates(message as DmxConnection)); // ignore: deprecated_member_use
+  DmxConnection copyWith(void Function(DmxConnection) updates) => super.copyWith((message) => updates(message as DmxConnection)) as DmxConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DmxConnection create() => DmxConnection._();
@@ -415,7 +415,7 @@ class DmxConnection extends $pb.GeneratedMessage {
   static $pb.PbList<DmxConnection> createRepeated() => $pb.PbList<DmxConnection>();
   @$core.pragma('dart2js:noInline')
   static DmxConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxConnection>(create);
-  static DmxConnection _defaultInstance;
+  static DmxConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get outputId => $_getSZ(0);
@@ -436,8 +436,8 @@ class HeliosConnection extends $pb.GeneratedMessage {
 
   HeliosConnection._() : super();
   factory HeliosConnection({
-    $core.String name,
-    $core.String firmware,
+    $core.String? name,
+    $core.String? firmware,
   }) {
     final _result = create();
     if (name != null) {
@@ -459,7 +459,7 @@ class HeliosConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HeliosConnection copyWith(void Function(HeliosConnection) updates) => super.copyWith((message) => updates(message as HeliosConnection)); // ignore: deprecated_member_use
+  HeliosConnection copyWith(void Function(HeliosConnection) updates) => super.copyWith((message) => updates(message as HeliosConnection)) as HeliosConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static HeliosConnection create() => HeliosConnection._();
@@ -467,7 +467,7 @@ class HeliosConnection extends $pb.GeneratedMessage {
   static $pb.PbList<HeliosConnection> createRepeated() => $pb.PbList<HeliosConnection>();
   @$core.pragma('dart2js:noInline')
   static HeliosConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HeliosConnection>(create);
-  static HeliosConnection _defaultInstance;
+  static HeliosConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -506,7 +506,7 @@ class MidiConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiConnection copyWith(void Function(MidiConnection) updates) => super.copyWith((message) => updates(message as MidiConnection)); // ignore: deprecated_member_use
+  MidiConnection copyWith(void Function(MidiConnection) updates) => super.copyWith((message) => updates(message as MidiConnection)) as MidiConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MidiConnection create() => MidiConnection._();
@@ -514,7 +514,7 @@ class MidiConnection extends $pb.GeneratedMessage {
   static $pb.PbList<MidiConnection> createRepeated() => $pb.PbList<MidiConnection>();
   @$core.pragma('dart2js:noInline')
   static MidiConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiConnection>(create);
-  static MidiConnection _defaultInstance;
+  static MidiConnection? _defaultInstance;
 }
 
 class OscConnection extends $pb.GeneratedMessage {
@@ -527,9 +527,9 @@ class OscConnection extends $pb.GeneratedMessage {
 
   OscConnection._() : super();
   factory OscConnection({
-    $core.int inputPort,
-    $core.int outputPort,
-    $core.String outputAddress,
+    $core.int? inputPort,
+    $core.int? outputPort,
+    $core.String? outputAddress,
   }) {
     final _result = create();
     if (inputPort != null) {
@@ -554,7 +554,7 @@ class OscConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OscConnection copyWith(void Function(OscConnection) updates) => super.copyWith((message) => updates(message as OscConnection)); // ignore: deprecated_member_use
+  OscConnection copyWith(void Function(OscConnection) updates) => super.copyWith((message) => updates(message as OscConnection)) as OscConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static OscConnection create() => OscConnection._();
@@ -562,7 +562,7 @@ class OscConnection extends $pb.GeneratedMessage {
   static $pb.PbList<OscConnection> createRepeated() => $pb.PbList<OscConnection>();
   @$core.pragma('dart2js:noInline')
   static OscConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OscConnection>(create);
-  static OscConnection _defaultInstance;
+  static OscConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get inputPort => $_getIZ(0);
@@ -603,10 +603,10 @@ class ProDjLinkConnection extends $pb.GeneratedMessage {
 
   ProDjLinkConnection._() : super();
   factory ProDjLinkConnection({
-    $core.String address,
-    $core.String model,
-    $core.int playerNumber,
-    CdjPlayback playback,
+    $core.String? address,
+    $core.String? model,
+    $core.int? playerNumber,
+    CdjPlayback? playback,
   }) {
     final _result = create();
     if (address != null) {
@@ -634,7 +634,7 @@ class ProDjLinkConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProDjLinkConnection copyWith(void Function(ProDjLinkConnection) updates) => super.copyWith((message) => updates(message as ProDjLinkConnection)); // ignore: deprecated_member_use
+  ProDjLinkConnection copyWith(void Function(ProDjLinkConnection) updates) => super.copyWith((message) => updates(message as ProDjLinkConnection)) as ProDjLinkConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProDjLinkConnection create() => ProDjLinkConnection._();
@@ -642,7 +642,7 @@ class ProDjLinkConnection extends $pb.GeneratedMessage {
   static $pb.PbList<ProDjLinkConnection> createRepeated() => $pb.PbList<ProDjLinkConnection>();
   @$core.pragma('dart2js:noInline')
   static ProDjLinkConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProDjLinkConnection>(create);
-  static ProDjLinkConnection _defaultInstance;
+  static ProDjLinkConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get address => $_getSZ(0);
@@ -692,8 +692,8 @@ class CdjPlayback_Track extends $pb.GeneratedMessage {
 
   CdjPlayback_Track._() : super();
   factory CdjPlayback_Track({
-    $core.String artist,
-    $core.String title,
+    $core.String? artist,
+    $core.String? title,
   }) {
     final _result = create();
     if (artist != null) {
@@ -715,7 +715,7 @@ class CdjPlayback_Track extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CdjPlayback_Track copyWith(void Function(CdjPlayback_Track) updates) => super.copyWith((message) => updates(message as CdjPlayback_Track)); // ignore: deprecated_member_use
+  CdjPlayback_Track copyWith(void Function(CdjPlayback_Track) updates) => super.copyWith((message) => updates(message as CdjPlayback_Track)) as CdjPlayback_Track; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CdjPlayback_Track create() => CdjPlayback_Track._();
@@ -723,7 +723,7 @@ class CdjPlayback_Track extends $pb.GeneratedMessage {
   static $pb.PbList<CdjPlayback_Track> createRepeated() => $pb.PbList<CdjPlayback_Track>();
   @$core.pragma('dart2js:noInline')
   static CdjPlayback_Track getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CdjPlayback_Track>(create);
-  static CdjPlayback_Track _defaultInstance;
+  static CdjPlayback_Track? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get artist => $_getSZ(0);
@@ -756,11 +756,11 @@ class CdjPlayback extends $pb.GeneratedMessage {
 
   CdjPlayback._() : super();
   factory CdjPlayback({
-    $core.bool live,
-    $core.double bpm,
-    $core.int frame,
-    CdjPlayback_State playback,
-    CdjPlayback_Track track,
+    $core.bool? live,
+    $core.double? bpm,
+    $core.int? frame,
+    CdjPlayback_State? playback,
+    CdjPlayback_Track? track,
   }) {
     final _result = create();
     if (live != null) {
@@ -791,7 +791,7 @@ class CdjPlayback extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CdjPlayback copyWith(void Function(CdjPlayback) updates) => super.copyWith((message) => updates(message as CdjPlayback)); // ignore: deprecated_member_use
+  CdjPlayback copyWith(void Function(CdjPlayback) updates) => super.copyWith((message) => updates(message as CdjPlayback)) as CdjPlayback; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CdjPlayback create() => CdjPlayback._();
@@ -799,7 +799,7 @@ class CdjPlayback extends $pb.GeneratedMessage {
   static $pb.PbList<CdjPlayback> createRepeated() => $pb.PbList<CdjPlayback>();
   @$core.pragma('dart2js:noInline')
   static CdjPlayback getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CdjPlayback>(create);
-  static CdjPlayback _defaultInstance;
+  static CdjPlayback? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get live => $_getBF(0);

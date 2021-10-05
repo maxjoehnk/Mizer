@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
 import '../platform.dart';

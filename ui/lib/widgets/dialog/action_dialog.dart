@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
@@ -8,10 +7,10 @@ final Color BORDER_COLOR = Colors.grey.shade700;
 
 class ActionDialog extends StatelessWidget {
   final String title;
-  final Widget content;
-  final List<DialogAction> actions;
+  final Widget? content;
+  final List<DialogAction>? actions;
 
-  const ActionDialog({this.actions, this.title, this.content, Key key}) : super(key: key);
+  const ActionDialog({this.actions, required this.title, this.content, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class ActionDialog extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 child: Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: actions
+                    children: (actions ?? [])
                         .map((e) => Hoverable(
                               onTap: e.onClick,
                               builder: (hover) => Container(

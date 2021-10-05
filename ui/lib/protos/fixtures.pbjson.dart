@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: fixtures.proto
 //
-// @dart = 2.7
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use fixtureControlDescriptor instead')
 const FixtureControl$json = const {
   '1': 'FixtureControl',
   '2': const [
@@ -22,6 +26,9 @@ const FixtureControl$json = const {
   ],
 };
 
+/// Descriptor for `FixtureControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESCQoFQ09MT1IQAhIHCgNQQU4QAxIICgRUSUxUEAQSCQoFRk9DVVMQBRIICgRaT09NEAYSCQoFUFJJU00QBxIICgRJUklTEAgSCQoFRlJPU1QQCRILCgdHRU5FUklDEAo=');
+@$core.Deprecated('Use addFixturesRequestDescriptor instead')
 const AddFixturesRequest$json = const {
   '1': 'AddFixturesRequest',
   '2': const [
@@ -29,6 +36,9 @@ const AddFixturesRequest$json = const {
   ],
 };
 
+/// Descriptor for `AddFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addFixturesRequestDescriptor = $convert.base64Decode('ChJBZGRGaXh0dXJlc1JlcXVlc3QSPQoIcmVxdWVzdHMYASADKAsyIS5taXplci5maXh0dXJlcy5BZGRGaXh0dXJlUmVxdWVzdFIIcmVxdWVzdHM=');
+@$core.Deprecated('Use addFixtureRequestDescriptor instead')
 const AddFixtureRequest$json = const {
   '1': 'AddFixtureRequest',
   '2': const [
@@ -40,10 +50,16 @@ const AddFixtureRequest$json = const {
   ],
 };
 
+/// Descriptor for `AddFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addFixtureRequestDescriptor = $convert.base64Decode('ChFBZGRGaXh0dXJlUmVxdWVzdBIiCgxkZWZpbml0aW9uSWQYASABKAlSDGRlZmluaXRpb25JZBISCgRtb2RlGAIgASgJUgRtb2RlEg4KAmlkGAMgASgNUgJpZBIYCgdjaGFubmVsGAQgASgNUgdjaGFubmVsEhoKCHVuaXZlcnNlGAUgASgNUgh1bml2ZXJzZQ==');
+@$core.Deprecated('Use getFixturesRequestDescriptor instead')
 const GetFixturesRequest$json = const {
   '1': 'GetFixturesRequest',
 };
 
+/// Descriptor for `GetFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getFixturesRequestDescriptor = $convert.base64Decode('ChJHZXRGaXh0dXJlc1JlcXVlc3Q=');
+@$core.Deprecated('Use fixturesDescriptor instead')
 const Fixtures$json = const {
   '1': 'Fixtures',
   '2': const [
@@ -51,6 +67,9 @@ const Fixtures$json = const {
   ],
 };
 
+/// Descriptor for `Fixtures`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixturesDescriptor = $convert.base64Decode('CghGaXh0dXJlcxIzCghmaXh0dXJlcxgBIAMoCzIXLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVSCGZpeHR1cmVz');
+@$core.Deprecated('Use fixtureDescriptor instead')
 const Fixture$json = const {
   '1': 'Fixture',
   '2': const [
@@ -64,6 +83,9 @@ const Fixture$json = const {
   ],
 };
 
+/// Descriptor for `Fixture`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureDescriptor = $convert.base64Decode('CgdGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEiIKDG1hbnVmYWN0dXJlchgDIAEoCVIMbWFudWZhY3R1cmVyEhIKBG1vZGUYBCABKAlSBG1vZGUSGgoIdW5pdmVyc2UYBSABKA1SCHVuaXZlcnNlEhgKB2NoYW5uZWwYBiABKA1SB2NoYW5uZWwSOwoIY29udHJvbHMYByADKAsyHy5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbHNSCGNvbnRyb2xz');
+@$core.Deprecated('Use fixtureControlsDescriptor instead')
 const FixtureControls$json = const {
   '1': 'FixtureControls',
   '2': const [
@@ -78,6 +100,9 @@ const FixtureControls$json = const {
   ],
 };
 
+/// Descriptor for `FixtureControls`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureControlsDescriptor = $convert.base64Decode('Cg9GaXh0dXJlQ29udHJvbHMSOAoHY29udHJvbBgBIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEjQKBWZhZGVyGAIgASgLMhwubWl6ZXIuZml4dHVyZXMuRmFkZXJDaGFubmVsSABSBWZhZGVyEjQKBWNvbG9yGAMgASgLMhwubWl6ZXIuZml4dHVyZXMuQ29sb3JDaGFubmVsSABSBWNvbG9yEjEKBGF4aXMYBCABKAsyGy5taXplci5maXh0dXJlcy5BeGlzQ2hhbm5lbEgAUgRheGlzEjoKB2dlbmVyaWMYBSABKAsyHi5taXplci5maXh0dXJlcy5HZW5lcmljQ2hhbm5lbEgAUgdnZW5lcmljQgcKBXZhbHVl');
+@$core.Deprecated('Use faderChannelDescriptor instead')
 const FaderChannel$json = const {
   '1': 'FaderChannel',
   '2': const [
@@ -85,6 +110,9 @@ const FaderChannel$json = const {
   ],
 };
 
+/// Descriptor for `FaderChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List faderChannelDescriptor = $convert.base64Decode('CgxGYWRlckNoYW5uZWwSFAoFdmFsdWUYASABKAFSBXZhbHVl');
+@$core.Deprecated('Use colorChannelDescriptor instead')
 const ColorChannel$json = const {
   '1': 'ColorChannel',
   '2': const [
@@ -94,6 +122,9 @@ const ColorChannel$json = const {
   ],
 };
 
+/// Descriptor for `ColorChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List colorChannelDescriptor = $convert.base64Decode('CgxDb2xvckNoYW5uZWwSEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWU=');
+@$core.Deprecated('Use axisChannelDescriptor instead')
 const AxisChannel$json = const {
   '1': 'AxisChannel',
   '2': const [
@@ -103,6 +134,9 @@ const AxisChannel$json = const {
   ],
 };
 
+/// Descriptor for `AxisChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List axisChannelDescriptor = $convert.base64Decode('CgtBeGlzQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSHQoKYW5nbGVfZnJvbRgCIAEoAVIJYW5nbGVGcm9tEhkKCGFuZ2xlX3RvGAMgASgBUgdhbmdsZVRv');
+@$core.Deprecated('Use genericChannelDescriptor instead')
 const GenericChannel$json = const {
   '1': 'GenericChannel',
   '2': const [
@@ -111,10 +145,16 @@ const GenericChannel$json = const {
   ],
 };
 
+/// Descriptor for `GenericChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List genericChannelDescriptor = $convert.base64Decode('Cg5HZW5lcmljQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use getFixtureDefinitionsRequestDescriptor instead')
 const GetFixtureDefinitionsRequest$json = const {
   '1': 'GetFixtureDefinitionsRequest',
 };
 
+/// Descriptor for `GetFixtureDefinitionsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getFixtureDefinitionsRequestDescriptor = $convert.base64Decode('ChxHZXRGaXh0dXJlRGVmaW5pdGlvbnNSZXF1ZXN0');
+@$core.Deprecated('Use fixtureDefinitionsDescriptor instead')
 const FixtureDefinitions$json = const {
   '1': 'FixtureDefinitions',
   '2': const [
@@ -122,6 +162,9 @@ const FixtureDefinitions$json = const {
   ],
 };
 
+/// Descriptor for `FixtureDefinitions`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureDefinitionsDescriptor = $convert.base64Decode('ChJGaXh0dXJlRGVmaW5pdGlvbnMSQwoLZGVmaW5pdGlvbnMYASADKAsyIS5taXplci5maXh0dXJlcy5GaXh0dXJlRGVmaW5pdGlvblILZGVmaW5pdGlvbnM=');
+@$core.Deprecated('Use fixtureDefinitionDescriptor instead')
 const FixtureDefinition$json = const {
   '1': 'FixtureDefinition',
   '2': const [
@@ -134,6 +177,9 @@ const FixtureDefinition$json = const {
   ],
 };
 
+/// Descriptor for `FixtureDefinition`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureDefinitionDescriptor = $convert.base64Decode('ChFGaXh0dXJlRGVmaW5pdGlvbhIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIiCgxtYW51ZmFjdHVyZXIYAyABKAlSDG1hbnVmYWN0dXJlchIxCgVtb2RlcxgEIAMoCzIbLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVNb2RlUgVtb2RlcxI/CghwaHlzaWNhbBgFIAEoCzIjLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVQaHlzaWNhbERhdGFSCHBoeXNpY2FsEhIKBHRhZ3MYBiADKAlSBHRhZ3M=');
+@$core.Deprecated('Use fixtureModeDescriptor instead')
 const FixtureMode$json = const {
   '1': 'FixtureMode',
   '2': const [
@@ -142,6 +188,9 @@ const FixtureMode$json = const {
   ],
 };
 
+/// Descriptor for `FixtureMode`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureModeDescriptor = $convert.base64Decode('CgtGaXh0dXJlTW9kZRISCgRuYW1lGAEgASgJUgRuYW1lEjoKCGNoYW5uZWxzGAIgAygLMh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUNoYW5uZWxSCGNoYW5uZWxz');
+@$core.Deprecated('Use fixtureChannelDescriptor instead')
 const FixtureChannel$json = const {
   '1': 'FixtureChannel',
   '2': const [
@@ -156,6 +205,7 @@ const FixtureChannel$json = const {
   ],
 };
 
+@$core.Deprecated('Use fixtureChannelDescriptor instead')
 const FixtureChannel_CoarseResolution$json = const {
   '1': 'CoarseResolution',
   '2': const [
@@ -163,6 +213,7 @@ const FixtureChannel_CoarseResolution$json = const {
   ],
 };
 
+@$core.Deprecated('Use fixtureChannelDescriptor instead')
 const FixtureChannel_FineResolution$json = const {
   '1': 'FineResolution',
   '2': const [
@@ -171,6 +222,7 @@ const FixtureChannel_FineResolution$json = const {
   ],
 };
 
+@$core.Deprecated('Use fixtureChannelDescriptor instead')
 const FixtureChannel_FinestResolution$json = const {
   '1': 'FinestResolution',
   '2': const [
@@ -180,6 +232,9 @@ const FixtureChannel_FinestResolution$json = const {
   ],
 };
 
+/// Descriptor for `FixtureChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureChannelDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ2hhbm5lbBISCgRuYW1lGAEgASgJUgRuYW1lEkkKBmNvYXJzZRgCIAEoCzIvLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDaGFubmVsLkNvYXJzZVJlc29sdXRpb25IAFIGY29hcnNlEkMKBGZpbmUYAyABKAsyLS5taXplci5maXh0dXJlcy5GaXh0dXJlQ2hhbm5lbC5GaW5lUmVzb2x1dGlvbkgAUgRmaW5lEkkKBmZpbmVzdBgEIAEoCzIvLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDaGFubmVsLkZpbmVzdFJlc29sdXRpb25IAFIGZmluZXN0GiwKEENvYXJzZVJlc29sdXRpb24SGAoHY2hhbm5lbBgBIAEoDVIHY2hhbm5lbBpYCg5GaW5lUmVzb2x1dGlvbhIgCgtmaW5lQ2hhbm5lbBgBIAEoDVILZmluZUNoYW5uZWwSJAoNY29hcnNlQ2hhbm5lbBgCIAEoDVINY29hcnNlQ2hhbm5lbBqAAQoQRmluZXN0UmVzb2x1dGlvbhIkCg1maW5lc3RDaGFubmVsGAEgASgNUg1maW5lc3RDaGFubmVsEiAKC2ZpbmVDaGFubmVsGAIgASgNUgtmaW5lQ2hhbm5lbBIkCg1jb2Fyc2VDaGFubmVsGAMgASgNUg1jb2Fyc2VDaGFubmVsQgwKCnJlc29sdXRpb24=');
+@$core.Deprecated('Use fixturePhysicalDataDescriptor instead')
 const FixturePhysicalData$json = const {
   '1': 'FixturePhysicalData',
   '2': const [
@@ -190,3 +245,5 @@ const FixturePhysicalData$json = const {
   ],
 };
 
+/// Descriptor for `FixturePhysicalData`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixturePhysicalDataDescriptor = $convert.base64Decode('ChNGaXh0dXJlUGh5c2ljYWxEYXRhEhQKBXdpZHRoGAEgASgCUgV3aWR0aBIWCgZoZWlnaHQYAiABKAJSBmhlaWdodBIUCgVkZXB0aBgDIAEoAlIFZGVwdGgSFgoGd2VpZ2h0GAQgASgCUgZ3ZWlnaHQ=');

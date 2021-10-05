@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -24,7 +23,7 @@ const NAMES = {
 class BeamSheet extends StatelessWidget {
   final List<Fixture> fixtures;
 
-  const BeamSheet({this.fixtures, Key key}) : super(key: key);
+  const BeamSheet({required this.fixtures, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

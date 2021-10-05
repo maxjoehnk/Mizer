@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: nodes.proto
 //
-// @dart = 2.7
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use channelProtocolDescriptor instead')
 const ChannelProtocol$json = const {
   '1': 'ChannelProtocol',
   '2': const [
@@ -21,6 +25,9 @@ const ChannelProtocol$json = const {
   ],
 };
 
+/// Descriptor for `ChannelProtocol`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List channelProtocolDescriptor = $convert.base64Decode('Cg9DaGFubmVsUHJvdG9jb2wSCgoGU0lOR0xFEAASCQoFTVVMVEkQARIJCgVDT0xPUhAJEgsKB1RFWFRVUkUQAhIKCgZWRUNUT1IQAxIJCgVMQVNFUhAEEggKBFBPTFkQBRIICgREQVRBEAYSDAoITUFURVJJQUwQBxIHCgNHU1QQCA==');
+@$core.Deprecated('Use addNodeRequestDescriptor instead')
 const AddNodeRequest$json = const {
   '1': 'AddNodeRequest',
   '2': const [
@@ -29,10 +36,16 @@ const AddNodeRequest$json = const {
   ],
 };
 
+/// Descriptor for `AddNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode('Cg5BZGROb2RlUmVxdWVzdBIoCgR0eXBlGAEgASgOMhQubWl6ZXIuTm9kZS5Ob2RlVHlwZVIEdHlwZRIvCghwb3NpdGlvbhgCIAEoCzITLm1pemVyLk5vZGVQb3NpdGlvblIIcG9zaXRpb24=');
+@$core.Deprecated('Use nodesRequestDescriptor instead')
 const NodesRequest$json = const {
   '1': 'NodesRequest',
 };
 
+/// Descriptor for `NodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodesRequestDescriptor = $convert.base64Decode('CgxOb2Rlc1JlcXVlc3Q=');
+@$core.Deprecated('Use writeControlDescriptor instead')
 const WriteControl$json = const {
   '1': 'WriteControl',
   '2': const [
@@ -42,10 +55,16 @@ const WriteControl$json = const {
   ],
 };
 
+/// Descriptor for `WriteControl`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List writeControlDescriptor = $convert.base64Decode('CgxXcml0ZUNvbnRyb2wSEgoEcGF0aBgBIAEoCVIEcGF0aBISCgRwb3J0GAIgASgJUgRwb3J0EhQKBXZhbHVlGAMgASgBUgV2YWx1ZQ==');
+@$core.Deprecated('Use writeResponseDescriptor instead')
 const WriteResponse$json = const {
   '1': 'WriteResponse',
 };
 
+/// Descriptor for `WriteResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List writeResponseDescriptor = $convert.base64Decode('Cg1Xcml0ZVJlc3BvbnNl');
+@$core.Deprecated('Use updateNodeConfigRequestDescriptor instead')
 const UpdateNodeConfigRequest$json = const {
   '1': 'UpdateNodeConfigRequest',
   '2': const [
@@ -54,10 +73,16 @@ const UpdateNodeConfigRequest$json = const {
   ],
 };
 
+/// Descriptor for `UpdateNodeConfigRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateNodeConfigRequestDescriptor = $convert.base64Decode('ChdVcGRhdGVOb2RlQ29uZmlnUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEikKBmNvbmZpZxgCIAEoCzIRLm1pemVyLk5vZGVDb25maWdSBmNvbmZpZw==');
+@$core.Deprecated('Use updateNodeConfigResponseDescriptor instead')
 const UpdateNodeConfigResponse$json = const {
   '1': 'UpdateNodeConfigResponse',
 };
 
+/// Descriptor for `UpdateNodeConfigResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateNodeConfigResponseDescriptor = $convert.base64Decode('ChhVcGRhdGVOb2RlQ29uZmlnUmVzcG9uc2U=');
+@$core.Deprecated('Use moveNodeRequestDescriptor instead')
 const MoveNodeRequest$json = const {
   '1': 'MoveNodeRequest',
   '2': const [
@@ -66,10 +91,16 @@ const MoveNodeRequest$json = const {
   ],
 };
 
+/// Descriptor for `MoveNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List moveNodeRequestDescriptor = $convert.base64Decode('Cg9Nb3ZlTm9kZVJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIvCghwb3NpdGlvbhgCIAEoCzITLm1pemVyLk5vZGVQb3NpdGlvblIIcG9zaXRpb24=');
+@$core.Deprecated('Use moveNodeResponseDescriptor instead')
 const MoveNodeResponse$json = const {
   '1': 'MoveNodeResponse',
 };
 
+/// Descriptor for `MoveNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List moveNodeResponseDescriptor = $convert.base64Decode('ChBNb3ZlTm9kZVJlc3BvbnNl');
+@$core.Deprecated('Use deleteNodeRequestDescriptor instead')
 const DeleteNodeRequest$json = const {
   '1': 'DeleteNodeRequest',
   '2': const [
@@ -77,10 +108,16 @@ const DeleteNodeRequest$json = const {
   ],
 };
 
+/// Descriptor for `DeleteNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List deleteNodeRequestDescriptor = $convert.base64Decode('ChFEZWxldGVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRo');
+@$core.Deprecated('Use deleteNodeResponseDescriptor instead')
 const DeleteNodeResponse$json = const {
   '1': 'DeleteNodeResponse',
 };
 
+/// Descriptor for `DeleteNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List deleteNodeResponseDescriptor = $convert.base64Decode('ChJEZWxldGVOb2RlUmVzcG9uc2U=');
+@$core.Deprecated('Use nodesDescriptor instead')
 const Nodes$json = const {
   '1': 'Nodes',
   '2': const [
@@ -89,6 +126,9 @@ const Nodes$json = const {
   ],
 };
 
+/// Descriptor for `Nodes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodesDescriptor = $convert.base64Decode('CgVOb2RlcxIhCgVub2RlcxgBIAMoCzILLm1pemVyLk5vZGVSBW5vZGVzEjEKCGNoYW5uZWxzGAIgAygLMhUubWl6ZXIuTm9kZUNvbm5lY3Rpb25SCGNoYW5uZWxz');
+@$core.Deprecated('Use nodeConnectionDescriptor instead')
 const NodeConnection$json = const {
   '1': 'NodeConnection',
   '2': const [
@@ -100,6 +140,9 @@ const NodeConnection$json = const {
   ],
 };
 
+/// Descriptor for `NodeConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeConnectionDescriptor = $convert.base64Decode('Cg5Ob2RlQ29ubmVjdGlvbhIeCgp0YXJnZXROb2RlGAEgASgJUgp0YXJnZXROb2RlEisKCnRhcmdldFBvcnQYAiABKAsyCy5taXplci5Qb3J0Ugp0YXJnZXRQb3J0Eh4KCnNvdXJjZU5vZGUYAyABKAlSCnNvdXJjZU5vZGUSKwoKc291cmNlUG9ydBgEIAEoCzILLm1pemVyLlBvcnRSCnNvdXJjZVBvcnQSMgoIcHJvdG9jb2wYBSABKA4yFi5taXplci5DaGFubmVsUHJvdG9jb2xSCHByb3RvY29s');
+@$core.Deprecated('Use nodeDescriptor instead')
 const Node$json = const {
   '1': 'Node',
   '2': const [
@@ -114,6 +157,7 @@ const Node$json = const {
   '4': const [Node_NodeType$json, Node_NodePreviewType$json],
 };
 
+@$core.Deprecated('Use nodeDescriptor instead')
 const Node_NodeType$json = const {
   '1': 'NodeType',
   '2': const [
@@ -145,6 +189,7 @@ const Node_NodeType$json = const {
   ],
 };
 
+@$core.Deprecated('Use nodeDescriptor instead')
 const Node_NodePreviewType$json = const {
   '1': 'NodePreviewType',
   '2': const [
@@ -156,6 +201,9 @@ const Node_NodePreviewType$json = const {
   ],
 };
 
+/// Descriptor for `Node`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeDescriptor = $convert.base64Decode('CgROb2RlEigKBHR5cGUYASABKA4yFC5taXplci5Ob2RlLk5vZGVUeXBlUgR0eXBlEhIKBHBhdGgYAiABKAlSBHBhdGgSIwoGaW5wdXRzGAMgAygLMgsubWl6ZXIuUG9ydFIGaW5wdXRzEiUKB291dHB1dHMYBCADKAsyCy5taXplci5Qb3J0UgdvdXRwdXRzEi8KCGRlc2lnbmVyGAUgASgLMhMubWl6ZXIuTm9kZURlc2lnbmVyUghkZXNpZ25lchI1CgdwcmV2aWV3GAYgASgOMhsubWl6ZXIuTm9kZS5Ob2RlUHJldmlld1R5cGVSB3ByZXZpZXcSKQoGY29uZmlnGAcgASgLMhEubWl6ZXIuTm9kZUNvbmZpZ1IGY29uZmlnIvkCCghOb2RlVHlwZRIJCgVGYWRlchAAEgoKBkJ1dHRvbhABEg4KCk9zY2lsbGF0b3IQAhIJCgVDbG9jaxADEgoKBlNjcmlwdBAEEgwKCEVudmVsb3BlEAUSCwoHRml4dHVyZRAGEgwKCFNlcXVlbmNlEAcSCgoGU2VsZWN0EAgSCQoFTWVyZ2UQCRINCglEbXhPdXRwdXQQCxIMCghPc2NJbnB1dBAMEg0KCU9zY091dHB1dBANEg0KCU1pZGlJbnB1dBAOEg4KCk1pZGlPdXRwdXQQDxINCglWaWRlb0ZpbGUQFBIPCgtWaWRlb091dHB1dBAVEg8KC1ZpZGVvRWZmZWN0EBYSFQoRVmlkZW9Db2xvckJhbGFuY2UQFxISCg5WaWRlb1RyYW5zZm9ybRAYEg4KClBpeGVsVG9EbXgQHhIQCgxQaXhlbFBhdHRlcm4QHxINCglPcGNPdXRwdXQQIBIJCgVMYXNlchAoEgwKCElsZGFGaWxlECkiUQoPTm9kZVByZXZpZXdUeXBlEgsKB0hpc3RvcnkQABIMCghXYXZlZm9ybRABEgwKCE11bHRpcGxlEAISCwoHVGV4dHVyZRADEggKBE5vbmUQBA==');
+@$core.Deprecated('Use nodeConfigDescriptor instead')
 const NodeConfig$json = const {
   '1': 'NodeConfig',
   '2': const [
@@ -190,6 +238,9 @@ const NodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `NodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeConfigDescriptor = $convert.base64Decode('CgpOb2RlQ29uZmlnEkkKEG9zY2lsbGF0b3JDb25maWcYCiABKAsyGy5taXplci5Pc2NpbGxhdG9yTm9kZUNvbmZpZ0gAUhBvc2NpbGxhdG9yQ29uZmlnEkYKD3NjcmlwdGluZ0NvbmZpZxgLIAEoCzIaLm1pemVyLlNjcmlwdGluZ05vZGVDb25maWdIAFIPc2NyaXB0aW5nQ29uZmlnEkMKDnNlcXVlbmNlQ29uZmlnGAwgASgLMhkubWl6ZXIuU2VxdWVuY2VOb2RlQ29uZmlnSABSDnNlcXVlbmNlQ29uZmlnEjoKC2Nsb2NrQ29uZmlnGA0gASgLMhYubWl6ZXIuQ2xvY2tOb2RlQ29uZmlnSABSC2Nsb2NrQ29uZmlnEkAKDWZpeHR1cmVDb25maWcYDiABKAsyGC5taXplci5GaXh0dXJlTm9kZUNvbmZpZ0gAUg1maXh0dXJlQ29uZmlnEjwKDGJ1dHRvbkNvbmZpZxgPIAEoCzIWLm1pemVyLklucHV0Tm9kZUNvbmZpZ0gAUgxidXR0b25Db25maWcSOgoLZmFkZXJDb25maWcYECABKAsyFi5taXplci5JbnB1dE5vZGVDb25maWdIAFILZmFkZXJDb25maWcSQwoOaWxkYUZpbGVDb25maWcYESABKAsyGS5taXplci5JbGRhRmlsZU5vZGVDb25maWdIAFIOaWxkYUZpbGVDb25maWcSOgoLbGFzZXJDb25maWcYEiABKAsyFi5taXplci5MYXNlck5vZGVDb25maWdIAFILbGFzZXJDb25maWcSTwoScGl4ZWxQYXR0ZXJuQ29uZmlnGBMgASgLMh0ubWl6ZXIuUGl4ZWxQYXR0ZXJuTm9kZUNvbmZpZ0gAUhJwaXhlbFBhdHRlcm5Db25maWcSQwoOcGl4ZWxEbXhDb25maWcYFCABKAsyGS5taXplci5QaXhlbERteE5vZGVDb25maWdIAFIOcGl4ZWxEbXhDb25maWcSRgoPZG14T3V0cHV0Q29uZmlnGBUgASgLMhoubWl6ZXIuRG14T3V0cHV0Tm9kZUNvbmZpZ0gAUg9kbXhPdXRwdXRDb25maWcSRgoPbWlkaUlucHV0Q29uZmlnGBYgASgLMhoubWl6ZXIuTWlkaUlucHV0Tm9kZUNvbmZpZ0gAUg9taWRpSW5wdXRDb25maWcSSQoQbWlkaU91dHB1dENvbmZpZxgXIAEoCzIbLm1pemVyLk1pZGlPdXRwdXROb2RlQ29uZmlnSABSEG1pZGlPdXRwdXRDb25maWcSRgoPb3BjT3V0cHV0Q29uZmlnGBggASgLMhoubWl6ZXIuT3BjT3V0cHV0Tm9kZUNvbmZpZ0gAUg9vcGNPdXRwdXRDb25maWcSPgoOb3NjSW5wdXRDb25maWcYGSABKAsyFC5taXplci5Pc2NOb2RlQ29uZmlnSABSDm9zY0lucHV0Q29uZmlnEkAKD29zY091dHB1dENvbmZpZxgaIAEoCzIULm1pemVyLk9zY05vZGVDb25maWdIAFIPb3NjT3V0cHV0Q29uZmlnEl4KF3ZpZGVvQ29sb3JCYWxhbmNlQ29uZmlnGBsgASgLMiIubWl6ZXIuVmlkZW9Db2xvckJhbGFuY2VOb2RlQ29uZmlnSABSF3ZpZGVvQ29sb3JCYWxhbmNlQ29uZmlnEkwKEXZpZGVvRWZmZWN0Q29uZmlnGBwgASgLMhwubWl6ZXIuVmlkZW9FZmZlY3ROb2RlQ29uZmlnSABSEXZpZGVvRWZmZWN0Q29uZmlnEkYKD3ZpZGVvRmlsZUNvbmZpZxgdIAEoCzIaLm1pemVyLlZpZGVvRmlsZU5vZGVDb25maWdIAFIPdmlkZW9GaWxlQ29uZmlnEkwKEXZpZGVvT3V0cHV0Q29uZmlnGB4gASgLMhwubWl6ZXIuVmlkZW9PdXRwdXROb2RlQ29uZmlnSABSEXZpZGVvT3V0cHV0Q29uZmlnElUKFHZpZGVvVHJhbnNmb3JtQ29uZmlnGB8gASgLMh8ubWl6ZXIuVmlkZW9UcmFuc2Zvcm1Ob2RlQ29uZmlnSABSFHZpZGVvVHJhbnNmb3JtQ29uZmlnEj0KDHNlbGVjdENvbmZpZxggIAEoCzIXLm1pemVyLlNlbGVjdE5vZGVDb25maWdIAFIMc2VsZWN0Q29uZmlnEjoKC21lcmdlQ29uZmlnGCEgASgLMhYubWl6ZXIuTWVyZ2VOb2RlQ29uZmlnSABSC21lcmdlQ29uZmlnEkMKDmVudmVsb3BlQ29uZmlnGCIgASgLMhkubWl6ZXIuRW52ZWxvcGVOb2RlQ29uZmlnSABSDmVudmVsb3BlQ29uZmlnQgYKBHR5cGU=');
+@$core.Deprecated('Use oscillatorNodeConfigDescriptor instead')
 const OscillatorNodeConfig$json = const {
   '1': 'OscillatorNodeConfig',
   '2': const [
@@ -203,6 +254,7 @@ const OscillatorNodeConfig$json = const {
   '4': const [OscillatorNodeConfig_OscillatorType$json],
 };
 
+@$core.Deprecated('Use oscillatorNodeConfigDescriptor instead')
 const OscillatorNodeConfig_OscillatorType$json = const {
   '1': 'OscillatorType',
   '2': const [
@@ -213,6 +265,9 @@ const OscillatorNodeConfig_OscillatorType$json = const {
   ],
 };
 
+/// Descriptor for `OscillatorNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List oscillatorNodeConfigDescriptor = $convert.base64Decode('ChRPc2NpbGxhdG9yTm9kZUNvbmZpZxI+CgR0eXBlGAEgASgOMioubWl6ZXIuT3NjaWxsYXRvck5vZGVDb25maWcuT3NjaWxsYXRvclR5cGVSBHR5cGUSFAoFcmF0aW8YAiABKAFSBXJhdGlvEhAKA21heBgDIAEoAVIDbWF4EhAKA21pbhgEIAEoAVIDbWluEhYKBm9mZnNldBgFIAEoAVIGb2Zmc2V0EhgKB3JldmVyc2UYBiABKAhSB3JldmVyc2UiPQoOT3NjaWxsYXRvclR5cGUSCgoGU3F1YXJlEAASCAoEU2luZRABEgcKA1NhdxACEgwKCFRyaWFuZ2xlEAM=');
+@$core.Deprecated('Use scriptingNodeConfigDescriptor instead')
 const ScriptingNodeConfig$json = const {
   '1': 'ScriptingNodeConfig',
   '2': const [
@@ -220,6 +275,9 @@ const ScriptingNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `ScriptingNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List scriptingNodeConfigDescriptor = $convert.base64Decode('ChNTY3JpcHRpbmdOb2RlQ29uZmlnEhYKBnNjcmlwdBgBIAEoCVIGc2NyaXB0');
+@$core.Deprecated('Use sequenceNodeConfigDescriptor instead')
 const SequenceNodeConfig$json = const {
   '1': 'SequenceNodeConfig',
   '2': const [
@@ -228,6 +286,7 @@ const SequenceNodeConfig$json = const {
   '3': const [SequenceNodeConfig_SequenceStep$json],
 };
 
+@$core.Deprecated('Use sequenceNodeConfigDescriptor instead')
 const SequenceNodeConfig_SequenceStep$json = const {
   '1': 'SequenceStep',
   '2': const [
@@ -237,6 +296,9 @@ const SequenceNodeConfig_SequenceStep$json = const {
   ],
 };
 
+/// Descriptor for `SequenceNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceNodeConfigDescriptor = $convert.base64Decode('ChJTZXF1ZW5jZU5vZGVDb25maWcSPAoFc3RlcHMYASADKAsyJi5taXplci5TZXF1ZW5jZU5vZGVDb25maWcuU2VxdWVuY2VTdGVwUgVzdGVwcxpMCgxTZXF1ZW5jZVN0ZXASEgoEdGljaxgBIAEoAVIEdGljaxIUCgV2YWx1ZRgCIAEoAVIFdmFsdWUSEgoEaG9sZBgDIAEoCFIEaG9sZA==');
+@$core.Deprecated('Use envelopeNodeConfigDescriptor instead')
 const EnvelopeNodeConfig$json = const {
   '1': 'EnvelopeNodeConfig',
   '2': const [
@@ -247,6 +309,9 @@ const EnvelopeNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `EnvelopeNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List envelopeNodeConfigDescriptor = $convert.base64Decode('ChJFbnZlbG9wZU5vZGVDb25maWcSFgoGYXR0YWNrGAEgASgBUgZhdHRhY2sSFAoFZGVjYXkYAiABKAFSBWRlY2F5EhgKB3N1c3RhaW4YAyABKAFSB3N1c3RhaW4SGAoHcmVsZWFzZRgEIAEoAVIHcmVsZWFzZQ==');
+@$core.Deprecated('Use clockNodeConfigDescriptor instead')
 const ClockNodeConfig$json = const {
   '1': 'ClockNodeConfig',
   '2': const [
@@ -254,6 +319,9 @@ const ClockNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `ClockNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List clockNodeConfigDescriptor = $convert.base64Decode('Cg9DbG9ja05vZGVDb25maWcSFAoFc3BlZWQYASABKAFSBXNwZWVk');
+@$core.Deprecated('Use fixtureNodeConfigDescriptor instead')
 const FixtureNodeConfig$json = const {
   '1': 'FixtureNodeConfig',
   '2': const [
@@ -261,10 +329,16 @@ const FixtureNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `FixtureNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureNodeConfigDescriptor = $convert.base64Decode('ChFGaXh0dXJlTm9kZUNvbmZpZxIdCgpmaXh0dXJlX2lkGAEgASgNUglmaXh0dXJlSWQ=');
+@$core.Deprecated('Use inputNodeConfigDescriptor instead')
 const InputNodeConfig$json = const {
   '1': 'InputNodeConfig',
 };
 
+/// Descriptor for `InputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List inputNodeConfigDescriptor = $convert.base64Decode('Cg9JbnB1dE5vZGVDb25maWc=');
+@$core.Deprecated('Use ildaFileNodeConfigDescriptor instead')
 const IldaFileNodeConfig$json = const {
   '1': 'IldaFileNodeConfig',
   '2': const [
@@ -272,6 +346,9 @@ const IldaFileNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `IldaFileNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List ildaFileNodeConfigDescriptor = $convert.base64Decode('ChJJbGRhRmlsZU5vZGVDb25maWcSEgoEZmlsZRgBIAEoCVIEZmlsZQ==');
+@$core.Deprecated('Use laserNodeConfigDescriptor instead')
 const LaserNodeConfig$json = const {
   '1': 'LaserNodeConfig',
   '2': const [
@@ -279,6 +356,9 @@ const LaserNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `LaserNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List laserNodeConfigDescriptor = $convert.base64Decode('Cg9MYXNlck5vZGVDb25maWcSGwoJZGV2aWNlX2lkGAEgASgJUghkZXZpY2VJZA==');
+@$core.Deprecated('Use pixelPatternNodeConfigDescriptor instead')
 const PixelPatternNodeConfig$json = const {
   '1': 'PixelPatternNodeConfig',
   '2': const [
@@ -287,6 +367,7 @@ const PixelPatternNodeConfig$json = const {
   '4': const [PixelPatternNodeConfig_Pattern$json],
 };
 
+@$core.Deprecated('Use pixelPatternNodeConfigDescriptor instead')
 const PixelPatternNodeConfig_Pattern$json = const {
   '1': 'Pattern',
   '2': const [
@@ -295,6 +376,9 @@ const PixelPatternNodeConfig_Pattern$json = const {
   ],
 };
 
+/// Descriptor for `PixelPatternNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pixelPatternNodeConfigDescriptor = $convert.base64Decode('ChZQaXhlbFBhdHRlcm5Ob2RlQ29uZmlnEj8KB3BhdHRlcm4YASABKA4yJS5taXplci5QaXhlbFBhdHRlcm5Ob2RlQ29uZmlnLlBhdHRlcm5SB3BhdHRlcm4iJwoHUGF0dGVybhIOCgpSZ2JJdGVyYXRlEAASDAoIUmdiU25ha2UQAQ==');
+@$core.Deprecated('Use pixelDmxNodeConfigDescriptor instead')
 const PixelDmxNodeConfig$json = const {
   '1': 'PixelDmxNodeConfig',
   '2': const [
@@ -305,6 +389,9 @@ const PixelDmxNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `PixelDmxNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pixelDmxNodeConfigDescriptor = $convert.base64Decode('ChJQaXhlbERteE5vZGVDb25maWcSFAoFd2lkdGgYASABKARSBXdpZHRoEhYKBmhlaWdodBgCIAEoBFIGaGVpZ2h0EiUKDnN0YXJ0X3VuaXZlcnNlGAMgASgNUg1zdGFydFVuaXZlcnNlEhYKBm91dHB1dBgEIAEoCVIGb3V0cHV0');
+@$core.Deprecated('Use dmxOutputNodeConfigDescriptor instead')
 const DmxOutputNodeConfig$json = const {
   '1': 'DmxOutputNodeConfig',
   '2': const [
@@ -317,14 +404,23 @@ const DmxOutputNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `DmxOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List dmxOutputNodeConfigDescriptor = $convert.base64Decode('ChNEbXhPdXRwdXROb2RlQ29uZmlnEhsKBm91dHB1dBgBIAEoCUgAUgZvdXRwdXSIAQESGgoIdW5pdmVyc2UYAiABKA1SCHVuaXZlcnNlEhgKB2NoYW5uZWwYAyABKA1SB2NoYW5uZWxCCQoHX291dHB1dA==');
+@$core.Deprecated('Use midiInputNodeConfigDescriptor instead')
 const MidiInputNodeConfig$json = const {
   '1': 'MidiInputNodeConfig',
 };
 
+/// Descriptor for `MidiInputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List midiInputNodeConfigDescriptor = $convert.base64Decode('ChNNaWRpSW5wdXROb2RlQ29uZmln');
+@$core.Deprecated('Use midiOutputNodeConfigDescriptor instead')
 const MidiOutputNodeConfig$json = const {
   '1': 'MidiOutputNodeConfig',
 };
 
+/// Descriptor for `MidiOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List midiOutputNodeConfigDescriptor = $convert.base64Decode('ChRNaWRpT3V0cHV0Tm9kZUNvbmZpZw==');
+@$core.Deprecated('Use opcOutputNodeConfigDescriptor instead')
 const OpcOutputNodeConfig$json = const {
   '1': 'OpcOutputNodeConfig',
   '2': const [
@@ -335,6 +431,9 @@ const OpcOutputNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `OpcOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List opcOutputNodeConfigDescriptor = $convert.base64Decode('ChNPcGNPdXRwdXROb2RlQ29uZmlnEhIKBGhvc3QYASABKAlSBGhvc3QSEgoEcG9ydBgCIAEoDVIEcG9ydBIUCgV3aWR0aBgDIAEoBFIFd2lkdGgSFgoGaGVpZ2h0GAQgASgEUgZoZWlnaHQ=');
+@$core.Deprecated('Use oscNodeConfigDescriptor instead')
 const OscNodeConfig$json = const {
   '1': 'OscNodeConfig',
   '2': const [
@@ -344,14 +443,23 @@ const OscNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `OscNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List oscNodeConfigDescriptor = $convert.base64Decode('Cg1Pc2NOb2RlQ29uZmlnEhIKBGhvc3QYASABKAlSBGhvc3QSEgoEcG9ydBgCIAEoDVIEcG9ydBISCgRwYXRoGAMgASgJUgRwYXRo');
+@$core.Deprecated('Use videoColorBalanceNodeConfigDescriptor instead')
 const VideoColorBalanceNodeConfig$json = const {
   '1': 'VideoColorBalanceNodeConfig',
 };
 
+/// Descriptor for `VideoColorBalanceNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List videoColorBalanceNodeConfigDescriptor = $convert.base64Decode('ChtWaWRlb0NvbG9yQmFsYW5jZU5vZGVDb25maWc=');
+@$core.Deprecated('Use videoEffectNodeConfigDescriptor instead')
 const VideoEffectNodeConfig$json = const {
   '1': 'VideoEffectNodeConfig',
 };
 
+/// Descriptor for `VideoEffectNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List videoEffectNodeConfigDescriptor = $convert.base64Decode('ChVWaWRlb0VmZmVjdE5vZGVDb25maWc=');
+@$core.Deprecated('Use videoFileNodeConfigDescriptor instead')
 const VideoFileNodeConfig$json = const {
   '1': 'VideoFileNodeConfig',
   '2': const [
@@ -359,22 +467,37 @@ const VideoFileNodeConfig$json = const {
   ],
 };
 
+/// Descriptor for `VideoFileNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List videoFileNodeConfigDescriptor = $convert.base64Decode('ChNWaWRlb0ZpbGVOb2RlQ29uZmlnEhIKBGZpbGUYASABKAlSBGZpbGU=');
+@$core.Deprecated('Use videoOutputNodeConfigDescriptor instead')
 const VideoOutputNodeConfig$json = const {
   '1': 'VideoOutputNodeConfig',
 };
 
+/// Descriptor for `VideoOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List videoOutputNodeConfigDescriptor = $convert.base64Decode('ChVWaWRlb091dHB1dE5vZGVDb25maWc=');
+@$core.Deprecated('Use videoTransformNodeConfigDescriptor instead')
 const VideoTransformNodeConfig$json = const {
   '1': 'VideoTransformNodeConfig',
 };
 
+/// Descriptor for `VideoTransformNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List videoTransformNodeConfigDescriptor = $convert.base64Decode('ChhWaWRlb1RyYW5zZm9ybU5vZGVDb25maWc=');
+@$core.Deprecated('Use selectNodeConfigDescriptor instead')
 const SelectNodeConfig$json = const {
   '1': 'SelectNodeConfig',
 };
 
+/// Descriptor for `SelectNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List selectNodeConfigDescriptor = $convert.base64Decode('ChBTZWxlY3ROb2RlQ29uZmln');
+@$core.Deprecated('Use mergeNodeConfigDescriptor instead')
 const MergeNodeConfig$json = const {
   '1': 'MergeNodeConfig',
 };
 
+/// Descriptor for `MergeNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mergeNodeConfigDescriptor = $convert.base64Decode('Cg9NZXJnZU5vZGVDb25maWc=');
+@$core.Deprecated('Use nodePositionDescriptor instead')
 const NodePosition$json = const {
   '1': 'NodePosition',
   '2': const [
@@ -383,6 +506,9 @@ const NodePosition$json = const {
   ],
 };
 
+/// Descriptor for `NodePosition`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodePositionDescriptor = $convert.base64Decode('CgxOb2RlUG9zaXRpb24SDAoBeBgBIAEoAVIBeBIMCgF5GAIgASgBUgF5');
+@$core.Deprecated('Use nodeDesignerDescriptor instead')
 const NodeDesigner$json = const {
   '1': 'NodeDesigner',
   '2': const [
@@ -392,6 +518,9 @@ const NodeDesigner$json = const {
   ],
 };
 
+/// Descriptor for `NodeDesigner`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List nodeDesignerDescriptor = $convert.base64Decode('CgxOb2RlRGVzaWduZXISLwoIcG9zaXRpb24YASABKAsyEy5taXplci5Ob2RlUG9zaXRpb25SCHBvc2l0aW9uEhQKBXNjYWxlGAIgASgBUgVzY2FsZRIWCgZoaWRkZW4YAyABKAhSBmhpZGRlbg==');
+@$core.Deprecated('Use portDescriptor instead')
 const Port$json = const {
   '1': 'Port',
   '2': const [
@@ -400,3 +529,5 @@ const Port$json = const {
   ],
 };
 
+/// Descriptor for `Port`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List portDescriptor = $convert.base64Decode('CgRQb3J0EhIKBG5hbWUYASABKAlSBG5hbWUSMgoIcHJvdG9jb2wYAiABKA4yFi5taXplci5DaGFubmVsUHJvdG9jb2xSCHByb3RvY29s');

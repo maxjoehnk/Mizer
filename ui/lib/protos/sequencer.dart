@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'sequencer.pb.dart';
 
 export 'sequencer.pb.dart';
@@ -12,6 +11,6 @@ const CueTriggerLabels = {
 
 extension CueTriggerExtensions on CueTrigger {
   String toLabel() {
-    return CueTriggerLabels[this];
+    return CueTriggerLabels[this]!;
   }
 }

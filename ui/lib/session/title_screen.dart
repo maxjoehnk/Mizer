@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -8,7 +7,7 @@ class TitleScreen extends StatelessWidget {
   final Function(AvailableSession) selectSession;
   final Function() openDemo;
 
-  TitleScreen({this.selectSession, this.openDemo});
+  TitleScreen({required this.selectSession, required this.openDemo});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +116,7 @@ class CreateSession extends StatelessWidget {
 }
 
 class OpenDemoSession extends StatelessWidget {
-  final Function openDemo;
+  final Function() openDemo;
 
   OpenDemoSession(this.openDemo);
 
@@ -153,7 +152,7 @@ class SessionList extends StatelessWidget {
                       .map((session) => ListTile(
                           onTap: () => this.selectSession(session),
                           title: Text(session.host),
-                          subtitle: Text(session.project)))
+                          subtitle: Text(session.project ?? "")))
                       .toList()),
             ));
   }

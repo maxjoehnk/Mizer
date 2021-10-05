@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: layouts.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -30,7 +30,7 @@ class LayoutResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutResponse copyWith(void Function(LayoutResponse) updates) => super.copyWith((message) => updates(message as LayoutResponse)); // ignore: deprecated_member_use
+  LayoutResponse copyWith(void Function(LayoutResponse) updates) => super.copyWith((message) => updates(message as LayoutResponse)) as LayoutResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static LayoutResponse create() => LayoutResponse._();
@@ -38,7 +38,7 @@ class LayoutResponse extends $pb.GeneratedMessage {
   static $pb.PbList<LayoutResponse> createRepeated() => $pb.PbList<LayoutResponse>();
   @$core.pragma('dart2js:noInline')
   static LayoutResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutResponse>(create);
-  static LayoutResponse _defaultInstance;
+  static LayoutResponse? _defaultInstance;
 }
 
 class GetLayoutsRequest extends $pb.GeneratedMessage {
@@ -59,7 +59,7 @@ class GetLayoutsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetLayoutsRequest copyWith(void Function(GetLayoutsRequest) updates) => super.copyWith((message) => updates(message as GetLayoutsRequest)); // ignore: deprecated_member_use
+  GetLayoutsRequest copyWith(void Function(GetLayoutsRequest) updates) => super.copyWith((message) => updates(message as GetLayoutsRequest)) as GetLayoutsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetLayoutsRequest create() => GetLayoutsRequest._();
@@ -67,7 +67,7 @@ class GetLayoutsRequest extends $pb.GeneratedMessage {
   static $pb.PbList<GetLayoutsRequest> createRepeated() => $pb.PbList<GetLayoutsRequest>();
   @$core.pragma('dart2js:noInline')
   static GetLayoutsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLayoutsRequest>(create);
-  static GetLayoutsRequest _defaultInstance;
+  static GetLayoutsRequest? _defaultInstance;
 }
 
 class AddLayoutRequest extends $pb.GeneratedMessage {
@@ -78,7 +78,7 @@ class AddLayoutRequest extends $pb.GeneratedMessage {
 
   AddLayoutRequest._() : super();
   factory AddLayoutRequest({
-    $core.String name,
+    $core.String? name,
   }) {
     final _result = create();
     if (name != null) {
@@ -97,7 +97,7 @@ class AddLayoutRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddLayoutRequest copyWith(void Function(AddLayoutRequest) updates) => super.copyWith((message) => updates(message as AddLayoutRequest)); // ignore: deprecated_member_use
+  AddLayoutRequest copyWith(void Function(AddLayoutRequest) updates) => super.copyWith((message) => updates(message as AddLayoutRequest)) as AddLayoutRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddLayoutRequest create() => AddLayoutRequest._();
@@ -105,7 +105,7 @@ class AddLayoutRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddLayoutRequest> createRepeated() => $pb.PbList<AddLayoutRequest>();
   @$core.pragma('dart2js:noInline')
   static AddLayoutRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddLayoutRequest>(create);
-  static AddLayoutRequest _defaultInstance;
+  static AddLayoutRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -125,7 +125,7 @@ class RemoveLayoutRequest extends $pb.GeneratedMessage {
 
   RemoveLayoutRequest._() : super();
   factory RemoveLayoutRequest({
-    $core.String id,
+    $core.String? id,
   }) {
     final _result = create();
     if (id != null) {
@@ -144,7 +144,7 @@ class RemoveLayoutRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveLayoutRequest copyWith(void Function(RemoveLayoutRequest) updates) => super.copyWith((message) => updates(message as RemoveLayoutRequest)); // ignore: deprecated_member_use
+  RemoveLayoutRequest copyWith(void Function(RemoveLayoutRequest) updates) => super.copyWith((message) => updates(message as RemoveLayoutRequest)) as RemoveLayoutRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RemoveLayoutRequest create() => RemoveLayoutRequest._();
@@ -152,7 +152,7 @@ class RemoveLayoutRequest extends $pb.GeneratedMessage {
   static $pb.PbList<RemoveLayoutRequest> createRepeated() => $pb.PbList<RemoveLayoutRequest>();
   @$core.pragma('dart2js:noInline')
   static RemoveLayoutRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveLayoutRequest>(create);
-  static RemoveLayoutRequest _defaultInstance;
+  static RemoveLayoutRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -173,8 +173,8 @@ class RenameLayoutRequest extends $pb.GeneratedMessage {
 
   RenameLayoutRequest._() : super();
   factory RenameLayoutRequest({
-    $core.String id,
-    $core.String name,
+    $core.String? id,
+    $core.String? name,
   }) {
     final _result = create();
     if (id != null) {
@@ -196,7 +196,7 @@ class RenameLayoutRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RenameLayoutRequest copyWith(void Function(RenameLayoutRequest) updates) => super.copyWith((message) => updates(message as RenameLayoutRequest)); // ignore: deprecated_member_use
+  RenameLayoutRequest copyWith(void Function(RenameLayoutRequest) updates) => super.copyWith((message) => updates(message as RenameLayoutRequest)) as RenameLayoutRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RenameLayoutRequest create() => RenameLayoutRequest._();
@@ -204,7 +204,7 @@ class RenameLayoutRequest extends $pb.GeneratedMessage {
   static $pb.PbList<RenameLayoutRequest> createRepeated() => $pb.PbList<RenameLayoutRequest>();
   @$core.pragma('dart2js:noInline')
   static RenameLayoutRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenameLayoutRequest>(create);
-  static RenameLayoutRequest _defaultInstance;
+  static RenameLayoutRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -235,9 +235,9 @@ class RenameControlRequest extends $pb.GeneratedMessage {
 
   RenameControlRequest._() : super();
   factory RenameControlRequest({
-    $core.String layoutId,
-    $core.String controlId,
-    $core.String name,
+    $core.String? layoutId,
+    $core.String? controlId,
+    $core.String? name,
   }) {
     final _result = create();
     if (layoutId != null) {
@@ -262,7 +262,7 @@ class RenameControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RenameControlRequest copyWith(void Function(RenameControlRequest) updates) => super.copyWith((message) => updates(message as RenameControlRequest)); // ignore: deprecated_member_use
+  RenameControlRequest copyWith(void Function(RenameControlRequest) updates) => super.copyWith((message) => updates(message as RenameControlRequest)) as RenameControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RenameControlRequest create() => RenameControlRequest._();
@@ -270,7 +270,7 @@ class RenameControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<RenameControlRequest> createRepeated() => $pb.PbList<RenameControlRequest>();
   @$core.pragma('dart2js:noInline')
   static RenameControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenameControlRequest>(create);
-  static RenameControlRequest _defaultInstance;
+  static RenameControlRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get layoutId => $_getSZ(0);
@@ -310,9 +310,9 @@ class MoveControlRequest extends $pb.GeneratedMessage {
 
   MoveControlRequest._() : super();
   factory MoveControlRequest({
-    $core.String layoutId,
-    $core.String controlId,
-    ControlPosition position,
+    $core.String? layoutId,
+    $core.String? controlId,
+    ControlPosition? position,
   }) {
     final _result = create();
     if (layoutId != null) {
@@ -337,7 +337,7 @@ class MoveControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveControlRequest copyWith(void Function(MoveControlRequest) updates) => super.copyWith((message) => updates(message as MoveControlRequest)); // ignore: deprecated_member_use
+  MoveControlRequest copyWith(void Function(MoveControlRequest) updates) => super.copyWith((message) => updates(message as MoveControlRequest)) as MoveControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MoveControlRequest create() => MoveControlRequest._();
@@ -345,7 +345,7 @@ class MoveControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<MoveControlRequest> createRepeated() => $pb.PbList<MoveControlRequest>();
   @$core.pragma('dart2js:noInline')
   static MoveControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MoveControlRequest>(create);
-  static MoveControlRequest _defaultInstance;
+  static MoveControlRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get layoutId => $_getSZ(0);
@@ -387,9 +387,9 @@ class UpdateControlRequest extends $pb.GeneratedMessage {
 
   UpdateControlRequest._() : super();
   factory UpdateControlRequest({
-    $core.String layoutId,
-    $core.String controlId,
-    ControlDecorations decorations,
+    $core.String? layoutId,
+    $core.String? controlId,
+    ControlDecorations? decorations,
   }) {
     final _result = create();
     if (layoutId != null) {
@@ -414,7 +414,7 @@ class UpdateControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateControlRequest copyWith(void Function(UpdateControlRequest) updates) => super.copyWith((message) => updates(message as UpdateControlRequest)); // ignore: deprecated_member_use
+  UpdateControlRequest copyWith(void Function(UpdateControlRequest) updates) => super.copyWith((message) => updates(message as UpdateControlRequest)) as UpdateControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UpdateControlRequest create() => UpdateControlRequest._();
@@ -422,7 +422,7 @@ class UpdateControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<UpdateControlRequest> createRepeated() => $pb.PbList<UpdateControlRequest>();
   @$core.pragma('dart2js:noInline')
   static UpdateControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateControlRequest>(create);
-  static UpdateControlRequest _defaultInstance;
+  static UpdateControlRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get layoutId => $_getSZ(0);
@@ -463,8 +463,8 @@ class RemoveControlRequest extends $pb.GeneratedMessage {
 
   RemoveControlRequest._() : super();
   factory RemoveControlRequest({
-    $core.String layoutId,
-    $core.String controlId,
+    $core.String? layoutId,
+    $core.String? controlId,
   }) {
     final _result = create();
     if (layoutId != null) {
@@ -486,7 +486,7 @@ class RemoveControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveControlRequest copyWith(void Function(RemoveControlRequest) updates) => super.copyWith((message) => updates(message as RemoveControlRequest)); // ignore: deprecated_member_use
+  RemoveControlRequest copyWith(void Function(RemoveControlRequest) updates) => super.copyWith((message) => updates(message as RemoveControlRequest)) as RemoveControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static RemoveControlRequest create() => RemoveControlRequest._();
@@ -494,7 +494,7 @@ class RemoveControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<RemoveControlRequest> createRepeated() => $pb.PbList<RemoveControlRequest>();
   @$core.pragma('dart2js:noInline')
   static RemoveControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveControlRequest>(create);
-  static RemoveControlRequest _defaultInstance;
+  static RemoveControlRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get layoutId => $_getSZ(0);
@@ -525,9 +525,9 @@ class AddControlRequest extends $pb.GeneratedMessage {
 
   AddControlRequest._() : super();
   factory AddControlRequest({
-    $core.String layoutId,
-    $0.Node_NodeType nodeType,
-    ControlPosition position,
+    $core.String? layoutId,
+    $0.Node_NodeType? nodeType,
+    ControlPosition? position,
   }) {
     final _result = create();
     if (layoutId != null) {
@@ -552,7 +552,7 @@ class AddControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddControlRequest copyWith(void Function(AddControlRequest) updates) => super.copyWith((message) => updates(message as AddControlRequest)); // ignore: deprecated_member_use
+  AddControlRequest copyWith(void Function(AddControlRequest) updates) => super.copyWith((message) => updates(message as AddControlRequest)) as AddControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddControlRequest create() => AddControlRequest._();
@@ -560,7 +560,7 @@ class AddControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddControlRequest> createRepeated() => $pb.PbList<AddControlRequest>();
   @$core.pragma('dart2js:noInline')
   static AddControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddControlRequest>(create);
-  static AddControlRequest _defaultInstance;
+  static AddControlRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get layoutId => $_getSZ(0);
@@ -602,9 +602,9 @@ class AddExistingControlRequest extends $pb.GeneratedMessage {
 
   AddExistingControlRequest._() : super();
   factory AddExistingControlRequest({
-    $core.String layoutId,
-    $core.String node,
-    ControlPosition position,
+    $core.String? layoutId,
+    $core.String? node,
+    ControlPosition? position,
   }) {
     final _result = create();
     if (layoutId != null) {
@@ -629,7 +629,7 @@ class AddExistingControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddExistingControlRequest copyWith(void Function(AddExistingControlRequest) updates) => super.copyWith((message) => updates(message as AddExistingControlRequest)); // ignore: deprecated_member_use
+  AddExistingControlRequest copyWith(void Function(AddExistingControlRequest) updates) => super.copyWith((message) => updates(message as AddExistingControlRequest)) as AddExistingControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddExistingControlRequest create() => AddExistingControlRequest._();
@@ -637,7 +637,7 @@ class AddExistingControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddExistingControlRequest> createRepeated() => $pb.PbList<AddExistingControlRequest>();
   @$core.pragma('dart2js:noInline')
   static AddExistingControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddExistingControlRequest>(create);
-  static AddExistingControlRequest _defaultInstance;
+  static AddExistingControlRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get layoutId => $_getSZ(0);
@@ -677,7 +677,7 @@ class Layouts extends $pb.GeneratedMessage {
 
   Layouts._() : super();
   factory Layouts({
-    $core.Iterable<Layout> layouts,
+    $core.Iterable<Layout>? layouts,
   }) {
     final _result = create();
     if (layouts != null) {
@@ -696,7 +696,7 @@ class Layouts extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Layouts copyWith(void Function(Layouts) updates) => super.copyWith((message) => updates(message as Layouts)); // ignore: deprecated_member_use
+  Layouts copyWith(void Function(Layouts) updates) => super.copyWith((message) => updates(message as Layouts)) as Layouts; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Layouts create() => Layouts._();
@@ -704,7 +704,7 @@ class Layouts extends $pb.GeneratedMessage {
   static $pb.PbList<Layouts> createRepeated() => $pb.PbList<Layouts>();
   @$core.pragma('dart2js:noInline')
   static Layouts getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Layouts>(create);
-  static Layouts _defaultInstance;
+  static Layouts? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Layout> get layouts => $_getList(0);
@@ -719,8 +719,8 @@ class Layout extends $pb.GeneratedMessage {
 
   Layout._() : super();
   factory Layout({
-    $core.String id,
-    $core.Iterable<LayoutControl> controls,
+    $core.String? id,
+    $core.Iterable<LayoutControl>? controls,
   }) {
     final _result = create();
     if (id != null) {
@@ -742,7 +742,7 @@ class Layout extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Layout copyWith(void Function(Layout) updates) => super.copyWith((message) => updates(message as Layout)); // ignore: deprecated_member_use
+  Layout copyWith(void Function(Layout) updates) => super.copyWith((message) => updates(message as Layout)) as Layout; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Layout create() => Layout._();
@@ -750,7 +750,7 @@ class Layout extends $pb.GeneratedMessage {
   static $pb.PbList<Layout> createRepeated() => $pb.PbList<Layout>();
   @$core.pragma('dart2js:noInline')
   static Layout getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Layout>(create);
-  static Layout _defaultInstance;
+  static Layout? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -777,11 +777,11 @@ class LayoutControl extends $pb.GeneratedMessage {
 
   LayoutControl._() : super();
   factory LayoutControl({
-    $core.String node,
-    ControlPosition position,
-    ControlSize size,
-    $core.String label,
-    ControlDecorations decoration,
+    $core.String? node,
+    ControlPosition? position,
+    ControlSize? size,
+    $core.String? label,
+    ControlDecorations? decoration,
   }) {
     final _result = create();
     if (node != null) {
@@ -812,7 +812,7 @@ class LayoutControl extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LayoutControl copyWith(void Function(LayoutControl) updates) => super.copyWith((message) => updates(message as LayoutControl)); // ignore: deprecated_member_use
+  LayoutControl copyWith(void Function(LayoutControl) updates) => super.copyWith((message) => updates(message as LayoutControl)) as LayoutControl; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static LayoutControl create() => LayoutControl._();
@@ -820,7 +820,7 @@ class LayoutControl extends $pb.GeneratedMessage {
   static $pb.PbList<LayoutControl> createRepeated() => $pb.PbList<LayoutControl>();
   @$core.pragma('dart2js:noInline')
   static LayoutControl getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LayoutControl>(create);
-  static LayoutControl _defaultInstance;
+  static LayoutControl? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get node => $_getSZ(0);
@@ -883,8 +883,8 @@ class ControlPosition extends $pb.GeneratedMessage {
 
   ControlPosition._() : super();
   factory ControlPosition({
-    $fixnum.Int64 x,
-    $fixnum.Int64 y,
+    $fixnum.Int64? x,
+    $fixnum.Int64? y,
   }) {
     final _result = create();
     if (x != null) {
@@ -906,7 +906,7 @@ class ControlPosition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlPosition copyWith(void Function(ControlPosition) updates) => super.copyWith((message) => updates(message as ControlPosition)); // ignore: deprecated_member_use
+  ControlPosition copyWith(void Function(ControlPosition) updates) => super.copyWith((message) => updates(message as ControlPosition)) as ControlPosition; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ControlPosition create() => ControlPosition._();
@@ -914,7 +914,7 @@ class ControlPosition extends $pb.GeneratedMessage {
   static $pb.PbList<ControlPosition> createRepeated() => $pb.PbList<ControlPosition>();
   @$core.pragma('dart2js:noInline')
   static ControlPosition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ControlPosition>(create);
-  static ControlPosition _defaultInstance;
+  static ControlPosition? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get x => $_getI64(0);
@@ -944,8 +944,8 @@ class ControlSize extends $pb.GeneratedMessage {
 
   ControlSize._() : super();
   factory ControlSize({
-    $fixnum.Int64 width,
-    $fixnum.Int64 height,
+    $fixnum.Int64? width,
+    $fixnum.Int64? height,
   }) {
     final _result = create();
     if (width != null) {
@@ -967,7 +967,7 @@ class ControlSize extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlSize copyWith(void Function(ControlSize) updates) => super.copyWith((message) => updates(message as ControlSize)); // ignore: deprecated_member_use
+  ControlSize copyWith(void Function(ControlSize) updates) => super.copyWith((message) => updates(message as ControlSize)) as ControlSize; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ControlSize create() => ControlSize._();
@@ -975,7 +975,7 @@ class ControlSize extends $pb.GeneratedMessage {
   static $pb.PbList<ControlSize> createRepeated() => $pb.PbList<ControlSize>();
   @$core.pragma('dart2js:noInline')
   static ControlSize getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ControlSize>(create);
-  static ControlSize _defaultInstance;
+  static ControlSize? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get width => $_getI64(0);
@@ -1005,8 +1005,8 @@ class ControlDecorations extends $pb.GeneratedMessage {
 
   ControlDecorations._() : super();
   factory ControlDecorations({
-    $core.bool hasColor,
-    Color color_2,
+    $core.bool? hasColor,
+    Color? color_2,
   }) {
     final _result = create();
     if (hasColor != null) {
@@ -1028,7 +1028,7 @@ class ControlDecorations extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ControlDecorations copyWith(void Function(ControlDecorations) updates) => super.copyWith((message) => updates(message as ControlDecorations)); // ignore: deprecated_member_use
+  ControlDecorations copyWith(void Function(ControlDecorations) updates) => super.copyWith((message) => updates(message as ControlDecorations)) as ControlDecorations; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ControlDecorations create() => ControlDecorations._();
@@ -1036,7 +1036,7 @@ class ControlDecorations extends $pb.GeneratedMessage {
   static $pb.PbList<ControlDecorations> createRepeated() => $pb.PbList<ControlDecorations>();
   @$core.pragma('dart2js:noInline')
   static ControlDecorations getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ControlDecorations>(create);
-  static ControlDecorations _defaultInstance;
+  static ControlDecorations? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get hasColor => $_getBF(0);
@@ -1069,9 +1069,9 @@ class Color extends $pb.GeneratedMessage {
 
   Color._() : super();
   factory Color({
-    $core.double red,
-    $core.double green,
-    $core.double blue,
+    $core.double? red,
+    $core.double? green,
+    $core.double? blue,
   }) {
     final _result = create();
     if (red != null) {
@@ -1096,7 +1096,7 @@ class Color extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Color copyWith(void Function(Color) updates) => super.copyWith((message) => updates(message as Color)); // ignore: deprecated_member_use
+  Color copyWith(void Function(Color) updates) => super.copyWith((message) => updates(message as Color)) as Color; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Color create() => Color._();
@@ -1104,7 +1104,7 @@ class Color extends $pb.GeneratedMessage {
   static $pb.PbList<Color> createRepeated() => $pb.PbList<Color>();
   @$core.pragma('dart2js:noInline')
   static Color getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Color>(create);
-  static Color _defaultInstance;
+  static Color? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get red => $_getN(0);

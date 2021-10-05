@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: sequencer.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -31,7 +31,7 @@ class GetSequencesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetSequencesRequest copyWith(void Function(GetSequencesRequest) updates) => super.copyWith((message) => updates(message as GetSequencesRequest)); // ignore: deprecated_member_use
+  GetSequencesRequest copyWith(void Function(GetSequencesRequest) updates) => super.copyWith((message) => updates(message as GetSequencesRequest)) as GetSequencesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetSequencesRequest create() => GetSequencesRequest._();
@@ -39,7 +39,7 @@ class GetSequencesRequest extends $pb.GeneratedMessage {
   static $pb.PbList<GetSequencesRequest> createRepeated() => $pb.PbList<GetSequencesRequest>();
   @$core.pragma('dart2js:noInline')
   static GetSequencesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetSequencesRequest>(create);
-  static GetSequencesRequest _defaultInstance;
+  static GetSequencesRequest? _defaultInstance;
 }
 
 class AddSequenceRequest extends $pb.GeneratedMessage {
@@ -60,7 +60,7 @@ class AddSequenceRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddSequenceRequest copyWith(void Function(AddSequenceRequest) updates) => super.copyWith((message) => updates(message as AddSequenceRequest)); // ignore: deprecated_member_use
+  AddSequenceRequest copyWith(void Function(AddSequenceRequest) updates) => super.copyWith((message) => updates(message as AddSequenceRequest)) as AddSequenceRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddSequenceRequest create() => AddSequenceRequest._();
@@ -68,7 +68,7 @@ class AddSequenceRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddSequenceRequest> createRepeated() => $pb.PbList<AddSequenceRequest>();
   @$core.pragma('dart2js:noInline')
   static AddSequenceRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddSequenceRequest>(create);
-  static AddSequenceRequest _defaultInstance;
+  static AddSequenceRequest? _defaultInstance;
 }
 
 class SequenceGoRequest extends $pb.GeneratedMessage {
@@ -79,7 +79,7 @@ class SequenceGoRequest extends $pb.GeneratedMessage {
 
   SequenceGoRequest._() : super();
   factory SequenceGoRequest({
-    $core.int sequence,
+    $core.int? sequence,
   }) {
     final _result = create();
     if (sequence != null) {
@@ -98,7 +98,7 @@ class SequenceGoRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceGoRequest copyWith(void Function(SequenceGoRequest) updates) => super.copyWith((message) => updates(message as SequenceGoRequest)); // ignore: deprecated_member_use
+  SequenceGoRequest copyWith(void Function(SequenceGoRequest) updates) => super.copyWith((message) => updates(message as SequenceGoRequest)) as SequenceGoRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SequenceGoRequest create() => SequenceGoRequest._();
@@ -106,7 +106,7 @@ class SequenceGoRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SequenceGoRequest> createRepeated() => $pb.PbList<SequenceGoRequest>();
   @$core.pragma('dart2js:noInline')
   static SequenceGoRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceGoRequest>(create);
-  static SequenceGoRequest _defaultInstance;
+  static SequenceGoRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get sequence => $_getIZ(0);
@@ -136,7 +136,7 @@ class EmptyResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EmptyResponse copyWith(void Function(EmptyResponse) updates) => super.copyWith((message) => updates(message as EmptyResponse)); // ignore: deprecated_member_use
+  EmptyResponse copyWith(void Function(EmptyResponse) updates) => super.copyWith((message) => updates(message as EmptyResponse)) as EmptyResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EmptyResponse create() => EmptyResponse._();
@@ -144,7 +144,7 @@ class EmptyResponse extends $pb.GeneratedMessage {
   static $pb.PbList<EmptyResponse> createRepeated() => $pb.PbList<EmptyResponse>();
   @$core.pragma('dart2js:noInline')
   static EmptyResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EmptyResponse>(create);
-  static EmptyResponse _defaultInstance;
+  static EmptyResponse? _defaultInstance;
 }
 
 class Sequences extends $pb.GeneratedMessage {
@@ -155,7 +155,7 @@ class Sequences extends $pb.GeneratedMessage {
 
   Sequences._() : super();
   factory Sequences({
-    $core.Iterable<Sequence> sequences,
+    $core.Iterable<Sequence>? sequences,
   }) {
     final _result = create();
     if (sequences != null) {
@@ -174,7 +174,7 @@ class Sequences extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Sequences copyWith(void Function(Sequences) updates) => super.copyWith((message) => updates(message as Sequences)); // ignore: deprecated_member_use
+  Sequences copyWith(void Function(Sequences) updates) => super.copyWith((message) => updates(message as Sequences)) as Sequences; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Sequences create() => Sequences._();
@@ -182,7 +182,7 @@ class Sequences extends $pb.GeneratedMessage {
   static $pb.PbList<Sequences> createRepeated() => $pb.PbList<Sequences>();
   @$core.pragma('dart2js:noInline')
   static Sequences getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Sequences>(create);
-  static Sequences _defaultInstance;
+  static Sequences? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Sequence> get sequences => $_getList(0);
@@ -198,9 +198,9 @@ class Sequence extends $pb.GeneratedMessage {
 
   Sequence._() : super();
   factory Sequence({
-    $core.int id,
-    $core.String name,
-    $core.Iterable<Cue> cues,
+    $core.int? id,
+    $core.String? name,
+    $core.Iterable<Cue>? cues,
   }) {
     final _result = create();
     if (id != null) {
@@ -225,7 +225,7 @@ class Sequence extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Sequence copyWith(void Function(Sequence) updates) => super.copyWith((message) => updates(message as Sequence)); // ignore: deprecated_member_use
+  Sequence copyWith(void Function(Sequence) updates) => super.copyWith((message) => updates(message as Sequence)) as Sequence; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Sequence create() => Sequence._();
@@ -233,7 +233,7 @@ class Sequence extends $pb.GeneratedMessage {
   static $pb.PbList<Sequence> createRepeated() => $pb.PbList<Sequence>();
   @$core.pragma('dart2js:noInline')
   static Sequence getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Sequence>(create);
-  static Sequence _defaultInstance;
+  static Sequence? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
@@ -269,11 +269,11 @@ class Cue extends $pb.GeneratedMessage {
 
   Cue._() : super();
   factory Cue({
-    $core.int id,
-    $core.String name,
-    CueTrigger trigger,
-    $core.bool loop,
-    $core.Iterable<CueChannel> channels,
+    $core.int? id,
+    $core.String? name,
+    CueTrigger? trigger,
+    $core.bool? loop,
+    $core.Iterable<CueChannel>? channels,
   }) {
     final _result = create();
     if (id != null) {
@@ -304,7 +304,7 @@ class Cue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Cue copyWith(void Function(Cue) updates) => super.copyWith((message) => updates(message as Cue)); // ignore: deprecated_member_use
+  Cue copyWith(void Function(Cue) updates) => super.copyWith((message) => updates(message as Cue)) as Cue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Cue create() => Cue._();
@@ -312,7 +312,7 @@ class Cue extends $pb.GeneratedMessage {
   static $pb.PbList<Cue> createRepeated() => $pb.PbList<Cue>();
   @$core.pragma('dart2js:noInline')
   static Cue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Cue>(create);
-  static Cue _defaultInstance;
+  static Cue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
@@ -366,11 +366,11 @@ class CueChannel extends $pb.GeneratedMessage {
 
   CueChannel._() : super();
   factory CueChannel({
-    $core.Iterable<$core.int> fixtures,
-    CueControl control,
-    CueValue value,
-    CueTimer fade,
-    CueTimer delay,
+    $core.Iterable<$core.int>? fixtures,
+    CueControl? control,
+    CueValue? value,
+    CueTimer? fade,
+    CueTimer? delay,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -401,7 +401,7 @@ class CueChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueChannel copyWith(void Function(CueChannel) updates) => super.copyWith((message) => updates(message as CueChannel)); // ignore: deprecated_member_use
+  CueChannel copyWith(void Function(CueChannel) updates) => super.copyWith((message) => updates(message as CueChannel)) as CueChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CueChannel create() => CueChannel._();
@@ -409,7 +409,7 @@ class CueChannel extends $pb.GeneratedMessage {
   static $pb.PbList<CueChannel> createRepeated() => $pb.PbList<CueChannel>();
   @$core.pragma('dart2js:noInline')
   static CueChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueChannel>(create);
-  static CueChannel _defaultInstance;
+  static CueChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get fixtures => $_getList(0);
@@ -478,8 +478,8 @@ class CueValue extends $pb.GeneratedMessage {
 
   CueValue._() : super();
   factory CueValue({
-    $core.double direct,
-    CueValueRange range,
+    $core.double? direct,
+    CueValueRange? range,
   }) {
     final _result = create();
     if (direct != null) {
@@ -501,7 +501,7 @@ class CueValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueValue copyWith(void Function(CueValue) updates) => super.copyWith((message) => updates(message as CueValue)); // ignore: deprecated_member_use
+  CueValue copyWith(void Function(CueValue) updates) => super.copyWith((message) => updates(message as CueValue)) as CueValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CueValue create() => CueValue._();
@@ -509,9 +509,9 @@ class CueValue extends $pb.GeneratedMessage {
   static $pb.PbList<CueValue> createRepeated() => $pb.PbList<CueValue>();
   @$core.pragma('dart2js:noInline')
   static CueValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueValue>(create);
-  static CueValue _defaultInstance;
+  static CueValue? _defaultInstance;
 
-  CueValue_Value whichValue() => _CueValue_ValueByTag[$_whichOneof(0)];
+  CueValue_Value whichValue() => _CueValue_ValueByTag[$_whichOneof(0)]!;
   void clearValue() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(3)
@@ -557,9 +557,9 @@ class CueTimer extends $pb.GeneratedMessage {
 
   CueTimer._() : super();
   factory CueTimer({
-    $core.bool hasTimer,
-    CueTime direct,
-    CueTimerRange range,
+    $core.bool? hasTimer,
+    CueTime? direct,
+    CueTimerRange? range,
   }) {
     final _result = create();
     if (hasTimer != null) {
@@ -584,7 +584,7 @@ class CueTimer extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTimer copyWith(void Function(CueTimer) updates) => super.copyWith((message) => updates(message as CueTimer)); // ignore: deprecated_member_use
+  CueTimer copyWith(void Function(CueTimer) updates) => super.copyWith((message) => updates(message as CueTimer)) as CueTimer; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CueTimer create() => CueTimer._();
@@ -592,9 +592,9 @@ class CueTimer extends $pb.GeneratedMessage {
   static $pb.PbList<CueTimer> createRepeated() => $pb.PbList<CueTimer>();
   @$core.pragma('dart2js:noInline')
   static CueTimer getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTimer>(create);
-  static CueTimer _defaultInstance;
+  static CueTimer? _defaultInstance;
 
-  CueTimer_Timer whichTimer() => _CueTimer_TimerByTag[$_whichOneof(0)];
+  CueTimer_Timer whichTimer() => _CueTimer_TimerByTag[$_whichOneof(0)]!;
   void clearTimer() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -638,8 +638,8 @@ class CueValueRange extends $pb.GeneratedMessage {
 
   CueValueRange._() : super();
   factory CueValueRange({
-    $core.double from,
-    $core.double to,
+    $core.double? from,
+    $core.double? to,
   }) {
     final _result = create();
     if (from != null) {
@@ -661,7 +661,7 @@ class CueValueRange extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueValueRange copyWith(void Function(CueValueRange) updates) => super.copyWith((message) => updates(message as CueValueRange)); // ignore: deprecated_member_use
+  CueValueRange copyWith(void Function(CueValueRange) updates) => super.copyWith((message) => updates(message as CueValueRange)) as CueValueRange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CueValueRange create() => CueValueRange._();
@@ -669,7 +669,7 @@ class CueValueRange extends $pb.GeneratedMessage {
   static $pb.PbList<CueValueRange> createRepeated() => $pb.PbList<CueValueRange>();
   @$core.pragma('dart2js:noInline')
   static CueValueRange getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueValueRange>(create);
-  static CueValueRange _defaultInstance;
+  static CueValueRange? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get from => $_getN(0);
@@ -711,8 +711,8 @@ class CueTime extends $pb.GeneratedMessage {
 
   CueTime._() : super();
   factory CueTime({
-    $core.double seconds,
-    $core.double beats,
+    $core.double? seconds,
+    $core.double? beats,
   }) {
     final _result = create();
     if (seconds != null) {
@@ -734,7 +734,7 @@ class CueTime extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTime copyWith(void Function(CueTime) updates) => super.copyWith((message) => updates(message as CueTime)); // ignore: deprecated_member_use
+  CueTime copyWith(void Function(CueTime) updates) => super.copyWith((message) => updates(message as CueTime)) as CueTime; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CueTime create() => CueTime._();
@@ -742,9 +742,9 @@ class CueTime extends $pb.GeneratedMessage {
   static $pb.PbList<CueTime> createRepeated() => $pb.PbList<CueTime>();
   @$core.pragma('dart2js:noInline')
   static CueTime getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTime>(create);
-  static CueTime _defaultInstance;
+  static CueTime? _defaultInstance;
 
-  CueTime_Time whichTime() => _CueTime_TimeByTag[$_whichOneof(0)];
+  CueTime_Time whichTime() => _CueTime_TimeByTag[$_whichOneof(0)]!;
   void clearTime() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -775,8 +775,8 @@ class CueTimerRange extends $pb.GeneratedMessage {
 
   CueTimerRange._() : super();
   factory CueTimerRange({
-    CueTime from,
-    CueTime to,
+    CueTime? from,
+    CueTime? to,
   }) {
     final _result = create();
     if (from != null) {
@@ -798,7 +798,7 @@ class CueTimerRange extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueTimerRange copyWith(void Function(CueTimerRange) updates) => super.copyWith((message) => updates(message as CueTimerRange)); // ignore: deprecated_member_use
+  CueTimerRange copyWith(void Function(CueTimerRange) updates) => super.copyWith((message) => updates(message as CueTimerRange)) as CueTimerRange; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static CueTimerRange create() => CueTimerRange._();
@@ -806,7 +806,7 @@ class CueTimerRange extends $pb.GeneratedMessage {
   static $pb.PbList<CueTimerRange> createRepeated() => $pb.PbList<CueTimerRange>();
   @$core.pragma('dart2js:noInline')
   static CueTimerRange getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTimerRange>(create);
-  static CueTimerRange _defaultInstance;
+  static CueTimerRange? _defaultInstance;
 
   @$pb.TagNumber(1)
   CueTime get from => $_getN(0);

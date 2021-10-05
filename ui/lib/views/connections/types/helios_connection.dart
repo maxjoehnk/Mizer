@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/connections.pb.dart';
@@ -6,7 +5,7 @@ import 'package:mizer/protos/connections.pb.dart';
 class HeliosConnectionView extends StatelessWidget {
   final HeliosConnection device;
 
-  HeliosConnectionView({this.device});
+  HeliosConnectionView({required this.device});
 
   @override
   Widget build(BuildContext context) {

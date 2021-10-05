@@ -1,18 +1,17 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 
 class MizerTable extends StatefulWidget {
   final List<Widget> columns;
   final List<MizerTableRow> rows;
 
-  const MizerTable({this.columns, this.rows, Key key}) : super(key: key);
+  const MizerTable({required this.columns, required this.rows, Key? key}) : super(key: key);
 
   @override
   State<MizerTable> createState() => _MizerTableState();
 }
 
 class _MizerTableState extends State<MizerTable> {
-  MizerTableRow _hoveredRow;
+  MizerTableRow? _hoveredRow;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class _MizerTableState extends State<MizerTable> {
         // We use the Listener as well as the GestureDetector because the onTap event
         // of the GestureDetector has a delay when used with onDoubleTap
         child: Listener(
-          onPointerUp: (_) => row.onTap(),
+          onPointerUp: (_) => row.onTap!(),
           child: GestureDetector(
             onDoubleTap: row.onDoubleTap,
             onSecondaryTap: row.onSecondaryTap,
@@ -65,9 +64,9 @@ class _MizerTableState extends State<MizerTable> {
 class MizerTableRow {
   final List<Widget> cells;
   final bool selected;
-  final Function() onTap;
-  final Function() onDoubleTap;
-  final Function() onSecondaryTap;
+  final void Function()? onTap;
+  final void Function()? onDoubleTap;
+  final void Function()? onSecondaryTap;
 
-  MizerTableRow({this.cells, this.selected, this.onTap, this.onDoubleTap, this.onSecondaryTap});
+  MizerTableRow({required this.cells, this.selected = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
 }

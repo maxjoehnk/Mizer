@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
@@ -11,7 +10,7 @@ const double TILE_SIZE = 96;
 class SelectSequenceDialog extends StatelessWidget {
   final SequencerApi api;
 
-  const SelectSequenceDialog({this.api, Key key}) : super(key: key);
+  const SelectSequenceDialog({required this.api, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class SelectSequenceDialog extends StatelessWidget {
         child: FutureBuilder(
             future: api.getSequences(),
             builder: (context, AsyncSnapshot<Sequences> data) {
-              List<Sequence> sequences = data.hasData ? data.data.sequences : [];
+              List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
 
               return GridView.count(
                   crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
@@ -48,11 +47,11 @@ class SelectSequenceDialog extends StatelessWidget {
 }
 
 class Tile extends StatelessWidget {
-  final String title;
+  final String? title;
   final Widget child;
-  final Function() onClick;
+  final Function()? onClick;
 
-  const Tile({this.title, this.child, this.onClick, Key key}) : super(key: key);
+  const Tile({this.title, required this.child, this.onClick, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +72,7 @@ class Tile extends StatelessWidget {
                   if (title != null)
                     Container(
                         color: Colors.grey.shade800,
-                        child: Text(title, textAlign: TextAlign.center)),
+                        child: Text(title!, textAlign: TextAlign.center)),
                   Expanded(child: child),
                 ],
               ),

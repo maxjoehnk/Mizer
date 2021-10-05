@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -14,7 +13,7 @@ class OscillatorProperties extends StatefulWidget {
   final OscillatorNodeConfig config;
   final Function(OscillatorNodeConfig) onUpdate;
 
-  OscillatorProperties(this.config, {@required this.onUpdate});
+  OscillatorProperties(this.config, {required this.onUpdate});
 
   @override
   _OscillatorPropertiesState createState() => _OscillatorPropertiesState(config);
@@ -71,7 +70,7 @@ class _OscillatorPropertiesState extends State<OscillatorProperties> {
   void _updateType(int type) {
     log("_updateType $type", name: "OscillatorProperties");
     setState(() {
-      state.type = OscillatorNodeConfig_OscillatorType.valueOf(type);
+      state.type = OscillatorNodeConfig_OscillatorType.valueOf(type)!;
       widget.onUpdate(state);
     });
   }

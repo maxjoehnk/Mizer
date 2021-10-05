@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
@@ -17,9 +16,9 @@ class ColorValue {
   final double green;
   final double blue;
 
-  ColorValue({this.red, this.green, this.blue});
+  ColorValue({required this.red, required this.green, required this.blue});
 
-  ColorValue copyWith({double red, double green, double blue}) {
+  ColorValue copyWith({double? red, double? green, double? blue}) {
     return ColorValue(
       red: red ?? this.red,
       green: green ?? this.green,
@@ -29,11 +28,11 @@ class ColorValue {
 }
 
 class ColorInput extends StatefulWidget {
-  final String label;
+  final String? label;
   final ColorValue value;
-  final Function(ColorValue) onChange;
+  final Function(ColorValue)? onChange;
 
-  const ColorInput({this.label, this.value, this.onChange, Key key}) : super(key: key);
+  const ColorInput({this.label, required this.value, this.onChange, Key? key}) : super(key: key);
 
   @override
   State<ColorInput> createState() => _ColorInputState(value);
@@ -58,7 +57,7 @@ class _ColorInputState extends State<ColorInput> {
               padding: const EdgeInsets.only(left: 4, bottom: 4),
               child: Row(children: [
                 Expanded(
-                  child: Text(widget.label),
+                  child: Text(widget.label ?? ""),
                 ),
                 TabHeader("RGB",
                     onSelect: () => setState(() => mode = ColorMode.Rgb),
@@ -76,7 +75,9 @@ class _ColorInputState extends State<ColorInput> {
                 if (mode == ColorMode.Rgb)
                   RGBInput(value, (color) {
                     setState(() => value = color);
-                    widget.onChange(color);
+                    if (widget.onChange != null) {
+                      widget.onChange!(color);
+                    }
                   }),
                 if (mode == ColorMode.Hsb) HSBInput(),
                 if (mode == ColorMode.Color) ColorPicker(),
@@ -91,7 +92,7 @@ class RGBInput extends StatelessWidget {
   final ColorValue value;
   final Function(ColorValue) onChange;
 
-  const RGBInput(this.value, this.onChange, {Key key}) : super(key: key);
+  const RGBInput(this.value, this.onChange, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,20 +133,20 @@ Gradient hueGradient() {
 }
 
 class HSBInput extends StatelessWidget {
-  const HSBInput({Key key}) : super(key: key);
+  const HSBInput({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      ColorFader(label: "H", gradient: hueGradient()),
-      ColorFader(label: "S", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255))),
-      ColorFader(label: "B", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255))),
+      ColorFader(label: "H", gradient: hueGradient(), value: 0),
+      ColorFader(label: "S", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255)), value: 0),
+      ColorFader(label: "B", gradient: colorChannelGradient(Color.fromARGB(255, 255, 255, 255)), value: 0),
     ]);
   }
 }
 
 class ColorPicker extends StatelessWidget {
-  const ColorPicker({Key key}) : super(key: key);
+  const ColorPicker({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -154,12 +155,12 @@ class ColorPicker extends StatelessWidget {
 }
 
 class ColorFader extends StatelessWidget {
-  final String label;
-  final Gradient gradient;
+  final String? label;
+  final Gradient? gradient;
   final double value;
-  final Function(double) onValue;
+  final Function(double)? onValue;
 
-  const ColorFader({this.label, this.gradient, this.value, this.onValue, Key key})
+  const ColorFader({this.label, this.gradient, required this.value, this.onValue, Key? key})
       : super(key: key);
 
   @override

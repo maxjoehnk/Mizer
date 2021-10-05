@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: session.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -27,7 +27,7 @@ class ProjectRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProjectRequest copyWith(void Function(ProjectRequest) updates) => super.copyWith((message) => updates(message as ProjectRequest)); // ignore: deprecated_member_use
+  ProjectRequest copyWith(void Function(ProjectRequest) updates) => super.copyWith((message) => updates(message as ProjectRequest)) as ProjectRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProjectRequest create() => ProjectRequest._();
@@ -35,7 +35,7 @@ class ProjectRequest extends $pb.GeneratedMessage {
   static $pb.PbList<ProjectRequest> createRepeated() => $pb.PbList<ProjectRequest>();
   @$core.pragma('dart2js:noInline')
   static ProjectRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProjectRequest>(create);
-  static ProjectRequest _defaultInstance;
+  static ProjectRequest? _defaultInstance;
 }
 
 class LoadProjectRequest extends $pb.GeneratedMessage {
@@ -46,7 +46,7 @@ class LoadProjectRequest extends $pb.GeneratedMessage {
 
   LoadProjectRequest._() : super();
   factory LoadProjectRequest({
-    $core.String path,
+    $core.String? path,
   }) {
     final _result = create();
     if (path != null) {
@@ -65,7 +65,7 @@ class LoadProjectRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LoadProjectRequest copyWith(void Function(LoadProjectRequest) updates) => super.copyWith((message) => updates(message as LoadProjectRequest)); // ignore: deprecated_member_use
+  LoadProjectRequest copyWith(void Function(LoadProjectRequest) updates) => super.copyWith((message) => updates(message as LoadProjectRequest)) as LoadProjectRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static LoadProjectRequest create() => LoadProjectRequest._();
@@ -73,7 +73,7 @@ class LoadProjectRequest extends $pb.GeneratedMessage {
   static $pb.PbList<LoadProjectRequest> createRepeated() => $pb.PbList<LoadProjectRequest>();
   @$core.pragma('dart2js:noInline')
   static LoadProjectRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LoadProjectRequest>(create);
-  static LoadProjectRequest _defaultInstance;
+  static LoadProjectRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get path => $_getSZ(0);
@@ -103,7 +103,7 @@ class ProjectResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProjectResponse copyWith(void Function(ProjectResponse) updates) => super.copyWith((message) => updates(message as ProjectResponse)); // ignore: deprecated_member_use
+  ProjectResponse copyWith(void Function(ProjectResponse) updates) => super.copyWith((message) => updates(message as ProjectResponse)) as ProjectResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProjectResponse create() => ProjectResponse._();
@@ -111,7 +111,7 @@ class ProjectResponse extends $pb.GeneratedMessage {
   static $pb.PbList<ProjectResponse> createRepeated() => $pb.PbList<ProjectResponse>();
   @$core.pragma('dart2js:noInline')
   static ProjectResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProjectResponse>(create);
-  static ProjectResponse _defaultInstance;
+  static ProjectResponse? _defaultInstance;
 }
 
 class ClientAnnouncement extends $pb.GeneratedMessage {
@@ -122,7 +122,7 @@ class ClientAnnouncement extends $pb.GeneratedMessage {
 
   ClientAnnouncement._() : super();
   factory ClientAnnouncement({
-    $core.String name,
+    $core.String? name,
   }) {
     final _result = create();
     if (name != null) {
@@ -141,7 +141,7 @@ class ClientAnnouncement extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClientAnnouncement copyWith(void Function(ClientAnnouncement) updates) => super.copyWith((message) => updates(message as ClientAnnouncement)); // ignore: deprecated_member_use
+  ClientAnnouncement copyWith(void Function(ClientAnnouncement) updates) => super.copyWith((message) => updates(message as ClientAnnouncement)) as ClientAnnouncement; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ClientAnnouncement create() => ClientAnnouncement._();
@@ -149,7 +149,7 @@ class ClientAnnouncement extends $pb.GeneratedMessage {
   static $pb.PbList<ClientAnnouncement> createRepeated() => $pb.PbList<ClientAnnouncement>();
   @$core.pragma('dart2js:noInline')
   static ClientAnnouncement getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClientAnnouncement>(create);
-  static ClientAnnouncement _defaultInstance;
+  static ClientAnnouncement? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -179,7 +179,7 @@ class SessionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SessionRequest copyWith(void Function(SessionRequest) updates) => super.copyWith((message) => updates(message as SessionRequest)); // ignore: deprecated_member_use
+  SessionRequest copyWith(void Function(SessionRequest) updates) => super.copyWith((message) => updates(message as SessionRequest)) as SessionRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SessionRequest create() => SessionRequest._();
@@ -187,7 +187,7 @@ class SessionRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SessionRequest> createRepeated() => $pb.PbList<SessionRequest>();
   @$core.pragma('dart2js:noInline')
   static SessionRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SessionRequest>(create);
-  static SessionRequest _defaultInstance;
+  static SessionRequest? _defaultInstance;
 }
 
 class Session extends $pb.GeneratedMessage {
@@ -198,7 +198,7 @@ class Session extends $pb.GeneratedMessage {
 
   Session._() : super();
   factory Session({
-    $core.Iterable<SessionDevice> devices,
+    $core.Iterable<SessionDevice>? devices,
   }) {
     final _result = create();
     if (devices != null) {
@@ -217,7 +217,7 @@ class Session extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Session copyWith(void Function(Session) updates) => super.copyWith((message) => updates(message as Session)); // ignore: deprecated_member_use
+  Session copyWith(void Function(Session) updates) => super.copyWith((message) => updates(message as Session)) as Session; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Session create() => Session._();
@@ -225,7 +225,7 @@ class Session extends $pb.GeneratedMessage {
   static $pb.PbList<Session> createRepeated() => $pb.PbList<Session>();
   @$core.pragma('dart2js:noInline')
   static Session getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Session>(create);
-  static Session _defaultInstance;
+  static Session? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<SessionDevice> get devices => $_getList(0);
@@ -242,10 +242,10 @@ class SessionDevice extends $pb.GeneratedMessage {
 
   SessionDevice._() : super();
   factory SessionDevice({
-    $core.String name,
-    $core.Iterable<$core.String> ips,
-    DeviceClock clock,
-    $core.double ping,
+    $core.String? name,
+    $core.Iterable<$core.String>? ips,
+    DeviceClock? clock,
+    $core.double? ping,
   }) {
     final _result = create();
     if (name != null) {
@@ -273,7 +273,7 @@ class SessionDevice extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SessionDevice copyWith(void Function(SessionDevice) updates) => super.copyWith((message) => updates(message as SessionDevice)); // ignore: deprecated_member_use
+  SessionDevice copyWith(void Function(SessionDevice) updates) => super.copyWith((message) => updates(message as SessionDevice)) as SessionDevice; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SessionDevice create() => SessionDevice._();
@@ -281,7 +281,7 @@ class SessionDevice extends $pb.GeneratedMessage {
   static $pb.PbList<SessionDevice> createRepeated() => $pb.PbList<SessionDevice>();
   @$core.pragma('dart2js:noInline')
   static SessionDevice getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SessionDevice>(create);
-  static SessionDevice _defaultInstance;
+  static SessionDevice? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -325,8 +325,8 @@ class DeviceClock extends $pb.GeneratedMessage {
 
   DeviceClock._() : super();
   factory DeviceClock({
-    $core.bool master,
-    $core.double drift,
+    $core.bool? master,
+    $core.double? drift,
   }) {
     final _result = create();
     if (master != null) {
@@ -348,7 +348,7 @@ class DeviceClock extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeviceClock copyWith(void Function(DeviceClock) updates) => super.copyWith((message) => updates(message as DeviceClock)); // ignore: deprecated_member_use
+  DeviceClock copyWith(void Function(DeviceClock) updates) => super.copyWith((message) => updates(message as DeviceClock)) as DeviceClock; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DeviceClock create() => DeviceClock._();
@@ -356,7 +356,7 @@ class DeviceClock extends $pb.GeneratedMessage {
   static $pb.PbList<DeviceClock> createRepeated() => $pb.PbList<DeviceClock>();
   @$core.pragma('dart2js:noInline')
   static DeviceClock getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeviceClock>(create);
-  static DeviceClock _defaultInstance;
+  static DeviceClock? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get master => $_getBF(0);

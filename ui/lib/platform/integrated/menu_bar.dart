@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
@@ -9,7 +8,7 @@ class IntegratedMenuBar extends StatelessWidget {
   final Widget child;
   final Menu menu;
 
-  const IntegratedMenuBar({this.child, this.menu, Key key}) : super(key: key);
+  const IntegratedMenuBar({required this.child, required this.menu, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,7 @@ class IntegratedMenuBar extends StatelessWidget {
               if (i is MenuItem) {
                 return nativeshell.MenuItem(title: i.label, action: i.action);
               }
+              throw new AssertionError("Invalid menu item");
             }).toList()))
         .toList();
 

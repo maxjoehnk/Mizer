@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:mizer/protos/programmer.pb.dart';
 
 export 'package:mizer/protos/programmer.pb.dart';

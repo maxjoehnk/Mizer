@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: fixtures.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -21,7 +21,7 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
 
   AddFixturesRequest._() : super();
   factory AddFixturesRequest({
-    $core.Iterable<AddFixtureRequest> requests,
+    $core.Iterable<AddFixtureRequest>? requests,
   }) {
     final _result = create();
     if (requests != null) {
@@ -40,7 +40,7 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFixturesRequest copyWith(void Function(AddFixturesRequest) updates) => super.copyWith((message) => updates(message as AddFixturesRequest)); // ignore: deprecated_member_use
+  AddFixturesRequest copyWith(void Function(AddFixturesRequest) updates) => super.copyWith((message) => updates(message as AddFixturesRequest)) as AddFixturesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddFixturesRequest create() => AddFixturesRequest._();
@@ -48,7 +48,7 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddFixturesRequest> createRepeated() => $pb.PbList<AddFixturesRequest>();
   @$core.pragma('dart2js:noInline')
   static AddFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFixturesRequest>(create);
-  static AddFixturesRequest _defaultInstance;
+  static AddFixturesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<AddFixtureRequest> get requests => $_getList(0);
@@ -66,11 +66,11 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
 
   AddFixtureRequest._() : super();
   factory AddFixtureRequest({
-    $core.String definitionId,
-    $core.String mode,
-    $core.int id,
-    $core.int channel,
-    $core.int universe,
+    $core.String? definitionId,
+    $core.String? mode,
+    $core.int? id,
+    $core.int? channel,
+    $core.int? universe,
   }) {
     final _result = create();
     if (definitionId != null) {
@@ -101,7 +101,7 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFixtureRequest copyWith(void Function(AddFixtureRequest) updates) => super.copyWith((message) => updates(message as AddFixtureRequest)); // ignore: deprecated_member_use
+  AddFixtureRequest copyWith(void Function(AddFixtureRequest) updates) => super.copyWith((message) => updates(message as AddFixtureRequest)) as AddFixtureRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddFixtureRequest create() => AddFixtureRequest._();
@@ -109,7 +109,7 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddFixtureRequest> createRepeated() => $pb.PbList<AddFixtureRequest>();
   @$core.pragma('dart2js:noInline')
   static AddFixtureRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFixtureRequest>(create);
-  static AddFixtureRequest _defaultInstance;
+  static AddFixtureRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get definitionId => $_getSZ(0);
@@ -175,7 +175,7 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetFixturesRequest copyWith(void Function(GetFixturesRequest) updates) => super.copyWith((message) => updates(message as GetFixturesRequest)); // ignore: deprecated_member_use
+  GetFixturesRequest copyWith(void Function(GetFixturesRequest) updates) => super.copyWith((message) => updates(message as GetFixturesRequest)) as GetFixturesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetFixturesRequest create() => GetFixturesRequest._();
@@ -183,7 +183,7 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
   static $pb.PbList<GetFixturesRequest> createRepeated() => $pb.PbList<GetFixturesRequest>();
   @$core.pragma('dart2js:noInline')
   static GetFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetFixturesRequest>(create);
-  static GetFixturesRequest _defaultInstance;
+  static GetFixturesRequest? _defaultInstance;
 }
 
 class Fixtures extends $pb.GeneratedMessage {
@@ -194,7 +194,7 @@ class Fixtures extends $pb.GeneratedMessage {
 
   Fixtures._() : super();
   factory Fixtures({
-    $core.Iterable<Fixture> fixtures,
+    $core.Iterable<Fixture>? fixtures,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -213,7 +213,7 @@ class Fixtures extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Fixtures copyWith(void Function(Fixtures) updates) => super.copyWith((message) => updates(message as Fixtures)); // ignore: deprecated_member_use
+  Fixtures copyWith(void Function(Fixtures) updates) => super.copyWith((message) => updates(message as Fixtures)) as Fixtures; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Fixtures create() => Fixtures._();
@@ -221,7 +221,7 @@ class Fixtures extends $pb.GeneratedMessage {
   static $pb.PbList<Fixtures> createRepeated() => $pb.PbList<Fixtures>();
   @$core.pragma('dart2js:noInline')
   static Fixtures getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Fixtures>(create);
-  static Fixtures _defaultInstance;
+  static Fixtures? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Fixture> get fixtures => $_getList(0);
@@ -241,13 +241,13 @@ class Fixture extends $pb.GeneratedMessage {
 
   Fixture._() : super();
   factory Fixture({
-    $core.int id,
-    $core.String name,
-    $core.String manufacturer,
-    $core.String mode,
-    $core.int universe,
-    $core.int channel,
-    $core.Iterable<FixtureControls> controls,
+    $core.int? id,
+    $core.String? name,
+    $core.String? manufacturer,
+    $core.String? mode,
+    $core.int? universe,
+    $core.int? channel,
+    $core.Iterable<FixtureControls>? controls,
   }) {
     final _result = create();
     if (id != null) {
@@ -284,7 +284,7 @@ class Fixture extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Fixture copyWith(void Function(Fixture) updates) => super.copyWith((message) => updates(message as Fixture)); // ignore: deprecated_member_use
+  Fixture copyWith(void Function(Fixture) updates) => super.copyWith((message) => updates(message as Fixture)) as Fixture; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Fixture create() => Fixture._();
@@ -292,7 +292,7 @@ class Fixture extends $pb.GeneratedMessage {
   static $pb.PbList<Fixture> createRepeated() => $pb.PbList<Fixture>();
   @$core.pragma('dart2js:noInline')
   static Fixture getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Fixture>(create);
-  static Fixture _defaultInstance;
+  static Fixture? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get id => $_getIZ(0);
@@ -380,11 +380,11 @@ class FixtureControls extends $pb.GeneratedMessage {
 
   FixtureControls._() : super();
   factory FixtureControls({
-    FixtureControl control,
-    FaderChannel fader,
-    ColorChannel color,
-    AxisChannel axis,
-    GenericChannel generic,
+    FixtureControl? control,
+    FaderChannel? fader,
+    ColorChannel? color,
+    AxisChannel? axis,
+    GenericChannel? generic,
   }) {
     final _result = create();
     if (control != null) {
@@ -415,7 +415,7 @@ class FixtureControls extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureControls copyWith(void Function(FixtureControls) updates) => super.copyWith((message) => updates(message as FixtureControls)); // ignore: deprecated_member_use
+  FixtureControls copyWith(void Function(FixtureControls) updates) => super.copyWith((message) => updates(message as FixtureControls)) as FixtureControls; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureControls create() => FixtureControls._();
@@ -423,9 +423,9 @@ class FixtureControls extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureControls> createRepeated() => $pb.PbList<FixtureControls>();
   @$core.pragma('dart2js:noInline')
   static FixtureControls getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureControls>(create);
-  static FixtureControls _defaultInstance;
+  static FixtureControls? _defaultInstance;
 
-  FixtureControls_Value whichValue() => _FixtureControls_ValueByTag[$_whichOneof(0)];
+  FixtureControls_Value whichValue() => _FixtureControls_ValueByTag[$_whichOneof(0)]!;
   void clearValue() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -490,7 +490,7 @@ class FaderChannel extends $pb.GeneratedMessage {
 
   FaderChannel._() : super();
   factory FaderChannel({
-    $core.double value,
+    $core.double? value,
   }) {
     final _result = create();
     if (value != null) {
@@ -509,7 +509,7 @@ class FaderChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FaderChannel copyWith(void Function(FaderChannel) updates) => super.copyWith((message) => updates(message as FaderChannel)); // ignore: deprecated_member_use
+  FaderChannel copyWith(void Function(FaderChannel) updates) => super.copyWith((message) => updates(message as FaderChannel)) as FaderChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FaderChannel create() => FaderChannel._();
@@ -517,7 +517,7 @@ class FaderChannel extends $pb.GeneratedMessage {
   static $pb.PbList<FaderChannel> createRepeated() => $pb.PbList<FaderChannel>();
   @$core.pragma('dart2js:noInline')
   static FaderChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaderChannel>(create);
-  static FaderChannel _defaultInstance;
+  static FaderChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
@@ -539,9 +539,9 @@ class ColorChannel extends $pb.GeneratedMessage {
 
   ColorChannel._() : super();
   factory ColorChannel({
-    $core.double red,
-    $core.double green,
-    $core.double blue,
+    $core.double? red,
+    $core.double? green,
+    $core.double? blue,
   }) {
     final _result = create();
     if (red != null) {
@@ -566,7 +566,7 @@ class ColorChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ColorChannel copyWith(void Function(ColorChannel) updates) => super.copyWith((message) => updates(message as ColorChannel)); // ignore: deprecated_member_use
+  ColorChannel copyWith(void Function(ColorChannel) updates) => super.copyWith((message) => updates(message as ColorChannel)) as ColorChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ColorChannel create() => ColorChannel._();
@@ -574,7 +574,7 @@ class ColorChannel extends $pb.GeneratedMessage {
   static $pb.PbList<ColorChannel> createRepeated() => $pb.PbList<ColorChannel>();
   @$core.pragma('dart2js:noInline')
   static ColorChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorChannel>(create);
-  static ColorChannel _defaultInstance;
+  static ColorChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get red => $_getN(0);
@@ -614,9 +614,9 @@ class AxisChannel extends $pb.GeneratedMessage {
 
   AxisChannel._() : super();
   factory AxisChannel({
-    $core.double value,
-    $core.double angleFrom,
-    $core.double angleTo,
+    $core.double? value,
+    $core.double? angleFrom,
+    $core.double? angleTo,
   }) {
     final _result = create();
     if (value != null) {
@@ -641,7 +641,7 @@ class AxisChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AxisChannel copyWith(void Function(AxisChannel) updates) => super.copyWith((message) => updates(message as AxisChannel)); // ignore: deprecated_member_use
+  AxisChannel copyWith(void Function(AxisChannel) updates) => super.copyWith((message) => updates(message as AxisChannel)) as AxisChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AxisChannel create() => AxisChannel._();
@@ -649,7 +649,7 @@ class AxisChannel extends $pb.GeneratedMessage {
   static $pb.PbList<AxisChannel> createRepeated() => $pb.PbList<AxisChannel>();
   @$core.pragma('dart2js:noInline')
   static AxisChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AxisChannel>(create);
-  static AxisChannel _defaultInstance;
+  static AxisChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
@@ -688,8 +688,8 @@ class GenericChannel extends $pb.GeneratedMessage {
 
   GenericChannel._() : super();
   factory GenericChannel({
-    $core.double value,
-    $core.String name,
+    $core.double? value,
+    $core.String? name,
   }) {
     final _result = create();
     if (value != null) {
@@ -711,7 +711,7 @@ class GenericChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GenericChannel copyWith(void Function(GenericChannel) updates) => super.copyWith((message) => updates(message as GenericChannel)); // ignore: deprecated_member_use
+  GenericChannel copyWith(void Function(GenericChannel) updates) => super.copyWith((message) => updates(message as GenericChannel)) as GenericChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GenericChannel create() => GenericChannel._();
@@ -719,7 +719,7 @@ class GenericChannel extends $pb.GeneratedMessage {
   static $pb.PbList<GenericChannel> createRepeated() => $pb.PbList<GenericChannel>();
   @$core.pragma('dart2js:noInline')
   static GenericChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GenericChannel>(create);
-  static GenericChannel _defaultInstance;
+  static GenericChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get value => $_getN(0);
@@ -758,7 +758,7 @@ class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetFixtureDefinitionsRequest copyWith(void Function(GetFixtureDefinitionsRequest) updates) => super.copyWith((message) => updates(message as GetFixtureDefinitionsRequest)); // ignore: deprecated_member_use
+  GetFixtureDefinitionsRequest copyWith(void Function(GetFixtureDefinitionsRequest) updates) => super.copyWith((message) => updates(message as GetFixtureDefinitionsRequest)) as GetFixtureDefinitionsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static GetFixtureDefinitionsRequest create() => GetFixtureDefinitionsRequest._();
@@ -766,7 +766,7 @@ class GetFixtureDefinitionsRequest extends $pb.GeneratedMessage {
   static $pb.PbList<GetFixtureDefinitionsRequest> createRepeated() => $pb.PbList<GetFixtureDefinitionsRequest>();
   @$core.pragma('dart2js:noInline')
   static GetFixtureDefinitionsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetFixtureDefinitionsRequest>(create);
-  static GetFixtureDefinitionsRequest _defaultInstance;
+  static GetFixtureDefinitionsRequest? _defaultInstance;
 }
 
 class FixtureDefinitions extends $pb.GeneratedMessage {
@@ -777,7 +777,7 @@ class FixtureDefinitions extends $pb.GeneratedMessage {
 
   FixtureDefinitions._() : super();
   factory FixtureDefinitions({
-    $core.Iterable<FixtureDefinition> definitions,
+    $core.Iterable<FixtureDefinition>? definitions,
   }) {
     final _result = create();
     if (definitions != null) {
@@ -796,7 +796,7 @@ class FixtureDefinitions extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureDefinitions copyWith(void Function(FixtureDefinitions) updates) => super.copyWith((message) => updates(message as FixtureDefinitions)); // ignore: deprecated_member_use
+  FixtureDefinitions copyWith(void Function(FixtureDefinitions) updates) => super.copyWith((message) => updates(message as FixtureDefinitions)) as FixtureDefinitions; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureDefinitions create() => FixtureDefinitions._();
@@ -804,7 +804,7 @@ class FixtureDefinitions extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureDefinitions> createRepeated() => $pb.PbList<FixtureDefinitions>();
   @$core.pragma('dart2js:noInline')
   static FixtureDefinitions getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureDefinitions>(create);
-  static FixtureDefinitions _defaultInstance;
+  static FixtureDefinitions? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<FixtureDefinition> get definitions => $_getList(0);
@@ -823,12 +823,12 @@ class FixtureDefinition extends $pb.GeneratedMessage {
 
   FixtureDefinition._() : super();
   factory FixtureDefinition({
-    $core.String id,
-    $core.String name,
-    $core.String manufacturer,
-    $core.Iterable<FixtureMode> modes,
-    FixturePhysicalData physical,
-    $core.Iterable<$core.String> tags,
+    $core.String? id,
+    $core.String? name,
+    $core.String? manufacturer,
+    $core.Iterable<FixtureMode>? modes,
+    FixturePhysicalData? physical,
+    $core.Iterable<$core.String>? tags,
   }) {
     final _result = create();
     if (id != null) {
@@ -862,7 +862,7 @@ class FixtureDefinition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureDefinition copyWith(void Function(FixtureDefinition) updates) => super.copyWith((message) => updates(message as FixtureDefinition)); // ignore: deprecated_member_use
+  FixtureDefinition copyWith(void Function(FixtureDefinition) updates) => super.copyWith((message) => updates(message as FixtureDefinition)) as FixtureDefinition; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureDefinition create() => FixtureDefinition._();
@@ -870,7 +870,7 @@ class FixtureDefinition extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureDefinition> createRepeated() => $pb.PbList<FixtureDefinition>();
   @$core.pragma('dart2js:noInline')
   static FixtureDefinition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureDefinition>(create);
-  static FixtureDefinition _defaultInstance;
+  static FixtureDefinition? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -926,8 +926,8 @@ class FixtureMode extends $pb.GeneratedMessage {
 
   FixtureMode._() : super();
   factory FixtureMode({
-    $core.String name,
-    $core.Iterable<FixtureChannel> channels,
+    $core.String? name,
+    $core.Iterable<FixtureChannel>? channels,
   }) {
     final _result = create();
     if (name != null) {
@@ -949,7 +949,7 @@ class FixtureMode extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureMode copyWith(void Function(FixtureMode) updates) => super.copyWith((message) => updates(message as FixtureMode)); // ignore: deprecated_member_use
+  FixtureMode copyWith(void Function(FixtureMode) updates) => super.copyWith((message) => updates(message as FixtureMode)) as FixtureMode; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureMode create() => FixtureMode._();
@@ -957,7 +957,7 @@ class FixtureMode extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureMode> createRepeated() => $pb.PbList<FixtureMode>();
   @$core.pragma('dart2js:noInline')
   static FixtureMode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureMode>(create);
-  static FixtureMode _defaultInstance;
+  static FixtureMode? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -980,7 +980,7 @@ class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
 
   FixtureChannel_CoarseResolution._() : super();
   factory FixtureChannel_CoarseResolution({
-    $core.int channel,
+    $core.int? channel,
   }) {
     final _result = create();
     if (channel != null) {
@@ -999,7 +999,7 @@ class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_CoarseResolution copyWith(void Function(FixtureChannel_CoarseResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_CoarseResolution)); // ignore: deprecated_member_use
+  FixtureChannel_CoarseResolution copyWith(void Function(FixtureChannel_CoarseResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_CoarseResolution)) as FixtureChannel_CoarseResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_CoarseResolution create() => FixtureChannel_CoarseResolution._();
@@ -1007,7 +1007,7 @@ class FixtureChannel_CoarseResolution extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureChannel_CoarseResolution> createRepeated() => $pb.PbList<FixtureChannel_CoarseResolution>();
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_CoarseResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_CoarseResolution>(create);
-  static FixtureChannel_CoarseResolution _defaultInstance;
+  static FixtureChannel_CoarseResolution? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get channel => $_getIZ(0);
@@ -1028,8 +1028,8 @@ class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
 
   FixtureChannel_FineResolution._() : super();
   factory FixtureChannel_FineResolution({
-    $core.int fineChannel,
-    $core.int coarseChannel,
+    $core.int? fineChannel,
+    $core.int? coarseChannel,
   }) {
     final _result = create();
     if (fineChannel != null) {
@@ -1051,7 +1051,7 @@ class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_FineResolution copyWith(void Function(FixtureChannel_FineResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FineResolution)); // ignore: deprecated_member_use
+  FixtureChannel_FineResolution copyWith(void Function(FixtureChannel_FineResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FineResolution)) as FixtureChannel_FineResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_FineResolution create() => FixtureChannel_FineResolution._();
@@ -1059,7 +1059,7 @@ class FixtureChannel_FineResolution extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureChannel_FineResolution> createRepeated() => $pb.PbList<FixtureChannel_FineResolution>();
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_FineResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_FineResolution>(create);
-  static FixtureChannel_FineResolution _defaultInstance;
+  static FixtureChannel_FineResolution? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get fineChannel => $_getIZ(0);
@@ -1090,9 +1090,9 @@ class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
 
   FixtureChannel_FinestResolution._() : super();
   factory FixtureChannel_FinestResolution({
-    $core.int finestChannel,
-    $core.int fineChannel,
-    $core.int coarseChannel,
+    $core.int? finestChannel,
+    $core.int? fineChannel,
+    $core.int? coarseChannel,
   }) {
     final _result = create();
     if (finestChannel != null) {
@@ -1117,7 +1117,7 @@ class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel_FinestResolution copyWith(void Function(FixtureChannel_FinestResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FinestResolution)); // ignore: deprecated_member_use
+  FixtureChannel_FinestResolution copyWith(void Function(FixtureChannel_FinestResolution) updates) => super.copyWith((message) => updates(message as FixtureChannel_FinestResolution)) as FixtureChannel_FinestResolution; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_FinestResolution create() => FixtureChannel_FinestResolution._();
@@ -1125,7 +1125,7 @@ class FixtureChannel_FinestResolution extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureChannel_FinestResolution> createRepeated() => $pb.PbList<FixtureChannel_FinestResolution>();
   @$core.pragma('dart2js:noInline')
   static FixtureChannel_FinestResolution getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel_FinestResolution>(create);
-  static FixtureChannel_FinestResolution _defaultInstance;
+  static FixtureChannel_FinestResolution? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get finestChannel => $_getIZ(0);
@@ -1180,10 +1180,10 @@ class FixtureChannel extends $pb.GeneratedMessage {
 
   FixtureChannel._() : super();
   factory FixtureChannel({
-    $core.String name,
-    FixtureChannel_CoarseResolution coarse,
-    FixtureChannel_FineResolution fine,
-    FixtureChannel_FinestResolution finest,
+    $core.String? name,
+    FixtureChannel_CoarseResolution? coarse,
+    FixtureChannel_FineResolution? fine,
+    FixtureChannel_FinestResolution? finest,
   }) {
     final _result = create();
     if (name != null) {
@@ -1211,7 +1211,7 @@ class FixtureChannel extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureChannel copyWith(void Function(FixtureChannel) updates) => super.copyWith((message) => updates(message as FixtureChannel)); // ignore: deprecated_member_use
+  FixtureChannel copyWith(void Function(FixtureChannel) updates) => super.copyWith((message) => updates(message as FixtureChannel)) as FixtureChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureChannel create() => FixtureChannel._();
@@ -1219,9 +1219,9 @@ class FixtureChannel extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureChannel> createRepeated() => $pb.PbList<FixtureChannel>();
   @$core.pragma('dart2js:noInline')
   static FixtureChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureChannel>(create);
-  static FixtureChannel _defaultInstance;
+  static FixtureChannel? _defaultInstance;
 
-  FixtureChannel_Resolution whichResolution() => _FixtureChannel_ResolutionByTag[$_whichOneof(0)];
+  FixtureChannel_Resolution whichResolution() => _FixtureChannel_ResolutionByTag[$_whichOneof(0)]!;
   void clearResolution() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -1278,10 +1278,10 @@ class FixturePhysicalData extends $pb.GeneratedMessage {
 
   FixturePhysicalData._() : super();
   factory FixturePhysicalData({
-    $core.double width,
-    $core.double height,
-    $core.double depth,
-    $core.double weight,
+    $core.double? width,
+    $core.double? height,
+    $core.double? depth,
+    $core.double? weight,
   }) {
     final _result = create();
     if (width != null) {
@@ -1309,7 +1309,7 @@ class FixturePhysicalData extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixturePhysicalData copyWith(void Function(FixturePhysicalData) updates) => super.copyWith((message) => updates(message as FixturePhysicalData)); // ignore: deprecated_member_use
+  FixturePhysicalData copyWith(void Function(FixturePhysicalData) updates) => super.copyWith((message) => updates(message as FixturePhysicalData)) as FixturePhysicalData; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixturePhysicalData create() => FixturePhysicalData._();
@@ -1317,7 +1317,7 @@ class FixturePhysicalData extends $pb.GeneratedMessage {
   static $pb.PbList<FixturePhysicalData> createRepeated() => $pb.PbList<FixturePhysicalData>();
   @$core.pragma('dart2js:noInline')
   static FixturePhysicalData getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixturePhysicalData>(create);
-  static FixturePhysicalData _defaultInstance;
+  static FixturePhysicalData? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get width => $_getN(0);

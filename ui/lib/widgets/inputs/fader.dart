@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,14 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'decoration.dart';
 
 class FaderInput extends StatefulWidget {
-  final Function(double) onValue;
+  final Function(double)? onValue;
   final double value;
-  final String label;
-  final Gradient gradient;
-  final Color color;
+  final String? label;
+  final Gradient? gradient;
+  final Color? color;
   final bool highlight;
 
-  FaderInput({this.onValue, this.value, this.label, this.color, this.gradient, this.highlight});
+  FaderInput({this.onValue, required this.value, this.label, this.color, this.gradient, this.highlight = false});
 
   @override
   _FaderInputState createState() => _FaderInputState(value ?? 0);
@@ -50,7 +49,7 @@ class _FaderInputState extends State<FaderInput> {
                       Container(
                           color: widget.highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
                           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                          child: Text(widget.label, textAlign: TextAlign.center)),
+                          child: Text(widget.label ?? "", textAlign: TextAlign.center)),
                     Expanded(
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,
@@ -76,7 +75,7 @@ class _FaderInputState extends State<FaderInput> {
     setState(() {
       this.value = _value;
     });
-    this.widget.onValue(_value);
+    _emitUpdate(_value);
   }
 
   void _onScroll(double direction) {
@@ -90,6 +89,12 @@ class _FaderInputState extends State<FaderInput> {
     setState(() {
       this.value = _value;
     });
-    this.widget.onValue(_value);
+    _emitUpdate(_value);
+  }
+
+  void _emitUpdate(double _value) {
+    if (this.widget.onValue != null) {
+      this.widget.onValue!(_value);
+    }
   }
 }

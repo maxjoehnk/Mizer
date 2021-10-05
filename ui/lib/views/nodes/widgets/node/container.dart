@@ -1,14 +1,13 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../consts.dart';
 
 class NodeContainer extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final bool selected;
 
-  NodeContainer({this.child, this.selected});
+  NodeContainer({this.child, this.selected = false});
 
   @override
   Widget build(BuildContext context) {

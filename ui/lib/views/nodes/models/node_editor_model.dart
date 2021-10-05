@@ -1,6 +1,6 @@
-// @dart=2.11
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:collection/collection.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
@@ -12,18 +12,19 @@ class NodeEditorModel extends ChangeNotifier {
   List<NodeConnection> channels;
   final GlobalKey painterKey = GlobalKey();
 
-  TransformationController transformationController;
-  NodeModel selectedNode;
-  NewConnectionModel connecting;
+  late TransformationController transformationController;
+  NodeModel? selectedNode;
+  NewConnectionModel? connecting;
 
   NodeEditorModel(Nodes nodes)
       : this.nodes = nodes.nodes
-            .where((node) => !node.designer.hidden)
-            .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
-            .toList(),
+      .where((node) => !node.designer.hidden)
+      .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
+      .toList(),
         this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList(),
         this.channels = nodes.channels {
-    transformationController = TransformationController()..addListener(update);
+    transformationController = TransformationController()
+      ..addListener(update);
   }
 
   void refresh(Nodes nodes) {
@@ -47,19 +48,20 @@ class NodeEditorModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  PortModel getPortModel(Node node, Port port, bool input) {
-    var nodeModel = this.nodes.firstWhere((nodeModel) => nodeModel.node == node, orElse: () => null);
+  PortModel? getPortModel(Node node, Port port, bool input) {
+    NodeModel? nodeModel = this.nodes.firstWhereOrNull((nodeModel) => nodeModel.node == node);
 
     if (nodeModel == null) {
       return null;
     }
 
-    return nodeModel?.ports
-        .firstWhere((portModel) => portModel.port.name == port.name && portModel.input == input, orElse: () => null);
+    return nodeModel.ports.firstWhereOrNull((portModel) => portModel.port.name == port.name && portModel.input == input);
   }
 
   Node getNode(String path) {
-    return nodes.firstWhere((nodeModel) => nodeModel.node.path == path).node;
+    return nodes
+        .firstWhere((nodeModel) => nodeModel.node.path == path)
+        .node;
   }
 
   selectNode(NodeModel nodeModel) {
@@ -89,12 +91,12 @@ class NewConnectionModel {
   Offset offset;
   GlobalKey key;
 
-  NewConnectionModel({ this.port, this.node, this.offset = Offset.zero, this.key });
+  NewConnectionModel({ required this.port, required this.node, this.offset = Offset.zero, required this.key });
 
   void update(GlobalKey key) {
     if (key.currentContext == null || this.key.currentContext == null) return;
-    RenderBox thisBox = this.key.currentContext.findRenderObject();
-    RenderBox thatBox = key.currentContext.findRenderObject();
+    RenderBox thisBox = this.key.currentContext!.findRenderObject() as RenderBox;
+    RenderBox thatBox = key.currentContext!.findRenderObject() as RenderBox;
     this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
   }
 }

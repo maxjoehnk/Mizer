@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +8,7 @@ const double HEADER_BADGE_HEIGHT = 32;
 class ProDJLinkConnectionView extends StatelessWidget {
   final ProDjLinkConnection device;
 
-  ProDJLinkConnectionView({this.device});
+  ProDJLinkConnectionView({required this.device});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class ProDJLinkConnectionView extends StatelessWidget {
 class CdjConnection extends StatelessWidget {
   final ProDjLinkConnection device;
 
-  CdjConnection({this.device});
+  CdjConnection({required this.device});
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +110,7 @@ class PlayingState extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           color: colors[playerState],
         ),
-        child: Text(labels[playerState], textAlign: TextAlign.center, style: style.subtitle1));
+        child: Text(labels[playerState]!, textAlign: TextAlign.center, style: style.subtitle1));
   }
 }
 
@@ -203,7 +202,7 @@ class BPM extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(bpm.toStringAsFixed(1), style: style.headline4),
         Text("BPM",
-            style: style.bodyText1.copyWith(color: style.bodyText1.color.withAlpha(164)),
+            style: style.bodyText1!.copyWith(color: style.bodyText1!.color!.withAlpha(164)),
             textAlign: TextAlign.start),
       ]),
     );
@@ -229,7 +228,7 @@ class TrackInfo extends StatelessWidget {
 }
 
 class PlayerMetadata extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
   PlayerMetadata({this.child});
 

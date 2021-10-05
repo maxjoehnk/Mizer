@@ -1,8 +1,6 @@
-// @dart=2.11
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 
@@ -38,9 +36,9 @@ class SessionDiscovery {
 class AvailableSession {
   final String host;
   final int port;
-  final String project;
+  final String? project;
 
-  AvailableSession({@required this.host, @required this.port, this.project});
+  AvailableSession({required this.host, required this.port, this.project});
 
   @override
   String toString() {
@@ -59,7 +57,7 @@ class AvailableSession {
 abstract class SessionDiscoveryEvent {}
 
 class SessionDiscoveryBloc extends Bloc<AvailableSession, List<AvailableSession>> {
-  StreamSubscription subscription;
+  late StreamSubscription subscription;
 
   SessionDiscoveryBloc(SessionDiscovery discovery) : super([]) {
     this.subscription = discovery.discover().listen(this.add);

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -9,7 +8,7 @@ import 'package:mizer/views/nodes/models/port_model.dart';
 class GraphPaintLayer extends StatelessWidget {
   final NodeEditorModel model;
 
-  GraphPaintLayer({ this.model });
+  GraphPaintLayer({ required this.model });
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +43,13 @@ class GraphLinePainter extends CustomPainter {
       draw(canvas, fromPosition, toPosition, channel.protocol);
     }
     if (model.connecting != null) {
-      var fromPort = model.getPortModel(model.connecting.node, model.connecting.port, false);
+      var fromPort = model.getPortModel(model.connecting!.node, model.connecting!.port, false);
       if (fromPort == null) {
         return;
       }
       Offset fromPosition = _getPosition(fromPort);
-      Offset toPosition = model.connecting.offset;
-      draw(canvas, fromPosition, toPosition, model.connecting.port.protocol);
+      Offset toPosition = model.connecting!.offset;
+      draw(canvas, fromPosition, toPosition, model.connecting!.port.protocol);
     }
   }
 

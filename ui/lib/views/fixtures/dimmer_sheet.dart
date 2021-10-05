@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -18,7 +17,7 @@ const NAMES = {
 class DimmerSheet extends StatelessWidget {
   final List<Fixture> fixtures;
 
-  const DimmerSheet({this.fixtures, Key key}) : super(key: key);
+  const DimmerSheet({required this.fixtures, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

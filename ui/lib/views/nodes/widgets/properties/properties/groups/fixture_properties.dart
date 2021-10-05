@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -16,7 +15,7 @@ class FixtureProperties extends StatefulWidget {
   final FixtureNodeConfig config;
   final Function(FixtureNodeConfig) onUpdate;
 
-  FixtureProperties(this.config, {@required this.onUpdate});
+  FixtureProperties(this.config, {required this.onUpdate});
 
   @override
   _FixturePropertiesState createState() => _FixturePropertiesState(config);

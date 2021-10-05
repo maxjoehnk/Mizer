@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/platform/integrated/menu_bar.dart';
 import 'package:mizer/platform/standalone/menu_bar.dart';
@@ -9,7 +8,7 @@ import 'menu.dart';
 class MenuBar extends StatelessWidget {
   final Widget child;
   final Menu menu;
-  const MenuBar({Key key, this.menu, this.child}) : super(key: key);
+  const MenuBar({Key? key, required this.menu, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

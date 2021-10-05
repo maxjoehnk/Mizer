@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: programmer.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
@@ -48,13 +48,13 @@ class ProgrammerApiClient extends $grpc.Client {
       ($core.List<$core.int> value) => $1.StoreResponse.fromBuffer(value));
 
   ProgrammerApiClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions options,
-      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseStream<$1.ProgrammerState> subscribeToProgrammer(
       $1.SubscribeProgrammerRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$subscribeToProgrammer, $async.Stream.fromIterable([request]),
         options: options);
@@ -62,29 +62,29 @@ class ProgrammerApiClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$1.WriteControlResponse> writeControl(
       $1.WriteControlRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$writeControl, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.SelectFixturesResponse> selectFixtures(
       $1.SelectFixturesRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$selectFixtures, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.ClearResponse> clear($1.ClearRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$clear, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.HighlightResponse> highlight(
       $1.HighlightRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$highlight, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.StoreResponse> store($1.StoreRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$store, request, options: options);
   }
 }

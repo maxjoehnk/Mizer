@@ -1,13 +1,13 @@
-// @dart=2.11
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class MizerSelect<T> extends StatefulWidget {
   final List<SelectOption<T>> options;
-  final T value;
+  final T? value;
   final Function(T) onChanged;
 
-  const MizerSelect({@required this.options, this.value, this.onChanged, Key key})
+  const MizerSelect({required this.options, this.value, required this.onChanged, Key? key})
       : super(key: key);
 
   @override
@@ -21,7 +21,7 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          RenderBox renderBox = context.findRenderObject();
+          RenderBox renderBox = context.findRenderObject() as RenderBox;
           Navigator.of(context).push(_MizerSelectRoute(
             renderBox: renderBox,
             options: widget.options,
@@ -30,18 +30,18 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
           ));
         },
         child: Row(children: [
-          if (label != null) Expanded(child: Text(label)),
+          if (label != null) Expanded(child: Text(label!)),
           Icon(Icons.arrow_drop_down)
         ]),
       ),
     );
   }
 
-  String get label {
+  String? get label {
     var value = this
         .widget
         .options
-        .firstWhere((element) => element.value == this.widget.value, orElse: () => null);
+        .firstWhereOrNull((element) => element.value == this.widget.value);
     if (value == null) {
       return null;
     }
@@ -51,20 +51,20 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
 
 class _MizerSelectRoute<T> extends PopupRoute {
   final List<SelectOption<T>> options;
-  final T value;
+  final T? value;
   final Function(T) onChanged;
   final RenderBox renderBox;
 
-  _MizerSelectRoute({@required this.options, this.value, this.onChanged, this.renderBox, Key key}) : super();
+  _MizerSelectRoute({required this.options, this.value, required this.onChanged, required this.renderBox}) : super();
 
   @override
-  Color get barrierColor => null;
+  Color? get barrierColor => null;
 
   @override
   bool get barrierDismissible => true;
 
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   @override
   Widget buildPage(
@@ -79,7 +79,7 @@ class _MizerSelectRoute<T> extends PopupRoute {
         top: offset.dy + size.height,
         left: offset.dx,
         child: DefaultTextStyle(
-          style: theme.bodyText2,
+          style: theme.bodyText2!,
           child: Container(
               padding: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
@@ -106,9 +106,9 @@ class _MizerSelectRoute<T> extends PopupRoute {
 
 class _MizerSelectOption<T> extends StatefulWidget {
   final SelectOption<T> option;
-  final Function onSelect;
+  final void Function()? onSelect;
 
-  const _MizerSelectOption({this.option, this.onSelect, Key key}) : super(key: key);
+  const _MizerSelectOption({required this.option, this.onSelect, Key? key}) : super(key: key);
 
   @override
   _MizerSelectOptionState<T> createState() => _MizerSelectOptionState<T>();
@@ -139,5 +139,5 @@ class SelectOption<T> {
   T value;
   String label;
 
-  SelectOption({this.value, this.label});
+  SelectOption({required this.value, required this.label});
 }

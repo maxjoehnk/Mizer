@@ -2,9 +2,13 @@
 //  Generated code. Do not modify.
 //  source: sequencer.proto
 //
-// @dart = 2.7
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
+import 'dart:core' as $core;
+import 'dart:convert' as $convert;
+import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use cueTriggerDescriptor instead')
 const CueTrigger$json = const {
   '1': 'CueTrigger',
   '2': const [
@@ -15,6 +19,9 @@ const CueTrigger$json = const {
   ],
 };
 
+/// Descriptor for `CueTrigger`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List cueTriggerDescriptor = $convert.base64Decode('CgpDdWVUcmlnZ2VyEgYKAkdPEAASCgoGRk9MTE9XEAESCQoFQkVBVFMQAhIMCghUSU1FQ09ERRAD');
+@$core.Deprecated('Use cueControlDescriptor instead')
 const CueControl$json = const {
   '1': 'CueControl',
   '2': const [
@@ -34,14 +41,23 @@ const CueControl$json = const {
   ],
 };
 
+/// Descriptor for `CueControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List cueControlDescriptor = $convert.base64Decode('CgpDdWVDb250cm9sEg0KCUlOVEVOU0lUWRAAEgsKB1NIVVRURVIQARINCglDT0xPUl9SRUQQAhIPCgtDT0xPUl9HUkVFThADEg4KCkNPTE9SX0JMVUUQBBIHCgNQQU4QBRIICgRUSUxUEAYSCQoFRk9DVVMQBxIICgRaT09NEAgSCQoFUFJJU00QCRIICgRJUklTEAoSCQoFRlJPU1QQCxILCgdHRU5FUklDEAw=');
+@$core.Deprecated('Use getSequencesRequestDescriptor instead')
 const GetSequencesRequest$json = const {
   '1': 'GetSequencesRequest',
 };
 
+/// Descriptor for `GetSequencesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getSequencesRequestDescriptor = $convert.base64Decode('ChNHZXRTZXF1ZW5jZXNSZXF1ZXN0');
+@$core.Deprecated('Use addSequenceRequestDescriptor instead')
 const AddSequenceRequest$json = const {
   '1': 'AddSequenceRequest',
 };
 
+/// Descriptor for `AddSequenceRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addSequenceRequestDescriptor = $convert.base64Decode('ChJBZGRTZXF1ZW5jZVJlcXVlc3Q=');
+@$core.Deprecated('Use sequenceGoRequestDescriptor instead')
 const SequenceGoRequest$json = const {
   '1': 'SequenceGoRequest',
   '2': const [
@@ -49,10 +65,16 @@ const SequenceGoRequest$json = const {
   ],
 };
 
+/// Descriptor for `SequenceGoRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceGoRequestDescriptor = $convert.base64Decode('ChFTZXF1ZW5jZUdvUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2U=');
+@$core.Deprecated('Use emptyResponseDescriptor instead')
 const EmptyResponse$json = const {
   '1': 'EmptyResponse',
 };
 
+/// Descriptor for `EmptyResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List emptyResponseDescriptor = $convert.base64Decode('Cg1FbXB0eVJlc3BvbnNl');
+@$core.Deprecated('Use sequencesDescriptor instead')
 const Sequences$json = const {
   '1': 'Sequences',
   '2': const [
@@ -60,6 +82,9 @@ const Sequences$json = const {
   ],
 };
 
+/// Descriptor for `Sequences`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequencesDescriptor = $convert.base64Decode('CglTZXF1ZW5jZXMSNwoJc2VxdWVuY2VzGAEgAygLMhkubWl6ZXIuc2VxdWVuY2VyLlNlcXVlbmNlUglzZXF1ZW5jZXM=');
+@$core.Deprecated('Use sequenceDescriptor instead')
 const Sequence$json = const {
   '1': 'Sequence',
   '2': const [
@@ -69,6 +94,9 @@ const Sequence$json = const {
   ],
 };
 
+/// Descriptor for `Sequence`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceDescriptor = $convert.base64Decode('CghTZXF1ZW5jZRIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIoCgRjdWVzGAMgAygLMhQubWl6ZXIuc2VxdWVuY2VyLkN1ZVIEY3Vlcw==');
+@$core.Deprecated('Use cueDescriptor instead')
 const Cue$json = const {
   '1': 'Cue',
   '2': const [
@@ -80,6 +108,9 @@ const Cue$json = const {
   ],
 };
 
+/// Descriptor for `Cue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueDescriptor = $convert.base64Decode('CgNDdWUSDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoHdHJpZ2dlchgDIAEoDjIbLm1pemVyLnNlcXVlbmNlci5DdWVUcmlnZ2VyUgd0cmlnZ2VyEhIKBGxvb3AYBCABKAhSBGxvb3ASNwoIY2hhbm5lbHMYBSADKAsyGy5taXplci5zZXF1ZW5jZXIuQ3VlQ2hhbm5lbFIIY2hhbm5lbHM=');
+@$core.Deprecated('Use cueChannelDescriptor instead')
 const CueChannel$json = const {
   '1': 'CueChannel',
   '2': const [
@@ -91,6 +122,9 @@ const CueChannel$json = const {
   ],
 };
 
+/// Descriptor for `CueChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueChannelDescriptor = $convert.base64Decode('CgpDdWVDaGFubmVsEhoKCGZpeHR1cmVzGAEgAygNUghmaXh0dXJlcxI1Cgdjb250cm9sGAIgASgOMhsubWl6ZXIuc2VxdWVuY2VyLkN1ZUNvbnRyb2xSB2NvbnRyb2wSLwoFdmFsdWUYAyABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVmFsdWVSBXZhbHVlEi0KBGZhZGUYBCABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVGltZXJSBGZhZGUSLwoFZGVsYXkYBSABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVGltZXJSBWRlbGF5');
+@$core.Deprecated('Use cueValueDescriptor instead')
 const CueValue$json = const {
   '1': 'CueValue',
   '2': const [
@@ -102,6 +136,9 @@ const CueValue$json = const {
   ],
 };
 
+/// Descriptor for `CueValue`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueValueDescriptor = $convert.base64Decode('CghDdWVWYWx1ZRIYCgZkaXJlY3QYAyABKAFIAFIGZGlyZWN0EjYKBXJhbmdlGAQgASgLMh4ubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUmFuZ2VIAFIFcmFuZ2VCBwoFdmFsdWU=');
+@$core.Deprecated('Use cueTimerDescriptor instead')
 const CueTimer$json = const {
   '1': 'CueTimer',
   '2': const [
@@ -114,6 +151,9 @@ const CueTimer$json = const {
   ],
 };
 
+/// Descriptor for `CueTimer`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueTimerDescriptor = $convert.base64Decode('CghDdWVUaW1lchIaCghoYXNUaW1lchgBIAEoCFIIaGFzVGltZXISMgoGZGlyZWN0GAIgASgLMhgubWl6ZXIuc2VxdWVuY2VyLkN1ZVRpbWVIAFIGZGlyZWN0EjYKBXJhbmdlGAMgASgLMh4ubWl6ZXIuc2VxdWVuY2VyLkN1ZVRpbWVyUmFuZ2VIAFIFcmFuZ2VCBwoFdGltZXI=');
+@$core.Deprecated('Use cueValueRangeDescriptor instead')
 const CueValueRange$json = const {
   '1': 'CueValueRange',
   '2': const [
@@ -122,6 +162,9 @@ const CueValueRange$json = const {
   ],
 };
 
+/// Descriptor for `CueValueRange`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueValueRangeDescriptor = $convert.base64Decode('Cg1DdWVWYWx1ZVJhbmdlEhIKBGZyb20YASABKAFSBGZyb20SDgoCdG8YAiABKAFSAnRv');
+@$core.Deprecated('Use cueTimeDescriptor instead')
 const CueTime$json = const {
   '1': 'CueTime',
   '2': const [
@@ -133,6 +176,9 @@ const CueTime$json = const {
   ],
 };
 
+/// Descriptor for `CueTime`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueTimeDescriptor = $convert.base64Decode('CgdDdWVUaW1lEhoKB3NlY29uZHMYASABKAFIAFIHc2Vjb25kcxIWCgViZWF0cxgCIAEoAUgAUgViZWF0c0IGCgR0aW1l');
+@$core.Deprecated('Use cueTimerRangeDescriptor instead')
 const CueTimerRange$json = const {
   '1': 'CueTimerRange',
   '2': const [
@@ -141,3 +187,5 @@ const CueTimerRange$json = const {
   ],
 };
 
+/// Descriptor for `CueTimerRange`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueTimerRangeDescriptor = $convert.base64Decode('Cg1DdWVUaW1lclJhbmdlEiwKBGZyb20YASABKAsyGC5taXplci5zZXF1ZW5jZXIuQ3VlVGltZVIEZnJvbRIoCgJ0bxgCIAEoCzIYLm1pemVyLnNlcXVlbmNlci5DdWVUaW1lUgJ0bw==');

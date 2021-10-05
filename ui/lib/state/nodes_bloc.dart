@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
@@ -98,8 +99,8 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
     }
   }
 
-  Node getNodeByPath(String path) {
-    return this.state.nodes.firstWhere((node) => node.path == path, orElse: () => null);
+  Node? getNodeByPath(String path) {
+    return this.state.nodes.firstWhereOrNull((node) => node.path == path);
   }
 
   List<PortOption> getAvailablePorts(Node node, Port port) {

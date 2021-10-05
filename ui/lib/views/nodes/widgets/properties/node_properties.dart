@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,7 @@ import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/video_file_properties.dart';
 
 class NodePropertiesPane extends StatelessWidget {
-  final Node node;
+  final Node? node;
 
   NodePropertiesPane({this.node});
 
@@ -20,6 +19,7 @@ class NodePropertiesPane extends StatelessWidget {
     if (this.node == null) {
       return Container();
     }
+    Node node = this.node!;
     var nodesApi = context.read<NodesApi>();
     return Container(
         decoration: BoxDecoration(
@@ -32,37 +32,37 @@ class NodePropertiesPane extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(this.node.path),
+            child: Text(node.path),
           ),
-          ..._getPropertyPanes(nodesApi),
+          ..._getPropertyPanes(node, nodesApi),
         ]));
   }
 
-  List<Widget> _getPropertyPanes(NodesApi nodesApi) {
+  List<Widget> _getPropertyPanes(Node node, NodesApi nodesApi) {
     List<Widget> widgets = [];
-    if (this.node.config.hasOscillatorConfig()) {
-      widgets.add(OscillatorProperties(this.node.config.oscillatorConfig,
+    if (node.config.hasOscillatorConfig()) {
+      widgets.add(OscillatorProperties(node.config.oscillatorConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path,
               config: NodeConfig(
                 oscillatorConfig: config,
               )))));
     }
-    if (this.node.config.hasDmxOutputConfig()) {
-      widgets.add(DmxOutputProperties(this.node.config.dmxOutputConfig,
+    if (node.config.hasDmxOutputConfig()) {
+      widgets.add(DmxOutputProperties(node.config.dmxOutputConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path,
               config: NodeConfig(
                 dmxOutputConfig: config,
               )))));
     }
-    if (this.node.config.hasFixtureConfig()) {
-      widgets.add(FixtureProperties(this.node.config.fixtureConfig,
+    if (node.config.hasFixtureConfig()) {
+      widgets.add(FixtureProperties(node.config.fixtureConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(fixtureConfig: config)))));
     }
-    if (this.node.config.hasVideoFileConfig()) {
-      widgets.add(VideoFileProperties(this.node.config.videoFileConfig,
+    if (node.config.hasVideoFileConfig()) {
+      widgets.add(VideoFileProperties(node.config.videoFileConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(videoFileConfig: config)))));
     }

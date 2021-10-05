@@ -1,14 +1,13 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 
 import 'hoverable.dart';
 
 class Panel extends StatelessWidget {
-  final String label;
+  final String? label;
   final Widget child;
-  final List<PanelAction> actions;
+  final List<PanelAction>? actions;
 
-  Panel({this.child, this.label, this.actions});
+  Panel({required this.child, this.label, this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +24,13 @@ class Panel extends StatelessWidget {
             Container(
                 color: Colors.grey.shade800,
                 padding: const EdgeInsets.all(2),
-                child: Text(label, textAlign: TextAlign.start)),
+                child: Text(label!, textAlign: TextAlign.start)),
           Expanded(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(child: child),
-                if (actions != null) PanelActions(actions: actions)
+                if (actions != null) PanelActions(actions: actions!)
               ],
             ),
           ),
@@ -43,17 +42,17 @@ class Panel extends StatelessWidget {
 
 class PanelAction {
   final String label;
-  final Function() onClick;
+  final Function()? onClick;
   final bool disabled;
   final bool activated;
 
-  PanelAction({this.label, this.onClick, this.disabled, this.activated = false});
+  PanelAction({required this.label, this.onClick, this.disabled = false, this.activated = false});
 }
 
 class PanelActions extends StatelessWidget {
   final List<PanelAction> actions;
 
-  const PanelActions({this.actions, Key key}) : super(key: key);
+  const PanelActions({required this.actions, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class PanelActions extends StatelessWidget {
                   height: 64,
                   width: 64,
                   child: Center(
-                    child: Text(a.label, style: textTheme.subtitle2.copyWith(fontSize: 10, color: _getColor(a))),
+                    child: Text(a.label, style: textTheme.subtitle2!.copyWith(fontSize: 10, color: _getColor(a))),
                   ),
                 ),
               ))

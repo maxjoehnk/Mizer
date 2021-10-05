@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/map_extensions.dart';
@@ -8,16 +7,16 @@ class FixtureSelector extends StatefulWidget {
   final FixtureDefinitions definitions;
   final Function(FixtureDefinition, FixtureMode) onSelect;
 
-  FixtureSelector(this.definitions, {this.onSelect});
+  FixtureSelector(this.definitions, {required this.onSelect});
 
   @override
   _FixtureSelectorState createState() => _FixtureSelectorState();
 }
 
 class _FixtureSelectorState extends State<FixtureSelector> {
-  _ManufacturerGroup manufacturer;
-  FixtureDefinition definition;
-  FixtureMode mode;
+  _ManufacturerGroup? manufacturer;
+  FixtureDefinition? definition;
+  FixtureMode? mode;
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +74,7 @@ class _FixtureSelectorState extends State<FixtureSelector> {
       title: Text(text),
       onTap: () {
         setState(() => this.mode = mode);
-        widget.onSelect(this.definition, mode);
+        widget.onSelect(this.definition!, mode);
       },
       selected: this.mode?.name == mode.name,
     );
@@ -88,14 +87,14 @@ class FixtureColumnEntry {
   final Widget child;
   final String text;
 
-  FixtureColumnEntry({this.child, this.text});
+  FixtureColumnEntry({required this.child, required this.text});
 }
 
 class _FixtureSelectorColumn extends StatefulWidget {
   final String label;
   final List<FixtureColumnEntry> children;
 
-  _FixtureSelectorColumn({this.label, this.children});
+  _FixtureSelectorColumn({required this.label, required this.children});
 
   @override
   State<_FixtureSelectorColumn> createState() => _FixtureSelectorColumnState();
@@ -142,8 +141,8 @@ class _FixtureSelectorColumnState extends State<_FixtureSelectorColumn> {
 }
 
 class _SelectedFixtureMode extends StatelessWidget {
-  final FixtureDefinition definition;
-  final FixtureMode mode;
+  final FixtureDefinition? definition;
+  final FixtureMode? mode;
 
   _SelectedFixtureMode(this.definition, this.mode);
 
@@ -157,27 +156,27 @@ class _SelectedFixtureMode extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          definition.name,
+          definition!.name,
           style: textTheme.headline4,
         ),
         Text(
-          definition.manufacturer,
+          definition!.manufacturer,
           style: textTheme.headline5,
         ),
-        Row(children: definition.tags.map((tag) => Chip(label: Text(tag))).toList()),
+        Row(children: definition!.tags.map((tag) => Chip(label: Text(tag))).toList()),
         Text("Channels", style: textTheme.subtitle1),
-        ...mode.channels.map((e) => Text(e.name, style: textTheme.bodyText2)).toList()
+        ...mode!.channels.map((e) => Text(e.name, style: textTheme.bodyText2)).toList()
       ]),
     );
   }
 }
 
-extension _FixtureDefinitionGrouping on FixtureDefinitions {
+extension _FixtureDefinitionGrouping on FixtureDefinitions? {
   List<_ManufacturerGroup> groupByManufacturer() {
     if (this == null) {
       return [];
     }
-    var groupedDefinitions = groupBy(this.definitions, (d) => d.manufacturer);
+    var groupedDefinitions = groupBy<FixtureDefinition, String>(this!.definitions, (d) => d.manufacturer);
 
     return groupedDefinitions
         .mapToList((manufacturer, definitions) => _ManufacturerGroup(manufacturer, definitions));

@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -55,7 +54,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
-  Widget _currentWidget;
+  Widget? _currentWidget;
 
   _HomeState() {
     _updateWidget();
@@ -132,7 +131,7 @@ class NavigationBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onSelect;
 
-  NavigationBar({this.routes, this.selectedIndex, this.onSelect});
+  NavigationBar({required this.routes, required this.selectedIndex, required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +156,7 @@ extension MapWithIndex<T> on List<T> {
 class NavigationItem extends StatefulWidget {
   final Route route;
   final bool selected;
-  final Function onSelect;
+  final void Function() onSelect;
 
   NavigationItem(this.route, this.selected, this.onSelect);
 
@@ -196,13 +195,13 @@ class _NavigationItemState extends State<NavigationItem> {
                       size: 24,
                     ),
                     Text(this.widget.route.label,
-                        style: textTheme.subtitle2.copyWith(color: color, fontSize: 10)),
+                        style: textTheme.subtitle2!.copyWith(color: color, fontSize: 10)),
                   ],
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
               ),
-              Align(alignment: Alignment.topRight, child: Text(widget.route.key.keyLabel, style: textTheme.caption.copyWith(fontSize: 9))),
+              Align(alignment: Alignment.topRight, child: Text(widget.route.key.keyLabel, style: textTheme.caption!.copyWith(fontSize: 9))),
             ],
           ),
         ),
@@ -210,7 +209,7 @@ class _NavigationItemState extends State<NavigationItem> {
     );
   }
 
-  Color get backgroundColor {
+  Color? get backgroundColor {
     if (widget.selected) {
       return Colors.black26;
     }

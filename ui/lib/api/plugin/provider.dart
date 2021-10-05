@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
@@ -24,7 +23,7 @@ import 'transport.dart';
 class PluginApiProvider extends StatelessWidget {
   final Widget child;
 
-  PluginApiProvider({@required this.child});
+  PluginApiProvider({required this.child});
 
   @override
   Widget build(BuildContext context) {

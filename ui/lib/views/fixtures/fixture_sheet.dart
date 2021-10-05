@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
@@ -21,7 +20,7 @@ class FixtureSheet extends StatefulWidget {
   final List<Fixture> fixtures;
   final ProgrammerApi api;
 
-  const FixtureSheet({this.fixtures, this.api, Key key}) : super(key: key);
+  const FixtureSheet({required this.fixtures, required this.api, Key? key}) : super(key: key);
 
   @override
   State<FixtureSheet> createState() => _FixtureSheetState();

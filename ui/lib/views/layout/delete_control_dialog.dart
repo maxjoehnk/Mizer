@@ -1,11 +1,10 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 
 class DeleteControlDialog extends StatelessWidget {
   final LayoutControl control;
 
-  const DeleteControlDialog({this.control, Key key}) : super(key: key);
+  const DeleteControlDialog({required this.control, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

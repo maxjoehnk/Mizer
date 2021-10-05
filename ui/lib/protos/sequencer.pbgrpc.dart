@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: sequencer.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:async' as $async;
@@ -31,24 +31,24 @@ class SequencerApiClient extends $grpc.Client {
           ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
 
   SequencerApiClient($grpc.ClientChannel channel,
-      {$grpc.CallOptions options,
-      $core.Iterable<$grpc.ClientInterceptor> interceptors})
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
   $grpc.ResponseFuture<$1.Sequences> getSequences(
       $1.GetSequencesRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getSequences, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Sequence> addSequence($1.AddSequenceRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addSequence, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.EmptyResponse> sequenceGo(
       $1.SequenceGoRequest request,
-      {$grpc.CallOptions options}) {
+      {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$sequenceGo, request, options: options);
   }
 }

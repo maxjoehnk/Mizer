@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -7,14 +6,14 @@ import 'package:mizer/widgets/controls/icon_button.dart';
 
 class Tabs extends StatefulWidget {
   final List<Tab> children;
-  final Function onAdd;
+  final Function()? onAdd;
   final bool padding;
 
   bool get canAdd {
     return onAdd != null;
   }
 
-  Tabs({this.children, this.onAdd, this.padding = true});
+  Tabs({required this.children, this.onAdd, this.padding = true});
 
   @override
   _TabsState createState() => _TabsState();
@@ -46,7 +45,7 @@ class _TabsState extends State<Tabs> {
                               this.activeIndex = i;
                             }))))
                 .values,
-            if (widget.canAdd) AddTabButton(onClick: widget.onAdd),
+            if (widget.canAdd) AddTabButton(onClick: widget.onAdd!),
           ]),
         ),
         if (this.active != null) Expanded(child: Padding(
@@ -57,30 +56,30 @@ class _TabsState extends State<Tabs> {
     );
   }
 
-  Widget get active {
+  Widget? get active {
     if (widget.children.isEmpty) {
       return null;
     }
-    return widget.children[activeIndex]?.child;
+    return widget.children[activeIndex].child;
   }
 }
 
 class Tab {
-  final String label;
+  final String? label;
   final Widget child;
-  Widget Function(bool, Function()) header;
+  late Widget Function(bool, Function()) header;
 
-  Tab({this.label, this.child, this.header}) {
-    header ??= (active, setActive) => TabHeader(label, selected: active, onSelect: setActive);
+  Tab({this.label, required this.child, Widget Function(bool, Function())? header}) {
+    this.header = header ?? (active, setActive) => TabHeader(label!, selected: active, onSelect: setActive);
   }
 }
 
 class TabHeader extends StatelessWidget {
   final String label;
-  final Function onSelect;
+  final Function() onSelect;
   final bool selected;
 
-  TabHeader(this.label, {this.onSelect, this.selected});
+  TabHeader(this.label, {required this.onSelect, this.selected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +95,9 @@ class TabHeader extends StatelessWidget {
 }
 
 class AddTabButton extends StatelessWidget {
-  final Function onClick;
+  final Function() onClick;
 
-  AddTabButton({this.onClick});
+  AddTabButton({required this.onClick});
 
   @override
   Widget build(BuildContext context) {

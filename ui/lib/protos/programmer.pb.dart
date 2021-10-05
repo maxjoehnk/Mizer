@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: programmer.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -34,7 +34,7 @@ class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SubscribeProgrammerRequest copyWith(void Function(SubscribeProgrammerRequest) updates) => super.copyWith((message) => updates(message as SubscribeProgrammerRequest)); // ignore: deprecated_member_use
+  SubscribeProgrammerRequest copyWith(void Function(SubscribeProgrammerRequest) updates) => super.copyWith((message) => updates(message as SubscribeProgrammerRequest)) as SubscribeProgrammerRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SubscribeProgrammerRequest create() => SubscribeProgrammerRequest._();
@@ -42,7 +42,7 @@ class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SubscribeProgrammerRequest> createRepeated() => $pb.PbList<SubscribeProgrammerRequest>();
   @$core.pragma('dart2js:noInline')
   static SubscribeProgrammerRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubscribeProgrammerRequest>(create);
-  static SubscribeProgrammerRequest _defaultInstance;
+  static SubscribeProgrammerRequest? _defaultInstance;
 }
 
 class ProgrammerState extends $pb.GeneratedMessage {
@@ -53,7 +53,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
 
   ProgrammerState._() : super();
   factory ProgrammerState({
-    $core.Iterable<$core.int> fixtures,
+    $core.Iterable<$core.int>? fixtures,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -72,7 +72,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ProgrammerState copyWith(void Function(ProgrammerState) updates) => super.copyWith((message) => updates(message as ProgrammerState)); // ignore: deprecated_member_use
+  ProgrammerState copyWith(void Function(ProgrammerState) updates) => super.copyWith((message) => updates(message as ProgrammerState)) as ProgrammerState; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ProgrammerState create() => ProgrammerState._();
@@ -80,7 +80,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
   static $pb.PbList<ProgrammerState> createRepeated() => $pb.PbList<ProgrammerState>();
   @$core.pragma('dart2js:noInline')
   static ProgrammerState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerState>(create);
-  static ProgrammerState _defaultInstance;
+  static ProgrammerState? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get fixtures => $_getList(0);
@@ -95,8 +95,8 @@ class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
 
   WriteControlRequest_GenericValue._() : super();
   factory WriteControlRequest_GenericValue({
-    $core.String name,
-    $core.double value,
+    $core.String? name,
+    $core.double? value,
   }) {
     final _result = create();
     if (name != null) {
@@ -118,7 +118,7 @@ class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteControlRequest_GenericValue copyWith(void Function(WriteControlRequest_GenericValue) updates) => super.copyWith((message) => updates(message as WriteControlRequest_GenericValue)); // ignore: deprecated_member_use
+  WriteControlRequest_GenericValue copyWith(void Function(WriteControlRequest_GenericValue) updates) => super.copyWith((message) => updates(message as WriteControlRequest_GenericValue)) as WriteControlRequest_GenericValue; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteControlRequest_GenericValue create() => WriteControlRequest_GenericValue._();
@@ -126,7 +126,7 @@ class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
   static $pb.PbList<WriteControlRequest_GenericValue> createRepeated() => $pb.PbList<WriteControlRequest_GenericValue>();
   @$core.pragma('dart2js:noInline')
   static WriteControlRequest_GenericValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlRequest_GenericValue>(create);
-  static WriteControlRequest_GenericValue _defaultInstance;
+  static WriteControlRequest_GenericValue? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -172,10 +172,10 @@ class WriteControlRequest extends $pb.GeneratedMessage {
 
   WriteControlRequest._() : super();
   factory WriteControlRequest({
-    $0.FixtureControl control,
-    $core.double fader,
-    $0.ColorChannel color,
-    WriteControlRequest_GenericValue generic,
+    $0.FixtureControl? control,
+    $core.double? fader,
+    $0.ColorChannel? color,
+    WriteControlRequest_GenericValue? generic,
   }) {
     final _result = create();
     if (control != null) {
@@ -203,7 +203,7 @@ class WriteControlRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteControlRequest copyWith(void Function(WriteControlRequest) updates) => super.copyWith((message) => updates(message as WriteControlRequest)); // ignore: deprecated_member_use
+  WriteControlRequest copyWith(void Function(WriteControlRequest) updates) => super.copyWith((message) => updates(message as WriteControlRequest)) as WriteControlRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteControlRequest create() => WriteControlRequest._();
@@ -211,9 +211,9 @@ class WriteControlRequest extends $pb.GeneratedMessage {
   static $pb.PbList<WriteControlRequest> createRepeated() => $pb.PbList<WriteControlRequest>();
   @$core.pragma('dart2js:noInline')
   static WriteControlRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlRequest>(create);
-  static WriteControlRequest _defaultInstance;
+  static WriteControlRequest? _defaultInstance;
 
-  WriteControlRequest_Value whichValue() => _WriteControlRequest_ValueByTag[$_whichOneof(0)];
+  WriteControlRequest_Value whichValue() => _WriteControlRequest_ValueByTag[$_whichOneof(0)]!;
   void clearValue() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -275,7 +275,7 @@ class WriteControlResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteControlResponse copyWith(void Function(WriteControlResponse) updates) => super.copyWith((message) => updates(message as WriteControlResponse)); // ignore: deprecated_member_use
+  WriteControlResponse copyWith(void Function(WriteControlResponse) updates) => super.copyWith((message) => updates(message as WriteControlResponse)) as WriteControlResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteControlResponse create() => WriteControlResponse._();
@@ -283,7 +283,7 @@ class WriteControlResponse extends $pb.GeneratedMessage {
   static $pb.PbList<WriteControlResponse> createRepeated() => $pb.PbList<WriteControlResponse>();
   @$core.pragma('dart2js:noInline')
   static WriteControlResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControlResponse>(create);
-  static WriteControlResponse _defaultInstance;
+  static WriteControlResponse? _defaultInstance;
 }
 
 class SelectFixturesRequest extends $pb.GeneratedMessage {
@@ -294,7 +294,7 @@ class SelectFixturesRequest extends $pb.GeneratedMessage {
 
   SelectFixturesRequest._() : super();
   factory SelectFixturesRequest({
-    $core.Iterable<$core.int> fixtures,
+    $core.Iterable<$core.int>? fixtures,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -313,7 +313,7 @@ class SelectFixturesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SelectFixturesRequest copyWith(void Function(SelectFixturesRequest) updates) => super.copyWith((message) => updates(message as SelectFixturesRequest)); // ignore: deprecated_member_use
+  SelectFixturesRequest copyWith(void Function(SelectFixturesRequest) updates) => super.copyWith((message) => updates(message as SelectFixturesRequest)) as SelectFixturesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SelectFixturesRequest create() => SelectFixturesRequest._();
@@ -321,7 +321,7 @@ class SelectFixturesRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SelectFixturesRequest> createRepeated() => $pb.PbList<SelectFixturesRequest>();
   @$core.pragma('dart2js:noInline')
   static SelectFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectFixturesRequest>(create);
-  static SelectFixturesRequest _defaultInstance;
+  static SelectFixturesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<$core.int> get fixtures => $_getList(0);
@@ -345,7 +345,7 @@ class SelectFixturesResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SelectFixturesResponse copyWith(void Function(SelectFixturesResponse) updates) => super.copyWith((message) => updates(message as SelectFixturesResponse)); // ignore: deprecated_member_use
+  SelectFixturesResponse copyWith(void Function(SelectFixturesResponse) updates) => super.copyWith((message) => updates(message as SelectFixturesResponse)) as SelectFixturesResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SelectFixturesResponse create() => SelectFixturesResponse._();
@@ -353,7 +353,7 @@ class SelectFixturesResponse extends $pb.GeneratedMessage {
   static $pb.PbList<SelectFixturesResponse> createRepeated() => $pb.PbList<SelectFixturesResponse>();
   @$core.pragma('dart2js:noInline')
   static SelectFixturesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectFixturesResponse>(create);
-  static SelectFixturesResponse _defaultInstance;
+  static SelectFixturesResponse? _defaultInstance;
 }
 
 class ClearRequest extends $pb.GeneratedMessage {
@@ -374,7 +374,7 @@ class ClearRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClearRequest copyWith(void Function(ClearRequest) updates) => super.copyWith((message) => updates(message as ClearRequest)); // ignore: deprecated_member_use
+  ClearRequest copyWith(void Function(ClearRequest) updates) => super.copyWith((message) => updates(message as ClearRequest)) as ClearRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ClearRequest create() => ClearRequest._();
@@ -382,7 +382,7 @@ class ClearRequest extends $pb.GeneratedMessage {
   static $pb.PbList<ClearRequest> createRepeated() => $pb.PbList<ClearRequest>();
   @$core.pragma('dart2js:noInline')
   static ClearRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClearRequest>(create);
-  static ClearRequest _defaultInstance;
+  static ClearRequest? _defaultInstance;
 }
 
 class ClearResponse extends $pb.GeneratedMessage {
@@ -403,7 +403,7 @@ class ClearResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClearResponse copyWith(void Function(ClearResponse) updates) => super.copyWith((message) => updates(message as ClearResponse)); // ignore: deprecated_member_use
+  ClearResponse copyWith(void Function(ClearResponse) updates) => super.copyWith((message) => updates(message as ClearResponse)) as ClearResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ClearResponse create() => ClearResponse._();
@@ -411,7 +411,7 @@ class ClearResponse extends $pb.GeneratedMessage {
   static $pb.PbList<ClearResponse> createRepeated() => $pb.PbList<ClearResponse>();
   @$core.pragma('dart2js:noInline')
   static ClearResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClearResponse>(create);
-  static ClearResponse _defaultInstance;
+  static ClearResponse? _defaultInstance;
 }
 
 class HighlightRequest extends $pb.GeneratedMessage {
@@ -422,7 +422,7 @@ class HighlightRequest extends $pb.GeneratedMessage {
 
   HighlightRequest._() : super();
   factory HighlightRequest({
-    $core.bool highlight,
+    $core.bool? highlight,
   }) {
     final _result = create();
     if (highlight != null) {
@@ -441,7 +441,7 @@ class HighlightRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HighlightRequest copyWith(void Function(HighlightRequest) updates) => super.copyWith((message) => updates(message as HighlightRequest)); // ignore: deprecated_member_use
+  HighlightRequest copyWith(void Function(HighlightRequest) updates) => super.copyWith((message) => updates(message as HighlightRequest)) as HighlightRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static HighlightRequest create() => HighlightRequest._();
@@ -449,7 +449,7 @@ class HighlightRequest extends $pb.GeneratedMessage {
   static $pb.PbList<HighlightRequest> createRepeated() => $pb.PbList<HighlightRequest>();
   @$core.pragma('dart2js:noInline')
   static HighlightRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HighlightRequest>(create);
-  static HighlightRequest _defaultInstance;
+  static HighlightRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.bool get highlight => $_getBF(0);
@@ -479,7 +479,7 @@ class HighlightResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HighlightResponse copyWith(void Function(HighlightResponse) updates) => super.copyWith((message) => updates(message as HighlightResponse)); // ignore: deprecated_member_use
+  HighlightResponse copyWith(void Function(HighlightResponse) updates) => super.copyWith((message) => updates(message as HighlightResponse)) as HighlightResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static HighlightResponse create() => HighlightResponse._();
@@ -487,7 +487,7 @@ class HighlightResponse extends $pb.GeneratedMessage {
   static $pb.PbList<HighlightResponse> createRepeated() => $pb.PbList<HighlightResponse>();
   @$core.pragma('dart2js:noInline')
   static HighlightResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HighlightResponse>(create);
-  static HighlightResponse _defaultInstance;
+  static HighlightResponse? _defaultInstance;
 }
 
 class StoreRequest extends $pb.GeneratedMessage {
@@ -499,8 +499,8 @@ class StoreRequest extends $pb.GeneratedMessage {
 
   StoreRequest._() : super();
   factory StoreRequest({
-    $core.int sequenceId,
-    StoreRequest_Mode storeMode,
+    $core.int? sequenceId,
+    StoreRequest_Mode? storeMode,
   }) {
     final _result = create();
     if (sequenceId != null) {
@@ -522,7 +522,7 @@ class StoreRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StoreRequest copyWith(void Function(StoreRequest) updates) => super.copyWith((message) => updates(message as StoreRequest)); // ignore: deprecated_member_use
+  StoreRequest copyWith(void Function(StoreRequest) updates) => super.copyWith((message) => updates(message as StoreRequest)) as StoreRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StoreRequest create() => StoreRequest._();
@@ -530,7 +530,7 @@ class StoreRequest extends $pb.GeneratedMessage {
   static $pb.PbList<StoreRequest> createRepeated() => $pb.PbList<StoreRequest>();
   @$core.pragma('dart2js:noInline')
   static StoreRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StoreRequest>(create);
-  static StoreRequest _defaultInstance;
+  static StoreRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get sequenceId => $_getIZ(0);
@@ -569,7 +569,7 @@ class StoreResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StoreResponse copyWith(void Function(StoreResponse) updates) => super.copyWith((message) => updates(message as StoreResponse)); // ignore: deprecated_member_use
+  StoreResponse copyWith(void Function(StoreResponse) updates) => super.copyWith((message) => updates(message as StoreResponse)) as StoreResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static StoreResponse create() => StoreResponse._();
@@ -577,6 +577,6 @@ class StoreResponse extends $pb.GeneratedMessage {
   static $pb.PbList<StoreResponse> createRepeated() => $pb.PbList<StoreResponse>();
   @$core.pragma('dart2js:noInline')
   static StoreResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StoreResponse>(create);
-  static StoreResponse _defaultInstance;
+  static StoreResponse? _defaultInstance;
 }
 

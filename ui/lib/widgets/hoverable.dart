@@ -1,14 +1,13 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 
 class Hoverable extends StatefulWidget {
   final bool disabled;
-  final Function() onTap;
-  final Function() onSecondaryTap;
-  final Function() onDoubleTap;
+  final void Function()? onTap;
+  final void Function()? onSecondaryTap;
+  final void Function()? onDoubleTap;
   final Widget Function(bool) builder;
 
-  const Hoverable({this.disabled = false, this.onTap, this.onSecondaryTap, this.onDoubleTap, this.builder, Key key}) : super(key: key);
+  const Hoverable({this.disabled = false, this.onTap, this.onSecondaryTap, this.onDoubleTap, required this.builder, Key? key}) : super(key: key);
 
   @override
   State<Hoverable> createState() => _HoverableState();

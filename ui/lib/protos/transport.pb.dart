@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: transport.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -32,7 +32,7 @@ class SubscribeTransportRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SubscribeTransportRequest copyWith(void Function(SubscribeTransportRequest) updates) => super.copyWith((message) => updates(message as SubscribeTransportRequest)); // ignore: deprecated_member_use
+  SubscribeTransportRequest copyWith(void Function(SubscribeTransportRequest) updates) => super.copyWith((message) => updates(message as SubscribeTransportRequest)) as SubscribeTransportRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SubscribeTransportRequest create() => SubscribeTransportRequest._();
@@ -40,7 +40,7 @@ class SubscribeTransportRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SubscribeTransportRequest> createRepeated() => $pb.PbList<SubscribeTransportRequest>();
   @$core.pragma('dart2js:noInline')
   static SubscribeTransportRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubscribeTransportRequest>(create);
-  static SubscribeTransportRequest _defaultInstance;
+  static SubscribeTransportRequest? _defaultInstance;
 }
 
 class Transport extends $pb.GeneratedMessage {
@@ -53,9 +53,9 @@ class Transport extends $pb.GeneratedMessage {
 
   Transport._() : super();
   factory Transport({
-    TransportState state,
-    $core.double speed,
-    Timecode timecode,
+    TransportState? state,
+    $core.double? speed,
+    Timecode? timecode,
   }) {
     final _result = create();
     if (state != null) {
@@ -80,7 +80,7 @@ class Transport extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Transport copyWith(void Function(Transport) updates) => super.copyWith((message) => updates(message as Transport)); // ignore: deprecated_member_use
+  Transport copyWith(void Function(Transport) updates) => super.copyWith((message) => updates(message as Transport)) as Transport; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Transport create() => Transport._();
@@ -88,7 +88,7 @@ class Transport extends $pb.GeneratedMessage {
   static $pb.PbList<Transport> createRepeated() => $pb.PbList<Transport>();
   @$core.pragma('dart2js:noInline')
   static Transport getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Transport>(create);
-  static Transport _defaultInstance;
+  static Transport? _defaultInstance;
 
   @$pb.TagNumber(1)
   TransportState get state => $_getN(0);
@@ -131,10 +131,10 @@ class Timecode extends $pb.GeneratedMessage {
 
   Timecode._() : super();
   factory Timecode({
-    $fixnum.Int64 frames,
-    $fixnum.Int64 seconds,
-    $fixnum.Int64 minutes,
-    $fixnum.Int64 hours,
+    $fixnum.Int64? frames,
+    $fixnum.Int64? seconds,
+    $fixnum.Int64? minutes,
+    $fixnum.Int64? hours,
   }) {
     final _result = create();
     if (frames != null) {
@@ -162,7 +162,7 @@ class Timecode extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Timecode copyWith(void Function(Timecode) updates) => super.copyWith((message) => updates(message as Timecode)); // ignore: deprecated_member_use
+  Timecode copyWith(void Function(Timecode) updates) => super.copyWith((message) => updates(message as Timecode)) as Timecode; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Timecode create() => Timecode._();
@@ -170,7 +170,7 @@ class Timecode extends $pb.GeneratedMessage {
   static $pb.PbList<Timecode> createRepeated() => $pb.PbList<Timecode>();
   @$core.pragma('dart2js:noInline')
   static Timecode getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Timecode>(create);
-  static Timecode _defaultInstance;
+  static Timecode? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get frames => $_getI64(0);
@@ -217,7 +217,7 @@ class SetTransportRequest extends $pb.GeneratedMessage {
 
   SetTransportRequest._() : super();
   factory SetTransportRequest({
-    TransportState state,
+    TransportState? state,
   }) {
     final _result = create();
     if (state != null) {
@@ -236,7 +236,7 @@ class SetTransportRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetTransportRequest copyWith(void Function(SetTransportRequest) updates) => super.copyWith((message) => updates(message as SetTransportRequest)); // ignore: deprecated_member_use
+  SetTransportRequest copyWith(void Function(SetTransportRequest) updates) => super.copyWith((message) => updates(message as SetTransportRequest)) as SetTransportRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SetTransportRequest create() => SetTransportRequest._();
@@ -244,7 +244,7 @@ class SetTransportRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SetTransportRequest> createRepeated() => $pb.PbList<SetTransportRequest>();
   @$core.pragma('dart2js:noInline')
   static SetTransportRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetTransportRequest>(create);
-  static SetTransportRequest _defaultInstance;
+  static SetTransportRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   TransportState get state => $_getN(0);
@@ -264,7 +264,7 @@ class SetBpmRequest extends $pb.GeneratedMessage {
 
   SetBpmRequest._() : super();
   factory SetBpmRequest({
-    $core.double bpm,
+    $core.double? bpm,
   }) {
     final _result = create();
     if (bpm != null) {
@@ -283,7 +283,7 @@ class SetBpmRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetBpmRequest copyWith(void Function(SetBpmRequest) updates) => super.copyWith((message) => updates(message as SetBpmRequest)); // ignore: deprecated_member_use
+  SetBpmRequest copyWith(void Function(SetBpmRequest) updates) => super.copyWith((message) => updates(message as SetBpmRequest)) as SetBpmRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SetBpmRequest create() => SetBpmRequest._();
@@ -291,7 +291,7 @@ class SetBpmRequest extends $pb.GeneratedMessage {
   static $pb.PbList<SetBpmRequest> createRepeated() => $pb.PbList<SetBpmRequest>();
   @$core.pragma('dart2js:noInline')
   static SetBpmRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetBpmRequest>(create);
-  static SetBpmRequest _defaultInstance;
+  static SetBpmRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get bpm => $_getN(0);

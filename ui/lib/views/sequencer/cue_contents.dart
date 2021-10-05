@@ -1,4 +1,4 @@
-// @dart=2.11
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/extensions/number_extensions.dart';
@@ -25,7 +25,7 @@ const LABELS = {
 class CueContents extends StatelessWidget {
   final Cue cue;
 
-  const CueContents({this.cue, Key key}) : super(key: key);
+  const CueContents({required this.cue, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class CueContents extends StatelessWidget {
             columns: [
               DataColumn(label: Text("Fixture ID")),
               DataColumn(label: Text("Name")),
-              ..._controls.map((c) => DataColumn(label: Text(LABELS[c])))
+              ..._controls.map((c) => DataColumn(label: Text(LABELS[c]!)))
             ],
             rows: _buildRows(fixtures.fixtures)),
       ),
@@ -55,7 +55,7 @@ class CueContents extends StatelessWidget {
     var channels = _controls;
     var fixtureIds = cue.channels
         .map((c) => c.fixtures)
-        .fold([], (previousValue, element) => [...previousValue, ...element])
+        .fold<List<int>>([], (previousValue, element) => [...previousValue, ...element])
         .toSet()
         .toList();
     fixtureIds.sort();
@@ -63,9 +63,8 @@ class CueContents extends StatelessWidget {
     return fixtureIds.map((fixtureId) {
       var fixture = fixtures.firstWhere((element) => element.id == fixtureId);
       var fixtureChannels = channels
-          .map((e) => cue.channels.firstWhere(
-              (element) => element.control == e && element.fixtures.contains(fixtureId),
-              orElse: () => null))
+          .map((e) => cue.channels.firstWhereOrNull(
+              (element) => element.control == e && element.fixtures.contains(fixtureId)))
           .toList();
 
       return DataRow(cells: [

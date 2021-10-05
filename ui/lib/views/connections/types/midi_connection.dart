@@ -1,11 +1,10 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
 class MidiConnectionView extends StatelessWidget {
   final MidiConnection device;
 
-  MidiConnectionView({this.device});
+  MidiConnectionView({required this.device});
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-// @dart=2.11
 export 'contracts/menu.dart';
 export 'contracts/menu_bar.dart';
 
@@ -9,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'contracts/menu.dart';
 
 abstract class Platform {
-  showContextMenu({ BuildContext context, Menu menu, Offset position });
+  showContextMenu({required BuildContext context, required Menu menu, required Offset position});
 
   static Platform of(BuildContext context) {
     return context.read<Platform>();

@@ -1,11 +1,10 @@
-// @dart=2.11
 import 'package:flutter/widgets.dart';
 
 class Field extends StatelessWidget {
   final String label;
   final Widget child;
 
-  Field({this.label, this.child});
+  Field({required this.label, required this.child});
 
   @override
   Widget build(BuildContext context) {

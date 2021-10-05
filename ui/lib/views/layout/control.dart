@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
@@ -26,7 +25,7 @@ class LayoutControlView extends StatelessWidget {
   Widget build(BuildContext context) {
     NodesBloc nodes = context.watch();
     NodesApi nodesApi = context.read();
-    Node node = nodes.getNodeByPath(this.control.node);
+    Node? node = nodes.getNodeByPath(this.control.node);
 
     var control = _getControl(node, nodesApi);
 
@@ -49,11 +48,12 @@ class LayoutControlView extends StatelessWidget {
     );
   }
 
-  Widget _getControl(Node node, NodesApi apiClient) {
+  Widget? _getControl(Node? node, NodesApi apiClient) {
     if (node?.type == Node_NodeType.Fader) {
       return FaderInput(
         label: control.label,
         color: _color,
+        value: 0,
         onValue: (value) =>
             apiClient.writeControlValue(path: control.node, port: "value", value: value),
       );

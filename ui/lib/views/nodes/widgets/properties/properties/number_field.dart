@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -10,22 +9,22 @@ import 'field.dart';
 class NumberField extends StatefulWidget {
   final String label;
   final num value;
-  final num min;
-  final num max;
-  num minHint;
-  num maxHint;
+  final num? min;
+  final num? max;
+  num? minHint;
+  num? maxHint;
   final bool fractions;
   final Function(num) onUpdate;
 
   NumberField(
-      {@required this.label,
-      @required this.value,
+      {required this.label,
+      required this.value,
       this.min,
       this.max,
       this.minHint,
       this.maxHint,
       this.fractions = false,
-      this.onUpdate}) {
+      required this.onUpdate}) {
     this.minHint = this.minHint ?? this.min ?? 0;
     this.maxHint = this.maxHint ?? this.max ?? 1;
   }
@@ -75,16 +74,16 @@ class _NumberFieldState extends State<NumberField> {
 
   num get _maxHint {
     if (widget.max != null) {
-      return widget.max;
+      return widget.max!;
     }
-    return widget.maxHint;
+    return widget.maxHint!;
   }
 
   num get _minHint {
     if (widget.min != null) {
-      return widget.min;
+      return widget.min!;
     }
-    return widget.minHint;
+    return widget.minHint!;
   }
 
   double get _valueHint {
@@ -92,11 +91,11 @@ class _NumberFieldState extends State<NumberField> {
   }
 
   Widget _readView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
       child: GestureDetector(
-        onHorizontalDragUpdate: (update) => _setValue(this.value + update.primaryDelta),
+        onHorizontalDragUpdate: (update) => _setValue(this.value + (update.primaryDelta ?? 0)),
         onTap: () => setState(() => this.isEditing = true),
         child: Field(
           label: this.widget.label,
@@ -113,7 +112,7 @@ class _NumberFieldState extends State<NumberField> {
   }
 
   Widget _editView(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.bodyText2;
+    TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
 
     return MouseRegion(
         cursor: SystemMouseCursors.resizeLeftRight,
@@ -141,8 +140,8 @@ class _NumberFieldState extends State<NumberField> {
 
   void _setValue(num value) {
     log("setValue $value", name: "NumberField");
-    if (widget?.min != null && widget?.max != null) {
-      value = value.clamp(widget.min, widget.max);
+    if (widget.min != null && widget.max != null) {
+      value = value.clamp(widget.min!, widget.max!);
     }
     if (!this.widget.fractions) {
       value = value.truncate();
@@ -158,10 +157,10 @@ class _NumberFieldState extends State<NumberField> {
 }
 
 class _Bar extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final double value;
 
-  _Bar({this.child, this.value});
+  _Bar({this.child, required this.value});
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,13 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class MizerButton extends StatefulWidget {
-  final Function() onClick;
+  final Function()? onClick;
   final Widget child;
   final bool active;
 
-  MizerButton({ @required this.child, this.onClick, this.active = false });
+  MizerButton({ required this.child, this.onClick, this.active = false });
 
   @override
   _MizerButtonState createState() => _MizerButtonState();
@@ -25,7 +24,9 @@ class _MizerButtonState extends State<MizerButton> {
       onFocusChange: (hasFocus) => setState(() => focused = hasFocus),
       onKey: (node, event) {
         if (event.isKeyPressed(LogicalKeyboardKey.enter)) {
-          widget.onClick();
+          if (widget.onClick != null) {
+            widget.onClick!();
+          }
           return KeyEventResult.handled;
         }
         return KeyEventResult.ignored;

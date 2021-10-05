@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -16,9 +15,9 @@ class BaseNode extends StatelessWidget {
   final Node node;
   final Widget child;
   final bool selected;
-  final Function onSelect;
+  final Function()? onSelect;
 
-  BaseNode(this.node, {this.child, this.selected, this.onSelect, Key key}) : super(key: key);
+  BaseNode(this.node, {required this.child, this.selected = false, this.onSelect, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class BaseNode extends StatelessWidget {
           onTap: this.onSelect,
           child: NodeContainer(
             child: DefaultTextStyle(
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText2!,
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,7 +50,7 @@ class BaseNode extends StatelessWidget {
     );
   }
 
-  factory BaseNode.fromNode(Node node, {Function onSelect, bool selected, Key key}) {
+  factory BaseNode.fromNode(Node node, {Function()? onSelect, bool selected = false, Key? key}) {
     return BaseNode(
       node,
       child: Container(),

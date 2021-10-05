@@ -1,11 +1,10 @@
-// @dart=2.11
 import 'package:flutter/material.dart';
 
 class RenameControlDialog extends StatelessWidget {
   final String name;
   final TextEditingController nameController;
 
-  RenameControlDialog({this.name, Key key})
+  RenameControlDialog({required this.name, Key? key})
       : nameController = TextEditingController(text: name),
         super(key: key);
 

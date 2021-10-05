@@ -2,7 +2,7 @@
 //  Generated code. Do not modify.
 //  source: nodes.proto
 //
-// @dart = 2.7
+// @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
@@ -23,8 +23,8 @@ class AddNodeRequest extends $pb.GeneratedMessage {
 
   AddNodeRequest._() : super();
   factory AddNodeRequest({
-    Node_NodeType type,
-    NodePosition position,
+    Node_NodeType? type,
+    NodePosition? position,
   }) {
     final _result = create();
     if (type != null) {
@@ -46,7 +46,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddNodeRequest copyWith(void Function(AddNodeRequest) updates) => super.copyWith((message) => updates(message as AddNodeRequest)); // ignore: deprecated_member_use
+  AddNodeRequest copyWith(void Function(AddNodeRequest) updates) => super.copyWith((message) => updates(message as AddNodeRequest)) as AddNodeRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AddNodeRequest create() => AddNodeRequest._();
@@ -54,7 +54,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   static $pb.PbList<AddNodeRequest> createRepeated() => $pb.PbList<AddNodeRequest>();
   @$core.pragma('dart2js:noInline')
   static AddNodeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddNodeRequest>(create);
-  static AddNodeRequest _defaultInstance;
+  static AddNodeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   Node_NodeType get type => $_getN(0);
@@ -95,7 +95,7 @@ class NodesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodesRequest copyWith(void Function(NodesRequest) updates) => super.copyWith((message) => updates(message as NodesRequest)); // ignore: deprecated_member_use
+  NodesRequest copyWith(void Function(NodesRequest) updates) => super.copyWith((message) => updates(message as NodesRequest)) as NodesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static NodesRequest create() => NodesRequest._();
@@ -103,7 +103,7 @@ class NodesRequest extends $pb.GeneratedMessage {
   static $pb.PbList<NodesRequest> createRepeated() => $pb.PbList<NodesRequest>();
   @$core.pragma('dart2js:noInline')
   static NodesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodesRequest>(create);
-  static NodesRequest _defaultInstance;
+  static NodesRequest? _defaultInstance;
 }
 
 class WriteControl extends $pb.GeneratedMessage {
@@ -116,9 +116,9 @@ class WriteControl extends $pb.GeneratedMessage {
 
   WriteControl._() : super();
   factory WriteControl({
-    $core.String path,
-    $core.String port,
-    $core.double value,
+    $core.String? path,
+    $core.String? port,
+    $core.double? value,
   }) {
     final _result = create();
     if (path != null) {
@@ -143,7 +143,7 @@ class WriteControl extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteControl copyWith(void Function(WriteControl) updates) => super.copyWith((message) => updates(message as WriteControl)); // ignore: deprecated_member_use
+  WriteControl copyWith(void Function(WriteControl) updates) => super.copyWith((message) => updates(message as WriteControl)) as WriteControl; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteControl create() => WriteControl._();
@@ -151,7 +151,7 @@ class WriteControl extends $pb.GeneratedMessage {
   static $pb.PbList<WriteControl> createRepeated() => $pb.PbList<WriteControl>();
   @$core.pragma('dart2js:noInline')
   static WriteControl getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteControl>(create);
-  static WriteControl _defaultInstance;
+  static WriteControl? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get path => $_getSZ(0);
@@ -199,7 +199,7 @@ class WriteResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  WriteResponse copyWith(void Function(WriteResponse) updates) => super.copyWith((message) => updates(message as WriteResponse)); // ignore: deprecated_member_use
+  WriteResponse copyWith(void Function(WriteResponse) updates) => super.copyWith((message) => updates(message as WriteResponse)) as WriteResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static WriteResponse create() => WriteResponse._();
@@ -207,7 +207,7 @@ class WriteResponse extends $pb.GeneratedMessage {
   static $pb.PbList<WriteResponse> createRepeated() => $pb.PbList<WriteResponse>();
   @$core.pragma('dart2js:noInline')
   static WriteResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WriteResponse>(create);
-  static WriteResponse _defaultInstance;
+  static WriteResponse? _defaultInstance;
 }
 
 class UpdateNodeConfigRequest extends $pb.GeneratedMessage {
@@ -219,8 +219,8 @@ class UpdateNodeConfigRequest extends $pb.GeneratedMessage {
 
   UpdateNodeConfigRequest._() : super();
   factory UpdateNodeConfigRequest({
-    $core.String path,
-    NodeConfig config,
+    $core.String? path,
+    NodeConfig? config,
   }) {
     final _result = create();
     if (path != null) {
@@ -242,7 +242,7 @@ class UpdateNodeConfigRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateNodeConfigRequest copyWith(void Function(UpdateNodeConfigRequest) updates) => super.copyWith((message) => updates(message as UpdateNodeConfigRequest)); // ignore: deprecated_member_use
+  UpdateNodeConfigRequest copyWith(void Function(UpdateNodeConfigRequest) updates) => super.copyWith((message) => updates(message as UpdateNodeConfigRequest)) as UpdateNodeConfigRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UpdateNodeConfigRequest create() => UpdateNodeConfigRequest._();
@@ -250,7 +250,7 @@ class UpdateNodeConfigRequest extends $pb.GeneratedMessage {
   static $pb.PbList<UpdateNodeConfigRequest> createRepeated() => $pb.PbList<UpdateNodeConfigRequest>();
   @$core.pragma('dart2js:noInline')
   static UpdateNodeConfigRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateNodeConfigRequest>(create);
-  static UpdateNodeConfigRequest _defaultInstance;
+  static UpdateNodeConfigRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get path => $_getSZ(0);
@@ -291,7 +291,7 @@ class UpdateNodeConfigResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UpdateNodeConfigResponse copyWith(void Function(UpdateNodeConfigResponse) updates) => super.copyWith((message) => updates(message as UpdateNodeConfigResponse)); // ignore: deprecated_member_use
+  UpdateNodeConfigResponse copyWith(void Function(UpdateNodeConfigResponse) updates) => super.copyWith((message) => updates(message as UpdateNodeConfigResponse)) as UpdateNodeConfigResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static UpdateNodeConfigResponse create() => UpdateNodeConfigResponse._();
@@ -299,7 +299,7 @@ class UpdateNodeConfigResponse extends $pb.GeneratedMessage {
   static $pb.PbList<UpdateNodeConfigResponse> createRepeated() => $pb.PbList<UpdateNodeConfigResponse>();
   @$core.pragma('dart2js:noInline')
   static UpdateNodeConfigResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateNodeConfigResponse>(create);
-  static UpdateNodeConfigResponse _defaultInstance;
+  static UpdateNodeConfigResponse? _defaultInstance;
 }
 
 class MoveNodeRequest extends $pb.GeneratedMessage {
@@ -311,8 +311,8 @@ class MoveNodeRequest extends $pb.GeneratedMessage {
 
   MoveNodeRequest._() : super();
   factory MoveNodeRequest({
-    $core.String path,
-    NodePosition position,
+    $core.String? path,
+    NodePosition? position,
   }) {
     final _result = create();
     if (path != null) {
@@ -334,7 +334,7 @@ class MoveNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveNodeRequest copyWith(void Function(MoveNodeRequest) updates) => super.copyWith((message) => updates(message as MoveNodeRequest)); // ignore: deprecated_member_use
+  MoveNodeRequest copyWith(void Function(MoveNodeRequest) updates) => super.copyWith((message) => updates(message as MoveNodeRequest)) as MoveNodeRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MoveNodeRequest create() => MoveNodeRequest._();
@@ -342,7 +342,7 @@ class MoveNodeRequest extends $pb.GeneratedMessage {
   static $pb.PbList<MoveNodeRequest> createRepeated() => $pb.PbList<MoveNodeRequest>();
   @$core.pragma('dart2js:noInline')
   static MoveNodeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MoveNodeRequest>(create);
-  static MoveNodeRequest _defaultInstance;
+  static MoveNodeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get path => $_getSZ(0);
@@ -383,7 +383,7 @@ class MoveNodeResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MoveNodeResponse copyWith(void Function(MoveNodeResponse) updates) => super.copyWith((message) => updates(message as MoveNodeResponse)); // ignore: deprecated_member_use
+  MoveNodeResponse copyWith(void Function(MoveNodeResponse) updates) => super.copyWith((message) => updates(message as MoveNodeResponse)) as MoveNodeResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MoveNodeResponse create() => MoveNodeResponse._();
@@ -391,7 +391,7 @@ class MoveNodeResponse extends $pb.GeneratedMessage {
   static $pb.PbList<MoveNodeResponse> createRepeated() => $pb.PbList<MoveNodeResponse>();
   @$core.pragma('dart2js:noInline')
   static MoveNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MoveNodeResponse>(create);
-  static MoveNodeResponse _defaultInstance;
+  static MoveNodeResponse? _defaultInstance;
 }
 
 class DeleteNodeRequest extends $pb.GeneratedMessage {
@@ -402,7 +402,7 @@ class DeleteNodeRequest extends $pb.GeneratedMessage {
 
   DeleteNodeRequest._() : super();
   factory DeleteNodeRequest({
-    $core.String path,
+    $core.String? path,
   }) {
     final _result = create();
     if (path != null) {
@@ -421,7 +421,7 @@ class DeleteNodeRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteNodeRequest copyWith(void Function(DeleteNodeRequest) updates) => super.copyWith((message) => updates(message as DeleteNodeRequest)); // ignore: deprecated_member_use
+  DeleteNodeRequest copyWith(void Function(DeleteNodeRequest) updates) => super.copyWith((message) => updates(message as DeleteNodeRequest)) as DeleteNodeRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DeleteNodeRequest create() => DeleteNodeRequest._();
@@ -429,7 +429,7 @@ class DeleteNodeRequest extends $pb.GeneratedMessage {
   static $pb.PbList<DeleteNodeRequest> createRepeated() => $pb.PbList<DeleteNodeRequest>();
   @$core.pragma('dart2js:noInline')
   static DeleteNodeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteNodeRequest>(create);
-  static DeleteNodeRequest _defaultInstance;
+  static DeleteNodeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get path => $_getSZ(0);
@@ -459,7 +459,7 @@ class DeleteNodeResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteNodeResponse copyWith(void Function(DeleteNodeResponse) updates) => super.copyWith((message) => updates(message as DeleteNodeResponse)); // ignore: deprecated_member_use
+  DeleteNodeResponse copyWith(void Function(DeleteNodeResponse) updates) => super.copyWith((message) => updates(message as DeleteNodeResponse)) as DeleteNodeResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DeleteNodeResponse create() => DeleteNodeResponse._();
@@ -467,7 +467,7 @@ class DeleteNodeResponse extends $pb.GeneratedMessage {
   static $pb.PbList<DeleteNodeResponse> createRepeated() => $pb.PbList<DeleteNodeResponse>();
   @$core.pragma('dart2js:noInline')
   static DeleteNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteNodeResponse>(create);
-  static DeleteNodeResponse _defaultInstance;
+  static DeleteNodeResponse? _defaultInstance;
 }
 
 class Nodes extends $pb.GeneratedMessage {
@@ -479,8 +479,8 @@ class Nodes extends $pb.GeneratedMessage {
 
   Nodes._() : super();
   factory Nodes({
-    $core.Iterable<Node> nodes,
-    $core.Iterable<NodeConnection> channels,
+    $core.Iterable<Node>? nodes,
+    $core.Iterable<NodeConnection>? channels,
   }) {
     final _result = create();
     if (nodes != null) {
@@ -502,7 +502,7 @@ class Nodes extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Nodes copyWith(void Function(Nodes) updates) => super.copyWith((message) => updates(message as Nodes)); // ignore: deprecated_member_use
+  Nodes copyWith(void Function(Nodes) updates) => super.copyWith((message) => updates(message as Nodes)) as Nodes; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Nodes create() => Nodes._();
@@ -510,7 +510,7 @@ class Nodes extends $pb.GeneratedMessage {
   static $pb.PbList<Nodes> createRepeated() => $pb.PbList<Nodes>();
   @$core.pragma('dart2js:noInline')
   static Nodes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Nodes>(create);
-  static Nodes _defaultInstance;
+  static Nodes? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Node> get nodes => $_getList(0);
@@ -531,11 +531,11 @@ class NodeConnection extends $pb.GeneratedMessage {
 
   NodeConnection._() : super();
   factory NodeConnection({
-    $core.String targetNode,
-    Port targetPort,
-    $core.String sourceNode,
-    Port sourcePort,
-    ChannelProtocol protocol,
+    $core.String? targetNode,
+    Port? targetPort,
+    $core.String? sourceNode,
+    Port? sourcePort,
+    ChannelProtocol? protocol,
   }) {
     final _result = create();
     if (targetNode != null) {
@@ -566,7 +566,7 @@ class NodeConnection extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeConnection copyWith(void Function(NodeConnection) updates) => super.copyWith((message) => updates(message as NodeConnection)); // ignore: deprecated_member_use
+  NodeConnection copyWith(void Function(NodeConnection) updates) => super.copyWith((message) => updates(message as NodeConnection)) as NodeConnection; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static NodeConnection create() => NodeConnection._();
@@ -574,7 +574,7 @@ class NodeConnection extends $pb.GeneratedMessage {
   static $pb.PbList<NodeConnection> createRepeated() => $pb.PbList<NodeConnection>();
   @$core.pragma('dart2js:noInline')
   static NodeConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeConnection>(create);
-  static NodeConnection _defaultInstance;
+  static NodeConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get targetNode => $_getSZ(0);
@@ -640,13 +640,13 @@ class Node extends $pb.GeneratedMessage {
 
   Node._() : super();
   factory Node({
-    Node_NodeType type,
-    $core.String path,
-    $core.Iterable<Port> inputs,
-    $core.Iterable<Port> outputs,
-    NodeDesigner designer,
-    Node_NodePreviewType preview,
-    NodeConfig config,
+    Node_NodeType? type,
+    $core.String? path,
+    $core.Iterable<Port>? inputs,
+    $core.Iterable<Port>? outputs,
+    NodeDesigner? designer,
+    Node_NodePreviewType? preview,
+    NodeConfig? config,
   }) {
     final _result = create();
     if (type != null) {
@@ -683,7 +683,7 @@ class Node extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Node copyWith(void Function(Node) updates) => super.copyWith((message) => updates(message as Node)); // ignore: deprecated_member_use
+  Node copyWith(void Function(Node) updates) => super.copyWith((message) => updates(message as Node)) as Node; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Node create() => Node._();
@@ -691,7 +691,7 @@ class Node extends $pb.GeneratedMessage {
   static $pb.PbList<Node> createRepeated() => $pb.PbList<Node>();
   @$core.pragma('dart2js:noInline')
   static Node getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Node>(create);
-  static Node _defaultInstance;
+  static Node? _defaultInstance;
 
   @$pb.TagNumber(1)
   Node_NodeType get type => $_getN(0);
@@ -839,31 +839,31 @@ class NodeConfig extends $pb.GeneratedMessage {
 
   NodeConfig._() : super();
   factory NodeConfig({
-    OscillatorNodeConfig oscillatorConfig,
-    ScriptingNodeConfig scriptingConfig,
-    SequenceNodeConfig sequenceConfig,
-    ClockNodeConfig clockConfig,
-    FixtureNodeConfig fixtureConfig,
-    InputNodeConfig buttonConfig,
-    InputNodeConfig faderConfig,
-    IldaFileNodeConfig ildaFileConfig,
-    LaserNodeConfig laserConfig,
-    PixelPatternNodeConfig pixelPatternConfig,
-    PixelDmxNodeConfig pixelDmxConfig,
-    DmxOutputNodeConfig dmxOutputConfig,
-    MidiInputNodeConfig midiInputConfig,
-    MidiOutputNodeConfig midiOutputConfig,
-    OpcOutputNodeConfig opcOutputConfig,
-    OscNodeConfig oscInputConfig,
-    OscNodeConfig oscOutputConfig,
-    VideoColorBalanceNodeConfig videoColorBalanceConfig,
-    VideoEffectNodeConfig videoEffectConfig,
-    VideoFileNodeConfig videoFileConfig,
-    VideoOutputNodeConfig videoOutputConfig,
-    VideoTransformNodeConfig videoTransformConfig,
-    SelectNodeConfig selectConfig,
-    MergeNodeConfig mergeConfig,
-    EnvelopeNodeConfig envelopeConfig,
+    OscillatorNodeConfig? oscillatorConfig,
+    ScriptingNodeConfig? scriptingConfig,
+    SequenceNodeConfig? sequenceConfig,
+    ClockNodeConfig? clockConfig,
+    FixtureNodeConfig? fixtureConfig,
+    InputNodeConfig? buttonConfig,
+    InputNodeConfig? faderConfig,
+    IldaFileNodeConfig? ildaFileConfig,
+    LaserNodeConfig? laserConfig,
+    PixelPatternNodeConfig? pixelPatternConfig,
+    PixelDmxNodeConfig? pixelDmxConfig,
+    DmxOutputNodeConfig? dmxOutputConfig,
+    MidiInputNodeConfig? midiInputConfig,
+    MidiOutputNodeConfig? midiOutputConfig,
+    OpcOutputNodeConfig? opcOutputConfig,
+    OscNodeConfig? oscInputConfig,
+    OscNodeConfig? oscOutputConfig,
+    VideoColorBalanceNodeConfig? videoColorBalanceConfig,
+    VideoEffectNodeConfig? videoEffectConfig,
+    VideoFileNodeConfig? videoFileConfig,
+    VideoOutputNodeConfig? videoOutputConfig,
+    VideoTransformNodeConfig? videoTransformConfig,
+    SelectNodeConfig? selectConfig,
+    MergeNodeConfig? mergeConfig,
+    EnvelopeNodeConfig? envelopeConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -954,7 +954,7 @@ class NodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeConfig copyWith(void Function(NodeConfig) updates) => super.copyWith((message) => updates(message as NodeConfig)); // ignore: deprecated_member_use
+  NodeConfig copyWith(void Function(NodeConfig) updates) => super.copyWith((message) => updates(message as NodeConfig)) as NodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static NodeConfig create() => NodeConfig._();
@@ -962,9 +962,9 @@ class NodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<NodeConfig> createRepeated() => $pb.PbList<NodeConfig>();
   @$core.pragma('dart2js:noInline')
   static NodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeConfig>(create);
-  static NodeConfig _defaultInstance;
+  static NodeConfig? _defaultInstance;
 
-  NodeConfig_Type whichType() => _NodeConfig_TypeByTag[$_whichOneof(0)];
+  NodeConfig_Type whichType() => _NodeConfig_TypeByTag[$_whichOneof(0)]!;
   void clearType() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(10)
@@ -1256,12 +1256,12 @@ class OscillatorNodeConfig extends $pb.GeneratedMessage {
 
   OscillatorNodeConfig._() : super();
   factory OscillatorNodeConfig({
-    OscillatorNodeConfig_OscillatorType type,
-    $core.double ratio,
-    $core.double max,
-    $core.double min,
-    $core.double offset,
-    $core.bool reverse,
+    OscillatorNodeConfig_OscillatorType? type,
+    $core.double? ratio,
+    $core.double? max,
+    $core.double? min,
+    $core.double? offset,
+    $core.bool? reverse,
   }) {
     final _result = create();
     if (type != null) {
@@ -1295,7 +1295,7 @@ class OscillatorNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OscillatorNodeConfig copyWith(void Function(OscillatorNodeConfig) updates) => super.copyWith((message) => updates(message as OscillatorNodeConfig)); // ignore: deprecated_member_use
+  OscillatorNodeConfig copyWith(void Function(OscillatorNodeConfig) updates) => super.copyWith((message) => updates(message as OscillatorNodeConfig)) as OscillatorNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static OscillatorNodeConfig create() => OscillatorNodeConfig._();
@@ -1303,7 +1303,7 @@ class OscillatorNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<OscillatorNodeConfig> createRepeated() => $pb.PbList<OscillatorNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static OscillatorNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OscillatorNodeConfig>(create);
-  static OscillatorNodeConfig _defaultInstance;
+  static OscillatorNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   OscillatorNodeConfig_OscillatorType get type => $_getN(0);
@@ -1368,7 +1368,7 @@ class ScriptingNodeConfig extends $pb.GeneratedMessage {
 
   ScriptingNodeConfig._() : super();
   factory ScriptingNodeConfig({
-    $core.String script,
+    $core.String? script,
   }) {
     final _result = create();
     if (script != null) {
@@ -1387,7 +1387,7 @@ class ScriptingNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ScriptingNodeConfig copyWith(void Function(ScriptingNodeConfig) updates) => super.copyWith((message) => updates(message as ScriptingNodeConfig)); // ignore: deprecated_member_use
+  ScriptingNodeConfig copyWith(void Function(ScriptingNodeConfig) updates) => super.copyWith((message) => updates(message as ScriptingNodeConfig)) as ScriptingNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ScriptingNodeConfig create() => ScriptingNodeConfig._();
@@ -1395,7 +1395,7 @@ class ScriptingNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<ScriptingNodeConfig> createRepeated() => $pb.PbList<ScriptingNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static ScriptingNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ScriptingNodeConfig>(create);
-  static ScriptingNodeConfig _defaultInstance;
+  static ScriptingNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get script => $_getSZ(0);
@@ -1417,9 +1417,9 @@ class SequenceNodeConfig_SequenceStep extends $pb.GeneratedMessage {
 
   SequenceNodeConfig_SequenceStep._() : super();
   factory SequenceNodeConfig_SequenceStep({
-    $core.double tick,
-    $core.double value,
-    $core.bool hold,
+    $core.double? tick,
+    $core.double? value,
+    $core.bool? hold,
   }) {
     final _result = create();
     if (tick != null) {
@@ -1444,7 +1444,7 @@ class SequenceNodeConfig_SequenceStep extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceNodeConfig_SequenceStep copyWith(void Function(SequenceNodeConfig_SequenceStep) updates) => super.copyWith((message) => updates(message as SequenceNodeConfig_SequenceStep)); // ignore: deprecated_member_use
+  SequenceNodeConfig_SequenceStep copyWith(void Function(SequenceNodeConfig_SequenceStep) updates) => super.copyWith((message) => updates(message as SequenceNodeConfig_SequenceStep)) as SequenceNodeConfig_SequenceStep; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SequenceNodeConfig_SequenceStep create() => SequenceNodeConfig_SequenceStep._();
@@ -1452,7 +1452,7 @@ class SequenceNodeConfig_SequenceStep extends $pb.GeneratedMessage {
   static $pb.PbList<SequenceNodeConfig_SequenceStep> createRepeated() => $pb.PbList<SequenceNodeConfig_SequenceStep>();
   @$core.pragma('dart2js:noInline')
   static SequenceNodeConfig_SequenceStep getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceNodeConfig_SequenceStep>(create);
-  static SequenceNodeConfig_SequenceStep _defaultInstance;
+  static SequenceNodeConfig_SequenceStep? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get tick => $_getN(0);
@@ -1490,7 +1490,7 @@ class SequenceNodeConfig extends $pb.GeneratedMessage {
 
   SequenceNodeConfig._() : super();
   factory SequenceNodeConfig({
-    $core.Iterable<SequenceNodeConfig_SequenceStep> steps,
+    $core.Iterable<SequenceNodeConfig_SequenceStep>? steps,
   }) {
     final _result = create();
     if (steps != null) {
@@ -1509,7 +1509,7 @@ class SequenceNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceNodeConfig copyWith(void Function(SequenceNodeConfig) updates) => super.copyWith((message) => updates(message as SequenceNodeConfig)); // ignore: deprecated_member_use
+  SequenceNodeConfig copyWith(void Function(SequenceNodeConfig) updates) => super.copyWith((message) => updates(message as SequenceNodeConfig)) as SequenceNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SequenceNodeConfig create() => SequenceNodeConfig._();
@@ -1517,7 +1517,7 @@ class SequenceNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<SequenceNodeConfig> createRepeated() => $pb.PbList<SequenceNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static SequenceNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceNodeConfig>(create);
-  static SequenceNodeConfig _defaultInstance;
+  static SequenceNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<SequenceNodeConfig_SequenceStep> get steps => $_getList(0);
@@ -1534,10 +1534,10 @@ class EnvelopeNodeConfig extends $pb.GeneratedMessage {
 
   EnvelopeNodeConfig._() : super();
   factory EnvelopeNodeConfig({
-    $core.double attack,
-    $core.double decay,
-    $core.double sustain,
-    $core.double release,
+    $core.double? attack,
+    $core.double? decay,
+    $core.double? sustain,
+    $core.double? release,
   }) {
     final _result = create();
     if (attack != null) {
@@ -1565,7 +1565,7 @@ class EnvelopeNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EnvelopeNodeConfig copyWith(void Function(EnvelopeNodeConfig) updates) => super.copyWith((message) => updates(message as EnvelopeNodeConfig)); // ignore: deprecated_member_use
+  EnvelopeNodeConfig copyWith(void Function(EnvelopeNodeConfig) updates) => super.copyWith((message) => updates(message as EnvelopeNodeConfig)) as EnvelopeNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static EnvelopeNodeConfig create() => EnvelopeNodeConfig._();
@@ -1573,7 +1573,7 @@ class EnvelopeNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<EnvelopeNodeConfig> createRepeated() => $pb.PbList<EnvelopeNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static EnvelopeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EnvelopeNodeConfig>(create);
-  static EnvelopeNodeConfig _defaultInstance;
+  static EnvelopeNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get attack => $_getN(0);
@@ -1620,7 +1620,7 @@ class ClockNodeConfig extends $pb.GeneratedMessage {
 
   ClockNodeConfig._() : super();
   factory ClockNodeConfig({
-    $core.double speed,
+    $core.double? speed,
   }) {
     final _result = create();
     if (speed != null) {
@@ -1639,7 +1639,7 @@ class ClockNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClockNodeConfig copyWith(void Function(ClockNodeConfig) updates) => super.copyWith((message) => updates(message as ClockNodeConfig)); // ignore: deprecated_member_use
+  ClockNodeConfig copyWith(void Function(ClockNodeConfig) updates) => super.copyWith((message) => updates(message as ClockNodeConfig)) as ClockNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ClockNodeConfig create() => ClockNodeConfig._();
@@ -1647,7 +1647,7 @@ class ClockNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<ClockNodeConfig> createRepeated() => $pb.PbList<ClockNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static ClockNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ClockNodeConfig>(create);
-  static ClockNodeConfig _defaultInstance;
+  static ClockNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get speed => $_getN(0);
@@ -1667,7 +1667,7 @@ class FixtureNodeConfig extends $pb.GeneratedMessage {
 
   FixtureNodeConfig._() : super();
   factory FixtureNodeConfig({
-    $core.int fixtureId,
+    $core.int? fixtureId,
   }) {
     final _result = create();
     if (fixtureId != null) {
@@ -1686,7 +1686,7 @@ class FixtureNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FixtureNodeConfig copyWith(void Function(FixtureNodeConfig) updates) => super.copyWith((message) => updates(message as FixtureNodeConfig)); // ignore: deprecated_member_use
+  FixtureNodeConfig copyWith(void Function(FixtureNodeConfig) updates) => super.copyWith((message) => updates(message as FixtureNodeConfig)) as FixtureNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static FixtureNodeConfig create() => FixtureNodeConfig._();
@@ -1694,7 +1694,7 @@ class FixtureNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<FixtureNodeConfig> createRepeated() => $pb.PbList<FixtureNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static FixtureNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureNodeConfig>(create);
-  static FixtureNodeConfig _defaultInstance;
+  static FixtureNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get fixtureId => $_getIZ(0);
@@ -1724,7 +1724,7 @@ class InputNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  InputNodeConfig copyWith(void Function(InputNodeConfig) updates) => super.copyWith((message) => updates(message as InputNodeConfig)); // ignore: deprecated_member_use
+  InputNodeConfig copyWith(void Function(InputNodeConfig) updates) => super.copyWith((message) => updates(message as InputNodeConfig)) as InputNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static InputNodeConfig create() => InputNodeConfig._();
@@ -1732,7 +1732,7 @@ class InputNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<InputNodeConfig> createRepeated() => $pb.PbList<InputNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static InputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InputNodeConfig>(create);
-  static InputNodeConfig _defaultInstance;
+  static InputNodeConfig? _defaultInstance;
 }
 
 class IldaFileNodeConfig extends $pb.GeneratedMessage {
@@ -1743,7 +1743,7 @@ class IldaFileNodeConfig extends $pb.GeneratedMessage {
 
   IldaFileNodeConfig._() : super();
   factory IldaFileNodeConfig({
-    $core.String file,
+    $core.String? file,
   }) {
     final _result = create();
     if (file != null) {
@@ -1762,7 +1762,7 @@ class IldaFileNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  IldaFileNodeConfig copyWith(void Function(IldaFileNodeConfig) updates) => super.copyWith((message) => updates(message as IldaFileNodeConfig)); // ignore: deprecated_member_use
+  IldaFileNodeConfig copyWith(void Function(IldaFileNodeConfig) updates) => super.copyWith((message) => updates(message as IldaFileNodeConfig)) as IldaFileNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static IldaFileNodeConfig create() => IldaFileNodeConfig._();
@@ -1770,7 +1770,7 @@ class IldaFileNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<IldaFileNodeConfig> createRepeated() => $pb.PbList<IldaFileNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static IldaFileNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IldaFileNodeConfig>(create);
-  static IldaFileNodeConfig _defaultInstance;
+  static IldaFileNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get file => $_getSZ(0);
@@ -1790,7 +1790,7 @@ class LaserNodeConfig extends $pb.GeneratedMessage {
 
   LaserNodeConfig._() : super();
   factory LaserNodeConfig({
-    $core.String deviceId,
+    $core.String? deviceId,
   }) {
     final _result = create();
     if (deviceId != null) {
@@ -1809,7 +1809,7 @@ class LaserNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  LaserNodeConfig copyWith(void Function(LaserNodeConfig) updates) => super.copyWith((message) => updates(message as LaserNodeConfig)); // ignore: deprecated_member_use
+  LaserNodeConfig copyWith(void Function(LaserNodeConfig) updates) => super.copyWith((message) => updates(message as LaserNodeConfig)) as LaserNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static LaserNodeConfig create() => LaserNodeConfig._();
@@ -1817,7 +1817,7 @@ class LaserNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<LaserNodeConfig> createRepeated() => $pb.PbList<LaserNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static LaserNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LaserNodeConfig>(create);
-  static LaserNodeConfig _defaultInstance;
+  static LaserNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get deviceId => $_getSZ(0);
@@ -1837,7 +1837,7 @@ class PixelPatternNodeConfig extends $pb.GeneratedMessage {
 
   PixelPatternNodeConfig._() : super();
   factory PixelPatternNodeConfig({
-    PixelPatternNodeConfig_Pattern pattern,
+    PixelPatternNodeConfig_Pattern? pattern,
   }) {
     final _result = create();
     if (pattern != null) {
@@ -1856,7 +1856,7 @@ class PixelPatternNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PixelPatternNodeConfig copyWith(void Function(PixelPatternNodeConfig) updates) => super.copyWith((message) => updates(message as PixelPatternNodeConfig)); // ignore: deprecated_member_use
+  PixelPatternNodeConfig copyWith(void Function(PixelPatternNodeConfig) updates) => super.copyWith((message) => updates(message as PixelPatternNodeConfig)) as PixelPatternNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PixelPatternNodeConfig create() => PixelPatternNodeConfig._();
@@ -1864,7 +1864,7 @@ class PixelPatternNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<PixelPatternNodeConfig> createRepeated() => $pb.PbList<PixelPatternNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static PixelPatternNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PixelPatternNodeConfig>(create);
-  static PixelPatternNodeConfig _defaultInstance;
+  static PixelPatternNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   PixelPatternNodeConfig_Pattern get pattern => $_getN(0);
@@ -1887,10 +1887,10 @@ class PixelDmxNodeConfig extends $pb.GeneratedMessage {
 
   PixelDmxNodeConfig._() : super();
   factory PixelDmxNodeConfig({
-    $fixnum.Int64 width,
-    $fixnum.Int64 height,
-    $core.int startUniverse,
-    $core.String output,
+    $fixnum.Int64? width,
+    $fixnum.Int64? height,
+    $core.int? startUniverse,
+    $core.String? output,
   }) {
     final _result = create();
     if (width != null) {
@@ -1918,7 +1918,7 @@ class PixelDmxNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PixelDmxNodeConfig copyWith(void Function(PixelDmxNodeConfig) updates) => super.copyWith((message) => updates(message as PixelDmxNodeConfig)); // ignore: deprecated_member_use
+  PixelDmxNodeConfig copyWith(void Function(PixelDmxNodeConfig) updates) => super.copyWith((message) => updates(message as PixelDmxNodeConfig)) as PixelDmxNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static PixelDmxNodeConfig create() => PixelDmxNodeConfig._();
@@ -1926,7 +1926,7 @@ class PixelDmxNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<PixelDmxNodeConfig> createRepeated() => $pb.PbList<PixelDmxNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static PixelDmxNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PixelDmxNodeConfig>(create);
-  static PixelDmxNodeConfig _defaultInstance;
+  static PixelDmxNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get width => $_getI64(0);
@@ -1975,9 +1975,9 @@ class DmxOutputNodeConfig extends $pb.GeneratedMessage {
 
   DmxOutputNodeConfig._() : super();
   factory DmxOutputNodeConfig({
-    $core.String output,
-    $core.int universe,
-    $core.int channel,
+    $core.String? output,
+    $core.int? universe,
+    $core.int? channel,
   }) {
     final _result = create();
     if (output != null) {
@@ -2002,7 +2002,7 @@ class DmxOutputNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DmxOutputNodeConfig copyWith(void Function(DmxOutputNodeConfig) updates) => super.copyWith((message) => updates(message as DmxOutputNodeConfig)); // ignore: deprecated_member_use
+  DmxOutputNodeConfig copyWith(void Function(DmxOutputNodeConfig) updates) => super.copyWith((message) => updates(message as DmxOutputNodeConfig)) as DmxOutputNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DmxOutputNodeConfig create() => DmxOutputNodeConfig._();
@@ -2010,7 +2010,7 @@ class DmxOutputNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<DmxOutputNodeConfig> createRepeated() => $pb.PbList<DmxOutputNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static DmxOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxOutputNodeConfig>(create);
-  static DmxOutputNodeConfig _defaultInstance;
+  static DmxOutputNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get output => $_getSZ(0);
@@ -2058,7 +2058,7 @@ class MidiInputNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiInputNodeConfig copyWith(void Function(MidiInputNodeConfig) updates) => super.copyWith((message) => updates(message as MidiInputNodeConfig)); // ignore: deprecated_member_use
+  MidiInputNodeConfig copyWith(void Function(MidiInputNodeConfig) updates) => super.copyWith((message) => updates(message as MidiInputNodeConfig)) as MidiInputNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MidiInputNodeConfig create() => MidiInputNodeConfig._();
@@ -2066,7 +2066,7 @@ class MidiInputNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<MidiInputNodeConfig> createRepeated() => $pb.PbList<MidiInputNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static MidiInputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiInputNodeConfig>(create);
-  static MidiInputNodeConfig _defaultInstance;
+  static MidiInputNodeConfig? _defaultInstance;
 }
 
 class MidiOutputNodeConfig extends $pb.GeneratedMessage {
@@ -2087,7 +2087,7 @@ class MidiOutputNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiOutputNodeConfig copyWith(void Function(MidiOutputNodeConfig) updates) => super.copyWith((message) => updates(message as MidiOutputNodeConfig)); // ignore: deprecated_member_use
+  MidiOutputNodeConfig copyWith(void Function(MidiOutputNodeConfig) updates) => super.copyWith((message) => updates(message as MidiOutputNodeConfig)) as MidiOutputNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MidiOutputNodeConfig create() => MidiOutputNodeConfig._();
@@ -2095,7 +2095,7 @@ class MidiOutputNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<MidiOutputNodeConfig> createRepeated() => $pb.PbList<MidiOutputNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static MidiOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiOutputNodeConfig>(create);
-  static MidiOutputNodeConfig _defaultInstance;
+  static MidiOutputNodeConfig? _defaultInstance;
 }
 
 class OpcOutputNodeConfig extends $pb.GeneratedMessage {
@@ -2109,10 +2109,10 @@ class OpcOutputNodeConfig extends $pb.GeneratedMessage {
 
   OpcOutputNodeConfig._() : super();
   factory OpcOutputNodeConfig({
-    $core.String host,
-    $core.int port,
-    $fixnum.Int64 width,
-    $fixnum.Int64 height,
+    $core.String? host,
+    $core.int? port,
+    $fixnum.Int64? width,
+    $fixnum.Int64? height,
   }) {
     final _result = create();
     if (host != null) {
@@ -2140,7 +2140,7 @@ class OpcOutputNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OpcOutputNodeConfig copyWith(void Function(OpcOutputNodeConfig) updates) => super.copyWith((message) => updates(message as OpcOutputNodeConfig)); // ignore: deprecated_member_use
+  OpcOutputNodeConfig copyWith(void Function(OpcOutputNodeConfig) updates) => super.copyWith((message) => updates(message as OpcOutputNodeConfig)) as OpcOutputNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static OpcOutputNodeConfig create() => OpcOutputNodeConfig._();
@@ -2148,7 +2148,7 @@ class OpcOutputNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<OpcOutputNodeConfig> createRepeated() => $pb.PbList<OpcOutputNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static OpcOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OpcOutputNodeConfig>(create);
-  static OpcOutputNodeConfig _defaultInstance;
+  static OpcOutputNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get host => $_getSZ(0);
@@ -2197,9 +2197,9 @@ class OscNodeConfig extends $pb.GeneratedMessage {
 
   OscNodeConfig._() : super();
   factory OscNodeConfig({
-    $core.String host,
-    $core.int port,
-    $core.String path,
+    $core.String? host,
+    $core.int? port,
+    $core.String? path,
   }) {
     final _result = create();
     if (host != null) {
@@ -2224,7 +2224,7 @@ class OscNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  OscNodeConfig copyWith(void Function(OscNodeConfig) updates) => super.copyWith((message) => updates(message as OscNodeConfig)); // ignore: deprecated_member_use
+  OscNodeConfig copyWith(void Function(OscNodeConfig) updates) => super.copyWith((message) => updates(message as OscNodeConfig)) as OscNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static OscNodeConfig create() => OscNodeConfig._();
@@ -2232,7 +2232,7 @@ class OscNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<OscNodeConfig> createRepeated() => $pb.PbList<OscNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static OscNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<OscNodeConfig>(create);
-  static OscNodeConfig _defaultInstance;
+  static OscNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get host => $_getSZ(0);
@@ -2280,7 +2280,7 @@ class VideoColorBalanceNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  VideoColorBalanceNodeConfig copyWith(void Function(VideoColorBalanceNodeConfig) updates) => super.copyWith((message) => updates(message as VideoColorBalanceNodeConfig)); // ignore: deprecated_member_use
+  VideoColorBalanceNodeConfig copyWith(void Function(VideoColorBalanceNodeConfig) updates) => super.copyWith((message) => updates(message as VideoColorBalanceNodeConfig)) as VideoColorBalanceNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VideoColorBalanceNodeConfig create() => VideoColorBalanceNodeConfig._();
@@ -2288,7 +2288,7 @@ class VideoColorBalanceNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<VideoColorBalanceNodeConfig> createRepeated() => $pb.PbList<VideoColorBalanceNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static VideoColorBalanceNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoColorBalanceNodeConfig>(create);
-  static VideoColorBalanceNodeConfig _defaultInstance;
+  static VideoColorBalanceNodeConfig? _defaultInstance;
 }
 
 class VideoEffectNodeConfig extends $pb.GeneratedMessage {
@@ -2309,7 +2309,7 @@ class VideoEffectNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  VideoEffectNodeConfig copyWith(void Function(VideoEffectNodeConfig) updates) => super.copyWith((message) => updates(message as VideoEffectNodeConfig)); // ignore: deprecated_member_use
+  VideoEffectNodeConfig copyWith(void Function(VideoEffectNodeConfig) updates) => super.copyWith((message) => updates(message as VideoEffectNodeConfig)) as VideoEffectNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VideoEffectNodeConfig create() => VideoEffectNodeConfig._();
@@ -2317,7 +2317,7 @@ class VideoEffectNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<VideoEffectNodeConfig> createRepeated() => $pb.PbList<VideoEffectNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static VideoEffectNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoEffectNodeConfig>(create);
-  static VideoEffectNodeConfig _defaultInstance;
+  static VideoEffectNodeConfig? _defaultInstance;
 }
 
 class VideoFileNodeConfig extends $pb.GeneratedMessage {
@@ -2328,7 +2328,7 @@ class VideoFileNodeConfig extends $pb.GeneratedMessage {
 
   VideoFileNodeConfig._() : super();
   factory VideoFileNodeConfig({
-    $core.String file,
+    $core.String? file,
   }) {
     final _result = create();
     if (file != null) {
@@ -2347,7 +2347,7 @@ class VideoFileNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  VideoFileNodeConfig copyWith(void Function(VideoFileNodeConfig) updates) => super.copyWith((message) => updates(message as VideoFileNodeConfig)); // ignore: deprecated_member_use
+  VideoFileNodeConfig copyWith(void Function(VideoFileNodeConfig) updates) => super.copyWith((message) => updates(message as VideoFileNodeConfig)) as VideoFileNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VideoFileNodeConfig create() => VideoFileNodeConfig._();
@@ -2355,7 +2355,7 @@ class VideoFileNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<VideoFileNodeConfig> createRepeated() => $pb.PbList<VideoFileNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static VideoFileNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoFileNodeConfig>(create);
-  static VideoFileNodeConfig _defaultInstance;
+  static VideoFileNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get file => $_getSZ(0);
@@ -2385,7 +2385,7 @@ class VideoOutputNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  VideoOutputNodeConfig copyWith(void Function(VideoOutputNodeConfig) updates) => super.copyWith((message) => updates(message as VideoOutputNodeConfig)); // ignore: deprecated_member_use
+  VideoOutputNodeConfig copyWith(void Function(VideoOutputNodeConfig) updates) => super.copyWith((message) => updates(message as VideoOutputNodeConfig)) as VideoOutputNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VideoOutputNodeConfig create() => VideoOutputNodeConfig._();
@@ -2393,7 +2393,7 @@ class VideoOutputNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<VideoOutputNodeConfig> createRepeated() => $pb.PbList<VideoOutputNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static VideoOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoOutputNodeConfig>(create);
-  static VideoOutputNodeConfig _defaultInstance;
+  static VideoOutputNodeConfig? _defaultInstance;
 }
 
 class VideoTransformNodeConfig extends $pb.GeneratedMessage {
@@ -2414,7 +2414,7 @@ class VideoTransformNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  VideoTransformNodeConfig copyWith(void Function(VideoTransformNodeConfig) updates) => super.copyWith((message) => updates(message as VideoTransformNodeConfig)); // ignore: deprecated_member_use
+  VideoTransformNodeConfig copyWith(void Function(VideoTransformNodeConfig) updates) => super.copyWith((message) => updates(message as VideoTransformNodeConfig)) as VideoTransformNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static VideoTransformNodeConfig create() => VideoTransformNodeConfig._();
@@ -2422,7 +2422,7 @@ class VideoTransformNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<VideoTransformNodeConfig> createRepeated() => $pb.PbList<VideoTransformNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static VideoTransformNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoTransformNodeConfig>(create);
-  static VideoTransformNodeConfig _defaultInstance;
+  static VideoTransformNodeConfig? _defaultInstance;
 }
 
 class SelectNodeConfig extends $pb.GeneratedMessage {
@@ -2443,7 +2443,7 @@ class SelectNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SelectNodeConfig copyWith(void Function(SelectNodeConfig) updates) => super.copyWith((message) => updates(message as SelectNodeConfig)); // ignore: deprecated_member_use
+  SelectNodeConfig copyWith(void Function(SelectNodeConfig) updates) => super.copyWith((message) => updates(message as SelectNodeConfig)) as SelectNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static SelectNodeConfig create() => SelectNodeConfig._();
@@ -2451,7 +2451,7 @@ class SelectNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<SelectNodeConfig> createRepeated() => $pb.PbList<SelectNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static SelectNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectNodeConfig>(create);
-  static SelectNodeConfig _defaultInstance;
+  static SelectNodeConfig? _defaultInstance;
 }
 
 class MergeNodeConfig extends $pb.GeneratedMessage {
@@ -2472,7 +2472,7 @@ class MergeNodeConfig extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MergeNodeConfig copyWith(void Function(MergeNodeConfig) updates) => super.copyWith((message) => updates(message as MergeNodeConfig)); // ignore: deprecated_member_use
+  MergeNodeConfig copyWith(void Function(MergeNodeConfig) updates) => super.copyWith((message) => updates(message as MergeNodeConfig)) as MergeNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MergeNodeConfig create() => MergeNodeConfig._();
@@ -2480,7 +2480,7 @@ class MergeNodeConfig extends $pb.GeneratedMessage {
   static $pb.PbList<MergeNodeConfig> createRepeated() => $pb.PbList<MergeNodeConfig>();
   @$core.pragma('dart2js:noInline')
   static MergeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MergeNodeConfig>(create);
-  static MergeNodeConfig _defaultInstance;
+  static MergeNodeConfig? _defaultInstance;
 }
 
 class NodePosition extends $pb.GeneratedMessage {
@@ -2492,8 +2492,8 @@ class NodePosition extends $pb.GeneratedMessage {
 
   NodePosition._() : super();
   factory NodePosition({
-    $core.double x,
-    $core.double y,
+    $core.double? x,
+    $core.double? y,
   }) {
     final _result = create();
     if (x != null) {
@@ -2515,7 +2515,7 @@ class NodePosition extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodePosition copyWith(void Function(NodePosition) updates) => super.copyWith((message) => updates(message as NodePosition)); // ignore: deprecated_member_use
+  NodePosition copyWith(void Function(NodePosition) updates) => super.copyWith((message) => updates(message as NodePosition)) as NodePosition; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static NodePosition create() => NodePosition._();
@@ -2523,7 +2523,7 @@ class NodePosition extends $pb.GeneratedMessage {
   static $pb.PbList<NodePosition> createRepeated() => $pb.PbList<NodePosition>();
   @$core.pragma('dart2js:noInline')
   static NodePosition getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodePosition>(create);
-  static NodePosition _defaultInstance;
+  static NodePosition? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get x => $_getN(0);
@@ -2554,9 +2554,9 @@ class NodeDesigner extends $pb.GeneratedMessage {
 
   NodeDesigner._() : super();
   factory NodeDesigner({
-    NodePosition position,
-    $core.double scale,
-    $core.bool hidden,
+    NodePosition? position,
+    $core.double? scale,
+    $core.bool? hidden,
   }) {
     final _result = create();
     if (position != null) {
@@ -2581,7 +2581,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  NodeDesigner copyWith(void Function(NodeDesigner) updates) => super.copyWith((message) => updates(message as NodeDesigner)); // ignore: deprecated_member_use
+  NodeDesigner copyWith(void Function(NodeDesigner) updates) => super.copyWith((message) => updates(message as NodeDesigner)) as NodeDesigner; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static NodeDesigner create() => NodeDesigner._();
@@ -2589,7 +2589,7 @@ class NodeDesigner extends $pb.GeneratedMessage {
   static $pb.PbList<NodeDesigner> createRepeated() => $pb.PbList<NodeDesigner>();
   @$core.pragma('dart2js:noInline')
   static NodeDesigner getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NodeDesigner>(create);
-  static NodeDesigner _defaultInstance;
+  static NodeDesigner? _defaultInstance;
 
   @$pb.TagNumber(1)
   NodePosition get position => $_getN(0);
@@ -2630,8 +2630,8 @@ class Port extends $pb.GeneratedMessage {
 
   Port._() : super();
   factory Port({
-    $core.String name,
-    ChannelProtocol protocol,
+    $core.String? name,
+    ChannelProtocol? protocol,
   }) {
     final _result = create();
     if (name != null) {
@@ -2653,7 +2653,7 @@ class Port extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Port copyWith(void Function(Port) updates) => super.copyWith((message) => updates(message as Port)); // ignore: deprecated_member_use
+  Port copyWith(void Function(Port) updates) => super.copyWith((message) => updates(message as Port)) as Port; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static Port create() => Port._();
@@ -2661,7 +2661,7 @@ class Port extends $pb.GeneratedMessage {
   static $pb.PbList<Port> createRepeated() => $pb.PbList<Port>();
   @$core.pragma('dart2js:noInline')
   static Port getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Port>(create);
-  static Port _defaultInstance;
+  static Port? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);

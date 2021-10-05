@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +5,7 @@ class PropertyGroup extends StatelessWidget {
   final String title;
   final List<Widget> children;
 
-  PropertyGroup({this.title, this.children});
+  PropertyGroup({required this.title, required this.children});
 
   @override
   Widget build(BuildContext context) {

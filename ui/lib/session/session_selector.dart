@@ -1,4 +1,3 @@
-// @dart=2.11
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,7 @@ class SessionProvider extends StatelessWidget {
   final Widget Function(ClientChannel) builder;
   final Widget Function() demo;
 
-  SessionProvider(this.discovery, {this.builder, this.demo});
+  SessionProvider(this.discovery, {required this.builder, required this.demo});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class SessionSelector extends StatefulWidget {
 }
 
 class _SessionSelectorState extends State<SessionSelector> {
-  AvailableSession selectedSession;
+  AvailableSession? selectedSession;
   bool runDemo = false;
 
   @override
@@ -39,7 +38,7 @@ class _SessionSelectorState extends State<SessionSelector> {
     if (this.runDemo) {
       return this.widget.demo();
     }else if (this.selectedSession != null) {
-      return this.widget.builder(this.selectedSession.openChannel());
+      return this.widget.builder(this.selectedSession!.openChannel());
     } else {
       return TitleScreen(
           selectSession: (session) => setState(() {

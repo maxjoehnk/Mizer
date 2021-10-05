@@ -11,7 +11,7 @@ const List<PopupCategory<Node_NodeType>> NODES = [
     PopupItem(Node_NodeType.Merge, "Merge"),
     PopupItem(Node_NodeType.Select, "Select"),
     PopupItem(Node_NodeType.Envelope, "Envelope"),
-    PopupItem(null, "DMX Input"),
+    // PopupItem(null, "DMX Input"),
     PopupItem(Node_NodeType.DmxOutput, "DMX Output"),
     PopupItem(Node_NodeType.MidiInput, "MIDI Input"),
     PopupItem(Node_NodeType.MidiOutput, "MIDI Output"),
@@ -19,7 +19,7 @@ const List<PopupCategory<Node_NodeType>> NODES = [
   PopupCategory(label: "Controls", items: [
     PopupItem(Node_NodeType.Fader, "Fader"),
     PopupItem(Node_NodeType.Button, "Button"),
-    PopupItem(null, "Color Picker"),
+    // PopupItem(null, "Color Picker"),
   ]),
   PopupCategory(label: "Video", items: [
     PopupItem(Node_NodeType.VideoFile, "File"),

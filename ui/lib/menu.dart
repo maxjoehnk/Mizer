@@ -1,8 +1,9 @@
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:mizer/platform/platform.dart';
+import 'package:nativeshell/nativeshell.dart' show Window;
+import 'package:provider/provider.dart';
 
 import 'actions/actions.dart';
 import 'actions/menu.dart';
@@ -47,6 +48,11 @@ class ApplicationMenu extends StatelessWidget {
             MenuActionItem(label: "Media", action: OpenViewIntent(View.Media)),
             MenuActionItem(label: "Connections", action: OpenViewIntent(View.Connections)),
             MenuActionItem(label: "Session", action: OpenViewIntent(View.Session)),
+          ]),
+          if (!context.platform.isStandalone) SubMenu(title: 'Window', children: [
+            MenuItem(
+                label: 'New Window',
+                action: () => Window.create({}).then((window) => window.show()))
           ])
         ]));
   }

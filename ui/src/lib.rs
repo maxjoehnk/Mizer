@@ -32,6 +32,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(handlers: Handle
     let _session = SessionChannel::new(handlers.session).channel(context.weak());
     let _sequencer = SequencerChannel::new(handlers.sequencer).channel(context.weak());
     let _programmer = ProgrammerChannel::new(handlers.programmer).channel(context.weak());
+    let _settings = SettingsChannel::new(handlers.settings).channel(context.weak());
 
     context
         .window_manager

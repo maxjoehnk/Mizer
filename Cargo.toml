@@ -41,6 +41,7 @@ members = [
     "runtime/pipeline/ports",
     "runtime/processing",
     "runtime/projects",
+    "runtime/settings",
     "ui",
     "ui/ffi",
     "util",
@@ -99,6 +100,7 @@ mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }
 mizer-util = { path = "util" }
+mizer-settings = { path = "runtime/settings" }
 tokio = { version = "1.8", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.1"

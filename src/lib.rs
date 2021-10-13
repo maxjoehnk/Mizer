@@ -20,6 +20,9 @@ use mizer_runtime::DefaultRuntime;
 pub use crate::api::*;
 pub use crate::flags::Flags;
 use mizer_sequencer::{SequencerModule, Sequencer};
+use mizer_settings::Settings;
+use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 mod api;
 mod flags;
@@ -30,6 +33,8 @@ pub fn build_runtime(
     handle: tokio::runtime::Handle,
     flags: Flags,
 ) -> anyhow::Result<(Mizer, ApiHandler)> {
+    let settings = Settings::load()?;
+    let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
     let (api_handler, api) = Api::setup(&runtime);
@@ -51,6 +56,7 @@ pub fn build_runtime(
         fixture_library,
         media_server_api.clone(),
         sequencer,
+        settings.clone(),
     );
 
     let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
@@ -62,6 +68,7 @@ pub fn build_runtime(
         runtime,
         grpc,
         handlers,
+        settings,
     };
     if has_project_file {
         mizer.load_project()?;
@@ -79,6 +86,7 @@ pub struct Mizer {
     grpc: Option<mizer_grpc_api::Server>,
     pub handlers: Handlers<Api>,
     project_path: Option<PathBuf>,
+    settings: Arc<NonEmptyPinboard<Settings>>,
 }
 
 impl Mizer {

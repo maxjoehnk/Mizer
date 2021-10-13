@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/menu.dart';
+import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
@@ -14,12 +15,13 @@ import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
 
 import 'actions/actions.dart';
+import 'api/contracts/settings.dart';
 
 List<Route> routes = [
   Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', LogicalKeyboardKey.digit1,
       View.Layout),
   Route(
-      () => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.digit2, View.Plan2D),
+      () => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.digit2, View.Plan),
   Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.digit3, View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.digit4,
       View.Nodes),
@@ -34,15 +36,12 @@ List<Route> routes = [
   Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit9, View.Session),
 ];
 
-Map<LogicalKeySet, Intent> shortcuts = getShortcuts(routes);
+Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);
 
-Map<LogicalKeySet, Intent> getShortcuts(List<Route> routes) {
-  Map<LogicalKeySet, Intent> shortcuts = {};
+Map<String, OpenViewIntent> getShortcuts(List<Route> routes) {
+  Map<String, OpenViewIntent> shortcuts = {};
   for (var route in routes) {
-    shortcuts[LogicalKeySet(
-      LogicalKeyboardKey.alt,
-      route.key,
-    )] = OpenViewIntent(route.viewKey);
+    shortcuts[route.viewKey.toHotkeyString()] = OpenViewIntent(route.viewKey);
   }
   return shortcuts;
 }
@@ -63,43 +62,50 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Shortcuts(
-      shortcuts: shortcuts,
-      child: ApplicationMenu(
-        child: Actions(
-          actions: <Type, CallbackAction>{
-            OpenViewIntent: CallbackAction<OpenViewIntent>(
-              onInvoke: (intent) => this._selectView(intent.view.index),
-            ),
-          },
-          child: Focus(
-            autofocus: true,
-            child: Row(
-              children: [
-                NavigationBar(
-                  selectedIndex: _selectedIndex,
-                  onSelect: this._selectView,
-                  routes: routes,
-                ),
-                Expanded(
-                    child: Column(
+        body: BlocBuilder<SettingsBloc, Settings>(
+          builder: (context, settings) => HotkeyProvider(
+            hotkeySelector: (hotkeys) => hotkeys.global,
+            global: true,
+            onHotkey: (hotkey) {
+              var intent = shortcuts[hotkey]!;
+              this._selectView(intent.view.index);
+            },
+            child: ApplicationMenu(
+                child: Actions(
+                  actions: <Type, CallbackAction>{
+                    OpenViewIntent: CallbackAction<OpenViewIntent>(
+                      onInvoke: (intent) => this._selectView(intent.view.index),
+                    ),
+                  },
+                  child: Focus(
+                    autofocus: true,
+                    child: Row(
                       children: [
-                        Expanded(
-                          child: Container(
-                              child: _currentWidget,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration()),
+                        NavigationBar(
+                          selectedIndex: _selectedIndex,
+                          onSelect: this._selectView,
+                          routes: routes,
                         ),
-                        TransportControls()
+                        Expanded(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                      child: _currentWidget,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration()),
+                                ),
+                                TransportControls()
+                              ],
+                            ))
                       ],
-                    ))
-              ],
-              crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+                ),
             ),
           ),
-        ),
-      ),
-    ));
+        ));
   }
 
   void _updateWidget() {

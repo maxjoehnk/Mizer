@@ -21,6 +21,7 @@ mizer-nodes = { path = "../runtime/pipeline/nodes" }
 mizer-runtime = { path = "../runtime" }
 mizer-layouts = { path = "../runtime/layouts" }
 mizer-clock = { path = "../runtime/clock" }
+mizer-settings = { path = "../runtime/settings" }
 mizer-sequencer = { path = "../components/sequencer" }
 flume = "0.10"
 futures = "0.3"

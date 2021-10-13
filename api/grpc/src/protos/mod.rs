@@ -5,6 +5,7 @@ mod media_grpc;
 mod nodes_grpc;
 mod session_grpc;
 mod sequencer_grpc;
+mod settings_grpc;
 mod transport_grpc;
 mod programmer_grpc;
 
@@ -15,6 +16,7 @@ pub use self::media_grpc::*;
 pub use self::nodes_grpc::*;
 pub use self::session_grpc::*;
 pub use self::sequencer_grpc::*;
+pub use self::settings_grpc::*;
 pub use self::transport_grpc::*;
 pub use self::programmer_grpc::*;
 pub use mizer_api::models::*;

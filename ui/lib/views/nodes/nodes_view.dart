@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/widgets/toolbar.dart';
@@ -62,59 +63,66 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
     });
 
     return Consumer<NodeEditorModel>(
-      builder: (context, model, _) => Stack(
-        children: [
-          GestureDetector(
-            onSecondaryTapUp: (event) {
-              Navigator.of(context).push(PopupMenuRoute(
-                  position: event.globalPosition,
-                  child: PopupMenu<Node_NodeType>(
-                      categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
-              setState(() {
-                addMenuPosition = event.localPosition;
-              });
-            },
-            child: Stack(children: [
-              SizedBox.expand(
-                  child: InteractiveViewer(
-                      transformationController: model.transformationController,
-                      boundaryMargin: EdgeInsets.all(double.infinity),
-                      minScale: 0.1,
-                      maxScale: 10.0,
-                      child: SizedBox.expand())),
-              // Transform(
-              //   transform: model.transformationController.value,
-              //   child: IgnorePointer(child: CanvasBackgroundLayer(child: SizedBox.expand())),
-              // ),
-              Transform(
-                  transform: model.transformationController.value,
-                  child: IgnorePointer(child: GraphPaintLayer(model: model))),
-              CanvasDropLayer(),
-              NodesTarget(),
-            ]),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            left: 0,
-            child: NodesToolbar(
-              onToggleHidden: () => setState(() => showHiddenNodes = !showHiddenNodes),
-              showHiddenNodes: showHiddenNodes,
-            )
-          ),
-          if (!showHiddenNodes) Positioned(
-              top: 16 + TOOLBAR_HEIGHT,
-              right: 16,
-              bottom: 16,
-              width: 256,
-              child: NodePropertiesPane(node: model.selectedNode?.node)),
-          if (showHiddenNodes) Positioned(
-              top: TOOLBAR_HEIGHT,
+      builder: (context, model, _) => HotkeyProvider(
+        hotkeySelector: (hotkeys) => hotkeys.nodes,
+        hotkeyMap: {
+          // TODO: determine position for new node
+          "add_node": () => {},
+        },
+        child: Stack(
+          children: [
+            GestureDetector(
+              onSecondaryTapUp: (event) {
+                Navigator.of(context).push(PopupMenuRoute(
+                    position: event.globalPosition,
+                    child: PopupMenu<Node_NodeType>(
+                        categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
+                setState(() {
+                  addMenuPosition = event.localPosition;
+                });
+              },
+              child: Stack(children: [
+                SizedBox.expand(
+                    child: InteractiveViewer(
+                        transformationController: model.transformationController,
+                        boundaryMargin: EdgeInsets.all(double.infinity),
+                        minScale: 0.1,
+                        maxScale: 10.0,
+                        child: SizedBox.expand())),
+                // Transform(
+                //   transform: model.transformationController.value,
+                //   child: IgnorePointer(child: CanvasBackgroundLayer(child: SizedBox.expand())),
+                // ),
+                Transform(
+                    transform: model.transformationController.value,
+                    child: IgnorePointer(child: GraphPaintLayer(model: model))),
+                CanvasDropLayer(),
+                NodesTarget(),
+              ]),
+            ),
+            Positioned(
+              top: 0,
               right: 0,
-              bottom: 0,
-              width: 256,
-              child: HiddenNodeList(nodes: model.hidden)),
-        ],
+              left: 0,
+              child: NodesToolbar(
+                onToggleHidden: () => setState(() => showHiddenNodes = !showHiddenNodes),
+                showHiddenNodes: showHiddenNodes,
+              )
+            ),
+            if (!showHiddenNodes) Positioned(
+                top: 16 + TOOLBAR_HEIGHT,
+                right: 16,
+                bottom: 16,
+                width: 256,
+                child: NodePropertiesPane(node: model.selectedNode?.node)),
+            if (showHiddenNodes) Positioned(
+                top: TOOLBAR_HEIGHT,
+                right: 0,
+                bottom: 0,
+                width: 256,
+                child: HiddenNodeList(nodes: model.hidden)),
+          ],
+        ),
       ),
     );
   }

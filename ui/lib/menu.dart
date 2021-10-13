@@ -40,7 +40,7 @@ class ApplicationMenu extends StatelessWidget {
           ]),
           SubMenu(title: 'View', children: [
             MenuActionItem(label: "Layout", action: OpenViewIntent(View.Layout)),
-            MenuActionItem(label: "2D Plan", action: OpenViewIntent(View.Plan2D)),
+            MenuActionItem(label: "2D Plan", action: OpenViewIntent(View.Plan)),
             MenuActionItem(label: "PreViz", action: OpenViewIntent(View.PreViz)),
             MenuActionItem(label: "Nodes", action: OpenViewIntent(View.Nodes)),
             MenuActionItem(label: "Sequences", action: OpenViewIntent(View.Sequences)),

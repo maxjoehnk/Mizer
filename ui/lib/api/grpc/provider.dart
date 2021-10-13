@@ -9,16 +9,18 @@ import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
+import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/contracts/transport.dart';
-import 'package:mizer/api/grpc/programmer.dart';
-import 'package:mizer/api/grpc/sequencer.dart';
 
 import 'connections.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
 import 'media.dart';
 import 'nodes.dart';
+import 'programmer.dart';
+import 'sequencer.dart';
 import 'session.dart';
+import 'settings.dart';
 import 'transport.dart';
 
 class GrpcApiProvider extends StatelessWidget {
@@ -41,6 +43,7 @@ class GrpcApiProvider extends StatelessWidget {
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsGrpcApi(_channel)),
         RepositoryProvider<SequencerApi>(create: (context) => SequencerGrpcApi(_channel)),
         RepositoryProvider<ProgrammerApi>(create: (context) => ProgrammerGrpcApi(_channel)),
+        RepositoryProvider<SettingsApi>(create: (context) => SettingsGrpcApi(_channel)),
       ],
     );
   }

@@ -30,6 +30,10 @@ dependencies:
   nativeshell: 0.1.9
   flutter_svg: ^0.22.0
   flex_color_picker: ^2.1.2
+  keyboard_shortcuts:
+    git:
+      url: https://github.com/AntoineMarcel/keyboard_shortcuts
+      ref: d935831
 
 dev_dependencies:
   flutter_test:

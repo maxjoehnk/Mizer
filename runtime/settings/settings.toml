@@ -1,0 +1,23 @@
+[hotkeys.global]
+layout_view = "alt+1"
+plan_view = "alt+2"
+previz_view = "alt+3"
+nodes_view = "alt+4"
+sequencer_view = "alt+5"
+fixtures_view = "alt+6"
+media_view = "alt+7"
+connections_view = "alt+8"
+session_view = "alt+9"
+
+[hotkeys.layouts]
+add_layout = "alt+a"
+
+[hotkeys.fixtures]
+add_fixture = "alt+a"
+select_all = "ctrl+a"
+clear = "delete"
+store = "insert"
+highlight = "home"
+
+[hotkeys.nodes]
+add_node = "alt+a"

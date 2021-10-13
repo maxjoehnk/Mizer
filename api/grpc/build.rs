@@ -11,6 +11,7 @@ fn main() {
         .input("../protos/transport.proto")
         .input("../protos/sequencer.proto")
         .input("../protos/programmer.proto")
+        .input("../protos/settings.proto")
         .include("../protos")
         .run()
         .expect("protoc-rust-grpc");

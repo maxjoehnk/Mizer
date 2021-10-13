@@ -7,6 +7,7 @@ pub use self::session::*;
 pub use self::sequencer::*;
 pub use self::transport::*;
 pub use self::programmer::*;
+pub use self::settings::*;
 use anyhow::Error;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
@@ -19,6 +20,7 @@ mod session;
 mod sequencer;
 mod transport;
 mod programmer;
+mod settings;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;

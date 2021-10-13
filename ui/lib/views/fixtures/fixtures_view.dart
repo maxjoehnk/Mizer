@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/views/fixtures/patch_fixture_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -31,48 +32,56 @@ class _FixturesViewState extends State<FixturesView> {
     var fixturesApi = context.read<FixturesApi>();
     var programmerApi = context.read<ProgrammerApi>();
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
-      return Column(
-        children: [
-          Expanded(
-            child: Panel(
-              label: "Fixtures",
-              child: FixtureTable(
-                  fixtures: fixtures.fixtures,
-                  selectedIds: selectedIds,
-                  // TODO: use setSelectedIds instead of manually calling programmerApi
-                  onSelect: (id, selected) => setState(() {
-                        if (selected) {
-                          this.selectedIds.add(id);
-                        } else {
-                          this.selectedIds.remove(id);
-                        }
-                        programmerApi.selectFixtures(this.selectedIds);
-                      }),
-                  onSelectSimilar: (fixture) {
-                    _setSelectedIds(fixtures.fixtures
-                        .where((f) =>
-                    f.manufacturer == fixture.manufacturer && f.name == fixture.name)
-                        .map((f) => f.id)
-                        .toList());
-                  }),
-              actions: [
-                PanelAction(
-                    label: "Add Fixture",
-                    onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
-                PanelAction(label: "Select All", onClick: () => _selectAll(fixtures.fixtures)),
-                PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
-                PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
-                PanelAction(label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty)
-              ],
+      return HotkeyProvider(
+        hotkeySelector: (hotkeys) => hotkeys.fixtures,
+        hotkeyMap: {
+          "add_fixture": () => _addFixture(context, fixturesApi, fixturesBloc),
+          "select_all": () => _selectAll(fixtures.fixtures),
+          "clear": () => _clear(),
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: Panel(
+                label: "Fixtures",
+                child: FixtureTable(
+                    fixtures: fixtures.fixtures,
+                    selectedIds: selectedIds,
+                    // TODO: use setSelectedIds instead of manually calling programmerApi
+                    onSelect: (id, selected) => setState(() {
+                          if (selected) {
+                            this.selectedIds.add(id);
+                          } else {
+                            this.selectedIds.remove(id);
+                          }
+                          programmerApi.selectFixtures(this.selectedIds);
+                        }),
+                    onSelectSimilar: (fixture) {
+                      _setSelectedIds(fixtures.fixtures
+                          .where((f) =>
+                      f.manufacturer == fixture.manufacturer && f.name == fixture.name)
+                          .map((f) => f.id)
+                          .toList());
+                    }),
+                actions: [
+                  PanelAction(
+                      label: "Add Fixture",
+                      onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
+                  PanelAction(label: "Select All", onClick: () => _selectAll(fixtures.fixtures)),
+                  PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
+                  PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
+                  PanelAction(label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty)
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: SHEET_CONTAINER_HEIGHT,
-            child: FixtureSheet(
-                fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(),
-                api: programmerApi),
-          ),
-        ],
+            SizedBox(
+              height: SHEET_CONTAINER_HEIGHT,
+              child: FixtureSheet(
+                  fixtures: fixtures.fixtures.where((f) => selectedIds.contains(f.id)).toList(),
+                  api: programmerApi),
+            ),
+          ],
+        ),
       );
     });
   }

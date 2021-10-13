@@ -1,3 +1,4 @@
+// @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/app.dart';
 import 'package:mizer/windows/dmx_monitor_window.dart';
@@ -12,7 +13,7 @@ class MizerIntegratedUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MizerApp(child: WindowWidget(onCreateState: (initData) {
-      WindowState? state;
+      WindowState state;
 
       state ??= DmxMonitorWindow.fromInitData(initData);
       state ??= MainWindowState();

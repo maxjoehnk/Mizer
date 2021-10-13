@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package mizer.settings;
+
+service SettingsApi {
+  rpc LoadSettings (RequestSettings) returns (Settings) {}
+}
+
+message RequestSettings {}
+
+message Settings {
+  Hotkeys hotkeys = 1;
+}
+
+message Hotkeys {
+  map<string, string> global = 1;
+  map<string, string> layouts = 2;
+  map<string, string> fixtures = 3;
+  map<string, string> nodes = 4;
+}

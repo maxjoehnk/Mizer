@@ -3,7 +3,7 @@ use std::sync::Arc;
 use grpc::ClientStub;
 pub use grpc::Server;
 
-use crate::protos::{FixturesApiServer, LayoutsApiServer, MediaApiServer, NodesApiServer, SessionApiClient, SessionApiServer, TransportApiServer, ProgrammerApiServer};
+use crate::protos::{FixturesApiServer, LayoutsApiServer, MediaApiServer, NodesApiServer, SessionApiClient, SessionApiServer, TransportApiServer, ProgrammerApiServer, SettingsApiServer};
 use mizer_api::handlers::*;
 use mizer_api::RuntimeApi;
 
@@ -24,6 +24,7 @@ pub fn start<R: RuntimeApi + 'static>(
     server.add_service(LayoutsApiServer::new_service_def(handlers.layouts));
     server.add_service(TransportApiServer::new_service_def(handlers.transport));
     server.add_service(ProgrammerApiServer::new_service_def(handlers.programmer));
+    server.add_service(SettingsApiServer::new_service_def(handlers.settings));
     let server = server.build()?;
 
     Ok(server)

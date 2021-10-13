@@ -8,16 +8,18 @@ import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
+import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/contracts/transport.dart';
-import 'package:mizer/api/demo/connections.dart';
-import 'package:mizer/api/demo/programmer.dart';
 
+import 'connections.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
 import 'media.dart';
 import 'nodes.dart';
+import 'programmer.dart';
 import 'sequencer.dart';
 import 'session.dart';
+import 'settings.dart';
 import 'transport.dart';
 
 class DemoApiProvider extends StatelessWidget {
@@ -39,6 +41,7 @@ class DemoApiProvider extends StatelessWidget {
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsDemoApi()),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerDemoApi()),
         RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerDemoApi()),
+        RepositoryProvider<SettingsApi>(create: (_) => SettingsDemoApi()),
       ]
     );
   }

@@ -6,3 +6,4 @@ mod nodes;
 mod transport;
 mod sequencer;
 mod programmer;
+mod settings;

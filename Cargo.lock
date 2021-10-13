@@ -2864,6 +2864,7 @@ dependencies = [
  "mizer-runtime",
  "mizer-sequencer",
  "mizer-session",
+ "mizer-settings",
  "mizer-ui",
  "mizer-util",
  "pinboard",
@@ -2890,6 +2891,7 @@ dependencies = [
  "mizer-nodes",
  "mizer-runtime",
  "mizer-sequencer",
+ "mizer-settings",
  "pinboard",
  "profiling",
  "protobuf",
@@ -3405,6 +3407,16 @@ dependencies = [
  "systemstat",
  "tokio",
  "zeroconf",
+]
+
+[[package]]
+name = "mizer-settings"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "serde",
+ "toml",
 ]
 
 [[package]]

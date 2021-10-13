@@ -317,6 +317,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  keyboard_shortcuts:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: d935831
+      resolved-ref: d935831affdc0bec4266ccc96b9a30a271e87ebc
+      url: "https://github.com/AntoineMarcel/keyboard_shortcuts"
+    source: git
+    version: "0.1.4"
   logging:
     dependency: transitive
     description:
@@ -480,6 +489,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  quiver:
+    dependency: transitive
+    description:
+      name: quiver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.5"
   select_form_field:
     dependency: "direct main"
     description:
@@ -597,6 +613,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.2"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   typed_data:
     dependency: transitive
     description:
@@ -611,6 +634,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.5"
   vm_service:
     dependency: transitive
     description:

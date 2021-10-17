@@ -78,7 +78,7 @@ impl ApiHandler {
                     .expect("api command sender disconnected");
             }
             ApiCommand::NewProject(sender) => {
-                mizer.close_project();
+                mizer.new_project();
                 sender
                     .send(Ok(()))
                     .expect("api command sender disconnected");

@@ -95,6 +95,6 @@ class LayoutControlView extends StatelessWidget {
   }
 
   get _color {
-    return control.decoration.hasColor ? control.decoration.color_2?.asFlutterColor : null;
+    return control.decoration.hasColor ? control.decoration.color_2.asFlutterColor : null;
   }
 }

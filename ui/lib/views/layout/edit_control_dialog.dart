@@ -54,7 +54,7 @@ class _EditControlDialogState extends State<EditControlDialog> {
 
   get _color {
     if (decorations.hasColor) {
-      return decorations.color_2?.asFlutterColor;
+      return decorations.color_2.asFlutterColor;
     }
     return Colors.white;
   }

@@ -11,7 +11,7 @@ class DeleteControlDialog extends StatelessWidget {
     return AlertDialog(
       title: Text("Delete Control"),
       content: SingleChildScrollView(
-        child: Text("Delete Control ${control.label ?? control.node}?"),
+        child: Text("Delete Control ${control.hasLabel() ? control.label : control.node}?"),
       ),
       actions: [
         TextButton(

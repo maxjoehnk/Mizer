@@ -16,7 +16,7 @@ class FaderInput extends StatefulWidget {
   FaderInput({this.onValue, required this.value, this.label, this.color, this.gradient, this.highlight = false});
 
   @override
-  _FaderInputState createState() => _FaderInputState(value ?? 0);
+  _FaderInputState createState() => _FaderInputState(value);
 }
 
 class _FaderInputState extends State<FaderInput> {

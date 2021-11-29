@@ -397,7 +397,7 @@ packages:
       name: nativeshell
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.9"
+    version: "0.1.10"
   nested:
     dependency: transitive
     description:

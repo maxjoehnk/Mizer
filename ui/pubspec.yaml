@@ -24,16 +24,16 @@ dependencies:
     git:
       url: https://github.com/google/flutter-desktop-embedding
       path: plugins/menubar
-      ref: 85dde09
+      ref: a8ca32b
   select_form_field: ^2.2.0
   collection: ^1.15.0
   nativeshell: 0.1.10
-  flutter_svg: ^0.22.0
+  flutter_svg: ^0.23.0+1
   flex_color_picker: ^2.1.2
   keyboard_shortcuts:
     git:
-      url: https://github.com/AntoineMarcel/keyboard_shortcuts
-      ref: d935831
+      url: https://github.com/rlch/keyboard_shortcuts.git
+      ref: e33efe2
 
 dev_dependencies:
   flutter_test:

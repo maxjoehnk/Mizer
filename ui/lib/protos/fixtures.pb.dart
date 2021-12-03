@@ -186,6 +186,145 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
   static GetFixturesRequest? _defaultInstance;
 }
 
+enum FixtureId_Id {
+  fixture, 
+  subFixture, 
+  notSet
+}
+
+class FixtureId extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, FixtureId_Id> _FixtureId_IdByTag = {
+    1 : FixtureId_Id.fixture,
+    2 : FixtureId_Id.subFixture,
+    0 : FixtureId_Id.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureId', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..oo(0, [1, 2])
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixture', $pb.PbFieldType.OU3)
+    ..aOM<SubFixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subFixture', subBuilder: SubFixtureId.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureId._() : super();
+  factory FixtureId({
+    $core.int? fixture,
+    SubFixtureId? subFixture,
+  }) {
+    final _result = create();
+    if (fixture != null) {
+      _result.fixture = fixture;
+    }
+    if (subFixture != null) {
+      _result.subFixture = subFixture;
+    }
+    return _result;
+  }
+  factory FixtureId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureId clone() => FixtureId()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureId copyWith(void Function(FixtureId) updates) => super.copyWith((message) => updates(message as FixtureId)) as FixtureId; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureId create() => FixtureId._();
+  FixtureId createEmptyInstance() => create();
+  static $pb.PbList<FixtureId> createRepeated() => $pb.PbList<FixtureId>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureId getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureId>(create);
+  static FixtureId? _defaultInstance;
+
+  FixtureId_Id whichId() => _FixtureId_IdByTag[$_whichOneof(0)]!;
+  void clearId() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.int get fixture => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set fixture($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFixture() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFixture() => clearField(1);
+
+  @$pb.TagNumber(2)
+  SubFixtureId get subFixture => $_getN(1);
+  @$pb.TagNumber(2)
+  set subFixture(SubFixtureId v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSubFixture() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSubFixture() => clearField(2);
+  @$pb.TagNumber(2)
+  SubFixtureId ensureSubFixture() => $_ensure(1);
+}
+
+class SubFixtureId extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubFixtureId', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'childId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  SubFixtureId._() : super();
+  factory SubFixtureId({
+    $core.int? fixtureId,
+    $core.int? childId,
+  }) {
+    final _result = create();
+    if (fixtureId != null) {
+      _result.fixtureId = fixtureId;
+    }
+    if (childId != null) {
+      _result.childId = childId;
+    }
+    return _result;
+  }
+  factory SubFixtureId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SubFixtureId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SubFixtureId clone() => SubFixtureId()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SubFixtureId copyWith(void Function(SubFixtureId) updates) => super.copyWith((message) => updates(message as SubFixtureId)) as SubFixtureId; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SubFixtureId create() => SubFixtureId._();
+  SubFixtureId createEmptyInstance() => create();
+  static $pb.PbList<SubFixtureId> createRepeated() => $pb.PbList<SubFixtureId>();
+  @$core.pragma('dart2js:noInline')
+  static SubFixtureId getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubFixtureId>(create);
+  static SubFixtureId? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get fixtureId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set fixtureId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFixtureId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFixtureId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get childId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set childId($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChildId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChildId() => clearField(2);
+}
+
 class Fixtures extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Fixtures', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..pc<Fixture>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: Fixture.create)
@@ -236,6 +375,7 @@ class Fixture extends $pb.GeneratedMessage {
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
     ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..pc<FixtureControls>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
+    ..pc<SubFixture>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
     ..hasRequiredFields = false
   ;
 
@@ -248,6 +388,7 @@ class Fixture extends $pb.GeneratedMessage {
     $core.int? universe,
     $core.int? channel,
     $core.Iterable<FixtureControls>? controls,
+    $core.Iterable<SubFixture>? children,
   }) {
     final _result = create();
     if (id != null) {
@@ -270,6 +411,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (controls != null) {
       _result.controls.addAll(controls);
+    }
+    if (children != null) {
+      _result.children.addAll(children);
     }
     return _result;
   }
@@ -350,6 +494,78 @@ class Fixture extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.List<FixtureControls> get controls => $_getList(6);
+
+  @$pb.TagNumber(8)
+  $core.List<SubFixture> get children => $_getList(7);
+}
+
+class SubFixture extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SubFixture', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<FixtureControls>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
+    ..hasRequiredFields = false
+  ;
+
+  SubFixture._() : super();
+  factory SubFixture({
+    $core.int? id,
+    $core.String? name,
+    $core.Iterable<FixtureControls>? controls,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (controls != null) {
+      _result.controls.addAll(controls);
+    }
+    return _result;
+  }
+  factory SubFixture.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SubFixture.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SubFixture clone() => SubFixture()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SubFixture copyWith(void Function(SubFixture) updates) => super.copyWith((message) => updates(message as SubFixture)) as SubFixture; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SubFixture create() => SubFixture._();
+  SubFixture createEmptyInstance() => create();
+  static $pb.PbList<SubFixture> createRepeated() => $pb.PbList<SubFixture>();
+  @$core.pragma('dart2js:noInline')
+  static SubFixture getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SubFixture>(create);
+  static SubFixture? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<FixtureControls> get controls => $_getList(2);
 }
 
 enum FixtureControls_Value {

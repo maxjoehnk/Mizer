@@ -58,7 +58,9 @@ impl From<mizer_sequencer::CueChannel> for CueChannel {
         };
 
         Self {
-            fixtures: channel.fixtures,
+            fixtures: channel.fixtures.into_iter()
+                .map(FixtureId::from)
+                .collect(),
             control: channel.control.into(),
             value: SingularPtrField::some(value),
             fade: SingularPtrField::some(CueTimer::from(channel.fade)),
@@ -132,10 +134,10 @@ impl From<Option<SequencerValue<SequencerTime>>> for CueTimer {
     }
 }
 
-impl From<mizer_fixtures::fixture::FixtureControl> for CueControl {
-    fn from(fixture_control: mizer_fixtures::fixture::FixtureControl) -> Self {
-        use mizer_fixtures::fixture::FixtureControl::*;
-        use mizer_fixtures::fixture::ColorChannel;
+impl From<mizer_fixtures::definition::FixtureControl> for CueControl {
+    fn from(fixture_control: mizer_fixtures::definition::FixtureControl) -> Self {
+        use mizer_fixtures::definition::FixtureControl::*;
+        use mizer_fixtures::definition::ColorChannel;
 
         match fixture_control {
             Intensity => Self::INTENSITY,

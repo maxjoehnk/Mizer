@@ -1,6 +1,7 @@
 use crate::RuntimeApi;
 use mizer_fixtures::manager::FixtureManager;
 use crate::models::programmer::*;
+use crate::models::fixtures::*;
 use mizer_sequencer::{Sequencer, CueChannel, SequencerValue};
 
 #[derive(Clone)]
@@ -30,9 +31,9 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         }
     }
 
-    pub fn select_fixtures(&self, fixture_ids: Vec<u32>) {
+    pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
         let mut programmer = self.fixture_manager.get_programmer();
-        programmer.select_fixtures(fixture_ids);
+        programmer.select_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
     }
 
     pub fn clear(&self) {

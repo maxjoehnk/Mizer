@@ -1,14 +1,35 @@
+use serde::{Deserialize, Serialize};
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
 use crate::manager::FixtureManager;
 use crate::processor::FixtureProcessor;
 use mizer_module::{Module, Runtime};
 
 pub mod fixture;
+pub mod definition;
 pub mod library;
 pub mod manager;
 mod processor;
 // TODO: should probably find a better name
 pub mod programmer;
+
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
+#[serde(untagged)]
+pub enum FixtureId {
+    Fixture(u32),
+    SubFixture(u32, u32)
+}
+
+impl From<u32> for FixtureId {
+    fn from(id: u32) -> Self {
+        Self::Fixture(id)
+    }
+}
+
+impl From<(u32, u32)> for FixtureId {
+    fn from((fixture_id, child_id): (u32, u32)) -> Self {
+        Self::SubFixture(fixture_id, child_id)
+    }
+}
 
 pub struct FixtureModule(FixtureLibrary, FixtureManager);
 

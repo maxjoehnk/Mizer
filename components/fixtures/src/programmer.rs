@@ -3,12 +3,14 @@ use std::sync::Arc;
 
 use dashmap::{DashMap};
 
-use crate::fixture::{Fixture, FixtureControl};
+use crate::fixture::Fixture;
+use crate::definition::FixtureControl;
+use crate::FixtureId;
 
 #[derive(Debug)]
 pub struct Programmer {
     pub highlight: bool,
-    selected_fixtures: HashMap<u32, FixtureProgrammer>,
+    selected_fixtures: HashMap<FixtureId, FixtureProgrammer>,
     fixtures: Arc<DashMap<u32, Fixture>>,
 }
 
@@ -19,7 +21,7 @@ pub struct FixtureProgrammer {
 
 #[derive(Debug)]
 pub struct ProgrammerChannel {
-    pub fixtures: Vec<u32>,
+    pub fixtures: Vec<FixtureId>,
     pub control: FixtureControl,
     pub value: f64,
 }
@@ -36,13 +38,29 @@ impl Programmer {
     pub fn run(&self) {
         log::trace!("Programmer::run");
         for (fixture_id, state) in self.selected_fixtures.iter() {
-            log::trace!("{} => {:?}", fixture_id, state);
-            if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                for (control, value) in state.controls.iter() {
-                    fixture.write_control(control.clone(), *value);
+            log::trace!("{:?} => {:?}", fixture_id, state);
+            match fixture_id {
+                FixtureId::Fixture(fixture_id) => {
+                    if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
+                        for (control, value) in state.controls.iter() {
+                            fixture.write_control(control.clone(), *value);
+                        }
+                        if self.highlight {
+                            fixture.highlight();
+                        }
+                    }
                 }
-                if self.highlight {
-                    fixture.highlight();
+                FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
+                    if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
+                        if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id) {
+                            for (control, value) in state.controls.iter() {
+                                sub_fixture.write_control(control.clone(), *value);
+                            }
+                            if self.highlight {
+                                sub_fixture.highlight();
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -54,7 +72,7 @@ impl Programmer {
         }
     }
 
-    pub fn select_fixtures(&mut self, fixtures: Vec<u32>) {
+    pub fn select_fixtures(&mut self, fixtures: Vec<FixtureId>) {
         let selected_fixtures = self.selected_fixtures.keys().copied().collect::<Vec<_>>();
         for id in selected_fixtures {
             if !fixtures.contains(&id) {
@@ -73,7 +91,7 @@ impl Programmer {
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerChannel> {
-        let mut controls: HashMap<FixtureControl, (Vec<u32>, f64)> = HashMap::new();
+        let mut controls: HashMap<FixtureControl, (Vec<FixtureId>, f64)> = HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
             for (control, value) in state.controls.iter() {
                 let entry = controls

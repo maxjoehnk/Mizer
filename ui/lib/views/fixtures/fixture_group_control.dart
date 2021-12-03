@@ -35,9 +35,8 @@ class Control {
 class FixtureGroupControl extends StatelessWidget {
   final Control control;
   final String? label;
-  final List<Fixture> fixtures;
 
-  const FixtureGroupControl(this.control, {this.label, required this.fixtures, Key? key}) : super(key: key);
+  const FixtureGroupControl(this.control, {this.label, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

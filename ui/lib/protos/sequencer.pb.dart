@@ -9,6 +9,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'fixtures.pb.dart' as $0;
+
 import 'sequencer.pbenum.dart';
 
 export 'sequencer.pbenum.dart';
@@ -356,7 +358,7 @@ class Cue extends $pb.GeneratedMessage {
 
 class CueChannel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PU3)
+    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..e<CueControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: CueControl.INTENSITY, valueOf: CueControl.valueOf, enumValues: CueControl.values)
     ..aOM<CueValue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: CueValue.create)
     ..aOM<CueTimer>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fade', subBuilder: CueTimer.create)
@@ -366,7 +368,7 @@ class CueChannel extends $pb.GeneratedMessage {
 
   CueChannel._() : super();
   factory CueChannel({
-    $core.Iterable<$core.int>? fixtures,
+    $core.Iterable<$0.FixtureId>? fixtures,
     CueControl? control,
     CueValue? value,
     CueTimer? fade,
@@ -412,7 +414,7 @@ class CueChannel extends $pb.GeneratedMessage {
   static CueChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.int> get fixtures => $_getList(0);
+  $core.List<$0.FixtureId> get fixtures => $_getList(0);
 
   @$pb.TagNumber(2)
   CueControl get control => $_getN(1);

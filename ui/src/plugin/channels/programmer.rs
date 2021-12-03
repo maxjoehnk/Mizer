@@ -28,20 +28,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 }
             }
             "selectFixtures" => {
-                if let Value::List(fixture_ids) = call.args {
-                    let fixture_ids = fixture_ids
-                        .into_iter()
-                        .filter_map(|v| {
-                            if let Value::I64(v) = v {
-                                Some(v as u32)
-                            } else {
-                                None
-                            }
-                        })
-                        .collect();
-                    self.select_fixtures(fixture_ids);
-
-                    reply.send_ok(Value::Null)
+                match call.arguments::<SelectFixturesRequest>() {
+                    Ok(req) => {
+                        let fixture_ids = req.fixtures.into_vec();
+                        self.select_fixtures(fixture_ids);
+                        reply.send_ok(Value::Null)
+                    }
+                    Err(err) => reply.respond_error(err)
                 }
             }
             "clear" => {
@@ -82,7 +75,7 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
         self.handler.write_control(req);
     }
 
-    fn select_fixtures(&self, fixture_ids: Vec<u32>) {
+    fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
         log::trace!("ProgrammerChannel::select_fixtures({:?})", fixture_ids);
         self.handler.select_fixtures(fixture_ids);
     }

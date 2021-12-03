@@ -1,4 +1,5 @@
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
 class ProgrammerDemoApi implements ProgrammerApi {
@@ -15,7 +16,7 @@ class ProgrammerDemoApi implements ProgrammerApi {
   }
 
   @override
-  Future<void> selectFixtures(List<int> fixtureIds) {
+  Future<void> selectFixtures(List<FixtureId> fixtureIds) {
     // TODO: implement selectFixtures
     throw UnimplementedError();
   }

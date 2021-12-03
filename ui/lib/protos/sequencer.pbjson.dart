@@ -114,7 +114,7 @@ final $typed_data.Uint8List cueDescriptor = $convert.base64Decode('CgNDdWUSDgoCa
 const CueChannel$json = const {
   '1': 'CueChannel',
   '2': const [
-    const {'1': 'fixtures', '3': 1, '4': 3, '5': 13, '10': 'fixtures'},
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
     const {'1': 'control', '3': 2, '4': 1, '5': 14, '6': '.mizer.sequencer.CueControl', '10': 'control'},
     const {'1': 'value', '3': 3, '4': 1, '5': 11, '6': '.mizer.sequencer.CueValue', '10': 'value'},
     const {'1': 'fade', '3': 4, '4': 1, '5': 11, '6': '.mizer.sequencer.CueTimer', '10': 'fade'},
@@ -123,7 +123,7 @@ const CueChannel$json = const {
 };
 
 /// Descriptor for `CueChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List cueChannelDescriptor = $convert.base64Decode('CgpDdWVDaGFubmVsEhoKCGZpeHR1cmVzGAEgAygNUghmaXh0dXJlcxI1Cgdjb250cm9sGAIgASgOMhsubWl6ZXIuc2VxdWVuY2VyLkN1ZUNvbnRyb2xSB2NvbnRyb2wSLwoFdmFsdWUYAyABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVmFsdWVSBXZhbHVlEi0KBGZhZGUYBCABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVGltZXJSBGZhZGUSLwoFZGVsYXkYBSABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVGltZXJSBWRlbGF5');
+final $typed_data.Uint8List cueChannelDescriptor = $convert.base64Decode('CgpDdWVDaGFubmVsEjUKCGZpeHR1cmVzGAEgAygLMhkubWl6ZXIuZml4dHVyZXMuRml4dHVyZUlkUghmaXh0dXJlcxI1Cgdjb250cm9sGAIgASgOMhsubWl6ZXIuc2VxdWVuY2VyLkN1ZUNvbnRyb2xSB2NvbnRyb2wSLwoFdmFsdWUYAyABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVmFsdWVSBXZhbHVlEi0KBGZhZGUYBCABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVGltZXJSBGZhZGUSLwoFZGVsYXkYBSABKAsyGS5taXplci5zZXF1ZW5jZXIuQ3VlVGltZXJSBWRlbGF5');
 @$core.Deprecated('Use cueValueDescriptor instead')
 const CueValue$json = const {
   '1': 'CueValue',

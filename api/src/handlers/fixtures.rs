@@ -38,6 +38,14 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                     fixture.current_mode.controls.clone(),
                     &fixture.channel_values,
                 ).into(),
+                children: fixture.current_mode.sub_fixtures.iter()
+                    .map(|sub_fixture| SubFixture {
+                        id: sub_fixture.id,
+                        name: sub_fixture.name.clone(),
+                        controls: FixtureControls::with_values(sub_fixture.controls.clone(), &fixture.channel_values).into(),
+                        ..Default::default()
+                    })
+                    .collect(),
                 ..Default::default()
             };
             fixtures.fixtures.push(fixture_model);

@@ -19,12 +19,12 @@ final $typed_data.Uint8List subscribeProgrammerRequestDescriptor = $convert.base
 const ProgrammerState$json = const {
   '1': 'ProgrammerState',
   '2': const [
-    const {'1': 'fixtures', '3': 1, '4': 3, '5': 13, '10': 'fixtures'},
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSGgoIZml4dHVyZXMYASADKA1SCGZpeHR1cmVz');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVz');
 @$core.Deprecated('Use writeControlRequestDescriptor instead')
 const WriteControlRequest$json = const {
   '1': 'WriteControlRequest',
@@ -62,12 +62,12 @@ final $typed_data.Uint8List writeControlResponseDescriptor = $convert.base64Deco
 const SelectFixturesRequest$json = const {
   '1': 'SelectFixturesRequest',
   '2': const [
-    const {'1': 'fixtures', '3': 1, '4': 3, '5': 13, '10': 'fixtures'},
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
   ],
 };
 
 /// Descriptor for `SelectFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List selectFixturesRequestDescriptor = $convert.base64Decode('ChVTZWxlY3RGaXh0dXJlc1JlcXVlc3QSGgoIZml4dHVyZXMYASADKA1SCGZpeHR1cmVz');
+final $typed_data.Uint8List selectFixturesRequestDescriptor = $convert.base64Decode('ChVTZWxlY3RGaXh0dXJlc1JlcXVlc3QSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVz');
 @$core.Deprecated('Use selectFixturesResponseDescriptor instead')
 const SelectFixturesResponse$json = const {
   '1': 'SelectFixturesResponse',

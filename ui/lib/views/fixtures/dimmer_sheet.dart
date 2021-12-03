@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
 import 'fixture_group_control.dart';
@@ -15,7 +16,7 @@ const NAMES = {
 };
 
 class DimmerSheet extends StatelessWidget {
-  final List<Fixture> fixtures;
+  final List<FixtureInstance> fixtures;
 
   const DimmerSheet({required this.fixtures, Key? key}) : super(key: key);
 
@@ -26,7 +27,7 @@ class DimmerSheet extends StatelessWidget {
           ? ListView(
               scrollDirection: Axis.horizontal,
               children: controls
-                  .map((control) => FixtureGroupControl(control, fixtures: fixtures))
+                  .map((control) => FixtureGroupControl(control))
                   .toList())
           : null,
     );

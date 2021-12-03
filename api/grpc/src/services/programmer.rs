@@ -15,7 +15,7 @@ impl<R: RuntimeApi> ProgrammerApi for ProgrammerHandler<R> {
     }
 
     fn select_fixtures(&self, req: ServerRequestSingle<SelectFixturesRequest>, resp: ServerResponseUnarySink<SelectFixturesResponse>) -> grpc::Result<()> {
-        self.select_fixtures(req.message.fixtures);
+        self.select_fixtures(req.message.fixtures.into_vec());
 
         resp.finish(Default::default())
     }

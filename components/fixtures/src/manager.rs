@@ -1,9 +1,11 @@
-use crate::fixture::{Fixture, FixtureDefinition};
+use crate::fixture::Fixture;
+use crate::definition::{FixtureControl, FixtureDefinition};
 use crate::library::FixtureLibrary;
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex};
+use crate::FixtureId;
 use crate::programmer::Programmer;
 
 #[derive(Clone)]
@@ -48,6 +50,23 @@ impl FixtureManager {
 
     pub fn get_fixture_mut(&self, fixture_id: u32) -> Option<impl DerefMut<Target = Fixture> + '_> {
         self.fixtures.get_mut(&fixture_id)
+    }
+
+    pub fn write_fixture_control(&self, fixture_id: FixtureId, control: FixtureControl, value: f64) {
+        match fixture_id {
+            FixtureId::Fixture(fixture_id) => {
+                if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
+                    fixture.write_control(control, value);
+                }
+            },
+            FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
+                if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
+                    if let Some(mut sub_fixture) = fixture.sub_fixture_mut(sub_fixture_id) {
+                        sub_fixture.write_control(control, value);
+                    }
+                }
+            }
+        }
     }
 
     pub fn get_fixtures(&self) -> Vec<impl Deref<Target = Fixture> + '_> {

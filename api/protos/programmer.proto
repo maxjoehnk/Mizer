@@ -16,7 +16,7 @@ service ProgrammerApi {
 message SubscribeProgrammerRequest {}
 
 message ProgrammerState {
-  repeated uint32 fixtures = 1;
+  repeated mizer.fixtures.FixtureId fixtures = 1;
 }
 
 message WriteControlRequest {
@@ -36,7 +36,7 @@ message WriteControlRequest {
 message WriteControlResponse {}
 
 message SelectFixturesRequest {
-  repeated uint32 fixtures = 1;
+  repeated mizer.fixtures.FixtureId fixtures = 1;
 }
 
 message SelectFixturesResponse {}

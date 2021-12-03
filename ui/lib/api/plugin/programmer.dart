@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
 class ProgrammerPluginApi implements ProgrammerApi {
@@ -14,8 +15,8 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
-  Future<void> selectFixtures(List<int> fixtureIds) async {
-    await channel.invokeMethod("selectFixtures", fixtureIds);
+  Future<void> selectFixtures(List<FixtureId> fixtureIds) async {
+    await channel.invokeMethod("selectFixtures", SelectFixturesRequest(fixtures: fixtureIds).writeToBuffer());
   }
 
   @override

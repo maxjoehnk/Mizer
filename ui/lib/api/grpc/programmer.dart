@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pbgrpc.dart';
 
 class ProgrammerGrpcApi implements ProgrammerApi {
@@ -18,7 +19,7 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   }
 
   @override
-  Future<void> selectFixtures(List<int> fixtureIds) async {
+  Future<void> selectFixtures(List<FixtureId> fixtureIds) async {
     await this.client.selectFixtures(SelectFixturesRequest(fixtures: fixtureIds));
   }
 

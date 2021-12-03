@@ -22,6 +22,18 @@ message AddFixtureRequest {
 
 message GetFixturesRequest {}
 
+message FixtureId {
+  oneof id {
+    uint32 fixture = 1;
+    SubFixtureId sub_fixture = 2;
+  }
+}
+
+message SubFixtureId {
+  uint32 fixture_id = 1;
+  uint32 child_id = 2;
+}
+
 message Fixtures {
   repeated Fixture fixtures = 1;
 }
@@ -34,6 +46,13 @@ message Fixture {
   uint32 universe = 5;
   uint32 channel = 6;
   repeated FixtureControls controls = 7;
+  repeated SubFixture children = 8;
+}
+
+message SubFixture {
+  uint32 id = 1;
+  string name = 2;
+  repeated FixtureControls controls = 3;
 }
 
 enum FixtureControl {

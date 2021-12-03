@@ -47,13 +47,13 @@ class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
 
 class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PU3)
+    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..hasRequiredFields = false
   ;
 
   ProgrammerState._() : super();
   factory ProgrammerState({
-    $core.Iterable<$core.int>? fixtures,
+    $core.Iterable<$0.FixtureId>? fixtures,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -83,7 +83,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
   static ProgrammerState? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.int> get fixtures => $_getList(0);
+  $core.List<$0.FixtureId> get fixtures => $_getList(0);
 }
 
 class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {
@@ -288,13 +288,13 @@ class WriteControlResponse extends $pb.GeneratedMessage {
 
 class SelectFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
-    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PU3)
+    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..hasRequiredFields = false
   ;
 
   SelectFixturesRequest._() : super();
   factory SelectFixturesRequest({
-    $core.Iterable<$core.int>? fixtures,
+    $core.Iterable<$0.FixtureId>? fixtures,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -324,7 +324,7 @@ class SelectFixturesRequest extends $pb.GeneratedMessage {
   static SelectFixturesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$core.int> get fixtures => $_getList(0);
+  $core.List<$0.FixtureId> get fixtures => $_getList(0);
 }
 
 class SelectFixturesResponse extends $pb.GeneratedMessage {

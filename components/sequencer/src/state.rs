@@ -1,14 +1,15 @@
 use crate::Sequence;
 use std::time::{Duration, Instant};
 use std::collections::HashMap;
-use mizer_fixtures::fixture::FixtureControl;
+use mizer_fixtures::definition::FixtureControl;
+use mizer_fixtures::FixtureId;
 
 #[derive(Debug, Default)]
 pub(crate) struct SequenceState {
     pub active_cue_index: u32,
     pub active: bool,
     last_go: Option<Instant>,
-    pub fixture_values: HashMap<(u32, FixtureControl), f64>,
+    pub fixture_values: HashMap<(FixtureId, FixtureControl), f64>,
 }
 
 impl SequenceState {
@@ -34,7 +35,7 @@ impl SequenceState {
         Instant::now().duration_since(self.last_go.unwrap_or_else(|| Instant::now()))
     }
 
-    pub fn get_fixture_value(&self, fixture: u32, control: &FixtureControl) -> Option<f64> {
-        self.fixture_values.get(&(fixture, control.clone())).copied()
+    pub fn get_fixture_value(&self, fixture_id: FixtureId, control: &FixtureControl) -> Option<f64> {
+        self.fixture_values.get(&(fixture_id, control.clone())).copied()
     }
 }

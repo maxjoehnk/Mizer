@@ -2,12 +2,12 @@ use std::collections::HashMap;
 
 use protobuf::SingularPtrField;
 
-use mizer_fixtures::fixture::{ChannelResolution, PhysicalFixtureData};
+use mizer_fixtures::definition::{ChannelResolution, PhysicalFixtureData};
 
 use crate::models::fixtures::*;
 
-impl From<mizer_fixtures::fixture::FixtureDefinition> for FixtureDefinition {
-    fn from(definition: mizer_fixtures::fixture::FixtureDefinition) -> Self {
+impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
+    fn from(definition: mizer_fixtures::definition::FixtureDefinition) -> Self {
         let physical: FixturePhysicalData = definition.physical.into();
         FixtureDefinition {
             id: definition.id,
@@ -26,7 +26,7 @@ impl From<mizer_fixtures::fixture::FixtureDefinition> for FixtureDefinition {
     }
 }
 
-impl From<mizer_fixtures::fixture::PhysicalFixtureData> for FixturePhysicalData {
+impl From<mizer_fixtures::definition::PhysicalFixtureData> for FixturePhysicalData {
     fn from(physical_data: PhysicalFixtureData) -> Self {
         let mut data = FixturePhysicalData::new();
         if let Some(dimensions) = physical_data.dimensions {
@@ -42,8 +42,8 @@ impl From<mizer_fixtures::fixture::PhysicalFixtureData> for FixturePhysicalData 
     }
 }
 
-impl From<mizer_fixtures::fixture::FixtureMode> for FixtureMode {
-    fn from(mode: mizer_fixtures::fixture::FixtureMode) -> Self {
+impl From<mizer_fixtures::definition::FixtureMode> for FixtureMode {
+    fn from(mode: mizer_fixtures::definition::FixtureMode) -> Self {
         FixtureMode {
             name: mode.name,
             channels: mode
@@ -57,8 +57,8 @@ impl From<mizer_fixtures::fixture::FixtureMode> for FixtureMode {
     }
 }
 
-impl From<mizer_fixtures::fixture::FixtureChannelDefinition> for FixtureChannel {
-    fn from(channel: mizer_fixtures::fixture::FixtureChannelDefinition) -> Self {
+impl From<mizer_fixtures::definition::FixtureChannelDefinition> for FixtureChannel {
+    fn from(channel: mizer_fixtures::definition::FixtureChannelDefinition) -> Self {
         FixtureChannel {
             name: channel.name,
             resolution: Some(channel.resolution.into()),
@@ -67,8 +67,8 @@ impl From<mizer_fixtures::fixture::FixtureChannelDefinition> for FixtureChannel 
     }
 }
 
-impl From<mizer_fixtures::fixture::ChannelResolution> for FixtureChannel_oneof_resolution {
-    fn from(resolution: mizer_fixtures::fixture::ChannelResolution) -> Self {
+impl From<mizer_fixtures::definition::ChannelResolution> for FixtureChannel_oneof_resolution {
+    fn from(resolution: mizer_fixtures::definition::ChannelResolution) -> Self {
         match resolution {
             ChannelResolution::Coarse(coarse) => {
                 FixtureChannel_oneof_resolution::coarse(FixtureChannel_CoarseResolution {
@@ -112,7 +112,7 @@ impl FixtureControls {
     }
 
     pub fn with_values(
-        fixture_controls: mizer_fixtures::fixture::FixtureControls,
+        fixture_controls: mizer_fixtures::definition::FixtureControls,
         values: &HashMap<String, f64>,
     ) -> Vec<Self> {
         let mut controls = Vec::new();
@@ -209,7 +209,7 @@ impl From<f64> for GenericChannel {
 
 impl AxisChannel {
     fn with_value(
-        axis: &mizer_fixtures::fixture::AxisGroup,
+        axis: &mizer_fixtures::definition::AxisGroup,
         values: &HashMap<String, f64>,
     ) -> Self {
         AxisChannel {
@@ -220,6 +220,39 @@ impl AxisChannel {
                 .unwrap_or_default(),
             angle_to: axis.angle.map(|angle| angle.to as f64).unwrap_or_default(),
             ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_fixtures::FixtureId> for FixtureId {
+    fn from(id: mizer_fixtures::FixtureId) -> Self {
+        match id {
+            mizer_fixtures::FixtureId::Fixture(fixture_id) => Self {
+                id: Some(FixtureId_oneof_id::fixture(fixture_id)),
+                ..Default::default()
+            },
+            mizer_fixtures::FixtureId::SubFixture(fixture_id, child_id) => Self {
+                id: Some(FixtureId_oneof_id::sub_fixture(SubFixtureId {
+                    fixture_id,
+                    child_id,
+                    ..Default::default()
+                })),
+                ..Default::default()
+            }
+        }
+    }
+}
+
+impl From<FixtureId> for mizer_fixtures::FixtureId {
+    fn from(id: FixtureId) -> Self {
+        match id.id {
+            Some(FixtureId_oneof_id::fixture(fixture_id)) => Self::Fixture(fixture_id),
+            Some(FixtureId_oneof_id::sub_fixture(SubFixtureId {
+                fixture_id,
+                child_id,
+                ..
+            })) => Self::SubFixture(fixture_id, child_id),
+            _ => unreachable!()
         }
     }
 }

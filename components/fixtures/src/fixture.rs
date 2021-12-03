@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
-use serde::{Deserialize, Serialize};
-
+use crate::definition::*;
 use mizer_protocol_dmx::DmxOutput;
 
 const U24_MAX: u32 = 16_777_215;
@@ -14,6 +13,7 @@ pub struct Fixture {
     pub universe: u16,
     pub channel: u8,
     pub output: Option<String>,
+    /// Contains values for all dmx channels including sub-fixtures
     pub channel_values: HashMap<String, f64>,
 }
 
@@ -41,50 +41,15 @@ impl Fixture {
         self.current_mode.channels.clone()
     }
 
-    pub fn write(&mut self, name: &str, value: f64) {
+    pub fn write<S: Into<String>>(&mut self, name: S, value: f64) {
+        let name = name.into();
         log::trace!("write {} -> {}", name, value);
-        self.channel_values.insert(name.to_string(), value);
+        self.channel_values.insert(name, value);
     }
 
     pub fn write_control(&mut self, control: FixtureControl, value: f64) {
-        match control {
-            FixtureControl::Intensity => if let Some(channel) = self.current_mode.controls.intensity.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Shutter => if let Some(channel) = self.current_mode.controls.shutter.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Zoom => if let Some(channel) = self.current_mode.controls.zoom.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Focus => if let Some(channel) = self.current_mode.controls.focus.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Iris => if let Some(channel) = self.current_mode.controls.iris.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Prism => if let Some(channel) = self.current_mode.controls.prism.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Frost => if let Some(channel) = self.current_mode.controls.frost.clone() {
-                self.write(&channel, value)
-            }
-            FixtureControl::Color(ColorChannel::Red) => if let Some(color_group) = self.current_mode.controls.color.clone() {
-                self.write(&color_group.red, value);
-            }
-            FixtureControl::Color(ColorChannel::Green) => if let Some(color_group) = self.current_mode.controls.color.clone() {
-                self.write(&color_group.green, value);
-            }
-            FixtureControl::Color(ColorChannel::Blue) => if let Some(color_group) = self.current_mode.controls.color.clone() {
-                self.write(&color_group.blue, value);
-            }
-            FixtureControl::Pan => if let Some(axis) = self.current_mode.controls.pan.clone() {
-                self.write(&axis.channel, value)
-            }
-            FixtureControl::Tilt => if let Some(axis) = self.current_mode.controls.tilt.clone() {
-                self.write(&axis.channel, value)
-            }
-            FixtureControl::Generic(channel) => self.write(&channel, value),
+        if let Some(channel) = self.current_mode.controls.get_channel(&control) {
+            self.write(channel.to_string(), value)
         }
     }
 
@@ -98,6 +63,18 @@ impl Fixture {
             self.write(&color_group.green, 1f64);
             self.write(&color_group.blue, 1f64);
         }
+    }
+
+    pub fn sub_fixture_mut(&mut self, id: u32) -> Option<SubFixture> {
+        self.current_mode
+            .sub_fixtures
+            .iter()
+            .find(|f| f.id == id)
+            .cloned()
+            .map(move |definition| SubFixture {
+                fixture: self,
+                definition,
+            })
     }
 
     pub(crate) fn set_to_default(&mut self) {
@@ -157,6 +134,31 @@ impl Fixture {
     }
 }
 
+#[derive(Debug)]
+pub struct SubFixture<'a> {
+    fixture: &'a mut Fixture,
+    definition: SubFixtureDefinition,
+}
+
+impl<'a> SubFixture<'a> {
+    pub fn write_control(&mut self, control: FixtureControl, value: f64) {
+        if let Some(channel) = self.definition.controls.get_channel(&control) {
+            self.fixture.write(channel, value)
+        }
+    }
+
+    pub fn highlight(&mut self) {
+        if let Some(ref channel) = self.definition.controls.intensity {
+            self.fixture.write(channel, 1f64);
+        }
+        if let Some(ref color_group) = self.definition.controls.color {
+            self.fixture.write(&color_group.red, 1f64);
+            self.fixture.write(&color_group.green, 1f64);
+            self.fixture.write(&color_group.blue, 1f64);
+        }
+    }
+}
+
 fn convert_value(input: f64) -> u8 {
     let clamped = input.min(1.0).max(0.0);
     let channel = clamped * (u8::MAX as f64);
@@ -191,167 +193,24 @@ fn get_current_mode(definition: &FixtureDefinition, selected_mode: Option<String
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
-pub struct FixtureDefinition {
-    pub id: String,
-    pub name: String,
-    pub manufacturer: String,
-    pub modes: Vec<FixtureMode>,
-    pub physical: PhysicalFixtureData,
-    pub tags: Vec<String>,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct FixtureMode {
-    pub name: String,
-    pub channels: Vec<FixtureChannelDefinition>,
-    pub controls: FixtureControls,
-    pub groups: Vec<FixtureChannelGroup>,
-}
-
-#[derive(Debug, Clone, PartialEq, Default)]
-pub struct FixtureControls {
-    pub intensity: Option<String>,
-    pub shutter: Option<String>,
-    pub color: Option<ColorGroup>,
-    pub pan: Option<AxisGroup>,
-    pub tilt: Option<AxisGroup>,
-    pub focus: Option<String>,
-    pub zoom: Option<String>,
-    pub prism: Option<String>,
-    pub iris: Option<String>,
-    pub frost: Option<String>,
-    pub generic: Vec<GenericControl>,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct FixtureChannelGroup {
-    pub name: String,
-    pub group_type: FixtureChannelGroupType,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum FixtureChannelGroupType {
-    Generic(String),
-    Color(ColorGroup),
-    Pan(AxisGroup),
-    Tilt(AxisGroup),
-    Focus(String),
-    Zoom(String),
-    Prism(String),
-    Intensity(String),
-    Shutter(String),
-    Iris(String),
-    Frost(String),
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct ColorGroup {
-    pub red: String,
-    pub green: String,
-    pub blue: String,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct AxisGroup {
-    pub channel: String,
-    pub angle: Option<Angle>,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Angle {
-    pub from: f32,
-    pub to: f32,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct GenericControl {
-    pub label: String,
-    pub channel: String,
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
-pub enum FixtureControl {
-    Intensity,
-    Shutter,
-    Color(ColorChannel),
-    Pan,
-    Tilt,
-    Focus,
-    Zoom,
-    Prism,
-    Iris,
-    Frost,
-    Generic(String),
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
-pub enum ColorChannel {
-    Red,
-    Green,
-    Blue
-}
-
-impl FixtureMode {
-    fn dmx_channels(&self) -> u8 {
-        self.channels.iter().map(|c| c.channels()).sum()
-    }
-
-    pub fn intensity(&self) -> Option<FixtureChannelDefinition> {
-        self.controls
-            .intensity
-            .as_ref()
-            .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
-    }
-
-    pub fn color(&self) -> Option<ColorGroup> {
-        self.controls.color.clone()
-    }
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct FixtureChannelDefinition {
-    pub name: String,
-    pub resolution: ChannelResolution,
-}
-
-impl FixtureChannelDefinition {
-    fn channels(&self) -> u8 {
-        match self.resolution {
-            ChannelResolution::Coarse { .. } => 1,
-            ChannelResolution::Fine { .. } => 2,
-            ChannelResolution::Finest { .. } => 3,
+impl FixtureControls {
+    fn get_channel<'a>(&'a self, control: &'a FixtureControl) -> Option<&'a str> {
+        match control {
+            FixtureControl::Intensity => self.intensity.as_ref().map(|c| c.as_str()),
+            FixtureControl::Shutter => self.shutter.as_ref().map(|c| c.as_str()),
+            FixtureControl::Zoom => self.zoom.as_ref().map(|c| c.as_str()),
+            FixtureControl::Focus => self.focus.as_ref().map(|c| c.as_str()),
+            FixtureControl::Iris => self.iris.as_ref().map(|c| c.as_str()),
+            FixtureControl::Prism => self.prism.as_ref().map(|c| c.as_str()),
+            FixtureControl::Frost => self.frost.as_ref().map(|c| c.as_str()),
+            FixtureControl::Color(ColorChannel::Red) => self.color.as_ref().map(|c| c.red.as_str()),
+            FixtureControl::Color(ColorChannel::Green) => self.color.as_ref().map(|c| c.green.as_str()),
+            FixtureControl::Color(ColorChannel::Blue) => self.color.as_ref().map(|c| c.blue.as_str()),
+            FixtureControl::Pan => self.pan.as_ref().map(|axis| axis.channel.as_str()),
+            FixtureControl::Tilt => self.tilt.as_ref().map(|axis| axis.channel.as_str()),
+            FixtureControl::Generic(ref channel) => Some(channel.as_str()),
         }
     }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum ChannelResolution {
-    /// 8 Bit
-    ///
-    /// coarse
-    Coarse(u8),
-    /// 16 Bit
-    ///
-    /// coarse, fine
-    Fine(u8, u8),
-    /// 24 Bit
-    ///
-    /// coarse, fine, finest
-    Finest(u8, u8, u8),
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct PhysicalFixtureData {
-    pub dimensions: Option<FixtureDimensions>,
-    pub weight: Option<f32>,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct FixtureDimensions {
-    pub width: f32,
-    pub height: f32,
-    pub depth: f32,
 }
 
 #[cfg(test)]

@@ -6,7 +6,8 @@ use crate::state::SequenceState;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_util::LerpExt;
 use std::time::Duration;
-use mizer_fixtures::fixture::{FixtureControl};
+use mizer_fixtures::definition::FixtureControl;
+use mizer_fixtures::FixtureId;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -25,9 +26,7 @@ impl Sequence {
         for channel in &cue.channels {
             for (fixture_id, value) in channel.values(&state) {
                 if let Some(value) = value {
-                    if let Some(mut fixture) = fixture_manager.get_fixture_mut(fixture_id) {
-                        fixture.write_control(channel.control.clone(), value);
-                    }
+                    fixture_manager.write_fixture_control(fixture_id, channel.control.clone(), value);
                 }
             }
         }
@@ -90,7 +89,7 @@ pub enum CueTrigger {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct CueChannel {
-    pub fixtures: Vec<u32>,
+    pub fixtures: Vec<FixtureId>,
     pub control: FixtureControl,
     pub value: SequencerValue<f64>,
     #[serde(default)]
@@ -100,7 +99,7 @@ pub struct CueChannel {
 }
 
 impl CueChannel {
-    fn values(&self, state: &SequenceState) -> Vec<(u32, Option<f64>)> {
+    fn values(&self, state: &SequenceState) -> Vec<(FixtureId, Option<f64>)> {
         let mut values = vec![None; self.fixtures.len()];
 
         self.fill_values(state, &mut values);

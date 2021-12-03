@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' show showDialog;
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/views/fixtures/dialogs/select_sequence_dialog.dart';
 import 'package:mizer/views/fixtures/dialogs/store_mode_dialog.dart';
@@ -18,7 +18,7 @@ import 'dimmer_sheet.dart';
 import 'gobo_sheet.dart';
 
 class FixtureSheet extends StatefulWidget {
-  final List<Fixture> fixtures;
+  final List<FixtureInstance> fixtures;
   final ProgrammerApi api;
 
   const FixtureSheet({required this.fixtures, required this.api, Key? key}) : super(key: key);

@@ -1,8 +1,9 @@
 use std::collections::HashMap;
+use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
 
-use mizer_fixtures::fixture::*;
+use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 
 #[derive(Default)]
@@ -105,6 +106,8 @@ pub struct OpenFixtureLibraryFixtureDefinition {
     pub manufacturer: FixtureManufacturer,
     #[serde(default)]
     pub physical: Physical,
+    #[serde(default)]
+    pub matrix: Option<Matrix>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -119,6 +122,8 @@ pub struct Channel {
     pub fine_channel_aliases: Vec<String>,
     pub default_value: Option<Value>,
     pub capabilities: Vec<Capability>,
+    #[serde(default)]
+    pub pixel_key: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -254,6 +259,19 @@ pub struct Physical {
     pub dmx_connector: Option<String>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Matrix {
+    #[serde(flatten)]
+    pub pixels: MatrixPixels,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum MatrixPixels {
+    PixelKeys(Vec<Vec<Vec<Option<String>>>>),
+    PixelCount([u32; 3]),
+}
+
 impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     fn from(def: OpenFixtureLibraryFixtureDefinition) -> Self {
         let available_channels = def.available_channels;
@@ -268,79 +286,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
             modes: def
                 .modes
                 .into_iter()
-                .map(|mode| {
-                    let channels = mode.channels.into_iter().flatten().collect::<Vec<_>>();
-                    let channels_2 = channels.clone();
-                    FixtureMode {
-                        name: mode.name,
-                        groups: group_channels(&available_channels, &channels),
-                        controls: group_controls(&available_channels, &channels),
-                        channels: channels
-                            .into_iter()
-                            .enumerate()
-                            .map(|(i, channel)| {
-                                let fine_channels = available_channels
-                                    .get(&channel)
-                                    .map(|c| &c.fine_channel_aliases[..]);
-                                match fine_channels {
-                                    Some(&[ref fine]) => {
-                                        let fine_channel =
-                                            channels_2.iter().position(|c| c == fine);
-                                        if let Some(fine_channel) = fine_channel {
-                                            FixtureChannelDefinition {
-                                                name: channel,
-                                                resolution: ChannelResolution::Fine(
-                                                    i as u8,
-                                                    fine_channel as u8,
-                                                ),
-                                            }
-                                        } else {
-                                            FixtureChannelDefinition {
-                                                name: channel,
-                                                resolution: ChannelResolution::Coarse(i as u8),
-                                            }
-                                        }
-                                    }
-                                    Some(&[ref fine, ref finest]) => {
-                                        let fine_channel =
-                                            channels_2.iter().position(|c| c == fine);
-                                        let finest_channel =
-                                            channels_2.iter().position(|c| c == fine);
-                                        if let Some(fine_channel) = fine_channel {
-                                            if let Some(finest_channel) = finest_channel {
-                                                FixtureChannelDefinition {
-                                                    name: channel,
-                                                    resolution: ChannelResolution::Finest(
-                                                        i as u8,
-                                                        fine_channel as u8,
-                                                        finest_channel as u8,
-                                                    ),
-                                                }
-                                            } else {
-                                                FixtureChannelDefinition {
-                                                    name: channel,
-                                                    resolution: ChannelResolution::Fine(
-                                                        i as u8,
-                                                        fine_channel as u8,
-                                                    ),
-                                                }
-                                            }
-                                        } else {
-                                            FixtureChannelDefinition {
-                                                name: channel,
-                                                resolution: ChannelResolution::Coarse(i as u8),
-                                            }
-                                        }
-                                    }
-                                    _ => FixtureChannelDefinition {
-                                        name: channel,
-                                        resolution: ChannelResolution::Coarse(i as u8),
-                                    },
-                                }
-                            })
-                            .collect(),
-                    }
-                })
+                .map(|mode| build_fixture_mode(mode, &available_channels))
                 .collect(),
             tags: def.categories,
             physical: PhysicalFixtureData {
@@ -349,6 +295,97 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
             },
         }
     }
+}
+
+fn build_fixture_mode(mode: Mode, available_channels: &HashMap<String, Channel>) -> FixtureMode {
+    let all_channels = mode.channels.into_iter().flatten().collect::<Vec<_>>();
+
+    let (pixels, channels): (Vec<_>, Vec<_>) = all_channels
+        .clone()
+        .into_iter()
+        .partition(|name| is_pixel_channel(name, available_channels));
+
+    FixtureMode {
+        name: mode.name,
+        controls: group_controls(available_channels, &channels),
+        channels: map_channels(available_channels, all_channels),
+        sub_fixtures: group_sub_fixtures(available_channels, pixels),
+    }
+}
+
+fn map_channels(
+    available_channels: &HashMap<String, Channel>,
+    channels: Vec<String>,
+) -> Vec<FixtureChannelDefinition> {
+    let channels_2 = channels.clone();
+
+    channels
+        .into_iter()
+        .enumerate()
+        .map(|(i, channel)| {
+            let fine_channels = available_channels
+                .get(&channel)
+                .map(|c| &c.fine_channel_aliases[..]);
+            match fine_channels {
+                Some(&[ref fine]) => {
+                    let fine_channel = channels_2.iter().position(|c| c == fine);
+                    if let Some(fine_channel) = fine_channel {
+                        FixtureChannelDefinition {
+                            name: channel,
+                            resolution: ChannelResolution::Fine(i as u8, fine_channel as u8),
+                        }
+                    } else {
+                        FixtureChannelDefinition {
+                            name: channel,
+                            resolution: ChannelResolution::Coarse(i as u8),
+                        }
+                    }
+                }
+                Some(&[ref fine, ref finest]) => {
+                    let fine_channel = channels_2.iter().position(|c| c == fine);
+                    let finest_channel = channels_2.iter().position(|c| c == fine);
+                    if let Some(fine_channel) = fine_channel {
+                        if let Some(finest_channel) = finest_channel {
+                            FixtureChannelDefinition {
+                                name: channel,
+                                resolution: ChannelResolution::Finest(
+                                    i as u8,
+                                    fine_channel as u8,
+                                    finest_channel as u8,
+                                ),
+                            }
+                        } else {
+                            FixtureChannelDefinition {
+                                name: channel,
+                                resolution: ChannelResolution::Fine(i as u8, fine_channel as u8),
+                            }
+                        }
+                    } else {
+                        FixtureChannelDefinition {
+                            name: channel,
+                            resolution: ChannelResolution::Coarse(i as u8),
+                        }
+                    }
+                }
+                _ => FixtureChannelDefinition {
+                    name: channel,
+                    resolution: ChannelResolution::Coarse(i as u8),
+                },
+            }
+        })
+        .collect()
+}
+
+fn is_pixel_channel(channel_name: &str, available_channels: &HashMap<String, Channel>) -> bool {
+    if let Some(channel) = available_channels.get(channel_name) {
+        // TODO: this excludes certain fixtures because of the way the pixelKeys are called.
+        if let Some(ref key) = channel.pixel_key {
+            if u32::from_str(key).is_ok() {
+                return true;
+            }
+        }
+    }
+    false
 }
 
 fn convert_dimensions(dimensions: Vec<f32>) -> Option<FixtureDimensions> {
@@ -362,121 +399,42 @@ fn convert_dimensions(dimensions: Vec<f32>) -> Option<FixtureDimensions> {
     }
 }
 
-fn group_channels(
+fn group_sub_fixtures(
     available_channels: &HashMap<String, Channel>,
-    enabled_channels: &[String],
-) -> Vec<FixtureChannelGroup> {
-    let channels = enabled_channels
-        .iter()
-        .filter_map(|name| {
-            available_channels
-                .get(name)
-                .map(|channel| (name.clone(), channel))
-        })
-        .collect::<Vec<_>>();
+    pixels: Vec<String>,
+) -> Vec<SubFixtureDefinition> {
+    let mut pixel_groups = HashMap::<String, Vec<String>>::new();
 
-    log::trace!("{:?}", channels);
+    for name in pixels {
+        let channel = &available_channels[&name];
+        let pixel_key = channel.pixel_key.clone().unwrap();
+        let group = pixel_groups.entry(pixel_key).or_default();
 
-    let mut color_group = ColorGroupBuilder::new();
-    let mut groups = Vec::new();
-
-    for (name, channel) in channels {
-        if channel
-            .capabilities
-            .iter()
-            .all(|c| matches!(c, Capability::NoFunction))
-        {
-            log::trace!("skipping capability {} as it has no functions", name);
-            continue;
-        }
-        match channel
-            .capabilities
-            .iter()
-            .find(|c| !matches!(c, Capability::NoFunction))
-        {
-            Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
-                color_group.red(name.clone());
-            }
-            Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
-                color_group.green(name.clone());
-            }
-            Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
-                color_group.blue(name.clone());
-            }
-            Some(Capability::Pan {
-                angle_start,
-                angle_end,
-            }) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Pan(AxisGroup {
-                    channel: name.clone(),
-                    angle: Some(Angle {
-                        from: *angle_start,
-                        to: *angle_end,
-                    }),
-                }),
-            }),
-            Some(Capability::Tilt {
-                angle_start,
-                angle_end,
-            }) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Tilt(AxisGroup {
-                    channel: name.clone(),
-                    angle: Some(Angle {
-                        from: *angle_start,
-                        to: *angle_end,
-                    }),
-                }),
-            }),
-            Some(Capability::Focus) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Focus(name.clone()),
-            }),
-            Some(Capability::Zoom) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Zoom(name.clone()),
-            }),
-            Some(Capability::Prism | Capability::PrismRotation) => {
-                groups.push(FixtureChannelGroup {
-                    name: name.clone(),
-                    group_type: FixtureChannelGroupType::Prism(name.clone()),
-                })
-            }
-            Some(Capability::Iris) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Iris(name.clone()),
-            }),
-            Some(Capability::Frost) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Frost(name.clone()),
-            }),
-            Some(Capability::Intensity) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Intensity(name.clone()),
-            }),
-            Some(Capability::ShutterStrobe { .. }) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Shutter(name.clone()),
-            }),
-            Some(_) => groups.push(FixtureChannelGroup {
-                name: name.clone(),
-                group_type: FixtureChannelGroupType::Generic(name.clone()),
-            }),
-            _ => {}
-        }
+        group.push(name);
     }
 
-    if let Some(color_group) = color_group.build() {
-        groups.push(FixtureChannelGroup {
-            name: "Color".into(),
-            group_type: FixtureChannelGroupType::Color(color_group),
-        });
-    }
+    let mut sub_fixtures: Vec<_> = pixel_groups
+        .into_iter()
+        .map(|(key, channels)| build_sub_fixture(key, available_channels, channels))
+        .collect();
 
-    log::trace!("in: {:?}, out: {:?}", enabled_channels, groups);
+    sub_fixtures.sort_by_key(|f| f.id);
 
-    groups
+    sub_fixtures
+}
+
+fn build_sub_fixture(
+    key: String,
+    available_channels: &HashMap<String, Channel>,
+    channels: Vec<String>,
+) -> SubFixtureDefinition {
+    let definition = SubFixtureDefinition {
+        id: u32::from_str_radix(&key, 10).expect(&format!("'{}' is not a number", key)),
+        name: format!("Pixel {}", key),
+        controls: group_controls(available_channels, &channels),
+    };
+
+    definition
 }
 
 fn group_controls(
@@ -511,7 +469,7 @@ fn group_controls(
         {
             Some(Capability::Intensity) => {
                 controls.intensity = Some(name);
-            },
+            }
             Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
                 color_group.red(name.clone());
             }
@@ -547,22 +505,22 @@ fn group_controls(
             }
             Some(Capability::Focus) => {
                 controls.focus = Some(name);
-            },
+            }
             Some(Capability::Zoom) => {
                 controls.zoom = Some(name);
-            },
+            }
             Some(Capability::Prism) => {
                 controls.prism = Some(name);
-            },
+            }
             Some(Capability::Iris) => {
                 controls.iris = Some(name);
-            },
+            }
             Some(Capability::Frost) => {
                 controls.frost = Some(name);
-            },
+            }
             Some(Capability::ShutterStrobe { .. }) => {
                 controls.shutter = Some(name);
-            },
+            }
             Some(_) => controls.generic.push(GenericControl {
                 label: name.clone(),
                 channel: name,
@@ -612,15 +570,14 @@ impl ColorGroupBuilder {
 mod tests {
     use std::collections::HashMap;
 
-    use mizer_fixtures::fixture::{ColorGroup, FixtureChannelGroup, FixtureChannelGroupType};
+    use mizer_fixtures::definition::{ColorGroup, FixtureChannelGroupType, GenericControl};
 
     use crate::{Capability, Channel};
 
-    use super::group_channels;
+    use super::group_controls;
 
-    // TODO: reenable when color support in ui is working properly
     #[test]
-    fn group_channels_should_group_color_channels() {
+    fn group_controls_should_group_color_channels() {
         let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into()];
         let mut available_channels = HashMap::new();
         available_channels.insert(
@@ -631,6 +588,7 @@ mod tests {
                 capabilities: vec![Capability::ColorIntensity {
                     color: "#ff0000".into(),
                 }],
+                pixel_key: None,
             },
         );
         available_channels.insert(
@@ -641,6 +599,7 @@ mod tests {
                 capabilities: vec![Capability::ColorIntensity {
                     color: "#00ff00".into(),
                 }],
+                pixel_key: None,
             },
         );
         available_channels.insert(
@@ -651,36 +610,25 @@ mod tests {
                 capabilities: vec![Capability::ColorIntensity {
                     color: "#0000ff".into(),
                 }],
+                pixel_key: None,
             },
         );
 
-        let groups = group_channels(&available_channels, &enabled_channels);
+        let controls = group_controls(&available_channels, &enabled_channels);
 
+        assert!(controls.color.is_some());
         assert_eq!(
-            groups,
-            vec![FixtureChannelGroup {
-                name: "Color".into(),
-                group_type: FixtureChannelGroupType::Color(ColorGroup {
-                    red: "Red".into(),
-                    green: "Green".into(),
-                    blue: "Blue".into(),
-                })
-            }]
+            controls.color.unwrap(),
+            ColorGroup {
+                red: "Red".into(),
+                green: "Green".into(),
+                blue: "Blue".into(),
+            }
         );
     }
 
     #[test]
-    fn group_channels_should_return_empty_list_for_fixture_without_channels() {
-        let enabled_channels = Vec::new();
-        let available_channels = HashMap::new();
-
-        let groups = group_channels(&available_channels, &enabled_channels);
-
-        assert!(groups.is_empty());
-    }
-
-    #[test]
-    fn group_channels_should_map_generic_channels() {
+    fn group_controls_should_map_generic_channels() {
         let enabled_channels = vec!["Channel".into()];
         let mut available_channels = HashMap::new();
         available_channels.insert(
@@ -689,17 +637,19 @@ mod tests {
                 fine_channel_aliases: Vec::default(),
                 default_value: None,
                 capabilities: vec![Capability::Generic],
+                pixel_key: None,
             },
         );
 
-        let groups = group_channels(&available_channels, &enabled_channels);
+        let groups = group_controls(&available_channels, &enabled_channels);
 
+        assert_eq!(groups.generic.len(), 1);
         assert_eq!(
-            groups,
-            vec![FixtureChannelGroup {
-                name: "Channel".into(),
-                group_type: FixtureChannelGroupType::Generic("Channel".into()),
-            }]
+            groups.generic[0],
+            GenericControl {
+                label: "Channel".into(),
+                channel: "Channel".into()
+            }
         );
     }
 }

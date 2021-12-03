@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/protos/fixtures.extensions.dart';
 
 import 'fixture_group_control.dart';
 
 class GoboSheet extends StatelessWidget {
-  final List<Fixture> fixtures;
+  final List<FixtureInstance> fixtures;
 
   const GoboSheet({required this.fixtures, Key? key}) : super(key: key);
 
@@ -15,7 +15,7 @@ class GoboSheet extends StatelessWidget {
           ? ListView(
               scrollDirection: Axis.horizontal,
               children: controls
-                  .map((control) => FixtureGroupControl(control, fixtures: fixtures))
+                  .map((control) => FixtureGroupControl(control))
                   .toList())
           : null,
     );

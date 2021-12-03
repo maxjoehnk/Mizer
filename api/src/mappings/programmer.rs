@@ -1,4 +1,4 @@
-use mizer_fixtures::fixture::{ColorChannel, FixtureControl};
+use mizer_fixtures::definition::{ColorChannel, FixtureControl};
 
 use crate::models::programmer::*;
 

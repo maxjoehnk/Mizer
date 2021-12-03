@@ -47,7 +47,7 @@ enum CueTrigger {
 }
 
 message CueChannel {
-  repeated uint32 fixtures = 1;
+  repeated mizer.fixtures.FixtureId fixtures = 1;
   CueControl control = 2;
   CueValue value = 3;
   CueTimer fade = 4;

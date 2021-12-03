@@ -1,4 +1,4 @@
-use crate::fixture::FixtureDefinition;
+use crate::definition::FixtureDefinition;
 use std::sync::Arc;
 
 #[derive(Clone)]

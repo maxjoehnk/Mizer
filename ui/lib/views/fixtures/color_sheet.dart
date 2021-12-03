@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/inputs/color.dart';
 
@@ -22,7 +23,7 @@ const NAMES = {
 };
 
 class ColorSheet extends StatelessWidget {
-  final List<Fixture> fixtures;
+  final List<FixtureInstance> fixtures;
 
   const ColorSheet({required this.fixtures, Key? key}) : super(key: key);
 
@@ -33,7 +34,7 @@ class ColorSheet extends StatelessWidget {
           ? ListView(
               scrollDirection: Axis.horizontal,
               children:
-                  controls.map((control) => FixtureGroupControl(control, fixtures: fixtures)).toList())
+                  controls.map((control) => FixtureGroupControl(control)).toList())
           : null,
     );
   }

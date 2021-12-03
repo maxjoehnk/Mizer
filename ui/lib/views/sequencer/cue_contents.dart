@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/extensions/number_extensions.dart';
+import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -55,20 +56,20 @@ class CueContents extends StatelessWidget {
     var channels = _controls;
     var fixtureIds = cue.channels
         .map((c) => c.fixtures)
-        .fold<List<int>>([], (previousValue, element) => [...previousValue, ...element])
+        .fold<List<FixtureId>>([], (previousValue, element) => [...previousValue, ...element])
         .toSet()
         .toList();
     fixtureIds.sort();
 
     return fixtureIds.map((fixtureId) {
-      var fixture = fixtures.firstWhere((element) => element.id == fixtureId);
+      var fixture = fixtures.getFixture(fixtureId);
       var fixtureChannels = channels
           .map((e) => cue.channels.firstWhereOrNull(
               (element) => element.control == e && element.fixtures.contains(fixtureId)))
           .toList();
 
       return DataRow(cells: [
-        DataCell(Text(fixtureId.toString())),
+        DataCell(Text(fixtureId.toDisplay())),
         DataCell(Text(fixture.name)),
         ...fixtureChannels.map((c) {
           if (c == null) {

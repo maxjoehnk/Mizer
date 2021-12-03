@@ -310,6 +310,7 @@ mod tests {
                     height: 20
                 }),
                 designer: NodeDesigner {
+                    hidden: false,
                     position: NodePosition { x: 1., y: 2. },
                     scale: 3.,
                 },

@@ -114,7 +114,7 @@ impl Sequencer {
     /// sets id counter to highest id in the given list of sequences
     /// should only be used for project loading
     pub fn load_sequences(&self, sequences: Vec<Sequence>) {
-        let id = sequences.iter().map(|s| s.id).max().unwrap_or(1);
+        let id = sequences.iter().map(|s| s.id + 1).max().unwrap_or(1);
         self.sequence_counter.store(id, Ordering::Relaxed);
         self.sequences
             .set(sequences.into_iter().map(|s| (s.id, s)).collect());

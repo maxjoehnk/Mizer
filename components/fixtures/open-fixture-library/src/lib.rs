@@ -343,7 +343,7 @@ fn map_channels(
                 }
                 Some(&[ref fine, ref finest]) => {
                     let fine_channel = channels_2.iter().position(|c| c == fine);
-                    let finest_channel = channels_2.iter().position(|c| c == fine);
+                    let finest_channel = channels_2.iter().position(|c| c == finest);
                     if let Some(fine_channel) = fine_channel {
                         if let Some(finest_channel) = finest_channel {
                             FixtureChannelDefinition {

@@ -196,7 +196,7 @@ impl PipelineWorker {
         receivers.add(link.target_port, rx, source_meta);
     }
 
-    fn disconnect_memory_ports<V: PortValue + Default + 'static>(&mut self, path: &NodePath, link: &NodeLink) {
+    fn disconnect_memory_ports<V: PortValue + Default + 'static>(&mut self, _: &NodePath, link: &NodeLink) {
         if let Some(receivers) = self.receivers.get_mut(&link.target) {
             receivers.remove(&link.target_port);
         }

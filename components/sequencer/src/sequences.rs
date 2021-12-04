@@ -112,7 +112,7 @@ impl CueChannel {
             .collect()
     }
 
-    fn fill_values(&self, state: &SequenceState, values: &mut Vec<Option<f64>>) {
+    fn fill_values(&self, _: &SequenceState, values: &mut Vec<Option<f64>>) {
         match self.value {
             SequencerValue::Direct(value) => {
                 values.fill(Some(value));

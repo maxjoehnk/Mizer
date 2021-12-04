@@ -25,8 +25,8 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                 resp.respond_msg(response);
             }
             "monitorDmx" => {
-                if let Value::String(outputId) = call.args {
-                    match self.handler.monitor_dmx(outputId) {
+                if let Value::String(output_id) = call.args {
+                    match self.handler.monitor_dmx(output_id) {
                         Ok(values) => {
                             let values = values
                                 .into_iter()

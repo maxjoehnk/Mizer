@@ -68,7 +68,7 @@ pub struct TransportEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
     for TransportEventChannel<R, AR>
 {
-    fn register_event_sink(&mut self, sink: EventSink, listen_argument: Value) {
+    fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
         let stream = self.handler.transport_stream();
         let subscription = self.runtime.subscribe(

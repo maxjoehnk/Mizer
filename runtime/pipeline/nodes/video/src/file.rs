@@ -45,7 +45,7 @@ impl PipelineNode for VideoFileNode {
 impl ProcessingNode for VideoFileNode {
     type State = VideoFileState;
 
-    fn process(&self, _: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, _: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let pipeline = PIPELINE.lock().unwrap();
         let bus = pipeline.bus().unwrap();
         if let Some(msg) = bus.pop() {

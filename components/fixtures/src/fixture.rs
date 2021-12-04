@@ -51,8 +51,8 @@ impl Fixture {
     }
 
     pub fn write_control(&mut self, control: FixtureControl, value: f64) {
-        if let Some(channel) = self.current_mode.controls.get_channel(&control) {
-            self.write(channel.to_string(), value)
+        if let Some(channel) = self.current_mode.controls.get_channel(&control).map(|c| c.to_string()) {
+            self.write(channel, value)
         }
     }
 

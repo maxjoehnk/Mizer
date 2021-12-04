@@ -1,12 +1,9 @@
-use std::cell::RefCell;
-use std::rc::Weak;
-
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodInvokerProvider, RegisteredMethodCallHandler, MethodChannel};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::SettingsHandler;
 
-use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
+use crate::plugin::channels::MethodReplyExt;
 
 pub struct SettingsChannel {
     handler: SettingsHandler,

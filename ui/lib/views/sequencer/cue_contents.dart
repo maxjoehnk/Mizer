@@ -59,7 +59,7 @@ class CueContents extends StatelessWidget {
         .fold<List<FixtureId>>([], (previousValue, element) => [...previousValue, ...element])
         .toSet()
         .toList();
-    fixtureIds.sort();
+    fixtureIds.sort((lhs, rhs) => lhs.compareTo(rhs));
 
     return fixtureIds.map((fixtureId) {
       var fixture = fixtures.getFixture(fixtureId);

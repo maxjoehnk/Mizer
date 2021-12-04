@@ -11,6 +11,21 @@ extension FixtureIdExtensions on FixtureId {
   int get fixtureId {
     return this.hasSubFixture() ? this.subFixture.fixtureId : this.fixture;
   }
+  
+  int compareTo(FixtureId other) {
+    var fixtureIdDiff = this.fixtureId - other.fixtureId;
+    if (fixtureIdDiff == 0) {
+      if (this.hasSubFixture() && other.hasSubFixture()) {
+        return this.subFixture.childId - other.subFixture.childId;
+      }
+      if (this.hasSubFixture()) {
+        return -1;
+      }else {
+        return 1;
+      }
+    }
+    return fixtureIdDiff;
+  }
 }
 
 class FixtureInstance {

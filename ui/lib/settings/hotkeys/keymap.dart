@@ -55,6 +55,7 @@ const Map<String, LogicalKeyboardKey> keyMappings = {
   "esc": LogicalKeyboardKey.escape,
   "insert": LogicalKeyboardKey.insert,
   "delete": LogicalKeyboardKey.delete,
+  "backspace": LogicalKeyboardKey.backspace,
   "home": LogicalKeyboardKey.home,
   "end": LogicalKeyboardKey.end,
   "pgUp": LogicalKeyboardKey.pageUp,

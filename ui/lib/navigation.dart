@@ -6,10 +6,11 @@ import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
-import 'package:mizer/views/fixtures/fixtures_view.dart';
+import 'package:mizer/views/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
+import 'package:mizer/views/patch/fixture_patch.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
@@ -18,22 +19,24 @@ import 'actions/actions.dart';
 import 'api/contracts/settings.dart';
 
 List<Route> routes = [
-  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', LogicalKeyboardKey.digit1,
+  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', LogicalKeyboardKey.f1,
       View.Layout),
   Route(
-      () => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.digit2, View.Plan),
-  Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.digit3, View.PreViz),
-  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.digit4,
+      () => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.f2, View.Plan),
+  Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.f3, View.PreViz),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.f4,
       View.Nodes),
-  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', LogicalKeyboardKey.digit5,
+  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', LogicalKeyboardKey.f5,
       View.Sequences),
-  Route(() => FixturesView(), MdiIcons.spotlight, 'Fixtures', LogicalKeyboardKey.digit6,
-      View.Fixtures),
+  Route(() => ProgrammerView(), MdiIcons.tuneVertical, 'Programmer', LogicalKeyboardKey.f6,
+      View.Programmer),
   Route(
-      () => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.digit7, View.Media),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Connections', LogicalKeyboardKey.digit8,
+      () => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.f7, View.Media),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Connections', LogicalKeyboardKey.f8,
       View.Connections),
-  Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.digit9, View.Session),
+  Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch', LogicalKeyboardKey.f9,
+      View.FixturePatch),
+  Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.f10, View.Session),
 ];
 
 Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);

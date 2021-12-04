@@ -15,17 +15,22 @@ export 'fixtures.pbenum.dart';
 
 class AddFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..pc<AddFixtureRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'requests', $pb.PbFieldType.PM, subBuilder: AddFixtureRequest.create)
+    ..aOM<AddFixtureRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'request', subBuilder: AddFixtureRequest.create)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   AddFixturesRequest._() : super();
   factory AddFixturesRequest({
-    $core.Iterable<AddFixtureRequest>? requests,
+    AddFixtureRequest? request,
+    $core.int? count,
   }) {
     final _result = create();
-    if (requests != null) {
-      _result.requests.addAll(requests);
+    if (request != null) {
+      _result.request = request;
+    }
+    if (count != null) {
+      _result.count = count;
     }
     return _result;
   }
@@ -51,7 +56,24 @@ class AddFixturesRequest extends $pb.GeneratedMessage {
   static AddFixturesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<AddFixtureRequest> get requests => $_getList(0);
+  AddFixtureRequest get request => $_getN(0);
+  @$pb.TagNumber(1)
+  set request(AddFixtureRequest v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRequest() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRequest() => clearField(1);
+  @$pb.TagNumber(1)
+  AddFixtureRequest ensureRequest() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.int get count => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set count($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCount() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCount() => clearField(2);
 }
 
 class AddFixtureRequest extends $pb.GeneratedMessage {
@@ -61,6 +83,7 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..hasRequiredFields = false
   ;
 
@@ -71,6 +94,7 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
     $core.int? id,
     $core.int? channel,
     $core.int? universe,
+    $core.String? name,
   }) {
     final _result = create();
     if (definitionId != null) {
@@ -87,6 +111,9 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
     }
     if (universe != null) {
       _result.universe = universe;
+    }
+    if (name != null) {
+      _result.name = name;
     }
     return _result;
   }
@@ -155,6 +182,15 @@ class AddFixtureRequest extends $pb.GeneratedMessage {
   $core.bool hasUniverse() => $_has(4);
   @$pb.TagNumber(5)
   void clearUniverse() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get name => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set name($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearName() => clearField(6);
 }
 
 class GetFixturesRequest extends $pb.GeneratedMessage {
@@ -184,6 +220,47 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static GetFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetFixturesRequest>(create);
   static GetFixturesRequest? _defaultInstance;
+}
+
+class DeleteFixturesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureIds', $pb.PbFieldType.PU3, protoName: 'fixtureIds')
+    ..hasRequiredFields = false
+  ;
+
+  DeleteFixturesRequest._() : super();
+  factory DeleteFixturesRequest({
+    $core.Iterable<$core.int>? fixtureIds,
+  }) {
+    final _result = create();
+    if (fixtureIds != null) {
+      _result.fixtureIds.addAll(fixtureIds);
+    }
+    return _result;
+  }
+  factory DeleteFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DeleteFixturesRequest clone() => DeleteFixturesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DeleteFixturesRequest copyWith(void Function(DeleteFixturesRequest) updates) => super.copyWith((message) => updates(message as DeleteFixturesRequest)) as DeleteFixturesRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeleteFixturesRequest create() => DeleteFixturesRequest._();
+  DeleteFixturesRequest createEmptyInstance() => create();
+  static $pb.PbList<DeleteFixturesRequest> createRepeated() => $pb.PbList<DeleteFixturesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DeleteFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteFixturesRequest>(create);
+  static DeleteFixturesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$core.int> get fixtureIds => $_getList(0);
 }
 
 enum FixtureId_Id {
@@ -371,11 +448,13 @@ class Fixture extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
-    ..pc<FixtureControls>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
-    ..pc<SubFixture>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelCount', $pb.PbFieldType.OU3)
+    ..pc<FixtureControls>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
+    ..pc<SubFixture>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
     ..hasRequiredFields = false
   ;
 
@@ -384,9 +463,11 @@ class Fixture extends $pb.GeneratedMessage {
     $core.int? id,
     $core.String? name,
     $core.String? manufacturer,
+    $core.String? model,
     $core.String? mode,
     $core.int? universe,
     $core.int? channel,
+    $core.int? channelCount,
     $core.Iterable<FixtureControls>? controls,
     $core.Iterable<SubFixture>? children,
   }) {
@@ -400,6 +481,9 @@ class Fixture extends $pb.GeneratedMessage {
     if (manufacturer != null) {
       _result.manufacturer = manufacturer;
     }
+    if (model != null) {
+      _result.model = model;
+    }
     if (mode != null) {
       _result.mode = mode;
     }
@@ -408,6 +492,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (channel != null) {
       _result.channel = channel;
+    }
+    if (channelCount != null) {
+      _result.channelCount = channelCount;
     }
     if (controls != null) {
       _result.controls.addAll(controls);
@@ -466,37 +553,55 @@ class Fixture extends $pb.GeneratedMessage {
   void clearManufacturer() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get mode => $_getSZ(3);
+  $core.String get model => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mode($core.String v) { $_setString(3, v); }
+  set model($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMode() => $_has(3);
+  $core.bool hasModel() => $_has(3);
   @$pb.TagNumber(4)
-  void clearMode() => clearField(4);
+  void clearModel() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.int get universe => $_getIZ(4);
+  $core.String get mode => $_getSZ(4);
   @$pb.TagNumber(5)
-  set universe($core.int v) { $_setUnsignedInt32(4, v); }
+  set mode($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasUniverse() => $_has(4);
+  $core.bool hasMode() => $_has(4);
   @$pb.TagNumber(5)
-  void clearUniverse() => clearField(5);
+  void clearMode() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.int get channel => $_getIZ(5);
+  $core.int get universe => $_getIZ(5);
   @$pb.TagNumber(6)
-  set channel($core.int v) { $_setUnsignedInt32(5, v); }
+  set universe($core.int v) { $_setUnsignedInt32(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasChannel() => $_has(5);
+  $core.bool hasUniverse() => $_has(5);
   @$pb.TagNumber(6)
-  void clearChannel() => clearField(6);
+  void clearUniverse() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.List<FixtureControls> get controls => $_getList(6);
+  $core.int get channel => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set channel($core.int v) { $_setUnsignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasChannel() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearChannel() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.List<SubFixture> get children => $_getList(7);
+  $core.int get channelCount => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set channelCount($core.int v) { $_setUnsignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasChannelCount() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearChannelCount() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.List<FixtureControls> get controls => $_getList(8);
+
+  @$pb.TagNumber(10)
+  $core.List<SubFixture> get children => $_getList(9);
 }
 
 class SubFixture extends $pb.GeneratedMessage {

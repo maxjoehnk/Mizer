@@ -8,6 +8,7 @@ impl ProjectManager for FixtureManager {
             if let Some(def) = def {
                 self.add_fixture(
                     fixture.id,
+                    fixture.name.clone(),
                     def,
                     fixture.mode.clone(),
                     fixture.output.clone(),
@@ -25,6 +26,7 @@ impl ProjectManager for FixtureManager {
         for fixture in self.fixtures.iter() {
             project.fixtures.push(FixtureConfig {
                 id: fixture.id,
+                name: fixture.name.clone(),
                 universe: fixture.universe.into(),
                 channel: fixture.channel,
                 fixture: fixture.definition.id.clone(),

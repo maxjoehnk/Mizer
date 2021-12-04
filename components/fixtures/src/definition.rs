@@ -10,6 +10,12 @@ pub struct FixtureDefinition {
     pub tags: Vec<String>,
 }
 
+impl FixtureDefinition {
+    pub fn get_mode(&self, name: &str) -> Option<&FixtureMode> {
+        self.modes.iter().find(|mode| mode.name == name)
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct SubFixtureDefinition {
     pub id: u32,
@@ -23,6 +29,23 @@ pub struct FixtureMode {
     pub channels: Vec<FixtureChannelDefinition>,
     pub controls: FixtureControls,
     pub sub_fixtures: Vec<SubFixtureDefinition>,
+}
+
+impl FixtureMode {
+    pub fn dmx_channels(&self) -> u8 {
+        self.channels.iter().map(|c| c.channels()).sum()
+    }
+
+    pub fn intensity(&self) -> Option<FixtureChannelDefinition> {
+        self.controls
+            .intensity
+            .as_ref()
+            .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
+    }
+
+    pub fn color(&self) -> Option<ColorGroup> {
+        self.controls.color.clone()
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Default)]
@@ -100,23 +123,6 @@ pub enum ColorChannel {
     Red,
     Green,
     Blue
-}
-
-impl FixtureMode {
-    pub(crate) fn dmx_channels(&self) -> u8 {
-        self.channels.iter().map(|c| c.channels()).sum()
-    }
-
-    pub fn intensity(&self) -> Option<FixtureChannelDefinition> {
-        self.controls
-            .intensity
-            .as_ref()
-            .and_then(|channel| self.channels.iter().find(|c| &c.name == channel).cloned())
-    }
-
-    pub fn color(&self) -> Option<ColorGroup> {
-        self.controls.color.clone()
-    }
 }
 
 #[derive(Debug, Clone, PartialEq)]

@@ -16,4 +16,9 @@ class FixturesDemoApi implements FixturesApi {
   Future<Fixtures> getFixtures() async {
     return Fixtures();
   }
+
+  @override
+  Future<Fixtures> deleteFixtures(List<int> fixtureIds) async {
+    return Fixtures();
+  }
 }

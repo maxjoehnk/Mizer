@@ -31,10 +31,11 @@ const Hotkeys$json = const {
   '2': const [
     const {'1': 'global', '3': 1, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.GlobalEntry', '10': 'global'},
     const {'1': 'layouts', '3': 2, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.LayoutsEntry', '10': 'layouts'},
-    const {'1': 'fixtures', '3': 3, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.FixturesEntry', '10': 'fixtures'},
+    const {'1': 'programmer', '3': 3, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.ProgrammerEntry', '10': 'programmer'},
     const {'1': 'nodes', '3': 4, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.NodesEntry', '10': 'nodes'},
+    const {'1': 'patch', '3': 5, '4': 3, '5': 11, '6': '.mizer.settings.Hotkeys.PatchEntry', '10': 'patch'},
   ],
-  '3': const [Hotkeys_GlobalEntry$json, Hotkeys_LayoutsEntry$json, Hotkeys_FixturesEntry$json, Hotkeys_NodesEntry$json],
+  '3': const [Hotkeys_GlobalEntry$json, Hotkeys_LayoutsEntry$json, Hotkeys_ProgrammerEntry$json, Hotkeys_NodesEntry$json, Hotkeys_PatchEntry$json],
 };
 
 @$core.Deprecated('Use hotkeysDescriptor instead')
@@ -58,8 +59,8 @@ const Hotkeys_LayoutsEntry$json = const {
 };
 
 @$core.Deprecated('Use hotkeysDescriptor instead')
-const Hotkeys_FixturesEntry$json = const {
-  '1': 'FixturesEntry',
+const Hotkeys_ProgrammerEntry$json = const {
+  '1': 'ProgrammerEntry',
   '2': const [
     const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
     const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
@@ -77,5 +78,15 @@ const Hotkeys_NodesEntry$json = const {
   '7': const {'7': true},
 };
 
+@$core.Deprecated('Use hotkeysDescriptor instead')
+const Hotkeys_PatchEntry$json = const {
+  '1': 'PatchEntry',
+  '2': const [
+    const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': const {'7': true},
+};
+
 /// Descriptor for `Hotkeys`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode('CgdIb3RrZXlzEjsKBmdsb2JhbBgBIAMoCzIjLm1pemVyLnNldHRpbmdzLkhvdGtleXMuR2xvYmFsRW50cnlSBmdsb2JhbBI+CgdsYXlvdXRzGAIgAygLMiQubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5MYXlvdXRzRW50cnlSB2xheW91dHMSQQoIZml4dHVyZXMYAyADKAsyJS5taXplci5zZXR0aW5ncy5Ib3RrZXlzLkZpeHR1cmVzRW50cnlSCGZpeHR1cmVzEjgKBW5vZGVzGAQgAygLMiIubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5Ob2Rlc0VudHJ5UgVub2Rlcxo5CgtHbG9iYWxFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjoKDExheW91dHNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjsKDUZpeHR1cmVzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo4CgpOb2Rlc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAE=');
+final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode('CgdIb3RrZXlzEjsKBmdsb2JhbBgBIAMoCzIjLm1pemVyLnNldHRpbmdzLkhvdGtleXMuR2xvYmFsRW50cnlSBmdsb2JhbBI+CgdsYXlvdXRzGAIgAygLMiQubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5MYXlvdXRzRW50cnlSB2xheW91dHMSRwoKcHJvZ3JhbW1lchgDIAMoCzInLm1pemVyLnNldHRpbmdzLkhvdGtleXMuUHJvZ3JhbW1lckVudHJ5Ugpwcm9ncmFtbWVyEjgKBW5vZGVzGAQgAygLMiIubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5Ob2Rlc0VudHJ5UgVub2RlcxI4CgVwYXRjaBgFIAMoCzIiLm1pemVyLnNldHRpbmdzLkhvdGtleXMuUGF0Y2hFbnRyeVIFcGF0Y2gaOQoLR2xvYmFsRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo6CgxMYXlvdXRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo9Cg9Qcm9ncmFtbWVyRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo4CgpOb2Rlc0VudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaOAoKUGF0Y2hFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgB');

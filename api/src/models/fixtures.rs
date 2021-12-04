@@ -27,7 +27,8 @@
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AddFixturesRequest {
     // message fields
-    pub requests: ::protobuf::RepeatedField<AddFixtureRequest>,
+    pub request: ::protobuf::SingularPtrField<AddFixtureRequest>,
+    pub count: u32,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -46,35 +47,58 @@ impl AddFixturesRequest {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.fixtures.AddFixtureRequest requests = 1;
+    // .mizer.fixtures.AddFixtureRequest request = 1;
 
 
-    pub fn get_requests(&self) -> &[AddFixtureRequest] {
-        &self.requests
+    pub fn get_request(&self) -> &AddFixtureRequest {
+        self.request.as_ref().unwrap_or_else(|| <AddFixtureRequest as ::protobuf::Message>::default_instance())
     }
-    pub fn clear_requests(&mut self) {
-        self.requests.clear();
+    pub fn clear_request(&mut self) {
+        self.request.clear();
+    }
+
+    pub fn has_request(&self) -> bool {
+        self.request.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_requests(&mut self, v: ::protobuf::RepeatedField<AddFixtureRequest>) {
-        self.requests = v;
+    pub fn set_request(&mut self, v: AddFixtureRequest) {
+        self.request = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
-    pub fn mut_requests(&mut self) -> &mut ::protobuf::RepeatedField<AddFixtureRequest> {
-        &mut self.requests
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_request(&mut self) -> &mut AddFixtureRequest {
+        if self.request.is_none() {
+            self.request.set_default();
+        }
+        self.request.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_requests(&mut self) -> ::protobuf::RepeatedField<AddFixtureRequest> {
-        ::std::mem::replace(&mut self.requests, ::protobuf::RepeatedField::new())
+    pub fn take_request(&mut self) -> AddFixtureRequest {
+        self.request.take().unwrap_or_else(|| AddFixtureRequest::new())
+    }
+
+    // uint32 count = 2;
+
+
+    pub fn get_count(&self) -> u32 {
+        self.count
+    }
+    pub fn clear_count(&mut self) {
+        self.count = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_count(&mut self, v: u32) {
+        self.count = v;
     }
 }
 
 impl ::protobuf::Message for AddFixturesRequest {
     fn is_initialized(&self) -> bool {
-        for v in &self.requests {
+        for v in &self.request {
             if !v.is_initialized() {
                 return false;
             }
@@ -87,7 +111,14 @@ impl ::protobuf::Message for AddFixturesRequest {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.requests)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.request)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.count = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -101,21 +132,27 @@ impl ::protobuf::Message for AddFixturesRequest {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.requests {
-            let len = value.compute_size();
+        if let Some(ref v) = self.request.as_ref() {
+            let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        };
+        }
+        if self.count != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.count, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        for v in &self.requests {
+        if let Some(ref v) = self.request.as_ref() {
             os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
-        };
+        }
+        if self.count != 0 {
+            os.write_uint32(2, self.count)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -154,10 +191,15 @@ impl ::protobuf::Message for AddFixturesRequest {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<AddFixtureRequest>>(
-                "requests",
-                |m: &AddFixturesRequest| { &m.requests },
-                |m: &mut AddFixturesRequest| { &mut m.requests },
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<AddFixtureRequest>>(
+                "request",
+                |m: &AddFixturesRequest| { &m.request },
+                |m: &mut AddFixturesRequest| { &mut m.request },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "count",
+                |m: &AddFixturesRequest| { &m.count },
+                |m: &mut AddFixturesRequest| { &mut m.count },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddFixturesRequest>(
                 "AddFixturesRequest",
@@ -175,7 +217,8 @@ impl ::protobuf::Message for AddFixturesRequest {
 
 impl ::protobuf::Clear for AddFixturesRequest {
     fn clear(&mut self) {
-        self.requests.clear();
+        self.request.clear();
+        self.count = 0;
         self.unknown_fields.clear();
     }
 }
@@ -201,6 +244,7 @@ pub struct AddFixtureRequest {
     pub id: u32,
     pub channel: u32,
     pub universe: u32,
+    pub name: ::std::string::String,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -315,6 +359,32 @@ impl AddFixtureRequest {
     pub fn set_universe(&mut self, v: u32) {
         self.universe = v;
     }
+
+    // string name = 6;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
 }
 
 impl ::protobuf::Message for AddFixtureRequest {
@@ -353,6 +423,9 @@ impl ::protobuf::Message for AddFixtureRequest {
                     let tmp = is.read_uint32()?;
                     self.universe = tmp;
                 },
+                6 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -380,6 +453,9 @@ impl ::protobuf::Message for AddFixtureRequest {
         if self.universe != 0 {
             my_size += ::protobuf::rt::value_size(5, self.universe, ::protobuf::wire_format::WireTypeVarint);
         }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(6, &self.name);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -400,6 +476,9 @@ impl ::protobuf::Message for AddFixtureRequest {
         }
         if self.universe != 0 {
             os.write_uint32(5, self.universe)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(6, &self.name)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -464,6 +543,11 @@ impl ::protobuf::Message for AddFixtureRequest {
                 |m: &AddFixtureRequest| { &m.universe },
                 |m: &mut AddFixtureRequest| { &mut m.universe },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &AddFixtureRequest| { &m.name },
+                |m: &mut AddFixtureRequest| { &mut m.name },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddFixtureRequest>(
                 "AddFixtureRequest",
                 fields,
@@ -485,6 +569,7 @@ impl ::protobuf::Clear for AddFixtureRequest {
         self.id = 0;
         self.channel = 0;
         self.universe = 0;
+        self.name.clear();
         self.unknown_fields.clear();
     }
 }
@@ -615,6 +700,167 @@ impl ::std::fmt::Debug for GetFixturesRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for GetFixturesRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct DeleteFixturesRequest {
+    // message fields
+    pub fixtureIds: ::std::vec::Vec<u32>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DeleteFixturesRequest {
+    fn default() -> &'a DeleteFixturesRequest {
+        <DeleteFixturesRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DeleteFixturesRequest {
+    pub fn new() -> DeleteFixturesRequest {
+        ::std::default::Default::default()
+    }
+
+    // repeated uint32 fixtureIds = 1;
+
+
+    pub fn get_fixtureIds(&self) -> &[u32] {
+        &self.fixtureIds
+    }
+    pub fn clear_fixtureIds(&mut self) {
+        self.fixtureIds.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixtureIds(&mut self, v: ::std::vec::Vec<u32>) {
+        self.fixtureIds = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_fixtureIds(&mut self) -> &mut ::std::vec::Vec<u32> {
+        &mut self.fixtureIds
+    }
+
+    // Take field
+    pub fn take_fixtureIds(&mut self) -> ::std::vec::Vec<u32> {
+        ::std::mem::replace(&mut self.fixtureIds, ::std::vec::Vec::new())
+    }
+}
+
+impl ::protobuf::Message for DeleteFixturesRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_uint32_into(wire_type, is, &mut self.fixtureIds)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.fixtureIds {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.fixtureIds {
+            os.write_uint32(1, *v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DeleteFixturesRequest {
+        DeleteFixturesRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_vec_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "fixtureIds",
+                |m: &DeleteFixturesRequest| { &m.fixtureIds },
+                |m: &mut DeleteFixturesRequest| { &mut m.fixtureIds },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DeleteFixturesRequest>(
+                "DeleteFixturesRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DeleteFixturesRequest {
+        static instance: ::protobuf::rt::LazyV2<DeleteFixturesRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DeleteFixturesRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for DeleteFixturesRequest {
+    fn clear(&mut self) {
+        self.fixtureIds.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DeleteFixturesRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DeleteFixturesRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -1240,9 +1486,11 @@ pub struct Fixture {
     pub id: u32,
     pub name: ::std::string::String,
     pub manufacturer: ::std::string::String,
+    pub model: ::std::string::String,
     pub mode: ::std::string::String,
     pub universe: u32,
     pub channel: u32,
+    pub channel_count: u32,
     pub controls: ::protobuf::RepeatedField<FixtureControls>,
     pub children: ::protobuf::RepeatedField<SubFixture>,
     // special fields
@@ -1330,7 +1578,33 @@ impl Fixture {
         ::std::mem::replace(&mut self.manufacturer, ::std::string::String::new())
     }
 
-    // string mode = 4;
+    // string model = 4;
+
+
+    pub fn get_model(&self) -> &str {
+        &self.model
+    }
+    pub fn clear_model(&mut self) {
+        self.model.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_model(&mut self, v: ::std::string::String) {
+        self.model = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_model(&mut self) -> &mut ::std::string::String {
+        &mut self.model
+    }
+
+    // Take field
+    pub fn take_model(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.model, ::std::string::String::new())
+    }
+
+    // string mode = 5;
 
 
     pub fn get_mode(&self) -> &str {
@@ -1356,7 +1630,7 @@ impl Fixture {
         ::std::mem::replace(&mut self.mode, ::std::string::String::new())
     }
 
-    // uint32 universe = 5;
+    // uint32 universe = 6;
 
 
     pub fn get_universe(&self) -> u32 {
@@ -1371,7 +1645,7 @@ impl Fixture {
         self.universe = v;
     }
 
-    // uint32 channel = 6;
+    // uint32 channel = 7;
 
 
     pub fn get_channel(&self) -> u32 {
@@ -1386,7 +1660,22 @@ impl Fixture {
         self.channel = v;
     }
 
-    // repeated .mizer.fixtures.FixtureControls controls = 7;
+    // uint32 channel_count = 8;
+
+
+    pub fn get_channel_count(&self) -> u32 {
+        self.channel_count
+    }
+    pub fn clear_channel_count(&mut self) {
+        self.channel_count = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_channel_count(&mut self, v: u32) {
+        self.channel_count = v;
+    }
+
+    // repeated .mizer.fixtures.FixtureControls controls = 9;
 
 
     pub fn get_controls(&self) -> &[FixtureControls] {
@@ -1411,7 +1700,7 @@ impl Fixture {
         ::std::mem::replace(&mut self.controls, ::protobuf::RepeatedField::new())
     }
 
-    // repeated .mizer.fixtures.SubFixture children = 8;
+    // repeated .mizer.fixtures.SubFixture children = 10;
 
 
     pub fn get_children(&self) -> &[SubFixture] {
@@ -1470,26 +1759,36 @@ impl ::protobuf::Message for Fixture {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.manufacturer)?;
                 },
                 4 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.mode)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.model)?;
                 },
                 5 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint32()?;
-                    self.universe = tmp;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.mode)?;
                 },
                 6 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_uint32()?;
-                    self.channel = tmp;
+                    self.universe = tmp;
                 },
                 7 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.controls)?;
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.channel = tmp;
                 },
                 8 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.channel_count = tmp;
+                },
+                9 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.controls)?;
+                },
+                10 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.children)?;
                 },
                 _ => {
@@ -1513,14 +1812,20 @@ impl ::protobuf::Message for Fixture {
         if !self.manufacturer.is_empty() {
             my_size += ::protobuf::rt::string_size(3, &self.manufacturer);
         }
+        if !self.model.is_empty() {
+            my_size += ::protobuf::rt::string_size(4, &self.model);
+        }
         if !self.mode.is_empty() {
-            my_size += ::protobuf::rt::string_size(4, &self.mode);
+            my_size += ::protobuf::rt::string_size(5, &self.mode);
         }
         if self.universe != 0 {
-            my_size += ::protobuf::rt::value_size(5, self.universe, ::protobuf::wire_format::WireTypeVarint);
+            my_size += ::protobuf::rt::value_size(6, self.universe, ::protobuf::wire_format::WireTypeVarint);
         }
         if self.channel != 0 {
-            my_size += ::protobuf::rt::value_size(6, self.channel, ::protobuf::wire_format::WireTypeVarint);
+            my_size += ::protobuf::rt::value_size(7, self.channel, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.channel_count != 0 {
+            my_size += ::protobuf::rt::value_size(8, self.channel_count, ::protobuf::wire_format::WireTypeVarint);
         }
         for value in &self.controls {
             let len = value.compute_size();
@@ -1545,22 +1850,28 @@ impl ::protobuf::Message for Fixture {
         if !self.manufacturer.is_empty() {
             os.write_string(3, &self.manufacturer)?;
         }
+        if !self.model.is_empty() {
+            os.write_string(4, &self.model)?;
+        }
         if !self.mode.is_empty() {
-            os.write_string(4, &self.mode)?;
+            os.write_string(5, &self.mode)?;
         }
         if self.universe != 0 {
-            os.write_uint32(5, self.universe)?;
+            os.write_uint32(6, self.universe)?;
         }
         if self.channel != 0 {
-            os.write_uint32(6, self.channel)?;
+            os.write_uint32(7, self.channel)?;
+        }
+        if self.channel_count != 0 {
+            os.write_uint32(8, self.channel_count)?;
         }
         for v in &self.controls {
-            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
         for v in &self.children {
-            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(10, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
@@ -1618,6 +1929,11 @@ impl ::protobuf::Message for Fixture {
                 |m: &mut Fixture| { &mut m.manufacturer },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "model",
+                |m: &Fixture| { &m.model },
+                |m: &mut Fixture| { &mut m.model },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "mode",
                 |m: &Fixture| { &m.mode },
                 |m: &mut Fixture| { &mut m.mode },
@@ -1631,6 +1947,11 @@ impl ::protobuf::Message for Fixture {
                 "channel",
                 |m: &Fixture| { &m.channel },
                 |m: &mut Fixture| { &mut m.channel },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "channel_count",
+                |m: &Fixture| { &m.channel_count },
+                |m: &mut Fixture| { &mut m.channel_count },
             ));
             fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<FixtureControls>>(
                 "controls",
@@ -1661,9 +1982,11 @@ impl ::protobuf::Clear for Fixture {
         self.id = 0;
         self.name.clear();
         self.manufacturer.clear();
+        self.model.clear();
         self.mode.clear();
         self.universe = 0;
         self.channel = 0;
+        self.channel_count = 0;
         self.controls.clear();
         self.children.clear();
         self.unknown_fields.clear();
@@ -5406,77 +5729,82 @@ impl ::protobuf::reflect::ProtobufValue for FixtureControl {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0efixtures.proto\x12\x0emizer.fixtures\"S\n\x12AddFixturesRequest\
-    \x12=\n\x08requests\x18\x01\x20\x03(\x0b2!.mizer.fixtures.AddFixtureRequ\
-    estR\x08requests\"\x91\x01\n\x11AddFixtureRequest\x12\"\n\x0cdefinitionI\
-    d\x18\x01\x20\x01(\tR\x0cdefinitionId\x12\x12\n\x04mode\x18\x02\x20\x01(\
-    \tR\x04mode\x12\x0e\n\x02id\x18\x03\x20\x01(\rR\x02id\x12\x18\n\x07chann\
-    el\x18\x04\x20\x01(\rR\x07channel\x12\x1a\n\x08universe\x18\x05\x20\x01(\
-    \rR\x08universe\"\x14\n\x12GetFixturesRequest\"n\n\tFixtureId\x12\x1a\n\
-    \x07fixture\x18\x01\x20\x01(\rH\0R\x07fixture\x12?\n\x0bsub_fixture\x18\
-    \x02\x20\x01(\x0b2\x1c.mizer.fixtures.SubFixtureIdH\0R\nsubFixtureB\x04\
-    \n\x02id\"H\n\x0cSubFixtureId\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\
-    \tfixtureId\x12\x19\n\x08child_id\x18\x02\x20\x01(\rR\x07childId\"?\n\
-    \x08Fixtures\x123\n\x08fixtures\x18\x01\x20\x03(\x0b2\x17.mizer.fixtures\
-    .FixtureR\x08fixtures\"\x90\x02\n\x07Fixture\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
-    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12\x12\n\x04mode\x18\
-    \x04\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08un\
-    iverse\x12\x18\n\x07channel\x18\x06\x20\x01(\rR\x07channel\x12;\n\x08con\
-    trols\x18\x07\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08contr\
-    ols\x126\n\x08children\x18\x08\x20\x03(\x0b2\x1a.mizer.fixtures.SubFixtu\
-    reR\x08children\"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02\
-    id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08controls\x18\
-    \x03\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xaf\
-    \x02\n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mi\
-    zer.fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\x02\x20\x01(\
-    \x0b2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x124\n\x05color\x18\
-    \x03\x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannelH\0R\x05color\x121\n\
-    \x04axis\x18\x04\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axi\
-    s\x12:\n\x07generic\x18\x05\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChan\
-    nelH\0R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05val\
-    ue\x18\x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\n\x03red\
-    \x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\
-    \x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\x0bAxisCh\
-    annel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle\
-    _from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\
-    \x01(\x01R\x07angleTo\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\
-    \x1e\n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\
-    \x0bdefinitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\
-    \x0bdefinitions\"\xe3\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\
-    \x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\
-    \x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\
-    \x04\x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08ph\
-    ysical\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08phy\
-    sical\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"]\n\x0bFixtureMode\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\
-    \x02\x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\
-    \x04\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12I\n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.C\
-    oarseResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mize\
-    r.fixtures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\
-    \x18\x04\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\
-    \0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\
-    \x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChanne\
-    l\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\
-    \x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinest\
-    Channel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\
-    \x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\r\
-    R\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\
-    \n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\
-    \x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05dep\
-    th\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight*\x8c\x01\n\x0eFix\
-    tureControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\
-    \n\x05COLOR\x10\x02\x12\x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\
-    \x12\t\n\x05FOCUS\x10\x05\x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\
-    \x07\x12\x08\n\x04IRIS\x10\x08\x12\t\n\x05FROST\x10\t\x12\x0b\n\x07GENER\
-    IC\x10\n2\x98\x02\n\x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fix\
-    tures.GetFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15G\
-    etFixtureDefinitions\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\
-    \x1a\".mizer.fixtures.FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\"\
-    .mizer.fixtures.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\
-    \x06proto3\
+    \n\x0efixtures.proto\x12\x0emizer.fixtures\"g\n\x12AddFixturesRequest\
+    \x12;\n\x07request\x18\x01\x20\x01(\x0b2!.mizer.fixtures.AddFixtureReque\
+    stR\x07request\x12\x14\n\x05count\x18\x02\x20\x01(\rR\x05count\"\xa5\x01\
+    \n\x11AddFixtureRequest\x12\"\n\x0cdefinitionId\x18\x01\x20\x01(\tR\x0cd\
+    efinitionId\x12\x12\n\x04mode\x18\x02\x20\x01(\tR\x04mode\x12\x0e\n\x02i\
+    d\x18\x03\x20\x01(\rR\x02id\x12\x18\n\x07channel\x18\x04\x20\x01(\rR\x07\
+    channel\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08universe\x12\x12\n\
+    \x04name\x18\x06\x20\x01(\tR\x04name\"\x14\n\x12GetFixturesRequest\"7\n\
+    \x15DeleteFixturesRequest\x12\x1e\n\nfixtureIds\x18\x01\x20\x03(\rR\nfix\
+    tureIds\"n\n\tFixtureId\x12\x1a\n\x07fixture\x18\x01\x20\x01(\rH\0R\x07f\
+    ixture\x12?\n\x0bsub_fixture\x18\x02\x20\x01(\x0b2\x1c.mizer.fixtures.Su\
+    bFixtureIdH\0R\nsubFixtureB\x04\n\x02id\"H\n\x0cSubFixtureId\x12\x1d\n\n\
+    fixture_id\x18\x01\x20\x01(\rR\tfixtureId\x12\x19\n\x08child_id\x18\x02\
+    \x20\x01(\rR\x07childId\"?\n\x08Fixtures\x123\n\x08fixtures\x18\x01\x20\
+    \x03(\x0b2\x17.mizer.fixtures.FixtureR\x08fixtures\"\xcb\x02\n\x07Fixtur\
+    e\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\
+    \x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanu\
+    facturer\x12\x14\n\x05model\x18\x04\x20\x01(\tR\x05model\x12\x12\n\x04mo\
+    de\x18\x05\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\x06\x20\x01(\rR\
+    \x08universe\x12\x18\n\x07channel\x18\x07\x20\x01(\rR\x07channel\x12#\n\
+    \rchannel_count\x18\x08\x20\x01(\rR\x0cchannelCount\x12;\n\x08controls\
+    \x18\t\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\x12\
+    6\n\x08children\x18\n\x20\x03(\x0b2\x1a.mizer.fixtures.SubFixtureR\x08ch\
+    ildren\"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
+    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08controls\x18\x03\
+    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xaf\x02\
+    \n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.\
+    fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\x02\x20\x01(\x0b\
+    2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x124\n\x05color\x18\x03\
+    \x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannelH\0R\x05color\x121\n\x04ax\
+    is\x18\x04\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x12:\
+    \n\x07generic\x18\x05\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChannelH\0\
+    R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05value\x18\
+    \x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\n\x03red\x18\
+    \x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05gr\
+    een\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\x0bAxisChannel\
+    \x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\
+    \x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\
+    \x01R\x07angleTo\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\
+    \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
+    \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
+    definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
+    definitions\"\xe3\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
+    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
+    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
+    \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
+    al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
+    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"]\n\x0bFixtureMode\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\
+    \x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\
+    \n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\
+    \n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.Coarse\
+    ResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fix\
+    tures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\
+    \x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06fi\
+    nest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\
+    \x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\
+    \x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rc\
+    oarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\
+    \x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01\
+    (\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseCha\
+    nnelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\
+    \x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02\
+    R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\
+    \x06weight\x18\x04\x20\x01(\x02R\x06weight*\x8c\x01\n\x0eFixtureControl\
+    \x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\n\x05COLOR\
+    \x10\x02\x12\x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\x12\t\n\x05F\
+    OCUS\x10\x05\x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\x07\x12\x08\
+    \n\x04IRIS\x10\x08\x12\t\n\x05FROST\x10\t\x12\x0b\n\x07GENERIC\x10\n2\
+    \xed\x02\n\x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.Get\
+    FixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixture\
+    Definitions\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer\
+    .fixtures.FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtu\
+    res.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDel\
+    eteFixtures\x12%.mizer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixt\
+    ures.Fixtures\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

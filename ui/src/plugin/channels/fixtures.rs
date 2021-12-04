@@ -33,6 +33,22 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for FixturesChannel<R> {
 
                 resp.respond_msg(response);
             }
+            "deleteFixtures" => {
+                if let Value::List(fixture_ids) = call.args {
+                    let fixture_ids = fixture_ids
+                        .into_iter()
+                        .filter_map(|v| {
+                            if let Value::I64(v) = v {
+                                Some(v as u32)
+                            } else {
+                                None
+                            }
+                        })
+                        .collect();
+
+                    resp.respond_msg(self.delete_fixtures(fixture_ids));
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -58,5 +74,10 @@ impl<R: RuntimeApi + 'static> FixturesChannel<R> {
 
     fn get_fixture_definitions(&self) -> FixtureDefinitions {
         self.handler.get_fixture_definitions()
+    }
+
+    fn delete_fixtures(&self, fixture_ids: Vec<u32>) -> Fixtures {
+        self.handler.delete_fixtures(fixture_ids);
+        self.handler.get_fixtures()
     }
 }

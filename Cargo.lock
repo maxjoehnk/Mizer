@@ -2870,6 +2870,7 @@ dependencies = [
  "anyhow",
  "flume",
  "futures",
+ "lazy_static",
  "log",
  "mizer-clock",
  "mizer-connections",
@@ -2885,6 +2886,7 @@ dependencies = [
  "profiling",
  "protobuf",
  "protoc-rust",
+ "regex",
  "serde",
 ]
 

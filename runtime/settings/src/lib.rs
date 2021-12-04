@@ -27,8 +27,9 @@ impl Settings {
 pub struct Hotkeys {
     pub global: HotkeyGroup,
     pub layouts: HotkeyGroup,
-    pub fixtures: HotkeyGroup,
+    pub programmer: HotkeyGroup,
     pub nodes: HotkeyGroup,
+    pub patch: HotkeyGroup,
 }
 
 pub type HotkeyGroup = HashMap<String, String>;

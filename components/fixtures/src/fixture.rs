@@ -8,6 +8,7 @@ const U24_MAX: u32 = 16_777_215;
 #[derive(Debug, Clone)]
 pub struct Fixture {
     pub id: u32,
+    pub name: String,
     pub definition: FixtureDefinition,
     pub current_mode: FixtureMode,
     pub universe: u16,
@@ -20,6 +21,7 @@ pub struct Fixture {
 impl Fixture {
     pub fn new(
         fixture_id: u32,
+        name: String,
         definition: FixtureDefinition,
         selected_mode: Option<String>,
         output: Option<String>,
@@ -28,6 +30,7 @@ impl Fixture {
     ) -> Self {
         Fixture {
             id: fixture_id,
+            name,
             current_mode: get_current_mode(&definition, selected_mode),
             definition,
             channel,

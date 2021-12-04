@@ -38,4 +38,11 @@ impl<R: RuntimeApi> FixturesApi for FixturesHandler<R> {
 
         resp.finish(fixtures)
     }
+
+    fn delete_fixtures(&self, req: ServerRequestSingle<DeleteFixturesRequest>, resp: ServerResponseUnarySink<Fixtures>) -> grpc::Result<()> {
+        self.delete_fixtures(req.message.fixtureIds);
+        let fixtures = self.get_fixtures();
+
+        resp.finish(fixtures)
+    }
 }

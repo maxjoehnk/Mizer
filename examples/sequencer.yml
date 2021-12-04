@@ -22,12 +22,14 @@ channels: []
 fixtures:
   - id: 2
     fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    name: LED Bar 1
     channel: 11
     universe: 1
     mode: 10-channel
     output: ~
   - id: 1
     fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    name: LED Bar 2
     channel: 1
     universe: 1
     mode: 10-channel

@@ -29,6 +29,11 @@ class FixturesApiClient extends $grpc.Client {
           '/mizer.fixtures.FixturesApi/AddFixtures',
           ($0.AddFixturesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Fixtures.fromBuffer(value));
+  static final _$deleteFixtures =
+      $grpc.ClientMethod<$0.DeleteFixturesRequest, $0.Fixtures>(
+          '/mizer.fixtures.FixturesApi/DeleteFixtures',
+          ($0.DeleteFixturesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Fixtures.fromBuffer(value));
 
   FixturesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -49,6 +54,12 @@ class FixturesApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Fixtures> addFixtures($0.AddFixturesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addFixtures, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Fixtures> deleteFixtures(
+      $0.DeleteFixturesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$deleteFixtures, request, options: options);
   }
 }
 
@@ -81,6 +92,14 @@ abstract class FixturesApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.AddFixturesRequest.fromBuffer(value),
         ($0.Fixtures value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DeleteFixturesRequest, $0.Fixtures>(
+        'DeleteFixtures',
+        deleteFixtures_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.DeleteFixturesRequest.fromBuffer(value),
+        ($0.Fixtures value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Fixtures> getFixtures_Pre($grpc.ServiceCall call,
@@ -99,10 +118,17 @@ abstract class FixturesApiServiceBase extends $grpc.Service {
     return addFixtures(call, await request);
   }
 
+  $async.Future<$0.Fixtures> deleteFixtures_Pre($grpc.ServiceCall call,
+      $async.Future<$0.DeleteFixturesRequest> request) async {
+    return deleteFixtures(call, await request);
+  }
+
   $async.Future<$0.Fixtures> getFixtures(
       $grpc.ServiceCall call, $0.GetFixturesRequest request);
   $async.Future<$0.FixtureDefinitions> getFixtureDefinitions(
       $grpc.ServiceCall call, $0.GetFixtureDefinitionsRequest request);
   $async.Future<$0.Fixtures> addFixtures(
       $grpc.ServiceCall call, $0.AddFixturesRequest request);
+  $async.Future<$0.Fixtures> deleteFixtures(
+      $grpc.ServiceCall call, $0.DeleteFixturesRequest request);
 }

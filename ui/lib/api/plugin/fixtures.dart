@@ -26,6 +26,13 @@ class FixturesPluginApi implements FixturesApi {
     return _parseResponse(response);
   }
 
+  @override
+  Future<Fixtures> deleteFixtures(List<int> fixtureIds) async {
+    var response = await channel.invokeMethod("deleteFixtures", fixtureIds);
+
+    return _parseResponse(response);
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

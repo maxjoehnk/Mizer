@@ -236,6 +236,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixtureConfig {
     pub id: u32,
+    pub name: String,
     pub fixture: String,
     pub channel: u8,
     pub universe: Option<u16>,
@@ -428,6 +429,7 @@ mod tests {
         let content = r#"
         fixtures:
         - id: 1
+          name: My Fixture
           fixture: fixture-definition-ref
           output: output
           channel: 1
@@ -440,6 +442,7 @@ mod tests {
             result.fixtures[0],
             FixtureConfig {
                 id: 1,
+                name: "My Fixture".into(),
                 fixture: "fixture-definition-ref".into(),
                 channel: 1,
                 output: Some("output".into()),
@@ -455,6 +458,7 @@ mod tests {
         let content = r#"
         fixtures:
         - id: 1
+          name: My Fixture
           fixture: another-fixture
           channel: 5
           mode: 2-channel
@@ -467,6 +471,7 @@ mod tests {
             result.fixtures[0],
             FixtureConfig {
                 id: 1,
+                name: "My Fixture".into(),
                 fixture: "another-fixture".into(),
                 channel: 5,
                 output: None,
@@ -482,6 +487,7 @@ mod tests {
         let content = r#"
         fixtures:
         - id: 1
+          name: My Fixture
           fixture: another-fixture
           channel: 5
           universe: 1
@@ -494,6 +500,7 @@ mod tests {
             result.fixtures[0],
             FixtureConfig {
                 id: 1,
+                name: "My Fixture".into(),
                 fixture: "another-fixture".into(),
                 channel: 5,
                 output: None,

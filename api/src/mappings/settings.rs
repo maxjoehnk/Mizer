@@ -15,9 +15,10 @@ impl From<settings::Hotkeys> for model::Hotkeys {
     fn from(hotkeys: settings::Hotkeys) -> Self {
         Self {
             global: hotkeys.global,
-            fixtures: hotkeys.fixtures,
+            programmer: hotkeys.programmer,
             nodes: hotkeys.nodes,
             layouts: hotkeys.layouts,
+            patch: hotkeys.patch,
             ..Default::default()
         }
     }

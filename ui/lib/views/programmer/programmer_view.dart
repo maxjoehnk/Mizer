@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
-import 'package:mizer/views/fixtures/patch_fixture_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 
 import 'fixture_sheet.dart';
@@ -17,12 +15,12 @@ const double SHEET_PADDING = 16;
 const double TAB_STRIP_HEIGHT = 32;
 const double SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
 
-class FixturesView extends StatefulWidget {
+class ProgrammerView extends StatefulWidget {
   @override
-  State<FixturesView> createState() => _FixturesViewState();
+  State<ProgrammerView> createState() => _ProgrammerViewState();
 }
 
-class _FixturesViewState extends State<FixturesView> {
+class _ProgrammerViewState extends State<ProgrammerView> {
   List<FixtureId> selectedIds = [];
   List<int> expandedIds = [];
 
@@ -30,13 +28,11 @@ class _FixturesViewState extends State<FixturesView> {
   Widget build(BuildContext context) {
     FixturesBloc fixturesBloc = context.read();
     fixturesBloc.add(FetchFixtures());
-    var fixturesApi = context.read<FixturesApi>();
     var programmerApi = context.read<ProgrammerApi>();
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return HotkeyProvider(
-        hotkeySelector: (hotkeys) => hotkeys.fixtures,
+        hotkeySelector: (hotkeys) => hotkeys.programmer,
         hotkeyMap: {
-          "add_fixture": () => _addFixture(context, fixturesApi, fixturesBloc),
           "select_all": () => _selectAll(fixtures.fixtures),
           "clear": () => _clear(),
         },
@@ -61,7 +57,7 @@ class _FixturesViewState extends State<FixturesView> {
                     onSelectSimilar: (fixture) {
                       _setSelectedIds(fixtures.fixtures
                           .where((f) =>
-                      f.manufacturer == fixture.manufacturer && f.name == fixture.name)
+                      f.manufacturer == fixture.manufacturer && f.model == fixture.model)
                           .map((f) => FixtureId(fixture: f.id))
                           .toList());
                     },
@@ -75,13 +71,10 @@ class _FixturesViewState extends State<FixturesView> {
                         ? this.expandedIds.remove(id)
                         : this.expandedIds.add(id))),
                 actions: [
-                  PanelAction(
-                      label: "Add Fixture",
-                      onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
                   PanelAction(label: "Select All", onClick: () => _selectAll(fixtures.fixtures)),
                   PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
                   PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
-                  PanelAction(label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty)
+                  PanelAction(label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty),
                 ],
               ),
             ),
@@ -106,10 +99,6 @@ class _FixturesViewState extends State<FixturesView> {
       return 0;
     }
     return SHEET_CONTAINER_HEIGHT;
-  }
-
-  _addFixture(BuildContext context, FixturesApi apiClient, FixturesBloc fixturesBloc) {
-    showDialog(context: context, builder: (context) => PatchFixtureDialog(apiClient, fixturesBloc));
   }
 
   _selectAll(List<Fixture> fixtures) {

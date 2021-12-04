@@ -1,23 +1,29 @@
 [hotkeys.global]
-layout_view = "alt+1"
-plan_view = "alt+2"
-previz_view = "alt+3"
-nodes_view = "alt+4"
-sequencer_view = "alt+5"
-fixtures_view = "alt+6"
-media_view = "alt+7"
-connections_view = "alt+8"
-session_view = "alt+9"
+layout_view = "f1"
+plan_view = "f2"
+previz_view = "f3"
+nodes_view = "f4"
+sequencer_view = "f5"
+programmer_view = "f6"
+media_view = "f7"
+connections_view = "f8"
+fixture_patch_view = "f9"
+session_view = "f10"
 
 [hotkeys.layouts]
 add_layout = "alt+a"
 
-[hotkeys.fixtures]
-add_fixture = "alt+a"
+[hotkeys.programmer]
 select_all = "ctrl+a"
-clear = "delete"
+clear = "backspace"
 store = "insert"
 highlight = "home"
+
+[hotkeys.patch]
+add_fixture = "alt+a"
+select_all = "ctrl+a"
+clear = "backspace"
+delete = "delete"
 
 [hotkeys.nodes]
 add_node = "alt+a"

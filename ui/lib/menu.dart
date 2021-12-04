@@ -44,7 +44,7 @@ class ApplicationMenu extends StatelessWidget {
             MenuActionItem(label: "PreViz", action: OpenViewIntent(View.PreViz)),
             MenuActionItem(label: "Nodes", action: OpenViewIntent(View.Nodes)),
             MenuActionItem(label: "Sequences", action: OpenViewIntent(View.Sequences)),
-            MenuActionItem(label: "Fixtures", action: OpenViewIntent(View.Fixtures)),
+            MenuActionItem(label: "Fixtures", action: OpenViewIntent(View.Programmer)),
             MenuActionItem(label: "Media", action: OpenViewIntent(View.Media)),
             MenuActionItem(label: "Connections", action: OpenViewIntent(View.Connections)),
             MenuActionItem(label: "Session", action: OpenViewIntent(View.Session)),

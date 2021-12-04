@@ -4,18 +4,18 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
-import 'package:mizer/views/fixtures/dialogs/select_sequence_dialog.dart';
-import 'package:mizer/views/fixtures/dialogs/store_mode_dialog.dart';
-import 'package:mizer/views/fixtures/position_sheet.dart';
+import 'package:mizer/views/programmer/dialogs/select_sequence_dialog.dart';
+import 'package:mizer/views/programmer/dialogs/store_mode_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
-import 'beam_sheet.dart';
-import 'channel_sheet.dart';
-import 'color_sheet.dart';
-import 'dimmer_sheet.dart';
-import 'gobo_sheet.dart';
+import 'sheets/beam_sheet.dart';
+import 'sheets/channel_sheet.dart';
+import 'sheets/color_sheet.dart';
+import 'sheets/dimmer_sheet.dart';
+import 'sheets/gobo_sheet.dart';
+import 'sheets/position_sheet.dart';
 
 class FixtureSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
@@ -33,7 +33,7 @@ class _FixtureSheetState extends State<FixtureSheet> {
   @override
   Widget build(BuildContext context) {
     return HotkeyProvider(
-      hotkeySelector: (hotkeys) => hotkeys.fixtures,
+      hotkeySelector: (hotkeys) => hotkeys.programmer,
       hotkeyMap: {
         "clear": () => widget.api.clear(),
         "store": () => _store(),

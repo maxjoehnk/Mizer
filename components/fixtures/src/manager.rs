@@ -33,6 +33,7 @@ impl FixtureManager {
     pub fn add_fixture(
         &self,
         fixture_id: u32,
+        name: String,
         definition: FixtureDefinition,
         mode: Option<String>,
         output: Option<String>,
@@ -40,7 +41,7 @@ impl FixtureManager {
         universe: Option<u16>,
     ) {
         log::trace!("Adding fixture {}", fixture_id);
-        let fixture = Fixture::new(fixture_id, definition, mode, output, channel, universe);
+        let fixture = Fixture::new(fixture_id, name, definition, mode, output, channel, universe);
         self.fixtures.insert(fixture_id, fixture);
     }
 
@@ -50,6 +51,10 @@ impl FixtureManager {
 
     pub fn get_fixture_mut(&self, fixture_id: u32) -> Option<impl DerefMut<Target = Fixture> + '_> {
         self.fixtures.get_mut(&fixture_id)
+    }
+
+    pub fn delete_fixture(&self, fixture_id: u32) {
+        self.fixtures.remove(&fixture_id);
     }
 
     pub fn write_fixture_control(&self, fixture_id: FixtureId, control: FixtureControl, value: f64) {

@@ -21,4 +21,9 @@ class FixturesGrpcApi implements FixturesApi {
   Future<FixtureDefinitions> getFixtureDefinitions() {
     return client.getFixtureDefinitions(GetFixtureDefinitionsRequest());
   }
+
+  @override
+  Future<Fixtures> deleteFixtures(List<int> fixtureIds) {
+    return client.deleteFixtures(DeleteFixturesRequest(fixtureIds: fixtureIds));
+  }
 }

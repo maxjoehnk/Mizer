@@ -27,6 +27,8 @@ pub trait FixturesApi {
     fn get_fixture_definitions(&self, req: ::grpc::ServerRequestSingle<super::fixtures::GetFixtureDefinitionsRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::FixtureDefinitions>) -> ::grpc::Result<()>;
 
     fn add_fixtures(&self, req: ::grpc::ServerRequestSingle<super::fixtures::AddFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
+
+    fn delete_fixtures(&self, req: ::grpc::ServerRequestSingle<super::fixtures::DeleteFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::fixtures::Fixtures>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -67,6 +69,16 @@ impl FixturesApiClient {
     pub fn add_fixtures(&self, o: ::grpc::RequestOptions, req: super::fixtures::AddFixturesRequest) -> ::grpc::SingleResponse<super::fixtures::Fixtures> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.fixtures.FixturesApi/AddFixtures"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn delete_fixtures(&self, o: ::grpc::RequestOptions, req: super::fixtures::DeleteFixturesRequest) -> ::grpc::SingleResponse<super::fixtures::Fixtures> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.fixtures.FixturesApi/DeleteFixtures"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -119,6 +131,18 @@ impl FixturesApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_fixtures(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.fixtures.FixturesApi/DeleteFixtures"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).delete_fixtures(req, resp))
                     },
                 ),
             ],

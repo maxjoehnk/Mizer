@@ -15,6 +15,7 @@ message Settings {
 message Hotkeys {
   map<string, string> global = 1;
   map<string, string> layouts = 2;
-  map<string, string> fixtures = 3;
+  map<string, string> programmer = 3;
   map<string, string> nodes = 4;
+  map<string, string> patch = 5;
 }

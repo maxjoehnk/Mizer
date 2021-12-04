@@ -32,13 +32,17 @@ class FixtureTable extends StatelessWidget {
     return SingleChildScrollView(
       child: MizerTable(columnWidths: {
         0: FixedColumnWidth(64),
+        1: FixedColumnWidth(64),
       }, columns: const [
         Text(""),
         Text("Id"),
-        Text("Manufacturer"),
-        Text("Model"),
-        Text("Mode"),
-        Text("Address")
+        Text("Name"),
+        Text("Intensity"),
+        Text("Red"),
+        Text("Green"),
+        Text("Blue"),
+        Text("Pan"),
+        Text("Tilt"),
       ], rows: rows),
     );
   }
@@ -69,10 +73,13 @@ class FixtureTable extends StatelessWidget {
           label: "Expand",
         ),
         Text(fixtureId.toDisplay()),
-        Text(fixture.manufacturer),
         Text(fixture.name),
-        Text(fixture.mode),
-        Text("${fixture.universe}:${fixture.channel}")
+        Text(""),
+        Text(""),
+        Text(""),
+        Text(""),
+        Text(""),
+        Text(""),
       ],
       onTap: () => onSelect(fixtureId, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),
@@ -81,17 +88,20 @@ class FixtureTable extends StatelessWidget {
     return row;
   }
 
-  MizerTableRow _subFixtureRow(Fixture fixture, SubFixture child) {
-    var fixtureId = FixtureId(subFixture: SubFixtureId(fixtureId: fixture.id, childId: child.id));
+  MizerTableRow _subFixtureRow(Fixture fixture, SubFixture subFixture) {
+    var fixtureId = FixtureId(subFixture: SubFixtureId(fixtureId: fixture.id, childId: subFixture.id));
     var selected = selectedIds.contains(fixtureId);
     var row = MizerTableRow(
       cells: [
         Text(""),
         Text(fixtureId.toDisplay()),
+        Text(subFixture.name),
         Text(""),
-        Text(child.name),
         Text(""),
-        Text("")
+        Text(""),
+        Text(""),
+        Text(""),
+        Text(""),
       ],
       onTap: () => onSelect(fixtureId, !selected),
       onDoubleTap: () => onSelectChildren(fixture),

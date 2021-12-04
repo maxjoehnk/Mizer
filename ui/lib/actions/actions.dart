@@ -12,9 +12,10 @@ enum View {
   PreViz,
   Nodes,
   Sequences,
-  Fixtures,
+  Programmer,
   Media,
   Connections,
+  FixturePatch,
   Session,
 }
 
@@ -24,9 +25,10 @@ const ViewHotkeyLabels = {
   View.PreViz: "previz_view",
   View.Nodes: "nodes_view",
   View.Sequences: "sequencer_view",
-  View.Fixtures: "fixtures_view",
+  View.Programmer: "programmer_view",
   View.Media: "media_view",
   View.Connections: "connections_view",
+  View.FixturePatch: "fixture_patch_view",
   View.Session: "session_view",
 };
 

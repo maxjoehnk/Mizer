@@ -14,7 +14,7 @@ import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
-import 'package:mizer/views/fixtures/fixtures_view.dart';
+import 'package:mizer/views/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
@@ -36,7 +36,7 @@ void main() {
 
       return bloc;
     });
-    testNavigation('Fixtures', MdiIcons.spotlight, FixturesView, bloc: (_) {
+    testNavigation('Programmer', MdiIcons.tuneVertical, ProgrammerView, bloc: (_) {
       FixturesBloc bloc = MockFixturesBloc();
       when(bloc.state).thenReturn(Fixtures());
 

@@ -40,6 +40,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
   int step = 0;
   FixtureDefinition? definition;
   FixtureMode? mode;
+  String? name;
   int universe = 1;
   int channel = 1;
   int id = 1;
@@ -74,6 +75,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
     if (step == 1) {
       return FixturePatch(this.mode!,
           onChange: (event) => setState(() {
+                name = event.name;
                 universe = event.universe;
                 channel = event.channel;
                 id = event.id;
@@ -109,6 +111,7 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
   Future addFixture(BuildContext context) async {
     widget.bloc.add(AddFixtures(
         definition: definition!,
+        name: name!,
         mode: mode!,
         startId: id,
         universe: universe,
@@ -129,6 +132,7 @@ class FixturePatch extends StatefulWidget {
 }
 
 class _FixturePatchState extends State<FixturePatch> {
+  String name = "";
   int universe = 1;
   int channel = 1;
   int id = 1;
@@ -141,12 +145,14 @@ class _FixturePatchState extends State<FixturePatch> {
         mainAxisSize: MainAxisSize.max,
         children: [
           PatchSettings(
+              name: "",
               universe: 1,
               channel: 1,
               id: 1,
               count: 1,
               onChange: (event) {
                 setState(() {
+                  name = event.name;
                   universe = event.universe;
                   channel = event.channel;
                   id = event.id;
@@ -161,31 +167,33 @@ class _FixturePatchState extends State<FixturePatch> {
 
 class PatchSettings extends StatefulWidget {
   final Function(PatchSettingsEvent) onChange;
+  final String name;
   final int universe;
   final int channel;
   final int id;
   final int count;
 
-  PatchSettings({Key? key, required this.channel, required this.universe, required this.id, required this.count, required this.onChange}) : super(key: key);
+  PatchSettings({Key? key, required this.channel, required this.universe, required this.name, required this.id, required this.count, required this.onChange}) : super(key: key);
 
   @override
   _PatchSettingsState createState() =>
-      _PatchSettingsState(universe: universe, channel: channel, id: id, count: count);
+      _PatchSettingsState(name: name, universe: universe, channel: channel, id: id, count: count);
 }
 
 class _PatchSettingsState extends State<PatchSettings> {
+  final TextEditingController _nameController;
   final TextEditingController _universeController;
   final TextEditingController _channelController;
   final TextEditingController _idController;
   final TextEditingController _countController;
 
-  bool createNodes = true;
-
-  _PatchSettingsState({required int channel, required int universe, required int id, required int count})
-      : _universeController = TextEditingController(text: universe.toString()),
+  _PatchSettingsState({required String name, required int channel, required int universe, required int id, required int count})
+      : _nameController = TextEditingController(text: name),
+        _universeController = TextEditingController(text: universe.toString()),
         _channelController = TextEditingController(text: channel.toString()),
         _idController = TextEditingController(text: id.toString()),
         _countController = TextEditingController(text: count.toString()) {
+    this._nameController.addListener(() => this._emitUpdate());
     this._universeController.addListener(() => this._emitUpdate());
     this._channelController.addListener(() => this._emitUpdate());
     this._idController.addListener(() => this._emitUpdate());
@@ -198,6 +206,13 @@ class _PatchSettingsState extends State<PatchSettings> {
       PatchField(
         child: TextField(
           autofocus: true,
+          decoration: InputDecoration(labelText: "Name"),
+          controller: _nameController,
+          keyboardType: TextInputType.text,
+        ),
+      ),
+      PatchField(
+        child: TextField(
           decoration: InputDecoration(labelText: "Universe"),
           controller: _universeController,
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
@@ -205,7 +220,6 @@ class _PatchSettingsState extends State<PatchSettings> {
       ),
       PatchField(
         child: TextField(
-          autofocus: true,
           decoration: InputDecoration(labelText: "Channel"),
           controller: _channelController,
           keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
@@ -229,24 +243,25 @@ class _PatchSettingsState extends State<PatchSettings> {
   }
 
   _emitUpdate() {
+    String name = _nameController.text;
     int id = int.parse(_idController.text);
     int universe = int.parse(_universeController.text);
     int channel = int.parse(_channelController.text);
     int count = int.parse(_countController.text);
     var event = PatchSettingsEvent(
-        id: id, universe: universe, channel: channel, count: count, createNodes: createNodes);
+        id: id, name: name, universe: universe, channel: channel, count: count);
     this.widget.onChange(event);
   }
 }
 
 class PatchSettingsEvent {
+  final String name;
   final int id;
   final int universe;
   final int channel;
   final int count;
-  final bool createNodes;
 
-  PatchSettingsEvent({required this.id, required this.universe, required this.channel, required this.count, required this.createNodes});
+  PatchSettingsEvent({required this.id, required this.name, required this.universe, required this.channel, required this.count});
 }
 
 class UniversePreview extends StatelessWidget {

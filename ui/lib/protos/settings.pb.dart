@@ -91,8 +91,9 @@ class Hotkeys extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Hotkeys', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..m<$core.String, $core.String>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'global', entryClassName: 'Hotkeys.GlobalEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layouts', entryClassName: 'Hotkeys.LayoutsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
-    ..m<$core.String, $core.String>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', entryClassName: 'Hotkeys.FixturesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
+    ..m<$core.String, $core.String>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmer', entryClassName: 'Hotkeys.ProgrammerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', entryClassName: 'Hotkeys.NodesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
+    ..m<$core.String, $core.String>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'patch', entryClassName: 'Hotkeys.PatchEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..hasRequiredFields = false
   ;
 
@@ -100,8 +101,9 @@ class Hotkeys extends $pb.GeneratedMessage {
   factory Hotkeys({
     $core.Map<$core.String, $core.String>? global,
     $core.Map<$core.String, $core.String>? layouts,
-    $core.Map<$core.String, $core.String>? fixtures,
+    $core.Map<$core.String, $core.String>? programmer,
     $core.Map<$core.String, $core.String>? nodes,
+    $core.Map<$core.String, $core.String>? patch,
   }) {
     final _result = create();
     if (global != null) {
@@ -110,11 +112,14 @@ class Hotkeys extends $pb.GeneratedMessage {
     if (layouts != null) {
       _result.layouts.addAll(layouts);
     }
-    if (fixtures != null) {
-      _result.fixtures.addAll(fixtures);
+    if (programmer != null) {
+      _result.programmer.addAll(programmer);
     }
     if (nodes != null) {
       _result.nodes.addAll(nodes);
+    }
+    if (patch != null) {
+      _result.patch.addAll(patch);
     }
     return _result;
   }
@@ -146,9 +151,12 @@ class Hotkeys extends $pb.GeneratedMessage {
   $core.Map<$core.String, $core.String> get layouts => $_getMap(1);
 
   @$pb.TagNumber(3)
-  $core.Map<$core.String, $core.String> get fixtures => $_getMap(2);
+  $core.Map<$core.String, $core.String> get programmer => $_getMap(2);
 
   @$pb.TagNumber(4)
   $core.Map<$core.String, $core.String> get nodes => $_getMap(3);
+
+  @$pb.TagNumber(5)
+  $core.Map<$core.String, $core.String> get patch => $_getMap(4);
 }
 

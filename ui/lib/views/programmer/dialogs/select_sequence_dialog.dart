@@ -23,6 +23,7 @@ class SelectSequenceDialog extends StatelessWidget {
             future: api.getSequences(),
             builder: (context, AsyncSnapshot<Sequences> data) {
               List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
+              sequences.sort((lhs, rhs) => lhs.id - rhs.id);
 
               return GridView.count(
                   crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),

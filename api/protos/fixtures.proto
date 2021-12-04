@@ -6,10 +6,12 @@ service FixturesApi {
   rpc GetFixtures (GetFixturesRequest) returns (Fixtures) {}
   rpc GetFixtureDefinitions (GetFixtureDefinitionsRequest) returns (FixtureDefinitions) {}
   rpc AddFixtures (AddFixturesRequest) returns (Fixtures) {}
+  rpc DeleteFixtures (DeleteFixturesRequest) returns (Fixtures) {}
 }
 
 message AddFixturesRequest {
-  repeated AddFixtureRequest requests = 1;
+  AddFixtureRequest request = 1;
+  uint32 count = 2;
 }
 
 message AddFixtureRequest {
@@ -18,9 +20,14 @@ message AddFixtureRequest {
   uint32 id = 3;
   uint32 channel = 4;
   uint32 universe = 5;
+  string name = 6;
 }
 
 message GetFixturesRequest {}
+
+message DeleteFixturesRequest {
+  repeated uint32 fixtureIds = 1;
+}
 
 message FixtureId {
   oneof id {
@@ -42,11 +49,13 @@ message Fixture {
   uint32 id = 1;
   string name = 2;
   string manufacturer = 3;
-  string mode = 4;
-  uint32 universe = 5;
-  uint32 channel = 6;
-  repeated FixtureControls controls = 7;
-  repeated SubFixture children = 8;
+  string model = 4;
+  string mode = 5;
+  uint32 universe = 6;
+  uint32 channel = 7;
+  uint32 channel_count = 8;
+  repeated FixtureControls controls = 9;
+  repeated SubFixture children = 10;
 }
 
 message SubFixture {

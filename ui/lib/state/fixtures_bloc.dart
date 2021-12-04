@@ -8,35 +8,41 @@ abstract class FixturesEvent {}
 
 class FetchFixtures extends FixturesEvent {}
 
+
+
 class AddFixtures extends FixturesEvent {
   FixtureDefinition definition;
   FixtureMode mode;
+  String name;
   int universe;
   int count;
   int startId;
   int startChannel;
 
-  AddFixtures({required this.definition, required this.mode, required this.universe, required this.count, required this.startId, required this.startChannel});
+  AddFixtures({required this.definition, required this.name, required this.mode, required this.universe, required this.count, required this.startId, required this.startChannel});
 
   AddFixturesRequest _into() {
-    List<AddFixtureRequest> fixtures = [];
-    for (var i = 0; i < count; i++) {
-      var request = AddFixtureRequest(
-          definitionId: definition.id,
-          mode: mode.name,
-          universe: universe,
-          id: startId + i,
-          channel: startChannel + (mode.channels.length * i),
-      );
-      fixtures.add(request);
-    }
-    return AddFixturesRequest(requests: fixtures);
+    var request = AddFixtureRequest(
+      definitionId: definition.id,
+      name: name,
+      mode: mode.name,
+      universe: universe,
+      id: startId,
+      channel: startChannel,
+    );
+    return AddFixturesRequest(request: request, count: count);
   }
 
   @override
   String toString() {
-    return 'AddFixtures{definition: $definition, mode: $mode, universe: $universe, count: $count, startId: $startId, startChannel: $startChannel}';
+    return 'AddFixtures{definition: $definition, name: $name, mode: $mode, universe: $universe, count: $count, startId: $startId, startChannel: $startChannel}';
   }
+}
+
+class DeleteFixtures extends FixturesEvent {
+  List<int> ids;
+
+  DeleteFixtures(this.ids);
 }
 
 class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
@@ -54,6 +60,9 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     if (event is AddFixtures) {
       yield await _addFixture(event);
     }
+    if (event is DeleteFixtures) {
+      yield await _deleteFixtures(event);
+    }
   }
 
   Future<Fixtures> _fetchFixtures() async {
@@ -68,6 +77,13 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     log("adding fixtures: $event", name: "FixturesBloc");
     var request = event._into();
     var fixtures = await api.addFixtures(request);
+
+    return fixtures;
+  }
+
+  Future<Fixtures> _deleteFixtures(DeleteFixtures event) async {
+    log("deleting fixtures: $event", name: "FixturesBloc");
+    var fixtures = await api.deleteFixtures(event.ids);
 
     return fixtures;
   }

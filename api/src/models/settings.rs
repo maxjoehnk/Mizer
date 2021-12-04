@@ -325,8 +325,9 @@ pub struct Hotkeys {
     // message fields
     pub global: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub layouts: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
-    pub fixtures: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub programmer: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub nodes: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub patch: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -395,29 +396,29 @@ impl Hotkeys {
         ::std::mem::replace(&mut self.layouts, ::std::collections::HashMap::new())
     }
 
-    // repeated .mizer.settings.Hotkeys.FixturesEntry fixtures = 3;
+    // repeated .mizer.settings.Hotkeys.ProgrammerEntry programmer = 3;
 
 
-    pub fn get_fixtures(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
-        &self.fixtures
+    pub fn get_programmer(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.programmer
     }
-    pub fn clear_fixtures(&mut self) {
-        self.fixtures.clear();
+    pub fn clear_programmer(&mut self) {
+        self.programmer.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_fixtures(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
-        self.fixtures = v;
+    pub fn set_programmer(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.programmer = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_fixtures(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
-        &mut self.fixtures
+    pub fn mut_programmer(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.programmer
     }
 
     // Take field
-    pub fn take_fixtures(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
-        ::std::mem::replace(&mut self.fixtures, ::std::collections::HashMap::new())
+    pub fn take_programmer(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.programmer, ::std::collections::HashMap::new())
     }
 
     // repeated .mizer.settings.Hotkeys.NodesEntry nodes = 4;
@@ -444,6 +445,31 @@ impl Hotkeys {
     pub fn take_nodes(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
         ::std::mem::replace(&mut self.nodes, ::std::collections::HashMap::new())
     }
+
+    // repeated .mizer.settings.Hotkeys.PatchEntry patch = 5;
+
+
+    pub fn get_patch(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.patch
+    }
+    pub fn clear_patch(&mut self) {
+        self.patch.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_patch(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.patch = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_patch(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.patch
+    }
+
+    // Take field
+    pub fn take_patch(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.patch, ::std::collections::HashMap::new())
+    }
 }
 
 impl ::protobuf::Message for Hotkeys {
@@ -462,10 +488,13 @@ impl ::protobuf::Message for Hotkeys {
                     ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.layouts)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.fixtures)?;
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.programmer)?;
                 },
                 4 => {
                     ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.nodes)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.patch)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -481,8 +510,9 @@ impl ::protobuf::Message for Hotkeys {
         let mut my_size = 0;
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(1, &self.global);
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(2, &self.layouts);
-        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.fixtures);
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.programmer);
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(4, &self.nodes);
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.patch);
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -491,8 +521,9 @@ impl ::protobuf::Message for Hotkeys {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(1, &self.global, os)?;
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(2, &self.layouts, os)?;
-        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.fixtures, os)?;
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.programmer, os)?;
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(4, &self.nodes, os)?;
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.patch, os)?;
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -542,14 +573,19 @@ impl ::protobuf::Message for Hotkeys {
                 |m: &mut Hotkeys| { &mut m.layouts },
             ));
             fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
-                "fixtures",
-                |m: &Hotkeys| { &m.fixtures },
-                |m: &mut Hotkeys| { &mut m.fixtures },
+                "programmer",
+                |m: &Hotkeys| { &m.programmer },
+                |m: &mut Hotkeys| { &mut m.programmer },
             ));
             fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
                 "nodes",
                 |m: &Hotkeys| { &m.nodes },
                 |m: &mut Hotkeys| { &mut m.nodes },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
+                "patch",
+                |m: &Hotkeys| { &m.patch },
+                |m: &mut Hotkeys| { &mut m.patch },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Hotkeys>(
                 "Hotkeys",
@@ -569,8 +605,9 @@ impl ::protobuf::Clear for Hotkeys {
     fn clear(&mut self) {
         self.global.clear();
         self.layouts.clear();
-        self.fixtures.clear();
+        self.programmer.clear();
         self.nodes.clear();
+        self.patch.clear();
         self.unknown_fields.clear();
     }
 }
@@ -590,21 +627,24 @@ impl ::protobuf::reflect::ProtobufValue for Hotkeys {
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"=\
     \n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer.setting\
-    s.HotkeysR\x07hotkeys\"\xf1\x03\n\x07Hotkeys\x12;\n\x06global\x18\x01\
+    s.HotkeysR\x07hotkeys\"\xed\x04\n\x07Hotkeys\x12;\n\x06global\x18\x01\
     \x20\x03(\x0b2#.mizer.settings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07\
     layouts\x18\x02\x20\x03(\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07l\
-    ayouts\x12A\n\x08fixtures\x18\x03\x20\x03(\x0b2%.mizer.settings.Hotkeys.\
-    FixturesEntryR\x08fixtures\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer\
-    .settings.Hotkeys.NodesEntryR\x05nodes\x1a9\n\x0bGlobalEntry\x12\x10\n\
-    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
-    R\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03key\x18\x01\x20\
-    \x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\
-    \x01\x1a;\n\rFixturesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
-    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nNodes\
-    Entry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\tR\x05value:\x028\x012Z\n\x0bSettingsApi\x12K\n\x0cLoadSet\
-    tings\x12\x1f.mizer.settings.RequestSettings\x1a\x18.mizer.settings.Sett\
-    ings\"\0b\x06proto3\
+    ayouts\x12G\n\nprogrammer\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.\
+    ProgrammerEntryR\nprogrammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".miz\
+    er.settings.Hotkeys.NodesEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03\
+    (\x0b2\".mizer.settings.Hotkeys.PatchEntryR\x05patch\x1a9\n\x0bGlobalEnt\
+    ry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03\
+    key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\
+    \x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03key\x18\x01\
+    \x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x02\
+    8\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
+    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nPatchEntr\
+    y\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
+    \x20\x01(\tR\x05value:\x028\x012Z\n\x0bSettingsApi\x12K\n\x0cLoadSetting\
+    s\x12\x1f.mizer.settings.RequestSettings\x1a\x18.mizer.settings.Settings\
+    \"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

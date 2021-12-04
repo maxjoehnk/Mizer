@@ -15,6 +15,7 @@ class SequenceList extends StatelessWidget {
         future: context.read<SequencerApi>().getSequences(),
         builder: (context, AsyncSnapshot<Sequences> data) {
           if (data.hasData) {
+            data.data!.sequences.sort((lhs, rhs) => lhs.id - rhs.id);
             return _list(data.data!.sequences);
           }
           return Container();

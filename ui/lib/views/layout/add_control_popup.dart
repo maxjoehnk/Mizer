@@ -38,6 +38,7 @@ class AddControlPopup extends StatelessWidget {
 List<Node_NodeType> CONTROL_NODES = [
   Node_NodeType.Fader,
   Node_NodeType.Button,
+  Node_NodeType.Sequencer,
 ];
 
 bool isControlNode(Node node) {

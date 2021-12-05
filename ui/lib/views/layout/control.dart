@@ -11,6 +11,7 @@ import 'package:mizer/widgets/inputs/button.dart';
 import 'package:mizer/widgets/inputs/fader.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 
+import 'controls/sequencer.dart';
 import 'delete_control_dialog.dart';
 import 'edit_control_dialog.dart';
 import 'rename_control_dialog.dart';
@@ -63,6 +64,12 @@ class LayoutControlView extends StatelessWidget {
           color: _color,
           onValue: (value) =>
               apiClient.writeControlValue(path: control.node, port: "value", value: value));
+    } else if (node?.type == Node_NodeType.Sequencer) {
+      return SequencerControl(
+        label: control.label,
+        color: _color,
+        node: node!,
+      );
     }
     return null;
   }

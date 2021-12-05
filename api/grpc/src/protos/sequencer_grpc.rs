@@ -24,6 +24,8 @@
 pub trait SequencerApi {
     fn get_sequences(&self, req: ::grpc::ServerRequestSingle<super::sequencer::GetSequencesRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequences>) -> ::grpc::Result<()>;
 
+    fn get_sequence(&self, req: ::grpc::ServerRequestSingle<super::sequencer::GetSequenceRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequence>) -> ::grpc::Result<()>;
+
     fn add_sequence(&self, req: ::grpc::ServerRequestSingle<super::sequencer::AddSequenceRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequence>) -> ::grpc::Result<()>;
 
     fn sequence_go(&self, req: ::grpc::ServerRequestSingle<super::sequencer::SequenceGoRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::EmptyResponse>) -> ::grpc::Result<()>;
@@ -47,6 +49,16 @@ impl SequencerApiClient {
     pub fn get_sequences(&self, o: ::grpc::RequestOptions, req: super::sequencer::GetSequencesRequest) -> ::grpc::SingleResponse<super::sequencer::Sequences> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/GetSequences"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn get_sequence(&self, o: ::grpc::RequestOptions, req: super::sequencer::GetSequenceRequest) -> ::grpc::SingleResponse<super::sequencer::Sequence> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/GetSequence"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -95,6 +107,18 @@ impl SequencerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_sequences(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/GetSequence"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_sequence(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(

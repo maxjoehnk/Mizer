@@ -3137,6 +3137,7 @@ dependencies = [
  "mizer-port-operation-nodes",
  "mizer-scripting-nodes",
  "mizer-sequence-nodes",
+ "mizer-sequencer-nodes",
  "mizer-util",
  "mizer-video-nodes",
  "serde",
@@ -3386,6 +3387,17 @@ dependencies = [
  "profiling",
  "serde",
  "test-case",
+]
+
+[[package]]
+name = "mizer-sequencer-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-node",
+ "mizer-sequencer",
+ "serde",
 ]
 
 [[package]]

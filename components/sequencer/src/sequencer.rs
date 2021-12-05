@@ -109,6 +109,10 @@ impl Sequencer {
         self.sequences.read().values().cloned().collect()
     }
 
+    pub fn sequence(&self, sequence_id: u32) -> Option<Sequence> {
+        self.sequences.read().get(&sequence_id).cloned()
+    }
+
     /// Override all existing sequences
     ///
     /// sets id counter to highest id in the given list of sequences

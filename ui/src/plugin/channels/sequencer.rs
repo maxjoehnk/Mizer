@@ -3,14 +3,15 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use mizer_api::handlers::SequencerHandler;
 use mizer_api::models::{Sequence, Sequences};
+use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;
 
-pub struct SequencerChannel {
-    handler: SequencerHandler,
+pub struct SequencerChannel<R: RuntimeApi> {
+    handler: SequencerHandler<R>,
 }
 
-impl MethodCallHandler for SequencerChannel {
+impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
     fn on_method_call(
         &mut self,
         call: MethodCall<Value>,
@@ -22,6 +23,13 @@ impl MethodCallHandler for SequencerChannel {
                 let sequences = self.get_sequences();
 
                 resp.respond_msg(sequences);
+            }
+            "getSequence" => {
+                if let Value::I64(sequence) = call.args {
+                    if let Some(sequence) = self.get_sequence(sequence as u32) {
+                        resp.respond_msg(sequence);
+                    }
+                }
             }
             "addSequence" => {
                 let sequence = self.add_sequence();
@@ -40,8 +48,8 @@ impl MethodCallHandler for SequencerChannel {
     }
 }
 
-impl SequencerChannel {
-    pub fn new(handler: SequencerHandler) -> Self {
+impl<R: RuntimeApi + 'static> SequencerChannel<R> {
+    pub fn new(handler: SequencerHandler<R>) -> Self {
         Self { handler }
     }
 
@@ -51,6 +59,10 @@ impl SequencerChannel {
 
     pub fn get_sequences(&self) -> Sequences {
         self.handler.get_sequences()
+    }
+
+    pub fn get_sequence(&self, sequence_id: u32) -> Option<Sequence> {
+        self.handler.get_sequence(sequence_id)
     }
 
     pub fn add_sequence(&self) -> Sequence {

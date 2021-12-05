@@ -15,6 +15,7 @@ mizer-port-operation-nodes = { path = "behaviors/port-operations" }
 mizer-dmx-nodes = { path = "protocols/dmx" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-sequence-nodes = { path = "behaviors/sequence" }
+mizer-sequencer-nodes = { path = "sequencer" }
 mizer-fixture-nodes = { path = "fixture" }
 mizer-laser-nodes = { path = "laser" }
 mizer-input-nodes = { path = "inputs" }

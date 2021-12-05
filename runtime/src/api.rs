@@ -32,36 +32,44 @@ impl<'a> NodeDescriptor<'a> {
     }
 
     pub fn downcast(&self) -> Node {
-        match self.node.node_type() {
-            NodeType::Clock => Node::Clock(self.downcast_node().unwrap()),
-            NodeType::Oscillator => Node::Oscillator(self.downcast_node().unwrap()),
-            NodeType::DmxOutput => Node::DmxOutput(self.downcast_node().unwrap()),
-            NodeType::Scripting => Node::Scripting(self.downcast_node().unwrap()),
-            NodeType::Sequence => Node::Sequence(self.downcast_node().unwrap()),
-            NodeType::Envelope => Node::Envelope(self.downcast_node().unwrap()),
-            NodeType::Select => Node::Select(self.downcast_node().unwrap()),
-            NodeType::Merge => Node::Merge(self.downcast_node().unwrap()),
-            NodeType::Fixture => Node::Fixture(self.downcast_node().unwrap()),
-            NodeType::IldaFile => Node::IldaFile(self.downcast_node().unwrap()),
-            NodeType::Laser => Node::Laser(self.downcast_node().unwrap()),
-            NodeType::Fader => Node::Fader(self.downcast_node().unwrap()),
-            NodeType::Button => Node::Button(self.downcast_node().unwrap()),
-            NodeType::MidiInput => Node::MidiInput(self.downcast_node().unwrap()),
-            NodeType::MidiOutput => Node::MidiOutput(self.downcast_node().unwrap()),
-            NodeType::OpcOutput => Node::OpcOutput(self.downcast_node().unwrap()),
-            NodeType::PixelPattern => Node::PixelPattern(self.downcast_node().unwrap()),
-            NodeType::PixelDmx => Node::PixelDmx(self.downcast_node().unwrap()),
-            NodeType::OscInput => Node::OscInput(self.downcast_node().unwrap()),
-            NodeType::OscOutput => Node::OscOutput(self.downcast_node().unwrap()),
-            NodeType::VideoFile => Node::VideoFile(self.downcast_node().unwrap()),
-            NodeType::VideoColorBalance => Node::VideoColorBalance(self.downcast_node().unwrap()),
-            NodeType::VideoOutput => Node::VideoOutput(self.downcast_node().unwrap()),
-            NodeType::VideoEffect => Node::VideoEffect(self.downcast_node().unwrap()),
-            NodeType::VideoTransform => Node::VideoTransform(self.downcast_node().unwrap()),
+        let node_type = self.node.node_type();
+        match node_type {
+            NodeType::Clock => Node::Clock(self.downcast_node(node_type).unwrap()),
+            NodeType::Oscillator => Node::Oscillator(self.downcast_node(node_type).unwrap()),
+            NodeType::DmxOutput => Node::DmxOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::Scripting => Node::Scripting(self.downcast_node(node_type).unwrap()),
+            NodeType::Sequence => Node::Sequence(self.downcast_node(node_type).unwrap()),
+            NodeType::Envelope => Node::Envelope(self.downcast_node(node_type).unwrap()),
+            NodeType::Select => Node::Select(self.downcast_node(node_type).unwrap()),
+            NodeType::Merge => Node::Merge(self.downcast_node(node_type).unwrap()),
+            NodeType::Fixture => Node::Fixture(self.downcast_node(node_type).unwrap()),
+            NodeType::Sequencer => Node::Sequencer(self.downcast_node(node_type).unwrap()),
+            NodeType::IldaFile => Node::IldaFile(self.downcast_node(node_type).unwrap()),
+            NodeType::Laser => Node::Laser(self.downcast_node(node_type).unwrap()),
+            NodeType::Fader => Node::Fader(self.downcast_node(node_type).unwrap()),
+            NodeType::Button => Node::Button(self.downcast_node(node_type).unwrap()),
+            NodeType::MidiInput => Node::MidiInput(self.downcast_node(node_type).unwrap()),
+            NodeType::MidiOutput => Node::MidiOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::OpcOutput => Node::OpcOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::PixelPattern => Node::PixelPattern(self.downcast_node(node_type).unwrap()),
+            NodeType::PixelDmx => Node::PixelDmx(self.downcast_node(node_type).unwrap()),
+            NodeType::OscInput => Node::OscInput(self.downcast_node(node_type).unwrap()),
+            NodeType::OscOutput => Node::OscOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoFile => Node::VideoFile(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoColorBalance => Node::VideoColorBalance(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoOutput => Node::VideoOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoEffect => Node::VideoEffect(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoTransform => Node::VideoTransform(self.downcast_node(node_type).unwrap()),
         }
     }
 
-    fn downcast_node<T: Clone + 'static>(&self) -> Option<T> {
-        self.node.value().downcast_ref().ok().cloned()
+    fn downcast_node<T: Clone + 'static>(&self, node_type: NodeType) -> Option<T> {
+        match self.node.value().downcast_ref::<T>() {
+            Ok(node) => Some(node.clone()),
+            Err(err) => {
+                log::error!("Could not downcast {} ({:?}): {:?}", self.path, node_type, err);
+                None
+            }
+        }
     }
 }

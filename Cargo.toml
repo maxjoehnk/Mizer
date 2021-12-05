@@ -30,6 +30,7 @@ members = [
     "runtime/pipeline/nodes/behaviors/sequence",
     "runtime/pipeline/nodes/clock",
     "runtime/pipeline/nodes/fixture",
+    "runtime/pipeline/nodes/sequencer",
     "runtime/pipeline/nodes/inputs",
     "runtime/pipeline/nodes/laser",
     "runtime/pipeline/nodes/protocols/dmx",

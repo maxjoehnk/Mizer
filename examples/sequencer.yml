@@ -18,6 +18,16 @@ nodes:
         x: 0.0
         y: 0.0
       scale: 0.0
+  - path: /sequencer-0
+    type: sequencer
+    config:
+      sequence: 1
+    designer:
+      hidden: true
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
 channels: []
 fixtures:
   - id: 2

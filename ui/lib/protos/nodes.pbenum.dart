@@ -56,6 +56,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType OscOutput = Node_NodeType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscOutput');
   static const Node_NodeType MidiInput = Node_NodeType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiInput');
   static const Node_NodeType MidiOutput = Node_NodeType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiOutput');
+  static const Node_NodeType Sequencer = Node_NodeType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequencer');
   static const Node_NodeType VideoFile = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoFile');
   static const Node_NodeType VideoOutput = Node_NodeType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoOutput');
   static const Node_NodeType VideoEffect = Node_NodeType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoEffect');
@@ -83,6 +84,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     OscOutput,
     MidiInput,
     MidiOutput,
+    Sequencer,
     VideoFile,
     VideoOutput,
     VideoEffect,

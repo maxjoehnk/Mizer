@@ -45,6 +45,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     ) -> anyhow::Result<NodeDescriptor<'_>>;
 
     fn add_node_for_fixture(&self, fixture_id: u32) -> anyhow::Result<NodeDescriptor<'_>>;
+    fn add_node_for_sequence(&self, sequence_id: u32) -> anyhow::Result<NodeDescriptor<'_>>;
 
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()>;
 

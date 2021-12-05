@@ -37,7 +37,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub nodes: NodesHandler<R>,
     pub session: SessionHandler<R>,
     pub transport: TransportHandler<R>,
-    pub sequencer: SequencerHandler,
+    pub sequencer: SequencerHandler<R>,
     pub programmer: ProgrammerHandler<R>,
     pub settings: SettingsHandler,
 }
@@ -59,7 +59,7 @@ impl<R: RuntimeApi> Handlers<R> {
             nodes: NodesHandler::new(runtime.clone()),
             session: SessionHandler::new(runtime.clone()),
             transport: TransportHandler::new(runtime.clone()),
-            sequencer: SequencerHandler::new(sequencer.clone()),
+            sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
             programmer: ProgrammerHandler::new(fixture_manager, sequencer, runtime),
             settings: SettingsHandler::new(settings),
         }

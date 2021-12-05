@@ -78,6 +78,7 @@ message Node {
     OscOutput = 13;
     MidiInput = 14;
     MidiOutput = 15;
+    Sequencer = 16;
     VideoFile = 20;
     VideoOutput = 21;
     VideoEffect = 22;
@@ -134,6 +135,7 @@ message NodeConfig {
     SelectNodeConfig selectConfig = 32;
     MergeNodeConfig mergeConfig = 33;
     EnvelopeNodeConfig envelopeConfig = 34;
+    SequencerNodeConfig sequencerConfig = 35;
   }
 }
 
@@ -179,6 +181,10 @@ message ClockNodeConfig {
 
 message FixtureNodeConfig {
   uint32 fixture_id = 1;
+}
+
+message SequencerNodeConfig {
+  uint32 sequence_id = 1;
 }
 
 message InputNodeConfig {}

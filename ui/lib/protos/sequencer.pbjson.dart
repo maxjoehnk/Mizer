@@ -50,6 +50,16 @@ const GetSequencesRequest$json = const {
 
 /// Descriptor for `GetSequencesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getSequencesRequestDescriptor = $convert.base64Decode('ChNHZXRTZXF1ZW5jZXNSZXF1ZXN0');
+@$core.Deprecated('Use getSequenceRequestDescriptor instead')
+const GetSequenceRequest$json = const {
+  '1': 'GetSequenceRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+  ],
+};
+
+/// Descriptor for `GetSequenceRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getSequenceRequestDescriptor = $convert.base64Decode('ChJHZXRTZXF1ZW5jZVJlcXVlc3QSGgoIc2VxdWVuY2UYASABKA1SCHNlcXVlbmNl');
 @$core.Deprecated('Use addSequenceRequestDescriptor instead')
 const AddSequenceRequest$json = const {
   '1': 'AddSequenceRequest',

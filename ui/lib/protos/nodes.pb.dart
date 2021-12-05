@@ -775,6 +775,7 @@ enum NodeConfig_Type {
   selectConfig, 
   mergeConfig, 
   envelopeConfig, 
+  sequencerConfig, 
   notSet
 }
 
@@ -805,10 +806,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     32 : NodeConfig_Type.selectConfig,
     33 : NodeConfig_Type.mergeConfig,
     34 : NodeConfig_Type.envelopeConfig,
+    35 : NodeConfig_Type.sequencerConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -834,6 +836,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<SelectNodeConfig>(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selectConfig', protoName: 'selectConfig', subBuilder: SelectNodeConfig.create)
     ..aOM<MergeNodeConfig>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mergeConfig', protoName: 'mergeConfig', subBuilder: MergeNodeConfig.create)
     ..aOM<EnvelopeNodeConfig>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'envelopeConfig', protoName: 'envelopeConfig', subBuilder: EnvelopeNodeConfig.create)
+    ..aOM<SequencerNodeConfig>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerConfig', protoName: 'sequencerConfig', subBuilder: SequencerNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -864,6 +867,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     SelectNodeConfig? selectConfig,
     MergeNodeConfig? mergeConfig,
     EnvelopeNodeConfig? envelopeConfig,
+    SequencerNodeConfig? sequencerConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -940,6 +944,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (envelopeConfig != null) {
       _result.envelopeConfig = envelopeConfig;
+    }
+    if (sequencerConfig != null) {
+      _result.sequencerConfig = sequencerConfig;
     }
     return _result;
   }
@@ -1241,6 +1248,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearEnvelopeConfig() => clearField(34);
   @$pb.TagNumber(34)
   EnvelopeNodeConfig ensureEnvelopeConfig() => $_ensure(24);
+
+  @$pb.TagNumber(35)
+  SequencerNodeConfig get sequencerConfig => $_getN(25);
+  @$pb.TagNumber(35)
+  set sequencerConfig(SequencerNodeConfig v) { setField(35, v); }
+  @$pb.TagNumber(35)
+  $core.bool hasSequencerConfig() => $_has(25);
+  @$pb.TagNumber(35)
+  void clearSequencerConfig() => clearField(35);
+  @$pb.TagNumber(35)
+  SequencerNodeConfig ensureSequencerConfig() => $_ensure(25);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -1704,6 +1722,53 @@ class FixtureNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasFixtureId() => $_has(0);
   @$pb.TagNumber(1)
   void clearFixtureId() => clearField(1);
+}
+
+class SequencerNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequencerNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  SequencerNodeConfig._() : super();
+  factory SequencerNodeConfig({
+    $core.int? sequenceId,
+  }) {
+    final _result = create();
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    return _result;
+  }
+  factory SequencerNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequencerNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequencerNodeConfig clone() => SequencerNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequencerNodeConfig copyWith(void Function(SequencerNodeConfig) updates) => super.copyWith((message) => updates(message as SequencerNodeConfig)) as SequencerNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequencerNodeConfig create() => SequencerNodeConfig._();
+  SequencerNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<SequencerNodeConfig> createRepeated() => $pb.PbList<SequencerNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static SequencerNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequencerNodeConfig>(create);
+  static SequencerNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequenceId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequenceId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequenceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequenceId() => clearField(1);
 }
 
 class InputNodeConfig extends $pb.GeneratedMessage {

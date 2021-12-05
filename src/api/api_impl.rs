@@ -5,7 +5,7 @@ use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::Connection;
 use mizer_layouts::{ControlConfig, Layout, ControlPosition, ControlSize};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId, NodePosition};
-use mizer_nodes::{FixtureNode, Node};
+use mizer_nodes::{FixtureNode, Node, SequencerNode};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 
 use crate::{ApiCommand, ApiHandler};
@@ -115,6 +115,21 @@ impl RuntimeApi for Api {
         };
         self.add_node_internal(
             NodeType::Fixture,
+            NodeDesigner {
+                hidden: true,
+                ..Default::default()
+            },
+            Some(node.into()),
+        )
+    }
+
+    fn add_node_for_sequence(&self, sequence_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
+        let node = SequencerNode {
+            sequence_id,
+            ..Default::default()
+        };
+        self.add_node_internal(
+            NodeType::Sequencer,
             NodeDesigner {
                 hidden: true,
                 ..Default::default()

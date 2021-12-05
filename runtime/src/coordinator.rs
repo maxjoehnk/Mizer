@@ -108,6 +108,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 node.fixture_manager = self.injector.get().cloned();
                 self.add_node(path, node)
             }
+            Sequencer(mut node) => self.add_node(path, node),
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
             Fader(node) => self.add_node(path, node),
@@ -540,6 +541,7 @@ pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
         NodeType::Select => Node::Select(downcast_node(node).unwrap()),
         NodeType::Merge => Node::Merge(downcast_node(node).unwrap()),
         NodeType::Fixture => Node::Fixture(downcast_node(node).unwrap()),
+        NodeType::Sequencer => Node::Sequencer(downcast_node(node).unwrap()),
         NodeType::IldaFile => Node::IldaFile(downcast_node(node).unwrap()),
         NodeType::Laser => Node::Laser(downcast_node(node).unwrap()),
         NodeType::Fader => Node::Fader(downcast_node(node).unwrap()),

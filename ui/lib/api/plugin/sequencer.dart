@@ -12,10 +12,6 @@ class SequencerPluginApi implements SequencerApi {
     return Sequences.fromBuffer(_convertBuffer(response));
   }
 
-  static List<int> _convertBuffer(List<Object> response) {
-    return response.map((dynamic e) => e as int).toList();
-  }
-
   @override
   Future<Sequence> addSequence() async {
     var response = await channel.invokeMethod("addSequence");
@@ -26,5 +22,16 @@ class SequencerPluginApi implements SequencerApi {
   @override
   Future<void> sequenceGo(int sequence) async {
     await channel.invokeMethod("sequenceGo", sequence);
+  }
+
+  @override
+  Future<Sequence> getSequence(int sequenceId) async {
+    var response = await channel.invokeMethod("getSequence", sequenceId);
+
+    return Sequence.fromBuffer(_convertBuffer(response));
+  }
+
+  static List<int> _convertBuffer(List<Object> response) {
+    return response.map((dynamic e) => e as int).toList();
   }
 }

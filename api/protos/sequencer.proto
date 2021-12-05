@@ -6,11 +6,16 @@ import "fixtures.proto";
 
 service SequencerApi {
   rpc GetSequences (GetSequencesRequest) returns (Sequences) {}
+  rpc GetSequence (GetSequenceRequest) returns (Sequence) {}
   rpc AddSequence (AddSequenceRequest) returns (Sequence) {}
   rpc SequenceGo (SequenceGoRequest) returns (EmptyResponse) {}
 }
 
 message GetSequencesRequest {}
+
+message GetSequenceRequest {
+  uint32 sequence = 1;
+}
 
 message AddSequenceRequest {
 }

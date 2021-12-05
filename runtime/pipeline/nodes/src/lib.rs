@@ -14,6 +14,7 @@ pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
 pub use mizer_port_operation_nodes::{MergeNode, SelectNode};
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
+pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
@@ -29,6 +30,7 @@ pub enum Node {
     Merge(MergeNode),
     Select(SelectNode),
     Fixture(FixtureNode),
+    Sequencer(SequencerNode),
     IldaFile(IldaFileNode),
     Laser(LaserNode),
     Fader(FaderNode),
@@ -59,6 +61,7 @@ impl From<NodeType> for Node {
             NodeType::Merge => MergeNode::default().into(),
             NodeType::Select => SelectNode::default().into(),
             NodeType::Fixture => FixtureNode::default().into(),
+            NodeType::Sequencer => SequencerNode::default().into(),
             NodeType::IldaFile => IldaFileNode::default().into(),
             NodeType::Laser => LaserNode::default().into(),
             NodeType::Fader => FaderNode::default().into(),
@@ -92,6 +95,7 @@ impl Node {
             Merge(_) => NodeType::Merge,
             Select(_) => NodeType::Select,
             Fixture(_) => NodeType::Fixture,
+            Sequencer(_) => NodeType::Sequencer,
             IldaFile(_) => NodeType::IldaFile,
             Laser(_) => NodeType::Laser,
             Fader(_) => NodeType::Fader,

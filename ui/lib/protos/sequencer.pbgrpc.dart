@@ -19,6 +19,11 @@ class SequencerApiClient extends $grpc.Client {
           '/mizer.sequencer.SequencerApi/GetSequences',
           ($1.GetSequencesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
+  static final _$getSequence =
+      $grpc.ClientMethod<$1.GetSequenceRequest, $1.Sequence>(
+          '/mizer.sequencer.SequencerApi/GetSequence',
+          ($1.GetSequenceRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequence.fromBuffer(value));
   static final _$addSequence =
       $grpc.ClientMethod<$1.AddSequenceRequest, $1.Sequence>(
           '/mizer.sequencer.SequencerApi/AddSequence',
@@ -39,6 +44,11 @@ class SequencerApiClient extends $grpc.Client {
       $1.GetSequencesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getSequences, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequence> getSequence($1.GetSequenceRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getSequence, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Sequence> addSequence($1.AddSequenceRequest request,
@@ -65,6 +75,14 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.GetSequencesRequest.fromBuffer(value),
         ($1.Sequences value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.GetSequenceRequest, $1.Sequence>(
+        'GetSequence',
+        getSequence_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.GetSequenceRequest.fromBuffer(value),
+        ($1.Sequence value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.AddSequenceRequest, $1.Sequence>(
         'AddSequence',
         addSequence_Pre,
@@ -87,6 +105,11 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
     return getSequences(call, await request);
   }
 
+  $async.Future<$1.Sequence> getSequence_Pre($grpc.ServiceCall call,
+      $async.Future<$1.GetSequenceRequest> request) async {
+    return getSequence(call, await request);
+  }
+
   $async.Future<$1.Sequence> addSequence_Pre($grpc.ServiceCall call,
       $async.Future<$1.AddSequenceRequest> request) async {
     return addSequence(call, await request);
@@ -99,6 +122,8 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
 
   $async.Future<$1.Sequences> getSequences(
       $grpc.ServiceCall call, $1.GetSequencesRequest request);
+  $async.Future<$1.Sequence> getSequence(
+      $grpc.ServiceCall call, $1.GetSequenceRequest request);
   $async.Future<$1.Sequence> addSequence(
       $grpc.ServiceCall call, $1.AddSequenceRequest request);
   $async.Future<$1.EmptyResponse> sequenceGo(

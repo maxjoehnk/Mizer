@@ -1,3 +1,5 @@
+use mizer_node::NodeType;
+use mizer_nodes::Node;
 use mizer_sequencer::Sequencer;
 
 use crate::models::{Sequence, Sequences};
@@ -38,5 +40,25 @@ impl<R: RuntimeApi> SequencerHandler<R> {
 
     pub fn sequence_go(&self, sequence: u32) {
         self.sequencer.sequence_go(sequence);
+    }
+
+    pub fn delete_sequence(&self, sequence: u32) -> anyhow::Result<()> {
+        self.delete_sequence_node(sequence)?;
+        self.sequencer.delete_sequence(sequence);
+
+        Ok(())
+    }
+
+    fn delete_sequence_node(&self, id: u32) -> anyhow::Result<()> {
+        if let Some(path) = self.runtime.nodes()
+            .into_iter()
+            .filter(|node| node.node_type() == NodeType::Sequencer)
+            .find(|node| if let Node::Sequencer(sequencer_node) = node.downcast() {
+                sequencer_node.sequence_id == id
+            } else { false })
+            .map(|node| node.path.clone()) {
+            self.runtime.delete_node(path)?;
+        }
+        Ok(())
     }
 }

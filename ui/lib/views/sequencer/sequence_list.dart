@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
-import 'package:provider/provider.dart';
+import 'package:mizer/state/sequencer_bloc.dart';
 
 class SequenceList extends StatelessWidget {
   final Sequence? selectedSequence;
@@ -11,14 +12,9 @@ class SequenceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: context.read<SequencerApi>().getSequences(),
-        builder: (context, AsyncSnapshot<Sequences> data) {
-          if (data.hasData) {
-            data.data!.sequences.sort((lhs, rhs) => lhs.id - rhs.id);
-            return _list(data.data!.sequences);
-          }
-          return Container();
+    return BlocBuilder<SequencerBloc, Sequences>(
+        builder: (context, state) {
+          return _list(state.sequences);
         });
   }
 

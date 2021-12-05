@@ -67,6 +67,16 @@ const AddSequenceRequest$json = const {
 
 /// Descriptor for `AddSequenceRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addSequenceRequestDescriptor = $convert.base64Decode('ChJBZGRTZXF1ZW5jZVJlcXVlc3Q=');
+@$core.Deprecated('Use deleteSequenceRequestDescriptor instead')
+const DeleteSequenceRequest$json = const {
+  '1': 'DeleteSequenceRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+  ],
+};
+
+/// Descriptor for `DeleteSequenceRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List deleteSequenceRequestDescriptor = $convert.base64Decode('ChVEZWxldGVTZXF1ZW5jZVJlcXVlc3QSGgoIc2VxdWVuY2UYASABKA1SCHNlcXVlbmNl');
 @$core.Deprecated('Use sequenceGoRequestDescriptor instead')
 const SequenceGoRequest$json = const {
   '1': 'SequenceGoRequest',

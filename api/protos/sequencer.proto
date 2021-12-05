@@ -8,6 +8,7 @@ service SequencerApi {
   rpc GetSequences (GetSequencesRequest) returns (Sequences) {}
   rpc GetSequence (GetSequenceRequest) returns (Sequence) {}
   rpc AddSequence (AddSequenceRequest) returns (Sequence) {}
+  rpc DeleteSequence (DeleteSequenceRequest) returns (Sequences) {}
   rpc SequenceGo (SequenceGoRequest) returns (EmptyResponse) {}
 }
 
@@ -18,6 +19,10 @@ message GetSequenceRequest {
 }
 
 message AddSequenceRequest {
+}
+
+message DeleteSequenceRequest {
+  uint32 sequence = 1;
 }
 
 message SequenceGoRequest {

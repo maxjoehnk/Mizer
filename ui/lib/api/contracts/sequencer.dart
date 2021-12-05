@@ -10,4 +10,6 @@ abstract class SequencerApi {
   Future<Sequence> addSequence();
 
   Future<void> sequenceGo(int sequence);
+
+  Future<Sequences> deleteSequence(int sequence);
 }

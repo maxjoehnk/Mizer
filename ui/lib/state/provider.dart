@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/state/sequencer_bloc.dart';
 
 import 'fixtures_bloc.dart';
 import 'layouts_bloc.dart';
@@ -24,6 +25,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => MediaBloc(context.read())),
         BlocProvider(create: (context) => LayoutsBloc(context.read())),
         BlocProvider(create: (context) => SettingsBloc(context.read())),
+        BlocProvider(create: (context) => SequencerBloc(context.read())),
       ],
     );
   }

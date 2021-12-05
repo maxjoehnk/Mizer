@@ -34,4 +34,11 @@ class SequencerPluginApi implements SequencerApi {
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
+
+  @override
+  Future<Sequences> deleteSequence(int sequenceId) async {
+    var response = await channel.invokeMethod("deleteSequence", sequenceId);
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
 }

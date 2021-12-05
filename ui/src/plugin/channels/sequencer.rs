@@ -31,6 +31,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                     }
                 }
             }
+            "deleteSequence" => {
+                if let Value::I64(sequence) = call.args {
+                    match self.delete_sequence(sequence as u32) {
+                        Ok(sequence) => resp.respond_msg(sequence),
+                        Err(err) => resp.respond_error(err)
+                    }
+                }
+            }
             "addSequence" => {
                 let sequence = self.add_sequence();
 
@@ -71,5 +79,11 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
 
     pub fn sequence_go(&self, sequence: u32) {
         self.handler.sequence_go(sequence);
+    }
+
+    pub fn delete_sequence(&self, sequence_id: u32) -> anyhow::Result<Sequences> {
+        self.handler.delete_sequence(sequence_id)?;
+
+        Ok(self.get_sequences())
     }
 }

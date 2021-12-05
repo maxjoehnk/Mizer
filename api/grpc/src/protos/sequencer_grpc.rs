@@ -28,6 +28,8 @@ pub trait SequencerApi {
 
     fn add_sequence(&self, req: ::grpc::ServerRequestSingle<super::sequencer::AddSequenceRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequence>) -> ::grpc::Result<()>;
 
+    fn delete_sequence(&self, req: ::grpc::ServerRequestSingle<super::sequencer::DeleteSequenceRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequences>) -> ::grpc::Result<()>;
+
     fn sequence_go(&self, req: ::grpc::ServerRequestSingle<super::sequencer::SequenceGoRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::EmptyResponse>) -> ::grpc::Result<()>;
 }
 
@@ -69,6 +71,16 @@ impl SequencerApiClient {
     pub fn add_sequence(&self, o: ::grpc::RequestOptions, req: super::sequencer::AddSequenceRequest) -> ::grpc::SingleResponse<super::sequencer::Sequence> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/AddSequence"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn delete_sequence(&self, o: ::grpc::RequestOptions, req: super::sequencer::DeleteSequenceRequest) -> ::grpc::SingleResponse<super::sequencer::Sequences> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/DeleteSequence"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -131,6 +143,18 @@ impl SequencerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_sequence(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/DeleteSequence"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).delete_sequence(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(

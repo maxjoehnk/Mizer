@@ -55,6 +55,9 @@ impl Sequencer {
                         state.go(&sequences[&sequencer]);
                     }
                 }
+                SequencerCommands::DropState(sequence) => {
+                    states.remove(&sequence);
+                }
             }
         }
     }
@@ -84,6 +87,13 @@ impl Sequencer {
         self.sequences.set(sequences);
 
         sequence
+    }
+
+    pub fn delete_sequence(&self, sequence: u32) {
+        let mut sequences = self.sequences.read();
+        sequences.remove(&sequence);
+        self.sequences.set(sequences);
+        self.commands.0.send(SequencerCommands::DropState(sequence));
     }
 
     pub fn sequence_go(&self, sequence: u32) {
@@ -129,4 +139,5 @@ impl Sequencer {
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum SequencerCommands {
     Go(u32),
+    DropState(u32),
 }

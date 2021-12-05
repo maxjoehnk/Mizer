@@ -29,4 +29,10 @@ class SequencerDemoApi implements SequencerApi {
     // TODO: implement getSequence
     throw UnimplementedError();
   }
+
+  @override
+  Future<Sequences> deleteSequence(int sequence) {
+    // TODO: implement deleteSequence
+    throw UnimplementedError();
+  }
 }

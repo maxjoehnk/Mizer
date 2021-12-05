@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
+import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,10 @@ class _SequencerViewState extends State<SequencerView> {
           child: Panel(
             label: "Sequences",
             child: SequenceList(selectSequence: _selectSequence, selectedSequence: _sequence),
-            actions: [PanelAction(label: "Add", onClick: () => _addSequence())],
+            actions: [
+              PanelAction(label: "Add", onClick: () => _addSequence()),
+              PanelAction(label: "Delete", onClick: () => _deleteSequence(), disabled: _sequence == null),
+            ],
           ),
         ),
         if (_sequence != null)
@@ -47,7 +51,13 @@ class _SequencerViewState extends State<SequencerView> {
     );
   }
 
-  _addSequence() {}
+  _addSequence() {
+    context.read<SequencerBloc>().add(AddSequence());
+  }
+
+  _deleteSequence() {
+    context.read<SequencerBloc>().add(DeleteSequence(_sequence!.id));
+  }
 
   _sequenceGo() {
     context.read<SequencerApi>().sequenceGo(_sequence!.id);

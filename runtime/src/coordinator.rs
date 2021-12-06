@@ -108,7 +108,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 node.fixture_manager = self.injector.get().cloned();
                 self.add_node(path, node)
             }
-            Sequencer(mut node) => self.add_node(path, node),
+            Sequencer(node) => self.add_node(path, node),
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
             Fader(node) => self.add_node(path, node),

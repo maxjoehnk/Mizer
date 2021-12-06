@@ -68,7 +68,7 @@ sequences:
             value: 1
       - id: 2
         name: Cue 2
-        trigger: Go
+        trigger: Follow
         channels:
           - fixtures: [1]
             control:

@@ -23,6 +23,11 @@ impl Sequence {
         }
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
         let cue = &self.cues[state.active_cue_index as usize];
+        if let Some(next_cue) = state.get_next_cue(&self) {
+            if next_cue.trigger == CueTrigger::Follow && cue.is_done(&state) {
+                state.go(&self);
+            }
+        }
         for channel in &cue.channels {
             for (fixture_id, value) in channel.values(&state) {
                 if let Some(value) = value {
@@ -71,6 +76,17 @@ impl Cue {
         }
         self.channels.retain(|c| !c.fixtures.is_empty());
     }
+
+    fn is_done(&self, state: &SequenceState) -> bool {
+        let cue_active = state.get_timer();
+        if let Some(longest_cue_duration) = self.channels.iter()
+            .map(|channel| channel.duration())
+            .max() {
+            longest_cue_duration < cue_active
+        }else {
+            true
+        }
+    }
 }
 
 impl PartialOrd for Cue {
@@ -81,7 +97,9 @@ impl PartialOrd for Cue {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub enum CueTrigger {
+    /// Requires manual go action to trigger
     Go,
+    /// Automatically triggers when the previous cue finishes
     Follow,
     Beats,
     Timecode,
@@ -99,6 +117,23 @@ pub struct CueChannel {
 }
 
 impl CueChannel {
+    fn duration(&self) -> Duration {
+        let fade_duration = if let Some(ref fade) = self.fade {
+            match fade.highest() {
+                SequencerTime::Beats(_) => Duration::default(),
+                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
+            }
+        }else { Duration::default() };
+        let delay_duration = if let Some(ref delay) = self.delay {
+            match delay.highest() {
+                SequencerTime::Beats(_) => Duration::default(),
+                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
+            }
+        }else { Duration::default() };
+
+        fade_duration + delay_duration
+    }
+
     fn values(&self, state: &SequenceState) -> Vec<(FixtureId, Option<f64>)> {
         let mut values = vec![None; self.fixtures.len()];
 
@@ -174,14 +209,29 @@ impl CueChannel {
 }
 
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 #[serde(untagged)]
 pub enum SequencerValue<T> {
     Direct(T),
     Range((T, T)),
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+impl<T: PartialOrd + Copy> SequencerValue<T> {
+    fn highest(&self) -> T {
+        match self {
+            Self::Direct(value) => *value,
+            Self::Range((lhs, rhs)) => {
+                if lhs > rhs {
+                    *lhs
+                }else {
+                    *rhs
+                }
+            }
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, PartialOrd)]
 #[serde(tag = "unit", content = "value")]
 pub enum SequencerTime {
     #[serde(rename = "seconds")]

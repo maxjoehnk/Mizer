@@ -1,4 +1,4 @@
-use crate::Sequence;
+use crate::{Cue, Sequence};
 use std::time::{Duration, Instant};
 use std::collections::HashMap;
 use mizer_fixtures::definition::FixtureControl;
@@ -37,5 +37,14 @@ impl SequenceState {
 
     pub fn get_fixture_value(&self, fixture_id: FixtureId, control: &FixtureControl) -> Option<f64> {
         self.fixture_values.get(&(fixture_id, control.clone())).copied()
+    }
+
+    pub fn get_next_cue<'a>(&self, sequence: &'a Sequence) -> Option<&'a Cue> {
+        let next_cue_index = (self.active_cue_index + 1) as usize;
+        if next_cue_index >= sequence.cues.len() {
+            None
+        }else {
+            Some(&sequence.cues[next_cue_index])
+        }
     }
 }

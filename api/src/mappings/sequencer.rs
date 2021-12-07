@@ -32,10 +32,23 @@ impl From<mizer_sequencer::CueTrigger> for CueTrigger {
         use mizer_sequencer::CueTrigger::*;
 
         match trigger {
-            Go => CueTrigger::GO,
-            Follow => CueTrigger::FOLLOW,
-            Beats => CueTrigger::BEATS,
-            Timecode => CueTrigger::TIMECODE,
+            Go => Self::GO,
+            Follow => Self::FOLLOW,
+            Beats => Self::BEATS,
+            Timecode => Self::TIMECODE,
+        }
+    }
+}
+
+impl From<CueTrigger> for mizer_sequencer::CueTrigger {
+    fn from(trigger: CueTrigger) -> Self {
+        use CueTrigger::*;
+
+        match trigger {
+            GO => Self::Go,
+            FOLLOW => Self::Follow,
+            BEATS => Self::Beats,
+            TIMECODE => Self::Timecode,
         }
     }
 }

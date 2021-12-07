@@ -2,9 +2,10 @@ use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::SequencerHandler;
-use mizer_api::models::{Sequence, Sequences};
+use mizer_api::models::{CueTriggerRequest, Sequence, Sequences};
 use mizer_api::RuntimeApi;
 
+use crate::MethodCallExt;
 use crate::plugin::channels::MethodReplyExt;
 
 pub struct SequencerChannel<R: RuntimeApi> {
@@ -51,6 +52,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "updateCueTrigger" => {
+                let result = call.arguments().map(|req| self.update_cue_trigger(req));
+                resp.respond_result(result);
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -85,5 +90,11 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
         self.handler.delete_sequence(sequence_id)?;
 
         Ok(self.get_sequences())
+    }
+
+    pub fn update_cue_trigger(&self, request: CueTriggerRequest) -> Sequences {
+        self.handler.update_cue_trigger(request);
+
+        self.get_sequences()
     }
 }

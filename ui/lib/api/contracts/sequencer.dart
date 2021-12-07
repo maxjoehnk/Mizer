@@ -12,4 +12,6 @@ abstract class SequencerApi {
   Future<void> sequenceGo(int sequence);
 
   Future<Sequences> deleteSequence(int sequence);
+
+  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger);
 }

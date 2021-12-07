@@ -12,7 +12,7 @@ class SequenceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SequencerBloc, Sequences>(
+    return BlocBuilder<SequencerBloc, SequencerState>(
         builder: (context, state) {
           return _list(state.sequences);
         });

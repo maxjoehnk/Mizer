@@ -31,4 +31,9 @@ class SequencerGrpcApi implements SequencerApi {
   Future<Sequences> deleteSequence(int sequenceId) {
     return this.client.deleteSequence(DeleteSequenceRequest(sequence: sequenceId));
   }
+
+  @override
+  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger) {
+    return this.client.updateCueTrigger(CueTriggerRequest(sequence: sequence, cue: cue, trigger: trigger));
+  }
 }

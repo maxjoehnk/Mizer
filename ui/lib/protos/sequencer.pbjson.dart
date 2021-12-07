@@ -87,6 +87,18 @@ const SequenceGoRequest$json = const {
 
 /// Descriptor for `SequenceGoRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List sequenceGoRequestDescriptor = $convert.base64Decode('ChFTZXF1ZW5jZUdvUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2U=');
+@$core.Deprecated('Use cueTriggerRequestDescriptor instead')
+const CueTriggerRequest$json = const {
+  '1': 'CueTriggerRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+    const {'1': 'cue', '3': 2, '4': 1, '5': 13, '10': 'cue'},
+    const {'1': 'trigger', '3': 3, '4': 1, '5': 14, '6': '.mizer.sequencer.CueTrigger', '10': 'trigger'},
+  ],
+};
+
+/// Descriptor for `CueTriggerRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueTriggerRequestDescriptor = $convert.base64Decode('ChFDdWVUcmlnZ2VyUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2USEAoDY3VlGAIgASgNUgNjdWUSNQoHdHJpZ2dlchgDIAEoDjIbLm1pemVyLnNlcXVlbmNlci5DdWVUcmlnZ2VyUgd0cmlnZ2Vy');
 @$core.Deprecated('Use emptyResponseDescriptor instead')
 const EmptyResponse$json = const {
   '1': 'EmptyResponse',

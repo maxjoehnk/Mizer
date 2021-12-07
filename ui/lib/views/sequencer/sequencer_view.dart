@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
@@ -17,37 +18,39 @@ class SequencerView extends StatefulWidget {
 }
 
 class _SequencerViewState extends State<SequencerView> {
-  Sequence? _sequence;
-  Cue? _cue;
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Panel(
-            label: "Sequences",
-            child: SequenceList(selectSequence: _selectSequence, selectedSequence: _sequence),
-            actions: [
-              PanelAction(label: "Add", onClick: () => _addSequence()),
-              PanelAction(label: "Delete", onClick: () => _deleteSequence(), disabled: _sequence == null),
-            ],
-          ),
-        ),
-        if (_sequence != null)
-          Expanded(
-            child: Panel(
-              label: "Cue List - ${_sequence!.name}",
-              child: CueList(sequence: _sequence!, onSelectCue: _selectCue, selectedCue: _cue),
-              actions: [
-                PanelAction(label: "Go", onClick: () => _sequenceGo()),
-              ],
+    context.read<SequencerBloc>().add(FetchSequences());
+    return BlocBuilder<SequencerBloc, SequencerState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            Expanded(
+              child: Panel(
+                label: "Sequences",
+                child: SequenceList(selectSequence: _selectSequence, selectedSequence: state.selectedSequence),
+                actions: [
+                  PanelAction(label: "Add", onClick: () => _addSequence()),
+                  PanelAction(label: "Delete", onClick: () => _deleteSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
+                ],
+              ),
             ),
-          ),
-        if (_cue != null)
-          Expanded(
-              child: Panel(label: "Cue Contents - ${_cue!.name}", child: CueContents(cue: _cue!)))
-      ],
+            if (state.selectedSequence != null)
+              Expanded(
+                child: Panel(
+                  label: "Cue List - ${state.selectedSequence!.name}",
+                  child: CueList(sequence: state.selectedSequence!, onSelectCue: _selectCue, selectedCue: state.selectedCue),
+                  actions: [
+                    PanelAction(label: "Go", onClick: () => _sequenceGo(state.selectedSequenceId!)),
+                  ],
+                ),
+              ),
+            if (state.selectedCue != null)
+              Expanded(
+                  child: Panel(label: "Cue Contents - ${state.selectedCue!.name}", child: CueContents(cue: state.selectedCue!)))
+          ],
+        );
+      }
     );
   }
 
@@ -55,22 +58,19 @@ class _SequencerViewState extends State<SequencerView> {
     context.read<SequencerBloc>().add(AddSequence());
   }
 
-  _deleteSequence() {
-    context.read<SequencerBloc>().add(DeleteSequence(_sequence!.id));
+  _deleteSequence(int sequenceId) {
+    context.read<SequencerBloc>().add(DeleteSequence(sequenceId));
   }
 
-  _sequenceGo() {
-    context.read<SequencerApi>().sequenceGo(_sequence!.id);
+  _sequenceGo(int sequenceId) {
+    context.read<SequencerApi>().sequenceGo(sequenceId);
   }
 
   _selectSequence(Sequence sequence) {
-    setState(() {
-      _sequence = sequence;
-      _cue = null;
-    });
+    context.read<SequencerBloc>().add(SelectSequence(sequence: sequence.id));
   }
 
   _selectCue(Cue cue) {
-    setState(() => _cue = cue);
+    context.read<SequencerBloc>().add(SelectCue(cue: cue.id));
   }
 }

@@ -35,4 +35,10 @@ class SequencerDemoApi implements SequencerApi {
     // TODO: implement deleteSequence
     throw UnimplementedError();
   }
+
+  @override
+  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger) {
+    // TODO: implement updateCueTrigger
+    throw UnimplementedError();
+  }
 }

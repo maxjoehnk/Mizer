@@ -39,6 +39,11 @@ class SequencerApiClient extends $grpc.Client {
           '/mizer.sequencer.SequencerApi/SequenceGo',
           ($1.SequenceGoRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
+  static final _$updateCueTrigger =
+      $grpc.ClientMethod<$1.CueTriggerRequest, $1.Sequences>(
+          '/mizer.sequencer.SequencerApi/UpdateCueTrigger',
+          ($1.CueTriggerRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
 
   SequencerApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -71,6 +76,12 @@ class SequencerApiClient extends $grpc.Client {
       $1.SequenceGoRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$sequenceGo, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequences> updateCueTrigger(
+      $1.CueTriggerRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateCueTrigger, request, options: options);
   }
 }
 
@@ -117,6 +128,13 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.SequenceGoRequest.fromBuffer(value),
         ($1.EmptyResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CueTriggerRequest, $1.Sequences>(
+        'UpdateCueTrigger',
+        updateCueTrigger_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.CueTriggerRequest.fromBuffer(value),
+        ($1.Sequences value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Sequences> getSequences_Pre($grpc.ServiceCall call,
@@ -144,6 +162,11 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
     return sequenceGo(call, await request);
   }
 
+  $async.Future<$1.Sequences> updateCueTrigger_Pre($grpc.ServiceCall call,
+      $async.Future<$1.CueTriggerRequest> request) async {
+    return updateCueTrigger(call, await request);
+  }
+
   $async.Future<$1.Sequences> getSequences(
       $grpc.ServiceCall call, $1.GetSequencesRequest request);
   $async.Future<$1.Sequence> getSequence(
@@ -154,4 +177,6 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.DeleteSequenceRequest request);
   $async.Future<$1.EmptyResponse> sequenceGo(
       $grpc.ServiceCall call, $1.SequenceGoRequest request);
+  $async.Future<$1.Sequences> updateCueTrigger(
+      $grpc.ServiceCall call, $1.CueTriggerRequest request);
 }

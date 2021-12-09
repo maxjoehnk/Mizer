@@ -12,12 +12,14 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class CueTrigger extends $pb.ProtobufEnum {
   static const CueTrigger GO = CueTrigger._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GO');
   static const CueTrigger FOLLOW = CueTrigger._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOLLOW');
-  static const CueTrigger BEATS = CueTrigger._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BEATS');
-  static const CueTrigger TIMECODE = CueTrigger._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
+  static const CueTrigger TIME = CueTrigger._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIME');
+  static const CueTrigger BEATS = CueTrigger._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BEATS');
+  static const CueTrigger TIMECODE = CueTrigger._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
 
   static const $core.List<CueTrigger> values = <CueTrigger> [
     GO,
     FOLLOW,
+    TIME,
     BEATS,
     TIMECODE,
   ];

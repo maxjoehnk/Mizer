@@ -1,38 +1,74 @@
-use crate::{Cue, Sequence};
+use crate::{Cue, CueChannel, Sequence};
 use std::time::{Duration, Instant};
 use std::collections::HashMap;
 use mizer_fixtures::definition::FixtureControl;
 use mizer_fixtures::FixtureId;
+use crate::contracts::Clock;
 
 #[derive(Debug, Default)]
 pub(crate) struct SequenceState {
-    pub active_cue_index: u32,
+    pub active_cue_index: usize,
     pub active: bool,
     last_go: Option<Instant>,
+    /// Timestamp when the currently active cue has finished
+    pub cue_finished_at: Option<Instant>,
     pub fixture_values: HashMap<(FixtureId, FixtureControl), f64>,
+    pub channel_state: HashMap<(FixtureId, FixtureControl), CueChannelState>,
+}
+
+#[derive(Copy, Clone, Debug)]
+pub enum CueChannelState {
+    Delay,
+    Fading,
+    Active,
 }
 
 impl SequenceState {
-    pub fn go(&mut self, sequence: &Sequence) {
-        self.last_go = Some(Instant::now());
+    pub(crate) fn is_cue_finished(&self) -> bool {
+        self.cue_finished_at.is_some()
+    }
+
+    pub fn jump_to(&mut self, sequence: &Sequence, cue_id: u32, clock: &impl Clock) {
+        if let Some(cue_index) = sequence.cues.iter().position(|cue| cue.id == cue_id) {
+            self.cue_finished_at = None;
+            self.active_cue_index = cue_index;
+            self.last_go = Some(clock.now());
+            self.update_channel_states(sequence);
+        }
+    }
+
+    pub fn go(&mut self, sequence: &Sequence, clock: &impl Clock) {
+        self.last_go = Some(clock.now());
+        self.cue_finished_at = None;
         if !self.active {
             self.active = true;
             self.active_cue_index = 0;
         }else {
             self.next_cue(sequence);
         }
+        self.update_channel_states(sequence);
     }
 
     fn next_cue(&mut self, sequence: &Sequence) {
         self.active_cue_index += 1;
-        if self.active_cue_index as usize >= sequence.cues.len() {
+        if self.active_cue_index >= sequence.cues.len() {
             self.active_cue_index = 0;
             self.active = false;
         }
     }
 
-    pub fn get_timer(&self) -> Duration {
-        Instant::now().duration_since(self.last_go.unwrap_or_else(|| Instant::now()))
+    fn update_channel_states(&mut self, sequence: &Sequence) {
+        self.channel_state.clear();
+        for channel in &sequence.cues[self.active_cue_index].channels {
+            let state = channel.initial_channel_state();
+            for fixture in &channel.fixtures {
+                self.channel_state.insert((*fixture, channel.control.clone()), state);
+            }
+        }
+    }
+
+    pub fn get_timer(&self, clock: &impl Clock) -> Duration {
+        clock.now().duration_since(self.last_go.unwrap_or_else(|| clock.now()))
     }
 
     pub fn get_fixture_value(&self, fixture_id: FixtureId, control: &FixtureControl) -> Option<f64> {
@@ -40,11 +76,23 @@ impl SequenceState {
     }
 
     pub fn get_next_cue<'a>(&self, sequence: &'a Sequence) -> Option<&'a Cue> {
-        let next_cue_index = (self.active_cue_index + 1) as usize;
+        let next_cue_index = self.active_cue_index + 1;
         if next_cue_index >= sequence.cues.len() {
             None
         }else {
             Some(&sequence.cues[next_cue_index])
+        }
+    }
+}
+
+impl CueChannel {
+    fn initial_channel_state(&self) -> CueChannelState {
+        if self.delay.is_some() {
+            CueChannelState::Delay
+        }else if self.fade.is_some() {
+            CueChannelState::Fading
+        }else {
+            CueChannelState::Active
         }
     }
 }

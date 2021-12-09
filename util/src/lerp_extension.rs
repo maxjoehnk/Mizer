@@ -12,7 +12,8 @@ impl<
             + Mul<Output = Self>
             + Div<Output = Self>
             + Copy
-            + std::fmt::Debug,
+            + std::fmt::Debug
+            + std::cmp::PartialEq,
     > LerpExt for T
 {
     // TODO: measure whether we should inline this
@@ -20,6 +21,11 @@ impl<
     where
         Self: Sized,
     {
+        // TODO: properly handle 0.lerp((0, 0), (0, 1))
+        if from.0 == from.1 {
+            return to.1;
+        }
+
         ((self - from.0) * (to.1 - to.0)) / (from.1 - from.0) + to.0
     }
 }

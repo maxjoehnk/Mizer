@@ -5,6 +5,7 @@ export 'sequencer.pb.dart';
 const CueTriggerLabels = {
   CueTrigger.GO: "Go",
   CueTrigger.FOLLOW: "Follow",
+  CueTrigger.TIME: "Time",
   CueTrigger.BEATS: "Beats",
   CueTrigger.TIMECODE: "Timecode",
 };

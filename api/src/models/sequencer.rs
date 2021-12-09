@@ -3391,8 +3391,9 @@ impl ::protobuf::reflect::ProtobufValue for CueTimerRange {
 pub enum CueTrigger {
     GO = 0,
     FOLLOW = 1,
-    BEATS = 2,
-    TIMECODE = 3,
+    TIME = 2,
+    BEATS = 3,
+    TIMECODE = 4,
 }
 
 impl ::protobuf::ProtobufEnum for CueTrigger {
@@ -3404,8 +3405,9 @@ impl ::protobuf::ProtobufEnum for CueTrigger {
         match value {
             0 => ::std::option::Option::Some(CueTrigger::GO),
             1 => ::std::option::Option::Some(CueTrigger::FOLLOW),
-            2 => ::std::option::Option::Some(CueTrigger::BEATS),
-            3 => ::std::option::Option::Some(CueTrigger::TIMECODE),
+            2 => ::std::option::Option::Some(CueTrigger::TIME),
+            3 => ::std::option::Option::Some(CueTrigger::BEATS),
+            4 => ::std::option::Option::Some(CueTrigger::TIMECODE),
             _ => ::std::option::Option::None
         }
     }
@@ -3414,6 +3416,7 @@ impl ::protobuf::ProtobufEnum for CueTrigger {
         static values: &'static [CueTrigger] = &[
             CueTrigger::GO,
             CueTrigger::FOLLOW,
+            CueTrigger::TIME,
             CueTrigger::BEATS,
             CueTrigger::TIMECODE,
         ];
@@ -3562,23 +3565,23 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\
     \x05beatsB\x06\n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\
     \x01(\x0b2\x18.mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\
-    \x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02to*9\n\nCueTrigger\x12\x06\n\
-    \x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\t\n\x05BEATS\x10\x02\x12\x0c\
-    \n\x08TIMECODE\x10\x03*\xad\x01\n\nCueControl\x12\r\n\tINTENSITY\x10\0\
-    \x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\x0bCO\
-    LOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x07\n\x03PAN\x10\x05\
-    \x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\x07\x12\x08\n\x04ZOOM\
-    \x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\x10\n\x12\t\n\x05FROST\
-    \x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x86\x04\n\x0cSequencerApi\x12R\n\
-    \x0cGetSequences\x12$.mizer.sequencer.GetSequencesRequest\x1a\x1a.mizer.\
-    sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12#.mizer.sequencer.GetSe\
-    quenceRequest\x1a\x19.mizer.sequencer.Sequence\"\0\x12O\n\x0bAddSequence\
-    \x12#.mizer.sequencer.AddSequenceRequest\x1a\x19.mizer.sequencer.Sequenc\
-    e\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequencer.DeleteSequenceReques\
-    t\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\nSequenceGo\x12\".mizer.s\
-    equencer.SequenceGoRequest\x1a\x1e.mizer.sequencer.EmptyResponse\"\0\x12\
-    T\n\x10UpdateCueTrigger\x12\".mizer.sequencer.CueTriggerRequest\x1a\x1a.\
-    mizer.sequencer.Sequences\"\0b\x06proto3\
+    \x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02to*C\n\nCueTrigger\x12\x06\n\
+    \x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\
+    \x05BEATS\x10\x03\x12\x0c\n\x08TIMECODE\x10\x04*\xad\x01\n\nCueControl\
+    \x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RE\
+    D\x10\x02\x12\x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\
+    \x12\x07\n\x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\
+    \x07\x12\x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\
+    \x10\n\x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x86\x04\n\
+    \x0cSequencerApi\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequence\
+    sRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12\
+    #.mizer.sequencer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\
+    \0\x12O\n\x0bAddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\x19\
+    .mizer.sequencer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequen\
+    cer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\n\
+    SequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequenc\
+    er.EmptyResponse\"\0\x12T\n\x10UpdateCueTrigger\x12\".mizer.sequencer.Cu\
+    eTriggerRequest\x1a\x1a.mizer.sequencer.Sequences\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

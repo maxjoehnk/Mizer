@@ -14,13 +14,14 @@ const CueTrigger$json = const {
   '2': const [
     const {'1': 'GO', '2': 0},
     const {'1': 'FOLLOW', '2': 1},
-    const {'1': 'BEATS', '2': 2},
-    const {'1': 'TIMECODE', '2': 3},
+    const {'1': 'TIME', '2': 2},
+    const {'1': 'BEATS', '2': 3},
+    const {'1': 'TIMECODE', '2': 4},
   ],
 };
 
 /// Descriptor for `CueTrigger`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List cueTriggerDescriptor = $convert.base64Decode('CgpDdWVUcmlnZ2VyEgYKAkdPEAASCgoGRk9MTE9XEAESCQoFQkVBVFMQAhIMCghUSU1FQ09ERRAD');
+final $typed_data.Uint8List cueTriggerDescriptor = $convert.base64Decode('CgpDdWVUcmlnZ2VyEgYKAkdPEAASCgoGRk9MTE9XEAESCAoEVElNRRACEgkKBUJFQVRTEAMSDAoIVElNRUNPREUQBA==');
 @$core.Deprecated('Use cueControlDescriptor instead')
 const CueControl$json = const {
   '1': 'CueControl',

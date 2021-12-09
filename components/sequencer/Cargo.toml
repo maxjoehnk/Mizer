@@ -16,3 +16,5 @@ profiling = "1"
 
 [dev-dependencies]
 test-case = "1"
+mockall = "0.10"
+mockall_double = "0.2"

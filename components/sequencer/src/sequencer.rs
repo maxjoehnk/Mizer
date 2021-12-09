@@ -12,6 +12,7 @@ use mizer_util::ThreadPinned;
 use crate::state::SequenceState;
 use crate::{Sequence};
 use mizer_fixtures::manager::FixtureManager;
+use crate::contracts::StdClock;
 
 #[derive(Clone)]
 pub struct Sequencer {
@@ -22,6 +23,7 @@ pub struct Sequencer {
         mpsc::SyncSender<SequencerCommands>,
         Arc<ThreadPinned<mpsc::Receiver<SequencerCommands>>>,
     ),
+    clock: StdClock,
 }
 
 impl Sequencer {
@@ -32,6 +34,7 @@ impl Sequencer {
             sequences: NonEmptyPinboard::new(Default::default()).into(),
             sequence_states: Default::default(),
             commands: (tx, Arc::new(rx.into())),
+            clock: StdClock,
         }
     }
 
@@ -52,7 +55,7 @@ impl Sequencer {
             match command {
                 SequencerCommands::Go(sequencer) => {
                     if let Some(state) = states.get_mut(&sequencer) {
-                        state.go(&sequences[&sequencer]);
+                        state.go(&sequences[&sequencer], &self.clock);
                     }
                 }
                 SequencerCommands::DropState(sequence) => {
@@ -70,7 +73,7 @@ impl Sequencer {
     ) {
         for (i, sequence) in sequences {
             let state = states.entry(*i).or_default();
-            sequence.run(state, fixture_manager);
+            sequence.run(state, &self.clock, fixture_manager);
         }
     }
 

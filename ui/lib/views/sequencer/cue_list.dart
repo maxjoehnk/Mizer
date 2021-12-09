@@ -54,6 +54,11 @@ class CueList extends StatelessWidget {
                                             hoverColor: Colors.black12,
                                             onTap: () =>
                                                 _updateCueTrigger(context, cue, CueTrigger.FOLLOW)),
+                                        ListTile(
+                                            title: Text("Time"),
+                                            hoverColor: Colors.black12,
+                                            onTap: () =>
+                                                _updateCueTrigger(context, cue, CueTrigger.TIME)),
                                       ]),
                                     ),
                                   ],

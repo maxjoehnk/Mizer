@@ -20,7 +20,7 @@ impl From<mizer_sequencer::Cue> for Cue {
             id: cue.id,
             name: cue.name,
             trigger: cue.trigger.into(),
-            field_loop: false,
+            field_loop: matches!(cue.loop_mode, mizer_sequencer::LoopMode::JumpTo(_)),
             channels: cue.channels.into_iter().map(CueChannel::from).collect(),
             ..Default::default()
         }
@@ -34,6 +34,7 @@ impl From<mizer_sequencer::CueTrigger> for CueTrigger {
         match trigger {
             Go => Self::GO,
             Follow => Self::FOLLOW,
+            Time => Self::TIME,
             Beats => Self::BEATS,
             Timecode => Self::TIMECODE,
         }
@@ -47,6 +48,7 @@ impl From<CueTrigger> for mizer_sequencer::CueTrigger {
         match trigger {
             GO => Self::Go,
             FOLLOW => Self::Follow,
+            TIME => Self::Time,
             BEATS => Self::Beats,
             TIMECODE => Self::Timecode,
         }

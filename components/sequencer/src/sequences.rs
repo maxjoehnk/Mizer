@@ -3,11 +3,8 @@ use std::cmp::Ordering;
 use serde::{Deserialize, Serialize};
 
 use crate::state::SequenceState;
-use mizer_fixtures::manager::FixtureManager;
-use mizer_util::LerpExt;
-use std::time::Duration;
-use mizer_fixtures::definition::FixtureControl;
-use mizer_fixtures::FixtureId;
+use crate::contracts::*;
+use crate::cue::*;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -17,24 +14,37 @@ pub struct Sequence {
 }
 
 impl Sequence {
-    pub(crate) fn run(&self, state: &mut SequenceState, fixture_manager: &FixtureManager) {
+    pub(crate) fn run(&self, state: &mut SequenceState, clock: &impl Clock, fixture_controller: &impl FixtureController) {
         if !state.active {
             return;
         }
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
-        let cue = &self.cues[state.active_cue_index as usize];
+        let cue = self.current_cue(state, clock);
         if let Some(next_cue) = state.get_next_cue(&self) {
-            if next_cue.trigger == CueTrigger::Follow && cue.is_done(&state) {
-                state.go(&self);
+            if next_cue.should_go(&state, clock) {
+                state.go(&self, clock);
             }
         }
+        cue.update_state(state, clock);
         for channel in &cue.channels {
-            for (fixture_id, value) in channel.values(&state) {
+            for (fixture_id, value) in channel.values(&state, clock) {
                 if let Some(value) = value {
-                    fixture_manager.write_fixture_control(fixture_id, channel.control.clone(), value);
+                    fixture_controller.write(fixture_id, channel.control.clone(), value);
                 }
             }
         }
+    }
+
+    fn current_cue(&self, state: &mut SequenceState, clock: &impl Clock) -> &Cue {
+        let cue = &self.cues[state.active_cue_index];
+        if state.is_cue_finished() {
+            if let LoopMode::JumpTo(cue_id) = cue.loop_mode {
+                state.jump_to(&self, cue_id, clock);
+                return &self.cues[state.active_cue_index];
+            }
+        }
+
+        cue
     }
 
     /// Returns cue id
@@ -45,6 +55,8 @@ impl Sequence {
             name: format!("Cue {}", id),
             channels: Vec::new(),
             trigger: CueTrigger::Go,
+            loop_mode: LoopMode::None,
+            time: None,
         };
         self.cues.push(cue);
 
@@ -55,208 +67,5 @@ impl Sequence {
 impl PartialOrd for Sequence {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         self.id.partial_cmp(&other.id)
-    }
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
-pub struct Cue {
-    pub id: u32,
-    pub name: String,
-    pub trigger: CueTrigger,
-    pub channels: Vec<CueChannel>,
-}
-
-impl Cue {
-    pub fn merge(&mut self, channels: Vec<CueChannel>) {
-        for channel in channels {
-            if let Some(target) = self.channels.iter_mut().find(|c| c.control == channel.control && c.fixtures.overlaps(&channel.fixtures)) {
-                target.fixtures.retain(|fixture_id| !channel.fixtures.contains(fixture_id));
-            }
-            self.channels.push(channel);
-        }
-        self.channels.retain(|c| !c.fixtures.is_empty());
-    }
-
-    fn is_done(&self, state: &SequenceState) -> bool {
-        let cue_active = state.get_timer();
-        if let Some(longest_cue_duration) = self.channels.iter()
-            .map(|channel| channel.duration())
-            .max() {
-            longest_cue_duration < cue_active
-        }else {
-            true
-        }
-    }
-}
-
-impl PartialOrd for Cue {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        self.id.partial_cmp(&other.id)
-    }
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
-pub enum CueTrigger {
-    /// Requires manual go action to trigger
-    Go,
-    /// Automatically triggers when the previous cue finishes
-    Follow,
-    Beats,
-    Timecode,
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
-pub struct CueChannel {
-    pub fixtures: Vec<FixtureId>,
-    pub control: FixtureControl,
-    pub value: SequencerValue<f64>,
-    #[serde(default)]
-    pub fade: Option<SequencerValue<SequencerTime>>,
-    #[serde(default)]
-    pub delay: Option<SequencerValue<SequencerTime>>,
-}
-
-impl CueChannel {
-    fn duration(&self) -> Duration {
-        let fade_duration = if let Some(ref fade) = self.fade {
-            match fade.highest() {
-                SequencerTime::Beats(_) => Duration::default(),
-                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
-            }
-        }else { Duration::default() };
-        let delay_duration = if let Some(ref delay) = self.delay {
-            match delay.highest() {
-                SequencerTime::Beats(_) => Duration::default(),
-                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
-            }
-        }else { Duration::default() };
-
-        fade_duration + delay_duration
-    }
-
-    fn values(&self, state: &SequenceState) -> Vec<(FixtureId, Option<f64>)> {
-        let mut values = vec![None; self.fixtures.len()];
-
-        self.fill_values(state, &mut values);
-        self.delay_values(state, &mut values);
-        self.fade_values(state, &mut values);
-
-        self.fixtures.iter()
-            .copied()
-            .zip(values)
-            .collect()
-    }
-
-    fn fill_values(&self, _: &SequenceState, values: &mut Vec<Option<f64>>) {
-        match self.value {
-            SequencerValue::Direct(value) => {
-                values.fill(Some(value));
-            }
-            SequencerValue::Range((from, to)) => {
-                for i in 0..self.fixtures.len() {
-                    let value: f64 = (i as f64).lerp((0., self.fixtures.len() as f64), (from, to));
-                    values[i] = Some(value);
-                }
-            }
-        }
-    }
-
-    fn delay_values(&self, state: &SequenceState, values: &mut Vec<Option<f64>>) {
-        match self.delay {
-            None => {},
-            Some(SequencerValue::Direct(SequencerTime::Seconds(delay))) => {
-                if state.get_timer() < Duration::from_secs_f64(delay) {
-                    values.fill(None);
-                }
-            },
-            Some(SequencerValue::Range((SequencerTime::Seconds(from), SequencerTime::Seconds(to)))) => {
-                for i in 0..self.fixtures.len() {
-                    let delay: f64 = (i as f64).lerp((0., self.fixtures.len() as f64), (from, to));
-                    if state.get_timer() < Duration::from_secs_f64(delay) {
-                        values[i] = None;
-                    }
-                }
-            },
-            _ => todo!()
-        }
-    }
-
-    fn fade_values(&self, state: &SequenceState, values: &mut Vec<Option<f64>>) {
-        match self.fade {
-            None => {},
-            Some(SequencerValue::Direct(SequencerTime::Seconds(duration))) => {
-                let time = state.get_timer().as_secs_f64();
-                for i in 0..self.fixtures.len() {
-                    if let Some(value) = &mut values[i] {
-                        let previous_value = state.get_fixture_value(self.fixtures[i], &self.control).unwrap_or_default();
-                        values[i] = Some(time.lerp((0., duration), (previous_value, *value)));
-                    }
-                }
-            }
-            Some(SequencerValue::Range((SequencerTime::Seconds(from), SequencerTime::Seconds(to)))) => {
-                let time = state.get_timer().as_secs_f64();
-                for i in 0..self.fixtures.len() {
-                    let duration: f64 = (i as f64).lerp((0., self.fixtures.len() as f64), (from, to));
-                    if let Some(value) = &mut values[i] {
-                        let previous_value = state.get_fixture_value(self.fixtures[i], &self.control).unwrap_or_default();
-                        values[i] = Some(time.lerp((0., duration), (previous_value, *value)));
-                    }
-                }
-            },
-            _ => todo!()
-        }
-    }
-}
-
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
-#[serde(untagged)]
-pub enum SequencerValue<T> {
-    Direct(T),
-    Range((T, T)),
-}
-
-impl<T: PartialOrd + Copy> SequencerValue<T> {
-    fn highest(&self) -> T {
-        match self {
-            Self::Direct(value) => *value,
-            Self::Range((lhs, rhs)) => {
-                if lhs > rhs {
-                    *lhs
-                }else {
-                    *rhs
-                }
-            }
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, PartialOrd)]
-#[serde(tag = "unit", content = "value")]
-pub enum SequencerTime {
-    #[serde(rename = "seconds")]
-    Seconds(f64),
-    #[serde(rename = "beats")]
-    Beats(f64),
-}
-
-impl Default for SequencerValue<SequencerTime> {
-    fn default() -> Self {
-        Self::Direct(SequencerTime::Seconds(0.))
-    }
-}
-
-trait VecExtension {
-    fn overlaps(&self, other: &Self) -> bool;
-}
-
-impl<T: PartialEq> VecExtension for Vec<T> {
-    fn overlaps(&self, other: &Self) -> bool {
-        for item in other.iter() {
-            if self.contains(item) {
-                return true;
-            }
-        }
-        false
     }
 }

@@ -59,8 +59,9 @@ message Cue {
 enum CueTrigger {
   GO = 0;
   FOLLOW = 1;
-  BEATS = 2;
-  TIMECODE = 3;
+  TIME = 2;
+  BEATS = 3;
+  TIMECODE = 4;
 }
 
 message CueChannel {

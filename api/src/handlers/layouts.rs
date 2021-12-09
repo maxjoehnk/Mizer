@@ -104,6 +104,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         match node_type {
             Node_NodeType::Fader => ControlSize { height: 4, width: 1, ..Default::default() },
             Node_NodeType::Button => ControlSize { height: 1, width: 1, ..Default::default() },
+            Node_NodeType::Sequencer => ControlSize { height: 1, width: 1, ..Default::default() },
             _ => ControlSize::default(),
         }
     }

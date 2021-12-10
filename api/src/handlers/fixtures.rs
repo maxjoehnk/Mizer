@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use std::ops::Deref;
 use regex::Regex;
 
 use mizer_fixtures::library::FixtureLibrary;
@@ -46,14 +47,14 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 model: fixture.definition.name.clone(),
                 mode: fixture.current_mode.name.clone(),
                 controls: FixtureControls::with_values(
+                    fixture.deref() as &mizer_fixtures::fixture::Fixture,
                     fixture.current_mode.controls.clone(),
-                    &fixture.channel_values,
                 ).into(),
                 children: fixture.current_mode.sub_fixtures.iter()
                     .map(|sub_fixture| SubFixture {
                         id: sub_fixture.id,
                         name: sub_fixture.name.clone(),
-                        controls: FixtureControls::with_values(sub_fixture.controls.clone(), &fixture.channel_values).into(),
+                        controls: FixtureControls::with_values(&fixture.sub_fixture(sub_fixture.id).unwrap(), sub_fixture.controls.clone()).into(),
                         ..Default::default()
                     })
                     .collect(),

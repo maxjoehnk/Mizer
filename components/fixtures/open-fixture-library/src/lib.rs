@@ -304,12 +304,21 @@ fn build_fixture_mode(mode: Mode, available_channels: &HashMap<String, Channel>)
         .clone()
         .into_iter()
         .partition(|name| is_pixel_channel(name, available_channels));
+    let mut controls: FixtureControls<FixtureControlChannel> = group_controls(available_channels, &channels).into();
+    let sub_fixtures = group_sub_fixtures(available_channels, pixels);
+    if sub_fixtures.iter().find(|f| f.controls.color.is_some()).is_some() {
+        controls.color = Some(ColorGroup {
+            red: FixtureControlChannel::Delegate,
+            green: FixtureControlChannel::Delegate,
+            blue: FixtureControlChannel::Delegate,
+        });
+    }
 
     FixtureMode {
         name: mode.name,
-        controls: group_controls(available_channels, &channels),
+        controls,
         channels: map_channels(available_channels, all_channels),
-        sub_fixtures: group_sub_fixtures(available_channels, pixels),
+        sub_fixtures,
     }
 }
 
@@ -440,7 +449,7 @@ fn build_sub_fixture(
 fn group_controls(
     available_channels: &HashMap<String, Channel>,
     enabled_channels: &[String],
-) -> FixtureControls {
+) -> FixtureControls<String> {
     let channels = enabled_channels
         .iter()
         .filter_map(|name| {
@@ -558,7 +567,7 @@ impl ColorGroupBuilder {
         self.blue = channel.into();
     }
 
-    fn build(self) -> Option<ColorGroup> {
+    fn build(self) -> Option<ColorGroup<String>> {
         match (self.red, self.green, self.blue) {
             (Some(red), Some(green), Some(blue)) => ColorGroup { red, green, blue }.into(),
             _ => None,
@@ -570,7 +579,7 @@ impl ColorGroupBuilder {
 mod tests {
     use std::collections::HashMap;
 
-    use mizer_fixtures::definition::{ColorGroup, FixtureChannelGroupType, GenericControl};
+    use mizer_fixtures::definition::{ColorGroup, GenericControl};
 
     use crate::{Capability, Channel};
 

@@ -1,4 +1,4 @@
-use crate::fixture::Fixture;
+use crate::fixture::{Fixture, IFixtureMut};
 use crate::definition::{FixtureControl, FixtureDefinition};
 use crate::library::FixtureLibrary;
 use dashmap::DashMap;

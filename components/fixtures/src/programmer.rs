@@ -3,7 +3,7 @@ use std::sync::Arc;
 
 use dashmap::{DashMap};
 
-use crate::fixture::Fixture;
+use crate::fixture::{Fixture, IFixtureMut};
 use crate::definition::FixtureControl;
 use crate::FixtureId;
 

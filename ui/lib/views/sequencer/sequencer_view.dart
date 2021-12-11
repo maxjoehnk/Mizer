@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
+import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class SequencerView extends StatefulWidget {
 class _SequencerViewState extends State<SequencerView> {
   @override
   Widget build(BuildContext context) {
+    context.read<FixturesBloc>().add(FetchFixtures());
     context.read<SequencerBloc>().add(FetchSequences());
     return BlocBuilder<SequencerBloc, SequencerState>(
       builder: (context, state) {

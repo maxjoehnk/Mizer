@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_protocol_dmx::DmxConnectionManager;
+use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct DmxOutputNode {

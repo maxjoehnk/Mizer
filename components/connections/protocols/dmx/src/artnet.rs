@@ -6,8 +6,8 @@ use std::convert::TryFrom;
 
 pub struct ArtnetOutput {
     socket: UdpSocket,
-    host: String,
-    port: u16,
+    pub host: String,
+    pub port: u16,
     buffer: DmxBuffer,
 }
 

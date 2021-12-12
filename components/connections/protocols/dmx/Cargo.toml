@@ -12,3 +12,4 @@ log = "0.4"
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
 profiling = "1"
+enum_dispatch = "0.3.7"

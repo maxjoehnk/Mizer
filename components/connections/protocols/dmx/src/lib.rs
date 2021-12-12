@@ -1,3 +1,4 @@
+use enum_dispatch::enum_dispatch;
 use std::collections::HashMap;
 use std::ops::Deref;
 
@@ -12,6 +13,7 @@ mod sacn;
 mod stub;
 mod artnet;
 
+#[enum_dispatch(DmxConnection)]
 pub trait DmxOutput {
     fn name(&self) -> String;
     fn write_single(&self, universe: u16, channel: u8, value: u8);
@@ -20,9 +22,15 @@ pub trait DmxOutput {
     fn read_buffer(&self) -> HashMap<u16, [u8; 512]>;
 }
 
+#[enum_dispatch]
+pub enum DmxConnection {
+    Artnet(ArtnetOutput),
+    Sacn(SacnOutput),
+}
+
 #[derive(Default)]
 pub struct DmxConnectionManager {
-    outputs: HashMap<String, Box<dyn DmxOutput>>,
+    outputs: HashMap<String, DmxConnection>,
 }
 
 impl DmxConnectionManager {
@@ -30,12 +38,12 @@ impl DmxConnectionManager {
         DmxConnectionManager::default()
     }
 
-    pub fn add_output(&mut self, id: String, output: impl DmxOutput + 'static) {
-        self.outputs.insert(id, Box::new(output));
+    pub fn add_output(&mut self, id: String, output: impl Into<DmxConnection>) {
+        self.outputs.insert(id, output.into());
     }
 
-    pub fn get_output(&self, name: &str) -> Option<&dyn DmxOutput> {
-        self.outputs.get(name).map(|output| output.deref())
+    pub fn get_output(&self, name: &str) -> Option<&DmxConnection> {
+        self.outputs.get(name)
     }
 
     pub fn flush(&self) {
@@ -44,7 +52,7 @@ impl DmxConnectionManager {
         }
     }
 
-    pub fn list_outputs<'a>(&'a self) -> Vec<(&'a String, &'a Box<dyn DmxOutput>)> {
+    pub fn list_outputs(&self) -> Vec<(&String, &DmxConnection)> {
         self.outputs.iter().collect()
     }
 

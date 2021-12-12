@@ -84,7 +84,7 @@ impl FixtureManager {
                 fixture.flush(output);
             }else {
                 for (_, output) in dmx_manager.list_outputs() {
-                    fixture.flush(output.as_ref());
+                    fixture.flush(output);
                 }
             }
         }

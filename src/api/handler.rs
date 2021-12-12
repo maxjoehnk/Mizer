@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use mizer_clock::Clock;
 use mizer_connections::{Connection, DmxView, MidiView};
 use mizer_module::Runtime;
-use mizer_protocol_dmx::DmxConnectionManager;
+use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 use mizer_protocol_midi::MidiConnectionManager;
 
 use crate::{ApiCommand, Mizer};

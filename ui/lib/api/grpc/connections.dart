@@ -19,4 +19,14 @@ class ConnectionsGrpcApi implements ConnectionsApi {
     return res.universes.asMap()
         .map((_, universe) => MapEntry(universe.universe, universe.channels));
   }
+
+  @override
+  Future<void> addArtnet(AddArtnetRequest request) async {
+    await this.client.addArtnetConnection(request);
+  }
+
+  @override
+  Future<void> addSacn(AddSacnRequest request) async {
+    await this.client.addSacnConnection(request);
+  }
 }

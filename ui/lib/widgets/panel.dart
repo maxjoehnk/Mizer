@@ -62,7 +62,7 @@ class PanelActions extends StatelessWidget {
     return Column(
       children: actions
           .map((a) => Hoverable(
-                disabled: a.disabled,
+                disabled: a.disabled || a.onClick == null,
                 onTap: a.onClick,
                 builder: (hovered) => Container(
                   color: _getBackground(a, hovered),

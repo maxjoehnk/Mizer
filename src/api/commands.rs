@@ -22,6 +22,8 @@ pub enum ApiCommand {
     DeleteNode(NodePath, flume::Sender<()>),
     SetClockState(ClockState),
     GetConnections(flume::Sender<Vec<Connection>>),
+    AddSacnConnection(String, flume::Sender<anyhow::Result<()>>),
+    AddArtnetConnection(String, (String, Option<u16>), flume::Sender<anyhow::Result<()>>),
     GetDmxMonitor(
         String,
         flume::Sender<anyhow::Result<HashMap<u16, [u8; 512]>>>,

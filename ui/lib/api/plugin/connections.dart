@@ -22,4 +22,14 @@ class ConnectionsPluginApi implements ConnectionsApi {
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
+
+  @override
+  Future<void> addArtnet(AddArtnetRequest request) async {
+    await channel.invokeMethod("addArtnet", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addSacn(AddSacnRequest request) async {
+    await channel.invokeMethod("addSacn", request.writeToBuffer());
+  }
 }

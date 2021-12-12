@@ -3,55 +3,75 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
-import 'package:mizer/views/connections/dialogs/dmx_monitor.dart';
-import 'package:mizer/views/connections/types/helios_connection.dart';
-import 'package:mizer/views/connections/types/midi_connection.dart';
-import 'package:mizer/views/connections/types/osc_connection.dart';
-import 'package:mizer/views/connections/types/prodjlink_connection.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 
-class ConnectionsView extends StatelessWidget {
+import 'dialogs/add_artnet_connection.dart';
+import 'dialogs/add_sacn_connection.dart';
+import 'dialogs/dmx_monitor.dart';
+import 'types/helios_connection.dart';
+import 'types/midi_connection.dart';
+import 'types/osc_connection.dart';
+import 'types/prodjlink_connection.dart';
+
+class ConnectionsView extends StatefulWidget {
+  @override
+  State<ConnectionsView> createState() => _ConnectionsViewState();
+}
+
+class _ConnectionsViewState extends State<ConnectionsView> {
+  List<Connection> connections = [];
+
   @override
   Widget build(BuildContext context) {
-    ConnectionsApi api = context.read();
-    return FutureBuilder(
-        future: api.getConnections(),
-        initialData: Connections(),
-        builder: (context, AsyncSnapshot<Connections> snapshot) {
-          Connections connections = snapshot.data!;
-          return Panel(
-            label: "Connections",
-            child: ListView.builder(
-                itemCount: connections.connections.length,
-                itemBuilder: (context, index) {
-                  var connection = connections.connections[index];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Panel(
+        label: "Connections",
+        child: ListView.builder(
+            itemCount: connections.length,
+            itemBuilder: (context, index) {
+              var connection = connections[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: ConnectionTag(connection),
-                          ),
-                          Expanded(child: DeviceTitle(connection)),
-                          ..._buildActions(context, connection),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: ConnectionTag(connection),
                       ),
-                      _buildConnection(connection),
-                      Divider(),
+                      Expanded(child: DeviceTitle(connection)),
+                      ..._buildActions(context, connection),
                     ],
-                  );
-                }),
-            actions: [
-              PanelAction(label: "Add sACN"),
-              PanelAction(label: "Add Artnet"),
-            ]
-          );
-        });
+                  ),
+                  _buildConnection(connection),
+                  Divider(),
+                ],
+              );
+            }),
+        actions: [
+          PanelAction(label: "Add sACN", onClick: _addSacn),
+          PanelAction(label: "Add Artnet", onClick: _addArtnet),
+        ]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchConnections();
+  }
+
+  @override
+  void activate() {
+    super.activate();
+    _fetchConnections();
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    _fetchConnections();
   }
 
   List<Widget> _buildActions(BuildContext context, Connection connection) {
@@ -90,6 +110,37 @@ class ConnectionsView extends StatelessWidget {
 
   _showDmxMonitor(BuildContext context, Connection connection) {
     openDialog(context, DmxMonitorDialog(connection));
+  }
+
+  _fetchConnections() async {
+    var connections = await api.getConnections();
+    this.setState(() {
+      this.connections = connections.connections;
+    });
+  }
+
+  _addSacn() async {
+    var value = await showDialog<AddSacnRequest>(
+        context: context, builder: (context) => AddSacnConnectionDialog());
+    if (value == null) {
+      return null;
+    }
+    await api.addSacn(value);
+    await _fetchConnections();
+  }
+
+  _addArtnet() async {
+    var value = await showDialog<AddArtnetRequest>(
+        context: context, builder: (context) => AddArtnetConnectionDialog());
+    if (value == null) {
+      return null;
+    }
+    await api.addArtnet(value);
+    await _fetchConnections();
+  }
+
+  ConnectionsApi get api {
+    return context.read();
   }
 }
 

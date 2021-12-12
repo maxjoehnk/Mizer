@@ -30,4 +30,12 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     pub fn monitor_dmx(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
         self.runtime.get_dmx_monitor(output_id)
     }
+
+    pub fn add_sacn(&self, name: String) -> anyhow::Result<()> {
+        self.runtime.add_sacn_connection(name)
+    }
+
+    pub fn add_artnet(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
+        self.runtime.add_artnet_connection(name, host, port)
+    }
 }

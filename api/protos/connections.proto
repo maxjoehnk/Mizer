@@ -6,6 +6,9 @@ service ConnectionsApi {
   rpc GetConnections (GetConnectionsRequest) returns (Connections) {}
 
   rpc MonitorDmx (MonitorDmxRequest) returns (MonitorDmxResponse) {}
+
+  rpc AddArtnetConnection (AddArtnetRequest) returns (Connections) {}
+  rpc AddSacnConnection (AddSacnRequest) returns (Connections) {}
 }
 
 message MonitorDmxRequest {
@@ -22,6 +25,16 @@ message MonitorDmxUniverse {
 }
 
 message GetConnectionsRequest {}
+
+message AddArtnetRequest {
+  string name = 1;
+  string host = 2;
+  uint32 port = 3;
+}
+
+message AddSacnRequest {
+  string name = 1;
+}
 
 message Connections {
   repeated Connection connections = 1;

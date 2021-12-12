@@ -1,6 +1,5 @@
 use enum_dispatch::enum_dispatch;
 use std::collections::HashMap;
-use std::ops::Deref;
 
 use mizer_module::{Module, Runtime};
 use mizer_processing::{Injector, Processor};

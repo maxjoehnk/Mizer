@@ -672,6 +672,407 @@ impl ::protobuf::reflect::ProtobufValue for GetConnectionsRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AddArtnetRequest {
+    // message fields
+    pub name: ::std::string::String,
+    pub host: ::std::string::String,
+    pub port: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddArtnetRequest {
+    fn default() -> &'a AddArtnetRequest {
+        <AddArtnetRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddArtnetRequest {
+    pub fn new() -> AddArtnetRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // string host = 2;
+
+
+    pub fn get_host(&self) -> &str {
+        &self.host
+    }
+    pub fn clear_host(&mut self) {
+        self.host.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_host(&mut self, v: ::std::string::String) {
+        self.host = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_host(&mut self) -> &mut ::std::string::String {
+        &mut self.host
+    }
+
+    // Take field
+    pub fn take_host(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.host, ::std::string::String::new())
+    }
+
+    // uint32 port = 3;
+
+
+    pub fn get_port(&self) -> u32 {
+        self.port
+    }
+    pub fn clear_port(&mut self) {
+        self.port = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_port(&mut self, v: u32) {
+        self.port = v;
+    }
+}
+
+impl ::protobuf::Message for AddArtnetRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.host)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.port = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if !self.host.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.host);
+        }
+        if self.port != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.port, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if !self.host.is_empty() {
+            os.write_string(2, &self.host)?;
+        }
+        if self.port != 0 {
+            os.write_uint32(3, self.port)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddArtnetRequest {
+        AddArtnetRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &AddArtnetRequest| { &m.name },
+                |m: &mut AddArtnetRequest| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "host",
+                |m: &AddArtnetRequest| { &m.host },
+                |m: &mut AddArtnetRequest| { &mut m.host },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "port",
+                |m: &AddArtnetRequest| { &m.port },
+                |m: &mut AddArtnetRequest| { &mut m.port },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddArtnetRequest>(
+                "AddArtnetRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddArtnetRequest {
+        static instance: ::protobuf::rt::LazyV2<AddArtnetRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddArtnetRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddArtnetRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.host.clear();
+        self.port = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddArtnetRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddArtnetRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AddSacnRequest {
+    // message fields
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddSacnRequest {
+    fn default() -> &'a AddSacnRequest {
+        <AddSacnRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddSacnRequest {
+    pub fn new() -> AddSacnRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for AddSacnRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddSacnRequest {
+        AddSacnRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &AddSacnRequest| { &m.name },
+                |m: &mut AddSacnRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddSacnRequest>(
+                "AddSacnRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddSacnRequest {
+        static instance: ::protobuf::rt::LazyV2<AddSacnRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddSacnRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddSacnRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddSacnRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddSacnRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Connections {
     // message fields
     pub connections: ::protobuf::RepeatedField<Connection>,
@@ -2989,36 +3390,41 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x127\n\tuniverses\x18\x01\x20\x03(\x0b2\x19.mizer.MonitorDmxUniverseR\t\
     universes\"L\n\x12MonitorDmxUniverse\x12\x1a\n\x08universe\x18\x01\x20\
     \x01(\rR\x08universe\x12\x1a\n\x08channels\x18\x02\x20\x01(\x0cR\x08chan\
-    nels\"\x17\n\x15GetConnectionsRequest\"B\n\x0bConnections\x123\n\x0bconn\
-    ections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\x9e\
-    \x02\n\nConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\
-    \x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\
-    \x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\
-    \n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12:\
-    \n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tpro\
-    DJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnection\
-    H\0R\x06heliosB\x0c\n\nconnection\"+\n\rDmxConnection\x12\x1a\n\x08outpu\
-    tId\x18\x01\x20\x01(\tR\x08outputId\"B\n\x10HeliosConnection\x12\x12\n\
-    \x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\
-    \x01(\tR\x08firmware\"\x10\n\x0eMidiConnection\"v\n\rOscConnection\x12\
-    \x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_po\
-    rt\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\
-    \x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07\
-    address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\
-    \x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerN\
-    umber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\
-    \x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\
-    \x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\
-    \n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\
-    \x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\
-    \x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\
-    \x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\
-    \x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\
-    \x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cuein\
-    g\x10\x032\x9b\x01\n\x0eConnectionsApi\x12D\n\x0eGetConnections\x12\x1c.\
-    mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\x12C\n\nMonito\
-    rDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\"\
-    \0b\x06proto3\
+    nels\"\x17\n\x15GetConnectionsRequest\"N\n\x10AddArtnetRequest\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12\x12\n\x04host\x18\x02\x20\x01(\
+    \tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"$\n\x0eAddSac\
+    nRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\x0bConnectio\
+    ns\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0b\
+    connections\"\x9e\x02\n\nConnection\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\
+    \x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0\
+    R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0\
+    R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnec\
+    tionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.Hel\
+    iosConnectionH\0R\x06heliosB\x0c\n\nconnection\"+\n\rDmxConnection\x12\
+    \x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\"B\n\x10HeliosConnect\
+    ion\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\
+    \x18\x02\x20\x01(\tR\x08firmware\"\x10\n\x0eMidiConnection\"v\n\rOscConn\
+    ection\x12\x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\
+    \x0boutput_port\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\
+    \x18\x03\x20\x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnection\
+    \x12\x18\n\x07address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05model\
+    \x18\x02\x20\x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\r\
+    R\x0cplayerNumber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.Cdj\
+    PlaybackR\x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\
+    \x01\x20\x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\
+    \x12\x14\n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\
+    \x04\x20\x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\x05tr\
+    ack\x18\x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\
+    \x05Track\x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\
+    \x05title\x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loadin\
+    g\x10\0\x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\
+    \x06Cueing\x10\x032\xa3\x02\n\x0eConnectionsApi\x12D\n\x0eGetConnections\
+    \x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\x12C\
+    \n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxR\
+    esponse\"\0\x12D\n\x13AddArtnetConnection\x12\x17.mizer.AddArtnetRequest\
+    \x1a\x12.mizer.Connections\"\0\x12@\n\x11AddSacnConnection\x12\x15.mizer\
+    .AddSacnRequest\x1a\x12.mizer.Connections\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

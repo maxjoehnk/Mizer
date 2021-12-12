@@ -36,4 +36,18 @@ impl<R: RuntimeApi> ConnectionsApi for ConnectionsHandler<R> {
             ..Default::default()
         })
     }
+
+    fn add_artnet_connection(&self, req: ServerRequestSingle<AddArtnetRequest>, resp: ServerResponseUnarySink<Connections>) -> grpc::Result<()> {
+        self.add_artnet(req.message.name, req.message.host, Some(req.message.port as u16));
+        let connections = self.get_connections();
+
+        resp.finish(connections)
+    }
+
+    fn add_sacn_connection(&self, req: ServerRequestSingle<AddSacnRequest>, resp: ServerResponseUnarySink<Connections>) -> grpc::Result<()> {
+        self.add_sacn(req.message.name);
+        let connections = self.get_connections();
+
+        resp.finish(connections)
+    }
 }

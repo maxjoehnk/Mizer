@@ -46,6 +46,28 @@ const GetConnectionsRequest$json = const {
 
 /// Descriptor for `GetConnectionsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getConnectionsRequestDescriptor = $convert.base64Decode('ChVHZXRDb25uZWN0aW9uc1JlcXVlc3Q=');
+@$core.Deprecated('Use addArtnetRequestDescriptor instead')
+const AddArtnetRequest$json = const {
+  '1': 'AddArtnetRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'host', '3': 2, '4': 1, '5': 9, '10': 'host'},
+    const {'1': 'port', '3': 3, '4': 1, '5': 13, '10': 'port'},
+  ],
+};
+
+/// Descriptor for `AddArtnetRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addArtnetRequestDescriptor = $convert.base64Decode('ChBBZGRBcnRuZXRSZXF1ZXN0EhIKBG5hbWUYASABKAlSBG5hbWUSEgoEaG9zdBgCIAEoCVIEaG9zdBISCgRwb3J0GAMgASgNUgRwb3J0');
+@$core.Deprecated('Use addSacnRequestDescriptor instead')
+const AddSacnRequest$json = const {
+  '1': 'AddSacnRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `AddSacnRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addSacnRequestDescriptor = $convert.base64Decode('Cg5BZGRTYWNuUmVxdWVzdBISCgRuYW1lGAEgASgJUgRuYW1l');
 @$core.Deprecated('Use connectionsDescriptor instead')
 const Connections$json = const {
   '1': 'Connections',

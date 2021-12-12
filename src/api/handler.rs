@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use mizer_clock::Clock;
 use mizer_connections::{Connection, DmxView, MidiView};
 use mizer_module::Runtime;
-use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
+use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
 use mizer_protocol_midi::MidiConnectionManager;
 
 use crate::{ApiCommand, Mizer};
@@ -95,6 +95,18 @@ impl ApiHandler {
                     .send(connections)
                     .expect("api command sender disconnected");
             }
+            ApiCommand::AddArtnetConnection(name, (host, port), sender) => {
+                let result = self.add_artnet_connection(mizer, name, host, port);
+                sender
+                    .send(result)
+                    .expect("api command sender disconnected")
+            }
+            ApiCommand::AddSacnConnection(name, sender) => {
+                let result = self.add_sacn_connection(mizer, name);
+                sender
+                    .send(result)
+                    .expect("api command sender disconnected")
+            }
             ApiCommand::GetDmxMonitor(output_id, sender) => {
                 let result = self.monitor_dmx(mizer, output_id);
                 sender
@@ -134,6 +146,30 @@ impl ApiHandler {
         connections.extend(dmx_connections);
 
         connections
+    }
+
+    fn add_artnet_connection(&self, mizer: &mut Mizer, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
+        let output = ArtnetOutput::new(host, port)?;
+        let dmx_manager = mizer
+            .runtime
+            .injector_mut()
+            .get_mut::<DmxConnectionManager>()
+            .unwrap();
+        dmx_manager.add_output(name, output);
+
+        Ok(())
+    }
+
+    fn add_sacn_connection(&self, mizer: &mut Mizer, name: String) -> anyhow::Result<()> {
+        let output = SacnOutput::new();
+        let dmx_manager = mizer
+            .runtime
+            .injector_mut()
+            .get_mut::<DmxConnectionManager>()
+            .unwrap();
+        dmx_manager.add_output(name, output);
+
+        Ok(())
     }
 
     fn monitor_dmx(

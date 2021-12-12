@@ -48,4 +48,16 @@ class ConnectionsDemoApi implements ConnectionsApi {
     // TODO: implement monitorDmxConnection
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> addArtnet(AddArtnetRequest request) {
+    // TODO: implement addArtnet
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> addSacn(AddSacnRequest request) {
+    // TODO: implement addSacn
+    throw UnimplementedError();
+  }
 }

@@ -67,6 +67,8 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;
 
     fn get_connections(&self) -> Vec<Connection>;
+    fn add_sacn_connection(&self, name: String) -> anyhow::Result<()>;
+    fn add_artnet_connection(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()>;
 
     fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>>;
 }

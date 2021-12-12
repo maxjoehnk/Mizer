@@ -25,6 +25,16 @@ class ConnectionsApiClient extends $grpc.Client {
           ($0.MonitorDmxRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.MonitorDmxResponse.fromBuffer(value));
+  static final _$addArtnetConnection =
+      $grpc.ClientMethod<$0.AddArtnetRequest, $0.Connections>(
+          '/mizer.ConnectionsApi/AddArtnetConnection',
+          ($0.AddArtnetRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
+  static final _$addSacnConnection =
+      $grpc.ClientMethod<$0.AddSacnRequest, $0.Connections>(
+          '/mizer.ConnectionsApi/AddSacnConnection',
+          ($0.AddSacnRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
 
   ConnectionsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -41,6 +51,18 @@ class ConnectionsApiClient extends $grpc.Client {
       $0.MonitorDmxRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$monitorDmx, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Connections> addArtnetConnection(
+      $0.AddArtnetRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addArtnetConnection, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Connections> addSacnConnection(
+      $0.AddSacnRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addSacnConnection, request, options: options);
   }
 }
 
@@ -63,6 +85,20 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.MonitorDmxRequest.fromBuffer(value),
         ($0.MonitorDmxResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddArtnetRequest, $0.Connections>(
+        'AddArtnetConnection',
+        addArtnetConnection_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.AddArtnetRequest.fromBuffer(value),
+        ($0.Connections value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.AddSacnRequest, $0.Connections>(
+        'AddSacnConnection',
+        addSacnConnection_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.AddSacnRequest.fromBuffer(value),
+        ($0.Connections value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Connections> getConnections_Pre($grpc.ServiceCall call,
@@ -75,8 +111,22 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
     return monitorDmx(call, await request);
   }
 
+  $async.Future<$0.Connections> addArtnetConnection_Pre($grpc.ServiceCall call,
+      $async.Future<$0.AddArtnetRequest> request) async {
+    return addArtnetConnection(call, await request);
+  }
+
+  $async.Future<$0.Connections> addSacnConnection_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.AddSacnRequest> request) async {
+    return addSacnConnection(call, await request);
+  }
+
   $async.Future<$0.Connections> getConnections(
       $grpc.ServiceCall call, $0.GetConnectionsRequest request);
   $async.Future<$0.MonitorDmxResponse> monitorDmx(
       $grpc.ServiceCall call, $0.MonitorDmxRequest request);
+  $async.Future<$0.Connections> addArtnetConnection(
+      $grpc.ServiceCall call, $0.AddArtnetRequest request);
+  $async.Future<$0.Connections> addSacnConnection(
+      $grpc.ServiceCall call, $0.AddSacnRequest request);
 }

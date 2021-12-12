@@ -42,14 +42,11 @@ class _MizerTableState extends State<MizerTable> {
   }
 
   Widget _wrapCell(Widget cell, MizerTableRow row) {
-    double padding = 0;
-    if (cell is Text) {
-      padding = 16;
-    }
     Widget cellContent = Container(
+        alignment: Alignment.centerLeft,
         height: 48,
         color: row.selected ? Colors.white24 : (_hoveredRow == row ? Colors.white10 : null),
-        padding: EdgeInsets.all(padding),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         child: cell);
 
     // The cell has probably interactive elements if it's not a text widget so we don't apply the tap handling

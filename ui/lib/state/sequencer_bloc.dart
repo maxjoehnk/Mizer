@@ -52,6 +52,13 @@ class SequencerState {
   }
 
   SequencerState copyWith({ List<Sequence>? sequences, int? selectedSequenceId, int? selectedCueId }) {
+    if (selectedSequenceId != null) {
+      return SequencerState(
+        sequences: sequences ?? this.sequences,
+        selectedSequenceId: selectedSequenceId,
+        selectedCueId: null
+      );
+    }
     return SequencerState(
       sequences: sequences ?? this.sequences,
       selectedSequenceId: selectedSequenceId ?? this.selectedSequenceId,

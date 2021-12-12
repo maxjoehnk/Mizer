@@ -6,6 +6,7 @@ import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/widgets/table/table.dart';
 
 const LABELS = {
   CueControl.INTENSITY: 'Dimmer',
@@ -32,14 +33,8 @@ class CueContents extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FixturesBloc, Fixtures>(
       builder: (context, fixtures) => SingleChildScrollView(
-        child: DataTable(
-            headingRowHeight: 40,
-            dataRowHeight: 40,
-            columns: [
-              DataColumn(label: Text("Fixture ID")),
-              DataColumn(label: Text("Name")),
-              ..._controls.map((c) => DataColumn(label: Text(LABELS[c]!)))
-            ],
+        child: MizerTable(
+            columns: [Text("Fixture ID"), Text("Name"), ..._controls.map((c) => Text(LABELS[c]!))],
             rows: _buildRows(fixtures.fixtures)),
       ),
     );
@@ -52,7 +47,7 @@ class CueContents extends StatelessWidget {
     return controls;
   }
 
-  List<DataRow> _buildRows(List<Fixture> fixtures) {
+  List<MizerTableRow> _buildRows(List<Fixture> fixtures) {
     var channels = _controls;
     var fixtureIds = cue.channels
         .map((c) => c.fixtures)
@@ -68,16 +63,16 @@ class CueContents extends StatelessWidget {
               (element) => element.control == e && element.fixtures.contains(fixtureId)))
           .toList();
 
-      return DataRow(cells: [
-        DataCell(Text(fixtureId.toDisplay())),
-        DataCell(Text(fixture.name)),
+      return MizerTableRow(cells: [
+        Text(fixtureId.toDisplay()),
+        Text(fixture.name),
         ...fixtureChannels.map((c) {
           if (c == null) {
-            return DataCell(Container());
+            return Container();
           }
-          return DataCell(Text(c.value.hasDirect()
+          return Text(c.value.hasDirect()
               ? c.value.direct.toPercentage()
-              : "${c.value.range.from.toPercentage()} .. ${c.value.range.to.toPercentage()}"));
+              : "${c.value.range.from.toPercentage()} .. ${c.value.range.to.toPercentage()}");
         })
       ]);
     }).toList();

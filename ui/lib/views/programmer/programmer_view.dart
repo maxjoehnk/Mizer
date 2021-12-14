@@ -109,7 +109,11 @@ class _ProgrammerViewState extends State<ProgrammerView> {
   }
 
   List<FixtureInstance> getSelectedInstances(List<FixtureId> selectedIds, List<Fixture> fixtures) {
-    return selectedIds.map((id) => fixtures.getFixture(id)).toList();
+    return selectedIds
+        .map((id) => fixtures.getFixture(id))
+        .where((element) => element != null)
+        .map((fixture) => fixture!)
+        .toList();
   }
 
   _selectAll(List<Fixture> fixtures) {

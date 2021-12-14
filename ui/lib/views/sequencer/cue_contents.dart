@@ -65,7 +65,7 @@ class CueContents extends StatelessWidget {
 
       return MizerTableRow(cells: [
         Text(fixtureId.toDisplay()),
-        Text(fixture.name),
+        Text(fixture?.name ?? ""),
         ...fixtureChannels.map((c) {
           if (c == null) {
             return Container();

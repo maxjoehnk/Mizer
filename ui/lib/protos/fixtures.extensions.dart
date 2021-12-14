@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
 extension FixtureIdExtensions on FixtureId {
@@ -63,8 +64,11 @@ extension SubFixtureExtension on SubFixture {
 }
 
 extension FixtureListExtensions on List<Fixture> {
-  FixtureInstance getFixture(FixtureId id) {
-    var fixture = this.firstWhere((f) => f.id == id.fixtureId);
+  FixtureInstance? getFixture(FixtureId id) {
+    var fixture = this.firstWhereOrNull((f) => f.id == id.fixtureId);
+    if (fixture == null) {
+      return null;
+    }
     if (id.hasSubFixture()) {
       var subFixture = fixture.children.firstWhere((c) => c.id == id.subFixture.childId);
 

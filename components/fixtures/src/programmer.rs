@@ -1,17 +1,28 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use dashmap::{DashMap};
+use dashmap::DashMap;
+use postage::watch;
+use postage::prelude::Sink;
+
+use futures::stream::Stream;
 
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::definition::FixtureControl;
 use crate::FixtureId;
 
-#[derive(Debug)]
 pub struct Programmer {
-    pub highlight: bool,
+    highlight: bool,
     selected_fixtures: HashMap<FixtureId, FixtureProgrammer>,
     fixtures: Arc<DashMap<u32, Fixture>>,
+    message_bus: watch::Sender<ProgrammerState>,
+    message_subscriber: watch::Receiver<ProgrammerState>,
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct ProgrammerState {
+    pub fixtures: Vec<FixtureId>,
+    pub highlight: bool,
 }
 
 #[derive(Debug, Default)]
@@ -28,10 +39,13 @@ pub struct ProgrammerChannel {
 
 impl Programmer {
     pub fn new(fixtures: Arc<DashMap<u32, Fixture>>) -> Self {
+        let (tx, rx) = watch::channel();
         Self {
             fixtures,
             highlight: false,
             selected_fixtures: Default::default(),
+            message_bus: tx,
+            message_subscriber: rx,
         }
     }
 
@@ -82,12 +96,19 @@ impl Programmer {
         for id in fixtures {
             self.selected_fixtures.entry(id).or_default();
         }
+        self.emit_state();
     }
 
     pub fn write_control(&mut self, control: FixtureControl, value: f64) {
         for (_, programmer) in self.selected_fixtures.iter_mut() {
             programmer.controls.insert(control.clone(), value);
         }
+        self.emit_state();
+    }
+
+    pub fn store_highlight(&mut self, highlight: bool) {
+        self.highlight = highlight;
+        self.emit_state();
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerChannel> {
@@ -112,5 +133,20 @@ impl Programmer {
                 fixtures,
             })
             .collect()
+    }
+
+    pub fn bus(&self) -> impl Stream<Item = ProgrammerState> {
+        self.message_subscriber.clone()
+    }
+
+    fn emit_state(&mut self) {
+        let state = ProgrammerState {
+            fixtures: self.selected_fixtures.keys().copied().collect(),
+            highlight: self.highlight,
+        };
+        log::trace!("sending programmer msg");
+        if let Err(err) = self.message_bus.try_send(state) {
+            log::error!("Error sending programmer msg {:?}", err);
+        }
     }
 }

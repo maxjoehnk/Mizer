@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
@@ -21,14 +23,26 @@ class ProgrammerView extends StatefulWidget {
 }
 
 class _ProgrammerViewState extends State<ProgrammerView> {
-  List<FixtureId> selectedIds = [];
+  StreamSubscription<ProgrammerState>? subscription;
+  ProgrammerState state = ProgrammerState();
   List<int> expandedIds = [];
+
+  @override
+  void initState() {
+    var programmerApi = context.read<ProgrammerApi>();
+    this.subscription =
+        programmerApi.observe().listen((event) {
+          print("event $event");
+          this.setState(() => this.state = event);
+        });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     FixturesBloc fixturesBloc = context.read();
     fixturesBloc.add(FetchFixtures());
-    var programmerApi = context.read<ProgrammerApi>();
+
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return HotkeyProvider(
         hotkeySelector: (hotkeys) => hotkeys.programmer,
@@ -45,19 +59,18 @@ class _ProgrammerViewState extends State<ProgrammerView> {
                     fixtures: fixtures.fixtures,
                     selectedIds: selectedIds,
                     expandedIds: expandedIds,
-                    // TODO: use setSelectedIds instead of manually calling programmerApi
                     onSelect: (id, selected) => setState(() {
                           if (selected) {
-                            this.selectedIds.add(id);
+                            _setSelectedIds([...selectedIds, id]);
                           } else {
-                            this.selectedIds.remove(id);
+                            _setSelectedIds(
+                                selectedIds.where((fixtureId) => fixtureId != id).toList());
                           }
-                          programmerApi.selectFixtures(this.selectedIds);
                         }),
                     onSelectSimilar: (fixture) {
                       _setSelectedIds(fixtures.fixtures
                           .where((f) =>
-                      f.manufacturer == fixture.manufacturer && f.model == fixture.model)
+                              f.manufacturer == fixture.manufacturer && f.model == fixture.model)
                           .map((f) => FixtureId(fixture: f.id))
                           .toList());
                     },
@@ -81,8 +94,9 @@ class _ProgrammerViewState extends State<ProgrammerView> {
             SizedBox(
               height: SHEET_CONTAINER_HEIGHT,
               child: FixtureSheet(
-                  fixtures: getSelectedInstances(fixtures.fixtures),
-                  api: programmerApi),
+                  highlight: state.highlight,
+                  fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
+                  api: context.read()),
             ),
           ],
         ),
@@ -90,15 +104,12 @@ class _ProgrammerViewState extends State<ProgrammerView> {
     });
   }
 
-  List<FixtureInstance> getSelectedInstances(List<Fixture> fixtures) {
-    return selectedIds.map((id) => fixtures.getFixture(id)).toList();
+  List<FixtureId> get selectedIds {
+    return state.fixtures;
   }
 
-  double get bottomOffset {
-    if (selectedIds.isEmpty) {
-      return 0;
-    }
-    return SHEET_CONTAINER_HEIGHT;
+  List<FixtureInstance> getSelectedInstances(List<FixtureId> selectedIds, List<Fixture> fixtures) {
+    return selectedIds.map((id) => fixtures.getFixture(id)).toList();
   }
 
   _selectAll(List<Fixture> fixtures) {
@@ -126,9 +137,18 @@ class _ProgrammerViewState extends State<ProgrammerView> {
   }
 
   _setSelectedIds(List<FixtureId> ids) {
-    setState(() {
-      selectedIds = ids;
-      context.read<ProgrammerApi>().selectFixtures(ids);
+    context.read<ProgrammerApi>().selectFixtures(ids);
+    this.setState(() {
+      this.state = ProgrammerState(
+        fixtures: ids,
+        highlight: this.state.highlight,
+      );
     });
+  }
+
+  @override
+  void dispose() {
+    this.subscription?.cancel();
+    super.dispose();
   }
 }

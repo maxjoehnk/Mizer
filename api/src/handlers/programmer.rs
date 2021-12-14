@@ -3,6 +3,7 @@ use mizer_fixtures::manager::FixtureManager;
 use crate::models::programmer::*;
 use crate::models::fixtures::*;
 use mizer_sequencer::{Sequencer, CueChannel, SequencerValue};
+use futures::stream::{Stream, StreamExt};
 
 #[derive(Clone)]
 pub struct ProgrammerHandler<R> {
@@ -24,6 +25,12 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         }
     }
 
+    pub fn state_stream(&self) -> impl Stream<Item = ProgrammerState> + 'static {
+        let programmer = self.fixture_manager.get_programmer();
+        programmer.bus()
+            .map(ProgrammerState::from)
+    }
+
     pub fn write_control(&self, request: WriteControlRequest) {
         let mut programmer = self.fixture_manager.get_programmer();
         for (control, value) in request.as_controls() {
@@ -32,6 +39,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
+        log::debug!("select_fixtures {:?}", fixture_ids);
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.select_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
     }
@@ -43,7 +51,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn highlight(&self, highlight: bool) {
         let mut programmer = self.fixture_manager.get_programmer();
-        programmer.highlight = highlight;
+        programmer.store_highlight(highlight);
     }
 
     pub fn store(&self, sequence_id: u32, store_mode: StoreRequest_Mode) {
@@ -73,3 +81,4 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         })
     }
 }
+

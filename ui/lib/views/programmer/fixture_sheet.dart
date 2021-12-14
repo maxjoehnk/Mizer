@@ -20,16 +20,15 @@ import 'sheets/position_sheet.dart';
 class FixtureSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
   final ProgrammerApi api;
+  final bool highlight;
 
-  const FixtureSheet({required this.fixtures, required this.api, Key? key}) : super(key: key);
+  const FixtureSheet({required this.fixtures, required this.api, required this.highlight, Key? key}) : super(key: key);
 
   @override
   State<FixtureSheet> createState() => _FixtureSheetState();
 }
 
 class _FixtureSheetState extends State<FixtureSheet> {
-  bool highlight = false;
-
   @override
   Widget build(BuildContext context) {
     return HotkeyProvider(
@@ -53,7 +52,7 @@ class _FixtureSheetState extends State<FixtureSheet> {
           actions: [
             PanelAction(
                 label: "Highlight",
-                activated: highlight,
+                activated: widget.highlight,
                 onClick: _highlight,
                 disabled: widget.fixtures.isEmpty),
             PanelAction(label: "Store", onClick: () => _store(), disabled: widget.fixtures.isEmpty),
@@ -64,10 +63,7 @@ class _FixtureSheetState extends State<FixtureSheet> {
   }
 
   void _highlight() {
-    setState(() {
-      highlight = !highlight;
-      widget.api.highlight(highlight);
-    });
+    widget.api.highlight(!widget.highlight);
   }
 
   _store() async {

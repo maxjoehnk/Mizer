@@ -1,4 +1,5 @@
 use mizer_fixtures::definition::{ColorChannel, FixtureControl};
+use crate::models::FixtureId;
 
 use crate::models::programmer::*;
 
@@ -43,6 +44,16 @@ impl WriteControlRequest {
                 vec![(FixtureControl::Generic(value.name), value.value)]
             }
             _ => unreachable!(),
+        }
+    }
+}
+
+impl From<mizer_fixtures::programmer::ProgrammerState> for ProgrammerState {
+    fn from(state: mizer_fixtures::programmer::ProgrammerState) -> Self {
+        Self {
+            fixtures: state.fixtures.into_iter().map(FixtureId::from).collect(),
+            highlight: state.highlight,
+            ..Default::default()
         }
     }
 }

@@ -7,7 +7,7 @@ import 'package:mizer/protos/programmer.pb.dart';
 
 class ProgrammerPluginApi implements ProgrammerApi {
   final MethodChannel channel = const MethodChannel("mizer.live/programmer");
-  final EventChannel stateEvents = const EventChannel("mizer.live/");
+  final EventChannel stateEvents = const EventChannel("mizer.live/programmer/watch");
 
   @override
   Future<void> writeControl(WriteControlRequest request) async {
@@ -37,9 +37,13 @@ class ProgrammerPluginApi implements ProgrammerApi {
 
   @override
   Stream<ProgrammerState> observe() {
-    return stateEvents
-        .receiveBroadcastStream()
-        .map((buffer) => ProgrammerState.fromBuffer(_convertBuffer(buffer)));
+    return stateEvents.receiveBroadcastStream().map((buffer) {
+      log("$buffer");
+      return ProgrammerState.fromBuffer(_convertBuffer(buffer));
+    }).map((state) {
+      log("$state");
+      return state;
+    });
   }
 
   static List<int> _convertBuffer(List<Object> response) {

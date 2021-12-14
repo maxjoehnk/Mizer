@@ -48,16 +48,21 @@ class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
 class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
     ..hasRequiredFields = false
   ;
 
   ProgrammerState._() : super();
   factory ProgrammerState({
     $core.Iterable<$0.FixtureId>? fixtures,
+    $core.bool? highlight,
   }) {
     final _result = create();
     if (fixtures != null) {
       _result.fixtures.addAll(fixtures);
+    }
+    if (highlight != null) {
+      _result.highlight = highlight;
     }
     return _result;
   }
@@ -84,6 +89,15 @@ class ProgrammerState extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<$0.FixtureId> get fixtures => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.bool get highlight => $_getBF(1);
+  @$pb.TagNumber(2)
+  set highlight($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHighlight() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHighlight() => clearField(2);
 }
 
 class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {

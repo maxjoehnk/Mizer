@@ -1,6 +1,6 @@
 use futures::stream::Stream;
 
-pub trait AsyncRuntime {
+pub trait AsyncRuntime: Clone {
     type Subscription: StreamSubscription;
 
     fn subscribe<E: Sync + Send + 'static>(

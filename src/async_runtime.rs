@@ -4,6 +4,7 @@ use tokio::runtime::Handle;
 use tokio::task::JoinHandle;
 use futures::StreamExt;
 
+#[derive(Clone)]
 pub struct TokioRuntime {
     runtime: Handle,
 }

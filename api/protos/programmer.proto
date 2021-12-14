@@ -17,6 +17,7 @@ message SubscribeProgrammerRequest {}
 
 message ProgrammerState {
   repeated mizer.fixtures.FixtureId fixtures = 1;
+  bool highlight = 2;
 }
 
 message WriteControlRequest {

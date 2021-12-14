@@ -147,6 +147,7 @@ impl ::protobuf::reflect::ProtobufValue for SubscribeProgrammerRequest {
 pub struct ProgrammerState {
     // message fields
     pub fixtures: ::protobuf::RepeatedField<super::fixtures::FixtureId>,
+    pub highlight: bool,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -189,6 +190,21 @@ impl ProgrammerState {
     pub fn take_fixtures(&mut self) -> ::protobuf::RepeatedField<super::fixtures::FixtureId> {
         ::std::mem::replace(&mut self.fixtures, ::protobuf::RepeatedField::new())
     }
+
+    // bool highlight = 2;
+
+
+    pub fn get_highlight(&self) -> bool {
+        self.highlight
+    }
+    pub fn clear_highlight(&mut self) {
+        self.highlight = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_highlight(&mut self, v: bool) {
+        self.highlight = v;
+    }
 }
 
 impl ::protobuf::Message for ProgrammerState {
@@ -208,6 +224,13 @@ impl ::protobuf::Message for ProgrammerState {
                 1 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fixtures)?;
                 },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.highlight = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -224,6 +247,9 @@ impl ::protobuf::Message for ProgrammerState {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.highlight != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -235,6 +261,9 @@ impl ::protobuf::Message for ProgrammerState {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.highlight != false {
+            os.write_bool(2, self.highlight)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -278,6 +307,11 @@ impl ::protobuf::Message for ProgrammerState {
                 |m: &ProgrammerState| { &m.fixtures },
                 |m: &mut ProgrammerState| { &mut m.fixtures },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "highlight",
+                |m: &ProgrammerState| { &m.highlight },
+                |m: &mut ProgrammerState| { &mut m.highlight },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<ProgrammerState>(
                 "ProgrammerState",
                 fields,
@@ -295,6 +329,7 @@ impl ::protobuf::Message for ProgrammerState {
 impl ::protobuf::Clear for ProgrammerState {
     fn clear(&mut self) {
         self.fixtures.clear();
+        self.highlight = false;
         self.unknown_fields.clear();
     }
 }
@@ -2150,34 +2185,34 @@ impl ::protobuf::reflect::ProtobufValue for StoreResponse {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10programmer.proto\x12\x10mizer.programmer\x1a\x0efixtures.proto\"\
-    \x1c\n\x1aSubscribeProgrammerRequest\"H\n\x0fProgrammerState\x125\n\x08f\
+    \x1c\n\x1aSubscribeProgrammerRequest\"f\n\x0fProgrammerState\x125\n\x08f\
     ixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\
-    \"\xb0\x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\
-    \x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\
-    \x18\x02\x20\x01(\x01H\0R\x05fader\x124\n\x05color\x18\x03\x20\x01(\x0b2\
-    \x1c.mizer.fixtures.ColorChannelH\0R\x05color\x12N\n\x07generic\x18\x04\
-    \x20\x01(\x0b22.mizer.programmer.WriteControlRequest.GenericValueH\0R\
-    \x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05val\
-    ue\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\
-    \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
-    ures\"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearRequest\"\x0f\n\r\
-    ClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\x18\x01\x20\
-    \x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\n\x0cStoreR\
-    equest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\n\
-    store_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\ts\
-    toreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\
-    \x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse2\xb5\x04\n\rProgrammer\
-    Api\x12l\n\x15SubscribeToProgrammer\x12,.mizer.programmer.SubscribeProgr\
-    ammerRequest\x1a!.mizer.programmer.ProgrammerState\"\00\x01\x12_\n\x0cWr\
-    iteControl\x12%.mizer.programmer.WriteControlRequest\x1a&.mizer.programm\
-    er.WriteControlResponse\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.programm\
-    er.SelectFixturesRequest\x1a(.mizer.programmer.SelectFixturesResponse\"\
-    \0\x12J\n\x05Clear\x12\x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.p\
-    rogrammer.ClearResponse\"\0\x12V\n\tHighlight\x12\".mizer.programmer.Hig\
-    hlightRequest\x1a#.mizer.programmer.HighlightResponse\"\0\x12J\n\x05Stor\
-    e\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.programmer.StoreRe\
-    sponse\"\0b\x06proto3\
+    \x12\x1c\n\thighlight\x18\x02\x20\x01(\x08R\thighlight\"\xb0\x02\n\x13Wr\
+    iteControlRequest\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixt\
+    ures.FixtureControlR\x07control\x12\x16\n\x05fader\x18\x02\x20\x01(\x01H\
+    \0R\x05fader\x124\n\x05color\x18\x03\x20\x01(\x0b2\x1c.mizer.fixtures.Co\
+    lorChannelH\0R\x05color\x12N\n\x07generic\x18\x04\x20\x01(\x0b22.mizer.p\
+    rogrammer.WriteControlRequest.GenericValueH\0R\x07generic\x1a8\n\x0cGene\
+    ricValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05valu\
+    e\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05value\"\x16\n\x14WriteControl\
+    Response\"N\n\x15SelectFixturesRequest\x125\n\x08fixtures\x18\x01\x20\
+    \x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"\x18\n\x16SelectFi\
+    xturesResponse\"\x0e\n\x0cClearRequest\"\x0f\n\rClearResponse\"0\n\x10Hi\
+    ghlightRequest\x12\x1c\n\thighlight\x18\x01\x20\x01(\x08R\thighlight\"\
+    \x13\n\x11HighlightResponse\"\xa1\x01\n\x0cStoreRequest\x12\x1f\n\x0bseq\
+    uence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\nstore_mode\x18\x02\x20\
+    \x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\tstoreMode\",\n\x04Mode\
+    \x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\x12\n\n\x06AddCue\x10\
+    \x02\"\x0f\n\rStoreResponse2\xb5\x04\n\rProgrammerApi\x12l\n\x15Subscrib\
+    eToProgrammer\x12,.mizer.programmer.SubscribeProgrammerRequest\x1a!.mize\
+    r.programmer.ProgrammerState\"\00\x01\x12_\n\x0cWriteControl\x12%.mizer.\
+    programmer.WriteControlRequest\x1a&.mizer.programmer.WriteControlRespons\
+    e\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesReque\
+    st\x1a(.mizer.programmer.SelectFixturesResponse\"\0\x12J\n\x05Clear\x12\
+    \x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.ClearRespons\
+    e\"\0\x12V\n\tHighlight\x12\".mizer.programmer.HighlightRequest\x1a#.miz\
+    er.programmer.HighlightResponse\"\0\x12J\n\x05Store\x12\x1e.mizer.progra\
+    mmer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

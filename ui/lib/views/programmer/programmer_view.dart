@@ -31,10 +31,7 @@ class _ProgrammerViewState extends State<ProgrammerView> {
   void initState() {
     var programmerApi = context.read<ProgrammerApi>();
     this.subscription =
-        programmerApi.observe().listen((event) {
-          print("event $event");
-          this.setState(() => this.state = event);
-        });
+        programmerApi.observe().listen((event) => this.setState(() => this.state = event));
     super.initState();
   }
 

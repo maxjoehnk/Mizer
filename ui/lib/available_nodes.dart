@@ -4,7 +4,6 @@ import 'package:mizer/widgets/popup_menu/popup_menu.dart';
 const List<PopupCategory<Node_NodeType>> NODES = [
   PopupCategory(label: "Standard", items: [
     PopupItem(Node_NodeType.Clock, "Clock"),
-    PopupItem(Node_NodeType.Fixture, "Fixture"),
     PopupItem(Node_NodeType.Script, "Script"),
     PopupItem(Node_NodeType.Sequence, "Sequence"),
     PopupItem(Node_NodeType.Oscillator, "Oscillator"),

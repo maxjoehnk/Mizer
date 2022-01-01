@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::sync::Arc;
 
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{
@@ -10,6 +11,7 @@ use protobuf::ProtobufEnum;
 use mizer_api::handlers::TransportHandler;
 use mizer_api::models::TransportState;
 use mizer_api::RuntimeApi;
+use mizer_ui_ffi::{FFIToPointer, Transport};
 use mizer_util::{AsyncRuntime, StreamSubscription};
 
 use crate::plugin::channels::MethodReplyExt;
@@ -37,6 +39,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
                     }
                 }
             }
+            "getTransportPointer" => {
+                match self.get_transport_pointer() {
+                    Ok(ptr) => resp.send_ok(Value::I64(ptr)),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -54,6 +62,14 @@ impl<R: RuntimeApi + 'static> TransportChannel<R> {
     fn set_state(&self, state: TransportState) -> anyhow::Result<()> {
         self.handler.set_state(state)?;
         Ok(())
+    }
+
+    fn get_transport_pointer(&self) -> anyhow::Result<i64> {
+        let clock_ref = self.handler.clock_ref();
+        let transport = Transport { clock_ref };
+        let transport = Arc::new(transport);
+
+        Ok(transport.to_pointer() as i64)
     }
 }
 

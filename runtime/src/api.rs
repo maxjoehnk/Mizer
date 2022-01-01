@@ -17,6 +17,7 @@ pub struct RuntimeAccess {
     pub layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
     // TODO: make broadcast
     pub clock_recv: flume::Receiver<ClockSnapshot>,
+    pub clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
 }
 
 pub struct NodeDescriptor<'a> {

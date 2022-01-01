@@ -72,6 +72,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn load_project(&self, path: String) -> anyhow::Result<()>;
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;
+    fn get_clock_snapshot_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>>;
 
     fn get_connections(&self) -> Vec<Connection>;
     fn add_sacn_connection(&self, name: String) -> anyhow::Result<()>;

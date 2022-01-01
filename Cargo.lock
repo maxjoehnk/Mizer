@@ -3478,6 +3478,7 @@ dependencies = [
 name = "mizer-ui-ffi"
 version = "0.1.0"
 dependencies = [
+ "mizer-clock",
  "pinboard",
 ]
 

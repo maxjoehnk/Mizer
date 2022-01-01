@@ -243,6 +243,10 @@ impl RuntimeApi for Api {
         self.access.clock_recv.clone()
     }
 
+    fn get_clock_snapshot_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>> {
+        self.access.clock_snapshot.clone()
+    }
+
     fn get_connections(&self) -> Vec<Connection> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetConnections(tx)).unwrap();

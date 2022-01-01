@@ -3,6 +3,7 @@ import 'dart:io' show Directory;
 
 import 'package:path/path.dart' as path;
 import 'bindings.dart';
+import 'transport.dart';
 import 'history.dart';
 
 extension DoubleArray on Array_f64 {
@@ -23,5 +24,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<NodeHistory>.fromAddress(pointerAddress);
 
     return NodeHistoryPointer(this, pointer);
+  }
+
+  TransportPointer openTransport(int pointerAddress) {
+    var pointer = ffi.Pointer<Transport>.fromAddress(pointerAddress);
+
+    return TransportPointer(this, pointer);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:fixnum/fixnum.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
-import 'package:mizer/protos/transport.pbenum.dart';
 
 class TransportDemoApi implements TransportApi {
   @override
@@ -34,5 +34,10 @@ class TransportDemoApi implements TransportApi {
         )
       );
     });
+  }
+
+  @override
+  Future<TransportPointer?> getTransportPointer() async {
+    return null;
   }
 }

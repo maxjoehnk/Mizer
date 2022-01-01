@@ -9,3 +9,4 @@ crate-type = ["cdylib", "lib"]
 
 [dependencies]
 pinboard = "2.1"
+mizer-clock = { path = "../../runtime/clock" }

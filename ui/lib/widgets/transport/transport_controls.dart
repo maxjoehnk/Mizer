@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
+
+import 'time_control.dart';
 
 const double TRANSPORT_CONTROLS_HEIGHT = 64;
 
@@ -18,44 +19,11 @@ class TransportControls extends StatelessWidget {
         child: Row(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: RepaintBoundary(child: TimeControl(stream)),
+            child: RepaintBoundary(child: TimeControl(api, stream)),
           ),
           RepaintBoundary(child: SpeedControl(stream.map((event) => event.speed).distinct())),
           RepaintBoundary(child: TransportControl(stream.map((event) => event.state).distinct())),
         ]));
-  }
-}
-
-class TimeControl extends StatelessWidget {
-  final Stream<Transport> transport;
-
-  TimeControl(this.transport);
-
-  @override
-  Widget build(BuildContext context) {
-    var style = Theme.of(context).textTheme;
-    return Container(
-        padding: const EdgeInsets.all(8),
-        color: Colors.grey.shade900,
-        width: 160,
-        child: StreamBuilder(
-          stream: transport,
-          initialData: Transport(),
-          builder: (context, AsyncSnapshot<Transport> snapshot) => Text(_formatTime(snapshot.data!), textAlign: TextAlign.center, style: style.headline5)
-        ));
-  }
-
-  String _formatTime(Transport transport) {
-    int hours = transport.timecode.hours.toInt();
-    int minutes = transport.timecode.minutes.toInt();
-    int seconds = transport.timecode.seconds.toInt();
-    int frames = transport.timecode.frames.toInt();
-
-    return "${_pad(hours)}:${_pad(minutes)}:${_pad(seconds)}.${_pad(frames)}";
-  }
-
-  String _pad(int number) {
-    return number.toString().padLeft(2, "0");
   }
 }
 

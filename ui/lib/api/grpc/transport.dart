@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/plugin/ffi/transport.dart';
 import 'package:mizer/protos/transport.pbgrpc.dart';
 
 class TransportGrpcApi implements TransportApi {
@@ -20,5 +21,10 @@ class TransportGrpcApi implements TransportApi {
   @override
   Stream<Transport> watchTransport() {
     return client.subscribeTransport(SubscribeTransportRequest());
+  }
+
+  @override
+  Future<TransportPointer?> getTransportPointer() async {
+    return null;
   }
 }

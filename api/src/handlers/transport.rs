@@ -1,8 +1,10 @@
+use std::sync::Arc;
 use crate::models::transport::Transport;
 use crate::models::TransportState;
 use crate::RuntimeApi;
 use futures::stream::Stream;
 use futures::StreamExt;
+use pinboard::NonEmptyPinboard;
 use mizer_clock::ClockSnapshot;
 
 #[derive(Clone)]
@@ -24,6 +26,10 @@ impl<R: RuntimeApi> TransportHandler<R> {
         self.runtime.set_clock_state(clock_state)?;
 
         Ok(())
+    }
+
+    pub fn clock_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>> {
+        self.runtime.get_clock_snapshot_ref()
     }
 }
 

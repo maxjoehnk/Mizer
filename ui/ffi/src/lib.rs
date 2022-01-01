@@ -1,6 +1,7 @@
 pub use types::FFIToPointer;
-pub use node_history::NodeHistory;
+pub use apis::node_history::NodeHistory;
+pub use apis::transport::Transport;
 
-mod node_history;
+mod apis;
 mod types;
 

@@ -35,36 +35,21 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     processors: Vec<Box<dyn Processor>>,
     clock_recv: flume::Receiver<ClockSnapshot>,
     clock_sender: flume::Sender<ClockSnapshot>,
+    clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
     pub fn new() -> Self {
-        let (clock_tx, clock_rx) = flume::unbounded();
-        let mut runtime = Self {
-            executor_id: ExecutorId("coordinator".to_string()),
-            planner: Default::default(),
-            nodes: Default::default(),
-            nodes_view: Default::default(),
-            designer: NonEmptyPinboard::new(Default::default()).into(),
-            links: NonEmptyPinboard::new(Default::default()).into(),
-            layouts: NonEmptyPinboard::new(Default::default()).into(),
-            pipeline: PipelineWorker::new(),
-            assigned_nodes: Default::default(),
-            clock: SystemClock::default(),
-            injector: Default::default(),
-            processors: Default::default(),
-            clock_recv: clock_rx,
-            clock_sender: clock_tx,
-        };
-        runtime.bootstrap();
+        let clock = SystemClock::default();
 
-        runtime
+        Self::with_clock(clock)
     }
 }
 
 impl<TClock: Clock> CoordinatorRuntime<TClock> {
     pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
         let (clock_tx, clock_rx) = flume::unbounded();
+        let snapshot = clock.snapshot();
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
             planner: Default::default(),
@@ -80,6 +65,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             processors: Default::default(),
             clock_recv: clock_rx,
             clock_sender: clock_tx,
+            clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
         };
         runtime.bootstrap();
 
@@ -266,6 +252,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             links: self.links.clone(),
             layouts: self.layouts.clone(),
             clock_recv: self.clock_recv.clone(),
+            clock_snapshot: self.clock_snapshot.clone(),
         }
     }
 
@@ -348,9 +335,11 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
     #[profiling::function]
     fn process(&mut self) {
-        if let Err(err) = self.clock_sender.send(self.clock.snapshot()) {
+        let snapshot = self.clock.snapshot();
+        if let Err(err) = self.clock_sender.send(snapshot) {
             log::error!("Could not send clock snapshot {:?}", err);
         }
+        self.clock_snapshot.set(snapshot);
         for processor in self.processors.iter() {
             processor.pre_process(&self.injector);
         }

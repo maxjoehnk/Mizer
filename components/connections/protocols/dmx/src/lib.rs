@@ -9,7 +9,6 @@ pub use crate::artnet::ArtnetOutput;
 
 mod buffer;
 mod sacn;
-mod stub;
 mod artnet;
 
 #[enum_dispatch(DmxConnection)]

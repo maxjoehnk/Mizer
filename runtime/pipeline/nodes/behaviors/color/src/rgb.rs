@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
-use mizer_util::*;
 
 #[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct RgbColorNode;
@@ -59,7 +58,7 @@ impl PipelineNode for RgbColorNode {
 impl ProcessingNode for RgbColorNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let red = context.read_port("Red");
         let green = context.read_port("Green");
         let blue = context.read_port("Blue");

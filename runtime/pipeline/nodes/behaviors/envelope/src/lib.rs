@@ -71,7 +71,7 @@ impl ProcessingNode for EnvelopeNode {
                 let attack = if self.attack == 0. {
                     1.0
                 } else {
-                    state.beat.lerp((0., self.attack), (0., 1.))
+                    state.beat.linear_extrapolate((0., self.attack), (0., 1.))
                 };
                 to * attack
             }
@@ -79,7 +79,7 @@ impl ProcessingNode for EnvelopeNode {
                 let release = if self.release == 0. {
                     0.0
                 } else {
-                    1. - state.beat.lerp((0., self.release), (0., 1.))
+                    1. - state.beat.linear_extrapolate((0., self.release), (0., 1.))
                 };
                 from * release
             }
@@ -88,7 +88,7 @@ impl ProcessingNode for EnvelopeNode {
                     to
                 } else {
                     let beat = state.beat - self.attack;
-                    1. - to * beat.lerp((0., self.decay), (0., 1.))
+                    1. - to * beat.linear_extrapolate((0., self.decay), (0., 1.))
                 }
             }
             EnvelopePhase::Sustain { value } => value,

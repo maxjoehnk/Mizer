@@ -13,12 +13,12 @@ mizer-node = { path = "../../runtime/pipeline/node" }
 mizer-nodes = { path = "../../runtime/pipeline/nodes" }
 mizer-runtime = { path = "../../runtime" }
 mizer-layouts = { path = "../../runtime/layouts" }
-grpc = { git = "https://github.com/stepancheg/grpc-rust", ref = "a0d7d22" }
-grpc-protobuf = { git = "https://github.com/stepancheg/grpc-rust", ref = "a0d7d22" }
+grpc = { git = "https://github.com/stepancheg/grpc-rust", rev = "a0d7d22" }
+grpc-protobuf = { git = "https://github.com/stepancheg/grpc-rust", rev = "a0d7d22" }
 futures = "0.3"
 protobuf = "2.23"
 tokio = { version = "1.8" }
 mizer-api = { path = ".." }
 
 [build-dependencies]
-protoc-rust-grpc = { git = "https://github.com/stepancheg/grpc-rust", ref = "a0d7d22" }
+protoc-rust-grpc = { git = "https://github.com/stepancheg/grpc-rust", rev = "a0d7d22" }

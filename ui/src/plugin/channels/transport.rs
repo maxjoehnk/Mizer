@@ -1,18 +1,16 @@
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
 
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{
     Context, EngineHandle, EventChannelHandler, EventSink, MethodCallHandler, MethodChannel,
-    RegisteredEventChannel, RunLoopSender,
+    RegisteredEventChannel,
 };
-use nativeshell::util::Capsule;
 use protobuf::ProtobufEnum;
 
 use mizer_api::handlers::TransportHandler;
 use mizer_api::models::TransportState;
 use mizer_api::RuntimeApi;
-use mizer_util::{AsyncRuntime, StreamSubscription, Subscriber};
+use mizer_util::{AsyncRuntime, StreamSubscription};
 
 use crate::plugin::channels::MethodReplyExt;
 use crate::plugin::event_sink::EventSinkSubscriber;

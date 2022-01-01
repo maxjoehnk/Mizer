@@ -28,7 +28,7 @@ impl MidiConnectionManager {
                 self.devices.insert(name.to_string(), device.connect()?);
             }
         }
-        if let Some(device) = self.devices.get_mut::<'a>(name) {
+        if let Some(device) = self.devices.get_mut(name) {
             Ok(Some(device))
         } else {
             Ok(None)

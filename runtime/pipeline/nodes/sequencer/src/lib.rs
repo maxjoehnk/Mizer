@@ -62,17 +62,8 @@ impl ProcessingNode for SequencerNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(sequencer) = context.inject::<Sequencer>() {
-
-            // if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
-            //     for port in context.input_ports() {
-            //         if let Some(value) = context.read_port(port.clone()) {
-            //             fixture.write(&port.0, value);
-            //         }
-            //     }
-            // } else {
-            //     log::error!("could not find fixture for id {}", self.fixture_id);
-            // }
+        if let Some(_sequencer) = context.inject::<Sequencer>() {
+            // TODO: implement sequencer node
         } else {
             log::warn!("missing fixture module");
         }

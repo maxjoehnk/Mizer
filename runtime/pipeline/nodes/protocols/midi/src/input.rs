@@ -94,8 +94,8 @@ impl ProcessingNode for MidiInputNode {
                             if channel != self.channel {
                                 continue;
                             }
-                            result_value = Some(value.lerp((*min, *max), (0f64, 1f64)));
-                            //value as f64).lerp((min, max), (0f64, 1f64)));
+                            result_value = Some(value.linear_extrapolate((*min, *max), (0f64, 1f64)));
+                            //value as f64).linear_extrapolate((min, max), (0f64, 1f64)));
                         }
                         (
                             MidiMessage::NoteOn(channel, port, value),
@@ -107,7 +107,7 @@ impl ProcessingNode for MidiInputNode {
                             if channel != self.channel {
                                 continue;
                             }
-                            result_value = Some(value.lerp((*min, *max), (0f64, 1f64)));
+                            result_value = Some(value.linear_extrapolate((*min, *max), (0f64, 1f64)));
                         }
                         (
                             MidiMessage::NoteOff(channel, port, _),

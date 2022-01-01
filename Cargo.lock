@@ -2029,7 +2029,7 @@ dependencies = [
 [[package]]
 name = "grpc"
 version = "0.9.0-pre"
-source = "git+https://github.com/stepancheg/grpc-rust#a0d7d22b073936767a6961ba4beb82a5a6092a49"
+source = "git+https://github.com/stepancheg/grpc-rust?rev=a0d7d22#a0d7d22b073936767a6961ba4beb82a5a6092a49"
 dependencies = [
  "base64 0.9.3",
  "bytes 1.1.0",
@@ -2046,7 +2046,7 @@ dependencies = [
 [[package]]
 name = "grpc-compiler"
 version = "0.9.0-pre"
-source = "git+https://github.com/stepancheg/grpc-rust#a0d7d22b073936767a6961ba4beb82a5a6092a49"
+source = "git+https://github.com/stepancheg/grpc-rust?rev=a0d7d22#a0d7d22b073936767a6961ba4beb82a5a6092a49"
 dependencies = [
  "protobuf",
  "protobuf-codegen",
@@ -2055,7 +2055,7 @@ dependencies = [
 [[package]]
 name = "grpc-protobuf"
 version = "0.9.0-pre"
-source = "git+https://github.com/stepancheg/grpc-rust#a0d7d22b073936767a6961ba4beb82a5a6092a49"
+source = "git+https://github.com/stepancheg/grpc-rust?rev=a0d7d22#a0d7d22b073936767a6961ba4beb82a5a6092a49"
 dependencies = [
  "bytes 1.1.0",
  "grpc",
@@ -4332,7 +4332,7 @@ dependencies = [
 [[package]]
 name = "protoc-rust-grpc"
 version = "0.9.0-pre"
-source = "git+https://github.com/stepancheg/grpc-rust#a0d7d22b073936767a6961ba4beb82a5a6092a49"
+source = "git+https://github.com/stepancheg/grpc-rust?rev=a0d7d22#a0d7d22b073936767a6961ba4beb82a5a6092a49"
 dependencies = [
  "grpc-compiler",
  "protobuf",

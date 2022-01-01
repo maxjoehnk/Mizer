@@ -59,7 +59,7 @@ impl PipelineNode for HsvColorNode {
 impl ProcessingNode for HsvColorNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let hue = context.read_port("Hue");
         let saturation = context.read_port("Saturation");
         let value = context.read_port("Value");

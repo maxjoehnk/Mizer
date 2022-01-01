@@ -82,10 +82,10 @@ impl ProcessingNode for MidiOutputNode {
                 let channel = self.channel.try_into().unwrap();
                 let msg = match &self.config {
                     MidiOutputConfig::CC { port, range } => {
-                        MidiMessage::ControlChange(channel, *port, value.lerp((0f64, 1f64), *range))
+                        MidiMessage::ControlChange(channel, *port, value.linear_extrapolate((0f64, 1f64), *range))
                     }
                     MidiOutputConfig::Note { port, range } => {
-                        MidiMessage::NoteOn(channel, *port, value.lerp((0f64, 1f64), *range))
+                        MidiMessage::NoteOn(channel, *port, value.linear_extrapolate((0f64, 1f64), *range))
                     }
                 };
 

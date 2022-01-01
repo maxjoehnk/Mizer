@@ -39,6 +39,6 @@ fn get_config(connection: &DmxConnection) -> ConnectionTypes {
             host: artnet.host.clone(),
             port: artnet.port.into(),
         },
-        DmxConnection::Sacn(sacn) => ConnectionTypes::Sacn,
+        DmxConnection::Sacn(_) => ConnectionTypes::Sacn,
     }
 }

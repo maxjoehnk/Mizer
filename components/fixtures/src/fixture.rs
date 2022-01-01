@@ -135,7 +135,8 @@ impl IFixtureMut for Fixture {
     fn write_control(&mut self, control: FixtureFaderControl, value: f64) {
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
-                self.write(channel.to_string(), value)
+                let channel = channel.to_string();
+                self.write(channel, value)
             }
             Some(FixtureControlChannel::Delegate) => {
                 let sub_fixtures = self.current_mode.sub_fixtures.clone();
@@ -267,7 +268,6 @@ impl<TChannel> FixtureControls<TChannel> {
             FixtureFaderControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Generic(ref channel) => self.generic.iter().find(|c| &c.label == channel).map(|c| &c.channel),
-            _ => None,
         }
     }
 }

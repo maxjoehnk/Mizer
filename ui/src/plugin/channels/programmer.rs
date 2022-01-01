@@ -110,7 +110,7 @@ pub struct ProgrammerEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
 for ProgrammerEventChannel<R, AR>
 {
-    fn register_event_sink(&mut self, sink: EventSink, listen_argument: Value) {
+    fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
         let stream = self.handler.state_stream();
         let subscription = self.runtime.subscribe(

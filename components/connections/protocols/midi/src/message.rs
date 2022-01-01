@@ -1,4 +1,5 @@
 use std::convert::TryFrom;
+use crate::consts::*;
 
 /// Represents a Midi channel
 ///
@@ -169,33 +170,6 @@ fn status_byte(status: u8, channel: Channel) -> u8 {
     (status & 0b00001111) * 16 + (channel as u8)
 }
 
-const NOTE_OFF: u8 = 8;
-const NOTE_ON: u8 = 9;
-const POLYPHONIC_PRESSURE: u8 = 10;
-const CONTROL_CHANGE: u8 = 11;
-const PROGRAM_CHANGE: u8 = 12;
-const CHANNEL_PRESSURE: u8 = 13;
-const PITCH_BEND: u8 = 14;
-
-const SYSEX: u8 = 240;
-const MTC_QUARTER_FRAME: u8 = 241;
-const SONG_POSITION_POINTER: u8 = 242;
-const SONG_SELECT: u8 = 243;
-const TUNE_REQUEST: u8 = 246;
-const SYSEX_EOX: u8 = 247;
-const TIMING_CLOCK: u8 = 248;
-const START: u8 = 250;
-const CONTINUE: u8 = 251;
-const STOP: u8 = 252;
-const ACTIVE_SENSING: u8 = 254;
-const SYSTEM_RESET: u8 = 255;
-
-const CC_RPN_MSB: u8 = 101;
-const CC_RPN_LSB: u8 = 100;
-const CC_NRPN_MSB: u8 = 99;
-const CC_NRPN_LSB: u8 = 98;
-const CC_DATA_ENTRY_MSB: u8 = 6;
-const CC_DATA_ENTRY_LSB: u8 = 38;
 
 #[cfg(test)]
 mod test {

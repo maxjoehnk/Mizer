@@ -2,10 +2,10 @@ use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::NodesHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
+use mizer_ui_ffi::{FFIPointer, NodeHistory};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::sync::Arc;
-use mizer_ui_ffi::{NodeHistory, FFIPointer};
 
 #[derive(Clone)]
 pub struct NodesChannel<R: RuntimeApi> {
@@ -31,21 +31,17 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 resp.respond_msg(response);
             }
             "linkNodes" => match call.arguments() {
-                Ok(args) => {
-                    match self.link_nodes(args) {
-                        Ok(()) => resp.send_ok(Value::Null),
-                        Err(err) => resp.respond_error(err),
-                    }
-                }
+                Ok(args) => match self.link_nodes(args) {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                },
                 Err(err) => resp.respond_error(err),
             },
             "writeControlValue" => match call.arguments() {
-                Ok(args) => {
-                    match self.write_control_value(args) {
-                        Ok(()) => resp.send_ok(Value::Null),
-                        Err(err) => resp.respond_error(err),
-                    }
-                }
+                Ok(args) => match self.write_control_value(args) {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                },
                 Err(err) => resp.respond_error(err),
             },
             "getHistoryPointer" => {
@@ -70,13 +66,15 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                         Ok(()) => resp.send_ok(Value::Null),
                         Err(err) => resp.respond_error(err),
                     }
-                },
+                }
                 Err(err) => resp.respond_error(err),
-            }
-            "deleteNode" => if let Value::String(path) = call.args {
-                match self.handler.delete_node(path.into()) {
-                    Ok(()) => resp.send_ok(Value::Null),
-                    Err(err) => resp.respond_error(err),
+            },
+            "deleteNode" => {
+                if let Value::String(path) = call.args {
+                    match self.handler.delete_node(path.into()) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
                 }
             }
             _ => resp.not_implemented(),
@@ -112,13 +110,11 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
     fn get_history_pointer(&self, path: String) -> anyhow::Result<i64> {
         let err_msg = format!("Missing preview for node {}", path);
         if let Some(history) = self.handler.get_node_history_ref(path)? {
-            let history = NodeHistory {
-                history
-            };
+            let history = NodeHistory { history };
             let history = Arc::new(history);
 
             Ok(history.to_pointer() as i64)
-        }else {
+        } else {
             anyhow::bail!("{}", err_msg)
         }
     }

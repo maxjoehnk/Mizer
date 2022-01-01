@@ -5,8 +5,8 @@ use mizer_api::handlers::SequencerHandler;
 use mizer_api::models::{CueTriggerRequest, Sequence, Sequences};
 use mizer_api::RuntimeApi;
 
-use crate::MethodCallExt;
 use crate::plugin::channels::MethodReplyExt;
+use crate::MethodCallExt;
 
 pub struct SequencerChannel<R: RuntimeApi> {
     handler: SequencerHandler<R>,
@@ -36,7 +36,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                 if let Value::I64(sequence) = call.args {
                     match self.delete_sequence(sequence as u32) {
                         Ok(sequence) => resp.respond_msg(sequence),
-                        Err(err) => resp.respond_error(err)
+                        Err(err) => resp.respond_error(err),
                     }
                 }
             }

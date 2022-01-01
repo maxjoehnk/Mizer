@@ -22,8 +22,8 @@ pub(crate) fn announce_device() {
             loop {
                 event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
                 #[cfg(target_os = "linux")]
-                    // poll doesn't sleep in avahi implementation
-                    thread::sleep(Duration::from_secs(POLL_TIMEOUT));
+                // poll doesn't sleep in avahi implementation
+                thread::sleep(Duration::from_secs(POLL_TIMEOUT));
             }
         })
         .unwrap();

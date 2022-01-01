@@ -1,8 +1,10 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::convert::TryInto;
-use serde::{Deserialize, Serialize};
 
-use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl, FixtureControls, FixtureControlType, FixtureControl};
+use mizer_fixtures::definition::{
+    ColorChannel, FixtureControl, FixtureControlType, FixtureControls, FixtureFaderControl,
+};
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
@@ -41,13 +43,7 @@ impl PipelineNode for FixtureNode {
         self.fixture_manager
             .as_ref()
             .and_then(|manager| manager.get_fixture(self.fixture_id))
-            .and_then(|fixture| {
-                fixture
-                    .current_mode
-                    .controls
-                    .get_ports()
-                    .remove(port)
-            })
+            .and_then(|fixture| fixture.current_mode.controls.get_ports().remove(port))
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
@@ -76,15 +72,25 @@ impl ProcessingNode for FixtureNode {
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(manager) = context.inject::<FixtureManager>() {
             if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
-                let ports: HashMap<PortId, PortMetadata> = fixture.current_mode.controls.get_ports();
+                let ports: HashMap<PortId, PortMetadata> =
+                    fixture.current_mode.controls.get_ports();
                 for port in context.input_ports() {
                     if let Some(port_metadata) = ports.get(&port) {
                         match port_metadata.port_type {
                             PortType::Color => {
                                 if let Some(value) = context.read_port::<_, Color>(port.clone()) {
-                                    fixture.write_control(FixtureFaderControl::Color(ColorChannel::Red), value.red);
-                                    fixture.write_control(FixtureFaderControl::Color(ColorChannel::Green), value.green);
-                                    fixture.write_control(FixtureFaderControl::Color(ColorChannel::Blue), value.blue);
+                                    fixture.write_control(
+                                        FixtureFaderControl::Color(ColorChannel::Red),
+                                        value.red,
+                                    );
+                                    fixture.write_control(
+                                        FixtureFaderControl::Color(ColorChannel::Green),
+                                        value.green,
+                                    );
+                                    fixture.write_control(
+                                        FixtureFaderControl::Color(ColorChannel::Blue),
+                                        value.blue,
+                                    );
                                 }
                             }
                             PortType::Single => {
@@ -93,7 +99,7 @@ impl ProcessingNode for FixtureNode {
                                     fixture.write_control(control.try_into().unwrap(), value);
                                 }
                             }
-                            _ => unimplemented!()
+                            _ => unimplemented!(),
                         }
                     }
                 }
@@ -120,15 +126,20 @@ impl<TChannel> FixtureControlPorts for FixtureControls<TChannel> {
     fn get_ports(&self) -> HashMap<PortId, PortMetadata> {
         self.controls()
             .into_iter()
-            .map(|(name, control_type)| (
-                name.to_string().into(),
-                PortMetadata {
-                    port_type: if control_type == FixtureControlType::Color { PortType::Color } else { PortType::Single },
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                }
-            ))
+            .map(|(name, control_type)| {
+                (
+                    name.to_string().into(),
+                    PortMetadata {
+                        port_type: if control_type == FixtureControlType::Color {
+                            PortType::Color
+                        } else {
+                            PortType::Single
+                        },
+                        direction: PortDirection::Input,
+                        ..Default::default()
+                    },
+                )
+            })
             .collect()
-
     }
 }

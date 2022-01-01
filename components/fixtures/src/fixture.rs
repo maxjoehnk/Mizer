@@ -159,7 +159,7 @@ impl IFixture for Fixture {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 self.channel_values.get(channel).copied()
             }
-            _ => None
+            _ => None,
         }
     }
 }
@@ -263,11 +263,17 @@ impl<TChannel> FixtureControls<TChannel> {
             FixtureFaderControl::Prism => self.prism.as_ref(),
             FixtureFaderControl::Frost => self.frost.as_ref(),
             FixtureFaderControl::Color(ColorChannel::Red) => self.color.as_ref().map(|c| &c.red),
-            FixtureFaderControl::Color(ColorChannel::Green) => self.color.as_ref().map(|c| &c.green),
+            FixtureFaderControl::Color(ColorChannel::Green) => {
+                self.color.as_ref().map(|c| &c.green)
+            }
             FixtureFaderControl::Color(ColorChannel::Blue) => self.color.as_ref().map(|c| &c.blue),
             FixtureFaderControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
-            FixtureFaderControl::Generic(ref channel) => self.generic.iter().find(|c| &c.label == channel).map(|c| &c.channel),
+            FixtureFaderControl::Generic(ref channel) => self
+                .generic
+                .iter()
+                .find(|c| &c.label == channel)
+                .map(|c| &c.channel),
         }
     }
 }

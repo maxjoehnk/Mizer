@@ -38,19 +38,20 @@ impl PipelineNode for SequencerNode {
                 port_type: PortType::Single,
                 ..Default::default()
             })
-        }else {
+        } else {
             None
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            ("go".into(), PortMetadata {
+        vec![(
+            "go".into(),
+            PortMetadata {
                 direction: PortDirection::Input,
                 port_type: PortType::Single,
                 ..Default::default()
-            })
-        ]
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

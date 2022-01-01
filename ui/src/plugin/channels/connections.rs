@@ -1,10 +1,10 @@
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
+use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::models::{AddArtnetRequest, AddSacnRequest};
 use mizer_api::RuntimeApi;
-use crate::MethodCallExt;
 
 use crate::plugin::channels::MethodReplyExt;
 
@@ -48,14 +48,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
             "addArtnet" => {
                 if let Err(err) = call.arguments().and_then(|args| self.add_artnet(args)) {
                     resp.respond_error(err);
-                }else {
+                } else {
                     resp.send_ok(Value::Null);
                 }
             }
             "addSacn" => {
                 if let Err(err) = call.arguments().and_then(|args| self.add_sacn(args)) {
                     resp.respond_error(err);
-                }else {
+                } else {
                     resp.send_ok(Value::Null);
                 }
             }
@@ -74,7 +74,8 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
     }
 
     fn add_artnet(&self, request: AddArtnetRequest) -> anyhow::Result<()> {
-        self.handler.add_artnet(request.name, request.host, Some(request.port as u16))
+        self.handler
+            .add_artnet(request.name, request.host, Some(request.port as u16))
     }
 
     fn add_sacn(&self, request: AddSacnRequest) -> anyhow::Result<()> {

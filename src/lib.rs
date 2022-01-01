@@ -19,7 +19,7 @@ use mizer_runtime::DefaultRuntime;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
-use mizer_sequencer::{SequencerModule, Sequencer};
+use mizer_sequencer::{Sequencer, SequencerModule};
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
@@ -72,7 +72,7 @@ pub fn build_runtime(
     };
     if has_project_file {
         mizer.load_project()?;
-    }else {
+    } else {
         mizer.new_project();
     }
 
@@ -182,9 +182,7 @@ impl Mizer {
     }
 }
 
-fn register_sequencer_module(
-    runtime: &mut DefaultRuntime
-) -> anyhow::Result<Sequencer> {
+fn register_sequencer_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Sequencer> {
     let (module, sequencer) = SequencerModule::new();
     module.register(runtime)?;
 

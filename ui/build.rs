@@ -1,4 +1,6 @@
-use nativeshell_build::{AppBundleOptions, BuildResult, Flutter, FlutterOptions, MacOSBundle, AsPath};
+use nativeshell_build::{
+    AppBundleOptions, AsPath, BuildResult, Flutter, FlutterOptions, MacOSBundle,
+};
 
 fn build_flutter() -> BuildResult<()> {
     Flutter::build(FlutterOptions {

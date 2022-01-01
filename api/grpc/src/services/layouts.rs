@@ -63,8 +63,16 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
         todo!()
     }
 
-    fn update_control(&self, req: ServerRequestSingle<UpdateControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
-        self.update_control(req.message.layout_id, req.message.control_id, req.message.decorations.unwrap());
+    fn update_control(
+        &self,
+        req: ServerRequestSingle<UpdateControlRequest>,
+        resp: ServerResponseUnarySink<LayoutResponse>,
+    ) -> grpc::Result<()> {
+        self.update_control(
+            req.message.layout_id,
+            req.message.control_id,
+            req.message.decorations.unwrap(),
+        );
 
         resp.finish(Default::default())
     }
@@ -79,14 +87,32 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
         resp.finish(Default::default())
     }
 
-    fn add_control(&self, req: ServerRequestSingle<AddControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
-        self.add_control(req.message.layout_id, req.message.node_type, req.message.position.unwrap()).unwrap();
+    fn add_control(
+        &self,
+        req: ServerRequestSingle<AddControlRequest>,
+        resp: ServerResponseUnarySink<LayoutResponse>,
+    ) -> grpc::Result<()> {
+        self.add_control(
+            req.message.layout_id,
+            req.message.node_type,
+            req.message.position.unwrap(),
+        )
+        .unwrap();
 
         resp.finish(Default::default())
     }
 
-    fn add_existing_control(&self, req: ServerRequestSingle<AddExistingControlRequest>, resp: ServerResponseUnarySink<LayoutResponse>) -> grpc::Result<()> {
-        self.add_control_for_node(req.message.layout_id, req.message.node.into(), req.message.position.unwrap()).unwrap();
+    fn add_existing_control(
+        &self,
+        req: ServerRequestSingle<AddExistingControlRequest>,
+        resp: ServerResponseUnarySink<LayoutResponse>,
+    ) -> grpc::Result<()> {
+        self.add_control_for_node(
+            req.message.layout_id,
+            req.message.node.into(),
+            req.message.position.unwrap(),
+        )
+        .unwrap();
 
         resp.finish(Default::default())
     }

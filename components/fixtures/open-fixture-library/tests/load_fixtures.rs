@@ -1,6 +1,6 @@
-use std::panic::catch_unwind;
 use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
+use std::panic::catch_unwind;
 
 #[test]
 fn load_fixtures() {

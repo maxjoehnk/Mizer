@@ -1,5 +1,6 @@
 use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
+pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::FixtureNode;
@@ -18,7 +19,6 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
-pub use mizer_color_nodes::{RgbColorNode, HsvColorNode};
 
 #[derive(Debug, Clone, From)]
 pub enum Node {

@@ -1,9 +1,9 @@
-use crate::RuntimeApi;
-use mizer_fixtures::manager::FixtureManager;
-use crate::models::programmer::*;
 use crate::models::fixtures::*;
-use mizer_sequencer::{Sequencer, CueChannel, SequencerValue};
+use crate::models::programmer::*;
+use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
+use mizer_fixtures::manager::FixtureManager;
+use mizer_sequencer::{CueChannel, Sequencer, SequencerValue};
 
 #[derive(Clone)]
 pub struct ProgrammerHandler<R> {
@@ -13,11 +13,7 @@ pub struct ProgrammerHandler<R> {
 }
 
 impl<R: RuntimeApi> ProgrammerHandler<R> {
-    pub fn new(
-        fixture_manager: FixtureManager,
-        sequencer: Sequencer,
-        runtime: R,
-    ) -> Self {
+    pub fn new(fixture_manager: FixtureManager, sequencer: Sequencer, runtime: R) -> Self {
         Self {
             fixture_manager,
             sequencer,
@@ -27,8 +23,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn state_stream(&self) -> impl Stream<Item = ProgrammerState> + 'static {
         let programmer = self.fixture_manager.get_programmer();
-        programmer.bus()
-            .map(ProgrammerState::from)
+        programmer.bus().map(ProgrammerState::from)
     }
 
     pub fn write_control(&self, request: WriteControlRequest) {
@@ -61,10 +56,12 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             let cue = if store_mode == StoreRequest_Mode::AddCue || sequence.cues.is_empty() {
                 let cue_id = sequence.add_cue();
                 sequence.cues.iter_mut().find(|c| c.id == cue_id)
-            }else {
+            } else {
                 sequence.cues.last_mut()
-            }.unwrap();
-            let cue_channels = controls.into_iter()
+            }
+            .unwrap();
+            let cue_channels = controls
+                .into_iter()
                 .map(|control| CueChannel {
                     control: control.control,
                     fixtures: control.fixtures,
@@ -75,10 +72,9 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 .collect();
             if store_mode == StoreRequest_Mode::Merge {
                 cue.merge(cue_channels);
-            }else {
+            } else {
                 cue.channels = cue_channels;
             }
         })
     }
 }
-

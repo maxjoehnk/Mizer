@@ -1,8 +1,8 @@
-use std::net::{UdpSocket, ToSocketAddrs};
 use crate::buffer::DmxBuffer;
 use crate::DmxOutput;
 use std::collections::HashMap;
 use std::convert::TryFrom;
+use std::net::{ToSocketAddrs, UdpSocket};
 
 pub struct ArtnetOutput {
     socket: UdpSocket,

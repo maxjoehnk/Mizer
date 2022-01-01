@@ -1,8 +1,8 @@
-use mizer_util::{AsyncRuntime, StreamSubscription, Subscriber};
 use futures::prelude::*;
+use futures::StreamExt;
+use mizer_util::{AsyncRuntime, StreamSubscription, Subscriber};
 use tokio::runtime::Handle;
 use tokio::task::JoinHandle;
-use futures::StreamExt;
 
 #[derive(Clone)]
 pub struct TokioRuntime {
@@ -12,7 +12,7 @@ pub struct TokioRuntime {
 impl TokioRuntime {
     pub fn new(handle: &Handle) -> Self {
         Self {
-            runtime: handle.clone()
+            runtime: handle.clone(),
         }
     }
 }
@@ -20,7 +20,11 @@ impl TokioRuntime {
 impl AsyncRuntime for TokioRuntime {
     type Subscription = TokioSubscription;
 
-    fn subscribe<E: Sync + Send + 'static>(&self, stream: impl Stream<Item=E> + Send + 'static, handler: impl Subscriber<E> + 'static) -> Self::Subscription {
+    fn subscribe<E: Sync + Send + 'static>(
+        &self,
+        stream: impl Stream<Item = E> + Send + 'static,
+        handler: impl Subscriber<E> + 'static,
+    ) -> Self::Subscription {
         let future = StreamExt::for_each(stream, move |item| {
             handler.next(item);
             futures::future::ready(())

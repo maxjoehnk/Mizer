@@ -8,7 +8,11 @@ use mizer_util::clock::{Clock, TestClock};
 
 const FRAMES: usize = 60 * 4;
 
-pub fn graph_node_with_frames<P: ProcessingNode>(node: P, name: &str, frames: usize) -> anyhow::Result<()> {
+pub fn graph_node_with_frames<P: ProcessingNode>(
+    node: P,
+    name: &str,
+    frames: usize,
+) -> anyhow::Result<()> {
     graph_node_internal(node, name, |_| 0., frames)
 }
 

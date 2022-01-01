@@ -1,14 +1,14 @@
-pub use self::lerp_extension::*;
-pub use self::conversion::*;
 pub use self::async_runtime::*;
-pub use self::thread_pinned::*;
 pub use self::colors::*;
+pub use self::conversion::*;
+pub use self::lerp_extension::*;
+pub use self::thread_pinned::*;
 
+mod async_runtime;
 #[cfg(feature = "test")]
 pub mod clock;
-mod lerp_extension;
-mod conversion;
 mod colors;
-mod async_runtime;
+mod conversion;
+mod lerp_extension;
 
 mod thread_pinned;

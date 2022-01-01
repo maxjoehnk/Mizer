@@ -72,7 +72,7 @@ impl ProcessingNode for HsvColorNode {
             (Some(hue), None, None) => Some((hue, 0f64, 0f64)),
             (None, Some(saturation), None) => Some((0f64, saturation, 0f64)),
             (None, None, Some(value)) => Some((0f64, 0f64, value)),
-            (None, None, None) => None
+            (None, None, None) => None,
         };
 
         if let Some((hue, saturation, value)) = hsv {
@@ -105,13 +105,22 @@ mod tests {
     #[test_case(240f64 / 360f64, 1f64, 1f64, 0f64, 0f64, 1f64; "HSV(240, 1, 1)")]
     #[test_case(300f64 / 360f64, 1f64, 1f64, 1f64, 0f64, 1f64; "HSV(300, 1, 1)")]
     #[test_case(360f64 / 360f64, 1f64, 1f64, 1f64, 0f64, 0f64; "HSV(360, 1, 1)")]
-    fn process_should_map_colors(hue: f64, saturation: f64, value: f64, red: f64, green: f64, blue: f64) -> anyhow::Result<()>  {
+    fn process_should_map_colors(
+        hue: f64,
+        saturation: f64,
+        value: f64,
+        red: f64,
+        green: f64,
+        blue: f64,
+    ) -> anyhow::Result<()> {
         let node = HsvColorNode;
         let mut state = node.create_state();
         let mut context = NodeContextMock::new();
         context.when_clock().returns(ClockFrame::default());
         context.when_read_port("Hue").returns(Some(hue));
-        context.when_read_port("Saturation").returns(Some(saturation));
+        context
+            .when_read_port("Saturation")
+            .returns(Some(saturation));
         context.when_read_port("Value").returns(Some(value));
 
         node.process(&context, &mut state)?;

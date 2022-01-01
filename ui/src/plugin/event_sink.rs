@@ -1,8 +1,8 @@
-use std::sync::{Arc, Mutex};
-use nativeshell::util::Capsule;
-use nativeshell::shell::{RunLoopSender, EventSink, Context};
 use mizer_util::Subscriber;
 use nativeshell::codec::Value;
+use nativeshell::shell::{Context, EventSink, RunLoopSender};
+use nativeshell::util::Capsule;
+use std::sync::{Arc, Mutex};
 
 pub struct EventSinkSubscriber {
     capsule: Arc<Mutex<Capsule<InnerSubscriber>>>,
@@ -42,8 +42,8 @@ impl EventSinkSubscriber {
     }
 
     fn run_in_run_loop<Cb: 'static>(&self, cb: Cb)
-        where
-            Cb: FnOnce(&InnerSubscriber) + Send,
+    where
+        Cb: FnOnce(&InnerSubscriber) + Send,
     {
         let capsule = Arc::clone(&self.capsule);
         self.sender.send(move || {

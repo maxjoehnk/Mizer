@@ -14,8 +14,8 @@ use mizer_protocol_laser::LaserFrame;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodePreviewState, PipelineContext};
-use std::sync::Arc;
 use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -75,8 +75,13 @@ impl PipelineWorker {
         let state = node.create_state();
         match mizer_node::ProcessingNode::details(node).preview_type {
             PreviewType::History => {
-                self.previews
-                    .insert(path.clone(), NodePreviewState::History(Default::default(), NonEmptyPinboard::new(Vec::new()).into()));
+                self.previews.insert(
+                    path.clone(),
+                    NodePreviewState::History(
+                        Default::default(),
+                        NonEmptyPinboard::new(Vec::new()).into(),
+                    ),
+                );
             }
             _ => {
                 self.previews.insert(path.clone(), NodePreviewState::None);
@@ -155,12 +160,8 @@ impl PipelineWorker {
             match link.port_type {
                 PortType::Single => self.disconnect_memory_ports::<f64>(path, link),
                 PortType::Color => self.disconnect_memory_ports::<Color>(path, link),
-                PortType::Multi => {
-                    self.disconnect_memory_ports::<Vec<f64>>(path, link)
-                }
-                PortType::Laser => {
-                    self.disconnect_memory_ports::<Vec<LaserFrame>>(path, link)
-                }
+                PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(path, link),
+                PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(path, link),
                 PortType::Gstreamer => self.disconnect_gst_ports(link),
                 _ => unimplemented!(),
             }
@@ -197,7 +198,11 @@ impl PipelineWorker {
         receivers.add(link.target_port, rx, source_meta);
     }
 
-    fn disconnect_memory_ports<V: PortValue + Default + 'static>(&mut self, _: &NodePath, link: &NodeLink) {
+    fn disconnect_memory_ports<V: PortValue + Default + 'static>(
+        &mut self,
+        _: &NodePath,
+        link: &NodeLink,
+    ) {
         if let Some(receivers) = self.receivers.get_mut(&link.target) {
             receivers.remove(&link.target_port);
         }
@@ -225,8 +230,10 @@ impl PipelineWorker {
         gst_source.unlink_from(gst_target);
     }
 
-
-    fn get_gst_node<'a>(&self, node_state: &'a Box<dyn Any>) -> &'a dyn mizer_video_nodes::GstreamerNode {
+    fn get_gst_node<'a>(
+        &self,
+        node_state: &'a Box<dyn Any>,
+    ) -> &'a dyn mizer_video_nodes::GstreamerNode {
         use mizer_video_nodes::*;
 
         if let Some(node_state) = node_state.downcast_ref::<VideoColorBalanceState>() {

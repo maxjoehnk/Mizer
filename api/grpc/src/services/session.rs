@@ -1,7 +1,5 @@
 use crate::protos::SessionApi;
-use grpc::{
-    ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
-};
+use grpc::{ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink};
 use mizer_api::handlers::SessionHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;

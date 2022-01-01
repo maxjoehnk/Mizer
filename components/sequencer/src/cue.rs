@@ -111,7 +111,10 @@ impl Cue {
         for channel in &self.channels {
             let delay_durations = channel.delay_durations();
             for fixture in &channel.fixtures {
-                match state.channel_state.get(&(*fixture, channel.control.clone())) {
+                match state
+                    .channel_state
+                    .get(&(*fixture, channel.control.clone()))
+                {
                     Some(CueChannelState::Delay) => {
                         if state.get_timer(clock) >= delay_durations[fixture] {
                             state.channel_state.insert(
@@ -208,8 +211,8 @@ impl CueChannel {
             ))) => {
                 let mut map = HashMap::new();
                 for (i, id) in self.fixtures.iter().enumerate() {
-                    let delay: f64 =
-                        (i as f64).linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
+                    let delay: f64 = (i as f64)
+                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
                     map.insert(*id, Duration::from_secs_f64(delay));
                 }
                 map
@@ -254,8 +257,8 @@ impl CueChannel {
             }
             SequencerValue::Range((from, to)) => {
                 for i in 0..self.fixtures.len() {
-                    let value: f64 =
-                        (i as f64).linear_extrapolate((0., (self.fixtures.len() as f64) - 1.0), (from, to));
+                    let value: f64 = (i as f64)
+                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.0), (from, to));
                     values[i] = Some(value);
                 }
             }
@@ -280,8 +283,8 @@ impl CueChannel {
                 SequencerTime::Seconds(to),
             ))) => {
                 for i in 0..self.fixtures.len() {
-                    let delay: f64 =
-                        (i as f64).linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
+                    let delay: f64 = (i as f64)
+                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
                     if state.get_timer(clock) < Duration::from_secs_f64(delay) {
                         values[i] = None;
                     }
@@ -310,7 +313,10 @@ impl CueChannel {
                             .unwrap_or_default();
                         let delay = delay_durations[&self.fixtures[i]];
                         if let Some(time) = time.checked_sub(delay).map(|time| time.as_secs_f64()) {
-                            values[i] = Some(time.min(duration).linear_extrapolate((0., duration), (previous_value, *value)));
+                            values[i] = Some(
+                                time.min(duration)
+                                    .linear_extrapolate((0., duration), (previous_value, *value)),
+                            );
                         }
                     }
                 }
@@ -320,15 +326,18 @@ impl CueChannel {
                 SequencerTime::Seconds(to),
             ))) => {
                 for i in 0..self.fixtures.len() {
-                    let duration: f64 =
-                        (i as f64).linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
+                    let duration: f64 = (i as f64)
+                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
                     if let Some(value) = &mut values[i] {
                         let previous_value = state
                             .get_fixture_value(self.fixtures[i], &self.control)
                             .unwrap_or_default();
                         let delay = delay_durations[&self.fixtures[i]];
                         if let Some(time) = time.checked_sub(delay).map(|time| time.as_secs_f64()) {
-                            values[i] = Some(time.min(duration).linear_extrapolate((0., duration), (previous_value, *value)));
+                            values[i] = Some(
+                                time.min(duration)
+                                    .linear_extrapolate((0., duration), (previous_value, *value)),
+                            );
                         }
                     }
                 }

@@ -5,11 +5,11 @@ use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
-use ringbuffer::{ConstGenericRingBuffer, RingBufferWrite, RingBufferExt};
+use pinboard::NonEmptyPinboard;
+use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
 use std::cell::RefCell;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
-use pinboard::NonEmptyPinboard;
 
 pub struct PipelineContext<'a> {
     pub(crate) frame: ClockFrame,
@@ -31,7 +31,10 @@ impl<'a> Debug for PipelineContext<'a> {
 
 #[derive(Debug)]
 pub enum NodePreviewState {
-    History(ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>, Arc<NonEmptyPinboard<Vec<f64>>>),
+    History(
+        ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>,
+        Arc<NonEmptyPinboard<Vec<f64>>>,
+    ),
     None,
 }
 

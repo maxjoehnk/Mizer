@@ -1,4 +1,4 @@
-use crate::{ProjectManager, Project};
+use crate::{Project, ProjectManager};
 use mizer_sequencer::Sequencer;
 
 impl ProjectManager for Sequencer {

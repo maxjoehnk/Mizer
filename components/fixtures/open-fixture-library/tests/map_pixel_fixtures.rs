@@ -1,4 +1,6 @@
-use mizer_fixtures::definition::{ColorGroup, FixtureControlChannel, FixtureDefinition, SubFixtureDefinition};
+use mizer_fixtures::definition::{
+    ColorGroup, FixtureControlChannel, FixtureDefinition, SubFixtureDefinition,
+};
 use mizer_open_fixture_library_provider::{
     Capability, Channel, FixtureManufacturer, Matrix, MatrixPixels, Mode,
     OpenFixtureLibraryFixtureDefinition,
@@ -54,11 +56,14 @@ fn should_create_delegate_channels() {
 
     let mode = &fixture.modes[0];
     assert!(mode.controls.color.is_some());
-    assert_eq!(mode.controls.color.as_ref().unwrap(), &ColorGroup {
-        red: FixtureControlChannel::Delegate,
-        green: FixtureControlChannel::Delegate,
-        blue: FixtureControlChannel::Delegate,
-    });
+    assert_eq!(
+        mode.controls.color.as_ref().unwrap(),
+        &ColorGroup {
+            red: FixtureControlChannel::Delegate,
+            green: FixtureControlChannel::Delegate,
+            blue: FixtureControlChannel::Delegate,
+        }
+    );
 }
 
 fn create_definition() -> OpenFixtureLibraryFixtureDefinition {

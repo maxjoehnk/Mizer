@@ -1,6 +1,6 @@
+use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureDefinition {
@@ -113,7 +113,9 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
             intensity: controls
                 .intensity
                 .and_then(FixtureControlChannel::into_channel),
-            shutter: controls.shutter.and_then(FixtureControlChannel::into_channel),
+            shutter: controls
+                .shutter
+                .and_then(FixtureControlChannel::into_channel),
             color: controls.color.and_then(|color| {
                 if let (
                     FixtureControlChannel::Channel(red),
@@ -209,7 +211,10 @@ impl<TChannel> FixtureControls<TChannel> {
             controls.push((FixtureControl::Color, FixtureControlType::Color));
         }
         for channel in &self.generic {
-            controls.push((FixtureControl::Generic(channel.label.clone()), FixtureControlType::Fader));
+            controls.push((
+                FixtureControl::Generic(channel.label.clone()),
+                FixtureControlType::Fader,
+            ));
         }
 
         controls
@@ -274,7 +279,7 @@ pub enum FixtureControl {
     Prism,
     Iris,
     Frost,
-    Generic(String)
+    Generic(String),
 }
 
 impl ToString for FixtureControl {

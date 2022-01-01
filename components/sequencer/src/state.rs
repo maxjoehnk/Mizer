@@ -1,9 +1,9 @@
+use crate::contracts::Clock;
 use crate::{Cue, CueChannel, Sequence};
-use std::time::{Duration, Instant};
-use std::collections::HashMap;
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
-use crate::contracts::Clock;
+use std::collections::HashMap;
+use std::time::{Duration, Instant};
 
 #[derive(Debug, Default)]
 pub(crate) struct SequenceState {
@@ -43,7 +43,7 @@ impl SequenceState {
         if !self.active {
             self.active = true;
             self.active_cue_index = 0;
-        }else {
+        } else {
             self.next_cue(sequence);
         }
         self.update_channel_states(sequence);
@@ -62,24 +62,33 @@ impl SequenceState {
         for channel in &sequence.cues[self.active_cue_index].channels {
             let state = channel.initial_channel_state();
             for fixture in &channel.fixtures {
-                self.channel_state.insert((*fixture, channel.control.clone()), state);
+                self.channel_state
+                    .insert((*fixture, channel.control.clone()), state);
             }
         }
     }
 
     pub fn get_timer(&self, clock: &impl Clock) -> Duration {
-        clock.now().duration_since(self.last_go.unwrap_or_else(|| clock.now()))
+        clock
+            .now()
+            .duration_since(self.last_go.unwrap_or_else(|| clock.now()))
     }
 
-    pub fn get_fixture_value(&self, fixture_id: FixtureId, control: &FixtureFaderControl) -> Option<f64> {
-        self.fixture_values.get(&(fixture_id, control.clone())).copied()
+    pub fn get_fixture_value(
+        &self,
+        fixture_id: FixtureId,
+        control: &FixtureFaderControl,
+    ) -> Option<f64> {
+        self.fixture_values
+            .get(&(fixture_id, control.clone()))
+            .copied()
     }
 
     pub fn get_next_cue<'a>(&self, sequence: &'a Sequence) -> Option<&'a Cue> {
         let next_cue_index = self.active_cue_index + 1;
         if next_cue_index >= sequence.cues.len() {
             None
-        }else {
+        } else {
             Some(&sequence.cues[next_cue_index])
         }
     }
@@ -89,9 +98,9 @@ impl CueChannel {
     fn initial_channel_state(&self) -> CueChannelState {
         if self.delay.is_some() {
             CueChannelState::Delay
-        }else if self.fade.is_some() {
+        } else if self.fade.is_some() {
             CueChannelState::Fading
-        }else {
+        } else {
             CueChannelState::Active
         }
     }

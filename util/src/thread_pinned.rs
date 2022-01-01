@@ -35,7 +35,6 @@ impl<T: std::cmp::PartialEq> PartialEq<ThreadPinned<T>> for ThreadPinned<T> {
         let value: &T = self.deref();
         let other: &T = other.deref();
 
-
         value == other
     }
 }

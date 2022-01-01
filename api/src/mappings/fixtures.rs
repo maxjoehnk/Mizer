@@ -98,13 +98,12 @@ impl FixtureControls {
     fn fader(control: FixtureControl, value: Option<f64>) -> Self {
         FixtureControls {
             control,
-            value: value
-                .map(|value| {
-                    FixtureControls_oneof_value::fader(FaderChannel {
-                        value,
-                        ..Default::default()
-                    })
-                }),
+            value: value.map(|value| {
+                FixtureControls_oneof_value::fader(FaderChannel {
+                    value,
+                    ..Default::default()
+                })
+            }),
             ..Default::default()
         }
     }
@@ -115,11 +114,13 @@ impl FixtureControls {
     ) -> Vec<Self> {
         let mut controls = Vec::new();
         if let Some(_) = fixture_controls.intensity {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Intensity);
+            let value =
+                fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Intensity);
             controls.push(FixtureControls::fader(FixtureControl::INTENSITY, value));
         }
         if let Some(_) = fixture_controls.shutter {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Shutter);
+            let value =
+                fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Shutter);
             controls.push(FixtureControls::fader(FixtureControl::SHUTTER, value));
         }
         if let Some(_) = fixture_controls.iris {
@@ -131,15 +132,18 @@ impl FixtureControls {
             controls.push(FixtureControls::fader(FixtureControl::ZOOM, value));
         }
         if let Some(_) = fixture_controls.frost {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Frost);
+            let value =
+                fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Frost);
             controls.push(FixtureControls::fader(FixtureControl::FROST, value));
         }
         if let Some(_) = fixture_controls.prism {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Prism);
+            let value =
+                fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Prism);
             controls.push(FixtureControls::fader(FixtureControl::PRISM, value));
         }
         if let Some(_) = fixture_controls.focus {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Focus);
+            let value =
+                fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Focus);
             controls.push(FixtureControls::fader(FixtureControl::FOCUS, value));
         }
         if let Some(channel) = fixture_controls.pan {
@@ -166,26 +170,39 @@ impl FixtureControls {
             controls.push(FixtureControls {
                 control: FixtureControl::COLOR,
                 value: Some(FixtureControls_oneof_value::color(ColorChannel {
-                    red: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
-                    green: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
-                    blue: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
+                    red: fixture
+                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Color(
+                            mizer_fixtures::definition::ColorChannel::Red,
+                        ))
+                        .unwrap_or_default(),
+                    green: fixture
+                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Color(
+                            mizer_fixtures::definition::ColorChannel::Red,
+                        ))
+                        .unwrap_or_default(),
+                    blue: fixture
+                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Color(
+                            mizer_fixtures::definition::ColorChannel::Red,
+                        ))
+                        .unwrap_or_default(),
                     ..Default::default()
                 })),
                 ..Default::default()
             })
         }
         for channel in fixture_controls.generic {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Generic(channel.label.clone()));
+            let value = fixture.read_control(
+                mizer_fixtures::definition::FixtureFaderControl::Generic(channel.label.clone()),
+            );
             controls.push(FixtureControls {
                 control: FixtureControl::GENERIC,
-                value: value
-                    .map(|value| {
-                        FixtureControls_oneof_value::generic(GenericChannel {
-                            name: channel.label,
-                            value,
-                            ..Default::default()
-                        })
-                    }),
+                value: value.map(|value| {
+                    FixtureControls_oneof_value::generic(GenericChannel {
+                        name: channel.label,
+                        value,
+                        ..Default::default()
+                    })
+                }),
                 ..Default::default()
             });
         }
@@ -234,7 +251,7 @@ impl From<mizer_fixtures::FixtureId> for FixtureId {
                     ..Default::default()
                 })),
                 ..Default::default()
-            }
+            },
         }
     }
 }
@@ -248,7 +265,7 @@ impl From<FixtureId> for mizer_fixtures::FixtureId {
                 child_id,
                 ..
             })) => Self::SubFixture(fixture_id, child_id),
-            _ => unreachable!()
+            _ => unreachable!(),
         }
     }
 }

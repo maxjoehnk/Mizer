@@ -56,10 +56,14 @@ impl<'a> NodeDescriptor<'a> {
             NodeType::OscInput => Node::OscInput(self.downcast_node(node_type).unwrap()),
             NodeType::OscOutput => Node::OscOutput(self.downcast_node(node_type).unwrap()),
             NodeType::VideoFile => Node::VideoFile(self.downcast_node(node_type).unwrap()),
-            NodeType::VideoColorBalance => Node::VideoColorBalance(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoColorBalance => {
+                Node::VideoColorBalance(self.downcast_node(node_type).unwrap())
+            }
             NodeType::VideoOutput => Node::VideoOutput(self.downcast_node(node_type).unwrap()),
             NodeType::VideoEffect => Node::VideoEffect(self.downcast_node(node_type).unwrap()),
-            NodeType::VideoTransform => Node::VideoTransform(self.downcast_node(node_type).unwrap()),
+            NodeType::VideoTransform => {
+                Node::VideoTransform(self.downcast_node(node_type).unwrap())
+            }
             NodeType::ColorHsv => Node::ColorHsv(self.downcast_node(node_type).unwrap()),
             NodeType::ColorRgb => Node::ColorRgb(self.downcast_node(node_type).unwrap()),
         }
@@ -69,7 +73,12 @@ impl<'a> NodeDescriptor<'a> {
         match self.node.value().downcast_ref::<T>() {
             Ok(node) => Some(node.clone()),
             Err(err) => {
-                log::error!("Could not downcast {} ({:?}): {:?}", self.path, node_type, err);
+                log::error!(
+                    "Could not downcast {} ({:?}): {:?}",
+                    self.path,
+                    node_type,
+                    err
+                );
                 None
             }
         }

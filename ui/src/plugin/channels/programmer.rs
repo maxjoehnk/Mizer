@@ -1,14 +1,17 @@
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel, RegisteredEventChannel, EventChannelHandler, EventSink};
+use nativeshell::shell::{
+    Context, EngineHandle, EventChannelHandler, EventSink, MethodCallHandler, MethodChannel,
+    RegisteredEventChannel,
+};
 
 use mizer_api::handlers::ProgrammerHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
+use crate::plugin::event_sink::EventSinkSubscriber;
 use mizer_util::{AsyncRuntime, StreamSubscription};
 use std::collections::HashMap;
-use crate::plugin::event_sink::EventSinkSubscriber;
 
 pub struct ProgrammerChannel<R: RuntimeApi> {
     handler: ProgrammerHandler<R>,
@@ -30,16 +33,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null)
                 }
             }
-            "selectFixtures" => {
-                match call.arguments::<SelectFixturesRequest>() {
-                    Ok(req) => {
-                        let fixture_ids = req.fixtures.into_vec();
-                        self.select_fixtures(fixture_ids);
-                        reply.send_ok(Value::Null)
-                    }
-                    Err(err) => reply.respond_error(err)
+            "selectFixtures" => match call.arguments::<SelectFixturesRequest>() {
+                Ok(req) => {
+                    let fixture_ids = req.fixtures.into_vec();
+                    self.select_fixtures(fixture_ids);
+                    reply.send_ok(Value::Null)
                 }
-            }
+                Err(err) => reply.respond_error(err),
+            },
             "clear" => {
                 self.clear();
 
@@ -99,7 +100,6 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     }
 }
 
-
 pub struct ProgrammerEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
     context: Context,
     handler: ProgrammerHandler<R>,
@@ -108,15 +108,14 @@ pub struct ProgrammerEventChannel<R: RuntimeApi, AR: AsyncRuntime> {
 }
 
 impl<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static> EventChannelHandler
-for ProgrammerEventChannel<R, AR>
+    for ProgrammerEventChannel<R, AR>
 {
     fn register_event_sink(&mut self, sink: EventSink, _: Value) {
         let id = sink.id();
         let stream = self.handler.state_stream();
-        let subscription = self.runtime.subscribe(
-            stream,
-            EventSinkSubscriber::new(sink, &self.context),
-        );
+        let subscription = self
+            .runtime
+            .subscribe(stream, EventSinkSubscriber::new(sink, &self.context));
         self.subscriptions.insert(id, subscription);
     }
 

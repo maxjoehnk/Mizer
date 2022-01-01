@@ -71,7 +71,7 @@ impl ProcessingNode for RgbColorNode {
             (Some(red), None, None) => Some((red, 0f64, 0f64)),
             (None, Some(green), None) => Some((0f64, green, 0f64)),
             (None, None, Some(blue)) => Some((0f64, 0f64, blue)),
-            (None, None, None) => None
+            (None, None, None) => None,
         };
 
         if let Some(rgb) = rgb {
@@ -99,7 +99,7 @@ mod tests {
     #[test_case(1f64, 0f64, 0f64)]
     #[test_case(0f64, 1f64, 0f64)]
     #[test_case(0f64, 0f64, 1f64)]
-    fn process_should_map_colors(red: f64, green: f64, blue: f64) -> anyhow::Result<()>  {
+    fn process_should_map_colors(red: f64, green: f64, blue: f64) -> anyhow::Result<()> {
         let node = RgbColorNode;
         let mut state = node.create_state();
         let mut context = NodeContextMock::new();

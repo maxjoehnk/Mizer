@@ -306,7 +306,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.designer.set(designer);
         self.planner.remove_node(&path);
         let links = self.links.read();
-        let (node_links, links) = links.into_iter()
+        let (node_links, links) = links
+            .into_iter()
             .partition(|link| link.source != path && link.target != path);
         self.links.set(links);
         self.pipeline.remove_node(&path, &node_links);

@@ -5,8 +5,8 @@ pub use crate::event::*;
 pub use crate::message::*;
 pub use crate::module::MidiModule;
 
-mod consts;
 mod connections;
+mod consts;
 mod device;
 mod device_provider;
 mod event;

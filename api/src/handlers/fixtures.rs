@@ -1,6 +1,6 @@
-use std::str::FromStr;
-use std::ops::Deref;
 use regex::Regex;
+use std::ops::Deref;
+use std::str::FromStr;
 
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
@@ -49,12 +49,20 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 controls: FixtureControls::with_values(
                     fixture.deref() as &mizer_fixtures::fixture::Fixture,
                     fixture.current_mode.controls.clone(),
-                ).into(),
-                children: fixture.current_mode.sub_fixtures.iter()
+                )
+                .into(),
+                children: fixture
+                    .current_mode
+                    .sub_fixtures
+                    .iter()
                     .map(|sub_fixture| SubFixture {
                         id: sub_fixture.id,
                         name: sub_fixture.name.clone(),
-                        controls: FixtureControls::with_values(&fixture.sub_fixture(sub_fixture.id).unwrap(), sub_fixture.controls.clone()).into(),
+                        controls: FixtureControls::with_values(
+                            &fixture.sub_fixture(sub_fixture.id).unwrap(),
+                            sub_fixture.controls.clone(),
+                        )
+                        .into(),
                         ..Default::default()
                     })
                     .collect(),
@@ -112,7 +120,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             let counter = counter + index;
 
             format!("{}{}", base_name, counter)
-        }else {
+        } else {
             base_name.to_string()
         }
     }
@@ -126,13 +134,20 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     }
 
     fn delete_fixture_node(&self, id: u32) -> anyhow::Result<()> {
-        if let Some(path) = self.runtime.nodes()
+        if let Some(path) = self
+            .runtime
+            .nodes()
             .into_iter()
             .filter(|node| node.node_type() == NodeType::Fixture)
-            .find(|node| if let Node::Fixture(fixture_node) = node.downcast() {
-                fixture_node.fixture_id == id
-            } else { false })
-            .map(|node| node.path) {
+            .find(|node| {
+                if let Node::Fixture(fixture_node) = node.downcast() {
+                    fixture_node.fixture_id == id
+                } else {
+                    false
+                }
+            })
+            .map(|node| node.path)
+        {
             self.runtime.delete_node(path)?;
         }
         Ok(())

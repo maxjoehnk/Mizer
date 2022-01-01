@@ -3,7 +3,10 @@ use std::sync::Arc;
 use grpc::ClientStub;
 pub use grpc::Server;
 
-use crate::protos::{FixturesApiServer, LayoutsApiServer, MediaApiServer, NodesApiServer, SessionApiClient, SessionApiServer, TransportApiServer, ProgrammerApiServer, SettingsApiServer};
+use crate::protos::{
+    FixturesApiServer, LayoutsApiServer, MediaApiServer, NodesApiServer, ProgrammerApiServer,
+    SessionApiClient, SessionApiServer, SettingsApiServer, TransportApiServer,
+};
 use mizer_api::handlers::*;
 use mizer_api::RuntimeApi;
 

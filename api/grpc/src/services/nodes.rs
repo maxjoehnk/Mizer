@@ -57,13 +57,21 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
         resp.finish(UpdateNodeConfigResponse::default())
     }
 
-    fn move_node(&self, req: ServerRequestSingle<MoveNodeRequest>, resp: ServerResponseUnarySink<MoveNodeResponse>) -> grpc::Result<()> {
+    fn move_node(
+        &self,
+        req: ServerRequestSingle<MoveNodeRequest>,
+        resp: ServerResponseUnarySink<MoveNodeResponse>,
+    ) -> grpc::Result<()> {
         self.move_node(req.message).unwrap();
 
         resp.finish(MoveNodeResponse::default())
     }
 
-    fn delete_node(&self, req: ServerRequestSingle<DeleteNodeRequest>, resp: ServerResponseUnarySink<DeleteNodeResponse>) -> grpc::Result<()> {
+    fn delete_node(
+        &self,
+        req: ServerRequestSingle<DeleteNodeRequest>,
+        resp: ServerResponseUnarySink<DeleteNodeResponse>,
+    ) -> grpc::Result<()> {
         self.delete_node(req.message.path.into()).unwrap();
 
         resp.finish(DeleteNodeResponse::default())

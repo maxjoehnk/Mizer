@@ -20,9 +20,12 @@ pub struct ReadPortMatcher<'a> {
 
 impl<'a> ReadPortMatcher<'a> {
     pub fn returns<V: PortValue + 'static>(self, value: Option<V>) {
-        self.function.mocks.insert(self.port, ReadPortMock {
-            value: value.map(|value| Box::new(value) as Box<dyn Any>),
-        });
+        self.function.mocks.insert(
+            self.port,
+            ReadPortMock {
+                value: value.map(|value| Box::new(value) as Box<dyn Any>),
+            },
+        );
     }
 }
 

@@ -2,9 +2,9 @@ use std::cmp::Ordering;
 
 use serde::{Deserialize, Serialize};
 
-use crate::state::SequenceState;
 use crate::contracts::*;
 use crate::cue::*;
+use crate::state::SequenceState;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -14,7 +14,12 @@ pub struct Sequence {
 }
 
 impl Sequence {
-    pub(crate) fn run(&self, state: &mut SequenceState, clock: &impl Clock, fixture_controller: &impl FixtureController) {
+    pub(crate) fn run(
+        &self,
+        state: &mut SequenceState,
+        clock: &impl Clock,
+        fixture_controller: &impl FixtureController,
+    ) {
         if !state.active {
             return;
         }

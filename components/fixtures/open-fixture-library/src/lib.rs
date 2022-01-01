@@ -304,7 +304,8 @@ fn build_fixture_mode(mode: Mode, available_channels: &HashMap<String, Channel>)
         .clone()
         .into_iter()
         .partition(|name| is_pixel_channel(name, available_channels));
-    let mut controls: FixtureControls<FixtureControlChannel> = group_controls(available_channels, &channels).into();
+    let mut controls: FixtureControls<FixtureControlChannel> =
+        group_controls(available_channels, &channels).into();
     let sub_fixtures = group_sub_fixtures(available_channels, pixels);
     if sub_fixtures.iter().any(|f| f.controls.color.is_some()) {
         controls.color = Some(ColorGroup {
@@ -438,7 +439,9 @@ fn build_sub_fixture(
     channels: Vec<String>,
 ) -> SubFixtureDefinition {
     let definition = SubFixtureDefinition {
-        id: key.parse::<u32>().expect(&format!("'{}' is not a number", key)),
+        id: key
+            .parse::<u32>()
+            .expect(&format!("'{}' is not a number", key)),
         name: format!("Pixel {}", key),
         controls: group_controls(available_channels, &channels),
     };

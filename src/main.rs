@@ -1,15 +1,15 @@
-use structopt::StructOpt;
 use anyhow::Context;
+use structopt::StructOpt;
 
+use crate::async_runtime::TokioRuntime;
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
 use mizer_session::Session;
-use crate::async_runtime::TokioRuntime;
 
 use std::sync::mpsc;
 
-mod logger;
 mod async_runtime;
+mod logger;
 
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
@@ -61,7 +61,10 @@ fn init() -> Flags {
 }
 
 #[cfg(feature = "ui")]
-fn setup_runtime(handle: &tokio::runtime::Handle, flags: Flags) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
+fn setup_runtime(
+    handle: &tokio::runtime::Handle,
+    flags: Flags,
+) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
     let (tx, rx) = mpsc::channel();
     let handle = handle.clone();
     std::thread::Builder::new()

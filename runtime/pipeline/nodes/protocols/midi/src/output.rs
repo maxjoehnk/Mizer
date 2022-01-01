@@ -81,12 +81,16 @@ impl ProcessingNode for MidiOutputNode {
                 let device: &mut MidiDevice = device.deref_mut();
                 let channel = self.channel.try_into().unwrap();
                 let msg = match &self.config {
-                    MidiOutputConfig::CC { port, range } => {
-                        MidiMessage::ControlChange(channel, *port, value.linear_extrapolate((0f64, 1f64), *range))
-                    }
-                    MidiOutputConfig::Note { port, range } => {
-                        MidiMessage::NoteOn(channel, *port, value.linear_extrapolate((0f64, 1f64), *range))
-                    }
+                    MidiOutputConfig::CC { port, range } => MidiMessage::ControlChange(
+                        channel,
+                        *port,
+                        value.linear_extrapolate((0f64, 1f64), *range),
+                    ),
+                    MidiOutputConfig::Note { port, range } => MidiMessage::NoteOn(
+                        channel,
+                        *port,
+                        value.linear_extrapolate((0f64, 1f64), *range),
+                    ),
                 };
 
                 device.write(msg)?;

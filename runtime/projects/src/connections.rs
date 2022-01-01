@@ -1,6 +1,8 @@
-use mizer_protocol_dmx::{DmxConnectionManager, SacnOutput, ArtnetOutput, DmxConnection, DmxOutput};
+use mizer_protocol_dmx::{
+    ArtnetOutput, DmxConnection, DmxConnectionManager, DmxOutput, SacnOutput,
+};
 
-use crate::{Project, ProjectManagerMut, ConnectionTypes, ConnectionConfig};
+use crate::{ConnectionConfig, ConnectionTypes, Project, ProjectManagerMut};
 
 impl ProjectManagerMut for DmxConnectionManager {
     fn new(&mut self) {
@@ -11,7 +13,10 @@ impl ProjectManagerMut for DmxConnectionManager {
         for connection in &project.connections {
             match &connection.config {
                 ConnectionTypes::Sacn => self.add_output(connection.id.clone(), SacnOutput::new()),
-                ConnectionTypes::Artnet { port, host } => self.add_output(connection.id.clone(), ArtnetOutput::new(host.clone(), *port)?)
+                ConnectionTypes::Artnet { port, host } => self.add_output(
+                    connection.id.clone(),
+                    ArtnetOutput::new(host.clone(), *port)?,
+                ),
             }
         }
 

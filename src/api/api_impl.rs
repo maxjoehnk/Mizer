@@ -3,14 +3,14 @@ use std::collections::HashMap;
 use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::Connection;
-use mizer_layouts::{ControlConfig, Layout, ControlPosition, ControlSize};
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId, NodePosition};
+use mizer_layouts::{ControlConfig, ControlPosition, ControlSize, Layout};
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
 use mizer_nodes::{FixtureNode, Node, SequencerNode};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 
 use crate::{ApiCommand, ApiHandler};
-use std::sync::Arc;
 use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct Api {
@@ -58,15 +58,27 @@ impl RuntimeApi for Api {
         });
     }
 
-    fn add_layout_control(&self, layout_id: String, path: NodePath, position: ControlPosition, size: ControlSize) {
-        log::debug!("add_layout_control {} {:?} {:?} {:?}", layout_id, path, position, size);
+    fn add_layout_control(
+        &self,
+        layout_id: String,
+        path: NodePath,
+        position: ControlPosition,
+        size: ControlSize,
+    ) {
+        log::debug!(
+            "add_layout_control {} {:?} {:?} {:?}",
+            layout_id,
+            path,
+            position,
+            size
+        );
         self.update_layout(layout_id, |layout| {
             layout.controls.push(ControlConfig {
                 node: path,
                 label: None,
                 position,
                 size,
-                decoration: Default::default()
+                decoration: Default::default(),
             });
         });
     }
@@ -153,7 +165,10 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
-    fn get_node_history_ref(&self, node: NodePath) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
+    fn get_node_history_ref(
+        &self,
+        node: NodePath,
+    ) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetNodePreviewRef(node, tx))?;
 
@@ -164,7 +179,9 @@ impl RuntimeApi for Api {
 
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor> {
         let designer = self.access.designer.read();
-        self.access.nodes.iter()
+        self.access
+            .nodes
+            .iter()
             .map(|entry| entry.key().clone())
             .find(|node_path| node_path == path)
             .map(|path| self.get_descriptor(path, &designer))
@@ -181,7 +198,7 @@ impl RuntimeApi for Api {
         let mut nodes = self.access.designer.read();
         if let Some(designer) = nodes.get_mut(&path) {
             designer.position = position;
-        }// TODO: else return err?
+        } // TODO: else return err?
         self.access.designer.set(nodes);
 
         Ok(())
@@ -240,9 +257,15 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
-    fn add_artnet_connection(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
+    fn add_artnet_connection(
+        &self,
+        name: String,
+        host: String,
+        port: Option<u16>,
+    ) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::AddArtnetConnection(name, (host, port), tx))?;
+        self.sender
+            .send(ApiCommand::AddArtnetConnection(name, (host, port), tx))?;
 
         rx.recv()?
     }

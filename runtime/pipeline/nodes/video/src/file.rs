@@ -1,5 +1,5 @@
 use gstreamer::prelude::*;
-use gstreamer::{Element, ElementFactory, MessageType, SeekFlags, SeekType, State, ClockTime};
+use gstreamer::{ClockTime, Element, ElementFactory, MessageType, SeekFlags, SeekType, State};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
@@ -51,7 +51,14 @@ impl ProcessingNode for VideoFileNode {
         if let Some(msg) = bus.pop() {
             log::trace!("pipeline {:?}", msg);
             if msg.type_() == MessageType::Eos {
-                pipeline.seek(1.0, SeekFlags::FLUSH, SeekType::Set, Some(ClockTime::ZERO), SeekType::None, ClockTime::NONE)?;
+                pipeline.seek(
+                    1.0,
+                    SeekFlags::FLUSH,
+                    SeekType::Set,
+                    Some(ClockTime::ZERO),
+                    SeekType::None,
+                    ClockTime::NONE,
+                )?;
                 pipeline.set_state(State::Playing)?;
             }
         }

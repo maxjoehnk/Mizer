@@ -80,7 +80,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
-    pub fn get_node_history_ref(&self, path: String) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
+    pub fn get_node_history_ref(
+        &self,
+        path: String,
+    ) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
         self.runtime.get_node_history_ref(path.into())
     }
 
@@ -94,10 +97,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     pub fn move_node(&self, request: MoveNodeRequest) -> anyhow::Result<()> {
-        self.runtime.update_node_position(
-            request.path.into(),
-            request.position.unwrap().into(),
-        )?;
+        self.runtime
+            .update_node_position(request.path.into(), request.position.unwrap().into())?;
 
         Ok(())
     }

@@ -1,4 +1,4 @@
-use crate::{MidiDevice, MidiDeviceProvider, MidiDeviceIdentifier};
+use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
 use dashmap::DashMap;
 use std::ops::DerefMut;
 

@@ -3,30 +3,30 @@ pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
-pub use self::session::*;
-pub use self::transport::*;
-pub use self::sequencer::*;
 pub use self::programmer::*;
+pub use self::sequencer::*;
+pub use self::session::*;
 pub use self::settings::*;
+pub use self::transport::*;
 use crate::RuntimeApi;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
 use mizer_sequencer::Sequencer;
-use std::sync::Arc;
-use pinboard::NonEmptyPinboard;
 use mizer_settings::Settings;
+use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 mod connections;
 mod fixtures;
 mod layouts;
 mod media;
 mod nodes;
-mod session;
-mod transport;
-mod sequencer;
 mod programmer;
+mod sequencer;
+mod session;
 mod settings;
+mod transport;
 
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
@@ -49,11 +49,15 @@ impl<R: RuntimeApi> Handlers<R> {
         fixture_library: FixtureLibrary,
         media_server: MediaServerApi,
         sequencer: Sequencer,
-        settings: Arc<NonEmptyPinboard<Settings>>
+        settings: Arc<NonEmptyPinboard<Settings>>,
     ) -> Self {
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
-            fixtures: FixturesHandler::new(fixture_manager.clone(), fixture_library, runtime.clone()),
+            fixtures: FixturesHandler::new(
+                fixture_manager.clone(),
+                fixture_library,
+                runtime.clone(),
+            ),
             layouts: LayoutsHandler::new(runtime.clone()),
             media: MediaHandler::new(media_server),
             nodes: NodesHandler::new(runtime.clone()),

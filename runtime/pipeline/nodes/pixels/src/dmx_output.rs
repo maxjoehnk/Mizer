@@ -1,8 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_util::ConvertBytes;
 use mizer_node::*;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
+use mizer_util::ConvertBytes;
 
 const DMX_CHANNELS: u16 = 512;
 const CHANNELS_PER_PIXEL: u64 = 3; // RGB, add configuration later

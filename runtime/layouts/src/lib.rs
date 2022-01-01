@@ -1,4 +1,4 @@
-use mizer_node::{NodePath, Color};
+use mizer_node::{Color, NodePath};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -32,5 +32,5 @@ pub struct ControlSize {
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ControlDecorations {
-    pub color: Option<Color>
+    pub color: Option<Color>,
 }

@@ -9,10 +9,10 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_util::ThreadPinned;
 
-use crate::state::SequenceState;
-use crate::{Sequence};
-use mizer_fixtures::manager::FixtureManager;
 use crate::contracts::StdClock;
+use crate::state::SequenceState;
+use crate::Sequence;
+use mizer_fixtures::manager::FixtureManager;
 
 #[derive(Clone)]
 pub struct Sequencer {

@@ -79,7 +79,9 @@ impl From<mizer_layouts::ControlDecorations> for ControlDecorations {
 impl From<ControlDecorations> for mizer_layouts::ControlDecorations {
     fn from(decorations: ControlDecorations) -> Self {
         Self {
-            color: decorations.hasColor.then(|| decorations.color.unwrap().into()),
+            color: decorations
+                .hasColor
+                .then(|| decorations.color.unwrap().into()),
         }
     }
 }

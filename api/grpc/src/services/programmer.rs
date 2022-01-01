@@ -1,8 +1,8 @@
 use futures::StreamExt;
 use grpc::{Metadata, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink};
 
-use mizer_api::RuntimeApi;
 use mizer_api::handlers::ProgrammerHandler;
+use mizer_api::RuntimeApi;
 
 use crate::protos::*;
 

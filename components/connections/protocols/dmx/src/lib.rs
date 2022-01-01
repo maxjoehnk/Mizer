@@ -4,12 +4,12 @@ use std::collections::HashMap;
 use mizer_module::{Module, Runtime};
 use mizer_processing::{Injector, Processor};
 
-pub use crate::sacn::SacnOutput;
 pub use crate::artnet::ArtnetOutput;
+pub use crate::sacn::SacnOutput;
 
+mod artnet;
 mod buffer;
 mod sacn;
-mod artnet;
 
 #[enum_dispatch(DmxConnection)]
 pub trait DmxOutput {

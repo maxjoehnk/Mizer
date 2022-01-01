@@ -27,8 +27,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     pub fn get_sequence(&self, sequence_id: u32) -> Option<Sequence> {
-        self.sequencer.sequence(sequence_id)
-            .map(Sequence::from)
+        self.sequencer.sequence(sequence_id).map(Sequence::from)
     }
 
     pub fn add_sequence(&self) -> Sequence {
@@ -50,23 +49,31 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     fn delete_sequence_node(&self, id: u32) -> anyhow::Result<()> {
-        if let Some(path) = self.runtime.nodes()
+        if let Some(path) = self
+            .runtime
+            .nodes()
             .into_iter()
             .filter(|node| node.node_type() == NodeType::Sequencer)
-            .find(|node| if let Node::Sequencer(sequencer_node) = node.downcast() {
-                sequencer_node.sequence_id == id
-            } else { false })
-            .map(|node| node.path) {
+            .find(|node| {
+                if let Node::Sequencer(sequencer_node) = node.downcast() {
+                    sequencer_node.sequence_id == id
+                } else {
+                    false
+                }
+            })
+            .map(|node| node.path)
+        {
             self.runtime.delete_node(path)?;
         }
         Ok(())
     }
 
     pub fn update_cue_trigger(&self, request: CueTriggerRequest) {
-        self.sequencer.update_sequence(request.sequence, |sequence| {
-            if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue) {
-                cue.trigger = request.trigger.into();
-            }
-        });
+        self.sequencer
+            .update_sequence(request.sequence, |sequence| {
+                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue) {
+                    cue.trigger = request.trigger.into();
+                }
+            });
     }
 }

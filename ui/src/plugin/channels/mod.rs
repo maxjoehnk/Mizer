@@ -3,11 +3,11 @@ pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
-pub use self::session::*;
-pub use self::sequencer::*;
-pub use self::transport::*;
 pub use self::programmer::*;
+pub use self::sequencer::*;
+pub use self::session::*;
 pub use self::settings::*;
+pub use self::transport::*;
 use anyhow::Error;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
@@ -16,11 +16,11 @@ mod fixtures;
 mod layouts;
 mod media;
 mod nodes;
-mod session;
-mod sequencer;
-mod transport;
 mod programmer;
+mod sequencer;
+mod session;
 mod settings;
+mod transport;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;

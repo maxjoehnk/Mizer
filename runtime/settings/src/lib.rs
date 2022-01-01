@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::io::Read;
 use std::path::Path;
 
@@ -7,7 +7,7 @@ const DEFAULT_SETTINGS: &str = include_str!("../settings.toml");
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Settings {
-    pub hotkeys: Hotkeys
+    pub hotkeys: Hotkeys,
 }
 
 impl Settings {

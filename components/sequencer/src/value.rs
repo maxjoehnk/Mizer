@@ -14,7 +14,7 @@ impl<T: PartialOrd + Copy> SequencerValue<T> {
             Self::Range((lhs, rhs)) => {
                 if lhs > rhs {
                     *lhs
-                }else {
+                } else {
                     *rhs
                 }
             }

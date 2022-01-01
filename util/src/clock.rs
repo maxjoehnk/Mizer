@@ -11,7 +11,7 @@ impl Default for TestClock {
         TestClock {
             speed: 60.,
             frame: 0.,
-            beat: 0.
+            beat: 0.,
         }
     }
 }

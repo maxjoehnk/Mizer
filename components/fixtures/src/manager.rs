@@ -1,12 +1,12 @@
+use crate::definition::{FixtureDefinition, FixtureFaderControl};
 use crate::fixture::{Fixture, IFixtureMut};
-use crate::definition::{FixtureFaderControl, FixtureDefinition};
 use crate::library::FixtureLibrary;
+use crate::programmer::Programmer;
+use crate::FixtureId;
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex};
-use crate::FixtureId;
-use crate::programmer::Programmer;
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -41,7 +41,9 @@ impl FixtureManager {
         universe: Option<u16>,
     ) {
         log::trace!("Adding fixture {}", fixture_id);
-        let fixture = Fixture::new(fixture_id, name, definition, mode, output, channel, universe);
+        let fixture = Fixture::new(
+            fixture_id, name, definition, mode, output, channel, universe,
+        );
         self.fixtures.insert(fixture_id, fixture);
     }
 
@@ -57,13 +59,18 @@ impl FixtureManager {
         self.fixtures.remove(&fixture_id);
     }
 
-    pub fn write_fixture_control(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64) {
+    pub fn write_fixture_control(
+        &self,
+        fixture_id: FixtureId,
+        control: FixtureFaderControl,
+        value: f64,
+    ) {
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
                     fixture.write_control(control, value);
                 }
-            },
+            }
             FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
                     if let Some(mut sub_fixture) = fixture.sub_fixture_mut(sub_fixture_id) {
@@ -80,9 +87,13 @@ impl FixtureManager {
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
         for fixture in self.fixtures.iter() {
-            if let Some(output) = fixture.output.as_ref().and_then(|output| dmx_manager.get_output(output)) {
+            if let Some(output) = fixture
+                .output
+                .as_ref()
+                .and_then(|output| dmx_manager.get_output(output))
+            {
                 fixture.flush(output);
-            }else {
+            } else {
                 for (_, output) in dmx_manager.list_outputs() {
                     fixture.flush(output);
                 }

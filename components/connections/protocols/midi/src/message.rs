@@ -1,5 +1,5 @@
-use std::convert::TryFrom;
 use crate::consts::*;
+use std::convert::TryFrom;
 
 /// Represents a Midi channel
 ///
@@ -169,7 +169,6 @@ fn matches_status(input: &u8, status: u8) -> bool {
 fn status_byte(status: u8, channel: Channel) -> u8 {
     (status & 0b00001111) * 16 + (channel as u8)
 }
-
 
 #[cfg(test)]
 mod test {

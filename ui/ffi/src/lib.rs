@@ -1,13 +1,13 @@
-use std::sync::Arc;
-use std::iter::FromIterator;
 use pinboard::NonEmptyPinboard;
+use std::iter::FromIterator;
+use std::sync::Arc;
 
 pub struct NodeHistory {
-    pub history: Arc<NonEmptyPinboard<Vec<f64>>>
+    pub history: Arc<NonEmptyPinboard<Vec<f64>>>,
 }
 
 #[no_mangle]
-pub unsafe extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
+pub unsafe extern "C" fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
     let ffi: Arc<NodeHistory> = FFIPointer::from_pointer(ptr);
 
     let values = ffi.history.read();
@@ -18,7 +18,7 @@ pub unsafe extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
 }
 
 #[no_mangle]
-pub unsafe extern fn drop_pointer(ptr: *const NodeHistory) {
+pub unsafe extern "C" fn drop_pointer(ptr: *const NodeHistory) {
     let ffi: Arc<NodeHistory> = FFIPointer::from_pointer(ptr);
 
     drop(ffi);
@@ -35,7 +35,7 @@ impl<T> From<Vec<T>> for Array<T> {
         vec.shrink_to_fit();
         let array = Array {
             len: vec.len(),
-            array: vec.as_ptr()
+            array: vec.as_ptr(),
         };
         std::mem::forget(vec);
 
@@ -44,7 +44,7 @@ impl<T> From<Vec<T>> for Array<T> {
 }
 
 impl<T> FromIterator<T> for Array<T> {
-    fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
+    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
         let vec: Vec<T> = iter.into_iter().collect();
 
         vec.into()

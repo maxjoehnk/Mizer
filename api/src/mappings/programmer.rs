@@ -1,5 +1,5 @@
-use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 use crate::models::FixtureId;
+use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 
 use crate::models::programmer::*;
 

@@ -50,7 +50,8 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
-            ApiCommand::GetNodePreviewRef(path, sender) => sender.send(mizer.runtime.get_history_ref(&path))
+            ApiCommand::GetNodePreviewRef(path, sender) => sender
+                .send(mizer.runtime.get_history_ref(&path))
                 .expect("api command sender disconnected"),
             ApiCommand::UpdateNode(path, config, sender) => {
                 sender
@@ -148,7 +149,13 @@ impl ApiHandler {
         connections
     }
 
-    fn add_artnet_connection(&self, mizer: &mut Mizer, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
+    fn add_artnet_connection(
+        &self,
+        mizer: &mut Mizer,
+        name: String,
+        host: String,
+        port: Option<u16>,
+    ) -> anyhow::Result<()> {
         let output = ArtnetOutput::new(host, port)?;
         let dmx_manager = mizer
             .runtime

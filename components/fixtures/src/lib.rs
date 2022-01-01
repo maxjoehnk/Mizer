@@ -1,11 +1,11 @@
-use serde::{Deserialize, Serialize};
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
 use crate::manager::FixtureManager;
 use crate::processor::FixtureProcessor;
 use mizer_module::{Module, Runtime};
+use serde::{Deserialize, Serialize};
 
-pub mod fixture;
 pub mod definition;
+pub mod fixture;
 pub mod library;
 pub mod manager;
 mod processor;
@@ -16,7 +16,7 @@ pub mod programmer;
 #[serde(untagged)]
 pub enum FixtureId {
     Fixture(u32),
-    SubFixture(u32, u32)
+    SubFixture(u32, u32),
 }
 
 impl From<u32> for FixtureId {

@@ -2,13 +2,13 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use dashmap::DashMap;
-use postage::watch;
 use postage::prelude::Sink;
+use postage::watch;
 
 use futures::stream::Stream;
 
-use crate::fixture::{Fixture, IFixtureMut};
 use crate::definition::FixtureFaderControl;
+use crate::fixture::{Fixture, IFixtureMut};
 use crate::FixtureId;
 
 pub struct Programmer {

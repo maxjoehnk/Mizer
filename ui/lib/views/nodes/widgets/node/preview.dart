@@ -71,12 +71,16 @@ class HistoryPaint extends StatefulWidget {
   State<HistoryPaint> createState() => _HistoryPaintState(pointer);
 }
 
-class _HistoryPaintState extends State<HistoryPaint> with TickerProviderStateMixin {
+class _HistoryPaintState extends State<HistoryPaint> with SingleTickerProviderStateMixin {
   final NodeHistoryPointer pointer;
   List<double> history = [];
   late final Ticker ticker;
 
-  _HistoryPaintState(this.pointer) {
+  _HistoryPaintState(this.pointer);
+
+  @override
+  void initState() {
+    super.initState();
     ticker = createTicker((elapsed) => setState(() => history = pointer.readHistory()));
     ticker.start();
   }

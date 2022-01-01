@@ -60,7 +60,7 @@ impl NodeReceivers {
     }
 
     pub fn remove(&mut self, port_id: &PortId) {
-        self.0.remove(&port_id);
+        self.0.remove(port_id);
     }
 }
 

@@ -7,7 +7,7 @@ pub struct NodeHistory {
 }
 
 #[no_mangle]
-pub extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
+pub unsafe extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
     let ffi: Arc<NodeHistory> = FFIPointer::from_pointer(ptr);
 
     let values = ffi.history.read();
@@ -18,7 +18,7 @@ pub extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
 }
 
 #[no_mangle]
-pub extern fn drop_pointer(ptr: *const NodeHistory) {
+pub unsafe extern fn drop_pointer(ptr: *const NodeHistory) {
     let ffi: Arc<NodeHistory> = FFIPointer::from_pointer(ptr);
 
     drop(ffi);
@@ -52,18 +52,18 @@ impl<T> FromIterator<T> for Array<T> {
 }
 
 pub trait FFIPointer<T> {
-    fn from_pointer(ptr: *const T) -> Self;
+    unsafe fn from_pointer(ptr: *const T) -> Self;
 
     fn to_pointer(&self) -> u64;
 }
 
 impl<T> FFIPointer<T> for Arc<T> {
-    fn from_pointer(ptr: *const T) -> Arc<T> {
-        unsafe { Arc::from_raw(ptr) }
+    unsafe fn from_pointer(ptr: *const T) -> Arc<T> {
+        Arc::from_raw(ptr)
     }
 
     fn to_pointer(&self) -> u64 {
-        let ptr = Arc::into_raw(Arc::clone(&self));
+        let ptr = Arc::into_raw(Arc::clone(self));
 
         ptr as u64
     }

@@ -44,7 +44,7 @@ const SET_PIXEL_COLORS: u8 = 0x00;
 pub struct SetColors(pub(crate) u8, pub(crate) PixelData);
 
 impl SetColors {
-    pub fn to_buffer(self) -> BytesMut {
+    pub fn into_buffer(self) -> BytesMut {
         let data_len = self.1 .0.len() * 3;
         let mut buffer = BytesMut::with_capacity(4 + data_len);
         buffer.put_slice(&[self.0, SET_PIXEL_COLORS]);

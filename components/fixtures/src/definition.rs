@@ -112,8 +112,8 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
         Self {
             intensity: controls
                 .intensity
-                .and_then(FixtureControlChannel::to_channel),
-            shutter: controls.shutter.and_then(FixtureControlChannel::to_channel),
+                .and_then(FixtureControlChannel::into_channel),
+            shutter: controls.shutter.and_then(FixtureControlChannel::into_channel),
             color: controls.color.and_then(|color| {
                 if let (
                     FixtureControlChannel::Channel(red),
@@ -146,11 +146,11 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
                     None
                 }
             }),
-            focus: controls.focus.and_then(FixtureControlChannel::to_channel),
-            zoom: controls.zoom.and_then(FixtureControlChannel::to_channel),
-            prism: controls.prism.and_then(FixtureControlChannel::to_channel),
-            iris: controls.iris.and_then(FixtureControlChannel::to_channel),
-            frost: controls.frost.and_then(FixtureControlChannel::to_channel),
+            focus: controls.focus.and_then(FixtureControlChannel::into_channel),
+            zoom: controls.zoom.and_then(FixtureControlChannel::into_channel),
+            prism: controls.prism.and_then(FixtureControlChannel::into_channel),
+            iris: controls.iris.and_then(FixtureControlChannel::into_channel),
+            frost: controls.frost.and_then(FixtureControlChannel::into_channel),
             generic: controls
                 .generic
                 .into_iter()
@@ -178,34 +178,34 @@ pub enum FixtureControlType {
 impl<TChannel> FixtureControls<TChannel> {
     pub fn controls(&self) -> Vec<(FixtureControl, FixtureControlType)> {
         let mut controls = Vec::new();
-        if let Some(_) = self.intensity {
+        if self.intensity.is_some() {
             controls.push((FixtureControl::Intensity, FixtureControlType::Fader));
         }
-        if let Some(_) = self.shutter {
+        if self.shutter.is_some() {
             controls.push((FixtureControl::Shutter, FixtureControlType::Fader));
         }
-        if let Some(_) = self.iris {
+        if self.iris.is_some() {
             controls.push((FixtureControl::Iris, FixtureControlType::Fader));
         }
-        if let Some(_) = self.zoom {
+        if self.zoom.is_some() {
             controls.push((FixtureControl::Zoom, FixtureControlType::Fader));
         }
-        if let Some(_) = self.frost {
+        if self.frost.is_some() {
             controls.push((FixtureControl::Frost, FixtureControlType::Fader));
         }
-        if let Some(_) = self.prism {
+        if self.prism.is_some() {
             controls.push((FixtureControl::Prism, FixtureControlType::Fader));
         }
-        if let Some(_) = self.focus {
+        if self.focus.is_some() {
             controls.push((FixtureControl::Focus, FixtureControlType::Fader));
         }
-        if let Some(_) = self.pan {
+        if self.pan.is_some() {
             controls.push((FixtureControl::Pan, FixtureControlType::Fader));
         }
-        if let Some(_) = self.tilt {
+        if self.tilt.is_some() {
             controls.push((FixtureControl::Tilt, FixtureControlType::Fader));
         }
-        if let Some(_) = self.color {
+        if self.color.is_some() {
             controls.push((FixtureControl::Color, FixtureControlType::Color));
         }
         for channel in &self.generic {
@@ -225,7 +225,7 @@ pub enum FixtureControlChannel {
 }
 
 impl FixtureControlChannel {
-    fn to_channel(self) -> Option<String> {
+    fn into_channel(self) -> Option<String> {
         if let FixtureControlChannel::Channel(channel) = self {
             Some(channel)
         } else {

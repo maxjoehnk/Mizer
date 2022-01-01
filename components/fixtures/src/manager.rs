@@ -90,7 +90,7 @@ impl FixtureManager {
         }
     }
 
-    pub fn get_programmer<'a>(&'a self) -> impl DerefMut<Target = Programmer> + 'a {
+    pub fn get_programmer(&self) -> impl DerefMut<Target = Programmer> + '_ {
         let programmer = self.programmer.lock().unwrap();
         programmer
     }

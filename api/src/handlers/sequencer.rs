@@ -56,7 +56,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .find(|node| if let Node::Sequencer(sequencer_node) = node.downcast() {
                 sequencer_node.sequence_id == id
             } else { false })
-            .map(|node| node.path.clone()) {
+            .map(|node| node.path) {
             self.runtime.delete_node(path)?;
         }
         Ok(())

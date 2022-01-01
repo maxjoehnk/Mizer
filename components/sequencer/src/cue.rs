@@ -105,7 +105,7 @@ impl Cue {
         if state.cue_finished_at.is_some() {
             return;
         }
-        if self.is_done(&state, clock) {
+        if self.is_done(state, clock) {
             state.cue_finished_at = Some(clock.now());
         }
         for channel in &self.channels {
@@ -113,7 +113,7 @@ impl Cue {
             for fixture in &channel.fixtures {
                 match state.channel_state.get(&(*fixture, channel.control.clone())) {
                     Some(CueChannelState::Delay) => {
-                        if state.get_timer(clock) >= delay_durations[&fixture] {
+                        if state.get_timer(clock) >= delay_durations[fixture] {
                             state.channel_state.insert(
                                 (*fixture, channel.control.clone()),
                                 CueChannelState::Fading,

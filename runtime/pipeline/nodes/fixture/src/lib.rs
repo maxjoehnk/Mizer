@@ -46,7 +46,7 @@ impl PipelineNode for FixtureNode {
                     .current_mode
                     .controls
                     .get_ports()
-                    .remove(&port)
+                    .remove(port)
             })
     }
 

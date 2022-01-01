@@ -176,7 +176,7 @@ impl PipelineWorker {
         let senders = self
             .senders
             .entry(link.source)
-            .or_insert(NodeSenders::default());
+            .or_insert_with(NodeSenders::default);
         let rx = if let Some((port, _)) = senders.get(link.source_port.clone()) {
             let port = port
                 .downcast_ref::<MemorySender<V>>()
@@ -193,7 +193,7 @@ impl PipelineWorker {
         let receivers = self
             .receivers
             .entry(link.target)
-            .or_insert(NodeReceivers::default());
+            .or_insert_with(NodeReceivers::default);
         receivers.add(link.target_port, rx, source_meta);
     }
 
@@ -252,7 +252,7 @@ impl PipelineWorker {
     ) {
         profiling::scope!("PipelineWorker::process");
         self.order_nodes_by_dependencies(&mut nodes);
-        self.process_nodes(&mut nodes, frame, &injector)
+        self.process_nodes(&mut nodes, frame, injector)
     }
 
     fn order_nodes_by_dependencies(
@@ -263,9 +263,9 @@ impl PipelineWorker {
             let left_deps = self.dependencies.get(left).cloned().unwrap_or_default();
             let right_deps = self.dependencies.get(right).cloned().unwrap_or_default();
 
-            if left_deps.contains(&right) {
+            if left_deps.contains(right) {
                 Ordering::Less
-            } else if right_deps.contains(&left) {
+            } else if right_deps.contains(left) {
                 Ordering::Greater
             } else {
                 Ordering::Equal

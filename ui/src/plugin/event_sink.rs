@@ -43,7 +43,7 @@ impl EventSinkSubscriber {
 
     fn run_in_run_loop<Cb: 'static>(&self, cb: Cb)
         where
-            Cb: FnOnce(&InnerSubscriber) -> () + Send,
+            Cb: FnOnce(&InnerSubscriber) + Send,
     {
         let capsule = Arc::clone(&self.capsule);
         self.sender.send(move || {

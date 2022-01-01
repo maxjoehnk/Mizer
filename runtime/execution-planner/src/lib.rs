@@ -151,12 +151,11 @@ impl ExecutionPlanner {
     fn group_nodes(&self) -> Vec<LinkedNodes> {
         let mut nodes = vec![];
 
-        let local_links = self
+        let mut local_links = self
             .links
             .iter()
             .filter(|l| l.local)
-            .flat_map(|l| vec![l.source.clone(), l.target.clone()])
-            .collect::<Vec<_>>();
+            .flat_map(|l| vec![l.source.clone(), l.target.clone()]);
 
         let mut node_group = LinkedNodes(Vec::new());
         for (path, node) in self.nodes.iter().sorted_by_key(|(path, _)| (*path).clone()) {

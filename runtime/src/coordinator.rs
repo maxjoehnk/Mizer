@@ -407,7 +407,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
             .nodes
             .iter()
             .map(|(name, node)| {
-                let node = downcast(&node);
+                let node = downcast(node);
                 mizer_project_files::Node {
                     designer: designer[name].clone(),
                     path: name.clone(),

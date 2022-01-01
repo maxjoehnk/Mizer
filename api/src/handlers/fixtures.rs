@@ -132,7 +132,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             .find(|node| if let Node::Fixture(fixture_node) = node.downcast() {
                 fixture_node.fixture_id == id
             } else { false })
-            .map(|node| node.path.clone()) {
+            .map(|node| node.path) {
             self.runtime.delete_node(path)?;
         }
         Ok(())

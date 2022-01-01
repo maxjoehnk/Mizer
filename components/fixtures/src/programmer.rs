@@ -118,7 +118,7 @@ impl Programmer {
                 let entry = controls
                     .entry(control.clone())
                     .or_insert((Vec::new(), *value));
-                if entry.1 == *value {
+                if (entry.1 - *value).abs() < f64::EPSILON {
                     entry.0.push(*fixture_id);
                 } else {
                     controls.insert(control.clone(), (vec![*fixture_id], *value));

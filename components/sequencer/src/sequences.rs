@@ -20,14 +20,14 @@ impl Sequence {
         }
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
         let cue = self.current_cue(state, clock);
-        if let Some(next_cue) = state.get_next_cue(&self) {
-            if next_cue.should_go(&state, clock) {
-                state.go(&self, clock);
+        if let Some(next_cue) = state.get_next_cue(self) {
+            if next_cue.should_go(state, clock) {
+                state.go(self, clock);
             }
         }
         cue.update_state(state, clock);
         for channel in &cue.channels {
-            for (fixture_id, value) in channel.values(&state, clock) {
+            for (fixture_id, value) in channel.values(state, clock) {
                 if let Some(value) = value {
                     fixture_controller.write(fixture_id, channel.control.clone(), value);
                 }
@@ -39,7 +39,7 @@ impl Sequence {
         let cue = &self.cues[state.active_cue_index];
         if state.is_cue_finished() {
             if let LoopMode::JumpTo(cue_id) = cue.loop_mode {
-                state.jump_to(&self, cue_id, clock);
+                state.jump_to(self, cue_id, clock);
                 return &self.cues[state.active_cue_index];
             }
         }

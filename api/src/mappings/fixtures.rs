@@ -104,8 +104,7 @@ impl FixtureControls {
                         value,
                         ..Default::default()
                     })
-                })
-                .into(),
+                }),
             ..Default::default()
         }
     }
@@ -149,8 +148,7 @@ impl FixtureControls {
                 control: FixtureControl::PAN,
                 value: Some(FixtureControls_oneof_value::axis(AxisChannel::with_value(
                     &channel, value,
-                )))
-                .into(),
+                ))),
                 ..Default::default()
             });
         }
@@ -160,8 +158,7 @@ impl FixtureControls {
                 control: FixtureControl::TILT,
                 value: Some(FixtureControls_oneof_value::axis(AxisChannel::with_value(
                     &channel, value,
-                )))
-                .into(),
+                ))),
                 ..Default::default()
             });
         }
@@ -173,8 +170,7 @@ impl FixtureControls {
                     green: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
                     blue: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
                     ..Default::default()
-                }))
-                .into(),
+                })),
                 ..Default::default()
             })
         }
@@ -189,8 +185,7 @@ impl FixtureControls {
                             value,
                             ..Default::default()
                         })
-                    })
-                    .into(),
+                    }),
                 ..Default::default()
             });
         }

@@ -83,7 +83,7 @@ impl ProcessingNode for OpcOutputNode {
         if let Some(pixels) = context.read_port::<_, Vec<f64>>("pixels") {
             let pixels = pixels.try_into()?;
             if let OpcOutputState::Connected(socket) = state {
-                let msg = SetColors(1, pixels).to_buffer();
+                let msg = SetColors(1, pixels).into_buffer();
 
                 socket.write_all(&msg)?;
             }

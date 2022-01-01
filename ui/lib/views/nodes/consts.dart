@@ -12,7 +12,7 @@ const double NODE_BASE_WIDTH = 300;
 const double OUTER_RADIUS = 4;
 const double INNER_RADIUS = 2;
 
-const double DOT_SIZE = 12;
+const double DOT_SIZE = 16;
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {

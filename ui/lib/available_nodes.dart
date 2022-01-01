@@ -1,41 +1,77 @@
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/popup_menu/popup_menu.dart';
 
-const List<PopupCategory<Node_NodeType>> NODES = [
-  PopupCategory(label: "Standard", items: [
-    PopupItem(Node_NodeType.Clock, "Clock"),
-    PopupItem(Node_NodeType.Script, "Script"),
-    PopupItem(Node_NodeType.Sequence, "Sequence"),
-    PopupItem(Node_NodeType.Oscillator, "Oscillator"),
-    PopupItem(Node_NodeType.Merge, "Merge"),
-    PopupItem(Node_NodeType.Select, "Select"),
-    PopupItem(Node_NodeType.Envelope, "Envelope"),
-    // PopupItem(null, "DMX Input"),
-    PopupItem(Node_NodeType.DmxOutput, "DMX Output"),
-    PopupItem(Node_NodeType.MidiInput, "MIDI Input"),
-    PopupItem(Node_NodeType.MidiOutput, "MIDI Output"),
-    PopupItem(Node_NodeType.ColorRgb, "RGB Mixer"),
-    PopupItem(Node_NodeType.ColorHsv, "HSV Mixer"),
+const Map<Node_NodeType, String> NODE_LABELS = {
+  Node_NodeType.Clock: "Clock",
+  Node_NodeType.Script: "Script",
+  Node_NodeType.Sequence: "Sequence",
+  Node_NodeType.Oscillator: "Oscillator",
+  Node_NodeType.Merge: "Merge",
+  Node_NodeType.Select: "Select",
+  Node_NodeType.Envelope: "Envelope",
+  Node_NodeType.DmxOutput: "DMX Output",
+  Node_NodeType.MidiInput: "MIDI Input",
+  Node_NodeType.MidiOutput: "MIDI Output",
+  Node_NodeType.ColorRgb: "RGB Mixer",
+  Node_NodeType.ColorHsv: "HSV Mixer",
+  Node_NodeType.Fader: "Fader",
+  Node_NodeType.Button: "Button",
+  Node_NodeType.VideoFile: "File",
+  Node_NodeType.VideoEffect: "Effect",
+  Node_NodeType.VideoOutput: "Output",
+  Node_NodeType.VideoColorBalance: "Color Balance",
+  Node_NodeType.VideoTransform: "Transform",
+  Node_NodeType.IldaFile: "Ilda",
+  Node_NodeType.Laser: "Output",
+  Node_NodeType.PixelPattern: "Pattern Generator",
+  Node_NodeType.PixelToDmx: "DMX Conversion",
+  Node_NodeType.OpcOutput: "OPC Output",
+  Node_NodeType.Fixture: "Fixture",
+};
+
+final List<PopupCategory<Node_NodeType>> NODES = [
+  buildCategory("Standard", [
+    Node_NodeType.Clock,
+    Node_NodeType.Script,
+    Node_NodeType.Sequence,
+    Node_NodeType.Oscillator,
+    Node_NodeType.Merge,
+    Node_NodeType.Select,
+    Node_NodeType.Envelope,
+    Node_NodeType.DmxOutput,
+    Node_NodeType.MidiInput,
+    Node_NodeType.MidiOutput,
+    Node_NodeType.ColorRgb,
+    Node_NodeType.ColorHsv,
   ]),
-  PopupCategory(label: "Controls", items: [
-    PopupItem(Node_NodeType.Fader, "Fader"),
-    PopupItem(Node_NodeType.Button, "Button"),
-    // PopupItem(null, "Color Picker"),
+  buildCategory("Controls", [
+    Node_NodeType.Fader,
+    Node_NodeType.Button,
+    // Node_NodeType.ColorPicker,
   ]),
-  PopupCategory(label: "Video", items: [
-    PopupItem(Node_NodeType.VideoFile, "File"),
-    PopupItem(Node_NodeType.VideoEffect, "Effect"),
-    PopupItem(Node_NodeType.VideoOutput, "Output"),
-    PopupItem(Node_NodeType.VideoColorBalance, "Color Balance"),
-    PopupItem(Node_NodeType.VideoTransform, "Transform"),
+  buildCategory("Video", [
+    Node_NodeType.VideoFile,
+    Node_NodeType.VideoEffect,
+    Node_NodeType.VideoOutput,
+    Node_NodeType.VideoColorBalance,
+    Node_NodeType.VideoTransform,
   ]),
-  PopupCategory(label: "Laser", items: [
-    PopupItem(Node_NodeType.IldaFile, "Ilda"),
-    PopupItem(Node_NodeType.Laser, "Output")
+  buildCategory("Laser", [
+    Node_NodeType.IldaFile,
+    Node_NodeType.Laser,
   ]),
-  PopupCategory(label: "Pixel", items: [
-    PopupItem(Node_NodeType.PixelPattern, "Pattern Generator"),
-    PopupItem(Node_NodeType.PixelToDmx, "DMX Conversion"),
-    PopupItem(Node_NodeType.OpcOutput, "OPC Output"),
+  buildCategory("Pixel", [
+    Node_NodeType.PixelPattern,
+    Node_NodeType.PixelToDmx,
+    Node_NodeType.OpcOutput,
   ])
 ];
+
+PopupCategory<Node_NodeType> buildCategory(String label, List<Node_NodeType> nodeTypes) {
+  return PopupCategory(
+      label: label,
+      items: nodeTypes
+          .map((e) => PopupItem(e, NODE_LABELS[e]!))
+          .toList()
+  );
+}

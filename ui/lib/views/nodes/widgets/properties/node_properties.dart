@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 import 'properties/groups/dmx_output_properties.dart';
@@ -21,6 +22,7 @@ class NodePropertiesPane extends StatelessWidget {
     }
     Node node = this.node!;
     var nodesApi = context.read<NodesApi>();
+    var textTheme = Theme.of(context).textTheme;
     return Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
@@ -31,8 +33,12 @@ class NodePropertiesPane extends StatelessWidget {
             ]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8.0, top: 8.0),
             child: Text(node.path),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
+            child: Text(NODE_LABELS[node.type] ?? "", style: textTheme.bodySmall,),
           ),
           ..._getPropertyPanes(node, nodesApi),
         ]));

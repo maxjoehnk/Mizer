@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MizerApp extends StatelessWidget {
@@ -18,7 +17,12 @@ class MizerApp extends StatelessWidget {
   }
 
   ThemeData _getTheme() {
-    return ThemeData.dark()
-        .copyWith(primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent);
+    final theme = ThemeData.dark();
+    return theme
+        .copyWith(
+        colorScheme: theme.colorScheme.copyWith(
+            primary: Colors.blueGrey, secondary: Colors.deepOrangeAccent),
+        primaryColor: Colors.blueGrey, accentColor: Colors.deepOrangeAccent
+    );
   }
 }

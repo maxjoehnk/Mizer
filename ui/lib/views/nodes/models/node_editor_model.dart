@@ -1,37 +1,33 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:collection/collection.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
 import 'node_model.dart';
 
 class NodeEditorModel extends ChangeNotifier {
-  List<Node> hidden;
-  List<NodeModel> nodes;
-  List<NodeConnection> channels;
+  List<Node> hidden = [];
+  List<NodeModel> nodes = [];
+  List<NodeConnection> channels = [];
   final GlobalKey painterKey = GlobalKey();
 
   late TransformationController transformationController;
   NodeModel? selectedNode;
   NewConnectionModel? connecting;
 
-  NodeEditorModel(Nodes nodes)
-      : this.nodes = nodes.nodes
-      .where((node) => !node.designer.hidden)
-      .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
-      .toList(),
-        this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList(),
-        this.channels = nodes.channels {
-    transformationController = TransformationController()
-      ..addListener(update);
+  NodeEditorModel(Nodes nodes) {
+    this.refresh(nodes);
+    transformationController = TransformationController()..addListener(update);
   }
 
   void refresh(Nodes nodes) {
-    this.nodes = nodes.nodes
-        .where((node) => !node.designer.hidden)
-        .map((node) => NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}")))
-        .toList();
+    this._disposeOldNodes();
+    this.nodes = nodes.nodes.where((node) => !node.designer.hidden).map((node) {
+      var nodeModel = NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}"));
+      nodeModel.addListener(this.update);
+      return nodeModel;
+    }).toList();
     this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList();
     this.channels = nodes.channels;
     this.updateNodes();
@@ -55,13 +51,12 @@ class NodeEditorModel extends ChangeNotifier {
       return null;
     }
 
-    return nodeModel.ports.firstWhereOrNull((portModel) => portModel.port.name == port.name && portModel.input == input);
+    return nodeModel.ports.firstWhereOrNull(
+        (portModel) => portModel.port.name == port.name && portModel.input == input);
   }
 
   Node getNode(String path) {
-    return nodes
-        .firstWhere((nodeModel) => nodeModel.node.path == path)
-        .node;
+    return nodes.firstWhere((nodeModel) => nodeModel.node.path == path).node;
   }
 
   selectNode(NodeModel nodeModel) {
@@ -83,6 +78,12 @@ class NodeEditorModel extends ChangeNotifier {
     connecting?.update(painterKey);
     this.update();
   }
+
+  void _disposeOldNodes() {
+    for (var node in nodes) {
+      node.dispose();
+    }
+  }
 }
 
 class NewConnectionModel {
@@ -91,7 +92,8 @@ class NewConnectionModel {
   Offset offset;
   GlobalKey key;
 
-  NewConnectionModel({ required this.port, required this.node, this.offset = Offset.zero, required this.key });
+  NewConnectionModel(
+      {required this.port, required this.node, this.offset = Offset.zero, required this.key});
 
   void update(GlobalKey key) {
     if (key.currentContext == null || this.key.currentContext == null) return;

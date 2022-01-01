@@ -52,7 +52,7 @@ class _NodeControlState extends State<NodeControl> {
 
   Widget _buildNode() {
     return Consumer<NodeEditorModel>(builder: (context, model, _) {
-      return BaseNode.fromNode(widget.nodeModel.node,
+      return BaseNode.fromNode(widget.nodeModel,
           key: widget.nodeModel.key, selected: model.selectedNode == widget.nodeModel, onSelect: () => model.selectNode(widget.nodeModel));
     });
   }

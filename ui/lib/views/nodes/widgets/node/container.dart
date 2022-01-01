@@ -11,29 +11,32 @@ class NodeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(OUTER_RADIUS)),
-          side: selected == true
-              ? BorderSide(
-                  color: Colors.white,
-                  style: BorderStyle.solid,
-                  width: 2,
-                )
-              : BorderSide(style: BorderStyle.none, width: 2),
-        ),
-        shadows: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
-        ],
-      ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.move,
       child: Container(
         decoration: ShapeDecoration(
-            color: Colors.grey.shade900,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(INNER_RADIUS)),
-            )),
-        child: this.child,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(OUTER_RADIUS)),
+            side: selected == true
+                ? BorderSide(
+                    color: Colors.white,
+                    style: BorderStyle.solid,
+                    width: 2,
+                  )
+                : BorderSide(style: BorderStyle.none, width: 2),
+          ),
+          shadows: [
+            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
+          ],
+        ),
+        child: Container(
+          decoration: ShapeDecoration(
+              color: Colors.grey.shade900,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(INNER_RADIUS)),
+              )),
+          child: this.child,
+        ),
       ),
     );
   }

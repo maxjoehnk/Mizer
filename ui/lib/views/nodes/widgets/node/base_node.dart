@@ -6,25 +6,44 @@ import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
 import '../../consts.dart';
+import '../../models/node_model.dart';
 import 'container.dart';
+import 'footer.dart';
 import 'header.dart';
 import 'ports.dart';
 import 'preview.dart';
 
 class BaseNode extends StatelessWidget {
-  final Node node;
+  final NodeModel nodeModel;
   final Widget child;
   final bool selected;
   final Function()? onSelect;
 
-  BaseNode(this.node, {required this.child, this.selected = false, this.onSelect, Key? key}) : super(key: key);
+  BaseNode(this.nodeModel, {required this.child, this.selected = false, this.onSelect, Key? key})
+      : super(key: key);
+
+  factory BaseNode.fromNode(NodeModel node, {Function()? onSelect, bool selected = false, Key? key}) {
+    return BaseNode(
+      node,
+      child: Container(),
+      onSelect: onSelect,
+      selected: selected,
+      key: key,
+    );
+  }
+
+  Node get node {
+    return nodeModel.node;
+  }
+
+  NodeTab get selectedTab {
+    return nodeModel.tab;
+  }
 
   @override
   Widget build(BuildContext context) {
     return ContextMenu(
-      menu: Menu(items: [
-        MenuItem(label: "Delete", action: () => _onDeleteNode(context))
-      ]),
+      menu: Menu(items: [MenuItem(label: "Delete", action: () => _onDeleteNode(context))]),
       child: Container(
         width: NODE_BASE_WIDTH,
         child: GestureDetector(
@@ -37,10 +56,15 @@ class BaseNode extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     NodeHeader(this.node.path),
-                    NodePortList(this.node, inputs: false),
-                    NodePortList(this.node, inputs: true),
-                    this.child,
-                    NodePreview(this.node),
+                    Stack(children: [
+                      _portsView(),
+                      if (selectedTab == NodeTab.Preview) _previewView(),
+                    ]),
+                    NodeFooter(
+                      node: node,
+                      selectedTab: selectedTab,
+                      onSelectTab: (tab) => nodeModel.selectTab(tab),
+                    )
                   ]),
             ),
             selected: selected,
@@ -50,13 +74,24 @@ class BaseNode extends StatelessWidget {
     );
   }
 
-  factory BaseNode.fromNode(Node node, {Function()? onSelect, bool selected = false, Key? key}) {
-    return BaseNode(
-      node,
-      child: Container(),
-      onSelect: onSelect,
-      selected: selected,
-      key: key,
+  Widget _portsView() {
+    bool collapsed = selectedTab != NodeTab.Ports;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            NodePortList(this.node, inputs: false, collapsed: collapsed),
+            NodePortList(this.node, inputs: true, collapsed: collapsed),
+          ]),
+    );
+  }
+
+  Widget _previewView() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: NodePreview(this.node),
     );
   }
 

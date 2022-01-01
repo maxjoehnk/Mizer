@@ -3,10 +3,16 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
 
-class NodeModel {
+enum NodeTab {
+  Ports,
+  Preview,
+}
+
+class NodeModel extends ChangeNotifier {
   final Node node;
   final GlobalKey key;
   final List<PortModel> ports;
+  NodeTab tab = NodeTab.Ports;
   Offset offset = Offset.infinite;
   Size size = Size.zero;
 
@@ -27,6 +33,11 @@ class NodeModel {
     for (var port in ports) {
       port.update(key);
     }
+  }
+
+  void selectTab(NodeTab tab) {
+    this.tab = tab;
+    this.notifyListeners();
   }
 
   void _applyOffset(Node node) {

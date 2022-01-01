@@ -93,10 +93,12 @@ class _HomeState extends State<Home> {
                             child: Column(
                               children: [
                                 Expanded(
-                                  child: Container(
-                                      child: _currentWidget,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration()),
+                                  child: SafeArea(
+                                    child: Container(
+                                        child: _currentWidget,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration()),
+                                  ),
                                 ),
                                 TransportControls()
                               ],

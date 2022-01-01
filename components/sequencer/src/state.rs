@@ -1,7 +1,7 @@
 use crate::{Cue, CueChannel, Sequence};
 use std::time::{Duration, Instant};
 use std::collections::HashMap;
-use mizer_fixtures::definition::FixtureControl;
+use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
 use crate::contracts::Clock;
 
@@ -12,8 +12,8 @@ pub(crate) struct SequenceState {
     last_go: Option<Instant>,
     /// Timestamp when the currently active cue has finished
     pub cue_finished_at: Option<Instant>,
-    pub fixture_values: HashMap<(FixtureId, FixtureControl), f64>,
-    pub channel_state: HashMap<(FixtureId, FixtureControl), CueChannelState>,
+    pub fixture_values: HashMap<(FixtureId, FixtureFaderControl), f64>,
+    pub channel_state: HashMap<(FixtureId, FixtureFaderControl), CueChannelState>,
 }
 
 #[derive(Copy, Clone, Debug)]
@@ -71,7 +71,7 @@ impl SequenceState {
         clock.now().duration_since(self.last_go.unwrap_or_else(|| clock.now()))
     }
 
-    pub fn get_fixture_value(&self, fixture_id: FixtureId, control: &FixtureControl) -> Option<f64> {
+    pub fn get_fixture_value(&self, fixture_id: FixtureId, control: &FixtureFaderControl) -> Option<f64> {
         self.fixture_values.get(&(fixture_id, control.clone())).copied()
     }
 

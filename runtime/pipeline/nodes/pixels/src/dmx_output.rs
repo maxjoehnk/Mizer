@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_util::ConvertToDmx;
+use mizer_util::ConvertBytes;
 use mizer_node::*;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 
@@ -79,7 +79,7 @@ impl ProcessingNode for PixelDmxNode {
         if let Some(pixels) = context.read_port::<_, Vec<f64>>(OUTPUT_PORT) {
             let data = pixels
                 .into_iter()
-                .map(ConvertToDmx::to_8bit)
+                .map(ConvertBytes::to_8bit)
                 .collect::<Vec<_>>();
             let data = data.chunks(512).enumerate();
             for (universe, bulk) in data {

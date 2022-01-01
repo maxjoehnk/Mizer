@@ -19,15 +19,15 @@ mod tests {
     use mockall::predicate;
     use test_case::test_case;
 
-    use mizer_fixtures::definition::FixtureControl;
+    use mizer_fixtures::definition::FixtureFaderControl;
     use mizer_fixtures::FixtureId;
     use crate::contracts::*;
     use crate::{Cue, CueChannel, Sequence, SequencerTime};
     use crate::state::SequenceState;
 
-    #[test_case(FixtureId::Fixture(1), 1f64, FixtureControl::Intensity)]
-    #[test_case(FixtureId::SubFixture(1, 1), 1f64, FixtureControl::Shutter)]
-    fn sequence_with_one_cue_should_apply_channels(fixture_id: FixtureId, value: f64, control: FixtureControl) {
+    #[test_case(FixtureId::Fixture(1), 1f64, FixtureFaderControl::Intensity)]
+    #[test_case(FixtureId::SubFixture(1, 1), 1f64, FixtureFaderControl::Shutter)]
+    fn sequence_with_one_cue_should_apply_channels(fixture_id: FixtureId, value: f64, control: FixtureFaderControl) {
         let mut context = TestContext::default();
         context
             .fixture_controller
@@ -54,7 +54,7 @@ mod tests {
     #[test]
     fn sequence_with_two_cues_should_apply_both_cues() {
         let fixture_id = FixtureId::Fixture(1);
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         context.fixture_controller
             .expect_write()
@@ -90,7 +90,7 @@ mod tests {
     #[test_case((0f64, 1f64), vec![0f64, 1f64])]
     #[test_case((0.5f64, 1f64), vec![0.5f64, 0.75f64, 1f64])]
     fn sequence_with_value_range_should_spread_values(value: (f64, f64), expected: Vec<f64>) {
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         let fixture_ids = expected.iter().enumerate().map(|(i, _)| FixtureId::Fixture(i as u32)).collect();
         for (i, value) in expected
@@ -122,7 +122,7 @@ mod tests {
     #[test]
     fn sequence_with_delay_should_not_write_values() {
         let fixture_id = FixtureId::Fixture(1);
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         context.fixture_controller
             .expect_write()
@@ -155,7 +155,7 @@ mod tests {
     #[test_case(5f64)]
     fn sequence_with_delay_should_write_values_after_delay_has_passed(delay: f64) {
         let fixture_id = FixtureId::Fixture(1);
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         context.fixture_controller
             .expect_write()
@@ -193,7 +193,7 @@ mod tests {
     #[test_case((0f64, 2f64), vec![true, true, false], 1f64)]
     fn sequence_with_delay_range_should_calculate_delay_for_each_fixture(delay: (f64, f64), fixtures: Vec<bool>, time: f64) {
         let mut context = TestContext::default();
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let fixture_ids = fixtures.iter().enumerate().map(|(i, _)| FixtureId::Fixture(i as u32)).collect();
         for (i, got_value) in fixtures.into_iter().enumerate() {
@@ -237,7 +237,7 @@ mod tests {
     #[test]
     fn sequence_with_fade_should_scale_value() {
         let fixture_id = FixtureId::Fixture(1);
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         context.fixture_controller
             .expect_write()
@@ -271,7 +271,7 @@ mod tests {
     #[test_case(0.5f64, 5f64, 2.5f64, 0.25f64)]
     fn sequence_with_fade_should_write_interpolated_value(value: f64, fade_duration: f64, time: f64, expected: f64) {
         let fixture_id = FixtureId::Fixture(1);
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
         context.fixture_controller
             .expect_write()
@@ -316,7 +316,7 @@ mod tests {
     #[test_case((1f64, 2f64), vec![0.0f64, 0f64], 0f64)]
     fn sequence_with_fade_range_should_calculate_fade_for_each_fixture(fade: (f64, f64), fixtures: Vec<f64>, time: f64) {
         let mut context = TestContext::default();
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let fixture_ids = fixtures.iter().enumerate().map(|(i, _)| FixtureId::Fixture(i as u32)).collect();
         context.fixture_controller.expect_write().return_const(());
@@ -354,7 +354,7 @@ mod tests {
     #[test]
     fn sequence_with_fade_and_delay_should_start_fade_after_delay() {
         let mut context = TestContext::default();
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let sequence = Sequence {
             id: 1,
@@ -392,7 +392,7 @@ mod tests {
     #[test_case((1f64, 2f64), (1f64, 2f64), vec![Some(1f64), Some(1f64)], 4f64)]
     fn sequence_with_fade_and_delay_ranges_should_start_fade_after_delay_for_each_fixture(fade: (f64, f64), delay: (f64, f64), expected: Vec<Option<f64>>, time: f64) {
         let mut context = TestContext::default();
-        let control = FixtureControl::Intensity;
+        let control = FixtureFaderControl::Intensity;
         let fixture_ids = expected.iter().enumerate().map(|(i, _)| FixtureId::Fixture(i as u32)).collect();
         let sequence = Sequence {
             id: 1,

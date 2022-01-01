@@ -60,6 +60,8 @@ impl<'a> NodeDescriptor<'a> {
             NodeType::VideoOutput => Node::VideoOutput(self.downcast_node(node_type).unwrap()),
             NodeType::VideoEffect => Node::VideoEffect(self.downcast_node(node_type).unwrap()),
             NodeType::VideoTransform => Node::VideoTransform(self.downcast_node(node_type).unwrap()),
+            NodeType::ColorHsv => Node::ColorHsv(self.downcast_node(node_type).unwrap()),
+            NodeType::ColorRgb => Node::ColorRgb(self.downcast_node(node_type).unwrap()),
         }
     }
 

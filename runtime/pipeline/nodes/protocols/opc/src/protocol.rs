@@ -1,5 +1,5 @@
 use bytes::{BufMut, BytesMut};
-use mizer_util::ConvertToDmx;
+use mizer_util::ConvertBytes;
 use std::convert::TryFrom;
 
 #[derive(Debug, Clone, Copy, Default)]

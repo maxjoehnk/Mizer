@@ -14,6 +14,8 @@ const List<PopupCategory<Node_NodeType>> NODES = [
     PopupItem(Node_NodeType.DmxOutput, "DMX Output"),
     PopupItem(Node_NodeType.MidiInput, "MIDI Input"),
     PopupItem(Node_NodeType.MidiOutput, "MIDI Output"),
+    PopupItem(Node_NodeType.ColorRgb, "RGB Mixer"),
+    PopupItem(Node_NodeType.ColorHsv, "HSV Mixer"),
   ]),
   PopupCategory(label: "Controls", items: [
     PopupItem(Node_NodeType.Fader, "Fader"),

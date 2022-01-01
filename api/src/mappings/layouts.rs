@@ -87,9 +87,9 @@ impl From<ControlDecorations> for mizer_layouts::ControlDecorations {
 impl From<mizer_node::Color> for Color {
     fn from(color: mizer_node::Color) -> Self {
         Self {
-            red: to_float(color.red),
-            green: to_float(color.green),
-            blue: to_float(color.blue),
+            red: color.red,
+            green: color.green,
+            blue: color.blue,
             ..Default::default()
         }
     }
@@ -97,22 +97,6 @@ impl From<mizer_node::Color> for Color {
 
 impl From<Color> for mizer_node::Color {
     fn from(color: Color) -> Self {
-        Self {
-            red: from_float(color.red),
-            green: from_float(color.green),
-            blue: from_float(color.blue),
-            alpha: u8::MAX,
-        }
+        Self::rgb(color.red, color.green, color.blue)
     }
-}
-
-fn to_float(color: u8) -> f64 {
-    let color = color as f64;
-    let max = u8::MAX as f64;
-
-    color / max
-}
-
-fn from_float(color: f64) -> u8 {
-    (color * u8::MAX as f64).min(255.).max(0.).floor() as u8
 }

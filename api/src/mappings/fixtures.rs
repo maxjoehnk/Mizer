@@ -116,35 +116,35 @@ impl FixtureControls {
     ) -> Vec<Self> {
         let mut controls = Vec::new();
         if let Some(_) = fixture_controls.intensity {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Intensity);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Intensity);
             controls.push(FixtureControls::fader(FixtureControl::INTENSITY, value));
         }
         if let Some(_) = fixture_controls.shutter {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Shutter);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Shutter);
             controls.push(FixtureControls::fader(FixtureControl::SHUTTER, value));
         }
         if let Some(_) = fixture_controls.iris {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Iris);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Iris);
             controls.push(FixtureControls::fader(FixtureControl::IRIS, value));
         }
         if let Some(_) = fixture_controls.zoom {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Zoom);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Zoom);
             controls.push(FixtureControls::fader(FixtureControl::ZOOM, value));
         }
         if let Some(_) = fixture_controls.frost {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Frost);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Frost);
             controls.push(FixtureControls::fader(FixtureControl::FROST, value));
         }
         if let Some(_) = fixture_controls.prism {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Prism);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Prism);
             controls.push(FixtureControls::fader(FixtureControl::PRISM, value));
         }
         if let Some(_) = fixture_controls.focus {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Focus);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Focus);
             controls.push(FixtureControls::fader(FixtureControl::FOCUS, value));
         }
         if let Some(channel) = fixture_controls.pan {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Pan);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Pan);
             controls.push(FixtureControls {
                 control: FixtureControl::PAN,
                 value: Some(FixtureControls_oneof_value::axis(AxisChannel::with_value(
@@ -155,7 +155,7 @@ impl FixtureControls {
             });
         }
         if let Some(channel) = fixture_controls.tilt {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Pan);
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Pan);
             controls.push(FixtureControls {
                 control: FixtureControl::TILT,
                 value: Some(FixtureControls_oneof_value::axis(AxisChannel::with_value(
@@ -169,9 +169,9 @@ impl FixtureControls {
             controls.push(FixtureControls {
                 control: FixtureControl::COLOR,
                 value: Some(FixtureControls_oneof_value::color(ColorChannel {
-                    red: fixture.read_control(mizer_fixtures::definition::FixtureControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
-                    green: fixture.read_control(mizer_fixtures::definition::FixtureControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
-                    blue: fixture.read_control(mizer_fixtures::definition::FixtureControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
+                    red: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
+                    green: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
+                    blue: fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Color(mizer_fixtures::definition::ColorChannel::Red)).unwrap_or_default(),
                     ..Default::default()
                 }))
                 .into(),
@@ -179,7 +179,7 @@ impl FixtureControls {
             })
         }
         for channel in fixture_controls.generic {
-            let value = fixture.read_control(mizer_fixtures::definition::FixtureControl::Generic(channel.label.clone()));
+            let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Generic(channel.label.clone()));
             controls.push(FixtureControls {
                 control: FixtureControl::GENERIC,
                 value: value

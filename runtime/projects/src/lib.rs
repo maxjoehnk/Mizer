@@ -168,6 +168,8 @@ pub enum NodeConfig {
     Envelope(mizer_nodes::EnvelopeNode),
     IldaFile(mizer_nodes::IldaFileNode),
     Laser(mizer_nodes::LaserNode),
+    ColorHsv(mizer_nodes::HsvColorNode),
+    ColorRgb(mizer_nodes::RgbColorNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -199,6 +201,8 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::VideoOutput(node) => Self::VideoOutput(node),
             NodeConfig::VideoEffect(node) => Self::VideoEffect(node),
             NodeConfig::VideoTransform(node) => Self::VideoTransform(node),
+            NodeConfig::ColorHsv(node) => Self::ColorHsv(node),
+            NodeConfig::ColorRgb(node) => Self::ColorRgb(node),
         }
     }
 }
@@ -232,6 +236,8 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::VideoOutput(node) => Self::VideoOutput(node),
             mizer_nodes::Node::VideoEffect(node) => Self::VideoEffect(node),
             mizer_nodes::Node::VideoTransform(node) => Self::VideoTransform(node),
+            mizer_nodes::Node::ColorHsv(node) => Self::ColorHsv(node),
+            mizer_nodes::Node::ColorRgb(node) => Self::ColorRgb(node),
         }
     }
 }

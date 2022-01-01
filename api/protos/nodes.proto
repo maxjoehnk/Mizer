@@ -89,6 +89,8 @@ message Node {
     OpcOutput = 32;
     Laser = 40;
     IldaFile = 41;
+    ColorRgb = 50;
+    ColorHsv = 51;
   }
 
   enum NodePreviewType {
@@ -136,6 +138,8 @@ message NodeConfig {
     MergeNodeConfig mergeConfig = 33;
     EnvelopeNodeConfig envelopeConfig = 34;
     SequencerNodeConfig sequencerConfig = 35;
+    ColorRgbNodeConfig colorRgbConfig = 40;
+    ColorHsvNodeConfig colorHsvConfig = 41;
   }
 }
 
@@ -245,6 +249,9 @@ message VideoTransformNodeConfig {}
 
 message SelectNodeConfig {}
 message MergeNodeConfig {}
+
+message ColorRgbNodeConfig {}
+message ColorHsvNodeConfig {}
 
 message NodePosition {
   double x = 1;

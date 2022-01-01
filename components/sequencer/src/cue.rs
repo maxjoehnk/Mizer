@@ -1,7 +1,7 @@
 use crate::contracts::Clock;
 use crate::state::{CueChannelState, SequenceState};
 use crate::value::*;
-use mizer_fixtures::definition::FixtureControl;
+use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
 use mizer_util::LerpExt;
 use serde::{Deserialize, Serialize};
@@ -154,7 +154,7 @@ impl Default for CueTrigger {
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct CueChannel {
     pub fixtures: Vec<FixtureId>,
-    pub control: FixtureControl,
+    pub control: FixtureFaderControl,
     pub value: SequencerValue<f64>,
     #[serde(default)]
     pub fade: Option<SequencerValue<SequencerTime>>,
@@ -164,7 +164,7 @@ pub struct CueChannel {
 
 impl CueChannel {
     pub(crate) fn new(
-        control: FixtureControl,
+        control: FixtureFaderControl,
         value: impl Into<SequencerValue<f64>>,
         fixtures: Vec<FixtureId>,
     ) -> Self {

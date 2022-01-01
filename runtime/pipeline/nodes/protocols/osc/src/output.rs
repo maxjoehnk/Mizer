@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 use mizer_protocol_osc::*;
+use mizer_util::ConvertBytes;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscOutputNode {
@@ -91,10 +92,10 @@ impl ProcessingNode for OscOutputNode {
         }
         if let Some(color) = context.read_port::<_, Color>("color") {
             let color = OscColor {
-                red: color.red,
-                green: color.green,
-                blue: color.blue,
-                alpha: color.alpha,
+                red: color.red.to_8bit(),
+                green: color.green.to_8bit(),
+                blue: color.blue.to_8bit(),
+                alpha: color.alpha.to_8bit(),
             };
             state.send(OscPacket::Message(OscMessage {
                 addr: self.path.clone(),

@@ -35,6 +35,8 @@ pub enum NodeType {
     IldaFile,
     Select,
     Merge,
+    ColorRgb,
+    ColorHsv,
 }
 
 impl NodeType {
@@ -68,6 +70,8 @@ impl NodeType {
             IldaFile => "ilda-file",
             Select => "select",
             Merge => "merge",
+            ColorHsv => "color-hsv",
+            ColorRgb => "color-rgb",
         }
         .to_string()
     }

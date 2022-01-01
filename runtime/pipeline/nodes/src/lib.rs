@@ -18,6 +18,7 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
+pub use mizer_color_nodes::{RgbColorNode, HsvColorNode};
 
 #[derive(Debug, Clone, From)]
 pub enum Node {
@@ -47,6 +48,8 @@ pub enum Node {
     VideoOutput(VideoOutputNode),
     VideoEffect(VideoEffectNode),
     VideoTransform(VideoTransformNode),
+    ColorRgb(RgbColorNode),
+    ColorHsv(HsvColorNode),
 }
 
 impl From<NodeType> for Node {
@@ -78,6 +81,8 @@ impl From<NodeType> for Node {
             NodeType::VideoOutput => VideoOutputNode::default().into(),
             NodeType::MidiInput => MidiInputNode::default().into(),
             NodeType::MidiOutput => MidiOutputNode::default().into(),
+            NodeType::ColorRgb => RgbColorNode::default().into(),
+            NodeType::ColorHsv => HsvColorNode::default().into(),
         }
     }
 }
@@ -112,6 +117,8 @@ impl Node {
             VideoOutput(_) => NodeType::VideoOutput,
             VideoEffect(_) => NodeType::VideoEffect,
             VideoTransform(_) => NodeType::VideoTransform,
+            ColorHsv(_) => NodeType::ColorHsv,
+            ColorRgb(_) => NodeType::ColorRgb,
         }
     }
 }

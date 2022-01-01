@@ -132,7 +132,7 @@ impl Fixture {
 }
 
 impl IFixtureMut for Fixture {
-    fn write_control(&mut self, control: FixtureControl, value: f64) {
+    fn write_control(&mut self, control: FixtureFaderControl, value: f64) {
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 self.write(channel.to_string(), value)
@@ -153,7 +153,7 @@ impl IFixtureMut for Fixture {
 }
 
 impl IFixture for Fixture {
-    fn read_control(&self, control: FixtureControl) -> Option<f64> {
+    fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 self.channel_values.get(channel).copied()
@@ -176,7 +176,7 @@ pub struct SubFixture<'a> {
 }
 
 impl<'a> IFixtureMut for SubFixtureMut<'a> {
-    fn write_control(&mut self, control: FixtureControl, value: f64) {
+    fn write_control(&mut self, control: FixtureFaderControl, value: f64) {
         if let Some(channel) = self.definition.controls.get_channel(&control) {
             self.fixture.write(channel, value)
         }
@@ -184,7 +184,7 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
 }
 
 impl<'a> IFixture for SubFixtureMut<'a> {
-    fn read_control(&self, control: FixtureControl) -> Option<f64> {
+    fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         self.definition
             .controls
             .get_channel(&control)
@@ -194,7 +194,7 @@ impl<'a> IFixture for SubFixtureMut<'a> {
 }
 
 impl<'a> IFixture for SubFixture<'a> {
-    fn read_control(&self, control: FixtureControl) -> Option<f64> {
+    fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         self.definition
             .controls
             .get_channel(&control)
@@ -204,16 +204,16 @@ impl<'a> IFixture for SubFixture<'a> {
 }
 
 pub trait IFixture {
-    fn read_control(&self, control: FixtureControl) -> Option<f64>;
+    fn read_control(&self, control: FixtureFaderControl) -> Option<f64>;
 }
 
 pub trait IFixtureMut: IFixture {
-    fn write_control(&mut self, control: FixtureControl, value: f64);
+    fn write_control(&mut self, control: FixtureFaderControl, value: f64);
     fn highlight(&mut self) {
-        self.write_control(FixtureControl::Intensity, 1f64);
-        self.write_control(FixtureControl::Color(ColorChannel::Red), 1f64);
-        self.write_control(FixtureControl::Color(ColorChannel::Green), 1f64);
-        self.write_control(FixtureControl::Color(ColorChannel::Blue), 1f64);
+        self.write_control(FixtureFaderControl::Intensity, 1f64);
+        self.write_control(FixtureFaderControl::Color(ColorChannel::Red), 1f64);
+        self.write_control(FixtureFaderControl::Color(ColorChannel::Green), 1f64);
+        self.write_control(FixtureFaderControl::Color(ColorChannel::Blue), 1f64);
     }
 }
 
@@ -252,21 +252,21 @@ fn get_current_mode(definition: &FixtureDefinition, selected_mode: Option<String
 }
 
 impl<TChannel> FixtureControls<TChannel> {
-    fn get_channel<'a>(&'a self, control: &'a FixtureControl) -> Option<&'a TChannel> {
+    fn get_channel<'a>(&'a self, control: &'a FixtureFaderControl) -> Option<&'a TChannel> {
         match control {
-            FixtureControl::Intensity => self.intensity.as_ref(),
-            FixtureControl::Shutter => self.shutter.as_ref(),
-            FixtureControl::Zoom => self.zoom.as_ref(),
-            FixtureControl::Focus => self.focus.as_ref(),
-            FixtureControl::Iris => self.iris.as_ref(),
-            FixtureControl::Prism => self.prism.as_ref(),
-            FixtureControl::Frost => self.frost.as_ref(),
-            FixtureControl::Color(ColorChannel::Red) => self.color.as_ref().map(|c| &c.red),
-            FixtureControl::Color(ColorChannel::Green) => self.color.as_ref().map(|c| &c.green),
-            FixtureControl::Color(ColorChannel::Blue) => self.color.as_ref().map(|c| &c.blue),
-            FixtureControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
-            FixtureControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
-            FixtureControl::Generic(ref channel) => self.generic.iter().find(|c| &c.label == channel).map(|c| &c.channel),
+            FixtureFaderControl::Intensity => self.intensity.as_ref(),
+            FixtureFaderControl::Shutter => self.shutter.as_ref(),
+            FixtureFaderControl::Zoom => self.zoom.as_ref(),
+            FixtureFaderControl::Focus => self.focus.as_ref(),
+            FixtureFaderControl::Iris => self.iris.as_ref(),
+            FixtureFaderControl::Prism => self.prism.as_ref(),
+            FixtureFaderControl::Frost => self.frost.as_ref(),
+            FixtureFaderControl::Color(ColorChannel::Red) => self.color.as_ref().map(|c| &c.red),
+            FixtureFaderControl::Color(ColorChannel::Green) => self.color.as_ref().map(|c| &c.green),
+            FixtureFaderControl::Color(ColorChannel::Blue) => self.color.as_ref().map(|c| &c.blue),
+            FixtureFaderControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
+            FixtureFaderControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
+            FixtureFaderControl::Generic(ref channel) => self.generic.iter().find(|c| &c.label == channel).map(|c| &c.channel),
             _ => None,
         }
     }

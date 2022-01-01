@@ -1,3 +1,5 @@
+use std::convert::TryFrom;
+use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq)]
@@ -167,6 +169,53 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum FixtureControlType {
+    Fader,
+    Color,
+}
+
+impl<TChannel> FixtureControls<TChannel> {
+    pub fn controls(&self) -> Vec<(FixtureControl, FixtureControlType)> {
+        let mut controls = Vec::new();
+        if let Some(_) = self.intensity {
+            controls.push((FixtureControl::Intensity, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.shutter {
+            controls.push((FixtureControl::Shutter, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.iris {
+            controls.push((FixtureControl::Iris, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.zoom {
+            controls.push((FixtureControl::Zoom, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.frost {
+            controls.push((FixtureControl::Frost, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.prism {
+            controls.push((FixtureControl::Prism, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.focus {
+            controls.push((FixtureControl::Focus, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.pan {
+            controls.push((FixtureControl::Pan, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.tilt {
+            controls.push((FixtureControl::Tilt, FixtureControlType::Fader));
+        }
+        if let Some(_) = self.color {
+            controls.push((FixtureControl::Color, FixtureControlType::Color));
+        }
+        for channel in &self.generic {
+            controls.push((FixtureControl::Generic(channel.label.clone()), FixtureControlType::Fader));
+        }
+
+        controls
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum FixtureControlChannel {
     /// Fixture control maps to one dmx channel
@@ -210,8 +259,97 @@ pub struct GenericControl<TChannel> {
     pub channel: TChannel,
 }
 
+/// Describes a single fixture control
+///
+/// This may have multiple fader values
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
 pub enum FixtureControl {
+    Intensity,
+    Shutter,
+    Color,
+    Pan,
+    Tilt,
+    Focus,
+    Zoom,
+    Prism,
+    Iris,
+    Frost,
+    Generic(String)
+}
+
+impl ToString for FixtureControl {
+    fn to_string(&self) -> String {
+        match self {
+            Self::Intensity => "Intensity".into(),
+            Self::Shutter => "Shutter".into(),
+            Self::Color => "Color".into(),
+            Self::Pan => "Pan".into(),
+            Self::Tilt => "Tilt".into(),
+            Self::Focus => "Focus".into(),
+            Self::Zoom => "Zoom".into(),
+            Self::Prism => "Prism".into(),
+            Self::Iris => "Iris".into(),
+            Self::Frost => "Frost".into(),
+            Self::Generic(control) => control.clone(),
+        }
+    }
+}
+
+impl From<&str> for FixtureControl {
+    fn from(s: &str) -> Self {
+        match s {
+            "Intensity" => Self::Intensity,
+            "Shutter" => Self::Shutter,
+            "Color" => Self::Color,
+            "Pan" => Self::Pan,
+            "Tilt" => Self::Tilt,
+            "Focus" => Self::Focus,
+            "Zoom" => Self::Zoom,
+            "Prism" => Self::Prism,
+            "Iris" => Self::Iris,
+            "Frost" => Self::Frost,
+            control => Self::Generic(control.into()),
+        }
+    }
+}
+
+impl From<String> for FixtureControl {
+    fn from(s: String) -> Self {
+        s.as_str().into()
+    }
+}
+
+impl FromStr for FixtureControl {
+    type Err = ();
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(s.into())
+    }
+}
+
+impl TryFrom<FixtureControl> for FixtureFaderControl {
+    type Error = ();
+
+    fn try_from(value: FixtureControl) -> Result<Self, Self::Error> {
+        match value {
+            FixtureControl::Intensity => Ok(Self::Intensity),
+            FixtureControl::Shutter => Ok(Self::Shutter),
+            FixtureControl::Color => Err(()),
+            FixtureControl::Pan => Ok(Self::Pan),
+            FixtureControl::Tilt => Ok(Self::Tilt),
+            FixtureControl::Focus => Ok(Self::Focus),
+            FixtureControl::Zoom => Ok(Self::Zoom),
+            FixtureControl::Prism => Ok(Self::Prism),
+            FixtureControl::Iris => Ok(Self::Iris),
+            FixtureControl::Frost => Ok(Self::Frost),
+            FixtureControl::Generic(name) => Ok(Self::Generic(name)),
+        }
+    }
+}
+
+/// Describes a single fader value
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
+pub enum FixtureFaderControl {
     Intensity,
     Shutter,
     Color(ColorChannel),

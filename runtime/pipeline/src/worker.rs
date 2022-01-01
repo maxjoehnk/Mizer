@@ -90,6 +90,7 @@ impl PipelineWorker {
                 log::debug!("Registering port receiver for {:?} {:?}", &path, &port_id);
                 match metadata.port_type {
                     PortType::Single => receivers.register::<f64>(port_id, metadata),
+                    PortType::Color => receivers.register::<Color>(port_id, metadata),
                     PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
                     PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
                     _ => {}
@@ -286,6 +287,7 @@ impl PipelineWorker {
                 receivers: self.receivers.get(path),
                 senders: self.senders.get(path),
             };
+            log::trace!("process_node {} with context {:?}", &path, &context);
             let state = self.states.get_mut(path);
             let state = state.unwrap();
             if let Err(e) = node.process(&context, state) {

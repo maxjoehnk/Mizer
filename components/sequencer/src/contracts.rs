@@ -1,5 +1,5 @@
 use std::time::Instant;
-use mizer_fixtures::definition::FixtureControl;
+use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
 use mizer_fixtures::manager::FixtureManager;
 
@@ -19,11 +19,11 @@ impl Clock for StdClock {
 
 #[cfg_attr(test, mockall::automock)]
 pub(crate) trait FixtureController {
-    fn write(&self, fixture_id: FixtureId, control: FixtureControl, value: f64);
+    fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64);
 }
 
 impl FixtureController for FixtureManager {
-    fn write(&self, fixture_id: FixtureId, control: FixtureControl, value: f64) {
+    fn write(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64) {
         self.write_fixture_control(fixture_id, control, value);
     }
 }

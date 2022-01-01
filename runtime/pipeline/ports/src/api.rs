@@ -44,6 +44,12 @@ impl PortId {
     }
 }
 
+impl AsRef<str> for PortId {
+    fn as_ref(&self) -> &str {
+        self.0.as_str()
+    }
+}
+
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, Deserialize, Serialize)]
 pub enum PortType {
     /// Single float value
@@ -114,10 +120,27 @@ pub trait PortValue: Debug + Clone + PartialEq + Send + Sync + Any {}
 
 impl<T> PortValue for T where T: Debug + Clone + PartialEq + Send + Sync + Any {}
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub struct Color {
-    pub red: u8,
-    pub green: u8,
-    pub blue: u8,
-    pub alpha: u8,
+    pub red: f64,
+    pub green: f64,
+    pub blue: f64,
+    pub alpha: f64,
+}
+
+impl Color {
+    pub fn rgb(red: f64, green: f64, blue: f64) -> Self {
+        Self {
+            red,
+            green,
+            blue,
+            alpha: 1f64,
+        }
+    }
+}
+
+impl From<(f64, f64, f64)> for Color {
+    fn from((r, g, b): (f64, f64, f64)) -> Self {
+        Self::rgb(r, g, b)
+    }
 }

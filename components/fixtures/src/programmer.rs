@@ -8,7 +8,7 @@ use postage::prelude::Sink;
 use futures::stream::Stream;
 
 use crate::fixture::{Fixture, IFixtureMut};
-use crate::definition::FixtureControl;
+use crate::definition::FixtureFaderControl;
 use crate::FixtureId;
 
 pub struct Programmer {
@@ -27,13 +27,13 @@ pub struct ProgrammerState {
 
 #[derive(Debug, Default)]
 pub struct FixtureProgrammer {
-    controls: HashMap<FixtureControl, f64>,
+    controls: HashMap<FixtureFaderControl, f64>,
 }
 
 #[derive(Debug)]
 pub struct ProgrammerChannel {
     pub fixtures: Vec<FixtureId>,
-    pub control: FixtureControl,
+    pub control: FixtureFaderControl,
     pub value: f64,
 }
 
@@ -99,7 +99,7 @@ impl Programmer {
         self.emit_state();
     }
 
-    pub fn write_control(&mut self, control: FixtureControl, value: f64) {
+    pub fn write_control(&mut self, control: FixtureFaderControl, value: f64) {
         for (_, programmer) in self.selected_fixtures.iter_mut() {
             programmer.controls.insert(control.clone(), value);
         }
@@ -112,7 +112,7 @@ impl Programmer {
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerChannel> {
-        let mut controls: HashMap<FixtureControl, (Vec<FixtureId>, f64)> = HashMap::new();
+        let mut controls: HashMap<FixtureFaderControl, (Vec<FixtureId>, f64)> = HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
             for (control, value) in state.controls.iter() {
                 let entry = controls

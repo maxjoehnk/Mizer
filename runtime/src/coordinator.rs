@@ -125,6 +125,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             VideoOutput(node) => self.add_node(path, node),
             MidiInput(node) => self.add_node(path, node),
             MidiOutput(node) => self.add_node(path, node),
+            ColorHsv(node) => self.add_node(path, node),
+            ColorRgb(node) => self.add_node(path, node),
         }
     }
 
@@ -558,6 +560,8 @@ pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
         NodeType::VideoOutput => Node::VideoOutput(downcast_node(node).unwrap()),
         NodeType::VideoEffect => Node::VideoEffect(downcast_node(node).unwrap()),
         NodeType::VideoTransform => Node::VideoTransform(downcast_node(node).unwrap()),
+        NodeType::ColorHsv => Node::ColorHsv(downcast_node(node).unwrap()),
+        NodeType::ColorRgb => Node::ColorRgb(downcast_node(node).unwrap()),
     }
 }
 

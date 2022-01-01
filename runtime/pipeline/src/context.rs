@@ -7,6 +7,7 @@ use mizer_processing::Injector;
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
 use ringbuffer::{ConstGenericRingBuffer, RingBufferWrite, RingBufferExt};
 use std::cell::RefCell;
+use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 use pinboard::NonEmptyPinboard;
 
@@ -16,6 +17,16 @@ pub struct PipelineContext<'a> {
     pub(crate) receivers: Option<&'a NodeReceivers>,
     pub(crate) injector: &'a Injector,
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
+}
+
+impl<'a> Debug for PipelineContext<'a> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("PipelineContext")
+            .field("frame", &self.frame)
+            .field("senders", &self.senders)
+            .field("receivers", &self.receivers)
+            .finish()
+    }
 }
 
 #[derive(Debug)]

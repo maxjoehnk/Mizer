@@ -35,6 +35,8 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             VideoOutput(output) => Self::videoOutputConfig(output.into()),
             VideoEffect(effect) => Self::videoEffectConfig(effect.into()),
             VideoTransform(transform) => Self::videoTransformConfig(transform.into()),
+            ColorRgb(node) => Self::colorRgbConfig(node.into()),
+            ColorHsv(node) => Self::colorHsvConfig(node.into()),
         }
     }
 }
@@ -82,6 +84,8 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::videoTransformConfig(transform) => {
                 Self::VideoTransform(transform.into())
             }
+            NodeConfig_oneof_type::colorRgbConfig(node) => Self::ColorRgb(node.into()),
+            NodeConfig_oneof_type::colorHsvConfig(node) => Self::ColorHsv(node.into()),
         }
     }
 }
@@ -609,6 +613,30 @@ impl From<MergeNodeConfig> for mizer_nodes::MergeNode {
     }
 }
 
+impl From<mizer_nodes::HsvColorNode> for ColorHsvNodeConfig {
+    fn from(_: mizer_nodes::HsvColorNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<ColorHsvNodeConfig> for mizer_nodes::HsvColorNode {
+    fn from(_: ColorHsvNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
+impl From<mizer_nodes::RgbColorNode> for ColorRgbNodeConfig {
+    fn from(_: mizer_nodes::RgbColorNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<ColorRgbNodeConfig> for mizer_nodes::RgbColorNode {
+    fn from(_: ColorRgbNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -638,6 +666,8 @@ impl From<NodeType> for Node_NodeType {
             NodeType::MidiOutput => Node_NodeType::MidiOutput,
             NodeType::Laser => Node_NodeType::Laser,
             NodeType::IldaFile => Node_NodeType::IldaFile,
+            NodeType::ColorHsv => Node_NodeType::ColorHsv,
+            NodeType::ColorRgb => Node_NodeType::ColorRgb,
         }
     }
 }
@@ -671,6 +701,8 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::MidiOutput => NodeType::MidiOutput,
             Node_NodeType::Laser => NodeType::Laser,
             Node_NodeType::IldaFile => NodeType::IldaFile,
+            Node_NodeType::ColorHsv => NodeType::ColorHsv,
+            Node_NodeType::ColorRgb => NodeType::ColorRgb,
         }
     }
 }

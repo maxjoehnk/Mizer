@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 use mizer_protocol_osc::*;
+use mizer_util::ConvertPercentages;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscInputNode {
@@ -130,10 +131,10 @@ fn write_color(context: &impl NodeContext, color: &OscColor) {
     context.write_port(
         "color",
         Color {
-            red: color.red,
-            green: color.green,
-            blue: color.blue,
-            alpha: color.alpha,
+            red: color.red.to_percentage(),
+            green: color.green.to_percentage(),
+            blue: color.blue.to_percentage(),
+            alpha: color.alpha.to_percentage(),
         },
     );
 }

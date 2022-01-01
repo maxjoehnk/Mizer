@@ -1,5 +1,9 @@
+use std::collections::HashMap;
+use std::convert::TryInto;
 use serde::{Deserialize, Serialize};
 
+use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl, FixtureControls, FixtureControlType, FixtureControl};
+use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
 
@@ -39,15 +43,10 @@ impl PipelineNode for FixtureNode {
             .and_then(|manager| manager.get_fixture(self.fixture_id))
             .and_then(|fixture| {
                 fixture
-                    .get_channels()
-                    .iter()
-                    .find(|c| port == c.name)
-                    .cloned()
-            })
-            .map(|_| PortMetadata {
-                direction: PortDirection::Input,
-                port_type: PortType::Single,
-                ..Default::default()
+                    .current_mode
+                    .controls
+                    .get_ports()
+                    .remove(&port)
             })
     }
 
@@ -57,18 +56,10 @@ impl PipelineNode for FixtureNode {
             .and_then(|manager| manager.get_fixture(self.fixture_id))
             .map(|fixture| {
                 fixture
-                    .get_channels()
-                    .iter()
-                    .map(|channel| {
-                        (
-                            channel.name.as_str().into(),
-                            PortMetadata {
-                                port_type: PortType::Single,
-                                direction: PortDirection::Input,
-                                ..Default::default()
-                            },
-                        )
-                    })
+                    .current_mode
+                    .controls
+                    .get_ports()
+                    .into_iter()
                     .collect()
             })
             .unwrap_or_default()
@@ -85,9 +76,25 @@ impl ProcessingNode for FixtureNode {
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(manager) = context.inject::<FixtureManager>() {
             if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
+                let ports: HashMap<PortId, PortMetadata> = fixture.current_mode.controls.get_ports();
                 for port in context.input_ports() {
-                    if let Some(value) = context.read_port(port.clone()) {
-                        fixture.write(&port.0, value);
+                    if let Some(port_metadata) = ports.get(&port) {
+                        match port_metadata.port_type {
+                            PortType::Color => {
+                                if let Some(value) = context.read_port::<_, Color>(port.clone()) {
+                                    fixture.write_control(FixtureFaderControl::Color(ColorChannel::Red), value.red);
+                                    fixture.write_control(FixtureFaderControl::Color(ColorChannel::Green), value.green);
+                                    fixture.write_control(FixtureFaderControl::Color(ColorChannel::Blue), value.blue);
+                                }
+                            }
+                            PortType::Single => {
+                                if let Some(value) = context.read_port(port.clone()) {
+                                    let control = FixtureControl::from(port.as_str());
+                                    fixture.write_control(control.try_into().unwrap(), value);
+                                }
+                            }
+                            _ => unimplemented!()
+                        }
                     }
                 }
             } else {
@@ -102,5 +109,26 @@ impl ProcessingNode for FixtureNode {
 
     fn create_state(&self) -> Self::State {
         Default::default()
+    }
+}
+
+trait FixtureControlPorts {
+    fn get_ports(&self) -> HashMap<PortId, PortMetadata>;
+}
+
+impl<TChannel> FixtureControlPorts for FixtureControls<TChannel> {
+    fn get_ports(&self) -> HashMap<PortId, PortMetadata> {
+        self.controls()
+            .into_iter()
+            .map(|(name, control_type)| (
+                name.to_string().into(),
+                PortMetadata {
+                    port_type: if control_type == FixtureControlType::Color { PortType::Color } else { PortType::Single },
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                }
+            ))
+            .collect()
+
     }
 }

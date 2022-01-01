@@ -1,5 +1,5 @@
 use crate::fixture::{Fixture, IFixtureMut};
-use crate::definition::{FixtureControl, FixtureDefinition};
+use crate::definition::{FixtureFaderControl, FixtureDefinition};
 use crate::library::FixtureLibrary;
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
@@ -57,7 +57,7 @@ impl FixtureManager {
         self.fixtures.remove(&fixture_id);
     }
 
-    pub fn write_fixture_control(&self, fixture_id: FixtureId, control: FixtureControl, value: f64) {
+    pub fn write_fixture_control(&self, fixture_id: FixtureId, control: FixtureFaderControl, value: f64) {
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {

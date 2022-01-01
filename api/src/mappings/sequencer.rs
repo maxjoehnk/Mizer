@@ -149,9 +149,9 @@ impl From<Option<SequencerValue<SequencerTime>>> for CueTimer {
     }
 }
 
-impl From<mizer_fixtures::definition::FixtureControl> for CueControl {
-    fn from(fixture_control: mizer_fixtures::definition::FixtureControl) -> Self {
-        use mizer_fixtures::definition::FixtureControl::*;
+impl From<mizer_fixtures::definition::FixtureFaderControl> for CueControl {
+    fn from(fixture_control: mizer_fixtures::definition::FixtureFaderControl) -> Self {
+        use mizer_fixtures::definition::FixtureFaderControl::*;
         use mizer_fixtures::definition::ColorChannel;
 
         match fixture_control {

@@ -18,32 +18,13 @@ import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/node_properties.dart';
 
-class FetchNodesView extends StatefulWidget {
-  @override
-  State<FetchNodesView> createState() => _FetchNodesViewState();
-}
-
-class _FetchNodesViewState extends State<FetchNodesView> {
-  NodeEditorModel? model;
+class FetchNodesView extends StatelessWidget {
+  const FetchNodesView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     context.read<NodesBloc>().add(FetchNodes());
-    return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
-      _updateModel(nodes);
-      return SizeChangedLayoutNotifier(
-        child: ChangeNotifierProvider<NodeEditorModel>.value(
-            value: model!, builder: (context, _) => SizedBox.expand(child: NodesView())),
-      );
-    });
-  }
-
-  _updateModel(Nodes nodes) {
-    if (model == null) {
-      model = NodeEditorModel(nodes);
-    } else {
-      model!.refresh(nodes);
-    }
+    return SizedBox.expand(child: NodesView());
   }
 }
 

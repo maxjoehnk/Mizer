@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/state/nodes_view.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 
 import 'fixtures_bloc.dart';
@@ -17,7 +18,7 @@ class StateProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      child: this.child,
+      child: NodesViewState(child: this.child),
       providers: [
         BlocProvider(create: (context) => NodesBloc(context.read())),
         BlocProvider(create: (context) => SessionBloc(context.read())),

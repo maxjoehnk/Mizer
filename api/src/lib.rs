@@ -1,5 +1,3 @@
-extern crate serde;
-
 use std::collections::HashMap;
 
 use mizer_clock::{ClockSnapshot, ClockState};

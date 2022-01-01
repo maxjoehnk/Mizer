@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1"
-artnet_protocol = { git = "https://github.com/Trangar/artnet_protocol" }
+artnet_protocol = "0.4"
 sacn = "0.4"
 log = "0.4"
 mizer-processing = { path = "../../../../runtime/processing" }

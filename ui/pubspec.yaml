@@ -41,8 +41,18 @@ dev_dependencies:
   test: ^1.17.0
   mockito: ^5.0.0
   bloc_test: ^8.2.0
+  ffigen: ^4.1.2
 
 flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+
+ffigen:
+  output: 'lib/api/plugin/ffi/bindings.dart'
+  name: 'FFIBindings'
+  headers:
+    entry-points:
+      - 'ffi.h'
+    include-directives:
+      - 'ffi.h'

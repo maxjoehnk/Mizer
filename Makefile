@@ -10,6 +10,5 @@ build-headless:
 	cargo build --release --no-default-features
 
 build:
-	cd ui && flutter pub get
-	cargo build -p mizer-ui-ffi
+	cd ui && make
 	cargo build --all-features

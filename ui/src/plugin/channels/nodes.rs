@@ -2,7 +2,7 @@ use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::NodesHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
-use mizer_ui_ffi::{FFIPointer, NodeHistory};
+use mizer_ui_ffi::{FFIToPointer, NodeHistory};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::sync::Arc;

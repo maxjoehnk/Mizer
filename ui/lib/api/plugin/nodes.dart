@@ -1,12 +1,18 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/nodes.dart';
-import 'package:mizer/api/plugin/ffi.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
-export 'ffi.dart' show NodeHistoryPointer;
+import 'ffi/api.dart';
+import 'ffi/bindings.dart';
+import 'ffi/history.dart';
+
+export 'ffi/history.dart' show NodeHistoryPointer;
 
 class NodesPluginApi implements NodesApi {
+  final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/nodes");
+
+  NodesPluginApi(this.bindings);
 
   @override
   Future<Node> addNode(AddNodeRequest request) async {
@@ -55,6 +61,6 @@ class NodesPluginApi implements NodesApi {
   Future<NodeHistoryPointer> getHistoryPointer(String path) async {
     int pointer = await channel.invokeMethod("getHistoryPointer", path);
 
-    return NodeHistoryPointer(pointer);
+    return this.bindings.openNodeHistory(pointer);
   }
 }

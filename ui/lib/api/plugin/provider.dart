@@ -10,6 +10,8 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/plugin/ffi/api.dart';
+import 'package:mizer/api/plugin/ffi/bindings.dart';
 
 import 'connections.dart';
 import 'fixtures.dart';
@@ -24,8 +26,11 @@ import 'transport.dart';
 
 class PluginApiProvider extends StatelessWidget {
   final Widget child;
+  late final FFIBindings bindings;
 
-  PluginApiProvider({required this.child});
+  PluginApiProvider({required this.child}) {
+    this.bindings = openBindings();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<FixturesApi>(create: (context) => FixturesPluginApi()),
         RepositoryProvider<LayoutsApi>(create: (context) => LayoutsPluginApi()),
         RepositoryProvider<MediaApi>(create: (context) => MediaPluginApi()),
-        RepositoryProvider<NodesApi>(create: (context) => NodesPluginApi()),
+        RepositoryProvider<NodesApi>(create: (context) => NodesPluginApi(bindings)),
         RepositoryProvider<SessionApi>(create: (context) => SessionPluginApi()),
         RepositoryProvider<TransportApi>(create: (context) => TransportPluginApi()),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerPluginApi()),

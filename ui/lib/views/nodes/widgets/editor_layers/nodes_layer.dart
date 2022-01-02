@@ -16,6 +16,7 @@ class NodesTarget extends StatelessWidget {
                 child: Stack(
               clipBehavior: Clip.none,
               children: model.nodes
+                  .where((node) => !node.node.designer.hidden)
                   .map((node) => Transform(
                         transform: model.transformationController.value *
                             Matrix4.translation(Vector3(node.offset.dx, node.offset.dy, 0)),

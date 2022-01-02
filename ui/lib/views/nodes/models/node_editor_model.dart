@@ -7,7 +7,6 @@ import 'node_model.dart';
 
 /// State Object for the Nodes view
 class NodeEditorModel extends ChangeNotifier {
-  List<Node> hidden = [];
   List<NodeModel> nodes = [];
   List<NodeConnection> channels = [];
   final GlobalKey painterKey = GlobalKey(debugLabel: "GraphPaintLayer");
@@ -21,18 +20,21 @@ class NodeEditorModel extends ChangeNotifier {
     transformationController = TransformationController()..addListener(update);
   }
 
+  List<NodeModel> get hidden {
+    return this.nodes.where((nm) => nm.node.designer.hidden).toList();
+  }
+
   /// Rebuild the node and port states
   void refresh(Nodes nodes) {
     this._disposeOldNodes();
     this.nodes = nodes.nodes
-        .where((node) => !node.designer.hidden)
         .map(this._createModel)
         .map((nodeModel) {
           nodeModel.addListener(this.update);
           return nodeModel;
         })
         .toList();
-    this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList();
+    this.nodes.sortBy((element) => element.node.path);
     this.channels = nodes.channels;
     this.updateNodes();
     this.update();

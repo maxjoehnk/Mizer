@@ -12,3 +12,6 @@ build-headless:
 build:
 	cd ui && make
 	cargo build
+
+run: build
+	target/debug/mizer

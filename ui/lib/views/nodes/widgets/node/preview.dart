@@ -87,7 +87,7 @@ class _HistoryPaintState extends State<HistoryPaint> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: HistoryPainter(history), size: Size(300, 200));
+    return CustomPaint(painter: HistoryPainter(history), size: Size(300, 200), willChange: true);
   }
 
   @override

@@ -66,19 +66,13 @@ class NodePort extends StatelessWidget {
               },
               builder: (BuildContext context, List<ConnectionRequest?> candidateData,
                   List<dynamic> rejectedData) {
-                List<Widget> children;
-                if (collapsed) {
-                  children = _collapsed(portKey);
-                }else {
-                  children = _expanded(portKey);
-                }
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 2.0),
                   height: DOT_SIZE,
                   child: Row(
                     mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: children,
+                    children: collapsed ? _collapsed(portKey) : _expanded(portKey),
                   ),
                 );
               }),

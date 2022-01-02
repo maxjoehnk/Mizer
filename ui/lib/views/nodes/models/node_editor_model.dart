@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/models/port_model.dart';
@@ -10,7 +9,7 @@ class NodeEditorModel extends ChangeNotifier {
   List<Node> hidden = [];
   List<NodeModel> nodes = [];
   List<NodeConnection> channels = [];
-  final GlobalKey painterKey = GlobalKey();
+  final GlobalKey painterKey = GlobalKey(debugLabel: "GraphPaintLayer");
 
   late TransformationController transformationController;
   NodeModel? selectedNode;
@@ -31,6 +30,7 @@ class NodeEditorModel extends ChangeNotifier {
     this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList();
     this.channels = nodes.channels;
     this.updateNodes();
+    this.update();
   }
 
   void updateNodes() {
@@ -96,7 +96,9 @@ class NewConnectionModel {
       {required this.port, required this.node, this.offset = Offset.zero, required this.key});
 
   void update(GlobalKey key) {
-    if (key.currentContext == null || this.key.currentContext == null) return;
+    if (key.currentContext == null || this.key.currentContext == null) {
+      return;
+    }
     RenderBox thisBox = this.key.currentContext!.findRenderObject() as RenderBox;
     RenderBox thatBox = key.currentContext!.findRenderObject() as RenderBox;
     this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));

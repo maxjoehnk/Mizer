@@ -11,7 +11,9 @@ class PortModel {
   PortModel({required this.key, required this.port, required this.input});
 
   void update(GlobalKey key) {
-    if (key.currentContext == null || this.key.currentContext == null) return;
+    if (key.currentContext == null || this.key.currentContext == null) {
+      return;
+    }
     RenderBox thisBox = this.key.currentContext!.findRenderObject() as RenderBox;
     RenderBox thatBox = key.currentContext!.findRenderObject() as RenderBox;
     this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));

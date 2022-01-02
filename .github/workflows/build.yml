@@ -123,6 +123,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install native dependencies
+        run: sudo apt-get update && sudo apt-get install libclang-dev
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'

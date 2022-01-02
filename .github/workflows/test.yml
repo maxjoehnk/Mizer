@@ -42,10 +42,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Install cbindgen binary crate
+        uses: actions-rs/install@v0.1
+        with:
+          crate: cbindgen
+          version: latest
+          use-tool-cache: true
       - uses: subosito/flutter-action@v1
         with:
           channel: dev
-      - run: flutter pub get
+      - name: Prepare UI
+        run: make
         working-directory: ui
       - run: flutter test
         working-directory: ui

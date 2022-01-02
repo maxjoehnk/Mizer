@@ -5,6 +5,7 @@ import 'package:mizer/views/nodes/models/port_model.dart';
 
 import 'node_model.dart';
 
+/// State Object for the Nodes view
 class NodeEditorModel extends ChangeNotifier {
   List<Node> hidden = [];
   List<NodeModel> nodes = [];
@@ -20,19 +21,32 @@ class NodeEditorModel extends ChangeNotifier {
     transformationController = TransformationController()..addListener(update);
   }
 
+  /// Rebuild the node and port states
   void refresh(Nodes nodes) {
     this._disposeOldNodes();
-    this.nodes = nodes.nodes.where((node) => !node.designer.hidden).map((node) {
-      var nodeModel = NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}"));
-      nodeModel.addListener(this.update);
-      return nodeModel;
-    }).toList();
+    this.nodes = nodes.nodes
+        .where((node) => !node.designer.hidden)
+        .map(this._createModel)
+        .map((nodeModel) {
+          nodeModel.addListener(this.update);
+          return nodeModel;
+        })
+        .toList();
     this.hidden = nodes.nodes.where((node) => node.designer.hidden).toList();
     this.channels = nodes.channels;
     this.updateNodes();
     this.update();
   }
+  
+  NodeModel _createModel(Node node) {
+    var previousNode = this.nodes.firstWhereOrNull((element) => element.node.path == node.path);
+    if (previousNode != null) {
+      return previousNode.updateNode(node, GlobalKey(debugLabel: "Node ${node.path}"));
+    }
+    return NodeModel(node: node, key: GlobalKey(debugLabel: "Node ${node.path}"));
+  }
 
+  /// Recalculate node position and sizes
   void updateNodes() {
     for (var node in nodes) {
       node.update(painterKey);
@@ -40,10 +54,12 @@ class NodeEditorModel extends ChangeNotifier {
     }
   }
 
+  /// Notify listeners of changes
   void update() {
     notifyListeners();
   }
 
+  /// Returns the [PortModel] for the given [node] and [port] combination
   PortModel? getPortModel(Node node, Port port, bool input) {
     NodeModel? nodeModel = this.nodes.firstWhereOrNull((nodeModel) => nodeModel.node == node);
 
@@ -55,6 +71,7 @@ class NodeEditorModel extends ChangeNotifier {
         (portModel) => portModel.port.name == port.name && portModel.input == input);
   }
 
+  /// Returns the [Node] with the given path
   Node getNode(String path) {
     return nodes.firstWhere((nodeModel) => nodeModel.node.path == path).node;
   }

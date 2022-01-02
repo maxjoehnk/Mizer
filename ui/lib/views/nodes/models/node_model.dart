@@ -11,14 +11,23 @@ enum NodeTab {
 class NodeModel extends ChangeNotifier {
   final Node node;
   final GlobalKey key;
-  final List<PortModel> ports;
+  final List<PortModel> ports = [];
   NodeTab tab = NodeTab.Ports;
   Offset offset = Offset.infinite;
   Size size = Size.zero;
 
-  NodeModel({required this.key, required this.node}) : this.ports = [] {
+  NodeModel({required this.key, required this.node}) {
     _applyOffset(node);
     _buildPorts();
+  }
+
+  NodeModel updateNode(Node node, GlobalKey key) {
+    var next = NodeModel(key: key, node: node);
+    next.tab = this.tab;
+    next.offset = this.offset;
+    next.size = this.size;
+
+    return next;
   }
 
   void update(GlobalKey key) {

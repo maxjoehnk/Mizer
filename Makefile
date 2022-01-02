@@ -11,4 +11,4 @@ build-headless:
 
 build:
 	cd ui && make
-	cargo build --all-features
+	cargo build

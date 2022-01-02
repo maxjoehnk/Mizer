@@ -47,9 +47,10 @@ class _FaderInputState extends State<FaderInput> {
                   children: [
                     if (widget.label != null)
                       Container(
+                          height: 32,
                           color: widget.highlight == true ? HIGHLIGHT_CONTROL_COLOR : DEFAULT_CONTROL_COLOR,
                           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                          child: Text(widget.label ?? "", textAlign: TextAlign.center)),
+                          child: Text(widget.label ?? "", textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)),
                     Expanded(
                       child: MouseRegion(
                         cursor: SystemMouseCursors.click,

@@ -35,7 +35,7 @@ class _ButtonInputState extends State<ButtonInput> {
                 this.widget.onValue(0);
               },
               child: Container(
-                child: widget.label == null ? null : Text(widget.label!),
+                child: widget.label == null ? null : Center(child: Text(widget.label!, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)),
                 decoration: ShapeDecoration(
                   color: this.pressed ? Colors.black45 : Colors.transparent,
                   shape: RoundedRectangleBorder(

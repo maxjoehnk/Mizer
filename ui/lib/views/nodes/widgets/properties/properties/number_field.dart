@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 import 'field.dart';
@@ -40,7 +39,20 @@ class _NumberFieldState extends State<NumberField> {
   num value;
   bool isEditing = false;
 
-  _NumberFieldState(this.value);
+  _NumberFieldState(this.value) {
+    this.controller.text = value.toString();
+  }
+
+  @override
+  void didUpdateWidget(NumberField oldWidget) {
+    if (oldWidget.value != widget.value && widget.value != this.value) {
+      this.controller.text = widget.value.toString();
+      setState(() {
+        value = widget.value;
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   void initState() {
@@ -54,7 +66,9 @@ class _NumberFieldState extends State<NumberField> {
       }
     });
     controller.addListener(() {
-      this._setValue(num.parse(controller.text));
+      var value = num.parse(controller.text);
+      value = _validateValue(value);
+      this._setValue(value);
     });
   }
 
@@ -95,7 +109,7 @@ class _NumberFieldState extends State<NumberField> {
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
       child: GestureDetector(
-        onHorizontalDragUpdate: (update) => _setValue(this.value + (update.primaryDelta ?? 0)),
+        onHorizontalDragUpdate: (update) => _dragValue(this.value + (update.primaryDelta ?? 0)),
         onTap: () => setState(() => this.isEditing = true),
         child: Field(
           label: this.widget.label,
@@ -129,6 +143,7 @@ class _NumberFieldState extends State<NumberField> {
               textAlign: TextAlign.center,
               selectionColor: Colors.black38,
               keyboardType: TextInputType.number,
+              autofocus: true,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
                 FilteringTextInputFormatter.singleLineFormatter
@@ -138,21 +153,30 @@ class _NumberFieldState extends State<NumberField> {
         ));
   }
 
+  void _dragValue(num value) {
+    value = _validateValue(value);
+    this.controller.text = this.value.toString();
+    _setValue(value);
+  }
+
   void _setValue(num value) {
     log("setValue $value", name: "NumberField");
+    setState(() {
+      this.value = value;
+    });
+    if (widget.value != value) {
+      widget.onUpdate(value);
+    }
+  }
+
+  num _validateValue(num value) {
     if (widget.min != null && widget.max != null) {
       value = value.clamp(widget.min!, widget.max!);
     }
     if (!this.widget.fractions) {
       value = value.truncate();
     }
-    setState(() {
-      this.value = value;
-      this.controller.text = this.value.toString();
-    });
-    if (widget.value != value) {
-      widget.onUpdate(value);
-    }
+    return value;
   }
 }
 

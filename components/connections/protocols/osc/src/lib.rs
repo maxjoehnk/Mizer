@@ -22,12 +22,19 @@ fn spawn_osc_input_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
         loop {
             match socket.recv_from(&mut buffer) {
                 Ok((size, _)) => {
-                    let msg = rosc::decoder::decode(&buffer[..size]).unwrap();
-                    if let Err(error) = tx.send(msg) {
-                        log::error!("Error sending osc packet to handler: {:?}", error);
+                    match rosc::decoder::decode(&buffer[..size]) {
+                        Ok(msg) => {
+                            log::trace!("Received osc packet {:?}", msg);
+                            if let Err(error) = tx.send(msg) {
+                                log::error!("Error sending osc packet to handler: {:?}", error);
+                            }
+                        },
+                        Err(err) => {
+                            log::error!("Error decoding osc packet: {:?}", err);
+                        }
                     }
                 }
-                Err(e) => println!("{:?}", e),
+                Err(e) => println!("Error receiving osc packet: {:?}", e),
             }
         }
     });

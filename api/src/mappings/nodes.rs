@@ -1,7 +1,7 @@
 use protobuf::SingularPtrField;
 
 use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
-use mizer_nodes::OscArgumentType;
+use mizer_nodes::{MidiInputConfig, MidiOutputConfig, OscArgumentType};
 use mizer_runtime::NodeDescriptor;
 
 use crate::models::nodes::*;
@@ -376,27 +376,91 @@ impl From<InputNodeConfig> for mizer_nodes::ButtonNode {
     }
 }
 
-impl From<mizer_nodes::MidiInputNode> for MidiInputNodeConfig {
-    fn from(_: mizer_nodes::MidiInputNode) -> Self {
-        Default::default()
+impl From<mizer_nodes::MidiInputNode> for MidiNodeConfig {
+    fn from(node: mizer_nodes::MidiInputNode) -> Self {
+        let (midi_type, port, range) = match node.config {
+            mizer_nodes::MidiInputConfig::CC {
+                port,
+                range,
+            } => (MidiNodeConfig_MidiType::CC, port, range),
+            mizer_nodes::MidiInputConfig::Note {
+                port,
+                range,
+            } => (MidiNodeConfig_MidiType::Note, port, range),
+        };
+
+        Self {
+            channel: node.channel as u32,
+            device: node.device,
+            field_type: midi_type,
+            port: port as u32,
+            rangeFrom: range.0 as u32,
+            rangeTo: range.1 as u32,
+            ..Default::default()
+        }
     }
 }
 
-impl From<MidiInputNodeConfig> for mizer_nodes::MidiInputNode {
-    fn from(_: MidiInputNodeConfig) -> Self {
-        Default::default()
+impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
+    fn from(config: MidiNodeConfig) -> Self {
+        Self {
+            device: config.device,
+            channel: config.channel as u8,
+            config: match config.field_type {
+                MidiNodeConfig_MidiType::CC => MidiInputConfig::CC {
+                    port: config.port as u8,
+                    range: (config.rangeFrom as u8, config.rangeTo as u8)
+                },
+                MidiNodeConfig_MidiType::Note => MidiInputConfig::Note {
+                    port: config.port as u8,
+                    range: (config.rangeFrom as u8, config.rangeTo as u8)
+                }
+            }
+        }
     }
 }
 
-impl From<mizer_nodes::MidiOutputNode> for MidiOutputNodeConfig {
-    fn from(_: mizer_nodes::MidiOutputNode) -> Self {
-        Default::default()
+impl From<mizer_nodes::MidiOutputNode> for MidiNodeConfig {
+    fn from(node: mizer_nodes::MidiOutputNode) -> Self {
+        let (midi_type, port, range) = match node.config {
+            mizer_nodes::MidiOutputConfig::CC {
+                port,
+                range,
+            } => (MidiNodeConfig_MidiType::CC, port, range),
+            mizer_nodes::MidiOutputConfig::Note {
+                port,
+                range,
+            } => (MidiNodeConfig_MidiType::Note, port, range),
+        };
+
+        Self {
+            channel: node.channel as u32,
+            device: node.device,
+            field_type: midi_type,
+            port: port as u32,
+            rangeFrom: range.0 as u32,
+            rangeTo: range.1 as u32,
+            ..Default::default()
+        }
     }
 }
 
-impl From<MidiOutputNodeConfig> for mizer_nodes::MidiOutputNode {
-    fn from(_: MidiOutputNodeConfig) -> Self {
-        Default::default()
+impl From<MidiNodeConfig> for mizer_nodes::MidiOutputNode {
+    fn from(config: MidiNodeConfig) -> Self {
+        Self {
+            device: config.device,
+            channel: config.channel as u8,
+            config: match config.field_type {
+                MidiNodeConfig_MidiType::CC => MidiOutputConfig::CC {
+                    port: config.port as u8,
+                    range: (config.rangeFrom as u8, config.rangeTo as u8)
+                },
+                MidiNodeConfig_MidiType::Note => MidiOutputConfig::Note {
+                    port: config.port as u8,
+                    range: (config.rangeFrom as u8, config.rangeTo as u8)
+                }
+            }
+        }
     }
 }
 

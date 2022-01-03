@@ -6,7 +6,7 @@ pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::FixtureNode;
 pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
-pub use mizer_midi_nodes::{MidiInputNode, MidiOutputNode};
+pub use mizer_midi_nodes::{MidiInputNode, MidiInputConfig, MidiOutputNode, MidiOutputConfig};
 use mizer_node::NodeType;
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscInputNode, OscOutputNode, OscArgumentType};

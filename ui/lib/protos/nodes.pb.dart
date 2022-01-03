@@ -827,8 +827,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<PixelPatternNodeConfig>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelPatternConfig', protoName: 'pixelPatternConfig', subBuilder: PixelPatternNodeConfig.create)
     ..aOM<PixelDmxNodeConfig>(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelDmxConfig', protoName: 'pixelDmxConfig', subBuilder: PixelDmxNodeConfig.create)
     ..aOM<DmxOutputNodeConfig>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmxOutputConfig', protoName: 'dmxOutputConfig', subBuilder: DmxOutputNodeConfig.create)
-    ..aOM<MidiInputNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', protoName: 'midiInputConfig', subBuilder: MidiInputNodeConfig.create)
-    ..aOM<MidiOutputNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', protoName: 'midiOutputConfig', subBuilder: MidiOutputNodeConfig.create)
+    ..aOM<MidiNodeConfig>(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiInputConfig', protoName: 'midiInputConfig', subBuilder: MidiNodeConfig.create)
+    ..aOM<MidiNodeConfig>(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiOutputConfig', protoName: 'midiOutputConfig', subBuilder: MidiNodeConfig.create)
     ..aOM<OpcOutputNodeConfig>(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'opcOutputConfig', protoName: 'opcOutputConfig', subBuilder: OpcOutputNodeConfig.create)
     ..aOM<OscNodeConfig>(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscInputConfig', protoName: 'oscInputConfig', subBuilder: OscNodeConfig.create)
     ..aOM<OscNodeConfig>(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscOutputConfig', protoName: 'oscOutputConfig', subBuilder: OscNodeConfig.create)
@@ -860,8 +860,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     PixelPatternNodeConfig? pixelPatternConfig,
     PixelDmxNodeConfig? pixelDmxConfig,
     DmxOutputNodeConfig? dmxOutputConfig,
-    MidiInputNodeConfig? midiInputConfig,
-    MidiOutputNodeConfig? midiOutputConfig,
+    MidiNodeConfig? midiInputConfig,
+    MidiNodeConfig? midiOutputConfig,
     OpcOutputNodeConfig? opcOutputConfig,
     OscNodeConfig? oscInputConfig,
     OscNodeConfig? oscOutputConfig,
@@ -1121,26 +1121,26 @@ class NodeConfig extends $pb.GeneratedMessage {
   DmxOutputNodeConfig ensureDmxOutputConfig() => $_ensure(11);
 
   @$pb.TagNumber(22)
-  MidiInputNodeConfig get midiInputConfig => $_getN(12);
+  MidiNodeConfig get midiInputConfig => $_getN(12);
   @$pb.TagNumber(22)
-  set midiInputConfig(MidiInputNodeConfig v) { setField(22, v); }
+  set midiInputConfig(MidiNodeConfig v) { setField(22, v); }
   @$pb.TagNumber(22)
   $core.bool hasMidiInputConfig() => $_has(12);
   @$pb.TagNumber(22)
   void clearMidiInputConfig() => clearField(22);
   @$pb.TagNumber(22)
-  MidiInputNodeConfig ensureMidiInputConfig() => $_ensure(12);
+  MidiNodeConfig ensureMidiInputConfig() => $_ensure(12);
 
   @$pb.TagNumber(23)
-  MidiOutputNodeConfig get midiOutputConfig => $_getN(13);
+  MidiNodeConfig get midiOutputConfig => $_getN(13);
   @$pb.TagNumber(23)
-  set midiOutputConfig(MidiOutputNodeConfig v) { setField(23, v); }
+  set midiOutputConfig(MidiNodeConfig v) { setField(23, v); }
   @$pb.TagNumber(23)
   $core.bool hasMidiOutputConfig() => $_has(13);
   @$pb.TagNumber(23)
   void clearMidiOutputConfig() => clearField(23);
   @$pb.TagNumber(23)
-  MidiOutputNodeConfig ensureMidiOutputConfig() => $_ensure(13);
+  MidiNodeConfig ensureMidiOutputConfig() => $_ensure(13);
 
   @$pb.TagNumber(24)
   OpcOutputNodeConfig get opcOutputConfig => $_getN(14);
@@ -2141,62 +2141,121 @@ class DmxOutputNodeConfig extends $pb.GeneratedMessage {
   void clearChannel() => clearField(3);
 }
 
-class MidiInputNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiInputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class MidiNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'device')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..e<MidiNodeConfig_MidiType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MidiNodeConfig_MidiType.CC, valueOf: MidiNodeConfig_MidiType.valueOf, enumValues: MidiNodeConfig_MidiType.values)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeFrom', $pb.PbFieldType.OU3, protoName: 'rangeFrom')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rangeTo', $pb.PbFieldType.OU3, protoName: 'rangeTo')
     ..hasRequiredFields = false
   ;
 
-  MidiInputNodeConfig._() : super();
-  factory MidiInputNodeConfig() => create();
-  factory MidiInputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MidiInputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  MidiNodeConfig._() : super();
+  factory MidiNodeConfig({
+    $core.String? device,
+    $core.int? channel,
+    MidiNodeConfig_MidiType? type,
+    $core.int? port,
+    $core.int? rangeFrom,
+    $core.int? rangeTo,
+  }) {
+    final _result = create();
+    if (device != null) {
+      _result.device = device;
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (port != null) {
+      _result.port = port;
+    }
+    if (rangeFrom != null) {
+      _result.rangeFrom = rangeFrom;
+    }
+    if (rangeTo != null) {
+      _result.rangeTo = rangeTo;
+    }
+    return _result;
+  }
+  factory MidiNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  MidiInputNodeConfig clone() => MidiInputNodeConfig()..mergeFromMessage(this);
+  MidiNodeConfig clone() => MidiNodeConfig()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MidiInputNodeConfig copyWith(void Function(MidiInputNodeConfig) updates) => super.copyWith((message) => updates(message as MidiInputNodeConfig)) as MidiInputNodeConfig; // ignore: deprecated_member_use
+  MidiNodeConfig copyWith(void Function(MidiNodeConfig) updates) => super.copyWith((message) => updates(message as MidiNodeConfig)) as MidiNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static MidiInputNodeConfig create() => MidiInputNodeConfig._();
-  MidiInputNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<MidiInputNodeConfig> createRepeated() => $pb.PbList<MidiInputNodeConfig>();
+  static MidiNodeConfig create() => MidiNodeConfig._();
+  MidiNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<MidiNodeConfig> createRepeated() => $pb.PbList<MidiNodeConfig>();
   @$core.pragma('dart2js:noInline')
-  static MidiInputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiInputNodeConfig>(create);
-  static MidiInputNodeConfig? _defaultInstance;
-}
+  static MidiNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiNodeConfig>(create);
+  static MidiNodeConfig? _defaultInstance;
 
-class MidiOutputNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiOutputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
+  @$pb.TagNumber(1)
+  $core.String get device => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set device($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDevice() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDevice() => clearField(1);
 
-  MidiOutputNodeConfig._() : super();
-  factory MidiOutputNodeConfig() => create();
-  factory MidiOutputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MidiOutputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  MidiOutputNodeConfig clone() => MidiOutputNodeConfig()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MidiOutputNodeConfig copyWith(void Function(MidiOutputNodeConfig) updates) => super.copyWith((message) => updates(message as MidiOutputNodeConfig)) as MidiOutputNodeConfig; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static MidiOutputNodeConfig create() => MidiOutputNodeConfig._();
-  MidiOutputNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<MidiOutputNodeConfig> createRepeated() => $pb.PbList<MidiOutputNodeConfig>();
-  @$core.pragma('dart2js:noInline')
-  static MidiOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiOutputNodeConfig>(create);
-  static MidiOutputNodeConfig? _defaultInstance;
+  @$pb.TagNumber(2)
+  $core.int get channel => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set channel($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChannel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  MidiNodeConfig_MidiType get type => $_getN(2);
+  @$pb.TagNumber(3)
+  set type(MidiNodeConfig_MidiType v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasType() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearType() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get port => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set port($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPort() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPort() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get rangeFrom => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set rangeFrom($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRangeFrom() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRangeFrom() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get rangeTo => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set rangeTo($core.int v) { $_setUnsignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasRangeTo() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRangeTo() => clearField(6);
 }
 
 class OpcOutputNodeConfig extends $pb.GeneratedMessage {

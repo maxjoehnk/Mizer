@@ -3,11 +3,11 @@ import 'package:mizer/widgets/controls/select.dart';
 
 import 'field.dart';
 
-class EnumField extends StatelessWidget {
+class EnumField<TValue> extends StatelessWidget {
   final String label;
-  final List<SelectOption<int>> items;
-  final int? initialValue;
-  final Function(int) onUpdate;
+  final List<SelectOption<TValue>> items;
+  final TValue? initialValue;
+  final Function(TValue) onUpdate;
 
   EnumField({ required this.label, required this.items, this.initialValue, required this.onUpdate });
 
@@ -15,7 +15,7 @@ class EnumField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Field(
       label: label,
-      child: MizerSelect<int>(
+      child: MizerSelect<TValue>(
         value: this.initialValue,
         options: this.items,
         onChanged: (value) => onUpdate(value),

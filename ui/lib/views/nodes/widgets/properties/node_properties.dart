@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
 
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/fixture_properties.dart';
@@ -81,6 +82,16 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(OscProperties(node.config.oscOutputConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(oscOutputConfig: config)))));
+    }
+    if (node.config.hasMidiInputConfig()) {
+      widgets.add(MidiProperties(node.config.midiInputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(midiInputConfig: config)))));
+    }
+    if (node.config.hasMidiOutputConfig()) {
+      widgets.add(MidiProperties(node.config.midiOutputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(midiOutputConfig: config)))));
     }
     return widgets;
   }

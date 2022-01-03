@@ -124,8 +124,8 @@ message NodeConfig {
     PixelPatternNodeConfig pixelPatternConfig = 19;
     PixelDmxNodeConfig pixelDmxConfig = 20;
     DmxOutputNodeConfig dmxOutputConfig = 21;
-    MidiInputNodeConfig midiInputConfig = 22;
-    MidiOutputNodeConfig midiOutputConfig = 23;
+    MidiNodeConfig midiInputConfig = 22;
+    MidiNodeConfig midiOutputConfig = 23;
     OpcOutputNodeConfig opcOutputConfig = 24;
     OscNodeConfig oscInputConfig = 25;
     OscNodeConfig oscOutputConfig = 26;
@@ -223,8 +223,19 @@ message DmxOutputNodeConfig {
   uint32 channel = 3;
 }
 
-message MidiInputNodeConfig {}
-message MidiOutputNodeConfig {}
+message MidiNodeConfig {
+  string device = 1;
+  uint32 channel = 2;
+  MidiType type = 3;
+  uint32 port = 4;
+  uint32 rangeFrom = 5;
+  uint32 rangeTo = 6;
+
+  enum MidiType {
+    CC = 0;
+    Note = 1;
+  }
+}
 
 message OpcOutputNodeConfig {
   string host = 1;

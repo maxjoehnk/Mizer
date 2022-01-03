@@ -222,8 +222,8 @@ const NodeConfig$json = const {
     const {'1': 'pixelPatternConfig', '3': 19, '4': 1, '5': 11, '6': '.mizer.PixelPatternNodeConfig', '9': 0, '10': 'pixelPatternConfig'},
     const {'1': 'pixelDmxConfig', '3': 20, '4': 1, '5': 11, '6': '.mizer.PixelDmxNodeConfig', '9': 0, '10': 'pixelDmxConfig'},
     const {'1': 'dmxOutputConfig', '3': 21, '4': 1, '5': 11, '6': '.mizer.DmxOutputNodeConfig', '9': 0, '10': 'dmxOutputConfig'},
-    const {'1': 'midiInputConfig', '3': 22, '4': 1, '5': 11, '6': '.mizer.MidiInputNodeConfig', '9': 0, '10': 'midiInputConfig'},
-    const {'1': 'midiOutputConfig', '3': 23, '4': 1, '5': 11, '6': '.mizer.MidiOutputNodeConfig', '9': 0, '10': 'midiOutputConfig'},
+    const {'1': 'midiInputConfig', '3': 22, '4': 1, '5': 11, '6': '.mizer.MidiNodeConfig', '9': 0, '10': 'midiInputConfig'},
+    const {'1': 'midiOutputConfig', '3': 23, '4': 1, '5': 11, '6': '.mizer.MidiNodeConfig', '9': 0, '10': 'midiOutputConfig'},
     const {'1': 'opcOutputConfig', '3': 24, '4': 1, '5': 11, '6': '.mizer.OpcOutputNodeConfig', '9': 0, '10': 'opcOutputConfig'},
     const {'1': 'oscInputConfig', '3': 25, '4': 1, '5': 11, '6': '.mizer.OscNodeConfig', '9': 0, '10': 'oscInputConfig'},
     const {'1': 'oscOutputConfig', '3': 26, '4': 1, '5': 11, '6': '.mizer.OscNodeConfig', '9': 0, '10': 'oscOutputConfig'},
@@ -245,7 +245,7 @@ const NodeConfig$json = const {
 };
 
 /// Descriptor for `NodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodeConfigDescriptor = $convert.base64Decode('CgpOb2RlQ29uZmlnEkkKEG9zY2lsbGF0b3JDb25maWcYCiABKAsyGy5taXplci5Pc2NpbGxhdG9yTm9kZUNvbmZpZ0gAUhBvc2NpbGxhdG9yQ29uZmlnEkYKD3NjcmlwdGluZ0NvbmZpZxgLIAEoCzIaLm1pemVyLlNjcmlwdGluZ05vZGVDb25maWdIAFIPc2NyaXB0aW5nQ29uZmlnEkMKDnNlcXVlbmNlQ29uZmlnGAwgASgLMhkubWl6ZXIuU2VxdWVuY2VOb2RlQ29uZmlnSABSDnNlcXVlbmNlQ29uZmlnEjoKC2Nsb2NrQ29uZmlnGA0gASgLMhYubWl6ZXIuQ2xvY2tOb2RlQ29uZmlnSABSC2Nsb2NrQ29uZmlnEkAKDWZpeHR1cmVDb25maWcYDiABKAsyGC5taXplci5GaXh0dXJlTm9kZUNvbmZpZ0gAUg1maXh0dXJlQ29uZmlnEjwKDGJ1dHRvbkNvbmZpZxgPIAEoCzIWLm1pemVyLklucHV0Tm9kZUNvbmZpZ0gAUgxidXR0b25Db25maWcSOgoLZmFkZXJDb25maWcYECABKAsyFi5taXplci5JbnB1dE5vZGVDb25maWdIAFILZmFkZXJDb25maWcSQwoOaWxkYUZpbGVDb25maWcYESABKAsyGS5taXplci5JbGRhRmlsZU5vZGVDb25maWdIAFIOaWxkYUZpbGVDb25maWcSOgoLbGFzZXJDb25maWcYEiABKAsyFi5taXplci5MYXNlck5vZGVDb25maWdIAFILbGFzZXJDb25maWcSTwoScGl4ZWxQYXR0ZXJuQ29uZmlnGBMgASgLMh0ubWl6ZXIuUGl4ZWxQYXR0ZXJuTm9kZUNvbmZpZ0gAUhJwaXhlbFBhdHRlcm5Db25maWcSQwoOcGl4ZWxEbXhDb25maWcYFCABKAsyGS5taXplci5QaXhlbERteE5vZGVDb25maWdIAFIOcGl4ZWxEbXhDb25maWcSRgoPZG14T3V0cHV0Q29uZmlnGBUgASgLMhoubWl6ZXIuRG14T3V0cHV0Tm9kZUNvbmZpZ0gAUg9kbXhPdXRwdXRDb25maWcSRgoPbWlkaUlucHV0Q29uZmlnGBYgASgLMhoubWl6ZXIuTWlkaUlucHV0Tm9kZUNvbmZpZ0gAUg9taWRpSW5wdXRDb25maWcSSQoQbWlkaU91dHB1dENvbmZpZxgXIAEoCzIbLm1pemVyLk1pZGlPdXRwdXROb2RlQ29uZmlnSABSEG1pZGlPdXRwdXRDb25maWcSRgoPb3BjT3V0cHV0Q29uZmlnGBggASgLMhoubWl6ZXIuT3BjT3V0cHV0Tm9kZUNvbmZpZ0gAUg9vcGNPdXRwdXRDb25maWcSPgoOb3NjSW5wdXRDb25maWcYGSABKAsyFC5taXplci5Pc2NOb2RlQ29uZmlnSABSDm9zY0lucHV0Q29uZmlnEkAKD29zY091dHB1dENvbmZpZxgaIAEoCzIULm1pemVyLk9zY05vZGVDb25maWdIAFIPb3NjT3V0cHV0Q29uZmlnEl4KF3ZpZGVvQ29sb3JCYWxhbmNlQ29uZmlnGBsgASgLMiIubWl6ZXIuVmlkZW9Db2xvckJhbGFuY2VOb2RlQ29uZmlnSABSF3ZpZGVvQ29sb3JCYWxhbmNlQ29uZmlnEkwKEXZpZGVvRWZmZWN0Q29uZmlnGBwgASgLMhwubWl6ZXIuVmlkZW9FZmZlY3ROb2RlQ29uZmlnSABSEXZpZGVvRWZmZWN0Q29uZmlnEkYKD3ZpZGVvRmlsZUNvbmZpZxgdIAEoCzIaLm1pemVyLlZpZGVvRmlsZU5vZGVDb25maWdIAFIPdmlkZW9GaWxlQ29uZmlnEkwKEXZpZGVvT3V0cHV0Q29uZmlnGB4gASgLMhwubWl6ZXIuVmlkZW9PdXRwdXROb2RlQ29uZmlnSABSEXZpZGVvT3V0cHV0Q29uZmlnElUKFHZpZGVvVHJhbnNmb3JtQ29uZmlnGB8gASgLMh8ubWl6ZXIuVmlkZW9UcmFuc2Zvcm1Ob2RlQ29uZmlnSABSFHZpZGVvVHJhbnNmb3JtQ29uZmlnEj0KDHNlbGVjdENvbmZpZxggIAEoCzIXLm1pemVyLlNlbGVjdE5vZGVDb25maWdIAFIMc2VsZWN0Q29uZmlnEjoKC21lcmdlQ29uZmlnGCEgASgLMhYubWl6ZXIuTWVyZ2VOb2RlQ29uZmlnSABSC21lcmdlQ29uZmlnEkMKDmVudmVsb3BlQ29uZmlnGCIgASgLMhkubWl6ZXIuRW52ZWxvcGVOb2RlQ29uZmlnSABSDmVudmVsb3BlQ29uZmlnEkYKD3NlcXVlbmNlckNvbmZpZxgjIAEoCzIaLm1pemVyLlNlcXVlbmNlck5vZGVDb25maWdIAFIPc2VxdWVuY2VyQ29uZmlnEkMKDmNvbG9yUmdiQ29uZmlnGCggASgLMhkubWl6ZXIuQ29sb3JSZ2JOb2RlQ29uZmlnSABSDmNvbG9yUmdiQ29uZmlnEkMKDmNvbG9ySHN2Q29uZmlnGCkgASgLMhkubWl6ZXIuQ29sb3JIc3ZOb2RlQ29uZmlnSABSDmNvbG9ySHN2Q29uZmlnQgYKBHR5cGU=');
+final $typed_data.Uint8List nodeConfigDescriptor = $convert.base64Decode('CgpOb2RlQ29uZmlnEkkKEG9zY2lsbGF0b3JDb25maWcYCiABKAsyGy5taXplci5Pc2NpbGxhdG9yTm9kZUNvbmZpZ0gAUhBvc2NpbGxhdG9yQ29uZmlnEkYKD3NjcmlwdGluZ0NvbmZpZxgLIAEoCzIaLm1pemVyLlNjcmlwdGluZ05vZGVDb25maWdIAFIPc2NyaXB0aW5nQ29uZmlnEkMKDnNlcXVlbmNlQ29uZmlnGAwgASgLMhkubWl6ZXIuU2VxdWVuY2VOb2RlQ29uZmlnSABSDnNlcXVlbmNlQ29uZmlnEjoKC2Nsb2NrQ29uZmlnGA0gASgLMhYubWl6ZXIuQ2xvY2tOb2RlQ29uZmlnSABSC2Nsb2NrQ29uZmlnEkAKDWZpeHR1cmVDb25maWcYDiABKAsyGC5taXplci5GaXh0dXJlTm9kZUNvbmZpZ0gAUg1maXh0dXJlQ29uZmlnEjwKDGJ1dHRvbkNvbmZpZxgPIAEoCzIWLm1pemVyLklucHV0Tm9kZUNvbmZpZ0gAUgxidXR0b25Db25maWcSOgoLZmFkZXJDb25maWcYECABKAsyFi5taXplci5JbnB1dE5vZGVDb25maWdIAFILZmFkZXJDb25maWcSQwoOaWxkYUZpbGVDb25maWcYESABKAsyGS5taXplci5JbGRhRmlsZU5vZGVDb25maWdIAFIOaWxkYUZpbGVDb25maWcSOgoLbGFzZXJDb25maWcYEiABKAsyFi5taXplci5MYXNlck5vZGVDb25maWdIAFILbGFzZXJDb25maWcSTwoScGl4ZWxQYXR0ZXJuQ29uZmlnGBMgASgLMh0ubWl6ZXIuUGl4ZWxQYXR0ZXJuTm9kZUNvbmZpZ0gAUhJwaXhlbFBhdHRlcm5Db25maWcSQwoOcGl4ZWxEbXhDb25maWcYFCABKAsyGS5taXplci5QaXhlbERteE5vZGVDb25maWdIAFIOcGl4ZWxEbXhDb25maWcSRgoPZG14T3V0cHV0Q29uZmlnGBUgASgLMhoubWl6ZXIuRG14T3V0cHV0Tm9kZUNvbmZpZ0gAUg9kbXhPdXRwdXRDb25maWcSQQoPbWlkaUlucHV0Q29uZmlnGBYgASgLMhUubWl6ZXIuTWlkaU5vZGVDb25maWdIAFIPbWlkaUlucHV0Q29uZmlnEkMKEG1pZGlPdXRwdXRDb25maWcYFyABKAsyFS5taXplci5NaWRpTm9kZUNvbmZpZ0gAUhBtaWRpT3V0cHV0Q29uZmlnEkYKD29wY091dHB1dENvbmZpZxgYIAEoCzIaLm1pemVyLk9wY091dHB1dE5vZGVDb25maWdIAFIPb3BjT3V0cHV0Q29uZmlnEj4KDm9zY0lucHV0Q29uZmlnGBkgASgLMhQubWl6ZXIuT3NjTm9kZUNvbmZpZ0gAUg5vc2NJbnB1dENvbmZpZxJACg9vc2NPdXRwdXRDb25maWcYGiABKAsyFC5taXplci5Pc2NOb2RlQ29uZmlnSABSD29zY091dHB1dENvbmZpZxJeChd2aWRlb0NvbG9yQmFsYW5jZUNvbmZpZxgbIAEoCzIiLm1pemVyLlZpZGVvQ29sb3JCYWxhbmNlTm9kZUNvbmZpZ0gAUhd2aWRlb0NvbG9yQmFsYW5jZUNvbmZpZxJMChF2aWRlb0VmZmVjdENvbmZpZxgcIAEoCzIcLm1pemVyLlZpZGVvRWZmZWN0Tm9kZUNvbmZpZ0gAUhF2aWRlb0VmZmVjdENvbmZpZxJGCg92aWRlb0ZpbGVDb25maWcYHSABKAsyGi5taXplci5WaWRlb0ZpbGVOb2RlQ29uZmlnSABSD3ZpZGVvRmlsZUNvbmZpZxJMChF2aWRlb091dHB1dENvbmZpZxgeIAEoCzIcLm1pemVyLlZpZGVvT3V0cHV0Tm9kZUNvbmZpZ0gAUhF2aWRlb091dHB1dENvbmZpZxJVChR2aWRlb1RyYW5zZm9ybUNvbmZpZxgfIAEoCzIfLm1pemVyLlZpZGVvVHJhbnNmb3JtTm9kZUNvbmZpZ0gAUhR2aWRlb1RyYW5zZm9ybUNvbmZpZxI9CgxzZWxlY3RDb25maWcYICABKAsyFy5taXplci5TZWxlY3ROb2RlQ29uZmlnSABSDHNlbGVjdENvbmZpZxI6CgttZXJnZUNvbmZpZxghIAEoCzIWLm1pemVyLk1lcmdlTm9kZUNvbmZpZ0gAUgttZXJnZUNvbmZpZxJDCg5lbnZlbG9wZUNvbmZpZxgiIAEoCzIZLm1pemVyLkVudmVsb3BlTm9kZUNvbmZpZ0gAUg5lbnZlbG9wZUNvbmZpZxJGCg9zZXF1ZW5jZXJDb25maWcYIyABKAsyGi5taXplci5TZXF1ZW5jZXJOb2RlQ29uZmlnSABSD3NlcXVlbmNlckNvbmZpZxJDCg5jb2xvclJnYkNvbmZpZxgoIAEoCzIZLm1pemVyLkNvbG9yUmdiTm9kZUNvbmZpZ0gAUg5jb2xvclJnYkNvbmZpZxJDCg5jb2xvckhzdkNvbmZpZxgpIAEoCzIZLm1pemVyLkNvbG9ySHN2Tm9kZUNvbmZpZ0gAUg5jb2xvckhzdkNvbmZpZ0IGCgR0eXBl');
 @$core.Deprecated('Use oscillatorNodeConfigDescriptor instead')
 const OscillatorNodeConfig$json = const {
   '1': 'OscillatorNodeConfig',
@@ -422,20 +422,31 @@ const DmxOutputNodeConfig$json = const {
 
 /// Descriptor for `DmxOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List dmxOutputNodeConfigDescriptor = $convert.base64Decode('ChNEbXhPdXRwdXROb2RlQ29uZmlnEhsKBm91dHB1dBgBIAEoCUgAUgZvdXRwdXSIAQESGgoIdW5pdmVyc2UYAiABKA1SCHVuaXZlcnNlEhgKB2NoYW5uZWwYAyABKA1SB2NoYW5uZWxCCQoHX291dHB1dA==');
-@$core.Deprecated('Use midiInputNodeConfigDescriptor instead')
-const MidiInputNodeConfig$json = const {
-  '1': 'MidiInputNodeConfig',
+@$core.Deprecated('Use midiNodeConfigDescriptor instead')
+const MidiNodeConfig$json = const {
+  '1': 'MidiNodeConfig',
+  '2': const [
+    const {'1': 'device', '3': 1, '4': 1, '5': 9, '10': 'device'},
+    const {'1': 'channel', '3': 2, '4': 1, '5': 13, '10': 'channel'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.mizer.MidiNodeConfig.MidiType', '10': 'type'},
+    const {'1': 'port', '3': 4, '4': 1, '5': 13, '10': 'port'},
+    const {'1': 'rangeFrom', '3': 5, '4': 1, '5': 13, '10': 'rangeFrom'},
+    const {'1': 'rangeTo', '3': 6, '4': 1, '5': 13, '10': 'rangeTo'},
+  ],
+  '4': const [MidiNodeConfig_MidiType$json],
 };
 
-/// Descriptor for `MidiInputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiInputNodeConfigDescriptor = $convert.base64Decode('ChNNaWRpSW5wdXROb2RlQ29uZmln');
-@$core.Deprecated('Use midiOutputNodeConfigDescriptor instead')
-const MidiOutputNodeConfig$json = const {
-  '1': 'MidiOutputNodeConfig',
+@$core.Deprecated('Use midiNodeConfigDescriptor instead')
+const MidiNodeConfig_MidiType$json = const {
+  '1': 'MidiType',
+  '2': const [
+    const {'1': 'CC', '2': 0},
+    const {'1': 'Note', '2': 1},
+  ],
 };
 
-/// Descriptor for `MidiOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiOutputNodeConfigDescriptor = $convert.base64Decode('ChRNaWRpT3V0cHV0Tm9kZUNvbmZpZw==');
+/// Descriptor for `MidiNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List midiNodeConfigDescriptor = $convert.base64Decode('Cg5NaWRpTm9kZUNvbmZpZxIWCgZkZXZpY2UYASABKAlSBmRldmljZRIYCgdjaGFubmVsGAIgASgNUgdjaGFubmVsEjIKBHR5cGUYAyABKA4yHi5taXplci5NaWRpTm9kZUNvbmZpZy5NaWRpVHlwZVIEdHlwZRISCgRwb3J0GAQgASgNUgRwb3J0EhwKCXJhbmdlRnJvbRgFIAEoDVIJcmFuZ2VGcm9tEhgKB3JhbmdlVG8YBiABKA1SB3JhbmdlVG8iHAoITWlkaVR5cGUSBgoCQ0MQABIICgROb3RlEAE=');
 @$core.Deprecated('Use opcOutputNodeConfigDescriptor instead')
 const OpcOutputNodeConfig$json = const {
   '1': 'OpcOutputNodeConfig',

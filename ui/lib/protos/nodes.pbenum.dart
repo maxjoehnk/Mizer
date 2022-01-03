@@ -162,6 +162,21 @@ class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
   const PixelPatternNodeConfig_Pattern._($core.int v, $core.String n) : super(v, n);
 }
 
+class MidiNodeConfig_MidiType extends $pb.ProtobufEnum {
+  static const MidiNodeConfig_MidiType CC = MidiNodeConfig_MidiType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CC');
+  static const MidiNodeConfig_MidiType Note = MidiNodeConfig_MidiType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Note');
+
+  static const $core.List<MidiNodeConfig_MidiType> values = <MidiNodeConfig_MidiType> [
+    CC,
+    Note,
+  ];
+
+  static final $core.Map<$core.int, MidiNodeConfig_MidiType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static MidiNodeConfig_MidiType? valueOf($core.int value) => _byValue[value];
+
+  const MidiNodeConfig_MidiType._($core.int v, $core.String n) : super(v, n);
+}
+
 class OscNodeConfig_ArgumentType extends $pb.ProtobufEnum {
   static const OscNodeConfig_ArgumentType Int = OscNodeConfig_ArgumentType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Int');
   static const OscNodeConfig_ArgumentType Float = OscNodeConfig_ArgumentType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Float');

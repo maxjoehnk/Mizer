@@ -142,14 +142,13 @@ impl OscillatorNode {
             OscillatorType::Triangle => {
                 let base = self.ratio / 2f64;
                 let frame = self.get_frame(beat);
-                let time = if frame > base { frame - base } else { frame };
                 let high = self.max;
                 let low = self.min;
-                let value = ((high - low) / self.ratio) * time + low;
+
                 if frame > base {
-                    high - value
+                    ((high - low) / base) * (base - frame) + high
                 } else {
-                    value
+                    ((high - low) / base) * frame + low
                 }
             }
             OscillatorType::Saw => {
@@ -170,5 +169,82 @@ impl OscillatorNode {
             frame -= self.ratio;
         }
         frame
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use test_case::test_case;
+
+    use crate::{OscillatorNode, OscillatorType};
+
+    #[test_case(0.)]
+    #[test_case(5.)]
+    fn triangle_oscillator_should_start_at_min(min: f64) {
+        let node = OscillatorNode {
+            oscillator_type: OscillatorType::Triangle,
+            min,
+            ..Default::default()
+        };
+
+        let value = node.tick(0.);
+
+        assert_eq!(value, min);
+    }
+
+    #[test_case(0.)]
+    #[test_case(5.)]
+    fn triangle_oscillator_should_end_at_min(min: f64) {
+        let node = OscillatorNode {
+            oscillator_type: OscillatorType::Triangle,
+            min,
+            ..Default::default()
+        };
+
+        let value = node.tick(1.);
+
+        assert_eq!(value, min);
+    }
+
+    #[test_case(1.)]
+    #[test_case(5.)]
+    fn triangle_oscillator_should_reach_max_at_halfway_point(max: f64) {
+        let node = OscillatorNode {
+            oscillator_type: OscillatorType::Triangle,
+            max,
+            ..Default::default()
+        };
+
+        let value = node.tick(0.5);
+
+        assert_eq!(value, max);
+    }
+
+    #[test_case(0.)]
+    #[test_case(5.)]
+    fn saw_oscillator_should_start_at_min(min: f64) {
+        let node = OscillatorNode {
+            oscillator_type: OscillatorType::Saw,
+            min,
+            ..Default::default()
+        };
+
+        let value = node.tick(0.);
+
+        assert_eq!(value, min);
+    }
+
+    #[test_case(1.)]
+    #[test_case(5.)]
+    fn saw_oscillator_should_end_at_max(max: f64) {
+        let node = OscillatorNode {
+            oscillator_type: OscillatorType::Saw,
+            max,
+            ..Default::default()
+        };
+
+        let value = node.tick(1.);
+
+        assert_eq!(value, max);
     }
 }

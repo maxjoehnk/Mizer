@@ -3242,6 +3242,7 @@ dependencies = [
  "log",
  "mizer-node",
  "serde",
+ "test-case",
 ]
 
 [[package]]

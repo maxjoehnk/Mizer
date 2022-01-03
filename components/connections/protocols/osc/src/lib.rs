@@ -1,21 +1,60 @@
 use std::collections::HashMap;
 use std::net::{SocketAddrV4, UdpSocket};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex, RwLock};
 use std::thread;
 
 use crossbeam_channel::{unbounded, Receiver, Sender};
+use event_feed::{Feed, Reader};
 use lazy_static::lazy_static;
 pub use rosc::{OscColor, OscMessage, OscPacket, OscType};
 
+#[derive(Clone)]
+#[repr(transparent)]
+struct OscInputStream(Arc<RwLock<Feed<OscPacket>>>);
+
+impl OscInputStream {
+    fn new() -> Self {
+        let feed = Feed::new();
+        let feed = Arc::new(RwLock::new(feed));
+
+        Self(feed)
+    }
+
+    fn send(&self, msg: OscPacket) -> anyhow::Result<()> {
+        let feed = self.0.read().map_err(|err| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
+        feed.send(msg);
+
+        Ok(())
+    }
+
+    fn subscribe(&self) -> anyhow::Result<OscInputSubscriber> {
+        let mut feed = self.0.write().map_err(|err| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
+        let reader = feed.add_reader();
+
+        Ok(OscInputSubscriber(reader))
+    }
+}
+
+#[derive(Clone)]
+#[repr(transparent)]
+struct OscInputSubscriber(Arc<Reader<OscPacket>>);
+
+impl OscInputSubscriber {
+    fn read(&self) -> Option<OscPacket> {
+        self.0.read().next()
+    }
+}
+
 lazy_static! {
-    static ref OSC_INPUT_THREADS: Mutex<HashMap<SocketAddrV4, Receiver<OscPacket>>> =
+    static ref OSC_INPUT_THREADS: Mutex<HashMap<SocketAddrV4, OscInputStream>> =
         Mutex::new(HashMap::new());
     static ref OSC_OUTPUT_THREADS: Mutex<HashMap<SocketAddrV4, Sender<OscPacket>>> =
         Mutex::new(HashMap::new());
 }
 
-fn spawn_osc_input_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
-    let (tx, rx) = unbounded();
+fn spawn_osc_input_thread(addr: SocketAddrV4) -> OscInputStream {
+    let feed = OscInputStream::new();
+    let tx = feed.clone();
     thread::spawn(move || {
         let socket = UdpSocket::bind(addr).unwrap();
         let mut buffer = [0u8; rosc::decoder::MTU];
@@ -25,9 +64,7 @@ fn spawn_osc_input_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
                     match rosc::decoder::decode(&buffer[..size]) {
                         Ok(msg) => {
                             log::trace!("Received osc packet {:?}", msg);
-                            if let Err(error) = tx.send(msg) {
-                                log::error!("Error sending osc packet to handler: {:?}", error);
-                            }
+                            tx.send(msg);
                         },
                         Err(err) => {
                             log::error!("Error decoding osc packet: {:?}", err);
@@ -40,9 +77,9 @@ fn spawn_osc_input_thread(addr: SocketAddrV4) -> Receiver<OscPacket> {
     });
     {
         let mut threads = OSC_INPUT_THREADS.lock().unwrap();
-        threads.insert(addr, rx.clone());
+        threads.insert(addr, feed.clone());
     }
-    rx
+    feed
 }
 
 fn spawn_osc_output_thread(addr: SocketAddrV4) -> Sender<OscPacket> {
@@ -72,7 +109,7 @@ fn spawn_osc_output_thread(addr: SocketAddrV4) -> Sender<OscPacket> {
 }
 
 pub struct OscInput {
-    rx: Receiver<OscPacket>,
+    subscriber: OscInputSubscriber,
 }
 
 impl OscInput {
@@ -83,12 +120,13 @@ impl OscInput {
             let threads = OSC_INPUT_THREADS.lock().unwrap();
             threads.get(&addr).cloned()
         };
-        let rx = rx.unwrap_or_else(|| spawn_osc_input_thread(addr));
-        Ok(Self { rx })
+        let mut feed = rx.unwrap_or_else(|| spawn_osc_input_thread(addr));
+        let subscriber = feed.subscribe()?;
+        Ok(Self { subscriber })
     }
 
     pub fn try_recv(&self) -> Option<OscPacket> {
-        self.rx.try_recv().ok()
+        self.subscriber.read()
     }
 }
 

@@ -2293,6 +2293,7 @@ class OscNodeConfig extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..e<OscNodeConfig_ArgumentType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'argumentType', $pb.PbFieldType.OE, protoName: 'argumentType', defaultOrMaker: OscNodeConfig_ArgumentType.Int, valueOf: OscNodeConfig_ArgumentType.valueOf, enumValues: OscNodeConfig_ArgumentType.values)
     ..hasRequiredFields = false
   ;
 
@@ -2301,6 +2302,7 @@ class OscNodeConfig extends $pb.GeneratedMessage {
     $core.String? host,
     $core.int? port,
     $core.String? path,
+    OscNodeConfig_ArgumentType? argumentType,
   }) {
     final _result = create();
     if (host != null) {
@@ -2311,6 +2313,9 @@ class OscNodeConfig extends $pb.GeneratedMessage {
     }
     if (path != null) {
       _result.path = path;
+    }
+    if (argumentType != null) {
+      _result.argumentType = argumentType;
     }
     return _result;
   }
@@ -2361,6 +2366,15 @@ class OscNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasPath() => $_has(2);
   @$pb.TagNumber(3)
   void clearPath() => clearField(3);
+
+  @$pb.TagNumber(4)
+  OscNodeConfig_ArgumentType get argumentType => $_getN(3);
+  @$pb.TagNumber(4)
+  set argumentType(OscNodeConfig_ArgumentType v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasArgumentType() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearArgumentType() => clearField(4);
 }
 
 class VideoColorBalanceNodeConfig extends $pb.GeneratedMessage {

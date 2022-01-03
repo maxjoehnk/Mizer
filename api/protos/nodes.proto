@@ -237,7 +237,18 @@ message OscNodeConfig {
   string host = 1;
   uint32 port = 2;
   string path = 3;
+  ArgumentType argumentType = 4;
+
+  enum ArgumentType {
+    Int = 0;
+    Float = 1;
+    Long = 2;
+    Double = 3;
+    Bool = 4;
+    Color = 5;
+  }
 }
+
 
 message VideoColorBalanceNodeConfig {}
 message VideoEffectNodeConfig {}

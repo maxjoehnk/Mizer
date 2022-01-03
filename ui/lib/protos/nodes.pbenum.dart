@@ -162,3 +162,26 @@ class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
   const PixelPatternNodeConfig_Pattern._($core.int v, $core.String n) : super(v, n);
 }
 
+class OscNodeConfig_ArgumentType extends $pb.ProtobufEnum {
+  static const OscNodeConfig_ArgumentType Int = OscNodeConfig_ArgumentType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Int');
+  static const OscNodeConfig_ArgumentType Float = OscNodeConfig_ArgumentType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Float');
+  static const OscNodeConfig_ArgumentType Long = OscNodeConfig_ArgumentType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Long');
+  static const OscNodeConfig_ArgumentType Double = OscNodeConfig_ArgumentType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Double');
+  static const OscNodeConfig_ArgumentType Bool = OscNodeConfig_ArgumentType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Bool');
+  static const OscNodeConfig_ArgumentType Color = OscNodeConfig_ArgumentType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Color');
+
+  static const $core.List<OscNodeConfig_ArgumentType> values = <OscNodeConfig_ArgumentType> [
+    Int,
+    Float,
+    Long,
+    Double,
+    Bool,
+    Color,
+  ];
+
+  static final $core.Map<$core.int, OscNodeConfig_ArgumentType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static OscNodeConfig_ArgumentType? valueOf($core.int value) => _byValue[value];
+
+  const OscNodeConfig_ArgumentType._($core.int v, $core.String n) : super(v, n);
+}
+

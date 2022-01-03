@@ -8480,6 +8480,7 @@ pub struct OscNodeConfig {
     pub host: ::std::string::String,
     pub port: u32,
     pub path: ::std::string::String,
+    pub argumentType: OscNodeConfig_ArgumentType,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -8564,6 +8565,21 @@ impl OscNodeConfig {
     pub fn take_path(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.path, ::std::string::String::new())
     }
+
+    // .mizer.OscNodeConfig.ArgumentType argumentType = 4;
+
+
+    pub fn get_argumentType(&self) -> OscNodeConfig_ArgumentType {
+        self.argumentType
+    }
+    pub fn clear_argumentType(&mut self) {
+        self.argumentType = OscNodeConfig_ArgumentType::Int;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_argumentType(&mut self, v: OscNodeConfig_ArgumentType) {
+        self.argumentType = v;
+    }
 }
 
 impl ::protobuf::Message for OscNodeConfig {
@@ -8588,6 +8604,9 @@ impl ::protobuf::Message for OscNodeConfig {
                 3 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
                 },
+                4 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.argumentType, 4, &mut self.unknown_fields)?
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -8609,6 +8628,9 @@ impl ::protobuf::Message for OscNodeConfig {
         if !self.path.is_empty() {
             my_size += ::protobuf::rt::string_size(3, &self.path);
         }
+        if self.argumentType != OscNodeConfig_ArgumentType::Int {
+            my_size += ::protobuf::rt::enum_size(4, self.argumentType);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -8623,6 +8645,9 @@ impl ::protobuf::Message for OscNodeConfig {
         }
         if !self.path.is_empty() {
             os.write_string(3, &self.path)?;
+        }
+        if self.argumentType != OscNodeConfig_ArgumentType::Int {
+            os.write_enum(4, ::protobuf::ProtobufEnum::value(&self.argumentType))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -8677,6 +8702,11 @@ impl ::protobuf::Message for OscNodeConfig {
                 |m: &OscNodeConfig| { &m.path },
                 |m: &mut OscNodeConfig| { &mut m.path },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<OscNodeConfig_ArgumentType>>(
+                "argumentType",
+                |m: &OscNodeConfig| { &m.argumentType },
+                |m: &mut OscNodeConfig| { &mut m.argumentType },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<OscNodeConfig>(
                 "OscNodeConfig",
                 fields,
@@ -8696,6 +8726,7 @@ impl ::protobuf::Clear for OscNodeConfig {
         self.host.clear();
         self.port = 0;
         self.path.clear();
+        self.argumentType = OscNodeConfig_ArgumentType::Int;
         self.unknown_fields.clear();
     }
 }
@@ -8709,6 +8740,69 @@ impl ::std::fmt::Debug for OscNodeConfig {
 impl ::protobuf::reflect::ProtobufValue for OscNodeConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum OscNodeConfig_ArgumentType {
+    Int = 0,
+    Float = 1,
+    Long = 2,
+    Double = 3,
+    Bool = 4,
+    Color = 5,
+}
+
+impl ::protobuf::ProtobufEnum for OscNodeConfig_ArgumentType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<OscNodeConfig_ArgumentType> {
+        match value {
+            0 => ::std::option::Option::Some(OscNodeConfig_ArgumentType::Int),
+            1 => ::std::option::Option::Some(OscNodeConfig_ArgumentType::Float),
+            2 => ::std::option::Option::Some(OscNodeConfig_ArgumentType::Long),
+            3 => ::std::option::Option::Some(OscNodeConfig_ArgumentType::Double),
+            4 => ::std::option::Option::Some(OscNodeConfig_ArgumentType::Bool),
+            5 => ::std::option::Option::Some(OscNodeConfig_ArgumentType::Color),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [OscNodeConfig_ArgumentType] = &[
+            OscNodeConfig_ArgumentType::Int,
+            OscNodeConfig_ArgumentType::Float,
+            OscNodeConfig_ArgumentType::Long,
+            OscNodeConfig_ArgumentType::Double,
+            OscNodeConfig_ArgumentType::Bool,
+            OscNodeConfig_ArgumentType::Color,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<OscNodeConfig_ArgumentType>("OscNodeConfig.ArgumentType", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for OscNodeConfig_ArgumentType {
+}
+
+impl ::std::default::Default for OscNodeConfig_ArgumentType {
+    fn default() -> Self {
+        OscNodeConfig_ArgumentType::Int
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for OscNodeConfig_ArgumentType {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
 }
 
@@ -10646,32 +10740,36 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\
     \x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\
     \x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06hei\
-    ght\"K\n\rOscNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\
-    \x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04path\x18\x03\
-    \x20\x01(\tR\x04path\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15V\
-    ideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\
-    \x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18Vid\
-    eoTransformNodeConfig\"\x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeCo\
-    nfig\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeConfig\"*\n\
-    \x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01\
-    y\x18\x02\x20\x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\
-    \x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scal\
-    e\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\
-    \x08R\x06hidden\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04na\
-    me\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\
-    \x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\
-    \n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\
-    \x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\
-    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\
-    \n\x03GST\x10\x082\xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mize\
-    r.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.A\
-    ddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.Nod\
-    eConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\
-    \x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12Up\
-    dateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.Upd\
-    ateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeReque\
-    st\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDeleteNode\x12\x18.mizer.D\
-    eleteNodeRequest\x1a\x19.mizer.DeleteNodeResponse\"\0b\x06proto3\
+    ght\"\xe1\x01\n\rOscNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04\
+    host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04path\x18\
+    \x03\x20\x01(\tR\x04path\x12E\n\x0cargumentType\x18\x04\x20\x01(\x0e2!.m\
+    izer.OscNodeConfig.ArgumentTypeR\x0cargumentType\"M\n\x0cArgumentType\
+    \x12\x07\n\x03Int\x10\0\x12\t\n\x05Float\x10\x01\x12\x08\n\x04Long\x10\
+    \x02\x12\n\n\x06Double\x10\x03\x12\x08\n\x04Bool\x10\x04\x12\t\n\x05Colo\
+    r\x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectN\
+    odeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\
+    \tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNo\
+    deConfig\"\x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeConfig\"\x14\n\
+    \x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeConfig\"*\n\x0cNodePositio\
+    n\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\
+    \x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\
+    \x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\
+    \x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\
+    \"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08pr\
+    otocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\
+    \x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\
+    \x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECT\
+    OR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\
+    \x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\
+    \xc6\x03\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
+    \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
+    \x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\
+    \x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.\
+    WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodePropert\
+    y\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigRe\
+    sponse\"\0\x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeRequest\x1a\x17.mize\
+    r.MoveNodeResponse\"\0\x12C\n\nDeleteNode\x12\x18.mizer.DeleteNodeReques\
+    t\x1a\x19.mizer.DeleteNodeResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -1,6 +1,7 @@
 use protobuf::SingularPtrField;
 
 use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
+use mizer_nodes::OscArgumentType;
 use mizer_runtime::NodeDescriptor;
 
 use crate::models::nodes::*;
@@ -490,6 +491,7 @@ impl From<mizer_nodes::OscInputNode> for OscNodeConfig {
             host: node.host,
             port: node.port as u32,
             path: node.path,
+            argumentType: node.argument_type.into(),
             ..Default::default()
         }
     }
@@ -501,6 +503,7 @@ impl From<OscNodeConfig> for mizer_nodes::OscInputNode {
             host: node.host,
             port: node.port as u16,
             path: node.path,
+            argument_type: node.argumentType.into(),
         }
     }
 }
@@ -511,6 +514,7 @@ impl From<mizer_nodes::OscOutputNode> for OscNodeConfig {
             host: node.host,
             port: node.port as u32,
             path: node.path,
+            argumentType: node.argument_type.into(),
             ..Default::default()
         }
     }
@@ -522,6 +526,37 @@ impl From<OscNodeConfig> for mizer_nodes::OscOutputNode {
             host: node.host,
             port: node.port as u16,
             path: node.path,
+            argument_type: node.argumentType.into(),
+        }
+    }
+}
+
+impl From<OscNodeConfig_ArgumentType> for mizer_nodes::OscArgumentType {
+    fn from(argument_type: OscNodeConfig_ArgumentType) -> Self {
+        use OscNodeConfig_ArgumentType::*;
+
+        match argument_type {
+            Bool => Self::Bool,
+            Int => Self::Int,
+            Double => Self::Double,
+            Float => Self::Float,
+            Long => Self::Long,
+            Color => Self::Color,
+        }
+    }
+}
+
+impl From<mizer_nodes::OscArgumentType> for OscNodeConfig_ArgumentType {
+    fn from(argument_type: OscArgumentType) -> Self {
+        use OscArgumentType::*;
+
+        match argument_type {
+            Bool => Self::Bool,
+            Int => Self::Int,
+            Double => Self::Double,
+            Float => Self::Float,
+            Long => Self::Long,
+            Color => Self::Color,
         }
     }
 }

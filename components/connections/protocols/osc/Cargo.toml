@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1"
-rosc = "0.4"
+rosc = "0.6"
 crossbeam-channel = "0.4"
 lazy_static = "1.4"
 log = "0.4"

@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_protocol_osc::*;
 use mizer_util::ConvertPercentages;
+use crate::OscArgumentType;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscInputNode {
@@ -11,6 +12,8 @@ pub struct OscInputNode {
     #[serde(default = "default_port")]
     pub port: u16,
     pub path: String,
+    #[serde(default = "default_argument_type")]
+    pub argument_type: OscArgumentType,
 }
 
 fn default_host() -> String {
@@ -21,11 +24,16 @@ fn default_port() -> u16 {
     6000
 }
 
+fn default_argument_type() -> OscArgumentType {
+    OscArgumentType::Float
+}
+
 impl Default for OscInputNode {
     fn default() -> Self {
         Self {
             host: default_host(),
             port: default_port(),
+            argument_type: default_argument_type(),
             path: "".into(),
         }
     }
@@ -39,34 +47,12 @@ impl PipelineNode for OscInputNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        let number = (port == "number").then(|| PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Output,
-            ..Default::default()
-        });
-        let color = (port == "color").then(|| PortMetadata {
-            port_type: PortType::Color,
-            direction: PortDirection::Output,
-            ..Default::default()
-        });
-        number.or(color)
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             (
-                "number".into(),
+                self.argument_type.get_port_id(),
                 PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
-            (
-                "color".into(),
-                PortMetadata {
-                    port_type: PortType::Color,
+                    port_type: self.argument_type.get_port_type(),
                     direction: PortDirection::Output,
                     ..Default::default()
                 },
@@ -111,30 +97,38 @@ impl OscInputNode {
     fn handle_msg(&self, msg: OscMessage, context: &impl NodeContext) {
         log::trace!("{:?}", msg);
         if msg.addr == self.path {
-            match &msg.args[0] {
-                OscType::Float(float) => write_number(context, *float as f64),
-                OscType::Double(double) => write_number(context, *double),
-                OscType::Int(int) => write_number(context, *int as f64),
-                OscType::Color(color) => write_color(context, color),
-                _ => {}
+            if self.argument_type.is_numeric() {
+                match &msg.args[0] {
+                    OscType::Float(float) => self.write_number(context, *float as f64),
+                    OscType::Double(double) => self.write_number(context, *double),
+                    OscType::Int(int) => self.write_number(context, *int as f64),
+                    OscType::Long(value) => self.write_number(context, *value as f64),
+                    OscType::Bool(value) => self.write_number(context, if *value { 1. } else { 0. }),
+                    _ => {}
+                }
+            }
+            if self.argument_type.is_color() {
+                if let OscType::Color(color) = &msg.args[0] {
+                    self.write_color(context, color);
+                }
             }
         }
     }
-}
 
-fn write_number(context: &impl NodeContext, value: f64) {
-    context.write_port("number", value);
-    context.push_history_value(value);
-}
+    fn write_number(&self, context: &impl NodeContext, value: f64) {
+        context.write_port(self.argument_type.get_port_id(), value);
+        context.push_history_value(value);
+    }
 
-fn write_color(context: &impl NodeContext, color: &OscColor) {
-    context.write_port(
-        "color",
-        Color {
-            red: color.red.to_percentage(),
-            green: color.green.to_percentage(),
-            blue: color.blue.to_percentage(),
-            alpha: color.alpha.to_percentage(),
-        },
-    );
+    fn write_color(&self, context: &impl NodeContext, color: &OscColor) {
+        context.write_port(
+            self.argument_type.get_port_id(),
+            Color {
+                red: color.red.to_percentage(),
+                green: color.green.to_percentage(),
+                blue: color.blue.to_percentage(),
+                alpha: color.alpha.to_percentage(),
+            },
+        );
+    }
 }

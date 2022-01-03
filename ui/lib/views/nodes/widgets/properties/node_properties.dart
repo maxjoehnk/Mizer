@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
@@ -8,6 +7,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/fixture_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
+import 'properties/groups/osc_properties.dart';
 import 'properties/groups/video_file_properties.dart';
 
 class NodePropertiesPane extends StatelessWidget {
@@ -71,6 +71,16 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(VideoFileProperties(node.config.videoFileConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(videoFileConfig: config)))));
+    }
+    if (node.config.hasOscInputConfig()) {
+      widgets.add(OscProperties(node.config.oscInputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(oscInputConfig: config)))));
+    }
+    if (node.config.hasOscOutputConfig()) {
+      widgets.add(OscProperties(node.config.oscOutputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(oscOutputConfig: config)))));
     }
     return widgets;
   }

@@ -4,6 +4,8 @@ use mizer_node::*;
 use mizer_protocol_osc::*;
 use mizer_util::ConvertBytes;
 
+use crate::argument_type::OscArgumentType;
+
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscOutputNode {
     #[serde(default = "default_host")]
@@ -11,6 +13,8 @@ pub struct OscOutputNode {
     #[serde(default = "default_port")]
     pub port: u16,
     pub path: String,
+    #[serde(default = "default_argument_type")]
+    pub argument_type: OscArgumentType,
 }
 
 fn default_host() -> String {
@@ -21,11 +25,16 @@ fn default_port() -> u16 {
     6000
 }
 
+fn default_argument_type() -> OscArgumentType {
+    OscArgumentType::Float
+}
+
 impl Default for OscOutputNode {
     fn default() -> Self {
         Self {
             host: default_host(),
             port: default_port(),
+            argument_type: default_argument_type(),
             path: "".into(),
         }
     }
@@ -39,34 +48,12 @@ impl PipelineNode for OscOutputNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        let number = (port == "number").then(|| PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Input,
-            ..Default::default()
-        });
-        let color = (port == "color").then(|| PortMetadata {
-            port_type: PortType::Color,
-            direction: PortDirection::Input,
-            ..Default::default()
-        });
-        number.or(color)
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
             (
-                "number".into(),
+                self.argument_type.get_port_id(),
                 PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "color".into(),
-                PortMetadata {
-                    port_type: PortType::Color,
+                    port_type: self.argument_type.get_port_type(),
                     direction: PortDirection::Input,
                     ..Default::default()
                 },
@@ -83,24 +70,36 @@ impl ProcessingNode for OscOutputNode {
     type State = OscOutput;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(value) = context.read_port::<_, f64>("number") {
-            context.push_history_value(value);
-            state.send(OscPacket::Message(OscMessage {
-                addr: self.path.clone(),
-                args: vec![value.into()],
-            }))?;
+        if self.argument_type.is_numeric() {
+            if let Some(value) = context.read_port::<_, f64>(self.argument_type.get_port_id()) {
+                context.push_history_value(value);
+                let arg = match self.argument_type {
+                    OscArgumentType::Float => OscType::Float(value as f32),
+                    OscArgumentType::Double => OscType::Double(value),
+                    OscArgumentType::Int => OscType::Int(value as i32),
+                    OscArgumentType::Long => OscType::Long(value as i64),
+                    OscArgumentType::Bool => OscType::Bool((value - 1.).abs() < f64::EPSILON),
+                    _ => unreachable!()
+                };
+                state.send(OscPacket::Message(OscMessage {
+                    addr: self.path.clone(),
+                    args: vec![arg],
+                }))?;
+            }
         }
-        if let Some(color) = context.read_port::<_, Color>("color") {
-            let color = OscColor {
-                red: color.red.to_8bit(),
-                green: color.green.to_8bit(),
-                blue: color.blue.to_8bit(),
-                alpha: color.alpha.to_8bit(),
-            };
-            state.send(OscPacket::Message(OscMessage {
-                addr: self.path.clone(),
-                args: vec![OscType::Color(color)],
-            }))?;
+        if self.argument_type.is_color() {
+            if let Some(color) = context.read_port::<_, Color>(self.argument_type.get_port_id()) {
+                let color = OscColor {
+                    red: color.red.to_8bit(),
+                    green: color.green.to_8bit(),
+                    blue: color.blue.to_8bit(),
+                    alpha: color.alpha as u8,
+                };
+                state.send(OscPacket::Message(OscMessage {
+                    addr: self.path.clone(),
+                    args: vec![OscType::Color(color)],
+                }))?;
+            }
         }
         Ok(())
     }

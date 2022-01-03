@@ -3,11 +3,34 @@ nodes:
     path: /osc-input-0
     config:
       port: 9000
-      path: /sink
+      path: /hue
+      argument_type: float
     designer:
       position:
         x: 0
         y: 5
+      scale: 1
+  - type: osc-input
+    path: /osc-input-1
+    config:
+      port: 9000
+      path: /saturation
+      argument_type: float
+    designer:
+      position:
+        x: 0
+        y: 7
+      scale: 1
+  - type: osc-input
+    path: /osc-input-2
+    config:
+      port: 9000
+      path: /value
+      argument_type: float
+    designer:
+      position:
+        x: 0
+        y: 9
       scale: 1
   - type: osc-output
     path: /osc-output-0
@@ -15,6 +38,7 @@ nodes:
       host: 127.0.0.1
       port: 9001
       path: /number
+      argument_type: float
     designer:
       position:
         x: 5
@@ -26,11 +50,24 @@ nodes:
       host: 127.0.0.1
       port: 9001
       path: /color
+      argument_type: color
+    designer:
+      position:
+        x: 10
+        y: 5
+      scale: 1
+  - path: /color-hsv-0
+    type: color-hsv
+    config: ~
     designer:
       position:
         x: 5
         y: 5
-      scale: 1
+      scale: 0.0
+      hidden: false
 channels:
   - number@/osc-input-0 -> number@/osc-output-0
-  - color@/osc-input-0 -> color@/osc-output-1
+  - number@/osc-input-0 -> Hue@/color-hsv-0
+  - number@/osc-input-1 -> Saturation@/color-hsv-0
+  - number@/osc-input-2 -> Value@/color-hsv-0
+  - Color@/color-hsv-0 -> color@/osc-output-1

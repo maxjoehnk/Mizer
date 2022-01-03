@@ -451,12 +451,14 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.path = config.path.clone();
             node.host = config.host.clone();
             node.port = config.port;
+            node.argument_type = config.argument_type;
         }
         (NodeType::OscInput, Node::OscInput(config)) => {
             let node: &mut OscInputNode = node.downcast_mut()?;
             node.path = config.path.clone();
             node.host = config.host.clone();
             node.port = config.port;
+            node.argument_type = config.argument_type;
         }
         (NodeType::Button, Node::Button(_)) => {}
         (NodeType::Fader, Node::Fader(_)) => {}

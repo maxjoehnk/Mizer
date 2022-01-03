@@ -3,7 +3,7 @@ use std::net::{SocketAddrV4, UdpSocket};
 use std::sync::{Arc, Mutex, RwLock};
 use std::thread;
 
-use crossbeam_channel::{unbounded, Receiver, Sender};
+use crossbeam_channel::{unbounded, Sender};
 use event_feed::{Feed, Reader};
 use lazy_static::lazy_static;
 pub use rosc::{OscColor, OscMessage, OscPacket, OscType};
@@ -21,14 +21,14 @@ impl OscInputStream {
     }
 
     fn send(&self, msg: OscPacket) -> anyhow::Result<()> {
-        let feed = self.0.read().map_err(|err| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
+        let feed = self.0.read().map_err(|_| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
         feed.send(msg);
 
         Ok(())
     }
 
     fn subscribe(&self) -> anyhow::Result<OscInputSubscriber> {
-        let mut feed = self.0.write().map_err(|err| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
+        let mut feed = self.0.write().map_err(|_| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
         let reader = feed.add_reader();
 
         Ok(OscInputSubscriber(reader))

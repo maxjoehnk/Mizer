@@ -152,7 +152,15 @@ impl OscillatorNode {
                     value
                 }
             }
-            oscillator => unimplemented!("{:?}", oscillator),
+            OscillatorType::Saw => {
+                let base = self.ratio;
+                let frame = self.get_frame(beat);
+                let high = self.max;
+                let low = self.min;
+                let value = ((high - low) / self.ratio) * frame + low;
+
+                value
+            }
         }
     }
 

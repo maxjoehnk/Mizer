@@ -4,7 +4,7 @@ use test_case::test_case;
 mod node_grapher;
 
 #[test_case(OscillatorType::Sine, "sine_oscillator")]
-// #[test_case(OscillatorType::Saw, "saw_oscillator")] TODO: implement saw
+#[test_case(OscillatorType::Saw, "saw_oscillator")]
 #[test_case(OscillatorType::Square, "square_oscillator")]
 #[test_case(OscillatorType::Triangle, "triangle_oscillator")]
 fn oscillator(oscillator_type: OscillatorType, name: &str) -> anyhow::Result<()> {

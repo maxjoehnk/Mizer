@@ -225,15 +225,27 @@ message DmxOutputNodeConfig {
 
 message MidiNodeConfig {
   string device = 1;
-  uint32 channel = 2;
-  MidiType type = 3;
-  uint32 port = 4;
-  uint32 rangeFrom = 5;
-  uint32 rangeTo = 6;
+  oneof binding {
+    NoteBinding noteBinding = 2;
+    ControlBinding controlBinding = 3;
+  }
 
-  enum MidiType {
-    CC = 0;
-    Note = 1;
+  message NoteBinding {
+    uint32 channel = 1;
+    MidiType type = 2;
+    uint32 port = 3;
+    uint32 rangeFrom = 4;
+    uint32 rangeTo = 5;
+
+    enum MidiType {
+      CC = 0;
+      Note = 1;
+    }
+  }
+
+  message ControlBinding {
+    string page = 1;
+    string control = 2;
   }
 }
 

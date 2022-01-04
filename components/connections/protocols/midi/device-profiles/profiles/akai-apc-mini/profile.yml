@@ -1,0 +1,7 @@
+id: akai-apc-mini
+manufacturer: AKAI
+name: APC Mini
+keyword: APC MINI
+#layout: layout-clean.svg
+scripts:
+  pages: pages.rhai

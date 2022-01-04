@@ -1,5 +1,6 @@
 use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
 use std::collections::HashMap;
+use mizer_midi_device_profiles::{DeviceProfile, load_profiles};
 
 use crate::device::MidiDevice;
 
@@ -7,6 +8,7 @@ pub struct MidiDeviceIdentifier {
     pub name: String,
     pub(crate) input: Option<MidiInputPort>,
     pub(crate) output: Option<MidiOutputPort>,
+    pub profile: Option<DeviceProfile>,
 }
 
 impl MidiDeviceIdentifier {
@@ -25,11 +27,25 @@ impl std::fmt::Debug for MidiDeviceIdentifier {
     }
 }
 
-pub struct MidiDeviceProvider;
+pub struct MidiDeviceProvider {
+    profiles: Vec<DeviceProfile>,
+}
 
 impl MidiDeviceProvider {
     pub fn new() -> Self {
-        MidiDeviceProvider
+        MidiDeviceProvider {
+            profiles: Vec::new(),
+        }
+    }
+
+    pub fn load_device_profiles(&mut self, path: &str) -> anyhow::Result<()> {
+        self.profiles = load_profiles(path)?;
+
+        Ok(())
+    }
+
+    pub fn list_device_profiles(&self) -> Vec<DeviceProfile> {
+        self.profiles.clone()
     }
 
     pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {
@@ -63,6 +79,7 @@ impl MidiDeviceProvider {
         let devices = ports
             .into_iter()
             .map(|(name, (input, output))| MidiDeviceIdentifier {
+                profile: self.profiles.iter().find(|profile| profile.matches(&name)).cloned(),
                 name,
                 input,
                 output,

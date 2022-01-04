@@ -8,30 +8,37 @@ use std::ops::DerefMut;
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiOutputNode {
     pub device: String,
-    #[serde(default = "default_channel")]
-    pub channel: u8,
     #[serde(flatten)]
     pub config: MidiOutputConfig,
 }
 
-#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum MidiOutputConfig {
     CC {
+        #[serde(default = "default_channel")]
+        channel: u8,
         port: u8,
         #[serde(default = "default_midi_range")]
         range: (u8, u8),
     },
     Note {
+        #[serde(default = "default_channel")]
+        channel: u8,
         port: u8,
         #[serde(default = "default_midi_range")]
         range: (u8, u8),
+    },
+    Control {
+        page: String,
+        control: String,
     },
 }
 
 impl Default for MidiOutputConfig {
     fn default() -> Self {
         MidiOutputConfig::Note {
+            channel: default_channel(),
             port: 1,
             range: default_midi_range(),
         }
@@ -79,21 +86,29 @@ impl ProcessingNode for MidiOutputNode {
             if let Some(value) = context.read_port::<_, f64>("value") {
                 context.push_history_value(value);
                 let device: &mut MidiDevice = device.deref_mut();
-                let channel = self.channel.try_into().unwrap();
                 let msg = match &self.config {
-                    MidiOutputConfig::CC { port, range } => MidiMessage::ControlChange(
-                        channel,
+                    MidiOutputConfig::CC { channel, port, range } => Some(MidiMessage::ControlChange(
+                        (*channel).try_into().unwrap(),
                         *port,
                         value.linear_extrapolate((0f64, 1f64), *range),
-                    ),
-                    MidiOutputConfig::Note { port, range } => MidiMessage::NoteOn(
-                        channel,
+                    )),
+                    MidiOutputConfig::Note { channel, port, range } => Some(MidiMessage::NoteOn(
+                        (*channel).try_into().unwrap(),
                         *port,
                         value.linear_extrapolate((0f64, 1f64), *range),
-                    ),
+                    )),
+                    MidiOutputConfig::Control { page, control } => {
+                        if let Some(control) = device.profile.as_ref().and_then(|profile| profile.get_control(page, control)) {
+                            control.send_value(value)
+                        }else {
+                            None
+                        }
+                    },
                 };
 
-                device.write(msg)?;
+                if let Some(msg) = msg {
+                    device.write(msg)?;
+                }
             }
         }
 

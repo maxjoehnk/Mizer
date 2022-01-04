@@ -162,19 +162,19 @@ class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
   const PixelPatternNodeConfig_Pattern._($core.int v, $core.String n) : super(v, n);
 }
 
-class MidiNodeConfig_MidiType extends $pb.ProtobufEnum {
-  static const MidiNodeConfig_MidiType CC = MidiNodeConfig_MidiType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CC');
-  static const MidiNodeConfig_MidiType Note = MidiNodeConfig_MidiType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Note');
+class MidiNodeConfig_NoteBinding_MidiType extends $pb.ProtobufEnum {
+  static const MidiNodeConfig_NoteBinding_MidiType CC = MidiNodeConfig_NoteBinding_MidiType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CC');
+  static const MidiNodeConfig_NoteBinding_MidiType Note = MidiNodeConfig_NoteBinding_MidiType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Note');
 
-  static const $core.List<MidiNodeConfig_MidiType> values = <MidiNodeConfig_MidiType> [
+  static const $core.List<MidiNodeConfig_NoteBinding_MidiType> values = <MidiNodeConfig_NoteBinding_MidiType> [
     CC,
     Note,
   ];
 
-  static final $core.Map<$core.int, MidiNodeConfig_MidiType> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static MidiNodeConfig_MidiType? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, MidiNodeConfig_NoteBinding_MidiType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static MidiNodeConfig_NoteBinding_MidiType? valueOf($core.int value) => _byValue[value];
 
-  const MidiNodeConfig_MidiType._($core.int v, $core.String n) : super(v, n);
+  const MidiNodeConfig_NoteBinding_MidiType._($core.int v, $core.String n) : super(v, n);
 }
 
 class OscNodeConfig_ArgumentType extends $pb.ProtobufEnum {

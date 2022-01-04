@@ -8,6 +8,7 @@ pub fn read_profile(path: &Path) -> anyhow::Result<DeviceProfile> {
     let mut profile = read_config(path)?;
     generate_pages(&mut profile, path)?;
     generate_output_script(&mut profile, path)?;
+    read_layout(&mut profile, path)?;
 
     Ok(profile)
 }
@@ -39,6 +40,17 @@ fn generate_output_script(profile: &mut DeviceProfile, path: &Path) -> anyhow::R
         .and_then(|scripts| scripts.outputs.as_ref())
     {
         profile.output_script = Some(parse_outputs_ast(path.join(script_name))?);
+    }
+
+    Ok(())
+}
+
+fn read_layout(profile: &mut DeviceProfile, path: &Path) -> anyhow::Result<()> {
+    if let Some(filename) = profile.layout_file.as_ref()
+    {
+        let layout_path = path.join(filename);
+        let layout = std::fs::read_to_string(&layout_path)?;
+        profile.layout = Some(layout);
     }
 
     Ok(())

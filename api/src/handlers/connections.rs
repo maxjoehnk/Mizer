@@ -38,4 +38,16 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     pub fn add_artnet(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
         self.runtime.add_artnet_connection(name, host, port)
     }
+
+    pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
+        let profiles = self.runtime.get_midi_device_profiles()
+            .into_iter()
+            .map(MidiDeviceProfile::from)
+            .collect();
+
+        MidiDeviceProfiles {
+            profiles,
+            ..Default::default()
+        }
+    }
 }

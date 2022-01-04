@@ -7,30 +7,37 @@ use std::ops::Deref;
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct MidiInputNode {
     pub device: String,
-    #[serde(default = "default_channel")]
-    pub channel: u8,
     #[serde(flatten)]
     pub config: MidiInputConfig,
 }
 
-#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum MidiInputConfig {
     CC {
+        #[serde(default = "default_channel")]
+        channel: u8,
         port: u8,
         #[serde(default = "default_midi_range")]
         range: (u8, u8),
     },
     Note {
+        #[serde(default = "default_channel")]
+        channel: u8,
         port: u8,
         #[serde(default = "default_midi_range")]
         range: (u8, u8),
+    },
+    Control {
+        page: String,
+        control: String,
     },
 }
 
 impl Default for MidiInputConfig {
     fn default() -> Self {
         MidiInputConfig::Note {
+            channel: default_channel(),
             port: 1,
             range: default_midi_range(),
         }
@@ -87,25 +94,26 @@ impl ProcessingNode for MidiInputNode {
                         (
                             MidiMessage::ControlChange(channel, port, value),
                             MidiInputConfig::CC {
+                                channel: config_channel,
                                 port: config_port,
                                 range: (min, max),
                             },
                         ) if port == *config_port => {
-                            if channel != self.channel {
+                            if channel != *config_channel {
                                 continue;
                             }
                             result_value =
                                 Some(value.linear_extrapolate((*min, *max), (0f64, 1f64)));
-                            //value as f64).linear_extrapolate((min, max), (0f64, 1f64)));
                         }
                         (
                             MidiMessage::NoteOn(channel, port, value),
                             MidiInputConfig::Note {
+                                channel: config_channel,
                                 port: config_port,
                                 range: (min, max),
                             },
                         ) if port == *config_port => {
-                            if channel != self.channel {
+                            if channel != *config_channel {
                                 continue;
                             }
                             result_value =
@@ -114,13 +122,23 @@ impl ProcessingNode for MidiInputNode {
                         (
                             MidiMessage::NoteOff(channel, port, _),
                             MidiInputConfig::Note {
+                                channel: config_channel,
                                 port: config_port, ..
                             },
                         ) if port == *config_port => {
-                            if channel != self.channel {
+                            if channel != *config_channel {
                                 continue;
                             }
                             result_value = Some(0f64);
+                        }
+                        (
+                            msg, MidiInputConfig::Control { page, control }
+                        ) => {
+                            if let Some(control) = device.profile.as_ref().and_then(|profile| profile.get_control(page, control)) {
+                                if let Some(value) = control.receive_value(msg) {
+                                    result_value = Some(value);
+                                }
+                            }
                         }
                         _ => {}
                     }

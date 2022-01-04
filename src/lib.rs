@@ -14,7 +14,7 @@ use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
-use mizer_protocol_midi::MidiModule;
+use mizer_protocol_midi::{MidiConnectionManager, MidiDeviceProvider, MidiModule};
 use mizer_runtime::DefaultRuntime;
 
 pub use crate::api::*;
@@ -44,6 +44,7 @@ pub fn build_runtime(
     register_dmx_module(&mut runtime)?;
     register_midi_module(&mut runtime)?;
     let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime)?;
+
 
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
@@ -205,7 +206,12 @@ fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
 }
 
 fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
-    MidiModule.register(runtime)
+    MidiModule.register(runtime)?;
+
+    let connection_manager = runtime.injector_mut().get_mut::<MidiConnectionManager>().unwrap();
+    connection_manager.load_device_profiles("components/connections/protocols/midi/device-profiles/profiles")?;
+
+    Ok(())
 }
 
 fn register_fixtures_module(

@@ -9,6 +9,8 @@ service ConnectionsApi {
 
   rpc AddArtnetConnection (AddArtnetRequest) returns (Connections) {}
   rpc AddSacnConnection (AddSacnRequest) returns (Connections) {}
+
+  rpc GetMidiDeviceProfiles (GetDeviceProfilesRequest) returns (MidiDeviceProfiles) {}
 }
 
 message MonitorDmxRequest {
@@ -25,6 +27,7 @@ message MonitorDmxUniverse {
 }
 
 message GetConnectionsRequest {}
+message GetDeviceProfilesRequest {}
 
 message AddArtnetRequest {
   string name = 1;
@@ -61,7 +64,44 @@ message HeliosConnection {
 }
 
 message MidiConnection {
+  optional string device_profile = 1;
+}
 
+message MidiDeviceProfiles {
+  repeated MidiDeviceProfile profiles = 1;
+}
+
+message MidiDeviceProfile {
+  string id = 1;
+  string manufacturer = 2;
+  string model = 3;
+  optional string layout = 4;
+  repeated Page pages = 5;
+
+  message Page {
+    string name = 1;
+    repeated Group groups = 2;
+    repeated Control controls = 3;
+  }
+
+  message Group {
+    string name = 1;
+    repeated Control controls = 2;
+  }
+
+  message Control {
+    string id = 1;
+    string name = 2;
+    uint32 channel = 3;
+    uint32 note = 4;
+    ControlType control_type = 5;
+    bool has_output = 6;
+  }
+
+  enum ControlType {
+    Note = 0;
+    CC = 1;
+  }
 }
 
 message OscConnection {

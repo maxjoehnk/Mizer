@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_connections::Connection;
+use mizer_connections::{Connection, midi_device_profile::DeviceProfile};
 use mizer_layouts::{ControlConfig, Layout};
 use mizer_layouts::{ControlPosition, ControlSize};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
@@ -82,6 +82,8 @@ pub trait RuntimeApi: Clone + Send + Sync {
         host: String,
         port: Option<u16>,
     ) -> anyhow::Result<()>;
+
+    fn get_midi_device_profiles(&self) -> Vec<DeviceProfile>;
 
     fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>>;
 }

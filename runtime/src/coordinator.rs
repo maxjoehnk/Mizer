@@ -473,14 +473,12 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
         (NodeType::MidiInput, Node::MidiInput(config)) => {
             let node: &mut MidiInputNode = node.downcast_mut()?;
             node.device = config.device.clone();
-            node.channel = config.channel;
-            node.config = config.config;
+            node.config = config.config.clone();
         }
         (NodeType::MidiOutput, Node::MidiOutput(config)) => {
             let node: &mut MidiOutputNode = node.downcast_mut()?;
             node.device = config.device.clone();
-            node.channel = config.channel;
-            node.config = config.config;
+            node.config = config.config.clone();
         }
         (NodeType::OpcOutput, Node::OpcOutput(config)) => {
             let node: &mut OpcOutputNode = node.downcast_mut()?;

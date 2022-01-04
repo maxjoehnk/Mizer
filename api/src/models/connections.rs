@@ -672,6 +672,125 @@ impl ::protobuf::reflect::ProtobufValue for GetConnectionsRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct GetDeviceProfilesRequest {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GetDeviceProfilesRequest {
+    fn default() -> &'a GetDeviceProfilesRequest {
+        <GetDeviceProfilesRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GetDeviceProfilesRequest {
+    pub fn new() -> GetDeviceProfilesRequest {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for GetDeviceProfilesRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GetDeviceProfilesRequest {
+        GetDeviceProfilesRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GetDeviceProfilesRequest>(
+                "GetDeviceProfilesRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GetDeviceProfilesRequest {
+        static instance: ::protobuf::rt::LazyV2<GetDeviceProfilesRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GetDeviceProfilesRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for GetDeviceProfilesRequest {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GetDeviceProfilesRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GetDeviceProfilesRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct AddArtnetRequest {
     // message fields
     pub name: ::std::string::String,
@@ -2166,6 +2285,8 @@ impl ::protobuf::reflect::ProtobufValue for HeliosConnection {
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MidiConnection {
+    // message oneof groups
+    pub _device_profile: ::std::option::Option<MidiConnection_oneof__device_profile>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -2179,9 +2300,64 @@ impl<'a> ::std::default::Default for &'a MidiConnection {
     }
 }
 
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MidiConnection_oneof__device_profile {
+    device_profile(::std::string::String),
+}
+
 impl MidiConnection {
     pub fn new() -> MidiConnection {
         ::std::default::Default::default()
+    }
+
+    // string device_profile = 1;
+
+
+    pub fn get_device_profile(&self) -> &str {
+        match self._device_profile {
+            ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_device_profile(&mut self) {
+        self._device_profile = ::std::option::Option::None;
+    }
+
+    pub fn has_device_profile(&self) -> bool {
+        match self._device_profile {
+            ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_device_profile(&mut self, v: ::std::string::String) {
+        self._device_profile = ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_device_profile(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(_)) = self._device_profile {
+        } else {
+            self._device_profile = ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(::std::string::String::new()));
+        }
+        match self._device_profile {
+            ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_device_profile(&mut self) -> ::std::string::String {
+        if self.has_device_profile() {
+            match self._device_profile.take() {
+                ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
     }
 }
 
@@ -2194,6 +2370,12 @@ impl ::protobuf::Message for MidiConnection {
         while !is.eof()? {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._device_profile = ::std::option::Option::Some(MidiConnection_oneof__device_profile::device_profile(is.read_string()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2206,12 +2388,26 @@ impl ::protobuf::Message for MidiConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self._device_profile {
+            match v {
+                &MidiConnection_oneof__device_profile::device_profile(ref v) => {
+                    my_size += ::protobuf::rt::string_size(1, &v);
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let ::std::option::Option::Some(ref v) = self._device_profile {
+            match v {
+                &MidiConnection_oneof__device_profile::device_profile(ref v) => {
+                    os.write_string(1, v)?;
+                },
+            };
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -2249,7 +2445,12 @@ impl ::protobuf::Message for MidiConnection {
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
-            let fields = ::std::vec::Vec::new();
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "device_profile",
+                MidiConnection::has_device_profile,
+                MidiConnection::get_device_profile,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiConnection>(
                 "MidiConnection",
                 fields,
@@ -2266,6 +2467,7 @@ impl ::protobuf::Message for MidiConnection {
 
 impl ::protobuf::Clear for MidiConnection {
     fn clear(&mut self) {
+        self._device_profile = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -2279,6 +2481,1415 @@ impl ::std::fmt::Debug for MidiConnection {
 impl ::protobuf::reflect::ProtobufValue for MidiConnection {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiDeviceProfiles {
+    // message fields
+    pub profiles: ::protobuf::RepeatedField<MidiDeviceProfile>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiDeviceProfiles {
+    fn default() -> &'a MidiDeviceProfiles {
+        <MidiDeviceProfiles as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MidiDeviceProfiles {
+    pub fn new() -> MidiDeviceProfiles {
+        ::std::default::Default::default()
+    }
+
+    // repeated .mizer.MidiDeviceProfile profiles = 1;
+
+
+    pub fn get_profiles(&self) -> &[MidiDeviceProfile] {
+        &self.profiles
+    }
+    pub fn clear_profiles(&mut self) {
+        self.profiles.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_profiles(&mut self, v: ::protobuf::RepeatedField<MidiDeviceProfile>) {
+        self.profiles = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_profiles(&mut self) -> &mut ::protobuf::RepeatedField<MidiDeviceProfile> {
+        &mut self.profiles
+    }
+
+    // Take field
+    pub fn take_profiles(&mut self) -> ::protobuf::RepeatedField<MidiDeviceProfile> {
+        ::std::mem::replace(&mut self.profiles, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for MidiDeviceProfiles {
+    fn is_initialized(&self) -> bool {
+        for v in &self.profiles {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.profiles)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.profiles {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.profiles {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiDeviceProfiles {
+        MidiDeviceProfiles::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MidiDeviceProfile>>(
+                "profiles",
+                |m: &MidiDeviceProfiles| { &m.profiles },
+                |m: &mut MidiDeviceProfiles| { &mut m.profiles },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiDeviceProfiles>(
+                "MidiDeviceProfiles",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiDeviceProfiles {
+        static instance: ::protobuf::rt::LazyV2<MidiDeviceProfiles> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiDeviceProfiles::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiDeviceProfiles {
+    fn clear(&mut self) {
+        self.profiles.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiDeviceProfiles {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiDeviceProfiles {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiDeviceProfile {
+    // message fields
+    pub id: ::std::string::String,
+    pub manufacturer: ::std::string::String,
+    pub model: ::std::string::String,
+    pub pages: ::protobuf::RepeatedField<MidiDeviceProfile_Page>,
+    // message oneof groups
+    pub _layout: ::std::option::Option<MidiDeviceProfile_oneof__layout>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiDeviceProfile {
+    fn default() -> &'a MidiDeviceProfile {
+        <MidiDeviceProfile as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MidiDeviceProfile_oneof__layout {
+    layout(::std::string::String),
+}
+
+impl MidiDeviceProfile {
+    pub fn new() -> MidiDeviceProfile {
+        ::std::default::Default::default()
+    }
+
+    // string id = 1;
+
+
+    pub fn get_id(&self) -> &str {
+        &self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: ::std::string::String) {
+        self.id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut ::std::string::String {
+        &mut self.id
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.id, ::std::string::String::new())
+    }
+
+    // string manufacturer = 2;
+
+
+    pub fn get_manufacturer(&self) -> &str {
+        &self.manufacturer
+    }
+    pub fn clear_manufacturer(&mut self) {
+        self.manufacturer.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_manufacturer(&mut self, v: ::std::string::String) {
+        self.manufacturer = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_manufacturer(&mut self) -> &mut ::std::string::String {
+        &mut self.manufacturer
+    }
+
+    // Take field
+    pub fn take_manufacturer(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.manufacturer, ::std::string::String::new())
+    }
+
+    // string model = 3;
+
+
+    pub fn get_model(&self) -> &str {
+        &self.model
+    }
+    pub fn clear_model(&mut self) {
+        self.model.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_model(&mut self, v: ::std::string::String) {
+        self.model = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_model(&mut self) -> &mut ::std::string::String {
+        &mut self.model
+    }
+
+    // Take field
+    pub fn take_model(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.model, ::std::string::String::new())
+    }
+
+    // string layout = 4;
+
+
+    pub fn get_layout(&self) -> &str {
+        match self._layout {
+            ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_layout(&mut self) {
+        self._layout = ::std::option::Option::None;
+    }
+
+    pub fn has_layout(&self) -> bool {
+        match self._layout {
+            ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_layout(&mut self, v: ::std::string::String) {
+        self._layout = ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_layout(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(_)) = self._layout {
+        } else {
+            self._layout = ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(::std::string::String::new()));
+        }
+        match self._layout {
+            ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_layout(&mut self) -> ::std::string::String {
+        if self.has_layout() {
+            match self._layout.take() {
+                ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // repeated .mizer.MidiDeviceProfile.Page pages = 5;
+
+
+    pub fn get_pages(&self) -> &[MidiDeviceProfile_Page] {
+        &self.pages
+    }
+    pub fn clear_pages(&mut self) {
+        self.pages.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pages(&mut self, v: ::protobuf::RepeatedField<MidiDeviceProfile_Page>) {
+        self.pages = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_pages(&mut self) -> &mut ::protobuf::RepeatedField<MidiDeviceProfile_Page> {
+        &mut self.pages
+    }
+
+    // Take field
+    pub fn take_pages(&mut self) -> ::protobuf::RepeatedField<MidiDeviceProfile_Page> {
+        ::std::mem::replace(&mut self.pages, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for MidiDeviceProfile {
+    fn is_initialized(&self) -> bool {
+        for v in &self.pages {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.manufacturer)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.model)?;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._layout = ::std::option::Option::Some(MidiDeviceProfile_oneof__layout::layout(is.read_string()?));
+                },
+                5 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.pages)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if !self.manufacturer.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.manufacturer);
+        }
+        if !self.model.is_empty() {
+            my_size += ::protobuf::rt::string_size(3, &self.model);
+        }
+        for value in &self.pages {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if let ::std::option::Option::Some(ref v) = self._layout {
+            match v {
+                &MidiDeviceProfile_oneof__layout::layout(ref v) => {
+                    my_size += ::protobuf::rt::string_size(4, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if !self.manufacturer.is_empty() {
+            os.write_string(2, &self.manufacturer)?;
+        }
+        if !self.model.is_empty() {
+            os.write_string(3, &self.model)?;
+        }
+        for v in &self.pages {
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if let ::std::option::Option::Some(ref v) = self._layout {
+            match v {
+                &MidiDeviceProfile_oneof__layout::layout(ref v) => {
+                    os.write_string(4, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiDeviceProfile {
+        MidiDeviceProfile::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "id",
+                |m: &MidiDeviceProfile| { &m.id },
+                |m: &mut MidiDeviceProfile| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "manufacturer",
+                |m: &MidiDeviceProfile| { &m.manufacturer },
+                |m: &mut MidiDeviceProfile| { &mut m.manufacturer },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "model",
+                |m: &MidiDeviceProfile| { &m.model },
+                |m: &mut MidiDeviceProfile| { &mut m.model },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "layout",
+                MidiDeviceProfile::has_layout,
+                MidiDeviceProfile::get_layout,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MidiDeviceProfile_Page>>(
+                "pages",
+                |m: &MidiDeviceProfile| { &m.pages },
+                |m: &mut MidiDeviceProfile| { &mut m.pages },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiDeviceProfile>(
+                "MidiDeviceProfile",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiDeviceProfile {
+        static instance: ::protobuf::rt::LazyV2<MidiDeviceProfile> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiDeviceProfile::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiDeviceProfile {
+    fn clear(&mut self) {
+        self.id.clear();
+        self.manufacturer.clear();
+        self.model.clear();
+        self._layout = ::std::option::Option::None;
+        self.pages.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiDeviceProfile {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiDeviceProfile {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiDeviceProfile_Page {
+    // message fields
+    pub name: ::std::string::String,
+    pub groups: ::protobuf::RepeatedField<MidiDeviceProfile_Group>,
+    pub controls: ::protobuf::RepeatedField<MidiDeviceProfile_Control>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiDeviceProfile_Page {
+    fn default() -> &'a MidiDeviceProfile_Page {
+        <MidiDeviceProfile_Page as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MidiDeviceProfile_Page {
+    pub fn new() -> MidiDeviceProfile_Page {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // repeated .mizer.MidiDeviceProfile.Group groups = 2;
+
+
+    pub fn get_groups(&self) -> &[MidiDeviceProfile_Group] {
+        &self.groups
+    }
+    pub fn clear_groups(&mut self) {
+        self.groups.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_groups(&mut self, v: ::protobuf::RepeatedField<MidiDeviceProfile_Group>) {
+        self.groups = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_groups(&mut self) -> &mut ::protobuf::RepeatedField<MidiDeviceProfile_Group> {
+        &mut self.groups
+    }
+
+    // Take field
+    pub fn take_groups(&mut self) -> ::protobuf::RepeatedField<MidiDeviceProfile_Group> {
+        ::std::mem::replace(&mut self.groups, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated .mizer.MidiDeviceProfile.Control controls = 3;
+
+
+    pub fn get_controls(&self) -> &[MidiDeviceProfile_Control] {
+        &self.controls
+    }
+    pub fn clear_controls(&mut self) {
+        self.controls.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_controls(&mut self, v: ::protobuf::RepeatedField<MidiDeviceProfile_Control>) {
+        self.controls = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_controls(&mut self) -> &mut ::protobuf::RepeatedField<MidiDeviceProfile_Control> {
+        &mut self.controls
+    }
+
+    // Take field
+    pub fn take_controls(&mut self) -> ::protobuf::RepeatedField<MidiDeviceProfile_Control> {
+        ::std::mem::replace(&mut self.controls, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for MidiDeviceProfile_Page {
+    fn is_initialized(&self) -> bool {
+        for v in &self.groups {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.controls {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.groups)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.controls)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        for value in &self.groups {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.controls {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        for v in &self.groups {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.controls {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiDeviceProfile_Page {
+        MidiDeviceProfile_Page::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &MidiDeviceProfile_Page| { &m.name },
+                |m: &mut MidiDeviceProfile_Page| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MidiDeviceProfile_Group>>(
+                "groups",
+                |m: &MidiDeviceProfile_Page| { &m.groups },
+                |m: &mut MidiDeviceProfile_Page| { &mut m.groups },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MidiDeviceProfile_Control>>(
+                "controls",
+                |m: &MidiDeviceProfile_Page| { &m.controls },
+                |m: &mut MidiDeviceProfile_Page| { &mut m.controls },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiDeviceProfile_Page>(
+                "MidiDeviceProfile.Page",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiDeviceProfile_Page {
+        static instance: ::protobuf::rt::LazyV2<MidiDeviceProfile_Page> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiDeviceProfile_Page::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiDeviceProfile_Page {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.groups.clear();
+        self.controls.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiDeviceProfile_Page {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiDeviceProfile_Page {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiDeviceProfile_Group {
+    // message fields
+    pub name: ::std::string::String,
+    pub controls: ::protobuf::RepeatedField<MidiDeviceProfile_Control>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiDeviceProfile_Group {
+    fn default() -> &'a MidiDeviceProfile_Group {
+        <MidiDeviceProfile_Group as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MidiDeviceProfile_Group {
+    pub fn new() -> MidiDeviceProfile_Group {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // repeated .mizer.MidiDeviceProfile.Control controls = 2;
+
+
+    pub fn get_controls(&self) -> &[MidiDeviceProfile_Control] {
+        &self.controls
+    }
+    pub fn clear_controls(&mut self) {
+        self.controls.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_controls(&mut self, v: ::protobuf::RepeatedField<MidiDeviceProfile_Control>) {
+        self.controls = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_controls(&mut self) -> &mut ::protobuf::RepeatedField<MidiDeviceProfile_Control> {
+        &mut self.controls
+    }
+
+    // Take field
+    pub fn take_controls(&mut self) -> ::protobuf::RepeatedField<MidiDeviceProfile_Control> {
+        ::std::mem::replace(&mut self.controls, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for MidiDeviceProfile_Group {
+    fn is_initialized(&self) -> bool {
+        for v in &self.controls {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.controls)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        for value in &self.controls {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        for v in &self.controls {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiDeviceProfile_Group {
+        MidiDeviceProfile_Group::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &MidiDeviceProfile_Group| { &m.name },
+                |m: &mut MidiDeviceProfile_Group| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<MidiDeviceProfile_Control>>(
+                "controls",
+                |m: &MidiDeviceProfile_Group| { &m.controls },
+                |m: &mut MidiDeviceProfile_Group| { &mut m.controls },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiDeviceProfile_Group>(
+                "MidiDeviceProfile.Group",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiDeviceProfile_Group {
+        static instance: ::protobuf::rt::LazyV2<MidiDeviceProfile_Group> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiDeviceProfile_Group::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiDeviceProfile_Group {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.controls.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiDeviceProfile_Group {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiDeviceProfile_Group {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiDeviceProfile_Control {
+    // message fields
+    pub id: ::std::string::String,
+    pub name: ::std::string::String,
+    pub channel: u32,
+    pub note: u32,
+    pub control_type: MidiDeviceProfile_ControlType,
+    pub has_output: bool,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiDeviceProfile_Control {
+    fn default() -> &'a MidiDeviceProfile_Control {
+        <MidiDeviceProfile_Control as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MidiDeviceProfile_Control {
+    pub fn new() -> MidiDeviceProfile_Control {
+        ::std::default::Default::default()
+    }
+
+    // string id = 1;
+
+
+    pub fn get_id(&self) -> &str {
+        &self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: ::std::string::String) {
+        self.id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut ::std::string::String {
+        &mut self.id
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.id, ::std::string::String::new())
+    }
+
+    // string name = 2;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // uint32 channel = 3;
+
+
+    pub fn get_channel(&self) -> u32 {
+        self.channel
+    }
+    pub fn clear_channel(&mut self) {
+        self.channel = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_channel(&mut self, v: u32) {
+        self.channel = v;
+    }
+
+    // uint32 note = 4;
+
+
+    pub fn get_note(&self) -> u32 {
+        self.note
+    }
+    pub fn clear_note(&mut self) {
+        self.note = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_note(&mut self, v: u32) {
+        self.note = v;
+    }
+
+    // .mizer.MidiDeviceProfile.ControlType control_type = 5;
+
+
+    pub fn get_control_type(&self) -> MidiDeviceProfile_ControlType {
+        self.control_type
+    }
+    pub fn clear_control_type(&mut self) {
+        self.control_type = MidiDeviceProfile_ControlType::Note;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_control_type(&mut self, v: MidiDeviceProfile_ControlType) {
+        self.control_type = v;
+    }
+
+    // bool has_output = 6;
+
+
+    pub fn get_has_output(&self) -> bool {
+        self.has_output
+    }
+    pub fn clear_has_output(&mut self) {
+        self.has_output = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_has_output(&mut self, v: bool) {
+        self.has_output = v;
+    }
+}
+
+impl ::protobuf::Message for MidiDeviceProfile_Control {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.channel = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.note = tmp;
+                },
+                5 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control_type, 5, &mut self.unknown_fields)?
+                },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.has_output = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        if self.channel != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.channel, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.note != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.note, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.control_type != MidiDeviceProfile_ControlType::Note {
+            my_size += ::protobuf::rt::enum_size(5, self.control_type);
+        }
+        if self.has_output != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        if self.channel != 0 {
+            os.write_uint32(3, self.channel)?;
+        }
+        if self.note != 0 {
+            os.write_uint32(4, self.note)?;
+        }
+        if self.control_type != MidiDeviceProfile_ControlType::Note {
+            os.write_enum(5, ::protobuf::ProtobufEnum::value(&self.control_type))?;
+        }
+        if self.has_output != false {
+            os.write_bool(6, self.has_output)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiDeviceProfile_Control {
+        MidiDeviceProfile_Control::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "id",
+                |m: &MidiDeviceProfile_Control| { &m.id },
+                |m: &mut MidiDeviceProfile_Control| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &MidiDeviceProfile_Control| { &m.name },
+                |m: &mut MidiDeviceProfile_Control| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "channel",
+                |m: &MidiDeviceProfile_Control| { &m.channel },
+                |m: &mut MidiDeviceProfile_Control| { &mut m.channel },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "note",
+                |m: &MidiDeviceProfile_Control| { &m.note },
+                |m: &mut MidiDeviceProfile_Control| { &mut m.note },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<MidiDeviceProfile_ControlType>>(
+                "control_type",
+                |m: &MidiDeviceProfile_Control| { &m.control_type },
+                |m: &mut MidiDeviceProfile_Control| { &mut m.control_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "has_output",
+                |m: &MidiDeviceProfile_Control| { &m.has_output },
+                |m: &mut MidiDeviceProfile_Control| { &mut m.has_output },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiDeviceProfile_Control>(
+                "MidiDeviceProfile.Control",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiDeviceProfile_Control {
+        static instance: ::protobuf::rt::LazyV2<MidiDeviceProfile_Control> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiDeviceProfile_Control::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiDeviceProfile_Control {
+    fn clear(&mut self) {
+        self.id.clear();
+        self.name.clear();
+        self.channel = 0;
+        self.note = 0;
+        self.control_type = MidiDeviceProfile_ControlType::Note;
+        self.has_output = false;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiDeviceProfile_Control {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiDeviceProfile_Control {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MidiDeviceProfile_ControlType {
+    Note = 0,
+    CC = 1,
+}
+
+impl ::protobuf::ProtobufEnum for MidiDeviceProfile_ControlType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<MidiDeviceProfile_ControlType> {
+        match value {
+            0 => ::std::option::Option::Some(MidiDeviceProfile_ControlType::Note),
+            1 => ::std::option::Option::Some(MidiDeviceProfile_ControlType::CC),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [MidiDeviceProfile_ControlType] = &[
+            MidiDeviceProfile_ControlType::Note,
+            MidiDeviceProfile_ControlType::CC,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<MidiDeviceProfile_ControlType>("MidiDeviceProfile.ControlType", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for MidiDeviceProfile_ControlType {
+}
+
+impl ::std::default::Default for MidiDeviceProfile_ControlType {
+    fn default() -> Self {
+        MidiDeviceProfile_ControlType::Note
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiDeviceProfile_ControlType {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
 }
 
@@ -3390,41 +5001,63 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x127\n\tuniverses\x18\x01\x20\x03(\x0b2\x19.mizer.MonitorDmxUniverseR\t\
     universes\"L\n\x12MonitorDmxUniverse\x12\x1a\n\x08universe\x18\x01\x20\
     \x01(\rR\x08universe\x12\x1a\n\x08channels\x18\x02\x20\x01(\x0cR\x08chan\
-    nels\"\x17\n\x15GetConnectionsRequest\"N\n\x10AddArtnetRequest\x12\x12\n\
-    \x04name\x18\x01\x20\x01(\tR\x04name\x12\x12\n\x04host\x18\x02\x20\x01(\
-    \tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"$\n\x0eAddSac\
-    nRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\x0bConnectio\
-    ns\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0b\
-    connections\"\x9e\x02\n\nConnection\x12\x12\n\x04name\x18\x01\x20\x01(\t\
-    R\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\
-    \x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0\
-    R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0\
-    R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnec\
-    tionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.Hel\
-    iosConnectionH\0R\x06heliosB\x0c\n\nconnection\"+\n\rDmxConnection\x12\
-    \x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\"B\n\x10HeliosConnect\
-    ion\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\
-    \x18\x02\x20\x01(\tR\x08firmware\"\x10\n\x0eMidiConnection\"v\n\rOscConn\
-    ection\x12\x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\
-    \x0boutput_port\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\
-    \x18\x03\x20\x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnection\
-    \x12\x18\n\x07address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05model\
-    \x18\x02\x20\x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\r\
-    R\x0cplayerNumber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.Cdj\
-    PlaybackR\x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\
-    \x01\x20\x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\
-    \x12\x14\n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\
-    \x04\x20\x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\x05tr\
-    ack\x18\x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\
-    \x05Track\x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\
-    \x05title\x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loadin\
-    g\x10\0\x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\
-    \x06Cueing\x10\x032\xa3\x02\n\x0eConnectionsApi\x12D\n\x0eGetConnections\
-    \x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\x12C\
-    \n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxR\
-    esponse\"\0\x12D\n\x13AddArtnetConnection\x12\x17.mizer.AddArtnetRequest\
-    \x1a\x12.mizer.Connections\"\0\x12@\n\x11AddSacnConnection\x12\x15.mizer\
-    .AddSacnRequest\x1a\x12.mizer.Connections\"\0b\x06proto3\
+    nels\"\x17\n\x15GetConnectionsRequest\"\x1a\n\x18GetDeviceProfilesReques\
+    t\"N\n\x10AddArtnetRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x12\x12\n\x04host\x18\x02\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x03\
+    \x20\x01(\rR\x04port\"$\n\x0eAddSacnRequest\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\"B\n\x0bConnections\x123\n\x0bconnections\x18\x01\
+    \x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\x9e\x02\n\nConnect\
+    ion\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\n\
+    \x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04midi\x18\x0b\
+    \x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\n\x03osc\x18\
+    \x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12:\n\tproDJLink\
+    \x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tproDJLink\x121\n\
+    \x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnectionH\0R\x06helio\
+    sB\x0c\n\nconnection\"+\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\
+    \x20\x01(\tR\x08outputId\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\tR\x08fi\
+    rmware\"O\n\x0eMidiConnection\x12*\n\x0edevice_profile\x18\x01\x20\x01(\
+    \tH\0R\rdeviceProfile\x88\x01\x01B\x11\n\x0f_device_profile\"J\n\x12Midi\
+    DeviceProfiles\x124\n\x08profiles\x18\x01\x20\x03(\x0b2\x18.mizer.MidiDe\
+    viceProfileR\x08profiles\"\x8f\x05\n\x11MidiDeviceProfile\x12\x0e\n\x02i\
+    d\x18\x01\x20\x01(\tR\x02id\x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\
+    \x0cmanufacturer\x12\x14\n\x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\
+    \n\x06layout\x18\x04\x20\x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05page\
+    s\x18\x05\x20\x03(\x0b2\x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\
+    \x90\x01\n\x04Page\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\
+    \x06groups\x18\x02\x20\x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06g\
+    roups\x12<\n\x08controls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfi\
+    le.ControlR\x08controls\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\x12<\n\x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.Midi\
+    DeviceProfile.ControlR\x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\
+    \x04note\x18\x04\x20\x01(\rR\x04note\x12G\n\x0ccontrol_type\x18\x05\x20\
+    \x01(\x0e2$.mizer.MidiDeviceProfile.ControlTypeR\x0bcontrolType\x12\x1d\
+    \n\nhas_output\x18\x06\x20\x01(\x08R\thasOutput\"\x1f\n\x0bControlType\
+    \x12\x08\n\x04Note\x10\0\x12\x06\n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rO\
+    scConnection\x12\x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\
+    \x1f\n\x0boutput_port\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_a\
+    ddress\x18\x03\x20\x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnec\
+    tion\x12\x18\n\x07address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05mo\
+    del\x18\x02\x20\x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01\
+    (\rR\x0cplayerNumber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.\
+    CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\
+    \x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\
+    \x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playba\
+    ck\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\
+    \x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\
+    \x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\
+    \x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07\
+    Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\
+    \n\n\x06Cueing\x10\x032\xfa\x02\n\x0eConnectionsApi\x12D\n\x0eGetConnect\
+    ions\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\
+    \x12C\n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.Monito\
+    rDmxResponse\"\0\x12D\n\x13AddArtnetConnection\x12\x17.mizer.AddArtnetRe\
+    quest\x1a\x12.mizer.Connections\"\0\x12@\n\x11AddSacnConnection\x12\x15.\
+    mizer.AddSacnRequest\x1a\x12.mizer.Connections\"\0\x12U\n\x15GetMidiDevi\
+    ceProfiles\x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDevi\
+    ceProfiles\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

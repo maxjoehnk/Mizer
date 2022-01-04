@@ -427,17 +427,30 @@ const MidiNodeConfig$json = const {
   '1': 'MidiNodeConfig',
   '2': const [
     const {'1': 'device', '3': 1, '4': 1, '5': 9, '10': 'device'},
-    const {'1': 'channel', '3': 2, '4': 1, '5': 13, '10': 'channel'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.mizer.MidiNodeConfig.MidiType', '10': 'type'},
-    const {'1': 'port', '3': 4, '4': 1, '5': 13, '10': 'port'},
-    const {'1': 'rangeFrom', '3': 5, '4': 1, '5': 13, '10': 'rangeFrom'},
-    const {'1': 'rangeTo', '3': 6, '4': 1, '5': 13, '10': 'rangeTo'},
+    const {'1': 'noteBinding', '3': 2, '4': 1, '5': 11, '6': '.mizer.MidiNodeConfig.NoteBinding', '9': 0, '10': 'noteBinding'},
+    const {'1': 'controlBinding', '3': 3, '4': 1, '5': 11, '6': '.mizer.MidiNodeConfig.ControlBinding', '9': 0, '10': 'controlBinding'},
   ],
-  '4': const [MidiNodeConfig_MidiType$json],
+  '3': const [MidiNodeConfig_NoteBinding$json, MidiNodeConfig_ControlBinding$json],
+  '8': const [
+    const {'1': 'binding'},
+  ],
 };
 
 @$core.Deprecated('Use midiNodeConfigDescriptor instead')
-const MidiNodeConfig_MidiType$json = const {
+const MidiNodeConfig_NoteBinding$json = const {
+  '1': 'NoteBinding',
+  '2': const [
+    const {'1': 'channel', '3': 1, '4': 1, '5': 13, '10': 'channel'},
+    const {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.mizer.MidiNodeConfig.NoteBinding.MidiType', '10': 'type'},
+    const {'1': 'port', '3': 3, '4': 1, '5': 13, '10': 'port'},
+    const {'1': 'rangeFrom', '3': 4, '4': 1, '5': 13, '10': 'rangeFrom'},
+    const {'1': 'rangeTo', '3': 5, '4': 1, '5': 13, '10': 'rangeTo'},
+  ],
+  '4': const [MidiNodeConfig_NoteBinding_MidiType$json],
+};
+
+@$core.Deprecated('Use midiNodeConfigDescriptor instead')
+const MidiNodeConfig_NoteBinding_MidiType$json = const {
   '1': 'MidiType',
   '2': const [
     const {'1': 'CC', '2': 0},
@@ -445,8 +458,17 @@ const MidiNodeConfig_MidiType$json = const {
   ],
 };
 
+@$core.Deprecated('Use midiNodeConfigDescriptor instead')
+const MidiNodeConfig_ControlBinding$json = const {
+  '1': 'ControlBinding',
+  '2': const [
+    const {'1': 'page', '3': 1, '4': 1, '5': 9, '10': 'page'},
+    const {'1': 'control', '3': 2, '4': 1, '5': 9, '10': 'control'},
+  ],
+};
+
 /// Descriptor for `MidiNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List midiNodeConfigDescriptor = $convert.base64Decode('Cg5NaWRpTm9kZUNvbmZpZxIWCgZkZXZpY2UYASABKAlSBmRldmljZRIYCgdjaGFubmVsGAIgASgNUgdjaGFubmVsEjIKBHR5cGUYAyABKA4yHi5taXplci5NaWRpTm9kZUNvbmZpZy5NaWRpVHlwZVIEdHlwZRISCgRwb3J0GAQgASgNUgRwb3J0EhwKCXJhbmdlRnJvbRgFIAEoDVIJcmFuZ2VGcm9tEhgKB3JhbmdlVG8YBiABKA1SB3JhbmdlVG8iHAoITWlkaVR5cGUSBgoCQ0MQABIICgROb3RlEAE=');
+final $typed_data.Uint8List midiNodeConfigDescriptor = $convert.base64Decode('Cg5NaWRpTm9kZUNvbmZpZxIWCgZkZXZpY2UYASABKAlSBmRldmljZRJFCgtub3RlQmluZGluZxgCIAEoCzIhLm1pemVyLk1pZGlOb2RlQ29uZmlnLk5vdGVCaW5kaW5nSABSC25vdGVCaW5kaW5nEk4KDmNvbnRyb2xCaW5kaW5nGAMgASgLMiQubWl6ZXIuTWlkaU5vZGVDb25maWcuQ29udHJvbEJpbmRpbmdIAFIOY29udHJvbEJpbmRpbmca0QEKC05vdGVCaW5kaW5nEhgKB2NoYW5uZWwYASABKA1SB2NoYW5uZWwSPgoEdHlwZRgCIAEoDjIqLm1pemVyLk1pZGlOb2RlQ29uZmlnLk5vdGVCaW5kaW5nLk1pZGlUeXBlUgR0eXBlEhIKBHBvcnQYAyABKA1SBHBvcnQSHAoJcmFuZ2VGcm9tGAQgASgNUglyYW5nZUZyb20SGAoHcmFuZ2VUbxgFIAEoDVIHcmFuZ2VUbyIcCghNaWRpVHlwZRIGCgJDQxAAEggKBE5vdGUQARo+Cg5Db250cm9sQmluZGluZxISCgRwYWdlGAEgASgJUgRwYWdlEhgKB2NvbnRyb2wYAiABKAlSB2NvbnRyb2xCCQoHYmluZGluZw==');
 @$core.Deprecated('Use opcOutputNodeConfigDescriptor instead')
 const OpcOutputNodeConfig$json = const {
   '1': 'OpcOutputNodeConfig',

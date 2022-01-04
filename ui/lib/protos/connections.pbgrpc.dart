@@ -35,6 +35,12 @@ class ConnectionsApiClient extends $grpc.Client {
           '/mizer.ConnectionsApi/AddSacnConnection',
           ($0.AddSacnRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
+  static final _$getMidiDeviceProfiles =
+      $grpc.ClientMethod<$0.GetDeviceProfilesRequest, $0.MidiDeviceProfiles>(
+          '/mizer.ConnectionsApi/GetMidiDeviceProfiles',
+          ($0.GetDeviceProfilesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.MidiDeviceProfiles.fromBuffer(value));
 
   ConnectionsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -63,6 +69,12 @@ class ConnectionsApiClient extends $grpc.Client {
       $0.AddSacnRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addSacnConnection, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.MidiDeviceProfiles> getMidiDeviceProfiles(
+      $0.GetDeviceProfilesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getMidiDeviceProfiles, request, options: options);
   }
 }
 
@@ -99,6 +111,15 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.AddSacnRequest.fromBuffer(value),
         ($0.Connections value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.GetDeviceProfilesRequest, $0.MidiDeviceProfiles>(
+            'GetMidiDeviceProfiles',
+            getMidiDeviceProfiles_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.GetDeviceProfilesRequest.fromBuffer(value),
+            ($0.MidiDeviceProfiles value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Connections> getConnections_Pre($grpc.ServiceCall call,
@@ -121,6 +142,12 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
     return addSacnConnection(call, await request);
   }
 
+  $async.Future<$0.MidiDeviceProfiles> getMidiDeviceProfiles_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.GetDeviceProfilesRequest> request) async {
+    return getMidiDeviceProfiles(call, await request);
+  }
+
   $async.Future<$0.Connections> getConnections(
       $grpc.ServiceCall call, $0.GetConnectionsRequest request);
   $async.Future<$0.MonitorDmxResponse> monitorDmx(
@@ -129,4 +156,6 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.AddArtnetRequest request);
   $async.Future<$0.Connections> addSacnConnection(
       $grpc.ServiceCall call, $0.AddSacnRequest request);
+  $async.Future<$0.MidiDeviceProfiles> getMidiDeviceProfiles(
+      $grpc.ServiceCall call, $0.GetDeviceProfilesRequest request);
 }

@@ -32,4 +32,11 @@ class ConnectionsPluginApi implements ConnectionsApi {
   Future<void> addSacn(AddSacnRequest request) async {
     await channel.invokeMethod("addSacn", request.writeToBuffer());
   }
+
+  @override
+  Future<MidiDeviceProfiles> getMidiDeviceProfiles() async {
+    var response = await channel.invokeMethod("getMidiDeviceProfiles");
+
+    return MidiDeviceProfiles.fromBuffer(_convertBuffer(response));
+  }
 }

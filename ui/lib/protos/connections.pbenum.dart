@@ -9,6 +9,21 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class MidiDeviceProfile_ControlType extends $pb.ProtobufEnum {
+  static const MidiDeviceProfile_ControlType Note = MidiDeviceProfile_ControlType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Note');
+  static const MidiDeviceProfile_ControlType CC = MidiDeviceProfile_ControlType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CC');
+
+  static const $core.List<MidiDeviceProfile_ControlType> values = <MidiDeviceProfile_ControlType> [
+    Note,
+    CC,
+  ];
+
+  static final $core.Map<$core.int, MidiDeviceProfile_ControlType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static MidiDeviceProfile_ControlType? valueOf($core.int value) => _byValue[value];
+
+  const MidiDeviceProfile_ControlType._($core.int v, $core.String n) : super(v, n);
+}
+
 class CdjPlayback_State extends $pb.ProtobufEnum {
   static const CdjPlayback_State Loading = CdjPlayback_State._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Loading');
   static const CdjPlayback_State Playing = CdjPlayback_State._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Playing');

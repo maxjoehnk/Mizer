@@ -60,4 +60,10 @@ class ConnectionsDemoApi implements ConnectionsApi {
     // TODO: implement addSacn
     throw UnimplementedError();
   }
+
+  @override
+  Future<MidiDeviceProfiles> getMidiDeviceProfiles() {
+    // TODO: implement getMidiDeviceProfiles
+    throw UnimplementedError();
+  }
 }

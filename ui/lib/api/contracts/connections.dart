@@ -8,4 +8,6 @@ abstract class ConnectionsApi {
   Future<void> addSacn(AddSacnRequest request);
 
   Future<Map<int, List<int>>> monitorDmxConnection(String outputId);
+
+  Future<MidiDeviceProfiles> getMidiDeviceProfiles();
 }

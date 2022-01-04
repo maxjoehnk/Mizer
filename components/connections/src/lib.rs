@@ -1,5 +1,9 @@
 use derive_more::From;
 
+pub mod midi_device_profile {
+    pub use mizer_protocol_midi::{DeviceProfile, Page, Group, Control, ControlType};
+}
+
 #[derive(From, Debug, Clone)]
 pub enum Connection {
     Midi(MidiView),
@@ -18,6 +22,7 @@ impl Connection {
 #[derive(Debug, Clone)]
 pub struct MidiView {
     pub name: String,
+    pub device_profile: Option<String>,
 }
 
 #[derive(Debug, Clone)]

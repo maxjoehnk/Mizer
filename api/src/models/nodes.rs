@@ -7973,11 +7973,8 @@ impl ::protobuf::reflect::ProtobufValue for DmxOutputNodeConfig {
 pub struct MidiNodeConfig {
     // message fields
     pub device: ::std::string::String,
-    pub channel: u32,
-    pub field_type: MidiNodeConfig_MidiType,
-    pub port: u32,
-    pub rangeFrom: u32,
-    pub rangeTo: u32,
+    // message oneof groups
+    pub binding: ::std::option::Option<MidiNodeConfig_oneof_binding>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -7989,6 +7986,13 @@ impl<'a> ::std::default::Default for &'a MidiNodeConfig {
     fn default() -> &'a MidiNodeConfig {
         <MidiNodeConfig as ::protobuf::Message>::default_instance()
     }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MidiNodeConfig_oneof_binding {
+    noteBinding(MidiNodeConfig_NoteBinding),
+    controlBinding(MidiNodeConfig_ControlBinding),
 }
 
 impl MidiNodeConfig {
@@ -8022,84 +8026,117 @@ impl MidiNodeConfig {
         ::std::mem::replace(&mut self.device, ::std::string::String::new())
     }
 
-    // uint32 channel = 2;
+    // .mizer.MidiNodeConfig.NoteBinding noteBinding = 2;
 
 
-    pub fn get_channel(&self) -> u32 {
-        self.channel
+    pub fn get_noteBinding(&self) -> &MidiNodeConfig_NoteBinding {
+        match self.binding {
+            ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(ref v)) => v,
+            _ => <MidiNodeConfig_NoteBinding as ::protobuf::Message>::default_instance(),
+        }
     }
-    pub fn clear_channel(&mut self) {
-        self.channel = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_channel(&mut self, v: u32) {
-        self.channel = v;
+    pub fn clear_noteBinding(&mut self) {
+        self.binding = ::std::option::Option::None;
     }
 
-    // .mizer.MidiNodeConfig.MidiType type = 3;
-
-
-    pub fn get_field_type(&self) -> MidiNodeConfig_MidiType {
-        self.field_type
-    }
-    pub fn clear_field_type(&mut self) {
-        self.field_type = MidiNodeConfig_MidiType::CC;
+    pub fn has_noteBinding(&self) -> bool {
+        match self.binding {
+            ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(..)) => true,
+            _ => false,
+        }
     }
 
     // Param is passed by value, moved
-    pub fn set_field_type(&mut self, v: MidiNodeConfig_MidiType) {
-        self.field_type = v;
+    pub fn set_noteBinding(&mut self, v: MidiNodeConfig_NoteBinding) {
+        self.binding = ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(v))
     }
 
-    // uint32 port = 4;
-
-
-    pub fn get_port(&self) -> u32 {
-        self.port
+    // Mutable pointer to the field.
+    pub fn mut_noteBinding(&mut self) -> &mut MidiNodeConfig_NoteBinding {
+        if let ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(_)) = self.binding {
+        } else {
+            self.binding = ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(MidiNodeConfig_NoteBinding::new()));
+        }
+        match self.binding {
+            ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(ref mut v)) => v,
+            _ => panic!(),
+        }
     }
-    pub fn clear_port(&mut self) {
-        self.port = 0;
+
+    // Take field
+    pub fn take_noteBinding(&mut self) -> MidiNodeConfig_NoteBinding {
+        if self.has_noteBinding() {
+            match self.binding.take() {
+                ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MidiNodeConfig_NoteBinding::new()
+        }
+    }
+
+    // .mizer.MidiNodeConfig.ControlBinding controlBinding = 3;
+
+
+    pub fn get_controlBinding(&self) -> &MidiNodeConfig_ControlBinding {
+        match self.binding {
+            ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(ref v)) => v,
+            _ => <MidiNodeConfig_ControlBinding as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_controlBinding(&mut self) {
+        self.binding = ::std::option::Option::None;
+    }
+
+    pub fn has_controlBinding(&self) -> bool {
+        match self.binding {
+            ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(..)) => true,
+            _ => false,
+        }
     }
 
     // Param is passed by value, moved
-    pub fn set_port(&mut self, v: u32) {
-        self.port = v;
+    pub fn set_controlBinding(&mut self, v: MidiNodeConfig_ControlBinding) {
+        self.binding = ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(v))
     }
 
-    // uint32 rangeFrom = 5;
-
-
-    pub fn get_rangeFrom(&self) -> u32 {
-        self.rangeFrom
-    }
-    pub fn clear_rangeFrom(&mut self) {
-        self.rangeFrom = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_rangeFrom(&mut self, v: u32) {
-        self.rangeFrom = v;
+    // Mutable pointer to the field.
+    pub fn mut_controlBinding(&mut self) -> &mut MidiNodeConfig_ControlBinding {
+        if let ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(_)) = self.binding {
+        } else {
+            self.binding = ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding::new()));
+        }
+        match self.binding {
+            ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(ref mut v)) => v,
+            _ => panic!(),
+        }
     }
 
-    // uint32 rangeTo = 6;
-
-
-    pub fn get_rangeTo(&self) -> u32 {
-        self.rangeTo
-    }
-    pub fn clear_rangeTo(&mut self) {
-        self.rangeTo = 0;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_rangeTo(&mut self, v: u32) {
-        self.rangeTo = v;
+    // Take field
+    pub fn take_controlBinding(&mut self) -> MidiNodeConfig_ControlBinding {
+        if self.has_controlBinding() {
+            match self.binding.take() {
+                ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MidiNodeConfig_ControlBinding::new()
+        }
     }
 }
 
 impl ::protobuf::Message for MidiNodeConfig {
     fn is_initialized(&self) -> bool {
+        if let Some(MidiNodeConfig_oneof_binding::noteBinding(ref v)) = self.binding {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(MidiNodeConfig_oneof_binding::controlBinding(ref v)) = self.binding {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         true
     }
 
@@ -8111,35 +8148,16 @@ impl ::protobuf::Message for MidiNodeConfig {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.device)?;
                 },
                 2 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    let tmp = is.read_uint32()?;
-                    self.channel = tmp;
+                    self.binding = ::std::option::Option::Some(MidiNodeConfig_oneof_binding::noteBinding(is.read_message()?));
                 },
                 3 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 3, &mut self.unknown_fields)?
-                },
-                4 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    let tmp = is.read_uint32()?;
-                    self.port = tmp;
-                },
-                5 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint32()?;
-                    self.rangeFrom = tmp;
-                },
-                6 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_uint32()?;
-                    self.rangeTo = tmp;
+                    self.binding = ::std::option::Option::Some(MidiNodeConfig_oneof_binding::controlBinding(is.read_message()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -8156,20 +8174,17 @@ impl ::protobuf::Message for MidiNodeConfig {
         if !self.device.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.device);
         }
-        if self.channel != 0 {
-            my_size += ::protobuf::rt::value_size(2, self.channel, ::protobuf::wire_format::WireTypeVarint);
-        }
-        if self.field_type != MidiNodeConfig_MidiType::CC {
-            my_size += ::protobuf::rt::enum_size(3, self.field_type);
-        }
-        if self.port != 0 {
-            my_size += ::protobuf::rt::value_size(4, self.port, ::protobuf::wire_format::WireTypeVarint);
-        }
-        if self.rangeFrom != 0 {
-            my_size += ::protobuf::rt::value_size(5, self.rangeFrom, ::protobuf::wire_format::WireTypeVarint);
-        }
-        if self.rangeTo != 0 {
-            my_size += ::protobuf::rt::value_size(6, self.rangeTo, ::protobuf::wire_format::WireTypeVarint);
+        if let ::std::option::Option::Some(ref v) = self.binding {
+            match v {
+                &MidiNodeConfig_oneof_binding::noteBinding(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &MidiNodeConfig_oneof_binding::controlBinding(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -8180,20 +8195,19 @@ impl ::protobuf::Message for MidiNodeConfig {
         if !self.device.is_empty() {
             os.write_string(1, &self.device)?;
         }
-        if self.channel != 0 {
-            os.write_uint32(2, self.channel)?;
-        }
-        if self.field_type != MidiNodeConfig_MidiType::CC {
-            os.write_enum(3, ::protobuf::ProtobufEnum::value(&self.field_type))?;
-        }
-        if self.port != 0 {
-            os.write_uint32(4, self.port)?;
-        }
-        if self.rangeFrom != 0 {
-            os.write_uint32(5, self.rangeFrom)?;
-        }
-        if self.rangeTo != 0 {
-            os.write_uint32(6, self.rangeTo)?;
+        if let ::std::option::Option::Some(ref v) = self.binding {
+            match v {
+                &MidiNodeConfig_oneof_binding::noteBinding(ref v) => {
+                    os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MidiNodeConfig_oneof_binding::controlBinding(ref v) => {
+                    os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -8238,30 +8252,15 @@ impl ::protobuf::Message for MidiNodeConfig {
                 |m: &MidiNodeConfig| { &m.device },
                 |m: &mut MidiNodeConfig| { &mut m.device },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "channel",
-                |m: &MidiNodeConfig| { &m.channel },
-                |m: &mut MidiNodeConfig| { &mut m.channel },
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MidiNodeConfig_NoteBinding>(
+                "noteBinding",
+                MidiNodeConfig::has_noteBinding,
+                MidiNodeConfig::get_noteBinding,
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<MidiNodeConfig_MidiType>>(
-                "type",
-                |m: &MidiNodeConfig| { &m.field_type },
-                |m: &mut MidiNodeConfig| { &mut m.field_type },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "port",
-                |m: &MidiNodeConfig| { &m.port },
-                |m: &mut MidiNodeConfig| { &mut m.port },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "rangeFrom",
-                |m: &MidiNodeConfig| { &m.rangeFrom },
-                |m: &mut MidiNodeConfig| { &mut m.rangeFrom },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
-                "rangeTo",
-                |m: &MidiNodeConfig| { &m.rangeTo },
-                |m: &mut MidiNodeConfig| { &mut m.rangeTo },
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MidiNodeConfig_ControlBinding>(
+                "controlBinding",
+                MidiNodeConfig::has_controlBinding,
+                MidiNodeConfig::get_controlBinding,
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiNodeConfig>(
                 "MidiNodeConfig",
@@ -8280,11 +8279,8 @@ impl ::protobuf::Message for MidiNodeConfig {
 impl ::protobuf::Clear for MidiNodeConfig {
     fn clear(&mut self) {
         self.device.clear();
-        self.channel = 0;
-        self.field_type = MidiNodeConfig_MidiType::CC;
-        self.port = 0;
-        self.rangeFrom = 0;
-        self.rangeTo = 0;
+        self.binding = ::std::option::Option::None;
+        self.binding = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -8301,30 +8297,321 @@ impl ::protobuf::reflect::ProtobufValue for MidiNodeConfig {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiNodeConfig_NoteBinding {
+    // message fields
+    pub channel: u32,
+    pub field_type: MidiNodeConfig_NoteBinding_MidiType,
+    pub port: u32,
+    pub rangeFrom: u32,
+    pub rangeTo: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiNodeConfig_NoteBinding {
+    fn default() -> &'a MidiNodeConfig_NoteBinding {
+        <MidiNodeConfig_NoteBinding as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MidiNodeConfig_NoteBinding {
+    pub fn new() -> MidiNodeConfig_NoteBinding {
+        ::std::default::Default::default()
+    }
+
+    // uint32 channel = 1;
+
+
+    pub fn get_channel(&self) -> u32 {
+        self.channel
+    }
+    pub fn clear_channel(&mut self) {
+        self.channel = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_channel(&mut self, v: u32) {
+        self.channel = v;
+    }
+
+    // .mizer.MidiNodeConfig.NoteBinding.MidiType type = 2;
+
+
+    pub fn get_field_type(&self) -> MidiNodeConfig_NoteBinding_MidiType {
+        self.field_type
+    }
+    pub fn clear_field_type(&mut self) {
+        self.field_type = MidiNodeConfig_NoteBinding_MidiType::CC;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_type(&mut self, v: MidiNodeConfig_NoteBinding_MidiType) {
+        self.field_type = v;
+    }
+
+    // uint32 port = 3;
+
+
+    pub fn get_port(&self) -> u32 {
+        self.port
+    }
+    pub fn clear_port(&mut self) {
+        self.port = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_port(&mut self, v: u32) {
+        self.port = v;
+    }
+
+    // uint32 rangeFrom = 4;
+
+
+    pub fn get_rangeFrom(&self) -> u32 {
+        self.rangeFrom
+    }
+    pub fn clear_rangeFrom(&mut self) {
+        self.rangeFrom = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rangeFrom(&mut self, v: u32) {
+        self.rangeFrom = v;
+    }
+
+    // uint32 rangeTo = 5;
+
+
+    pub fn get_rangeTo(&self) -> u32 {
+        self.rangeTo
+    }
+    pub fn clear_rangeTo(&mut self) {
+        self.rangeTo = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rangeTo(&mut self, v: u32) {
+        self.rangeTo = v;
+    }
+}
+
+impl ::protobuf::Message for MidiNodeConfig_NoteBinding {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.channel = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 2, &mut self.unknown_fields)?
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.port = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.rangeFrom = tmp;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.rangeTo = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.channel != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.channel, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.field_type != MidiNodeConfig_NoteBinding_MidiType::CC {
+            my_size += ::protobuf::rt::enum_size(2, self.field_type);
+        }
+        if self.port != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.port, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.rangeFrom != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.rangeFrom, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.rangeTo != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.rangeTo, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.channel != 0 {
+            os.write_uint32(1, self.channel)?;
+        }
+        if self.field_type != MidiNodeConfig_NoteBinding_MidiType::CC {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.field_type))?;
+        }
+        if self.port != 0 {
+            os.write_uint32(3, self.port)?;
+        }
+        if self.rangeFrom != 0 {
+            os.write_uint32(4, self.rangeFrom)?;
+        }
+        if self.rangeTo != 0 {
+            os.write_uint32(5, self.rangeTo)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiNodeConfig_NoteBinding {
+        MidiNodeConfig_NoteBinding::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "channel",
+                |m: &MidiNodeConfig_NoteBinding| { &m.channel },
+                |m: &mut MidiNodeConfig_NoteBinding| { &mut m.channel },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<MidiNodeConfig_NoteBinding_MidiType>>(
+                "type",
+                |m: &MidiNodeConfig_NoteBinding| { &m.field_type },
+                |m: &mut MidiNodeConfig_NoteBinding| { &mut m.field_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "port",
+                |m: &MidiNodeConfig_NoteBinding| { &m.port },
+                |m: &mut MidiNodeConfig_NoteBinding| { &mut m.port },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "rangeFrom",
+                |m: &MidiNodeConfig_NoteBinding| { &m.rangeFrom },
+                |m: &mut MidiNodeConfig_NoteBinding| { &mut m.rangeFrom },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "rangeTo",
+                |m: &MidiNodeConfig_NoteBinding| { &m.rangeTo },
+                |m: &mut MidiNodeConfig_NoteBinding| { &mut m.rangeTo },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiNodeConfig_NoteBinding>(
+                "MidiNodeConfig.NoteBinding",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiNodeConfig_NoteBinding {
+        static instance: ::protobuf::rt::LazyV2<MidiNodeConfig_NoteBinding> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiNodeConfig_NoteBinding::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiNodeConfig_NoteBinding {
+    fn clear(&mut self) {
+        self.channel = 0;
+        self.field_type = MidiNodeConfig_NoteBinding_MidiType::CC;
+        self.port = 0;
+        self.rangeFrom = 0;
+        self.rangeTo = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiNodeConfig_NoteBinding {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiNodeConfig_NoteBinding {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum MidiNodeConfig_MidiType {
+pub enum MidiNodeConfig_NoteBinding_MidiType {
     CC = 0,
     Note = 1,
 }
 
-impl ::protobuf::ProtobufEnum for MidiNodeConfig_MidiType {
+impl ::protobuf::ProtobufEnum for MidiNodeConfig_NoteBinding_MidiType {
     fn value(&self) -> i32 {
         *self as i32
     }
 
-    fn from_i32(value: i32) -> ::std::option::Option<MidiNodeConfig_MidiType> {
+    fn from_i32(value: i32) -> ::std::option::Option<MidiNodeConfig_NoteBinding_MidiType> {
         match value {
-            0 => ::std::option::Option::Some(MidiNodeConfig_MidiType::CC),
-            1 => ::std::option::Option::Some(MidiNodeConfig_MidiType::Note),
+            0 => ::std::option::Option::Some(MidiNodeConfig_NoteBinding_MidiType::CC),
+            1 => ::std::option::Option::Some(MidiNodeConfig_NoteBinding_MidiType::Note),
             _ => ::std::option::Option::None
         }
     }
 
     fn values() -> &'static [Self] {
-        static values: &'static [MidiNodeConfig_MidiType] = &[
-            MidiNodeConfig_MidiType::CC,
-            MidiNodeConfig_MidiType::Note,
+        static values: &'static [MidiNodeConfig_NoteBinding_MidiType] = &[
+            MidiNodeConfig_NoteBinding_MidiType::CC,
+            MidiNodeConfig_NoteBinding_MidiType::Note,
         ];
         values
     }
@@ -8332,23 +8619,227 @@ impl ::protobuf::ProtobufEnum for MidiNodeConfig_MidiType {
     fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<MidiNodeConfig_MidiType>("MidiNodeConfig.MidiType", file_descriptor_proto())
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<MidiNodeConfig_NoteBinding_MidiType>("MidiNodeConfig.NoteBinding.MidiType", file_descriptor_proto())
         })
     }
 }
 
-impl ::std::marker::Copy for MidiNodeConfig_MidiType {
+impl ::std::marker::Copy for MidiNodeConfig_NoteBinding_MidiType {
 }
 
-impl ::std::default::Default for MidiNodeConfig_MidiType {
+impl ::std::default::Default for MidiNodeConfig_NoteBinding_MidiType {
     fn default() -> Self {
-        MidiNodeConfig_MidiType::CC
+        MidiNodeConfig_NoteBinding_MidiType::CC
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for MidiNodeConfig_MidiType {
+impl ::protobuf::reflect::ProtobufValue for MidiNodeConfig_NoteBinding_MidiType {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MidiNodeConfig_ControlBinding {
+    // message fields
+    pub page: ::std::string::String,
+    pub control: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MidiNodeConfig_ControlBinding {
+    fn default() -> &'a MidiNodeConfig_ControlBinding {
+        <MidiNodeConfig_ControlBinding as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MidiNodeConfig_ControlBinding {
+    pub fn new() -> MidiNodeConfig_ControlBinding {
+        ::std::default::Default::default()
+    }
+
+    // string page = 1;
+
+
+    pub fn get_page(&self) -> &str {
+        &self.page
+    }
+    pub fn clear_page(&mut self) {
+        self.page.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_page(&mut self, v: ::std::string::String) {
+        self.page = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_page(&mut self) -> &mut ::std::string::String {
+        &mut self.page
+    }
+
+    // Take field
+    pub fn take_page(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.page, ::std::string::String::new())
+    }
+
+    // string control = 2;
+
+
+    pub fn get_control(&self) -> &str {
+        &self.control
+    }
+    pub fn clear_control(&mut self) {
+        self.control.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_control(&mut self, v: ::std::string::String) {
+        self.control = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_control(&mut self) -> &mut ::std::string::String {
+        &mut self.control
+    }
+
+    // Take field
+    pub fn take_control(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.control, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for MidiNodeConfig_ControlBinding {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.page)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.control)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.page.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.page);
+        }
+        if !self.control.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.control);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.page.is_empty() {
+            os.write_string(1, &self.page)?;
+        }
+        if !self.control.is_empty() {
+            os.write_string(2, &self.control)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MidiNodeConfig_ControlBinding {
+        MidiNodeConfig_ControlBinding::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "page",
+                |m: &MidiNodeConfig_ControlBinding| { &m.page },
+                |m: &mut MidiNodeConfig_ControlBinding| { &mut m.page },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "control",
+                |m: &MidiNodeConfig_ControlBinding| { &m.control },
+                |m: &mut MidiNodeConfig_ControlBinding| { &mut m.control },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MidiNodeConfig_ControlBinding>(
+                "MidiNodeConfig.ControlBinding",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MidiNodeConfig_ControlBinding {
+        static instance: ::protobuf::rt::LazyV2<MidiNodeConfig_ControlBinding> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MidiNodeConfig_ControlBinding::new)
+    }
+}
+
+impl ::protobuf::Clear for MidiNodeConfig_ControlBinding {
+    fn clear(&mut self) {
+        self.page.clear();
+        self.control.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MidiNodeConfig_ControlBinding {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MidiNodeConfig_ControlBinding {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
     }
 }
 
@@ -10881,46 +11372,52 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Universe\x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOu\
     tputNodeConfig\x12\x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06output\x88\
     \x01\x01\x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\
-    \x07channel\x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\xe0\x01\n\
+    \x07channel\x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\xde\x03\n\
     \x0eMidiNodeConfig\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12\
-    \x18\n\x07channel\x18\x02\x20\x01(\rR\x07channel\x122\n\x04type\x18\x03\
-    \x20\x01(\x0e2\x1e.mizer.MidiNodeConfig.MidiTypeR\x04type\x12\x12\n\x04p\
-    ort\x18\x04\x20\x01(\rR\x04port\x12\x1c\n\trangeFrom\x18\x05\x20\x01(\rR\
-    \trangeFrom\x12\x18\n\x07rangeTo\x18\x06\x20\x01(\rR\x07rangeTo\"\x1c\n\
-    \x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\x04Note\x10\x01\"k\n\x13Opc\
-    OutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\
-    \x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\x03\x20\x01(\
-    \x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\x06height\"\xe1\
-    \x01\n\rOscNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04host\x12\
-    \x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04path\x18\x03\x20\
-    \x01(\tR\x04path\x12E\n\x0cargumentType\x18\x04\x20\x01(\x0e2!.mizer.Osc\
-    NodeConfig.ArgumentTypeR\x0cargumentType\"M\n\x0cArgumentType\x12\x07\n\
-    \x03Int\x10\0\x12\t\n\x05Float\x10\x01\x12\x08\n\x04Long\x10\x02\x12\n\n\
-    \x06Double\x10\x03\x12\x08\n\x04Bool\x10\x04\x12\t\n\x05Color\x10\x05\"\
-    \x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\"\
-    )\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\
-    \"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\
-    \x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeConfig\"\x14\n\x12ColorRg\
-    bNodeConfig\"\x14\n\x12ColorHsvNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\
-    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
-    \x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.\
-    mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\
-    \x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"N\n\x04Po\
-    rt\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\
-    \x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\x01\n\x0f\
-    ChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\
-    \x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\
-    \x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\
-    \x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\xc6\x03\
-    \n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.miz\
-    er.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mize\
-    r.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\x15.mizer.\
-    NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteContro\
-    l\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.m\
-    izer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\
-    \x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeRequest\x1a\x17.mizer.MoveNode\
-    Response\"\0\x12C\n\nDeleteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.\
-    mizer.DeleteNodeResponse\"\0b\x06proto3\
+    E\n\x0bnoteBinding\x18\x02\x20\x01(\x0b2!.mizer.MidiNodeConfig.NoteBindi\
+    ngH\0R\x0bnoteBinding\x12N\n\x0econtrolBinding\x18\x03\x20\x01(\x0b2$.mi\
+    zer.MidiNodeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd1\x01\n\
+    \x0bNoteBinding\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12>\
+    \n\x04type\x18\x02\x20\x01(\x0e2*.mizer.MidiNodeConfig.NoteBinding.MidiT\
+    ypeR\x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1c\n\tra\
+    ngeFrom\x18\x04\x20\x01(\rR\trangeFrom\x12\x18\n\x07rangeTo\x18\x05\x20\
+    \x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\
+    \x04Note\x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\
+    \x01(\tR\x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\
+    \n\x07binding\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\
+    \x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\
+    \x05width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\
+    \x01(\x04R\x06height\"\xe1\x01\n\rOscNodeConfig\x12\x12\n\x04host\x18\
+    \x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\
+    \x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\x12E\n\x0cargumentType\
+    \x18\x04\x20\x01(\x0e2!.mizer.OscNodeConfig.ArgumentTypeR\x0cargumentTyp\
+    e\"M\n\x0cArgumentType\x12\x07\n\x03Int\x10\0\x12\t\n\x05Float\x10\x01\
+    \x12\x08\n\x04Long\x10\x02\x12\n\n\x06Double\x10\x03\x12\x08\n\x04Bool\
+    \x10\x04\x12\t\n\x05Color\x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\
+    \"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\
+    \x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\
+    \x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10SelectNodeConfig\"\x11\n\
+    \x0fMergeNodeConfig\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNod\
+    eConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\
+    \x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12/\n\
+    \x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\
+    \x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\
+    \x18\x03\x20\x01(\x08R\x06hidden\"N\n\x04Port\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.\
+    ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SI\
+    NGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07\
+    TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
+    \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
+    \x10\x07\x12\x07\n\x03GST\x10\x082\xc6\x03\n\x08NodesApi\x12/\n\x08GetNo\
+    des\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\
+    \x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\
+    \x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\
+    \x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResp\
+    onse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequ\
+    est\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\
+    \x16.mizer.MoveNodeRequest\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDe\
+    leteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeRespons\
+    e\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

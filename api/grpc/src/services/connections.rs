@@ -62,4 +62,10 @@ impl<R: RuntimeApi> ConnectionsApi for ConnectionsHandler<R> {
 
         resp.finish(connections)
     }
+
+    fn get_midi_device_profiles(&self, req: ServerRequestSingle<GetDeviceProfilesRequest>, resp: ServerResponseUnarySink<MidiDeviceProfiles>) -> grpc::Result<()> {
+        let profiles = self.get_midi_device_profiles();
+
+        resp.finish(profiles)
+    }
 }

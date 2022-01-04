@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_connections::Connection;
+use mizer_connections::{Connection, midi_device_profile::DeviceProfile};
 use mizer_layouts::{ControlConfig, ControlPosition, ControlSize, Layout};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
 use mizer_nodes::{FixtureNode, Node, SequencerNode};
@@ -272,6 +272,13 @@ impl RuntimeApi for Api {
             .send(ApiCommand::AddArtnetConnection(name, (host, port), tx))?;
 
         rx.recv()?
+    }
+
+    fn get_midi_device_profiles(&self) -> Vec<DeviceProfile> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::GetMidiDeviceProfiles(tx)).unwrap();
+
+        rx.recv().unwrap()
     }
 
     fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {

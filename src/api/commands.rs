@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use mizer_clock::ClockState;
-use mizer_connections::Connection;
+use mizer_connections::{Connection, midi_device_profile::DeviceProfile};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use pinboard::NonEmptyPinboard;
@@ -25,6 +25,7 @@ pub enum ApiCommand {
     DeleteNode(NodePath, flume::Sender<()>),
     SetClockState(ClockState),
     GetConnections(flume::Sender<Vec<Connection>>),
+    GetMidiDeviceProfiles(flume::Sender<Vec<DeviceProfile>>),
     AddSacnConnection(String, flume::Sender<anyhow::Result<()>>),
     AddArtnetConnection(
         String,

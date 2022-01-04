@@ -1,6 +1,5 @@
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/connections.dart';
-import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/connections.pbgrpc.dart';
 
 class ConnectionsGrpcApi implements ConnectionsApi {
@@ -28,5 +27,10 @@ class ConnectionsGrpcApi implements ConnectionsApi {
   @override
   Future<void> addSacn(AddSacnRequest request) async {
     await this.client.addSacnConnection(request);
+  }
+
+  @override
+  Future<MidiDeviceProfiles> getMidiDeviceProfiles() {
+    return this.client.getMidiDeviceProfiles(GetDeviceProfilesRequest());
   }
 }

@@ -378,24 +378,44 @@ impl From<InputNodeConfig> for mizer_nodes::ButtonNode {
 
 impl From<mizer_nodes::MidiInputNode> for MidiNodeConfig {
     fn from(node: mizer_nodes::MidiInputNode) -> Self {
-        let (midi_type, port, range) = match node.config {
+        let binding = match node.config {
             mizer_nodes::MidiInputConfig::CC {
+                channel,
                 port,
                 range,
-            } => (MidiNodeConfig_MidiType::CC, port, range),
+            } => MidiNodeConfig_oneof_binding::noteBinding(MidiNodeConfig_NoteBinding {
+                channel: channel as u32,
+                field_type: MidiNodeConfig_NoteBinding_MidiType::CC,
+                port: port as u32,
+                rangeFrom: range.0 as u32,
+                rangeTo: range.1 as u32,
+                ..Default::default()
+            }),
             mizer_nodes::MidiInputConfig::Note {
+                channel,
                 port,
                 range,
-            } => (MidiNodeConfig_MidiType::Note, port, range),
+            } => MidiNodeConfig_oneof_binding::noteBinding(MidiNodeConfig_NoteBinding {
+                channel: channel as u32,
+                field_type: MidiNodeConfig_NoteBinding_MidiType::Note,
+                port: port as u32,
+                rangeFrom: range.0 as u32,
+                rangeTo: range.1 as u32,
+                ..Default::default()
+            }),
+            mizer_nodes::MidiInputConfig::Control {
+                page,
+                control
+            } => MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding {
+                page,
+                control,
+                ..Default::default()
+            }),
         };
 
         Self {
-            channel: node.channel as u32,
             device: node.device,
-            field_type: midi_type,
-            port: port as u32,
-            rangeFrom: range.0 as u32,
-            rangeTo: range.1 as u32,
+            binding: Some(binding),
             ..Default::default()
         }
     }
@@ -405,16 +425,28 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
     fn from(config: MidiNodeConfig) -> Self {
         Self {
             device: config.device,
-            channel: config.channel as u8,
-            config: match config.field_type {
-                MidiNodeConfig_MidiType::CC => MidiInputConfig::CC {
-                    port: config.port as u8,
-                    range: (config.rangeFrom as u8, config.rangeTo as u8)
+            config: match config.binding {
+                Some(MidiNodeConfig_oneof_binding::noteBinding(binding)) => {
+                    match binding.field_type {
+                        MidiNodeConfig_NoteBinding_MidiType::CC => MidiInputConfig::CC {
+                            channel: binding.channel as u8,
+                            port: binding.port as u8,
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
+                        },
+                        MidiNodeConfig_NoteBinding_MidiType::Note => MidiInputConfig::Note {
+                            channel: binding.channel as u8,
+                            port: binding.port as u8,
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
+                        }
+                    }
                 },
-                MidiNodeConfig_MidiType::Note => MidiInputConfig::Note {
-                    port: config.port as u8,
-                    range: (config.rangeFrom as u8, config.rangeTo as u8)
-                }
+                Some(MidiNodeConfig_oneof_binding::controlBinding(binding)) => {
+                    MidiInputConfig::Control {
+                        page: binding.page,
+                        control: binding.control,
+                    }
+                },
+                None => MidiInputConfig::default(),
             }
         }
     }
@@ -422,24 +454,44 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
 
 impl From<mizer_nodes::MidiOutputNode> for MidiNodeConfig {
     fn from(node: mizer_nodes::MidiOutputNode) -> Self {
-        let (midi_type, port, range) = match node.config {
+        let binding = match node.config {
             mizer_nodes::MidiOutputConfig::CC {
+                channel,
                 port,
                 range,
-            } => (MidiNodeConfig_MidiType::CC, port, range),
+            } => MidiNodeConfig_oneof_binding::noteBinding(MidiNodeConfig_NoteBinding {
+                channel: channel as u32,
+                field_type: MidiNodeConfig_NoteBinding_MidiType::CC,
+                port: port as u32,
+                rangeFrom: range.0 as u32,
+                rangeTo: range.1 as u32,
+                ..Default::default()
+            }),
             mizer_nodes::MidiOutputConfig::Note {
+                channel,
                 port,
                 range,
-            } => (MidiNodeConfig_MidiType::Note, port, range),
+            } => MidiNodeConfig_oneof_binding::noteBinding(MidiNodeConfig_NoteBinding {
+                channel: channel as u32,
+                field_type: MidiNodeConfig_NoteBinding_MidiType::Note,
+                port: port as u32,
+                rangeFrom: range.0 as u32,
+                rangeTo: range.1 as u32,
+                ..Default::default()
+            }),
+            mizer_nodes::MidiOutputConfig::Control {
+                page,
+                control
+            } => MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding {
+                page,
+                control,
+                ..Default::default()
+            }),
         };
 
         Self {
-            channel: node.channel as u32,
             device: node.device,
-            field_type: midi_type,
-            port: port as u32,
-            rangeFrom: range.0 as u32,
-            rangeTo: range.1 as u32,
+            binding: Some(binding),
             ..Default::default()
         }
     }
@@ -449,16 +501,28 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiOutputNode {
     fn from(config: MidiNodeConfig) -> Self {
         Self {
             device: config.device,
-            channel: config.channel as u8,
-            config: match config.field_type {
-                MidiNodeConfig_MidiType::CC => MidiOutputConfig::CC {
-                    port: config.port as u8,
-                    range: (config.rangeFrom as u8, config.rangeTo as u8)
+            config: match config.binding {
+                Some(MidiNodeConfig_oneof_binding::noteBinding(binding)) => {
+                    match binding.field_type {
+                        MidiNodeConfig_NoteBinding_MidiType::CC => MidiOutputConfig::CC {
+                            channel: binding.channel as u8,
+                            port: binding.port as u8,
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
+                        },
+                        MidiNodeConfig_NoteBinding_MidiType::Note => MidiOutputConfig::Note {
+                            channel: binding.channel as u8,
+                            port: binding.port as u8,
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
+                        }
+                    }
                 },
-                MidiNodeConfig_MidiType::Note => MidiOutputConfig::Note {
-                    port: config.port as u8,
-                    range: (config.rangeFrom as u8, config.rangeTo as u8)
-                }
+                Some(MidiNodeConfig_oneof_binding::controlBinding(binding)) => {
+                    MidiOutputConfig::Control {
+                        page: binding.page,
+                        control: binding.control,
+                    }
+                },
+                None => MidiOutputConfig::default(),
             }
         }
     }

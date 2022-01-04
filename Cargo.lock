@@ -3130,10 +3130,19 @@ name = "mizer-midi-device-profiles"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "mizer-protocol-midi",
+ "log",
+ "mizer-midi-messages",
  "rhai 0.19.15",
  "serde",
  "serde_yaml",
+]
+
+[[package]]
+name = "mizer-midi-messages"
+version = "0.1.0"
+dependencies = [
+ "log",
+ "serde",
 ]
 
 [[package]]
@@ -3371,8 +3380,11 @@ dependencies = [
  "dashmap",
  "log",
  "midir",
+ "mizer-midi-device-profiles",
+ "mizer-midi-messages",
  "mizer-module",
  "mizer-processing",
+ "mizer-util",
 ]
 
 [[package]]

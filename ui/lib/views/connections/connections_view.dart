@@ -22,6 +22,7 @@ class ConnectionsView extends StatefulWidget {
 
 class _ConnectionsViewState extends State<ConnectionsView> {
   List<Connection> connections = [];
+  List<MidiDeviceProfile> midiDeviceProfiles = [];
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +60,19 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   @override
   void initState() {
     super.initState();
-    _fetchConnections();
+    _fetch();
   }
 
   @override
   void activate() {
     super.activate();
-    _fetchConnections();
+    _fetch();
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    _fetchConnections();
+    _fetch();
   }
 
   List<Widget> _buildActions(BuildContext context, Connection connection) {
@@ -103,7 +104,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return OscConnectionView(device: connection.osc);
     }
     if (connection.hasMidi()) {
-      return MidiConnectionView(device: connection.midi);
+      return MidiConnectionView(device: connection.midi, deviceProfiles: midiDeviceProfiles);
     }
     return Container();
   }
@@ -112,10 +113,22 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     openDialog(context, DmxMonitorDialog(connection));
   }
 
-  _fetchConnections() async {
+  _fetch() async {
+    await _fetchConnections();
+    await _fetchMidiDeviceProfiles();
+  }
+
+  Future<void> _fetchConnections() async {
     var connections = await api.getConnections();
     this.setState(() {
       this.connections = connections.connections;
+    });
+  }
+
+  Future<void> _fetchMidiDeviceProfiles() async {
+    var deviceProfiles = await api.getMidiDeviceProfiles();
+    this.setState(() {
+      this.midiDeviceProfiles = deviceProfiles.profiles;
     });
   }
 
@@ -126,7 +139,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return null;
     }
     await api.addSacn(value);
-    await _fetchConnections();
+    await _fetch();
   }
 
   _addArtnet() async {
@@ -136,7 +149,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return null;
     }
     await api.addArtnet(value);
-    await _fetchConnections();
+    await _fetch();
   }
 
   ConnectionsApi get api {

@@ -12,4 +12,6 @@ dashmap = "4"
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
 crossbeam-channel = "0.5"
-
+mizer-midi-device-profiles = { path = "device-profiles" }
+mizer-util = { path = "../../../../util" }
+mizer-midi-messages = { path = "messages" }

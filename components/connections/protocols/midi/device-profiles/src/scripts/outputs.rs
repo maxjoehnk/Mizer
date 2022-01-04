@@ -1,6 +1,7 @@
 use crate::scripts::ScriptError;
 use rhai::{Array, Engine, Scope, AST};
 use std::path::PathBuf;
+use std::sync::Arc;
 
 pub fn parse_outputs_ast(script: impl Into<PathBuf>) -> Result<OutputScript, ScriptError> {
     let mut engine = Engine::new();
@@ -9,13 +10,14 @@ pub fn parse_outputs_ast(script: impl Into<PathBuf>) -> Result<OutputScript, Scr
 
     let ast = engine.compile_file(script.into())?;
 
-    let script = OutputScript { ast, engine };
+    let script = OutputScript { ast, engine: Arc::new(engine) };
     Ok(script)
 }
 
+#[derive(Clone)]
 pub struct OutputScript {
     ast: AST,
-    engine: Engine,
+    engine: Arc<Engine>,
 }
 
 impl OutputScript {

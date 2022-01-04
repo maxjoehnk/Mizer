@@ -1,6 +1,7 @@
 use crate::{MidiDevice, MidiDeviceIdentifier, MidiDeviceProvider};
 use dashmap::DashMap;
 use std::ops::DerefMut;
+use mizer_midi_device_profiles::DeviceProfile;
 
 pub struct MidiConnectionManager {
     provider: MidiDeviceProvider,
@@ -17,6 +18,10 @@ impl MidiConnectionManager {
             provider,
             devices: Default::default(),
         }
+    }
+
+    pub fn load_device_profiles(&mut self, path: &str) -> anyhow::Result<()> {
+        self.provider.load_device_profiles(path)
     }
 
     pub fn request_device<'a>(
@@ -37,5 +42,9 @@ impl MidiConnectionManager {
 
     pub fn list_available_devices(&self) -> Vec<MidiDeviceIdentifier> {
         self.provider.list_devices().unwrap()
+    }
+
+    pub fn list_available_device_profiles(&self) -> Vec<DeviceProfile> {
+        self.provider.list_device_profiles()
     }
 }

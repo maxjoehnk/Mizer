@@ -5,7 +5,7 @@ import 'field.dart';
 
 class EnumField<TValue> extends StatelessWidget {
   final String label;
-  final List<SelectOption<TValue>> items;
+  final List<SelectItem<TValue>> items;
   final TValue? initialValue;
   final Function(TValue) onUpdate;
 

@@ -26,6 +26,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
 
                 resp.respond_msg(response);
             }
+            "getMidiDeviceProfiles" => {
+                let response = self.handler.get_midi_device_profiles();
+
+                resp.respond_msg(response);
+            }
             "monitorDmx" => {
                 if let Value::String(output_id) = call.args {
                     match self.handler.monitor_dmx(output_id) {

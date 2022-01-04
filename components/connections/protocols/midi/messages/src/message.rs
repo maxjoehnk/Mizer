@@ -1,10 +1,11 @@
 use crate::consts::*;
 use std::convert::TryFrom;
+use serde::{Deserialize, Serialize};
 
 /// Represents a Midi channel
 ///
 /// Note that `Ch1 = 0`, `Ch2 = 1`, etc, as the actual protocol is 0-indexed.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Deserialize, Serialize)]
 pub enum Channel {
     Ch1 = 0,
     Ch2 = 1,
@@ -22,6 +23,12 @@ pub enum Channel {
     Ch14 = 13,
     Ch15 = 14,
     Ch16 = 15,
+}
+
+impl Default for Channel {
+    fn default() -> Self {
+        Self::Ch1
+    }
 }
 
 impl PartialEq<u8> for Channel {

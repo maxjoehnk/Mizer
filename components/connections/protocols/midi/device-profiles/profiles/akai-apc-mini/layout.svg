@@ -1,0 +1,2024 @@
+<!--<?xml version="1.0" encoding="UTF-8" standalone="no"?>-->
+<svg
+        xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        xmlns="http://www.w3.org/2000/svg"
+        id="svg6635" version="1.1" viewBox="0
+  0 1024 886" inkscape:version="0.92.4 5da689c313, 2019-01-14"
+        sodipodi:docname="test_controller.svg">
+    <metadata id="metadata6639">
+        <rdf:RDF>
+            <cc:Work rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <sodipodi:namedview id="namedview6637"
+                        bordercolor="#666666" borderopacity="1" gridtolerance="10"
+                        guidetolerance="10" objecttolerance="10" pagecolor="#ffffff"
+                        showgrid="false" inkscape:current-layer="Akai_APC_Mini" inkscape:cx="512"
+                        inkscape:cy="141.75442" inkscape:pageopacity="0" inkscape:pageshadow="2"
+                        inkscape:window-height="1043" inkscape:window-maximized="0"
+                        inkscape:window-width="1914" inkscape:window-x="1280" inkscape:window-y="16"
+                        inkscape:zoom="0.76660156"/>
+    <defs id="defs6104">
+        <style id="style5196">
+            .cls-1 { fill: none; } .cls-2 { clip-path: url(#clip-Akai_APC_Mini); }
+            .cls-3 { fill: #464646; } .cls-4 { clip-path: url(#clip-path); } .cls-5,
+            .cls-7 { fill: #fff; } .cls-6 { clip-path: url(#clip-path-2); } .cls-7 {
+            stroke: #fff; } .cls-10, .cls-7 { stroke-width: 4px; } .cls-8 { clip-path:
+            url(#clip-path-3); } .cls-9 { clip-path: url(#clip-path-4); } .cls-10 {
+            fill: #535353; stroke: #adadad; } .cls-11 { stroke: none; } .cls-12 {
+            filter: url(#Rectangle_6); } .cls-13 { filter: url(#Button-80); } .cls-14 {
+            filter: url(#Button-79); } .cls-15 { filter: url(#Button-78); } .cls-16 {
+            filter: url(#Button-77); } .cls-17 { filter: url(#Button-76); } .cls-18 {
+            filter: url(#Button-75); } .cls-19 { filter: url(#Button-74); } .cls-20 {
+            filter: url(#Button-73); } .cls-21 { filter: url(#Button-72); } .cls-22 {
+            filter: url(#Button-71); } .cls-23 { filter: url(#Button-70); } .cls-24 {
+            filter: url(#Button-69); } .cls-25 { filter: url(#Button-68); } .cls-26 {
+            filter: url(#Button-67); } .cls-27 { filter: url(#Button-66); } .cls-28 {
+            filter: url(#Button-65); } .cls-29 { filter: url(#Button-64); } .cls-30 {
+            filter: url(#Button-63); } .cls-31 { filter: url(#Button-62); } .cls-32 {
+            filter: url(#Button-61); } .cls-33 { filter: url(#Button-60); } .cls-34 {
+            filter: url(#Button-59); } .cls-35 { filter: url(#Button-58); } .cls-36 {
+            filter: url(#Button-57); } .cls-37 { filter: url(#Button-56); } .cls-38 {
+            filter: url(#Button-55); } .cls-39 { filter: url(#Button-54); } .cls-40 {
+            filter: url(#Button-53); } .cls-41 { filter: url(#Button-52); } .cls-42 {
+            filter: url(#Button-51); } .cls-43 { filter: url(#Button-50); } .cls-44 {
+            filter: url(#Button-49); } .cls-45 { filter: url(#Button-48); } .cls-46 {
+            filter: url(#Button-47); } .cls-47 { filter: url(#Button-46); } .cls-48 {
+            filter: url(#Button-45); } .cls-49 { filter: url(#Button-44); } .cls-50 {
+            filter: url(#Button-43); } .cls-51 { filter: url(#Button-42); } .cls-52 {
+            filter: url(#Button-41); } .cls-53 { filter: url(#Button-40); } .cls-54 {
+            filter: url(#Button-39); } .cls-55 { filter: url(#Button-38); } .cls-56 {
+            filter: url(#Button-37); } .cls-57 { filter: url(#Button-36); } .cls-58 {
+            filter: url(#Button-35); } .cls-59 { filter: url(#Button-34); } .cls-60 {
+            filter: url(#Button-33); } .cls-61 { filter: url(#Button-32); } .cls-62 {
+            filter: url(#Button-31); } .cls-63 { filter: url(#Button-30); } .cls-64 {
+            filter: url(#Button-29); } .cls-65 { filter: url(#Button-28); } .cls-66 {
+            filter: url(#Button-27); } .cls-67 { filter: url(#Button-26); } .cls-68 {
+            filter: url(#Button-25); } .cls-69 { filter: url(#Button-24); } .cls-70 {
+            filter: url(#Button-23); } .cls-71 { filter: url(#Button-22); } .cls-72 {
+            filter: url(#Button-21); } .cls-73 { filter: url(#Button-20); } .cls-74 {
+            filter: url(#Button-19); } .cls-75 { filter: url(#Button-18); } .cls-76 {
+            filter: url(#Button-17); } .cls-77 { filter: url(#Button-16); } .cls-78 {
+            filter: url(#Button-15); } .cls-79 { filter: url(#Button-14); } .cls-80 {
+            filter: url(#Button-13); } .cls-81 { filter: url(#Button-12); } .cls-82 {
+            filter: url(#Button-11); } .cls-83 { filter: url(#Button-10); } .cls-84 {
+            filter: url(#Button-9); } .cls-85 { filter: url(#Button-8); } .cls-86 {
+            filter: url(#Button-7); } .cls-87 { filter: url(#Button-6); } .cls-88 {
+            filter: url(#Button-5); } .cls-89 { filter: url(#Button-4); } .cls-90 {
+            filter: url(#Button-3); } .cls-91 { filter: url(#Button-2); } .cls-92 {
+            filter: url(#Button); }
+        </style>
+        <clipPath id="clip-path">
+            <rect
+                    id="rect5198" width="847" height="497" class="cls-1"/>
+        </clipPath>
+        <filter
+                id="Button" width="95" height="42" x="41" y="100"
+                filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5201" dx="2" dy="2"
+                      input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5203"
+                            result="blur"/>
+            <feFlood id="feFlood5205" flood-opacity="0.161"/>
+            <feComposite id="feComposite5207" in2="blur" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5209" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-2" width="95" height="42"
+                x="148" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5212"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5214"
+                            result="blur-2"/>
+            <feFlood id="feFlood5216" flood-opacity="0.161"/>
+            <feComposite id="feComposite5218" in2="blur-2" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5220" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-3" width="95" height="42"
+                x="255" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5223"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5225"
+                            result="blur-3"/>
+            <feFlood id="feFlood5227" flood-opacity="0.161"/>
+            <feComposite id="feComposite5229" in2="blur-3" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5231" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-4" width="95" height="42"
+                x="362" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5234"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5236"
+                            result="blur-4"/>
+            <feFlood id="feFlood5238" flood-opacity="0.161"/>
+            <feComposite id="feComposite5240" in2="blur-4" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5242" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-5" width="95" height="42"
+                x="469" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5245"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5247"
+                            result="blur-5"/>
+            <feFlood id="feFlood5249" flood-opacity="0.161"/>
+            <feComposite id="feComposite5251" in2="blur-5" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5253" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-6" width="95" height="42"
+                x="576" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5256"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5258"
+                            result="blur-6"/>
+            <feFlood id="feFlood5260" flood-opacity="0.161"/>
+            <feComposite id="feComposite5262" in2="blur-6" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5264" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-7" width="95" height="42"
+                x="683" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5267"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5269"
+                            result="blur-7"/>
+            <feFlood id="feFlood5271" flood-opacity="0.161"/>
+            <feComposite id="feComposite5273" in2="blur-7" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5275" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-8" width="95" height="42"
+                x="790" y="100" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5278"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5280"
+                            result="blur-8"/>
+            <feFlood id="feFlood5282" flood-opacity="0.161"/>
+            <feComposite id="feComposite5284" in2="blur-8" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5286" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-9" width="95" height="42"
+                x="41" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5289"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5291"
+                            result="blur-9"/>
+            <feFlood id="feFlood5293" flood-opacity="0.161"/>
+            <feComposite id="feComposite5295" in2="blur-9" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5297" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-10" width="95" height="42"
+                x="148" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5300"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5302"
+                            result="blur-10"/>
+            <feFlood id="feFlood5304" flood-opacity="0.161"/>
+            <feComposite id="feComposite5306" in2="blur-10" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5308" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-11" width="95" height="42"
+                x="255" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5311"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5313"
+                            result="blur-11"/>
+            <feFlood id="feFlood5315" flood-opacity="0.161"/>
+            <feComposite id="feComposite5317" in2="blur-11" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5319" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-12" width="95" height="42"
+                x="362" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5322"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5324"
+                            result="blur-12"/>
+            <feFlood id="feFlood5326" flood-opacity="0.161"/>
+            <feComposite id="feComposite5328" in2="blur-12" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5330" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-13" width="95" height="42"
+                x="469" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5333"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5335"
+                            result="blur-13"/>
+            <feFlood id="feFlood5337" flood-opacity="0.161"/>
+            <feComposite id="feComposite5339" in2="blur-13" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5341" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-14" width="95" height="42"
+                x="576" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5344"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5346"
+                            result="blur-14"/>
+            <feFlood id="feFlood5348" flood-opacity="0.161"/>
+            <feComposite id="feComposite5350" in2="blur-14" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5352" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-15" width="95" height="42"
+                x="683" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5355"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5357"
+                            result="blur-15"/>
+            <feFlood id="feFlood5359" flood-opacity="0.161"/>
+            <feComposite id="feComposite5361" in2="blur-15" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5363" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-16" width="95" height="42"
+                x="790" y="157" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5366"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5368"
+                            result="blur-16"/>
+            <feFlood id="feFlood5370" flood-opacity="0.161"/>
+            <feComposite id="feComposite5372" in2="blur-16" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5374" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-17" width="95" height="42"
+                x="41" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5377"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5379"
+                            result="blur-17"/>
+            <feFlood id="feFlood5381" flood-opacity="0.161"/>
+            <feComposite id="feComposite5383" in2="blur-17" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5385" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-18" width="95" height="42"
+                x="148" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5388"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5390"
+                            result="blur-18"/>
+            <feFlood id="feFlood5392" flood-opacity="0.161"/>
+            <feComposite id="feComposite5394" in2="blur-18" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5396" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-19" width="95" height="42"
+                x="255" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5399"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5401"
+                            result="blur-19"/>
+            <feFlood id="feFlood5403" flood-opacity="0.161"/>
+            <feComposite id="feComposite5405" in2="blur-19" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5407" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-20" width="95" height="42"
+                x="362" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5410"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5412"
+                            result="blur-20"/>
+            <feFlood id="feFlood5414" flood-opacity="0.161"/>
+            <feComposite id="feComposite5416" in2="blur-20" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5418" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-21" width="95" height="42"
+                x="469" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5421"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5423"
+                            result="blur-21"/>
+            <feFlood id="feFlood5425" flood-opacity="0.161"/>
+            <feComposite id="feComposite5427" in2="blur-21" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5429" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-22" width="95" height="42"
+                x="576" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5432"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5434"
+                            result="blur-22"/>
+            <feFlood id="feFlood5436" flood-opacity="0.161"/>
+            <feComposite id="feComposite5438" in2="blur-22" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5440" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-23" width="95" height="42"
+                x="683" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5443"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5445"
+                            result="blur-23"/>
+            <feFlood id="feFlood5447" flood-opacity="0.161"/>
+            <feComposite id="feComposite5449" in2="blur-23" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5451" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-24" width="95" height="42"
+                x="790" y="214" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5454"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5456"
+                            result="blur-24"/>
+            <feFlood id="feFlood5458" flood-opacity="0.161"/>
+            <feComposite id="feComposite5460" in2="blur-24" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5462" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-25" width="95" height="42"
+                x="41" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5465"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5467"
+                            result="blur-25"/>
+            <feFlood id="feFlood5469" flood-opacity="0.161"/>
+            <feComposite id="feComposite5471" in2="blur-25" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5473" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-26" width="95" height="42"
+                x="148" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5476"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5478"
+                            result="blur-26"/>
+            <feFlood id="feFlood5480" flood-opacity="0.161"/>
+            <feComposite id="feComposite5482" in2="blur-26" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5484" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-27" width="95" height="42"
+                x="255" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5487"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5489"
+                            result="blur-27"/>
+            <feFlood id="feFlood5491" flood-opacity="0.161"/>
+            <feComposite id="feComposite5493" in2="blur-27" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5495" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-28" width="95" height="42"
+                x="362" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5498"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5500"
+                            result="blur-28"/>
+            <feFlood id="feFlood5502" flood-opacity="0.161"/>
+            <feComposite id="feComposite5504" in2="blur-28" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5506" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-29" width="95" height="42"
+                x="469" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5509"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5511"
+                            result="blur-29"/>
+            <feFlood id="feFlood5513" flood-opacity="0.161"/>
+            <feComposite id="feComposite5515" in2="blur-29" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5517" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-30" width="95" height="42"
+                x="576" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5520"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5522"
+                            result="blur-30"/>
+            <feFlood id="feFlood5524" flood-opacity="0.161"/>
+            <feComposite id="feComposite5526" in2="blur-30" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5528" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-31" width="95" height="42"
+                x="683" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5531"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5533"
+                            result="blur-31"/>
+            <feFlood id="feFlood5535" flood-opacity="0.161"/>
+            <feComposite id="feComposite5537" in2="blur-31" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5539" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-32" width="95" height="42"
+                x="790" y="271" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5542"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5544"
+                            result="blur-32"/>
+            <feFlood id="feFlood5546" flood-opacity="0.161"/>
+            <feComposite id="feComposite5548" in2="blur-32" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5550" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-33" width="95" height="42"
+                x="41" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5553"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5555"
+                            result="blur-33"/>
+            <feFlood id="feFlood5557" flood-opacity="0.161"/>
+            <feComposite id="feComposite5559" in2="blur-33" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5561" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-34" width="95" height="42"
+                x="148" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5564"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5566"
+                            result="blur-34"/>
+            <feFlood id="feFlood5568" flood-opacity="0.161"/>
+            <feComposite id="feComposite5570" in2="blur-34" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5572" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-35" width="95" height="42"
+                x="255" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5575"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5577"
+                            result="blur-35"/>
+            <feFlood id="feFlood5579" flood-opacity="0.161"/>
+            <feComposite id="feComposite5581" in2="blur-35" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5583" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-36" width="95" height="42"
+                x="362" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5586"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5588"
+                            result="blur-36"/>
+            <feFlood id="feFlood5590" flood-opacity="0.161"/>
+            <feComposite id="feComposite5592" in2="blur-36" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5594" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-37" width="95" height="42"
+                x="469" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5597"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5599"
+                            result="blur-37"/>
+            <feFlood id="feFlood5601" flood-opacity="0.161"/>
+            <feComposite id="feComposite5603" in2="blur-37" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5605" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-38" width="95" height="42"
+                x="576" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5608"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5610"
+                            result="blur-38"/>
+            <feFlood id="feFlood5612" flood-opacity="0.161"/>
+            <feComposite id="feComposite5614" in2="blur-38" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5616" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-39" width="95" height="42"
+                x="683" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5619"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5621"
+                            result="blur-39"/>
+            <feFlood id="feFlood5623" flood-opacity="0.161"/>
+            <feComposite id="feComposite5625" in2="blur-39" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5627" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-40" width="95" height="42"
+                x="790" y="328" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5630"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5632"
+                            result="blur-40"/>
+            <feFlood id="feFlood5634" flood-opacity="0.161"/>
+            <feComposite id="feComposite5636" in2="blur-40" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5638" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-41" width="95" height="42"
+                x="41" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5641"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5643"
+                            result="blur-41"/>
+            <feFlood id="feFlood5645" flood-opacity="0.161"/>
+            <feComposite id="feComposite5647" in2="blur-41" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5649" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-42" width="95" height="42"
+                x="148" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5652"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5654"
+                            result="blur-42"/>
+            <feFlood id="feFlood5656" flood-opacity="0.161"/>
+            <feComposite id="feComposite5658" in2="blur-42" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5660" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-43" width="95" height="42"
+                x="255" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5663"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5665"
+                            result="blur-43"/>
+            <feFlood id="feFlood5667" flood-opacity="0.161"/>
+            <feComposite id="feComposite5669" in2="blur-43" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5671" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-44" width="95" height="42"
+                x="362" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5674"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5676"
+                            result="blur-44"/>
+            <feFlood id="feFlood5678" flood-opacity="0.161"/>
+            <feComposite id="feComposite5680" in2="blur-44" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5682" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-45" width="95" height="42"
+                x="469" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5685"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5687"
+                            result="blur-45"/>
+            <feFlood id="feFlood5689" flood-opacity="0.161"/>
+            <feComposite id="feComposite5691" in2="blur-45" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5693" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-46" width="95" height="42"
+                x="576" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5696"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5698"
+                            result="blur-46"/>
+            <feFlood id="feFlood5700" flood-opacity="0.161"/>
+            <feComposite id="feComposite5702" in2="blur-46" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5704" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-47" width="95" height="42"
+                x="683" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5707"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5709"
+                            result="blur-47"/>
+            <feFlood id="feFlood5711" flood-opacity="0.161"/>
+            <feComposite id="feComposite5713" in2="blur-47" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5715" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-48" width="95" height="42"
+                x="790" y="385" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5718"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5720"
+                            result="blur-48"/>
+            <feFlood id="feFlood5722" flood-opacity="0.161"/>
+            <feComposite id="feComposite5724" in2="blur-48" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5726" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-49" width="95" height="42"
+                x="41" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5729"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5731"
+                            result="blur-49"/>
+            <feFlood id="feFlood5733" flood-opacity="0.161"/>
+            <feComposite id="feComposite5735" in2="blur-49" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5737" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-50" width="95" height="42"
+                x="148" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5740"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5742"
+                            result="blur-50"/>
+            <feFlood id="feFlood5744" flood-opacity="0.161"/>
+            <feComposite id="feComposite5746" in2="blur-50" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5748" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-51" width="95" height="42"
+                x="255" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5751"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5753"
+                            result="blur-51"/>
+            <feFlood id="feFlood5755" flood-opacity="0.161"/>
+            <feComposite id="feComposite5757" in2="blur-51" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5759" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-52" width="95" height="42"
+                x="362" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5762"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5764"
+                            result="blur-52"/>
+            <feFlood id="feFlood5766" flood-opacity="0.161"/>
+            <feComposite id="feComposite5768" in2="blur-52" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5770" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-53" width="95" height="42"
+                x="469" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5773"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5775"
+                            result="blur-53"/>
+            <feFlood id="feFlood5777" flood-opacity="0.161"/>
+            <feComposite id="feComposite5779" in2="blur-53" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5781" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-54" width="95" height="42"
+                x="576" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5784"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5786"
+                            result="blur-54"/>
+            <feFlood id="feFlood5788" flood-opacity="0.161"/>
+            <feComposite id="feComposite5790" in2="blur-54" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5792" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-55" width="95" height="42"
+                x="683" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5795"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5797"
+                            result="blur-55"/>
+            <feFlood id="feFlood5799" flood-opacity="0.161"/>
+            <feComposite id="feComposite5801" in2="blur-55" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5803" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-56" width="95" height="42"
+                x="790" y="442" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5806"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5808"
+                            result="blur-56"/>
+            <feFlood id="feFlood5810" flood-opacity="0.161"/>
+            <feComposite id="feComposite5812" in2="blur-56" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5814" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-57" width="95" height="42"
+                x="41" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5817"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5819"
+                            result="blur-57"/>
+            <feFlood id="feFlood5821" flood-opacity="0.161"/>
+            <feComposite id="feComposite5823" in2="blur-57" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5825" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-58" width="95" height="42"
+                x="148" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5828"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5830"
+                            result="blur-58"/>
+            <feFlood id="feFlood5832" flood-opacity="0.161"/>
+            <feComposite id="feComposite5834" in2="blur-58" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5836" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-59" width="95" height="42"
+                x="255" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5839"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5841"
+                            result="blur-59"/>
+            <feFlood id="feFlood5843" flood-opacity="0.161"/>
+            <feComposite id="feComposite5845" in2="blur-59" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5847" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-60" width="95" height="42"
+                x="362" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5850"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5852"
+                            result="blur-60"/>
+            <feFlood id="feFlood5854" flood-opacity="0.161"/>
+            <feComposite id="feComposite5856" in2="blur-60" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5858" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-61" width="95" height="42"
+                x="469" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5861"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5863"
+                            result="blur-61"/>
+            <feFlood id="feFlood5865" flood-opacity="0.161"/>
+            <feComposite id="feComposite5867" in2="blur-61" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5869" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-62" width="95" height="42"
+                x="576" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5872"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5874"
+                            result="blur-62"/>
+            <feFlood id="feFlood5876" flood-opacity="0.161"/>
+            <feComposite id="feComposite5878" in2="blur-62" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5880" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-63" width="95" height="42"
+                x="683" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5883"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5885"
+                            result="blur-63"/>
+            <feFlood id="feFlood5887" flood-opacity="0.161"/>
+            <feComposite id="feComposite5889" in2="blur-63" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5891" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-64" width="95" height="42"
+                x="790" y="499" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5894"
+                      dx="2" dy="2" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5896"
+                            result="blur-64"/>
+            <feFlood id="feFlood5898" flood-opacity="0.161"/>
+            <feComposite id="feComposite5900" in2="blur-64" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5902" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <clipPath id="clip-path-2">
+            <rect id="rect5905"
+                  width="54" height="452" class="cls-1"/>
+        </clipPath>
+        <filter id="Button-65"
+                width="53" height="53" x="912" y="95" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5908" dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5910" result="blur-65"/>
+            <feFlood
+                    id="feFlood5912" flood-opacity="0.161"/>
+            <feComposite id="feComposite5914"
+                         in2="blur-65" operator="in" result="result1"/>
+            <feComposite
+                    id="feComposite5916" in="SourceGraphic" in2="result1"/>
+        </filter>
+        <filter
+                id="Button-66" width="53" height="53" x="912" y="152"
+                filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5919" dx="3" dy="3"
+                      input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5921"
+                            result="blur-66"/>
+            <feFlood id="feFlood5923" flood-opacity="0.161"/>
+            <feComposite id="feComposite5925" in2="blur-66" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5927" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-67" width="53" height="53"
+                x="912" y="209" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5930"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5932"
+                            result="blur-67"/>
+            <feFlood id="feFlood5934" flood-opacity="0.161"/>
+            <feComposite id="feComposite5936" in2="blur-67" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5938" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-68" width="53" height="53"
+                x="912" y="266" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5941"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5943"
+                            result="blur-68"/>
+            <feFlood id="feFlood5945" flood-opacity="0.161"/>
+            <feComposite id="feComposite5947" in2="blur-68" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5949" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-69" width="53" height="53"
+                x="912" y="323" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5952"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5954"
+                            result="blur-69"/>
+            <feFlood id="feFlood5956" flood-opacity="0.161"/>
+            <feComposite id="feComposite5958" in2="blur-69" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5960" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-70" width="53" height="53"
+                x="912" y="380" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5963"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5965"
+                            result="blur-70"/>
+            <feFlood id="feFlood5967" flood-opacity="0.161"/>
+            <feComposite id="feComposite5969" in2="blur-70" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5971" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-71" width="53" height="53"
+                x="912" y="437" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5974"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5976"
+                            result="blur-71"/>
+            <feFlood id="feFlood5978" flood-opacity="0.161"/>
+            <feComposite id="feComposite5980" in2="blur-71" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5982" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-72" width="53" height="53"
+                x="912" y="494" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5985"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur5987"
+                            result="blur-72"/>
+            <feFlood id="feFlood5989" flood-opacity="0.161"/>
+            <feComposite id="feComposite5991" in2="blur-72" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite5993" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <clipPath id="clip-path-3">
+            <rect id="rect5996"
+                  width="801" height="53" class="cls-1"/>
+        </clipPath>
+        <filter id="Button-73"
+                width="53" height="53" x="64" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset5999" dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6001" result="blur-73"/>
+            <feFlood
+                    id="feFlood6003" flood-opacity="0.161"/>
+            <feComposite id="feComposite6005"
+                         in2="blur-73" operator="in" result="result1"/>
+            <feComposite
+                    id="feComposite6007" in="SourceGraphic" in2="result1"/>
+        </filter>
+        <filter
+                id="Button-74" width="53" height="53" x="170" y="562"
+                filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6010" dx="3" dy="3"
+                      input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6012"
+                            result="blur-74"/>
+            <feFlood id="feFlood6014" flood-opacity="0.161"/>
+            <feComposite id="feComposite6016" in2="blur-74" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6018" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-75" width="53" height="53"
+                x="276" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6021"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6023"
+                            result="blur-75"/>
+            <feFlood id="feFlood6025" flood-opacity="0.161"/>
+            <feComposite id="feComposite6027" in2="blur-75" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6029" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-76" width="53" height="53"
+                x="382" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6032"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6034"
+                            result="blur-76"/>
+            <feFlood id="feFlood6036" flood-opacity="0.161"/>
+            <feComposite id="feComposite6038" in2="blur-76" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6040" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-77" width="53" height="53"
+                x="488" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6043"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6045"
+                            result="blur-77"/>
+            <feFlood id="feFlood6047" flood-opacity="0.161"/>
+            <feComposite id="feComposite6049" in2="blur-77" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6051" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-78" width="53" height="53"
+                x="594" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6054"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6056"
+                            result="blur-78"/>
+            <feFlood id="feFlood6058" flood-opacity="0.161"/>
+            <feComposite id="feComposite6060" in2="blur-78" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6062" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-79" width="53" height="53"
+                x="700" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6065"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6067"
+                            result="blur-79"/>
+            <feFlood id="feFlood6069" flood-opacity="0.161"/>
+            <feComposite id="feComposite6071" in2="blur-79" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6073" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Button-80" width="53" height="53"
+                x="806" y="562" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6076"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6078"
+                            result="blur-80"/>
+            <feFlood id="feFlood6080" flood-opacity="0.161"/>
+            <feComposite id="feComposite6082" in2="blur-80" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6084" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <filter id="Rectangle_6" width="49" height="49"
+                x="914" y="566" filterUnits="userSpaceOnUse">
+            <feOffset id="feOffset6087"
+                      dx="3" dy="3" input="SourceAlpha"/>
+            <feGaussianBlur id="feGaussianBlur6089"
+                            result="blur-81"/>
+            <feFlood id="feFlood6091" flood-opacity="0.161"/>
+            <feComposite id="feComposite6093" in2="blur-81" operator="in"
+                         result="result1"/>
+            <feComposite id="feComposite6095" in="SourceGraphic"
+                         in2="result1"/>
+        </filter>
+        <clipPath id="clip-path-4">
+            <rect id="rect6098"
+                  width="948" height="223" class="cls-1"/>
+        </clipPath>
+        <clipPath
+                id="clip-Akai_APC_Mini">
+            <rect id="rect6101" width="1024" height="886"/>
+        </clipPath>
+    </defs>
+    <g id="Akai_APC_Mini" class="cls-2"
+       clip-path="url(#clip-Akai_APC_Mini)" data-name="Akai APC Mini">
+        <rect
+                id="Background" width="1024" height="886" class="cls-3" rx="10"/>
+        <g
+                id="Buttons" class="cls-4" clip-path="url(#clip-path)"
+                transform="translate(41 100)">
+            <g id="g6110" transform="translate(-59
+  -149)">
+                <g id="g6108" class="cls-92" transform="matrix(1, 0, 0, 1, 18, 49)">
+                    <rect id="Button-81" width="93" height="40" x="0" y="0" class="cls-5"
+                          data-config="note-56" data-name="Button" rx="4" style="fill:#ffffff"
+                          transform="translate(41,100)"/>
+                </g>
+            </g>
+            <g id="g6115"
+               transform="translate(48 -149)">
+                <g id="g6113" class="cls-91"
+                   transform="matrix(1, 0, 0, 1, -89, 49)">
+                    <rect id="Button-82" width="93"
+                          height="40" x="0" y="0" class="cls-5" data-config="note-57"
+                          data-name="Button" rx="4" style="fill:#ffffff"
+                          transform="translate(148,100)"/>
+                </g>
+            </g>
+            <g id="g6120"
+               transform="translate(155 -149)">
+                <g id="g6118" class="cls-90"
+                   transform="matrix(1, 0, 0, 1, -196, 49)">
+                    <rect id="Button-83" width="93"
+                          height="40" x="0" y="0" class="cls-5" data-config="note-58"
+                          data-name="Button" rx="4" style="fill:#ffffff"
+                          transform="translate(255,100)"/>
+                </g>
+            </g>
+            <g id="g6125"
+               transform="translate(262 -149)">
+                <g id="g6123" class="cls-89"
+                   transform="matrix(1, 0, 0, 1, -303, 49)">
+                    <rect id="Button-84" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-59" rx="4"
+                          transform="translate(362 100)"/>
+                </g>
+            </g>
+            <g id="g6130"
+               transform="translate(369 -149)">
+                <g id="g6128" class="cls-88"
+                   transform="matrix(1, 0, 0, 1, -410, 49)">
+                    <rect id="Button-85" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-60" rx="4"
+                          transform="translate(469 100)"/>
+                </g>
+            </g>
+            <g id="g6135"
+               transform="translate(476 -149)">
+                <g id="g6133" class="cls-87"
+                   transform="matrix(1, 0, 0, 1, -517, 49)">
+                    <rect id="Button-86" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-61" rx="4"
+                          transform="translate(576 100)"/>
+                </g>
+            </g>
+            <g id="g6140"
+               transform="translate(583 -149)">
+                <g id="g6138" class="cls-86"
+                   transform="matrix(1, 0, 0, 1, -624, 49)">
+                    <rect id="Button-87" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-62" rx="4"
+                          transform="translate(683 100)"/>
+                </g>
+            </g>
+            <g id="g6145"
+               transform="translate(690 -149)">
+                <g id="g6143" class="cls-85"
+                   transform="matrix(1, 0, 0, 1, -731, 49)">
+                    <rect id="Button-88" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-63" rx="4"
+                          transform="translate(790 100)"/>
+                </g>
+            </g>
+            <g id="g6150"
+               transform="translate(-59 -92)">
+                <g id="g6148" class="cls-84"
+                   transform="matrix(1, 0, 0, 1, 18, -8)">
+                    <rect id="Button-89" width="93"
+                          height="40" x="0" y="0" class="cls-5" data-config="note-48"
+                          data-name="Button" rx="4" style="fill:#ffffff"
+                          transform="translate(41,157)"/>
+                </g>
+            </g>
+            <g id="g6155"
+               transform="translate(48 -92)">
+                <g id="g6153" class="cls-83"
+                   transform="matrix(1, 0, 0, 1, -89, -8)">
+                    <rect id="Button-90" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-49" rx="4"
+                          transform="translate(148 157)"/>
+                </g>
+            </g>
+            <g id="g6160"
+               transform="translate(155 -92)">
+                <g id="g6158" class="cls-82"
+                   transform="matrix(1, 0, 0, 1, -196, -8)">
+                    <rect id="Button-91" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-50" rx="4"
+                          transform="translate(255 157)"/>
+                </g>
+            </g>
+            <g id="g6165"
+               transform="translate(262 -92)">
+                <g id="g6163" class="cls-81"
+                   transform="matrix(1, 0, 0, 1, -303, -8)">
+                    <rect id="Button-92" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-51" rx="4"
+                          transform="translate(362 157)"/>
+                </g>
+            </g>
+            <g id="g6170"
+               transform="translate(369 -92)">
+                <g id="g6168" class="cls-80"
+                   transform="matrix(1, 0, 0, 1, -410, -8)">
+                    <rect id="Button-93" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-52" rx="4"
+                          transform="translate(469 157)"/>
+                </g>
+            </g>
+            <g id="g6175"
+               transform="translate(476 -92)">
+                <g id="g6173" class="cls-79"
+                   transform="matrix(1, 0, 0, 1, -517, -8)">
+                    <rect id="Button-94" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-53" rx="4"
+                          transform="translate(576 157)"/>
+                </g>
+            </g>
+            <g id="g6180"
+               transform="translate(583 -92)">
+                <g id="g6178" class="cls-78"
+                   transform="matrix(1, 0, 0, 1, -624, -8)">
+                    <rect id="Button-95" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-54" rx="4"
+                          transform="translate(683 157)"/>
+                </g>
+            </g>
+            <g id="g6185"
+               transform="translate(690 -92)">
+                <g id="g6183" class="cls-77"
+                   transform="matrix(1, 0, 0, 1, -731, -8)">
+                    <rect id="Button-96" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-55" rx="4"
+                          transform="translate(790 157)"/>
+                </g>
+            </g>
+            <g id="g6190"
+               transform="translate(-59 -35)">
+                <g id="g6188" class="cls-76"
+                   transform="matrix(1, 0, 0, 1, 18, -65)">
+                    <rect id="Button-97" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-40" rx="4"
+                          transform="translate(41 214)"/>
+                </g>
+            </g>
+            <g id="g6195"
+               transform="translate(48 -35)">
+                <g id="g6193" class="cls-75"
+                   transform="matrix(1, 0, 0, 1, -89, -65)">
+                    <rect id="Button-98" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-41" rx="4"
+                          transform="translate(148 214)"/>
+                </g>
+            </g>
+            <g id="g6200"
+               transform="translate(155 -35)">
+                <g id="g6198" class="cls-74"
+                   transform="matrix(1, 0, 0, 1, -196, -65)">
+                    <rect id="Button-99" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-42" rx="4"
+                          transform="translate(255 214)"/>
+                </g>
+            </g>
+            <g id="g6205"
+               transform="translate(262 -35)">
+                <g id="g6203" class="cls-73"
+                   transform="matrix(1, 0, 0, 1, -303, -65)">
+                    <rect id="Button-100" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-43" rx="4"
+                          transform="translate(362 214)"/>
+                </g>
+            </g>
+            <g id="g6210"
+               transform="translate(369 -35)">
+                <g id="g6208" class="cls-72"
+                   transform="matrix(1, 0, 0, 1, -410, -65)">
+                    <rect id="Button-101" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-44" rx="4"
+                          transform="translate(469 214)"/>
+                </g>
+            </g>
+            <g id="g6215"
+               transform="translate(476 -35)">
+                <g id="g6213" class="cls-71"
+                   transform="matrix(1, 0, 0, 1, -517, -65)">
+                    <rect id="Button-102" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-45" rx="4"
+                          transform="translate(576 214)"/>
+                </g>
+            </g>
+            <g id="g6220"
+               transform="translate(583 -35)">
+                <g id="g6218" class="cls-70"
+                   transform="matrix(1, 0, 0, 1, -624, -65)">
+                    <rect id="Button-103" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-46" rx="4"
+                          transform="translate(683 214)"/>
+                </g>
+            </g>
+            <g id="g6225"
+               transform="translate(690 -35)">
+                <g id="g6223" class="cls-69"
+                   transform="matrix(1, 0, 0, 1, -731, -65)">
+                    <rect id="Button-104" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-47" rx="4"
+                          transform="translate(790 214)"/>
+                </g>
+            </g>
+            <g id="g6230"
+               transform="translate(-59 22)">
+                <g id="g6228" class="cls-68"
+                   transform="matrix(1, 0, 0, 1, 18, -122)">
+                    <rect id="Button-105" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-32" rx="4"
+                          transform="translate(41 271)"/>
+                </g>
+            </g>
+            <g id="g6235"
+               transform="translate(48 22)">
+                <g id="g6233" class="cls-67"
+                   transform="matrix(1, 0, 0, 1, -89, -122)">
+                    <rect id="Button-106" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-33" rx="4"
+                          transform="translate(148 271)"/>
+                </g>
+            </g>
+            <g id="g6240"
+               transform="translate(155 22)">
+                <g id="g6238" class="cls-66"
+                   transform="matrix(1, 0, 0, 1, -196, -122)">
+                    <rect id="Button-107" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-34" rx="4"
+                          transform="translate(255 271)"/>
+                </g>
+            </g>
+            <g id="g6245"
+               transform="translate(262 22)">
+                <g id="g6243" class="cls-65"
+                   transform="matrix(1, 0, 0, 1, -303, -122)">
+                    <rect id="Button-108" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-35" rx="4"
+                          transform="translate(362 271)"/>
+                </g>
+            </g>
+            <g id="g6250"
+               transform="translate(369 22)">
+                <g id="g6248" class="cls-64"
+                   transform="matrix(1, 0, 0, 1, -410, -122)">
+                    <rect id="Button-109" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-36" rx="4"
+                          transform="translate(469 271)"/>
+                </g>
+            </g>
+            <g id="g6255"
+               transform="translate(476 22)">
+                <g id="g6253" class="cls-63"
+                   transform="matrix(1, 0, 0, 1, -517, -122)">
+                    <rect id="Button-110" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-37" rx="4"
+                          transform="translate(576 271)"/>
+                </g>
+            </g>
+            <g id="g6260"
+               transform="translate(583 22)">
+                <g id="g6258" class="cls-62"
+                   transform="matrix(1, 0, 0, 1, -624, -122)">
+                    <rect id="Button-111" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-38" rx="4"
+                          transform="translate(683 271)"/>
+                </g>
+            </g>
+            <g id="g6265"
+               transform="translate(690 22)">
+                <g id="g6263" class="cls-61"
+                   transform="matrix(1, 0, 0, 1, -731, -122)">
+                    <rect id="Button-112" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-39" rx="4"
+                          transform="translate(790 271)"/>
+                </g>
+            </g>
+            <g id="g6270"
+               transform="translate(-59 79)">
+                <g id="g6268" class="cls-60"
+                   transform="matrix(1, 0, 0, 1, 18, -179)">
+                    <rect id="Button-113" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-24" rx="4"
+                          transform="translate(41 328)"/>
+                </g>
+            </g>
+            <g id="g6275"
+               transform="translate(48 79)">
+                <g id="g6273" class="cls-59"
+                   transform="matrix(1, 0, 0, 1, -89, -179)">
+                    <rect id="Button-114" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-25" rx="4"
+                          transform="translate(148 328)"/>
+                </g>
+            </g>
+            <g id="g6280"
+               transform="translate(155 79)">
+                <g id="g6278" class="cls-58"
+                   transform="matrix(1, 0, 0, 1, -196, -179)">
+                    <rect id="Button-115" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-26" rx="4"
+                          transform="translate(255 328)"/>
+                </g>
+            </g>
+            <g id="g6285"
+               transform="translate(262 79)">
+                <g id="g6283" class="cls-57"
+                   transform="matrix(1, 0, 0, 1, -303, -179)">
+                    <rect id="Button-116" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-27" rx="4"
+                          transform="translate(362 328)"/>
+                </g>
+            </g>
+            <g id="g6290"
+               transform="translate(369 79)">
+                <g id="g6288" class="cls-56"
+                   transform="matrix(1, 0, 0, 1, -410, -179)">
+                    <rect id="Button-117" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-28" rx="4"
+                          transform="translate(469 328)"/>
+                </g>
+            </g>
+            <g id="g6295"
+               transform="translate(476 79)">
+                <g id="g6293" class="cls-55"
+                   transform="matrix(1, 0, 0, 1, -517, -179)">
+                    <rect id="Button-118" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-29" rx="4"
+                          transform="translate(576 328)"/>
+                </g>
+            </g>
+            <g id="g6300"
+               transform="translate(583 79)">
+                <g id="g6298" class="cls-54"
+                   transform="matrix(1, 0, 0, 1, -624, -179)">
+                    <rect id="Button-119" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-30" rx="4"
+                          transform="translate(683 328)"/>
+                </g>
+            </g>
+            <g id="g6305"
+               transform="translate(690 79)">
+                <g id="g6303" class="cls-53"
+                   transform="matrix(1, 0, 0, 1, -731, -179)">
+                    <rect id="Button-120" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-31" rx="4"
+                          transform="translate(790 328)"/>
+                </g>
+            </g>
+            <g id="g6310"
+               transform="translate(-59 136)">
+                <g id="g6308" class="cls-52"
+                   transform="matrix(1, 0, 0, 1, 18, -236)">
+                    <rect id="Button-121" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-16" rx="4"
+                          transform="translate(41 385)"/>
+                </g>
+            </g>
+            <g id="g6315"
+               transform="translate(48 136)">
+                <g id="g6313" class="cls-51"
+                   transform="matrix(1, 0, 0, 1, -89, -236)">
+                    <rect id="Button-122" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-17" rx="4"
+                          transform="translate(148 385)"/>
+                </g>
+            </g>
+            <g id="g6320"
+               transform="translate(155 136)">
+                <g id="g6318" class="cls-50"
+                   transform="matrix(1, 0, 0, 1, -196, -236)">
+                    <rect id="Button-123" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-18" rx="4"
+                          transform="translate(255 385)"/>
+                </g>
+            </g>
+            <g id="g6325"
+               transform="translate(262 136)">
+                <g id="g6323" class="cls-49"
+                   transform="matrix(1, 0, 0, 1, -303, -236)">
+                    <rect id="Button-124" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-19" rx="4"
+                          transform="translate(362 385)"/>
+                </g>
+            </g>
+            <g id="g6330"
+               transform="translate(369 136)">
+                <g id="g6328" class="cls-48"
+                   transform="matrix(1, 0, 0, 1, -410, -236)">
+                    <rect id="Button-125" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-20" rx="4"
+                          transform="translate(469 385)"/>
+                </g>
+            </g>
+            <g id="g6335"
+               transform="translate(476 136)">
+                <g id="g6333" class="cls-47"
+                   transform="matrix(1, 0, 0, 1, -517, -236)">
+                    <rect id="Button-126" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-21" rx="4"
+                          transform="translate(576 385)"/>
+                </g>
+            </g>
+            <g id="g6340"
+               transform="translate(583 136)">
+                <g id="g6338" class="cls-46"
+                   transform="matrix(1, 0, 0, 1, -624, -236)">
+                    <rect id="Button-127" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-22" rx="4"
+                          transform="translate(683 385)"/>
+                </g>
+            </g>
+            <g id="g6345"
+               transform="translate(690 136)">
+                <g id="g6343" class="cls-45"
+                   transform="matrix(1, 0, 0, 1, -731, -236)">
+                    <rect id="Button-128" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-23" rx="4"
+                          transform="translate(790 385)"/>
+                </g>
+            </g>
+            <g id="g6350"
+               transform="translate(-59 193)">
+                <g id="g6348" class="cls-44"
+                   transform="matrix(1, 0, 0, 1, 18, -293)">
+                    <rect id="Button-129" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-8" rx="4"
+                          transform="translate(41 442)"/>
+                </g>
+            </g>
+            <g id="g6355"
+               transform="translate(48 193)">
+                <g id="g6353" class="cls-43"
+                   transform="matrix(1, 0, 0, 1, -89, -293)">
+                    <rect id="Button-130" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-9" rx="4"
+                          transform="translate(148 442)"/>
+                </g>
+            </g>
+            <g id="g6360"
+               transform="translate(155 193)">
+                <g id="g6358" class="cls-42"
+                   transform="matrix(1, 0, 0, 1, -196, -293)">
+                    <rect id="Button-131" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-10" rx="4"
+                          transform="translate(255 442)"/>
+                </g>
+            </g>
+            <g id="g6365"
+               transform="translate(262 193)">
+                <g id="g6363" class="cls-41"
+                   transform="matrix(1, 0, 0, 1, -303, -293)">
+                    <rect id="Button-132" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-11" rx="4"
+                          transform="translate(362 442)"/>
+                </g>
+            </g>
+            <g id="g6370"
+               transform="translate(369 193)">
+                <g id="g6368" class="cls-40"
+                   transform="matrix(1, 0, 0, 1, -410, -293)">
+                    <rect id="Button-133" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-12" rx="4"
+                          transform="translate(469 442)"/>
+                </g>
+            </g>
+            <g id="g6375"
+               transform="translate(476 193)">
+                <g id="g6373" class="cls-39"
+                   transform="matrix(1, 0, 0, 1, -517, -293)">
+                    <rect id="Button-134" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-13" rx="4"
+                          transform="translate(576 442)"/>
+                </g>
+            </g>
+            <g id="g6380"
+               transform="translate(583 193)">
+                <g id="g6378" class="cls-38"
+                   transform="matrix(1, 0, 0, 1, -624, -293)">
+                    <rect id="Button-135" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-14" rx="4"
+                          transform="translate(683 442)"/>
+                </g>
+            </g>
+            <g id="g6385"
+               transform="translate(690 193)">
+                <g id="g6383" class="cls-37"
+                   transform="matrix(1, 0, 0, 1, -731, -293)">
+                    <rect id="Button-136" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-15" rx="4"
+                          transform="translate(790 442)"/>
+                </g>
+            </g>
+            <g id="g6390"
+               transform="translate(-59 250)">
+                <g id="g6388" class="cls-36"
+                   transform="matrix(1, 0, 0, 1, 18, -350)">
+                    <rect id="Button-137" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-0" rx="4"
+                          transform="translate(41 499)"/>
+                </g>
+            </g>
+            <g id="g6395"
+               transform="translate(48 250)">
+                <g id="g6393" class="cls-35"
+                   transform="matrix(1, 0, 0, 1, -89, -350)">
+                    <rect id="Button-138" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-1" rx="4"
+                          transform="translate(148 499)"/>
+                </g>
+            </g>
+            <g id="g6400"
+               transform="translate(155 250)">
+                <g id="g6398" class="cls-34"
+                   transform="matrix(1, 0, 0, 1, -196, -350)">
+                    <rect id="Button-139" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-2" rx="4"
+                          transform="translate(255 499)"/>
+                </g>
+            </g>
+            <g id="g6405"
+               transform="translate(262 250)">
+                <g id="g6403" class="cls-33"
+                   transform="matrix(1, 0, 0, 1, -303, -350)">
+                    <rect id="Button-140" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-3" rx="4"
+                          transform="translate(362 499)"/>
+                </g>
+            </g>
+            <g id="g6410"
+               transform="translate(369 250)">
+                <g id="g6408" class="cls-32"
+                   transform="matrix(1, 0, 0, 1, -410, -350)">
+                    <rect id="Button-141" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-4" rx="4"
+                          transform="translate(469 499)"/>
+                </g>
+            </g>
+            <g id="g6415"
+               transform="translate(476 250)">
+                <g id="g6413" class="cls-31"
+                   transform="matrix(1, 0, 0, 1, -517, -350)">
+                    <rect id="Button-142" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-5" rx="4"
+                          transform="translate(576 499)"/>
+                </g>
+            </g>
+            <g id="g6420"
+               transform="translate(583 250)">
+                <g id="g6418" class="cls-30"
+                   transform="matrix(1, 0, 0, 1, -624, -350)">
+                    <rect id="Button-143" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-6" rx="4"
+                          transform="translate(683 499)"/>
+                </g>
+            </g>
+            <g id="g6425"
+               transform="translate(690 250)">
+                <g id="g6423" class="cls-29"
+                   transform="matrix(1, 0, 0, 1, -731, -350)">
+                    <rect id="Button-144" width="93"
+                          height="40" class="cls-5" data-name="Button" data-config="note-7" rx="4"
+                          transform="translate(790 499)"/>
+                </g>
+            </g>
+        </g>
+        <g id="Repeat_Grid_6"
+           class="cls-6" clip-path="url(#clip-path-2)" data-name="Repeat Grid 6"
+           transform="translate(912 95)">
+            <g id="Group_3" data-name="Group 3"
+               transform="translate(-364 -37)">
+                <g id="g6433" class="cls-28"
+                   transform="matrix(1, 0, 0, 1, -548, -58)">
+                    <g id="Button-145" class="cls-7"
+                       data-config="note-82" data-name="Button" transform="translate(912 95)">
+                        <circle id="circle6428" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6430" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-2" data-name="Group 3" transform="translate(-364 20)">
+                <g
+                        id="g6441" class="cls-27" transform="matrix(1, 0, 0, 1, -548, -115)">
+                    <g
+                            id="Button-146" class="cls-7" data-config="note-83" data-name="Button"
+                            transform="translate(912 152)">
+                        <circle id="circle6436" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6438" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_3-3" data-name="Group 3"
+               transform="translate(-364 77)">
+                <g id="g6449" class="cls-26"
+                   transform="matrix(1, 0, 0, 1, -548, -172)">
+                    <g id="Button-147" class="cls-7"
+                       data-config="note-84" data-name="Button" transform="translate(912 209)">
+                        <circle id="circle6444" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6446" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-4" data-name="Group 3" transform="translate(-364 134)">
+                <g
+                        id="g6457" class="cls-25" transform="matrix(1, 0, 0, 1, -548, -229)">
+                    <g
+                            id="Button-148" class="cls-7" data-config="note-85" data-name="Button"
+                            transform="translate(912 266)">
+                        <circle id="circle6452" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6454" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_3-5" data-name="Group 3"
+               transform="translate(-364 191)">
+                <g id="g6465" class="cls-24"
+                   transform="matrix(1, 0, 0, 1, -548, -286)">
+                    <g id="Button-149" class="cls-7"
+                       data-config="note-86" data-name="Button" transform="translate(912 323)">
+                        <circle id="circle6460" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6462" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-6" data-name="Group 3" transform="translate(-364 248)">
+                <g
+                        id="g6473" class="cls-23" transform="matrix(1, 0, 0, 1, -548, -343)">
+                    <g
+                            id="Button-150" class="cls-7" data-config="note-87" data-name="Button"
+                            transform="translate(912 380)">
+                        <circle id="circle6468" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6470" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_3-7" data-name="Group 3"
+               transform="translate(-364 305)">
+                <g id="g6481" class="cls-22"
+                   transform="matrix(1, 0, 0, 1, -548, -400)">
+                    <g id="Button-151" class="cls-7"
+                       data-config="note-88" data-name="Button" transform="translate(912 437)">
+                        <circle id="circle6476" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6478" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-8" data-name="Group 3" transform="translate(-364 362)">
+                <g
+                        id="g6489" class="cls-21" transform="matrix(1, 0, 0, 1, -548, -457)">
+                    <g
+                            id="Button-152" class="cls-7" data-config="note-89" data-name="Button"
+                            transform="translate(912 494)">
+                        <circle id="circle6484" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6486" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+        <g id="Repeat_Grid_7" class="cls-8"
+           clip-path="url(#clip-path-3)" data-name="Repeat Grid 7"
+           transform="translate(64 562)">
+            <g id="Group_3-9" data-name="Group 3"
+               transform="translate(-364,-37)">
+                <g id="g6498" class="cls-20"
+                   style="filter:url(#Button-73)" transform="translate(300,-525)">
+                    <g
+                            id="Button-153" class="cls-7" data-config="note-64" data-name="Button"
+                            style="fill:#ffffff;stroke:#ffffff;stroke-width:4px"
+                            transform="translate(64,562)">
+                        <circle id="circle6493" cx="25" cy="25"
+                                r="25" class="cls-11" style="stroke:none"/>
+                        <circle id="circle6495" cx="25"
+                                cy="25" r="23" class="cls-1" style="fill:none"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-10" data-name="Group 3" transform="translate(-258 -37)">
+                <g
+                        id="g6506" class="cls-19" transform="matrix(1, 0, 0, 1, 194, -525)">
+                    <g
+                            id="Button-154" class="cls-7" data-config="note-65" data-name="Button"
+                            transform="translate(170 562)">
+                        <circle id="circle6501" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6503" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_3-11" data-name="Group 3"
+               transform="translate(-152 -37)">
+                <g id="g6514" class="cls-18"
+                   transform="matrix(1, 0, 0, 1, 88, -525)">
+                    <g id="Button-155" class="cls-7"
+                       data-config="note-66" data-name="Button" transform="translate(276 562)">
+                        <circle id="circle6509" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6511" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-12" data-name="Group 3" transform="translate(-46 -37)">
+                <g
+                        id="g6522" class="cls-17" transform="matrix(1, 0, 0, 1, -18, -525)">
+                    <g
+                            id="Button-156" class="cls-7" data-config="note-67" data-name="Button"
+                            transform="translate(382 562)">
+                        <circle id="circle6517" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6519" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_3-13" data-name="Group 3"
+               transform="translate(60 -37)">
+                <g id="g6530" class="cls-16"
+                   transform="matrix(1, 0, 0, 1, -124, -525)">
+                    <g id="Button-157" class="cls-7"
+                       data-config="note-68" data-name="Button" transform="translate(488 562)">
+                        <circle id="circle6525" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6527" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-14" data-name="Group 3" transform="translate(166 -37)">
+                <g
+                        id="g6538" class="cls-15" transform="matrix(1, 0, 0, 1, -230, -525)">
+                    <g
+                            id="Button-158" class="cls-7" data-config="note-69" data-name="Button"
+                            transform="translate(594 562)">
+                        <circle id="circle6533" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6535" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g id="Group_3-15" data-name="Group 3"
+               transform="translate(272 -37)">
+                <g id="g6546" class="cls-14"
+                   transform="matrix(1, 0, 0, 1, -336, -525)">
+                    <g id="Button-159" class="cls-7"
+                       data-config="note-70" data-name="Button" transform="translate(700 562)">
+                        <circle id="circle6541" cx="25" cy="25" r="25" class="cls-11"/>
+                        <circle
+                                id="circle6543" cx="25" cy="25" r="23" class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+            <g
+                    id="Group_3-16" data-name="Group 3" transform="translate(378 -37)">
+                <g
+                        id="g6554" class="cls-13" transform="matrix(1, 0, 0, 1, -442, -525)">
+                    <g
+                            id="Button-160" class="cls-7" data-config="note-71" data-name="Button"
+                            transform="translate(806 562)">
+                        <circle id="circle6549" cx="25" cy="25"
+                                r="25" class="cls-11"/>
+                        <circle id="circle6551" cx="25" cy="25" r="23"
+                                class="cls-1"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+        <g id="g6559" class="cls-12"
+           transform="matrix(1, 0, 0, 1, 0, 0)">
+            <rect id="Rectangle_6-2" width="46"
+                  height="46" class="cls-5" data-config="note-98" data-name="Rectangle 6"
+                  rx="4" transform="translate(914 566)"/>
+        </g>
+        <g id="Repeat_Grid_8"
+           class="cls-9" clip-path="url(#clip-path-4)" data-name="Repeat Grid 8"
+           transform="translate(41 638)">
+            <g id="Group_4" data-config="cc-48"
+               data-name="Group 4" transform="translate(-41,-638)">
+                <g id="Group_5"
+                   data-name="Group 5">
+                    <g id="Rectangle_7" class="cls-10" data-name="Rectangle
+  7" style="fill:#535353;stroke:#adadad;stroke-width:4px"
+                       transform="translate(41,638)">
+                        <rect id="rect6561" width="95" height="223"
+                              x="0" y="0" class="cls-11" rx="5" style="stroke:none"/>
+                        <rect id="rect6563"
+                              width="91" height="219" x="2" y="2" class="cls-1" rx="3" style="fill:none"/>
+                    </g>
+                    <rect id="Rectangle_8" width="87" height="49" x="0" y="0"
+                          data-name="Rectangle 8" transform="translate(45,802)"/>
+                </g>
+            </g>
+            <g
+                    id="Group_4-2" data-config="cc-49" data-name="Group 4"
+                    transform="translate(65 -638)">
+                <g id="Group_5-2" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-2" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6569" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6571" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-2" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-3" data-config="cc-50" data-name="Group 4"
+               transform="translate(171 -638)">
+                <g id="Group_5-3" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-3" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6577" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6579" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-3" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-4" data-config="cc-51" data-name="Group 4"
+               transform="translate(277 -638)">
+                <g id="Group_5-4" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-4" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6585" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6587" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-4" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-5" data-config="cc-52" data-name="Group 4"
+               transform="translate(383 -638)">
+                <g id="Group_5-5" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-5" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6593" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6595" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-5" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-6" data-config="cc-53" data-name="Group 4"
+               transform="translate(489 -638)">
+                <g id="Group_5-6" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-6" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6601" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6603" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-6" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-7" data-config="cc-54" data-name="Group 4"
+               transform="translate(595 -638)">
+                <g id="Group_5-7" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-7" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6609" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6611" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-7" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-8" data-config="cc-55" data-name="Group 4"
+               transform="translate(701 -638)">
+                <g id="Group_5-8" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-8" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6617" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6619" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-8" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+            <g id="Group_4-9" data-config="cc-56" data-name="Group 4"
+               transform="translate(807 -638)">
+                <g id="Group_5-9" data-name="Group 5">
+                    <g
+                            id="Rectangle_7-9" class="cls-10" data-name="Rectangle 7"
+                            transform="translate(41 638)">
+                        <rect id="rect6625" width="95" height="223"
+                              class="cls-11" rx="5"/>
+                        <rect id="rect6627" width="91" height="219" x="2"
+                              y="2" class="cls-1" rx="3"/>
+                    </g>
+                    <rect id="Rectangle_8-9" width="87"
+                          height="49" data-name="Rectangle 8" transform="translate(45 802)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

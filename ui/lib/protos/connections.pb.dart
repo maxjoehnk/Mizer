@@ -191,6 +191,35 @@ class GetConnectionsRequest extends $pb.GeneratedMessage {
   static GetConnectionsRequest? _defaultInstance;
 }
 
+class GetDeviceProfilesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetDeviceProfilesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GetDeviceProfilesRequest._() : super();
+  factory GetDeviceProfilesRequest() => create();
+  factory GetDeviceProfilesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetDeviceProfilesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetDeviceProfilesRequest clone() => GetDeviceProfilesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetDeviceProfilesRequest copyWith(void Function(GetDeviceProfilesRequest) updates) => super.copyWith((message) => updates(message as GetDeviceProfilesRequest)) as GetDeviceProfilesRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetDeviceProfilesRequest create() => GetDeviceProfilesRequest._();
+  GetDeviceProfilesRequest createEmptyInstance() => create();
+  static $pb.PbList<GetDeviceProfilesRequest> createRepeated() => $pb.PbList<GetDeviceProfilesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetDeviceProfilesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetDeviceProfilesRequest>(create);
+  static GetDeviceProfilesRequest? _defaultInstance;
+}
+
 class AddArtnetRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddArtnetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
@@ -612,11 +641,20 @@ class HeliosConnection extends $pb.GeneratedMessage {
 
 class MidiConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceProfile')
     ..hasRequiredFields = false
   ;
 
   MidiConnection._() : super();
-  factory MidiConnection() => create();
+  factory MidiConnection({
+    $core.String? deviceProfile,
+  }) {
+    final _result = create();
+    if (deviceProfile != null) {
+      _result.deviceProfile = deviceProfile;
+    }
+    return _result;
+  }
   factory MidiConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MidiConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -637,6 +675,388 @@ class MidiConnection extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static MidiConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiConnection>(create);
   static MidiConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceProfile => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceProfile($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceProfile() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceProfile() => clearField(1);
+}
+
+class MidiDeviceProfiles extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfiles', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..pc<MidiDeviceProfile>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'profiles', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile.create)
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfiles._() : super();
+  factory MidiDeviceProfiles({
+    $core.Iterable<MidiDeviceProfile>? profiles,
+  }) {
+    final _result = create();
+    if (profiles != null) {
+      _result.profiles.addAll(profiles);
+    }
+    return _result;
+  }
+  factory MidiDeviceProfiles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfiles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfiles clone() => MidiDeviceProfiles()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfiles copyWith(void Function(MidiDeviceProfiles) updates) => super.copyWith((message) => updates(message as MidiDeviceProfiles)) as MidiDeviceProfiles; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfiles create() => MidiDeviceProfiles._();
+  MidiDeviceProfiles createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfiles> createRepeated() => $pb.PbList<MidiDeviceProfiles>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfiles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfiles>(create);
+  static MidiDeviceProfiles? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<MidiDeviceProfile> get profiles => $_getList(0);
+}
+
+class MidiDeviceProfile_Page extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Page', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<MidiDeviceProfile_Group>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Group.create)
+    ..pc<MidiDeviceProfile_Control>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Control.create)
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfile_Page._() : super();
+  factory MidiDeviceProfile_Page({
+    $core.String? name,
+    $core.Iterable<MidiDeviceProfile_Group>? groups,
+    $core.Iterable<MidiDeviceProfile_Control>? controls,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (groups != null) {
+      _result.groups.addAll(groups);
+    }
+    if (controls != null) {
+      _result.controls.addAll(controls);
+    }
+    return _result;
+  }
+  factory MidiDeviceProfile_Page.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfile_Page.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile_Page clone() => MidiDeviceProfile_Page()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile_Page copyWith(void Function(MidiDeviceProfile_Page) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Page)) as MidiDeviceProfile_Page; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile_Page create() => MidiDeviceProfile_Page._();
+  MidiDeviceProfile_Page createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfile_Page> createRepeated() => $pb.PbList<MidiDeviceProfile_Page>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile_Page getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfile_Page>(create);
+  static MidiDeviceProfile_Page? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<MidiDeviceProfile_Group> get groups => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<MidiDeviceProfile_Control> get controls => $_getList(2);
+}
+
+class MidiDeviceProfile_Group extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Group', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..pc<MidiDeviceProfile_Control>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Control.create)
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfile_Group._() : super();
+  factory MidiDeviceProfile_Group({
+    $core.String? name,
+    $core.Iterable<MidiDeviceProfile_Control>? controls,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (controls != null) {
+      _result.controls.addAll(controls);
+    }
+    return _result;
+  }
+  factory MidiDeviceProfile_Group.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfile_Group.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile_Group clone() => MidiDeviceProfile_Group()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile_Group copyWith(void Function(MidiDeviceProfile_Group) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Group)) as MidiDeviceProfile_Group; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile_Group create() => MidiDeviceProfile_Group._();
+  MidiDeviceProfile_Group createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfile_Group> createRepeated() => $pb.PbList<MidiDeviceProfile_Group>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile_Group getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfile_Group>(create);
+  static MidiDeviceProfile_Group? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<MidiDeviceProfile_Control> get controls => $_getList(1);
+}
+
+class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile.Control', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'note', $pb.PbFieldType.OU3)
+    ..e<MidiDeviceProfile_ControlType>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: MidiDeviceProfile_ControlType.Note, valueOf: MidiDeviceProfile_ControlType.valueOf, enumValues: MidiDeviceProfile_ControlType.values)
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasOutput')
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfile_Control._() : super();
+  factory MidiDeviceProfile_Control({
+    $core.String? id,
+    $core.String? name,
+    $core.int? channel,
+    $core.int? note,
+    MidiDeviceProfile_ControlType? controlType,
+    $core.bool? hasOutput,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (note != null) {
+      _result.note = note;
+    }
+    if (controlType != null) {
+      _result.controlType = controlType;
+    }
+    if (hasOutput != null) {
+      _result.hasOutput = hasOutput;
+    }
+    return _result;
+  }
+  factory MidiDeviceProfile_Control.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfile_Control.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile_Control clone() => MidiDeviceProfile_Control()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile_Control copyWith(void Function(MidiDeviceProfile_Control) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile_Control)) as MidiDeviceProfile_Control; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile_Control create() => MidiDeviceProfile_Control._();
+  MidiDeviceProfile_Control createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfile_Control> createRepeated() => $pb.PbList<MidiDeviceProfile_Control>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile_Control getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfile_Control>(create);
+  static MidiDeviceProfile_Control? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get channel => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set channel($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasChannel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearChannel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get note => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set note($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasNote() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearNote() => clearField(4);
+
+  @$pb.TagNumber(5)
+  MidiDeviceProfile_ControlType get controlType => $_getN(4);
+  @$pb.TagNumber(5)
+  set controlType(MidiDeviceProfile_ControlType v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasControlType() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearControlType() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get hasOutput => $_getBF(5);
+  @$pb.TagNumber(6)
+  set hasOutput($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasHasOutput() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearHasOutput() => clearField(6);
+}
+
+class MidiDeviceProfile extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiDeviceProfile', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layout')
+    ..pc<MidiDeviceProfile_Page>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pages', $pb.PbFieldType.PM, subBuilder: MidiDeviceProfile_Page.create)
+    ..hasRequiredFields = false
+  ;
+
+  MidiDeviceProfile._() : super();
+  factory MidiDeviceProfile({
+    $core.String? id,
+    $core.String? manufacturer,
+    $core.String? model,
+    $core.String? layout,
+    $core.Iterable<MidiDeviceProfile_Page>? pages,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (manufacturer != null) {
+      _result.manufacturer = manufacturer;
+    }
+    if (model != null) {
+      _result.model = model;
+    }
+    if (layout != null) {
+      _result.layout = layout;
+    }
+    if (pages != null) {
+      _result.pages.addAll(pages);
+    }
+    return _result;
+  }
+  factory MidiDeviceProfile.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MidiDeviceProfile.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile clone() => MidiDeviceProfile()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MidiDeviceProfile copyWith(void Function(MidiDeviceProfile) updates) => super.copyWith((message) => updates(message as MidiDeviceProfile)) as MidiDeviceProfile; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile create() => MidiDeviceProfile._();
+  MidiDeviceProfile createEmptyInstance() => create();
+  static $pb.PbList<MidiDeviceProfile> createRepeated() => $pb.PbList<MidiDeviceProfile>();
+  @$core.pragma('dart2js:noInline')
+  static MidiDeviceProfile getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MidiDeviceProfile>(create);
+  static MidiDeviceProfile? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get manufacturer => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set manufacturer($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasManufacturer() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearManufacturer() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get model => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set model($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasModel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearModel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get layout => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set layout($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasLayout() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearLayout() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<MidiDeviceProfile_Page> get pages => $_getList(4);
 }
 
 class OscConnection extends $pb.GeneratedMessage {

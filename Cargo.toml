@@ -8,6 +8,7 @@ members = [
     "components/connections/protocols/laser",
     "components/connections/protocols/midi",
     "components/connections/protocols/midi/device-profiles",
+    "components/connections/protocols/midi/messages",
     "components/connections/protocols/osc",
     "components/fixtures",
     "components/fixtures/open-fixture-library",

@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 
 use mizer_clock::Clock;
-use mizer_connections::{Connection, DmxView, MidiView};
+use mizer_connections::{Connection, midi_device_profile::DeviceProfile, DmxView, MidiView};
 use mizer_module::Runtime;
 use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
 use mizer_protocol_midi::MidiConnectionManager;
@@ -96,6 +96,12 @@ impl ApiHandler {
                     .send(connections)
                     .expect("api command sender disconnected");
             }
+            ApiCommand::GetMidiDeviceProfiles(sender) => {
+                let device_profiles = self.get_midi_device_profiles(mizer);
+                sender
+                    .send(device_profiles)
+                    .expect("api command sender disconnected");
+            }
             ApiCommand::AddArtnetConnection(name, (host, port), sender) => {
                 let result = self.add_artnet_connection(mizer, name, host, port);
                 sender
@@ -126,7 +132,10 @@ impl ApiHandler {
         let midi_connections = manager
             .list_available_devices()
             .into_iter()
-            .map(|device| MidiView { name: device.name })
+            .map(|device| MidiView {
+                name: device.name,
+                device_profile: device.profile.as_ref().map(|profile| profile.id.clone())
+            })
             .map(Connection::from);
         let dmx_manager = mizer
             .runtime
@@ -147,6 +156,16 @@ impl ApiHandler {
         connections.extend(dmx_connections);
 
         connections
+    }
+
+    fn get_midi_device_profiles(&self, mizer: &mut Mizer) -> Vec<DeviceProfile> {
+        let manager = mizer
+            .runtime
+            .injector()
+            .get::<MidiConnectionManager>()
+            .unwrap();
+
+        manager.list_available_device_profiles()
     }
 
     fn add_artnet_connection(

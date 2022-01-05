@@ -66,6 +66,9 @@ class ApplicationMenu extends StatelessWidget {
     final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
     await api.loadProject(file!.path);
+    if (context.platform.isIntegrated) {
+      Window.of(context).setTitle("Mizer (${file.name})");
+    }
     context.read<FixturesBloc>().add(FetchFixtures());
     context.read<LayoutsBloc>().add(FetchLayouts());
     context.read<MediaBloc>().add(MediaEvent.Fetch);

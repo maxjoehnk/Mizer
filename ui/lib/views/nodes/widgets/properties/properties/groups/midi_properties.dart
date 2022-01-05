@@ -188,7 +188,9 @@ class _MidiPropertiesState extends State<MidiProperties> {
         state.noteBinding = MidiNodeConfig_NoteBinding();
       }
       if (binding == MidiNodeConfig_Binding.controlBinding) {
-        state.controlBinding = MidiNodeConfig_ControlBinding();
+        state.controlBinding = MidiNodeConfig_ControlBinding(
+          page: deviceProfile?.pages.firstOrNull?.name,
+        );
       }
       widget.onUpdate(state);
     });

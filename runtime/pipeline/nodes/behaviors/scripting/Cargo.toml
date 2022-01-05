@@ -8,4 +8,4 @@ edition = "2018"
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../node" }
-rhai = "0.17"
+rhai = "1.3"

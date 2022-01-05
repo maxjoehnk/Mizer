@@ -2506,9 +2506,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a5bbe824c507c5da5956355e86a746d82e0e1464f65d862cc5e71da70e94b2c"
 dependencies = [
  "cfg-if 1.0.0",
- "js-sys",
- "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]
@@ -3132,7 +3129,7 @@ dependencies = [
  "anyhow",
  "log",
  "mizer-midi-messages",
- "rhai 1.3.0",
+ "rhai",
  "serde",
  "serde_yaml",
 ]
@@ -3433,7 +3430,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "mizer-node",
- "rhai 0.17.0",
+ "rhai",
  "serde",
 ]
 
@@ -4674,16 +4671,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9a374af9a0e5fdcdd98c1c7b64f05004f9ea2555b6c75f211daa81268a3c50f1"
 dependencies = [
  "bytemuck",
-]
-
-[[package]]
-name = "rhai"
-version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aeb8b135a1c494f65c30f1249789196529f87f6338089cb74e38b46e83b38752"
-dependencies = [
- "instant",
- "num-traits",
 ]
 
 [[package]]

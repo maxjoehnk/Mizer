@@ -74,10 +74,10 @@ impl ProcessingNode for ScriptingNode {
             state.ast = state.engine.compile(&self.script)?;
             state.script = self.script.clone();
         }
-        match state
+        let value: Result<f64, _> = state
             .engine
-            .call_fn::<_, f64>(&mut state.scope, &state.ast, "main", ())
-        {
+            .call_fn(&mut state.scope, &state.ast, "main", ());
+        match value {
             Ok(value) => {
                 context.write_port("value", value);
 

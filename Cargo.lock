@@ -3132,7 +3132,7 @@ dependencies = [
  "anyhow",
  "log",
  "mizer-midi-messages",
- "rhai 0.19.15",
+ "rhai 1.3.0",
  "serde",
  "serde_yaml",
 ]
@@ -4688,9 +4688,9 @@ dependencies = [
 
 [[package]]
 name = "rhai"
-version = "0.19.15"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e39f22e6f2e7ecf283d206eb5fcfae2652b05c43f9956f79341fd87f7a4234b9"
+checksum = "c00a731f4b606602a1683ae0a1289a59497c39075fb6dc56ce9ec9251ef48b89"
 dependencies = [
  "ahash",
  "instant",
@@ -4702,9 +4702,9 @@ dependencies = [
 
 [[package]]
 name = "rhai_codegen"
-version = "0.3.6"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "643fd67d19aafd45a9e335afe4183dc58ba0cc6a1f43fbe34c7d92c041cdcafc"
+checksum = "b14fd9df9de7895cb7e79ba593a9d8eb00a769178476480c26703b97b500a726"
 dependencies = [
  "proc-macro2",
  "quote",

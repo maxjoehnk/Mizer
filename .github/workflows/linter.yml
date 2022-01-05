@@ -42,6 +42,13 @@ jobs:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: dev
+      - name: Get flutter deps
+        run: flutter pub get
+        working-directory: ui
+
       ################################
       # Run Linter against code base #
       ################################

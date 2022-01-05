@@ -11,3 +11,4 @@ serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../../../node" }
 mizer-protocol-midi = { path = "../../../../../components/connections/protocols/midi" }
 mizer-util = { path = "../../../../../util" }
+mizer-message-bus = { path = "../../../../../util/bus" }

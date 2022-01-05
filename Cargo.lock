@@ -2879,6 +2879,7 @@ dependencies = [
  "mizer-grpc-api",
  "mizer-layouts",
  "mizer-media",
+ "mizer-message-bus",
  "mizer-module",
  "mizer-node",
  "mizer-nodes",
@@ -2915,6 +2916,7 @@ dependencies = [
  "mizer-fixtures",
  "mizer-layouts",
  "mizer-media",
+ "mizer-message-bus",
  "mizer-node",
  "mizer-nodes",
  "mizer-runtime",
@@ -3123,6 +3125,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-message-bus"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "flume",
+ "futures",
+ "log",
+ "parking_lot 0.11.2",
+]
+
+[[package]]
 name = "mizer-midi-device-profiles"
 version = "0.1.0"
 dependencies = [
@@ -3148,6 +3161,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "log",
+ "mizer-message-bus",
  "mizer-node",
  "mizer-protocol-midi",
  "mizer-util",
@@ -3373,10 +3387,10 @@ name = "mizer-protocol-midi"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "crossbeam-channel 0.5.1",
  "dashmap",
  "log",
  "midir",
+ "mizer-message-bus",
  "mizer-midi-device-profiles",
  "mizer-midi-messages",
  "mizer-module",

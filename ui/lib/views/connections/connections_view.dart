@@ -10,6 +10,7 @@ import 'package:mizer/widgets/panel.dart';
 import 'dialogs/add_artnet_connection.dart';
 import 'dialogs/add_sacn_connection.dart';
 import 'dialogs/dmx_monitor.dart';
+import 'dialogs/midi_monitor.dart';
 import 'types/helios_connection.dart';
 import 'types/midi_connection.dart';
 import 'types/osc_connection.dart';
@@ -88,7 +89,11 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor")];
     }
     if (connection.hasMidi()) {
-      return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor")];
+      return [MizerIconButton(
+          icon: MdiIcons.formatListBulleted,
+          label: "Monitor",
+          onClick: () => _showMidiMonitor(context, connection))
+      ];
     }
     return [];
   }
@@ -111,6 +116,10 @@ class _ConnectionsViewState extends State<ConnectionsView> {
 
   _showDmxMonitor(BuildContext context, Connection connection) {
     openDialog(context, DmxMonitorDialog(connection));
+  }
+
+  _showMidiMonitor(BuildContext context, Connection connection) {
+    openDialog(context, MidiMonitorDialog(connection));
   }
 
   _fetch() async {

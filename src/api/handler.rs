@@ -3,9 +3,10 @@ use std::path::PathBuf;
 
 use mizer_clock::Clock;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, DmxView, MidiView};
+use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
 use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
-use mizer_protocol_midi::MidiConnectionManager;
+use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 
 use crate::{ApiCommand, Mizer};
 
@@ -120,6 +121,12 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
+            ApiCommand::GetMidiMonitor(name, sender) => {
+                let result = self.monitor_midi(mizer, name);
+                sender
+                    .send(result)
+                    .expect("api command sender disconnected");
+            }
         }
     }
 
@@ -212,5 +219,23 @@ impl ApiHandler {
         let buffer = dmx_connection.read_buffer();
 
         Ok(buffer)
+    }
+
+    fn monitor_midi(
+        &self,
+        mizer: &mut Mizer,
+        name: String,
+    ) -> anyhow::Result<Subscriber<MidiEvent>> {
+        let midi_manager = mizer
+            .runtime
+            .injector()
+            .get::<MidiConnectionManager>()
+            .unwrap();
+        let device = midi_manager
+            .request_device(&name)?
+            .ok_or_else(|| anyhow::anyhow!("Unknown Midi Device"))?;
+        let subscriber = device.events();
+
+        Ok(subscriber)
     }
 }

@@ -33,4 +33,9 @@ class ConnectionsGrpcApi implements ConnectionsApi {
   Future<MidiDeviceProfiles> getMidiDeviceProfiles() {
     return this.client.getMidiDeviceProfiles(GetDeviceProfilesRequest());
   }
+
+  @override
+  Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
+    return this.client.monitorMidi(MonitorMidiRequest(name: connectionId));
+  }
 }

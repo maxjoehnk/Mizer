@@ -25,6 +25,12 @@ class ConnectionsApiClient extends $grpc.Client {
           ($0.MonitorDmxRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.MonitorDmxResponse.fromBuffer(value));
+  static final _$monitorMidi =
+      $grpc.ClientMethod<$0.MonitorMidiRequest, $0.MonitorMidiResponse>(
+          '/mizer.ConnectionsApi/MonitorMidi',
+          ($0.MonitorMidiRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.MonitorMidiResponse.fromBuffer(value));
   static final _$addArtnetConnection =
       $grpc.ClientMethod<$0.AddArtnetRequest, $0.Connections>(
           '/mizer.ConnectionsApi/AddArtnetConnection',
@@ -57,6 +63,14 @@ class ConnectionsApiClient extends $grpc.Client {
       $0.MonitorDmxRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$monitorDmx, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.MonitorMidiResponse> monitorMidi(
+      $0.MonitorMidiRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$monitorMidi, $async.Stream.fromIterable([request]),
+        options: options);
   }
 
   $grpc.ResponseFuture<$0.Connections> addArtnetConnection(
@@ -97,6 +111,15 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.MonitorDmxRequest.fromBuffer(value),
         ($0.MonitorDmxResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.MonitorMidiRequest, $0.MonitorMidiResponse>(
+            'MonitorMidi',
+            monitorMidi_Pre,
+            false,
+            true,
+            ($core.List<$core.int> value) =>
+                $0.MonitorMidiRequest.fromBuffer(value),
+            ($0.MonitorMidiResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.AddArtnetRequest, $0.Connections>(
         'AddArtnetConnection',
         addArtnetConnection_Pre,
@@ -132,6 +155,11 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
     return monitorDmx(call, await request);
   }
 
+  $async.Stream<$0.MonitorMidiResponse> monitorMidi_Pre($grpc.ServiceCall call,
+      $async.Future<$0.MonitorMidiRequest> request) async* {
+    yield* monitorMidi(call, await request);
+  }
+
   $async.Future<$0.Connections> addArtnetConnection_Pre($grpc.ServiceCall call,
       $async.Future<$0.AddArtnetRequest> request) async {
     return addArtnetConnection(call, await request);
@@ -152,6 +180,8 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.GetConnectionsRequest request);
   $async.Future<$0.MonitorDmxResponse> monitorDmx(
       $grpc.ServiceCall call, $0.MonitorDmxRequest request);
+  $async.Stream<$0.MonitorMidiResponse> monitorMidi(
+      $grpc.ServiceCall call, $0.MonitorMidiRequest request);
   $async.Future<$0.Connections> addArtnetConnection(
       $grpc.ServiceCall call, $0.AddArtnetRequest request);
   $async.Future<$0.Connections> addSacnConnection(

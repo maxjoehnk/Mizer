@@ -6,6 +6,7 @@ service ConnectionsApi {
   rpc GetConnections (GetConnectionsRequest) returns (Connections) {}
 
   rpc MonitorDmx (MonitorDmxRequest) returns (MonitorDmxResponse) {}
+  rpc MonitorMidi (MonitorMidiRequest) returns (stream MonitorMidiResponse) {}
 
   rpc AddArtnetConnection (AddArtnetRequest) returns (Connections) {}
   rpc AddSacnConnection (AddSacnRequest) returns (Connections) {}
@@ -24,6 +25,34 @@ message MonitorDmxResponse {
 message MonitorDmxUniverse {
   uint32 universe = 1;
   bytes channels = 2;
+}
+
+message MonitorMidiRequest {
+  string name = 1;
+}
+message MonitorMidiResponse {
+  uint64 timestamp = 2;
+  oneof message {
+    NoteMsg cc = 3;
+    NoteMsg noteOff = 4;
+    NoteMsg noteOn = 5;
+    SysEx sysEx = 6;
+    bytes unknown = 7;
+  }
+
+  message NoteMsg {
+    uint32 channel = 1;
+    uint32 note = 2;
+    uint32 value = 3;
+  }
+
+  message SysEx {
+    uint32 manufacturer1 = 1;
+    uint32 manufacturer2 = 2;
+    uint32 manufacturer3 = 3;
+    uint32 model = 4;
+    bytes data = 5;
+  }
 }
 
 message GetConnectionsRequest {}

@@ -2,8 +2,10 @@ use std::collections::HashMap;
 
 use mizer_clock::ClockState;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
+use mizer_message_bus::Subscriber;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
+use mizer_protocol_midi::MidiEvent;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -36,6 +38,7 @@ pub enum ApiCommand {
         String,
         flume::Sender<anyhow::Result<HashMap<u16, [u8; 512]>>>,
     ),
+    GetMidiMonitor(String, flume::Sender<anyhow::Result<Subscriber<MidiEvent>>>),
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),

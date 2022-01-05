@@ -1,4 +1,7 @@
-use grpc::{ServerRequestSingle, ServerResponseUnarySink};
+use futures::StreamExt;
+use grpc::{
+    GrpcStatus, Metadata, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
+};
 
 use mizer_api::handlers::ConnectionsHandler;
 use mizer_api::models::*;
@@ -6,7 +9,7 @@ use mizer_api::RuntimeApi;
 
 use crate::protos::{Connections, ConnectionsApi, GetConnectionsRequest};
 
-impl<R: RuntimeApi> ConnectionsApi for ConnectionsHandler<R> {
+impl<R: RuntimeApi + 'static> ConnectionsApi for ConnectionsHandler<R> {
     fn get_connections(
         &self,
         _: ServerRequestSingle<GetConnectionsRequest>,
@@ -35,6 +38,31 @@ impl<R: RuntimeApi> ConnectionsApi for ConnectionsHandler<R> {
                 .collect(),
             ..Default::default()
         })
+    }
+
+    fn monitor_midi(
+        &self,
+        req: ServerRequestSingle<MonitorMidiRequest>,
+        mut resp: ServerResponseSink<MonitorMidiResponse>,
+    ) -> grpc::Result<()> {
+        match self.monitor_midi(req.message.name.clone()) {
+            Ok(mut stream) => {
+                req.loop_handle().spawn(async move {
+                    while let Some(m) = stream.next().await {
+                        resp.send_data(m)?;
+                    }
+                    resp.send_trailers(Metadata::new())
+                });
+                Ok(())
+            }
+            Err(e) => {
+                log::error!("Monitoring of midi device failed {:?}", e);
+                resp.send_grpc_error(
+                    GrpcStatus::Internal,
+                    format!("Monitoring of midi device failed {:?}", e),
+                )
+            }
+        }
     }
 
     fn add_artnet_connection(

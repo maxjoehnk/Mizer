@@ -1,4 +1,3 @@
-pub use self::connections::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
@@ -9,12 +8,15 @@ pub use self::session::*;
 pub use self::settings::*;
 pub use self::transport::*;
 use anyhow::Error;
+pub use event::connections::*;
+pub use method::connections::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
-mod connections;
+mod event;
 mod fixtures;
 mod layouts;
 mod media;
+mod method;
 mod nodes;
 mod programmer;
 mod sequencer;

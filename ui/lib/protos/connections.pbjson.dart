@@ -39,6 +39,57 @@ const MonitorDmxUniverse$json = const {
 
 /// Descriptor for `MonitorDmxUniverse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List monitorDmxUniverseDescriptor = $convert.base64Decode('ChJNb25pdG9yRG14VW5pdmVyc2USGgoIdW5pdmVyc2UYASABKA1SCHVuaXZlcnNlEhoKCGNoYW5uZWxzGAIgASgMUghjaGFubmVscw==');
+@$core.Deprecated('Use monitorMidiRequestDescriptor instead')
+const MonitorMidiRequest$json = const {
+  '1': 'MonitorMidiRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `MonitorMidiRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List monitorMidiRequestDescriptor = $convert.base64Decode('ChJNb25pdG9yTWlkaVJlcXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use monitorMidiResponseDescriptor instead')
+const MonitorMidiResponse$json = const {
+  '1': 'MonitorMidiResponse',
+  '2': const [
+    const {'1': 'timestamp', '3': 2, '4': 1, '5': 4, '10': 'timestamp'},
+    const {'1': 'cc', '3': 3, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'cc'},
+    const {'1': 'noteOff', '3': 4, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOff'},
+    const {'1': 'noteOn', '3': 5, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.NoteMsg', '9': 0, '10': 'noteOn'},
+    const {'1': 'sysEx', '3': 6, '4': 1, '5': 11, '6': '.mizer.MonitorMidiResponse.SysEx', '9': 0, '10': 'sysEx'},
+    const {'1': 'unknown', '3': 7, '4': 1, '5': 12, '9': 0, '10': 'unknown'},
+  ],
+  '3': const [MonitorMidiResponse_NoteMsg$json, MonitorMidiResponse_SysEx$json],
+  '8': const [
+    const {'1': 'message'},
+  ],
+};
+
+@$core.Deprecated('Use monitorMidiResponseDescriptor instead')
+const MonitorMidiResponse_NoteMsg$json = const {
+  '1': 'NoteMsg',
+  '2': const [
+    const {'1': 'channel', '3': 1, '4': 1, '5': 13, '10': 'channel'},
+    const {'1': 'note', '3': 2, '4': 1, '5': 13, '10': 'note'},
+    const {'1': 'value', '3': 3, '4': 1, '5': 13, '10': 'value'},
+  ],
+};
+
+@$core.Deprecated('Use monitorMidiResponseDescriptor instead')
+const MonitorMidiResponse_SysEx$json = const {
+  '1': 'SysEx',
+  '2': const [
+    const {'1': 'manufacturer1', '3': 1, '4': 1, '5': 13, '10': 'manufacturer1'},
+    const {'1': 'manufacturer2', '3': 2, '4': 1, '5': 13, '10': 'manufacturer2'},
+    const {'1': 'manufacturer3', '3': 3, '4': 1, '5': 13, '10': 'manufacturer3'},
+    const {'1': 'model', '3': 4, '4': 1, '5': 13, '10': 'model'},
+    const {'1': 'data', '3': 5, '4': 1, '5': 12, '10': 'data'},
+  ],
+};
+
+/// Descriptor for `MonitorMidiResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List monitorMidiResponseDescriptor = $convert.base64Decode('ChNNb25pdG9yTWlkaVJlc3BvbnNlEhwKCXRpbWVzdGFtcBgCIAEoBFIJdGltZXN0YW1wEjQKAmNjGAMgASgLMiIubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSAmNjEj4KB25vdGVPZmYYBCABKAsyIi5taXplci5Nb25pdG9yTWlkaVJlc3BvbnNlLk5vdGVNc2dIAFIHbm90ZU9mZhI8CgZub3RlT24YBSABKAsyIi5taXplci5Nb25pdG9yTWlkaVJlc3BvbnNlLk5vdGVNc2dIAFIGbm90ZU9uEjgKBXN5c0V4GAYgASgLMiAubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5TeXNFeEgAUgVzeXNFeBIaCgd1bmtub3duGAcgASgMSABSB3Vua25vd24aTQoHTm90ZU1zZxIYCgdjaGFubmVsGAEgASgNUgdjaGFubmVsEhIKBG5vdGUYAiABKA1SBG5vdGUSFAoFdmFsdWUYAyABKA1SBXZhbHVlGqMBCgVTeXNFeBIkCg1tYW51ZmFjdHVyZXIxGAEgASgNUg1tYW51ZmFjdHVyZXIxEiQKDW1hbnVmYWN0dXJlcjIYAiABKA1SDW1hbnVmYWN0dXJlcjISJAoNbWFudWZhY3R1cmVyMxgDIAEoDVINbWFudWZhY3R1cmVyMxIUCgVtb2RlbBgEIAEoDVIFbW9kZWwSEgoEZGF0YRgFIAEoDFIEZGF0YUIJCgdtZXNzYWdl');
 @$core.Deprecated('Use getConnectionsRequestDescriptor instead')
 const GetConnectionsRequest$json = const {
   '1': 'GetConnectionsRequest',

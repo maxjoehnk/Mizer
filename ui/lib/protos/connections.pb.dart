@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'connections.pbenum.dart';
@@ -160,6 +161,377 @@ class MonitorDmxUniverse extends $pb.GeneratedMessage {
   $core.bool hasChannels() => $_has(1);
   @$pb.TagNumber(2)
   void clearChannels() => clearField(2);
+}
+
+class MonitorMidiRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  MonitorMidiRequest._() : super();
+  factory MonitorMidiRequest({
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory MonitorMidiRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorMidiRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorMidiRequest clone() => MonitorMidiRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorMidiRequest copyWith(void Function(MonitorMidiRequest) updates) => super.copyWith((message) => updates(message as MonitorMidiRequest)) as MonitorMidiRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiRequest create() => MonitorMidiRequest._();
+  MonitorMidiRequest createEmptyInstance() => create();
+  static $pb.PbList<MonitorMidiRequest> createRepeated() => $pb.PbList<MonitorMidiRequest>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorMidiRequest>(create);
+  static MonitorMidiRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+}
+
+class MonitorMidiResponse_NoteMsg extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse.NoteMsg', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'note', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorMidiResponse_NoteMsg._() : super();
+  factory MonitorMidiResponse_NoteMsg({
+    $core.int? channel,
+    $core.int? note,
+    $core.int? value,
+  }) {
+    final _result = create();
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    if (note != null) {
+      _result.note = note;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory MonitorMidiResponse_NoteMsg.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorMidiResponse_NoteMsg.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse_NoteMsg clone() => MonitorMidiResponse_NoteMsg()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse_NoteMsg copyWith(void Function(MonitorMidiResponse_NoteMsg) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_NoteMsg)) as MonitorMidiResponse_NoteMsg; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse_NoteMsg create() => MonitorMidiResponse_NoteMsg._();
+  MonitorMidiResponse_NoteMsg createEmptyInstance() => create();
+  static $pb.PbList<MonitorMidiResponse_NoteMsg> createRepeated() => $pb.PbList<MonitorMidiResponse_NoteMsg>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse_NoteMsg getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorMidiResponse_NoteMsg>(create);
+  static MonitorMidiResponse_NoteMsg? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get channel => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set channel($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasChannel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearChannel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get note => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set note($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNote() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNote() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get value => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set value($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasValue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearValue() => clearField(3);
+}
+
+class MonitorMidiResponse_SysEx extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse.SysEx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer1', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer2', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'manufacturer3', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorMidiResponse_SysEx._() : super();
+  factory MonitorMidiResponse_SysEx({
+    $core.int? manufacturer1,
+    $core.int? manufacturer2,
+    $core.int? manufacturer3,
+    $core.int? model,
+    $core.List<$core.int>? data,
+  }) {
+    final _result = create();
+    if (manufacturer1 != null) {
+      _result.manufacturer1 = manufacturer1;
+    }
+    if (manufacturer2 != null) {
+      _result.manufacturer2 = manufacturer2;
+    }
+    if (manufacturer3 != null) {
+      _result.manufacturer3 = manufacturer3;
+    }
+    if (model != null) {
+      _result.model = model;
+    }
+    if (data != null) {
+      _result.data = data;
+    }
+    return _result;
+  }
+  factory MonitorMidiResponse_SysEx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorMidiResponse_SysEx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse_SysEx clone() => MonitorMidiResponse_SysEx()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse_SysEx copyWith(void Function(MonitorMidiResponse_SysEx) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse_SysEx)) as MonitorMidiResponse_SysEx; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse_SysEx create() => MonitorMidiResponse_SysEx._();
+  MonitorMidiResponse_SysEx createEmptyInstance() => create();
+  static $pb.PbList<MonitorMidiResponse_SysEx> createRepeated() => $pb.PbList<MonitorMidiResponse_SysEx>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse_SysEx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorMidiResponse_SysEx>(create);
+  static MonitorMidiResponse_SysEx? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get manufacturer1 => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set manufacturer1($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasManufacturer1() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearManufacturer1() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get manufacturer2 => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set manufacturer2($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasManufacturer2() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearManufacturer2() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get manufacturer3 => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set manufacturer3($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasManufacturer3() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearManufacturer3() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get model => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set model($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasModel() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearModel() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.List<$core.int> get data => $_getN(4);
+  @$pb.TagNumber(5)
+  set data($core.List<$core.int> v) { $_setBytes(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasData() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearData() => clearField(5);
+}
+
+enum MonitorMidiResponse_Message {
+  cc, 
+  noteOff, 
+  noteOn, 
+  sysEx, 
+  unknown, 
+  notSet
+}
+
+class MonitorMidiResponse extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, MonitorMidiResponse_Message> _MonitorMidiResponse_MessageByTag = {
+    3 : MonitorMidiResponse_Message.cc,
+    4 : MonitorMidiResponse_Message.noteOff,
+    5 : MonitorMidiResponse_Message.noteOn,
+    6 : MonitorMidiResponse_Message.sysEx,
+    7 : MonitorMidiResponse_Message.unknown,
+    0 : MonitorMidiResponse_Message.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorMidiResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [3, 4, 5, 6, 7])
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOM<MonitorMidiResponse_NoteMsg>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cc', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_NoteMsg>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOff', protoName: 'noteOff', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_NoteMsg>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOn', protoName: 'noteOn', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_SysEx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sysEx', protoName: 'sysEx', subBuilder: MonitorMidiResponse_SysEx.create)
+    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unknown', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorMidiResponse._() : super();
+  factory MonitorMidiResponse({
+    $fixnum.Int64? timestamp,
+    MonitorMidiResponse_NoteMsg? cc,
+    MonitorMidiResponse_NoteMsg? noteOff,
+    MonitorMidiResponse_NoteMsg? noteOn,
+    MonitorMidiResponse_SysEx? sysEx,
+    $core.List<$core.int>? unknown,
+  }) {
+    final _result = create();
+    if (timestamp != null) {
+      _result.timestamp = timestamp;
+    }
+    if (cc != null) {
+      _result.cc = cc;
+    }
+    if (noteOff != null) {
+      _result.noteOff = noteOff;
+    }
+    if (noteOn != null) {
+      _result.noteOn = noteOn;
+    }
+    if (sysEx != null) {
+      _result.sysEx = sysEx;
+    }
+    if (unknown != null) {
+      _result.unknown = unknown;
+    }
+    return _result;
+  }
+  factory MonitorMidiResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorMidiResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse clone() => MonitorMidiResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorMidiResponse copyWith(void Function(MonitorMidiResponse) updates) => super.copyWith((message) => updates(message as MonitorMidiResponse)) as MonitorMidiResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse create() => MonitorMidiResponse._();
+  MonitorMidiResponse createEmptyInstance() => create();
+  static $pb.PbList<MonitorMidiResponse> createRepeated() => $pb.PbList<MonitorMidiResponse>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorMidiResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorMidiResponse>(create);
+  static MonitorMidiResponse? _defaultInstance;
+
+  MonitorMidiResponse_Message whichMessage() => _MonitorMidiResponse_MessageByTag[$_whichOneof(0)]!;
+  void clearMessage() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get timestamp => $_getI64(0);
+  @$pb.TagNumber(2)
+  set timestamp($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTimestamp() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearTimestamp() => clearField(2);
+
+  @$pb.TagNumber(3)
+  MonitorMidiResponse_NoteMsg get cc => $_getN(1);
+  @$pb.TagNumber(3)
+  set cc(MonitorMidiResponse_NoteMsg v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCc() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearCc() => clearField(3);
+  @$pb.TagNumber(3)
+  MonitorMidiResponse_NoteMsg ensureCc() => $_ensure(1);
+
+  @$pb.TagNumber(4)
+  MonitorMidiResponse_NoteMsg get noteOff => $_getN(2);
+  @$pb.TagNumber(4)
+  set noteOff(MonitorMidiResponse_NoteMsg v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasNoteOff() => $_has(2);
+  @$pb.TagNumber(4)
+  void clearNoteOff() => clearField(4);
+  @$pb.TagNumber(4)
+  MonitorMidiResponse_NoteMsg ensureNoteOff() => $_ensure(2);
+
+  @$pb.TagNumber(5)
+  MonitorMidiResponse_NoteMsg get noteOn => $_getN(3);
+  @$pb.TagNumber(5)
+  set noteOn(MonitorMidiResponse_NoteMsg v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasNoteOn() => $_has(3);
+  @$pb.TagNumber(5)
+  void clearNoteOn() => clearField(5);
+  @$pb.TagNumber(5)
+  MonitorMidiResponse_NoteMsg ensureNoteOn() => $_ensure(3);
+
+  @$pb.TagNumber(6)
+  MonitorMidiResponse_SysEx get sysEx => $_getN(4);
+  @$pb.TagNumber(6)
+  set sysEx(MonitorMidiResponse_SysEx v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasSysEx() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearSysEx() => clearField(6);
+  @$pb.TagNumber(6)
+  MonitorMidiResponse_SysEx ensureSysEx() => $_ensure(4);
+
+  @$pb.TagNumber(7)
+  $core.List<$core.int> get unknown => $_getN(5);
+  @$pb.TagNumber(7)
+  set unknown($core.List<$core.int> v) { $_setBytes(5, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasUnknown() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearUnknown() => clearField(7);
 }
 
 class GetConnectionsRequest extends $pb.GeneratedMessage {

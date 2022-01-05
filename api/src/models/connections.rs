@@ -553,6 +553,1237 @@ impl ::protobuf::reflect::ProtobufValue for MonitorDmxUniverse {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MonitorMidiRequest {
+    // message fields
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorMidiRequest {
+    fn default() -> &'a MonitorMidiRequest {
+        <MonitorMidiRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorMidiRequest {
+    pub fn new() -> MonitorMidiRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for MonitorMidiRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorMidiRequest {
+        MonitorMidiRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &MonitorMidiRequest| { &m.name },
+                |m: &mut MonitorMidiRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorMidiRequest>(
+                "MonitorMidiRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorMidiRequest {
+        static instance: ::protobuf::rt::LazyV2<MonitorMidiRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorMidiRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorMidiRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorMidiRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorMidiRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MonitorMidiResponse {
+    // message fields
+    pub timestamp: u64,
+    // message oneof groups
+    pub message: ::std::option::Option<MonitorMidiResponse_oneof_message>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorMidiResponse {
+    fn default() -> &'a MonitorMidiResponse {
+        <MonitorMidiResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MonitorMidiResponse_oneof_message {
+    cc(MonitorMidiResponse_NoteMsg),
+    noteOff(MonitorMidiResponse_NoteMsg),
+    noteOn(MonitorMidiResponse_NoteMsg),
+    sysEx(MonitorMidiResponse_SysEx),
+    unknown(::std::vec::Vec<u8>),
+}
+
+impl MonitorMidiResponse {
+    pub fn new() -> MonitorMidiResponse {
+        ::std::default::Default::default()
+    }
+
+    // uint64 timestamp = 2;
+
+
+    pub fn get_timestamp(&self) -> u64 {
+        self.timestamp
+    }
+    pub fn clear_timestamp(&mut self) {
+        self.timestamp = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_timestamp(&mut self, v: u64) {
+        self.timestamp = v;
+    }
+
+    // .mizer.MonitorMidiResponse.NoteMsg cc = 3;
+
+
+    pub fn get_cc(&self) -> &MonitorMidiResponse_NoteMsg {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(ref v)) => v,
+            _ => <MonitorMidiResponse_NoteMsg as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_cc(&mut self) {
+        self.message = ::std::option::Option::None;
+    }
+
+    pub fn has_cc(&self) -> bool {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cc(&mut self, v: MonitorMidiResponse_NoteMsg) {
+        self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cc(&mut self) -> &mut MonitorMidiResponse_NoteMsg {
+        if let ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(_)) = self.message {
+        } else {
+            self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(MonitorMidiResponse_NoteMsg::new()));
+        }
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_cc(&mut self) -> MonitorMidiResponse_NoteMsg {
+        if self.has_cc() {
+            match self.message.take() {
+                ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MonitorMidiResponse_NoteMsg::new()
+        }
+    }
+
+    // .mizer.MonitorMidiResponse.NoteMsg noteOff = 4;
+
+
+    pub fn get_noteOff(&self) -> &MonitorMidiResponse_NoteMsg {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(ref v)) => v,
+            _ => <MonitorMidiResponse_NoteMsg as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_noteOff(&mut self) {
+        self.message = ::std::option::Option::None;
+    }
+
+    pub fn has_noteOff(&self) -> bool {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_noteOff(&mut self, v: MonitorMidiResponse_NoteMsg) {
+        self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_noteOff(&mut self) -> &mut MonitorMidiResponse_NoteMsg {
+        if let ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(_)) = self.message {
+        } else {
+            self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(MonitorMidiResponse_NoteMsg::new()));
+        }
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_noteOff(&mut self) -> MonitorMidiResponse_NoteMsg {
+        if self.has_noteOff() {
+            match self.message.take() {
+                ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MonitorMidiResponse_NoteMsg::new()
+        }
+    }
+
+    // .mizer.MonitorMidiResponse.NoteMsg noteOn = 5;
+
+
+    pub fn get_noteOn(&self) -> &MonitorMidiResponse_NoteMsg {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(ref v)) => v,
+            _ => <MonitorMidiResponse_NoteMsg as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_noteOn(&mut self) {
+        self.message = ::std::option::Option::None;
+    }
+
+    pub fn has_noteOn(&self) -> bool {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_noteOn(&mut self, v: MonitorMidiResponse_NoteMsg) {
+        self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_noteOn(&mut self) -> &mut MonitorMidiResponse_NoteMsg {
+        if let ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(_)) = self.message {
+        } else {
+            self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(MonitorMidiResponse_NoteMsg::new()));
+        }
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_noteOn(&mut self) -> MonitorMidiResponse_NoteMsg {
+        if self.has_noteOn() {
+            match self.message.take() {
+                ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MonitorMidiResponse_NoteMsg::new()
+        }
+    }
+
+    // .mizer.MonitorMidiResponse.SysEx sysEx = 6;
+
+
+    pub fn get_sysEx(&self) -> &MonitorMidiResponse_SysEx {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(ref v)) => v,
+            _ => <MonitorMidiResponse_SysEx as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_sysEx(&mut self) {
+        self.message = ::std::option::Option::None;
+    }
+
+    pub fn has_sysEx(&self) -> bool {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sysEx(&mut self, v: MonitorMidiResponse_SysEx) {
+        self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_sysEx(&mut self) -> &mut MonitorMidiResponse_SysEx {
+        if let ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(_)) = self.message {
+        } else {
+            self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(MonitorMidiResponse_SysEx::new()));
+        }
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_sysEx(&mut self) -> MonitorMidiResponse_SysEx {
+        if self.has_sysEx() {
+            match self.message.take() {
+                ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MonitorMidiResponse_SysEx::new()
+        }
+    }
+
+    // bytes unknown = 7;
+
+
+    pub fn get_unknown(&self) -> &[u8] {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(ref v)) => v,
+            _ => &[],
+        }
+    }
+    pub fn clear_unknown(&mut self) {
+        self.message = ::std::option::Option::None;
+    }
+
+    pub fn has_unknown(&self) -> bool {
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_unknown(&mut self, v: ::std::vec::Vec<u8>) {
+        self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_unknown(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if let ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(_)) = self.message {
+        } else {
+            self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(::std::vec::Vec::new()));
+        }
+        match self.message {
+            ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_unknown(&mut self) -> ::std::vec::Vec<u8> {
+        if self.has_unknown() {
+            match self.message.take() {
+                ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::vec::Vec::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for MonitorMidiResponse {
+    fn is_initialized(&self) -> bool {
+        if let Some(MonitorMidiResponse_oneof_message::cc(ref v)) = self.message {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(MonitorMidiResponse_oneof_message::noteOff(ref v)) = self.message {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(MonitorMidiResponse_oneof_message::noteOn(ref v)) = self.message {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(MonitorMidiResponse_oneof_message::sysEx(ref v)) = self.message {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.timestamp = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::cc(is.read_message()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOff(is.read_message()?));
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::noteOn(is.read_message()?));
+                },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::sysEx(is.read_message()?));
+                },
+                7 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.message = ::std::option::Option::Some(MonitorMidiResponse_oneof_message::unknown(is.read_bytes()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.timestamp != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.timestamp, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let ::std::option::Option::Some(ref v) = self.message {
+            match v {
+                &MonitorMidiResponse_oneof_message::cc(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &MonitorMidiResponse_oneof_message::noteOff(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &MonitorMidiResponse_oneof_message::noteOn(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &MonitorMidiResponse_oneof_message::sysEx(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &MonitorMidiResponse_oneof_message::unknown(ref v) => {
+                    my_size += ::protobuf::rt::bytes_size(7, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.timestamp != 0 {
+            os.write_uint64(2, self.timestamp)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.message {
+            match v {
+                &MonitorMidiResponse_oneof_message::cc(ref v) => {
+                    os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MonitorMidiResponse_oneof_message::noteOff(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MonitorMidiResponse_oneof_message::noteOn(ref v) => {
+                    os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MonitorMidiResponse_oneof_message::sysEx(ref v) => {
+                    os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MonitorMidiResponse_oneof_message::unknown(ref v) => {
+                    os.write_bytes(7, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorMidiResponse {
+        MonitorMidiResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "timestamp",
+                |m: &MonitorMidiResponse| { &m.timestamp },
+                |m: &mut MonitorMidiResponse| { &mut m.timestamp },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MonitorMidiResponse_NoteMsg>(
+                "cc",
+                MonitorMidiResponse::has_cc,
+                MonitorMidiResponse::get_cc,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MonitorMidiResponse_NoteMsg>(
+                "noteOff",
+                MonitorMidiResponse::has_noteOff,
+                MonitorMidiResponse::get_noteOff,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MonitorMidiResponse_NoteMsg>(
+                "noteOn",
+                MonitorMidiResponse::has_noteOn,
+                MonitorMidiResponse::get_noteOn,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MonitorMidiResponse_SysEx>(
+                "sysEx",
+                MonitorMidiResponse::has_sysEx,
+                MonitorMidiResponse::get_sysEx,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor::<_>(
+                "unknown",
+                MonitorMidiResponse::has_unknown,
+                MonitorMidiResponse::get_unknown,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorMidiResponse>(
+                "MonitorMidiResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorMidiResponse {
+        static instance: ::protobuf::rt::LazyV2<MonitorMidiResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorMidiResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorMidiResponse {
+    fn clear(&mut self) {
+        self.timestamp = 0;
+        self.message = ::std::option::Option::None;
+        self.message = ::std::option::Option::None;
+        self.message = ::std::option::Option::None;
+        self.message = ::std::option::Option::None;
+        self.message = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorMidiResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorMidiResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MonitorMidiResponse_NoteMsg {
+    // message fields
+    pub channel: u32,
+    pub note: u32,
+    pub value: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorMidiResponse_NoteMsg {
+    fn default() -> &'a MonitorMidiResponse_NoteMsg {
+        <MonitorMidiResponse_NoteMsg as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorMidiResponse_NoteMsg {
+    pub fn new() -> MonitorMidiResponse_NoteMsg {
+        ::std::default::Default::default()
+    }
+
+    // uint32 channel = 1;
+
+
+    pub fn get_channel(&self) -> u32 {
+        self.channel
+    }
+    pub fn clear_channel(&mut self) {
+        self.channel = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_channel(&mut self, v: u32) {
+        self.channel = v;
+    }
+
+    // uint32 note = 2;
+
+
+    pub fn get_note(&self) -> u32 {
+        self.note
+    }
+    pub fn clear_note(&mut self) {
+        self.note = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_note(&mut self, v: u32) {
+        self.note = v;
+    }
+
+    // uint32 value = 3;
+
+
+    pub fn get_value(&self) -> u32 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: u32) {
+        self.value = v;
+    }
+}
+
+impl ::protobuf::Message for MonitorMidiResponse_NoteMsg {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.channel = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.note = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.value = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.channel != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.channel, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.note != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.note, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.value != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.value, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.channel != 0 {
+            os.write_uint32(1, self.channel)?;
+        }
+        if self.note != 0 {
+            os.write_uint32(2, self.note)?;
+        }
+        if self.value != 0 {
+            os.write_uint32(3, self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorMidiResponse_NoteMsg {
+        MonitorMidiResponse_NoteMsg::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "channel",
+                |m: &MonitorMidiResponse_NoteMsg| { &m.channel },
+                |m: &mut MonitorMidiResponse_NoteMsg| { &mut m.channel },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "note",
+                |m: &MonitorMidiResponse_NoteMsg| { &m.note },
+                |m: &mut MonitorMidiResponse_NoteMsg| { &mut m.note },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "value",
+                |m: &MonitorMidiResponse_NoteMsg| { &m.value },
+                |m: &mut MonitorMidiResponse_NoteMsg| { &mut m.value },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorMidiResponse_NoteMsg>(
+                "MonitorMidiResponse.NoteMsg",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorMidiResponse_NoteMsg {
+        static instance: ::protobuf::rt::LazyV2<MonitorMidiResponse_NoteMsg> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorMidiResponse_NoteMsg::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorMidiResponse_NoteMsg {
+    fn clear(&mut self) {
+        self.channel = 0;
+        self.note = 0;
+        self.value = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorMidiResponse_NoteMsg {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorMidiResponse_NoteMsg {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MonitorMidiResponse_SysEx {
+    // message fields
+    pub manufacturer1: u32,
+    pub manufacturer2: u32,
+    pub manufacturer3: u32,
+    pub model: u32,
+    pub data: ::std::vec::Vec<u8>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorMidiResponse_SysEx {
+    fn default() -> &'a MonitorMidiResponse_SysEx {
+        <MonitorMidiResponse_SysEx as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorMidiResponse_SysEx {
+    pub fn new() -> MonitorMidiResponse_SysEx {
+        ::std::default::Default::default()
+    }
+
+    // uint32 manufacturer1 = 1;
+
+
+    pub fn get_manufacturer1(&self) -> u32 {
+        self.manufacturer1
+    }
+    pub fn clear_manufacturer1(&mut self) {
+        self.manufacturer1 = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_manufacturer1(&mut self, v: u32) {
+        self.manufacturer1 = v;
+    }
+
+    // uint32 manufacturer2 = 2;
+
+
+    pub fn get_manufacturer2(&self) -> u32 {
+        self.manufacturer2
+    }
+    pub fn clear_manufacturer2(&mut self) {
+        self.manufacturer2 = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_manufacturer2(&mut self, v: u32) {
+        self.manufacturer2 = v;
+    }
+
+    // uint32 manufacturer3 = 3;
+
+
+    pub fn get_manufacturer3(&self) -> u32 {
+        self.manufacturer3
+    }
+    pub fn clear_manufacturer3(&mut self) {
+        self.manufacturer3 = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_manufacturer3(&mut self, v: u32) {
+        self.manufacturer3 = v;
+    }
+
+    // uint32 model = 4;
+
+
+    pub fn get_model(&self) -> u32 {
+        self.model
+    }
+    pub fn clear_model(&mut self) {
+        self.model = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_model(&mut self, v: u32) {
+        self.model = v;
+    }
+
+    // bytes data = 5;
+
+
+    pub fn get_data(&self) -> &[u8] {
+        &self.data
+    }
+    pub fn clear_data(&mut self) {
+        self.data.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_data(&mut self, v: ::std::vec::Vec<u8>) {
+        self.data = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_data(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.data
+    }
+
+    // Take field
+    pub fn take_data(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.data, ::std::vec::Vec::new())
+    }
+}
+
+impl ::protobuf::Message for MonitorMidiResponse_SysEx {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.manufacturer1 = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.manufacturer2 = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.manufacturer3 = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.model = tmp;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.data)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.manufacturer1 != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.manufacturer1, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.manufacturer2 != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.manufacturer2, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.manufacturer3 != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.manufacturer3, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.model != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.model, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.data.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(5, &self.data);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.manufacturer1 != 0 {
+            os.write_uint32(1, self.manufacturer1)?;
+        }
+        if self.manufacturer2 != 0 {
+            os.write_uint32(2, self.manufacturer2)?;
+        }
+        if self.manufacturer3 != 0 {
+            os.write_uint32(3, self.manufacturer3)?;
+        }
+        if self.model != 0 {
+            os.write_uint32(4, self.model)?;
+        }
+        if !self.data.is_empty() {
+            os.write_bytes(5, &self.data)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MonitorMidiResponse_SysEx {
+        MonitorMidiResponse_SysEx::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "manufacturer1",
+                |m: &MonitorMidiResponse_SysEx| { &m.manufacturer1 },
+                |m: &mut MonitorMidiResponse_SysEx| { &mut m.manufacturer1 },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "manufacturer2",
+                |m: &MonitorMidiResponse_SysEx| { &m.manufacturer2 },
+                |m: &mut MonitorMidiResponse_SysEx| { &mut m.manufacturer2 },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "manufacturer3",
+                |m: &MonitorMidiResponse_SysEx| { &m.manufacturer3 },
+                |m: &mut MonitorMidiResponse_SysEx| { &mut m.manufacturer3 },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "model",
+                |m: &MonitorMidiResponse_SysEx| { &m.model },
+                |m: &mut MonitorMidiResponse_SysEx| { &mut m.model },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
+                "data",
+                |m: &MonitorMidiResponse_SysEx| { &m.data },
+                |m: &mut MonitorMidiResponse_SysEx| { &mut m.data },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MonitorMidiResponse_SysEx>(
+                "MonitorMidiResponse.SysEx",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MonitorMidiResponse_SysEx {
+        static instance: ::protobuf::rt::LazyV2<MonitorMidiResponse_SysEx> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MonitorMidiResponse_SysEx::new)
+    }
+}
+
+impl ::protobuf::Clear for MonitorMidiResponse_SysEx {
+    fn clear(&mut self) {
+        self.manufacturer1 = 0;
+        self.manufacturer2 = 0;
+        self.manufacturer3 = 0;
+        self.model = 0;
+        self.data.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MonitorMidiResponse_SysEx {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorMidiResponse_SysEx {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct GetConnectionsRequest {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -5001,63 +6232,79 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x127\n\tuniverses\x18\x01\x20\x03(\x0b2\x19.mizer.MonitorDmxUniverseR\t\
     universes\"L\n\x12MonitorDmxUniverse\x12\x1a\n\x08universe\x18\x01\x20\
     \x01(\rR\x08universe\x12\x1a\n\x08channels\x18\x02\x20\x01(\x0cR\x08chan\
-    nels\"\x17\n\x15GetConnectionsRequest\"\x1a\n\x18GetDeviceProfilesReques\
-    t\"N\n\x10AddArtnetRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12\x12\n\x04host\x18\x02\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x03\
-    \x20\x01(\rR\x04port\"$\n\x0eAddSacnRequest\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\"B\n\x0bConnections\x123\n\x0bconnections\x18\x01\
-    \x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\x9e\x02\n\nConnect\
-    ion\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\n\
-    \x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04midi\x18\x0b\
-    \x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\n\x03osc\x18\
-    \x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12:\n\tproDJLink\
-    \x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tproDJLink\x121\n\
-    \x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnectionH\0R\x06helio\
-    sB\x0c\n\nconnection\"+\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\
-    \x20\x01(\tR\x08outputId\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\tR\x08fi\
-    rmware\"O\n\x0eMidiConnection\x12*\n\x0edevice_profile\x18\x01\x20\x01(\
-    \tH\0R\rdeviceProfile\x88\x01\x01B\x11\n\x0f_device_profile\"J\n\x12Midi\
-    DeviceProfiles\x124\n\x08profiles\x18\x01\x20\x03(\x0b2\x18.mizer.MidiDe\
-    viceProfileR\x08profiles\"\x8f\x05\n\x11MidiDeviceProfile\x12\x0e\n\x02i\
-    d\x18\x01\x20\x01(\tR\x02id\x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\
-    \x0cmanufacturer\x12\x14\n\x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\
-    \n\x06layout\x18\x04\x20\x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05page\
-    s\x18\x05\x20\x03(\x0b2\x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\
-    \x90\x01\n\x04Page\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\
-    \x06groups\x18\x02\x20\x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06g\
-    roups\x12<\n\x08controls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfi\
-    le.ControlR\x08controls\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\x12<\n\x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.Midi\
-    DeviceProfile.ControlR\x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12\x18\n\x07channel\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\
-    \x04note\x18\x04\x20\x01(\rR\x04note\x12G\n\x0ccontrol_type\x18\x05\x20\
-    \x01(\x0e2$.mizer.MidiDeviceProfile.ControlTypeR\x0bcontrolType\x12\x1d\
-    \n\nhas_output\x18\x06\x20\x01(\x08R\thasOutput\"\x1f\n\x0bControlType\
-    \x12\x08\n\x04Note\x10\0\x12\x06\n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rO\
-    scConnection\x12\x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\
-    \x1f\n\x0boutput_port\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_a\
-    ddress\x18\x03\x20\x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnec\
-    tion\x12\x18\n\x07address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05mo\
-    del\x18\x02\x20\x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01\
-    (\rR\x0cplayerNumber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.\
-    CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\
-    \x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\
-    \x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playba\
-    ck\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\
-    \x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\
-    \x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\
-    \x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07\
-    Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\
-    \n\n\x06Cueing\x10\x032\xfa\x02\n\x0eConnectionsApi\x12D\n\x0eGetConnect\
-    ions\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\
-    \x12C\n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.Monito\
-    rDmxResponse\"\0\x12D\n\x13AddArtnetConnection\x12\x17.mizer.AddArtnetRe\
-    quest\x1a\x12.mizer.Connections\"\0\x12@\n\x11AddSacnConnection\x12\x15.\
-    mizer.AddSacnRequest\x1a\x12.mizer.Connections\"\0\x12U\n\x15GetMidiDevi\
-    ceProfiles\x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDevi\
-    ceProfiles\"\0b\x06proto3\
+    nels\"(\n\x12MonitorMidiRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\"\xbd\x04\n\x13MonitorMidiResponse\x12\x1c\n\ttimestamp\x18\x02\
+    \x20\x01(\x04R\ttimestamp\x124\n\x02cc\x18\x03\x20\x01(\x0b2\".mizer.Mon\
+    itorMidiResponse.NoteMsgH\0R\x02cc\x12>\n\x07noteOff\x18\x04\x20\x01(\
+    \x0b2\".mizer.MonitorMidiResponse.NoteMsgH\0R\x07noteOff\x12<\n\x06noteO\
+    n\x18\x05\x20\x01(\x0b2\".mizer.MonitorMidiResponse.NoteMsgH\0R\x06noteO\
+    n\x128\n\x05sysEx\x18\x06\x20\x01(\x0b2\x20.mizer.MonitorMidiResponse.Sy\
+    sExH\0R\x05sysEx\x12\x1a\n\x07unknown\x18\x07\x20\x01(\x0cH\0R\x07unknow\
+    n\x1aM\n\x07NoteMsg\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
+    \x12\x12\n\x04note\x18\x02\x20\x01(\rR\x04note\x12\x14\n\x05value\x18\
+    \x03\x20\x01(\rR\x05value\x1a\xa3\x01\n\x05SysEx\x12$\n\rmanufacturer1\
+    \x18\x01\x20\x01(\rR\rmanufacturer1\x12$\n\rmanufacturer2\x18\x02\x20\
+    \x01(\rR\rmanufacturer2\x12$\n\rmanufacturer3\x18\x03\x20\x01(\rR\rmanuf\
+    acturer3\x12\x14\n\x05model\x18\x04\x20\x01(\rR\x05model\x12\x12\n\x04da\
+    ta\x18\x05\x20\x01(\x0cR\x04dataB\t\n\x07message\"\x17\n\x15GetConnectio\
+    nsRequest\"\x1a\n\x18GetDeviceProfilesRequest\"N\n\x10AddArtnetRequest\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x12\n\x04host\x18\x02\
+    \x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"$\n\
+    \x0eAddSacnRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\
+    \x0bConnections\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.Co\
+    nnectionR\x0bconnections\"\x9e\x02\n\nConnection\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.Dmx\
+    ConnectionH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.Mid\
+    iConnectionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.Os\
+    cConnectionH\0R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.P\
+    roDjLinkConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\
+    \x17.mizer.HeliosConnectionH\0R\x06heliosB\x0c\n\nconnection\"+\n\rDmxCo\
+    nnection\x12\x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\"B\n\x10H\
+    eliosConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\
+    \x08firmware\x18\x02\x20\x01(\tR\x08firmware\"O\n\x0eMidiConnection\x12*\
+    \n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
+    \x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\
+    \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\
+    \x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
+    \x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\
+    \x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\
+    \x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\
+    \x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\
+    \x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08contro\
+    ls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08control\
+    s\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\
+    \x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\
+    \x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\t\
+    R\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07chann\
+    el\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\
+    \x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceP\
+    rofile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01\
+    (\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\x06\
+    \n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rOscConnection\x12\x1d\n\ninput_po\
+    rt\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x02\x20\
+    \x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\x01(\tR\routpu\
+    tAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\
+    \x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\
+    \x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08p\
+    layback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\
+    \x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\
+    \x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\
+    \x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.m\
+    izer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b\
+    2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06art\
+    ist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\
+    \x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\
+    \x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x032\xc4\x03\n\
+    \x0eConnectionsApi\x12D\n\x0eGetConnections\x12\x1c.mizer.GetConnections\
+    Request\x1a\x12.mizer.Connections\"\0\x12C\n\nMonitorDmx\x12\x18.mizer.M\
+    onitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\"\0\x12H\n\x0bMonitorM\
+    idi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\"\
+    \00\x01\x12D\n\x13AddArtnetConnection\x12\x17.mizer.AddArtnetRequest\x1a\
+    \x12.mizer.Connections\"\0\x12@\n\x11AddSacnConnection\x12\x15.mizer.Add\
+    SacnRequest\x1a\x12.mizer.Connections\"\0\x12U\n\x15GetMidiDeviceProfile\
+    s\x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfile\
+    s\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

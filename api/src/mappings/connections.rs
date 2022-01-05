@@ -105,3 +105,48 @@ impl From<mizer_connections::midi_device_profile::ControlType> for MidiDevicePro
         }
     }
 }
+
+impl From<mizer_connections::MidiEvent> for MonitorMidiResponse {
+    fn from(event: mizer_connections::MidiEvent) -> Self {
+        MonitorMidiResponse {
+            timestamp: event.timestamp,
+            message: Some(event.msg.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_connections::MidiMessage> for MonitorMidiResponse_oneof_message {
+    fn from(msg: mizer_connections::MidiMessage) -> Self {
+        use mizer_connections::MidiMessage::*;
+        match msg {
+            ControlChange(channel, note, value) => Self::cc(MonitorMidiResponse_NoteMsg {
+                channel: channel as u8 as u32,
+                note: note as u32,
+                value: value as u32,
+                ..Default::default()
+            }),
+            NoteOff(channel, note, value) => Self::noteOff(MonitorMidiResponse_NoteMsg {
+                channel: channel as u8 as u32,
+                note: note as u32,
+                value: value as u32,
+                ..Default::default()
+            }),
+            NoteOn(channel, note, value) => Self::noteOn(MonitorMidiResponse_NoteMsg {
+                channel: channel as u8 as u32,
+                note: note as u32,
+                value: value as u32,
+                ..Default::default()
+            }),
+            Sysex((manu1, manu2, manu3), model, data) => Self::sysEx(MonitorMidiResponse_SysEx {
+                manufacturer1: manu1 as u32,
+                manufacturer2: manu2 as u32,
+                manufacturer3: manu3 as u32,
+                model: model as u32,
+                data,
+                ..Default::default()
+            }),
+            Unknown(data) => Self::unknown(data),
+        }
+    }
+}

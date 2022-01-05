@@ -1,0 +1,12 @@
+[package]
+name = "mizer-message-bus"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+futures = "0.3"
+flume = "0.10"
+parking_lot = "0.11"

@@ -12,7 +12,6 @@ class MidiConnectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("MIDI Device: $device");
     return Column(
       children: [
         Padding(

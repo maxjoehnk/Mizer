@@ -3,10 +3,11 @@ use nativeshell::{
     shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
 };
 
-use crate::plugin::channels::*;
 use mizer_api::handlers::Handlers;
 use mizer_api::RuntimeApi;
 use mizer_util::AsyncRuntime;
+
+use crate::plugin::channels::*;
 
 mod plugin;
 
@@ -25,7 +26,11 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(
         ..Default::default()
     })?;
 
-    let _connections = ConnectionsChannel::new(handlers.connections).channel(context.weak());
+    let _connections =
+        ConnectionsChannel::new(handlers.connections.clone()).channel(context.weak());
+    let _midi_monitor_events =
+        MonitorMidiEventChannel::new(handlers.connections, async_runtime.clone(), context.weak())
+            .event_channel(context.weak());
     let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.weak());
     let _nodes = NodesChannel::new(handlers.nodes).channel(context.weak());
     let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.weak());

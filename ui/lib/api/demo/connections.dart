@@ -66,4 +66,10 @@ class ConnectionsDemoApi implements ConnectionsApi {
     // TODO: implement getMidiDeviceProfiles
     throw UnimplementedError();
   }
+
+  @override
+  Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
+    // TODO: implement monitorMidiConnection
+    throw UnimplementedError();
+  }
 }

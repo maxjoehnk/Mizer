@@ -1,3 +1,4 @@
+use mizer_message_bus::Subscriber;
 use mizer_node::*;
 use mizer_protocol_midi::*;
 use mizer_util::LerpExt;
@@ -77,7 +78,7 @@ impl PipelineNode for MidiInputNode {
 }
 
 impl ProcessingNode for MidiInputNode {
-    type State = Option<MidiEventReceiver>;
+    type State = Option<Subscriber<MidiEvent>>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         let connection_manager = context.inject::<MidiConnectionManager>().unwrap();

@@ -9,6 +9,8 @@ use mizer_nodes::{FixtureNode, Node, SequencerNode};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 
 use crate::{ApiCommand, ApiHandler};
+use mizer_message_bus::Subscriber;
+use mizer_protocol_midi::MidiEvent;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -290,6 +292,15 @@ impl RuntimeApi for Api {
             .unwrap();
 
         rx.recv().unwrap()
+    }
+
+    fn get_midi_monitor(&self, name: String) -> anyhow::Result<Subscriber<MidiEvent>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender
+            .send(ApiCommand::GetMidiMonitor(name, tx))
+            .unwrap();
+
+        rx.recv().map_err(anyhow::Error::from).and_then(|r| r)
     }
 }
 

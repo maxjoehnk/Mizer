@@ -1,3 +1,4 @@
+use futures::{Stream, StreamExt};
 use std::collections::HashMap;
 
 use crate::models::*;
@@ -29,6 +30,24 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     pub fn monitor_dmx(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>> {
         self.runtime.get_dmx_monitor(output_id)
+    }
+
+    pub fn monitor_midi(
+        &self,
+        name: String,
+    ) -> anyhow::Result<impl Stream<Item = MonitorMidiResponse>> {
+        let stream = self
+            .runtime
+            .get_midi_monitor(name)?
+            .into_stream()
+            .map(|event| {
+                log::warn!("event: {:?}", event);
+
+                event
+            })
+            .map(MonitorMidiResponse::from);
+
+        Ok(stream)
     }
 
     pub fn add_sacn(&self, name: String) -> anyhow::Result<()> {

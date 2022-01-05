@@ -48,6 +48,7 @@ members = [
     "ui",
     "ui/ffi",
     "util",
+    "util/bus"
 ]
 
 [lib]
@@ -103,6 +104,7 @@ mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }
 mizer-util = { path = "util" }
+mizer-message-bus = { path = "util/bus" }
 mizer-settings = { path = "runtime/settings" }
 tokio = { version = "1.8", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"

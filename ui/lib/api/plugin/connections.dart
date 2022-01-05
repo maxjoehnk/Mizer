@@ -4,6 +4,7 @@ import 'package:mizer/protos/connections.pb.dart';
 
 class ConnectionsPluginApi implements ConnectionsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/connections");
+  final EventChannel midiMonitorChannel = const EventChannel("mizer.live/connections/midi");
 
   @override
   Future<Connections> getConnections() async {
@@ -38,5 +39,11 @@ class ConnectionsPluginApi implements ConnectionsApi {
     var response = await channel.invokeMethod("getMidiDeviceProfiles");
 
     return MidiDeviceProfiles.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
+    return midiMonitorChannel.receiveBroadcastStream(connectionId)
+        .map((buffer) => MonitorMidiResponse.fromBuffer(_convertBuffer(buffer)));
   }
 }

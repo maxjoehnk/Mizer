@@ -2,6 +2,11 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/platform/platform.dart';
+import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/state/layouts_bloc.dart';
+import 'package:mizer/state/media_bloc.dart';
+import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 import 'package:provider/provider.dart';
 
@@ -26,7 +31,7 @@ class ApplicationMenu extends StatelessWidget {
                 shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
             MenuItem(
                 label: "Open Project",
-                action: () => _openProject(context.read()),
+                action: () => _openProject(context, context.read()),
                 shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyO)),
             MenuItem(
                 label: 'Save Project',
@@ -57,9 +62,14 @@ class ApplicationMenu extends StatelessWidget {
         ]));
   }
 
-  Future<void> _openProject(SessionApi api) async {
+  Future<void> _openProject(BuildContext context, SessionApi api) async {
     final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
     await api.loadProject(file!.path);
+    context.read<FixturesBloc>().add(FetchFixtures());
+    context.read<LayoutsBloc>().add(FetchLayouts());
+    context.read<MediaBloc>().add(MediaEvent.Fetch);
+    context.read<NodesBloc>().add(FetchNodes());
+    context.read<SequencerBloc>().add(FetchSequences());
   }
 }

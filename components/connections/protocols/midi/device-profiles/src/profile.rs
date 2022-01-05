@@ -1,7 +1,7 @@
-use std::convert::TryInto;
 use crate::scripts::outputs::OutputScript;
-use serde::{Deserialize, Serialize};
 use mizer_midi_messages::Channel;
+use serde::{Deserialize, Serialize};
+use std::convert::TryInto;
 
 #[derive(Clone, Deserialize, Serialize)]
 pub struct DeviceProfile {
@@ -18,7 +18,7 @@ pub struct DeviceProfile {
     #[serde(rename = "layout")]
     pub(crate) layout_file: Option<String>,
     #[serde(skip)]
-    pub layout: Option<String>
+    pub layout: Option<String>,
 }
 
 impl DeviceProfile {
@@ -28,8 +28,7 @@ impl DeviceProfile {
 
     pub fn get_control(&self, page: &str, control: &str) -> Option<Control> {
         let page = self.pages.iter().find(|p| p.name == page);
-        let control = page
-            .and_then(|page| page.all_controls().find(|c| c.id == control).cloned());
+        let control = page.and_then(|page| page.all_controls().find(|c| c.id == control).cloned());
 
         control
     }

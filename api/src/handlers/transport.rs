@@ -1,11 +1,11 @@
-use std::sync::Arc;
 use crate::models::transport::Transport;
 use crate::models::TransportState;
 use crate::RuntimeApi;
 use futures::stream::Stream;
 use futures::StreamExt;
-use pinboard::NonEmptyPinboard;
 use mizer_clock::ClockSnapshot;
+use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct TransportHandler<R: RuntimeApi> {

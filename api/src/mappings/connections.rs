@@ -15,7 +15,9 @@ impl From<mizer_connections::Connection> for Connection_oneof_connection {
         use mizer_connections::Connection::*;
         match connection {
             Midi(midi) => Self::midi(MidiConnection {
-                _device_profile: midi.device_profile.map(MidiConnection_oneof__device_profile::device_profile),
+                _device_profile: midi
+                    .device_profile
+                    .map(MidiConnection_oneof__device_profile::device_profile),
                 ..Default::default()
             }),
             Dmx(view) => Self::dmx(DmxConnection {
@@ -32,7 +34,9 @@ impl From<mizer_connections::midi_device_profile::DeviceProfile> for MidiDeviceP
             id: device_profile.id,
             manufacturer: device_profile.manufacturer,
             model: device_profile.name,
-            pages: device_profile.pages.into_iter()
+            pages: device_profile
+                .pages
+                .into_iter()
                 .map(MidiDeviceProfile_Page::from)
                 .collect(),
             ..Default::default()
@@ -48,10 +52,14 @@ impl From<mizer_connections::midi_device_profile::Page> for MidiDeviceProfile_Pa
     fn from(page: mizer_connections::midi_device_profile::Page) -> Self {
         Self {
             name: page.name,
-            controls: page.controls.into_iter()
+            controls: page
+                .controls
+                .into_iter()
                 .map(MidiDeviceProfile_Control::from)
                 .collect(),
-            groups: page.groups.into_iter()
+            groups: page
+                .groups
+                .into_iter()
                 .map(MidiDeviceProfile_Group::from)
                 .collect(),
             ..Default::default()
@@ -63,7 +71,9 @@ impl From<mizer_connections::midi_device_profile::Group> for MidiDeviceProfile_G
     fn from(page: mizer_connections::midi_device_profile::Group) -> Self {
         Self {
             name: page.name,
-            controls: page.controls.into_iter()
+            controls: page
+                .controls
+                .into_iter()
                 .map(MidiDeviceProfile_Control::from)
                 .collect(),
             ..Default::default()

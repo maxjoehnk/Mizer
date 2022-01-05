@@ -1,7 +1,7 @@
-use std::sync::Arc;
-use pinboard::NonEmptyPinboard;
-use mizer_clock::ClockSnapshot;
 use crate::types::{drop_pointer, FFIFromPointer};
+use mizer_clock::ClockSnapshot;
+use pinboard::NonEmptyPinboard;
+use std::sync::Arc;
 
 pub struct Transport {
     pub clock_ref: Arc<NonEmptyPinboard<ClockSnapshot>>,
@@ -27,7 +27,7 @@ impl From<mizer_clock::Timecode> for Timecode {
 }
 
 #[no_mangle]
-pub extern fn read_timecode(ptr: *const Transport) -> Timecode {
+pub extern "C" fn read_timecode(ptr: *const Transport) -> Timecode {
     let ffi = Arc::from_pointer(ptr);
 
     let snapshot = ffi.clock_ref.read();
@@ -38,7 +38,6 @@ pub extern fn read_timecode(ptr: *const Transport) -> Timecode {
 }
 
 #[no_mangle]
-pub extern fn drop_transport_pointer(ptr: *const Transport) {
+pub extern "C" fn drop_transport_pointer(ptr: *const Transport) {
     drop_pointer(ptr);
 }
-

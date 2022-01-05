@@ -49,16 +49,14 @@ impl PipelineNode for OscOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            (
-                self.argument_type.get_port_id(),
-                PortMetadata {
-                    port_type: self.argument_type.get_port_type(),
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-        ]
+        vec![(
+            self.argument_type.get_port_id(),
+            PortMetadata {
+                port_type: self.argument_type.get_port_type(),
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {
@@ -79,7 +77,7 @@ impl ProcessingNode for OscOutputNode {
                     OscArgumentType::Int => OscType::Int(value as i32),
                     OscArgumentType::Long => OscType::Long(value as i64),
                     OscArgumentType::Bool => OscType::Bool((value - 1.).abs() < f64::EPSILON),
-                    _ => unreachable!()
+                    _ => unreachable!(),
                 };
                 state.send(OscPacket::Message(OscMessage {
                     addr: self.path.clone(),

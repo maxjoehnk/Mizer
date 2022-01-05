@@ -403,14 +403,13 @@ impl From<mizer_nodes::MidiInputNode> for MidiNodeConfig {
                 rangeTo: range.1 as u32,
                 ..Default::default()
             }),
-            mizer_nodes::MidiInputConfig::Control {
-                page,
-                control
-            } => MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding {
-                page,
-                control,
-                ..Default::default()
-            }),
+            mizer_nodes::MidiInputConfig::Control { page, control } => {
+                MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding {
+                    page,
+                    control,
+                    ..Default::default()
+                })
+            }
         };
 
         Self {
@@ -431,23 +430,23 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiInputNode {
                         MidiNodeConfig_NoteBinding_MidiType::CC => MidiInputConfig::CC {
                             channel: binding.channel as u8,
                             port: binding.port as u8,
-                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8),
                         },
                         MidiNodeConfig_NoteBinding_MidiType::Note => MidiInputConfig::Note {
                             channel: binding.channel as u8,
                             port: binding.port as u8,
-                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
-                        }
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8),
+                        },
                     }
-                },
+                }
                 Some(MidiNodeConfig_oneof_binding::controlBinding(binding)) => {
                     MidiInputConfig::Control {
                         page: binding.page,
                         control: binding.control,
                     }
-                },
+                }
                 None => MidiInputConfig::default(),
-            }
+            },
         }
     }
 }
@@ -479,14 +478,13 @@ impl From<mizer_nodes::MidiOutputNode> for MidiNodeConfig {
                 rangeTo: range.1 as u32,
                 ..Default::default()
             }),
-            mizer_nodes::MidiOutputConfig::Control {
-                page,
-                control
-            } => MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding {
-                page,
-                control,
-                ..Default::default()
-            }),
+            mizer_nodes::MidiOutputConfig::Control { page, control } => {
+                MidiNodeConfig_oneof_binding::controlBinding(MidiNodeConfig_ControlBinding {
+                    page,
+                    control,
+                    ..Default::default()
+                })
+            }
         };
 
         Self {
@@ -507,23 +505,23 @@ impl From<MidiNodeConfig> for mizer_nodes::MidiOutputNode {
                         MidiNodeConfig_NoteBinding_MidiType::CC => MidiOutputConfig::CC {
                             channel: binding.channel as u8,
                             port: binding.port as u8,
-                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8),
                         },
                         MidiNodeConfig_NoteBinding_MidiType::Note => MidiOutputConfig::Note {
                             channel: binding.channel as u8,
                             port: binding.port as u8,
-                            range: (binding.rangeFrom as u8, binding.rangeTo as u8)
-                        }
+                            range: (binding.rangeFrom as u8, binding.rangeTo as u8),
+                        },
                     }
-                },
+                }
                 Some(MidiNodeConfig_oneof_binding::controlBinding(binding)) => {
                     MidiOutputConfig::Control {
                         page: binding.page,
                         control: binding.control,
                     }
-                },
+                }
                 None => MidiOutputConfig::default(),
-            }
+            },
         }
     }
 }

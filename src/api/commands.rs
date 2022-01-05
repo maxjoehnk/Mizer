@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use mizer_clock::ClockState;
-use mizer_connections::{Connection, midi_device_profile::DeviceProfile};
+use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use pinboard::NonEmptyPinboard;

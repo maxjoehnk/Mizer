@@ -10,7 +10,10 @@ pub fn parse_outputs_ast(script: impl Into<PathBuf>) -> Result<OutputScript, Scr
 
     let ast = engine.compile_file(script.into())?;
 
-    let script = OutputScript { ast, engine: Arc::new(engine) };
+    let script = OutputScript {
+        ast,
+        engine: Arc::new(engine),
+    };
     Ok(script)
 }
 

@@ -1,13 +1,13 @@
-use std::sync::Arc;
+use crate::types::{drop_pointer, Array, FFIFromPointer};
 use pinboard::NonEmptyPinboard;
-use crate::types::{Array, drop_pointer, FFIFromPointer};
+use std::sync::Arc;
 
 pub struct NodeHistory {
-    pub history: Arc<NonEmptyPinboard<Vec<f64>>>
+    pub history: Arc<NonEmptyPinboard<Vec<f64>>>,
 }
 
 #[no_mangle]
-pub extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
+pub extern "C" fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
     let ffi = Arc::from_pointer(ptr);
 
     let values = ffi.history.read();
@@ -18,7 +18,6 @@ pub extern fn read_node_history(ptr: *const NodeHistory) -> Array<f64> {
 }
 
 #[no_mangle]
-pub extern fn drop_node_history_pointer(ptr: *const NodeHistory) {
+pub extern "C" fn drop_node_history_pointer(ptr: *const NodeHistory) {
     drop_pointer(ptr);
 }
-

@@ -1,7 +1,7 @@
 use derive_more::From;
 
 pub mod midi_device_profile {
-    pub use mizer_protocol_midi::{DeviceProfile, Page, Group, Control, ControlType};
+    pub use mizer_protocol_midi::{Control, ControlType, DeviceProfile, Group, Page};
 }
 
 #[derive(From, Debug, Clone)]

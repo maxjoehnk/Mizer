@@ -1,6 +1,6 @@
 use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
+use mizer_midi_device_profiles::{load_profiles, DeviceProfile};
 use std::collections::HashMap;
-use mizer_midi_device_profiles::{DeviceProfile, load_profiles};
 
 use crate::device::MidiDevice;
 
@@ -79,7 +79,11 @@ impl MidiDeviceProvider {
         let devices = ports
             .into_iter()
             .map(|(name, (input, output))| MidiDeviceIdentifier {
-                profile: self.profiles.iter().find(|profile| profile.matches(&name)).cloned(),
+                profile: self
+                    .profiles
+                    .iter()
+                    .find(|profile| profile.matches(&name))
+                    .cloned(),
                 name,
                 input,
                 output,

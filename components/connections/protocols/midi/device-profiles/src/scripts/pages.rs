@@ -1,4 +1,4 @@
-use crate::profile::{Control, Page, Group};
+use crate::profile::{Control, Group, Page};
 use crate::scripts::ScriptError;
 use rhai::{Array, Engine};
 use std::path::PathBuf;

@@ -1,4 +1,4 @@
-pub use crate::profile::{DeviceProfile, Group, Page, Control, ControlType};
+pub use crate::profile::{Control, ControlType, DeviceProfile, Group, Page};
 use crate::profile_reader::read_profile;
 use std::fs;
 

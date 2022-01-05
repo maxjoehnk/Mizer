@@ -45,7 +45,6 @@ pub fn build_runtime(
     register_midi_module(&mut runtime)?;
     let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime)?;
 
-
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
     handle.spawn(media_server.run_api());
@@ -208,8 +207,12 @@ fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
 fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     MidiModule.register(runtime)?;
 
-    let connection_manager = runtime.injector_mut().get_mut::<MidiConnectionManager>().unwrap();
-    connection_manager.load_device_profiles("components/connections/protocols/midi/device-profiles/profiles")?;
+    let connection_manager = runtime
+        .injector_mut()
+        .get_mut::<MidiConnectionManager>()
+        .unwrap();
+    connection_manager
+        .load_device_profiles("components/connections/protocols/midi/device-profiles/profiles")?;
 
     Ok(())
 }

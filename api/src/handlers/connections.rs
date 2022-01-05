@@ -40,7 +40,9 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
-        let profiles = self.runtime.get_midi_device_profiles()
+        let profiles = self
+            .runtime
+            .get_midi_device_profiles()
             .into_iter()
             .map(MidiDeviceProfile::from)
             .collect();

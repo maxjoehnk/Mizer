@@ -1,5 +1,5 @@
 mod input;
 mod output;
 
-pub use self::input::{MidiInputNode, MidiInputConfig};
-pub use self::output::{MidiOutputNode, MidiOutputConfig};
+pub use self::input::{MidiInputConfig, MidiInputNode};
+pub use self::output::{MidiOutputConfig, MidiOutputNode};

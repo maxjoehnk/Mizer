@@ -21,14 +21,20 @@ impl OscInputStream {
     }
 
     fn send(&self, msg: OscPacket) -> anyhow::Result<()> {
-        let feed = self.0.read().map_err(|_| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
+        let feed = self
+            .0
+            .read()
+            .map_err(|_| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
         feed.send(msg);
 
         Ok(())
     }
 
     fn subscribe(&self) -> anyhow::Result<OscInputSubscriber> {
-        let mut feed = self.0.write().map_err(|_| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
+        let mut feed = self
+            .0
+            .write()
+            .map_err(|_| anyhow::anyhow!("OscInputStream RWLock is poisoned"))?;
         let reader = feed.add_reader();
 
         Ok(OscInputSubscriber(reader))
@@ -60,17 +66,15 @@ fn spawn_osc_input_thread(addr: SocketAddrV4) -> OscInputStream {
         let mut buffer = [0u8; rosc::decoder::MTU];
         loop {
             match socket.recv_from(&mut buffer) {
-                Ok((size, _)) => {
-                    match rosc::decoder::decode(&buffer[..size]) {
-                        Ok(msg) => {
-                            log::trace!("Received osc packet {:?}", msg);
-                            tx.send(msg);
-                        },
-                        Err(err) => {
-                            log::error!("Error decoding osc packet: {:?}", err);
-                        }
+                Ok((size, _)) => match rosc::decoder::decode(&buffer[..size]) {
+                    Ok(msg) => {
+                        log::trace!("Received osc packet {:?}", msg);
+                        tx.send(msg);
                     }
-                }
+                    Err(err) => {
+                        log::error!("Error decoding osc packet: {:?}", err);
+                    }
+                },
                 Err(e) => println!("Error receiving osc packet: {:?}", e),
             }
         }

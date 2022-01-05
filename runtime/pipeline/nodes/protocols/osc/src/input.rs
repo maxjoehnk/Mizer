@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
+use crate::OscArgumentType;
 use mizer_node::*;
 use mizer_protocol_osc::*;
 use mizer_util::ConvertPercentages;
-use crate::OscArgumentType;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct OscInputNode {
@@ -48,16 +48,14 @@ impl PipelineNode for OscInputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            (
-                self.argument_type.get_port_id(),
-                PortMetadata {
-                    port_type: self.argument_type.get_port_type(),
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
-        ]
+        vec![(
+            self.argument_type.get_port_id(),
+            PortMetadata {
+                port_type: self.argument_type.get_port_type(),
+                direction: PortDirection::Output,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {
@@ -103,7 +101,9 @@ impl OscInputNode {
                     OscType::Double(double) => self.write_number(context, *double),
                     OscType::Int(int) => self.write_number(context, *int as f64),
                     OscType::Long(value) => self.write_number(context, *value as f64),
-                    OscType::Bool(value) => self.write_number(context, if *value { 1. } else { 0. }),
+                    OscType::Bool(value) => {
+                        self.write_number(context, if *value { 1. } else { 0. })
+                    }
                     _ => {}
                 }
             }

@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use mizer_clock::{ClockSnapshot, ClockState};
-use mizer_connections::{Connection, midi_device_profile::DeviceProfile};
+use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::{ControlConfig, Layout};
 use mizer_layouts::{ControlPosition, ControlSize};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};

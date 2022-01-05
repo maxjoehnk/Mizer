@@ -123,7 +123,8 @@ impl ProcessingNode for MidiInputNode {
                             MidiMessage::NoteOff(channel, port, _),
                             MidiInputConfig::Note {
                                 channel: config_channel,
-                                port: config_port, ..
+                                port: config_port,
+                                ..
                             },
                         ) if port == *config_port => {
                             if channel != *config_channel {
@@ -131,10 +132,12 @@ impl ProcessingNode for MidiInputNode {
                             }
                             result_value = Some(0f64);
                         }
-                        (
-                            msg, MidiInputConfig::Control { page, control }
-                        ) => {
-                            if let Some(control) = device.profile.as_ref().and_then(|profile| profile.get_control(page, control)) {
+                        (msg, MidiInputConfig::Control { page, control }) => {
+                            if let Some(control) = device
+                                .profile
+                                .as_ref()
+                                .and_then(|profile| profile.get_control(page, control))
+                            {
                                 if let Some(value) = control.receive_value(msg) {
                                     result_value = Some(value);
                                 }

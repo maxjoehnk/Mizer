@@ -1,5 +1,5 @@
-use std::sync::Arc;
 use std::iter::FromIterator;
+use std::sync::Arc;
 
 #[repr(C)]
 pub struct Array<T> {
@@ -12,7 +12,7 @@ impl<T> From<Vec<T>> for Array<T> {
         vec.shrink_to_fit();
         let array = Array {
             len: vec.len(),
-            array: vec.as_ptr()
+            array: vec.as_ptr(),
         };
         std::mem::forget(vec);
 
@@ -21,7 +21,7 @@ impl<T> From<Vec<T>> for Array<T> {
 }
 
 impl<T> FromIterator<T> for Array<T> {
-    fn from_iter<I: IntoIterator<Item=T>>(iter: I) -> Self {
+    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
         let vec: Vec<T> = iter.into_iter().collect();
 
         vec.into()
@@ -29,7 +29,7 @@ impl<T> FromIterator<T> for Array<T> {
 }
 
 /// Split into two traits so FFIFromPointer can be kept internal to the ffi crate
-pub trait FFIToPointer<T> : FFIFromPointer<T> {
+pub trait FFIToPointer<T>: FFIFromPointer<T> {
     fn to_pointer(&self) -> u64;
 }
 

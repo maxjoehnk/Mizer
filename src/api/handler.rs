@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 
 use mizer_clock::Clock;
-use mizer_connections::{Connection, midi_device_profile::DeviceProfile, DmxView, MidiView};
+use mizer_connections::{midi_device_profile::DeviceProfile, Connection, DmxView, MidiView};
 use mizer_module::Runtime;
 use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
 use mizer_protocol_midi::MidiConnectionManager;
@@ -134,7 +134,7 @@ impl ApiHandler {
             .into_iter()
             .map(|device| MidiView {
                 name: device.name,
-                device_profile: device.profile.as_ref().map(|profile| profile.id.clone())
+                device_profile: device.profile.as_ref().map(|profile| profile.id.clone()),
             })
             .map(Connection::from);
         let dmx_manager = mizer

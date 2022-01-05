@@ -1,6 +1,6 @@
 use crate::consts::*;
-use std::convert::TryFrom;
 use serde::{Deserialize, Serialize};
+use std::convert::TryFrom;
 
 /// Represents a Midi channel
 ///

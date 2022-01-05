@@ -87,23 +87,35 @@ impl ProcessingNode for MidiOutputNode {
                 context.push_history_value(value);
                 let device: &mut MidiDevice = device.deref_mut();
                 let msg = match &self.config {
-                    MidiOutputConfig::CC { channel, port, range } => Some(MidiMessage::ControlChange(
+                    MidiOutputConfig::CC {
+                        channel,
+                        port,
+                        range,
+                    } => Some(MidiMessage::ControlChange(
                         (*channel).try_into().unwrap(),
                         *port,
                         value.linear_extrapolate((0f64, 1f64), *range),
                     )),
-                    MidiOutputConfig::Note { channel, port, range } => Some(MidiMessage::NoteOn(
+                    MidiOutputConfig::Note {
+                        channel,
+                        port,
+                        range,
+                    } => Some(MidiMessage::NoteOn(
                         (*channel).try_into().unwrap(),
                         *port,
                         value.linear_extrapolate((0f64, 1f64), *range),
                     )),
                     MidiOutputConfig::Control { page, control } => {
-                        if let Some(control) = device.profile.as_ref().and_then(|profile| profile.get_control(page, control)) {
+                        if let Some(control) = device
+                            .profile
+                            .as_ref()
+                            .and_then(|profile| profile.get_control(page, control))
+                        {
                             control.send_value(value)
-                        }else {
+                        } else {
                             None
                         }
-                    },
+                    }
                 };
 
                 if let Some(msg) = msg {

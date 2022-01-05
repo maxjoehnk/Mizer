@@ -39,12 +39,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
                     }
                 }
             }
-            "getTransportPointer" => {
-                match self.get_transport_pointer() {
-                    Ok(ptr) => resp.send_ok(Value::I64(ptr)),
-                    Err(err) => resp.respond_error(err),
-                }
-            }
+            "getTransportPointer" => match self.get_transport_pointer() {
+                Ok(ptr) => resp.send_ok(Value::I64(ptr)),
+                Err(err) => resp.respond_error(err),
+            },
             _ => resp.not_implemented(),
         }
     }

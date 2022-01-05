@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use mizer_node::{PortId, PortType};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all = "camelCase")]

@@ -24,7 +24,9 @@ fn add_buttons(channel) {
         let button_id = "button-" + (channel - 1) + "-" + button_index;
         group += note("Pad " + button_number, 9 + button_index)
             .channel(channel)
+            .range(0, 127)
             .output()
+            .output_range(0, 127) // This should be replaced by some calculation
             .id(button_id);
     }
     for button_index in range(0, 4) {
@@ -32,7 +34,9 @@ fn add_buttons(channel) {
         let button_id = "button-" + (channel - 1) + "-" + (button_index + 4);
         group += note("Pad " + button_name, 25 + button_index)
             .channel(channel)
+            .range(0, 127)
             .output()
+            .output_range(0, 127) // This should be replaced by some calculation
             .id(button_id);
     }
 
@@ -43,12 +47,12 @@ fn add_faders(channel) {
     let group = create_group("Knobs");
     for fader_index in range(0, 8) {
         let fader_name = fader_index + 1;
-        group += cc("Knob 1-" + fader_name, 21 + fader_index).channel(channel);
+        group += cc("Knob 1-" + fader_name, 21 + fader_index).channel(channel).range(0, 127);
     }
 
     for fader_index in range(0, 8) {
         let fader_name = fader_index + 1;
-        group += cc("Knob 2-" + fader_name, 41 + fader_index).channel(channel);
+        group += cc("Knob 2-" + fader_name, 41 + fader_index).channel(channel).range(0, 127);
     }
 
     group
@@ -56,10 +60,10 @@ fn add_faders(channel) {
 
 fn add_move_buttons(page, channel) {
     let button_id = "button-" + (channel - 1) + "-";
-    page += note("Down", 115).channel(channel).output().id(button_id + "9");
-    page += note("Up", 114).channel(channel).output().id(button_id + "8");
-    page += note("Left", 116).channel(channel).output().id(button_id + "10");
-    page += note("Right", 117).channel(channel).output().id(button_id + "11");
+    page += cc("Down", 115).channel(channel).range(0, 127).output().id(button_id + "9");
+    page += cc("Up", 114).channel(channel).range(0, 127).output().id(button_id + "8");
+    page += cc("Left", 116).channel(channel).range(0, 127).output().id(button_id + "10");
+    page += cc("Right", 117).channel(channel).range(0, 127).output().id(button_id + "11");
 
     page
 }

@@ -75,6 +75,7 @@ jobs:
           if-no-files-found: error
 
   build-windows:
+    if: false
     runs-on: windows-latest
     needs: gvsbuild
     steps:
@@ -153,6 +154,7 @@ jobs:
 
   # Gtk & glib dependencies for windows
   gvsbuild:
+    if: false
     name: build GTK binaries with gvsbuild
     runs-on: windows-latest
 

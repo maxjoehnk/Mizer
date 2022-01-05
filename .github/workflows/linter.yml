@@ -56,5 +56,9 @@ jobs:
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
+          VALIDATE_RUST_CLIPPY: false
+          VALIDATE_RUST_2015: false
+          VALIDATE_RUST_2018: false
+          VALIDATE_RUST_2021: false
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

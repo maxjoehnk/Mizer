@@ -77,7 +77,7 @@ fn generate_data_file(
         .into_iter()
         .zip(frames)
         .map(|(value, frame)| format!("{} {}", frame, value))
-        .reduce(|lhs, rhs| lhs.add("\n").add(&rhs))
+        .reduce(|lhs, rhs| lhs.add("\n").add(rhs.as_str()))
         .unwrap_or_default();
     fs::write(dir.join(format!("{}.dat", name)), data)?;
 

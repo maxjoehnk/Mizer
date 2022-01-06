@@ -5,13 +5,12 @@ fn main() {
 
     std::fs::create_dir_all(".fixtures").unwrap();
 
-    // TODO: replace wget with rust native download
-    Command::new("wget")
-        .args(&[
-            "https://open-fixture-library.org/download.aglight",
-            "-O",
-            ".fixtures/fixtures.json",
-        ])
-        .output()
-        .expect("failed to download fixture library");
+    let mut fixtures = ureq::get("https://open-fixture-library.org/download.aglight")
+        .call()
+        .unwrap()
+        .into_reader();
+
+    let mut file = std::fs::File::create(".fixtures/fixtures.json").unwrap();
+
+    std::io::copy(&mut fixtures, &mut file).unwrap();
 }

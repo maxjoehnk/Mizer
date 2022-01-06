@@ -16,7 +16,6 @@ You need to have the following tools installed:
 * protoc
 * GStreamer
 * LLVM
-* wget
 
 ### Building
 

@@ -8,30 +8,16 @@ use mizer_fixtures::library::FixtureLibraryProvider;
 
 #[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
+    file_path: String,
     definitions: HashMap<String, Vec<OpenFixtureLibraryFixtureDefinition>>,
 }
 
 impl OpenFixtureLibraryProvider {
-    pub fn new() -> Self {
-        Default::default()
-    }
-
-    pub fn load(&mut self, path: &str) -> anyhow::Result<()> {
-        let files = std::fs::read_dir(path)?;
-        for file in files {
-            let file = file?;
-            if file.metadata()?.is_file() {
-                let mut ag_library_file = std::fs::File::open(&file.path())?;
-                let ag_library: AgLibraryFile = serde_json::from_reader(&mut ag_library_file)?;
-
-                for fixture in ag_library.fixtures {
-                    let manufacturer = fixture.manufacturer.name.to_slug();
-                    self.add_fixture_definition(&manufacturer, fixture);
-                }
-            }
+    pub fn new(file_path: String) -> Self {
+        Self {
+            file_path,
+            definitions: Default::default(),
         }
-
-        Ok(())
     }
 
     fn add_fixture_definition(
@@ -50,6 +36,26 @@ impl OpenFixtureLibraryProvider {
 }
 
 impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
+    fn load(&mut self) -> anyhow::Result<()> {
+        let files = std::fs::read_dir(&self.file_path)?;
+        for file in files {
+            let file = file?;
+            if file.metadata()?.is_file() {
+                log::trace!("Loading ofl library from '{:?}'...", file);
+                let mut ag_library_file = std::fs::File::open(&file.path())?;
+                let ag_library: AgLibraryFile = simd_json::serde::from_reader(&mut ag_library_file)?;
+
+                for fixture in ag_library.fixtures {
+                    let manufacturer = fixture.manufacturer.name.to_slug();
+                    self.add_fixture_definition(&manufacturer, fixture);
+                }
+                log::debug!("Loaded ofl library from '{:?}'.", file);
+            }
+        }
+
+        Ok(())
+    }
+
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition> {
         if !id.starts_with("ofl:") {
             return None;

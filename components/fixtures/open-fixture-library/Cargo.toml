@@ -7,6 +7,7 @@ edition = "2018"
 [dependencies]
 log = "0.4"
 anyhow = "1"
-mizer-fixtures = { path = "../" }
+mizer-fixtures = { path = ".." }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+simd-json = "0.4"

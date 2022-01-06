@@ -31,6 +31,8 @@ impl FixtureLibrary {
 }
 
 pub trait FixtureLibraryProvider: Send + Sync {
+    fn load(&mut self) -> anyhow::Result<()>;
+
     fn get_definition(&self, id: &str) -> Option<FixtureDefinition>;
 
     fn list_definitions(&self) -> Vec<FixtureDefinition>;

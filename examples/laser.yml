@@ -1,4 +1,12 @@
 nodes:
+  - type: programmer
+    path: /programmer
+    config: {}
+    designer:
+      position:
+        x: -5
+        y: 0
+      scale: 1
   - type: ilda-file
     path: /ilda-file-0
     config:

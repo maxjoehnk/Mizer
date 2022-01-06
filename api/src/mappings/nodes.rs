@@ -19,6 +19,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             Select(select) => Self::selectConfig(select.into()),
             Merge(merge) => Self::mergeConfig(merge.into()),
             Fixture(fixture) => Self::fixtureConfig(fixture.into()),
+            Programmer(programmer) => Self::programmerConfig(programmer.into()),
             Sequencer(sequencer) => Self::sequencerConfig(sequencer.into()),
             IldaFile(ilda) => Self::ildaFileConfig(ilda.into()),
             Laser(laser) => Self::laserConfig(laser.into()),
@@ -58,6 +59,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::selectConfig(select) => Self::Select(select.into()),
             NodeConfig_oneof_type::mergeConfig(merge) => Self::Merge(merge.into()),
             NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
+            NodeConfig_oneof_type::programmerConfig(programmer) => Self::Programmer(programmer.into()),
             NodeConfig_oneof_type::sequencerConfig(sequencer) => Self::Sequencer(sequencer.into()),
             NodeConfig_oneof_type::ildaFileConfig(ilda) => Self::IldaFile(ilda.into()),
             NodeConfig_oneof_type::laserConfig(laser) => Self::Laser(laser.into()),
@@ -297,6 +299,18 @@ impl From<FixtureNodeConfig> for mizer_nodes::FixtureNode {
             fixture_id: fixture.fixture_id,
             ..Default::default()
         }
+    }
+}
+
+impl From<mizer_nodes::ProgrammerNode> for ProgrammerNodeConfig {
+    fn from(_: mizer_nodes::ProgrammerNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<ProgrammerNodeConfig> for mizer_nodes::ProgrammerNode {
+    fn from(_: ProgrammerNodeConfig) -> Self {
+        Default::default()
     }
 }
 
@@ -818,6 +832,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::PixelPattern => Node_NodeType::PixelPattern,
             NodeType::OpcOutput => Node_NodeType::OpcOutput,
             NodeType::Fixture => Node_NodeType::Fixture,
+            NodeType::Programmer => Node_NodeType::Programmer,
             NodeType::Sequencer => Node_NodeType::Sequencer,
             NodeType::Sequence => Node_NodeType::Sequence,
             NodeType::Envelope => Node_NodeType::Envelope,
@@ -853,6 +868,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::PixelPattern => NodeType::PixelPattern,
             Node_NodeType::OpcOutput => NodeType::OpcOutput,
             Node_NodeType::Fixture => NodeType::Fixture,
+            Node_NodeType::Programmer => NodeType::Programmer,
             Node_NodeType::Sequencer => NodeType::Sequencer,
             Node_NodeType::Sequence => NodeType::Sequence,
             Node_NodeType::Envelope => NodeType::Envelope,

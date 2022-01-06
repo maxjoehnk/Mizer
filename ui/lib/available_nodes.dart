@@ -29,6 +29,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.PixelToDmx: "DMX Conversion",
   Node_NodeType.OpcOutput: "OPC Output",
   Node_NodeType.Fixture: "Fixture",
+  Node_NodeType.Programmer: "Programmer",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [

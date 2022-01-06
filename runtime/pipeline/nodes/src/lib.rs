@@ -3,7 +3,7 @@ pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
-pub use mizer_fixture_nodes::FixtureNode;
+pub use mizer_fixture_nodes::{FixtureNode, ProgrammerNode};
 pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
@@ -31,6 +31,7 @@ pub enum Node {
     Merge(MergeNode),
     Select(SelectNode),
     Fixture(FixtureNode),
+    Programmer(ProgrammerNode),
     Sequencer(SequencerNode),
     IldaFile(IldaFileNode),
     Laser(LaserNode),
@@ -64,6 +65,7 @@ impl From<NodeType> for Node {
             NodeType::Merge => MergeNode::default().into(),
             NodeType::Select => SelectNode::default().into(),
             NodeType::Fixture => FixtureNode::default().into(),
+            NodeType::Programmer => ProgrammerNode::default().into(),
             NodeType::Sequencer => SequencerNode::default().into(),
             NodeType::IldaFile => IldaFileNode::default().into(),
             NodeType::Laser => LaserNode::default().into(),
@@ -100,6 +102,7 @@ impl Node {
             Merge(_) => NodeType::Merge,
             Select(_) => NodeType::Select,
             Fixture(_) => NodeType::Fixture,
+            Programmer(_) => NodeType::Programmer,
             Sequencer(_) => NodeType::Sequencer,
             IldaFile(_) => NodeType::IldaFile,
             Laser(_) => NodeType::Laser,

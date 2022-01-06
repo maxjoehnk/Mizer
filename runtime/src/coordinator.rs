@@ -94,6 +94,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 node.fixture_manager = self.injector.get().cloned();
                 self.add_node(path, node)
             }
+            Programmer(node) => self.add_node(path, node),
             Sequencer(node) => self.add_node(path, node),
             IldaFile(node) => self.add_node(path, node),
             Laser(node) => self.add_node(path, node),
@@ -446,6 +447,7 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut FixtureNode = node.downcast_mut()?;
             node.fixture_id = config.fixture_id;
         }
+        (NodeType::Programmer, Node::Programmer(_)) => {}
         (NodeType::OscOutput, Node::OscOutput(config)) => {
             let node: &mut OscOutputNode = node.downcast_mut()?;
             node.path = config.path.clone();
@@ -533,6 +535,7 @@ pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
         NodeType::Select => Node::Select(downcast_node(node).unwrap()),
         NodeType::Merge => Node::Merge(downcast_node(node).unwrap()),
         NodeType::Fixture => Node::Fixture(downcast_node(node).unwrap()),
+        NodeType::Programmer => Node::Programmer(downcast_node(node).unwrap()),
         NodeType::Sequencer => Node::Sequencer(downcast_node(node).unwrap()),
         NodeType::IldaFile => Node::IldaFile(downcast_node(node).unwrap()),
         NodeType::Laser => Node::Laser(downcast_node(node).unwrap()),

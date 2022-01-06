@@ -776,6 +776,7 @@ enum NodeConfig_Type {
   mergeConfig, 
   envelopeConfig, 
   sequencerConfig, 
+  programmerConfig, 
   colorRgbConfig, 
   colorHsvConfig, 
   notSet
@@ -809,12 +810,13 @@ class NodeConfig extends $pb.GeneratedMessage {
     33 : NodeConfig_Type.mergeConfig,
     34 : NodeConfig_Type.envelopeConfig,
     35 : NodeConfig_Type.sequencerConfig,
+    36 : NodeConfig_Type.programmerConfig,
     40 : NodeConfig_Type.colorRgbConfig,
     41 : NodeConfig_Type.colorHsvConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 40, 41])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 40, 41])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -841,6 +843,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<MergeNodeConfig>(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mergeConfig', protoName: 'mergeConfig', subBuilder: MergeNodeConfig.create)
     ..aOM<EnvelopeNodeConfig>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'envelopeConfig', protoName: 'envelopeConfig', subBuilder: EnvelopeNodeConfig.create)
     ..aOM<SequencerNodeConfig>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerConfig', protoName: 'sequencerConfig', subBuilder: SequencerNodeConfig.create)
+    ..aOM<ProgrammerNodeConfig>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmerConfig', protoName: 'programmerConfig', subBuilder: ProgrammerNodeConfig.create)
     ..aOM<ColorRgbNodeConfig>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorRgbConfig', protoName: 'colorRgbConfig', subBuilder: ColorRgbNodeConfig.create)
     ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
     ..hasRequiredFields = false
@@ -874,6 +877,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     MergeNodeConfig? mergeConfig,
     EnvelopeNodeConfig? envelopeConfig,
     SequencerNodeConfig? sequencerConfig,
+    ProgrammerNodeConfig? programmerConfig,
     ColorRgbNodeConfig? colorRgbConfig,
     ColorHsvNodeConfig? colorHsvConfig,
   }) {
@@ -955,6 +959,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (sequencerConfig != null) {
       _result.sequencerConfig = sequencerConfig;
+    }
+    if (programmerConfig != null) {
+      _result.programmerConfig = programmerConfig;
     }
     if (colorRgbConfig != null) {
       _result.colorRgbConfig = colorRgbConfig;
@@ -1274,27 +1281,38 @@ class NodeConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(35)
   SequencerNodeConfig ensureSequencerConfig() => $_ensure(25);
 
+  @$pb.TagNumber(36)
+  ProgrammerNodeConfig get programmerConfig => $_getN(26);
+  @$pb.TagNumber(36)
+  set programmerConfig(ProgrammerNodeConfig v) { setField(36, v); }
+  @$pb.TagNumber(36)
+  $core.bool hasProgrammerConfig() => $_has(26);
+  @$pb.TagNumber(36)
+  void clearProgrammerConfig() => clearField(36);
+  @$pb.TagNumber(36)
+  ProgrammerNodeConfig ensureProgrammerConfig() => $_ensure(26);
+
   @$pb.TagNumber(40)
-  ColorRgbNodeConfig get colorRgbConfig => $_getN(26);
+  ColorRgbNodeConfig get colorRgbConfig => $_getN(27);
   @$pb.TagNumber(40)
   set colorRgbConfig(ColorRgbNodeConfig v) { setField(40, v); }
   @$pb.TagNumber(40)
-  $core.bool hasColorRgbConfig() => $_has(26);
+  $core.bool hasColorRgbConfig() => $_has(27);
   @$pb.TagNumber(40)
   void clearColorRgbConfig() => clearField(40);
   @$pb.TagNumber(40)
-  ColorRgbNodeConfig ensureColorRgbConfig() => $_ensure(26);
+  ColorRgbNodeConfig ensureColorRgbConfig() => $_ensure(27);
 
   @$pb.TagNumber(41)
-  ColorHsvNodeConfig get colorHsvConfig => $_getN(27);
+  ColorHsvNodeConfig get colorHsvConfig => $_getN(28);
   @$pb.TagNumber(41)
   set colorHsvConfig(ColorHsvNodeConfig v) { setField(41, v); }
   @$pb.TagNumber(41)
-  $core.bool hasColorHsvConfig() => $_has(27);
+  $core.bool hasColorHsvConfig() => $_has(28);
   @$pb.TagNumber(41)
   void clearColorHsvConfig() => clearField(41);
   @$pb.TagNumber(41)
-  ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(27);
+  ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(28);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -1575,6 +1593,35 @@ class SequenceNodeConfig extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<SequenceNodeConfig_SequenceStep> get steps => $_getList(0);
+}
+
+class ProgrammerNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ProgrammerNodeConfig._() : super();
+  factory ProgrammerNodeConfig() => create();
+  factory ProgrammerNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProgrammerNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProgrammerNodeConfig clone() => ProgrammerNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProgrammerNodeConfig copyWith(void Function(ProgrammerNodeConfig) updates) => super.copyWith((message) => updates(message as ProgrammerNodeConfig)) as ProgrammerNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerNodeConfig create() => ProgrammerNodeConfig._();
+  ProgrammerNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ProgrammerNodeConfig> createRepeated() => $pb.PbList<ProgrammerNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerNodeConfig>(create);
+  static ProgrammerNodeConfig? _defaultInstance;
 }
 
 class EnvelopeNodeConfig extends $pb.GeneratedMessage {

@@ -89,6 +89,7 @@ message Node {
     OpcOutput = 32;
     Laser = 40;
     IldaFile = 41;
+    Programmer = 45;
     ColorRgb = 50;
     ColorHsv = 51;
   }
@@ -138,6 +139,7 @@ message NodeConfig {
     MergeNodeConfig mergeConfig = 33;
     EnvelopeNodeConfig envelopeConfig = 34;
     SequencerNodeConfig sequencerConfig = 35;
+    ProgrammerNodeConfig programmerConfig = 36;
     ColorRgbNodeConfig colorRgbConfig = 40;
     ColorHsvNodeConfig colorHsvConfig = 41;
   }
@@ -171,6 +173,8 @@ message SequenceNodeConfig {
     bool hold = 3;
   }
 }
+
+message ProgrammerNodeConfig {}
 
 message EnvelopeNodeConfig {
   double attack = 1;

@@ -8,7 +8,8 @@ use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 
 use mizer_layouts::ControlConfig;
-use mizer_node::{NodeDesigner, NodePath, PortId};
+use mizer_node::{NodeDesigner, NodePath, NodePosition, PortId};
+use mizer_nodes::ProgrammerNode;
 use mizer_sequencer::Sequence;
 
 mod connections;
@@ -44,12 +45,23 @@ pub struct Project {
 
 impl Project {
     pub fn new() -> Self {
-        Self::default()
+        Self {
+            nodes: vec![Node {
+                path: "/programmer".into(),
+                config: NodeConfig::Programmer(ProgrammerNode),
+                designer: NodeDesigner {
+                    position: NodePosition::default(),
+                    hidden: true,
+                    scale: 1f64,
+                }
+            }],
+            ..Default::default()
+        }
     }
 
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {
         let file = File::open(path)?;
-        let project = serde_yaml::from_reader(file)?;
+        let project: Project = serde_yaml::from_reader(file)?;
 
         Ok(project)
     }
@@ -152,6 +164,7 @@ pub enum NodeConfig {
     Select(mizer_nodes::SelectNode),
     Merge(mizer_nodes::MergeNode),
     Fixture(mizer_nodes::FixtureNode),
+    Programmer(mizer_nodes::ProgrammerNode),
     Sequencer(mizer_nodes::SequencerNode),
     OscInput(mizer_nodes::OscInputNode),
     OscOutput(mizer_nodes::OscOutputNode),
@@ -182,6 +195,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::Sequence(node) => Self::Sequence(node),
             NodeConfig::Envelope(node) => Self::Envelope(node),
             NodeConfig::Fixture(node) => Self::Fixture(node),
+            NodeConfig::Programmer(node) => Self::Programmer(node),
             NodeConfig::Sequencer(node) => Self::Sequencer(node),
             NodeConfig::Select(node) => Self::Select(node),
             NodeConfig::Merge(node) => Self::Merge(node),
@@ -217,6 +231,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::Sequence(node) => Self::Sequence(node),
             mizer_nodes::Node::Envelope(node) => Self::Envelope(node),
             mizer_nodes::Node::Fixture(node) => Self::Fixture(node),
+            mizer_nodes::Node::Programmer(node) => Self::Programmer(node),
             mizer_nodes::Node::Sequencer(node) => Self::Sequencer(node),
             mizer_nodes::Node::Select(node) => Self::Select(node),
             mizer_nodes::Node::Merge(node) => Self::Merge(node),

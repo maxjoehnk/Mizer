@@ -1,4 +1,12 @@
 nodes:
+  - type: programmer
+    path: /programmer
+    config: {}
+    designer:
+      position:
+        x: -5
+        y: 0
+      scale: 1
   - type: midi-input
     path: /midi-input-0
     config:

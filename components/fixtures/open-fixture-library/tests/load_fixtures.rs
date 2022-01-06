@@ -4,17 +4,17 @@ use std::panic::catch_unwind;
 
 #[test]
 fn load_fixtures() {
-    let mut provider = OpenFixtureLibraryProvider::new();
+    let mut provider = OpenFixtureLibraryProvider::new(".fixtures".into());
 
-    let result = provider.load(".fixtures");
+    let result = provider.load();
 
     assert!(result.is_ok());
 }
 
 #[test]
 fn should_map_all_definitions() {
-    let mut provider = OpenFixtureLibraryProvider::new();
-    provider.load(".fixtures").unwrap();
+    let mut provider = OpenFixtureLibraryProvider::new(".fixtures".into());
+    provider.load().unwrap();
 
     let result = catch_unwind(|| provider.list_definitions());
 

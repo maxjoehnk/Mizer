@@ -294,11 +294,11 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.designer.set(designer);
         self.planner.remove_node(&path);
         let links = self.links.read();
-        let (node_links, links) = links
+        let (links, removed_links) = links
             .into_iter()
             .partition(|link| link.source != path && link.target != path);
         self.links.set(links);
-        self.pipeline.remove_node(&path, &node_links);
+        self.pipeline.remove_node(&path, &removed_links);
         log::debug!("Pipeline {:?}", self.pipeline);
         self.plan();
     }
@@ -595,6 +595,21 @@ mod tests {
             }
         }
 
+        fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+            vec![
+                ("input".into(), PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                }),
+                ("output".into(), PortMetadata {
+                    direction: PortDirection::Output,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                }),
+            ]
+        }
+
         fn node_type(&self) -> NodeType {
             unimplemented!()
         }
@@ -612,5 +627,28 @@ mod tests {
         fn create_state(&self) -> Self::State {
             Default::default()
         }
+    }
+
+    #[test]
+    fn delete_node_should_remove_the_connected_links() {
+        let mut runner = CoordinatorRuntime::new();
+        let path1 = NodePath("/node1".into());
+        let path2 = NodePath("/node2".into());
+        runner.add_node(path1.clone(), TestNode);
+        runner.add_node(path2.clone(), TestNode);
+        runner.add_link(NodeLink {
+            source: path1.clone(),
+            source_port: "output".into(),
+            target: path2,
+            target_port: "input".into(),
+            port_type: PortType::Single,
+            local: true
+        });
+
+        runner.delete_node(path1);
+
+        let links = runner.links.read();
+
+        assert!(links.is_empty());
     }
 }

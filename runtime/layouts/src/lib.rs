@@ -18,7 +18,7 @@ pub struct ControlConfig {
     pub decoration: ControlDecorations,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ControlPosition {
     pub x: u64,
     pub y: u64,

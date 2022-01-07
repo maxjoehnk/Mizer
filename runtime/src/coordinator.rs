@@ -299,8 +299,25 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .partition(|link| link.source != path && link.target != path);
         self.links.set(links);
         self.pipeline.remove_node(&path, &removed_links);
+        self.remove_node_from_layouts(&path);
         log::debug!("Pipeline {:?}", self.pipeline);
         self.plan();
+    }
+
+    fn remove_node_from_layouts(&self, path: &NodePath) {
+        let layouts = self.layouts.read();
+        let layouts = layouts.into_iter()
+            .map(|mut layout| {
+                layout.controls = layout.controls
+                    .into_iter()
+                    .filter(|control| &control.node != path)
+                    .collect();
+
+                layout
+            })
+            .collect();
+
+        self.layouts.set(layouts);
     }
 
     fn get_next_id(&self, node_type: NodeType) -> u32 {
@@ -564,6 +581,7 @@ fn downcast_node<T: Clone + 'static>(node: &Box<dyn ProcessingNodeExt>) -> Optio
 
 #[cfg(test)]
 mod tests {
+    use mizer_layouts::{ControlDecorations, ControlPosition, ControlSize};
     use super::*;
 
     #[test]
@@ -648,7 +666,35 @@ mod tests {
         runner.delete_node(path1);
 
         let links = runner.links.read();
-
         assert!(links.is_empty());
+    }
+
+    #[test]
+    fn delete_node_should_remove_layout_controls() {
+        let mut runner = CoordinatorRuntime::new();
+        let path = NodePath("/node".into());
+        runner.add_node(path.clone(), TestNode);
+        let mut layouts = runner.layouts.read();
+        layouts.push(Layout {
+            id: "".into(),
+            controls: vec![
+                ControlConfig {
+                    node: path.clone(),
+                    position: ControlPosition::default(),
+                    label: None,
+                    decoration: ControlDecorations::default(),
+                    size: ControlSize {
+                        width: 1,
+                        height: 1,
+                    }
+                }
+            ]
+        });
+        runner.layouts.set(layouts);
+
+        runner.delete_node(path);
+
+        let layouts = runner.layouts.read();
+        assert!(layouts[0].controls.is_empty());
     }
 }

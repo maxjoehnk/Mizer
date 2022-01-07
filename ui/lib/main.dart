@@ -9,7 +9,6 @@ import 'package:mizer/session/session_selector.dart';
 import 'package:mizer/state/provider.dart';
 import 'package:provider/provider.dart';
 
-import 'api/demo/provider.dart';
 import 'api/grpc/provider.dart';
 
 void main() async {
@@ -31,8 +30,7 @@ class MizerRemoteApp extends StatelessWidget {
         child: Provider<Platform>(
           create: (_) => StandalonePlatform(),
           child: SessionProvider(discovery,
-              builder: (channel) => GrpcApiProvider(channel, child: StateProvider(child: Home())),
-              demo: () => DemoApiProvider(child: StateProvider(child: Home()))),
+              builder: (channel) => GrpcApiProvider(channel, child: StateProvider(child: Home()))),
         ));
   }
 }

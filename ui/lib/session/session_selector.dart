@@ -8,22 +8,20 @@ import 'package:mizer/session/title_screen.dart';
 class SessionProvider extends StatelessWidget {
   final SessionDiscovery discovery;
   final Widget Function(ClientChannel) builder;
-  final Widget Function() demo;
 
-  SessionProvider(this.discovery, {required this.builder, required this.demo});
+  SessionProvider(this.discovery, {required this.builder});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (create) => SessionDiscoveryBloc(discovery), child: SessionSelector(this.builder, this.demo));
+        create: (create) => SessionDiscoveryBloc(discovery), child: SessionSelector(this.builder));
   }
 }
 
 class SessionSelector extends StatefulWidget {
   final Widget Function(ClientChannel) builder;
-  final Widget Function() demo;
 
-  SessionSelector(this.builder, this.demo);
+  SessionSelector(this.builder);
 
   @override
   _SessionSelectorState createState() => _SessionSelectorState();
@@ -31,20 +29,16 @@ class SessionSelector extends StatefulWidget {
 
 class _SessionSelectorState extends State<SessionSelector> {
   AvailableSession? selectedSession;
-  bool runDemo = false;
 
   @override
   Widget build(BuildContext context) {
-    if (this.runDemo) {
-      return this.widget.demo();
-    }else if (this.selectedSession != null) {
+     if (this.selectedSession != null) {
       return this.widget.builder(this.selectedSession!.openChannel());
     } else {
       return TitleScreen(
           selectSession: (session) => setState(() {
                 this.selectedSession = session;
-              }),
-      openDemo: () => setState(() => runDemo = true));
+              }));
     }
   }
 }

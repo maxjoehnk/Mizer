@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/session/session_discovery.dart';
 
 class TitleScreen extends StatelessWidget {
   final Function(AvailableSession) selectSession;
-  final Function() openDemo;
 
-  TitleScreen({required this.selectSession, required this.openDemo});
+  TitleScreen({required this.selectSession});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,6 @@ class TitleScreen extends StatelessWidget {
               children: [
                 JoinSession(this.selectSession),
                 CreateSession(),
-                OpenDemoSession(this.openDemo),
               ],
             )),
           ]),
@@ -112,28 +109,6 @@ class CreateSession extends StatelessWidget {
           ]),
         ),
         onTap: () {});
-  }
-}
-
-class OpenDemoSession extends StatelessWidget {
-  final Function() openDemo;
-
-  OpenDemoSession(this.openDemo);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Icon(MdiIcons.testTube),
-            ),
-            Text("Demo Session")
-          ]),
-        ),
-        onTap: openDemo);
   }
 }
 

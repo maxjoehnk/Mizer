@@ -16,6 +16,8 @@ service LayoutsApi {
   rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
   rpc AddControl (AddControlRequest) returns (LayoutResponse) {}
   rpc AddExistingControl (AddExistingControlRequest) returns (LayoutResponse) {}
+
+  rpc ReadFaderValue (ReadFaderValueRequest) returns (FaderValueResponse) {}
 }
 
 message LayoutResponse {}
@@ -106,4 +108,12 @@ message Color {
   double red = 1;
   double green = 2;
   double blue = 3;
+}
+
+message ReadFaderValueRequest {
+  string node = 1;
+}
+
+message FaderValueResponse {
+  double value = 1;
 }

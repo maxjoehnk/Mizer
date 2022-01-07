@@ -64,6 +64,12 @@ class LayoutsApiClient extends $grpc.Client {
           '/mizer.LayoutsApi/AddExistingControl',
           ($1.AddExistingControlRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.LayoutResponse.fromBuffer(value));
+  static final _$readFaderValue =
+      $grpc.ClientMethod<$1.ReadFaderValueRequest, $1.FaderValueResponse>(
+          '/mizer.LayoutsApi/ReadFaderValue',
+          ($1.ReadFaderValueRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $1.FaderValueResponse.fromBuffer(value));
 
   LayoutsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -124,6 +130,12 @@ class LayoutsApiClient extends $grpc.Client {
       $1.AddExistingControlRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addExistingControl, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.FaderValueResponse> readFaderValue(
+      $1.ReadFaderValueRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$readFaderValue, request, options: options);
   }
 }
 
@@ -209,6 +221,15 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $1.AddExistingControlRequest.fromBuffer(value),
             ($1.LayoutResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$1.ReadFaderValueRequest, $1.FaderValueResponse>(
+            'ReadFaderValue',
+            readFaderValue_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $1.ReadFaderValueRequest.fromBuffer(value),
+            ($1.FaderValueResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Layouts> getLayouts_Pre($grpc.ServiceCall call,
@@ -262,6 +283,12 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
     return addExistingControl(call, await request);
   }
 
+  $async.Future<$1.FaderValueResponse> readFaderValue_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$1.ReadFaderValueRequest> request) async {
+    return readFaderValue(call, await request);
+  }
+
   $async.Future<$1.Layouts> getLayouts(
       $grpc.ServiceCall call, $1.GetLayoutsRequest request);
   $async.Future<$1.Layouts> addLayout(
@@ -282,4 +309,6 @@ abstract class LayoutsApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.AddControlRequest request);
   $async.Future<$1.LayoutResponse> addExistingControl(
       $grpc.ServiceCall call, $1.AddExistingControlRequest request);
+  $async.Future<$1.FaderValueResponse> readFaderValue(
+      $grpc.ServiceCall call, $1.ReadFaderValueRequest request);
 }

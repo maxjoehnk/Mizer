@@ -63,4 +63,11 @@ class LayoutsGrpcApi implements LayoutsApi {
     var request = UpdateControlRequest(layoutId: layoutId, controlId: id, decorations: decoration);
     await this.client.updateControl(request);
   }
+
+  @override
+  Future<double> readFaderValue(String nodePath) async {
+    var response = await this.client.readFaderValue(ReadFaderValueRequest(node: nodePath));
+
+    return response.value;
+  }
 }

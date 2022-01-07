@@ -3844,6 +3844,323 @@ impl ::protobuf::reflect::ProtobufValue for Color {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct ReadFaderValueRequest {
+    // message fields
+    pub node: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ReadFaderValueRequest {
+    fn default() -> &'a ReadFaderValueRequest {
+        <ReadFaderValueRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ReadFaderValueRequest {
+    pub fn new() -> ReadFaderValueRequest {
+        ::std::default::Default::default()
+    }
+
+    // string node = 1;
+
+
+    pub fn get_node(&self) -> &str {
+        &self.node
+    }
+    pub fn clear_node(&mut self) {
+        self.node.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node(&mut self, v: ::std::string::String) {
+        self.node = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_node(&mut self) -> &mut ::std::string::String {
+        &mut self.node
+    }
+
+    // Take field
+    pub fn take_node(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.node, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for ReadFaderValueRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.node)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.node.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.node);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.node.is_empty() {
+            os.write_string(1, &self.node)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ReadFaderValueRequest {
+        ReadFaderValueRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "node",
+                |m: &ReadFaderValueRequest| { &m.node },
+                |m: &mut ReadFaderValueRequest| { &mut m.node },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ReadFaderValueRequest>(
+                "ReadFaderValueRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ReadFaderValueRequest {
+        static instance: ::protobuf::rt::LazyV2<ReadFaderValueRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ReadFaderValueRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for ReadFaderValueRequest {
+    fn clear(&mut self) {
+        self.node.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ReadFaderValueRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ReadFaderValueRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct FaderValueResponse {
+    // message fields
+    pub value: f64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a FaderValueResponse {
+    fn default() -> &'a FaderValueResponse {
+        <FaderValueResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl FaderValueResponse {
+    pub fn new() -> FaderValueResponse {
+        ::std::default::Default::default()
+    }
+
+    // double value = 1;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+}
+
+impl ::protobuf::Message for FaderValueResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.value != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.value != 0. {
+            os.write_double(1, self.value)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> FaderValueResponse {
+        FaderValueResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &FaderValueResponse| { &m.value },
+                |m: &mut FaderValueResponse| { &mut m.value },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<FaderValueResponse>(
+                "FaderValueResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static FaderValueResponse {
+        static instance: ::protobuf::rt::LazyV2<FaderValueResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(FaderValueResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for FaderValueResponse {
+    fn clear(&mut self) {
+        self.value = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for FaderValueResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for FaderValueResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rlayouts.proto\x12\x05mizer\x1a\x0bnodes.proto\"\x10\n\x0eLayoutRespo\
     nse\"\x13\n\x11GetLayoutsRequest\"&\n\x10AddLayoutRequest\x12\x12\n\x04n\
@@ -3882,20 +4199,23 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ons\x12\x1a\n\x08hasColor\x18\x01\x20\x01(\x08R\x08hasColor\x12\"\n\x05c\
     olor\x18\x02\x20\x01(\x0b2\x0c.mizer.ColorR\x05color\"C\n\x05Color\x12\
     \x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\
-    \x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue2\
-    \xa4\x05\n\nLayoutsApi\x128\n\nGetLayouts\x12\x18.mizer.GetLayoutsReques\
-    t\x1a\x0e.mizer.Layouts\"\0\x126\n\tAddLayout\x12\x17.mizer.AddLayoutReq\
-    uest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cRemoveLayout\x12\x1a.mizer.Remo\
-    veLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cRenameLayout\x12\x1a\
-    .mizer.RenameLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12E\n\rRenameContr\
-    ol\x12\x1b.mizer.RenameControlRequest\x1a\x15.mizer.LayoutResponse\"\0\
-    \x12A\n\x0bMoveControl\x12\x19.mizer.MoveControlRequest\x1a\x15.mizer.La\
-    youtResponse\"\0\x12E\n\rUpdateControl\x12\x1b.mizer.UpdateControlReques\
-    t\x1a\x15.mizer.LayoutResponse\"\0\x12E\n\rRemoveControl\x12\x1b.mizer.R\
-    emoveControlRequest\x1a\x15.mizer.LayoutResponse\"\0\x12?\n\nAddControl\
-    \x12\x18.mizer.AddControlRequest\x1a\x15.mizer.LayoutResponse\"\0\x12O\n\
-    \x12AddExistingControl\x12\x20.mizer.AddExistingControlRequest\x1a\x15.m\
-    izer.LayoutResponse\"\0b\x06proto3\
+    \x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\
+    \"+\n\x15ReadFaderValueRequest\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04\
+    node\"*\n\x12FaderValueResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\
+    \x05value2\xf1\x05\n\nLayoutsApi\x128\n\nGetLayouts\x12\x18.mizer.GetLay\
+    outsRequest\x1a\x0e.mizer.Layouts\"\0\x126\n\tAddLayout\x12\x17.mizer.Ad\
+    dLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cRemoveLayout\x12\x1a.\
+    mizer.RemoveLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12<\n\x0cRenameLayo\
+    ut\x12\x1a.mizer.RenameLayoutRequest\x1a\x0e.mizer.Layouts\"\0\x12E\n\rR\
+    enameControl\x12\x1b.mizer.RenameControlRequest\x1a\x15.mizer.LayoutResp\
+    onse\"\0\x12A\n\x0bMoveControl\x12\x19.mizer.MoveControlRequest\x1a\x15.\
+    mizer.LayoutResponse\"\0\x12E\n\rUpdateControl\x12\x1b.mizer.UpdateContr\
+    olRequest\x1a\x15.mizer.LayoutResponse\"\0\x12E\n\rRemoveControl\x12\x1b\
+    .mizer.RemoveControlRequest\x1a\x15.mizer.LayoutResponse\"\0\x12?\n\nAdd\
+    Control\x12\x18.mizer.AddControlRequest\x1a\x15.mizer.LayoutResponse\"\0\
+    \x12O\n\x12AddExistingControl\x12\x20.mizer.AddExistingControlRequest\
+    \x1a\x15.mizer.LayoutResponse\"\0\x12K\n\x0eReadFaderValue\x12\x1c.mizer\
+    .ReadFaderValueRequest\x1a\x19.mizer.FaderValueResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -3,18 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/platform/platform.dart';
-import 'package:mizer/protos/layouts.pb.dart';
+import 'package:mizer/protos/layouts.pb.dart' hide Color;
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/widgets/inputs/button.dart';
-import 'package:mizer/widgets/inputs/fader.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 
+import 'controls/fader.dart';
 import 'controls/sequencer.dart';
-import 'delete_control_dialog.dart';
-import 'edit_control_dialog.dart';
-import 'rename_control_dialog.dart';
+import 'dialogs/delete_control_dialog.dart';
+import 'dialogs/edit_control_dialog.dart';
+import 'dialogs/rename_control_dialog.dart';
 
 class LayoutControlView extends StatelessWidget {
   final LayoutControl control;
@@ -51,13 +51,7 @@ class LayoutControlView extends StatelessWidget {
 
   Widget? _getControl(Node? node, NodesApi apiClient) {
     if (node?.type == Node_NodeType.Fader) {
-      return FaderInput(
-        label: control.label,
-        color: _color,
-        value: 0,
-        onValue: (value) =>
-            apiClient.writeControlValue(path: control.node, port: "value", value: value),
-      );
+      return FaderControl(control: control, color: _color);
     } else if (node?.type == Node_NodeType.Button) {
       return ButtonInput(
           label: control.label,
@@ -76,7 +70,7 @@ class LayoutControlView extends StatelessWidget {
 
   _editControl(BuildContext context) async {
     LayoutsBloc bloc = context.read();
-    ControlDecorations result = await showDialog(
+    ControlDecorations? result = await showDialog(
         context: context, builder: (context) => EditControlDialog(control: control));
     if (result != null) {
       bloc.add(UpdateControl(layoutId: layoutId, controlId: control.node, decorations: result));
@@ -85,7 +79,7 @@ class LayoutControlView extends StatelessWidget {
 
   _renameControl(BuildContext context) async {
     LayoutsBloc bloc = context.read();
-    String result = await showDialog(
+    String? result = await showDialog(
         context: context, builder: (context) => RenameControlDialog(name: control.label));
     if (result != null) {
       bloc.add(RenameControl(layoutId: layoutId, controlId: control.node, name: result));
@@ -101,7 +95,7 @@ class LayoutControlView extends StatelessWidget {
     }
   }
 
-  get _color {
+  Color? get _color {
     return control.decoration.hasColor ? control.decoration.color_2.asFlutterColor : null;
   }
 }

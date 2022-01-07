@@ -13,4 +13,6 @@ abstract class LayoutsApi {
   Future<void> moveControl(String layoutId, String id, ControlPosition position);
   Future<void> updateControl(String layoutId, String id, ControlDecorations decoration);
   Future<void> deleteControl(String layoutId, String id);
+
+  Future<double> readFaderValue(String nodeId);
 }

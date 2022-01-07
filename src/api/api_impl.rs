@@ -302,6 +302,14 @@ impl RuntimeApi for Api {
 
         rx.recv().map_err(anyhow::Error::from).and_then(|r| r)
     }
+
+    fn read_fader_value(&self, node_path: NodePath) -> anyhow::Result<f64> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender
+            .send(ApiCommand::ReadFaderValue(node_path, tx))?;
+
+        rx.recv()?
+    }
 }
 
 impl Api {

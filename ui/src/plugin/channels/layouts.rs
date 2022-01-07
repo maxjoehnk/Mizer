@@ -17,7 +17,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
         resp: MethodCallReply<Value>,
         _: EngineHandle,
     ) {
-        log::debug!("mizer.live/layouts -> {}", call.method);
+        log::trace!("mizer.live/layouts -> {}", call.method);
         match call.method.as_str() {
             "getLayouts" => {
                 let response = self.get_layouts();
@@ -85,6 +85,15 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     resp.respond_error(err);
                 } else {
                     resp.send_ok(Value::Null);
+                }
+            }
+            "readFaderValue" => {
+                if let Value::String(node_path) = call.args {
+                    if let Some(value) = self.handler.read_fader_value(node_path.into()) {
+                        resp.send_ok(Value::F64(value));
+                    }else {
+                        resp.respond_error(anyhow::anyhow!("Missing node path"));
+                    }
                 }
             }
             _ => resp.not_implemented(),

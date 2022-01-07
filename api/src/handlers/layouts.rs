@@ -121,6 +121,10 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         Ok(())
     }
 
+    pub fn read_fader_value(&self, node_path: NodePath) -> Option<f64> {
+        self.runtime.read_fader_value(node_path).ok()
+    }
+
     fn get_default_size_for_node_type(node_type: Node_NodeType) -> ControlSize {
         match node_type {
             Node_NodeType::Fader => ControlSize {

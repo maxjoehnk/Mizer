@@ -1134,3 +1134,97 @@ class Color extends $pb.GeneratedMessage {
   void clearBlue() => clearField(3);
 }
 
+class ReadFaderValueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ReadFaderValueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'node')
+    ..hasRequiredFields = false
+  ;
+
+  ReadFaderValueRequest._() : super();
+  factory ReadFaderValueRequest({
+    $core.String? node,
+  }) {
+    final _result = create();
+    if (node != null) {
+      _result.node = node;
+    }
+    return _result;
+  }
+  factory ReadFaderValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ReadFaderValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ReadFaderValueRequest clone() => ReadFaderValueRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ReadFaderValueRequest copyWith(void Function(ReadFaderValueRequest) updates) => super.copyWith((message) => updates(message as ReadFaderValueRequest)) as ReadFaderValueRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ReadFaderValueRequest create() => ReadFaderValueRequest._();
+  ReadFaderValueRequest createEmptyInstance() => create();
+  static $pb.PbList<ReadFaderValueRequest> createRepeated() => $pb.PbList<ReadFaderValueRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ReadFaderValueRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ReadFaderValueRequest>(create);
+  static ReadFaderValueRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get node => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set node($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasNode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearNode() => clearField(1);
+}
+
+class FaderValueResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaderValueResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  FaderValueResponse._() : super();
+  factory FaderValueResponse({
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory FaderValueResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaderValueResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FaderValueResponse clone() => FaderValueResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FaderValueResponse copyWith(void Function(FaderValueResponse) updates) => super.copyWith((message) => updates(message as FaderValueResponse)) as FaderValueResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FaderValueResponse create() => FaderValueResponse._();
+  FaderValueResponse createEmptyInstance() => create();
+  static $pb.PbList<FaderValueResponse> createRepeated() => $pb.PbList<FaderValueResponse>();
+  @$core.pragma('dart2js:noInline')
+  static FaderValueResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaderValueResponse>(create);
+  static FaderValueResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
+  set value($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+}
+

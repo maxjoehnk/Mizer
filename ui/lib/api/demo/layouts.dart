@@ -60,4 +60,10 @@ class LayoutsDemoApi implements LayoutsApi {
     // TODO: implement updateControl
     throw UnimplementedError();
   }
+
+  @override
+  Future<double> readFaderValue(String nodeId) {
+    // TODO: implement getFaderNode
+    throw UnimplementedError();
+  }
 }

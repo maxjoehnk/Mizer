@@ -89,4 +89,6 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_dmx_monitor(&self, output_id: String) -> anyhow::Result<HashMap<u16, [u8; 512]>>;
 
     fn get_midi_monitor(&self, name: String) -> anyhow::Result<Subscriber<MidiEvent>>;
+
+    fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
 }

@@ -74,4 +74,11 @@ class LayoutsPluginApi implements LayoutsApi {
     var request = UpdateControlRequest(layoutId: layoutId, controlId: id, decorations: decoration);
     await channel.invokeMethod("updateControl", request.writeToBuffer());
   }
+
+  @override
+  Future<double> readFaderValue(String nodePath) async {
+    var value = await channel.invokeMethod("readFaderValue", nodePath);
+
+    return value as double;
+  }
 }

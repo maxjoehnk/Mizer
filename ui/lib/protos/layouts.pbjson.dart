@@ -204,3 +204,23 @@ const Color$json = const {
 
 /// Descriptor for `Color`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List colorDescriptor = $convert.base64Decode('CgVDb2xvchIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZQ==');
+@$core.Deprecated('Use readFaderValueRequestDescriptor instead')
+const ReadFaderValueRequest$json = const {
+  '1': 'ReadFaderValueRequest',
+  '2': const [
+    const {'1': 'node', '3': 1, '4': 1, '5': 9, '10': 'node'},
+  ],
+};
+
+/// Descriptor for `ReadFaderValueRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List readFaderValueRequestDescriptor = $convert.base64Decode('ChVSZWFkRmFkZXJWYWx1ZVJlcXVlc3QSEgoEbm9kZRgBIAEoCVIEbm9kZQ==');
+@$core.Deprecated('Use faderValueResponseDescriptor instead')
+const FaderValueResponse$json = const {
+  '1': 'FaderValueResponse',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `FaderValueResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List faderValueResponseDescriptor = $convert.base64Decode('ChJGYWRlclZhbHVlUmVzcG9uc2USFAoFdmFsdWUYASABKAFSBXZhbHVl');

@@ -19,6 +19,7 @@ pub enum ApiCommand {
     ),
     AddLink(NodeLink, flume::Sender<anyhow::Result<()>>),
     WritePort(NodePath, PortId, f64, flume::Sender<anyhow::Result<()>>),
+    ReadFaderValue(NodePath, flume::Sender<anyhow::Result<f64>>),
     GetNodePreviewRef(
         NodePath,
         flume::Sender<Option<Arc<NonEmptyPinboard<Vec<f64>>>>>,

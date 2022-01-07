@@ -1,7 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'decoration.dart';
 
@@ -23,6 +21,15 @@ class _FaderInputState extends State<FaderInput> {
   double value = 0;
 
   _FaderInputState(this.value);
+
+
+  @override
+  void didUpdateWidget(FaderInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      this.value = widget.value;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

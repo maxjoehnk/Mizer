@@ -27,7 +27,7 @@ class ApplicationMenu extends StatelessWidget {
           SubMenu(title: "File", children: [
             MenuItem(
                 label: "New Project",
-                action: () => context.read<SessionApi>().newProject(),
+                action: () => _newProject(context),
                 shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
             MenuItem(
                 label: "Open Project",
@@ -62,6 +62,11 @@ class ApplicationMenu extends StatelessWidget {
         ]));
   }
 
+  Future<void> _newProject(BuildContext context) async {
+    await context.read<SessionApi>().newProject();
+    _refreshViews(context);
+  }
+
   Future<void> _openProject(BuildContext context, SessionApi api) async {
     final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
@@ -69,6 +74,10 @@ class ApplicationMenu extends StatelessWidget {
     if (context.platform.isIntegrated) {
       Window.of(context).setTitle("Mizer (${file.name})");
     }
+    _refreshViews(context);
+  }
+
+  void _refreshViews(BuildContext context) {
     context.read<FixturesBloc>().add(FetchFixtures());
     context.read<LayoutsBloc>().add(FetchLayouts());
     context.read<MediaBloc>().add(MediaEvent.Fetch);

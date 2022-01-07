@@ -68,48 +68,84 @@ class AddExistingControl implements LayoutsEvent {
   AddExistingControl({ required this.layoutId, required this.node, required this.position });
 }
 
-class LayoutsBloc extends Bloc<LayoutsEvent, Layouts> {
+class SelectLayoutTab implements LayoutsEvent {
+  final int tabIndex;
+
+  SelectLayoutTab({ required this.tabIndex });
+}
+
+class LayoutState {
+  final List<Layout> layouts;
+  final int tabIndex;
+
+  LayoutState({ required this.layouts, required this.tabIndex });
+
+  factory LayoutState.empty() {
+    return LayoutState(layouts: [], tabIndex: 0);
+  }
+
+  LayoutState copyWith({ List<Layout>? layouts, int? tabIndex }) {
+    return LayoutState(
+      layouts: layouts ?? this.layouts,
+      tabIndex: tabIndex ?? this.tabIndex,
+    );
+  }
+}
+
+class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
   final LayoutsApi api;
 
-  LayoutsBloc(this.api) : super(Layouts());
+  LayoutsBloc(this.api) : super(LayoutState.empty());
 
   @override
-  Stream<Layouts> mapEventToState(LayoutsEvent event) async* {
+  Stream<LayoutState> mapEventToState(LayoutsEvent event) async* {
     // TODO: don't fetch layouts after each action when getLayouts returns a stream
     if (event is FetchLayouts) {
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is AddLayout) {
-      yield await api.addLayout(event.name);
-      yield await api.getLayouts();
+      await api.addLayout(event.name);
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is RemoveLayout) {
-      yield await api.removeLayout(event.id);
-      yield await api.getLayouts();
+      await api.removeLayout(event.id);
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is RenameLayout) {
       await api.renameLayout(event.id, event.name);
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is RenameControl) {
       await api.renameControl(event.layoutId, event.controlId, event.name);
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is DeleteControl) {
       await api.deleteControl(event.layoutId, event.controlId);
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is AddControl) {
       await api.addControl(event.layoutId, event.nodeType, event.position);
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is AddExistingControl) {
       await api.addControlForNode(event.layoutId, event.node.path, event.position);
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
     }
     if (event is UpdateControl) {
       await api.updateControl(event.layoutId, event.controlId, event.decorations);
-      yield await api.getLayouts();
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
+    }
+    if (event is SelectLayoutTab) {
+      yield state.copyWith(tabIndex: event.tabIndex);
     }
   }
 }

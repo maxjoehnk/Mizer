@@ -23,8 +23,8 @@ class LayoutView extends StatelessWidget {
   Widget build(BuildContext context) {
     var layoutsBloc = context.read<LayoutsBloc>();
     layoutsBloc.add(FetchLayouts());
-    return BlocBuilder<LayoutsBloc, Layouts>(builder: (context, layouts) {
-      log("${layouts.layouts}", name: "LayoutView");
+    return BlocBuilder<LayoutsBloc, LayoutState>(builder: (context, state) {
+      log("${state.layouts}", name: "LayoutView");
       context.read<NodesBloc>().add(FetchNodes());
       return HotkeyProvider(
         hotkeySelector: (hotkeys) => hotkeys.layouts,
@@ -32,8 +32,10 @@ class LayoutView extends StatelessWidget {
           "add_layout": () => _addLayout(context, layoutsBloc),
         },
         child: tabs.Tabs(
+          tabIndex: state.tabIndex,
+          onSelectTab: (index) => layoutsBloc.add(SelectLayoutTab(tabIndex: index)),
           padding: false,
-          children: layouts.layouts
+          children: state.layouts
               .map((layout) => tabs.Tab(
                   header: (active, setActive) => ContextMenu(
                       menu: Menu(items: [

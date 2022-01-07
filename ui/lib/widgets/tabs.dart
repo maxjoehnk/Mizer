@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 
@@ -8,21 +6,34 @@ class Tabs extends StatefulWidget {
   final List<Tab> children;
   final Function()? onAdd;
   final bool padding;
+  final int? tabIndex;
+  final Function(int)? onSelectTab;
 
   bool get canAdd {
     return onAdd != null;
   }
 
-  Tabs({required this.children, this.onAdd, this.padding = true});
+  Tabs({required this.children, this.tabIndex, this.onSelectTab, this.onAdd, this.padding = true});
 
   @override
-  _TabsState createState() => _TabsState();
+  _TabsState createState() => _TabsState(activeIndex: this.tabIndex ?? 0);
 }
 
 class _TabsState extends State<Tabs> {
   int activeIndex = 0;
 
-  _TabsState();
+  _TabsState({ this.activeIndex = 0 });
+
+  @override
+  void didUpdateWidget(Tabs oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.tabIndex == null || widget.tabIndex == oldWidget.tabIndex) {
+      return;
+    }
+    setState(() {
+      activeIndex = widget.tabIndex!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +48,13 @@ class _TabsState extends State<Tabs> {
                 .widget
                 .children
                 .asMap()
-                .map((i, e) => MapEntry(
+                .map((i, e) =>
+                MapEntry(
                     i,
                     e.header(
-                        this.activeIndex == i,
-                        () => setState(() {
-                              this.activeIndex = i;
-                            }))))
+                      this.activeIndex == i,
+                          () => _onSelectTab(i),
+                    )))
                 .values,
             if (widget.canAdd) AddTabButton(onClick: widget.onAdd!),
           ]),
@@ -62,6 +73,16 @@ class _TabsState extends State<Tabs> {
     }
     return widget.children[activeIndex].child;
   }
+
+  void _onSelectTab(int index) {
+    if (widget.onSelectTab != null) {
+      widget.onSelectTab!(index);
+      return;
+    }
+    setState(() {
+      this.activeIndex = index;
+    });
+  }
 }
 
 class Tab {
@@ -70,7 +91,8 @@ class Tab {
   late Widget Function(bool, Function()) header;
 
   Tab({this.label, required this.child, Widget Function(bool, Function())? header}) {
-    this.header = header ?? (active, setActive) => TabHeader(label!, selected: active, onSelect: setActive);
+    this.header =
+        header ?? (active, setActive) => TabHeader(label!, selected: active, onSelect: setActive);
   }
 }
 

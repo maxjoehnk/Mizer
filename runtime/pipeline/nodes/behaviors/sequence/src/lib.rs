@@ -83,6 +83,9 @@ impl ProcessingNode for SequenceNode {
     type State = SequenceState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        if self.steps.is_empty() {
+            return Ok(());
+        }
         if !state.active {
             return Ok(());
         }

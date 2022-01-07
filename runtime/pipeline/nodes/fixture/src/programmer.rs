@@ -1,6 +1,5 @@
 use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::programmer::Programmer;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;

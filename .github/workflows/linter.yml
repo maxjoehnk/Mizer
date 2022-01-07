@@ -56,6 +56,10 @@ jobs:
         uses: github/super-linter@v4
         env:
           VALIDATE_ALL_CODEBASE: false
+          VALIDATE_JSCPD: false
+          # This gives false positives because the flutter sdk and the dependencies are not available
+          VALIDATE_DART: false
+          VALIDATE_EDITORCONFIG: false
           VALIDATE_RUST_CLIPPY: false
           VALIDATE_RUST_2015: false
           VALIDATE_RUST_2018: false

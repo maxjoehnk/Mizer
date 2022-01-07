@@ -114,6 +114,7 @@ impl Mizer {
         fixture_manager.new();
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
         dmx_manager.new();
+        self.runtime.new();
     }
 
     fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {

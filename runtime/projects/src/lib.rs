@@ -8,8 +8,7 @@ use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 
 use mizer_layouts::ControlConfig;
-use mizer_node::{NodeDesigner, NodePath, NodePosition, PortId};
-use mizer_nodes::ProgrammerNode;
+use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_sequencer::Sequence;
 
 mod connections;
@@ -45,18 +44,7 @@ pub struct Project {
 
 impl Project {
     pub fn new() -> Self {
-        Self {
-            nodes: vec![Node {
-                path: "/programmer".into(),
-                config: NodeConfig::Programmer(ProgrammerNode),
-                designer: NodeDesigner {
-                    position: NodePosition::default(),
-                    hidden: true,
-                    scale: 1f64,
-                },
-            }],
-            ..Default::default()
-        }
+        Self::default()
     }
 
     pub fn load_file<P: AsRef<Path>>(path: P) -> anyhow::Result<Project> {

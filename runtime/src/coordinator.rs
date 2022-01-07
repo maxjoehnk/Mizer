@@ -372,6 +372,10 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 }
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
+    fn new(&mut self) {
+        self.handle_add_node(NodeType::Programmer, NodeDesigner::default(), None).unwrap();
+    }
+
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         for node in &project.nodes {
             self.add_project_node(node.path.clone(), node.config.clone().into());

@@ -44,14 +44,15 @@ impl ApiHandler {
                     .send(Ok(()))
                     .expect("api command sender disconnected");
             }
-            ApiCommand::ReadFaderValue(path,  sender) => {
-                let value = mizer.runtime.pipeline.get_state::<f64>(&path)
+            ApiCommand::ReadFaderValue(path, sender) => {
+                let value = mizer
+                    .runtime
+                    .pipeline
+                    .get_state::<f64>(&path)
                     .copied()
                     .ok_or_else(|| anyhow::anyhow!("No fader node with given path found"));
 
-                sender
-                    .send(value)
-                    .expect("api command sender disconnected");
+                sender.send(value).expect("api command sender disconnected");
             }
             ApiCommand::AddLink(link, sender) => {
                 let result = mizer.runtime.add_link(link);

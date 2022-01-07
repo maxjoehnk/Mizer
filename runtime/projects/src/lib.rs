@@ -53,7 +53,7 @@ impl Project {
                     position: NodePosition::default(),
                     hidden: true,
                     scale: 1f64,
-                }
+                },
             }],
             ..Default::default()
         }

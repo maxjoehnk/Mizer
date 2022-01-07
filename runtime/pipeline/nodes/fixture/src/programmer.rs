@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
 use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Programmer;
+use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
@@ -18,56 +18,86 @@ impl PipelineNode for ProgrammerNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            ("Intensity".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Shutter".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Color".into(), PortMetadata {
-                port_type: PortType::Color,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Pan".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Tilt".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Focus".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Zoom".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Prism".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Iris".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            ("Frost".into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
+            (
+                "Intensity".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Shutter".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Color".into(),
+                PortMetadata {
+                    port_type: PortType::Color,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Pan".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Tilt".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Focus".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Zoom".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Prism".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Iris".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                "Frost".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
         ]
     }
 
@@ -90,8 +120,10 @@ impl ProcessingNode for ProgrammerNode {
             }
             if let Some(color) = context.read_port::<_, Color>("Color") {
                 programmer.write_control(FixtureFaderControl::Color(ColorChannel::Red), color.red);
-                programmer.write_control(FixtureFaderControl::Color(ColorChannel::Green), color.green);
-                programmer.write_control(FixtureFaderControl::Color(ColorChannel::Blue), color.blue);
+                programmer
+                    .write_control(FixtureFaderControl::Color(ColorChannel::Green), color.green);
+                programmer
+                    .write_control(FixtureFaderControl::Color(ColorChannel::Blue), color.blue);
             }
             if let Some(pan) = context.read_port::<_, f64>("Pan") {
                 programmer.write_control(FixtureFaderControl::Pan, pan);

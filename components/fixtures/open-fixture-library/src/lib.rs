@@ -43,7 +43,8 @@ impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
             if file.metadata()?.is_file() {
                 log::trace!("Loading ofl library from '{:?}'...", file);
                 let mut ag_library_file = std::fs::File::open(&file.path())?;
-                let ag_library: AgLibraryFile = simd_json::serde::from_reader(&mut ag_library_file)?;
+                let ag_library: AgLibraryFile =
+                    simd_json::serde::from_reader(&mut ag_library_file)?;
 
                 for fixture in ag_library.fixtures {
                     let manufacturer = fixture.manufacturer.name.to_slug();

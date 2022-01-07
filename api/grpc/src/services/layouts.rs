@@ -117,14 +117,21 @@ impl<R: RuntimeApi> LayoutsApi for LayoutsHandler<R> {
         resp.finish(Default::default())
     }
 
-    fn read_fader_value(&self, req: ServerRequestSingle<ReadFaderValueRequest>, resp: ServerResponseUnarySink<FaderValueResponse>) -> grpc::Result<()> {
+    fn read_fader_value(
+        &self,
+        req: ServerRequestSingle<ReadFaderValueRequest>,
+        resp: ServerResponseUnarySink<FaderValueResponse>,
+    ) -> grpc::Result<()> {
         if let Some(value) = self.read_fader_value(req.message.node.into()) {
             resp.finish(FaderValueResponse {
                 value,
                 ..Default::default()
             })
-        }else {
-            resp.send_grpc_error(GrpcStatus::NotFound, format!("No matching fader node found"))
+        } else {
+            resp.send_grpc_error(
+                GrpcStatus::NotFound,
+                format!("No matching fader node found"),
+            )
         }
     }
 }

@@ -59,7 +59,9 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::selectConfig(select) => Self::Select(select.into()),
             NodeConfig_oneof_type::mergeConfig(merge) => Self::Merge(merge.into()),
             NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
-            NodeConfig_oneof_type::programmerConfig(programmer) => Self::Programmer(programmer.into()),
+            NodeConfig_oneof_type::programmerConfig(programmer) => {
+                Self::Programmer(programmer.into())
+            }
             NodeConfig_oneof_type::sequencerConfig(sequencer) => Self::Sequencer(sequencer.into()),
             NodeConfig_oneof_type::ildaFileConfig(ilda) => Self::IldaFile(ilda.into()),
             NodeConfig_oneof_type::laserConfig(laser) => Self::Laser(laser.into()),

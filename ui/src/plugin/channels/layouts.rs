@@ -91,7 +91,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                 if let Value::String(node_path) = call.args {
                     if let Some(value) = self.handler.read_fader_value(node_path.into()) {
                         resp.send_ok(Value::F64(value));
-                    }else {
+                    } else {
                         resp.respond_error(anyhow::anyhow!("Missing node path"));
                     }
                 }

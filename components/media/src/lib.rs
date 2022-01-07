@@ -50,7 +50,7 @@ impl MediaServer {
             match command {
                 MediaServerCommand::ClearFiles => {
                     self.db.clear();
-                },
+                }
                 MediaServerCommand::ImportFile(model, file_path, resp) => {
                     let document = self
                         .import_file

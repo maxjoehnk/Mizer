@@ -234,7 +234,9 @@ fn register_fixtures_module(
 
 fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     log::info!("Loading open fixture library...");
-    let mut ofl_provider = OpenFixtureLibraryProvider::new("components/fixtures/open-fixture-library/.fixtures".to_string());
+    let mut ofl_provider = OpenFixtureLibraryProvider::new(
+        "components/fixtures/open-fixture-library/.fixtures".to_string(),
+    );
     if let Err(err) = ofl_provider.load() {
         log::warn!("Could not load open fixture library {:?}", err);
     } else {

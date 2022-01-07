@@ -70,6 +70,13 @@ impl DataAccess {
         Ok(media_document)
     }
 
+    pub fn clear(&self) -> anyhow::Result<()> {
+        self.media.clear()?;
+        self.tags.clear()?;
+
+        Ok(())
+    }
+
     fn insert_media(&self, document: &MediaDocument) -> anyhow::Result<()> {
         let id = document.id.as_bytes();
         let value = serde_json::to_vec(&document)?;

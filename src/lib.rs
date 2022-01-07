@@ -48,7 +48,6 @@ pub fn build_runtime(
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
     handle.spawn(media_server.run_api());
-    // import_media_files(&media_paths, &media_server_api)?;
 
     let handlers = Handlers::new(
         api,
@@ -60,7 +59,7 @@ pub fn build_runtime(
     );
 
     let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
-    setup_media_api(handle, &flags, media_server_api)?;
+    setup_media_api(handle, &flags, media_server_api.clone())?;
     let has_project_file = flags.file.is_some();
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
@@ -69,6 +68,7 @@ pub fn build_runtime(
         grpc,
         handlers,
         settings,
+        media_server_api,
     };
     if has_project_file {
         mizer.load_project()?;
@@ -87,6 +87,7 @@ pub struct Mizer {
     pub handlers: Handlers<Api>,
     project_path: Option<PathBuf>,
     settings: Arc<NonEmptyPinboard<Settings>>,
+    media_server_api: MediaServerApi,
 }
 
 impl Mizer {
@@ -136,6 +137,7 @@ impl Mizer {
                 let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
                 dmx_manager.load(&project)?;
             }
+            import_media_files(&media_paths, &self.media_server_api)?;
             self.runtime.load(&project).context("loading project")?;
             log::info!("Loading project...Done");
 
@@ -179,6 +181,7 @@ impl Mizer {
         dmx_manager.clear();
         let sequencer = injector.get::<Sequencer>().unwrap();
         sequencer.clear();
+        self.media_server_api.clear();
     }
 }
 
@@ -241,7 +244,6 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     Ok(ofl_provider)
 }
 
-// TODO: combine with project loading/saving
 fn import_media_files(
     media_paths: &[String],
     media_server_api: &MediaServerApi,

@@ -48,6 +48,9 @@ impl MediaServer {
         let mut stream = self.command_queue.1.into_stream();
         while let Some(command) = stream.next().await {
             match command {
+                MediaServerCommand::ClearFiles => {
+                    self.db.clear();
+                },
                 MediaServerCommand::ImportFile(model, file_path, resp) => {
                     let document = self
                         .import_file

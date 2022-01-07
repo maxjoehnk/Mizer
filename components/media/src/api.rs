@@ -23,9 +23,14 @@ impl MediaServerApi {
     pub fn open_channel<T>() -> (Sender<T>, Receiver<T>) {
         flume::bounded(1)
     }
+
+    pub fn clear(&self) {
+        self.send_command(MediaServerCommand::ClearFiles);
+    }
 }
 
 pub enum MediaServerCommand {
+    ClearFiles,
     ImportFile(MediaCreateModel, PathBuf, Sender<MediaDocument>),
     CreateTag(TagCreateModel, Sender<TagDocument>),
     GetTags(Sender<Vec<TagDocument>>),

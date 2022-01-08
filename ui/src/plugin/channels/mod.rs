@@ -4,12 +4,13 @@ pub use self::media::*;
 pub use self::nodes::*;
 pub use self::programmer::*;
 pub use self::sequencer::*;
-pub use self::session::*;
 pub use self::settings::*;
 pub use self::transport::*;
 use anyhow::Error;
 pub use event::connections::*;
+pub use event::session::*;
 pub use method::connections::*;
+pub use method::session::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
 mod event;
@@ -20,7 +21,6 @@ mod method;
 mod nodes;
 mod programmer;
 mod sequencer;
-mod session;
 mod settings;
 mod transport;
 

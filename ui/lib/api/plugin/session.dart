@@ -6,10 +6,13 @@ import 'package:mizer/protos/session.pb.dart';
 
 class SessionPluginApi implements SessionApi {
   final MethodChannel channel = const MethodChannel("mizer.live/session");
+  final EventChannel sessionEvents = const EventChannel("mizer.live/session/watch");
 
   @override
   Stream<Session> watchSession() {
-    return Stream.empty();
+    return sessionEvents.receiveBroadcastStream().map((buffer) {
+      return Session.fromBuffer(_convertBuffer(buffer));
+    });
   }
 
   @override
@@ -27,5 +30,14 @@ class SessionPluginApi implements SessionApi {
     log("saving project");
     await channel.invokeMethod("saveProject");
     log("saved project");
+  }
+
+  @override
+  Future<void> saveProjectAs(String path) async {
+    await channel.invokeMethod("saveProjectAs", path);
+  }
+
+  static List<int> _convertBuffer(List<Object> response) {
+    return response.map((dynamic e) => e as int).toList();
   }
 }

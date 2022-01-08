@@ -41,6 +41,12 @@ class SessionApiClient extends $grpc.Client {
           ($0.ProjectRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ProjectResponse.fromBuffer(value));
+  static final _$saveProjectAs =
+      $grpc.ClientMethod<$0.SaveProjectAsRequest, $0.ProjectResponse>(
+          '/mizer.SessionApi/SaveProjectAs',
+          ($0.SaveProjectAsRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.ProjectResponse.fromBuffer(value));
 
   SessionApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -74,6 +80,12 @@ class SessionApiClient extends $grpc.Client {
       $0.ProjectRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$saveProject, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.ProjectResponse> saveProjectAs(
+      $0.SaveProjectAsRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$saveProjectAs, request, options: options);
   }
 }
 
@@ -118,6 +130,14 @@ abstract class SessionApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ProjectRequest.fromBuffer(value),
         ($0.ProjectResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SaveProjectAsRequest, $0.ProjectResponse>(
+        'SaveProjectAs',
+        saveProjectAs_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.SaveProjectAsRequest.fromBuffer(value),
+        ($0.ProjectResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.Session> getSession_Pre(
@@ -145,6 +165,11 @@ abstract class SessionApiServiceBase extends $grpc.Service {
     return saveProject(call, await request);
   }
 
+  $async.Future<$0.ProjectResponse> saveProjectAs_Pre($grpc.ServiceCall call,
+      $async.Future<$0.SaveProjectAsRequest> request) async {
+    return saveProjectAs(call, await request);
+  }
+
   $async.Stream<$0.Session> getSession(
       $grpc.ServiceCall call, $0.SessionRequest request);
   $async.Future<$0.Session> joinSession(
@@ -155,4 +180,6 @@ abstract class SessionApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.LoadProjectRequest request);
   $async.Future<$0.ProjectResponse> saveProject(
       $grpc.ServiceCall call, $0.ProjectRequest request);
+  $async.Future<$0.ProjectResponse> saveProjectAs(
+      $grpc.ServiceCall call, $0.SaveProjectAsRequest request);
 }

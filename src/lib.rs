@@ -16,6 +16,7 @@ use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::{MidiConnectionManager, MidiDeviceProvider, MidiModule};
 use mizer_runtime::DefaultRuntime;
+use mizer_session::SessionState;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
@@ -23,6 +24,7 @@ use mizer_sequencer::{Sequencer, SequencerModule};
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+use mizer_message_bus::MessageBus;
 
 mod api;
 mod flags;
@@ -69,6 +71,7 @@ pub fn build_runtime(
         handlers,
         settings,
         media_server_api,
+        session_events: MessageBus::new(),
     };
     if has_project_file {
         mizer.load_project()?;
@@ -88,6 +91,7 @@ pub struct Mizer {
     project_path: Option<PathBuf>,
     settings: Arc<NonEmptyPinboard<Settings>>,
     media_server_api: MediaServerApi,
+    session_events: MessageBus<SessionState>,
 }
 
 impl Mizer {
@@ -115,15 +119,18 @@ impl Mizer {
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
         dmx_manager.new();
         self.runtime.new();
+        self.send_session_update();
     }
 
     fn load_project_from(&mut self, path: PathBuf) -> anyhow::Result<()> {
+        self.close_project();
         self.project_path = Some(path);
-        self.load_project()
+        self.load_project()?;
+
+        Ok(())
     }
 
     fn load_project(&mut self) -> anyhow::Result<()> {
-        self.close_project();
         if let Some(ref path) = self.project_path {
             let mut media_paths = Vec::new();
             log::info!("Loading project {:?}...", path);
@@ -145,6 +152,7 @@ impl Mizer {
             if self.flags.generate_graph {
                 self.runtime.generate_pipeline_graph()?;
             }
+            self.send_session_update();
         }
 
         Ok(())
@@ -152,7 +160,10 @@ impl Mizer {
 
     fn save_project_as(&mut self, path: PathBuf) -> anyhow::Result<()> {
         self.project_path = Some(path);
-        self.save_project()
+        self.save_project()?;
+        self.send_session_update();
+
+        Ok(())
     }
 
     fn save_project(&self) -> anyhow::Result<()> {
@@ -182,7 +193,15 @@ impl Mizer {
         dmx_manager.clear();
         let sequencer = injector.get::<Sequencer>().unwrap();
         sequencer.clear();
+        self.project_path = None;
         self.media_server_api.clear();
+        self.send_session_update();
+    }
+
+    fn send_session_update(&self) {
+        self.session_events.send(SessionState {
+            project_path: self.project_path.clone().map(|path| path.into_os_string().into_string().expect("Could not convert path to string")),
+        });
     }
 }
 

@@ -306,6 +306,168 @@ impl ::protobuf::reflect::ProtobufValue for LoadProjectRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct SaveProjectAsRequest {
+    // message fields
+    pub path: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SaveProjectAsRequest {
+    fn default() -> &'a SaveProjectAsRequest {
+        <SaveProjectAsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SaveProjectAsRequest {
+    pub fn new() -> SaveProjectAsRequest {
+        ::std::default::Default::default()
+    }
+
+    // string path = 1;
+
+
+    pub fn get_path(&self) -> &str {
+        &self.path
+    }
+    pub fn clear_path(&mut self) {
+        self.path.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
+    }
+
+    // Take field
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for SaveProjectAsRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.path);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.path.is_empty() {
+            os.write_string(1, &self.path)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SaveProjectAsRequest {
+        SaveProjectAsRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "path",
+                |m: &SaveProjectAsRequest| { &m.path },
+                |m: &mut SaveProjectAsRequest| { &mut m.path },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SaveProjectAsRequest>(
+                "SaveProjectAsRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SaveProjectAsRequest {
+        static instance: ::protobuf::rt::LazyV2<SaveProjectAsRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SaveProjectAsRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for SaveProjectAsRequest {
+    fn clear(&mut self) {
+        self.path.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SaveProjectAsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SaveProjectAsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ProjectResponse {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -709,6 +871,8 @@ impl ::protobuf::reflect::ProtobufValue for SessionRequest {
 pub struct Session {
     // message fields
     pub devices: ::protobuf::RepeatedField<SessionDevice>,
+    // message oneof groups
+    pub _filePath: ::std::option::Option<Session_oneof__filePath>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -722,12 +886,67 @@ impl<'a> ::std::default::Default for &'a Session {
     }
 }
 
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum Session_oneof__filePath {
+    filePath(::std::string::String),
+}
+
 impl Session {
     pub fn new() -> Session {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.SessionDevice devices = 1;
+    // string filePath = 1;
+
+
+    pub fn get_filePath(&self) -> &str {
+        match self._filePath {
+            ::std::option::Option::Some(Session_oneof__filePath::filePath(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_filePath(&mut self) {
+        self._filePath = ::std::option::Option::None;
+    }
+
+    pub fn has_filePath(&self) -> bool {
+        match self._filePath {
+            ::std::option::Option::Some(Session_oneof__filePath::filePath(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_filePath(&mut self, v: ::std::string::String) {
+        self._filePath = ::std::option::Option::Some(Session_oneof__filePath::filePath(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_filePath(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(Session_oneof__filePath::filePath(_)) = self._filePath {
+        } else {
+            self._filePath = ::std::option::Option::Some(Session_oneof__filePath::filePath(::std::string::String::new()));
+        }
+        match self._filePath {
+            ::std::option::Option::Some(Session_oneof__filePath::filePath(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_filePath(&mut self) -> ::std::string::String {
+        if self.has_filePath() {
+            match self._filePath.take() {
+                ::std::option::Option::Some(Session_oneof__filePath::filePath(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // repeated .mizer.SessionDevice devices = 2;
 
 
     pub fn get_devices(&self) -> &[SessionDevice] {
@@ -768,6 +987,12 @@ impl ::protobuf::Message for Session {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._filePath = ::std::option::Option::Some(Session_oneof__filePath::filePath(is.read_string()?));
+                },
+                2 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.devices)?;
                 },
                 _ => {
@@ -786,6 +1011,13 @@ impl ::protobuf::Message for Session {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if let ::std::option::Option::Some(ref v) = self._filePath {
+            match v {
+                &Session_oneof__filePath::filePath(ref v) => {
+                    my_size += ::protobuf::rt::string_size(1, &v);
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -793,10 +1025,17 @@ impl ::protobuf::Message for Session {
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
         for v in &self.devices {
-            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if let ::std::option::Option::Some(ref v) = self._filePath {
+            match v {
+                &Session_oneof__filePath::filePath(ref v) => {
+                    os.write_string(1, v)?;
+                },
+            };
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -835,6 +1074,11 @@ impl ::protobuf::Message for Session {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "filePath",
+                Session::has_filePath,
+                Session::get_filePath,
+            ));
             fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<SessionDevice>>(
                 "devices",
                 |m: &Session| { &m.devices },
@@ -856,6 +1100,7 @@ impl ::protobuf::Message for Session {
 
 impl ::protobuf::Clear for Session {
     fn clear(&mut self) {
+        self._filePath = ::std::option::Option::None;
         self.devices.clear();
         self.unknown_fields.clear();
     }
@@ -1360,22 +1605,25 @@ impl ::protobuf::reflect::ProtobufValue for DeviceClock {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rsession.proto\x12\x05mizer\"\x10\n\x0eProjectRequest\"(\n\x12LoadPro\
-    jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0fPro\
-    jectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"9\n\x07Session\x12.\n\x07dev\
-    ices\x18\x01\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devices\"s\n\rSes\
-    sionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x10\n\x03ip\
-    s\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\x01(\x0b2\x12.m\
-    izer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\x01(\x01R\x04pi\
-    ng\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\x01(\x08R\x06mast\
-    er\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\xc4\x02\n\nSession\
-    Api\x127\n\nGetSession\x12\x15.mizer.SessionRequest\x1a\x0e.mizer.Sessio\
-    n\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.ClientAnnouncement\x1a\
-    \x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\x15.mizer.ProjectRequest\
-    \x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLoadProject\x12\x19.mizer.L\
-    oadProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12>\n\x0bSaveProjec\
-    t\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0b\x06pro\
-    to3\
+    jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"*\n\x14SavePr\
+    ojectAsRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0f\
+    ProjectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"g\n\x07Session\x12\x1f\n\x08\
+    filePath\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\x07device\
+    s\x18\x02\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devicesB\x0b\n\t_fil\
+    ePath\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\
+    \x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\
+    \x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\
+    \x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\
+    \x8c\x03\n\nSessionApi\x127\n\nGetSession\x12\x15.mizer.SessionRequest\
+    \x1a\x0e.mizer.Session\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.Clie\
+    ntAnnouncement\x1a\x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\x15.mize\
+    r.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLoadProject\
+    \x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12>\
+    \n\x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectResp\
+    onse\"\0\x12F\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\
+    \x16.mizer.ProjectResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

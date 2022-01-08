@@ -10,6 +10,7 @@ use mizer_nodes::Node;
 use mizer_runtime::NodeDescriptor;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+use mizer_session::SessionState;
 
 pub mod handlers;
 mod mappings;
@@ -68,8 +69,10 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
 
+    fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>>;
     fn new_project(&self) -> anyhow::Result<()>;
     fn save_project(&self) -> anyhow::Result<()>;
+    fn save_project_as(&self, path: String) -> anyhow::Result<()>;
     fn load_project(&self, path: String) -> anyhow::Result<()>;
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot>;

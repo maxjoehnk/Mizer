@@ -23,6 +23,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SessionChannel<R> {
                 Ok(()) => resp.send_ok(Value::Null),
                 Err(e) => resp.respond_error(e),
             },
+            "saveProjectAs" => {
+                if let Value::String(path) = call.args {
+                    match self.save_project_as(path) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(e) => resp.respond_error(e),
+                    }
+                }
+            },
             "newProject" => match self.new_project() {
                 Ok(()) => resp.send_ok(Value::Null),
                 Err(e) => resp.respond_error(e),
@@ -51,6 +59,10 @@ impl<R: RuntimeApi + 'static> SessionChannel<R> {
 
     fn save_project(&self) -> anyhow::Result<()> {
         self.handler.save_project()
+    }
+
+    fn save_project_as(&self, path: String) -> anyhow::Result<()> {
+        self.handler.save_project_as(path)
     }
 
     fn new_project(&self) -> anyhow::Result<()> {

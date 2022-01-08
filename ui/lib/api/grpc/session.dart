@@ -26,4 +26,9 @@ class SessionGrpcApi implements SessionApi {
   Future<void> saveProject() async {
     await client.saveProject(ProjectRequest());
   }
+
+  @override
+  Future<void> saveProjectAs(String path) async {
+    await client.saveProjectAs(SaveProjectAsRequest(path: path));
+  }
 }

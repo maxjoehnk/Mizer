@@ -4,6 +4,11 @@ use serde::{Deserialize, Serialize};
 mod discovery;
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct SessionState {
+    pub project_path: Option<String>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Session {
     pub clients: Vec<SessionClient>,
 }

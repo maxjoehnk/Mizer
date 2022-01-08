@@ -8,10 +8,14 @@ service SessionApi {
   rpc NewProject (ProjectRequest) returns (ProjectResponse) {}
   rpc LoadProject (LoadProjectRequest) returns (ProjectResponse) {}
   rpc SaveProject (ProjectRequest) returns (ProjectResponse) {}
+  rpc SaveProjectAs (SaveProjectAsRequest) returns (ProjectResponse) {}
 }
 
 message ProjectRequest {}
 message LoadProjectRequest {
+  string path = 1;
+}
+message SaveProjectAsRequest {
   string path = 1;
 }
 message ProjectResponse {}
@@ -23,7 +27,8 @@ message ClientAnnouncement {
 message SessionRequest {}
 
 message Session {
-  repeated SessionDevice devices = 1;
+  optional string filePath = 1;
+  repeated SessionDevice devices = 2;
 }
 
 message SessionDevice {

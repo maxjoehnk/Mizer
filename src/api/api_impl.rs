@@ -7,6 +7,7 @@ use mizer_layouts::{ControlConfig, ControlPosition, ControlSize, Layout};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
 use mizer_nodes::{FixtureNode, Node, SequencerNode};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
+use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
 use mizer_message_bus::Subscriber;
@@ -220,6 +221,13 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::ObserveSession(tx))?;
+
+        Ok(rx.recv()?)
+    }
+
     fn new_project(&self) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::NewProject(tx))?;
@@ -230,6 +238,13 @@ impl RuntimeApi for Api {
     fn save_project(&self) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::SaveProject(tx))?;
+
+        rx.recv()?
+    }
+
+    fn save_project_as(&self, path: String) -> anyhow::Result<()> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::SaveProjectAs(path, tx))?;
 
         rx.recv()?
     }

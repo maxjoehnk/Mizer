@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:mizer/platform/integrated/menu.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 
 import '../platform.dart';
@@ -27,7 +27,7 @@ class IntegratedMenuBar extends StatelessWidget {
                 return nativeshell.MenuItem.separator();
               }
               if (i is MenuItem) {
-                return nativeshell.MenuItem(title: i.label, action: i.action);
+                return i.toNative();
               }
               throw new AssertionError("Invalid menu item");
             }).toList()))

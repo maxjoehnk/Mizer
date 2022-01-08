@@ -85,6 +85,53 @@ class LoadProjectRequest extends $pb.GeneratedMessage {
   void clearPath() => clearField(1);
 }
 
+class SaveProjectAsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SaveProjectAsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
+  SaveProjectAsRequest._() : super();
+  factory SaveProjectAsRequest({
+    $core.String? path,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    return _result;
+  }
+  factory SaveProjectAsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SaveProjectAsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SaveProjectAsRequest clone() => SaveProjectAsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SaveProjectAsRequest copyWith(void Function(SaveProjectAsRequest) updates) => super.copyWith((message) => updates(message as SaveProjectAsRequest)) as SaveProjectAsRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SaveProjectAsRequest create() => SaveProjectAsRequest._();
+  SaveProjectAsRequest createEmptyInstance() => create();
+  static $pb.PbList<SaveProjectAsRequest> createRepeated() => $pb.PbList<SaveProjectAsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SaveProjectAsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SaveProjectAsRequest>(create);
+  static SaveProjectAsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+}
+
 class ProjectResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProjectResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..hasRequiredFields = false
@@ -192,15 +239,20 @@ class SessionRequest extends $pb.GeneratedMessage {
 
 class Session extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Session', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..pc<SessionDevice>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'devices', $pb.PbFieldType.PM, subBuilder: SessionDevice.create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath', protoName: 'filePath')
+    ..pc<SessionDevice>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'devices', $pb.PbFieldType.PM, subBuilder: SessionDevice.create)
     ..hasRequiredFields = false
   ;
 
   Session._() : super();
   factory Session({
+    $core.String? filePath,
     $core.Iterable<SessionDevice>? devices,
   }) {
     final _result = create();
+    if (filePath != null) {
+      _result.filePath = filePath;
+    }
     if (devices != null) {
       _result.devices.addAll(devices);
     }
@@ -228,7 +280,16 @@ class Session extends $pb.GeneratedMessage {
   static Session? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<SessionDevice> get devices => $_getList(0);
+  $core.String get filePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set filePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFilePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFilePath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<SessionDevice> get devices => $_getList(1);
 }
 
 class SessionDevice extends $pb.GeneratedMessage {

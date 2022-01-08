@@ -2949,6 +2949,7 @@ dependencies = [
  "mizer-nodes",
  "mizer-runtime",
  "mizer-sequencer",
+ "mizer-session",
  "mizer-settings",
  "pinboard",
  "profiling",

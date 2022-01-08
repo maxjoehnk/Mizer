@@ -6,6 +6,7 @@ use mizer_message_bus::Subscriber;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use mizer_protocol_midi::MidiEvent;
+use mizer_session::SessionState;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -44,4 +45,5 @@ pub enum ApiCommand {
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),
     LoadProject(String, flume::Sender<anyhow::Result<()>>),
+    ObserveSession(flume::Sender<Subscriber<SessionState>>),
 }

@@ -10,6 +10,6 @@ extension NativeShellMenu on Menu {
 
 extension NativeShellMenuItem on MenuItem {
   nativeshell.MenuItem toNative() {
-    return nativeshell.MenuItem(title: label, action: action);
+    return nativeshell.MenuItem(title: label, action: (disabled ?? false) ? null : this.action);
   }
 }

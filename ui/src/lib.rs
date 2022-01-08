@@ -1,6 +1,6 @@
 use nativeshell::{
     codec::Value,
-    shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
+    shell::{Context, ContextOptions, exec_bundle, register_observatory_listener},
 };
 
 use mizer_api::handlers::Handlers;
@@ -39,7 +39,10 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(
     let _transport_events =
         TransportEventChannel::new(handlers.transport, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
-    let _session = SessionChannel::new(handlers.session).channel(context.weak());
+    let _session = SessionChannel::new(handlers.session.clone()).channel(context.weak());
+    let _session_events =
+        MonitorSessionChannel::new(handlers.session, async_runtime.clone(), context.weak())
+            .event_channel(context.weak());
     let _sequencer = SequencerChannel::new(handlers.sequencer).channel(context.weak());
     let _programmer = ProgrammerChannel::new(handlers.programmer.clone()).channel(context.weak());
     let _programmer_events =

@@ -5,4 +5,5 @@ abstract class SessionApi {
   Future<void> newProject();
   Future<void> loadProject(String path);
   Future<void> saveProject();
+  Future<void> saveProjectAs(String path);
 }

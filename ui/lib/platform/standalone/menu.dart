@@ -33,6 +33,7 @@ class MenuRowItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hoverable(
+      disabled: item.action == null || (item.disabled ?? false),
       onTap: () {
         Navigator.of(context).pop();
         if (item.action != null) {

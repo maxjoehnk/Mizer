@@ -137,6 +137,11 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
+            ApiCommand::ObserveSession(sender) => {
+                sender
+                    .send(mizer.session_events.subscribe())
+                    .expect("api command sender disconnected");
+            }
         }
     }
 

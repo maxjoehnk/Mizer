@@ -7,3 +7,4 @@ mod programmer;
 mod sequencer;
 mod settings;
 mod transport;
+mod session;

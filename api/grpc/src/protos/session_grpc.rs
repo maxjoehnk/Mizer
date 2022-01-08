@@ -31,6 +31,8 @@ pub trait SessionApi {
     fn load_project(&self, req: ::grpc::ServerRequestSingle<super::session::LoadProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
 
     fn save_project(&self, req: ::grpc::ServerRequestSingle<super::session::ProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
+
+    fn save_project_as(&self, req: ::grpc::ServerRequestSingle<super::session::SaveProjectAsRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -91,6 +93,16 @@ impl SessionApiClient {
     pub fn save_project(&self, o: ::grpc::RequestOptions, req: super::session::ProjectRequest) -> ::grpc::SingleResponse<super::session::ProjectResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/SaveProject"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn save_project_as(&self, o: ::grpc::RequestOptions, req: super::session::SaveProjectAsRequest) -> ::grpc::SingleResponse<super::session::ProjectResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/SaveProjectAs"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -167,6 +179,18 @@ impl SessionApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).save_project(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/SaveProjectAs"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).save_project_as(req, resp))
                     },
                 ),
             ],

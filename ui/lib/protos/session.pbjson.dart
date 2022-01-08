@@ -25,6 +25,16 @@ const LoadProjectRequest$json = const {
 
 /// Descriptor for `LoadProjectRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loadProjectRequestDescriptor = $convert.base64Decode('ChJMb2FkUHJvamVjdFJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aA==');
+@$core.Deprecated('Use saveProjectAsRequestDescriptor instead')
+const SaveProjectAsRequest$json = const {
+  '1': 'SaveProjectAsRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+/// Descriptor for `SaveProjectAsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List saveProjectAsRequestDescriptor = $convert.base64Decode('ChRTYXZlUHJvamVjdEFzUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRo');
 @$core.Deprecated('Use projectResponseDescriptor instead')
 const ProjectResponse$json = const {
   '1': 'ProjectResponse',
@@ -53,12 +63,16 @@ final $typed_data.Uint8List sessionRequestDescriptor = $convert.base64Decode('Cg
 const Session$json = const {
   '1': 'Session',
   '2': const [
-    const {'1': 'devices', '3': 1, '4': 3, '5': 11, '6': '.mizer.SessionDevice', '10': 'devices'},
+    const {'1': 'filePath', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'filePath', '17': true},
+    const {'1': 'devices', '3': 2, '4': 3, '5': 11, '6': '.mizer.SessionDevice', '10': 'devices'},
+  ],
+  '8': const [
+    const {'1': '_filePath'},
   ],
 };
 
 /// Descriptor for `Session`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEi4KB2RldmljZXMYASADKAsyFC5taXplci5TZXNzaW9uRGV2aWNlUgdkZXZpY2Vz');
+final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEh8KCGZpbGVQYXRoGAEgASgJSABSCGZpbGVQYXRoiAEBEi4KB2RldmljZXMYAiADKAsyFC5taXplci5TZXNzaW9uRGV2aWNlUgdkZXZpY2VzQgsKCV9maWxlUGF0aA==');
 @$core.Deprecated('Use sessionDeviceDescriptor instead')
 const SessionDevice$json = const {
   '1': 'SessionDevice',

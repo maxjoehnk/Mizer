@@ -10,6 +10,7 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/contracts/transport.dart';
+import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/api/plugin/ffi/api.dart';
 import 'package:mizer/api/plugin/ffi/bindings.dart';
 
@@ -46,7 +47,8 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<TransportApi>(create: (context) => TransportPluginApi(bindings)),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerPluginApi()),
         RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerPluginApi()),
-        RepositoryProvider<SettingsApi>(create: (_) => SettingsPluginApi()),
+        RepositoryProvider<SettingsApi>(create: (_) => ApplicationPluginApi()),
+        RepositoryProvider<ApplicationPluginApi>(create: (_) => ApplicationPluginApi()),
       ],
     );
   }

@@ -1,7 +1,5 @@
-use anyhow::Context;
 use structopt::StructOpt;
 
-use crate::async_runtime::TokioRuntime;
 use mizer::{build_runtime, Api, Flags};
 use mizer_api::handlers::Handlers;
 use mizer_session::Session;
@@ -26,22 +24,8 @@ fn main() -> anyhow::Result<()> {
     if headless {
         run_headless(flags)
     } else {
-        run(flags)
+        ui::run(flags)
     }
-}
-
-#[cfg(feature = "ui")]
-fn run(flags: Flags) -> anyhow::Result<()> {
-    let tokio = build_tokio_runtime();
-    let handlers = setup_runtime(tokio.handle(), flags)?;
-
-    let handlers = handlers.recv().context("internal api setup")?;
-
-    let runtime = TokioRuntime::new(tokio.handle());
-
-    mizer_ui::run(handlers, runtime)?;
-
-    Ok(())
 }
 
 fn run_headless(flags: Flags) -> anyhow::Result<()> {
@@ -58,24 +42,6 @@ fn init() -> Flags {
     log::debug!("flags: {:?}", flags);
 
     flags
-}
-
-#[cfg(feature = "ui")]
-fn setup_runtime(
-    handle: &tokio::runtime::Handle,
-    flags: Flags,
-) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
-    let (tx, rx) = mpsc::channel();
-    let handle = handle.clone();
-    std::thread::Builder::new()
-        .name("Task Runtime".into())
-        .spawn(move || {
-            if let Err(err) = start_runtime(&handle, flags, Some(tx)) {
-                log::error!("{}", err);
-                std::process::exit(1);
-            }
-        })?;
-    Ok(rx)
 }
 
 fn build_tokio_runtime() -> tokio::runtime::Runtime {
@@ -104,4 +70,57 @@ fn start_runtime(
     runtime.block_on(mizer.run(&api_handler));
 
     Ok(())
+}
+
+#[cfg(feature = "ui")]
+mod ui {
+    use anyhow::Context;
+
+    use crate::async_runtime::TokioRuntime;
+    use mizer::{Api, Flags};
+    use mizer_api::handlers::Handlers;
+
+    use std::sync::mpsc;
+    use mizer_ui::LifecycleHandler;
+
+    pub fn run(flags: Flags) -> anyhow::Result<()> {
+        let tokio = super::build_tokio_runtime();
+        let handlers = setup_runtime(tokio.handle(), flags)?;
+
+        let handlers = handlers.recv().context("internal api setup")?;
+
+        let runtime = TokioRuntime::new(tokio.handle());
+
+        let tokio = AsyncRuntime(tokio);
+
+        mizer_ui::run(handlers, runtime, tokio)?;
+
+        Ok(())
+    }
+
+    fn setup_runtime(
+        handle: &tokio::runtime::Handle,
+        flags: Flags,
+    ) -> anyhow::Result<mpsc::Receiver<Handlers<Api>>> {
+        let (tx, rx) = mpsc::channel();
+        let handle = handle.clone();
+        std::thread::Builder::new()
+            .name("Task Runtime".into())
+            .spawn(move || {
+                if let Err(err) = super::start_runtime(&handle, flags, Some(tx)) {
+                    log::error!("{}", err);
+                    std::process::exit(1);
+                }
+            })?;
+        Ok(rx)
+    }
+
+    struct AsyncRuntime(tokio::runtime::Runtime);
+
+    impl LifecycleHandler for AsyncRuntime {
+        fn shutdown(self) {
+            // TODO: this is no clean exit.
+            self.0.shutdown_background();
+        }
+    }
 }

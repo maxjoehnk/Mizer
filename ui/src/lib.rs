@@ -2,6 +2,7 @@ use nativeshell::{
     codec::Value,
     shell::{Context, ContextOptions, exec_bundle, register_observatory_listener},
 };
+use nativeshell::shell::ContextRef;
 
 use mizer_api::handlers::Handlers;
 use mizer_api::RuntimeApi;
@@ -13,9 +14,10 @@ mod plugin;
 
 nativeshell::include_flutter_plugins!();
 
-pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(
+pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHandler + 'static>(
     handlers: Handlers<R>,
     async_runtime: AR,
+    lifecycle_handler: LH,
 ) -> anyhow::Result<()> {
     exec_bundle();
     register_observatory_listener("mizer".into());
@@ -25,6 +27,8 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(
         flutter_plugins: flutter_get_plugins(),
         ..Default::default()
     })?;
+
+    let lifecycle_handler = HookLifecycleHandler::new(context.weak(), lifecycle_handler);
 
     let _connections =
         ConnectionsChannel::new(handlers.connections.clone()).channel(context.weak());
@@ -48,7 +52,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(
     let _programmer_events =
         ProgrammerEventChannel::new(handlers.programmer, async_runtime, context.weak())
             .event_channel(context.weak());
-    let _settings = SettingsChannel::new(handlers.settings).channel(context.weak());
+    let _application = ApplicationChannel::new(handlers.settings, lifecycle_handler).channel(context.weak());
 
     context
         .window_manager
@@ -57,4 +61,39 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static>(
     context.run_loop.borrow().run();
 
     Ok(())
+}
+
+pub trait LifecycleHandler {
+    fn shutdown(self);
+}
+
+impl LifecycleHandler for ContextRef {
+    fn shutdown(self) {
+        // TODO: this is no clean exit.
+        self.run_loop.borrow().stop();
+        self.engine_manager.borrow_mut().shut_down().unwrap();
+    }
+}
+
+struct HookLifecycleHandler<LH: LifecycleHandler + 'static> {
+    context_handler: Context,
+    app_handler: LH,
+}
+
+impl<LH: LifecycleHandler + 'static> HookLifecycleHandler<LH> {
+    fn new(context: Context, handler: LH) -> Self {
+        Self {
+            context_handler: context,
+            app_handler: handler,
+        }
+    }
+}
+
+impl<LH: LifecycleHandler + 'static> LifecycleHandler for HookLifecycleHandler<LH> {
+    fn shutdown(self) {
+        if let Some(context) = self.context_handler.get() {
+            context.shutdown();
+        }
+        self.app_handler.shutdown();
+    }
 }

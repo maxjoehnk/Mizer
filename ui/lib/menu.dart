@@ -2,6 +2,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -11,7 +12,6 @@ import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
-import 'package:provider/provider.dart';
 
 import 'actions/actions.dart';
 import 'actions/menu.dart';
@@ -50,6 +50,7 @@ class ApplicationMenu extends StatelessWidget {
               MenuItem(label: 'Preferences'),
               MenuItem(
                   label: "Exit",
+                  action: () => context.read<ApplicationPluginApi>().exit(),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyQ))
             ]),
             SubMenu(title: 'View', children: [

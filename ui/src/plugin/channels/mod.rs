@@ -1,10 +1,10 @@
+pub use self::application::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::programmer::*;
 pub use self::sequencer::*;
-pub use self::settings::*;
 pub use self::transport::*;
 use anyhow::Error;
 pub use event::connections::*;
@@ -13,6 +13,7 @@ pub use method::connections::*;
 pub use method::session::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
+mod application;
 mod event;
 mod fixtures;
 mod layouts;
@@ -21,7 +22,6 @@ mod method;
 mod nodes;
 mod programmer;
 mod sequencer;
-mod settings;
 mod transport;
 
 pub trait MethodCallExt {

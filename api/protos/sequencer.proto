@@ -46,6 +46,7 @@ message Sequence {
   uint32 id = 1;
   string name = 2;
   repeated Cue cues = 3;
+  bool wrapAround = 4;
 }
 
 message Cue {

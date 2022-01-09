@@ -157,6 +157,7 @@ sequences:
             fade: ~
             delay: ~
         loop_mode: ~
+    wrap_around: true
   - id: 1
     name: Sequence 1
     cues:

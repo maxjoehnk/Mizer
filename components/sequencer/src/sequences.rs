@@ -11,9 +11,27 @@ pub struct Sequence {
     pub id: u32,
     pub name: String,
     pub cues: Vec<Cue>,
+    #[serde(default)]
+    pub wrap_around: bool,
+}
+
+#[cfg(test)]
+impl Default for Sequence {
+    fn default() -> Self {
+        Self::new(1)
+    }
 }
 
 impl Sequence {
+    pub fn new(id: u32) -> Self {
+        Self {
+            id,
+            name: format!("Sequence {}", id),
+            cues: Vec::new(),
+            wrap_around: false,
+        }
+    }
+
     pub(crate) fn run(
         &self,
         state: &mut SequenceState,

@@ -96,12 +96,7 @@ impl Sequencer {
 
     pub fn add_sequence(&self) -> Sequence {
         let i = self.sequence_counter.fetch_add(1, Ordering::AcqRel);
-        let sequence = Sequence {
-            id: i,
-            name: format!("Sequence {}", i),
-            cues: Vec::new(),
-        };
-
+        let sequence = Sequence::new(i);
         let mut sequences = self.sequences.read();
         sequences.insert(i, sequence.clone());
         self.sequences.set(sequences);

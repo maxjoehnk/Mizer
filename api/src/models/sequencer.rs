@@ -1242,6 +1242,7 @@ pub struct Sequence {
     pub id: u32,
     pub name: ::std::string::String,
     pub cues: ::protobuf::RepeatedField<Cue>,
+    pub wrapAround: bool,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1325,6 +1326,21 @@ impl Sequence {
     pub fn take_cues(&mut self) -> ::protobuf::RepeatedField<Cue> {
         ::std::mem::replace(&mut self.cues, ::protobuf::RepeatedField::new())
     }
+
+    // bool wrapAround = 4;
+
+
+    pub fn get_wrapAround(&self) -> bool {
+        self.wrapAround
+    }
+    pub fn clear_wrapAround(&mut self) {
+        self.wrapAround = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_wrapAround(&mut self, v: bool) {
+        self.wrapAround = v;
+    }
 }
 
 impl ::protobuf::Message for Sequence {
@@ -1354,6 +1370,13 @@ impl ::protobuf::Message for Sequence {
                 3 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.cues)?;
                 },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.wrapAround = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1376,6 +1399,9 @@ impl ::protobuf::Message for Sequence {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.wrapAround != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1393,6 +1419,9 @@ impl ::protobuf::Message for Sequence {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.wrapAround != false {
+            os.write_bool(4, self.wrapAround)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1446,6 +1475,11 @@ impl ::protobuf::Message for Sequence {
                 |m: &Sequence| { &m.cues },
                 |m: &mut Sequence| { &mut m.cues },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "wrapAround",
+                |m: &Sequence| { &m.wrapAround },
+                |m: &mut Sequence| { &mut m.wrapAround },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Sequence>(
                 "Sequence",
                 fields,
@@ -1465,6 +1499,7 @@ impl ::protobuf::Clear for Sequence {
         self.id = 0;
         self.name.clear();
         self.cues.clear();
+        self.wrapAround = false;
         self.unknown_fields.clear();
     }
 }
@@ -3540,48 +3575,49 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\
     5\n\x07trigger\x18\x03\x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07\
     trigger\"\x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequences\x18\x01\
-    \x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\"X\n\x08Sequence\
+    \x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\"x\n\x08Sequence\
     \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
     \x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mizer.sequence\
-    r.CueR\x04cues\"\xad\x01\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\
-    \x18\x03\x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x12\
-    \x12\n\x04loop\x18\x04\x20\x01(\x08R\x04loop\x127\n\x08channels\x18\x05\
-    \x20\x03(\x0b2\x1b.mizer.sequencer.CueChannelR\x08channels\"\x8b\x02\n\n\
-    CueChannel\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.F\
-    ixtureIdR\x08fixtures\x125\n\x07control\x18\x02\x20\x01(\x0e2\x1b.mizer.\
-    sequencer.CueControlR\x07control\x12/\n\x05value\x18\x03\x20\x01(\x0b2\
-    \x19.mizer.sequencer.CueValueR\x05value\x12-\n\x04fade\x18\x04\x20\x01(\
-    \x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\x05\x20\
-    \x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05delay\"e\n\x08CueValue\x12\
-    \x18\n\x06direct\x18\x03\x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\
-    \x04\x20\x01(\x0b2\x1e.mizer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\
-    \x05value\"\x9b\x01\n\x08CueTimer\x12\x1a\n\x08hasTimer\x18\x01\x20\x01(\
-    \x08R\x08hasTimer\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.seque\
-    ncer.CueTimeH\0R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.miz\
-    er.sequencer.CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRa\
-    nge\x12\x12\n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\
-    \x02\x20\x01(\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\
-    \x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\
-    \x05beatsB\x06\n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\
-    \x01(\x0b2\x18.mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\
-    \x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02to*C\n\nCueTrigger\x12\x06\n\
-    \x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\
-    \x05BEATS\x10\x03\x12\x0c\n\x08TIMECODE\x10\x04*\xad\x01\n\nCueControl\
-    \x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RE\
-    D\x10\x02\x12\x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\
-    \x12\x07\n\x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\
-    \x07\x12\x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\
-    \x10\n\x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x86\x04\n\
-    \x0cSequencerApi\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequence\
-    sRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12\
-    #.mizer.sequencer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\
-    \0\x12O\n\x0bAddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\x19\
-    .mizer.sequencer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequen\
-    cer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\n\
-    SequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequenc\
-    er.EmptyResponse\"\0\x12T\n\x10UpdateCueTrigger\x12\".mizer.sequencer.Cu\
-    eTriggerRequest\x1a\x1a.mizer.sequencer.Sequences\"\0b\x06proto3\
+    r.CueR\x04cues\x12\x1e\n\nwrapAround\x18\x04\x20\x01(\x08R\nwrapAround\"\
+    \xad\x01\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\x20\x01(\
+    \x0e2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x12\x12\n\x04loop\x18\
+    \x04\x20\x01(\x08R\x04loop\x127\n\x08channels\x18\x05\x20\x03(\x0b2\x1b.\
+    mizer.sequencer.CueChannelR\x08channels\"\x8b\x02\n\nCueChannel\x125\n\
+    \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
+    ures\x125\n\x07control\x18\x02\x20\x01(\x0e2\x1b.mizer.sequencer.CueCont\
+    rolR\x07control\x12/\n\x05value\x18\x03\x20\x01(\x0b2\x19.mizer.sequence\
+    r.CueValueR\x05value\x12-\n\x04fade\x18\x04\x20\x01(\x0b2\x19.mizer.sequ\
+    encer.CueTimerR\x04fade\x12/\n\x05delay\x18\x05\x20\x01(\x0b2\x19.mizer.\
+    sequencer.CueTimerR\x05delay\"e\n\x08CueValue\x12\x18\n\x06direct\x18\
+    \x03\x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01(\x0b2\
+    \x1e.mizer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\x9b\
+    \x01\n\x08CueTimer\x12\x1a\n\x08hasTimer\x18\x01\x20\x01(\x08R\x08hasTim\
+    er\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeH\0\
+    R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.mizer.sequencer.Cu\
+    eTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\n\
+    \x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01(\
+    \x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\0\
+    R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\n\
+    \x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.mi\
+    zer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.mi\
+    zer.sequencer.CueTimeR\x02to*C\n\nCueTrigger\x12\x06\n\x02GO\x10\0\x12\n\
+    \n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\x03\
+    \x12\x0c\n\x08TIMECODE\x10\x04*\xad\x01\n\nCueControl\x12\r\n\tINTENSITY\
+    \x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\
+    \x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x07\n\x03PAN\
+    \x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\x07\x12\x08\n\
+    \x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\x10\n\x12\t\n\
+    \x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x86\x04\n\x0cSequencerAp\
+    i\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequencesRequest\x1a\
+    \x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12#.mizer.sequ\
+    encer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\0\x12O\n\x0b\
+    AddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\x19.mizer.sequen\
+    cer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequencer.DeleteSeq\
+    uenceRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\nSequenceGo\
+    \x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequencer.EmptyRe\
+    sponse\"\0\x12T\n\x10UpdateCueTrigger\x12\".mizer.sequencer.CueTriggerRe\
+    quest\x1a\x1a.mizer.sequencer.Sequences\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

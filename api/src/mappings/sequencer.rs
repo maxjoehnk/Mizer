@@ -9,6 +9,7 @@ impl From<mizer_sequencer::Sequence> for Sequence {
             id: sequence.id,
             name: sequence.name,
             cues: sequence.cues.into_iter().map(Cue::from).collect(),
+            wrapAround: sequence.wrap_around,
             ..Default::default()
         }
     }

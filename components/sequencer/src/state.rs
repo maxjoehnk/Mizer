@@ -52,6 +52,10 @@ impl SequenceState {
     fn next_cue(&mut self, sequence: &Sequence) {
         self.active_cue_index += 1;
         if self.active_cue_index >= sequence.cues.len() {
+            if sequence.wrap_around {
+                self.active_cue_index = 0;
+                return;
+            }
             self.active_cue_index = 0;
             self.active = false;
         }
@@ -87,7 +91,11 @@ impl SequenceState {
     pub fn get_next_cue<'a>(&self, sequence: &'a Sequence) -> Option<&'a Cue> {
         let next_cue_index = self.active_cue_index + 1;
         if next_cue_index >= sequence.cues.len() {
-            None
+            if sequence.wrap_around {
+                Some(&sequence.cues[0])
+            }else {
+                None
+            }
         } else {
             Some(&sequence.cues[next_cue_index])
         }

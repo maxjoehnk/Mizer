@@ -27,7 +27,7 @@ class SequenceList extends StatelessWidget {
         columnWidths: {
           0: FixedColumnWidth(64),
         },
-        columns: const [Text(""), Text("Name"), Text("Cues")],
+        columns: const [Text(""), Text("Name"), Text("Cues"), Text("Wrap Around")],
         rows: sequences.map(_sequenceRow).toList(),
       ),
     );
@@ -41,6 +41,7 @@ class SequenceList extends StatelessWidget {
         active ? Icon(Icons.play_arrow, size: 24) : Container(),
         Text(sequence.name),
         Text(sequence.cues.length.toString()),
+        Text(sequence.wrapAround ? "Wrap" : "No Wrap"),
       ],
       onTap: () {
         if (!selected) {

@@ -44,13 +44,12 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
                 vec![CueChannel::new(control, value, vec![fixture_id])],
             )],
+            ..Default::default()
         };
 
         context.state.go(&sequence, &context.clock);
@@ -89,8 +88,6 @@ mod tests {
             .once()
             .return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![
                 Cue::new(
                     1,
@@ -103,6 +100,7 @@ mod tests {
                     vec![CueChannel::new(control, 0.5f64, vec![fixture_id])],
                 ),
             ],
+            ..Default::default()
         };
 
         context.state.go(&sequence, &context.clock);
@@ -144,13 +142,12 @@ mod tests {
                 .return_const(());
         }
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
                 vec![CueChannel::new(control, value, fixture_ids)],
             )],
+            ..Default::default()
         };
 
         context.state.go(&sequence, &context.clock);
@@ -179,8 +176,6 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -192,6 +187,7 @@ mod tests {
                     fade: None,
                 }],
             )],
+            ..Default::default()
         };
 
         context.state.go(&sequence, &context.clock);
@@ -221,8 +217,6 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -234,6 +228,7 @@ mod tests {
                     fade: None,
                 }],
             )],
+            ..Default::default()
         };
         context.state.go(&sequence, &context.clock);
         sequence.run(
@@ -295,8 +290,6 @@ mod tests {
             }
         }
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -314,6 +307,7 @@ mod tests {
                     fade: None,
                 }],
             )],
+            ..Default::default()
         };
         context.state.go(&sequence, &context.clock);
         sequence.run(
@@ -348,8 +342,6 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -361,6 +353,7 @@ mod tests {
                     delay: None,
                 }],
             )],
+            ..Default::default()
         };
 
         context.state.go(&sequence, &context.clock);
@@ -406,8 +399,6 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -419,6 +410,7 @@ mod tests {
                     delay: None,
                 }],
             )],
+            ..Default::default()
         };
         context.state.go(&sequence, &context.clock);
         sequence.run(
@@ -459,8 +451,6 @@ mod tests {
             .collect();
         context.fixture_controller.expect_write().return_const(());
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -478,6 +468,7 @@ mod tests {
                     delay: None,
                 }],
             )],
+            ..Default::default()
         };
         context.state.go(&sequence, &context.clock);
         sequence.run(
@@ -514,8 +505,6 @@ mod tests {
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -527,6 +516,7 @@ mod tests {
                     delay: Some(SequencerTime::Seconds(1f64).into()),
                 }],
             )],
+            ..Default::default()
         };
         context.fixture_controller.expect_write().never();
         context.state.go(&sequence, &context.clock);
@@ -574,8 +564,6 @@ mod tests {
             .map(|(i, _)| FixtureId::Fixture(i as u32))
             .collect();
         let sequence = Sequence {
-            id: 1,
-            name: Default::default(),
             cues: vec![Cue::new(
                 1,
                 Default::default(),
@@ -599,6 +587,7 @@ mod tests {
                     ),
                 }],
             )],
+            ..Default::default()
         };
         context.fixture_controller.expect_write().return_const(());
         context.state.go(&sequence, &context.clock);

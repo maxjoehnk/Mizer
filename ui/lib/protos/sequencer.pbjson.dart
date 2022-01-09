@@ -124,11 +124,12 @@ const Sequence$json = const {
     const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'cues', '3': 3, '4': 3, '5': 11, '6': '.mizer.sequencer.Cue', '10': 'cues'},
+    const {'1': 'wrapAround', '3': 4, '4': 1, '5': 8, '10': 'wrapAround'},
   ],
 };
 
 /// Descriptor for `Sequence`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sequenceDescriptor = $convert.base64Decode('CghTZXF1ZW5jZRIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIoCgRjdWVzGAMgAygLMhQubWl6ZXIuc2VxdWVuY2VyLkN1ZVIEY3Vlcw==');
+final $typed_data.Uint8List sequenceDescriptor = $convert.base64Decode('CghTZXF1ZW5jZRIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIoCgRjdWVzGAMgAygLMhQubWl6ZXIuc2VxdWVuY2VyLkN1ZVIEY3VlcxIeCgp3cmFwQXJvdW5kGAQgASgIUgp3cmFwQXJvdW5k');
 @$core.Deprecated('Use cueDescriptor instead')
 const Cue$json = const {
   '1': 'Cue',

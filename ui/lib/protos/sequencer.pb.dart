@@ -364,6 +364,7 @@ class Sequence extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..pc<Cue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
     ..hasRequiredFields = false
   ;
 
@@ -372,6 +373,7 @@ class Sequence extends $pb.GeneratedMessage {
     $core.int? id,
     $core.String? name,
     $core.Iterable<Cue>? cues,
+    $core.bool? wrapAround,
   }) {
     final _result = create();
     if (id != null) {
@@ -382,6 +384,9 @@ class Sequence extends $pb.GeneratedMessage {
     }
     if (cues != null) {
       _result.cues.addAll(cues);
+    }
+    if (wrapAround != null) {
+      _result.wrapAround = wrapAround;
     }
     return _result;
   }
@@ -426,6 +431,15 @@ class Sequence extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $core.List<Cue> get cues => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.bool get wrapAround => $_getBF(3);
+  @$pb.TagNumber(4)
+  set wrapAround($core.bool v) { $_setBool(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWrapAround() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWrapAround() => clearField(4);
 }
 
 class Cue extends $pb.GeneratedMessage {

@@ -78,8 +78,14 @@ class SequencerControl extends StatelessWidget {
       cues.add(previousCue);
     }
     cues.add(activeCue);
+    var cueList;
+    if (sequence.wrapAround) {
+      cueList = [...sequence.cues, ...sequence.cues];
+    }else {
+      cueList = sequence.cues;
+    }
     var nextCues =
-        sequence.cues.skip(activeCueIndex + 1).take((rows - 2).clamp(1, sequence.cues.length - 1));
+        cueList.skip(activeCueIndex + 1).take((rows - 2).clamp(1, sequence.cues.length - 1));
     cues.addAll(nextCues);
 
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [

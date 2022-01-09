@@ -9,7 +9,7 @@ mod value;
 
 pub use self::cue::*;
 pub use self::module::SequencerModule;
-pub use self::sequencer::Sequencer;
+pub use self::sequencer::{Sequencer, SequencerView, SequenceView};
 pub use self::sequences::*;
 pub use self::value::*;
 

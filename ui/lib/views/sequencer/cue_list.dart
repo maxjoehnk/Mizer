@@ -10,8 +10,9 @@ class CueList extends StatelessWidget {
   final Sequence sequence;
   final Function(Cue) onSelectCue;
   final Cue? selectedCue;
+  final int? activeCue;
 
-  const CueList({required this.sequence, required this.onSelectCue, this.selectedCue, Key? key})
+  const CueList({required this.sequence, required this.onSelectCue, this.selectedCue, this.activeCue, Key? key})
       : super(key: key);
 
   @override
@@ -56,6 +57,7 @@ class CueList extends StatelessWidget {
                         Text(cue.loop ? "Loop" : "")
                       ],
                       selected: selected,
+                      highlight: activeCue == cue.id,
                       onTap: onTap);
               })
               .toList()),

@@ -1,6 +1,6 @@
 use mizer_node::NodeType;
 use mizer_nodes::Node;
-use mizer_sequencer::Sequencer;
+use mizer_sequencer::{Sequencer, SequencerView};
 
 use crate::models::{CueTriggerRequest, Sequence, Sequences};
 use crate::RuntimeApi;
@@ -75,5 +75,9 @@ impl<R: RuntimeApi> SequencerHandler<R> {
                     cue.trigger = request.trigger.into();
                 }
             });
+    }
+
+    pub fn sequencer_view(&self) -> SequencerView {
+        self.sequencer.get_sequencer_view()
     }
 }

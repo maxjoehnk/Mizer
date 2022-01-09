@@ -1,5 +1,7 @@
 import 'package:mizer/protos/sequencer.pb.dart';
 
+import '../plugin/ffi/sequencer.dart';
+
 export 'package:mizer/protos/sequencer.pb.dart';
 
 abstract class SequencerApi {
@@ -14,4 +16,6 @@ abstract class SequencerApi {
   Future<Sequences> deleteSequence(int sequence);
 
   Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger);
+
+  Future<SequencerPointer?> getSequencerPointer();
 }

@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/protos/sequencer.pbgrpc.dart';
 
 class SequencerGrpcApi implements SequencerApi {
@@ -35,5 +36,10 @@ class SequencerGrpcApi implements SequencerApi {
   @override
   Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger) {
     return this.client.updateCueTrigger(CueTriggerRequest(sequence: sequence, cue: cue, trigger: trigger));
+  }
+
+  @override
+  Future<SequencerPointer?> getSequencerPointer() async {
+    return null;
   }
 }

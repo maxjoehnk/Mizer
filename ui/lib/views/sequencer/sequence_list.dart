@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/table/table.dart';
@@ -8,8 +9,9 @@ import 'package:mizer/widgets/table/table.dart';
 class SequenceList extends StatelessWidget {
   final Sequence? selectedSequence;
   final Function(Sequence) selectSequence;
+  final Map<int, SequenceState> sequenceStates;
 
-  const SequenceList({required this.selectSequence, this.selectedSequence, Key? key}) : super(key: key);
+  const SequenceList({required this.selectSequence, this.selectedSequence, required this.sequenceStates, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,10 @@ class SequenceList extends StatelessWidget {
   Widget _list(List<Sequence> sequences) {
     return SingleChildScrollView(
       child: MizerTable(
-        columns: const [Text("Name"), Text("Cues")],
+        columnWidths: {
+          0: FixedColumnWidth(64),
+        },
+        columns: const [Text(""), Text("Name"), Text("Cues")],
         rows: sequences.map(_sequenceRow).toList(),
       ),
     );
@@ -30,8 +35,10 @@ class SequenceList extends StatelessWidget {
 
   MizerTableRow _sequenceRow(Sequence sequence) {
     bool selected = sequence == selectedSequence;
+    bool active = this.sequenceStates[sequence.id]?.active ?? false;
     return MizerTableRow(
       cells: [
+        active ? Icon(Icons.play_arrow, size: 24) : Container(),
         Text(sequence.name),
         Text(sequence.cues.length.toString()),
       ],

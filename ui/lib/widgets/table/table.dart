@@ -45,7 +45,7 @@ class _MizerTableState extends State<MizerTable> {
     Widget cellContent = Container(
         alignment: Alignment.centerLeft,
         height: 48,
-        color: row.selected ? Colors.white24 : (_hoveredRow == row ? Colors.white10 : null),
+        color: row.selected ? Colors.white24 : (_hoveredRow == row ? Colors.white10 : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: cell);
 
@@ -75,9 +75,10 @@ class _MizerTableState extends State<MizerTable> {
 class MizerTableRow {
   final List<Widget> cells;
   final bool selected;
+  final bool highlight;
   final void Function()? onTap;
   final void Function()? onDoubleTap;
   final void Function()? onSecondaryTap;
 
-  MizerTableRow({required this.cells, this.selected = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
+  MizerTableRow({required this.cells, this.selected = false, this.highlight = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
 }

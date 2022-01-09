@@ -19,11 +19,18 @@ pub struct Sequencer {
     sequence_counter: Arc<AtomicU32>,
     sequences: Arc<NonEmptyPinboard<HashMap<u32, Sequence>>>,
     sequence_states: Arc<ThreadPinned<RefCell<HashMap<u32, SequenceState>>>>,
+    sequence_view: Arc<NonEmptyPinboard<HashMap<u32, SequenceView>>>,
     commands: (
         mpsc::SyncSender<SequencerCommands>,
         Arc<ThreadPinned<mpsc::Receiver<SequencerCommands>>>,
     ),
     clock: StdClock,
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct SequenceView {
+    pub active: bool,
+    pub cue_id: Option<u32>,
 }
 
 impl Sequencer {
@@ -33,6 +40,7 @@ impl Sequencer {
             sequence_counter: AtomicU32::new(1).into(),
             sequences: NonEmptyPinboard::new(Default::default()).into(),
             sequence_states: Default::default(),
+            sequence_view: NonEmptyPinboard::new(Default::default()).into(),
             commands: (tx, Arc::new(rx.into())),
             clock: StdClock,
         }
@@ -41,8 +49,17 @@ impl Sequencer {
     pub(crate) fn run_sequences(&self, fixture_manager: &FixtureManager) {
         let sequences = self.sequences.read();
         let mut states = self.sequence_states.deref().deref().borrow_mut();
+        let mut view = self.sequence_view.read();
         self.handle_commands(&sequences, &mut states);
         self.handle_sequences(&sequences, &mut states, fixture_manager);
+        for (id, state) in states.iter() {
+            if let Some(sequence) = sequences.get(id) {
+                let view = view.entry(*id).or_default();
+                view.active = state.active;
+                view.cue_id = sequence.cues.get(state.active_cue_index).map(|cue| cue.id);
+            }
+        }
+        self.sequence_view.set(view);
         log::trace!("{:?}", states);
     }
 
@@ -88,6 +105,9 @@ impl Sequencer {
         let mut sequences = self.sequences.read();
         sequences.insert(i, sequence.clone());
         self.sequences.set(sequences);
+        let mut view = self.sequence_view.read();
+        view.insert(i, SequenceView::default());
+        self.sequence_view.set(view);
 
         sequence
     }
@@ -115,6 +135,7 @@ impl Sequencer {
         self.sequences.set(Default::default());
         let states = self.sequence_states.deref().deref();
         states.borrow_mut().clear();
+        self.sequence_view.set(Default::default());
         self.sequence_counter.store(1, Ordering::Relaxed);
     }
 
@@ -133,9 +154,14 @@ impl Sequencer {
     pub fn load_sequences(&self, sequences: Vec<Sequence>) {
         let id = sequences.iter().map(|s| s.id + 1).max().unwrap_or(1);
         self.sequence_counter.store(id, Ordering::Relaxed);
+        self.sequence_view.set(sequences.iter().map(|s| (s.id, SequenceView::default())).collect());
         self.sequences
             .set(sequences.into_iter().map(|s| (s.id, s)).collect());
         log::debug!("Sequences: {:?}", self.sequences.read());
+    }
+
+    pub fn get_sequencer_view(&self) -> SequencerView {
+        SequencerView(self.sequence_view.clone())
     }
 }
 
@@ -143,4 +169,13 @@ impl Sequencer {
 enum SequencerCommands {
     Go(u32),
     DropState(u32),
+}
+
+#[derive(Clone)]
+pub struct SequencerView(Arc<NonEmptyPinboard<HashMap<u32, SequenceView>>>);
+
+impl SequencerView {
+    pub fn read(&self) -> HashMap<u32, SequenceView> {
+        self.0.read()
+    }
 }

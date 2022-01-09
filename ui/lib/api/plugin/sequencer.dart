@@ -1,9 +1,15 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
-import 'package:mizer/protos/sequencer.pb.dart';
+
+import 'ffi/api.dart';
+import 'ffi/bindings.dart';
+import 'ffi/sequencer.dart';
 
 class SequencerPluginApi implements SequencerApi {
+  final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/sequencer");
+
+  SequencerPluginApi(this.bindings);
 
   @override
   Future<Sequences> getSequences() async {
@@ -44,6 +50,13 @@ class SequencerPluginApi implements SequencerApi {
     var response = await channel.invokeMethod("updateCueTrigger", request.writeToBuffer());
 
     return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<SequencerPointer?> getSequencerPointer() async {
+    int pointer = await channel.invokeMethod("getSequencerPointer");
+
+    return this.bindings.openSequencer(pointer);
   }
 
   static List<int> _convertBuffer(List<Object> response) {

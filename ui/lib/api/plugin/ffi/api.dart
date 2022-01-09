@@ -1,6 +1,7 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' show Directory;
 
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:path/path.dart' as path;
 import 'bindings.dart';
 import 'transport.dart';
@@ -30,5 +31,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<Transport>.fromAddress(pointerAddress);
 
     return TransportPointer(this, pointer);
+  }
+
+  SequencerPointer openSequencer(int pointerAddress) {
+    var pointer = ffi.Pointer<Sequencer>.fromAddress(pointerAddress);
+
+    return SequencerPointer(this, pointer);
   }
 }

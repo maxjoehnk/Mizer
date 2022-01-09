@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
@@ -19,8 +20,9 @@ import 'dialogs/rename_control_dialog.dart';
 class LayoutControlView extends StatelessWidget {
   final LayoutControl control;
   final String layoutId;
+  final Map<int, SequenceState> sequencerState;
 
-  LayoutControlView(this.layoutId, this.control);
+  LayoutControlView(this.layoutId, this.control, this.sequencerState);
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,8 @@ class LayoutControlView extends StatelessWidget {
         label: control.label,
         color: _color,
         node: node!,
+        state: sequencerState,
+        size: control.size,
       );
     }
     return null;

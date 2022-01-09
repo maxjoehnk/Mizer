@@ -2,7 +2,10 @@ import 'dart:developer';
 
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -45,9 +48,12 @@ class LayoutView extends StatelessWidget {
                             label: "Delete", action: () => _onDelete(context, layout, layoutsBloc)),
                       ]),
                       child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
-                  child: ControlLayout(
-                    layout: layout,
-                  )))
+                  child: SequencerStateFetcher(builder: (context, sequencerStates) {
+                    return ControlLayout(
+                      layout: layout,
+                      sequencerState: sequencerStates,
+                    );
+                  })))
               .toList(),
           onAdd: () => _addLayout(context, layoutsBloc),
         ),
@@ -57,10 +63,10 @@ class LayoutView extends StatelessWidget {
 
   Future<void> _addLayout(BuildContext context, LayoutsBloc layoutsBloc) {
     return showDialog(
-          context: context,
-          useRootNavigator: false,
-          builder: (_) => NameLayoutDialog(),
-        ).then((name) => layoutsBloc.add(AddLayout(name: name)));
+      context: context,
+      useRootNavigator: false,
+      builder: (_) => NameLayoutDialog(),
+    ).then((name) => layoutsBloc.add(AddLayout(name: name)));
   }
 
   void _onDelete(BuildContext context, Layout layout, LayoutsBloc bloc) async {
@@ -125,8 +131,9 @@ class NameLayoutDialog extends StatelessWidget {
 
 class ControlLayout extends StatelessWidget {
   final Layout layout;
+  final Map<int, SequenceState> sequencerState;
 
-  ControlLayout({required this.layout});
+  ControlLayout({required this.layout, required this.sequencerState});
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +162,8 @@ class ControlLayout extends StatelessWidget {
                   CustomMultiChildLayout(
                       delegate: ControlsLayoutDelegate(layout),
                       children: layout.controls
-                          .map((e) => LayoutId(id: e.node, child: LayoutControlView(layout.id, e)))
+                          .map((e) => LayoutId(
+                              id: e.node, child: LayoutControlView(layout.id, e, sequencerState)))
                           .toList()),
                 ],
               ),
@@ -183,5 +191,48 @@ class ControlsLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
     return false;
+  }
+}
+
+class SequencerStateFetcher extends StatefulWidget {
+  final Widget Function(BuildContext, Map<int, SequenceState>) builder;
+
+  const SequencerStateFetcher({required this.builder, Key? key}) : super(key: key);
+
+  @override
+  _SequencerStateFetcherState createState() => _SequencerStateFetcherState();
+}
+
+class _SequencerStateFetcherState extends State<SequencerStateFetcher>
+    with SingleTickerProviderStateMixin {
+  SequencerPointer? _pointer;
+  Map<int, SequenceState> sequenceStates = {};
+  Ticker? ticker;
+
+  @override
+  void initState() {
+    super.initState();
+    var sequencerApi = context.read<SequencerApi>();
+    sequencerApi.getSequencerPointer().then((pointer) => setState(() {
+          _pointer = pointer;
+          ticker = this.createTicker((elapsed) {
+            setState(() {
+              sequenceStates = _pointer!.readState();
+            });
+          });
+          ticker!.start();
+        }));
+  }
+
+  @override
+  void dispose() {
+    _pointer?.dispose();
+    ticker?.stop(canceled: true);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder(context, sequenceStates);
   }
 }

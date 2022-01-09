@@ -33,7 +33,6 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
           ticker = this.createTicker((elapsed) {
             setState(() {
               sequenceStates = _pointer!.readState();
-              // print(sequenceStates);
             });
           });
           ticker!.start();

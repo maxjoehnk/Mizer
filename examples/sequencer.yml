@@ -1,22 +1,24 @@
 ---
 nodes:
-  - type: programmer
-    path: /programmer
-    config: {}
-    designer:
-      position:
-        x: -5
-        y: 0
-      scale: 1
-  - path: /fixture-0
-    type: fixture
+  - path: /sequencer-1
+    type: sequencer
     config:
-      fixture: 1
+      sequence: 2
     designer:
       position:
         x: 0.0
         y: 0.0
       scale: 0.0
+      hidden: true
+  - path: /programmer
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -5.0
+        y: 0.0
+      scale: 1.0
+      hidden: false
   - path: /fixture-1
     type: fixture
     config:
@@ -26,77 +28,202 @@ nodes:
         x: 0.0
         y: 0.0
       scale: 0.0
+      hidden: false
+  - path: /sequencer-2
+    type: sequencer
+    config:
+      sequence: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: false
   - path: /sequencer-0
     type: sequencer
     config:
       sequence: 1
     designer:
-      hidden: true
       position:
         x: 0.0
         y: 0.0
       scale: 0.0
+      hidden: true
 channels: []
 fixtures:
   - id: 2
-    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
     name: LED Bar 1
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
     channel: 11
     universe: 1
     mode: 10-channel
     output: ~
   - id: 1
-    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
     name: LED Bar 2
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
     channel: 1
     universe: 1
     mode: 10-channel
     output: ~
 media: []
-layouts: {}
+layouts:
+  Default:
+    - label: ~
+      node: /sequencer-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 2
+        height: 1
+      decoration:
+        color: ~
+    - label: ~
+      node: /sequencer-1
+      position:
+        x: 2
+        y: 0
+      size:
+        width: 2
+        height: 2
+      decoration:
+        color: ~
+    - label: ~
+      node: /sequencer-2
+      position:
+        x: 4
+        y: 0
+      size:
+        width: 2
+        height: 1
+      decoration:
+        color: ~
+connections:
+  - id: dmx-0
+    name: "Artnet (0.0.0.0:6454)"
+    type: artnet
+    host: 0.0.0.0
+    port: 6454
 sequences:
+  - id: 2
+    name: Sequence 2
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 2
+              - 1
+            control: Intensity
+            value: 1.0
+            fade: ~
+            delay: ~
+        loop_mode: ~
+      - id: 2
+        name: Cue 2
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 2
+              - 1
+            control: Intensity
+            value: 0.0
+            fade: ~
+            delay: ~
+        loop_mode: ~
+      - id: 3
+        name: Cue 3
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 2
+              - 1
+            control: Intensity
+            value: 0.5
+            fade: ~
+            delay: ~
+        loop_mode: ~
   - id: 1
     name: Sequence 1
     cues:
       - id: 1
         name: Cue 1
         trigger: Go
+        time: ~
         channels:
-          - fixtures: [1, 2]
+          - fixtures:
+              - 1
+              - 2
             control: Intensity
-            value: 1
+            value: 1.0
             fade:
               - unit: seconds
-                value: 0
+                value: 0.0
               - unit: seconds
-                value: 1
-          - fixtures: [1, 2]
+                value: 1.0
+            delay: ~
+          - fixtures:
+              - 1
+              - 2
             control:
               Generic: White
-            value: 1
+            value: 1.0
+            fade: ~
+            delay: ~
+        loop_mode: ~
       - id: 2
         name: Cue 2
         trigger: Follow
+        time: ~
         channels:
-          - fixtures: [1]
+          - fixtures:
+              - 1
             control:
               Color: Red
-            value: 1
+            value: 1.0
             fade:
               unit: seconds
-              value: 1
-          - fixtures: [1, 2]
+              value: 1.0
+            delay: ~
+          - fixtures:
+              - 1
+              - 2
             control:
               Generic: White
-            value: 0
+            value: 0.0
+            fade: ~
             delay:
               - unit: seconds
-                value: 0
+                value: 0.0
               - unit: seconds
-                value: 1
-
-connections:
-  - type: artnet
-    id: dmx-0
-    name: Artnet
-    host: 0.0.0.0
+                value: 1.0
+        loop_mode: ~
+  - id: 3
+    name: Sequence 3
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 2
+            control: Intensity
+            value: 1.0
+            fade: ~
+            delay: ~
+        loop_mode: ~

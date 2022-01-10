@@ -6,6 +6,8 @@ use mizer_sequencer::Sequencer;
 
 const GO_FORWARD: &str = "Go+";
 const STOP: &str = "Stop";
+const ACTIVE: &str = "Active";
+const CUE: &str = "Cue";
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct SequencerNode {
@@ -50,7 +52,21 @@ impl PipelineNode for SequencerNode {
                 port_type: PortType::Single,
                 ..Default::default()
             },
-        )]
+        ), (
+            ACTIVE.into(),
+            PortMetadata {
+                direction: PortDirection::Output,
+                port_type: PortType::Single,
+                ..Default::default()
+            }
+        ), (
+             CUE.into(),
+             PortMetadata {
+                 direction: PortDirection::Output,
+                 port_type: PortType::Single,
+                 ..Default::default()
+             }
+         )]
     }
 
     fn node_type(&self) -> NodeType {
@@ -71,6 +87,12 @@ impl ProcessingNode for SequencerNode {
             if let Some(value) = context.read_port(STOP) {
                 if let Some(true) = state.stop.update(value) {
                     sequencer.sequence_stop(self.sequence_id);
+                }
+            }
+            if let Some(sequence_state) = sequencer.get_sequencer_view().read().get(&self.sequence_id) {
+                context.write_port(ACTIVE, if sequence_state.active { 1f64 } else { 0f64 });
+                if let Some(cue_id) = sequence_state.cue_id {
+                    context.write_port(CUE, cue_id as f64);
                 }
             }
         } else {

@@ -75,6 +75,11 @@ impl Sequencer {
                         state.go(&sequences[&sequencer], &self.clock);
                     }
                 }
+                SequencerCommands::Stop(sequencer) => {
+                    if let Some(state) = states.get_mut(&sequencer) {
+                        state.stop(&sequences[&sequencer], &self.clock);
+                    }
+                }
                 SequencerCommands::DropState(sequence) => {
                     states.remove(&sequence);
                 }
@@ -116,6 +121,10 @@ impl Sequencer {
 
     pub fn sequence_go(&self, sequence: u32) {
         self.commands.0.send(SequencerCommands::Go(sequence));
+    }
+
+    pub fn sequence_stop(&self, sequence: u32) {
+        self.commands.0.send(SequencerCommands::Stop(sequence));
     }
 
     pub fn update_sequence<SU: FnOnce(&mut Sequence)>(&self, sequence: u32, update: SU) {
@@ -163,6 +172,7 @@ impl Sequencer {
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum SequencerCommands {
     Go(u32),
+    Stop(u32),
     DropState(u32),
 }
 

@@ -49,6 +49,12 @@ impl SequenceState {
         self.update_channel_states(sequence);
     }
 
+    pub fn stop(&mut self, sequence: &Sequence, clock: &impl Clock) {
+        self.active = false;
+        self.active_cue_index = 0;
+        self.update_channel_states(sequence);
+    }
+
     fn next_cue(&mut self, sequence: &Sequence) {
         self.active_cue_index += 1;
         if self.active_cue_index >= sequence.cues.len() {

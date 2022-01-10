@@ -19,6 +19,7 @@ mod preview;
 
 #[cfg(feature = "test")]
 pub mod mocks;
+pub mod edge;
 
 pub trait PipelineNode: Debug + Send + Sync + Any {
     fn details(&self) -> NodeDetails;

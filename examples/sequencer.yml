@@ -1,15 +1,5 @@
 ---
 nodes:
-  - path: /sequencer-1
-    type: sequencer
-    config:
-      sequence: 2
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: true
   - path: /programmer
     type: programmer
     config: ~
@@ -19,10 +9,20 @@ nodes:
         y: 0.0
       scale: 1.0
       hidden: false
-  - path: /fixture-1
+  - path: /sequencer-1
+    type: sequencer
+    config:
+      sequence: 2
+    designer:
+      position:
+        x: 6.730359586261872
+        y: 12.269195031535856
+      scale: 0.0
+      hidden: false
+  - path: /fixture-0
     type: fixture
     config:
-      fixture: 2
+      fixture: 1
     designer:
       position:
         x: 0.0
@@ -35,19 +35,32 @@ nodes:
       sequence: 3
     designer:
       position:
-        x: 0.0
-        y: 0.0
+        x: 6.831420315865062
+        y: 6.740239201595003
       scale: 0.0
-      hidden: true
-  - path: /fixture-0
+      hidden: false
+  - path: /fixture-1
     type: fixture
     config:
-      fixture: 1
+      fixture: 2
     designer:
       position:
         x: 0.0
         y: 0.0
       scale: 0.0
+      hidden: false
+  - path: /midi-input-0
+    type: midi-input
+    config:
+      device: "Launch Control:Launch Control MIDI 1 28:0"
+      type: control
+      page: User 1
+      control: button-0-6
+    designer:
+      position:
+        x: -2.1675331633545842
+        y: 10.449766605230861
+      scale: 1.0
       hidden: false
   - path: /sequencer-0
     type: sequencer
@@ -58,20 +71,35 @@ nodes:
         x: 0.0
         y: 0.0
       scale: 0.0
-      hidden: true
-channels: []
+      hidden: false
+  - path: /midi-input-1
+    type: midi-input
+    config:
+      device: "Launch Control:Launch Control MIDI 1 28:0"
+      type: control
+      page: User 1
+      control: button-0-7
+    designer:
+      position:
+        x: -2.0078636413076447
+        y: 12.708417480674877
+      scale: 1.0
+      hidden: false
+channels:
+  - value@/midi-input-0 -> Go+@/sequencer-1
+  - value@/midi-input-1 -> Stop@/sequencer-1
 fixtures:
-  - id: 2
-    name: LED Bar 1
-    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
-    channel: 11
-    universe: 1
-    mode: 10-channel
-    output: ~
   - id: 1
     name: LED Bar 2
     fixture: "ofl:eurolite:led-bar-3-hcl-bar"
     channel: 1
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 2
+    name: LED Bar 1
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 11
     universe: 1
     mode: 10-channel
     output: ~
@@ -115,6 +143,22 @@ connections:
     host: 0.0.0.0
     port: 6454
 sequences:
+  - id: 3
+    name: Sequence 3
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 2
+            control: Intensity
+            value: 1.0
+            fade: ~
+            delay: ~
+        loop_mode: ~
+    wrap_around: false
   - id: 2
     name: Sequence 2
     cues:
@@ -213,18 +257,4 @@ sequences:
               - unit: seconds
                 value: 1.0
         loop_mode: ~
-  - id: 3
-    name: Sequence 3
-    cues:
-      - id: 1
-        name: Cue 1
-        trigger: Go
-        time: ~
-        channels:
-          - fixtures:
-              - 2
-            control: Intensity
-            value: 1.0
-            fade: ~
-            delay: ~
-        loop_mode: ~
+    wrap_around: false

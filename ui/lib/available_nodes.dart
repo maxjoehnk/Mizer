@@ -30,6 +30,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.OpcOutput: "OPC Output",
   Node_NodeType.Fixture: "Fixture",
   Node_NodeType.Programmer: "Programmer",
+  Node_NodeType.Sequencer: "Sequencer",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [

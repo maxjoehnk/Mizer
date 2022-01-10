@@ -1,7 +1,11 @@
 use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
+use mizer_node::edge::Edge;
 use mizer_sequencer::Sequencer;
+
+const GO_FORWARD: &str = "Go+";
+const STOP: &str = "Stop";
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct SequencerNode {
@@ -31,21 +35,16 @@ impl PipelineNode for SequencerNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        if port == "go" {
-            Some(PortMetadata {
+    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
+        vec![(
+            GO_FORWARD.into(),
+            PortMetadata {
                 direction: PortDirection::Input,
                 port_type: PortType::Single,
                 ..Default::default()
-            })
-        } else {
-            None
-        }
-    }
-
-    fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "go".into(),
+            },
+        ), (
+            STOP.into(),
             PortMetadata {
                 direction: PortDirection::Input,
                 port_type: PortType::Single,
@@ -60,11 +59,20 @@ impl PipelineNode for SequencerNode {
 }
 
 impl ProcessingNode for SequencerNode {
-    type State = ();
+    type State = SequencerState;
 
-    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(_sequencer) = context.inject::<Sequencer>() {
-            // TODO: implement sequencer node
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        if let Some(sequencer) = context.inject::<Sequencer>() {
+            if let Some(value) = context.read_port(GO_FORWARD) {
+                if let Some(true) = state.go_forward.update(value) {
+                    sequencer.sequence_go(self.sequence_id);
+                }
+            }
+            if let Some(value) = context.read_port(STOP) {
+                if let Some(true) = state.stop.update(value) {
+                    sequencer.sequence_stop(self.sequence_id);
+                }
+            }
         } else {
             log::warn!("missing fixture module");
         }
@@ -75,4 +83,10 @@ impl ProcessingNode for SequencerNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+}
+
+#[derive(Default)]
+pub struct SequencerState {
+    go_forward: Edge,
+    stop: Edge,
 }

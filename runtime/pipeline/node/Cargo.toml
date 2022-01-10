@@ -15,3 +15,6 @@ mizer-clock = { path = "../../clock" }
 mizer-ports = { path = "../ports" }
 mizer-injector = { path = "../../injector" }
 downcast = "0.10"
+
+[dev-dependencies]
+test-case = "1.2"

@@ -17,7 +17,7 @@ mod sequencer;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
-        r"^(?P<fc>[a-z0-9\- ]*)@(?P<fi>[a-z0-9\-/]*)\s->\s(?P<tc>[a-z0-9\- ]*)@(?P<ti>[a-z0-9\-/]*)$"
+        r"^(?P<fc>[a-z0-9\-\+ ]*)@(?P<fi>[a-z0-9\-/]*)\s->\s(?P<tc>[a-z0-9\-\+ ]*)@(?P<ti>[a-z0-9\-/]*)$"
     )
     .case_insensitive(true)
     .build()

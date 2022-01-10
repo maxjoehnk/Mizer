@@ -3216,6 +3216,7 @@ dependencies = [
  "mizer-injector",
  "mizer-ports",
  "serde",
+ "test-case",
 ]
 
 [[package]]

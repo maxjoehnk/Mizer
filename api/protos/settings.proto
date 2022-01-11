@@ -18,4 +18,5 @@ message Hotkeys {
   map<string, string> programmer = 3;
   map<string, string> nodes = 4;
   map<string, string> patch = 5;
+  map<string, string> sequencer = 6;
 }

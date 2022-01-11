@@ -30,6 +30,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
           "add_fixture": () => _addFixture(context, fixturesApi, fixturesBloc),
           "select_all": () => _selectAll(fixtures.fixtures),
           "clear": () => _clear(),
+          "delete": () => _deleteFixture(context, fixturesBloc),
         },
         child: Column(
           children: [
@@ -50,9 +51,10 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                 actions: [
                   PanelAction(
                       label: "Add Fixture",
+                      hotkeyId: "add_fixture",
                       onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
-                  PanelAction(label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty),
-                  PanelAction(label: "Delete", onClick: () => _deleteFixture(context, fixturesBloc), disabled: selectedIds.isEmpty)
+                  PanelAction(label: "Clear", hotkeyId: "clear", onClick: _clear, disabled: selectedIds.isEmpty),
+                  PanelAction(label: "Delete", hotkeyId: "delete", onClick: () => _deleteFixture(context, fixturesBloc), disabled: selectedIds.isEmpty)
                 ],
               ),
             ),

@@ -30,6 +30,7 @@ pub struct Hotkeys {
     pub programmer: HotkeyGroup,
     pub nodes: HotkeyGroup,
     pub patch: HotkeyGroup,
+    pub sequencer: HotkeyGroup,
 }
 
 pub type HotkeyGroup = HashMap<String, String>;

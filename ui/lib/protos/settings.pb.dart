@@ -94,6 +94,7 @@ class Hotkeys extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmer', entryClassName: 'Hotkeys.ProgrammerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', entryClassName: 'Hotkeys.NodesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'patch', entryClassName: 'Hotkeys.PatchEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
+    ..m<$core.String, $core.String>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencer', entryClassName: 'Hotkeys.SequencerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..hasRequiredFields = false
   ;
 
@@ -104,6 +105,7 @@ class Hotkeys extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? programmer,
     $core.Map<$core.String, $core.String>? nodes,
     $core.Map<$core.String, $core.String>? patch,
+    $core.Map<$core.String, $core.String>? sequencer,
   }) {
     final _result = create();
     if (global != null) {
@@ -120,6 +122,9 @@ class Hotkeys extends $pb.GeneratedMessage {
     }
     if (patch != null) {
       _result.patch.addAll(patch);
+    }
+    if (sequencer != null) {
+      _result.sequencer.addAll(sequencer);
     }
     return _result;
   }
@@ -158,5 +163,8 @@ class Hotkeys extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $core.Map<$core.String, $core.String> get patch => $_getMap(4);
+
+  @$pb.TagNumber(6)
+  $core.Map<$core.String, $core.String> get sequencer => $_getMap(5);
 }
 

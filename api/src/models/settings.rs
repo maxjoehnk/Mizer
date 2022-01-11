@@ -328,6 +328,7 @@ pub struct Hotkeys {
     pub programmer: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub nodes: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub patch: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub sequencer: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -470,6 +471,31 @@ impl Hotkeys {
     pub fn take_patch(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
         ::std::mem::replace(&mut self.patch, ::std::collections::HashMap::new())
     }
+
+    // repeated .mizer.settings.Hotkeys.SequencerEntry sequencer = 6;
+
+
+    pub fn get_sequencer(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.sequencer
+    }
+    pub fn clear_sequencer(&mut self) {
+        self.sequencer.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequencer(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.sequencer = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_sequencer(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.sequencer
+    }
+
+    // Take field
+    pub fn take_sequencer(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.sequencer, ::std::collections::HashMap::new())
+    }
 }
 
 impl ::protobuf::Message for Hotkeys {
@@ -496,6 +522,9 @@ impl ::protobuf::Message for Hotkeys {
                 5 => {
                     ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.patch)?;
                 },
+                6 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.sequencer)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -513,6 +542,7 @@ impl ::protobuf::Message for Hotkeys {
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.programmer);
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(4, &self.nodes);
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.patch);
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(6, &self.sequencer);
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -524,6 +554,7 @@ impl ::protobuf::Message for Hotkeys {
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(3, &self.programmer, os)?;
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(4, &self.nodes, os)?;
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.patch, os)?;
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(6, &self.sequencer, os)?;
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -587,6 +618,11 @@ impl ::protobuf::Message for Hotkeys {
                 |m: &Hotkeys| { &m.patch },
                 |m: &mut Hotkeys| { &mut m.patch },
             ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
+                "sequencer",
+                |m: &Hotkeys| { &m.sequencer },
+                |m: &mut Hotkeys| { &mut m.sequencer },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Hotkeys>(
                 "Hotkeys",
                 fields,
@@ -608,6 +644,7 @@ impl ::protobuf::Clear for Hotkeys {
         self.programmer.clear();
         self.nodes.clear();
         self.patch.clear();
+        self.sequencer.clear();
         self.unknown_fields.clear();
     }
 }
@@ -627,24 +664,27 @@ impl ::protobuf::reflect::ProtobufValue for Hotkeys {
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"=\
     \n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer.setting\
-    s.HotkeysR\x07hotkeys\"\xed\x04\n\x07Hotkeys\x12;\n\x06global\x18\x01\
+    s.HotkeysR\x07hotkeys\"\xf1\x05\n\x07Hotkeys\x12;\n\x06global\x18\x01\
     \x20\x03(\x0b2#.mizer.settings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07\
     layouts\x18\x02\x20\x03(\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07l\
     ayouts\x12G\n\nprogrammer\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.\
     ProgrammerEntryR\nprogrammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".miz\
     er.settings.Hotkeys.NodesEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03\
-    (\x0b2\".mizer.settings.Hotkeys.PatchEntryR\x05patch\x1a9\n\x0bGlobalEnt\
-    ry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03\
-    key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\
-    \x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03key\x18\x01\
-    \x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x02\
-    8\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
-    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nPatchEntr\
-    y\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\tR\x05value:\x028\x012Z\n\x0bSettingsApi\x12K\n\x0cLoadSetting\
-    s\x12\x1f.mizer.settings.RequestSettings\x1a\x18.mizer.settings.Settings\
-    \"\0b\x06proto3\
+    (\x0b2\".mizer.settings.Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\
+    \x18\x06\x20\x03(\x0b2&.mizer.settings.Hotkeys.SequencerEntryR\tsequence\
+    r\x1a9\n\x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
+    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayouts\
+    Entry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\
+    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
+    R\x05value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01\
+    (\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\
+    \x1a8\n\nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
+    \n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEn\
+    try\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x012Z\n\x0bSettingsApi\x12K\n\x0cLoadSet\
+    tings\x12\x1f.mizer.settings.RequestSettings\x1a\x18.mizer.settings.Sett\
+    ings\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

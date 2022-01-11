@@ -51,12 +51,14 @@ class _FixtureSheetState extends State<FixtureSheet> {
           ),
           actions: [
             PanelAction(
+                hotkeyId: "highlight",
                 label: "Highlight",
                 activated: widget.highlight,
                 onClick: _highlight,
                 disabled: widget.fixtures.isEmpty),
-            PanelAction(label: "Store", onClick: () => _store(), disabled: widget.fixtures.isEmpty),
+            PanelAction(hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.fixtures.isEmpty),
             PanelAction(
+              hotkeyId: "clear",
                 label: "Clear", onClick: () => widget.api.clear(), disabled: widget.fixtures.isEmpty),
           ]),
     );

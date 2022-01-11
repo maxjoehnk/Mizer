@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/state/settings_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'keymap.dart';
 
@@ -43,7 +44,7 @@ class HotkeyProvider extends StatelessWidget {
         nextChild = shortcut(nextChild);
       }
 
-      return nextChild;
+      return Provider.value(value: HotkeyMapping(hotkeys), child: nextChild);
     });
   }
 
@@ -60,4 +61,10 @@ class HotkeyProvider extends StatelessWidget {
         .values
         .toList();
   }
+}
+
+class HotkeyMapping {
+  final Map<String, String> mappings;
+
+  HotkeyMapping(this.mappings);
 }

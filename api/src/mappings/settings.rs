@@ -19,6 +19,7 @@ impl From<settings::Hotkeys> for model::Hotkeys {
             nodes: hotkeys.nodes,
             layouts: hotkeys.layouts,
             patch: hotkeys.patch,
+            sequencer: hotkeys.sequencer,
             ..Default::default()
         }
     }

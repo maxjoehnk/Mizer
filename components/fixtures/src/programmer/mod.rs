@@ -11,6 +11,13 @@ use crate::definition::FixtureFaderControl;
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::FixtureId;
 
+pub use groups::*;
+pub use presets::*;
+
+mod presets;
+mod groups;
+mod default_presets;
+
 pub struct Programmer {
     highlight: bool,
     selected_fixtures: HashMap<FixtureId, FixtureProgrammer>,

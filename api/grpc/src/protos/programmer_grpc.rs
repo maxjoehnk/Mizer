@@ -33,6 +33,14 @@ pub trait ProgrammerApi {
     fn highlight(&self, req: ::grpc::ServerRequestSingle<super::programmer::HighlightRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::HighlightResponse>) -> ::grpc::Result<()>;
 
     fn store(&self, req: ::grpc::ServerRequestSingle<super::programmer::StoreRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::StoreResponse>) -> ::grpc::Result<()>;
+
+    fn get_presets(&self, req: ::grpc::ServerRequestSingle<super::programmer::PresetsRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::Presets>) -> ::grpc::Result<()>;
+
+    fn call_preset(&self, req: ::grpc::ServerRequestSingle<super::programmer::PresetId>, resp: ::grpc::ServerResponseUnarySink<super::programmer::CallPresetResponse>) -> ::grpc::Result<()>;
+
+    fn get_groups(&self, req: ::grpc::ServerRequestSingle<super::programmer::GroupsRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::Groups>) -> ::grpc::Result<()>;
+
+    fn select_group(&self, req: ::grpc::ServerRequestSingle<super::programmer::SelectGroupRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::SelectGroupResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -103,6 +111,46 @@ impl ProgrammerApiClient {
     pub fn store(&self, o: ::grpc::RequestOptions, req: super::programmer::StoreRequest) -> ::grpc::SingleResponse<super::programmer::StoreResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/Store"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn get_presets(&self, o: ::grpc::RequestOptions, req: super::programmer::PresetsRequest) -> ::grpc::SingleResponse<super::programmer::Presets> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/GetPresets"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn call_preset(&self, o: ::grpc::RequestOptions, req: super::programmer::PresetId) -> ::grpc::SingleResponse<super::programmer::CallPresetResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/CallPreset"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn get_groups(&self, o: ::grpc::RequestOptions, req: super::programmer::GroupsRequest) -> ::grpc::SingleResponse<super::programmer::Groups> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/GetGroups"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn select_group(&self, o: ::grpc::RequestOptions, req: super::programmer::SelectGroupRequest) -> ::grpc::SingleResponse<super::programmer::SelectGroupResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SelectGroup"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -191,6 +239,54 @@ impl ProgrammerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).store(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/GetPresets"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_presets(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/CallPreset"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).call_preset(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/GetGroups"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_groups(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SelectGroup"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).select_group(req, resp))
                     },
                 ),
             ],

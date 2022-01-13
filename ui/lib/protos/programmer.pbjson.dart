@@ -136,3 +136,136 @@ const StoreResponse$json = const {
 
 /// Descriptor for `StoreResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List storeResponseDescriptor = $convert.base64Decode('Cg1TdG9yZVJlc3BvbnNl');
+@$core.Deprecated('Use presetsRequestDescriptor instead')
+const PresetsRequest$json = const {
+  '1': 'PresetsRequest',
+};
+
+/// Descriptor for `PresetsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List presetsRequestDescriptor = $convert.base64Decode('Cg5QcmVzZXRzUmVxdWVzdA==');
+@$core.Deprecated('Use presetIdDescriptor instead')
+const PresetId$json = const {
+  '1': 'PresetId',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+    const {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.mizer.programmer.PresetId.PresetType', '10': 'type'},
+  ],
+  '4': const [PresetId_PresetType$json],
+};
+
+@$core.Deprecated('Use presetIdDescriptor instead')
+const PresetId_PresetType$json = const {
+  '1': 'PresetType',
+  '2': const [
+    const {'1': 'Intensity', '2': 0},
+    const {'1': 'Shutter', '2': 1},
+    const {'1': 'Color', '2': 2},
+    const {'1': 'Position', '2': 3},
+  ],
+};
+
+/// Descriptor for `PresetId`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List presetIdDescriptor = $convert.base64Decode('CghQcmVzZXRJZBIOCgJpZBgBIAEoDVICaWQSOQoEdHlwZRgCIAEoDjIlLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWQuUHJlc2V0VHlwZVIEdHlwZSJBCgpQcmVzZXRUeXBlEg0KCUludGVuc2l0eRAAEgsKB1NodXR0ZXIQARIJCgVDb2xvchACEgwKCFBvc2l0aW9uEAM=');
+@$core.Deprecated('Use presetsDescriptor instead')
+const Presets$json = const {
+  '1': 'Presets',
+  '2': const [
+    const {'1': 'intensities', '3': 1, '4': 3, '5': 11, '6': '.mizer.programmer.Preset', '10': 'intensities'},
+    const {'1': 'shutter', '3': 2, '4': 3, '5': 11, '6': '.mizer.programmer.Preset', '10': 'shutter'},
+    const {'1': 'color', '3': 3, '4': 3, '5': 11, '6': '.mizer.programmer.Preset', '10': 'color'},
+    const {'1': 'position', '3': 4, '4': 3, '5': 11, '6': '.mizer.programmer.Preset', '10': 'position'},
+  ],
+};
+
+/// Descriptor for `Presets`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List presetsDescriptor = $convert.base64Decode('CgdQcmVzZXRzEjoKC2ludGVuc2l0aWVzGAEgAygLMhgubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXRSC2ludGVuc2l0aWVzEjIKB3NodXR0ZXIYAiADKAsyGC5taXplci5wcm9ncmFtbWVyLlByZXNldFIHc2h1dHRlchIuCgVjb2xvchgDIAMoCzIYLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0UgVjb2xvchI0Cghwb3NpdGlvbhgEIAMoCzIYLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0Ughwb3NpdGlvbg==');
+@$core.Deprecated('Use presetDescriptor instead')
+const Preset$json = const {
+  '1': 'Preset',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'id'},
+    const {'1': 'label', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'label', '17': true},
+    const {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
+    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Color', '9': 0, '10': 'color'},
+    const {'1': 'position', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.Preset.Position', '9': 0, '10': 'position'},
+  ],
+  '3': const [Preset_Color$json, Preset_Position$json],
+  '8': const [
+    const {'1': 'value'},
+    const {'1': '_label'},
+  ],
+};
+
+@$core.Deprecated('Use presetDescriptor instead')
+const Preset_Color$json = const {
+  '1': 'Color',
+  '2': const [
+    const {'1': 'red', '3': 1, '4': 1, '5': 1, '10': 'red'},
+    const {'1': 'green', '3': 2, '4': 1, '5': 1, '10': 'green'},
+    const {'1': 'blue', '3': 3, '4': 1, '5': 1, '10': 'blue'},
+  ],
+};
+
+@$core.Deprecated('Use presetDescriptor instead')
+const Preset_Position$json = const {
+  '1': 'Position',
+  '2': const [
+    const {'1': 'tilt', '3': 1, '4': 1, '5': 1, '10': 'tilt'},
+    const {'1': 'pan', '3': 2, '4': 1, '5': 1, '10': 'pan'},
+  ],
+};
+
+/// Descriptor for `Preset`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List presetDescriptor = $convert.base64Decode('CgZQcmVzZXQSKgoCaWQYASABKAsyGi5taXplci5wcm9ncmFtbWVyLlByZXNldElkUgJpZBIZCgVsYWJlbBgCIAEoCUgBUgVsYWJlbIgBARIWCgVmYWRlchgDIAEoAUgAUgVmYWRlchI2CgVjb2xvchgEIAEoCzIeLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0LkNvbG9ySABSBWNvbG9yEj8KCHBvc2l0aW9uGAUgASgLMiEubWl6ZXIucHJvZ3JhbW1lci5QcmVzZXQuUG9zaXRpb25IAFIIcG9zaXRpb24aQwoFQ29sb3ISEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWUaMAoIUG9zaXRpb24SEgoEdGlsdBgBIAEoAVIEdGlsdBIQCgNwYW4YAiABKAFSA3BhbkIHCgV2YWx1ZUIICgZfbGFiZWw=');
+@$core.Deprecated('Use callPresetResponseDescriptor instead')
+const CallPresetResponse$json = const {
+  '1': 'CallPresetResponse',
+};
+
+/// Descriptor for `CallPresetResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List callPresetResponseDescriptor = $convert.base64Decode('ChJDYWxsUHJlc2V0UmVzcG9uc2U=');
+@$core.Deprecated('Use groupsRequestDescriptor instead')
+const GroupsRequest$json = const {
+  '1': 'GroupsRequest',
+};
+
+/// Descriptor for `GroupsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List groupsRequestDescriptor = $convert.base64Decode('Cg1Hcm91cHNSZXF1ZXN0');
+@$core.Deprecated('Use groupsDescriptor instead')
+const Groups$json = const {
+  '1': 'Groups',
+  '2': const [
+    const {'1': 'groups', '3': 1, '4': 3, '5': 11, '6': '.mizer.programmer.Group', '10': 'groups'},
+  ],
+};
+
+/// Descriptor for `Groups`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List groupsDescriptor = $convert.base64Decode('CgZHcm91cHMSLwoGZ3JvdXBzGAEgAygLMhcubWl6ZXIucHJvZ3JhbW1lci5Hcm91cFIGZ3JvdXBz');
+@$core.Deprecated('Use groupDescriptor instead')
+const Group$json = const {
+  '1': 'Group',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `Group`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List groupDescriptor = $convert.base64Decode('CgVHcm91cBIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use selectGroupRequestDescriptor instead')
+const SelectGroupRequest$json = const {
+  '1': 'SelectGroupRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `SelectGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List selectGroupRequestDescriptor = $convert.base64Decode('ChJTZWxlY3RHcm91cFJlcXVlc3QSDgoCaWQYASABKA1SAmlk');
+@$core.Deprecated('Use selectGroupResponseDescriptor instead')
+const SelectGroupResponse$json = const {
+  '1': 'SelectGroupResponse',
+};
+
+/// Descriptor for `SelectGroupResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List selectGroupResponseDescriptor = $convert.base64Decode('ChNTZWxlY3RHcm91cFJlc3BvbnNl');

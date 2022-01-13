@@ -46,6 +46,26 @@ class ProgrammerApiClient extends $grpc.Client {
       '/mizer.programmer.ProgrammerApi/Store',
       ($1.StoreRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $1.StoreResponse.fromBuffer(value));
+  static final _$getPresets = $grpc.ClientMethod<$1.PresetsRequest, $1.Presets>(
+      '/mizer.programmer.ProgrammerApi/GetPresets',
+      ($1.PresetsRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Presets.fromBuffer(value));
+  static final _$callPreset =
+      $grpc.ClientMethod<$1.PresetId, $1.CallPresetResponse>(
+          '/mizer.programmer.ProgrammerApi/CallPreset',
+          ($1.PresetId value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $1.CallPresetResponse.fromBuffer(value));
+  static final _$getGroups = $grpc.ClientMethod<$1.GroupsRequest, $1.Groups>(
+      '/mizer.programmer.ProgrammerApi/GetGroups',
+      ($1.GroupsRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $1.Groups.fromBuffer(value));
+  static final _$selectGroup =
+      $grpc.ClientMethod<$1.SelectGroupRequest, $1.SelectGroupResponse>(
+          '/mizer.programmer.ProgrammerApi/SelectGroup',
+          ($1.SelectGroupRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $1.SelectGroupResponse.fromBuffer(value));
 
   ProgrammerApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -86,6 +106,27 @@ class ProgrammerApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.StoreResponse> store($1.StoreRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$store, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Presets> getPresets($1.PresetsRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getPresets, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.CallPresetResponse> callPreset($1.PresetId request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$callPreset, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Groups> getGroups($1.GroupsRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getGroups, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.SelectGroupResponse> selectGroup(
+      $1.SelectGroupRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$selectGroup, request, options: options);
   }
 }
 
@@ -141,6 +182,36 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.StoreRequest.fromBuffer(value),
         ($1.StoreResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.PresetsRequest, $1.Presets>(
+        'GetPresets',
+        getPresets_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.PresetsRequest.fromBuffer(value),
+        ($1.Presets value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.PresetId, $1.CallPresetResponse>(
+        'CallPreset',
+        callPreset_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.PresetId.fromBuffer(value),
+        ($1.CallPresetResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.GroupsRequest, $1.Groups>(
+        'GetGroups',
+        getGroups_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.GroupsRequest.fromBuffer(value),
+        ($1.Groups value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$1.SelectGroupRequest, $1.SelectGroupResponse>(
+            'SelectGroup',
+            selectGroup_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $1.SelectGroupRequest.fromBuffer(value),
+            ($1.SelectGroupResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer_Pre(
@@ -176,6 +247,26 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return store(call, await request);
   }
 
+  $async.Future<$1.Presets> getPresets_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.PresetsRequest> request) async {
+    return getPresets(call, await request);
+  }
+
+  $async.Future<$1.CallPresetResponse> callPreset_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.PresetId> request) async {
+    return callPreset(call, await request);
+  }
+
+  $async.Future<$1.Groups> getGroups_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.GroupsRequest> request) async {
+    return getGroups(call, await request);
+  }
+
+  $async.Future<$1.SelectGroupResponse> selectGroup_Pre($grpc.ServiceCall call,
+      $async.Future<$1.SelectGroupRequest> request) async {
+    return selectGroup(call, await request);
+  }
+
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer(
       $grpc.ServiceCall call, $1.SubscribeProgrammerRequest request);
   $async.Future<$1.WriteControlResponse> writeControl(
@@ -188,4 +279,12 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.HighlightRequest request);
   $async.Future<$1.StoreResponse> store(
       $grpc.ServiceCall call, $1.StoreRequest request);
+  $async.Future<$1.Presets> getPresets(
+      $grpc.ServiceCall call, $1.PresetsRequest request);
+  $async.Future<$1.CallPresetResponse> callPreset(
+      $grpc.ServiceCall call, $1.PresetId request);
+  $async.Future<$1.Groups> getGroups(
+      $grpc.ServiceCall call, $1.GroupsRequest request);
+  $async.Future<$1.SelectGroupResponse> selectGroup(
+      $grpc.ServiceCall call, $1.SelectGroupRequest request);
 }

@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 anyhow = "1"
 log = "0.4"
-dashmap = "4"
+dashmap = { version = "4", features = ["serde"] }
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
 mizer-protocol-dmx = { path = "../connections/protocols/dmx" }

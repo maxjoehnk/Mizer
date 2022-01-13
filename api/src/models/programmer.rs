@@ -2183,6 +2183,2447 @@ impl ::protobuf::reflect::ProtobufValue for StoreResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PresetsRequest {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PresetsRequest {
+    fn default() -> &'a PresetsRequest {
+        <PresetsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PresetsRequest {
+    pub fn new() -> PresetsRequest {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for PresetsRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PresetsRequest {
+        PresetsRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PresetsRequest>(
+                "PresetsRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PresetsRequest {
+        static instance: ::protobuf::rt::LazyV2<PresetsRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PresetsRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for PresetsRequest {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PresetsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PresetsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PresetId {
+    // message fields
+    pub id: u32,
+    pub field_type: PresetId_PresetType,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PresetId {
+    fn default() -> &'a PresetId {
+        <PresetId as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PresetId {
+    pub fn new() -> PresetId {
+        ::std::default::Default::default()
+    }
+
+    // uint32 id = 1;
+
+
+    pub fn get_id(&self) -> u32 {
+        self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: u32) {
+        self.id = v;
+    }
+
+    // .mizer.programmer.PresetId.PresetType type = 2;
+
+
+    pub fn get_field_type(&self) -> PresetId_PresetType {
+        self.field_type
+    }
+    pub fn clear_field_type(&mut self) {
+        self.field_type = PresetId_PresetType::Intensity;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_type(&mut self, v: PresetId_PresetType) {
+        self.field_type = v;
+    }
+}
+
+impl ::protobuf::Message for PresetId {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.id = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 2, &mut self.unknown_fields)?
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.field_type != PresetId_PresetType::Intensity {
+            my_size += ::protobuf::rt::enum_size(2, self.field_type);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.id != 0 {
+            os.write_uint32(1, self.id)?;
+        }
+        if self.field_type != PresetId_PresetType::Intensity {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.field_type))?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PresetId {
+        PresetId::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "id",
+                |m: &PresetId| { &m.id },
+                |m: &mut PresetId| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<PresetId_PresetType>>(
+                "type",
+                |m: &PresetId| { &m.field_type },
+                |m: &mut PresetId| { &mut m.field_type },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PresetId>(
+                "PresetId",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PresetId {
+        static instance: ::protobuf::rt::LazyV2<PresetId> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PresetId::new)
+    }
+}
+
+impl ::protobuf::Clear for PresetId {
+    fn clear(&mut self) {
+        self.id = 0;
+        self.field_type = PresetId_PresetType::Intensity;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PresetId {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PresetId {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum PresetId_PresetType {
+    Intensity = 0,
+    Shutter = 1,
+    Color = 2,
+    Position = 3,
+}
+
+impl ::protobuf::ProtobufEnum for PresetId_PresetType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<PresetId_PresetType> {
+        match value {
+            0 => ::std::option::Option::Some(PresetId_PresetType::Intensity),
+            1 => ::std::option::Option::Some(PresetId_PresetType::Shutter),
+            2 => ::std::option::Option::Some(PresetId_PresetType::Color),
+            3 => ::std::option::Option::Some(PresetId_PresetType::Position),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [PresetId_PresetType] = &[
+            PresetId_PresetType::Intensity,
+            PresetId_PresetType::Shutter,
+            PresetId_PresetType::Color,
+            PresetId_PresetType::Position,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<PresetId_PresetType>("PresetId.PresetType", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for PresetId_PresetType {
+}
+
+impl ::std::default::Default for PresetId_PresetType {
+    fn default() -> Self {
+        PresetId_PresetType::Intensity
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PresetId_PresetType {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Presets {
+    // message fields
+    pub intensities: ::protobuf::RepeatedField<Preset>,
+    pub shutter: ::protobuf::RepeatedField<Preset>,
+    pub color: ::protobuf::RepeatedField<Preset>,
+    pub position: ::protobuf::RepeatedField<Preset>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Presets {
+    fn default() -> &'a Presets {
+        <Presets as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Presets {
+    pub fn new() -> Presets {
+        ::std::default::Default::default()
+    }
+
+    // repeated .mizer.programmer.Preset intensities = 1;
+
+
+    pub fn get_intensities(&self) -> &[Preset] {
+        &self.intensities
+    }
+    pub fn clear_intensities(&mut self) {
+        self.intensities.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_intensities(&mut self, v: ::protobuf::RepeatedField<Preset>) {
+        self.intensities = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_intensities(&mut self) -> &mut ::protobuf::RepeatedField<Preset> {
+        &mut self.intensities
+    }
+
+    // Take field
+    pub fn take_intensities(&mut self) -> ::protobuf::RepeatedField<Preset> {
+        ::std::mem::replace(&mut self.intensities, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated .mizer.programmer.Preset shutter = 2;
+
+
+    pub fn get_shutter(&self) -> &[Preset] {
+        &self.shutter
+    }
+    pub fn clear_shutter(&mut self) {
+        self.shutter.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_shutter(&mut self, v: ::protobuf::RepeatedField<Preset>) {
+        self.shutter = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_shutter(&mut self) -> &mut ::protobuf::RepeatedField<Preset> {
+        &mut self.shutter
+    }
+
+    // Take field
+    pub fn take_shutter(&mut self) -> ::protobuf::RepeatedField<Preset> {
+        ::std::mem::replace(&mut self.shutter, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated .mizer.programmer.Preset color = 3;
+
+
+    pub fn get_color(&self) -> &[Preset] {
+        &self.color
+    }
+    pub fn clear_color(&mut self) {
+        self.color.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color(&mut self, v: ::protobuf::RepeatedField<Preset>) {
+        self.color = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_color(&mut self) -> &mut ::protobuf::RepeatedField<Preset> {
+        &mut self.color
+    }
+
+    // Take field
+    pub fn take_color(&mut self) -> ::protobuf::RepeatedField<Preset> {
+        ::std::mem::replace(&mut self.color, ::protobuf::RepeatedField::new())
+    }
+
+    // repeated .mizer.programmer.Preset position = 4;
+
+
+    pub fn get_position(&self) -> &[Preset] {
+        &self.position
+    }
+    pub fn clear_position(&mut self) {
+        self.position.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position(&mut self, v: ::protobuf::RepeatedField<Preset>) {
+        self.position = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_position(&mut self) -> &mut ::protobuf::RepeatedField<Preset> {
+        &mut self.position
+    }
+
+    // Take field
+    pub fn take_position(&mut self) -> ::protobuf::RepeatedField<Preset> {
+        ::std::mem::replace(&mut self.position, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for Presets {
+    fn is_initialized(&self) -> bool {
+        for v in &self.intensities {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.shutter {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.color {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.position {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.intensities)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.shutter)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.color)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.position)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.intensities {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.shutter {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.color {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.position {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.intensities {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.shutter {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.color {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.position {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Presets {
+        Presets::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Preset>>(
+                "intensities",
+                |m: &Presets| { &m.intensities },
+                |m: &mut Presets| { &mut m.intensities },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Preset>>(
+                "shutter",
+                |m: &Presets| { &m.shutter },
+                |m: &mut Presets| { &mut m.shutter },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Preset>>(
+                "color",
+                |m: &Presets| { &m.color },
+                |m: &mut Presets| { &mut m.color },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Preset>>(
+                "position",
+                |m: &Presets| { &m.position },
+                |m: &mut Presets| { &mut m.position },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Presets>(
+                "Presets",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Presets {
+        static instance: ::protobuf::rt::LazyV2<Presets> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Presets::new)
+    }
+}
+
+impl ::protobuf::Clear for Presets {
+    fn clear(&mut self) {
+        self.intensities.clear();
+        self.shutter.clear();
+        self.color.clear();
+        self.position.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Presets {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Presets {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Preset {
+    // message fields
+    pub id: ::protobuf::SingularPtrField<PresetId>,
+    // message oneof groups
+    pub value: ::std::option::Option<Preset_oneof_value>,
+    pub _label: ::std::option::Option<Preset_oneof__label>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Preset {
+    fn default() -> &'a Preset {
+        <Preset as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum Preset_oneof_value {
+    fader(f64),
+    color(Preset_Color),
+    position(Preset_Position),
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum Preset_oneof__label {
+    label(::std::string::String),
+}
+
+impl Preset {
+    pub fn new() -> Preset {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.programmer.PresetId id = 1;
+
+
+    pub fn get_id(&self) -> &PresetId {
+        self.id.as_ref().unwrap_or_else(|| <PresetId as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_id(&mut self) {
+        self.id.clear();
+    }
+
+    pub fn has_id(&self) -> bool {
+        self.id.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: PresetId) {
+        self.id = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut PresetId {
+        if self.id.is_none() {
+            self.id.set_default();
+        }
+        self.id.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> PresetId {
+        self.id.take().unwrap_or_else(|| PresetId::new())
+    }
+
+    // string label = 2;
+
+
+    pub fn get_label(&self) -> &str {
+        match self._label {
+            ::std::option::Option::Some(Preset_oneof__label::label(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_label(&mut self) {
+        self._label = ::std::option::Option::None;
+    }
+
+    pub fn has_label(&self) -> bool {
+        match self._label {
+            ::std::option::Option::Some(Preset_oneof__label::label(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_label(&mut self, v: ::std::string::String) {
+        self._label = ::std::option::Option::Some(Preset_oneof__label::label(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_label(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(Preset_oneof__label::label(_)) = self._label {
+        } else {
+            self._label = ::std::option::Option::Some(Preset_oneof__label::label(::std::string::String::new()));
+        }
+        match self._label {
+            ::std::option::Option::Some(Preset_oneof__label::label(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_label(&mut self) -> ::std::string::String {
+        if self.has_label() {
+            match self._label.take() {
+                ::std::option::Option::Some(Preset_oneof__label::label(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // double fader = 3;
+
+
+    pub fn get_fader(&self) -> f64 {
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::fader(v)) => v,
+            _ => 0.,
+        }
+    }
+    pub fn clear_fader(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_fader(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::fader(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fader(&mut self, v: f64) {
+        self.value = ::std::option::Option::Some(Preset_oneof_value::fader(v))
+    }
+
+    // .mizer.programmer.Preset.Color color = 4;
+
+
+    pub fn get_color(&self) -> &Preset_Color {
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::color(ref v)) => v,
+            _ => <Preset_Color as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_color(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_color(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::color(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color(&mut self, v: Preset_Color) {
+        self.value = ::std::option::Option::Some(Preset_oneof_value::color(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_color(&mut self) -> &mut Preset_Color {
+        if let ::std::option::Option::Some(Preset_oneof_value::color(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(Preset_oneof_value::color(Preset_Color::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::color(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_color(&mut self) -> Preset_Color {
+        if self.has_color() {
+            match self.value.take() {
+                ::std::option::Option::Some(Preset_oneof_value::color(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            Preset_Color::new()
+        }
+    }
+
+    // .mizer.programmer.Preset.Position position = 5;
+
+
+    pub fn get_position(&self) -> &Preset_Position {
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::position(ref v)) => v,
+            _ => <Preset_Position as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_position(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_position(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::position(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position(&mut self, v: Preset_Position) {
+        self.value = ::std::option::Option::Some(Preset_oneof_value::position(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_position(&mut self) -> &mut Preset_Position {
+        if let ::std::option::Option::Some(Preset_oneof_value::position(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(Preset_oneof_value::position(Preset_Position::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(Preset_oneof_value::position(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_position(&mut self) -> Preset_Position {
+        if self.has_position() {
+            match self.value.take() {
+                ::std::option::Option::Some(Preset_oneof_value::position(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            Preset_Position::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for Preset {
+    fn is_initialized(&self) -> bool {
+        for v in &self.id {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        if let Some(Preset_oneof_value::color(ref v)) = self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(Preset_oneof_value::position(ref v)) = self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.id)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._label = ::std::option::Option::Some(Preset_oneof__label::label(is.read_string()?));
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.value = ::std::option::Option::Some(Preset_oneof_value::fader(is.read_double()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.value = ::std::option::Option::Some(Preset_oneof_value::color(is.read_message()?));
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.value = ::std::option::Option::Some(Preset_oneof_value::position(is.read_message()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.id.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.value {
+            match v {
+                &Preset_oneof_value::fader(v) => {
+                    my_size += 9;
+                },
+                &Preset_oneof_value::color(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &Preset_oneof_value::position(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._label {
+            match v {
+                &Preset_oneof__label::label(ref v) => {
+                    my_size += ::protobuf::rt::string_size(2, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.id.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.value {
+            match v {
+                &Preset_oneof_value::fader(v) => {
+                    os.write_double(3, v)?;
+                },
+                &Preset_oneof_value::color(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Preset_oneof_value::position(ref v) => {
+                    os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._label {
+            match v {
+                &Preset_oneof__label::label(ref v) => {
+                    os.write_string(2, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Preset {
+        Preset::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<PresetId>>(
+                "id",
+                |m: &Preset| { &m.id },
+                |m: &mut Preset| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "label",
+                Preset::has_label,
+                Preset::get_label,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_f64_accessor::<_>(
+                "fader",
+                Preset::has_fader,
+                Preset::get_fader,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, Preset_Color>(
+                "color",
+                Preset::has_color,
+                Preset::get_color,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, Preset_Position>(
+                "position",
+                Preset::has_position,
+                Preset::get_position,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Preset>(
+                "Preset",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Preset {
+        static instance: ::protobuf::rt::LazyV2<Preset> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Preset::new)
+    }
+}
+
+impl ::protobuf::Clear for Preset {
+    fn clear(&mut self) {
+        self.id.clear();
+        self._label = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.value = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Preset {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Preset {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Preset_Color {
+    // message fields
+    pub red: f64,
+    pub green: f64,
+    pub blue: f64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Preset_Color {
+    fn default() -> &'a Preset_Color {
+        <Preset_Color as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Preset_Color {
+    pub fn new() -> Preset_Color {
+        ::std::default::Default::default()
+    }
+
+    // double red = 1;
+
+
+    pub fn get_red(&self) -> f64 {
+        self.red
+    }
+    pub fn clear_red(&mut self) {
+        self.red = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_red(&mut self, v: f64) {
+        self.red = v;
+    }
+
+    // double green = 2;
+
+
+    pub fn get_green(&self) -> f64 {
+        self.green
+    }
+    pub fn clear_green(&mut self) {
+        self.green = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_green(&mut self, v: f64) {
+        self.green = v;
+    }
+
+    // double blue = 3;
+
+
+    pub fn get_blue(&self) -> f64 {
+        self.blue
+    }
+    pub fn clear_blue(&mut self) {
+        self.blue = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_blue(&mut self, v: f64) {
+        self.blue = v;
+    }
+}
+
+impl ::protobuf::Message for Preset_Color {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.red = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.green = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.blue = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.red != 0. {
+            my_size += 9;
+        }
+        if self.green != 0. {
+            my_size += 9;
+        }
+        if self.blue != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.red != 0. {
+            os.write_double(1, self.red)?;
+        }
+        if self.green != 0. {
+            os.write_double(2, self.green)?;
+        }
+        if self.blue != 0. {
+            os.write_double(3, self.blue)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Preset_Color {
+        Preset_Color::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "red",
+                |m: &Preset_Color| { &m.red },
+                |m: &mut Preset_Color| { &mut m.red },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "green",
+                |m: &Preset_Color| { &m.green },
+                |m: &mut Preset_Color| { &mut m.green },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "blue",
+                |m: &Preset_Color| { &m.blue },
+                |m: &mut Preset_Color| { &mut m.blue },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Preset_Color>(
+                "Preset.Color",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Preset_Color {
+        static instance: ::protobuf::rt::LazyV2<Preset_Color> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Preset_Color::new)
+    }
+}
+
+impl ::protobuf::Clear for Preset_Color {
+    fn clear(&mut self) {
+        self.red = 0.;
+        self.green = 0.;
+        self.blue = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Preset_Color {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Preset_Color {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Preset_Position {
+    // message fields
+    pub tilt: f64,
+    pub pan: f64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Preset_Position {
+    fn default() -> &'a Preset_Position {
+        <Preset_Position as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Preset_Position {
+    pub fn new() -> Preset_Position {
+        ::std::default::Default::default()
+    }
+
+    // double tilt = 1;
+
+
+    pub fn get_tilt(&self) -> f64 {
+        self.tilt
+    }
+    pub fn clear_tilt(&mut self) {
+        self.tilt = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_tilt(&mut self, v: f64) {
+        self.tilt = v;
+    }
+
+    // double pan = 2;
+
+
+    pub fn get_pan(&self) -> f64 {
+        self.pan
+    }
+    pub fn clear_pan(&mut self) {
+        self.pan = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pan(&mut self, v: f64) {
+        self.pan = v;
+    }
+}
+
+impl ::protobuf::Message for Preset_Position {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.tilt = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.pan = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.tilt != 0. {
+            my_size += 9;
+        }
+        if self.pan != 0. {
+            my_size += 9;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.tilt != 0. {
+            os.write_double(1, self.tilt)?;
+        }
+        if self.pan != 0. {
+            os.write_double(2, self.pan)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Preset_Position {
+        Preset_Position::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "tilt",
+                |m: &Preset_Position| { &m.tilt },
+                |m: &mut Preset_Position| { &mut m.tilt },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "pan",
+                |m: &Preset_Position| { &m.pan },
+                |m: &mut Preset_Position| { &mut m.pan },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Preset_Position>(
+                "Preset.Position",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Preset_Position {
+        static instance: ::protobuf::rt::LazyV2<Preset_Position> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Preset_Position::new)
+    }
+}
+
+impl ::protobuf::Clear for Preset_Position {
+    fn clear(&mut self) {
+        self.tilt = 0.;
+        self.pan = 0.;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Preset_Position {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Preset_Position {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct CallPresetResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CallPresetResponse {
+    fn default() -> &'a CallPresetResponse {
+        <CallPresetResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CallPresetResponse {
+    pub fn new() -> CallPresetResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for CallPresetResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CallPresetResponse {
+        CallPresetResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CallPresetResponse>(
+                "CallPresetResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CallPresetResponse {
+        static instance: ::protobuf::rt::LazyV2<CallPresetResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CallPresetResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for CallPresetResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CallPresetResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CallPresetResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct GroupsRequest {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GroupsRequest {
+    fn default() -> &'a GroupsRequest {
+        <GroupsRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GroupsRequest {
+    pub fn new() -> GroupsRequest {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for GroupsRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GroupsRequest {
+        GroupsRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GroupsRequest>(
+                "GroupsRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GroupsRequest {
+        static instance: ::protobuf::rt::LazyV2<GroupsRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GroupsRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for GroupsRequest {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GroupsRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GroupsRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Groups {
+    // message fields
+    pub groups: ::protobuf::RepeatedField<Group>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Groups {
+    fn default() -> &'a Groups {
+        <Groups as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Groups {
+    pub fn new() -> Groups {
+        ::std::default::Default::default()
+    }
+
+    // repeated .mizer.programmer.Group groups = 1;
+
+
+    pub fn get_groups(&self) -> &[Group] {
+        &self.groups
+    }
+    pub fn clear_groups(&mut self) {
+        self.groups.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_groups(&mut self, v: ::protobuf::RepeatedField<Group>) {
+        self.groups = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_groups(&mut self) -> &mut ::protobuf::RepeatedField<Group> {
+        &mut self.groups
+    }
+
+    // Take field
+    pub fn take_groups(&mut self) -> ::protobuf::RepeatedField<Group> {
+        ::std::mem::replace(&mut self.groups, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for Groups {
+    fn is_initialized(&self) -> bool {
+        for v in &self.groups {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.groups)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.groups {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.groups {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Groups {
+        Groups::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Group>>(
+                "groups",
+                |m: &Groups| { &m.groups },
+                |m: &mut Groups| { &mut m.groups },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Groups>(
+                "Groups",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Groups {
+        static instance: ::protobuf::rt::LazyV2<Groups> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Groups::new)
+    }
+}
+
+impl ::protobuf::Clear for Groups {
+    fn clear(&mut self) {
+        self.groups.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Groups {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Groups {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Group {
+    // message fields
+    pub id: u32,
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Group {
+    fn default() -> &'a Group {
+        <Group as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl Group {
+    pub fn new() -> Group {
+        ::std::default::Default::default()
+    }
+
+    // uint32 id = 1;
+
+
+    pub fn get_id(&self) -> u32 {
+        self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: u32) {
+        self.id = v;
+    }
+
+    // string name = 2;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for Group {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.id = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.id != 0 {
+            os.write_uint32(1, self.id)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Group {
+        Group::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "id",
+                |m: &Group| { &m.id },
+                |m: &mut Group| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &Group| { &m.name },
+                |m: &mut Group| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Group>(
+                "Group",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Group {
+        static instance: ::protobuf::rt::LazyV2<Group> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Group::new)
+    }
+}
+
+impl ::protobuf::Clear for Group {
+    fn clear(&mut self) {
+        self.id = 0;
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Group {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Group {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct SelectGroupRequest {
+    // message fields
+    pub id: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SelectGroupRequest {
+    fn default() -> &'a SelectGroupRequest {
+        <SelectGroupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SelectGroupRequest {
+    pub fn new() -> SelectGroupRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 id = 1;
+
+
+    pub fn get_id(&self) -> u32 {
+        self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: u32) {
+        self.id = v;
+    }
+}
+
+impl ::protobuf::Message for SelectGroupRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.id = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.id != 0 {
+            os.write_uint32(1, self.id)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SelectGroupRequest {
+        SelectGroupRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "id",
+                |m: &SelectGroupRequest| { &m.id },
+                |m: &mut SelectGroupRequest| { &mut m.id },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SelectGroupRequest>(
+                "SelectGroupRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SelectGroupRequest {
+        static instance: ::protobuf::rt::LazyV2<SelectGroupRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SelectGroupRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for SelectGroupRequest {
+    fn clear(&mut self) {
+        self.id = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SelectGroupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SelectGroupRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct SelectGroupResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SelectGroupResponse {
+    fn default() -> &'a SelectGroupResponse {
+        <SelectGroupResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SelectGroupResponse {
+    pub fn new() -> SelectGroupResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for SelectGroupResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SelectGroupResponse {
+        SelectGroupResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SelectGroupResponse>(
+                "SelectGroupResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SelectGroupResponse {
+        static instance: ::protobuf::rt::LazyV2<SelectGroupResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SelectGroupResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for SelectGroupResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SelectGroupResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SelectGroupResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10programmer.proto\x12\x10mizer.programmer\x1a\x0efixtures.proto\"\
     \x1c\n\x1aSubscribeProgrammerRequest\"f\n\x0fProgrammerState\x125\n\x08f\
@@ -2203,16 +4644,46 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     uence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\nstore_mode\x18\x02\x20\
     \x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\tstoreMode\",\n\x04Mode\
     \x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\x12\n\n\x06AddCue\x10\
-    \x02\"\x0f\n\rStoreResponse2\xb5\x04\n\rProgrammerApi\x12l\n\x15Subscrib\
-    eToProgrammer\x12,.mizer.programmer.SubscribeProgrammerRequest\x1a!.mize\
-    r.programmer.ProgrammerState\"\00\x01\x12_\n\x0cWriteControl\x12%.mizer.\
-    programmer.WriteControlRequest\x1a&.mizer.programmer.WriteControlRespons\
-    e\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesReque\
-    st\x1a(.mizer.programmer.SelectFixturesResponse\"\0\x12J\n\x05Clear\x12\
-    \x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.ClearRespons\
-    e\"\0\x12V\n\tHighlight\x12\".mizer.programmer.HighlightRequest\x1a#.miz\
-    er.programmer.HighlightResponse\"\0\x12J\n\x05Store\x12\x1e.mizer.progra\
-    mmer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\"\0b\x06proto3\
+    \x02\"\x0f\n\rStoreResponse\"\x10\n\x0ePresetsRequest\"\x98\x01\n\x08Pre\
+    setId\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x129\n\x04type\x18\x02\
+    \x20\x01(\x0e2%.mizer.programmer.PresetId.PresetTypeR\x04type\"A\n\nPres\
+    etType\x12\r\n\tIntensity\x10\0\x12\x0b\n\x07Shutter\x10\x01\x12\t\n\x05\
+    Color\x10\x02\x12\x0c\n\x08Position\x10\x03\"\xdf\x01\n\x07Presets\x12:\
+    \n\x0bintensities\x18\x01\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x0b\
+    intensities\x122\n\x07shutter\x18\x02\x20\x03(\x0b2\x18.mizer.programmer\
+    .PresetR\x07shutter\x12.\n\x05color\x18\x03\x20\x03(\x0b2\x18.mizer.prog\
+    rammer.PresetR\x05color\x124\n\x08position\x18\x04\x20\x03(\x0b2\x18.miz\
+    er.programmer.PresetR\x08position\"\xea\x02\n\x06Preset\x12*\n\x02id\x18\
+    \x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\x02id\x12\x19\n\x05lab\
+    el\x18\x02\x20\x01(\tH\x01R\x05label\x88\x01\x01\x12\x16\n\x05fader\x18\
+    \x03\x20\x01(\x01H\0R\x05fader\x126\n\x05color\x18\x04\x20\x01(\x0b2\x1e\
+    .mizer.programmer.Preset.ColorH\0R\x05color\x12?\n\x08position\x18\x05\
+    \x20\x01(\x0b2!.mizer.programmer.Preset.PositionH\0R\x08position\x1aC\n\
+    \x05Color\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05gre\
+    en\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01\
+    R\x04blue\x1a0\n\x08Position\x12\x12\n\x04tilt\x18\x01\x20\x01(\x01R\x04\
+    tilt\x12\x10\n\x03pan\x18\x02\x20\x01(\x01R\x03panB\x07\n\x05valueB\x08\
+    \n\x06_label\"\x14\n\x12CallPresetResponse\"\x0f\n\rGroupsRequest\"9\n\
+    \x06Groups\x12/\n\x06groups\x18\x01\x20\x03(\x0b2\x17.mizer.programmer.G\
+    roupR\x06groups\"+\n\x05Group\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
+    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroupReques\
+    t\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroupRespon\
+    se2\xfc\x06\n\rProgrammerApi\x12l\n\x15SubscribeToProgrammer\x12,.mizer.\
+    programmer.SubscribeProgrammerRequest\x1a!.mizer.programmer.ProgrammerSt\
+    ate\"\00\x01\x12_\n\x0cWriteControl\x12%.mizer.programmer.WriteControlRe\
+    quest\x1a&.mizer.programmer.WriteControlResponse\"\0\x12e\n\x0eSelectFix\
+    tures\x12'.mizer.programmer.SelectFixturesRequest\x1a(.mizer.programmer.\
+    SelectFixturesResponse\"\0\x12J\n\x05Clear\x12\x1e.mizer.programmer.Clea\
+    rRequest\x1a\x1f.mizer.programmer.ClearResponse\"\0\x12V\n\tHighlight\
+    \x12\".mizer.programmer.HighlightRequest\x1a#.mizer.programmer.Highlight\
+    Response\"\0\x12J\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\
+    \x1f.mizer.programmer.StoreResponse\"\0\x12K\n\nGetPresets\x12\x20.mizer\
+    .programmer.PresetsRequest\x1a\x19.mizer.programmer.Presets\"\0\x12P\n\n\
+    CallPreset\x12\x1a.mizer.programmer.PresetId\x1a$.mizer.programmer.CallP\
+    resetResponse\"\0\x12H\n\tGetGroups\x12\x1f.mizer.programmer.GroupsReque\
+    st\x1a\x18.mizer.programmer.Groups\"\0\x12\\\n\x0bSelectGroup\x12$.mizer\
+    .programmer.SelectGroupRequest\x1a%.mizer.programmer.SelectGroupResponse\
+    \"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

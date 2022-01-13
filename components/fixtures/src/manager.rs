@@ -1,7 +1,7 @@
 use crate::definition::{FixtureDefinition, FixtureFaderControl};
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::library::FixtureLibrary;
-use crate::programmer::Programmer;
+use crate::programmer::{Group, Programmer, Presets};
 use crate::FixtureId;
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
@@ -13,6 +13,8 @@ pub struct FixtureManager {
     library: FixtureLibrary,
     // TODO: this is only public for project loading/saving
     pub fixtures: Arc<DashMap<u32, Fixture>>,
+    pub groups: Arc<DashMap<u32, Group>>,
+    pub presets: Arc<Presets>,
     programmer: Arc<Mutex<Programmer>>,
 }
 
@@ -23,6 +25,8 @@ impl FixtureManager {
             library,
             programmer: Arc::new(Mutex::new(Programmer::new(Arc::clone(&fixtures)))),
             fixtures,
+            groups: Default::default(),
+            presets: Default::default(),
         }
     }
 
@@ -83,6 +87,14 @@ impl FixtureManager {
 
     pub fn get_fixtures(&self) -> Vec<impl Deref<Target = Fixture> + '_> {
         self.fixtures.iter().collect()
+    }
+
+    pub fn get_group(&self, group_id: u32) -> Option<impl Deref<Target = Group> + '_> {
+        self.groups.get(&group_id)
+    }
+
+    pub fn get_groups(&self) -> Vec<impl Deref<Target = Group> + '_> {
+        self.groups.iter().collect()
     }
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {

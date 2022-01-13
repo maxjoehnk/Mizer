@@ -594,3 +594,656 @@ class StoreResponse extends $pb.GeneratedMessage {
   static StoreResponse? _defaultInstance;
 }
 
+class PresetsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  PresetsRequest._() : super();
+  factory PresetsRequest() => create();
+  factory PresetsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PresetsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PresetsRequest clone() => PresetsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PresetsRequest copyWith(void Function(PresetsRequest) updates) => super.copyWith((message) => updates(message as PresetsRequest)) as PresetsRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PresetsRequest create() => PresetsRequest._();
+  PresetsRequest createEmptyInstance() => create();
+  static $pb.PbList<PresetsRequest> createRepeated() => $pb.PbList<PresetsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static PresetsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PresetsRequest>(create);
+  static PresetsRequest? _defaultInstance;
+}
+
+class PresetId extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetId', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..e<PresetId_PresetType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: PresetId_PresetType.Intensity, valueOf: PresetId_PresetType.valueOf, enumValues: PresetId_PresetType.values)
+    ..hasRequiredFields = false
+  ;
+
+  PresetId._() : super();
+  factory PresetId({
+    $core.int? id,
+    PresetId_PresetType? type,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    return _result;
+  }
+  factory PresetId.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PresetId.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PresetId clone() => PresetId()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PresetId copyWith(void Function(PresetId) updates) => super.copyWith((message) => updates(message as PresetId)) as PresetId; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PresetId create() => PresetId._();
+  PresetId createEmptyInstance() => create();
+  static $pb.PbList<PresetId> createRepeated() => $pb.PbList<PresetId>();
+  @$core.pragma('dart2js:noInline')
+  static PresetId getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PresetId>(create);
+  static PresetId? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  PresetId_PresetType get type => $_getN(1);
+  @$pb.TagNumber(2)
+  set type(PresetId_PresetType v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasType() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearType() => clearField(2);
+}
+
+class Presets extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Presets', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..pc<Preset>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'intensities', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..pc<Preset>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shutter', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..pc<Preset>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..pc<Preset>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', $pb.PbFieldType.PM, subBuilder: Preset.create)
+    ..hasRequiredFields = false
+  ;
+
+  Presets._() : super();
+  factory Presets({
+    $core.Iterable<Preset>? intensities,
+    $core.Iterable<Preset>? shutter,
+    $core.Iterable<Preset>? color,
+    $core.Iterable<Preset>? position,
+  }) {
+    final _result = create();
+    if (intensities != null) {
+      _result.intensities.addAll(intensities);
+    }
+    if (shutter != null) {
+      _result.shutter.addAll(shutter);
+    }
+    if (color != null) {
+      _result.color.addAll(color);
+    }
+    if (position != null) {
+      _result.position.addAll(position);
+    }
+    return _result;
+  }
+  factory Presets.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Presets.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Presets clone() => Presets()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Presets copyWith(void Function(Presets) updates) => super.copyWith((message) => updates(message as Presets)) as Presets; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Presets create() => Presets._();
+  Presets createEmptyInstance() => create();
+  static $pb.PbList<Presets> createRepeated() => $pb.PbList<Presets>();
+  @$core.pragma('dart2js:noInline')
+  static Presets getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Presets>(create);
+  static Presets? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Preset> get intensities => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.List<Preset> get shutter => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<Preset> get color => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.List<Preset> get position => $_getList(3);
+}
+
+class Preset_Color extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Preset.Color', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  Preset_Color._() : super();
+  factory Preset_Color({
+    $core.double? red,
+    $core.double? green,
+    $core.double? blue,
+  }) {
+    final _result = create();
+    if (red != null) {
+      _result.red = red;
+    }
+    if (green != null) {
+      _result.green = green;
+    }
+    if (blue != null) {
+      _result.blue = blue;
+    }
+    return _result;
+  }
+  factory Preset_Color.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Preset_Color.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Preset_Color clone() => Preset_Color()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Preset_Color copyWith(void Function(Preset_Color) updates) => super.copyWith((message) => updates(message as Preset_Color)) as Preset_Color; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Preset_Color create() => Preset_Color._();
+  Preset_Color createEmptyInstance() => create();
+  static $pb.PbList<Preset_Color> createRepeated() => $pb.PbList<Preset_Color>();
+  @$core.pragma('dart2js:noInline')
+  static Preset_Color getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Preset_Color>(create);
+  static Preset_Color? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get red => $_getN(0);
+  @$pb.TagNumber(1)
+  set red($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRed() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRed() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get green => $_getN(1);
+  @$pb.TagNumber(2)
+  set green($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGreen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGreen() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get blue => $_getN(2);
+  @$pb.TagNumber(3)
+  set blue($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBlue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBlue() => clearField(3);
+}
+
+class Preset_Position extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Preset.Position', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tilt', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pan', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  Preset_Position._() : super();
+  factory Preset_Position({
+    $core.double? tilt,
+    $core.double? pan,
+  }) {
+    final _result = create();
+    if (tilt != null) {
+      _result.tilt = tilt;
+    }
+    if (pan != null) {
+      _result.pan = pan;
+    }
+    return _result;
+  }
+  factory Preset_Position.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Preset_Position.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Preset_Position clone() => Preset_Position()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Preset_Position copyWith(void Function(Preset_Position) updates) => super.copyWith((message) => updates(message as Preset_Position)) as Preset_Position; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Preset_Position create() => Preset_Position._();
+  Preset_Position createEmptyInstance() => create();
+  static $pb.PbList<Preset_Position> createRepeated() => $pb.PbList<Preset_Position>();
+  @$core.pragma('dart2js:noInline')
+  static Preset_Position getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Preset_Position>(create);
+  static Preset_Position? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get tilt => $_getN(0);
+  @$pb.TagNumber(1)
+  set tilt($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTilt() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTilt() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get pan => $_getN(1);
+  @$pb.TagNumber(2)
+  set pan($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPan() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPan() => clearField(2);
+}
+
+enum Preset_Value {
+  fader, 
+  color, 
+  position, 
+  notSet
+}
+
+class Preset extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, Preset_Value> _Preset_ValueByTag = {
+    3 : Preset_Value.fader,
+    4 : Preset_Value.color,
+    5 : Preset_Value.position,
+    0 : Preset_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Preset', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..oo(0, [3, 4, 5])
+    ..aOM<PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: PresetId.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'label')
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
+    ..aOM<Preset_Color>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Preset_Color.create)
+    ..aOM<Preset_Position>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: Preset_Position.create)
+    ..hasRequiredFields = false
+  ;
+
+  Preset._() : super();
+  factory Preset({
+    PresetId? id,
+    $core.String? label,
+    $core.double? fader,
+    Preset_Color? color,
+    Preset_Position? position,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (label != null) {
+      _result.label = label;
+    }
+    if (fader != null) {
+      _result.fader = fader;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    return _result;
+  }
+  factory Preset.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Preset.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Preset clone() => Preset()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Preset copyWith(void Function(Preset) updates) => super.copyWith((message) => updates(message as Preset)) as Preset; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Preset create() => Preset._();
+  Preset createEmptyInstance() => create();
+  static $pb.PbList<Preset> createRepeated() => $pb.PbList<Preset>();
+  @$core.pragma('dart2js:noInline')
+  static Preset getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Preset>(create);
+  static Preset? _defaultInstance;
+
+  Preset_Value whichValue() => _Preset_ValueByTag[$_whichOneof(0)]!;
+  void clearValue() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  PresetId get id => $_getN(0);
+  @$pb.TagNumber(1)
+  set id(PresetId v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+  @$pb.TagNumber(1)
+  PresetId ensureId() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get label => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set label($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLabel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLabel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get fader => $_getN(2);
+  @$pb.TagNumber(3)
+  set fader($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFader() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFader() => clearField(3);
+
+  @$pb.TagNumber(4)
+  Preset_Color get color => $_getN(3);
+  @$pb.TagNumber(4)
+  set color(Preset_Color v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasColor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearColor() => clearField(4);
+  @$pb.TagNumber(4)
+  Preset_Color ensureColor() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  Preset_Position get position => $_getN(4);
+  @$pb.TagNumber(5)
+  set position(Preset_Position v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPosition() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPosition() => clearField(5);
+  @$pb.TagNumber(5)
+  Preset_Position ensurePosition() => $_ensure(4);
+}
+
+class CallPresetResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallPresetResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  CallPresetResponse._() : super();
+  factory CallPresetResponse() => create();
+  factory CallPresetResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallPresetResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallPresetResponse clone() => CallPresetResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallPresetResponse copyWith(void Function(CallPresetResponse) updates) => super.copyWith((message) => updates(message as CallPresetResponse)) as CallPresetResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallPresetResponse create() => CallPresetResponse._();
+  CallPresetResponse createEmptyInstance() => create();
+  static $pb.PbList<CallPresetResponse> createRepeated() => $pb.PbList<CallPresetResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CallPresetResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallPresetResponse>(create);
+  static CallPresetResponse? _defaultInstance;
+}
+
+class GroupsRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GroupsRequest._() : super();
+  factory GroupsRequest() => create();
+  factory GroupsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GroupsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GroupsRequest clone() => GroupsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GroupsRequest copyWith(void Function(GroupsRequest) updates) => super.copyWith((message) => updates(message as GroupsRequest)) as GroupsRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GroupsRequest create() => GroupsRequest._();
+  GroupsRequest createEmptyInstance() => create();
+  static $pb.PbList<GroupsRequest> createRepeated() => $pb.PbList<GroupsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GroupsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupsRequest>(create);
+  static GroupsRequest? _defaultInstance;
+}
+
+class Groups extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Groups', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..pc<Group>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.PM, subBuilder: Group.create)
+    ..hasRequiredFields = false
+  ;
+
+  Groups._() : super();
+  factory Groups({
+    $core.Iterable<Group>? groups,
+  }) {
+    final _result = create();
+    if (groups != null) {
+      _result.groups.addAll(groups);
+    }
+    return _result;
+  }
+  factory Groups.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Groups.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Groups clone() => Groups()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Groups copyWith(void Function(Groups) updates) => super.copyWith((message) => updates(message as Groups)) as Groups; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Groups create() => Groups._();
+  Groups createEmptyInstance() => create();
+  static $pb.PbList<Groups> createRepeated() => $pb.PbList<Groups>();
+  @$core.pragma('dart2js:noInline')
+  static Groups getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Groups>(create);
+  static Groups? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Group> get groups => $_getList(0);
+}
+
+class Group extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Group', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  Group._() : super();
+  factory Group({
+    $core.int? id,
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory Group.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Group.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Group clone() => Group()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Group copyWith(void Function(Group) updates) => super.copyWith((message) => updates(message as Group)) as Group; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Group create() => Group._();
+  Group createEmptyInstance() => create();
+  static $pb.PbList<Group> createRepeated() => $pb.PbList<Group>();
+  @$core.pragma('dart2js:noInline')
+  static Group getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Group>(create);
+  static Group? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+}
+
+class SelectGroupRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectGroupRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  SelectGroupRequest._() : super();
+  factory SelectGroupRequest({
+    $core.int? id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory SelectGroupRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SelectGroupRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SelectGroupRequest clone() => SelectGroupRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SelectGroupRequest copyWith(void Function(SelectGroupRequest) updates) => super.copyWith((message) => updates(message as SelectGroupRequest)) as SelectGroupRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SelectGroupRequest create() => SelectGroupRequest._();
+  SelectGroupRequest createEmptyInstance() => create();
+  static $pb.PbList<SelectGroupRequest> createRepeated() => $pb.PbList<SelectGroupRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SelectGroupRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectGroupRequest>(create);
+  static SelectGroupRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
+class SelectGroupResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SelectGroupResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  SelectGroupResponse._() : super();
+  factory SelectGroupResponse() => create();
+  factory SelectGroupResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SelectGroupResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SelectGroupResponse clone() => SelectGroupResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SelectGroupResponse copyWith(void Function(SelectGroupResponse) updates) => super.copyWith((message) => updates(message as SelectGroupResponse)) as SelectGroupResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SelectGroupResponse create() => SelectGroupResponse._();
+  SelectGroupResponse createEmptyInstance() => create();
+  static $pb.PbList<SelectGroupResponse> createRepeated() => $pb.PbList<SelectGroupResponse>();
+  @$core.pragma('dart2js:noInline')
+  static SelectGroupResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SelectGroupResponse>(create);
+  static SelectGroupResponse? _defaultInstance;
+}
+

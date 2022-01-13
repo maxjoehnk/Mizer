@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/protos/programmer.pb.dart';
 
 class ProgrammerPluginApi implements ProgrammerApi {
   final MethodChannel channel = const MethodChannel("mizer.live/programmer");
@@ -44,6 +43,30 @@ class ProgrammerPluginApi implements ProgrammerApi {
       log("$state");
       return state;
     });
+  }
+
+  @override
+  Future<Presets> getPresets() async {
+    var response = await channel.invokeMethod("getPresets");
+
+    return Presets.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<void> callPreset(PresetId id) async {
+    await channel.invokeMethod("callPreset", id.writeToBuffer());
+  }
+
+  @override
+  Future<Groups> getGroups() async {
+    var response = await channel.invokeMethod("getGroups");
+
+    return Groups.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<void> selectGroup(int id) async {
+    await channel.invokeMethod("selectGroup", id);
   }
 
   static List<int> _convertBuffer(List<Object> response) {

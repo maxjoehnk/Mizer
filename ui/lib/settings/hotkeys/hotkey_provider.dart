@@ -10,18 +10,26 @@ import 'keymap.dart';
 
 class HotkeyProvider extends StatelessWidget {
   final Map<String, String> Function(Hotkeys) hotkeySelector;
-  final Widget child;
+  late final Widget Function(BuildContext, Map<String, String>) builder;
   late final void Function(String) onHotkey;
   late final Map<String, Function()> hotkeyMap;
   final bool global;
 
   HotkeyProvider(
       {required this.hotkeySelector,
-      required this.child,
+      Widget? child,
+      Widget Function(BuildContext, Map<String, String>)? builder,
       Function(String)? onHotkey,
       Map<String, Function()>? hotkeyMap,
       this.global = false}) {
     assert(onHotkey != null || hotkeyMap != null);
+    if (child != null) {
+      this.builder = (context, hotkeys) => child;
+    }
+    if (builder != null) {
+      this.builder = builder;
+    }
+    assert(this.builder != null);
     if (hotkeyMap != null) {
       this.onHotkey = (key) {
         var handler = hotkeyMap[key];
@@ -39,7 +47,7 @@ class HotkeyProvider extends StatelessWidget {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       var hotkeys = hotkeySelector(settings.hotkeys);
 
-      var nextChild = child;
+      var nextChild = builder(context, hotkeys);
       for (var shortcut in _shortcuts(hotkeys)) {
         nextChild = shortcut(nextChild);
       }

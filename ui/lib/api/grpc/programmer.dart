@@ -37,4 +37,24 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   Future<void> store(int sequenceId, StoreRequest_Mode storeMode) async {
     await this.client.store(StoreRequest(sequenceId: sequenceId, storeMode: storeMode));
   }
+
+  @override
+  Future<Presets> getPresets() {
+    return this.client.getPresets(PresetsRequest());
+  }
+
+  @override
+  Future<void> callPreset(PresetId id) async {
+    await this.client.callPreset(id);
+  }
+
+  @override
+  Future<Groups> getGroups() {
+    return this.client.getGroups(GroupsRequest());
+  }
+
+  @override
+  Future<void> selectGroup(int id) async {
+    await this.client.selectGroup(SelectGroupRequest(id: id));
+  }
 }

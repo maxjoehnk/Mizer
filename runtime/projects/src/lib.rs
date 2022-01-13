@@ -6,10 +6,12 @@ use std::path::Path;
 use lazy_static::lazy_static;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::programmer::Group;
 
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_sequencer::Sequence;
+use crate::fixtures::PresetsStore;
 
 mod connections;
 mod fixtures;
@@ -30,14 +32,18 @@ pub struct Project {
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub channels: Vec<Channel>,
-    #[serde(default)]
-    pub fixtures: Vec<FixtureConfig>,
     #[serde(default, rename = "media")]
     pub media_paths: Vec<String>,
     #[serde(default)]
     pub layouts: HashMap<String, Vec<ControlConfig>>,
     #[serde(default)]
     pub connections: Vec<ConnectionConfig>,
+    #[serde(default)]
+    pub fixtures: Vec<FixtureConfig>,
+    #[serde(default)]
+    pub groups: Vec<Group>,
+    #[serde(default)]
+    pub presets: PresetsStore,
     #[serde(default)]
     pub sequences: Vec<Sequence>,
 }

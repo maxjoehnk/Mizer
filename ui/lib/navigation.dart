@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
+import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
@@ -14,29 +14,24 @@ import 'package:mizer/views/patch/fixture_patch.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 
 import 'actions/actions.dart';
 import 'api/contracts/settings.dart';
 
 List<Route> routes = [
-  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', LogicalKeyboardKey.f1,
-      View.Layout),
+  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', View.Layout),
+  Route(() => Container(), Icons.view_comfortable, '2D Plan', View.Plan),
+  Route(() => Container(), MdiIcons.video3D, 'PreViz', View.PreViz),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', View.Nodes),
+  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', View.Sequencer),
+  Route(() => ProgrammerView(), MdiIcons.tuneVertical, 'Programmer', View.Programmer),
+  Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets', View.Presets),
   Route(
-      () => Container(), Icons.view_comfortable, '2D Plan', LogicalKeyboardKey.f2, View.Plan),
-  Route(() => Container(), MdiIcons.video3D, 'PreViz', LogicalKeyboardKey.f3, View.PreViz),
-  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', LogicalKeyboardKey.f4,
-      View.Nodes),
-  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', LogicalKeyboardKey.f5,
-      View.Sequences),
-  Route(() => ProgrammerView(), MdiIcons.tuneVertical, 'Programmer', LogicalKeyboardKey.f6,
-      View.Programmer),
-  Route(
-      () => MediaView(), Icons.perm_media_outlined, 'Media', LogicalKeyboardKey.f7, View.Media),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Connections', LogicalKeyboardKey.f8,
-      View.Connections),
-  Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch', LogicalKeyboardKey.f9,
-      View.FixturePatch),
-  Route(() => SessionView(), Icons.mediation, 'Session', LogicalKeyboardKey.f10, View.Session),
+      () => MediaView(), Icons.perm_media_outlined, 'Media', View.Media),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Connections', View.Connections),
+  Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch', View.FixturePatch),
+  Route(() => SessionView(), Icons.mediation, 'Session', View.Session),
 ];
 
 Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);
@@ -73,7 +68,7 @@ class _HomeState extends State<Home> {
               var intent = shortcuts[hotkey]!;
               this._selectView(intent.view.index);
             },
-            child: ApplicationMenu(
+            builder: (context, hotkeys) => ApplicationMenu(
                 child: Actions(
                   actions: <Type, CallbackAction>{
                     OpenViewIntent: CallbackAction<OpenViewIntent>(
@@ -88,6 +83,7 @@ class _HomeState extends State<Home> {
                           selectedIndex: _selectedIndex,
                           onSelect: this._selectView,
                           routes: routes,
+                          hotkeys: hotkeys,
                         ),
                         Expanded(
                             child: Column(
@@ -129,20 +125,20 @@ class Route {
   final WidgetFunction view;
   final IconData icon;
   final String label;
-  final LogicalKeyboardKey key;
   final View viewKey;
 
-  Route(this.view, this.icon, this.label, this.key, this.viewKey);
+  Route(this.view, this.icon, this.label, this.viewKey);
 }
 
 typedef WidgetFunction = Widget Function();
 
 class NavigationBar extends StatelessWidget {
   final List<Route> routes;
+  final Map<String, String> hotkeys;
   final int selectedIndex;
   final Function(int) onSelect;
 
-  NavigationBar({required this.routes, required this.selectedIndex, required this.onSelect});
+  NavigationBar({required this.routes, required this.selectedIndex, required this.onSelect, required this.hotkeys});
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +149,7 @@ class NavigationBar extends StatelessWidget {
             children: this
                 .routes
                 .mapEnumerated((route, i) =>
-                    NavigationItem(route, this.selectedIndex == i, () => this.onSelect(i)))
+                    NavigationItem(route, this.selectedIndex == i, () => this.onSelect(i), this.hotkeys))
                 .toList()));
   }
 }
@@ -168,8 +164,9 @@ class NavigationItem extends StatefulWidget {
   final Route route;
   final bool selected;
   final void Function() onSelect;
+  final Map<String, String> hotkeys;
 
-  NavigationItem(this.route, this.selected, this.onSelect);
+  NavigationItem(this.route, this.selected, this.onSelect, this.hotkeys);
 
   @override
   _NavigationItemState createState() => _NavigationItemState();
@@ -212,12 +209,16 @@ class _NavigationItemState extends State<NavigationItem> {
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
               ),
-              Align(alignment: Alignment.topRight, child: Text(widget.route.key.keyLabel, style: textTheme.caption!.copyWith(fontSize: 9))),
+              if (hotkeyLabel != null) Align(alignment: Alignment.topRight, child: Text(hotkeyLabel!.toCapitalCase(), style: textTheme.caption!.copyWith(fontSize: 9))),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String? get hotkeyLabel {
+    return widget.hotkeys[widget.route.viewKey.toHotkeyString()];
   }
 
   Color? get backgroundColor {

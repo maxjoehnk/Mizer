@@ -7,6 +7,7 @@ import 'fixtures_bloc.dart';
 import 'layouts_bloc.dart';
 import 'media_bloc.dart';
 import 'nodes_bloc.dart';
+import 'presets_bloc.dart';
 import 'session_bloc.dart';
 import 'settings_bloc.dart';
 
@@ -27,6 +28,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => LayoutsBloc(context.read())),
         BlocProvider(create: (context) => SettingsBloc(context.read())),
         BlocProvider(create: (context) => SequencerBloc(context.read())),
+        BlocProvider(create: (context) => PresetsBloc(context.read())),
       ],
     );
   }

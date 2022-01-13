@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 var HIGHLIGHT_CONTROL_COLOR = Colors.grey.shade900;
 var DEFAULT_CONTROL_COLOR = Colors.grey.shade800;

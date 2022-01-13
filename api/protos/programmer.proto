@@ -11,6 +11,10 @@ service ProgrammerApi {
   rpc Clear (ClearRequest) returns (ClearResponse) {}
   rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
   rpc Store (StoreRequest) returns (StoreResponse) {}
+  rpc GetPresets (PresetsRequest) returns (Presets) {}
+  rpc CallPreset (PresetId) returns (CallPresetResponse) {}
+  rpc GetGroups (GroupsRequest) returns (Groups) {}
+  rpc SelectGroup (SelectGroupRequest) returns (SelectGroupResponse) {}
 }
 
 message SubscribeProgrammerRequest {}
@@ -62,3 +66,64 @@ message StoreRequest {
   }
 }
 message StoreResponse {}
+
+message PresetsRequest {}
+
+message PresetId {
+  uint32 id = 1;
+  PresetType type = 2;
+
+  enum PresetType {
+    Intensity = 0;
+    Shutter = 1;
+    Color = 2;
+    Position = 3;
+  }
+}
+
+message Presets {
+  repeated Preset intensities = 1;
+  repeated Preset shutter = 2;
+  repeated Preset color = 3;
+  repeated Preset position = 4;
+}
+
+message Preset {
+  PresetId id = 1;
+  optional string label = 2;
+  oneof value {
+    double fader = 3;
+    Color color = 4;
+    Position position = 5;
+  }
+
+  message Color {
+    double red = 1;
+    double green = 2;
+    double blue = 3;
+  }
+
+  message Position {
+    double tilt = 1;
+    double pan = 2;
+  }
+}
+
+message CallPresetResponse {
+}
+
+message GroupsRequest {}
+message Groups {
+  repeated Group groups = 1;
+}
+
+message Group {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message SelectGroupRequest {
+  uint32 id = 1;
+}
+
+message SelectGroupResponse {}

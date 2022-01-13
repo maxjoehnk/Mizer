@@ -4,6 +4,7 @@ use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_sequencer::{CueChannel, Sequencer, SequencerValue};
+use std::ops::Deref;
 
 #[derive(Clone)]
 pub struct ProgrammerHandler<R> {
@@ -37,6 +38,14 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         log::debug!("select_fixtures {:?}", fixture_ids);
         let mut programmer = self.fixture_manager.get_programmer();
         programmer.select_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
+    }
+
+    pub fn select_group(&self, group_id: u32) {
+        log::debug!("select_group {:?}", group_id);
+        if let Some(group) = self.fixture_manager.get_group(group_id) {
+            let mut programmer = self.fixture_manager.get_programmer();
+            programmer.select_fixtures(group.fixtures.clone());
+        }
     }
 
     pub fn clear(&self) {
@@ -76,5 +85,33 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
                 cue.channels = cue_channels;
             }
         })
+    }
+
+    pub fn get_presets(&self) -> Presets {
+        Presets {
+            intensities: self.fixture_manager.presets.intensity_presets().into_iter().map(Preset::from).collect(),
+            shutter: self.fixture_manager.presets.shutter_presets().into_iter().map(Preset::from).collect(),
+            color: self.fixture_manager.presets.color_presets().into_iter().map(Preset::from).collect(),
+            position: self.fixture_manager.presets.position_presets().into_iter().map(Preset::from).collect(),
+            ..Default::default()
+        }
+    }
+
+    pub fn call_preset(&self, preset_id: PresetId) {
+        log::debug!("call_preset {:?}", preset_id);
+        let values = self.fixture_manager.presets.get_preset_values(preset_id.into());
+        let mut programmer = self.fixture_manager.get_programmer();
+        for (control, value) in values {
+            programmer.write_control(control, value);
+        }
+    }
+
+    pub fn get_groups(&self) -> Groups {
+        Groups {
+            groups: self.fixture_manager.get_groups().into_iter().map(|group| {
+                group.deref().clone().into()
+            }).collect(),
+            ..Default::default()
+        }
     }
 }

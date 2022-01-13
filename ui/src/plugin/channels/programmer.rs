@@ -60,6 +60,24 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null)
                 }
             }
+            "getPresets" => {
+                let presets = self.handler.get_presets();
+                reply.respond_msg(presets);
+            }
+            "callPreset" => match call.arguments().map(|req| self.handler.call_preset(req)) {
+                Ok(()) => reply.send_ok(Value::Null),
+                Err(err) => reply.respond_error(err),
+            }
+            "getGroups" => {
+                let groups = self.handler.get_groups();
+                reply.respond_msg(groups);
+            }
+            "selectGroup" => {
+                if let Value::I64(id) = call.args {
+                    self.handler.select_group(id as u32);
+                    reply.send_ok(Value::Null);
+                }
+            }
             _ => reply.not_implemented(),
         }
     }

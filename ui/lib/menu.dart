@@ -16,6 +16,7 @@ import 'package:nativeshell/nativeshell.dart' show Window;
 import 'actions/actions.dart';
 import 'actions/menu.dart';
 import 'api/contracts/session.dart';
+import 'navigation.dart';
 
 class ApplicationMenu extends StatelessWidget {
   final Widget child;
@@ -53,17 +54,12 @@ class ApplicationMenu extends StatelessWidget {
                   action: () => context.read<ApplicationPluginApi>().exit(),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyQ))
             ]),
-            SubMenu(title: 'View', children: [
-              MenuActionItem(label: "Layout", action: OpenViewIntent(View.Layout)),
-              MenuActionItem(label: "2D Plan", action: OpenViewIntent(View.Plan)),
-              MenuActionItem(label: "PreViz", action: OpenViewIntent(View.PreViz)),
-              MenuActionItem(label: "Nodes", action: OpenViewIntent(View.Nodes)),
-              MenuActionItem(label: "Sequences", action: OpenViewIntent(View.Sequences)),
-              MenuActionItem(label: "Fixtures", action: OpenViewIntent(View.Programmer)),
-              MenuActionItem(label: "Media", action: OpenViewIntent(View.Media)),
-              MenuActionItem(label: "Connections", action: OpenViewIntent(View.Connections)),
-              MenuActionItem(label: "Session", action: OpenViewIntent(View.Session)),
-            ]),
+            SubMenu(
+                title: 'View',
+                children: routes
+                    .map((route) =>
+                        MenuActionItem(label: route.label, action: OpenViewIntent(route.viewKey)))
+                    .toList()),
             if (!context.platform.isStandalone) SubMenu(title: 'Window', children: [
               MenuItem(
                   label: 'New Window',

@@ -1,0 +1,221 @@
+---
+nodes:
+  - path: /fixture-2
+    type: fixture
+    config:
+      fixture: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-3
+    type: fixture
+    config:
+      fixture: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-6
+    type: fixture
+    config:
+      fixture: 7
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-7
+    type: fixture
+    config:
+      fixture: 8
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-1
+    type: fixture
+    config:
+      fixture: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-5
+    type: fixture
+    config:
+      fixture: 6
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: false
+  - path: /fixture-4
+    type: fixture
+    config:
+      fixture: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+channels: []
+media: []
+layouts:
+  Default: []
+connections:
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+fixtures:
+  - id: 2
+    name: LED Bar 3 HCL 2
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 11
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 8
+    name: Wild Wash 4
+    fixture: "ofl:stairville:wild-wash-132-led-rgb"
+    channel: 68
+    universe: 1
+    mode: 6-channel
+    output: ~
+  - id: 5
+    name: Wild Wash 1
+    fixture: "ofl:stairville:wild-wash-132-led-rgb"
+    channel: 50
+    universe: 1
+    mode: 6-channel
+    output: ~
+  - id: 4
+    name: LED Bar 3 HCL 4
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 31
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 3
+    name: LED Bar 3 HCL 3
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 21
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 6
+    name: Wild Wash 2
+    fixture: "ofl:stairville:wild-wash-132-led-rgb"
+    channel: 56
+    universe: 1
+    mode: 6-channel
+    output: ~
+  - id: 7
+    name: Wild Wash 3
+    fixture: "ofl:stairville:wild-wash-132-led-rgb"
+    channel: 62
+    universe: 1
+    mode: 6-channel
+    output: ~
+  - id: 1
+    name: LED Bar 3 HCL 1
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 1
+    universe: 1
+    mode: 10-channel
+    output: ~
+groups:
+  - id: 1
+    name: LED Bar-3 HCL
+    fixtures:
+      - 1
+      - 2
+      - 3
+      - 4
+  - id: 2
+    name: Wild Wash
+    fixtures:
+      - 5
+      - 6
+      - 7
+      - 8
+presets:
+  intensity:
+    - id: 2
+      label: 25%
+      value: 0.25
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 5
+      label: 100%
+      value: 1.0
+    - id: 3
+      label: 50%
+      value: 0.5
+  shutter: []
+  color:
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+  position:
+    - id: 1
+      label: Center
+      value:
+        - 0.0
+        - 0.0
+sequences: []

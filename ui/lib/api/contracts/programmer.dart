@@ -15,4 +15,12 @@ abstract class ProgrammerApi {
   Future<void> store(int sequenceId, StoreRequest_Mode storeMode);
 
   Stream<ProgrammerState> observe();
+
+  Future<Presets> getPresets();
+
+  Future<void> callPreset(PresetId id);
+
+  Future<Groups> getGroups();
+
+  Future<void> selectGroup(int id);
 }

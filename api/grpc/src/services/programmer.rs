@@ -72,4 +72,28 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
 
         resp.finish(Default::default())
     }
+
+    fn get_presets(&self, req: ServerRequestSingle<PresetsRequest>, resp: ServerResponseUnarySink<Presets>) -> grpc::Result<()> {
+        let presets = self.get_presets();
+
+        resp.finish(presets)
+    }
+
+    fn call_preset(&self, req: ServerRequestSingle<PresetId>, resp: ServerResponseUnarySink<CallPresetResponse>) -> grpc::Result<()> {
+        self.call_preset(req.message);
+
+        resp.finish(Default::default())
+    }
+
+    fn get_groups(&self, req: ServerRequestSingle<GroupsRequest>, resp: ServerResponseUnarySink<Groups>) -> grpc::Result<()> {
+        let groups = self.get_groups();
+
+        resp.finish(groups)
+    }
+
+    fn select_group(&self, req: ServerRequestSingle<super::programmer::SelectGroupRequest>, resp: ServerResponseUnarySink<super::programmer::SelectGroupResponse>) -> grpc::Result<()> {
+        self.select_group(req.message.id);
+
+        resp.finish(Default::default())
+    }
 }

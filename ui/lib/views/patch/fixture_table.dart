@@ -7,11 +7,13 @@ class FixtureTable extends StatelessWidget {
   final List<Fixture> fixtures;
   final List<int> selectedIds;
   final Function(int, bool) onSelect;
+  final Function(Fixture) onSelectSimilar;
 
   FixtureTable(
       {required this.fixtures,
       required this.selectedIds,
       required this.onSelect,
+      required this.onSelectSimilar,
       Key? key})
       : super(key: key);
 
@@ -56,6 +58,7 @@ class FixtureTable extends StatelessWidget {
         Text("${fixture.universe}:${fixture.channel} - ${fixture.channel + fixture.channelCount - 1}"),
       ],
       onTap: () => onSelect(fixture.id, !selected),
+      onDoubleTap: () => onSelectSimilar(fixture),
       selected: selected,
     );
     return row;

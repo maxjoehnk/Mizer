@@ -47,6 +47,11 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                             this.selectedIds.remove(id);
                           }
                         }),
+                  onSelectSimilar: (fixture) => setState(() => selectedIds = fixtures.fixtures
+                            .where((f) =>
+                        f.manufacturer == fixture.manufacturer && f.model == fixture.model)
+                            .map((f) => f.id)
+                            .toList()),
                 ),
                 actions: [
                   PanelAction(

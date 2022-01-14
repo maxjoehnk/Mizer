@@ -4,6 +4,10 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{Preset, Color, Position, Presets};
 
 impl ProjectManager for FixtureManager {
+    fn new(&self) {
+        self.presets.load_defaults();
+    }
+
     fn load(&self, project: &Project) -> anyhow::Result<()> {
         for fixture in &project.fixtures {
             let def = self.get_definition(&fixture.fixture);

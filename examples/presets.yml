@@ -212,6 +212,24 @@ presets:
         - 1.0
         - 1.0
         - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
   position:
     - id: 1
       label: Center

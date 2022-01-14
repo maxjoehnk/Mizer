@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -67,13 +69,17 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
   Widget _getStep() {
     if (step == 0) {
       return FixtureSelector(widget.definitions,
+          definition: definition,
+          mode: mode,
           onSelect: (definition, mode) => setState(() {
                 this.definition = definition;
                 this.mode = mode;
               }));
     }
     if (step == 1) {
-      return FixturePatch(this.mode!,
+      return FixturePatch(this.definition!, this.mode!,
+          initialId: widget.bloc.state.fixtures.isEmpty ? 1 : widget.bloc.state.fixtures.map((f) => f.id).reduce(max) + 1,
+          initialChannel: widget.bloc.state.fixtures.isEmpty ? 1 : widget.bloc.state.fixtures.map((f) => f.channel + f.channelCount).reduce(max),
           onChange: (event) => setState(() {
                 name = event.name;
                 universe = event.universe;
@@ -90,6 +96,12 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
       return [
         Padding(
           padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("Cancel")),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
               onPressed: this.mode == null ? null : () => setState(() => step += 1),
               child: Text("Next")),
@@ -98,6 +110,12 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
     }
     if (step == 1) {
       return [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () => setState(() => step = 0),
+              child: Text("Back")),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
@@ -122,10 +140,13 @@ class _PatchFixtureDialogStepperState extends State<PatchFixtureDialogStepper> {
 }
 
 class FixturePatch extends StatefulWidget {
+  final FixtureDefinition definition;
   final FixtureMode mode;
   final Function(PatchSettingsEvent) onChange;
+  final int initialId;
+  final int initialChannel;
 
-  FixturePatch(this.mode, {required this.onChange});
+  FixturePatch(this.definition, this.mode, {required this.onChange, required this.initialId, required this.initialChannel});
 
   @override
   _FixturePatchState createState() => _FixturePatchState();
@@ -139,17 +160,25 @@ class _FixturePatchState extends State<FixturePatch> {
   int count = 1;
 
   @override
+  void initState() {
+    super.initState();
+    name = widget.definition.name + " 1";
+    id = widget.initialId;
+    channel = widget.initialChannel;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
         children: [
           PatchSettings(
-              name: "",
-              universe: 1,
-              channel: 1,
-              id: 1,
-              count: 1,
+              name: name,
+              universe: universe,
+              channel: channel,
+              id: id,
+              count: count,
               onChange: (event) {
                 setState(() {
                   name = event.name;
@@ -160,6 +189,7 @@ class _FixturePatchState extends State<FixturePatch> {
                 });
                 widget.onChange(event);
               }),
+          // TODO: show fixture preview
           UniversePreview(),
         ]);
   }

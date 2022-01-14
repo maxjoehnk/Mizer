@@ -4,10 +4,12 @@ import 'package:mizer/extensions/map_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
 class FixtureSelector extends StatefulWidget {
+  final FixtureDefinition? definition;
+  final FixtureMode? mode;
   final FixtureDefinitions definitions;
   final Function(FixtureDefinition, FixtureMode) onSelect;
 
-  FixtureSelector(this.definitions, {required this.onSelect});
+  FixtureSelector(this.definitions, {this.definition, this.mode, required this.onSelect});
 
   @override
   _FixtureSelectorState createState() => _FixtureSelectorState();
@@ -17,6 +19,16 @@ class _FixtureSelectorState extends State<FixtureSelector> {
   _ManufacturerGroup? manufacturer;
   FixtureDefinition? definition;
   FixtureMode? mode;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.definition != null) {
+      this.manufacturer = widget.definitions.groupByManufacturer().firstWhere((group) => group.name == widget.definition!.manufacturer);
+    }
+    this.definition = widget.definition;
+    this.mode = widget.mode;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +44,9 @@ class _FixtureSelectorState extends State<FixtureSelector> {
                 .toList()),
         _FixtureSelectorColumn(
             label: "Fixtures",
-            children: manufacturer?.definitions?.map(_definitionItem)?.toList() ?? []),
+            children: manufacturer?.definitions.map(_definitionItem).toList() ?? []),
         _FixtureSelectorColumn(
-            label: "Modes", children: definition?.modes?.map(_modeItem)?.toList() ?? []),
+            label: "Modes", children: definition?.modes.map(_modeItem).toList() ?? []),
         _SelectedFixtureMode(definition, mode)
       ],
     );

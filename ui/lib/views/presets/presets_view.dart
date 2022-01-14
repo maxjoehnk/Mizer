@@ -96,7 +96,7 @@ class PresetButton extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       child,
-                      Text(preset.label),
+                      Text(preset.label, style: textTheme.bodySmall, overflow: TextOverflow.clip, maxLines: 1),
                     ],
                   ),
                 ),

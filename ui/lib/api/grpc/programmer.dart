@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pbgrpc.dart';
 
@@ -56,5 +57,10 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   @override
   Future<void> selectGroup(int id) async {
     await this.client.selectGroup(SelectGroupRequest(id: id));
+  }
+
+  @override
+  Future<ProgrammerStatePointer?> getProgrammerPointer() async {
+    return null;
   }
 }

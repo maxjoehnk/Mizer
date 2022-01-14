@@ -3065,6 +3065,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "pinboard",
  "postage",
  "profiling",
  "serde",
@@ -3561,6 +3562,7 @@ name = "mizer-ui-ffi"
 version = "0.1.0"
 dependencies = [
  "mizer-clock",
+ "mizer-fixtures",
  "mizer-sequencer",
  "pinboard",
 ]

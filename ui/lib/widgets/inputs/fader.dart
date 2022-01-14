@@ -22,7 +22,6 @@ class _FaderInputState extends State<FaderInput> {
 
   _FaderInputState(this.value);
 
-
   @override
   void didUpdateWidget(FaderInput oldWidget) {
     super.didUpdateWidget(oldWidget);

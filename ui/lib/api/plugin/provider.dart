@@ -46,7 +46,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<SessionApi>(create: (context) => SessionPluginApi()),
         RepositoryProvider<TransportApi>(create: (context) => TransportPluginApi(bindings)),
         RepositoryProvider<SequencerApi>(create: (_) => SequencerPluginApi(bindings)),
-        RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerPluginApi()),
+        RepositoryProvider<ProgrammerApi>(create: (_) => ProgrammerPluginApi(bindings)),
         RepositoryProvider<SettingsApi>(create: (_) => ApplicationPluginApi()),
         RepositoryProvider<ApplicationPluginApi>(create: (_) => ApplicationPluginApi()),
       ],

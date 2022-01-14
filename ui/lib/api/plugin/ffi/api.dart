@@ -1,6 +1,7 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' show Directory;
 
+import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:path/path.dart' as path;
 import 'bindings.dart';
@@ -37,5 +38,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<Sequencer>.fromAddress(pointerAddress);
 
     return SequencerPointer(this, pointer);
+  }
+
+  ProgrammerStatePointer openProgrammer(int pointerAddress) {
+    var pointer = ffi.Pointer<Programmer>.fromAddress(pointerAddress);
+
+    return ProgrammerStatePointer(this, pointer);
   }
 }

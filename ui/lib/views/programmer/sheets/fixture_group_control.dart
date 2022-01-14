@@ -12,8 +12,9 @@ class Control {
   final ColorChannel? color;
   final AxisChannel? axis;
   final GenericChannel? generic;
+  final ProgrammerChannel? channel;
 
-  Control(this.label, { required this.update, this.fader, this.generic, this.color, this.axis });
+  Control(this.label, { required this.update, this.fader, this.generic, this.color, this.axis, required this.channel });
 
   bool get hasFader {
     return fader != null;
@@ -34,9 +35,10 @@ class Control {
 
 class FixtureGroupControl extends StatelessWidget {
   final Control control;
+  final ProgrammerChannel? channel;
   final String? label;
 
-  const FixtureGroupControl(this.control, {this.label, Key? key}) : super(key: key);
+  const FixtureGroupControl(this.control, {this.channel, this.label, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +50,15 @@ class FixtureGroupControl extends StatelessWidget {
           child: FaderInput(
             // highlight: modifiedChannels.contains(group.name),
               label: control.label,
-              value: control.fader?.value ?? control.generic!.value,
+              value: control.channel?.fader ?? 0,
+              // value: control.fader?.value ?? control.generic!.value,
               onValue: (v) => api.writeControl(control.update(v))));
     }
     if (control.hasColor) {
       widget = ColorInput(
         label: control.label,
-        value: ColorValue(red: control.color!.red, green: control.color!.green, blue: control.color!.blue),
+        value: ColorValue(red: control.channel?.color.red ?? 0, green: control.channel?.color.green ?? 0, blue: control.channel?.color.blue ?? 0),
+        // value: ColorValue(red: control.color!.red, green: control.color!.green, blue: control.color!.blue),
         onChange: (v) => api.writeControl(control.update(v)),
       );
     }

@@ -19,10 +19,11 @@ import 'sheets/position_sheet.dart';
 
 class FixtureSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
+  final List<ProgrammerChannel> channels;
   final ProgrammerApi api;
   final bool highlight;
 
-  const FixtureSheet({required this.fixtures, required this.api, required this.highlight, Key? key}) : super(key: key);
+  const FixtureSheet({required this.fixtures, required this.channels, required this.api, required this.highlight, Key? key}) : super(key: key);
 
   @override
   State<FixtureSheet> createState() => _FixtureSheetState();
@@ -41,12 +42,12 @@ class _FixtureSheetState extends State<FixtureSheet> {
       child: Panel(
           child: Tabs(
             children: [
-              Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures)),
-              Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures)),
+              Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
               Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures)),
-              Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures)),
-              Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures)),
-              Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures)),
+              Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
+              Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
             ],
           ),
           actions: [

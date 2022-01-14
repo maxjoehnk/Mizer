@@ -1,6 +1,6 @@
 use dashmap::DashMap;
 use serde::{Deserialize, Serialize};
-use crate::definition::{ColorChannel, FixtureControl, FixtureFaderControl};
+use crate::definition::FixtureControlValue;
 
 pub type Color = (f64, f64, f64);
 pub type Position = (f64, f64);
@@ -37,40 +37,30 @@ impl Presets {
         self.position.clear();
     }
 
-    pub fn get_preset_values(&self, id: PresetId) -> Vec<(FixtureFaderControl, f64)> {
+    pub fn get_preset_values(&self, id: PresetId) -> Vec<FixtureControlValue> {
         match id {
-            PresetId::Intensity(id) => Self::fader_value(&self.intensity, FixtureFaderControl::Intensity, id),
-            PresetId::Shutter(id) => Self::fader_value(&self.shutter, FixtureFaderControl::Shutter, id),
+            PresetId::Intensity(id) => self.intensity.get(&id).map(|value| vec![FixtureControlValue::Intensity(value.value)]).unwrap_or_default(),
+            PresetId::Shutter(id) => self.intensity.get(&id).map(|value| vec![FixtureControlValue::Shutter(value.value)]).unwrap_or_default(),
             PresetId::Color(id) => Self::color_value(&self.color, id),
             PresetId::Position(id) => Self::position_value(&self.position, id),
         }
     }
 
-    fn fader_value(presets: &DashMap<u32, Preset<f64>>, control: FixtureFaderControl, id: u32) -> Vec<(FixtureFaderControl, f64)> {
-        if let Some(preset) = presets.get(&id) {
-            vec![(control, preset.value)]
-        }else {
-            Default::default()
-        }
-    }
-
-    fn color_value(presets: &DashMap<u32, Preset<Color>>, id: u32) -> Vec<(FixtureFaderControl, f64)> {
+    fn color_value(presets: &DashMap<u32, Preset<Color>>, id: u32) -> Vec<FixtureControlValue> {
         if let Some(preset) = presets.get(&id) {
             vec![
-                (FixtureFaderControl::Color(ColorChannel::Red), preset.value.0),
-                (FixtureFaderControl::Color(ColorChannel::Green), preset.value.1),
-                (FixtureFaderControl::Color(ColorChannel::Blue), preset.value.2),
+                FixtureControlValue::Color(preset.value.0, preset.value.1, preset.value.2)
             ]
         }else {
             Default::default()
         }
     }
 
-    fn position_value(presets: &DashMap<u32, Preset<Position>>, id: u32) -> Vec<(FixtureFaderControl, f64)> {
+    fn position_value(presets: &DashMap<u32, Preset<Position>>, id: u32) -> Vec<FixtureControlValue> {
         if let Some(preset) = presets.get(&id) {
             vec![
-                (FixtureFaderControl::Pan, preset.value.0),
-                (FixtureFaderControl::Tilt, preset.value.1),
+                FixtureControlValue::Pan(preset.value.0),
+                FixtureControlValue::Tilt(preset.value.1),
             ]
         }else {
             Default::default()

@@ -2,11 +2,21 @@ import 'dart:developer';
 
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
+import 'ffi/api.dart';
+import 'ffi/bindings.dart';
+import 'ffi/programmer.dart';
+
+export 'ffi/programmer.dart' show ProgrammerStatePointer;
+
 class ProgrammerPluginApi implements ProgrammerApi {
+  final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/programmer");
   final EventChannel stateEvents = const EventChannel("mizer.live/programmer/watch");
+
+  ProgrammerPluginApi(this.bindings);
 
   @override
   Future<void> writeControl(WriteControlRequest request) async {
@@ -67,6 +77,12 @@ class ProgrammerPluginApi implements ProgrammerApi {
   @override
   Future<void> selectGroup(int id) async {
     await channel.invokeMethod("selectGroup", id);
+  }
+
+  Future<ProgrammerStatePointer?> getProgrammerPointer() async {
+    int pointer = await channel.invokeMethod("getProgrammerPointer");
+
+    return this.bindings.openProgrammer(pointer);
   }
 
   static List<int> _convertBuffer(List<Object> response) {

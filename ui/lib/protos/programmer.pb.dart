@@ -49,6 +49,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
+    ..pc<ProgrammerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -56,6 +57,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
   factory ProgrammerState({
     $core.Iterable<$0.FixtureId>? fixtures,
     $core.bool? highlight,
+    $core.Iterable<ProgrammerChannel>? controls,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -63,6 +65,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
     }
     if (highlight != null) {
       _result.highlight = highlight;
+    }
+    if (controls != null) {
+      _result.controls.addAll(controls);
     }
     return _result;
   }
@@ -98,6 +103,188 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.bool hasHighlight() => $_has(1);
   @$pb.TagNumber(2)
   void clearHighlight() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<ProgrammerChannel> get controls => $_getList(2);
+}
+
+class ProgrammerChannel_GenericValue extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerChannel.GenericValue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  ProgrammerChannel_GenericValue._() : super();
+  factory ProgrammerChannel_GenericValue({
+    $core.String? name,
+    $core.double? value,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory ProgrammerChannel_GenericValue.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProgrammerChannel_GenericValue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProgrammerChannel_GenericValue clone() => ProgrammerChannel_GenericValue()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProgrammerChannel_GenericValue copyWith(void Function(ProgrammerChannel_GenericValue) updates) => super.copyWith((message) => updates(message as ProgrammerChannel_GenericValue)) as ProgrammerChannel_GenericValue; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerChannel_GenericValue create() => ProgrammerChannel_GenericValue._();
+  ProgrammerChannel_GenericValue createEmptyInstance() => create();
+  static $pb.PbList<ProgrammerChannel_GenericValue> createRepeated() => $pb.PbList<ProgrammerChannel_GenericValue>();
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerChannel_GenericValue getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerChannel_GenericValue>(create);
+  static ProgrammerChannel_GenericValue? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
+}
+
+enum ProgrammerChannel_Value {
+  fader, 
+  color, 
+  generic, 
+  notSet
+}
+
+class ProgrammerChannel extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, ProgrammerChannel_Value> _ProgrammerChannel_ValueByTag = {
+    3 : ProgrammerChannel_Value.fader,
+    4 : ProgrammerChannel_Value.color,
+    5 : ProgrammerChannel_Value.generic,
+    0 : ProgrammerChannel_Value.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..oo(0, [3, 4, 5])
+    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..e<$0.FixtureControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
+    ..aOM<$0.ColorChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorChannel.create)
+    ..aOM<ProgrammerChannel_GenericValue>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: ProgrammerChannel_GenericValue.create)
+    ..hasRequiredFields = false
+  ;
+
+  ProgrammerChannel._() : super();
+  factory ProgrammerChannel({
+    $core.Iterable<$0.FixtureId>? fixtures,
+    $0.FixtureControl? control,
+    $core.double? fader,
+    $0.ColorChannel? color,
+    ProgrammerChannel_GenericValue? generic,
+  }) {
+    final _result = create();
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    if (control != null) {
+      _result.control = control;
+    }
+    if (fader != null) {
+      _result.fader = fader;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    if (generic != null) {
+      _result.generic = generic;
+    }
+    return _result;
+  }
+  factory ProgrammerChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProgrammerChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProgrammerChannel clone() => ProgrammerChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProgrammerChannel copyWith(void Function(ProgrammerChannel) updates) => super.copyWith((message) => updates(message as ProgrammerChannel)) as ProgrammerChannel; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerChannel create() => ProgrammerChannel._();
+  ProgrammerChannel createEmptyInstance() => create();
+  static $pb.PbList<ProgrammerChannel> createRepeated() => $pb.PbList<ProgrammerChannel>();
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerChannel>(create);
+  static ProgrammerChannel? _defaultInstance;
+
+  ProgrammerChannel_Value whichValue() => _ProgrammerChannel_ValueByTag[$_whichOneof(0)]!;
+  void clearValue() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.List<$0.FixtureId> get fixtures => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $0.FixtureControl get control => $_getN(1);
+  @$pb.TagNumber(2)
+  set control($0.FixtureControl v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControl() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearControl() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get fader => $_getN(2);
+  @$pb.TagNumber(3)
+  set fader($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasFader() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearFader() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $0.ColorChannel get color => $_getN(3);
+  @$pb.TagNumber(4)
+  set color($0.ColorChannel v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasColor() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearColor() => clearField(4);
+  @$pb.TagNumber(4)
+  $0.ColorChannel ensureColor() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  ProgrammerChannel_GenericValue get generic => $_getN(4);
+  @$pb.TagNumber(5)
+  set generic(ProgrammerChannel_GenericValue v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasGeneric() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearGeneric() => clearField(5);
+  @$pb.TagNumber(5)
+  ProgrammerChannel_GenericValue ensureGeneric() => $_ensure(4);
 }
 
 class WriteControlRequest_GenericValue extends $pb.GeneratedMessage {

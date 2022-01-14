@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
@@ -17,8 +18,9 @@ const NAMES = {
 
 class DimmerSheet extends StatelessWidget {
   final List<FixtureInstance> fixtures;
+  final List<ProgrammerChannel> channels;
 
-  const DimmerSheet({required this.fixtures, Key? key}) : super(key: key);
+  const DimmerSheet({required this.fixtures, required this.channels, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +41,15 @@ class DimmerSheet extends StatelessWidget {
     }
     return fixtures.first.controls
         .where((e) => CONTROLS.contains(e.control))
-        .map((control) => Control(NAMES[control.control],
+        .map((control) {
+          var value = channels.firstWhereOrNull((channel) => channel.control == control.control);
+          return Control(NAMES[control.control],
             fader: control.fader,
+            channel: value,
             update: (v) => WriteControlRequest(
                   control: control.control,
                   fader: v,
-                )));
+                ));
+        });
   }
 }

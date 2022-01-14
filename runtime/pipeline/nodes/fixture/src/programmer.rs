@@ -1,4 +1,4 @@
-use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
+use mizer_fixtures::definition::{ColorChannel, FixtureControlValue, FixtureFaderControl};
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
 
@@ -112,38 +112,34 @@ impl ProcessingNode for ProgrammerNode {
         if let Some(fixture_manager) = context.inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
             if let Some(intensity) = context.read_port::<_, f64>("Intensity") {
-                programmer.write_control(FixtureFaderControl::Intensity, intensity);
+                programmer.write_control(FixtureControlValue::Intensity(intensity));
             }
             if let Some(shutter) = context.read_port::<_, f64>("Shutter") {
-                programmer.write_control(FixtureFaderControl::Shutter, shutter);
+                programmer.write_control(FixtureControlValue::Shutter(shutter));
             }
             if let Some(color) = context.read_port::<_, Color>("Color") {
-                programmer.write_control(FixtureFaderControl::Color(ColorChannel::Red), color.red);
-                programmer
-                    .write_control(FixtureFaderControl::Color(ColorChannel::Green), color.green);
-                programmer
-                    .write_control(FixtureFaderControl::Color(ColorChannel::Blue), color.blue);
+                programmer.write_control(FixtureControlValue::Color(color.red, color.green, color.blue));
             }
             if let Some(pan) = context.read_port::<_, f64>("Pan") {
-                programmer.write_control(FixtureFaderControl::Pan, pan);
+                programmer.write_control(FixtureControlValue::Pan(pan));
             }
             if let Some(tilt) = context.read_port::<_, f64>("Tilt") {
-                programmer.write_control(FixtureFaderControl::Tilt, tilt);
+                programmer.write_control(FixtureControlValue::Tilt(tilt));
             }
             if let Some(focus) = context.read_port::<_, f64>("Focus") {
-                programmer.write_control(FixtureFaderControl::Focus, focus);
+                programmer.write_control(FixtureControlValue::Focus(focus));
             }
             if let Some(zoom) = context.read_port::<_, f64>("Zoom") {
-                programmer.write_control(FixtureFaderControl::Zoom, zoom);
+                programmer.write_control(FixtureControlValue::Zoom(zoom));
             }
             if let Some(prism) = context.read_port::<_, f64>("Prism") {
-                programmer.write_control(FixtureFaderControl::Prism, prism);
+                programmer.write_control(FixtureControlValue::Prism(prism));
             }
             if let Some(iris) = context.read_port::<_, f64>("Iris") {
-                programmer.write_control(FixtureFaderControl::Iris, iris);
+                programmer.write_control(FixtureControlValue::Iris(iris));
             }
             if let Some(frost) = context.read_port::<_, f64>("Frost") {
-                programmer.write_control(FixtureFaderControl::Frost, frost);
+                programmer.write_control(FixtureControlValue::Frost(frost));
             }
         }
 

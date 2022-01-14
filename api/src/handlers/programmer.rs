@@ -3,6 +3,7 @@ use crate::models::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::programmer::ProgrammerView;
 use mizer_sequencer::{CueChannel, Sequencer, SequencerValue};
 use std::ops::Deref;
 
@@ -29,9 +30,8 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn write_control(&self, request: WriteControlRequest) {
         let mut programmer = self.fixture_manager.get_programmer();
-        for (control, value) in request.as_controls() {
-            programmer.write_control(control, value);
-        }
+        let control = request.as_controls();
+        programmer.write_control(control);
     }
 
     pub fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
@@ -101,8 +101,8 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         log::debug!("call_preset {:?}", preset_id);
         let values = self.fixture_manager.presets.get_preset_values(preset_id.into());
         let mut programmer = self.fixture_manager.get_programmer();
-        for (control, value) in values {
-            programmer.write_control(control, value);
+        for value in values {
+            programmer.write_control(value);
         }
     }
 
@@ -113,5 +113,9 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             }).collect(),
             ..Default::default()
         }
+    }
+
+    pub fn programmer_view(&self) -> ProgrammerView {
+        self.fixture_manager.get_programmer().view()
     }
 }

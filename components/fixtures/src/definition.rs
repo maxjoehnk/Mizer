@@ -375,6 +375,40 @@ pub enum ColorChannel {
     Blue,
 }
 
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+pub enum FixtureControlValue {
+    Intensity(f64),
+    Shutter(f64),
+    Color(f64, f64, f64),
+    Pan(f64),
+    Tilt(f64),
+    Focus(f64),
+    Zoom(f64),
+    Prism(f64),
+    Iris(f64),
+    Frost(f64),
+    Generic(String, f64),
+}
+
+impl From<FixtureControlValue> for FixtureControl {
+    fn from(value: FixtureControlValue) -> Self {
+        use FixtureControlValue::*;
+        match value {
+            Intensity(_) => Self::Intensity,
+            Shutter(_) => Self::Shutter,
+            Color(_, _, _) => Self::Color,
+            Pan(_) => Self::Pan,
+            Tilt(_) => Self::Tilt,
+            Focus(_) => Self::Focus,
+            Zoom(_) => Self::Zoom,
+            Prism(_) => Self::Prism,
+            Iris(_) => Self::Iris,
+            Frost(_) => Self::Frost,
+            Generic(channel, _) => Self::Generic(channel),
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureChannelDefinition {
     pub name: String,

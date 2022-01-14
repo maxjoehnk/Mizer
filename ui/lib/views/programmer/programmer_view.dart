@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/api/plugin/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
@@ -22,17 +24,33 @@ class ProgrammerView extends StatefulWidget {
   State<ProgrammerView> createState() => _ProgrammerViewState();
 }
 
-class _ProgrammerViewState extends State<ProgrammerView> {
-  StreamSubscription<ProgrammerState>? subscription;
+class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProviderStateMixin {
+  ProgrammerStatePointer? _pointer;
+  Ticker? ticker;
   ProgrammerState state = ProgrammerState();
   List<int> expandedIds = [];
 
   @override
   void initState() {
-    var programmerApi = context.read<ProgrammerApi>();
-    this.subscription =
-        programmerApi.observe().listen((event) => this.setState(() => this.state = event));
     super.initState();
+    var programmerApi = context.read<ProgrammerApi>();
+    programmerApi.getProgrammerPointer()
+      .then((pointer) {
+      _pointer = pointer;
+        ticker = this.createTicker((elapsed) {
+          setState(() {
+            state = _pointer!.readState();
+          });
+        });
+        ticker!.start();
+    });
+  }
+
+  @override
+  void dispose() {
+    _pointer?.dispose();
+    ticker?.stop(canceled: true);
+    super.dispose();
   }
 
   @override
@@ -92,6 +110,7 @@ class _ProgrammerViewState extends State<ProgrammerView> {
               height: SHEET_CONTAINER_HEIGHT,
               child: FixtureSheet(
                   highlight: state.highlight,
+                  channels: state.controls,
                   fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
                   api: context.read()),
             ),
@@ -139,17 +158,11 @@ class _ProgrammerViewState extends State<ProgrammerView> {
 
   _setSelectedIds(List<FixtureId> ids) {
     context.read<ProgrammerApi>().selectFixtures(ids);
-    this.setState(() {
-      this.state = ProgrammerState(
-        fixtures: ids,
-        highlight: this.state.highlight,
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    this.subscription?.cancel();
-    super.dispose();
+    // this.setState(() {
+    //   this.state = ProgrammerState(
+    //     fixtures: ids,
+    //     highlight: this.state.highlight,
+    //   );
+    // });
   }
 }

@@ -9,6 +9,23 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+class ProgrammerChannel_ColorChannel extends $pb.ProtobufEnum {
+  static const ProgrammerChannel_ColorChannel Red = ProgrammerChannel_ColorChannel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Red');
+  static const ProgrammerChannel_ColorChannel Green = ProgrammerChannel_ColorChannel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Green');
+  static const ProgrammerChannel_ColorChannel Blue = ProgrammerChannel_ColorChannel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Blue');
+
+  static const $core.List<ProgrammerChannel_ColorChannel> values = <ProgrammerChannel_ColorChannel> [
+    Red,
+    Green,
+    Blue,
+  ];
+
+  static final $core.Map<$core.int, ProgrammerChannel_ColorChannel> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ProgrammerChannel_ColorChannel? valueOf($core.int value) => _byValue[value];
+
+  const ProgrammerChannel_ColorChannel._($core.int v, $core.String n) : super(v, n);
+}
+
 class StoreRequest_Mode extends $pb.ProtobufEnum {
   static const StoreRequest_Mode Overwrite = StoreRequest_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Overwrite');
   static const StoreRequest_Mode Merge = StoreRequest_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');

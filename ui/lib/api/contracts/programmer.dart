@@ -1,6 +1,8 @@
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
+import '../plugin/ffi/programmer.dart';
+
 export 'package:mizer/protos/programmer.pb.dart';
 
 abstract class ProgrammerApi {
@@ -23,4 +25,6 @@ abstract class ProgrammerApi {
   Future<Groups> getGroups();
 
   Future<void> selectGroup(int id);
+
+  Future<ProgrammerStatePointer?> getProgrammerPointer();
 }

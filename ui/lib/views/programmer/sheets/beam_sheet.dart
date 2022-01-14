@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
@@ -23,8 +24,9 @@ const NAMES = {
 
 class BeamSheet extends StatelessWidget {
   final List<FixtureInstance> fixtures;
+  final List<ProgrammerChannel> channels;
 
-  const BeamSheet({required this.fixtures, Key? key}) : super(key: key);
+  const BeamSheet({required this.fixtures, required this.channels, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class BeamSheet extends StatelessWidget {
         .where((e) => CONTROLS.contains(e.control))
         .map((control) => Control(NAMES[control.control],
             fader: control.fader,
+            channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
             update: (v) => WriteControlRequest(
                   control: control.control,
                   fader: v,

@@ -45,6 +45,14 @@ class _ColorInputState extends State<ColorInput> {
   _ColorInputState(this.value);
 
   @override
+  void didUpdateWidget(ColorInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      this.value = widget.value;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
         decoration: ControlDecoration(),

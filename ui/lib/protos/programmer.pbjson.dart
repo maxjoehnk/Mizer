@@ -21,11 +21,50 @@ const ProgrammerState$json = const {
   '2': const [
     const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
     const {'1': 'highlight', '3': 2, '4': 1, '5': 8, '10': 'highlight'},
+    const {'1': 'controls', '3': 3, '4': 3, '5': 11, '6': '.mizer.programmer.ProgrammerChannel', '10': 'controls'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEhwKCWhpZ2hsaWdodBgCIAEoCFIJaGlnaGxpZ2h0');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEhwKCWhpZ2hsaWdodBgCIAEoCFIJaGlnaGxpZ2h0Ej8KCGNvbnRyb2xzGAMgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHM=');
+@$core.Deprecated('Use programmerChannelDescriptor instead')
+const ProgrammerChannel$json = const {
+  '1': 'ProgrammerChannel',
+  '2': const [
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
+    const {'1': 'control', '3': 2, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
+    const {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
+    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
+    const {'1': 'generic', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.ProgrammerChannel.GenericValue', '9': 0, '10': 'generic'},
+  ],
+  '3': const [ProgrammerChannel_GenericValue$json],
+  '4': const [ProgrammerChannel_ColorChannel$json],
+  '8': const [
+    const {'1': 'value'},
+  ],
+};
+
+@$core.Deprecated('Use programmerChannelDescriptor instead')
+const ProgrammerChannel_GenericValue$json = const {
+  '1': 'GenericValue',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
+  ],
+};
+
+@$core.Deprecated('Use programmerChannelDescriptor instead')
+const ProgrammerChannel_ColorChannel$json = const {
+  '1': 'ColorChannel',
+  '2': const [
+    const {'1': 'Red', '2': 0},
+    const {'1': 'Green', '2': 1},
+    const {'1': 'Blue', '2': 2},
+  ],
+};
+
+/// Descriptor for `ProgrammerChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List programmerChannelDescriptor = $convert.base64Decode('ChFQcm9ncmFtbWVyQ2hhbm5lbBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSOAoHY29udHJvbBgCIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEhYKBWZhZGVyGAMgASgBSABSBWZhZGVyEjQKBWNvbG9yGAQgASgLMhwubWl6ZXIuZml4dHVyZXMuQ29sb3JDaGFubmVsSABSBWNvbG9yEkwKB2dlbmVyaWMYBSABKAsyMC5taXplci5wcm9ncmFtbWVyLlByb2dyYW1tZXJDaGFubmVsLkdlbmVyaWNWYWx1ZUgAUgdnZW5lcmljGjgKDEdlbmVyaWNWYWx1ZRISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YWx1ZSIsCgxDb2xvckNoYW5uZWwSBwoDUmVkEAASCQoFR3JlZW4QARIICgRCbHVlEAJCBwoFdmFsdWU=');
 @$core.Deprecated('Use writeControlRequestDescriptor instead')
 const WriteControlRequest$json = const {
   '1': 'WriteControlRequest',

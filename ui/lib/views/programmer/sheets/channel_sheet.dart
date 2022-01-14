@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
@@ -7,8 +8,9 @@ import 'fixture_group_control.dart';
 
 class ChannelSheet extends StatelessWidget {
   final List<FixtureInstance> fixtures;
+  final List<ProgrammerChannel> channels;
 
-  const ChannelSheet({required this.fixtures, Key? key}) : super(key: key);
+  const ChannelSheet({required this.fixtures, required this.channels, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,8 @@ class ChannelSheet extends StatelessWidget {
         .where((e) => e.control == FixtureControl.GENERIC)
         .map((control) => Control(control.generic.name,
             generic: control.generic,
-            update: (v) => WriteControlRequest(
+        channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
+        update: (v) => WriteControlRequest(
                   control: control.control,
                   generic: WriteControlRequest_GenericValue(value: v, name: control.generic.name),
                 )));

@@ -44,7 +44,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         log::debug!("select_group {:?}", group_id);
         if let Some(group) = self.fixture_manager.get_group(group_id) {
             let mut programmer = self.fixture_manager.get_programmer();
-            programmer.select_fixtures(group.fixtures.clone());
+            programmer.select_group(&group);
         }
     }
 
@@ -99,11 +99,8 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn call_preset(&self, preset_id: PresetId) {
         log::debug!("call_preset {:?}", preset_id);
-        let values = self.fixture_manager.presets.get_preset_values(preset_id.into());
         let mut programmer = self.fixture_manager.get_programmer();
-        for value in values {
-            programmer.write_control(value);
-        }
+        programmer.call_preset(&self.fixture_manager.presets, preset_id.into());
     }
 
     pub fn get_groups(&self) -> Groups {

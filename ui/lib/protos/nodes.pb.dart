@@ -777,6 +777,8 @@ enum NodeConfig_Type {
   envelopeConfig, 
   sequencerConfig, 
   programmerConfig, 
+  groupConfig, 
+  presetConfig, 
   colorRgbConfig, 
   colorHsvConfig, 
   notSet
@@ -811,12 +813,14 @@ class NodeConfig extends $pb.GeneratedMessage {
     34 : NodeConfig_Type.envelopeConfig,
     35 : NodeConfig_Type.sequencerConfig,
     36 : NodeConfig_Type.programmerConfig,
+    37 : NodeConfig_Type.groupConfig,
+    38 : NodeConfig_Type.presetConfig,
     40 : NodeConfig_Type.colorRgbConfig,
     41 : NodeConfig_Type.colorHsvConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 40, 41])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -844,6 +848,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<EnvelopeNodeConfig>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'envelopeConfig', protoName: 'envelopeConfig', subBuilder: EnvelopeNodeConfig.create)
     ..aOM<SequencerNodeConfig>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerConfig', protoName: 'sequencerConfig', subBuilder: SequencerNodeConfig.create)
     ..aOM<ProgrammerNodeConfig>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmerConfig', protoName: 'programmerConfig', subBuilder: ProgrammerNodeConfig.create)
+    ..aOM<GroupNodeConfig>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupConfig', protoName: 'groupConfig', subBuilder: GroupNodeConfig.create)
+    ..aOM<PresetNodeConfig>(38, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetConfig', protoName: 'presetConfig', subBuilder: PresetNodeConfig.create)
     ..aOM<ColorRgbNodeConfig>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorRgbConfig', protoName: 'colorRgbConfig', subBuilder: ColorRgbNodeConfig.create)
     ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
     ..hasRequiredFields = false
@@ -878,6 +884,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     EnvelopeNodeConfig? envelopeConfig,
     SequencerNodeConfig? sequencerConfig,
     ProgrammerNodeConfig? programmerConfig,
+    GroupNodeConfig? groupConfig,
+    PresetNodeConfig? presetConfig,
     ColorRgbNodeConfig? colorRgbConfig,
     ColorHsvNodeConfig? colorHsvConfig,
   }) {
@@ -962,6 +970,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (programmerConfig != null) {
       _result.programmerConfig = programmerConfig;
+    }
+    if (groupConfig != null) {
+      _result.groupConfig = groupConfig;
+    }
+    if (presetConfig != null) {
+      _result.presetConfig = presetConfig;
     }
     if (colorRgbConfig != null) {
       _result.colorRgbConfig = colorRgbConfig;
@@ -1292,27 +1306,49 @@ class NodeConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(36)
   ProgrammerNodeConfig ensureProgrammerConfig() => $_ensure(26);
 
+  @$pb.TagNumber(37)
+  GroupNodeConfig get groupConfig => $_getN(27);
+  @$pb.TagNumber(37)
+  set groupConfig(GroupNodeConfig v) { setField(37, v); }
+  @$pb.TagNumber(37)
+  $core.bool hasGroupConfig() => $_has(27);
+  @$pb.TagNumber(37)
+  void clearGroupConfig() => clearField(37);
+  @$pb.TagNumber(37)
+  GroupNodeConfig ensureGroupConfig() => $_ensure(27);
+
+  @$pb.TagNumber(38)
+  PresetNodeConfig get presetConfig => $_getN(28);
+  @$pb.TagNumber(38)
+  set presetConfig(PresetNodeConfig v) { setField(38, v); }
+  @$pb.TagNumber(38)
+  $core.bool hasPresetConfig() => $_has(28);
+  @$pb.TagNumber(38)
+  void clearPresetConfig() => clearField(38);
+  @$pb.TagNumber(38)
+  PresetNodeConfig ensurePresetConfig() => $_ensure(28);
+
   @$pb.TagNumber(40)
-  ColorRgbNodeConfig get colorRgbConfig => $_getN(27);
+  ColorRgbNodeConfig get colorRgbConfig => $_getN(29);
   @$pb.TagNumber(40)
   set colorRgbConfig(ColorRgbNodeConfig v) { setField(40, v); }
   @$pb.TagNumber(40)
-  $core.bool hasColorRgbConfig() => $_has(27);
+  $core.bool hasColorRgbConfig() => $_has(29);
   @$pb.TagNumber(40)
   void clearColorRgbConfig() => clearField(40);
   @$pb.TagNumber(40)
-  ColorRgbNodeConfig ensureColorRgbConfig() => $_ensure(27);
+  ColorRgbNodeConfig ensureColorRgbConfig() => $_ensure(29);
 
   @$pb.TagNumber(41)
-  ColorHsvNodeConfig get colorHsvConfig => $_getN(28);
+  ColorHsvNodeConfig get colorHsvConfig => $_getN(30);
   @$pb.TagNumber(41)
   set colorHsvConfig(ColorHsvNodeConfig v) { setField(41, v); }
   @$pb.TagNumber(41)
-  $core.bool hasColorHsvConfig() => $_has(28);
+  $core.bool hasColorHsvConfig() => $_has(30);
   @$pb.TagNumber(41)
   void clearColorHsvConfig() => clearField(41);
   @$pb.TagNumber(41)
-  ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(28);
+  ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(30);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -1622,6 +1658,64 @@ class ProgrammerNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ProgrammerNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerNodeConfig>(create);
   static ProgrammerNodeConfig? _defaultInstance;
+}
+
+class GroupNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  GroupNodeConfig._() : super();
+  factory GroupNodeConfig() => create();
+  factory GroupNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GroupNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GroupNodeConfig clone() => GroupNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GroupNodeConfig copyWith(void Function(GroupNodeConfig) updates) => super.copyWith((message) => updates(message as GroupNodeConfig)) as GroupNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GroupNodeConfig create() => GroupNodeConfig._();
+  GroupNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<GroupNodeConfig> createRepeated() => $pb.PbList<GroupNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static GroupNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupNodeConfig>(create);
+  static GroupNodeConfig? _defaultInstance;
+}
+
+class PresetNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  PresetNodeConfig._() : super();
+  factory PresetNodeConfig() => create();
+  factory PresetNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PresetNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PresetNodeConfig clone() => PresetNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PresetNodeConfig copyWith(void Function(PresetNodeConfig) updates) => super.copyWith((message) => updates(message as PresetNodeConfig)) as PresetNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PresetNodeConfig create() => PresetNodeConfig._();
+  PresetNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<PresetNodeConfig> createRepeated() => $pb.PbList<PresetNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static PresetNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PresetNodeConfig>(create);
+  static PresetNodeConfig? _defaultInstance;
 }
 
 class EnvelopeNodeConfig extends $pb.GeneratedMessage {

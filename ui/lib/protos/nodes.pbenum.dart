@@ -47,16 +47,19 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Clock = Node_NodeType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Clock');
   static const Node_NodeType Script = Node_NodeType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Script');
   static const Node_NodeType Envelope = Node_NodeType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Envelope');
-  static const Node_NodeType Fixture = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fixture');
-  static const Node_NodeType Sequence = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
-  static const Node_NodeType Select = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
-  static const Node_NodeType Merge = Node_NodeType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');
-  static const Node_NodeType DmxOutput = Node_NodeType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DmxOutput');
-  static const Node_NodeType OscInput = Node_NodeType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscInput');
-  static const Node_NodeType OscOutput = Node_NodeType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscOutput');
-  static const Node_NodeType MidiInput = Node_NodeType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiInput');
-  static const Node_NodeType MidiOutput = Node_NodeType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiOutput');
-  static const Node_NodeType Sequencer = Node_NodeType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequencer');
+  static const Node_NodeType Sequence = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
+  static const Node_NodeType Select = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
+  static const Node_NodeType Merge = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');
+  static const Node_NodeType DmxOutput = Node_NodeType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DmxOutput');
+  static const Node_NodeType OscInput = Node_NodeType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscInput');
+  static const Node_NodeType OscOutput = Node_NodeType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscOutput');
+  static const Node_NodeType MidiInput = Node_NodeType._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiInput');
+  static const Node_NodeType MidiOutput = Node_NodeType._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MidiOutput');
+  static const Node_NodeType Sequencer = Node_NodeType._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequencer');
+  static const Node_NodeType Fixture = Node_NodeType._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fixture');
+  static const Node_NodeType Programmer = Node_NodeType._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Programmer');
+  static const Node_NodeType Group = Node_NodeType._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Group');
+  static const Node_NodeType Preset = Node_NodeType._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Preset');
   static const Node_NodeType VideoFile = Node_NodeType._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoFile');
   static const Node_NodeType VideoOutput = Node_NodeType._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoOutput');
   static const Node_NodeType VideoEffect = Node_NodeType._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'VideoEffect');
@@ -67,7 +70,6 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType OpcOutput = Node_NodeType._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OpcOutput');
   static const Node_NodeType Laser = Node_NodeType._(40, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Laser');
   static const Node_NodeType IldaFile = Node_NodeType._(41, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IldaFile');
-  static const Node_NodeType Programmer = Node_NodeType._(45, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Programmer');
   static const Node_NodeType ColorRgb = Node_NodeType._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorRgb');
   static const Node_NodeType ColorHsv = Node_NodeType._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorHsv');
 
@@ -78,7 +80,6 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Clock,
     Script,
     Envelope,
-    Fixture,
     Sequence,
     Select,
     Merge,
@@ -88,6 +89,10 @@ class Node_NodeType extends $pb.ProtobufEnum {
     MidiInput,
     MidiOutput,
     Sequencer,
+    Fixture,
+    Programmer,
+    Group,
+    Preset,
     VideoFile,
     VideoOutput,
     VideoEffect,
@@ -98,7 +103,6 @@ class Node_NodeType extends $pb.ProtobufEnum {
     OpcOutput,
     Laser,
     IldaFile,
-    Programmer,
     ColorRgb,
     ColorHsv,
   ];

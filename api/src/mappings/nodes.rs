@@ -20,6 +20,8 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             Merge(merge) => Self::mergeConfig(merge.into()),
             Fixture(fixture) => Self::fixtureConfig(fixture.into()),
             Programmer(programmer) => Self::programmerConfig(programmer.into()),
+            Group(group) => Self::groupConfig(group.into()),
+            Preset(preset) => Self::presetConfig(preset.into()),
             Sequencer(sequencer) => Self::sequencerConfig(sequencer.into()),
             IldaFile(ilda) => Self::ildaFileConfig(ilda.into()),
             Laser(laser) => Self::laserConfig(laser.into()),
@@ -62,6 +64,8 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::programmerConfig(programmer) => {
                 Self::Programmer(programmer.into())
             }
+            NodeConfig_oneof_type::groupConfig(group) => Self::Group(group.into()),
+            NodeConfig_oneof_type::presetConfig(preset) => Self::Preset(preset.into()),
             NodeConfig_oneof_type::sequencerConfig(sequencer) => Self::Sequencer(sequencer.into()),
             NodeConfig_oneof_type::ildaFileConfig(ilda) => Self::IldaFile(ilda.into()),
             NodeConfig_oneof_type::laserConfig(laser) => Self::Laser(laser.into()),
@@ -312,6 +316,30 @@ impl From<mizer_nodes::ProgrammerNode> for ProgrammerNodeConfig {
 
 impl From<ProgrammerNodeConfig> for mizer_nodes::ProgrammerNode {
     fn from(_: ProgrammerNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
+impl From<mizer_nodes::GroupNode> for GroupNodeConfig {
+    fn from(_: mizer_nodes::GroupNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<GroupNodeConfig> for mizer_nodes::GroupNode {
+    fn from(_: GroupNodeConfig) -> Self {
+        Default::default()
+    }
+}
+
+impl From<mizer_nodes::PresetNode> for PresetNodeConfig {
+    fn from(_: mizer_nodes::PresetNode) -> Self {
+        Default::default()
+    }
+}
+
+impl From<PresetNodeConfig> for mizer_nodes::PresetNode {
+    fn from(_: PresetNodeConfig) -> Self {
         Default::default()
     }
 }
@@ -835,6 +863,8 @@ impl From<NodeType> for Node_NodeType {
             NodeType::OpcOutput => Node_NodeType::OpcOutput,
             NodeType::Fixture => Node_NodeType::Fixture,
             NodeType::Programmer => Node_NodeType::Programmer,
+            NodeType::Group => Node_NodeType::Group,
+            NodeType::Preset => Node_NodeType::Preset,
             NodeType::Sequencer => Node_NodeType::Sequencer,
             NodeType::Sequence => Node_NodeType::Sequence,
             NodeType::Envelope => Node_NodeType::Envelope,
@@ -871,6 +901,8 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::OpcOutput => NodeType::OpcOutput,
             Node_NodeType::Fixture => NodeType::Fixture,
             Node_NodeType::Programmer => NodeType::Programmer,
+            Node_NodeType::Group => NodeType::Group,
+            Node_NodeType::Preset => NodeType::Preset,
             Node_NodeType::Sequencer => NodeType::Sequencer,
             Node_NodeType::Sequence => NodeType::Sequence,
             Node_NodeType::Envelope => NodeType::Envelope,

@@ -89,6 +89,81 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
+  - path: /group-0
+    type: group
+    config:
+      id: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /group-1
+    type: group
+    config:
+      id: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-0
+    type: preset
+    config:
+      id:
+        Intensity: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-1
+    type: preset
+    config:
+      id:
+        Intensity: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-2
+    type: preset
+    config:
+      id:
+        Intensity: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-3
+    type: preset
+    config:
+      id:
+        Intensity: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /preset-4
+    type: preset
+    config:
+      id:
+        Intensity: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
 channels: []
 media: []
 layouts:

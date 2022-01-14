@@ -68,17 +68,20 @@ message Node {
     Clock = 3;
     Script = 4;
     Envelope = 5;
-    Fixture = 6;
-    Sequence = 7;
-    Select = 8;
-    Merge = 9;
+    Sequence = 6;
+    Select = 7;
+    Merge = 8;
 //    DmxInput = 10;
-    DmxOutput = 11;
-    OscInput = 12;
-    OscOutput = 13;
-    MidiInput = 14;
-    MidiOutput = 15;
-    Sequencer = 16;
+    DmxOutput = 10;
+    OscInput = 11;
+    OscOutput = 12;
+    MidiInput = 13;
+    MidiOutput = 14;
+    Sequencer = 15;
+    Fixture = 16;
+    Programmer = 17;
+    Group = 18;
+    Preset = 19;
     VideoFile = 20;
     VideoOutput = 21;
     VideoEffect = 22;
@@ -89,7 +92,6 @@ message Node {
     OpcOutput = 32;
     Laser = 40;
     IldaFile = 41;
-    Programmer = 45;
     ColorRgb = 50;
     ColorHsv = 51;
   }
@@ -140,6 +142,8 @@ message NodeConfig {
     EnvelopeNodeConfig envelopeConfig = 34;
     SequencerNodeConfig sequencerConfig = 35;
     ProgrammerNodeConfig programmerConfig = 36;
+    GroupNodeConfig groupConfig = 37;
+    PresetNodeConfig presetConfig = 38;
     ColorRgbNodeConfig colorRgbConfig = 40;
     ColorHsvNodeConfig colorHsvConfig = 41;
   }
@@ -175,6 +179,8 @@ message SequenceNodeConfig {
 }
 
 message ProgrammerNodeConfig {}
+message GroupNodeConfig {}
+message PresetNodeConfig {}
 
 message EnvelopeNodeConfig {
   double attack = 1;

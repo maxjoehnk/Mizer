@@ -189,6 +189,17 @@ impl Programmer {
         self.emit_state();
     }
 
+    pub fn select_group(&mut self, group: &Group) {
+        self.select_fixtures(group.fixtures.clone());
+    }
+
+    pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {
+        let values = presets.get_preset_values(preset_id);
+        for value in values {
+            self.write_control(value);
+        }
+    }
+
     pub fn write_control(&mut self, value: FixtureControlValue) {
         for (_, programmer) in self.selected_fixtures.iter_mut() {
             match value {

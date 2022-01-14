@@ -30,6 +30,8 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.OpcOutput: "OPC Output",
   Node_NodeType.Fixture: "Fixture",
   Node_NodeType.Programmer: "Programmer",
+  Node_NodeType.Group: "Group",
+  Node_NodeType.Preset: "Preset",
   Node_NodeType.Sequencer: "Sequencer",
 };
 

@@ -9,6 +9,7 @@ import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
@@ -99,5 +100,6 @@ class ApplicationMenu extends StatelessWidget {
     context.read<MediaBloc>().add(MediaEvent.Fetch);
     context.read<NodesBloc>().add(FetchNodes());
     context.read<SequencerBloc>().add(FetchSequences());
+    context.read<PresetsBloc>().add(FetchPresets());
   }
 }

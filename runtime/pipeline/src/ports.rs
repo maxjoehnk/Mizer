@@ -1,6 +1,7 @@
 use std::any::Any;
 use std::cell::RefCell;
 use std::collections::HashMap;
+use std::ops::Deref;
 
 use mizer_node::PortMetadata;
 use mizer_ports::memory::{MemoryReceiver, MemorySender};
@@ -92,17 +93,22 @@ impl AnyPortReceiver {
     }
 
     pub fn read<V: PortValue + 'static>(&self) -> Option<V> {
-        self.receiver::<V>().and_then(|recv| {
-            let mut value_store = recv.value.borrow_mut();
-            let value = value_store.take();
+        self.receiver::<V>().and_then(|recv| recv.read())
+    }
 
-            value.or_else(|| {
-                recv.transport
-                    .borrow()
-                    .as_ref()
-                    // TODO: return reference to data
-                    .and_then(|port| port.recv().map(|value| value.clone()))
-            })
+    pub fn read_changes<V: PortValue + 'static>(&self) -> Option<V> {
+        self.receiver::<V>().and_then(|recv| {
+            let value = recv.read();
+            let mut last_value = recv.last_value.borrow_mut();
+            if last_value.deref() == &value {
+                return None;
+            }
+            if let Some(value) = value {
+                *last_value = Some(value.clone());
+                Some(value)
+            }else {
+                None
+            }
         })
     }
 
@@ -176,13 +182,30 @@ pub struct NodeReceiver<V: PortValue + 'static> {
     transport: RefCell<Option<MemoryReceiver<V>>>,
     /// Used to set values from outside the pipeline
     value: RefCell<Option<V>>,
+    last_value: RefCell<Option<V>>
 }
 
 impl<V: PortValue + 'static> Default for NodeReceiver<V> {
     fn default() -> Self {
-        NodeReceiver {
-            transport: RefCell::new(None),
-            value: RefCell::new(None),
+        Self {
+            transport: Default::default(),
+            value: Default::default(),
+            last_value: Default::default(),
         }
+    }
+}
+
+impl<V: PortValue + 'static> NodeReceiver<V> {
+    fn read(&self) -> Option<V> {
+        let mut value_store = self.value.borrow_mut();
+        let value = value_store.take();
+
+        value.or_else(|| {
+            self.transport
+                .borrow()
+                .as_ref()
+                // TODO: return reference to data
+                .and_then(|port| port.recv().map(|value| value.clone()))
+        })
     }
 }

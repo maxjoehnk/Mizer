@@ -74,6 +74,13 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .and_then(|receiver| receiver.read())
     }
 
+    fn read_port_changes<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {
+        let port = port.into();
+        self.receivers
+            .and_then(|receivers| receivers.get(&port))
+            .and_then(|receiver| receiver.read_changes())
+    }
+
     fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
         let port = port.into();
         self.receivers

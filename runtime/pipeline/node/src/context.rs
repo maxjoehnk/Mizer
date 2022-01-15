@@ -8,6 +8,7 @@ pub trait NodeContext: PreviewContext {
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V);
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
+    fn read_port_changes<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
 
     fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>>;
 

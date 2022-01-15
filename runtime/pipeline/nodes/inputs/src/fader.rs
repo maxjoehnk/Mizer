@@ -43,7 +43,7 @@ impl ProcessingNode for FaderNode {
     type State = f64;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(value) = context.read_port::<_, f64>("value") {
+        if let Some(value) = context.read_port_changes::<_, f64>("value") {
             *state = value;
         }
         context.write_port("value", *state);

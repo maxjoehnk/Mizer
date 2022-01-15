@@ -111,34 +111,34 @@ impl ProcessingNode for ProgrammerNode {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(fixture_manager) = context.inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
-            if let Some(intensity) = context.read_port::<_, f64>("Intensity") {
+            if let Some(intensity) = context.read_port_changes::<_, f64>("Intensity") {
                 programmer.write_control(FixtureControlValue::Intensity(intensity));
             }
-            if let Some(shutter) = context.read_port::<_, f64>("Shutter") {
+            if let Some(shutter) = context.read_port_changes::<_, f64>("Shutter") {
                 programmer.write_control(FixtureControlValue::Shutter(shutter));
             }
-            if let Some(color) = context.read_port::<_, Color>("Color") {
+            if let Some(color) = context.read_port_changes::<_, Color>("Color") {
                 programmer.write_control(FixtureControlValue::Color(color.red, color.green, color.blue));
             }
-            if let Some(pan) = context.read_port::<_, f64>("Pan") {
+            if let Some(pan) = context.read_port_changes::<_, f64>("Pan") {
                 programmer.write_control(FixtureControlValue::Pan(pan));
             }
-            if let Some(tilt) = context.read_port::<_, f64>("Tilt") {
+            if let Some(tilt) = context.read_port_changes::<_, f64>("Tilt") {
                 programmer.write_control(FixtureControlValue::Tilt(tilt));
             }
-            if let Some(focus) = context.read_port::<_, f64>("Focus") {
+            if let Some(focus) = context.read_port_changes::<_, f64>("Focus") {
                 programmer.write_control(FixtureControlValue::Focus(focus));
             }
-            if let Some(zoom) = context.read_port::<_, f64>("Zoom") {
+            if let Some(zoom) = context.read_port_changes::<_, f64>("Zoom") {
                 programmer.write_control(FixtureControlValue::Zoom(zoom));
             }
-            if let Some(prism) = context.read_port::<_, f64>("Prism") {
+            if let Some(prism) = context.read_port_changes::<_, f64>("Prism") {
                 programmer.write_control(FixtureControlValue::Prism(prism));
             }
-            if let Some(iris) = context.read_port::<_, f64>("Iris") {
+            if let Some(iris) = context.read_port_changes::<_, f64>("Iris") {
                 programmer.write_control(FixtureControlValue::Iris(iris));
             }
-            if let Some(frost) = context.read_port::<_, f64>("Frost") {
+            if let Some(frost) = context.read_port_changes::<_, f64>("Frost") {
                 programmer.write_control(FixtureControlValue::Frost(frost));
             }
         }

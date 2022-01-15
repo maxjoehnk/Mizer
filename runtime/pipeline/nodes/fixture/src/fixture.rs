@@ -78,7 +78,7 @@ impl ProcessingNode for FixtureNode {
                     if let Some(port_metadata) = ports.get(&port) {
                         match port_metadata.port_type {
                             PortType::Color => {
-                                if let Some(value) = context.read_port::<_, Color>(port.clone()) {
+                                if let Some(value) = context.read_port_changes::<_, Color>(port.clone()) {
                                     fixture.write_control(
                                         FixtureFaderControl::Color(ColorChannel::Red),
                                         value.red,
@@ -94,7 +94,7 @@ impl ProcessingNode for FixtureNode {
                                 }
                             }
                             PortType::Single => {
-                                if let Some(value) = context.read_port(port.clone()) {
+                                if let Some(value) = context.read_port_changes(port.clone()) {
                                     let control = FixtureControl::from(port.as_str());
                                     fixture.write_control(control.try_into().unwrap(), value);
                                 }

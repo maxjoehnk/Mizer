@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/views/nodes/models/node_model.dart';
-
-import 'node/base_node.dart';
+import 'package:mizer/views/nodes/widgets/node/node_control.dart';
 
 class HiddenNodeList extends StatelessWidget {
   final List<NodeModel> nodes;
@@ -15,7 +14,7 @@ class HiddenNodeList extends StatelessWidget {
       // TODO: allow moving out of hidden list
       child: ListView(children: nodes.map((node) => Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BaseNode.fromNode(node),
+        child: NodeControl(node),
       )).toList()),
     );
   }

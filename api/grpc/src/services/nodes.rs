@@ -76,4 +76,10 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
         resp.finish(DeleteNodeResponse::default())
     }
+
+    fn show_node(&self, req: ServerRequestSingle<ShowNodeRequest>, resp: ServerResponseUnarySink<ShowNodeResponse>) -> grpc::Result<()> {
+        self.show_node(req.message).unwrap();
+
+        resp.finish(Default::default())
+    }
 }

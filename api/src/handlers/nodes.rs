@@ -103,6 +103,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    pub fn show_node(&self, request: ShowNodeRequest) -> anyhow::Result<()> {
+        self.runtime
+            .show_node(request.path.into(), request.position.unwrap().into())?;
+
+        Ok(())
+    }
+
     pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.delete_node(path)
     }

@@ -63,4 +63,9 @@ class NodesPluginApi implements NodesApi {
 
     return this.bindings.openNodeHistory(pointer);
   }
+
+  @override
+  Future<void> showNode(ShowNodeRequest request) async {
+    await channel.invokeMethod("showNode", request.writeToBuffer());
+  }
 }

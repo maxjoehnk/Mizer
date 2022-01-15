@@ -35,6 +35,8 @@ pub trait NodesApi {
     fn move_node(&self, req: ::grpc::ServerRequestSingle<super::nodes::MoveNodeRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::MoveNodeResponse>) -> ::grpc::Result<()>;
 
     fn delete_node(&self, req: ::grpc::ServerRequestSingle<super::nodes::DeleteNodeRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::DeleteNodeResponse>) -> ::grpc::Result<()>;
+
+    fn show_node(&self, req: ::grpc::ServerRequestSingle<super::nodes::ShowNodeRequest>, resp: ::grpc::ServerResponseUnarySink<super::nodes::ShowNodeResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -115,6 +117,16 @@ impl NodesApiClient {
     pub fn delete_node(&self, o: ::grpc::RequestOptions, req: super::nodes::DeleteNodeRequest) -> ::grpc::SingleResponse<super::nodes::DeleteNodeResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/DeleteNode"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn show_node(&self, o: ::grpc::RequestOptions, req: super::nodes::ShowNodeRequest) -> ::grpc::SingleResponse<super::nodes::ShowNodeResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/ShowNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -215,6 +227,18 @@ impl NodesApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).delete_node(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/ShowNode"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).show_node(req, resp))
                     },
                 ),
             ],

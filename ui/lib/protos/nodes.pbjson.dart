@@ -100,6 +100,24 @@ const MoveNodeResponse$json = const {
 
 /// Descriptor for `MoveNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List moveNodeResponseDescriptor = $convert.base64Decode('ChBNb3ZlTm9kZVJlc3BvbnNl');
+@$core.Deprecated('Use showNodeRequestDescriptor instead')
+const ShowNodeRequest$json = const {
+  '1': 'ShowNodeRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.mizer.NodePosition', '10': 'position'},
+  ],
+};
+
+/// Descriptor for `ShowNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List showNodeRequestDescriptor = $convert.base64Decode('Cg9TaG93Tm9kZVJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aBIvCghwb3NpdGlvbhgCIAEoCzITLm1pemVyLk5vZGVQb3NpdGlvblIIcG9zaXRpb24=');
+@$core.Deprecated('Use showNodeResponseDescriptor instead')
+const ShowNodeResponse$json = const {
+  '1': 'ShowNodeResponse',
+};
+
+/// Descriptor for `ShowNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List showNodeResponseDescriptor = $convert.base64Decode('ChBTaG93Tm9kZVJlc3BvbnNl');
 @$core.Deprecated('Use deleteNodeRequestDescriptor instead')
 const DeleteNodeRequest$json = const {
   '1': 'DeleteNodeRequest',

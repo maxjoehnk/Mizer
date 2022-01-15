@@ -222,6 +222,17 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn show_node(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()> {
+        let mut nodes = self.access.designer.read();
+        if let Some(designer) = nodes.get_mut(&path) {
+            designer.position = position;
+            designer.hidden = false;
+        } // TODO: else return err?
+        self.access.designer.set(nodes);
+
+        Ok(())
+    }
+
     fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::DeleteNode(path, tx))?;

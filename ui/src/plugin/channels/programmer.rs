@@ -80,6 +80,16 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null);
                 }
             }
+            "addGroup" => {
+                if let Value::String(name) = call.args {
+                    let group = self.handler.add_group(name);
+                    reply.respond_msg(group);
+                }
+            }
+            "assignFixturesToGroup" => match call.arguments().map(|req| self.assign_fixtures_to_group(req)) {
+                Ok(()) => reply.send_ok(Value::Null),
+                Err(err) => reply.respond_error(err),
+            }
             "getProgrammerPointer" => match self.get_programmer_pointer() {
                 Ok(ptr) => reply.send_ok(Value::I64(ptr)),
                 Err(err) => reply.respond_error(err),
@@ -131,6 +141,10 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
         let programmer = Arc::new(programmer);
 
         Ok(programmer.to_pointer() as i64)
+    }
+
+    fn assign_fixtures_to_group(&self, req: AssignFixturesToGroupRequest) {
+        self.handler.assign_fixtures_to_group(req.id, req.fixtures.into_vec());
     }
 }
 

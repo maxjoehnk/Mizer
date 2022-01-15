@@ -96,4 +96,16 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
 
         resp.finish(Default::default())
     }
+
+    fn add_group(&self, req: ServerRequestSingle<AddGroupRequest>, resp: ServerResponseUnarySink<Group>) -> grpc::Result<()> {
+        let group = self.add_group(req.message.name);
+
+        resp.finish(group)
+    }
+
+    fn assign_fixtures_to_group(&self, req: ServerRequestSingle<AssignFixturesToGroupRequest>, resp: ServerResponseUnarySink<AssignFixturesToGroupResponse>) -> grpc::Result<()> {
+        self.assign_fixtures_to_group(req.message.id, req.message.fixtures.into_vec());
+
+        resp.finish(Default::default())
+    }
 }

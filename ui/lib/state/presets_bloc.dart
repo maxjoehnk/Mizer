@@ -14,6 +14,12 @@ abstract class PresetsEvent {}
 
 class FetchPresets extends PresetsEvent {}
 
+class AddGroup extends PresetsEvent {
+  final Group group;
+
+  AddGroup(this.group);
+}
+
 class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
   final ProgrammerApi api;
 
@@ -33,6 +39,12 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
 
       yield PresetsState(presets: presets, groups: groups);
     }
+    if (event is AddGroup) {
+      yield PresetsState(
+        presets: state.presets,
+        groups: [...state.groups, event.group],
+      );
+    }
   }
 
   Future<Presets> _getPresets() async {
@@ -45,6 +57,7 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
 
   Future<List<Group>> _getGroups() async {
     var groups = await this.api.getGroups();
+    groups.groups.sort((a, b) => a.id - b.id);
 
     return groups.groups;
   }

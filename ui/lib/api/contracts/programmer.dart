@@ -26,5 +26,9 @@ abstract class ProgrammerApi {
 
   Future<void> selectGroup(int id);
 
+  Future<Group> addGroup(String name);
+
+  Future<void> assignFixturesToGroup(List<int> fixtures, Group group);
+
   Future<ProgrammerStatePointer?> getProgrammerPointer();
 }

@@ -51,6 +51,19 @@ impl FixtureManager {
         self.fixtures.insert(fixture_id, fixture);
     }
 
+    pub fn add_group(&self, name: String) -> u32 {
+        let highest_id = self.groups.iter().map(|e| e.id).max().unwrap_or_default();
+        let group_id = highest_id + 1;
+        let group = Group {
+            id: group_id,
+            fixtures: Vec::new(),
+            name
+        };
+        self.groups.insert(group_id, group);
+
+        group_id
+    }
+
     pub fn get_fixture(&self, fixture_id: u32) -> Option<impl Deref<Target = Fixture> + '_> {
         self.fixtures.get(&fixture_id)
     }

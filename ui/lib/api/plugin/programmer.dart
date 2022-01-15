@@ -85,6 +85,20 @@ class ProgrammerPluginApi implements ProgrammerApi {
     return this.bindings.openProgrammer(pointer);
   }
 
+  @override
+  Future<Group> addGroup(String name) async {
+    var response = await channel.invokeMethod("addGroup", name);
+
+    return Group.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<void> assignFixturesToGroup(List<int> fixtures, Group group) async {
+    var request = AssignFixturesToGroupRequest(
+        id: group.id, fixtures: fixtures.map((id) => FixtureId(fixture: id)).toList());
+    await channel.invokeMethod("assignFixturesToGroup", request.writeToBuffer());
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

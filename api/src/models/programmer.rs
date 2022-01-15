@@ -5335,6 +5335,491 @@ impl ::protobuf::reflect::ProtobufValue for SelectGroupResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AddGroupRequest {
+    // message fields
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddGroupRequest {
+    fn default() -> &'a AddGroupRequest {
+        <AddGroupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddGroupRequest {
+    pub fn new() -> AddGroupRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for AddGroupRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddGroupRequest {
+        AddGroupRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &AddGroupRequest| { &m.name },
+                |m: &mut AddGroupRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddGroupRequest>(
+                "AddGroupRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddGroupRequest {
+        static instance: ::protobuf::rt::LazyV2<AddGroupRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddGroupRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddGroupRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddGroupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddGroupRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AssignFixturesToGroupRequest {
+    // message fields
+    pub id: u32,
+    pub fixtures: ::protobuf::RepeatedField<super::fixtures::FixtureId>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AssignFixturesToGroupRequest {
+    fn default() -> &'a AssignFixturesToGroupRequest {
+        <AssignFixturesToGroupRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AssignFixturesToGroupRequest {
+    pub fn new() -> AssignFixturesToGroupRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 id = 1;
+
+
+    pub fn get_id(&self) -> u32 {
+        self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: u32) {
+        self.id = v;
+    }
+
+    // repeated .mizer.fixtures.FixtureId fixtures = 2;
+
+
+    pub fn get_fixtures(&self) -> &[super::fixtures::FixtureId] {
+        &self.fixtures
+    }
+    pub fn clear_fixtures(&mut self) {
+        self.fixtures.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixtures(&mut self, v: ::protobuf::RepeatedField<super::fixtures::FixtureId>) {
+        self.fixtures = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_fixtures(&mut self) -> &mut ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        &mut self.fixtures
+    }
+
+    // Take field
+    pub fn take_fixtures(&mut self) -> ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        ::std::mem::replace(&mut self.fixtures, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for AssignFixturesToGroupRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.fixtures {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.id = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fixtures)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        for value in &self.fixtures {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.id != 0 {
+            os.write_uint32(1, self.id)?;
+        }
+        for v in &self.fixtures {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AssignFixturesToGroupRequest {
+        AssignFixturesToGroupRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "id",
+                |m: &AssignFixturesToGroupRequest| { &m.id },
+                |m: &mut AssignFixturesToGroupRequest| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::fixtures::FixtureId>>(
+                "fixtures",
+                |m: &AssignFixturesToGroupRequest| { &m.fixtures },
+                |m: &mut AssignFixturesToGroupRequest| { &mut m.fixtures },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AssignFixturesToGroupRequest>(
+                "AssignFixturesToGroupRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AssignFixturesToGroupRequest {
+        static instance: ::protobuf::rt::LazyV2<AssignFixturesToGroupRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AssignFixturesToGroupRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AssignFixturesToGroupRequest {
+    fn clear(&mut self) {
+        self.id = 0;
+        self.fixtures.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AssignFixturesToGroupRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AssignFixturesToGroupRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AssignFixturesToGroupResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AssignFixturesToGroupResponse {
+    fn default() -> &'a AssignFixturesToGroupResponse {
+        <AssignFixturesToGroupResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AssignFixturesToGroupResponse {
+    pub fn new() -> AssignFixturesToGroupResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for AssignFixturesToGroupResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AssignFixturesToGroupResponse {
+        AssignFixturesToGroupResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AssignFixturesToGroupResponse>(
+                "AssignFixturesToGroupResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AssignFixturesToGroupResponse {
+        static instance: ::protobuf::rt::LazyV2<AssignFixturesToGroupResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AssignFixturesToGroupResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for AssignFixturesToGroupResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AssignFixturesToGroupResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AssignFixturesToGroupResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10programmer.proto\x12\x10mizer.programmer\x1a\x0efixtures.proto\"\
     \x1c\n\x1aSubscribeProgrammerRequest\"\xa7\x01\n\x0fProgrammerState\x125\
@@ -5390,22 +5875,29 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     roupR\x06groups\"+\n\x05Group\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
     \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroupReques\
     t\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroupRespon\
-    se2\xfc\x06\n\rProgrammerApi\x12l\n\x15SubscribeToProgrammer\x12,.mizer.\
-    programmer.SubscribeProgrammerRequest\x1a!.mizer.programmer.ProgrammerSt\
-    ate\"\00\x01\x12_\n\x0cWriteControl\x12%.mizer.programmer.WriteControlRe\
-    quest\x1a&.mizer.programmer.WriteControlResponse\"\0\x12e\n\x0eSelectFix\
-    tures\x12'.mizer.programmer.SelectFixturesRequest\x1a(.mizer.programmer.\
-    SelectFixturesResponse\"\0\x12J\n\x05Clear\x12\x1e.mizer.programmer.Clea\
-    rRequest\x1a\x1f.mizer.programmer.ClearResponse\"\0\x12V\n\tHighlight\
-    \x12\".mizer.programmer.HighlightRequest\x1a#.mizer.programmer.Highlight\
-    Response\"\0\x12J\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\
-    \x1f.mizer.programmer.StoreResponse\"\0\x12K\n\nGetPresets\x12\x20.mizer\
-    .programmer.PresetsRequest\x1a\x19.mizer.programmer.Presets\"\0\x12P\n\n\
-    CallPreset\x12\x1a.mizer.programmer.PresetId\x1a$.mizer.programmer.CallP\
-    resetResponse\"\0\x12H\n\tGetGroups\x12\x1f.mizer.programmer.GroupsReque\
-    st\x1a\x18.mizer.programmer.Groups\"\0\x12\\\n\x0bSelectGroup\x12$.mizer\
-    .programmer.SelectGroupRequest\x1a%.mizer.programmer.SelectGroupResponse\
-    \"\0b\x06proto3\
+    se\"%\n\x0fAddGroupRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \"e\n\x1cAssignFixturesToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\r\
+    R\x02id\x125\n\x08fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixtures.Fixt\
+    ureIdR\x08fixtures\"\x1f\n\x1dAssignFixturesToGroupResponse2\xc2\x08\n\r\
+    ProgrammerApi\x12l\n\x15SubscribeToProgrammer\x12,.mizer.programmer.Subs\
+    cribeProgrammerRequest\x1a!.mizer.programmer.ProgrammerState\"\00\x01\
+    \x12_\n\x0cWriteControl\x12%.mizer.programmer.WriteControlRequest\x1a&.m\
+    izer.programmer.WriteControlResponse\"\0\x12e\n\x0eSelectFixtures\x12'.m\
+    izer.programmer.SelectFixturesRequest\x1a(.mizer.programmer.SelectFixtur\
+    esResponse\"\0\x12J\n\x05Clear\x12\x1e.mizer.programmer.ClearRequest\x1a\
+    \x1f.mizer.programmer.ClearResponse\"\0\x12V\n\tHighlight\x12\".mizer.pr\
+    ogrammer.HighlightRequest\x1a#.mizer.programmer.HighlightResponse\"\0\
+    \x12J\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.pro\
+    grammer.StoreResponse\"\0\x12K\n\nGetPresets\x12\x20.mizer.programmer.Pr\
+    esetsRequest\x1a\x19.mizer.programmer.Presets\"\0\x12P\n\nCallPreset\x12\
+    \x1a.mizer.programmer.PresetId\x1a$.mizer.programmer.CallPresetResponse\
+    \"\0\x12H\n\tGetGroups\x12\x1f.mizer.programmer.GroupsRequest\x1a\x18.mi\
+    zer.programmer.Groups\"\0\x12\\\n\x0bSelectGroup\x12$.mizer.programmer.S\
+    electGroupRequest\x1a%.mizer.programmer.SelectGroupResponse\"\0\x12H\n\
+    \x08AddGroup\x12!.mizer.programmer.AddGroupRequest\x1a\x17.mizer.program\
+    mer.Group\"\0\x12z\n\x15AssignFixturesToGroup\x12..mizer.programmer.Assi\
+    gnFixturesToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroupResp\
+    onse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

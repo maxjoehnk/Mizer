@@ -79,7 +79,7 @@ class PanelActions extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(a.label, style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
+                      Text(a.label, textAlign: TextAlign.center, style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
                       if (hotkey != null) Padding(
                         padding: const EdgeInsets.only(top: 2.0),
                         child: Text(hotkey.toCapitalCase(), style: textTheme.bodySmall!.copyWith(color: _getHotkeyColor(a), fontSize: 10)),

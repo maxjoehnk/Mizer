@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 
+import 'dialogs/assign_fixtures_to_group_dialog.dart';
 import 'fixture_table.dart';
 import 'dialogs/patch_fixture_dialog.dart';
 import 'dialogs/delete_fixture_dialog.dart';
@@ -31,6 +34,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
           "select_all": () => _selectAll(fixtures.fixtures),
           "clear": () => _clear(),
           "delete": () => _deleteFixture(context, fixturesBloc),
+          "assign_group": () => _assignGroup(context, fixturesBloc),
         },
         child: Column(
           children: [
@@ -59,7 +63,8 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                       hotkeyId: "add_fixture",
                       onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
                   PanelAction(label: "Clear", hotkeyId: "clear", onClick: _clear, disabled: selectedIds.isEmpty),
-                  PanelAction(label: "Delete", hotkeyId: "delete", onClick: () => _deleteFixture(context, fixturesBloc), disabled: selectedIds.isEmpty)
+                  PanelAction(label: "Delete", hotkeyId: "delete", onClick: () => _deleteFixture(context, fixturesBloc), disabled: selectedIds.isEmpty),
+                  PanelAction(label: "Assign Group", hotkeyId: "assign_group", onClick: () => _assignGroup(context, fixturesBloc)),
                 ],
               ),
             ),
@@ -94,5 +99,15 @@ class _FixturePatchViewState extends State<FixturePatchView> {
 
   _setSelectedIds(List<int> ids) {
     setState(() => selectedIds = ids);
+  }
+
+  _assignGroup(BuildContext context, FixturesBloc fixturesBloc) async {
+    var programmerApi = context.read<ProgrammerApi>();
+    var presetsBloc = context.read<PresetsBloc>();
+    Group? group = await showDialog(context: context, builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
+    if (group == null) {
+      return;
+    }
+    await programmerApi.assignFixturesToGroup(selectedIds, group);
   }
 }

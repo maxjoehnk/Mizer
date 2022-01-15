@@ -5,7 +5,7 @@ use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::{ControlConfig, ControlPosition, ControlSize, Layout};
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
-use mizer_nodes::{FixtureNode, Node, SequencerNode};
+use mizer_nodes::{FixtureNode, GroupNode, Node, SequencerNode};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 use mizer_session::SessionState;
 
@@ -145,6 +145,21 @@ impl RuntimeApi for Api {
         };
         self.add_node_internal(
             NodeType::Sequencer,
+            NodeDesigner {
+                hidden: true,
+                ..Default::default()
+            },
+            Some(node.into()),
+        )
+    }
+
+    fn add_node_for_group(&self, group_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
+        let node = GroupNode {
+            id: group_id,
+            ..Default::default()
+        };
+        self.add_node_internal(
+            NodeType::Group,
             NodeDesigner {
                 hidden: true,
                 ..Default::default()

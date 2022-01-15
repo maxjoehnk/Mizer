@@ -1434,3 +1434,134 @@ class SelectGroupResponse extends $pb.GeneratedMessage {
   static SelectGroupResponse? _defaultInstance;
 }
 
+class AddGroupRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddGroupRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  AddGroupRequest._() : super();
+  factory AddGroupRequest({
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory AddGroupRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddGroupRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddGroupRequest clone() => AddGroupRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddGroupRequest copyWith(void Function(AddGroupRequest) updates) => super.copyWith((message) => updates(message as AddGroupRequest)) as AddGroupRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddGroupRequest create() => AddGroupRequest._();
+  AddGroupRequest createEmptyInstance() => create();
+  static $pb.PbList<AddGroupRequest> createRepeated() => $pb.PbList<AddGroupRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddGroupRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddGroupRequest>(create);
+  static AddGroupRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+}
+
+class AssignFixturesToGroupRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AssignFixturesToGroupRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..hasRequiredFields = false
+  ;
+
+  AssignFixturesToGroupRequest._() : super();
+  factory AssignFixturesToGroupRequest({
+    $core.int? id,
+    $core.Iterable<$0.FixtureId>? fixtures,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    return _result;
+  }
+  factory AssignFixturesToGroupRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AssignFixturesToGroupRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AssignFixturesToGroupRequest clone() => AssignFixturesToGroupRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AssignFixturesToGroupRequest copyWith(void Function(AssignFixturesToGroupRequest) updates) => super.copyWith((message) => updates(message as AssignFixturesToGroupRequest)) as AssignFixturesToGroupRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AssignFixturesToGroupRequest create() => AssignFixturesToGroupRequest._();
+  AssignFixturesToGroupRequest createEmptyInstance() => create();
+  static $pb.PbList<AssignFixturesToGroupRequest> createRepeated() => $pb.PbList<AssignFixturesToGroupRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AssignFixturesToGroupRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AssignFixturesToGroupRequest>(create);
+  static AssignFixturesToGroupRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$0.FixtureId> get fixtures => $_getList(1);
+}
+
+class AssignFixturesToGroupResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AssignFixturesToGroupResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AssignFixturesToGroupResponse._() : super();
+  factory AssignFixturesToGroupResponse() => create();
+  factory AssignFixturesToGroupResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AssignFixturesToGroupResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AssignFixturesToGroupResponse clone() => AssignFixturesToGroupResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AssignFixturesToGroupResponse copyWith(void Function(AssignFixturesToGroupResponse) updates) => super.copyWith((message) => updates(message as AssignFixturesToGroupResponse)) as AssignFixturesToGroupResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AssignFixturesToGroupResponse create() => AssignFixturesToGroupResponse._();
+  AssignFixturesToGroupResponse createEmptyInstance() => create();
+  static $pb.PbList<AssignFixturesToGroupResponse> createRepeated() => $pb.PbList<AssignFixturesToGroupResponse>();
+  @$core.pragma('dart2js:noInline')
+  static AssignFixturesToGroupResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AssignFixturesToGroupResponse>(create);
+  static AssignFixturesToGroupResponse? _defaultInstance;
+}
+

@@ -63,4 +63,15 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   Future<ProgrammerStatePointer?> getProgrammerPointer() async {
     return null;
   }
+
+  @override
+  Future<Group> addGroup(String name) {
+    return this.client.addGroup(AddGroupRequest(name: name));
+  }
+
+  @override
+  Future<void> assignFixturesToGroup(List<int> fixtures, Group group) async {
+    await this.client.assignFixturesToGroup(AssignFixturesToGroupRequest(
+        id: group.id, fixtures: fixtures.map((id) => FixtureId(fixture: id)).toList()));
+  }
 }

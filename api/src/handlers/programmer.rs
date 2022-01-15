@@ -112,6 +112,24 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         }
     }
 
+    pub fn add_group(&self, name: String) -> Group {
+        let group_id = self.fixture_manager.add_group(name.clone());
+        self.runtime.add_node_for_group(group_id);
+
+        Group {
+            name,
+            id: group_id,
+            ..Default::default()
+        }
+    }
+
+    pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
+        if let Some(mut group) = self.fixture_manager.groups.get_mut(&group_id) {
+            let mut fixture_ids = fixture_ids.into_iter().map(|id| id.into()).collect::<Vec<_>>();
+            group.fixtures.append(&mut fixture_ids);
+        }
+    }
+
     pub fn programmer_view(&self) -> ProgrammerView {
         self.fixture_manager.get_programmer().view()
     }

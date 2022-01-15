@@ -15,6 +15,8 @@ service ProgrammerApi {
   rpc CallPreset (PresetId) returns (CallPresetResponse) {}
   rpc GetGroups (GroupsRequest) returns (Groups) {}
   rpc SelectGroup (SelectGroupRequest) returns (SelectGroupResponse) {}
+  rpc AddGroup (AddGroupRequest) returns (Group) {}
+  rpc AssignFixturesToGroup (AssignFixturesToGroupRequest) returns (AssignFixturesToGroupResponse) {}
 }
 
 message SubscribeProgrammerRequest {}
@@ -149,3 +151,14 @@ message SelectGroupRequest {
 }
 
 message SelectGroupResponse {}
+
+message AddGroupRequest {
+  string name = 1;
+}
+
+message AssignFixturesToGroupRequest {
+  uint32 id = 1;
+  repeated mizer.fixtures.FixtureId fixtures = 2;
+}
+
+message AssignFixturesToGroupResponse {}

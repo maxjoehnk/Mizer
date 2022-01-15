@@ -308,3 +308,31 @@ const SelectGroupResponse$json = const {
 
 /// Descriptor for `SelectGroupResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List selectGroupResponseDescriptor = $convert.base64Decode('ChNTZWxlY3RHcm91cFJlc3BvbnNl');
+@$core.Deprecated('Use addGroupRequestDescriptor instead')
+const AddGroupRequest$json = const {
+  '1': 'AddGroupRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `AddGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addGroupRequestDescriptor = $convert.base64Decode('Cg9BZGRHcm91cFJlcXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use assignFixturesToGroupRequestDescriptor instead')
+const AssignFixturesToGroupRequest$json = const {
+  '1': 'AssignFixturesToGroupRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+    const {'1': 'fixtures', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
+  ],
+};
+
+/// Descriptor for `AssignFixturesToGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List assignFixturesToGroupRequestDescriptor = $convert.base64Decode('ChxBc3NpZ25GaXh0dXJlc1RvR3JvdXBSZXF1ZXN0Eg4KAmlkGAEgASgNUgJpZBI1CghmaXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXM=');
+@$core.Deprecated('Use assignFixturesToGroupResponseDescriptor instead')
+const AssignFixturesToGroupResponse$json = const {
+  '1': 'AssignFixturesToGroupResponse',
+};
+
+/// Descriptor for `AssignFixturesToGroupResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List assignFixturesToGroupResponseDescriptor = $convert.base64Decode('Ch1Bc3NpZ25GaXh0dXJlc1RvR3JvdXBSZXNwb25zZQ==');

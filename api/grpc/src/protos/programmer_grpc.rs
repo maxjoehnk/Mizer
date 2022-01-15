@@ -41,6 +41,10 @@ pub trait ProgrammerApi {
     fn get_groups(&self, req: ::grpc::ServerRequestSingle<super::programmer::GroupsRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::Groups>) -> ::grpc::Result<()>;
 
     fn select_group(&self, req: ::grpc::ServerRequestSingle<super::programmer::SelectGroupRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::SelectGroupResponse>) -> ::grpc::Result<()>;
+
+    fn add_group(&self, req: ::grpc::ServerRequestSingle<super::programmer::AddGroupRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::Group>) -> ::grpc::Result<()>;
+
+    fn assign_fixtures_to_group(&self, req: ::grpc::ServerRequestSingle<super::programmer::AssignFixturesToGroupRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::AssignFixturesToGroupResponse>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -151,6 +155,26 @@ impl ProgrammerApiClient {
     pub fn select_group(&self, o: ::grpc::RequestOptions, req: super::programmer::SelectGroupRequest) -> ::grpc::SingleResponse<super::programmer::SelectGroupResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SelectGroup"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn add_group(&self, o: ::grpc::RequestOptions, req: super::programmer::AddGroupRequest) -> ::grpc::SingleResponse<super::programmer::Group> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/AddGroup"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn assign_fixtures_to_group(&self, o: ::grpc::RequestOptions, req: super::programmer::AssignFixturesToGroupRequest) -> ::grpc::SingleResponse<super::programmer::AssignFixturesToGroupResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/AssignFixturesToGroup"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -287,6 +311,30 @@ impl ProgrammerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).select_group(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/AddGroup"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_group(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/AssignFixturesToGroup"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).assign_fixtures_to_group(req, resp))
                     },
                 ),
             ],

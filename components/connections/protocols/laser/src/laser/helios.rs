@@ -4,10 +4,13 @@ use pinboard::Pinboard;
 use std::sync::{Arc, Condvar, Mutex};
 use std::thread;
 use std::time::Duration;
+use std::convert::{TryFrom, TryInto};
 
 pub struct HeliosLaser {
     current_frame: Arc<Pinboard<LaserFrame>>,
     lock: Arc<(Mutex<bool>, Condvar)>,
+    pub name: String,
+    pub firmware: u32,
 }
 
 impl HeliosLaser {
@@ -17,7 +20,7 @@ impl HeliosLaser {
         let mut lasers = vec![];
         for device in devices {
             let device = device.open()?;
-            lasers.push(device.into());
+            lasers.push(device.try_into()?);
         }
 
         Ok(lasers)
@@ -69,11 +72,15 @@ impl HeliosLaserContext {
     }
 }
 
-impl From<helios_dac::NativeHeliosDac> for HeliosLaser {
-    fn from(dac: NativeHeliosDac) -> Self {
+impl TryFrom<helios_dac::NativeHeliosDac> for HeliosLaser {
+    type Error = anyhow::Error;
+
+    fn try_from(dac: NativeHeliosDac) -> anyhow::Result<Self> {
         let lock = Arc::new((Mutex::new(false), Condvar::new()));
         let frame_board = Arc::new(Pinboard::<LaserFrame>::new_empty());
         let context = HeliosLaserContext::new(&lock, &frame_board);
+        let name = dac.name()?;
+        let firmware = dac.firmware_version()?;
 
         thread::Builder::new()
             .name("HeliosLaserWorker".to_string())
@@ -89,10 +96,12 @@ impl From<helios_dac::NativeHeliosDac> for HeliosLaser {
             })
             .unwrap();
 
-        HeliosLaser {
+        Ok(HeliosLaser {
             lock,
             current_frame: frame_board,
-        }
+            name,
+            firmware,
+        })
     }
 }
 

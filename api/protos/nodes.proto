@@ -100,6 +100,7 @@ message Node {
     OpcOutput = 32;
     Laser = 40;
     IldaFile = 41;
+    Gamepad = 45;
     ColorRgb = 50;
     ColorHsv = 51;
   }
@@ -154,6 +155,7 @@ message NodeConfig {
     PresetNodeConfig presetConfig = 38;
     ColorRgbNodeConfig colorRgbConfig = 40;
     ColorHsvNodeConfig colorHsvConfig = 41;
+    GamepadNodeConfig gamepadNodeConfig = 42;
   }
 }
 
@@ -216,6 +218,10 @@ message IldaFileNodeConfig {
 }
 
 message LaserNodeConfig {
+  string device_id = 1;
+}
+
+message GamepadNodeConfig {
   string device_id = 1;
 }
 

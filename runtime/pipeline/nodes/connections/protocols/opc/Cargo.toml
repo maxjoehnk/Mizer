@@ -1,5 +1,5 @@
 [package]
-name = "mizer-dmx-nodes"
+name = "mizer-opc-nodes"
 version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2018"
@@ -7,5 +7,7 @@ edition = "2018"
 [dependencies]
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
-mizer-node = { path = "../../../node" }
-mizer-protocol-dmx = { path = "../../../../../components/connections/protocols/dmx" }
+mizer-util = { path = "../../../../../../util" }
+mizer-node = { path = "../../../../node" }
+log = "0.4"
+bytes = "0.5"

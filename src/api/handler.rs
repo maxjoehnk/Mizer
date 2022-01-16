@@ -3,6 +3,7 @@ use std::path::PathBuf;
 
 use mizer_clock::Clock;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, DmxView, MidiView};
+use mizer_devices::DeviceManager;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
 use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
@@ -172,10 +173,20 @@ impl ApiHandler {
                 name: output.name(),
             })
             .map(Connection::from);
+        let device_manager = mizer
+            .runtime
+            .injector()
+            .get::<DeviceManager>()
+            .unwrap();
+        let devices = device_manager
+            .current_devices()
+            .into_iter()
+            .map(Connection::from);
 
         let mut connections = Vec::new();
         connections.extend(midi_connections);
         connections.extend(dmx_connections);
+        connections.extend(devices);
 
         connections
     }

@@ -80,6 +80,8 @@ message Connection {
     OscConnection osc = 12;
     ProDjLinkConnection proDJLink = 13;
     HeliosConnection helios = 14;
+    EtherDreamConnection etherDream = 15;
+    GamepadConnection gamepad = 16;
   }
 }
 
@@ -89,7 +91,16 @@ message DmxConnection {
 
 message HeliosConnection {
   string name = 1;
-  string firmware = 2;
+  uint32 firmware = 2;
+}
+
+message EtherDreamConnection {
+  string name = 1;
+}
+
+message GamepadConnection {
+  string id = 1;
+  string name = 2;
 }
 
 message MidiConnection {

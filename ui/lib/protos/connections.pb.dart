@@ -761,6 +761,8 @@ enum Connection_Connection {
   osc, 
   proDJLink, 
   helios, 
+  etherDream, 
+  gamepad, 
   notSet
 }
 
@@ -771,16 +773,20 @@ class Connection extends $pb.GeneratedMessage {
     12 : Connection_Connection.osc,
     13 : Connection_Connection.proDJLink,
     14 : Connection_Connection.helios,
+    15 : Connection_Connection.etherDream,
+    16 : Connection_Connection.gamepad,
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<DmxConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
     ..aOM<MidiConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
     ..aOM<OscConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
     ..aOM<ProDjLinkConnection>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proDJLink', protoName: 'proDJLink', subBuilder: ProDjLinkConnection.create)
     ..aOM<HeliosConnection>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'helios', subBuilder: HeliosConnection.create)
+    ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', protoName: 'etherDream', subBuilder: EtherDreamConnection.create)
+    ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
     ..hasRequiredFields = false
   ;
 
@@ -792,6 +798,8 @@ class Connection extends $pb.GeneratedMessage {
     OscConnection? osc,
     ProDjLinkConnection? proDJLink,
     HeliosConnection? helios,
+    EtherDreamConnection? etherDream,
+    GamepadConnection? gamepad,
   }) {
     final _result = create();
     if (name != null) {
@@ -811,6 +819,12 @@ class Connection extends $pb.GeneratedMessage {
     }
     if (helios != null) {
       _result.helios = helios;
+    }
+    if (etherDream != null) {
+      _result.etherDream = etherDream;
+    }
+    if (gamepad != null) {
+      _result.gamepad = gamepad;
     }
     return _result;
   }
@@ -901,6 +915,28 @@ class Connection extends $pb.GeneratedMessage {
   void clearHelios() => clearField(14);
   @$pb.TagNumber(14)
   HeliosConnection ensureHelios() => $_ensure(5);
+
+  @$pb.TagNumber(15)
+  EtherDreamConnection get etherDream => $_getN(6);
+  @$pb.TagNumber(15)
+  set etherDream(EtherDreamConnection v) { setField(15, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasEtherDream() => $_has(6);
+  @$pb.TagNumber(15)
+  void clearEtherDream() => clearField(15);
+  @$pb.TagNumber(15)
+  EtherDreamConnection ensureEtherDream() => $_ensure(6);
+
+  @$pb.TagNumber(16)
+  GamepadConnection get gamepad => $_getN(7);
+  @$pb.TagNumber(16)
+  set gamepad(GamepadConnection v) { setField(16, v); }
+  @$pb.TagNumber(16)
+  $core.bool hasGamepad() => $_has(7);
+  @$pb.TagNumber(16)
+  void clearGamepad() => clearField(16);
+  @$pb.TagNumber(16)
+  GamepadConnection ensureGamepad() => $_ensure(7);
 }
 
 class DmxConnection extends $pb.GeneratedMessage {
@@ -953,14 +989,14 @@ class DmxConnection extends $pb.GeneratedMessage {
 class HeliosConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'HeliosConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'firmware')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'firmware', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   HeliosConnection._() : super();
   factory HeliosConnection({
     $core.String? name,
-    $core.String? firmware,
+    $core.int? firmware,
   }) {
     final _result = create();
     if (name != null) {
@@ -1002,13 +1038,121 @@ class HeliosConnection extends $pb.GeneratedMessage {
   void clearName() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get firmware => $_getSZ(1);
+  $core.int get firmware => $_getIZ(1);
   @$pb.TagNumber(2)
-  set firmware($core.String v) { $_setString(1, v); }
+  set firmware($core.int v) { $_setUnsignedInt32(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasFirmware() => $_has(1);
   @$pb.TagNumber(2)
   void clearFirmware() => clearField(2);
+}
+
+class EtherDreamConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EtherDreamConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  EtherDreamConnection._() : super();
+  factory EtherDreamConnection({
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory EtherDreamConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EtherDreamConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EtherDreamConnection clone() => EtherDreamConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EtherDreamConnection copyWith(void Function(EtherDreamConnection) updates) => super.copyWith((message) => updates(message as EtherDreamConnection)) as EtherDreamConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EtherDreamConnection create() => EtherDreamConnection._();
+  EtherDreamConnection createEmptyInstance() => create();
+  static $pb.PbList<EtherDreamConnection> createRepeated() => $pb.PbList<EtherDreamConnection>();
+  @$core.pragma('dart2js:noInline')
+  static EtherDreamConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EtherDreamConnection>(create);
+  static EtherDreamConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+}
+
+class GamepadConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GamepadConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  GamepadConnection._() : super();
+  factory GamepadConnection({
+    $core.String? id,
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory GamepadConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GamepadConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GamepadConnection clone() => GamepadConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GamepadConnection copyWith(void Function(GamepadConnection) updates) => super.copyWith((message) => updates(message as GamepadConnection)) as GamepadConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GamepadConnection create() => GamepadConnection._();
+  GamepadConnection createEmptyInstance() => create();
+  static $pb.PbList<GamepadConnection> createRepeated() => $pb.PbList<GamepadConnection>();
+  @$core.pragma('dart2js:noInline')
+  static GamepadConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GamepadConnection>(create);
+  static GamepadConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
 }
 
 class MidiConnection extends $pb.GeneratedMessage {

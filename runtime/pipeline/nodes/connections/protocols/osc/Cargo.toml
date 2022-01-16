@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 anyhow = "1"
 serde = { version = "1", features = ["derive"] }
-mizer-node = { path = "../../../node" }
-mizer-protocol-osc = { path = "../../../../../components/connections/protocols/osc" }
+mizer-node = { path = "../../../../node" }
+mizer-protocol-osc = { path = "../../../../../../components/connections/protocols/osc" }
 log = "0.4"
-mizer-util = { path = "../../../../../util" }
+mizer-util = { path = "../../../../../../util" }

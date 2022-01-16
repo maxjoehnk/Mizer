@@ -24,6 +24,20 @@ impl From<mizer_connections::Connection> for Connection_oneof_connection {
                 outputId: view.output_id,
                 ..Default::default()
             }),
+            Helios(laser) => Self::helios(HeliosConnection {
+                name: laser.name,
+                firmware: laser.firmware,
+                ..Default::default()
+            }),
+            EtherDream(laser) => Self::etherDream(EtherDreamConnection {
+                name: laser.name,
+                ..Default::default()
+            }),
+            Gamepad(gamepad) => Self::gamepad(GamepadConnection {
+                id: gamepad.id,
+                name: gamepad.name,
+                ..Default::default()
+            }),
         }
     }
 }

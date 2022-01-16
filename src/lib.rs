@@ -14,7 +14,7 @@ use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
 use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
-use mizer_protocol_midi::{MidiConnectionManager, MidiDeviceProvider, MidiModule};
+use mizer_protocol_midi::{MidiConnectionManager, MidiModule};
 use mizer_runtime::DefaultRuntime;
 use mizer_session::SessionState;
 
@@ -217,7 +217,13 @@ fn register_device_module(
     handle: &tokio::runtime::Handle,
 ) -> anyhow::Result<()> {
     let (device_module, device_manager) = DeviceModule::new();
-    handle.spawn(device_manager.start_discovery());
+    let handle = handle.clone();
+    std::thread::spawn(move || {
+        let local = tokio::task::LocalSet::new();
+        local.spawn_local(device_manager.start_discovery());
+
+        handle.block_on(local);
+    });
     device_module.register(runtime)?;
 
     Ok(())

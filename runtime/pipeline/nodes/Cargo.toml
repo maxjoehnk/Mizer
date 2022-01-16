@@ -13,17 +13,18 @@ mizer-color-nodes = { path = "behaviors/color" }
 mizer-envelope-nodes = { path = "behaviors/envelope" }
 mizer-oscillator-nodes = { path = "behaviors/oscillator" }
 mizer-port-operation-nodes = { path = "behaviors/port-operations" }
-mizer-dmx-nodes = { path = "protocols/dmx" }
+mizer-dmx-nodes = { path = "connections/protocols/dmx" }
+mizer-gamepad-nodes = { path = "connections/gamepad" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-sequence-nodes = { path = "behaviors/sequence" }
 mizer-sequencer-nodes = { path = "sequencer" }
 mizer-fixture-nodes = { path = "fixture" }
-mizer-laser-nodes = { path = "laser" }
+mizer-laser-nodes = { path = "connections/laser" }
 mizer-input-nodes = { path = "inputs" }
-mizer-midi-nodes = { path = "protocols/midi" }
+mizer-midi-nodes = { path = "connections/protocols/midi" }
 mizer-pixel-nodes = { path = "pixels" }
-mizer-opc-nodes = { path = "protocols/opc" }
-mizer-osc-nodes = { path ="protocols/osc" }
+mizer-opc-nodes = { path = "connections/protocols/opc" }
+mizer-osc-nodes = { path = "connections/protocols/osc" }
 mizer-video-nodes = { path = "video" }
 derive_more = "0.99"
 

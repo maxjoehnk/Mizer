@@ -8,6 +8,6 @@ edition = "2018"
 anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
-mizer-protocol-laser = { path = "../../../../components/connections/protocols/laser" }
-mizer-devices = { path = "../../../../components/connections/devices" }
-mizer-node = { path = "../../node" }
+mizer-protocol-laser = { path = "../../../../../components/connections/protocols/laser" }
+mizer-devices = { path = "../../../../../components/connections/devices" }
+mizer-node = { path = "../../../node" }

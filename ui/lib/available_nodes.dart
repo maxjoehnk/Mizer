@@ -33,6 +33,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Group: "Group",
   Node_NodeType.Preset: "Preset",
   Node_NodeType.Sequencer: "Sequencer",
+  Node_NodeType.Gamepad: "Gamepad",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -51,6 +52,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.OscOutput,
     Node_NodeType.ColorRgb,
     Node_NodeType.ColorHsv,
+    Node_NodeType.Gamepad,
   ]),
   buildCategory("Controls", [
     Node_NodeType.Fader,

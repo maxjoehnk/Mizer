@@ -2618,6 +2618,8 @@ pub enum Connection_oneof_connection {
     osc(OscConnection),
     proDJLink(ProDjLinkConnection),
     helios(HeliosConnection),
+    etherDream(EtherDreamConnection),
+    gamepad(GamepadConnection),
 }
 
 impl Connection {
@@ -2895,6 +2897,104 @@ impl Connection {
             HeliosConnection::new()
         }
     }
+
+    // .mizer.EtherDreamConnection etherDream = 15;
+
+
+    pub fn get_etherDream(&self) -> &EtherDreamConnection {
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::etherDream(ref v)) => v,
+            _ => <EtherDreamConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_etherDream(&mut self) {
+        self.connection = ::std::option::Option::None;
+    }
+
+    pub fn has_etherDream(&self) -> bool {
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::etherDream(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_etherDream(&mut self, v: EtherDreamConnection) {
+        self.connection = ::std::option::Option::Some(Connection_oneof_connection::etherDream(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_etherDream(&mut self) -> &mut EtherDreamConnection {
+        if let ::std::option::Option::Some(Connection_oneof_connection::etherDream(_)) = self.connection {
+        } else {
+            self.connection = ::std::option::Option::Some(Connection_oneof_connection::etherDream(EtherDreamConnection::new()));
+        }
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::etherDream(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_etherDream(&mut self) -> EtherDreamConnection {
+        if self.has_etherDream() {
+            match self.connection.take() {
+                ::std::option::Option::Some(Connection_oneof_connection::etherDream(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            EtherDreamConnection::new()
+        }
+    }
+
+    // .mizer.GamepadConnection gamepad = 16;
+
+
+    pub fn get_gamepad(&self) -> &GamepadConnection {
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::gamepad(ref v)) => v,
+            _ => <GamepadConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_gamepad(&mut self) {
+        self.connection = ::std::option::Option::None;
+    }
+
+    pub fn has_gamepad(&self) -> bool {
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::gamepad(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_gamepad(&mut self, v: GamepadConnection) {
+        self.connection = ::std::option::Option::Some(Connection_oneof_connection::gamepad(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_gamepad(&mut self) -> &mut GamepadConnection {
+        if let ::std::option::Option::Some(Connection_oneof_connection::gamepad(_)) = self.connection {
+        } else {
+            self.connection = ::std::option::Option::Some(Connection_oneof_connection::gamepad(GamepadConnection::new()));
+        }
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::gamepad(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_gamepad(&mut self) -> GamepadConnection {
+        if self.has_gamepad() {
+            match self.connection.take() {
+                ::std::option::Option::Some(Connection_oneof_connection::gamepad(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            GamepadConnection::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for Connection {
@@ -2920,6 +3020,16 @@ impl ::protobuf::Message for Connection {
             }
         }
         if let Some(Connection_oneof_connection::helios(ref v)) = self.connection {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(Connection_oneof_connection::etherDream(ref v)) = self.connection {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(Connection_oneof_connection::gamepad(ref v)) = self.connection {
             if !v.is_initialized() {
                 return false;
             }
@@ -2964,6 +3074,18 @@ impl ::protobuf::Message for Connection {
                     }
                     self.connection = ::std::option::Option::Some(Connection_oneof_connection::helios(is.read_message()?));
                 },
+                15 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.connection = ::std::option::Option::Some(Connection_oneof_connection::etherDream(is.read_message()?));
+                },
+                16 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.connection = ::std::option::Option::Some(Connection_oneof_connection::gamepad(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3001,6 +3123,14 @@ impl ::protobuf::Message for Connection {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
+                &Connection_oneof_connection::etherDream(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &Connection_oneof_connection::gamepad(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -3036,6 +3166,16 @@ impl ::protobuf::Message for Connection {
                 },
                 &Connection_oneof_connection::helios(ref v) => {
                     os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Connection_oneof_connection::etherDream(ref v) => {
+                    os.write_tag(15, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Connection_oneof_connection::gamepad(ref v) => {
+                    os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -3109,6 +3249,16 @@ impl ::protobuf::Message for Connection {
                 Connection::has_helios,
                 Connection::get_helios,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, EtherDreamConnection>(
+                "etherDream",
+                Connection::has_etherDream,
+                Connection::get_etherDream,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GamepadConnection>(
+                "gamepad",
+                Connection::has_gamepad,
+                Connection::get_gamepad,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Connection>(
                 "Connection",
                 fields,
@@ -3126,6 +3276,8 @@ impl ::protobuf::Message for Connection {
 impl ::protobuf::Clear for Connection {
     fn clear(&mut self) {
         self.name.clear();
+        self.connection = ::std::option::Option::None;
+        self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
@@ -3314,7 +3466,7 @@ impl ::protobuf::reflect::ProtobufValue for DmxConnection {
 pub struct HeliosConnection {
     // message fields
     pub name: ::std::string::String,
-    pub firmware: ::std::string::String,
+    pub firmware: u32,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -3359,30 +3511,19 @@ impl HeliosConnection {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // string firmware = 2;
+    // uint32 firmware = 2;
 
 
-    pub fn get_firmware(&self) -> &str {
-        &self.firmware
+    pub fn get_firmware(&self) -> u32 {
+        self.firmware
     }
     pub fn clear_firmware(&mut self) {
-        self.firmware.clear();
+        self.firmware = 0;
     }
 
     // Param is passed by value, moved
-    pub fn set_firmware(&mut self, v: ::std::string::String) {
+    pub fn set_firmware(&mut self, v: u32) {
         self.firmware = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_firmware(&mut self) -> &mut ::std::string::String {
-        &mut self.firmware
-    }
-
-    // Take field
-    pub fn take_firmware(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.firmware, ::std::string::String::new())
     }
 }
 
@@ -3399,7 +3540,11 @@ impl ::protobuf::Message for HeliosConnection {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.firmware)?;
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.firmware = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3416,8 +3561,8 @@ impl ::protobuf::Message for HeliosConnection {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
-        if !self.firmware.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.firmware);
+        if self.firmware != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.firmware, ::protobuf::wire_format::WireTypeVarint);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -3428,8 +3573,8 @@ impl ::protobuf::Message for HeliosConnection {
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
-        if !self.firmware.is_empty() {
-            os.write_string(2, &self.firmware)?;
+        if self.firmware != 0 {
+            os.write_uint32(2, self.firmware)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3474,7 +3619,7 @@ impl ::protobuf::Message for HeliosConnection {
                 |m: &HeliosConnection| { &m.name },
                 |m: &mut HeliosConnection| { &mut m.name },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
                 "firmware",
                 |m: &HeliosConnection| { &m.firmware },
                 |m: &mut HeliosConnection| { &mut m.firmware },
@@ -3496,7 +3641,7 @@ impl ::protobuf::Message for HeliosConnection {
 impl ::protobuf::Clear for HeliosConnection {
     fn clear(&mut self) {
         self.name.clear();
-        self.firmware.clear();
+        self.firmware = 0;
         self.unknown_fields.clear();
     }
 }
@@ -3508,6 +3653,372 @@ impl ::std::fmt::Debug for HeliosConnection {
 }
 
 impl ::protobuf::reflect::ProtobufValue for HeliosConnection {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct EtherDreamConnection {
+    // message fields
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a EtherDreamConnection {
+    fn default() -> &'a EtherDreamConnection {
+        <EtherDreamConnection as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl EtherDreamConnection {
+    pub fn new() -> EtherDreamConnection {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for EtherDreamConnection {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> EtherDreamConnection {
+        EtherDreamConnection::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &EtherDreamConnection| { &m.name },
+                |m: &mut EtherDreamConnection| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<EtherDreamConnection>(
+                "EtherDreamConnection",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static EtherDreamConnection {
+        static instance: ::protobuf::rt::LazyV2<EtherDreamConnection> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(EtherDreamConnection::new)
+    }
+}
+
+impl ::protobuf::Clear for EtherDreamConnection {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for EtherDreamConnection {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for EtherDreamConnection {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct GamepadConnection {
+    // message fields
+    pub id: ::std::string::String,
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GamepadConnection {
+    fn default() -> &'a GamepadConnection {
+        <GamepadConnection as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GamepadConnection {
+    pub fn new() -> GamepadConnection {
+        ::std::default::Default::default()
+    }
+
+    // string id = 1;
+
+
+    pub fn get_id(&self) -> &str {
+        &self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: ::std::string::String) {
+        self.id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_id(&mut self) -> &mut ::std::string::String {
+        &mut self.id
+    }
+
+    // Take field
+    pub fn take_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.id, ::std::string::String::new())
+    }
+
+    // string name = 2;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for GamepadConnection {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GamepadConnection {
+        GamepadConnection::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "id",
+                |m: &GamepadConnection| { &m.id },
+                |m: &mut GamepadConnection| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &GamepadConnection| { &m.name },
+                |m: &mut GamepadConnection| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GamepadConnection>(
+                "GamepadConnection",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GamepadConnection {
+        static instance: ::protobuf::rt::LazyV2<GamepadConnection> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GamepadConnection::new)
+    }
+}
+
+impl ::protobuf::Clear for GamepadConnection {
+    fn clear(&mut self) {
+        self.id.clear();
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GamepadConnection {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GamepadConnection {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -6252,44 +6763,49 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"$\n\
     \x0eAddSacnRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\
     \x0bConnections\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.Co\
-    nnectionR\x0bconnections\"\x9e\x02\n\nConnection\x12\x12\n\x04name\x18\
+    nnectionR\x0bconnections\"\x93\x03\n\nConnection\x12\x12\n\x04name\x18\
     \x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.Dmx\
     ConnectionH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.Mid\
     iConnectionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.Os\
     cConnectionH\0R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.P\
     roDjLinkConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\
-    \x17.mizer.HeliosConnectionH\0R\x06heliosB\x0c\n\nconnection\"+\n\rDmxCo\
-    nnection\x12\x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\"B\n\x10H\
-    eliosConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\
-    \x08firmware\x18\x02\x20\x01(\tR\x08firmware\"O\n\x0eMidiConnection\x12*\
-    \n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
-    \x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\
-    \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\
-    \x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
-    \x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\
-    \x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\
-    \x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\
-    \x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\
-    \x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08contro\
-    ls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08control\
-    s\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\
-    \x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\
-    \x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\t\
-    R\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07chann\
-    el\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\
-    \x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceP\
-    rofile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01\
-    (\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\x06\
-    \n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rOscConnection\x12\x1d\n\ninput_po\
-    rt\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x02\x20\
-    \x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\x01(\tR\routpu\
-    tAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\
-    \x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\
-    \x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08p\
-    layback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\
-    \x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\
-    \x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\
+    \x17.mizer.HeliosConnectionH\0R\x06helios\x12=\n\netherDream\x18\x0f\x20\
+    \x01(\x0b2\x1b.mizer.EtherDreamConnectionH\0R\netherDream\x124\n\x07game\
+    pad\x18\x10\x20\x01(\x0b2\x18.mizer.GamepadConnectionH\0R\x07gamepadB\
+    \x0c\n\nconnection\"+\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\x20\
+    \x01(\tR\x08outputId\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08firmwa\
+    re\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
+    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"O\n\x0eMidiConnect\
+    ion\x12*\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\
+    \x01\x01B\x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08\
+    profiles\x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\
+    \"\x8f\x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
+    \x02id\x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\
+    \x14\n\x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\
+    \x20\x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\
+    \x0b2\x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\
+    \x20\x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08co\
+    ntrols\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08con\
+    trols\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\
+    \n\x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.Control\
+    R\x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\
+    \tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07cha\
+    nnel\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\r\
+    R\x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDevice\
+    Profile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\
+    \x01(\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\
+    \x06\n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rOscConnection\x12\x1d\n\ninpu\
+    t_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x02\
+    \x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\x01(\tR\ro\
+    utputAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\
+    \x01\x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05mo\
+    del\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\
+    \x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\
+    \x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04liv\
+    e\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\
     \x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.m\
     izer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b\
     2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06art\

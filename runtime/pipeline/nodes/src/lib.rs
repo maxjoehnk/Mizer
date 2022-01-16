@@ -4,6 +4,7 @@ pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, ProgrammerNode, GroupNode, PresetNode};
+pub use mizer_gamepad_nodes::GamepadNode;
 pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
@@ -51,6 +52,7 @@ pub enum Node {
     VideoOutput(VideoOutputNode),
     VideoEffect(VideoEffectNode),
     VideoTransform(VideoTransformNode),
+    Gamepad(GamepadNode),
     ColorRgb(RgbColorNode),
     ColorHsv(HsvColorNode),
 }
@@ -87,6 +89,7 @@ impl From<NodeType> for Node {
             NodeType::VideoOutput => VideoOutputNode::default().into(),
             NodeType::MidiInput => MidiInputNode::default().into(),
             NodeType::MidiOutput => MidiOutputNode::default().into(),
+            NodeType::Gamepad => GamepadNode::default().into(),
             NodeType::ColorRgb => RgbColorNode::default().into(),
             NodeType::ColorHsv => HsvColorNode::default().into(),
         }
@@ -126,6 +129,7 @@ impl Node {
             VideoOutput(_) => NodeType::VideoOutput,
             VideoEffect(_) => NodeType::VideoEffect,
             VideoTransform(_) => NodeType::VideoTransform,
+            Gamepad(_) => NodeType::Gamepad,
             ColorHsv(_) => NodeType::ColorHsv,
             ColorRgb(_) => NodeType::ColorRgb,
         }

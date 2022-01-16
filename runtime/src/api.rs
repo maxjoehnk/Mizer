@@ -68,6 +68,7 @@ impl<'a> NodeDescriptor<'a> {
             NodeType::VideoTransform => {
                 Node::VideoTransform(self.downcast_node(node_type).unwrap())
             }
+            NodeType::Gamepad => Node::Gamepad(self.downcast_node(node_type).unwrap()),
             NodeType::ColorHsv => Node::ColorHsv(self.downcast_node(node_type).unwrap()),
             NodeType::ColorRgb => Node::ColorRgb(self.downcast_node(node_type).unwrap()),
         }

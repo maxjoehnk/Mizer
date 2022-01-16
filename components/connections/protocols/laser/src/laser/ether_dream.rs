@@ -21,6 +21,22 @@ impl EtherDreamLaser {
             Ok(EtherDreamLaser { device })
         }))
     }
+
+    pub fn status(&self) -> EtherDreamLaserStatus {
+        let dac = self.device.dac();
+
+        EtherDreamLaserStatus {
+            mac_address: dac.mac_address.to_string(),
+            hw_revision: dac.hw_revision,
+            sw_revision: dac.sw_revision,
+        }
+    }
+}
+
+pub struct EtherDreamLaserStatus {
+    pub mac_address: String,
+    pub hw_revision: u16,
+    pub sw_revision: u16,
 }
 
 impl Laser for EtherDreamLaser {

@@ -41,6 +41,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             VideoTransform(transform) => Self::videoTransformConfig(transform.into()),
             ColorRgb(node) => Self::colorRgbConfig(node.into()),
             ColorHsv(node) => Self::colorHsvConfig(node.into()),
+            Gamepad(node) => Self::gamepadNodeConfig(node.into()),
         }
     }
 }
@@ -95,6 +96,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             }
             NodeConfig_oneof_type::colorRgbConfig(node) => Self::ColorRgb(node.into()),
             NodeConfig_oneof_type::colorHsvConfig(node) => Self::ColorHsv(node.into()),
+            NodeConfig_oneof_type::gamepadNodeConfig(node) => Self::Gamepad(node.into()),
         }
     }
 }
@@ -392,6 +394,23 @@ impl From<LaserNodeConfig> for mizer_nodes::LaserNode {
     fn from(laser: LaserNodeConfig) -> Self {
         Self {
             device_id: laser.device_id,
+        }
+    }
+}
+
+impl From<mizer_nodes::GamepadNode> for GamepadNodeConfig {
+    fn from(gamepad: mizer_nodes::GamepadNode) -> Self {
+        Self {
+            device_id: gamepad.device_id,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<GamepadNodeConfig> for mizer_nodes::GamepadNode {
+    fn from(gamepad: GamepadNodeConfig) -> Self {
+        Self {
+            device_id: gamepad.device_id,
         }
     }
 }
@@ -876,6 +895,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::IldaFile => Node_NodeType::IldaFile,
             NodeType::ColorHsv => Node_NodeType::ColorHsv,
             NodeType::ColorRgb => Node_NodeType::ColorRgb,
+            NodeType::Gamepad => Node_NodeType::Gamepad,
         }
     }
 }
@@ -914,6 +934,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::IldaFile => NodeType::IldaFile,
             Node_NodeType::ColorHsv => NodeType::ColorHsv,
             Node_NodeType::ColorRgb => NodeType::ColorRgb,
+            Node_NodeType::Gamepad => NodeType::Gamepad,
         }
     }
 }

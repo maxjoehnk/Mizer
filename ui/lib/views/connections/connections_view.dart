@@ -182,6 +182,12 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasHelios()) {
       return _tag("Helios");
     }
+    if (connection.hasEtherDream()) {
+      return _tag("Ether Dream");
+    }
+    if (connection.hasGamepad()) {
+      return _tag("Gamepad");
+    }
     if (connection.hasOsc()) {
       return _tag("OSC");
     }

@@ -146,6 +146,8 @@ const Connection$json = const {
     const {'1': 'osc', '3': 12, '4': 1, '5': 11, '6': '.mizer.OscConnection', '9': 0, '10': 'osc'},
     const {'1': 'proDJLink', '3': 13, '4': 1, '5': 11, '6': '.mizer.ProDjLinkConnection', '9': 0, '10': 'proDJLink'},
     const {'1': 'helios', '3': 14, '4': 1, '5': 11, '6': '.mizer.HeliosConnection', '9': 0, '10': 'helios'},
+    const {'1': 'etherDream', '3': 15, '4': 1, '5': 11, '6': '.mizer.EtherDreamConnection', '9': 0, '10': 'etherDream'},
+    const {'1': 'gamepad', '3': 16, '4': 1, '5': 11, '6': '.mizer.GamepadConnection', '9': 0, '10': 'gamepad'},
   ],
   '8': const [
     const {'1': 'connection'},
@@ -153,7 +155,7 @@ const Connection$json = const {
 };
 
 /// Descriptor for `Connection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3NCDAoKY29ubmVjdGlvbg==');
+final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSPQoKZXRoZXJEcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWRCDAoKY29ubmVjdGlvbg==');
 @$core.Deprecated('Use dmxConnectionDescriptor instead')
 const DmxConnection$json = const {
   '1': 'DmxConnection',
@@ -169,12 +171,33 @@ const HeliosConnection$json = const {
   '1': 'HeliosConnection',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'firmware', '3': 2, '4': 1, '5': 9, '10': 'firmware'},
+    const {'1': 'firmware', '3': 2, '4': 1, '5': 13, '10': 'firmware'},
   ],
 };
 
 /// Descriptor for `HeliosConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List heliosConnectionDescriptor = $convert.base64Decode('ChBIZWxpb3NDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSGgoIZmlybXdhcmUYAiABKAlSCGZpcm13YXJl');
+final $typed_data.Uint8List heliosConnectionDescriptor = $convert.base64Decode('ChBIZWxpb3NDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSGgoIZmlybXdhcmUYAiABKA1SCGZpcm13YXJl');
+@$core.Deprecated('Use etherDreamConnectionDescriptor instead')
+const EtherDreamConnection$json = const {
+  '1': 'EtherDreamConnection',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `EtherDreamConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List etherDreamConnectionDescriptor = $convert.base64Decode('ChRFdGhlckRyZWFtQ29ubmVjdGlvbhISCgRuYW1lGAEgASgJUgRuYW1l');
+@$core.Deprecated('Use gamepadConnectionDescriptor instead')
+const GamepadConnection$json = const {
+  '1': 'GamepadConnection',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `GamepadConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List gamepadConnectionDescriptor = $convert.base64Decode('ChFHYW1lcGFkQ29ubmVjdGlvbhIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
 @$core.Deprecated('Use midiConnectionDescriptor instead')
 const MidiConnection$json = const {
   '1': 'MidiConnection',

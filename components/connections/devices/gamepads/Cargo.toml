@@ -1,0 +1,14 @@
+[package]
+name = "mizer-gamepads"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+log = "0.4"
+anyhow = "1"
+gilrs = "0.8"
+futures = "0.3"
+flume = "0.10"
+pinboard = "2.1"
+enum-iterator = "0.7"

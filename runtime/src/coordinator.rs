@@ -116,6 +116,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             MidiOutput(node) => self.add_node(path, node),
             ColorHsv(node) => self.add_node(path, node),
             ColorRgb(node) => self.add_node(path, node),
+            Gamepad(node) => self.add_node(path, node),
         }
     }
 
@@ -540,6 +541,10 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
         }
         (NodeType::VideoOutput, Node::VideoOutput(_)) => {}
         (NodeType::VideoTransform, Node::VideoTransform(_)) => {}
+        (NodeType::Gamepad, Node::Gamepad(config)) => {
+            let node: &mut GamepadNode = node.downcast_mut()?;
+            node.device_id = config.device_id.clone();
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,
@@ -582,6 +587,7 @@ pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
         NodeType::VideoTransform => Node::VideoTransform(downcast_node(node).unwrap()),
         NodeType::ColorHsv => Node::ColorHsv(downcast_node(node).unwrap()),
         NodeType::ColorRgb => Node::ColorRgb(downcast_node(node).unwrap()),
+        NodeType::Gamepad => Node::Gamepad(downcast_node(node).unwrap()),
     }
 }
 

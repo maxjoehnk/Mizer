@@ -873,6 +873,7 @@ enum NodeConfig_Type {
   presetConfig, 
   colorRgbConfig, 
   colorHsvConfig, 
+  gamepadNodeConfig, 
   notSet
 }
 
@@ -909,10 +910,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     38 : NodeConfig_Type.presetConfig,
     40 : NodeConfig_Type.colorRgbConfig,
     41 : NodeConfig_Type.colorHsvConfig,
+    42 : NodeConfig_Type.gamepadNodeConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -944,6 +946,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<PresetNodeConfig>(38, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetConfig', protoName: 'presetConfig', subBuilder: PresetNodeConfig.create)
     ..aOM<ColorRgbNodeConfig>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorRgbConfig', protoName: 'colorRgbConfig', subBuilder: ColorRgbNodeConfig.create)
     ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
+    ..aOM<GamepadNodeConfig>(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepadNodeConfig', protoName: 'gamepadNodeConfig', subBuilder: GamepadNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -980,6 +983,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     PresetNodeConfig? presetConfig,
     ColorRgbNodeConfig? colorRgbConfig,
     ColorHsvNodeConfig? colorHsvConfig,
+    GamepadNodeConfig? gamepadNodeConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1074,6 +1078,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (colorHsvConfig != null) {
       _result.colorHsvConfig = colorHsvConfig;
+    }
+    if (gamepadNodeConfig != null) {
+      _result.gamepadNodeConfig = gamepadNodeConfig;
     }
     return _result;
   }
@@ -1441,6 +1448,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearColorHsvConfig() => clearField(41);
   @$pb.TagNumber(41)
   ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(30);
+
+  @$pb.TagNumber(42)
+  GamepadNodeConfig get gamepadNodeConfig => $_getN(31);
+  @$pb.TagNumber(42)
+  set gamepadNodeConfig(GamepadNodeConfig v) { setField(42, v); }
+  @$pb.TagNumber(42)
+  $core.bool hasGamepadNodeConfig() => $_has(31);
+  @$pb.TagNumber(42)
+  void clearGamepadNodeConfig() => clearField(42);
+  @$pb.TagNumber(42)
+  GamepadNodeConfig ensureGamepadNodeConfig() => $_ensure(31);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -2152,6 +2170,53 @@ class LaserNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static LaserNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LaserNodeConfig>(create);
   static LaserNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceId() => clearField(1);
+}
+
+class GamepadNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GamepadNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId')
+    ..hasRequiredFields = false
+  ;
+
+  GamepadNodeConfig._() : super();
+  factory GamepadNodeConfig({
+    $core.String? deviceId,
+  }) {
+    final _result = create();
+    if (deviceId != null) {
+      _result.deviceId = deviceId;
+    }
+    return _result;
+  }
+  factory GamepadNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GamepadNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GamepadNodeConfig clone() => GamepadNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GamepadNodeConfig copyWith(void Function(GamepadNodeConfig) updates) => super.copyWith((message) => updates(message as GamepadNodeConfig)) as GamepadNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GamepadNodeConfig create() => GamepadNodeConfig._();
+  GamepadNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<GamepadNodeConfig> createRepeated() => $pb.PbList<GamepadNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static GamepadNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GamepadNodeConfig>(create);
+  static GamepadNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get deviceId => $_getSZ(0);

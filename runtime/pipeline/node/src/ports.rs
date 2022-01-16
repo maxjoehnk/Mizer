@@ -43,3 +43,26 @@ impl Default for PortDirection {
         Self::Input
     }
 }
+
+pub trait TogglePort {
+    fn to_value(self) -> f64;
+    fn from_value(value: f64) -> Self;
+}
+
+impl TogglePort for bool {
+    fn to_value(self) -> f64 {
+        if self {
+            1.0
+        }else {
+            0.0
+        }
+    }
+
+    fn from_value(value: f64) -> Self {
+        if value > 0f64 {
+            true
+        }else {
+            false
+        }
+    }
+}

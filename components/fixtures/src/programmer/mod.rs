@@ -193,6 +193,10 @@ impl Programmer {
         self.select_fixtures(group.fixtures.clone());
     }
 
+    pub fn is_group_active(&self, group: &Group) -> bool {
+        group.fixtures.iter().all(|id| self.selected_fixtures.contains_key(id))
+    }
+
     pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {
         let values = presets.get_preset_values(preset_id);
         for value in values {

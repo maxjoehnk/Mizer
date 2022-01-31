@@ -29,6 +29,7 @@ List<Route> routes = [
   Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets', View.Presets),
   Route(
       () => MediaView(), Icons.perm_media_outlined, 'Media', View.Media),
+  Route(() => Container(), Icons.tv, 'Surfaces', View.Surfaces),
   Route(() => ConnectionsView(), Icons.device_hub, 'Connections', View.Connections),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch', View.FixturePatch),
   Route(() => SessionView(), Icons.mediation, 'Session', View.Session),

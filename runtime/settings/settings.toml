@@ -7,9 +7,9 @@ sequencer_view = "f5"
 programmer_view = "f6"
 presets_view = "f7"
 media_view = "f9"
-connections_view = "f10"
-fixture_patch_view = "f11"
-session_view = "f12"
+surfaces_view = "f10"
+connections_view = "f11"
+fixture_patch_view = "f12"
 
 [hotkeys.layouts]
 add_layout = "alt+a"

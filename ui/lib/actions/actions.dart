@@ -16,6 +16,7 @@ enum View {
   Presets,
   Media,
   Connections,
+  Surfaces,
   FixturePatch,
   Session,
 }
@@ -30,6 +31,7 @@ const ViewHotkeyLabels = {
   View.Presets: "presets_view",
   View.Media: "media_view",
   View.Connections: "connections_view",
+  View.Surfaces: "surfaces_view",
   View.FixturePatch: "fixture_patch_view",
   View.Session: "session_view",
 };

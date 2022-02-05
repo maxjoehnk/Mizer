@@ -39,8 +39,8 @@ Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);
 
 Map<String, OpenViewIntent> getShortcuts(List<Route> routes) {
   Map<String, OpenViewIntent> shortcuts = {};
-  for (var route in routes) {
-    shortcuts[route.viewKey.toHotkeyString()] = OpenViewIntent(route.viewKey);
+  for (var entry in routes.asMap().entries) {
+    shortcuts[entry.value.viewKey.toHotkeyString()] = OpenViewIntent(entry.key);
   }
   return shortcuts;
 }
@@ -67,13 +67,13 @@ class _HomeState extends State<Home> {
             global: true,
             onHotkey: (hotkey) {
               var intent = shortcuts[hotkey]!;
-              this._selectView(intent.view.index);
+              this._selectView(intent.viewIndex);
             },
             builder: (context, hotkeys) => ApplicationMenu(
                 child: Actions(
                   actions: <Type, CallbackAction>{
                     OpenViewIntent: CallbackAction<OpenViewIntent>(
-                      onInvoke: (intent) => this._selectView(intent.view.index),
+                      onInvoke: (intent) => this._selectView(intent.viewIndex),
                     ),
                   },
                   child: Focus(

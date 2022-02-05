@@ -58,8 +58,8 @@ class ApplicationMenu extends StatelessWidget {
             SubMenu(
                 title: 'View',
                 children: routes
-                    .map((route) =>
-                        MenuActionItem(label: route.label, action: OpenViewIntent(route.viewKey)))
+                    .mapEnumerated((route, index) =>
+                        MenuActionItem(label: route.label, action: OpenViewIntent(index)))
                     .toList()),
             if (!context.platform.isStandalone) SubMenu(title: 'Window', children: [
               MenuItem(

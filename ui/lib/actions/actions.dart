@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 class OpenViewIntent extends Intent {
-  final View view;
+  final int viewIndex;
 
-  const OpenViewIntent(this.view);
+  const OpenViewIntent(this.viewIndex);
 }
 
 enum View {

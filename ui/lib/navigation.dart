@@ -5,6 +5,7 @@ import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
+import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
@@ -27,6 +28,7 @@ List<Route> routes = [
   Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', View.Sequencer),
   Route(() => ProgrammerView(), MdiIcons.tuneVertical, 'Programmer', View.Programmer),
   Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets', View.Presets),
+  Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects', View.Effects),
   Route(
       () => MediaView(), Icons.perm_media_outlined, 'Media', View.Media),
   Route(() => Container(), Icons.tv, 'Surfaces', View.Surfaces),

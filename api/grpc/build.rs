@@ -10,6 +10,7 @@ fn main() {
         .input("../protos/layouts.proto")
         .input("../protos/transport.proto")
         .input("../protos/sequencer.proto")
+        .input("../protos/effects.proto")
         .input("../protos/programmer.proto")
         .input("../protos/settings.proto")
         .include("../protos")

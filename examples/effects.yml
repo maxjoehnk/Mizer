@@ -1,0 +1,90 @@
+---
+nodes: []
+channels: []
+fixtures:
+  - id: 1
+    name: Viper 1
+    fixture: "ofl:martin:mac-viper-performance"
+    channel: 1
+    universe: 1
+    mode: Extended 16-bit
+    output: ~
+  - id: 2
+    name: Viper 2
+    fixture: "ofl:martin:mac-viper-performance"
+    channel: 41
+    universe: 1
+    mode: Extended 16-bit
+    output: ~
+  - id: 3
+    name: Viper 3
+    fixture: "ofl:martin:mac-viper-performance"
+    channel: 81
+    universe: 1
+    mode: Extended 16-bit
+    output: ~
+  - id: 4
+    name: Viper 4
+    fixture: "ofl:martin:mac-viper-performance"
+    channel: 121
+    universe: 1
+    mode: Extended 16-bit
+    output: ~
+media: []
+layouts: {}
+sequences:
+  - id: 1
+    name: Sequence 1
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        channels:
+          - fixtures: [1, 2, 3, 4]
+            control: Intensity
+            value: 1
+        effects:
+          - fixtures: [1, 2, 3, 4]
+            effect: 1
+effects:
+  - id: 1
+    name: Test
+    steps:
+      - channels:
+          - control: Pan
+            value: 0
+          - control: Tilt
+            value:
+              - 0
+              - 1
+      - channels:
+          - control: Pan
+            value: 1
+          - control: Tilt
+            value: 0.5
+  - id: 2
+    name: Test 2
+    steps:
+      - channels:
+          - control: Pan
+            value: 0
+          - control: Tilt
+            value: 0
+      - channels:
+          - control: Pan
+            value: 1
+          - control: Tilt
+            value: 0.5
+      - channels:
+          - control: Pan
+            value: 0
+          - control: Tilt
+            value:
+              - 0.75
+              - 1
+
+connections:
+  - type: artnet
+    id: dmx-0
+    name: Artnet
+    host: 0.0.0.0

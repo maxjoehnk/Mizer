@@ -1,7 +1,7 @@
 use crate::definition::FixtureDefinition;
 use std::sync::Arc;
 
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct FixtureLibrary {
     providers: Arc<Vec<Box<dyn FixtureLibraryProvider>>>,
 }

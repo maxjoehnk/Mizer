@@ -6,6 +6,7 @@ pub use self::nodes::*;
 pub use self::programmer::*;
 pub use self::sequencer::*;
 pub use self::transport::*;
+pub use self::effects::*;
 use anyhow::Error;
 pub use event::connections::*;
 pub use event::session::*;
@@ -23,6 +24,7 @@ mod nodes;
 mod programmer;
 mod sequencer;
 mod transport;
+mod effects;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;

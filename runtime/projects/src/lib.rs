@@ -10,12 +10,13 @@ use mizer_fixtures::programmer::Group;
 
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
-use mizer_sequencer::Sequence;
+use mizer_sequencer::{Sequence, Effect};
 use crate::fixtures::PresetsStore;
 
 mod connections;
 mod fixtures;
 mod sequencer;
+mod effects;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -46,6 +47,8 @@ pub struct Project {
     pub presets: PresetsStore,
     #[serde(default)]
     pub sequences: Vec<Sequence>,
+    #[serde(default)]
+    pub effects: Vec<Effect>,
 }
 
 impl Project {

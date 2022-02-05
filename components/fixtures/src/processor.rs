@@ -1,11 +1,11 @@
 use crate::manager::FixtureManager;
-use mizer_processing::{Injector, Processor};
+use mizer_processing::*;
 use mizer_protocol_dmx::DmxConnectionManager;
 
 pub struct FixtureProcessor;
 
 impl Processor for FixtureProcessor {
-    fn pre_process(&self, injector: &Injector) {
+    fn pre_process(&self, injector: &Injector, _: ClockFrame) {
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
@@ -13,7 +13,7 @@ impl Processor for FixtureProcessor {
         fixture_manager.execute_programmers();
     }
 
-    fn process(&self, injector: &Injector) {
+    fn process(&self, injector: &Injector, _: ClockFrame) {
         profiling::scope!("FixtureProcessor::process");
         let fixture_manager = injector
             .get::<FixtureManager>()

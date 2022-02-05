@@ -368,6 +368,25 @@ pub enum FixtureFaderControl {
     Generic(String),
 }
 
+impl FixtureControl {
+    pub fn faders(self) -> Vec<FixtureFaderControl> {
+        use FixtureControl::*;
+        match self {
+            Intensity => vec![FixtureFaderControl::Intensity],
+            Shutter => vec![FixtureFaderControl::Shutter],
+            Color => vec![FixtureFaderControl::Color(ColorChannel::Red), FixtureFaderControl::Color(ColorChannel::Green), FixtureFaderControl::Color(ColorChannel::Blue)],
+            Pan => vec![FixtureFaderControl::Pan],
+            Tilt => vec![FixtureFaderControl::Tilt],
+            Focus => vec![FixtureFaderControl::Focus],
+            Zoom => vec![FixtureFaderControl::Zoom],
+            Prism => vec![FixtureFaderControl::Prism],
+            Iris => vec![FixtureFaderControl::Iris],
+            Frost => vec![FixtureFaderControl::Frost],
+            Generic(generic) => vec![FixtureFaderControl::Generic(generic)],
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
 pub enum ColorChannel {
     Red,
@@ -441,7 +460,7 @@ pub enum ChannelResolution {
     Finest(u8, u8, u8),
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct PhysicalFixtureData {
     pub dimensions: Option<FixtureDimensions>,
     pub weight: Option<f32>,

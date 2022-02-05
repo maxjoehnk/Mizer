@@ -20,7 +20,7 @@ use mizer_session::SessionState;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
-use mizer_sequencer::{Sequencer, SequencerModule};
+use mizer_sequencer::{SequencerModule, Sequencer, EffectEngine, EffectsModule};
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
@@ -42,6 +42,7 @@ pub fn build_runtime(
     let (api_handler, api) = Api::setup(&runtime);
 
     let sequencer = register_sequencer_module(&mut runtime)?;
+    let effect_engine = register_effects_module(&mut runtime)?;
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
     register_midi_module(&mut runtime)?;
@@ -57,6 +58,7 @@ pub fn build_runtime(
         fixture_library,
         media_server_api.clone(),
         sequencer,
+        effect_engine,
         settings.clone(),
     );
 
@@ -116,6 +118,10 @@ impl Mizer {
         let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
         fixture_manager.new();
+        let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
+        effects_engine.new();
+        let sequencer = injector.get::<Sequencer>().unwrap();
+        sequencer.new();
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
         dmx_manager.new();
         self.runtime.new();
@@ -140,6 +146,8 @@ impl Mizer {
                 let injector = self.runtime.injector_mut();
                 let manager: &FixtureManager = injector.get().unwrap();
                 manager.load(&project).context("loading fixtures")?;
+                let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
+                effects_engine.load(&project)?;
                 let sequencer = injector.get::<Sequencer>().unwrap();
                 sequencer.load(&project)?;
                 let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
@@ -178,6 +186,8 @@ impl Mizer {
             dmx_manager.save(&mut project);
             let sequencer = injector.get::<Sequencer>().unwrap();
             sequencer.save(&mut project);
+            let effects_engine = injector.get::<EffectEngine>().unwrap();
+            effects_engine.save(&mut project);
             project.save_file(file)?;
             log::info!("Saving project...Done");
         }
@@ -195,6 +205,8 @@ impl Mizer {
         sequencer.clear();
         self.project_path = None;
         self.media_server_api.clear();
+        let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
+        effects_engine.clear();
         self.send_session_update();
     }
 
@@ -210,6 +222,15 @@ fn register_sequencer_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Seq
     module.register(runtime)?;
 
     Ok(sequencer)
+}
+
+fn register_effects_module(
+    runtime: &mut DefaultRuntime
+) -> anyhow::Result<EffectEngine> {
+    let (module, engine) = EffectsModule::new();
+    module.register(runtime)?;
+
+    Ok(engine)
 }
 
 fn register_device_module(

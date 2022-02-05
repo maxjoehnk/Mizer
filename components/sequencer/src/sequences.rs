@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::contracts::*;
 use crate::cue::*;
 use crate::state::SequenceState;
+use crate::EffectEngine;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Sequence {
@@ -37,6 +38,7 @@ impl Sequence {
         state: &mut SequenceState,
         clock: &impl Clock,
         fixture_controller: &impl FixtureController,
+        effect_engine: &EffectEngine,
     ) {
         if !state.active {
             return;
@@ -45,7 +47,7 @@ impl Sequence {
         let cue = self.current_cue(state, clock);
         if let Some(next_cue) = state.get_next_cue(self) {
             if next_cue.should_go(state, clock) {
-                state.go(self, clock);
+                state.go(self, clock, effect_engine);
             }
         }
         cue.update_state(state, clock);
@@ -54,6 +56,14 @@ impl Sequence {
                 if let Some(value) = value {
                     fixture_controller.write(fixture_id, channel.control.clone(), value);
                 }
+            }
+        }
+        for effect in &cue.effects {
+            if state.running_effects.contains_key(effect) {
+                continue;
+            }
+            if let Some(id) = effect_engine.run_effect(effect.effect, effect.fixtures.clone()) {
+                state.running_effects.insert(effect.clone(), id);
             }
         }
     }
@@ -77,6 +87,7 @@ impl Sequence {
             id,
             name: format!("Cue {}", id),
             channels: Vec::new(),
+            effects: Vec::new(),
             trigger: CueTrigger::Go,
             loop_mode: LoopMode::None,
             time: None,

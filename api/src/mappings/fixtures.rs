@@ -1,9 +1,10 @@
 use protobuf::SingularPtrField;
 
-use mizer_fixtures::definition::{ChannelResolution, PhysicalFixtureData};
+use mizer_fixtures::definition::{ChannelResolution, PhysicalFixtureData, self};
 use mizer_fixtures::fixture::IFixture;
 
 use crate::models::fixtures::*;
+use crate::models;
 
 impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
     fn from(definition: mizer_fixtures::definition::FixtureDefinition) -> Self {
@@ -266,6 +267,26 @@ impl From<FixtureId> for mizer_fixtures::FixtureId {
                 ..
             })) => Self::SubFixture(fixture_id, child_id),
             _ => unreachable!(),
+        }
+    }
+}
+
+impl From<definition::FixtureFaderControl> for models::FixtureControl {
+    fn from(control: definition::FixtureFaderControl) -> Self {
+        use definition::FixtureFaderControl::*;
+
+        match control {
+            Intensity => Self::INTENSITY,
+            Shutter => Self::SHUTTER,
+            Pan => Self::PAN,
+            Tilt => Self::TILT,
+            Prism => Self::PRISM,
+            Iris => Self::IRIS,
+            Frost => Self::FROST,
+            Color(_) => Self::COLOR,
+            Generic(_) => Self::GENERIC,
+            Zoom => Self::ZOOM,
+            Focus => Self::FOCUS,
         }
     }
 }

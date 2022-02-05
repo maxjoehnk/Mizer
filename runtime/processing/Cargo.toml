@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 dashmap = "4"
+mizer-clock = { path = "../clock" }
 mizer-injector = { path = "../injector" }
 
 [dev-dependencies]

@@ -19,8 +19,15 @@ pub struct Cue {
     /// CueTrigger::Time => time after previous cue was triggered until this cue is triggered
     pub time: Option<SequencerTime>,
     pub channels: Vec<CueChannel>,
+    pub effects: Vec<CueEffect>,
     #[serde(default)]
     pub loop_mode: LoopMode,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
+pub struct CueEffect {
+    pub fixtures: Vec<FixtureId>,
+    pub effect: u32,
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -42,6 +49,7 @@ impl Cue {
             id,
             name,
             channels,
+            effects: Vec::new(),
             trigger: Default::default(),
             time: Default::default(),
             loop_mode: Default::default(),

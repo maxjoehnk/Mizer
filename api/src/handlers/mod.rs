@@ -8,11 +8,12 @@ pub use self::sequencer::*;
 pub use self::session::*;
 pub use self::settings::*;
 pub use self::transport::*;
+pub use self::effects::*;
 use crate::RuntimeApi;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
-use mizer_sequencer::Sequencer;
+use mizer_sequencer::{Sequencer, EffectEngine};
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
@@ -27,6 +28,7 @@ mod sequencer;
 mod session;
 mod settings;
 mod transport;
+mod effects;
 
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
@@ -40,6 +42,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub sequencer: SequencerHandler<R>,
     pub programmer: ProgrammerHandler<R>,
     pub settings: SettingsHandler,
+    pub effects: EffectsHandler,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -49,6 +52,7 @@ impl<R: RuntimeApi> Handlers<R> {
         fixture_library: FixtureLibrary,
         media_server: MediaServerApi,
         sequencer: Sequencer,
+        effect_engine: EffectEngine,
         settings: Arc<NonEmptyPinboard<Settings>>,
     ) -> Self {
         Handlers {
@@ -64,6 +68,7 @@ impl<R: RuntimeApi> Handlers<R> {
             session: SessionHandler::new(runtime.clone()),
             transport: TransportHandler::new(runtime.clone()),
             sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
+            effects: EffectsHandler::new(effect_engine),
             programmer: ProgrammerHandler::new(fixture_manager, sequencer, runtime),
             settings: SettingsHandler::new(settings),
         }

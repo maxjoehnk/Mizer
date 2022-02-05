@@ -12,6 +12,7 @@ fn main() {
             "protos/nodes.proto",
             "protos/session.proto",
             "protos/sequencer.proto",
+            "protos/effects.proto",
             "protos/transport.proto",
             "protos/programmer.proto",
             "protos/settings.proto",

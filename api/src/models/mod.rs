@@ -1,4 +1,5 @@
 pub mod connections;
+pub mod effects;
 pub mod fixtures;
 pub mod layouts;
 pub mod media;
@@ -10,6 +11,7 @@ pub mod settings;
 pub mod transport;
 
 pub use self::connections::*;
+pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;

@@ -215,9 +215,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .collect();
     }
 
-    fn process_pipeline(&mut self) {
-        let frame = self.clock.tick();
-
+    fn process_pipeline(&mut self, frame: ClockFrame) {
         let nodes = self
             .nodes
             .iter()
@@ -356,20 +354,21 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
     #[profiling::function]
     fn process(&mut self) {
+        let frame = self.clock.tick();
         let snapshot = self.clock.snapshot();
         if let Err(err) = self.clock_sender.send(snapshot) {
             log::error!("Could not send clock snapshot {:?}", err);
         }
         self.clock_snapshot.set(snapshot);
         for processor in self.processors.iter() {
-            processor.pre_process(&self.injector);
+            processor.pre_process(&self.injector, frame);
         }
-        self.process_pipeline();
+        self.process_pipeline(frame);
         for processor in self.processors.iter() {
-            processor.process(&self.injector);
+            processor.process(&self.injector, frame);
         }
         for processor in self.processors.iter() {
-            processor.post_process(&self.injector);
+            processor.post_process(&self.injector, frame);
         }
     }
 }

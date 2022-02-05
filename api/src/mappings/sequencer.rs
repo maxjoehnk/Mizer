@@ -58,7 +58,20 @@ impl From<CueTrigger> for mizer_sequencer::CueTrigger {
 
 impl From<mizer_sequencer::CueChannel> for CueChannel {
     fn from(channel: mizer_sequencer::CueChannel) -> Self {
-        let value = match channel.value {
+        Self {
+            fixtures: channel.fixtures.into_iter().map(FixtureId::from).collect(),
+            control: channel.control.into(),
+            value: SingularPtrField::some(channel.value.into()),
+            fade: SingularPtrField::some(CueTimer::from(channel.fade)),
+            delay: SingularPtrField::some(CueTimer::from(channel.delay)),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_sequencer::SequencerValue<f64>> for CueValue {
+    fn from(value: mizer_sequencer::SequencerValue<f64>) -> Self {
+        match value {
             SequencerValue::Direct(value) => CueValue {
                 value: Some(CueValue_oneof_value::direct(value)),
                 ..Default::default()
@@ -71,15 +84,6 @@ impl From<mizer_sequencer::CueChannel> for CueChannel {
                 })),
                 ..Default::default()
             },
-        };
-
-        Self {
-            fixtures: channel.fixtures.into_iter().map(FixtureId::from).collect(),
-            control: channel.control.into(),
-            value: SingularPtrField::some(value),
-            fade: SingularPtrField::some(CueTimer::from(channel.fade)),
-            delay: SingularPtrField::some(CueTimer::from(channel.delay)),
-            ..Default::default()
         }
     }
 }

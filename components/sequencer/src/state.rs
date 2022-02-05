@@ -1,5 +1,5 @@
 use crate::contracts::Clock;
-use crate::{Cue, CueChannel, Sequence};
+use crate::{Cue, CueChannel, CueEffect, EffectEngine, EffectInstanceId, Sequence};
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
 use std::collections::HashMap;
@@ -14,6 +14,7 @@ pub(crate) struct SequenceState {
     pub cue_finished_at: Option<Instant>,
     pub fixture_values: HashMap<(FixtureId, FixtureFaderControl), f64>,
     pub channel_state: HashMap<(FixtureId, FixtureFaderControl), CueChannelState>,
+    pub running_effects: HashMap<CueEffect, EffectInstanceId>,
 }
 
 #[derive(Copy, Clone, Debug)]
@@ -37,9 +38,10 @@ impl SequenceState {
         }
     }
 
-    pub fn go(&mut self, sequence: &Sequence, clock: &impl Clock) {
+    pub fn go(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
         self.last_go = Some(clock.now());
         self.cue_finished_at = None;
+        self.stop_effects(effect_engine);
         if !self.active {
             self.active = true;
             self.active_cue_index = 0;
@@ -49,10 +51,11 @@ impl SequenceState {
         self.update_channel_states(sequence);
     }
 
-    pub fn stop(&mut self, sequence: &Sequence, clock: &impl Clock) {
+    pub fn stop(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
         self.active = false;
         self.active_cue_index = 0;
         self.update_channel_states(sequence);
+        self.stop_effects(effect_engine);
     }
 
     fn next_cue(&mut self, sequence: &Sequence) {
@@ -105,6 +108,13 @@ impl SequenceState {
         } else {
             Some(&sequence.cues[next_cue_index])
         }
+    }
+
+    fn stop_effects(&mut self, effect_engine: &EffectEngine) {
+        for id in self.running_effects.values() {
+            effect_engine.stop_effect(id);
+        }
+        self.running_effects.clear();
     }
 }
 

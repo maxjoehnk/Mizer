@@ -2,7 +2,7 @@ use enum_dispatch::enum_dispatch;
 use std::collections::HashMap;
 
 use mizer_module::{Module, Runtime};
-use mizer_processing::{Injector, Processor};
+use mizer_processing::*;
 
 pub use crate::artnet::ArtnetOutput;
 pub use crate::sacn::SacnOutput;
@@ -62,7 +62,7 @@ impl DmxConnectionManager {
 struct DmxProcessor;
 
 impl Processor for DmxProcessor {
-    fn post_process(&self, injector: &Injector) {
+    fn post_process(&self, injector: &Injector, _: ClockFrame) {
         profiling::scope!("DmxProcessor::post_process");
         if let Some(dmx) = injector.get::<DmxConnectionManager>() {
             dmx.flush();

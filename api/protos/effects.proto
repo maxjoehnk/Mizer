@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package mizer.effects;
+
+import "fixtures.proto";
+import "sequencer.proto";
+
+service EffectsApi {
+  rpc GetEffects (GetEffectsRequest) returns (Effects) {}
+}
+
+message GetEffectsRequest {}
+
+message Effects {
+  repeated Effect effects = 1;
+}
+
+message Effect {
+  uint32 id = 1;
+  string name = 2;
+  repeated EffectStep steps = 3;
+}
+
+message EffectStep {
+  repeated EffectChannel channels = 1;
+}
+
+message EffectChannel {
+  mizer.fixtures.FixtureControl control = 1;
+  mizer.sequencer.CueValue value = 2;
+  oneof control_point {
+    SimpleControlPoint simple = 3;
+    QuadraticControlPoint quadratic = 4;
+    CubicControlPoint cubic = 5;
+  }
+}
+
+message SimpleControlPoint {
+}
+
+message QuadraticControlPoint {
+  double c0a = 1;
+  double c0b = 2;
+}
+
+message CubicControlPoint {
+  double c0a = 1;
+  double c0b = 2;
+  double c1a = 3;
+  double c1b = 4;
+}

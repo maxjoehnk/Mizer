@@ -5,13 +5,15 @@ mod processor;
 mod sequencer;
 mod sequences;
 mod state;
+pub mod effects;
 mod value;
 
 pub use self::cue::*;
-pub use self::module::SequencerModule;
+pub use self::module::*;
 pub use self::sequencer::{Sequencer, SequencerView, SequenceView};
 pub use self::sequences::*;
 pub use self::value::*;
+pub use self::effects::*;
 
 #[cfg(test)]
 mod tests {
@@ -21,7 +23,7 @@ mod tests {
 
     use crate::contracts::*;
     use crate::state::SequenceState;
-    use crate::{Cue, CueChannel, Sequence, SequencerTime};
+    use crate::{Cue, CueChannel, EffectEngine, Sequence, SequencerTime};
     use mizer_fixtures::definition::FixtureFaderControl;
     use mizer_fixtures::FixtureId;
 
@@ -52,11 +54,12 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -103,17 +106,19 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -150,11 +155,12 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -190,11 +196,12 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -230,11 +237,12 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
         context.forward_clock(delay);
 
@@ -242,6 +250,7 @@ mod tests {
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -309,11 +318,12 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
         context.forward_clock(time);
 
@@ -321,6 +331,7 @@ mod tests {
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -356,11 +367,12 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -412,11 +424,12 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
         context.forward_clock(time);
 
@@ -424,6 +437,7 @@ mod tests {
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -470,11 +484,12 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
         context.forward_clock(time);
         context.fixture_controller.checkpoint();
@@ -494,6 +509,7 @@ mod tests {
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -519,11 +535,12 @@ mod tests {
             ..Default::default()
         };
         context.fixture_controller.expect_write().never();
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
         context.fixture_controller.checkpoint();
         context.forward_clock(1f64);
@@ -542,6 +559,7 @@ mod tests {
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -590,11 +608,12 @@ mod tests {
             ..Default::default()
         };
         context.fixture_controller.expect_write().return_const(());
-        context.state.go(&sequence, &context.clock);
+        context.state.go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
         context.fixture_controller.checkpoint();
         context.forward_clock(time);
@@ -622,6 +641,7 @@ mod tests {
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
+            &context.effect_engine,
         );
 
         context.fixture_controller.checkpoint();
@@ -632,6 +652,7 @@ mod tests {
         clock: MockClock,
         fixture_controller: MockFixtureController,
         state: SequenceState,
+        effect_engine: EffectEngine,
     }
 
     impl Default for TestContext {
@@ -642,6 +663,7 @@ mod tests {
                 clock: Default::default(),
                 fixture_controller: Default::default(),
                 state: Default::default(),
+                effect_engine: Default::default(),
             };
             context.clock.expect_now().return_const(now);
 

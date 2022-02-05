@@ -1,4 +1,4 @@
-pub use mizer_processing::{Injector, Processor};
+pub use mizer_processing::*;
 
 pub trait Module {
     fn register(self, runtime: &mut dyn Runtime) -> anyhow::Result<()>;

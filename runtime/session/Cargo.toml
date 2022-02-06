@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1"
-tokio = "1.8"
+tokio = "1.16"
 hostname = "0.3"
 serde = { version = "1", features = ["derive"] }
 

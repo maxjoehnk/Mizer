@@ -9,7 +9,7 @@ anyhow = "1"
 log = "0.4"
 pinboard = "2.1"
 dashmap = "4"
-downcast = "0.10"
+downcast = "0.11"
 flume = "0.10"
 mizer-clock = { path = "clock" }
 mizer-node = { path = "pipeline/node" }

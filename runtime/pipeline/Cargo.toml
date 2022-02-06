@@ -8,7 +8,7 @@ edition = "2018"
 log = "0.4"
 anyhow = "1"
 gstreamer = "0.17"
-metrics = "0.14"
+metrics = "0.18"
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-protocol-laser = { path = "../../components/connections/protocols/laser" }
 mizer-project-files = { path = "../projects" }
@@ -21,7 +21,7 @@ mizer-processing = { path = "../processing" }
 dashmap = "4"
 flume = "0.10"
 ringbuffer = "0.8"
-downcast = "0.10"
+downcast = "0.11"
 profiling = "1"
 pinboard = "2.1"
 

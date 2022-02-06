@@ -77,12 +77,12 @@ tracy = ["profiling/profile-with-tracy"]
 
 [dependencies]
 derive_more = "0.99"
-env_logger = "0.7"
+env_logger = "0.9"
 log = "0.4"
 anyhow = "1"
 gstreamer = "0.17"
 structopt = "0.3"
-metrics = "0.14"
+metrics = "0.18"
 mizer-media = { path = "components/media" }
 mizer-project-files = { path = "runtime/projects" }
 mizer-fixtures = { path = "components/fixtures" }
@@ -108,7 +108,7 @@ mizer-ui = { path = "ui", optional = true }
 mizer-util = { path = "util" }
 mizer-message-bus = { path = "util/bus" }
 mizer-settings = { path = "runtime/settings" }
-tokio = { version = "1.8", features = ["rt-multi-thread", "macros", "time", "rt"] }
+tokio = { version = "1.16", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.1"
 dashmap = "4"
@@ -116,7 +116,7 @@ flume = "0.10"
 profiling = "1.0"
 
 [dev-dependencies]
-test-case = "1.0"
+test-case = "1.2"
 criterion = { version = "0.3", features = ["html_reports"] }
 
 [[bench]]

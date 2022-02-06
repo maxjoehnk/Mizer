@@ -23,7 +23,7 @@ pub async fn start(media_server_api: MediaServerApi) -> anyhow::Result<()> {
     Ok(())
 }
 
-async fn add_media(api: &MediaServerApi, mut payload: Multipart) -> tide::Result {
+async fn add_media(api: &MediaServerApi, mut payload: Multipart<'_>) -> tide::Result {
     let mut media_request = MediaCreateModel {
         name: String::new(),
         tags: Vec::new(),

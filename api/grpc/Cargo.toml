@@ -16,8 +16,8 @@ mizer-layouts = { path = "../../runtime/layouts" }
 grpc = { git = "https://github.com/stepancheg/grpc-rust", rev = "a0d7d22" }
 grpc-protobuf = { git = "https://github.com/stepancheg/grpc-rust", rev = "a0d7d22" }
 futures = "0.3"
-protobuf = "2.23"
-tokio = { version = "1.8" }
+protobuf = "2.24"
+tokio = { version = "1.16" }
 mizer-api = { path = ".." }
 
 [build-dependencies]

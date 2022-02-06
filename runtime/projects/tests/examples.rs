@@ -2,16 +2,21 @@ use mizer_project_files::Project;
 use test_case::test_case;
 
 #[test_case("artnet"; "artnet")]
+#[test_case("effects"; "effects")]
 #[test_case("fixture"; "fixture")]
-#[test_case("laser"; "laser")]
-#[test_case("pixels"; "pixels")]
-#[test_case("sacn"; "sacn")]
-#[test_case("sequence"; "sequence")]
-#[test_case("video"; "video")]
+#[test_case("history"; "history")]
 #[test_case("inputs"; "inputs")]
-#[test_case("osc"; "osc")]
+#[test_case("laser"; "laser")]
+#[test_case("media"; "media")]
 #[test_case("midi"; "midi")]
 #[test_case("operations"; "operations")]
+#[test_case("osc"; "osc")]
+#[test_case("pixels"; "pixels")]
+#[test_case("presets"; "presets")]
+#[test_case("sacn"; "sacn")]
+#[test_case("sequence"; "sequence")]
+#[test_case("sequencer"; "sequencer")]
+#[test_case("video"; "video")]
 fn test_load_project(project: &str) {
     let path = format!(
         "{}/../../examples/{}.yml",

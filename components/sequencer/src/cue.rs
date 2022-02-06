@@ -18,7 +18,9 @@ pub struct Cue {
     /// CueTrigger::Follow => pause between cues
     /// CueTrigger::Time => time after previous cue was triggered until this cue is triggered
     pub time: Option<SequencerTime>,
+    #[serde(default)]
     pub channels: Vec<CueChannel>,
+    #[serde(default)]
     pub effects: Vec<CueEffect>,
     #[serde(default)]
     pub loop_mode: LoopMode,

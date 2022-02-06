@@ -87,7 +87,7 @@ class Effect extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Effect', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pc<EffectStep>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'steps', $pb.PbFieldType.PM, subBuilder: EffectStep.create)
+    ..pc<EffectChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: EffectChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -95,7 +95,7 @@ class Effect extends $pb.GeneratedMessage {
   factory Effect({
     $core.int? id,
     $core.String? name,
-    $core.Iterable<EffectStep>? steps,
+    $core.Iterable<EffectChannel>? channels,
   }) {
     final _result = create();
     if (id != null) {
@@ -104,8 +104,8 @@ class Effect extends $pb.GeneratedMessage {
     if (name != null) {
       _result.name = name;
     }
-    if (steps != null) {
-      _result.steps.addAll(steps);
+    if (channels != null) {
+      _result.channels.addAll(channels);
     }
     return _result;
   }
@@ -149,97 +149,27 @@ class Effect extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<EffectStep> get steps => $_getList(2);
-}
-
-class EffectStep extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EffectStep', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
-    ..pc<EffectChannel>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: EffectChannel.create)
-    ..hasRequiredFields = false
-  ;
-
-  EffectStep._() : super();
-  factory EffectStep({
-    $core.Iterable<EffectChannel>? channels,
-  }) {
-    final _result = create();
-    if (channels != null) {
-      _result.channels.addAll(channels);
-    }
-    return _result;
-  }
-  factory EffectStep.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory EffectStep.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  EffectStep clone() => EffectStep()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  EffectStep copyWith(void Function(EffectStep) updates) => super.copyWith((message) => updates(message as EffectStep)) as EffectStep; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static EffectStep create() => EffectStep._();
-  EffectStep createEmptyInstance() => create();
-  static $pb.PbList<EffectStep> createRepeated() => $pb.PbList<EffectStep>();
-  @$core.pragma('dart2js:noInline')
-  static EffectStep getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EffectStep>(create);
-  static EffectStep? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<EffectChannel> get channels => $_getList(0);
-}
-
-enum EffectChannel_ControlPoint {
-  simple, 
-  quadratic, 
-  cubic, 
-  notSet
+  $core.List<EffectChannel> get channels => $_getList(2);
 }
 
 class EffectChannel extends $pb.GeneratedMessage {
-  static const $core.Map<$core.int, EffectChannel_ControlPoint> _EffectChannel_ControlPointByTag = {
-    3 : EffectChannel_ControlPoint.simple,
-    4 : EffectChannel_ControlPoint.quadratic,
-    5 : EffectChannel_ControlPoint.cubic,
-    0 : EffectChannel_ControlPoint.notSet
-  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EffectChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
-    ..oo(0, [3, 4, 5])
     ..e<$0.FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
-    ..aOM<$1.CueValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: $1.CueValue.create)
-    ..aOM<SimpleControlPoint>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'simple', subBuilder: SimpleControlPoint.create)
-    ..aOM<QuadraticControlPoint>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadratic', subBuilder: QuadraticControlPoint.create)
-    ..aOM<CubicControlPoint>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cubic', subBuilder: CubicControlPoint.create)
+    ..pc<EffectStep>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'steps', $pb.PbFieldType.PM, subBuilder: EffectStep.create)
     ..hasRequiredFields = false
   ;
 
   EffectChannel._() : super();
   factory EffectChannel({
     $0.FixtureControl? control,
-    $1.CueValue? value,
-    SimpleControlPoint? simple,
-    QuadraticControlPoint? quadratic,
-    CubicControlPoint? cubic,
+    $core.Iterable<EffectStep>? steps,
   }) {
     final _result = create();
     if (control != null) {
       _result.control = control;
     }
-    if (value != null) {
-      _result.value = value;
-    }
-    if (simple != null) {
-      _result.simple = simple;
-    }
-    if (quadratic != null) {
-      _result.quadratic = quadratic;
-    }
-    if (cubic != null) {
-      _result.cubic = cubic;
+    if (steps != null) {
+      _result.steps.addAll(steps);
     }
     return _result;
   }
@@ -264,9 +194,6 @@ class EffectChannel extends $pb.GeneratedMessage {
   static EffectChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EffectChannel>(create);
   static EffectChannel? _defaultInstance;
 
-  EffectChannel_ControlPoint whichControlPoint() => _EffectChannel_ControlPointByTag[$_whichOneof(0)]!;
-  void clearControlPoint() => clearField($_whichOneof(0));
-
   @$pb.TagNumber(1)
   $0.FixtureControl get control => $_getN(0);
   @$pb.TagNumber(1)
@@ -277,48 +204,121 @@ class EffectChannel extends $pb.GeneratedMessage {
   void clearControl() => clearField(1);
 
   @$pb.TagNumber(2)
-  $1.CueValue get value => $_getN(1);
+  $core.List<EffectStep> get steps => $_getList(1);
+}
+
+enum EffectStep_ControlPoint {
+  simple, 
+  quadratic, 
+  cubic, 
+  notSet
+}
+
+class EffectStep extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, EffectStep_ControlPoint> _EffectStep_ControlPointByTag = {
+    2 : EffectStep_ControlPoint.simple,
+    3 : EffectStep_ControlPoint.quadratic,
+    4 : EffectStep_ControlPoint.cubic,
+    0 : EffectStep_ControlPoint.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EffectStep', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
+    ..oo(0, [2, 3, 4])
+    ..aOM<$1.CueValue>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: $1.CueValue.create)
+    ..aOM<SimpleControlPoint>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'simple', subBuilder: SimpleControlPoint.create)
+    ..aOM<QuadraticControlPoint>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'quadratic', subBuilder: QuadraticControlPoint.create)
+    ..aOM<CubicControlPoint>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cubic', subBuilder: CubicControlPoint.create)
+    ..hasRequiredFields = false
+  ;
+
+  EffectStep._() : super();
+  factory EffectStep({
+    $1.CueValue? value,
+    SimpleControlPoint? simple,
+    QuadraticControlPoint? quadratic,
+    CubicControlPoint? cubic,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (simple != null) {
+      _result.simple = simple;
+    }
+    if (quadratic != null) {
+      _result.quadratic = quadratic;
+    }
+    if (cubic != null) {
+      _result.cubic = cubic;
+    }
+    return _result;
+  }
+  factory EffectStep.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EffectStep.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EffectStep clone() => EffectStep()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EffectStep copyWith(void Function(EffectStep) updates) => super.copyWith((message) => updates(message as EffectStep)) as EffectStep; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EffectStep create() => EffectStep._();
+  EffectStep createEmptyInstance() => create();
+  static $pb.PbList<EffectStep> createRepeated() => $pb.PbList<EffectStep>();
+  @$core.pragma('dart2js:noInline')
+  static EffectStep getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EffectStep>(create);
+  static EffectStep? _defaultInstance;
+
+  EffectStep_ControlPoint whichControlPoint() => _EffectStep_ControlPointByTag[$_whichOneof(0)]!;
+  void clearControlPoint() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $1.CueValue get value => $_getN(0);
+  @$pb.TagNumber(1)
+  set value($1.CueValue v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+  @$pb.TagNumber(1)
+  $1.CueValue ensureValue() => $_ensure(0);
+
   @$pb.TagNumber(2)
-  set value($1.CueValue v) { setField(2, v); }
+  SimpleControlPoint get simple => $_getN(1);
   @$pb.TagNumber(2)
-  $core.bool hasValue() => $_has(1);
+  set simple(SimpleControlPoint v) { setField(2, v); }
   @$pb.TagNumber(2)
-  void clearValue() => clearField(2);
+  $core.bool hasSimple() => $_has(1);
   @$pb.TagNumber(2)
-  $1.CueValue ensureValue() => $_ensure(1);
+  void clearSimple() => clearField(2);
+  @$pb.TagNumber(2)
+  SimpleControlPoint ensureSimple() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  SimpleControlPoint get simple => $_getN(2);
+  QuadraticControlPoint get quadratic => $_getN(2);
   @$pb.TagNumber(3)
-  set simple(SimpleControlPoint v) { setField(3, v); }
+  set quadratic(QuadraticControlPoint v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasSimple() => $_has(2);
+  $core.bool hasQuadratic() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSimple() => clearField(3);
+  void clearQuadratic() => clearField(3);
   @$pb.TagNumber(3)
-  SimpleControlPoint ensureSimple() => $_ensure(2);
+  QuadraticControlPoint ensureQuadratic() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  QuadraticControlPoint get quadratic => $_getN(3);
+  CubicControlPoint get cubic => $_getN(3);
   @$pb.TagNumber(4)
-  set quadratic(QuadraticControlPoint v) { setField(4, v); }
+  set cubic(CubicControlPoint v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasQuadratic() => $_has(3);
+  $core.bool hasCubic() => $_has(3);
   @$pb.TagNumber(4)
-  void clearQuadratic() => clearField(4);
+  void clearCubic() => clearField(4);
   @$pb.TagNumber(4)
-  QuadraticControlPoint ensureQuadratic() => $_ensure(3);
-
-  @$pb.TagNumber(5)
-  CubicControlPoint get cubic => $_getN(4);
-  @$pb.TagNumber(5)
-  set cubic(CubicControlPoint v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasCubic() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearCubic() => clearField(5);
-  @$pb.TagNumber(5)
-  CubicControlPoint ensureCubic() => $_ensure(4);
+  CubicControlPoint ensureCubic() => $_ensure(3);
 }
 
 class SimpleControlPoint extends $pb.GeneratedMessage {

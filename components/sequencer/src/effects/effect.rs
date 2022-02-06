@@ -12,19 +12,19 @@ use crate::SequencerValue;
 pub struct Effect {
     pub id: u32,
     pub name: String,
-    pub steps: Vec<EffectStep>,
+    pub channels: Vec<EffectChannel>,
 }
 
 impl Effect {
     pub(crate) fn build_splines(&self) -> HashMap<FixtureFaderControl, Spline> {
         let mut steps =
             HashMap::<FixtureFaderControl, Vec<(EffectControlPoint, SequencerValue<f64>)>>::new();
-        for step in self.steps.iter() {
-            for channel in step.channels.iter() {
+        for channel in self.channels.iter() {
+            for step in channel.steps.iter() {
                 steps
                     .entry(channel.control.clone())
-                    .and_modify(|values| values.push((channel.control_point, channel.value)))
-                    .or_insert_with(|| vec![(channel.control_point, channel.value)]);
+                    .and_modify(|values| values.push((step.control_point, step.value)))
+                    .or_insert_with(|| vec![(step.control_point, step.value)]);
             }
         }
 
@@ -53,60 +53,88 @@ impl Effect {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct EffectStep {
-    pub channels: Vec<EffectChannel>,
-}
-
-impl EffectStep {
-    pub const fn new(channels: Vec<EffectChannel>) -> Self {
-        Self { channels }
-    }
-}
-
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
-pub struct EffectChannel {
-    pub control: FixtureFaderControl,
     pub value: SequencerValue<f64>,
     #[serde(default)]
     pub control_point: EffectControlPoint,
 }
 
-impl EffectChannel {
-    pub const fn new(control: FixtureFaderControl, value: f64) -> Self {
+impl EffectStep {
+    pub const fn new(value: f64) -> Self {
         Self {
-            control,
             value: SequencerValue::Direct(value),
             control_point: EffectControlPoint::Simple,
         }
     }
 
-    pub const fn range(control: FixtureFaderControl, value: (f64, f64)) -> Self {
+    pub const fn range(value: (f64, f64)) -> Self {
         Self {
-            control,
             value: SequencerValue::Range(value),
             control_point: EffectControlPoint::Simple,
         }
     }
 
-    pub const fn quadratic(control: FixtureFaderControl, value: f64, point: (f64, f64)) -> Self {
+    pub const fn quadratic(value: f64, point: (f64, f64)) -> Self {
         Self {
-            control,
             value: SequencerValue::Direct(value),
             control_point: EffectControlPoint::Quadratic([point.0, point.1]),
         }
     }
 
     pub const fn cubic(
-        control: FixtureFaderControl,
         value: f64,
         a: (f64, f64),
         b: (f64, f64),
     ) -> Self {
         Self {
-            control,
             value: SequencerValue::Direct(value),
             control_point: EffectControlPoint::Cubic([a.0, a.1], [b.0, b.1]),
         }
     }
+
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+pub struct EffectChannel {
+    pub control: FixtureFaderControl,
+    pub steps: Vec<EffectStep>,
+}
+
+impl EffectChannel {
+    pub const fn new(control: FixtureFaderControl, steps: Vec<EffectStep>) -> Self {
+        Self {
+            control,
+            steps
+        }
+    }
+
+    // pub const fn range(control: FixtureFaderControl, value: (f64, f64)) -> Self {
+    //     Self {
+    //         control,
+    //         value: SequencerValue::Range(value),
+    //         control_point: EffectControlPoint::Simple,
+    //     }
+    // }
+    //
+    // pub const fn quadratic(control: FixtureFaderControl, value: f64, point: (f64, f64)) -> Self {
+    //     Self {
+    //         control,
+    //         value: SequencerValue::Direct(value),
+    //         control_point: EffectControlPoint::Quadratic([point.0, point.1]),
+    //     }
+    // }
+    //
+    // pub const fn cubic(
+    //     control: FixtureFaderControl,
+    //     value: f64,
+    //     a: (f64, f64),
+    //     b: (f64, f64),
+    // ) -> Self {
+    //     Self {
+    //         control,
+    //         value: SequencerValue::Direct(value),
+    //         control_point: EffectControlPoint::Cubic([a.0, a.1], [b.0, b.1]),
+    //     }
+    // }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -126,8 +154,8 @@ impl Default for EffectControlPoint {
 mod tests {
     use test_case::test_case;
     use mizer_fixtures::definition::FixtureFaderControl;
-    use crate::{Effect, EffectChannel, SequencerValue};
-    use crate::effects::default_effects::EffectStepTemplate;
+    use crate::{Effect, EffectChannel, EffectStep, SequencerValue};
+    use crate::effects::default_effects::EffectChannelTemplate;
 
     #[test_case(0., 1., 0., 0.)]
     #[test_case(0., 1., 1., 1.)]
@@ -136,13 +164,8 @@ mod tests {
         let effect = Effect {
             id: Default::default(),
             name: Default::default(),
-            steps: vec![
-                (&EffectStepTemplate::new([
-                    EffectChannel::new(FixtureFaderControl::Intensity, 0.)
-                ])).into(),
-                (&EffectStepTemplate::new([
-                    EffectChannel::new(FixtureFaderControl::Intensity, 1.)
-                ])).into(),
+            channels: vec![
+                (&EffectChannelTemplate::new(FixtureFaderControl::Intensity, [EffectStep::new(0.), EffectStep::new(1.)])).into(),
             ]
         };
 
@@ -160,14 +183,10 @@ mod tests {
         let effect = Effect {
             id: Default::default(),
             name: Default::default(),
-            steps: vec![
-                (&EffectStepTemplate::new([
-                    EffectChannel::new(FixtureFaderControl::Intensity, 0.)
-                ])).into(),
-                (&EffectStepTemplate::new([
-                    EffectChannel::range(FixtureFaderControl::Intensity, end)
-                ])).into(),
-            ]
+            channels: vec![(&EffectChannelTemplate::new(FixtureFaderControl::Intensity, [
+                EffectStep::new(0.),
+                EffectStep::range(end),
+            ])).into()]
         };
 
         let splines = effect.build_splines();

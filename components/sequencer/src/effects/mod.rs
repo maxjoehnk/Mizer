@@ -15,9 +15,9 @@ pub(crate) use self::processor::*;
 
 #[cfg(test)]
 mod tests {
-    use crate::effects::default_effects::CIRCLE;
+    use crate::effects::default_effects::{CIRCLE, EffectChannelTemplate};
     use crate::effects::effect_grapher::{graph_effect, graph_position_effect};
-    use crate::{Effect, EffectStep, EffectChannel};
+    use crate::{Effect, EffectStep};
     use mizer_fixtures::definition::FixtureFaderControl;
 
     #[test]
@@ -39,17 +39,11 @@ mod tests {
         let effect = Effect {
             name: "linear_range".into(),
             id: 1,
-            steps: vec![
-                EffectStep {
-                    channels: vec![
-                        EffectChannel::new(FixtureFaderControl::Intensity, 0.)
-                    ]
-                },
-                EffectStep {
-                    channels: vec![
-                        EffectChannel::range(FixtureFaderControl::Intensity, (0., 1.))
-                    ]
-                }
+            channels: vec![
+                (&EffectChannelTemplate::new(FixtureFaderControl::Intensity, [
+                    EffectStep::new(0.),
+                    EffectStep::range((0., 1.))
+                ])).into()
             ]
         };
 

@@ -36,8 +36,8 @@ fn run_effect(effect: &Effect, fixtures: Vec<u32>) -> anyhow::Result<(HashMap<(u
     for fixture_id in fixtures.iter() {
         add_test_fixture(&fixture_manager, *fixture_id);
     }
-    let mut effect_instance = EffectInstance::new(&effect, fixtures.into_iter().map(FixtureId::Fixture).collect());
-    let frames = effect.steps.len() * FRAMES_PER_STEP;
+    let mut effect_instance = EffectInstance::new(effect, fixtures.into_iter().map(FixtureId::Fixture).collect());
+    let frames = effect.channels.iter().map(|c| c.steps.len()).max().unwrap_or_default() * FRAMES_PER_STEP;
 
     for _ in 0..frames {
         let frame = clock.tick();

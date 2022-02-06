@@ -31,39 +31,39 @@ const Effect$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'steps', '3': 3, '4': 3, '5': 11, '6': '.mizer.effects.EffectStep', '10': 'steps'},
+    const {'1': 'channels', '3': 3, '4': 3, '5': 11, '6': '.mizer.effects.EffectChannel', '10': 'channels'},
   ],
 };
 
 /// Descriptor for `Effect`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List effectDescriptor = $convert.base64Decode('CgZFZmZlY3QSDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSLwoFc3RlcHMYAyADKAsyGS5taXplci5lZmZlY3RzLkVmZmVjdFN0ZXBSBXN0ZXBz');
-@$core.Deprecated('Use effectStepDescriptor instead')
-const EffectStep$json = const {
-  '1': 'EffectStep',
-  '2': const [
-    const {'1': 'channels', '3': 1, '4': 3, '5': 11, '6': '.mizer.effects.EffectChannel', '10': 'channels'},
-  ],
-};
-
-/// Descriptor for `EffectStep`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List effectStepDescriptor = $convert.base64Decode('CgpFZmZlY3RTdGVwEjgKCGNoYW5uZWxzGAEgAygLMhwubWl6ZXIuZWZmZWN0cy5FZmZlY3RDaGFubmVsUghjaGFubmVscw==');
+final $typed_data.Uint8List effectDescriptor = $convert.base64Decode('CgZFZmZlY3QSDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSOAoIY2hhbm5lbHMYAyADKAsyHC5taXplci5lZmZlY3RzLkVmZmVjdENoYW5uZWxSCGNoYW5uZWxz');
 @$core.Deprecated('Use effectChannelDescriptor instead')
 const EffectChannel$json = const {
   '1': 'EffectChannel',
   '2': const [
     const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
-    const {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.mizer.sequencer.CueValue', '10': 'value'},
-    const {'1': 'simple', '3': 3, '4': 1, '5': 11, '6': '.mizer.effects.SimpleControlPoint', '9': 0, '10': 'simple'},
-    const {'1': 'quadratic', '3': 4, '4': 1, '5': 11, '6': '.mizer.effects.QuadraticControlPoint', '9': 0, '10': 'quadratic'},
-    const {'1': 'cubic', '3': 5, '4': 1, '5': 11, '6': '.mizer.effects.CubicControlPoint', '9': 0, '10': 'cubic'},
+    const {'1': 'steps', '3': 2, '4': 3, '5': 11, '6': '.mizer.effects.EffectStep', '10': 'steps'},
+  ],
+};
+
+/// Descriptor for `EffectChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List effectChannelDescriptor = $convert.base64Decode('Cg1FZmZlY3RDaGFubmVsEjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBIvCgVzdGVwcxgCIAMoCzIZLm1pemVyLmVmZmVjdHMuRWZmZWN0U3RlcFIFc3RlcHM=');
+@$core.Deprecated('Use effectStepDescriptor instead')
+const EffectStep$json = const {
+  '1': 'EffectStep',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 11, '6': '.mizer.sequencer.CueValue', '10': 'value'},
+    const {'1': 'simple', '3': 2, '4': 1, '5': 11, '6': '.mizer.effects.SimpleControlPoint', '9': 0, '10': 'simple'},
+    const {'1': 'quadratic', '3': 3, '4': 1, '5': 11, '6': '.mizer.effects.QuadraticControlPoint', '9': 0, '10': 'quadratic'},
+    const {'1': 'cubic', '3': 4, '4': 1, '5': 11, '6': '.mizer.effects.CubicControlPoint', '9': 0, '10': 'cubic'},
   ],
   '8': const [
     const {'1': 'control_point'},
   ],
 };
 
-/// Descriptor for `EffectChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List effectChannelDescriptor = $convert.base64Decode('Cg1FZmZlY3RDaGFubmVsEjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBIvCgV2YWx1ZRgCIAEoCzIZLm1pemVyLnNlcXVlbmNlci5DdWVWYWx1ZVIFdmFsdWUSOwoGc2ltcGxlGAMgASgLMiEubWl6ZXIuZWZmZWN0cy5TaW1wbGVDb250cm9sUG9pbnRIAFIGc2ltcGxlEkQKCXF1YWRyYXRpYxgEIAEoCzIkLm1pemVyLmVmZmVjdHMuUXVhZHJhdGljQ29udHJvbFBvaW50SABSCXF1YWRyYXRpYxI4CgVjdWJpYxgFIAEoCzIgLm1pemVyLmVmZmVjdHMuQ3ViaWNDb250cm9sUG9pbnRIAFIFY3ViaWNCDwoNY29udHJvbF9wb2ludA==');
+/// Descriptor for `EffectStep`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List effectStepDescriptor = $convert.base64Decode('CgpFZmZlY3RTdGVwEi8KBXZhbHVlGAEgASgLMhkubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUgV2YWx1ZRI7CgZzaW1wbGUYAiABKAsyIS5taXplci5lZmZlY3RzLlNpbXBsZUNvbnRyb2xQb2ludEgAUgZzaW1wbGUSRAoJcXVhZHJhdGljGAMgASgLMiQubWl6ZXIuZWZmZWN0cy5RdWFkcmF0aWNDb250cm9sUG9pbnRIAFIJcXVhZHJhdGljEjgKBWN1YmljGAQgASgLMiAubWl6ZXIuZWZmZWN0cy5DdWJpY0NvbnRyb2xQb2ludEgAUgVjdWJpY0IPCg1jb250cm9sX3BvaW50');
 @$core.Deprecated('Use simpleControlPointDescriptor instead')
 const SimpleControlPoint$json = const {
   '1': 'SimpleControlPoint',

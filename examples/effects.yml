@@ -49,37 +49,30 @@ sequences:
 effects:
   - id: 1
     name: Test
-    steps:
-      - channels:
-          - control: Pan
-            value: 0
-          - control: Tilt
-            value:
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+          - value: 1
+      - control: Tilt
+        steps:
+          - value:
               - 0
               - 1
-      - channels:
-          - control: Pan
-            value: 1
-          - control: Tilt
-            value: 0.5
+          - value: 0.5
   - id: 2
     name: Test 2
-    steps:
-      - channels:
-          - control: Pan
-            value: 0
-          - control: Tilt
-            value: 0
-      - channels:
-          - control: Pan
-            value: 1
-          - control: Tilt
-            value: 0.5
-      - channels:
-          - control: Pan
-            value: 0
-          - control: Tilt
-            value:
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+          - value: 1
+          - value: 0
+      - control: Tilt
+        steps:
+          - value: 0
+          - value: 0.5
+          - value:
               - 0.75
               - 1
 

@@ -18,20 +18,20 @@ message Effects {
 message Effect {
   uint32 id = 1;
   string name = 2;
-  repeated EffectStep steps = 3;
-}
-
-message EffectStep {
-  repeated EffectChannel channels = 1;
+  repeated EffectChannel channels = 3;
 }
 
 message EffectChannel {
   mizer.fixtures.FixtureControl control = 1;
-  mizer.sequencer.CueValue value = 2;
+  repeated EffectStep steps = 2;
+}
+
+message EffectStep {
+  mizer.sequencer.CueValue value = 1;
   oneof control_point {
-    SimpleControlPoint simple = 3;
-    QuadraticControlPoint quadratic = 4;
-    CubicControlPoint cubic = 5;
+    SimpleControlPoint simple = 2;
+    QuadraticControlPoint quadratic = 3;
+    CubicControlPoint cubic = 4;
   }
 }
 

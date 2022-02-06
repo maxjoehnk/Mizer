@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
@@ -80,34 +79,20 @@ class FrameEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Panel(label: "Frames", child: ListView(
-      children: frames.map((frame) {
+      children: effect.channels.map((channel) {
         return Row(children: [
-          Text(frame.control.name),
-          Expanded(child: CustomPaint(painter: FramePainter(frame), size: Size.fromHeight(64)))
+          Text(channel.control.name),
+          Expanded(child: CustomPaint(painter: FramePainter(channel), size: Size.fromHeight(64)))
         ]);
       }).toList(growable: false),
     ));
   }
-
-  List<EffectFrame> get frames {
-    Map<FixtureControl, List<EffectChannel>> frames = Map();
-    for (var step in effect.steps) {
-      for (var channel in step.channels) {
-        frames.update(channel.control, (values) => [...values, channel],
-            ifAbsent: () => [channel]);
-      }
-    }
-    return frames
-        .map((key, value) => MapEntry(key, EffectFrame(control: key, steps: value)))
-        .values
-        .toList(growable: false);
-  }
 }
 
 class FramePainter extends CustomPainter {
-  final EffectFrame frame;
+  final EffectChannel channel;
 
-  FramePainter(this.frame);
+  FramePainter(this.channel);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -121,10 +106,10 @@ class FramePainter extends CustomPainter {
     var upperLinePath = Path();
     var lowerLinePath = Path();
     var fillPath = Path();
-    double stepSize = size.width / frame.steps.length;
+    double stepSize = size.width / channel.steps.length;
     var backPath = [];
-    for (var i = 0; i < frame.steps.length; i++) {
-      var step = frame.steps[i];
+    for (var i = 0; i < channel.steps.length; i++) {
+      var step = channel.steps[i];
       var x = i * stepSize;
       double y;
       double y2;
@@ -166,13 +151,6 @@ class FramePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant FramePainter oldDelegate) {
-    return oldDelegate.frame != frame;
+    return oldDelegate.channel != channel;
   }
-}
-
-class EffectFrame {
-  final FixtureControl control;
-  final List<EffectChannel> steps;
-
-  EffectFrame({ required this.control, required this.steps });
 }

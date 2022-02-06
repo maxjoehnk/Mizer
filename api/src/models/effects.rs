@@ -317,7 +317,7 @@ pub struct Effect {
     // message fields
     pub id: u32,
     pub name: ::std::string::String,
-    pub steps: ::protobuf::RepeatedField<EffectStep>,
+    pub channels: ::protobuf::RepeatedField<EffectChannel>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -377,35 +377,35 @@ impl Effect {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
-    // repeated .mizer.effects.EffectStep steps = 3;
+    // repeated .mizer.effects.EffectChannel channels = 3;
 
 
-    pub fn get_steps(&self) -> &[EffectStep] {
-        &self.steps
+    pub fn get_channels(&self) -> &[EffectChannel] {
+        &self.channels
     }
-    pub fn clear_steps(&mut self) {
-        self.steps.clear();
+    pub fn clear_channels(&mut self) {
+        self.channels.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_steps(&mut self, v: ::protobuf::RepeatedField<EffectStep>) {
-        self.steps = v;
+    pub fn set_channels(&mut self, v: ::protobuf::RepeatedField<EffectChannel>) {
+        self.channels = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_steps(&mut self) -> &mut ::protobuf::RepeatedField<EffectStep> {
-        &mut self.steps
+    pub fn mut_channels(&mut self) -> &mut ::protobuf::RepeatedField<EffectChannel> {
+        &mut self.channels
     }
 
     // Take field
-    pub fn take_steps(&mut self) -> ::protobuf::RepeatedField<EffectStep> {
-        ::std::mem::replace(&mut self.steps, ::protobuf::RepeatedField::new())
+    pub fn take_channels(&mut self) -> ::protobuf::RepeatedField<EffectChannel> {
+        ::std::mem::replace(&mut self.channels, ::protobuf::RepeatedField::new())
     }
 }
 
 impl ::protobuf::Message for Effect {
     fn is_initialized(&self) -> bool {
-        for v in &self.steps {
+        for v in &self.channels {
             if !v.is_initialized() {
                 return false;
             }
@@ -428,7 +428,7 @@ impl ::protobuf::Message for Effect {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.steps)?;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.channels)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -448,7 +448,7 @@ impl ::protobuf::Message for Effect {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.name);
         }
-        for value in &self.steps {
+        for value in &self.channels {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
@@ -464,7 +464,7 @@ impl ::protobuf::Message for Effect {
         if !self.name.is_empty() {
             os.write_string(2, &self.name)?;
         }
-        for v in &self.steps {
+        for v in &self.channels {
             os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -517,10 +517,10 @@ impl ::protobuf::Message for Effect {
                 |m: &Effect| { &m.name },
                 |m: &mut Effect| { &mut m.name },
             ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<EffectStep>>(
-                "steps",
-                |m: &Effect| { &m.steps },
-                |m: &mut Effect| { &mut m.steps },
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<EffectChannel>>(
+                "channels",
+                |m: &Effect| { &m.channels },
+                |m: &mut Effect| { &mut m.channels },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Effect>(
                 "Effect",
@@ -540,7 +540,7 @@ impl ::protobuf::Clear for Effect {
     fn clear(&mut self) {
         self.id = 0;
         self.name.clear();
-        self.steps.clear();
+        self.channels.clear();
         self.unknown_fields.clear();
     }
 }
@@ -559,181 +559,10 @@ impl ::protobuf::reflect::ProtobufValue for Effect {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct EffectStep {
-    // message fields
-    pub channels: ::protobuf::RepeatedField<EffectChannel>,
-    // special fields
-    #[cfg_attr(feature = "with-serde", serde(skip))]
-    pub unknown_fields: ::protobuf::UnknownFields,
-    #[cfg_attr(feature = "with-serde", serde(skip))]
-    pub cached_size: ::protobuf::CachedSize,
-}
-
-impl<'a> ::std::default::Default for &'a EffectStep {
-    fn default() -> &'a EffectStep {
-        <EffectStep as ::protobuf::Message>::default_instance()
-    }
-}
-
-impl EffectStep {
-    pub fn new() -> EffectStep {
-        ::std::default::Default::default()
-    }
-
-    // repeated .mizer.effects.EffectChannel channels = 1;
-
-
-    pub fn get_channels(&self) -> &[EffectChannel] {
-        &self.channels
-    }
-    pub fn clear_channels(&mut self) {
-        self.channels.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_channels(&mut self, v: ::protobuf::RepeatedField<EffectChannel>) {
-        self.channels = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_channels(&mut self) -> &mut ::protobuf::RepeatedField<EffectChannel> {
-        &mut self.channels
-    }
-
-    // Take field
-    pub fn take_channels(&mut self) -> ::protobuf::RepeatedField<EffectChannel> {
-        ::std::mem::replace(&mut self.channels, ::protobuf::RepeatedField::new())
-    }
-}
-
-impl ::protobuf::Message for EffectStep {
-    fn is_initialized(&self) -> bool {
-        for v in &self.channels {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
-            match field_number {
-                1 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.channels)?;
-                },
-                _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u32 {
-        let mut my_size = 0;
-        for value in &self.channels {
-            let len = value.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        };
-        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
-        self.cached_size.set(my_size);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        for v in &self.channels {
-            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        };
-        os.write_unknown_fields(self.get_unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn get_cached_size(&self) -> u32 {
-        self.cached_size.get()
-    }
-
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        &self.unknown_fields
-    }
-
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        &mut self.unknown_fields
-    }
-
-    fn as_any(&self) -> &dyn (::std::any::Any) {
-        self as &dyn (::std::any::Any)
-    }
-    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
-        self as &mut dyn (::std::any::Any)
-    }
-    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
-        self
-    }
-
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-
-    fn new() -> EffectStep {
-        EffectStep::new()
-    }
-
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<EffectChannel>>(
-                "channels",
-                |m: &EffectStep| { &m.channels },
-                |m: &mut EffectStep| { &mut m.channels },
-            ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<EffectStep>(
-                "EffectStep",
-                fields,
-                file_descriptor_proto()
-            )
-        })
-    }
-
-    fn default_instance() -> &'static EffectStep {
-        static instance: ::protobuf::rt::LazyV2<EffectStep> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(EffectStep::new)
-    }
-}
-
-impl ::protobuf::Clear for EffectStep {
-    fn clear(&mut self) {
-        self.channels.clear();
-        self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for EffectStep {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for EffectStep {
-    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
-        ::protobuf::reflect::ReflectValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
-#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct EffectChannel {
     // message fields
     pub control: super::fixtures::FixtureControl,
-    pub value: ::protobuf::SingularPtrField<super::sequencer::CueValue>,
-    // message oneof groups
-    pub control_point: ::std::option::Option<EffectChannel_oneof_control_point>,
+    pub steps: ::protobuf::RepeatedField<EffectStep>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -745,14 +574,6 @@ impl<'a> ::std::default::Default for &'a EffectChannel {
     fn default() -> &'a EffectChannel {
         <EffectChannel as ::protobuf::Message>::default_instance()
     }
-}
-
-#[derive(Clone,PartialEq,Debug)]
-#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum EffectChannel_oneof_control_point {
-    simple(SimpleControlPoint),
-    quadratic(QuadraticControlPoint),
-    cubic(CubicControlPoint),
 }
 
 impl EffectChannel {
@@ -775,209 +596,39 @@ impl EffectChannel {
         self.control = v;
     }
 
-    // .mizer.sequencer.CueValue value = 2;
+    // repeated .mizer.effects.EffectStep steps = 2;
 
 
-    pub fn get_value(&self) -> &super::sequencer::CueValue {
-        self.value.as_ref().unwrap_or_else(|| <super::sequencer::CueValue as ::protobuf::Message>::default_instance())
+    pub fn get_steps(&self) -> &[EffectStep] {
+        &self.steps
     }
-    pub fn clear_value(&mut self) {
-        self.value.clear();
-    }
-
-    pub fn has_value(&self) -> bool {
-        self.value.is_some()
+    pub fn clear_steps(&mut self) {
+        self.steps.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_value(&mut self, v: super::sequencer::CueValue) {
-        self.value = ::protobuf::SingularPtrField::some(v);
+    pub fn set_steps(&mut self, v: ::protobuf::RepeatedField<EffectStep>) {
+        self.steps = v;
     }
 
     // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_value(&mut self) -> &mut super::sequencer::CueValue {
-        if self.value.is_none() {
-            self.value.set_default();
-        }
-        self.value.as_mut().unwrap()
+    pub fn mut_steps(&mut self) -> &mut ::protobuf::RepeatedField<EffectStep> {
+        &mut self.steps
     }
 
     // Take field
-    pub fn take_value(&mut self) -> super::sequencer::CueValue {
-        self.value.take().unwrap_or_else(|| super::sequencer::CueValue::new())
-    }
-
-    // .mizer.effects.SimpleControlPoint simple = 3;
-
-
-    pub fn get_simple(&self) -> &SimpleControlPoint {
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(ref v)) => v,
-            _ => <SimpleControlPoint as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_simple(&mut self) {
-        self.control_point = ::std::option::Option::None;
-    }
-
-    pub fn has_simple(&self) -> bool {
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_simple(&mut self, v: SimpleControlPoint) {
-        self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_simple(&mut self) -> &mut SimpleControlPoint {
-        if let ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(_)) = self.control_point {
-        } else {
-            self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(SimpleControlPoint::new()));
-        }
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_simple(&mut self) -> SimpleControlPoint {
-        if self.has_simple() {
-            match self.control_point.take() {
-                ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            SimpleControlPoint::new()
-        }
-    }
-
-    // .mizer.effects.QuadraticControlPoint quadratic = 4;
-
-
-    pub fn get_quadratic(&self) -> &QuadraticControlPoint {
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(ref v)) => v,
-            _ => <QuadraticControlPoint as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_quadratic(&mut self) {
-        self.control_point = ::std::option::Option::None;
-    }
-
-    pub fn has_quadratic(&self) -> bool {
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_quadratic(&mut self, v: QuadraticControlPoint) {
-        self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_quadratic(&mut self) -> &mut QuadraticControlPoint {
-        if let ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(_)) = self.control_point {
-        } else {
-            self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(QuadraticControlPoint::new()));
-        }
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_quadratic(&mut self) -> QuadraticControlPoint {
-        if self.has_quadratic() {
-            match self.control_point.take() {
-                ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            QuadraticControlPoint::new()
-        }
-    }
-
-    // .mizer.effects.CubicControlPoint cubic = 5;
-
-
-    pub fn get_cubic(&self) -> &CubicControlPoint {
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(ref v)) => v,
-            _ => <CubicControlPoint as ::protobuf::Message>::default_instance(),
-        }
-    }
-    pub fn clear_cubic(&mut self) {
-        self.control_point = ::std::option::Option::None;
-    }
-
-    pub fn has_cubic(&self) -> bool {
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(..)) => true,
-            _ => false,
-        }
-    }
-
-    // Param is passed by value, moved
-    pub fn set_cubic(&mut self, v: CubicControlPoint) {
-        self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(v))
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_cubic(&mut self) -> &mut CubicControlPoint {
-        if let ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(_)) = self.control_point {
-        } else {
-            self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(CubicControlPoint::new()));
-        }
-        match self.control_point {
-            ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(ref mut v)) => v,
-            _ => panic!(),
-        }
-    }
-
-    // Take field
-    pub fn take_cubic(&mut self) -> CubicControlPoint {
-        if self.has_cubic() {
-            match self.control_point.take() {
-                ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            CubicControlPoint::new()
-        }
+    pub fn take_steps(&mut self) -> ::protobuf::RepeatedField<EffectStep> {
+        ::std::mem::replace(&mut self.steps, ::protobuf::RepeatedField::new())
     }
 }
 
 impl ::protobuf::Message for EffectChannel {
     fn is_initialized(&self) -> bool {
-        for v in &self.value {
+        for v in &self.steps {
             if !v.is_initialized() {
                 return false;
             }
         };
-        if let Some(EffectChannel_oneof_control_point::simple(ref v)) = self.control_point {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(EffectChannel_oneof_control_point::quadratic(ref v)) = self.control_point {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
-        if let Some(EffectChannel_oneof_control_point::cubic(ref v)) = self.control_point {
-            if !v.is_initialized() {
-                return false;
-            }
-        }
         true
     }
 
@@ -989,25 +640,7 @@ impl ::protobuf::Message for EffectChannel {
                     ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 1, &mut self.unknown_fields)?
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.value)?;
-                },
-                3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::simple(is.read_message()?));
-                },
-                4 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::quadratic(is.read_message()?));
-                },
-                5 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self.control_point = ::std::option::Option::Some(EffectChannel_oneof_control_point::cubic(is.read_message()?));
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.steps)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -1024,26 +657,10 @@ impl ::protobuf::Message for EffectChannel {
         if self.control != super::fixtures::FixtureControl::INTENSITY {
             my_size += ::protobuf::rt::enum_size(1, self.control);
         }
-        if let Some(ref v) = self.value.as_ref() {
-            let len = v.compute_size();
+        for value in &self.steps {
+            let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        }
-        if let ::std::option::Option::Some(ref v) = self.control_point {
-            match v {
-                &EffectChannel_oneof_control_point::simple(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &EffectChannel_oneof_control_point::quadratic(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-                &EffectChannel_oneof_control_point::cubic(ref v) => {
-                    let len = v.compute_size();
-                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-                },
-            };
-        }
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1053,30 +670,11 @@ impl ::protobuf::Message for EffectChannel {
         if self.control != super::fixtures::FixtureControl::INTENSITY {
             os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.control))?;
         }
-        if let Some(ref v) = self.value.as_ref() {
+        for v in &self.steps {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
-        }
-        if let ::std::option::Option::Some(ref v) = self.control_point {
-            match v {
-                &EffectChannel_oneof_control_point::simple(ref v) => {
-                    os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &EffectChannel_oneof_control_point::quadratic(ref v) => {
-                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-                &EffectChannel_oneof_control_point::cubic(ref v) => {
-                    os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-                    os.write_raw_varint32(v.get_cached_size())?;
-                    v.write_to_with_cached_sizes(os)?;
-                },
-            };
-        }
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1120,25 +718,10 @@ impl ::protobuf::Message for EffectChannel {
                 |m: &EffectChannel| { &m.control },
                 |m: &mut EffectChannel| { &mut m.control },
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::sequencer::CueValue>>(
-                "value",
-                |m: &EffectChannel| { &m.value },
-                |m: &mut EffectChannel| { &mut m.value },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SimpleControlPoint>(
-                "simple",
-                EffectChannel::has_simple,
-                EffectChannel::get_simple,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, QuadraticControlPoint>(
-                "quadratic",
-                EffectChannel::has_quadratic,
-                EffectChannel::get_quadratic,
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, CubicControlPoint>(
-                "cubic",
-                EffectChannel::has_cubic,
-                EffectChannel::get_cubic,
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<EffectStep>>(
+                "steps",
+                |m: &EffectChannel| { &m.steps },
+                |m: &mut EffectChannel| { &mut m.steps },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<EffectChannel>(
                 "EffectChannel",
@@ -1157,10 +740,7 @@ impl ::protobuf::Message for EffectChannel {
 impl ::protobuf::Clear for EffectChannel {
     fn clear(&mut self) {
         self.control = super::fixtures::FixtureControl::INTENSITY;
-        self.value.clear();
-        self.control_point = ::std::option::Option::None;
-        self.control_point = ::std::option::Option::None;
-        self.control_point = ::std::option::Option::None;
+        self.steps.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1172,6 +752,426 @@ impl ::std::fmt::Debug for EffectChannel {
 }
 
 impl ::protobuf::reflect::ProtobufValue for EffectChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct EffectStep {
+    // message fields
+    pub value: ::protobuf::SingularPtrField<super::sequencer::CueValue>,
+    // message oneof groups
+    pub control_point: ::std::option::Option<EffectStep_oneof_control_point>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a EffectStep {
+    fn default() -> &'a EffectStep {
+        <EffectStep as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum EffectStep_oneof_control_point {
+    simple(SimpleControlPoint),
+    quadratic(QuadraticControlPoint),
+    cubic(CubicControlPoint),
+}
+
+impl EffectStep {
+    pub fn new() -> EffectStep {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.sequencer.CueValue value = 1;
+
+
+    pub fn get_value(&self) -> &super::sequencer::CueValue {
+        self.value.as_ref().unwrap_or_else(|| <super::sequencer::CueValue as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_value(&mut self) {
+        self.value.clear();
+    }
+
+    pub fn has_value(&self) -> bool {
+        self.value.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: super::sequencer::CueValue) {
+        self.value = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_value(&mut self) -> &mut super::sequencer::CueValue {
+        if self.value.is_none() {
+            self.value.set_default();
+        }
+        self.value.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_value(&mut self) -> super::sequencer::CueValue {
+        self.value.take().unwrap_or_else(|| super::sequencer::CueValue::new())
+    }
+
+    // .mizer.effects.SimpleControlPoint simple = 2;
+
+
+    pub fn get_simple(&self) -> &SimpleControlPoint {
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::simple(ref v)) => v,
+            _ => <SimpleControlPoint as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_simple(&mut self) {
+        self.control_point = ::std::option::Option::None;
+    }
+
+    pub fn has_simple(&self) -> bool {
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::simple(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_simple(&mut self, v: SimpleControlPoint) {
+        self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::simple(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_simple(&mut self) -> &mut SimpleControlPoint {
+        if let ::std::option::Option::Some(EffectStep_oneof_control_point::simple(_)) = self.control_point {
+        } else {
+            self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::simple(SimpleControlPoint::new()));
+        }
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::simple(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_simple(&mut self) -> SimpleControlPoint {
+        if self.has_simple() {
+            match self.control_point.take() {
+                ::std::option::Option::Some(EffectStep_oneof_control_point::simple(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            SimpleControlPoint::new()
+        }
+    }
+
+    // .mizer.effects.QuadraticControlPoint quadratic = 3;
+
+
+    pub fn get_quadratic(&self) -> &QuadraticControlPoint {
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(ref v)) => v,
+            _ => <QuadraticControlPoint as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_quadratic(&mut self) {
+        self.control_point = ::std::option::Option::None;
+    }
+
+    pub fn has_quadratic(&self) -> bool {
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_quadratic(&mut self, v: QuadraticControlPoint) {
+        self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_quadratic(&mut self) -> &mut QuadraticControlPoint {
+        if let ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(_)) = self.control_point {
+        } else {
+            self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(QuadraticControlPoint::new()));
+        }
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_quadratic(&mut self) -> QuadraticControlPoint {
+        if self.has_quadratic() {
+            match self.control_point.take() {
+                ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            QuadraticControlPoint::new()
+        }
+    }
+
+    // .mizer.effects.CubicControlPoint cubic = 4;
+
+
+    pub fn get_cubic(&self) -> &CubicControlPoint {
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(ref v)) => v,
+            _ => <CubicControlPoint as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_cubic(&mut self) {
+        self.control_point = ::std::option::Option::None;
+    }
+
+    pub fn has_cubic(&self) -> bool {
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cubic(&mut self, v: CubicControlPoint) {
+        self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_cubic(&mut self) -> &mut CubicControlPoint {
+        if let ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(_)) = self.control_point {
+        } else {
+            self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(CubicControlPoint::new()));
+        }
+        match self.control_point {
+            ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_cubic(&mut self) -> CubicControlPoint {
+        if self.has_cubic() {
+            match self.control_point.take() {
+                ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CubicControlPoint::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for EffectStep {
+    fn is_initialized(&self) -> bool {
+        for v in &self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        if let Some(EffectStep_oneof_control_point::simple(ref v)) = self.control_point {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(EffectStep_oneof_control_point::quadratic(ref v)) = self.control_point {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(EffectStep_oneof_control_point::cubic(ref v)) = self.control_point {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.value)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::simple(is.read_message()?));
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::quadratic(is.read_message()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.control_point = ::std::option::Option::Some(EffectStep_oneof_control_point::cubic(is.read_message()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.value.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let ::std::option::Option::Some(ref v) = self.control_point {
+            match v {
+                &EffectStep_oneof_control_point::simple(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &EffectStep_oneof_control_point::quadratic(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &EffectStep_oneof_control_point::cubic(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.value.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.control_point {
+            match v {
+                &EffectStep_oneof_control_point::simple(ref v) => {
+                    os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &EffectStep_oneof_control_point::quadratic(ref v) => {
+                    os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &EffectStep_oneof_control_point::cubic(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> EffectStep {
+        EffectStep::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::sequencer::CueValue>>(
+                "value",
+                |m: &EffectStep| { &m.value },
+                |m: &mut EffectStep| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SimpleControlPoint>(
+                "simple",
+                EffectStep::has_simple,
+                EffectStep::get_simple,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, QuadraticControlPoint>(
+                "quadratic",
+                EffectStep::has_quadratic,
+                EffectStep::get_quadratic,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, CubicControlPoint>(
+                "cubic",
+                EffectStep::has_cubic,
+                EffectStep::get_cubic,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<EffectStep>(
+                "EffectStep",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static EffectStep {
+        static instance: ::protobuf::rt::LazyV2<EffectStep> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(EffectStep::new)
+    }
+}
+
+impl ::protobuf::Clear for EffectStep {
+    fn clear(&mut self) {
+        self.value.clear();
+        self.control_point = ::std::option::Option::None;
+        self.control_point = ::std::option::Option::None;
+        self.control_point = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for EffectStep {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for EffectStep {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -1749,25 +1749,25 @@ impl ::protobuf::reflect::ProtobufValue for CubicControlPoint {
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\reffects.proto\x12\rmizer.effects\x1a\x0efixtures.proto\x1a\x0fsequen\
     cer.proto\"\x13\n\x11GetEffectsRequest\":\n\x07Effects\x12/\n\x07effects\
-    \x18\x01\x20\x03(\x0b2\x15.mizer.effects.EffectR\x07effects\"]\n\x06Effe\
+    \x18\x01\x20\x03(\x0b2\x15.mizer.effects.EffectR\x07effects\"f\n\x06Effe\
     ct\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\
-    \x20\x01(\tR\x04name\x12/\n\x05steps\x18\x03\x20\x03(\x0b2\x19.mizer.eff\
-    ects.EffectStepR\x05steps\"F\n\nEffectStep\x128\n\x08channels\x18\x01\
-    \x20\x03(\x0b2\x1c.mizer.effects.EffectChannelR\x08channels\"\xc8\x02\n\
-    \rEffectChannel\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtur\
-    es.FixtureControlR\x07control\x12/\n\x05value\x18\x02\x20\x01(\x0b2\x19.\
-    mizer.sequencer.CueValueR\x05value\x12;\n\x06simple\x18\x03\x20\x01(\x0b\
-    2!.mizer.effects.SimpleControlPointH\0R\x06simple\x12D\n\tquadratic\x18\
-    \x04\x20\x01(\x0b2$.mizer.effects.QuadraticControlPointH\0R\tquadratic\
-    \x128\n\x05cubic\x18\x05\x20\x01(\x0b2\x20.mizer.effects.CubicControlPoi\
-    ntH\0R\x05cubicB\x0f\n\rcontrol_point\"\x14\n\x12SimpleControlPoint\";\n\
-    \x15QuadraticControlPoint\x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\
-    \x12\x10\n\x03c0b\x18\x02\x20\x01(\x01R\x03c0b\"[\n\x11CubicControlPoint\
-    \x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x02\
-    \x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x03\x20\x01(\x01R\x03c1a\x12\
-    \x10\n\x03c1b\x18\x04\x20\x01(\x01R\x03c1b2V\n\nEffectsApi\x12H\n\nGetEf\
-    fects\x12\x20.mizer.effects.GetEffectsRequest\x1a\x16.mizer.effects.Effe\
-    cts\"\0b\x06proto3\
+    \x20\x01(\tR\x04name\x128\n\x08channels\x18\x03\x20\x03(\x0b2\x1c.mizer.\
+    effects.EffectChannelR\x08channels\"z\n\rEffectChannel\x128\n\x07control\
+    \x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\
+    /\n\x05steps\x18\x02\x20\x03(\x0b2\x19.mizer.effects.EffectStepR\x05step\
+    s\"\x8b\x02\n\nEffectStep\x12/\n\x05value\x18\x01\x20\x01(\x0b2\x19.mize\
+    r.sequencer.CueValueR\x05value\x12;\n\x06simple\x18\x02\x20\x01(\x0b2!.m\
+    izer.effects.SimpleControlPointH\0R\x06simple\x12D\n\tquadratic\x18\x03\
+    \x20\x01(\x0b2$.mizer.effects.QuadraticControlPointH\0R\tquadratic\x128\
+    \n\x05cubic\x18\x04\x20\x01(\x0b2\x20.mizer.effects.CubicControlPointH\0\
+    R\x05cubicB\x0f\n\rcontrol_point\"\x14\n\x12SimpleControlPoint\";\n\x15Q\
+    uadraticControlPoint\x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\
+    \x10\n\x03c0b\x18\x02\x20\x01(\x01R\x03c0b\"[\n\x11CubicControlPoint\x12\
+    \x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x02\x20\
+    \x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x03\x20\x01(\x01R\x03c1a\x12\x10\
+    \n\x03c1b\x18\x04\x20\x01(\x01R\x03c1b2V\n\nEffectsApi\x12H\n\nGetEffect\
+    s\x12\x20.mizer.effects.GetEffectsRequest\x1a\x16.mizer.effects.Effects\
+    \"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

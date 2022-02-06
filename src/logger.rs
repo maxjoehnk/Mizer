@@ -1,20 +1,11 @@
 use std::io::Write;
+use env_logger::fmt::Formatter;
+use log::Record;
 
 pub fn init() {
     env_logger::builder()
         .format(|buf, record| {
-            let style = buf.style();
-            let timestamp = buf.timestamp();
-            let thread = std::thread::current().id();
-            writeln!(
-                buf,
-                "[{} {} {}] {:?}: {}",
-                timestamp,
-                record.level(),
-                record.target(),
-                thread,
-                style.value(record.args())
-            )?;
+            write_record(buf, record)?;
 
             if record.key_values().count() > 0 {
                 let arguments = LogArgs {
@@ -26,6 +17,41 @@ pub fn init() {
             Ok(())
         })
         .init();
+}
+
+#[cfg(debug_assertions)]
+fn write_record(buf: &mut Formatter, record: &Record) -> std::io::Result<()> {
+    let style = buf.style();
+    let timestamp = buf.timestamp();
+    let thread = std::thread::current().id();
+    let file = record.file().zip(record.line()).map(|(file, line)| format!("{}:{}", file, line)).unwrap_or_default();
+
+    writeln!(
+        buf,
+        "[{} {} {} {}] {:?}: {}",
+        timestamp,
+        record.level(),
+        record.target(),
+        file,
+        thread,
+        style.value(record.args())
+    )
+}
+
+#[cfg(not(debug_assertions))]
+fn write_record(buf: &mut Formatter, record: &Record) -> std::io::Result<()> {
+    let style = buf.style();
+    let timestamp = buf.timestamp();
+    let thread = std::thread::current().id();
+    writeln!(
+        buf,
+        "[{} {} {}] {:?}: {}",
+        timestamp,
+        record.level(),
+        record.target(),
+        thread,
+        style.value(record.args())
+    )
 }
 
 struct LogArgs<T: log::kv::Source> {

@@ -81,6 +81,7 @@ mod tests {
 
         if let Ok(result) = handle.join() {
             // This should panic
+            #[allow(unused_must_use)]
             result.deref();
         }
     }

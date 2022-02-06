@@ -124,7 +124,7 @@ impl OscInput {
             let threads = OSC_INPUT_THREADS.lock().unwrap();
             threads.get(&addr).cloned()
         };
-        let mut feed = rx.unwrap_or_else(|| spawn_osc_input_thread(addr));
+        let feed = rx.unwrap_or_else(|| spawn_osc_input_thread(addr));
         let subscriber = feed.subscribe()?;
         Ok(Self { subscriber })
     }

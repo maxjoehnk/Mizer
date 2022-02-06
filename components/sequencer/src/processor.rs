@@ -6,7 +6,7 @@ use crate::EffectEngine;
 pub(crate) struct SequenceProcessor;
 
 impl Processor for SequenceProcessor {
-    fn process(&self, injector: &Injector, frame: ClockFrame) {
+    fn process(&self, injector: &Injector, _: ClockFrame) {
         profiling::scope!("SequenceProcessor::process");
         let sequencer = injector.get::<Sequencer>().unwrap();
         let fixture_manager = injector

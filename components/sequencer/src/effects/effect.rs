@@ -154,7 +154,7 @@ impl Default for EffectControlPoint {
 mod tests {
     use test_case::test_case;
     use mizer_fixtures::definition::FixtureFaderControl;
-    use crate::{Effect, EffectChannel, EffectStep, SequencerValue};
+    use crate::{Effect, EffectStep, SequencerValue};
     use crate::effects::default_effects::EffectChannelTemplate;
 
     #[test_case(0., 1., 0., 0.)]

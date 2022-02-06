@@ -1,4 +1,4 @@
-use mizer_fixtures::definition::{ColorChannel, FixtureControlValue, FixtureFaderControl};
+use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
 

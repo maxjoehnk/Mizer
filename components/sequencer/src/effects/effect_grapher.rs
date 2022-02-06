@@ -55,14 +55,14 @@ fn generate_graph(effect: &Effect, fixture_frames: HashMap<(u32, FixtureFaderCon
     let dir = Path::new(".snapshots");
     fs::create_dir_all(dir)?;
     let name = format!("{}-time", effect.name);
-    generate_script_file(&dir, &name, fixture_frames.keys().cloned().sorted_by_key(|(id, _)| *id).collect())?;
+    generate_script_file(dir, &name, fixture_frames.keys().cloned().sorted_by_key(|(id, _)| *id).collect())?;
     for ((id, control), values) in fixture_frames.iter().sorted_by_key(|((id, _), _)| id) {
-        generate_data_file(&dir, &format!("{}-{:?}", id, control), &values, &history_ticks)?;
+        generate_data_file(dir, &format!("{}-{:?}", id, control), values, &history_ticks)?;
     }
-    generate_plot(&dir, &name)?;
-    cleanup_script(&dir, &name)?;
-    for ((id, control), values) in fixture_frames.iter() {
-        cleanup_data(&dir, &format!("{}-{:?}", id, control))?;
+    generate_plot(dir, &name)?;
+    cleanup_script(dir, &name)?;
+    for ((id, control), _) in fixture_frames.iter() {
+        cleanup_data(dir, &format!("{}-{:?}", id, control))?;
     }
 
     Ok(())
@@ -72,13 +72,13 @@ fn generate_position_graph(effect: &Effect, fixture_frames: HashMap<(u32, Fixtur
     let dir = Path::new(".snapshots");
     fs::create_dir_all(dir)?;
     let name = format!("{}-position", effect.name);
-    generate_position_script_file(&dir, &name)?;
+    generate_position_script_file(dir, &name)?;
     let pan = fixture_frames.get(&(1, FixtureFaderControl::Pan)).unwrap();
     let tilt = fixture_frames.get(&(1, FixtureFaderControl::Tilt)).unwrap();
-    generate_data_file(&dir, &name, &tilt, &pan)?;
-    generate_plot(&dir, &name)?;
-    cleanup_script(&dir, &name)?;
-    cleanup_data(&dir, &name)?;
+    generate_data_file(dir, &name, tilt, pan)?;
+    generate_plot(dir, &name)?;
+    cleanup_script(dir, &name)?;
+    cleanup_data(dir, &name)?;
 
     Ok(())
 }
@@ -161,7 +161,7 @@ fn generate_data_file(
     assert_eq!(y_axes.len(), x_axes.len());
 
     let data = y_axes
-        .into_iter()
+        .iter()
         .zip(x_axes)
         .map(|(value, frame)| format!("{} {}", frame, value))
         .reduce(|lhs, rhs| lhs.add("\n").add(&rhs))

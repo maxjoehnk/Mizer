@@ -21,7 +21,7 @@ impl Clock for TestClock {
         let delta: f64 = 16.6f64 * (self.speed / 60000f64);
         self.frame += delta;
         self.beat += delta;
-        let mut downbeat = self.beat > 4f64;
+        let downbeat = self.beat > 4f64;
         while self.beat > 4f64 {
             self.beat -= 4f64;
         }

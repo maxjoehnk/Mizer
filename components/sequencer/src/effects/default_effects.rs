@@ -1,23 +1,23 @@
 use super::{Effect, EffectChannel, EffectStep};
 use mizer_fixtures::definition::FixtureFaderControl;
 
-const c: f64 = 0.55191502449351;
+const C: f64 = 0.55191502449351;
 
 pub(crate) const CIRCLE: EffectTemplate<2, 5> = EffectTemplate::new("Circle",
     [
         EffectChannelTemplate::new(FixtureFaderControl::Pan, [
             EffectStep::new(1.0),
-            EffectStep::cubic(0.0, (c, 1.), (1., c)),
-            EffectStep::cubic(-1., (-c, -1.), (1., -c)),
-            EffectStep::cubic(0., (-1., -c), (-c, -1.)),
-            EffectStep::cubic(1., (1., c), (c, 1.)),
+            EffectStep::cubic(0.0, (C, 1.), (1., C)),
+            EffectStep::cubic(-1., (-C, -1.), (1., -C)),
+            EffectStep::cubic(0., (-1., -C), (-C, -1.)),
+            EffectStep::cubic(1., (1., C), (C, 1.)),
         ]),
         EffectChannelTemplate::new(FixtureFaderControl::Tilt, [
             EffectStep::new(0.0),
-            EffectStep::cubic(1.0, (1., c), (c, 1.)),
-            EffectStep::cubic(0., (c, 1.), (1., c)),
-            EffectStep::cubic(-1., (-c, -1.), (-1., -c)),
-            EffectStep::cubic(0., (-1., -c), (-c, -1.)),
+            EffectStep::cubic(1.0, (1., C), (C, 1.)),
+            EffectStep::cubic(0., (C, 1.), (1., C)),
+            EffectStep::cubic(-1., (-C, -1.), (-1., -C)),
+            EffectStep::cubic(0., (-1., -C), (-C, -1.)),
         ]),
     ]
 );

@@ -152,7 +152,6 @@ impl OscillatorNode {
                 }
             }
             OscillatorType::Saw => {
-                let base = self.ratio;
                 let frame = self.get_frame(beat);
                 let high = self.max;
                 let low = self.min;

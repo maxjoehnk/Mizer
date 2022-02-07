@@ -73,7 +73,7 @@ license = "GNU AGPLv3"
 [features]
 default = ["ui"]
 ui = ["mizer-ui"]
-tracy = ["profiling/profile-with-tracy"]
+tracing = ["profiling/profile-with-tracy"]
 
 [dependencies]
 derive_more = "0.99"

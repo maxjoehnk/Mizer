@@ -8,11 +8,7 @@ import 'base_window_state.dart';
 class MainWindowState extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return WindowLayoutProbe(
-      child: BaseWindowState(
-        child: WindowTitleUpdater(child: Home()),
-      ),
-    );
+    return BaseWindowState(child: WindowLayoutProbe(child: WindowTitleUpdater(child: Home())));
   }
 
   @override

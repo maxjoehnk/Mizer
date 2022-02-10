@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/state/nodes_view.dart';
+import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 
 import 'fixtures_bloc.dart';
@@ -29,6 +30,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => SettingsBloc(context.read())),
         BlocProvider(create: (context) => SequencerBloc(context.read())),
         BlocProvider(create: (context) => PresetsBloc(context.read())),
+        BlocProvider(create: (context) => PlansBloc(context.read())),
       ],
     );
   }

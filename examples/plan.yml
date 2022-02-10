@@ -1,0 +1,469 @@
+---
+nodes:
+  - path: /fixture-1
+    type: fixture
+    config:
+      fixture: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-3
+    type: fixture
+    config:
+      fixture: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-8
+    type: fixture
+    config:
+      fixture: 9
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-2
+    type: fixture
+    config:
+      fixture: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-9
+    type: fixture
+    config:
+      fixture: 10
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: false
+  - path: /sequencer-0
+    type: sequencer
+    config:
+      sequence: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-4
+    type: fixture
+    config:
+      fixture: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-7
+    type: fixture
+    config:
+      fixture: 8
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-6
+    type: fixture
+    config:
+      fixture: 7
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-5
+    type: fixture
+    config:
+      fixture: 6
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+channels: []
+media: []
+layouts:
+  Default: []
+connections:
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+fixtures:
+  - id: 6
+    name: LED Bar-3 HCL Bar 6
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 51
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 2
+    name: LED Bar-3 HCL Bar 2
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 11
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 1
+    name: LED Bar-3 HCL Bar 1
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 1
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 3
+    name: LED Bar-3 HCL Bar 3
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 21
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 9
+    name: LED Bar-3 HCL Bar 9
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 81
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 4
+    name: LED Bar-3 HCL Bar 4
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 31
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 8
+    name: LED Bar-3 HCL Bar 8
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 71
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 10
+    name: LED Bar-3 HCL Bar 10
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 91
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 7
+    name: LED Bar-3 HCL Bar 7
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 61
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 5
+    name: LED Bar-3 HCL Bar 5
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 41
+    universe: 1
+    mode: 10-channel
+    output: ~
+groups: []
+presets:
+  intensity:
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 5
+      label: 100%
+      value: 1.0
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 2
+      label: 25%
+      value: 0.25
+  shutter: []
+  color:
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+  position: []
+sequences:
+  - id: 1
+    name: Sequence 1
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+            control:
+              Color: Green
+            value: 1.0
+            fade: ~
+            delay: ~
+          - fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+            control:
+              Color: Red
+            value: 1.0
+            fade: ~
+            delay: ~
+          - fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+            control:
+              Color: Blue
+            value: 1.0
+            fade: ~
+            delay: ~
+          - fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+            control: Intensity
+            value: 1.0
+            fade: ~
+            delay: ~
+        effects: []
+        loop_mode: ~
+      - id: 2
+        name: Cue 2
+        trigger: Go
+        time: ~
+        channels:
+          - fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+            control:
+              Color: Green
+            value: 1.0
+            fade: ~
+            delay: ~
+          - fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+            control:
+              Color: Blue
+            value: 1.0
+            fade: ~
+            delay: ~
+          - fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+            control:
+              Color: Red
+            value: 1.0
+            fade: ~
+            delay: ~
+          - fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+            control: Intensity
+            value: 1.0
+            fade: ~
+            delay: ~
+        effects: []
+        loop_mode: ~
+    wrap_around: true
+effects:
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - 1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.0
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - -1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+plans:
+  - name: Test
+    fixtures:
+      - fixture: 1
+        x: 0
+        y: 0
+      - fixture: 2
+        x: 1
+        y: 0
+      - fixture: 3
+        x: 2
+        y: 0
+      - fixture: 4
+        x: 3
+        y: 0
+      - fixture: 5
+        x: 4
+        y: 0
+      - fixture: 6
+        x: 0
+        y: 1
+      - fixture: 7
+        x: 1
+        y: 1
+      - fixture: 8
+        x: 2
+        y: 1
+      - fixture: 9
+        x: 3
+        y: 1
+      - fixture: 10
+        x: 4
+        y: 1

@@ -14,6 +14,7 @@ log = "0.4"
 protobuf = "2.24"
 serde = { version = "1", features = ["derive"] }
 mizer-fixtures = { path = "../components/fixtures" }
+mizer-plan = { path = "../components/plan" }
 mizer-media = { path = "../components/media" }
 mizer-connections = { path = "../components/connections" }
 mizer-node = { path = "../runtime/pipeline/node" }

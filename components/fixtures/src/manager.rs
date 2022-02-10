@@ -2,7 +2,7 @@ use crate::definition::{FixtureDefinition, FixtureFaderControl};
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{Group, Programmer, Presets};
-use crate::FixtureId;
+use crate::{FixtureId, FixtureStates};
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
@@ -15,6 +15,7 @@ pub struct FixtureManager {
     pub fixtures: Arc<DashMap<u32, Fixture>>,
     pub groups: Arc<DashMap<u32, Group>>,
     pub presets: Arc<Presets>,
+    pub states: FixtureStates,
     programmer: Arc<Mutex<Programmer>>,
 }
 
@@ -26,6 +27,7 @@ impl FixtureManager {
             programmer: Arc::new(Mutex::new(Programmer::new(Arc::clone(&fixtures)))),
             fixtures,
             groups: Default::default(),
+            states: Default::default(),
             presets: Default::default(),
         }
     }
@@ -48,6 +50,7 @@ impl FixtureManager {
         let fixture = Fixture::new(
             fixture_id, name, definition, mode, output, channel, universe,
         );
+        self.states.add_fixture(&fixture);
         self.fixtures.insert(fixture_id, fixture);
     }
 
@@ -73,7 +76,9 @@ impl FixtureManager {
     }
 
     pub fn delete_fixture(&self, fixture_id: u32) {
-        self.fixtures.remove(&fixture_id);
+        if let Some((_, fixture)) = self.fixtures.remove(&fixture_id) {
+            self.states.remove_fixture(&fixture);
+        }
     }
 
     pub fn write_fixture_control(

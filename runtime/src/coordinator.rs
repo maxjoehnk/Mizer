@@ -16,6 +16,7 @@ use mizer_nodes::*;
 use mizer_pipeline::*;
 use mizer_processing::*;
 use mizer_project_files::{Channel, Project, ProjectManagerMut};
+use mizer_plan::Plan;
 
 use crate::api::RuntimeAccess;
 
@@ -27,6 +28,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
+    plans: Arc<NonEmptyPinboard<Vec<Plan>>>,
     // TODO: this should not be pub
     pub pipeline: PipelineWorker,
     pub clock: TClock,
@@ -58,6 +60,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             designer: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
             layouts: NonEmptyPinboard::new(Default::default()).into(),
+            plans: NonEmptyPinboard::new(Default::default()).into(),
             pipeline: PipelineWorker::new(),
             assigned_nodes: Default::default(),
             clock,
@@ -253,6 +256,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             designer: self.designer.clone(),
             links: self.links.clone(),
             layouts: self.layouts.clone(),
+            plans: self.plans.clone(),
             clock_recv: self.clock_recv.clone(),
             clock_snapshot: self.clock_snapshot.clone(),
         }
@@ -395,6 +399,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
             self.add_link(link)?;
         }
         self.add_layouts(project.layouts.clone());
+        self.plans.set(project.plans.clone());
         Ok(())
     }
 
@@ -428,7 +433,8 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
                     config: node.into(),
                 }
             })
-            .collect()
+            .collect();
+        project.plans = self.plans.read();
     }
 
     fn clear(&mut self) {
@@ -441,6 +447,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
         self.links.set(Default::default());
         self.nodes_view.clear();
         self.pipeline = PipelineWorker::new();
+        self.plans.set(Default::default());
         self.plan();
     }
 }

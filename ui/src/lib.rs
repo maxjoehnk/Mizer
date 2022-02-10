@@ -54,6 +54,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
             .event_channel(context.weak());
     let _application = ApplicationChannel::new(handlers.settings, lifecycle_handler).channel(context.weak());
     let _effects = EffectsChannel::new(handlers.effects).channel(context.weak());
+    let _plans = PlansChannel::new(handlers.plans).channel(context.weak());
 
     context
         .window_manager

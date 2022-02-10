@@ -7,12 +7,13 @@ import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/contracts/transport.dart';
-import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/api/grpc/plans.dart';
 
 import 'connections.dart';
 import 'effects.dart';
@@ -25,7 +26,6 @@ import 'sequencer.dart';
 import 'session.dart';
 import 'settings.dart';
 import 'transport.dart';
-import 'effects.dart';
 
 class GrpcApiProvider extends StatelessWidget {
   final ClientChannel _channel;
@@ -50,6 +50,7 @@ class GrpcApiProvider extends StatelessWidget {
         RepositoryProvider<EffectsApi>(create: (context) => EffectsGrpcApi(_channel)),
         RepositoryProvider<SettingsApi>(create: (context) => SettingsGrpcApi(_channel)),
         RepositoryProvider<EffectsApi>(create: (context) => EffectsGrpcApi(_channel)),
+        RepositoryProvider<PlansApi>(create: (context) => PlansGrpcApi(_channel)),
       ],
     );
   }

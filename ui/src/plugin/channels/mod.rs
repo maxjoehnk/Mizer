@@ -12,6 +12,7 @@ pub use event::connections::*;
 pub use event::session::*;
 pub use method::connections::*;
 pub use method::session::*;
+pub use method::plans::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
 mod application;

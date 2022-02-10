@@ -14,6 +14,7 @@ use mizer_message_bus::Subscriber;
 use mizer_protocol_midi::MidiEvent;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+use mizer_plan::Plan;
 
 #[derive(Clone)]
 pub struct Api {
@@ -112,6 +113,31 @@ impl RuntimeApi for Api {
             {
                 update(control);
             }
+        });
+    }
+
+    fn plans(&self) -> Vec<mizer_plan::Plan> {
+        self.access.plans.read()
+    }
+
+    fn add_plan(&self, name: String) {
+        let mut plans = self.access.plans.read();
+        plans.push(Plan {
+            name,
+            fixtures: Default::default(),
+        });
+        self.access.plans.set(plans);
+    }
+
+    fn remove_plan(&self, id: String) {
+        let mut plans = self.access.plans.read();
+        plans.retain(|plan| plan.name != id);
+        self.access.plans.set(plans);
+    }
+
+    fn rename_plan(&self, id: String, name: String) {
+        self.update_plan(id, |plan| {
+            plan.name = name;
         });
     }
 
@@ -407,5 +433,13 @@ impl Api {
             update(layout);
         }
         self.access.layouts.set(layouts);
+    }
+
+    fn update_plan<Cb: FnOnce(&mut Plan)>(&self, plan_id: String, update: Cb) {
+        let mut plans = self.access.plans.read();
+        if let Some(plan) = plans.iter_mut().find(|plan| plan.name == plan_id) {
+            update(plan);
+        }
+        self.access.plans.set(plans);
     }
 }

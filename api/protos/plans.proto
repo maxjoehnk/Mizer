@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package mizer.plan;
+
+import "fixtures.proto";
+
+service PlansApi {
+  rpc GetPlans (PlansRequest) returns (Plans) {}
+  rpc AddPlan (AddPlanRequest) returns (Plans) {}
+  rpc RemovePlan (RemovePlanRequest) returns (Plans) {}
+  rpc RenamePlan (RenamePlanRequest) returns (Plans) {}
+}
+
+message PlansRequest {}
+
+message AddPlanRequest {
+  string name = 1;
+}
+
+message RemovePlanRequest {
+  string id = 1;
+}
+
+message RenamePlanRequest {
+  string id = 1;
+  string name = 2;
+}
+
+message Plans {
+  repeated Plan plans = 1;
+}
+
+message Plan {
+  string name = 1;
+  repeated FixturePosition positions = 2;
+}
+
+message FixturePosition {
+  mizer.fixtures.FixtureId id = 1;
+  uint32 x = 2;
+  uint32 y = 3;
+}

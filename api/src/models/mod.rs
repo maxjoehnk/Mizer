@@ -9,6 +9,7 @@ pub mod sequencer;
 pub mod session;
 pub mod settings;
 pub mod transport;
+pub mod plans;
 
 pub use self::connections::*;
 pub use self::effects::*;
@@ -21,3 +22,4 @@ pub use self::sequencer::*;
 pub use self::session::*;
 pub use self::settings::*;
 pub use self::transport::*;
+pub use self::plans::*;

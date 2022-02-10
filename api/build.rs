@@ -16,6 +16,7 @@ fn main() {
             "protos/transport.proto",
             "protos/programmer.proto",
             "protos/settings.proto",
+            "protos/plans.proto",
         ])
         .include("protos")
         .customize(Customize {

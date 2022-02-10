@@ -1,0 +1,18 @@
+[package]
+name = "mizer-plan"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+dashmap = { version = "4", features = ["serde"] }
+mizer-processing = { path = "../../runtime/processing" }
+mizer-module = { path = "../../runtime/module" }
+mizer-fixtures = { path = "../fixtures" }
+profiling = "1"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+test-case = "1.2"

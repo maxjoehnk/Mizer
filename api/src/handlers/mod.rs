@@ -9,6 +9,7 @@ pub use self::session::*;
 pub use self::settings::*;
 pub use self::transport::*;
 pub use self::effects::*;
+pub use self::plans::*;
 use crate::RuntimeApi;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
@@ -29,6 +30,7 @@ mod session;
 mod settings;
 mod transport;
 mod effects;
+mod plans;
 
 #[derive(Clone)]
 pub struct Handlers<R: RuntimeApi> {
@@ -43,6 +45,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub programmer: ProgrammerHandler<R>,
     pub settings: SettingsHandler,
     pub effects: EffectsHandler,
+    pub plans: PlansHandler<R>,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -69,8 +72,9 @@ impl<R: RuntimeApi> Handlers<R> {
             transport: TransportHandler::new(runtime.clone()),
             sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
             effects: EffectsHandler::new(effect_engine),
-            programmer: ProgrammerHandler::new(fixture_manager, sequencer, runtime),
+            programmer: ProgrammerHandler::new(fixture_manager.clone(), sequencer, runtime.clone()),
             settings: SettingsHandler::new(settings),
+            plans: PlansHandler::new(fixture_manager, runtime),
         }
     }
 }

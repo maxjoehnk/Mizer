@@ -13,6 +13,7 @@ fn main() {
         .input("../protos/effects.proto")
         .input("../protos/programmer.proto")
         .input("../protos/settings.proto")
+        .input("../protos/plans.proto")
         .include("../protos")
         .run()
         .expect("protoc-rust-grpc");

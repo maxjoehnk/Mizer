@@ -1,12 +1,13 @@
 import 'dart:ffi' as ffi;
 import 'dart:io' show Directory;
-
-import 'package:mizer/api/plugin/ffi/programmer.dart';
-import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:path/path.dart' as path;
+
+import 'programmer.dart';
+import 'sequencer.dart';
 import 'bindings.dart';
 import 'transport.dart';
 import 'history.dart';
+import 'plans.dart';
 
 extension DoubleArray on Array_f64 {
   List<double> toList() {
@@ -44,5 +45,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<Programmer>.fromAddress(pointerAddress);
 
     return ProgrammerStatePointer(this, pointer);
+  }
+
+  FixturesRefPointer openFixturesRef(int pointerAddress) {
+    var pointer = ffi.Pointer<FixturesRef>.fromAddress(pointerAddress);
+
+    return FixturesRefPointer(this, pointer);
   }
 }

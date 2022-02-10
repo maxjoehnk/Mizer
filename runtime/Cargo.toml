@@ -22,6 +22,7 @@ mizer-processing = { path = "processing" }
 mizer-project-files = { path = "projects" }
 mizer-module = { path = "module" }
 mizer-layouts = { path = "layouts" }
+mizer-plan = { path = "../components/plan" }
 profiling = "1.0"
 
 [dev-dependencies]

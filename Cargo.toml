@@ -13,6 +13,7 @@ members = [
     "components/connections/protocols/osc",
     "components/fixtures",
     "components/fixtures/open-fixture-library",
+    "components/plan",
     "components/media",
     "components/sequencer",
     "runtime",
@@ -87,6 +88,7 @@ mizer-media = { path = "components/media" }
 mizer-project-files = { path = "runtime/projects" }
 mizer-fixtures = { path = "components/fixtures" }
 mizer-open-fixture-library-provider = { path = "components/fixtures/open-fixture-library" }
+mizer-plan = { path = "components/plan" }
 mizer-pipeline = { path = "runtime/pipeline" }
 mizer-api = { path = "api" }
 mizer-grpc-api = { path = "api/grpc" }

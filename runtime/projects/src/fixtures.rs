@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use crate::{FixtureConfig, Project, ProjectManager};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{Preset, Color, Position, Presets};
+use std::ops::Deref;
 
 impl ProjectManager for FixtureManager {
     fn new(&self) {
@@ -33,7 +34,7 @@ impl ProjectManager for FixtureManager {
     }
 
     fn save(&self, project: &mut Project) {
-        for fixture in self.fixtures.iter() {
+        for fixture in self.get_fixtures() {
             project.fixtures.push(FixtureConfig {
                 id: fixture.id,
                 name: fixture.name.clone(),
@@ -44,8 +45,8 @@ impl ProjectManager for FixtureManager {
                 output: fixture.output.clone(),
             });
         }
-        for group in self.groups.iter() {
-            project.groups.push(group.value().clone());
+        for group in self.get_groups() {
+            project.groups.push(group.deref().clone());
         }
         project.presets = PresetsStore::store(&self.presets);
     }
@@ -54,6 +55,7 @@ impl ProjectManager for FixtureManager {
         self.fixtures.clear();
         self.groups.clear();
         self.presets.clear();
+        self.states.clear();
     }
 }
 

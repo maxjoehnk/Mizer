@@ -7,6 +7,7 @@ use test_case::test_case;
 #[test_case("fixture"; "fixture")]
 #[test_case("laser"; "laser")]
 #[test_case("pixels"; "pixels")]
+#[test_case("plan"; "plan")]
 #[test_case("sacn"; "sacn")]
 #[test_case("sequence"; "sequence")]
 #[test_case("video"; "video")]

@@ -8,6 +8,7 @@ use mizer_message_bus::Subscriber;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
 use mizer_nodes::Node;
 use mizer_runtime::NodeDescriptor;
+use mizer_plan::Plan;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 use mizer_session::SessionState;
@@ -43,6 +44,14 @@ pub trait RuntimeApi: Clone + Send + Sync {
         control_id: String,
         update: F,
     );
+
+    fn plans(&self) -> Vec<Plan>;
+
+    fn add_plan(&self, name: String);
+
+    fn remove_plan(&self, id: String);
+
+    fn rename_plan(&self, id: String, name: String);
 
     fn add_node(
         &self,

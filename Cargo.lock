@@ -3109,6 +3109,7 @@ dependencies = [
  "mizer-nodes",
  "mizer-open-fixture-library-provider",
  "mizer-pipeline",
+ "mizer-plan",
  "mizer-processing",
  "mizer-project-files",
  "mizer-protocol-dmx",
@@ -3143,6 +3144,7 @@ dependencies = [
  "mizer-message-bus",
  "mizer-node",
  "mizer-nodes",
+ "mizer-plan",
  "mizer-runtime",
  "mizer-sequencer",
  "mizer-session",
@@ -3561,6 +3563,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-plan"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "dashmap",
+ "log",
+ "mizer-fixtures",
+ "mizer-module",
+ "mizer-processing",
+ "profiling",
+ "serde",
+ "test-case",
+]
+
+[[package]]
 name = "mizer-port-operation-nodes"
 version = "0.1.0"
 dependencies = [
@@ -3603,6 +3620,7 @@ dependencies = [
  "mizer-node",
  "mizer-nodes",
  "mizer-pixel-nodes",
+ "mizer-plan",
  "mizer-protocol-dmx",
  "mizer-sequencer",
  "regex",
@@ -3685,6 +3703,7 @@ dependencies = [
  "mizer-node",
  "mizer-nodes",
  "mizer-pipeline",
+ "mizer-plan",
  "mizer-ports",
  "mizer-processing",
  "mizer-project-files",

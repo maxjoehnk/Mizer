@@ -11,6 +11,7 @@ use mizer_fixtures::programmer::Group;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_sequencer::{Sequence, Effect};
+use mizer_plan::Plan;
 use crate::fixtures::PresetsStore;
 
 mod connections;
@@ -49,6 +50,8 @@ pub struct Project {
     pub sequences: Vec<Sequence>,
     #[serde(default)]
     pub effects: Vec<Effect>,
+    #[serde(default)]
+    pub plans: Vec<Plan>,
 }
 
 impl Project {

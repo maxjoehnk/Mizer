@@ -6,6 +6,7 @@ import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
+import 'package:mizer/views/plan/plan_view.dart';
 import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
@@ -22,7 +23,7 @@ import 'api/contracts/settings.dart';
 
 List<Route> routes = [
   Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', View.Layout),
-  Route(() => Container(), Icons.view_comfortable, '2D Plan', View.Plan),
+  Route(() => PlanView(), Icons.view_comfortable, '2D Plan', View.Plan),
   Route(() => Container(), MdiIcons.video3D, 'PreViz', View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', View.Nodes),
   Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', View.Sequencer),

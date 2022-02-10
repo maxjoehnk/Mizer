@@ -1,8 +1,13 @@
+use std::collections::HashMap;
+use std::sync::Arc;
+use pinboard::NonEmptyPinboard;
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
 use crate::manager::FixtureManager;
 use crate::processor::FixtureProcessor;
 use mizer_module::{Module, Runtime};
 use serde::{Deserialize, Serialize};
+use crate::fixture::Fixture;
+use crate::programmer::Color;
 
 pub mod definition;
 pub mod fixture;
@@ -52,4 +57,51 @@ impl Module for FixtureModule {
         runtime.add_processor(FixtureProcessor.into());
         Ok(())
     }
+}
+
+#[derive(Clone)]
+pub struct FixtureStates(Arc<NonEmptyPinboard<HashMap<FixtureId, FixtureState>>>);
+
+impl Default for FixtureStates {
+    fn default() -> Self {
+        Self(Arc::new(NonEmptyPinboard::new(HashMap::new())))
+    }
+}
+
+impl FixtureStates {
+    pub(crate) fn add_fixture(&self, fixture: &Fixture) {
+        let mut states = self.0.read();
+        states.insert(FixtureId::Fixture(fixture.id), Default::default());
+        for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
+            states.insert(FixtureId::SubFixture(fixture.id, sub_fixture.id), Default::default());
+        }
+        self.0.set(states);
+    }
+
+    pub(crate) fn remove_fixture(&self, fixture: &Fixture) {
+        let mut states = self.0.read();
+        states.remove(&FixtureId::Fixture(fixture.id));
+        for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
+            states.remove(&FixtureId::SubFixture(fixture.id, sub_fixture.id));
+        }
+        self.0.set(states);
+    }
+
+    pub fn clear(&self) {
+        self.0.set(Default::default());
+    }
+
+    pub fn read(&self) -> HashMap<FixtureId, FixtureState> {
+        self.0.read()
+    }
+
+    pub(crate) fn write(&self, state: HashMap<FixtureId, FixtureState>) {
+        self.0.set(state);
+    }
+}
+
+#[derive(Clone, Copy, Debug, Default)]
+pub struct FixtureState {
+    pub brightness: Option<f64>,
+    pub color: Option<Color>,
 }

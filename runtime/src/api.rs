@@ -5,6 +5,7 @@ use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PipelineNode, PortId, PortMetadata};
 use mizer_nodes::Node;
+use mizer_plan::Plan;
 use pinboard::NonEmptyPinboard;
 use std::collections::HashMap;
 use std::sync::Arc;
@@ -15,6 +16,7 @@ pub struct RuntimeAccess {
     pub designer: Arc<NonEmptyPinboard<HashMap<NodePath, NodeDesigner>>>,
     pub links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
     pub layouts: Arc<NonEmptyPinboard<Vec<Layout>>>,
+    pub plans: Arc<NonEmptyPinboard<Vec<Plan>>>,
     // TODO: make broadcast
     pub clock_recv: flume::Receiver<ClockSnapshot>,
     pub clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,

@@ -3,7 +3,7 @@ pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
-pub use mizer_fixture_nodes::{FixtureNode, ProgrammerNode, GroupNode, PresetNode};
+pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
 pub use mizer_gamepad_nodes::GamepadNode;
 pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};

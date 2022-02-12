@@ -4,20 +4,20 @@ use std::fs::File;
 use std::path::Path;
 
 use lazy_static::lazy_static;
+use mizer_fixtures::programmer::Group;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
-use mizer_fixtures::programmer::Group;
 
+use crate::fixtures::PresetsStore;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
-use mizer_sequencer::{Sequence, Effect};
 use mizer_plan::Plan;
-use crate::fixtures::PresetsStore;
+use mizer_sequencer::{Effect, Sequence};
 
 mod connections;
+mod effects;
 mod fixtures;
 mod sequencer;
-mod effects;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(

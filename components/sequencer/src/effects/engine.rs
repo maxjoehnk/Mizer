@@ -1,17 +1,17 @@
-use std::collections::HashMap;
-use dashmap::DashMap;
 use super::Effect;
 use crate::effects::default_effects::CIRCLE;
-use std::sync::{Arc, Mutex};
 use crate::effects::instance::EffectInstance;
+use dashmap::DashMap;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex};
 
 #[derive(Default, Clone)]
 pub struct EffectEngine {
     pub effects: Arc<DashMap<u32, Effect>>,
-    instances: Arc<Mutex<HashMap<EffectInstanceId, EffectInstance>>>
+    instances: Arc<Mutex<HashMap<EffectInstanceId, EffectInstance>>>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -42,7 +42,11 @@ impl EffectEngine {
     }
 
     #[profiling::function]
-    pub(crate) fn run_effect(&self, effect: u32, fixtures: Vec<FixtureId>) -> Option<EffectInstanceId> {
+    pub(crate) fn run_effect(
+        &self,
+        effect: u32,
+        fixtures: Vec<FixtureId>,
+    ) -> Option<EffectInstanceId> {
         if let Some(effect) = self.effects.get(&effect) {
             let instance = EffectInstance::new(&effect, fixtures);
             let id = EffectInstanceId::new();
@@ -50,7 +54,7 @@ impl EffectEngine {
             instances.insert(id, instance);
 
             Some(id)
-        }else {
+        } else {
             None
         }
     }
@@ -62,7 +66,10 @@ impl EffectEngine {
     }
 
     pub fn effects(&self) -> Vec<Effect> {
-        self.effects.iter().map(|element| element.value().clone()).collect()
+        self.effects
+            .iter()
+            .map(|element| element.value().clone())
+            .collect()
     }
 
     pub fn clear(&self) {

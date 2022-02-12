@@ -1,6 +1,6 @@
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
-use std::io::{Write, Read};
+use std::io::{Read, Write};
 use std::path::Path;
 use tiny_skia::Pixmap;
 use usvg::{NodeExt, Options};

@@ -1,17 +1,21 @@
-use std::sync::Arc;
-use mizer_fixtures::{FixtureId, FixtureState, FixtureStates};
 use crate::types::{drop_pointer, FFIFromPointer};
+use mizer_fixtures::{FixtureId, FixtureState, FixtureStates};
+use std::sync::Arc;
 
 pub struct FixturesRef(pub FixtureStates);
 
 #[no_mangle]
-pub extern fn read_fixture_state(ptr: *const FixturesRef, fixture_id: u32, sub_fixture_id: u32) -> FFIFixtureState {
+pub extern "C" fn read_fixture_state(
+    ptr: *const FixturesRef,
+    fixture_id: u32,
+    sub_fixture_id: u32,
+) -> FFIFixtureState {
     let ffi = Arc::from_pointer(ptr);
 
     let state = ffi.0.read();
     let id = if sub_fixture_id != 0 {
         FixtureId::SubFixture(fixture_id, sub_fixture_id)
-    }else {
+    } else {
         FixtureId::Fixture(fixture_id)
     };
 
@@ -23,7 +27,7 @@ pub extern fn read_fixture_state(ptr: *const FixturesRef, fixture_id: u32, sub_f
 }
 
 #[no_mangle]
-pub extern fn drop_fixture_pointer(ptr: *const FixturesRef) {
+pub extern "C" fn drop_fixture_pointer(ptr: *const FixturesRef) {
     drop_pointer(ptr);
 }
 
@@ -48,7 +52,7 @@ impl From<FixtureState> for FFIFixtureState {
             has_color: if state.color.is_some() { 1 } else { 0 },
             color_red: red,
             color_green: green,
-            color_blue: blue
+            color_blue: blue,
         }
     }
 }

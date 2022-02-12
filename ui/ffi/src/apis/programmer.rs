@@ -1,15 +1,15 @@
-use std::sync::Arc;
+use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_fixtures::definition::FixtureControlValue;
-use mizer_fixtures::FixtureId;
-use crate::types::{Array, drop_pointer, FFIFromPointer};
 use mizer_fixtures::programmer::{ProgrammerChannel, ProgrammerState, ProgrammerView};
+use mizer_fixtures::FixtureId;
+use std::sync::Arc;
 
 pub struct Programmer {
-    pub view: ProgrammerView
+    pub view: ProgrammerView,
 }
 
 #[no_mangle]
-pub extern fn read_programmer_state(ptr: *const Programmer) -> FFIProgrammerState {
+pub extern "C" fn read_programmer_state(ptr: *const Programmer) -> FFIProgrammerState {
     let ffi = Arc::from_pointer(ptr);
 
     let state = ffi.view.read();
@@ -20,7 +20,7 @@ pub extern fn read_programmer_state(ptr: *const Programmer) -> FFIProgrammerStat
 }
 
 #[no_mangle]
-pub extern fn drop_programmer_pointer(ptr: *const Programmer) {
+pub extern "C" fn drop_programmer_pointer(ptr: *const Programmer) {
     drop_pointer(ptr);
 }
 
@@ -34,8 +34,18 @@ pub struct FFIProgrammerState {
 impl From<ProgrammerState> for FFIProgrammerState {
     fn from(state: ProgrammerState) -> Self {
         Self {
-            fixtures: state.fixtures.into_iter().map(FFIFixtureId::from).collect::<Vec<_>>().into(),
-            channels: state.channels.into_iter().map(FFIProgrammerChannel::from).collect::<Vec<_>>().into(),
+            fixtures: state
+                .fixtures
+                .into_iter()
+                .map(FFIFixtureId::from)
+                .collect::<Vec<_>>()
+                .into(),
+            channels: state
+                .channels
+                .into_iter()
+                .map(FFIProgrammerChannel::from)
+                .collect::<Vec<_>>()
+                .into(),
             highlight: if state.highlight { 1 } else { 0 },
         }
     }
@@ -56,8 +66,8 @@ impl From<FixtureId> for FFIFixtureId {
             },
             FixtureId::SubFixture(fixture, sub_fixture) => FFIFixtureId {
                 fixture_id: fixture,
-                sub_fixture_id: sub_fixture
-            }
+                sub_fixture_id: sub_fixture,
+            },
         }
     }
 }
@@ -100,46 +110,51 @@ impl From<ProgrammerChannel> for FFIProgrammerChannel {
     fn from(channel: ProgrammerChannel) -> Self {
         use FixtureControlValue::*;
         let (control, value) = match channel.value {
-            Intensity(value) => (FFIFixtureFaderControl::Intensity, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Shutter(value) => (FFIFixtureFaderControl::Shutter, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Pan(value) => (FFIFixtureFaderControl::Pan, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Tilt(value) => (FFIFixtureFaderControl::Tilt, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Focus(value) => (FFIFixtureFaderControl::Focus, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Zoom(value) => (FFIFixtureFaderControl::Zoom, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Prism(value) => (FFIFixtureFaderControl::Prism, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Iris(value) => (FFIFixtureFaderControl::Iris, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Frost(value) => (FFIFixtureFaderControl::Frost, ProgrammerChannelValue {
-                fader: value,
-            }),
-            Color(red, green, blue) => (FFIFixtureFaderControl::Color, ProgrammerChannelValue {
-                color: FFIColorValue {
-                    red,
-                    green,
-                    blue
-                }
-            }),
+            Intensity(value) => (
+                FFIFixtureFaderControl::Intensity,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Shutter(value) => (
+                FFIFixtureFaderControl::Shutter,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Pan(value) => (
+                FFIFixtureFaderControl::Pan,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Tilt(value) => (
+                FFIFixtureFaderControl::Tilt,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Focus(value) => (
+                FFIFixtureFaderControl::Focus,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Zoom(value) => (
+                FFIFixtureFaderControl::Zoom,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Prism(value) => (
+                FFIFixtureFaderControl::Prism,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Iris(value) => (
+                FFIFixtureFaderControl::Iris,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Frost(value) => (
+                FFIFixtureFaderControl::Frost,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Color(red, green, blue) => (
+                FFIFixtureFaderControl::Color,
+                ProgrammerChannelValue {
+                    color: FFIColorValue { red, green, blue },
+                },
+            ),
             Generic(_, _) => todo!(),
         };
 
-        Self {
-            value,
-            control,
-        }
+        Self { value, control }
     }
 }

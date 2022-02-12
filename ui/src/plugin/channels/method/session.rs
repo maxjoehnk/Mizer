@@ -30,7 +30,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SessionChannel<R> {
                         Err(e) => resp.respond_error(e),
                     }
                 }
-            },
+            }
             "newProject" => match self.new_project() {
                 Ok(()) => resp.send_ok(Value::Null),
                 Err(e) => resp.respond_error(e),

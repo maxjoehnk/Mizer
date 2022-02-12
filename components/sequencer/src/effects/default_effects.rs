@@ -3,23 +3,30 @@ use mizer_fixtures::definition::FixtureFaderControl;
 
 const C: f64 = 0.55191502449351;
 
-pub(crate) const CIRCLE: EffectTemplate<2, 5> = EffectTemplate::new("Circle",
+pub(crate) const CIRCLE: EffectTemplate<2, 5> = EffectTemplate::new(
+    "Circle",
     [
-        EffectChannelTemplate::new(FixtureFaderControl::Pan, [
-            EffectStep::new(1.0),
-            EffectStep::cubic(0.0, (C, 1.), (1., C)),
-            EffectStep::cubic(-1., (-C, -1.), (1., -C)),
-            EffectStep::cubic(0., (-1., -C), (-C, -1.)),
-            EffectStep::cubic(1., (1., C), (C, 1.)),
-        ]),
-        EffectChannelTemplate::new(FixtureFaderControl::Tilt, [
-            EffectStep::new(0.0),
-            EffectStep::cubic(1.0, (1., C), (C, 1.)),
-            EffectStep::cubic(0., (C, 1.), (1., C)),
-            EffectStep::cubic(-1., (-C, -1.), (-1., -C)),
-            EffectStep::cubic(0., (-1., -C), (-C, -1.)),
-        ]),
-    ]
+        EffectChannelTemplate::new(
+            FixtureFaderControl::Pan,
+            [
+                EffectStep::new(1.0),
+                EffectStep::cubic(0.0, (C, 1.), (1., C)),
+                EffectStep::cubic(-1., (-C, -1.), (1., -C)),
+                EffectStep::cubic(0., (-1., -C), (-C, -1.)),
+                EffectStep::cubic(1., (1., C), (C, 1.)),
+            ],
+        ),
+        EffectChannelTemplate::new(
+            FixtureFaderControl::Tilt,
+            [
+                EffectStep::new(0.0),
+                EffectStep::cubic(1.0, (1., C), (C, 1.)),
+                EffectStep::cubic(0., (C, 1.), (1., C)),
+                EffectStep::cubic(-1., (-C, -1.), (-1., -C)),
+                EffectStep::cubic(0., (-1., -C), (-C, -1.)),
+            ],
+        ),
+    ],
 );
 
 pub(crate) struct EffectTemplate<const T: usize, const P: usize> {
@@ -29,10 +36,7 @@ pub(crate) struct EffectTemplate<const T: usize, const P: usize> {
 
 impl<const T: usize, const P: usize> EffectTemplate<T, P> {
     pub const fn new(name: &'static str, channels: [EffectChannelTemplate<P>; T]) -> Self {
-        Self {
-            name,
-            channels
-        }
+        Self { name, channels }
     }
 }
 
@@ -48,15 +52,12 @@ impl<const T: usize, const P: usize> From<(u32, &EffectTemplate<T, P>)> for Effe
 
 pub(crate) struct EffectChannelTemplate<const T: usize> {
     pub control: FixtureFaderControl,
-    pub steps: [EffectStep; T]
+    pub steps: [EffectStep; T],
 }
 
 impl<const T: usize> EffectChannelTemplate<T> {
     pub const fn new(control: FixtureFaderControl, steps: [EffectStep; T]) -> Self {
-        Self {
-            control,
-            steps
-        }
+        Self { control, steps }
     }
 }
 
@@ -64,7 +65,7 @@ impl<const T: usize> From<&EffectChannelTemplate<T>> for EffectChannel {
     fn from(template: &EffectChannelTemplate<T>) -> Self {
         EffectChannel {
             control: template.control.clone(),
-            steps: template.steps.to_vec()
+            steps: template.steps.to_vec(),
         }
     }
 }

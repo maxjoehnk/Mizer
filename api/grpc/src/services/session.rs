@@ -1,6 +1,8 @@
-use futures::StreamExt;
 use crate::protos::SessionApi;
-use grpc::{GrpcStatus, Metadata, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink};
+use futures::StreamExt;
+use grpc::{
+    GrpcStatus, Metadata, ServerRequestSingle, ServerResponseSink, ServerResponseUnarySink,
+};
 use mizer_api::handlers::SessionHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
@@ -69,7 +71,11 @@ impl<R: RuntimeApi + 'static> SessionApi for SessionHandler<R> {
         resp.finish(Default::default())
     }
 
-    fn save_project_as(&self, req: ServerRequestSingle<super::session::SaveProjectAsRequest>, resp: ServerResponseUnarySink<ProjectResponse>) -> grpc::Result<()> {
+    fn save_project_as(
+        &self,
+        req: ServerRequestSingle<super::session::SaveProjectAsRequest>,
+        resp: ServerResponseUnarySink<ProjectResponse>,
+    ) -> grpc::Result<()> {
         self.save_project_as(req.message.path).unwrap();
 
         resp.finish(Default::default())

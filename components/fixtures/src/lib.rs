@@ -1,13 +1,13 @@
-use std::collections::HashMap;
-use std::sync::Arc;
-use pinboard::NonEmptyPinboard;
+use crate::fixture::Fixture;
 use crate::library::{FixtureLibrary, FixtureLibraryProvider};
 use crate::manager::FixtureManager;
 use crate::processor::FixtureProcessor;
-use mizer_module::{Module, Runtime};
-use serde::{Deserialize, Serialize};
-use crate::fixture::Fixture;
 use crate::programmer::Color;
+use mizer_module::{Module, Runtime};
+use pinboard::NonEmptyPinboard;
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::sync::Arc;
 
 pub mod definition;
 pub mod fixture;
@@ -73,7 +73,10 @@ impl FixtureStates {
         let mut states = self.0.read();
         states.insert(FixtureId::Fixture(fixture.id), Default::default());
         for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
-            states.insert(FixtureId::SubFixture(fixture.id, sub_fixture.id), Default::default());
+            states.insert(
+                FixtureId::SubFixture(fixture.id, sub_fixture.id),
+                Default::default(),
+            );
         }
         self.0.set(states);
     }

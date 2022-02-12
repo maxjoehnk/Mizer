@@ -1,4 +1,4 @@
-use crate::{ProjectManagerMut, Project};
+use crate::{Project, ProjectManagerMut};
 use mizer_sequencer::EffectEngine;
 
 impl ProjectManagerMut for EffectEngine {

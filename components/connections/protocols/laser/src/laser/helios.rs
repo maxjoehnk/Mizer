@@ -1,10 +1,10 @@
 use super::*;
 use ::helios_dac::NativeHeliosDac;
 use pinboard::Pinboard;
+use std::convert::{TryFrom, TryInto};
 use std::sync::{Arc, Condvar, Mutex};
 use std::thread;
 use std::time::Duration;
-use std::convert::{TryFrom, TryInto};
 
 pub struct HeliosLaser {
     current_frame: Arc<Pinboard<LaserFrame>>,

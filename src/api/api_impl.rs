@@ -11,10 +11,10 @@ use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
 use mizer_message_bus::Subscriber;
+use mizer_plan::Plan;
 use mizer_protocol_midi::MidiEvent;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
-use mizer_plan::Plan;
 
 #[derive(Clone)]
 pub struct Api {

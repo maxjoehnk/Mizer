@@ -102,7 +102,7 @@ impl SequenceState {
         if next_cue_index >= sequence.cues.len() {
             if sequence.wrap_around {
                 Some(&sequence.cues[0])
-            }else {
+            } else {
                 None
             }
         } else {

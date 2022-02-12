@@ -73,37 +73,61 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
         resp.finish(Default::default())
     }
 
-    fn get_presets(&self, req: ServerRequestSingle<PresetsRequest>, resp: ServerResponseUnarySink<Presets>) -> grpc::Result<()> {
+    fn get_presets(
+        &self,
+        req: ServerRequestSingle<PresetsRequest>,
+        resp: ServerResponseUnarySink<Presets>,
+    ) -> grpc::Result<()> {
         let presets = self.get_presets();
 
         resp.finish(presets)
     }
 
-    fn call_preset(&self, req: ServerRequestSingle<PresetId>, resp: ServerResponseUnarySink<CallPresetResponse>) -> grpc::Result<()> {
+    fn call_preset(
+        &self,
+        req: ServerRequestSingle<PresetId>,
+        resp: ServerResponseUnarySink<CallPresetResponse>,
+    ) -> grpc::Result<()> {
         self.call_preset(req.message);
 
         resp.finish(Default::default())
     }
 
-    fn get_groups(&self, req: ServerRequestSingle<GroupsRequest>, resp: ServerResponseUnarySink<Groups>) -> grpc::Result<()> {
+    fn get_groups(
+        &self,
+        req: ServerRequestSingle<GroupsRequest>,
+        resp: ServerResponseUnarySink<Groups>,
+    ) -> grpc::Result<()> {
         let groups = self.get_groups();
 
         resp.finish(groups)
     }
 
-    fn select_group(&self, req: ServerRequestSingle<super::programmer::SelectGroupRequest>, resp: ServerResponseUnarySink<super::programmer::SelectGroupResponse>) -> grpc::Result<()> {
+    fn select_group(
+        &self,
+        req: ServerRequestSingle<super::programmer::SelectGroupRequest>,
+        resp: ServerResponseUnarySink<super::programmer::SelectGroupResponse>,
+    ) -> grpc::Result<()> {
         self.select_group(req.message.id);
 
         resp.finish(Default::default())
     }
 
-    fn add_group(&self, req: ServerRequestSingle<AddGroupRequest>, resp: ServerResponseUnarySink<Group>) -> grpc::Result<()> {
+    fn add_group(
+        &self,
+        req: ServerRequestSingle<AddGroupRequest>,
+        resp: ServerResponseUnarySink<Group>,
+    ) -> grpc::Result<()> {
         let group = self.add_group(req.message.name);
 
         resp.finish(group)
     }
 
-    fn assign_fixtures_to_group(&self, req: ServerRequestSingle<AssignFixturesToGroupRequest>, resp: ServerResponseUnarySink<AssignFixturesToGroupResponse>) -> grpc::Result<()> {
+    fn assign_fixtures_to_group(
+        &self,
+        req: ServerRequestSingle<AssignFixturesToGroupRequest>,
+        resp: ServerResponseUnarySink<AssignFixturesToGroupResponse>,
+    ) -> grpc::Result<()> {
         self.assign_fixtures_to_group(req.message.id, req.message.fixtures.into_vec());
 
         resp.finish(Default::default())

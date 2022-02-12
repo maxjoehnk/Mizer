@@ -1,7 +1,7 @@
-use serde::{Deserialize, Serialize};
 use crate::{FixtureConfig, Project, ProjectManager};
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::programmer::{Preset, Color, Position, Presets};
+use mizer_fixtures::programmer::{Color, Position, Preset, Presets};
+use serde::{Deserialize, Serialize};
 use std::ops::Deref;
 
 impl ProjectManager for FixtureManager {
@@ -84,10 +84,26 @@ impl PresetsStore {
     }
 
     fn store(presets: &Presets) -> Self {
-        let intensity = presets.intensity.iter().map(|entry| entry.value().clone()).collect();
-        let shutter = presets.shutter.iter().map(|entry| entry.value().clone()).collect();
-        let color = presets.color.iter().map(|entry| entry.value().clone()).collect();
-        let position = presets.position.iter().map(|entry| entry.value().clone()).collect();
+        let intensity = presets
+            .intensity
+            .iter()
+            .map(|entry| entry.value().clone())
+            .collect();
+        let shutter = presets
+            .shutter
+            .iter()
+            .map(|entry| entry.value().clone())
+            .collect();
+        let color = presets
+            .color
+            .iter()
+            .map(|entry| entry.value().clone())
+            .collect();
+        let position = presets
+            .position
+            .iter()
+            .map(|entry| entry.value().clone())
+            .collect();
 
         Self {
             intensity,

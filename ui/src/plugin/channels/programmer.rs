@@ -10,10 +10,10 @@ use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use crate::plugin::event_sink::EventSinkSubscriber;
+use mizer_ui_ffi::{FFIToPointer, Programmer};
 use mizer_util::{AsyncRuntime, StreamSubscription};
 use std::collections::HashMap;
 use std::sync::Arc;
-use mizer_ui_ffi::{FFIToPointer, Programmer};
 
 pub struct ProgrammerChannel<R: RuntimeApi> {
     handler: ProgrammerHandler<R>,
@@ -69,7 +69,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
             "callPreset" => match call.arguments().map(|req| self.handler.call_preset(req)) {
                 Ok(()) => reply.send_ok(Value::Null),
                 Err(err) => reply.respond_error(err),
-            }
+            },
             "getGroups" => {
                 let groups = self.handler.get_groups();
                 reply.respond_msg(groups);
@@ -86,14 +86,17 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.respond_msg(group);
                 }
             }
-            "assignFixturesToGroup" => match call.arguments().map(|req| self.assign_fixtures_to_group(req)) {
+            "assignFixturesToGroup" => match call
+                .arguments()
+                .map(|req| self.assign_fixtures_to_group(req))
+            {
                 Ok(()) => reply.send_ok(Value::Null),
                 Err(err) => reply.respond_error(err),
-            }
+            },
             "getProgrammerPointer" => match self.get_programmer_pointer() {
                 Ok(ptr) => reply.send_ok(Value::I64(ptr)),
                 Err(err) => reply.respond_error(err),
-            }
+            },
             _ => reply.not_implemented(),
         }
     }
@@ -135,16 +138,15 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn get_programmer_pointer(&self) -> anyhow::Result<i64> {
         let view = self.handler.programmer_view();
-        let programmer = Programmer {
-            view
-        };
+        let programmer = Programmer { view };
         let programmer = Arc::new(programmer);
 
         Ok(programmer.to_pointer() as i64)
     }
 
     fn assign_fixtures_to_group(&self, req: AssignFixturesToGroupRequest) {
-        self.handler.assign_fixtures_to_group(req.id, req.fixtures.into_vec());
+        self.handler
+            .assign_fixtures_to_group(req.id, req.fixtures.into_vec());
     }
 }
 

@@ -1,6 +1,6 @@
-use std::sync::Arc;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+use std::sync::Arc;
 
 use mizer_api::handlers::SequencerHandler;
 use mizer_api::models::{CueTriggerRequest, Sequence, Sequences};
@@ -61,7 +61,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
             "getSequencerPointer" => match self.get_sequencer_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
-            }
+            },
             _ => resp.not_implemented(),
         }
     }
@@ -106,9 +106,7 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
 
     fn get_sequencer_pointer(&self) -> anyhow::Result<i64> {
         let view = self.handler.sequencer_view();
-        let sequencer = Sequencer {
-            view
-        };
+        let sequencer = Sequencer { view };
         let sequencer = Arc::new(sequencer);
 
         Ok(sequencer.to_pointer() as i64)

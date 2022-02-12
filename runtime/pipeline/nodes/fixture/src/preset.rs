@@ -1,12 +1,15 @@
-use serde::{Deserialize, Serialize};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
-use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata, PortType, PreviewType, ProcessingNode};
 use mizer_node::edge::Edge;
+use mizer_node::{
+    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
+    PortType, PreviewType, ProcessingNode,
+};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct PresetNode {
-    pub id: PresetId
+    pub id: PresetId,
 }
 
 impl Default for PresetNode {
@@ -26,16 +29,14 @@ impl PipelineNode for PresetNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![
-            (
-                "Call".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                }
-            )
-        ]
+        vec![(
+            "Call".into(),
+            PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        )]
     }
 
     fn node_type(&self) -> NodeType {

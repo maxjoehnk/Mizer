@@ -1,18 +1,18 @@
 use crate::laser::LaserDevice;
-use futures::StreamExt;
-use futures::stream::select_all;
-use mizer_module::{Module, Runtime};
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::sync::Arc;
-use dashmap::DashMap;
 use dashmap::mapref::one::{Ref, RefMut};
-use mizer_gamepads::{GamepadRef, GamepadDiscovery, GamepadState};
+use dashmap::DashMap;
 use derive_more::From;
 use futures::prelude::stream::BoxStream;
+use futures::stream::select_all;
+use futures::StreamExt;
+use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
+use mizer_module::{Module, Runtime};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
+use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::Arc;
 
-pub mod laser;
 pub mod gamepads;
+pub mod laser;
 
 pub trait Device {
     fn status(&self) -> DeviceStatus;
@@ -83,17 +83,18 @@ impl DeviceManager {
     }
 
     pub fn current_devices(&self) -> Vec<DeviceRef> {
-        let lasers = self.lasers.iter()
-            .map(|laser| match laser.value() {
-                LaserDevice::EtherDream(ether_dream) => EtherDreamView::from(ether_dream).into(),
-                LaserDevice::Helios(helios) => HeliosView::from(helios).into(),
-            });
-        let gamepads = self.gamepads.iter()
-            .map(|gamepad| GamepadView {
+        let lasers = self.lasers.iter().map(|laser| match laser.value() {
+            LaserDevice::EtherDream(ether_dream) => EtherDreamView::from(ether_dream).into(),
+            LaserDevice::Helios(helios) => HeliosView::from(helios).into(),
+        });
+        let gamepads = self.gamepads.iter().map(|gamepad| {
+            GamepadView {
                 id: gamepad.key().clone(),
                 name: gamepad.name(),
                 state: gamepad.state(),
-            }.into());
+            }
+            .into()
+        });
 
         lasers.chain(gamepads).collect()
     }

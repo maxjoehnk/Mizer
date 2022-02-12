@@ -1,14 +1,14 @@
-use nativeshell::shell::{MethodChannel, MethodCallHandler, EngineHandle, Context};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
-use mizer_api::handlers::{EffectsHandler};
+use mizer_api::handlers::EffectsHandler;
 use mizer_api::models::Effects;
 
 use crate::plugin::channels::MethodReplyExt;
 
 #[derive(Clone)]
 pub struct EffectsChannel {
-    handler: EffectsHandler
+    handler: EffectsHandler,
 }
 
 impl MethodCallHandler for EffectsChannel {

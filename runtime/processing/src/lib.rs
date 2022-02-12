@@ -1,5 +1,5 @@
-pub use mizer_injector::Injector;
 pub use mizer_clock::ClockFrame;
+pub use mizer_injector::Injector;
 
 pub trait Processor {
     fn pre_process(&self, _injector: &Injector, _frame: ClockFrame) {}

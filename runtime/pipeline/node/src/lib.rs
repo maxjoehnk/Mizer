@@ -17,9 +17,9 @@ mod ports;
 mod introspection;
 mod preview;
 
+pub mod edge;
 #[cfg(feature = "test")]
 pub mod mocks;
-pub mod edge;
 
 pub trait PipelineNode: Debug + Send + Sync + Any {
     fn details(&self) -> NodeDetails;

@@ -53,7 +53,7 @@ impl TogglePort for bool {
     fn to_value(self) -> f64 {
         if self {
             1.0
-        }else {
+        } else {
             0.0
         }
     }
@@ -61,7 +61,7 @@ impl TogglePort for bool {
     fn from_value(value: f64) -> Self {
         if value > 0f64 {
             true
-        }else {
+        } else {
             false
         }
     }

@@ -14,9 +14,9 @@ use mizer_module::Runtime;
 use mizer_node::*;
 use mizer_nodes::*;
 use mizer_pipeline::*;
+use mizer_plan::Plan;
 use mizer_processing::*;
 use mizer_project_files::{Channel, Project, ProjectManagerMut};
-use mizer_plan::Plan;
 
 use crate::api::RuntimeAccess;
 
@@ -311,9 +311,11 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     fn remove_node_from_layouts(&self, path: &NodePath) {
         let layouts = self.layouts.read();
-        let layouts = layouts.into_iter()
+        let layouts = layouts
+            .into_iter()
             .map(|mut layout| {
-                layout.controls = layout.controls
+                layout.controls = layout
+                    .controls
                     .into_iter()
                     .filter(|control| &control.node != path)
                     .collect();
@@ -379,7 +381,8 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new(&mut self) {
-        self.handle_add_node(NodeType::Programmer, NodeDesigner::default(), None).unwrap();
+        self.handle_add_node(NodeType::Programmer, NodeDesigner::default(), None)
+            .unwrap();
     }
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
@@ -603,8 +606,8 @@ fn downcast_node<T: Clone + 'static>(node: &Box<dyn ProcessingNodeExt>) -> Optio
 
 #[cfg(test)]
 mod tests {
-    use mizer_layouts::{ControlDecorations, ControlPosition, ControlSize};
     use super::*;
+    use mizer_layouts::{ControlDecorations, ControlPosition, ControlSize};
 
     #[test]
     fn node_runner_should_lend_state_ref() {
@@ -637,16 +640,22 @@ mod tests {
 
         fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
             vec![
-                ("input".into(), PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                }),
-                ("output".into(), PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                }),
+                (
+                    "input".into(),
+                    PortMetadata {
+                        direction: PortDirection::Input,
+                        port_type: PortType::Single,
+                        ..Default::default()
+                    },
+                ),
+                (
+                    "output".into(),
+                    PortMetadata {
+                        direction: PortDirection::Output,
+                        port_type: PortType::Single,
+                        ..Default::default()
+                    },
+                ),
             ]
         }
 
@@ -682,7 +691,7 @@ mod tests {
             target: path2,
             target_port: "input".into(),
             port_type: PortType::Single,
-            local: true
+            local: true,
         });
 
         runner.delete_node(path1);
@@ -699,18 +708,16 @@ mod tests {
         let mut layouts = runner.layouts.read();
         layouts.push(Layout {
             id: "".into(),
-            controls: vec![
-                ControlConfig {
-                    node: path.clone(),
-                    position: ControlPosition::default(),
-                    label: None,
-                    decoration: ControlDecorations::default(),
-                    size: ControlSize {
-                        width: 1,
-                        height: 1,
-                    }
-                }
-            ]
+            controls: vec![ControlConfig {
+                node: path.clone(),
+                position: ControlPosition::default(),
+                label: None,
+                decoration: ControlDecorations::default(),
+                size: ControlSize {
+                    width: 1,
+                    height: 1,
+                },
+            }],
         });
         runner.layouts.set(layouts);
 

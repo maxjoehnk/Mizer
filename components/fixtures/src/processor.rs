@@ -1,11 +1,11 @@
-use std::collections::HashMap;
-use std::ops::Deref;
-use crate::manager::FixtureManager;
-use mizer_processing::*;
-use mizer_protocol_dmx::DmxConnectionManager;
 use crate::definition::{ColorChannel, FixtureFaderControl};
 use crate::fixture::IFixture;
+use crate::manager::FixtureManager;
 use crate::{FixtureId, FixtureState};
+use mizer_processing::*;
+use mizer_protocol_dmx::DmxConnectionManager;
+use std::collections::HashMap;
+use std::ops::Deref;
 
 pub struct FixtureProcessor;
 
@@ -34,8 +34,7 @@ impl Processor for FixtureProcessor {
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
         let mut state = fixture_manager.states.read();
-        for fixture in fixture_manager.get_fixtures()
-            .iter() {
+        for fixture in fixture_manager.get_fixtures().iter() {
             update_state(&mut state, FixtureId::Fixture(fixture.id), fixture.deref());
             for sub_fixture in fixture.current_mode.sub_fixtures.iter() {
                 let id = FixtureId::SubFixture(fixture.id, sub_fixture.id);
@@ -48,11 +47,18 @@ impl Processor for FixtureProcessor {
     }
 }
 
-fn update_state(state: &mut HashMap<FixtureId, FixtureState>, id: FixtureId, fixture: &impl IFixture) {
+fn update_state(
+    state: &mut HashMap<FixtureId, FixtureState>,
+    id: FixtureId,
+    fixture: &impl IFixture,
+) {
     let fixture_state = state.entry(id).or_default();
     fixture_state.brightness = fixture.read_control(FixtureFaderControl::Intensity);
     let red = fixture.read_control(FixtureFaderControl::Color(ColorChannel::Red));
     let green = fixture.read_control(FixtureFaderControl::Color(ColorChannel::Green));
     let blue = fixture.read_control(FixtureFaderControl::Color(ColorChannel::Blue));
-    fixture_state.color = red.zip(green).zip(blue).map(|((red, green), blue)| (red, green, blue));
+    fixture_state.color = red
+        .zip(green)
+        .zip(blue)
+        .map(|((red, green), blue)| (red, green, blue));
 }

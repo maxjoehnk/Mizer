@@ -1,6 +1,6 @@
-use protobuf::SingularPtrField;
 use crate::models::{FixtureControl, FixtureId};
 use mizer_fixtures::definition::FixtureControlValue;
+use protobuf::SingularPtrField;
 
 use crate::models::programmer::*;
 
@@ -36,7 +36,9 @@ impl WriteControlRequest {
             (TILT, Some(WriteControlRequest_oneof_value::fader(value))) => {
                 FixtureControlValue::Tilt(value)
             }
-            (COLOR, Some(WriteControlRequest_oneof_value::color(value))) => FixtureControlValue::Color(value.red, value.green, value.blue),
+            (COLOR, Some(WriteControlRequest_oneof_value::color(value))) => {
+                FixtureControlValue::Color(value.red, value.green, value.blue)
+            }
             (GENERIC, Some(WriteControlRequest_oneof_value::generic(value))) => {
                 FixtureControlValue::Generic(value.name, value.value)
             }
@@ -96,9 +98,18 @@ impl From<mizer_fixtures::programmer::PresetId> for PresetId {
     }
 }
 
-
-impl From<(mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Preset<f64>)> for Preset {
-    fn from((id, preset): (mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Preset<f64>)) -> Self {
+impl
+    From<(
+        mizer_fixtures::programmer::PresetId,
+        mizer_fixtures::programmer::Preset<f64>,
+    )> for Preset
+{
+    fn from(
+        (id, preset): (
+            mizer_fixtures::programmer::PresetId,
+            mizer_fixtures::programmer::Preset<f64>,
+        ),
+    ) -> Self {
         Self {
             id: SingularPtrField::some(id.into()),
             value: Some(Preset_oneof_value::fader(preset.value)),
@@ -108,8 +119,18 @@ impl From<(mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Pre
     }
 }
 
-impl From<(mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Color>)> for Preset {
-    fn from((id, preset): (mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Color>)) -> Self {
+impl
+    From<(
+        mizer_fixtures::programmer::PresetId,
+        mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Color>,
+    )> for Preset
+{
+    fn from(
+        (id, preset): (
+            mizer_fixtures::programmer::PresetId,
+            mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Color>,
+        ),
+    ) -> Self {
         Self {
             id: SingularPtrField::some(id.into()),
             value: Some(Preset_oneof_value::color(preset.value.into())),
@@ -120,7 +141,7 @@ impl From<(mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Pre
 }
 
 impl From<mizer_fixtures::programmer::Color> for Preset_Color {
-    fn from((red, green, blue ): mizer_fixtures::programmer::Color) -> Self {
+    fn from((red, green, blue): mizer_fixtures::programmer::Color) -> Self {
         Self {
             red,
             green,
@@ -130,8 +151,18 @@ impl From<mizer_fixtures::programmer::Color> for Preset_Color {
     }
 }
 
-impl From<(mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Position>)> for Preset {
-    fn from((id, preset): (mizer_fixtures::programmer::PresetId, mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Position>)) -> Self {
+impl
+    From<(
+        mizer_fixtures::programmer::PresetId,
+        mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Position>,
+    )> for Preset
+{
+    fn from(
+        (id, preset): (
+            mizer_fixtures::programmer::PresetId,
+            mizer_fixtures::programmer::Preset<mizer_fixtures::programmer::Position>,
+        ),
+    ) -> Self {
         Self {
             id: SingularPtrField::some(id.into()),
             value: Some(Preset_oneof_value::position(preset.value.into())),
@@ -165,26 +196,59 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
     fn from(channel: mizer_fixtures::programmer::ProgrammerChannel) -> Self {
         use FixtureControlValue::*;
         let (control, value) = match channel.value {
-            Intensity(value) => (FixtureControl::INTENSITY, ProgrammerChannel_oneof_value::fader(value)),
-            Shutter(value) => (FixtureControl::SHUTTER, ProgrammerChannel_oneof_value::fader(value)),
-            Pan(value) => (FixtureControl::PAN, ProgrammerChannel_oneof_value::fader(value)),
-            Tilt(value) => (FixtureControl::TILT, ProgrammerChannel_oneof_value::fader(value)),
-            Focus(value) => (FixtureControl::FOCUS, ProgrammerChannel_oneof_value::fader(value)),
-            Zoom(value) => (FixtureControl::ZOOM, ProgrammerChannel_oneof_value::fader(value)),
-            Prism(value) => (FixtureControl::PRISM, ProgrammerChannel_oneof_value::fader(value)),
-            Iris(value) => (FixtureControl::IRIS, ProgrammerChannel_oneof_value::fader(value)),
-            Frost(value) => (FixtureControl::FROST, ProgrammerChannel_oneof_value::fader(value)),
-            Color(red, green, blue) => (FixtureControl::COLOR, ProgrammerChannel_oneof_value::color(crate::models::ColorChannel {
-                red,
-                green,
-                blue,
-                ..Default::default()
-            })),
-            Generic(name, value) => (FixtureControl::GENERIC, ProgrammerChannel_oneof_value::generic(ProgrammerChannel_GenericValue {
-                value,
-                name,
-                ..Default::default()
-            }))
+            Intensity(value) => (
+                FixtureControl::INTENSITY,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Shutter(value) => (
+                FixtureControl::SHUTTER,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Pan(value) => (
+                FixtureControl::PAN,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Tilt(value) => (
+                FixtureControl::TILT,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Focus(value) => (
+                FixtureControl::FOCUS,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Zoom(value) => (
+                FixtureControl::ZOOM,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Prism(value) => (
+                FixtureControl::PRISM,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Iris(value) => (
+                FixtureControl::IRIS,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Frost(value) => (
+                FixtureControl::FROST,
+                ProgrammerChannel_oneof_value::fader(value),
+            ),
+            Color(red, green, blue) => (
+                FixtureControl::COLOR,
+                ProgrammerChannel_oneof_value::color(crate::models::ColorChannel {
+                    red,
+                    green,
+                    blue,
+                    ..Default::default()
+                }),
+            ),
+            Generic(name, value) => (
+                FixtureControl::GENERIC,
+                ProgrammerChannel_oneof_value::generic(ProgrammerChannel_GenericValue {
+                    value,
+                    name,
+                    ..Default::default()
+                }),
+            ),
         };
 
         Self {

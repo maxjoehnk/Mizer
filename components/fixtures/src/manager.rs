@@ -1,7 +1,7 @@
 use crate::definition::{FixtureDefinition, FixtureFaderControl};
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::library::FixtureLibrary;
-use crate::programmer::{Group, Programmer, Presets};
+use crate::programmer::{Group, Presets, Programmer};
 use crate::{FixtureId, FixtureStates};
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
@@ -60,7 +60,7 @@ impl FixtureManager {
         let group = Group {
             id: group_id,
             fixtures: Vec::new(),
-            name
+            name,
         };
         self.groups.insert(group_id, group);
 

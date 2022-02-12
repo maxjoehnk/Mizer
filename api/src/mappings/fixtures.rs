@@ -1,10 +1,10 @@
 use protobuf::SingularPtrField;
 
-use mizer_fixtures::definition::{ChannelResolution, PhysicalFixtureData, self};
+use mizer_fixtures::definition::{self, ChannelResolution, PhysicalFixtureData};
 use mizer_fixtures::fixture::IFixture;
 
-use crate::models::fixtures::*;
 use crate::models;
+use crate::models::fixtures::*;
 
 impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
     fn from(definition: mizer_fixtures::definition::FixtureDefinition) -> Self {

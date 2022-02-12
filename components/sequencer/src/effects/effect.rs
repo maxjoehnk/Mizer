@@ -3,8 +3,8 @@ use std::collections::HashMap;
 use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 
-use mizer_fixtures::definition::FixtureFaderControl;
 use super::spline::*;
+use mizer_fixtures::definition::FixtureFaderControl;
 
 use crate::SequencerValue;
 
@@ -36,12 +36,12 @@ impl Effect {
                     .enumerate()
                     .tuple_windows()
                     .map(|(a, b)| {
-                        let a_value: SequencerValue<f64> = a.1.1;
+                        let a_value: SequencerValue<f64> = a.1 .1;
                         let start = [(a.0 as f64).into(), a_value];
-                        let b_value: SequencerValue<f64> = b.1.1;
+                        let b_value: SequencerValue<f64> = b.1 .1;
                         let end = [(b.0 as f64).into(), b_value];
 
-                        SplinePart::new(start, end, b.1.0)
+                        SplinePart::new(start, end, b.1 .0)
                     })
                     .collect();
 
@@ -80,17 +80,12 @@ impl EffectStep {
         }
     }
 
-    pub const fn cubic(
-        value: f64,
-        a: (f64, f64),
-        b: (f64, f64),
-    ) -> Self {
+    pub const fn cubic(value: f64, a: (f64, f64), b: (f64, f64)) -> Self {
         Self {
             value: SequencerValue::Direct(value),
             control_point: EffectControlPoint::Cubic([a.0, a.1], [b.0, b.1]),
         }
     }
-
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
@@ -101,10 +96,7 @@ pub struct EffectChannel {
 
 impl EffectChannel {
     pub const fn new(control: FixtureFaderControl, steps: Vec<EffectStep>) -> Self {
-        Self {
-            control,
-            steps
-        }
+        Self { control, steps }
     }
 
     // pub const fn range(control: FixtureFaderControl, value: (f64, f64)) -> Self {
@@ -152,21 +144,28 @@ impl Default for EffectControlPoint {
 
 #[cfg(test)]
 mod tests {
-    use test_case::test_case;
-    use mizer_fixtures::definition::FixtureFaderControl;
-    use crate::{Effect, EffectStep, SequencerValue};
     use crate::effects::default_effects::EffectChannelTemplate;
+    use crate::{Effect, EffectStep, SequencerValue};
+    use mizer_fixtures::definition::FixtureFaderControl;
+    use test_case::test_case;
 
     #[test_case(0., 1., 0., 0.)]
     #[test_case(0., 1., 1., 1.)]
     #[test_case(0., 1., 0.5, 0.5)]
-    fn linear_effect_should_transition_from_start_to_finish(start: f64, end: f64, frame: f64, expected: f64) {
+    fn linear_effect_should_transition_from_start_to_finish(
+        start: f64,
+        end: f64,
+        frame: f64,
+        expected: f64,
+    ) {
         let effect = Effect {
             id: Default::default(),
             name: Default::default(),
-            channels: vec![
-                (&EffectChannelTemplate::new(FixtureFaderControl::Intensity, [EffectStep::new(0.), EffectStep::new(1.)])).into(),
-            ]
+            channels: vec![(&EffectChannelTemplate::new(
+                FixtureFaderControl::Intensity,
+                [EffectStep::new(0.), EffectStep::new(1.)],
+            ))
+                .into()],
         };
 
         let splines = effect.build_splines();
@@ -179,14 +178,20 @@ mod tests {
     #[test_case(0., (0., 1.), 0., (0., 0.))]
     #[test_case(0., (0., 1.), 1., (0., 1.))]
     #[test_case(0., (0., 1.), 0.5, (0., 0.5))]
-    fn linear_effect_should_transition_from_start_to_finish_with_ranges(start: f64, end: (f64, f64), frame: f64, expected: (f64, f64)) {
+    fn linear_effect_should_transition_from_start_to_finish_with_ranges(
+        start: f64,
+        end: (f64, f64),
+        frame: f64,
+        expected: (f64, f64),
+    ) {
         let effect = Effect {
             id: Default::default(),
             name: Default::default(),
-            channels: vec![(&EffectChannelTemplate::new(FixtureFaderControl::Intensity, [
-                EffectStep::new(0.),
-                EffectStep::range(end),
-            ])).into()]
+            channels: vec![(&EffectChannelTemplate::new(
+                FixtureFaderControl::Intensity,
+                [EffectStep::new(0.), EffectStep::range(end)],
+            ))
+                .into()],
         };
 
         let splines = effect.build_splines();

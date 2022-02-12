@@ -1,7 +1,7 @@
-use mizer_module::*;
 use crate::sequencer::Sequencer;
-use mizer_fixtures::manager::FixtureManager;
 use crate::EffectEngine;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_module::*;
 
 pub(crate) struct SequenceProcessor;
 

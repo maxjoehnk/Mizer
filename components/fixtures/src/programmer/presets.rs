@@ -1,6 +1,6 @@
+use crate::definition::FixtureControlValue;
 use dashmap::DashMap;
 use serde::{Deserialize, Serialize};
-use crate::definition::FixtureControlValue;
 
 pub type Color = (f64, f64, f64);
 pub type Position = (f64, f64);
@@ -15,19 +15,31 @@ pub struct Presets {
 
 impl Presets {
     pub fn intensity_presets(&self) -> Vec<(PresetId, Preset<f64>)> {
-        self.intensity.iter().map(|preset| (PresetId::Intensity(preset.id), preset.clone())).collect()
+        self.intensity
+            .iter()
+            .map(|preset| (PresetId::Intensity(preset.id), preset.clone()))
+            .collect()
     }
 
     pub fn shutter_presets(&self) -> Vec<(PresetId, Preset<f64>)> {
-        self.shutter.iter().map(|preset| (PresetId::Shutter(preset.id), preset.clone())).collect()
+        self.shutter
+            .iter()
+            .map(|preset| (PresetId::Shutter(preset.id), preset.clone()))
+            .collect()
     }
 
     pub fn color_presets(&self) -> Vec<(PresetId, Preset<Color>)> {
-        self.color.iter().map(|preset| (PresetId::Color(preset.id), preset.clone())).collect()
+        self.color
+            .iter()
+            .map(|preset| (PresetId::Color(preset.id), preset.clone()))
+            .collect()
     }
 
     pub fn position_presets(&self) -> Vec<(PresetId, Preset<Position>)> {
-        self.position.iter().map(|preset| (PresetId::Position(preset.id), preset.clone())).collect()
+        self.position
+            .iter()
+            .map(|preset| (PresetId::Position(preset.id), preset.clone()))
+            .collect()
     }
 
     pub fn clear(&self) {
@@ -39,8 +51,16 @@ impl Presets {
 
     pub fn get_preset_values(&self, id: PresetId) -> Vec<FixtureControlValue> {
         match id {
-            PresetId::Intensity(id) => self.intensity.get(&id).map(|value| vec![FixtureControlValue::Intensity(value.value)]).unwrap_or_default(),
-            PresetId::Shutter(id) => self.intensity.get(&id).map(|value| vec![FixtureControlValue::Shutter(value.value)]).unwrap_or_default(),
+            PresetId::Intensity(id) => self
+                .intensity
+                .get(&id)
+                .map(|value| vec![FixtureControlValue::Intensity(value.value)])
+                .unwrap_or_default(),
+            PresetId::Shutter(id) => self
+                .intensity
+                .get(&id)
+                .map(|value| vec![FixtureControlValue::Shutter(value.value)])
+                .unwrap_or_default(),
             PresetId::Color(id) => Self::color_value(&self.color, id),
             PresetId::Position(id) => Self::position_value(&self.position, id),
         }
@@ -48,21 +68,26 @@ impl Presets {
 
     fn color_value(presets: &DashMap<u32, Preset<Color>>, id: u32) -> Vec<FixtureControlValue> {
         if let Some(preset) = presets.get(&id) {
-            vec![
-                FixtureControlValue::Color(preset.value.0, preset.value.1, preset.value.2)
-            ]
-        }else {
+            vec![FixtureControlValue::Color(
+                preset.value.0,
+                preset.value.1,
+                preset.value.2,
+            )]
+        } else {
             Default::default()
         }
     }
 
-    fn position_value(presets: &DashMap<u32, Preset<Position>>, id: u32) -> Vec<FixtureControlValue> {
+    fn position_value(
+        presets: &DashMap<u32, Preset<Position>>,
+        id: u32,
+    ) -> Vec<FixtureControlValue> {
         if let Some(preset) = presets.get(&id) {
             vec![
                 FixtureControlValue::Pan(preset.value.0),
                 FixtureControlValue::Tilt(preset.value.1),
             ]
-        }else {
+        } else {
             Default::default()
         }
     }

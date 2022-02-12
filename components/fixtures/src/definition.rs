@@ -374,7 +374,11 @@ impl FixtureControl {
         match self {
             Intensity => vec![FixtureFaderControl::Intensity],
             Shutter => vec![FixtureFaderControl::Shutter],
-            Color => vec![FixtureFaderControl::Color(ColorChannel::Red), FixtureFaderControl::Color(ColorChannel::Green), FixtureFaderControl::Color(ColorChannel::Blue)],
+            Color => vec![
+                FixtureFaderControl::Color(ColorChannel::Red),
+                FixtureFaderControl::Color(ColorChannel::Green),
+                FixtureFaderControl::Color(ColorChannel::Blue),
+            ],
             Pan => vec![FixtureFaderControl::Pan],
             Tilt => vec![FixtureFaderControl::Tilt],
             Focus => vec![FixtureFaderControl::Focus],

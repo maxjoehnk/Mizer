@@ -7,7 +7,9 @@ impl From<effects::Effect> for models::Effect {
         Self {
             id: effect.id,
             name: effect.name,
-            channels: effect.channels.into_iter()
+            channels: effect
+                .channels
+                .into_iter()
                 .map(models::EffectChannel::from)
                 .collect(),
             ..Default::default()
@@ -29,7 +31,9 @@ impl From<effects::EffectChannel> for models::EffectChannel {
     fn from(channel: effects::EffectChannel) -> Self {
         Self {
             control: channel.control.into(),
-            steps: channel.steps.into_iter()
+            steps: channel
+                .steps
+                .into_iter()
                 .map(models::EffectStep::from)
                 .collect(),
             ..Default::default()
@@ -41,11 +45,13 @@ impl From<effects::EffectControlPoint> for models::EffectStep_oneof_control_poin
     fn from(control_point: effects::EffectControlPoint) -> Self {
         match control_point {
             effects::EffectControlPoint::Simple => Self::simple(Default::default()),
-            effects::EffectControlPoint::Quadratic(c) => Self::quadratic(models::QuadraticControlPoint {
-                c0a: c[0],
-                c0b: c[1],
-                ..Default::default()
-            }),
+            effects::EffectControlPoint::Quadratic(c) => {
+                Self::quadratic(models::QuadraticControlPoint {
+                    c0a: c[0],
+                    c0b: c[1],
+                    ..Default::default()
+                })
+            }
             effects::EffectControlPoint::Cubic(c0, c1) => Self::cubic(models::CubicControlPoint {
                 c0a: c0[0],
                 c0b: c0[1],

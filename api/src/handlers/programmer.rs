@@ -89,10 +89,34 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn get_presets(&self) -> Presets {
         Presets {
-            intensities: self.fixture_manager.presets.intensity_presets().into_iter().map(Preset::from).collect(),
-            shutter: self.fixture_manager.presets.shutter_presets().into_iter().map(Preset::from).collect(),
-            color: self.fixture_manager.presets.color_presets().into_iter().map(Preset::from).collect(),
-            position: self.fixture_manager.presets.position_presets().into_iter().map(Preset::from).collect(),
+            intensities: self
+                .fixture_manager
+                .presets
+                .intensity_presets()
+                .into_iter()
+                .map(Preset::from)
+                .collect(),
+            shutter: self
+                .fixture_manager
+                .presets
+                .shutter_presets()
+                .into_iter()
+                .map(Preset::from)
+                .collect(),
+            color: self
+                .fixture_manager
+                .presets
+                .color_presets()
+                .into_iter()
+                .map(Preset::from)
+                .collect(),
+            position: self
+                .fixture_manager
+                .presets
+                .position_presets()
+                .into_iter()
+                .map(Preset::from)
+                .collect(),
             ..Default::default()
         }
     }
@@ -105,9 +129,12 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn get_groups(&self) -> Groups {
         Groups {
-            groups: self.fixture_manager.get_groups().into_iter().map(|group| {
-                group.deref().clone().into()
-            }).collect(),
+            groups: self
+                .fixture_manager
+                .get_groups()
+                .into_iter()
+                .map(|group| group.deref().clone().into())
+                .collect(),
             ..Default::default()
         }
     }
@@ -125,7 +152,10 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
         if let Some(mut group) = self.fixture_manager.groups.get_mut(&group_id) {
-            let mut fixture_ids = fixture_ids.into_iter().map(|id| id.into()).collect::<Vec<_>>();
+            let mut fixture_ids = fixture_ids
+                .into_iter()
+                .map(|id| id.into())
+                .collect::<Vec<_>>();
             group.fixtures.append(&mut fixture_ids);
         }
     }

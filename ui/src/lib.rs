@@ -1,8 +1,8 @@
+use nativeshell::shell::ContextRef;
 use nativeshell::{
     codec::Value,
-    shell::{Context, ContextOptions, exec_bundle, register_observatory_listener},
+    shell::{exec_bundle, register_observatory_listener, Context, ContextOptions},
 };
-use nativeshell::shell::ContextRef;
 
 use mizer_api::handlers::Handlers;
 use mizer_api::RuntimeApi;
@@ -52,7 +52,8 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
     let _programmer_events =
         ProgrammerEventChannel::new(handlers.programmer, async_runtime, context.weak())
             .event_channel(context.weak());
-    let _application = ApplicationChannel::new(handlers.settings, lifecycle_handler).channel(context.weak());
+    let _application =
+        ApplicationChannel::new(handlers.settings, lifecycle_handler).channel(context.weak());
     let _effects = EffectsChannel::new(handlers.effects).channel(context.weak());
     let _plans = PlansChannel::new(handlers.plans).channel(context.weak());
 

@@ -1,6 +1,6 @@
-use std::sync::Arc;
-use crate::types::{Array, drop_pointer, FFIFromPointer};
+use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_sequencer::SequencerView;
+use std::sync::Arc;
 
 pub struct Sequencer {
     pub view: SequencerView,
@@ -11,11 +11,11 @@ pub struct Sequencer {
 pub struct SequenceState {
     pub sequence_id: u32,
     pub active: u8,
-    pub current_cue_id: u32
+    pub current_cue_id: u32,
 }
 
 #[no_mangle]
-pub extern fn read_sequencer_state(ptr: *const Sequencer) -> Array<SequenceState> {
+pub extern "C" fn read_sequencer_state(ptr: *const Sequencer) -> Array<SequenceState> {
     let ffi = Arc::from_pointer(ptr);
     let values = ffi.view.read();
     let values = values
@@ -33,6 +33,6 @@ pub extern fn read_sequencer_state(ptr: *const Sequencer) -> Array<SequenceState
 }
 
 #[no_mangle]
-pub extern fn drop_sequencer_pointer(ptr: *const Sequencer) {
+pub extern "C" fn drop_sequencer_pointer(ptr: *const Sequencer) {
     drop_pointer(ptr);
 }

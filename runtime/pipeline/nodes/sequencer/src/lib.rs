@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_node::*;
 use mizer_node::edge::Edge;
+use mizer_node::*;
 use mizer_sequencer::Sequencer;
 
 const GO_FORWARD: &str = "Go+";
@@ -38,35 +38,40 @@ impl PipelineNode for SequencerNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            GO_FORWARD.into(),
-            PortMetadata {
-                direction: PortDirection::Input,
-                port_type: PortType::Single,
-                ..Default::default()
-            },
-        ), (
-            STOP.into(),
-            PortMetadata {
-                direction: PortDirection::Input,
-                port_type: PortType::Single,
-                ..Default::default()
-            },
-        ), (
-            ACTIVE.into(),
-            PortMetadata {
-                direction: PortDirection::Output,
-                port_type: PortType::Single,
-                ..Default::default()
-            }
-        ), (
-             CUE.into(),
-             PortMetadata {
-                 direction: PortDirection::Output,
-                 port_type: PortType::Single,
-                 ..Default::default()
-             }
-         )]
+        vec![
+            (
+                GO_FORWARD.into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
+            (
+                STOP.into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
+            (
+                ACTIVE.into(),
+                PortMetadata {
+                    direction: PortDirection::Output,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
+            (
+                CUE.into(),
+                PortMetadata {
+                    direction: PortDirection::Output,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
+        ]
     }
 
     fn node_type(&self) -> NodeType {
@@ -89,7 +94,9 @@ impl ProcessingNode for SequencerNode {
                     sequencer.sequence_stop(self.sequence_id);
                 }
             }
-            if let Some(sequence_state) = sequencer.get_sequencer_view().read().get(&self.sequence_id) {
+            if let Some(sequence_state) =
+                sequencer.get_sequencer_view().read().get(&self.sequence_id)
+            {
                 context.write_port(ACTIVE, if sequence_state.active { 1f64 } else { 0f64 });
                 if let Some(cue_id) = sequence_state.cue_id {
                     context.write_port(CUE, cue_id as f64);

@@ -2,22 +2,24 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use dashmap::DashMap;
+use pinboard::NonEmptyPinboard;
 use postage::prelude::Sink;
 use postage::watch;
-use pinboard::NonEmptyPinboard;
 
 use futures::stream::Stream;
 
-use crate::definition::{ColorChannel, ColorGroup, FixtureControl, FixtureControlValue, FixtureFaderControl};
+use crate::definition::{
+    ColorChannel, ColorGroup, FixtureControl, FixtureControlValue, FixtureFaderControl,
+};
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::FixtureId;
 
 pub use groups::*;
 pub use presets::*;
 
-mod presets;
-mod groups;
 mod default_presets;
+mod groups;
+mod presets;
 
 pub struct Programmer {
     highlight: bool,
@@ -56,17 +58,50 @@ impl FixtureProgrammer {
     }
 
     fn controls(&self) -> impl Iterator<Item = FixtureControlValue> + '_ {
-        let intensity = self.intensity.iter().map(|value| FixtureControlValue::Intensity(*value));
-        let shutter = self.shutter.iter().map(|value| FixtureControlValue::Shutter(*value));
-        let color = self.color.iter().map(|value| FixtureControlValue::Color(value.red, value. green, value.blue));
-        let pan = self.pan.iter().map(|value| FixtureControlValue::Pan(*value));
-        let tilt = self.tilt.iter().map(|value| FixtureControlValue::Tilt(*value));
-        let focus = self.focus.iter().map(|value| FixtureControlValue::Focus(*value));
-        let zoom = self.zoom.iter().map(|value| FixtureControlValue::Zoom(*value));
-        let prism = self.prism.iter().map(|value| FixtureControlValue::Prism(*value));
-        let iris = self.iris.iter().map(|value| FixtureControlValue::Iris(*value));
-        let frost = self.frost.iter().map(|value| FixtureControlValue::Frost(*value));
-        let generic = self.generic.iter().map(|(key, value)| FixtureControlValue::Generic(key.clone(), *value));
+        let intensity = self
+            .intensity
+            .iter()
+            .map(|value| FixtureControlValue::Intensity(*value));
+        let shutter = self
+            .shutter
+            .iter()
+            .map(|value| FixtureControlValue::Shutter(*value));
+        let color = self
+            .color
+            .iter()
+            .map(|value| FixtureControlValue::Color(value.red, value.green, value.blue));
+        let pan = self
+            .pan
+            .iter()
+            .map(|value| FixtureControlValue::Pan(*value));
+        let tilt = self
+            .tilt
+            .iter()
+            .map(|value| FixtureControlValue::Tilt(*value));
+        let focus = self
+            .focus
+            .iter()
+            .map(|value| FixtureControlValue::Focus(*value));
+        let zoom = self
+            .zoom
+            .iter()
+            .map(|value| FixtureControlValue::Zoom(*value));
+        let prism = self
+            .prism
+            .iter()
+            .map(|value| FixtureControlValue::Prism(*value));
+        let iris = self
+            .iris
+            .iter()
+            .map(|value| FixtureControlValue::Iris(*value));
+        let frost = self
+            .frost
+            .iter()
+            .map(|value| FixtureControlValue::Frost(*value));
+        let generic = self
+            .generic
+            .iter()
+            .map(|(key, value)| FixtureControlValue::Generic(key.clone(), *value));
 
         intensity
             .chain(shutter)
@@ -82,21 +117,53 @@ impl FixtureProgrammer {
     }
 
     fn fader_controls(&self) -> impl Iterator<Item = (FixtureFaderControl, f64)> + '_ {
-        let intensity = self.intensity.iter().map(|value| (FixtureFaderControl::Intensity, *value));
-        let shutter = self.shutter.iter().map(|value| (FixtureFaderControl::Shutter, *value));
-        let color = self.color.iter().flat_map(|value| vec![
-            (FixtureFaderControl::Color(ColorChannel::Red), value.red),
-            (FixtureFaderControl::Color(ColorChannel::Green), value.green),
-            (FixtureFaderControl::Color(ColorChannel::Blue), value.blue),
-        ]);
-        let pan = self.pan.iter().map(|value| (FixtureFaderControl::Pan, *value));
-        let tilt = self.tilt.iter().map(|value| (FixtureFaderControl::Tilt, *value));
-        let focus = self.focus.iter().map(|value| (FixtureFaderControl::Focus, *value));
-        let zoom = self.zoom.iter().map(|value| (FixtureFaderControl::Zoom, *value));
-        let prism = self.prism.iter().map(|value| (FixtureFaderControl::Prism, *value));
-        let iris = self.iris.iter().map(|value| (FixtureFaderControl::Iris, *value));
-        let frost = self.frost.iter().map(|value| (FixtureFaderControl::Frost, *value));
-        let generic = self.generic.iter().map(|(key, value)| (FixtureFaderControl::Generic(key.clone()), *value));
+        let intensity = self
+            .intensity
+            .iter()
+            .map(|value| (FixtureFaderControl::Intensity, *value));
+        let shutter = self
+            .shutter
+            .iter()
+            .map(|value| (FixtureFaderControl::Shutter, *value));
+        let color = self.color.iter().flat_map(|value| {
+            vec![
+                (FixtureFaderControl::Color(ColorChannel::Red), value.red),
+                (FixtureFaderControl::Color(ColorChannel::Green), value.green),
+                (FixtureFaderControl::Color(ColorChannel::Blue), value.blue),
+            ]
+        });
+        let pan = self
+            .pan
+            .iter()
+            .map(|value| (FixtureFaderControl::Pan, *value));
+        let tilt = self
+            .tilt
+            .iter()
+            .map(|value| (FixtureFaderControl::Tilt, *value));
+        let focus = self
+            .focus
+            .iter()
+            .map(|value| (FixtureFaderControl::Focus, *value));
+        let zoom = self
+            .zoom
+            .iter()
+            .map(|value| (FixtureFaderControl::Zoom, *value));
+        let prism = self
+            .prism
+            .iter()
+            .map(|value| (FixtureFaderControl::Prism, *value));
+        let iris = self
+            .iris
+            .iter()
+            .map(|value| (FixtureFaderControl::Iris, *value));
+        let frost = self
+            .frost
+            .iter()
+            .map(|value| (FixtureFaderControl::Frost, *value));
+        let generic = self
+            .generic
+            .iter()
+            .map(|(key, value)| (FixtureFaderControl::Generic(key.clone()), *value));
 
         intensity
             .chain(shutter)
@@ -134,7 +201,7 @@ impl Programmer {
             selected_fixtures: Default::default(),
             message_bus: tx,
             message_subscriber: rx,
-            programmer_view: Arc::new(NonEmptyPinboard::new(Default::default()))
+            programmer_view: Arc::new(NonEmptyPinboard::new(Default::default())),
         }
     }
 
@@ -194,7 +261,10 @@ impl Programmer {
     }
 
     pub fn is_group_active(&self, group: &Group) -> bool {
-        group.fixtures.iter().all(|id| self.selected_fixtures.contains_key(id))
+        group
+            .fixtures
+            .iter()
+            .all(|id| self.selected_fixtures.contains_key(id))
     }
 
     pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {
@@ -209,11 +279,9 @@ impl Programmer {
             match value {
                 FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
                 FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
-                FixtureControlValue::Color(red, green, blue) => programmer.color = Some(ColorGroup {
-                    red,
-                    green,
-                    blue
-                }),
+                FixtureControlValue::Color(red, green, blue) => {
+                    programmer.color = Some(ColorGroup { red, green, blue })
+                }
                 FixtureControlValue::Pan(value) => programmer.pan = Some(value),
                 FixtureControlValue::Tilt(value) => programmer.tilt = Some(value),
                 FixtureControlValue::Focus(value) => programmer.focus = Some(value),
@@ -223,7 +291,7 @@ impl Programmer {
                 FixtureControlValue::Frost(value) => programmer.frost = Some(value),
                 FixtureControlValue::Generic(ref name, value) => {
                     programmer.generic.insert(name.clone(), value);
-                },
+                }
             }
         }
         self.emit_state();
@@ -259,7 +327,8 @@ impl Programmer {
     }
 
     fn get_channels(&self) -> Vec<ProgrammerChannel> {
-        let mut controls: HashMap<FixtureControl, (Vec<FixtureId>, FixtureControlValue)> = HashMap::new();
+        let mut controls: HashMap<FixtureControl, (Vec<FixtureId>, FixtureControlValue)> =
+            HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
             for value in state.controls() {
                 let entry = controls
@@ -274,10 +343,7 @@ impl Programmer {
         }
         controls
             .into_iter()
-            .map(|(_, (fixtures, value))| ProgrammerChannel {
-                value,
-                fixtures,
-            })
+            .map(|(_, (fixtures, value))| ProgrammerChannel { value, fixtures })
             .collect()
     }
 

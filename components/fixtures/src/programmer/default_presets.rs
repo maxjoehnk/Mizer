@@ -1,5 +1,5 @@
-use dashmap::DashMap;
 use crate::programmer::{Preset, Presets};
+use dashmap::DashMap;
 
 impl Presets {
     pub fn load_defaults(&self) {
@@ -19,12 +19,13 @@ impl Presets {
     }
 }
 
-fn add_preset<TValue>(presets: &DashMap<u32, Preset<TValue>>, id: u32, value: TValue, label: impl Into<String>) {
+fn add_preset<TValue>(
+    presets: &DashMap<u32, Preset<TValue>>,
+    id: u32,
+    value: TValue,
+    label: impl Into<String>,
+) {
     let label = Some(label.into());
 
-    presets.insert(id, Preset {
-        id,
-        label,
-        value
-    });
+    presets.insert(id, Preset { id, label, value });
 }

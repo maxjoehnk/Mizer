@@ -1,8 +1,8 @@
-use std::iter::FromIterator;
-use geo_nd::Vector;
-use std::num::FpCategory;
-use num_traits::{Num, One, ToPrimitive, Zero};
 use crate::{EffectControlPoint, SequencerValue};
+use geo_nd::Vector;
+use num_traits::{Num, One, ToPrimitive, Zero};
+use std::iter::FromIterator;
+use std::num::FpCategory;
 
 pub type Bezier = bezier_nd::Bezier<SequencerValue<f64>, Point, 2>;
 
@@ -21,7 +21,12 @@ impl Spline {
             frame -= self.0.len() as f64;
         }
         let index = frame.floor() as usize;
-        if let Some((index, curve)) = self.0.get(index).map(|c| (index, c)).or_else(|| self.0.get(0).map(|c| (0, c))) {
+        if let Some((index, curve)) = self
+            .0
+            .get(index)
+            .map(|c| (index, c))
+            .or_else(|| self.0.get(0).map(|c| (0, c)))
+        {
             let point_in_curve = frame - index as f64;
             let point = curve.0.point_at(SequencerValue::Direct(point_in_curve));
 
@@ -36,7 +41,11 @@ impl Spline {
 pub struct SplinePart(Bezier);
 
 impl SplinePart {
-    pub fn new(start: [SequencerValue<f64>; 2], end: [SequencerValue<f64>; 2], control_point: EffectControlPoint) -> Self {
+    pub fn new(
+        start: [SequencerValue<f64>; 2],
+        end: [SequencerValue<f64>; 2],
+        control_point: EffectControlPoint,
+    ) -> Self {
         let start = Point::from_array(start);
         let end = Point::from_array(end);
 
@@ -44,24 +53,13 @@ impl SplinePart {
             EffectControlPoint::Simple => Bezier::line(&start, &end),
             EffectControlPoint::Cubic(c0, c1) => Bezier::cubic(
                 &start,
-                &Point::from_array([
-                    c0[0].into(),
-                    c0[1].into(),
-                ]),
-                &Point::from_array([
-                    c1[0].into(),
-                    c1[1].into(),
-                ]),
+                &Point::from_array([c0[0].into(), c0[1].into()]),
+                &Point::from_array([c1[0].into(), c1[1].into()]),
                 &end,
             ),
-            EffectControlPoint::Quadratic(c) => Bezier::quadratic(
-                &start,
-                &Point::from_array([
-                    c[0].into(),
-                    c[1].into(),
-                ]),
-                &end,
-            ),
+            EffectControlPoint::Quadratic(c) => {
+                Bezier::quadratic(&start, &Point::from_array([c[0].into(), c[1].into()]), &end)
+            }
         };
 
         Self(bezier)
@@ -308,8 +306,7 @@ impl ToPrimitive for SequencerValue<f64> {
 
 impl num_traits::NumCast for SequencerValue<f64> {
     fn from<T: ToPrimitive>(n: T) -> Option<Self> {
-        n.to_f64()
-            .map(SequencerValue::Direct)
+        n.to_f64().map(SequencerValue::Direct)
     }
 }
 
@@ -344,14 +341,17 @@ impl geo_nd::Num for SequencerValue<f64> {}
 
 #[cfg(test)]
 mod tests {
-    use std::iter::FromIterator;
-    use geo_nd::Vector;
     use crate::{EffectControlPoint, SequencerValue, Spline, SplinePart};
+    use geo_nd::Vector;
+    use std::iter::FromIterator;
 
     #[test]
     fn bezier_test() {
         pub type RangeBezier = bezier_nd::Bezier<f64, geo_nd::FArray<f64, 2>, 2>;
-        let bezier = RangeBezier::line(&geo_nd::FArray::from_array([0., 0.]), &geo_nd::FArray::from_array([1., 0.]));
+        let bezier = RangeBezier::line(
+            &geo_nd::FArray::from_array([0., 0.]),
+            &geo_nd::FArray::from_array([1., 0.]),
+        );
 
         assert_eq!(bezier.point_at(0.)[1], 0.);
         assert_eq!(bezier.point_at(1.)[1], 0.);
@@ -359,7 +359,11 @@ mod tests {
 
     #[test]
     fn bezier_direct_test() {
-        let spline = SplinePart::new([0.0.into(), 0.0.into()], [1.0.into(), 0.0.into()], EffectControlPoint::Simple);
+        let spline = SplinePart::new(
+            [0.0.into(), 0.0.into()],
+            [1.0.into(), 0.0.into()],
+            EffectControlPoint::Simple,
+        );
         let spline = Spline::from_iter([spline]);
 
         assert_eq!(spline.sample(0.), Some(SequencerValue::Direct(0.)));
@@ -368,7 +372,11 @@ mod tests {
 
     #[test]
     fn bezier_range_test() {
-        let spline = SplinePart::new([0.0.into(), 0.0.into()], [1.0.into(), SequencerValue::Range((0., 1.))], EffectControlPoint::Simple);
+        let spline = SplinePart::new(
+            [0.0.into(), 0.0.into()],
+            [1.0.into(), SequencerValue::Range((0., 1.))],
+            EffectControlPoint::Simple,
+        );
         let spline = Spline::from_iter([spline]);
 
         assert_eq!(spline.sample(0.), Some(SequencerValue::Range((0., 0.))));

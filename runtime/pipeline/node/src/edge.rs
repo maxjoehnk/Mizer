@@ -59,7 +59,10 @@ mod tests {
 
     #[test_case(0.5f64, 1f64)]
     #[test_case(1f64, 0.5f64)]
-    fn returning_two_values_above_zero_after_each_other_should_return_none(first: f64, second: f64) {
+    fn returning_two_values_above_zero_after_each_other_should_return_none(
+        first: f64,
+        second: f64,
+    ) {
         let mut edge = Edge::new();
         edge.update(first);
 

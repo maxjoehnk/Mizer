@@ -173,11 +173,7 @@ impl ApiHandler {
                 name: output.name(),
             })
             .map(Connection::from);
-        let device_manager = mizer
-            .runtime
-            .injector()
-            .get::<DeviceManager>()
-            .unwrap();
+        let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
         let devices = device_manager
             .current_devices()
             .into_iter()

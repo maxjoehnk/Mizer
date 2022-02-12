@@ -1,12 +1,12 @@
-use std::sync::Arc;
 use crate::plugin::channels::MethodReplyExt;
+use crate::MethodCallExt;
 use mizer_api::handlers::PlansHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
+use mizer_ui_ffi::{FFIToPointer, FixturesRef};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use mizer_ui_ffi::{FFIToPointer, FixturesRef};
-use crate::MethodCallExt;
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct PlansChannel<R: RuntimeApi> {
@@ -51,7 +51,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
             "getFixturesPointer" => match self.get_fixtures_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
-            }
+            },
             _ => resp.not_implemented(),
         }
     }

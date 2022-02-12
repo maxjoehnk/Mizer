@@ -1,4 +1,5 @@
 pub use self::application::*;
+pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
 pub use self::media::*;
@@ -6,16 +7,16 @@ pub use self::nodes::*;
 pub use self::programmer::*;
 pub use self::sequencer::*;
 pub use self::transport::*;
-pub use self::effects::*;
 use anyhow::Error;
 pub use event::connections::*;
 pub use event::session::*;
 pub use method::connections::*;
-pub use method::session::*;
 pub use method::plans::*;
+pub use method::session::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
 mod application;
+mod effects;
 mod event;
 mod fixtures;
 mod layouts;
@@ -25,7 +26,6 @@ mod nodes;
 mod programmer;
 mod sequencer;
 mod transport;
-mod effects;
 
 pub trait MethodCallExt {
     fn arguments<T: protobuf::Message>(&self) -> anyhow::Result<T>;

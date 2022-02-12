@@ -2,15 +2,18 @@ use std::fs;
 use std::ops::Add;
 use std::path::Path;
 
-use mizer_util::clock::{Clock, TestClock};
-use super::*;
 use super::instance::EffectInstance;
-use std::collections::HashMap;
+use super::*;
 use itertools::Itertools;
-use mizer_fixtures::definition::{FixtureFaderControl, FixtureDefinition, FixtureMode, FixtureControls, FixtureChannelDefinition, ChannelResolution, AxisGroup};
-use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::definition::{
+    AxisGroup, ChannelResolution, FixtureChannelDefinition, FixtureControls, FixtureDefinition,
+    FixtureFaderControl, FixtureMode,
+};
 use mizer_fixtures::fixture::IFixture;
+use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureId;
+use mizer_util::clock::{Clock, TestClock};
+use std::collections::HashMap;
 
 const FRAMES_PER_STEP: usize = 60;
 
@@ -28,7 +31,10 @@ pub fn graph_position_effect(effect: Effect) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn run_effect(effect: &Effect, fixtures: Vec<u32>) -> anyhow::Result<(HashMap<(u32, FixtureFaderControl), Vec<f64>>, Vec<f64>)> {
+fn run_effect(
+    effect: &Effect,
+    fixtures: Vec<u32>,
+) -> anyhow::Result<(HashMap<(u32, FixtureFaderControl), Vec<f64>>, Vec<f64>)> {
     let mut clock = TestClock::default();
     let mut history_ticks = Vec::new();
     let mut fixture_frames = HashMap::<(u32, FixtureFaderControl), Vec<f64>>::new();
@@ -36,8 +42,17 @@ fn run_effect(effect: &Effect, fixtures: Vec<u32>) -> anyhow::Result<(HashMap<(u
     for fixture_id in fixtures.iter() {
         add_test_fixture(&fixture_manager, *fixture_id);
     }
-    let mut effect_instance = EffectInstance::new(effect, fixtures.into_iter().map(FixtureId::Fixture).collect());
-    let frames = effect.channels.iter().map(|c| c.steps.len()).max().unwrap_or_default() * FRAMES_PER_STEP;
+    let mut effect_instance = EffectInstance::new(
+        effect,
+        fixtures.into_iter().map(FixtureId::Fixture).collect(),
+    );
+    let frames = effect
+        .channels
+        .iter()
+        .map(|c| c.steps.len())
+        .max()
+        .unwrap_or_default()
+        * FRAMES_PER_STEP;
 
     for _ in 0..frames {
         let frame = clock.tick();
@@ -51,13 +66,30 @@ fn run_effect(effect: &Effect, fixtures: Vec<u32>) -> anyhow::Result<(HashMap<(u
     Ok((fixture_frames, history_ticks))
 }
 
-fn generate_graph(effect: &Effect, fixture_frames: HashMap<(u32, FixtureFaderControl), Vec<f64>>, history_ticks: Vec<f64>) -> anyhow::Result<()> {
+fn generate_graph(
+    effect: &Effect,
+    fixture_frames: HashMap<(u32, FixtureFaderControl), Vec<f64>>,
+    history_ticks: Vec<f64>,
+) -> anyhow::Result<()> {
     let dir = Path::new(".snapshots");
     fs::create_dir_all(dir)?;
     let name = format!("{}-time", effect.name);
-    generate_script_file(dir, &name, fixture_frames.keys().cloned().sorted_by_key(|(id, _)| *id).collect())?;
+    generate_script_file(
+        dir,
+        &name,
+        fixture_frames
+            .keys()
+            .cloned()
+            .sorted_by_key(|(id, _)| *id)
+            .collect(),
+    )?;
     for ((id, control), values) in fixture_frames.iter().sorted_by_key(|((id, _), _)| id) {
-        generate_data_file(dir, &format!("{}-{:?}", id, control), values, &history_ticks)?;
+        generate_data_file(
+            dir,
+            &format!("{}-{:?}", id, control),
+            values,
+            &history_ticks,
+        )?;
     }
     generate_plot(dir, &name)?;
     cleanup_script(dir, &name)?;
@@ -68,7 +100,10 @@ fn generate_graph(effect: &Effect, fixture_frames: HashMap<(u32, FixtureFaderCon
     Ok(())
 }
 
-fn generate_position_graph(effect: &Effect, fixture_frames: HashMap<(u32, FixtureFaderControl), Vec<f64>>) -> anyhow::Result<()> {
+fn generate_position_graph(
+    effect: &Effect,
+    fixture_frames: HashMap<(u32, FixtureFaderControl), Vec<f64>>,
+) -> anyhow::Result<()> {
     let dir = Path::new(".snapshots");
     fs::create_dir_all(dir)?;
     let name = format!("{}-position", effect.name);
@@ -84,59 +119,88 @@ fn generate_position_graph(effect: &Effect, fixture_frames: HashMap<(u32, Fixtur
 }
 
 fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
-    fixture_manager.add_fixture(id, "Fixture".into(), FixtureDefinition {
-        id: "test-fixture".into(),
-        name: "Test Fixture".into(),
-        manufacturer: "Mizer".into(),
-        modes: vec![FixtureMode {
-            name: "Default".into(),
-            channels: vec![
-                FixtureChannelDefinition {
-                    name: "intensity".into(),
-                    resolution: ChannelResolution::Coarse(0)
-                },
-                FixtureChannelDefinition {
-                    name: "pan".into(),
-                    resolution: ChannelResolution::Coarse(0)
-                },
-                FixtureChannelDefinition {
-                    name: "tilt".into(),
-                    resolution: ChannelResolution::Coarse(0)
-                },
-            ],
-            controls: FixtureControls {
-                intensity: Some("intensity".to_string()),
-                pan: Some(AxisGroup {
-                    channel: "pan".into(),
-                    angle: None,
-                }),
-                tilt: Some(AxisGroup {
-                    channel: "tilt".into(),
-                    angle: None,
-                }),
-                ..Default::default()
-            }.into(),
-            sub_fixtures: vec![]
-        }],
-        physical: Default::default(),
-        tags: Vec::new(),
-    }, Some("Default".into()), None, 1, None);
+    fixture_manager.add_fixture(
+        id,
+        "Fixture".into(),
+        FixtureDefinition {
+            id: "test-fixture".into(),
+            name: "Test Fixture".into(),
+            manufacturer: "Mizer".into(),
+            modes: vec![FixtureMode {
+                name: "Default".into(),
+                channels: vec![
+                    FixtureChannelDefinition {
+                        name: "intensity".into(),
+                        resolution: ChannelResolution::Coarse(0),
+                    },
+                    FixtureChannelDefinition {
+                        name: "pan".into(),
+                        resolution: ChannelResolution::Coarse(0),
+                    },
+                    FixtureChannelDefinition {
+                        name: "tilt".into(),
+                        resolution: ChannelResolution::Coarse(0),
+                    },
+                ],
+                controls: FixtureControls {
+                    intensity: Some("intensity".to_string()),
+                    pan: Some(AxisGroup {
+                        channel: "pan".into(),
+                        angle: None,
+                    }),
+                    tilt: Some(AxisGroup {
+                        channel: "tilt".into(),
+                        angle: None,
+                    }),
+                    ..Default::default()
+                }
+                .into(),
+                sub_fixtures: vec![],
+            }],
+            physical: Default::default(),
+            tags: Vec::new(),
+        },
+        Some("Default".into()),
+        None,
+        1,
+        None,
+    );
 }
 
-fn collect_fixture_frames(fixture_manager: &FixtureManager, frames: &mut HashMap<(u32, FixtureFaderControl), Vec<f64>>) {
+fn collect_fixture_frames(
+    fixture_manager: &FixtureManager,
+    frames: &mut HashMap<(u32, FixtureFaderControl), Vec<f64>>,
+) {
     for fixture in fixture_manager.get_fixtures() {
-        for control in fixture.current_mode.controls.controls().into_iter().flat_map(|(controls, _)| controls.faders()) {
+        for control in fixture
+            .current_mode
+            .controls
+            .controls()
+            .into_iter()
+            .flat_map(|(controls, _)| controls.faders())
+        {
             if let Some(value) = fixture.read_control(control.clone()) {
-                frames.entry((fixture.id, control))
-                    .or_default()
-                    .push(value);
+                frames.entry((fixture.id, control)).or_default().push(value);
             }
         }
     }
 }
 
-fn generate_script_file(dir: &Path, name: &str, files: Vec<(u32, FixtureFaderControl)>) -> anyhow::Result<()> {
-    let channels = files.iter().map(|(id, control)| format!("'{}-{:?}.dat' title '{} {:?}' with lines", id, control, id, control)).collect::<Vec<_>>().join(", ");
+fn generate_script_file(
+    dir: &Path,
+    name: &str,
+    files: Vec<(u32, FixtureFaderControl)>,
+) -> anyhow::Result<()> {
+    let channels = files
+        .iter()
+        .map(|(id, control)| {
+            format!(
+                "'{}-{:?}.dat' title '{} {:?}' with lines",
+                id, control, id, control
+            )
+        })
+        .collect::<Vec<_>>()
+        .join(", ");
     let script = format!("set xlabel 'Frames'\nset ylabel 'Value'\nset yrange[-1:1]\nset term svg enhanced\nset output '{}.svg'\nplot {}\n", name, channels);
     let file_path = dir.join(format!("{}.gnu", name));
     fs::write(file_path, script)?;

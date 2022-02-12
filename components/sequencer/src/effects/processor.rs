@@ -1,6 +1,6 @@
-use mizer_module::*;
 use crate::EffectEngine;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_module::*;
 
 pub(crate) struct EffectsProcessor;
 

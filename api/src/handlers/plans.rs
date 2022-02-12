@@ -1,7 +1,7 @@
-use mizer_fixtures::FixtureStates;
-use mizer_fixtures::manager::FixtureManager;
 use crate::models::*;
 use crate::RuntimeApi;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::FixtureStates;
 
 #[derive(Clone)]
 pub struct PlansHandler<R: RuntimeApi> {
@@ -11,7 +11,10 @@ pub struct PlansHandler<R: RuntimeApi> {
 
 impl<R: RuntimeApi> PlansHandler<R> {
     pub fn new(fixture_manager: FixtureManager, runtime: R) -> Self {
-        Self { fixture_manager, runtime }
+        Self {
+            fixture_manager,
+            runtime,
+        }
     }
 
     pub fn get_plans(&self) -> Plans {
@@ -42,7 +45,7 @@ impl<R: RuntimeApi> PlansHandler<R> {
         self.get_plans()
     }
 
-     pub fn state_ref(&self) -> FixtureStates {
-         self.fixture_manager.states.clone()
-     }
+    pub fn state_ref(&self) -> FixtureStates {
+        self.fixture_manager.states.clone()
+    }
 }

@@ -1,14 +1,17 @@
-use serde::{Deserialize, Serialize};
 use mizer_fixtures::manager::FixtureManager;
-use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata, PortType, PreviewType, ProcessingNode};
 use mizer_node::edge::Edge;
+use mizer_node::{
+    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
+    PortType, PreviewType, ProcessingNode,
+};
+use serde::{Deserialize, Serialize};
 
 const CALL_PORT: &str = "Call";
 const ACTIVE_PORT: &str = "Active";
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct GroupNode {
-    pub id: u32
+    pub id: u32,
 }
 
 impl PipelineNode for GroupNode {
@@ -27,7 +30,7 @@ impl PipelineNode for GroupNode {
                     port_type: PortType::Single,
                     direction: PortDirection::Input,
                     ..Default::default()
-                }
+                },
             ),
             (
                 ACTIVE_PORT.into(),
@@ -35,8 +38,8 @@ impl PipelineNode for GroupNode {
                     port_type: PortType::Single,
                     direction: PortDirection::Output,
                     ..Default::default()
-                }
-            )
+                },
+            ),
         ]
     }
 

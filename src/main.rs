@@ -80,8 +80,8 @@ mod ui {
     use mizer::{Api, Flags};
     use mizer_api::handlers::Handlers;
 
-    use std::sync::mpsc;
     use mizer_ui::LifecycleHandler;
+    use std::sync::mpsc;
 
     pub fn run(flags: Flags) -> anyhow::Result<()> {
         let tokio = super::build_tokio_runtime();

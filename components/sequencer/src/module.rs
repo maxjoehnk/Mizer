@@ -2,7 +2,7 @@ use mizer_module::{Module, Runtime};
 
 use crate::processor::SequenceProcessor;
 use crate::sequencer::Sequencer;
-use crate::{EffectsProcessor, EffectEngine};
+use crate::{EffectEngine, EffectsProcessor};
 
 pub struct SequencerModule(Sequencer);
 

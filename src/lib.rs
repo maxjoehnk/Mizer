@@ -20,11 +20,11 @@ use mizer_session::SessionState;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
-use mizer_sequencer::{SequencerModule, Sequencer, EffectEngine, EffectsModule};
+use mizer_message_bus::MessageBus;
+use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
-use mizer_message_bus::MessageBus;
 
 mod api;
 mod flags;
@@ -221,7 +221,11 @@ impl Mizer {
 
     fn send_session_update(&self) {
         self.session_events.send(SessionState {
-            project_path: self.project_path.clone().map(|path| path.into_os_string().into_string().expect("Could not convert path to string")),
+            project_path: self.project_path.clone().map(|path| {
+                path.into_os_string()
+                    .into_string()
+                    .expect("Could not convert path to string")
+            }),
         });
     }
 }
@@ -233,9 +237,7 @@ fn register_sequencer_module(runtime: &mut DefaultRuntime) -> anyhow::Result<Seq
     Ok(sequencer)
 }
 
-fn register_effects_module(
-    runtime: &mut DefaultRuntime
-) -> anyhow::Result<EffectEngine> {
+fn register_effects_module(runtime: &mut DefaultRuntime) -> anyhow::Result<EffectEngine> {
     let (module, engine) = EffectsModule::new();
     module.register(runtime)?;
 

@@ -3,12 +3,12 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use mizer_api::handlers::SettingsHandler;
 
-use crate::LifecycleHandler;
 use crate::plugin::channels::MethodReplyExt;
+use crate::LifecycleHandler;
 
 pub struct ApplicationChannel<LH: LifecycleHandler + 'static> {
     handler: SettingsHandler,
-    lifecycle_handler: Option<LH>
+    lifecycle_handler: Option<LH>,
 }
 
 impl<LH: LifecycleHandler + 'static> MethodCallHandler for ApplicationChannel<LH> {
@@ -37,7 +37,10 @@ impl<LH: LifecycleHandler + 'static> MethodCallHandler for ApplicationChannel<LH
 
 impl<LH: LifecycleHandler + 'static> ApplicationChannel<LH> {
     pub fn new(handler: SettingsHandler, lifecycle_handler: LH) -> Self {
-        Self { handler, lifecycle_handler: Some(lifecycle_handler) }
+        Self {
+            handler,
+            lifecycle_handler: Some(lifecycle_handler),
+        }
     }
 
     pub fn channel(self, context: Context) -> MethodChannel {

@@ -118,7 +118,11 @@ impl ProcessingNode for ProgrammerNode {
                 programmer.write_control(FixtureControlValue::Shutter(shutter));
             }
             if let Some(color) = context.read_port_changes::<_, Color>("Color") {
-                programmer.write_control(FixtureControlValue::Color(color.red, color.green, color.blue));
+                programmer.write_control(FixtureControlValue::Color(
+                    color.red,
+                    color.green,
+                    color.blue,
+                ));
             }
             if let Some(pan) = context.read_port_changes::<_, f64>("Pan") {
                 programmer.write_control(FixtureControlValue::Pan(pan));

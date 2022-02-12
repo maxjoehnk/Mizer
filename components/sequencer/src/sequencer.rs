@@ -11,7 +11,7 @@ use mizer_util::ThreadPinned;
 
 use crate::contracts::StdClock;
 use crate::state::SequenceState;
-use crate::{Sequence, EffectEngine};
+use crate::{EffectEngine, Sequence};
 use mizer_fixtures::manager::FixtureManager;
 
 #[derive(Clone)]
@@ -46,7 +46,11 @@ impl Sequencer {
         }
     }
 
-    pub(crate) fn run_sequences(&self, fixture_manager: &FixtureManager, effect_engine: &EffectEngine) {
+    pub(crate) fn run_sequences(
+        &self,
+        fixture_manager: &FixtureManager,
+        effect_engine: &EffectEngine,
+    ) {
         let sequences = self.sequences.read();
         let mut states = self.sequence_states.deref().deref().borrow_mut();
         let mut view = self.sequence_view.read();
@@ -163,7 +167,12 @@ impl Sequencer {
     pub fn load_sequences(&self, sequences: Vec<Sequence>) {
         let id = sequences.iter().map(|s| s.id + 1).max().unwrap_or(1);
         self.sequence_counter.store(id, Ordering::Relaxed);
-        self.sequence_view.set(sequences.iter().map(|s| (s.id, SequenceView::default())).collect());
+        self.sequence_view.set(
+            sequences
+                .iter()
+                .map(|s| (s.id, SequenceView::default()))
+                .collect(),
+        );
         self.sequences
             .set(sequences.into_iter().map(|s| (s.id, s)).collect());
         log::debug!("Sequences: {:?}", self.sequences.read());

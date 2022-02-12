@@ -1,19 +1,19 @@
 mod contracts;
 mod cue;
+pub mod effects;
 mod module;
 mod processor;
 mod sequencer;
 mod sequences;
 mod state;
-pub mod effects;
 mod value;
 
 pub use self::cue::*;
+pub use self::effects::*;
 pub use self::module::*;
-pub use self::sequencer::{Sequencer, SequencerView, SequenceView};
+pub use self::sequencer::{SequenceView, Sequencer, SequencerView};
 pub use self::sequences::*;
 pub use self::value::*;
-pub use self::effects::*;
 
 #[cfg(test)]
 mod tests {
@@ -54,7 +54,9 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -106,14 +108,18 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
         );
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -155,7 +161,9 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -196,7 +204,9 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -237,7 +247,9 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -318,7 +330,9 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -367,7 +381,9 @@ mod tests {
             ..Default::default()
         };
 
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -424,7 +440,9 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -484,7 +502,9 @@ mod tests {
             )],
             ..Default::default()
         };
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -535,7 +555,9 @@ mod tests {
             ..Default::default()
         };
         context.fixture_controller.expect_write().never();
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,
@@ -608,7 +630,9 @@ mod tests {
             ..Default::default()
         };
         context.fixture_controller.expect_write().return_const(());
-        context.state.go(&sequence, &context.clock, &context.effect_engine);
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
         sequence.run(
             &mut context.state,
             &context.clock,

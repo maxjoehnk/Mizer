@@ -1,7 +1,9 @@
-use std::fmt::{Display, Formatter};
-use serde::{Deserialize, Serialize};
-use std::ops::{Mul, Sub, Add, Div, AddAssign, Neg, Rem, SubAssign, MulAssign, DivAssign, RemAssign};
 use mizer_util::LerpExt;
+use serde::{Deserialize, Serialize};
+use std::fmt::{Display, Formatter};
+use std::ops::{
+    Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
+};
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, PartialOrd)]
 #[serde(untagged)]
@@ -124,7 +126,9 @@ impl<T: Add<Output = T> + Copy> Add<Self> for SequencerValue<T> {
             (Self::Direct(lhs), Self::Direct(rhs)) => SequencerValue::Direct(lhs + rhs),
             (Self::Direct(lhs), Self::Range((a, b))) => SequencerValue::Range((lhs + a, lhs + b)),
             (Self::Range((a, b)), Self::Direct(rhs)) => SequencerValue::Range((rhs + a, rhs + b)),
-            (Self::Range((a1, b1)), Self::Range((a2, b2))) => SequencerValue::Range((a1 + a2, b1 + b2)),
+            (Self::Range((a1, b1)), Self::Range((a2, b2))) => {
+                SequencerValue::Range((a1 + a2, b1 + b2))
+            }
         }
     }
 }

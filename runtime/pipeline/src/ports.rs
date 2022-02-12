@@ -106,7 +106,7 @@ impl AnyPortReceiver {
             if let Some(value) = value {
                 *last_value = Some(value.clone());
                 Some(value)
-            }else {
+            } else {
                 None
             }
         })
@@ -182,7 +182,7 @@ pub struct NodeReceiver<V: PortValue + 'static> {
     transport: RefCell<Option<MemoryReceiver<V>>>,
     /// Used to set values from outside the pipeline
     value: RefCell<Option<V>>,
-    last_value: RefCell<Option<V>>
+    last_value: RefCell<Option<V>>,
 }
 
 impl<V: PortValue + 'static> Default for NodeReceiver<V> {

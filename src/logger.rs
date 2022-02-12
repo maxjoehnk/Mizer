@@ -1,6 +1,6 @@
-use std::io::Write;
 use env_logger::fmt::Formatter;
 use log::Record;
+use std::io::Write;
 
 pub fn init() {
     env_logger::builder()
@@ -24,7 +24,11 @@ fn write_record(buf: &mut Formatter, record: &Record) -> std::io::Result<()> {
     let style = buf.style();
     let timestamp = buf.timestamp();
     let thread = std::thread::current().id();
-    let file = record.file().zip(record.line()).map(|(file, line)| format!("{}:{}", file, line)).unwrap_or_default();
+    let file = record
+        .file()
+        .zip(record.line())
+        .map(|(file, line)| format!("{}:{}", file, line))
+        .unwrap_or_default();
 
     writeln!(
         buf,

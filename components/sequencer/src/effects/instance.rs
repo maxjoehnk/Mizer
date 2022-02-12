@@ -1,9 +1,9 @@
-use mizer_fixtures::manager::FixtureManager;
 use crate::{Effect, Spline};
+use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
 use std::collections::HashMap;
-use mizer_fixtures::definition::FixtureFaderControl;
-use mizer_fixtures::FixtureId;
 
 #[derive(Debug)]
 pub(crate) struct EffectInstance {
@@ -19,11 +19,16 @@ impl EffectInstance {
             effect: effect.id,
             fixtures,
             frame: 0.,
-            splines: effect.build_splines()
+            splines: effect.build_splines(),
         }
     }
 
-    pub fn process(&mut self, effect: &Effect, fixture_manager: &FixtureManager, frame: ClockFrame) {
+    pub fn process(
+        &mut self,
+        effect: &Effect,
+        fixture_manager: &FixtureManager,
+        frame: ClockFrame,
+    ) {
         profiling::scope!("EffectInstance::process");
         self.frame = frame.frame;
 
@@ -33,7 +38,7 @@ impl EffectInstance {
                 for (i, id) in self.fixtures.iter().enumerate() {
                     fixture_manager.write_fixture_control(*id, control.clone(), values[i]);
                 }
-            }else {
+            } else {
                 println!("no sample");
             }
         }

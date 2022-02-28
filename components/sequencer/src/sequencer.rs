@@ -75,21 +75,27 @@ impl Sequencer {
     ) {
         for command in self.commands.1.try_iter() {
             match command {
-                SequencerCommands::Go(sequence) => {
-                    if let Some(state) = states.get_mut(&sequence) {
-                        state.go(&sequences[&sequence], &self.clock, effect_engine);
+                SequencerCommands::Go(sequence_id) => {
+                    if let Some(state) = states.get_mut(&sequence_id) {
+                        if let Some(sequence) = sequences.get(&sequence_id) {
+                            state.go(sequence, &self.clock, effect_engine);
+                        }
                     }
                 }
-                SequencerCommands::Stop(sequence) => {
-                    if let Some(state) = states.get_mut(&sequence) {
-                        state.stop(&sequences[&sequence], &self.clock, effect_engine);
+                SequencerCommands::Stop(sequence_id) => {
+                    if let Some(state) = states.get_mut(&sequence_id) {
+                        if let Some(sequence) = sequences.get(&sequence_id) {
+                            state.stop(sequence, &self.clock, effect_engine);
+                        }
                     }
                 }
-                SequencerCommands::DropState(sequence) => {
-                    if let Some(state) = states.get_mut(&sequence) {
-                        state.stop(&sequences[&sequence], &self.clock, effect_engine);
+                SequencerCommands::DropState(sequence_id) => {
+                    if let Some(state) = states.get_mut(&sequence_id) {
+                        if let Some(sequence) = sequences.get(&sequence_id) {
+                            state.stop(sequence, &self.clock, effect_engine);
+                        }
                     }
-                    states.remove(&sequence);
+                    states.remove(&sequence_id);
                 }
             }
         }

@@ -27,7 +27,7 @@ dependencies:
       ref: a8ca32b
   select_form_field: ^2.2.0
   collection: ^1.15.0
-  nativeshell: 0.1.10
+  nativeshell: ^0.1.13
   flutter_svg: ^1.0.0
   flex_color_picker: ^2.1.2
   keyboard_shortcuts:

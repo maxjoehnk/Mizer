@@ -30,5 +30,7 @@ abstract class ProgrammerApi {
 
   Future<void> assignFixturesToGroup(List<int> fixtures, Group group);
 
+  Future<void> assignFixtureSelectionToGroup(Group group);
+
   Future<ProgrammerStatePointer?> getProgrammerPointer();
 }

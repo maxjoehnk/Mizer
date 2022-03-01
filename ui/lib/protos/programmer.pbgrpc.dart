@@ -76,6 +76,13 @@ class ProgrammerApiClient extends $grpc.Client {
       ($1.AssignFixturesToGroupRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $1.AssignFixturesToGroupResponse.fromBuffer(value));
+  static final _$assignFixtureSelectionToGroup = $grpc.ClientMethod<
+          $1.AssignFixtureSelectionToGroupRequest,
+          $1.AssignFixturesToGroupResponse>(
+      '/mizer.programmer.ProgrammerApi/AssignFixtureSelectionToGroup',
+      ($1.AssignFixtureSelectionToGroupRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $1.AssignFixturesToGroupResponse.fromBuffer(value));
 
   ProgrammerApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -148,6 +155,14 @@ class ProgrammerApiClient extends $grpc.Client {
       $1.AssignFixturesToGroupRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$assignFixturesToGroup, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.AssignFixturesToGroupResponse>
+      assignFixtureSelectionToGroup(
+          $1.AssignFixtureSelectionToGroupRequest request,
+          {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$assignFixtureSelectionToGroup, request,
+        options: options);
   }
 }
 
@@ -249,6 +264,15 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.AssignFixturesToGroupRequest.fromBuffer(value),
         ($1.AssignFixturesToGroupResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.AssignFixtureSelectionToGroupRequest,
+            $1.AssignFixturesToGroupResponse>(
+        'AssignFixtureSelectionToGroup',
+        assignFixtureSelectionToGroup_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.AssignFixtureSelectionToGroupRequest.fromBuffer(value),
+        ($1.AssignFixturesToGroupResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer_Pre(
@@ -315,6 +339,14 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return assignFixturesToGroup(call, await request);
   }
 
+  $async.Future<$1.AssignFixturesToGroupResponse>
+      assignFixtureSelectionToGroup_Pre(
+          $grpc.ServiceCall call,
+          $async.Future<$1.AssignFixtureSelectionToGroupRequest>
+              request) async {
+    return assignFixtureSelectionToGroup(call, await request);
+  }
+
   $async.Stream<$1.ProgrammerState> subscribeToProgrammer(
       $grpc.ServiceCall call, $1.SubscribeProgrammerRequest request);
   $async.Future<$1.WriteControlResponse> writeControl(
@@ -339,4 +371,6 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.AddGroupRequest request);
   $async.Future<$1.AssignFixturesToGroupResponse> assignFixturesToGroup(
       $grpc.ServiceCall call, $1.AssignFixturesToGroupRequest request);
+  $async.Future<$1.AssignFixturesToGroupResponse> assignFixtureSelectionToGroup(
+      $grpc.ServiceCall call, $1.AssignFixtureSelectionToGroupRequest request);
 }

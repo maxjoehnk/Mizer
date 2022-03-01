@@ -20,6 +20,7 @@ impl From<settings::Hotkeys> for model::Hotkeys {
             layouts: hotkeys.layouts,
             patch: hotkeys.patch,
             sequencer: hotkeys.sequencer,
+            plan: hotkeys.plan,
             ..Default::default()
         }
     }

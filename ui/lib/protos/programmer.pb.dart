@@ -1536,6 +1536,53 @@ class AssignFixturesToGroupRequest extends $pb.GeneratedMessage {
   $core.List<$0.FixtureId> get fixtures => $_getList(1);
 }
 
+class AssignFixtureSelectionToGroupRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AssignFixtureSelectionToGroupRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  AssignFixtureSelectionToGroupRequest._() : super();
+  factory AssignFixtureSelectionToGroupRequest({
+    $core.int? id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory AssignFixtureSelectionToGroupRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AssignFixtureSelectionToGroupRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AssignFixtureSelectionToGroupRequest clone() => AssignFixtureSelectionToGroupRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AssignFixtureSelectionToGroupRequest copyWith(void Function(AssignFixtureSelectionToGroupRequest) updates) => super.copyWith((message) => updates(message as AssignFixtureSelectionToGroupRequest)) as AssignFixtureSelectionToGroupRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AssignFixtureSelectionToGroupRequest create() => AssignFixtureSelectionToGroupRequest._();
+  AssignFixtureSelectionToGroupRequest createEmptyInstance() => create();
+  static $pb.PbList<AssignFixtureSelectionToGroupRequest> createRepeated() => $pb.PbList<AssignFixtureSelectionToGroupRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AssignFixtureSelectionToGroupRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AssignFixtureSelectionToGroupRequest>(create);
+  static AssignFixtureSelectionToGroupRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+}
+
 class AssignFixturesToGroupResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AssignFixturesToGroupResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false

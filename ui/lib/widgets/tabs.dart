@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 
+import 'panel.dart';
+
 class Tabs extends StatefulWidget {
   final List<Tab> children;
+  final List<PanelAction>? actions;
   final Function()? onAdd;
   final bool padding;
   final int? tabIndex;
@@ -13,7 +16,7 @@ class Tabs extends StatefulWidget {
     return onAdd != null;
   }
 
-  Tabs({required this.children, this.tabIndex, this.onSelectTab, this.onAdd, this.padding = true});
+  Tabs({required this.children, this.actions, this.tabIndex, this.onSelectTab, this.onAdd, this.padding = true});
 
   @override
   _TabsState createState() => _TabsState(activeIndex: this.tabIndex ?? 0);
@@ -59,9 +62,16 @@ class _TabsState extends State<Tabs> {
             if (widget.canAdd) AddTabButton(onClick: widget.onAdd!),
           ]),
         ),
-        if (this.active != null) Expanded(child: Padding(
-          padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
-          child: this.active,
+        if (this.active != null) Expanded(child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: widget.padding ? const EdgeInsets.all(8.0) : const EdgeInsets.all(0),
+                child: this.active,
+              ),
+            ),
+            if (widget.actions != null) PanelActions(actions: widget.actions!)
+          ],
         )),
       ],
     );

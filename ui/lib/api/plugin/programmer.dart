@@ -99,6 +99,11 @@ class ProgrammerPluginApi implements ProgrammerApi {
     await channel.invokeMethod("assignFixturesToGroup", request.writeToBuffer());
   }
 
+  @override
+  Future<void> assignFixtureSelectionToGroup(Group group) async {
+    await channel.invokeMethod("assignFixtureSelectionToGroup", group.id);
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

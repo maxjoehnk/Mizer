@@ -15,6 +15,9 @@ fixture_patch_view = "f12"
 [hotkeys.layouts]
 add_layout = "alt+a"
 
+[hotkeys.plan]
+store = "insert"
+
 [hotkeys.programmer]
 select_all = "ctrl+a"
 clear = "backspace"

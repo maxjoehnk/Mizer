@@ -160,6 +160,15 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         }
     }
 
+    pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
+        if let Some(mut group) = self.fixture_manager.groups.get_mut(&group_id) {
+            let programmer = self.fixture_manager.get_programmer();
+            let state = programmer.view().read();
+            let mut fixture_ids = state.fixtures.clone();
+            group.fixtures.append(&mut fixture_ids);
+        }
+    }
+
     pub fn programmer_view(&self) -> ProgrammerView {
         self.fixture_manager.get_programmer().view()
     }

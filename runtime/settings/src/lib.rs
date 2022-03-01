@@ -27,6 +27,7 @@ impl Settings {
 pub struct Hotkeys {
     pub global: HotkeyGroup,
     pub layouts: HotkeyGroup,
+    pub plan: HotkeyGroup,
     pub programmer: HotkeyGroup,
     pub nodes: HotkeyGroup,
     pub patch: HotkeyGroup,

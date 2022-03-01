@@ -329,6 +329,16 @@ const AssignFixturesToGroupRequest$json = const {
 
 /// Descriptor for `AssignFixturesToGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List assignFixturesToGroupRequestDescriptor = $convert.base64Decode('ChxBc3NpZ25GaXh0dXJlc1RvR3JvdXBSZXF1ZXN0Eg4KAmlkGAEgASgNUgJpZBI1CghmaXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXM=');
+@$core.Deprecated('Use assignFixtureSelectionToGroupRequestDescriptor instead')
+const AssignFixtureSelectionToGroupRequest$json = const {
+  '1': 'AssignFixtureSelectionToGroupRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `AssignFixtureSelectionToGroupRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List assignFixtureSelectionToGroupRequestDescriptor = $convert.base64Decode('CiRBc3NpZ25GaXh0dXJlU2VsZWN0aW9uVG9Hcm91cFJlcXVlc3QSDgoCaWQYASABKA1SAmlk');
 @$core.Deprecated('Use assignFixturesToGroupResponseDescriptor instead')
 const AssignFixturesToGroupResponse$json = const {
   '1': 'AssignFixturesToGroupResponse',

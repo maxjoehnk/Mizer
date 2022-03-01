@@ -17,6 +17,7 @@ service ProgrammerApi {
   rpc SelectGroup (SelectGroupRequest) returns (SelectGroupResponse) {}
   rpc AddGroup (AddGroupRequest) returns (Group) {}
   rpc AssignFixturesToGroup (AssignFixturesToGroupRequest) returns (AssignFixturesToGroupResponse) {}
+  rpc AssignFixtureSelectionToGroup (AssignFixtureSelectionToGroupRequest) returns (AssignFixturesToGroupResponse) {}
 }
 
 message SubscribeProgrammerRequest {}
@@ -159,6 +160,10 @@ message AddGroupRequest {
 message AssignFixturesToGroupRequest {
   uint32 id = 1;
   repeated mizer.fixtures.FixtureId fixtures = 2;
+}
+
+message AssignFixtureSelectionToGroupRequest {
+  uint32 id = 1;
 }
 
 message AssignFixturesToGroupResponse {}

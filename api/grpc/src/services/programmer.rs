@@ -132,4 +132,10 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
 
         resp.finish(Default::default())
     }
+
+    fn assign_fixture_selection_to_group(&self, req: ServerRequestSingle<AssignFixtureSelectionToGroupRequest>, resp: ServerResponseUnarySink<AssignFixturesToGroupResponse>) -> grpc::Result<()> {
+        self.assign_fixture_selection_to_group(req.message.id);
+
+        resp.finish(Default::default())
+    }
 }

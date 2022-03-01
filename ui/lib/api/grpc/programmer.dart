@@ -74,4 +74,9 @@ class ProgrammerGrpcApi implements ProgrammerApi {
     await this.client.assignFixturesToGroup(AssignFixturesToGroupRequest(
         id: group.id, fixtures: fixtures.map((id) => FixtureId(fixture: id)).toList()));
   }
+
+  @override
+  Future<void> assignFixtureSelectionToGroup(Group group) async {
+    await this.client.assignFixtureSelectionToGroup(AssignFixtureSelectionToGroupRequest(id: group.id));
+  }
 }

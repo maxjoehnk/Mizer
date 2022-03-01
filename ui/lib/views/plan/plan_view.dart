@@ -10,7 +10,10 @@ import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/extensions/fixture_id_extensions.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/plans.pb.dart';
+import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/plans_bloc.dart';
+import 'package:mizer/views/plan/dialogs/select_group_dialog.dart';
+import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
@@ -23,21 +26,30 @@ class PlanView extends StatelessWidget {
   Widget build(BuildContext context) {
     PlansBloc plansBloc = context.read();
     return BlocBuilder<PlansBloc, PlansState>(builder: (context, state) {
-      return tabs.Tabs(
-        tabIndex: state.tabIndex,
-        onSelectTab: (index) => plansBloc.add(SelectPlanTab(index)),
-        padding: false,
-        children: state.plans
-            .map((plan) => tabs.Tab(
-                header: (active, setActive) => ContextMenu(
-                    menu: Menu(items: [
-                      MenuItem(label: "Rename", action: () => _onRename(context, plan, plansBloc)),
-                      MenuItem(label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
-                    ]),
-                    child: tabs.TabHeader(plan.name, selected: active, onSelect: setActive)),
-                child: PlanLayout(plan: plan)))
-            .toList(),
-        onAdd: () => _addPlan(context, plansBloc),
+      return HotkeyProvider(
+        hotkeySelector: (hotkeys) => hotkeys.plan,
+        hotkeyMap: {
+          "store": () => _storeInGroup(context),
+        },
+        child: tabs.Tabs(
+          tabIndex: state.tabIndex,
+          onSelectTab: (index) => plansBloc.add(SelectPlanTab(index)),
+          padding: false,
+          children: state.plans
+              .map((plan) => tabs.Tab(
+                  header: (active, setActive) => ContextMenu(
+                      menu: Menu(items: [
+                        MenuItem(label: "Rename", action: () => _onRename(context, plan, plansBloc)),
+                        MenuItem(label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
+                      ]),
+                      child: tabs.TabHeader(plan.name, selected: active, onSelect: setActive)),
+                  child: PlanLayout(plan: plan)))
+              .toList(),
+          onAdd: () => _addPlan(context, plansBloc),
+          actions: [
+            PanelAction(hotkeyId: "store", label: "Store", onClick: () => _storeInGroup(context)),
+          ],
+        ),
       );
     });
   }
@@ -81,6 +93,15 @@ class PlanView extends StatelessWidget {
     if (result != null) {
       bloc.add(RenamePlan(id: plan.name, name: result));
     }
+  }
+
+  void _storeInGroup(BuildContext context) async {
+    ProgrammerApi programmerApi = context.read();
+    var group = await showDialog(context: context, builder: (context) => SelectGroupDialog(api: programmerApi));
+    if (group == null) {
+      return;
+    }
+    await programmerApi.assignFixtureSelectionToGroup(group);
   }
 }
 

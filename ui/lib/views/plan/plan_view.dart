@@ -21,7 +21,41 @@ import 'dialogs/name_layout_dialog.dart';
 
 const double fieldSize = 24;
 
-class PlanView extends StatelessWidget {
+class PlanView extends StatefulWidget {
+  @override
+  State<PlanView> createState() => _PlanViewState();
+}
+
+class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin {
+  ProgrammerStatePointer? _programmerPointer;
+  Ticker? _ticker;
+  ProgrammerState? _programmerState;
+
+  @override
+  void initState() {
+    super.initState();
+    ProgrammerApi programmerApi = context.read();
+    programmerApi.getProgrammerPointer().then((pointer) {
+      if (pointer == null) {
+        return;
+      }
+      setState(() {
+        _programmerPointer = pointer;
+      });
+      _ticker = createTicker((elapsed) {
+        setState(() => _programmerState = pointer.readState());
+      });
+      _ticker!.start();
+    });
+  }
+
+  @override
+  void dispose() {
+    _programmerPointer?.dispose();
+    _ticker?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     PlansBloc plansBloc = context.read();
@@ -29,7 +63,8 @@ class PlanView extends StatelessWidget {
       return HotkeyProvider(
         hotkeySelector: (hotkeys) => hotkeys.plan,
         hotkeyMap: {
-          "store": () => _storeInGroup(context),
+          "store": _storeInGroup,
+          "highlight": _highlight,
         },
         child: tabs.Tabs(
           tabIndex: state.tabIndex,
@@ -43,11 +78,12 @@ class PlanView extends StatelessWidget {
                         MenuItem(label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
                       ]),
                       child: tabs.TabHeader(plan.name, selected: active, onSelect: setActive)),
-                  child: PlanLayout(plan: plan)))
+                  child: PlanLayout(plan: plan, programmerState: _programmerState)))
               .toList(),
           onAdd: () => _addPlan(context, plansBloc),
           actions: [
-            PanelAction(hotkeyId: "store", label: "Store", onClick: () => _storeInGroup(context)),
+            PanelAction(hotkeyId: "highlight", label: "Highlight", onClick: _highlight, activated: _programmerState?.highlight ?? false),
+            PanelAction(hotkeyId: "store", label: "Store", onClick: _storeInGroup),
           ],
         ),
       );
@@ -95,7 +131,7 @@ class PlanView extends StatelessWidget {
     }
   }
 
-  void _storeInGroup(BuildContext context) async {
+  void _storeInGroup() async {
     ProgrammerApi programmerApi = context.read();
     var group = await showDialog(context: context, builder: (context) => SelectGroupDialog(api: programmerApi));
     if (group == null) {
@@ -103,12 +139,18 @@ class PlanView extends StatelessWidget {
     }
     await programmerApi.assignFixtureSelectionToGroup(group);
   }
+
+  void _highlight() {
+    ProgrammerApi programmerApi = context.read();
+    programmerApi.highlight(!(_programmerState?.highlight ?? false));
+  }
 }
 
 class PlanLayout extends StatefulWidget {
   final Plan plan;
+  final ProgrammerState? programmerState;
 
-  const PlanLayout({required this.plan, Key? key}) : super(key: key);
+  const PlanLayout({required this.plan, this.programmerState, Key? key}) : super(key: key);
 
   @override
   State<PlanLayout> createState() => _PlanLayoutState();
@@ -116,39 +158,21 @@ class PlanLayout extends StatefulWidget {
 
 class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateMixin {
   FixturesRefPointer? _fixturesPointer;
-  ProgrammerStatePointer? _programmerPointer;
-  Ticker? _ticker;
-  ProgrammerState? _programmerState;
 
   @override
   void initState() {
     super.initState();
     PlansApi plansApi = context.read();
-    ProgrammerApi programmerApi = context.read();
     plansApi.getFixturesPointer().then((pointer) {
       setState(() {
         _fixturesPointer = pointer;
       });
-    });
-    programmerApi.getProgrammerPointer().then((pointer) {
-      if (pointer == null) {
-        return;
-      }
-      setState(() {
-        _programmerPointer = pointer;
-      });
-      _ticker = createTicker((elapsed) {
-        setState(() => _programmerState = pointer.readState());
-      });
-      _ticker!.start();
     });
   }
 
   @override
   void dispose() {
     _fixturesPointer?.dispose();
-    _programmerPointer?.dispose();
-    _ticker?.dispose();
     super.dispose();
   }
 
@@ -164,7 +188,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
             delegate: PlanLayoutDelegate(widget.plan),
             children: widget.plan.positions.map((p) {
               var selected =
-                  _programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
+                  widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
               return LayoutId(
                   id: p.id,
                   child: Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected));

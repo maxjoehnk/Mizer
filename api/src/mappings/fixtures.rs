@@ -21,6 +21,7 @@ impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {
                 .into(),
             tags: definition.tags.into(),
             physical: SingularPtrField::some(physical),
+            provider: definition.provider.to_string(),
             ..Default::default()
         }
     }

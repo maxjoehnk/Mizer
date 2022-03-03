@@ -68,16 +68,16 @@ class _FixtureSelectorState extends State<FixtureSelector> {
   }
 
   FixtureColumnEntry _definitionItem(FixtureDefinition definition) {
-    var text = definition.name;
     var child = ListTile(
         onTap: () => setState(() {
               this.definition = definition;
               mode = null;
             }),
         selected: definition.id == this.definition?.id,
-        title: Text(text));
+        title: Text(definition.name),
+        subtitle: Text(definition.provider));
 
-    return FixtureColumnEntry(child: child, text: text);
+    return FixtureColumnEntry(child: child, text: definition.name);
   }
 
   FixtureColumnEntry _modeItem(FixtureMode mode) {

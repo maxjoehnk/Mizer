@@ -226,11 +226,12 @@ const FixtureDefinition$json = const {
     const {'1': 'modes', '3': 4, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureMode', '10': 'modes'},
     const {'1': 'physical', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixturePhysicalData', '10': 'physical'},
     const {'1': 'tags', '3': 6, '4': 3, '5': 9, '10': 'tags'},
+    const {'1': 'provider', '3': 7, '4': 1, '5': 9, '10': 'provider'},
   ],
 };
 
 /// Descriptor for `FixtureDefinition`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureDefinitionDescriptor = $convert.base64Decode('ChFGaXh0dXJlRGVmaW5pdGlvbhIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIiCgxtYW51ZmFjdHVyZXIYAyABKAlSDG1hbnVmYWN0dXJlchIxCgVtb2RlcxgEIAMoCzIbLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVNb2RlUgVtb2RlcxI/CghwaHlzaWNhbBgFIAEoCzIjLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVQaHlzaWNhbERhdGFSCHBoeXNpY2FsEhIKBHRhZ3MYBiADKAlSBHRhZ3M=');
+final $typed_data.Uint8List fixtureDefinitionDescriptor = $convert.base64Decode('ChFGaXh0dXJlRGVmaW5pdGlvbhIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIiCgxtYW51ZmFjdHVyZXIYAyABKAlSDG1hbnVmYWN0dXJlchIxCgVtb2RlcxgEIAMoCzIbLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVNb2RlUgVtb2RlcxI/CghwaHlzaWNhbBgFIAEoCzIjLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVQaHlzaWNhbERhdGFSCHBoeXNpY2FsEhIKBHRhZ3MYBiADKAlSBHRhZ3MSGgoIcHJvdmlkZXIYByABKAlSCHByb3ZpZGVy');
 @$core.Deprecated('Use fixtureModeDescriptor instead')
 const FixtureMode$json = const {
   '1': 'FixtureMode',

@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::path::Path;
 use std::str::FromStr;
 
 use serde::{Deserialize, Serialize};
@@ -37,6 +38,9 @@ impl OpenFixtureLibraryProvider {
 
 impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
     fn load(&mut self) -> anyhow::Result<()> {
+        if !Path::new(&self.file_path).exists() {
+            return Ok(());
+        }
         let files = std::fs::read_dir(&self.file_path)?;
         for file in files {
             let file = file?;
@@ -300,6 +304,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
                 weight: def.physical.weight,
                 dimensions: convert_dimensions(def.physical.dimensions),
             },
+            provider: "Open Fixture Library",
         }
     }
 }

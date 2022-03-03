@@ -3821,6 +3821,7 @@ pub struct FixtureDefinition {
     pub modes: ::protobuf::RepeatedField<FixtureMode>,
     pub physical: ::protobuf::SingularPtrField<FixturePhysicalData>,
     pub tags: ::protobuf::RepeatedField<::std::string::String>,
+    pub provider: ::std::string::String,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -3999,6 +4000,32 @@ impl FixtureDefinition {
     pub fn take_tags(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
         ::std::mem::replace(&mut self.tags, ::protobuf::RepeatedField::new())
     }
+
+    // string provider = 7;
+
+
+    pub fn get_provider(&self) -> &str {
+        &self.provider
+    }
+    pub fn clear_provider(&mut self) {
+        self.provider.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_provider(&mut self, v: ::std::string::String) {
+        self.provider = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_provider(&mut self) -> &mut ::std::string::String {
+        &mut self.provider
+    }
+
+    // Take field
+    pub fn take_provider(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.provider, ::std::string::String::new())
+    }
 }
 
 impl ::protobuf::Message for FixtureDefinition {
@@ -4038,6 +4065,9 @@ impl ::protobuf::Message for FixtureDefinition {
                 6 => {
                     ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.tags)?;
                 },
+                7 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.provider)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -4070,6 +4100,9 @@ impl ::protobuf::Message for FixtureDefinition {
         for value in &self.tags {
             my_size += ::protobuf::rt::string_size(6, &value);
         };
+        if !self.provider.is_empty() {
+            my_size += ::protobuf::rt::string_size(7, &self.provider);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4098,6 +4131,9 @@ impl ::protobuf::Message for FixtureDefinition {
         for v in &self.tags {
             os.write_string(6, &v)?;
         };
+        if !self.provider.is_empty() {
+            os.write_string(7, &self.provider)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -4166,6 +4202,11 @@ impl ::protobuf::Message for FixtureDefinition {
                 |m: &FixtureDefinition| { &m.tags },
                 |m: &mut FixtureDefinition| { &mut m.tags },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "provider",
+                |m: &FixtureDefinition| { &m.provider },
+                |m: &mut FixtureDefinition| { &mut m.provider },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<FixtureDefinition>(
                 "FixtureDefinition",
                 fields,
@@ -4188,6 +4229,7 @@ impl ::protobuf::Clear for FixtureDefinition {
         self.modes.clear();
         self.physical.clear();
         self.tags.clear();
+        self.provider.clear();
         self.unknown_fields.clear();
     }
 }
@@ -5771,40 +5813,41 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
     \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
     definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
-    definitions\"\xe3\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
+    definitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
     \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
     manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
     \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
     al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
-    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\"]\n\x0bFixtureMode\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\
-    \x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\
-    \n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\
-    \n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.Coarse\
-    ResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fix\
-    tures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\
-    \x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06fi\
-    nest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\
-    \x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\
-    \x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rc\
-    oarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\
-    \x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01\
-    (\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseCha\
-    nnelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\
-    \x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02\
-    R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\
-    \x06weight\x18\x04\x20\x01(\x02R\x06weight*\x8c\x01\n\x0eFixtureControl\
-    \x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\n\x05COLOR\
-    \x10\x02\x12\x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\x12\t\n\x05F\
-    OCUS\x10\x05\x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\x07\x12\x08\
-    \n\x04IRIS\x10\x08\x12\t\n\x05FROST\x10\t\x12\x0b\n\x07GENERIC\x10\n2\
-    \xed\x02\n\x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.Get\
-    FixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixture\
-    Definitions\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer\
-    .fixtures.FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtu\
-    res.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDel\
-    eteFixtures\x12%.mizer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixt\
-    ures.Fixtures\"\0b\x06proto3\
+    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\x1a\n\x08provider\
+    \x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\x20\x03(\x0b2\
+    \x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\n\x0eFixtureCh\
+    annel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\n\x06coarse\x18\
+    \x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.CoarseResolutionH\0R\
+    \x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fixtures.FixtureC\
+    hannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\x20\x01(\x0b2\
+    /.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\
+    \x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
+    \x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\
+    \x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\
+    \x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\x01\x20\x01\
+    (\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfine\
+    Channel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\
+    \nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\
+    \x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\
+    \x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\
+    \x18\x04\x20\x01(\x02R\x06weight*\x8c\x01\n\x0eFixtureControl\x12\r\n\tI\
+    NTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\n\x05COLOR\x10\x02\x12\
+    \x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\x12\t\n\x05FOCUS\x10\x05\
+    \x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\x07\x12\x08\n\x04IRIS\
+    \x10\x08\x12\t\n\x05FROST\x10\t\x12\x0b\n\x07GENERIC\x10\n2\xed\x02\n\
+    \x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixturesRe\
+    quest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixtureDefinition\
+    s\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.\
+    FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFix\
+    turesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixture\
+    s\x12%.mizer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtu\
+    res\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

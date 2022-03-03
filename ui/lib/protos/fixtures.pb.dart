@@ -1139,6 +1139,7 @@ class FixtureDefinition extends $pb.GeneratedMessage {
     ..pc<FixtureMode>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'modes', $pb.PbFieldType.PM, subBuilder: FixtureMode.create)
     ..aOM<FixturePhysicalData>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'physical', subBuilder: FixturePhysicalData.create)
     ..pPS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'provider')
     ..hasRequiredFields = false
   ;
 
@@ -1150,6 +1151,7 @@ class FixtureDefinition extends $pb.GeneratedMessage {
     $core.Iterable<FixtureMode>? modes,
     FixturePhysicalData? physical,
     $core.Iterable<$core.String>? tags,
+    $core.String? provider,
   }) {
     final _result = create();
     if (id != null) {
@@ -1169,6 +1171,9 @@ class FixtureDefinition extends $pb.GeneratedMessage {
     }
     if (tags != null) {
       _result.tags.addAll(tags);
+    }
+    if (provider != null) {
+      _result.provider = provider;
     }
     return _result;
   }
@@ -1236,6 +1241,15 @@ class FixtureDefinition extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(6)
   $core.List<$core.String> get tags => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $core.String get provider => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set provider($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasProvider() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearProvider() => clearField(7);
 }
 
 class FixtureMode extends $pb.GeneratedMessage {

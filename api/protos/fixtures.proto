@@ -122,6 +122,7 @@ message FixtureDefinition {
   repeated FixtureMode modes = 4;
   FixturePhysicalData physical = 5;
   repeated string tags = 6;
+  string provider = 7;
 }
 
 message FixtureMode {

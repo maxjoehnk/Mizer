@@ -10,6 +10,7 @@ pub struct FixtureDefinition {
     pub modes: Vec<FixtureMode>,
     pub physical: PhysicalFixtureData,
     pub tags: Vec<String>,
+    pub provider: &'static str,
 }
 
 impl FixtureDefinition {
@@ -57,7 +58,7 @@ impl FixtureMode {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct FixtureControls<TChannel> {
     pub intensity: Option<TChannel>,
     pub shutter: Option<TChannel>,
@@ -70,6 +71,24 @@ pub struct FixtureControls<TChannel> {
     pub iris: Option<TChannel>,
     pub frost: Option<TChannel>,
     pub generic: Vec<GenericControl<TChannel>>,
+}
+
+impl<TChannel> Default for FixtureControls<TChannel> {
+    fn default() -> Self {
+        Self {
+            intensity: None,
+            shutter: None,
+            color: None,
+            pan: None,
+            tilt: None,
+            focus: None,
+            zoom: None,
+            prism: None,
+            iris: None,
+            frost: None,
+            generic: Vec::default(),
+        }
+    }
 }
 
 impl From<FixtureControls<String>> for FixtureControls<FixtureControlChannel> {

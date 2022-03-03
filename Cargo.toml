@@ -12,6 +12,7 @@ members = [
     "components/connections/protocols/midi/messages",
     "components/connections/protocols/osc",
     "components/fixtures",
+    "components/fixtures/gdtf",
     "components/fixtures/open-fixture-library",
     "components/plan",
     "components/media",
@@ -87,6 +88,7 @@ metrics = "0.18"
 mizer-media = { path = "components/media" }
 mizer-project-files = { path = "runtime/projects" }
 mizer-fixtures = { path = "components/fixtures" }
+mizer-gdtf-provider = { path = "components/fixtures/gdtf" }
 mizer-open-fixture-library-provider = { path = "components/fixtures/open-fixture-library" }
 mizer-plan = { path = "components/plan" }
 mizer-pipeline = { path = "runtime/pipeline" }

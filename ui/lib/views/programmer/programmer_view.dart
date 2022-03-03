@@ -72,6 +72,7 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
                 label: "Fixtures",
                 child: FixtureTable(
                     fixtures: fixtures.fixtures,
+                    state: state,
                     selectedIds: selectedIds,
                     expandedIds: expandedIds,
                     onSelect: (id, selected) => setState(() {

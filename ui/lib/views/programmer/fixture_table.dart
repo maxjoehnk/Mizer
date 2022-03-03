@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
@@ -9,6 +10,7 @@ class FixtureTable extends StatelessWidget {
   final List<Fixture> fixtures;
   final List<FixtureId> selectedIds;
   final List<int> expandedIds;
+  final ProgrammerState? state;
   final Function(FixtureId, bool) onSelect;
   final Function(int) onExpand;
   final Function(Fixture) onSelectSimilar;
@@ -18,6 +20,7 @@ class FixtureTable extends StatelessWidget {
       {required this.fixtures,
       required this.selectedIds,
       required this.expandedIds,
+      this.state,
       required this.onSelect,
       required this.onExpand,
       required this.onSelectSimilar,
@@ -65,6 +68,7 @@ class FixtureTable extends StatelessWidget {
   MizerTableRow _fixtureRow(Fixture fixture, bool expanded) {
     var fixtureId = FixtureId(fixture: fixture.id);
     var selected = selectedIds.contains(fixtureId);
+    var fixtureState = state?.controls.where((channel) => channel.fixtures.contains(fixtureId));
     var row = MizerTableRow(
       cells: [
         fixture.children.isEmpty ? Container() : MizerIconButton(
@@ -74,18 +78,35 @@ class FixtureTable extends StatelessWidget {
         ),
         Text(fixtureId.toDisplay()),
         Text(fixture.name),
-        Text(""),
-        Text(""),
-        Text(""),
-        Text(""),
-        Text(""),
-        Text(""),
+        Text(_faderState(fixtureState, FixtureControl.INTENSITY)),
+        Text(_colorState(fixtureState, (color) => color.red)),
+        Text(_colorState(fixtureState, (color) => color.green)),
+        Text(_colorState(fixtureState, (color) => color.blue)),
+        Text(_faderState(fixtureState, FixtureControl.PAN)),
+        Text(_faderState(fixtureState, FixtureControl.TILT)),
       ],
       onTap: () => onSelect(fixtureId, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),
       selected: selected,
     );
     return row;
+  }
+
+  String _faderState(Iterable<ProgrammerChannel>? fixtureState, FixtureControl control) {
+    var value = fixtureState?.firstWhereOrNull((element) => element.control == control)?.fader;
+    if (value == null) {
+      return "";
+    }
+    return "${(value * 100).toStringAsFixed(1)}%";
+  }
+
+  String _colorState(Iterable<ProgrammerChannel>? fixtureState, double Function(ColorChannel) colorAccessor) {
+    var color = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR)?.color;
+    if (color == null) {
+      return "";
+    }
+    var value = colorAccessor(color);
+    return "${(value * 100).toStringAsFixed(1)}%";
   }
 
   MizerTableRow _subFixtureRow(Fixture fixture, SubFixture subFixture) {

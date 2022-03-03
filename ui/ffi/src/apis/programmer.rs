@@ -76,6 +76,7 @@ impl From<FixtureId> for FFIFixtureId {
 pub struct FFIProgrammerChannel {
     pub value: ProgrammerChannelValue,
     pub control: FFIFixtureFaderControl,
+    pub fixtures: Array<FFIFixtureId>,
 }
 
 #[repr(C)]
@@ -155,6 +156,6 @@ impl From<ProgrammerChannel> for FFIProgrammerChannel {
             Generic(_, _) => todo!(),
         };
 
-        Self { value, control }
+        Self { value, control, fixtures: channel.fixtures.into_iter().map(FFIFixtureId::from).collect() }
     }
 }

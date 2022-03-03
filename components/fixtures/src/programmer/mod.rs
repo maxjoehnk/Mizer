@@ -331,11 +331,11 @@ impl Programmer {
             HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
             for value in state.controls() {
-                let entry = controls
+                let (fixture_ids, control_value) = controls
                     .entry(value.clone().into())
                     .or_insert((Vec::new(), value.clone()));
-                if entry.1 == value {
-                    entry.0.push(*fixture_id);
+                if control_value == &value {
+                    fixture_ids.push(*fixture_id);
                 } else {
                     controls.insert(value.clone().into(), (vec![*fixture_id], value));
                 }

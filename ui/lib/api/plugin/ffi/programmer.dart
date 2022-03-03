@@ -53,9 +53,11 @@ class ProgrammerStatePointer {
     var channels = new List.generate(result.len, (index) => result.array.elementAt(index).ref);
 
     return channels.map((channel) {
+      var fixtures = _readFixtureSelection(channel.fixtures);
       var control = controlMappings[channel.control];
       var result = ProgrammerChannel(
-          control: control
+          control: control,
+          fixtures: fixtures,
       );
       if (channel.control == FFIFixtureFaderControl.Color) {
         result.color = ColorChannel(

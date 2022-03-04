@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/widgets/table/table.dart';
 
 import 'fixture_selector.dart';
 
@@ -169,29 +170,37 @@ class _FixturePatchState extends State<FixturePatch> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          PatchSettings(
-              name: name,
-              universe: universe,
-              channel: channel,
-              id: id,
-              count: count,
-              onChange: (event) {
-                setState(() {
-                  name = event.name;
-                  universe = event.universe;
-                  channel = event.channel;
-                  id = event.id;
-                  count = event.count;
-                });
-                widget.onChange(event);
-              }),
-          // TODO: show fixture preview
-          UniversePreview(),
-        ]);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: PatchSettings(
+                  name: name,
+                  universe: universe,
+                  channel: channel,
+                  id: id,
+                  count: count,
+                  onChange: (event) {
+                    setState(() {
+                      name = event.name;
+                      universe = event.universe;
+                      channel = event.channel;
+                      id = event.id;
+                      count = event.count;
+                    });
+                    widget.onChange(event);
+                  }),
+            ),
+            Expanded(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FixturePatchPreview(mode: widget.mode, universe: universe, startChannel: channel, startId: id, count: count),
+            )),
+          ]),
+    );
   }
 }
 
@@ -294,10 +303,56 @@ class PatchSettingsEvent {
   PatchSettingsEvent({required this.id, required this.name, required this.universe, required this.channel, required this.count});
 }
 
-class UniversePreview extends StatelessWidget {
+class FixturePatchPreview extends StatelessWidget {
+  final FixtureMode mode;
+  final int universe;
+  final int startChannel;
+  final int count;
+  final int startId;
+
+  const FixturePatchPreview(
+      {Key? key,
+      required this.mode,
+      required this.universe,
+      required this.startChannel,
+      required this.startId,
+      required this.count})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    List<MizerTableRow> rows = _getRows();
+    
+    return SingleChildScrollView(
+      child: MizerTable(
+        columnWidths: {
+          0: FixedColumnWidth(64),
+          1: FixedColumnWidth(128),
+        },
+        columns: [
+          Text("Id"),
+          Text("Address"),
+        ],
+        rows: rows,
+      ),
+    );
+  }
+
+  List<MizerTableRow> _getRows() {
+    List<MizerTableRow> rows = [];
+    
+    for (var i = 0; i < count; i++) {
+      var id = startId + i;
+      var startAddress = startChannel + (i * mode.channels.length);
+      var endAddress = startAddress + mode.channels.length - 1;
+
+      rows.add(MizerTableRow(cells: [
+        Text(id.toString()),
+        Text("$universe:$startAddress - $universe:$endAddress"),
+      ]));
+    }
+
+    return rows;
   }
 }
 

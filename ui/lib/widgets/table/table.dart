@@ -64,8 +64,8 @@ class _MizerTableState extends State<MizerTable> {
     }
     return MouseRegion(
         cursor: row.onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
-        onHover: (_) => setState(() => _hoveredRow = row),
-        onExit: (_) => setState(() => _hoveredRow = null),
+        onHover: row.onTap != null ? (_) => setState(() => _hoveredRow = row) : null,
+        onExit: row.onTap != null ? (_) => setState(() => _hoveredRow = null) : null,
         // We use the Listener as well as the GestureDetector because the onTap event
         // of the GestureDetector has a delay when used with onDoubleTap
         child: cellContent);

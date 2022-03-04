@@ -14,8 +14,8 @@ mod sacn;
 #[enum_dispatch(DmxConnection)]
 pub trait DmxOutput {
     fn name(&self) -> String;
-    fn write_single(&self, universe: u16, channel: u8, value: u8);
-    fn write_bulk(&self, universe: u16, channel: u8, values: &[u8]);
+    fn write_single(&self, universe: u16, channel: u16, value: u8);
+    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]);
     fn flush(&self);
     fn read_buffer(&self) -> HashMap<u16, [u8; 512]>;
 }

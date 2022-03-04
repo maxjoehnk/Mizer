@@ -35,8 +35,8 @@ pub struct FixtureMode {
 }
 
 impl FixtureMode {
-    pub fn dmx_channels(&self) -> u8 {
-        self.channels.iter().map(|c| c.channels()).sum()
+    pub fn dmx_channels(&self) -> u16 {
+        self.channels.iter().map(|c| c.channels() as u16).sum()
     }
 
     pub fn intensity(&self) -> Option<FixtureChannelDefinition> {

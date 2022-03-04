@@ -7,7 +7,8 @@ pub struct DmxBuffer {
 }
 
 impl DmxBuffer {
-    pub fn write_single(&self, universe: u16, channel: u8, value: u8) {
+    pub fn write_single(&self, universe: u16, channel: u16, value: u8) {
+        assert!(channel < 512, "DMX Channel is above 512");
         log::trace!("writing {}:{} => {}", universe, channel, value);
         let mut universe_buffer = self.buffers.lock().unwrap();
         universe_buffer.entry(universe).or_insert_with(|| [0; 512]);
@@ -15,7 +16,9 @@ impl DmxBuffer {
         buffer[channel as usize] = value;
     }
 
-    pub fn write_bulk(&self, universe: u16, channel: u8, values: &[u8]) {
+    pub fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
+        assert!(channel < 512, "DMX Channel is above 512");
+        assert!(channel as usize + values.len() <= 512, "DMX Channel is above 512");
         let mut universe_buffer = self.buffers.lock().unwrap();
         universe_buffer.entry(universe).or_insert_with(|| [0; 512]);
         let buffer = universe_buffer.get_mut(&universe).unwrap();

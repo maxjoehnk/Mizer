@@ -31,11 +31,11 @@ impl DmxOutput for ArtnetOutput {
         format!("Artnet ({}:{})", self.host, self.port)
     }
 
-    fn write_single(&self, universe: u16, channel: u8, value: u8) {
+    fn write_single(&self, universe: u16, channel: u16, value: u8) {
         self.buffer.write_single(universe, channel, value)
     }
 
-    fn write_bulk(&self, universe: u16, channel: u8, values: &[u8]) {
+    fn write_bulk(&self, universe: u16, channel: u16, values: &[u8]) {
         self.buffer.write_bulk(universe, channel, values)
     }
 

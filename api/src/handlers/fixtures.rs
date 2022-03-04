@@ -98,14 +98,14 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             for i in 0..add_fixtures.count {
                 let fixture_id = request.id + i;
                 let name = Self::built_name(&captures, i);
-                let offset = mode.dmx_channels() * (i as u8);
+                let offset = mode.dmx_channels() * (i as u16);
                 self.fixture_manager.add_fixture(
                     fixture_id,
                     name,
                     definition.clone(),
                     request.mode.clone().into(),
                     None,
-                    (request.channel as u8) + offset,
+                    (request.channel as u16) + offset,
                     Some(request.universe as u16),
                 );
                 self.runtime.add_node_for_fixture(fixture_id).unwrap();

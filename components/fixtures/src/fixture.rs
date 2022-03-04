@@ -12,7 +12,7 @@ pub struct Fixture {
     pub definition: FixtureDefinition,
     pub current_mode: FixtureMode,
     pub universe: u16,
-    pub channel: u8,
+    pub channel: u16,
     pub output: Option<String>,
     /// Contains values for all dmx channels including sub-fixtures
     pub channel_values: HashMap<String, f64>,
@@ -25,7 +25,7 @@ impl Fixture {
         definition: FixtureDefinition,
         selected_mode: Option<String>,
         output: Option<String>,
-        channel: u8,
+        channel: u16,
         universe: Option<u16>,
     ) -> Self {
         Fixture {
@@ -97,17 +97,18 @@ impl Fixture {
                 .iter()
                 .find(|channel| &channel.name == channel_name)
             {
+                let base_channel = self.channel as usize;
                 match channel.resolution {
                     ChannelResolution::Coarse(coarse) => {
-                        let channel = (self.channel + coarse) as usize;
+                        let channel = base_channel + coarse as usize;
                         buffer[channel] = convert_value(*value);
                     }
                     ChannelResolution::Fine(coarse, fine) => {
                         let value = convert_value_16bit(*value);
                         let coarse_value = (value >> 0) & 0xff;
                         let fine_value = (value >> 8) & 0xff;
-                        let coarse_channel = (self.channel + coarse) as usize;
-                        let fine_channel = (self.channel + fine) as usize;
+                        let coarse_channel = base_channel + coarse as usize;
+                        let fine_channel = base_channel + fine as usize;
                         buffer[coarse_channel] = coarse_value as u8;
                         buffer[fine_channel] = fine_value as u8;
                     }
@@ -116,9 +117,9 @@ impl Fixture {
                         let coarse_value = (value >> 0) & 0xff;
                         let fine_value = (value >> 8) & 0xff;
                         let finest_value = (value >> 16) & 0xff;
-                        let coarse_channel = (self.channel + coarse) as usize;
-                        let fine_channel = (self.channel + fine) as usize;
-                        let finest_channel = (self.channel + finest) as usize;
+                        let coarse_channel = base_channel + coarse as usize;
+                        let fine_channel = base_channel + fine as usize;
+                        let finest_channel = base_channel + finest as usize;
                         buffer[coarse_channel] = coarse_value as u8;
                         buffer[fine_channel] = fine_value as u8;
                         buffer[finest_channel] = finest_value as u8;

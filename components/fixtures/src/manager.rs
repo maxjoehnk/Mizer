@@ -43,7 +43,7 @@ impl FixtureManager {
         definition: FixtureDefinition,
         mode: Option<String>,
         output: Option<String>,
-        channel: u8,
+        channel: u16,
         universe: Option<u16>,
     ) {
         log::trace!("Adding fixture {}", fixture_id);

@@ -197,7 +197,7 @@ impl From<mizer_nodes::DmxOutputNode> for DmxOutputNodeConfig {
 impl From<DmxOutputNodeConfig> for mizer_nodes::DmxOutputNode {
     fn from(output: DmxOutputNodeConfig) -> Self {
         Self {
-            channel: output.channel as u8,
+            channel: output.channel as u16,
             universe: output.universe as u16,
             output: output._output.map(|o| match o {
                 DmxOutputNodeConfig_oneof__output::output(output) => output,

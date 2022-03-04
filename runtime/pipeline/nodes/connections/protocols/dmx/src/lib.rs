@@ -7,7 +7,7 @@ use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 pub struct DmxOutputNode {
     #[serde(default = "default_universe")]
     pub universe: u16,
-    pub channel: u8,
+    pub channel: u16,
     pub output: Option<String>,
 }
 

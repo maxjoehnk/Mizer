@@ -271,7 +271,7 @@ pub struct FixtureConfig {
     pub id: u32,
     pub name: String,
     pub fixture: String,
-    pub channel: u8,
+    pub channel: u16,
     pub universe: Option<u16>,
     #[serde(default)]
     pub mode: Option<String>,

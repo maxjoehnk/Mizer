@@ -17,3 +17,12 @@ extension OverlapExtension on FixtureId {
     }
   }
 }
+
+extension DisplayExtension on FixtureId {
+  String toDisplay() {
+    if (this.hasSubFixture()) {
+      return "${this.subFixture.fixtureId}:${this.subFixture.childId}";
+    }
+    return fixture.toString();
+  }
+}

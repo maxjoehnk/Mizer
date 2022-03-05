@@ -265,8 +265,9 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
   }
 
   Widget _getDragFeedback(FixturePosition position) {
+    var textStyle = Theme.of(context).textTheme.bodyMedium;
     if (widget.programmerState?.fixtures.isEmpty ?? true) {
-      return Fixture2DView(fixture: position, ref: _fixturesPointer!, selected: true);
+      return Fixture2DView(fixture: position, ref: _fixturesPointer!, selected: true, textStyle: textStyle);
     }
 
     var selectedFixtures = widget.plan.positions.where((p) => widget.programmerState?.fixtures.contains(p.id) ?? false);
@@ -274,7 +275,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: selectedFixtures
-          .map((p) => Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: true))
+          .map((p) => Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: true, textStyle: textStyle))
           .toList(),
     );
   }
@@ -284,8 +285,9 @@ class Fixture2DView extends StatefulWidget {
   final FixturePosition fixture;
   final FixturesRefPointer ref;
   final bool selected;
+  final TextStyle? textStyle;
 
-  const Fixture2DView({required this.fixture, required this.ref, this.selected = true, Key? key})
+  const Fixture2DView({required this.fixture, required this.ref, this.selected = true, this.textStyle, Key? key})
       : super(key: key);
 
   @override
@@ -321,16 +323,18 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
         padding: const EdgeInsets.all(2),
         child: Container(
             decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2),
-            side: BorderSide(
-              color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
-              width: 2,
-              style: BorderStyle.solid,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(2),
+                side: BorderSide(
+                  color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
+                  width: 2,
+                  style: BorderStyle.solid,
+                ),
+              ),
+              color: state.getColor(),
             ),
-          ),
-          color: state.getColor(),
-        )));
+            child:
+                Align(alignment: Alignment.topLeft, child: Text(widget.fixture.id.toDisplay(), style: widget.textStyle?.copyWith(fontSize: 8) ?? TextStyle(fontSize: 8)))));
   }
 }
 

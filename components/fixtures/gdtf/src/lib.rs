@@ -1,7 +1,7 @@
+use rayon::prelude::*;
 use std::collections::HashMap;
 use std::io::Read;
 use std::path::Path;
-use rayon::prelude::*;
 use strong_xml::XmlRead;
 use zip::ZipArchive;
 
@@ -35,21 +35,31 @@ impl FixtureLibraryProvider for GdtfProvider {
             return Ok(());
         }
         let files = std::fs::read_dir(&self.file_path)?;
-        let definitions = files.par_bridge()
+        let definitions = files
+            .par_bridge()
             .map(|file| {
                 let file = file?;
-                if file.metadata()?.is_file() && file.file_name().to_string_lossy().to_string().ends_with(".gdtf") {
+                if file.metadata()?.is_file()
+                    && file
+                        .file_name()
+                        .to_string_lossy()
+                        .to_string()
+                        .ends_with(".gdtf")
+                {
                     log::trace!("Loading GDTF Fixture from '{:?}'...", file);
                     let gdtf_archive = GdtfArchive::read(&file.path())?;
                     log::debug!("Loaded GDTF Fixture from '{:?}'.", file);
 
                     Ok(Some(gdtf_archive))
-                }else {
+                } else {
                     Ok(None)
                 }
             })
             .filter_map(|archive: anyhow::Result<_>| match archive {
-                Ok(Some(archive)) => Some(Ok((archive.definition.fixture_type.fixture_type_id.clone(), archive.definition))),
+                Ok(Some(archive)) => Some(Ok((
+                    archive.definition.fixture_type.fixture_type_id.clone(),
+                    archive.definition,
+                ))),
                 Ok(None) => None,
                 Err(err) => Some(Err(err)),
             })
@@ -71,7 +81,10 @@ impl FixtureLibraryProvider for GdtfProvider {
             return None;
         }
         let id_parts = id.split(':').collect::<Vec<_>>();
-        self.definitions.get(id_parts[1]).cloned().map(FixtureDefinition::from)
+        self.definitions
+            .get(id_parts[1])
+            .cloned()
+            .map(FixtureDefinition::from)
     }
 
     fn list_definitions(&self) -> Vec<FixtureDefinition> {
@@ -98,8 +111,6 @@ impl GdtfArchive {
         description_file.read_to_string(&mut description)?;
         let definition = GdtfFixtureDefinition::from_str(&description)?;
 
-        Ok(Self {
-            definition
-        })
+        Ok(Self { definition })
     }
 }

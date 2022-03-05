@@ -1,6 +1,6 @@
+use mizer_fixtures::definition::ChannelResolution;
 use std::num::ParseIntError;
 use std::str::FromStr;
-use mizer_fixtures::definition::ChannelResolution;
 
 #[derive(Debug, Clone)]
 pub struct DmxChannelOffset(Option<Vec<u8>>);
@@ -18,14 +18,15 @@ impl FromStr for DmxChannelOffset {
         if s.is_empty() {
             return Ok(Self(None));
         }
-        let offsets = s.split(',')
+        let offsets = s
+            .split(',')
             .map(|offset_str| {
                 let offset = u16::from_str(offset_str)?;
                 let offset = offset - 1;
                 if offset > u8::MAX as u16 {
                     // Parse again so we throw the proper error
                     u8::from_str(offset_str)
-                }else {
+                } else {
                     Ok(offset as u8)
                 }
             })
@@ -36,7 +37,7 @@ impl FromStr for DmxChannelOffset {
                 eprintln!("{err:?} for input {s}");
                 Err(err)
             }
-            Ok(offsets) => Ok(Self(Some(offsets)))
+            Ok(offsets) => Ok(Self(Some(offsets))),
         }
     }
 }
@@ -47,7 +48,7 @@ impl From<DmxChannelOffset> for ChannelResolution {
             [coarse] => Self::Coarse(*coarse),
             [coarse, fine] => Self::Fine(*coarse, *fine),
             [coarse, fine, finest] => Self::Finest(*coarse, *fine, *finest),
-            _ => unimplemented!()
+            _ => unimplemented!(),
         }
     }
 }

@@ -8,11 +8,11 @@ use mizer_devices::DeviceModule;
 use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
+use mizer_gdtf_provider::GdtfProvider;
 use mizer_media::api::MediaServerApi;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
-use mizer_gdtf_provider::GdtfProvider;
 use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::{MidiConnectionManager, MidiModule};
@@ -284,7 +284,8 @@ fn register_fixtures_module(
 ) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
     let ofl_provider = load_ofl_provider()?;
     let gdtf_provider = load_gdtf_provider()?;
-    let providers: Vec<Box<dyn FixtureLibraryProvider>> = vec![Box::new(ofl_provider), Box::new(gdtf_provider)];
+    let providers: Vec<Box<dyn FixtureLibraryProvider>> =
+        vec![Box::new(ofl_provider), Box::new(gdtf_provider)];
 
     let (fixture_module, fixture_manager, fixture_library) = FixtureModule::new(providers);
     fixture_module.register(runtime)?;
@@ -306,12 +307,9 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
     Ok(ofl_provider)
 }
 
-
 fn load_gdtf_provider() -> anyhow::Result<GdtfProvider> {
     log::info!("Loading GDTF fixture library...");
-    let mut gdtf_provider = GdtfProvider::new(
-        "components/fixtures/gdtf/.fixtures".to_string(),
-    );
+    let mut gdtf_provider = GdtfProvider::new("components/fixtures/gdtf/.fixtures".to_string());
     if let Err(err) = gdtf_provider.load() {
         log::warn!("Could not load GDTF fixture library {:?}", err);
     } else {

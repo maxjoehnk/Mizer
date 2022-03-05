@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, MidiEvent};
+use mizer_fixtures::FixtureId;
 use mizer_layouts::{ControlConfig, Layout};
 use mizer_layouts::{ControlPosition, ControlSize};
 use mizer_message_bus::Subscriber;
@@ -10,7 +11,6 @@ use mizer_nodes::Node;
 use mizer_plan::Plan;
 use mizer_runtime::NodeDescriptor;
 use mizer_session::SessionState;
-use mizer_fixtures::FixtureId;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -51,7 +51,12 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn remove_plan(&self, id: String);
     fn rename_plan(&self, id: String, name: String);
     fn add_fixtures_to_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>);
-    fn move_fixtures_in_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>, offset: (i32, i32));
+    fn move_fixtures_in_plan(
+        &self,
+        plan_id: String,
+        fixture_ids: Vec<FixtureId>,
+        offset: (i32, i32),
+    );
 
     fn add_node(
         &self,

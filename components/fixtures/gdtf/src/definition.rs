@@ -1,5 +1,5 @@
-use strong_xml::XmlRead;
 use crate::types::*;
+use strong_xml::XmlRead;
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "GDTF")]
@@ -91,7 +91,7 @@ pub struct Feature {
 #[xml(tag = "Attributes")]
 pub struct Attributes {
     #[xml(child = "Attribute")]
-    pub attributes: Vec<Attribute>
+    pub attributes: Vec<Attribute>,
 }
 
 #[derive(Debug, Clone, XmlRead)]
@@ -162,7 +162,7 @@ pub struct DmxChannel {
     pub highlight: DmxValue,
     // This is documented as a list of channels but I haven't found a file where this is the case
     #[xml(child = "LogicalChannel")]
-    pub logical_channel: LogicalChannel
+    pub logical_channel: LogicalChannel,
 }
 
 #[derive(Debug, Clone, XmlRead)]

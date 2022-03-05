@@ -10,12 +10,12 @@ use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
+use mizer_fixtures::FixtureId;
 use mizer_message_bus::Subscriber;
 use mizer_plan::{FixturePosition, Plan};
 use mizer_protocol_midi::MidiEvent;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
-use mizer_fixtures::FixtureId;
 
 #[derive(Clone)]
 pub struct Api {
@@ -149,10 +149,19 @@ impl RuntimeApi for Api {
             }
         });
     }
-    fn move_fixtures_in_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>, (x, y): (i32, i32)) {
+    fn move_fixtures_in_plan(
+        &self,
+        plan_id: String,
+        fixture_ids: Vec<FixtureId>,
+        (x, y): (i32, i32),
+    ) {
         self.update_plan(plan_id, |plan| {
             dbg!(&fixture_ids);
-            for position in plan.fixtures.iter_mut().filter(|position| fixture_ids.contains(&position.fixture)) {
+            for position in plan
+                .fixtures
+                .iter_mut()
+                .filter(|position| fixture_ids.contains(&position.fixture))
+            {
                 dbg!(&position);
                 position.x += x;
                 position.y += y;

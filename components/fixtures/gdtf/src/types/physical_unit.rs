@@ -53,7 +53,7 @@ impl FromStr for PhysicalUnit {
             "AngularAccc" => Ok(Self::AngularAccc),
             "WaveLength" => Ok(Self::WaveLength),
             "ColorComponent" => Ok(Self::ColorComponent),
-            _ => Err(format!("Unknown PhysicalUnit '{s}'"))
+            _ => Err(format!("Unknown PhysicalUnit '{s}'")),
         }
     }
 }

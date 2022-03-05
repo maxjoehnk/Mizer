@@ -21,10 +21,6 @@ impl FromStr for DmxValue {
         let value = u32::from_str(parts[0])?;
         let byte_count = u8::from_str(parts[1])?;
 
-        Ok(Self(Some(InnerValue {
-            value,
-            byte_count,
-        })))
+        Ok(Self(Some(InnerValue { value, byte_count })))
     }
 }
-

@@ -156,6 +156,14 @@ impl From<ProgrammerChannel> for FFIProgrammerChannel {
             Generic(_, _) => todo!(),
         };
 
-        Self { value, control, fixtures: channel.fixtures.into_iter().map(FFIFixtureId::from).collect() }
+        Self {
+            value,
+            control,
+            fixtures: channel
+                .fixtures
+                .into_iter()
+                .map(FFIFixtureId::from)
+                .collect(),
+        }
     }
 }

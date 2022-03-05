@@ -241,7 +241,13 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
         .widget
         .plan
         .positions
-        .where((fixture) => rect.contains(_convertToScreenPosition(fixture)))
+        .where((fixture) {
+          var fixturePosition = _convertToScreenPosition(fixture);
+          var fixtureEnd = fixturePosition.translate(fieldSize, fieldSize);
+          var fixtureRect = Rect.fromPoints(fixturePosition, fixtureEnd);
+
+          return fixtureRect.overlaps(rect);
+        })
         .map((fixture) => fixture.id)
         .toList();
 

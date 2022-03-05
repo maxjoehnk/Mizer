@@ -672,6 +672,527 @@ impl ::protobuf::reflect::ProtobufValue for RenamePlanRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MoveFixturesRequest {
+    // message fields
+    pub plan_id: ::std::string::String,
+    pub x: i32,
+    pub y: i32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MoveFixturesRequest {
+    fn default() -> &'a MoveFixturesRequest {
+        <MoveFixturesRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MoveFixturesRequest {
+    pub fn new() -> MoveFixturesRequest {
+        ::std::default::Default::default()
+    }
+
+    // string plan_id = 1;
+
+
+    pub fn get_plan_id(&self) -> &str {
+        &self.plan_id
+    }
+    pub fn clear_plan_id(&mut self) {
+        self.plan_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_plan_id(&mut self, v: ::std::string::String) {
+        self.plan_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_plan_id(&mut self) -> &mut ::std::string::String {
+        &mut self.plan_id
+    }
+
+    // Take field
+    pub fn take_plan_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.plan_id, ::std::string::String::new())
+    }
+
+    // int32 x = 2;
+
+
+    pub fn get_x(&self) -> i32 {
+        self.x
+    }
+    pub fn clear_x(&mut self) {
+        self.x = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_x(&mut self, v: i32) {
+        self.x = v;
+    }
+
+    // int32 y = 3;
+
+
+    pub fn get_y(&self) -> i32 {
+        self.y
+    }
+    pub fn clear_y(&mut self) {
+        self.y = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_y(&mut self, v: i32) {
+        self.y = v;
+    }
+}
+
+impl ::protobuf::Message for MoveFixturesRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.plan_id)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.x = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.y = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if self.x != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.x, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.y != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.y, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if self.x != 0 {
+            os.write_int32(2, self.x)?;
+        }
+        if self.y != 0 {
+            os.write_int32(3, self.y)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MoveFixturesRequest {
+        MoveFixturesRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "plan_id",
+                |m: &MoveFixturesRequest| { &m.plan_id },
+                |m: &mut MoveFixturesRequest| { &mut m.plan_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "x",
+                |m: &MoveFixturesRequest| { &m.x },
+                |m: &mut MoveFixturesRequest| { &mut m.x },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "y",
+                |m: &MoveFixturesRequest| { &m.y },
+                |m: &mut MoveFixturesRequest| { &mut m.y },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MoveFixturesRequest>(
+                "MoveFixturesRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MoveFixturesRequest {
+        static instance: ::protobuf::rt::LazyV2<MoveFixturesRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MoveFixturesRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for MoveFixturesRequest {
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.x = 0;
+        self.y = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MoveFixturesRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MoveFixturesRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MoveFixtureRequest {
+    // message fields
+    pub plan_id: ::std::string::String,
+    pub fixture_id: ::protobuf::SingularPtrField<super::fixtures::FixtureId>,
+    pub x: i32,
+    pub y: i32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MoveFixtureRequest {
+    fn default() -> &'a MoveFixtureRequest {
+        <MoveFixtureRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MoveFixtureRequest {
+    pub fn new() -> MoveFixtureRequest {
+        ::std::default::Default::default()
+    }
+
+    // string plan_id = 1;
+
+
+    pub fn get_plan_id(&self) -> &str {
+        &self.plan_id
+    }
+    pub fn clear_plan_id(&mut self) {
+        self.plan_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_plan_id(&mut self, v: ::std::string::String) {
+        self.plan_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_plan_id(&mut self) -> &mut ::std::string::String {
+        &mut self.plan_id
+    }
+
+    // Take field
+    pub fn take_plan_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.plan_id, ::std::string::String::new())
+    }
+
+    // .mizer.fixtures.FixtureId fixture_id = 2;
+
+
+    pub fn get_fixture_id(&self) -> &super::fixtures::FixtureId {
+        self.fixture_id.as_ref().unwrap_or_else(|| <super::fixtures::FixtureId as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_fixture_id(&mut self) {
+        self.fixture_id.clear();
+    }
+
+    pub fn has_fixture_id(&self) -> bool {
+        self.fixture_id.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixture_id(&mut self, v: super::fixtures::FixtureId) {
+        self.fixture_id = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_fixture_id(&mut self) -> &mut super::fixtures::FixtureId {
+        if self.fixture_id.is_none() {
+            self.fixture_id.set_default();
+        }
+        self.fixture_id.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_fixture_id(&mut self) -> super::fixtures::FixtureId {
+        self.fixture_id.take().unwrap_or_else(|| super::fixtures::FixtureId::new())
+    }
+
+    // int32 x = 3;
+
+
+    pub fn get_x(&self) -> i32 {
+        self.x
+    }
+    pub fn clear_x(&mut self) {
+        self.x = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_x(&mut self, v: i32) {
+        self.x = v;
+    }
+
+    // int32 y = 4;
+
+
+    pub fn get_y(&self) -> i32 {
+        self.y
+    }
+    pub fn clear_y(&mut self) {
+        self.y = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_y(&mut self, v: i32) {
+        self.y = v;
+    }
+}
+
+impl ::protobuf::Message for MoveFixtureRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.fixture_id {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.plan_id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.fixture_id)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.x = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.y = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if let Some(ref v) = self.fixture_id.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.x != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.x, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.y != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.y, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if let Some(ref v) = self.fixture_id.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.x != 0 {
+            os.write_int32(3, self.x)?;
+        }
+        if self.y != 0 {
+            os.write_int32(4, self.y)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MoveFixtureRequest {
+        MoveFixtureRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "plan_id",
+                |m: &MoveFixtureRequest| { &m.plan_id },
+                |m: &mut MoveFixtureRequest| { &mut m.plan_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::fixtures::FixtureId>>(
+                "fixture_id",
+                |m: &MoveFixtureRequest| { &m.fixture_id },
+                |m: &mut MoveFixtureRequest| { &mut m.fixture_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "x",
+                |m: &MoveFixtureRequest| { &m.x },
+                |m: &mut MoveFixtureRequest| { &mut m.x },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "y",
+                |m: &MoveFixtureRequest| { &m.y },
+                |m: &mut MoveFixtureRequest| { &mut m.y },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MoveFixtureRequest>(
+                "MoveFixtureRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MoveFixtureRequest {
+        static instance: ::protobuf::rt::LazyV2<MoveFixtureRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MoveFixtureRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for MoveFixtureRequest {
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.fixture_id.clear();
+        self.x = 0;
+        self.y = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MoveFixtureRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MoveFixtureRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Plans {
     // message fields
     pub plans: ::protobuf::RepeatedField<Plan>,
@@ -1055,8 +1576,8 @@ impl ::protobuf::reflect::ProtobufValue for Plan {
 pub struct FixturePosition {
     // message fields
     pub id: ::protobuf::SingularPtrField<super::fixtures::FixtureId>,
-    pub x: u32,
-    pub y: u32,
+    pub x: i32,
+    pub y: i32,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1108,10 +1629,10 @@ impl FixturePosition {
         self.id.take().unwrap_or_else(|| super::fixtures::FixtureId::new())
     }
 
-    // uint32 x = 2;
+    // int32 x = 2;
 
 
-    pub fn get_x(&self) -> u32 {
+    pub fn get_x(&self) -> i32 {
         self.x
     }
     pub fn clear_x(&mut self) {
@@ -1119,14 +1640,14 @@ impl FixturePosition {
     }
 
     // Param is passed by value, moved
-    pub fn set_x(&mut self, v: u32) {
+    pub fn set_x(&mut self, v: i32) {
         self.x = v;
     }
 
-    // uint32 y = 3;
+    // int32 y = 3;
 
 
-    pub fn get_y(&self) -> u32 {
+    pub fn get_y(&self) -> i32 {
         self.y
     }
     pub fn clear_y(&mut self) {
@@ -1134,7 +1655,7 @@ impl FixturePosition {
     }
 
     // Param is passed by value, moved
-    pub fn set_y(&mut self, v: u32) {
+    pub fn set_y(&mut self, v: i32) {
         self.y = v;
     }
 }
@@ -1160,14 +1681,14 @@ impl ::protobuf::Message for FixturePosition {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    let tmp = is.read_uint32()?;
+                    let tmp = is.read_int32()?;
                     self.x = tmp;
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    let tmp = is.read_uint32()?;
+                    let tmp = is.read_int32()?;
                     self.y = tmp;
                 },
                 _ => {
@@ -1204,10 +1725,10 @@ impl ::protobuf::Message for FixturePosition {
             v.write_to_with_cached_sizes(os)?;
         }
         if self.x != 0 {
-            os.write_uint32(2, self.x)?;
+            os.write_int32(2, self.x)?;
         }
         if self.y != 0 {
-            os.write_uint32(3, self.y)?;
+            os.write_int32(3, self.y)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1252,12 +1773,12 @@ impl ::protobuf::Message for FixturePosition {
                 |m: &FixturePosition| { &m.id },
                 |m: &mut FixturePosition| { &mut m.id },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
                 "x",
                 |m: &FixturePosition| { &m.x },
                 |m: &mut FixturePosition| { &mut m.x },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
                 "y",
                 |m: &FixturePosition| { &m.y },
                 |m: &mut FixturePosition| { &mut m.y },
@@ -1302,18 +1823,26 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Request\"$\n\x0eAddPlanRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04\
     name\"#\n\x11RemovePlanRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
     \"7\n\x11RenamePlanRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\
-    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"/\n\x05Plans\x12&\n\x05plans\
-    \x18\x01\x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"U\n\x04Plan\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\
-    \x03(\x0b2\x1b.mizer.plan.FixturePositionR\tpositions\"X\n\x0fFixturePos\
-    ition\x12)\n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.FixtureIdR\
-    \x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\rR\x01x\x12\x0c\n\x01y\x18\x03\
-    \x20\x01(\rR\x01y2\x85\x02\n\x08PlansApi\x129\n\x08GetPlans\x12\x18.mize\
-    r.plan.PlansRequest\x1a\x11.mizer.plan.Plans\"\0\x12:\n\x07AddPlan\x12\
-    \x1a.mizer.plan.AddPlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\n\nRemo\
-    vePlan\x12\x1d.mizer.plan.RemovePlanRequest\x1a\x11.mizer.plan.Plans\"\0\
-    \x12@\n\nRenamePlan\x12\x1d.mizer.plan.RenamePlanRequest\x1a\x11.mizer.p\
-    lan.Plans\"\0b\x06proto3\
+    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"J\n\x13MoveFixturesRequest\
+    \x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\
+    \x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x83\
+    \x01\n\x12MoveFixtureRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
+    \x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.F\
+    ixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\n\
+    \x01y\x18\x04\x20\x01(\x05R\x01y\"/\n\x05Plans\x12&\n\x05plans\x18\x01\
+    \x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"U\n\x04Plan\x12\x12\n\x04n\
+    ame\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\x03(\x0b2\
+    \x1b.mizer.plan.FixturePositionR\tpositions\"X\n\x0fFixturePosition\x12)\
+    \n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.FixtureIdR\x02id\x12\
+    \x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\
+    \x05R\x01y2\x8f\x03\n\x08PlansApi\x129\n\x08GetPlans\x12\x18.mizer.plan.\
+    PlansRequest\x1a\x11.mizer.plan.Plans\"\0\x12:\n\x07AddPlan\x12\x1a.mize\
+    r.plan.AddPlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\n\nRemovePlan\
+    \x12\x1d.mizer.plan.RemovePlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\
+    \n\nRenamePlan\x12\x1d.mizer.plan.RenamePlanRequest\x1a\x11.mizer.plan.P\
+    lans\"\0\x12D\n\x0cMoveFixtures\x12\x1f.mizer.plan.MoveFixturesRequest\
+    \x1a\x11.mizer.plan.Plans\"\0\x12B\n\x0bMoveFixture\x12\x1e.mizer.plan.M\
+    oveFixtureRequest\x1a\x11.mizer.plan.Plans\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

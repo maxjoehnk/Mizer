@@ -1,12 +1,15 @@
-use crate::plugin::channels::MethodReplyExt;
-use crate::MethodCallExt;
+use std::sync::Arc;
+
+use nativeshell::codec::{MethodCall, MethodCallReply, Value};
+use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+
 use mizer_api::handlers::PlansHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, FixturesRef};
-use nativeshell::codec::{MethodCall, MethodCallReply, Value};
-use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
-use std::sync::Arc;
+
+use crate::MethodCallExt;
+use crate::plugin::channels::MethodReplyExt;
 
 #[derive(Clone)]
 pub struct PlansChannel<R: RuntimeApi> {
@@ -52,6 +55,31 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
             },
+            "addFixtureSelection" => {
+                if let Value::String(id) = call.args {
+                    self.add_fixture_selection(id);
+
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "moveSelection" => {
+                if let Err(err) = call
+                    .arguments()
+                    .map(|req| self.move_fixture_selection(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "moveFixture" => {
+                if let Err(err) = call
+                    .arguments()
+                    .map(|req| self.move_fixture(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -87,5 +115,19 @@ impl<R: RuntimeApi + 'static> PlansChannel<R> {
         let states = Arc::new(FixturesRef(states));
 
         Ok(states.to_pointer() as i64)
+    }
+
+    fn add_fixture_selection(&self, plan_id: String) {
+        self.handler.add_fixture_selection(plan_id);
+    }
+
+    fn move_fixture_selection(&self, req: MoveFixturesRequest) {
+        log::debug!("move_fixture_selection {req:?}");
+        self.handler.move_fixture_selection(req.plan_id, (req.x, req.y));
+    }
+
+    fn move_fixture(&self, req: MoveFixtureRequest) {
+        log::debug!("move_fixture {req:?}");
+        self.handler.move_fixture(req.plan_id, req.fixture_id.unwrap(), (req.x, req.y));
     }
 }

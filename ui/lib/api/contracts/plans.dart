@@ -1,5 +1,4 @@
 import 'package:mizer/api/plugin/ffi/plans.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
 
 abstract class PlansApi {
@@ -8,7 +7,9 @@ abstract class PlansApi {
   Future<void> removePlan(String id);
   Future<void> renamePlan(String id, String name);
 
-  Future<void> addFixture(String planId, FixtureId fixtureId);
+  Future<void> addFixtureSelection(String planId);
+  Future<void> moveSelection(String planId, double dx, double dy);
+  Future<void> moveFixture(MoveFixtureRequest request);
 
   Future<FixturesRefPointer?> getFixturesPointer();
 }

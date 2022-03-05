@@ -32,6 +32,16 @@ class PlansApiClient extends $grpc.Client {
           '/mizer.plan.PlansApi/RenamePlan',
           ($1.RenamePlanRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Plans.fromBuffer(value));
+  static final _$moveFixtures =
+      $grpc.ClientMethod<$1.MoveFixturesRequest, $1.Plans>(
+          '/mizer.plan.PlansApi/MoveFixtures',
+          ($1.MoveFixturesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Plans.fromBuffer(value));
+  static final _$moveFixture =
+      $grpc.ClientMethod<$1.MoveFixtureRequest, $1.Plans>(
+          '/mizer.plan.PlansApi/MoveFixture',
+          ($1.MoveFixtureRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Plans.fromBuffer(value));
 
   PlansApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -56,6 +66,16 @@ class PlansApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Plans> renamePlan($1.RenamePlanRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$renamePlan, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Plans> moveFixtures($1.MoveFixturesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$moveFixtures, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Plans> moveFixture($1.MoveFixtureRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$moveFixture, request, options: options);
   }
 }
 
@@ -91,6 +111,22 @@ abstract class PlansApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.RenamePlanRequest.fromBuffer(value),
         ($1.Plans value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.MoveFixturesRequest, $1.Plans>(
+        'MoveFixtures',
+        moveFixtures_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.MoveFixturesRequest.fromBuffer(value),
+        ($1.Plans value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.MoveFixtureRequest, $1.Plans>(
+        'MoveFixture',
+        moveFixture_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.MoveFixtureRequest.fromBuffer(value),
+        ($1.Plans value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Plans> getPlans_Pre(
@@ -113,6 +149,16 @@ abstract class PlansApiServiceBase extends $grpc.Service {
     return renamePlan(call, await request);
   }
 
+  $async.Future<$1.Plans> moveFixtures_Pre($grpc.ServiceCall call,
+      $async.Future<$1.MoveFixturesRequest> request) async {
+    return moveFixtures(call, await request);
+  }
+
+  $async.Future<$1.Plans> moveFixture_Pre($grpc.ServiceCall call,
+      $async.Future<$1.MoveFixtureRequest> request) async {
+    return moveFixture(call, await request);
+  }
+
   $async.Future<$1.Plans> getPlans(
       $grpc.ServiceCall call, $1.PlansRequest request);
   $async.Future<$1.Plans> addPlan(
@@ -121,4 +167,8 @@ abstract class PlansApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.RemovePlanRequest request);
   $async.Future<$1.Plans> renamePlan(
       $grpc.ServiceCall call, $1.RenamePlanRequest request);
+  $async.Future<$1.Plans> moveFixtures(
+      $grpc.ServiceCall call, $1.MoveFixturesRequest request);
+  $async.Future<$1.Plans> moveFixture(
+      $grpc.ServiceCall call, $1.MoveFixtureRequest request);
 }

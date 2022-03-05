@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/plans.dart';
-import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
 
 import 'ffi/api.dart';
@@ -12,12 +11,6 @@ class PlansPluginApi implements PlansApi {
   final MethodChannel channel = const MethodChannel("mizer.live/plans");
 
   PlansPluginApi(this.bindings);
-
-  @override
-  Future<void> addFixture(String planId, FixtureId fixtureId) {
-    // TODO: implement addFixture
-    throw UnimplementedError();
-  }
 
   @override
   Future<Plans> getPlans() async {
@@ -58,5 +51,21 @@ class PlansPluginApi implements PlansApi {
 
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
+  }
+
+  @override
+  Future<void> addFixtureSelection(String planId) async {
+    await channel.invokeMethod("addFixtureSelection", planId);
+  }
+
+  @override
+  Future<void> moveSelection(String planId, double dx, double dy) async {
+    var request = MoveFixturesRequest(planId: planId, x: dx.round(), y: dy.round());
+    await channel.invokeMethod("moveSelection", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> moveFixture(MoveFixtureRequest request) async {
+    await channel.invokeMethod("moveFixture", request.writeToBuffer());
   }
 }

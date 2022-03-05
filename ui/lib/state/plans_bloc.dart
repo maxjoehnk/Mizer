@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/plans.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
 
 class PlansEvent {}
@@ -26,6 +27,25 @@ class SelectPlanTab implements PlansEvent {
   final int tabIndex;
 
   SelectPlanTab(this.tabIndex);
+}
+
+class PlaceFixtureSelection implements PlansEvent {
+  PlaceFixtureSelection();
+}
+
+class MoveFixtureSelection implements PlansEvent {
+  final double x;
+  final double y;
+
+  MoveFixtureSelection({ required this.x, required this.y });
+}
+
+class MoveFixture implements PlansEvent {
+  final FixtureId id;
+  final double x;
+  final double y;
+
+  MoveFixture({ required this.id, required this.x, required this.y });
 }
 
 class PlansState {
@@ -73,6 +93,24 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
     }
     if (event is SelectPlanTab) {
       yield state.copyWith(tabIndex: event.tabIndex);
+    }
+    if (event is PlaceFixtureSelection) {
+      var plan = state.plans[state.tabIndex];
+      await api.addFixtureSelection(plan.name);
+      var plans = await api.getPlans();
+      yield state.copyWith(plans: plans.plans);
+    }
+    if (event is MoveFixtureSelection) {
+      var plan = state.plans[state.tabIndex];
+      await api.moveSelection(plan.name, event.x, event.y);
+      var plans = await api.getPlans();
+      yield state.copyWith(plans: plans.plans);
+    }
+    if (event is MoveFixture) {
+      var plan = state.plans[state.tabIndex];
+      await api.moveFixture(MoveFixtureRequest(planId: plan.name, fixtureId: event.id, x: event.x.round(), y: event.y.round()));
+      var plans = await api.getPlans();
+      yield state.copyWith(plans: plans.plans);
     }
   }
 }

@@ -46,6 +46,31 @@ const RenamePlanRequest$json = const {
 
 /// Descriptor for `RenamePlanRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List renamePlanRequestDescriptor = $convert.base64Decode('ChFSZW5hbWVQbGFuUmVxdWVzdBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use moveFixturesRequestDescriptor instead')
+const MoveFixturesRequest$json = const {
+  '1': 'MoveFixturesRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'x', '3': 2, '4': 1, '5': 5, '10': 'x'},
+    const {'1': 'y', '3': 3, '4': 1, '5': 5, '10': 'y'},
+  ],
+};
+
+/// Descriptor for `MoveFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List moveFixturesRequestDescriptor = $convert.base64Decode('ChNNb3ZlRml4dHVyZXNSZXF1ZXN0EhcKB3BsYW5faWQYASABKAlSBnBsYW5JZBIMCgF4GAIgASgFUgF4EgwKAXkYAyABKAVSAXk=');
+@$core.Deprecated('Use moveFixtureRequestDescriptor instead')
+const MoveFixtureRequest$json = const {
+  '1': 'MoveFixtureRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'fixture_id', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtureId'},
+    const {'1': 'x', '3': 3, '4': 1, '5': 5, '10': 'x'},
+    const {'1': 'y', '3': 4, '4': 1, '5': 5, '10': 'y'},
+  ],
+};
+
+/// Descriptor for `MoveFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List moveFixtureRequestDescriptor = $convert.base64Decode('ChJNb3ZlRml4dHVyZVJlcXVlc3QSFwoHcGxhbl9pZBgBIAEoCVIGcGxhbklkEjgKCmZpeHR1cmVfaWQYAiABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCWZpeHR1cmVJZBIMCgF4GAMgASgFUgF4EgwKAXkYBCABKAVSAXk=');
 @$core.Deprecated('Use plansDescriptor instead')
 const Plans$json = const {
   '1': 'Plans',
@@ -72,10 +97,10 @@ const FixturePosition$json = const {
   '1': 'FixturePosition',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'id'},
-    const {'1': 'x', '3': 2, '4': 1, '5': 13, '10': 'x'},
-    const {'1': 'y', '3': 3, '4': 1, '5': 13, '10': 'y'},
+    const {'1': 'x', '3': 2, '4': 1, '5': 5, '10': 'x'},
+    const {'1': 'y', '3': 3, '4': 1, '5': 5, '10': 'y'},
   ],
 };
 
 /// Descriptor for `FixturePosition`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixturePositionDescriptor = $convert.base64Decode('Cg9GaXh0dXJlUG9zaXRpb24SKQoCaWQYASABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSAmlkEgwKAXgYAiABKA1SAXgSDAoBeRgDIAEoDVIBeQ==');
+final $typed_data.Uint8List fixturePositionDescriptor = $convert.base64Decode('Cg9GaXh0dXJlUG9zaXRpb24SKQoCaWQYASABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSAmlkEgwKAXgYAiABKAVSAXgSDAoBeRgDIAEoBVIBeQ==');

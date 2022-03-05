@@ -10,6 +10,6 @@ pub struct Plan {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct FixturePosition {
     pub fixture: FixtureId,
-    pub x: u32,
-    pub y: u32,
+    pub x: i32,
+    pub y: i32,
 }

@@ -30,6 +30,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
   ProgrammerStatePointer? _programmerPointer;
   Ticker? _ticker;
   ProgrammerState? _programmerState;
+  bool _setupMode = false;
 
   @override
   void initState() {
@@ -78,12 +79,14 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
                         MenuItem(label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
                       ]),
                       child: tabs.TabHeader(plan.name, selected: active, onSelect: setActive)),
-                  child: PlanLayout(plan: plan, programmerState: _programmerState)))
+                  child: PlanLayout(plan: plan, programmerState: _programmerState, setupMode: _setupMode)))
               .toList(),
           onAdd: () => _addPlan(context, plansBloc),
           actions: [
             PanelAction(hotkeyId: "highlight", label: "Highlight", onClick: _highlight, activated: _programmerState?.highlight ?? false),
             PanelAction(hotkeyId: "store", label: "Store", onClick: _storeInGroup),
+            PanelAction(label: "Place Fixture Selection", onClick: () => _placeFixtureSelection(plansBloc)),
+            PanelAction(label: "Setup", activated: _setupMode, onClick: _setup),
           ],
         ),
       );
@@ -144,13 +147,22 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
     ProgrammerApi programmerApi = context.read();
     programmerApi.highlight(!(_programmerState?.highlight ?? false));
   }
+
+  Future _placeFixtureSelection(PlansBloc bloc) async {
+    bloc.add(PlaceFixtureSelection());
+  }
+
+  void _setup() {
+    _setupMode = !_setupMode;
+  }
 }
 
 class PlanLayout extends StatefulWidget {
   final Plan plan;
   final ProgrammerState? programmerState;
+  final bool setupMode;
 
-  const PlanLayout({required this.plan, this.programmerState, Key? key}) : super(key: key);
+  const PlanLayout({required this.plan, this.programmerState, required this.setupMode, Key? key}) : super(key: key);
 
   @override
   State<PlanLayout> createState() => _PlanLayoutState();
@@ -158,6 +170,7 @@ class PlanLayout extends StatefulWidget {
 
 class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateMixin {
   FixturesRefPointer? _fixturesPointer;
+  SelectionState? _selectionState;
 
   @override
   void initState() {
@@ -181,20 +194,45 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
     if (_fixturesPointer == null) {
       return Container();
     }
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        CustomMultiChildLayout(
-            delegate: PlanLayoutDelegate(widget.plan),
-            children: widget.plan.positions.map((p) {
-              var selected =
-                  widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
-              return LayoutId(
-                  id: p.id,
-                  child: Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected));
-            }).toList()),
-        SizedBox(width: 1000, height: 1000, child: DragDropSelection(onSelect: this._onSelection)),
-      ],
+    return DragTarget(
+      onWillAccept: (details) => details is FixturePosition,
+      onAcceptWithDetails: (details) {
+        var renderBox = context.findRenderObject() as RenderBox;
+        var local = renderBox.globalToLocal(details.offset);
+        var newPosition = _convertFromScreenPosition(local);
+        var fixturePosition = details.data as FixturePosition;
+        var movement = Offset(newPosition.dx - fixturePosition.x, newPosition.dy - fixturePosition.y);
+
+        PlansBloc bloc = context.read();
+        if (widget.programmerState?.fixtures.isEmpty ?? true) {
+          bloc.add(MoveFixture(id: fixturePosition.id, x: movement.dx, y: movement.dy));
+        }else {
+          bloc.add(MoveFixtureSelection(x: movement.dx, y: movement.dy));
+        }
+
+      },
+      builder: (context, candidates, rejects) => Stack(
+        fit: StackFit.expand,
+        children: [
+          SizedBox(width: 1000, height: 1000, child: DragDropSelection(onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
+          CustomMultiChildLayout(
+              delegate: PlanLayoutDelegate(widget.plan),
+              children: widget.plan.positions.map((p) {
+                var selected =
+                    widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
+                var child = Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected);
+                return LayoutId(
+                    id: p.id,
+                    child: widget.setupMode ? Draggable(
+                      hitTestBehavior: HitTestBehavior.translucent,
+                      data: p,
+                      feedback: _getDragFeedback(p),
+                      child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
+                    ) : child);
+              }).toList()),
+          if (_selectionState != null) SelectionIndicator(_selectionState!),
+        ],
+      ),
     );
   }
 
@@ -209,6 +247,30 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
 
     ProgrammerApi programmerApi = context.read();
     programmerApi.selectFixtures(selection);
+    setState(() {
+      this._selectionState = null;
+    });
+  }
+
+  void _onUpdateSelection(SelectionState state) {
+    setState(() {
+      this._selectionState = state;
+    });
+  }
+
+  Widget _getDragFeedback(FixturePosition position) {
+    if (widget.programmerState?.fixtures.isEmpty ?? true) {
+      return Fixture2DView(fixture: position, ref: _fixturesPointer!, selected: true);
+    }
+
+    var selectedFixtures = widget.plan.positions.where((p) => widget.programmerState?.fixtures.contains(p.id) ?? false);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: selectedFixtures
+          .map((p) => Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: true))
+          .toList(),
+    );
   }
 }
 
@@ -282,42 +344,42 @@ class PlanLayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
-    return false;
+  bool shouldRelayout(covariant PlanLayoutDelegate oldDelegate) {
+    return plan.positions != oldDelegate.plan.positions;
   }
 }
 
 class DragDropSelection extends StatefulWidget {
+  final void Function(SelectionState) onUpdate;
   final void Function(Rect) onSelect;
 
-  DragDropSelection({required this.onSelect}) : super();
+  DragDropSelection({required this.onUpdate, required this.onSelect}) : super();
 
   @override
   State<DragDropSelection> createState() => _DragDropSelectionState();
 }
 
 class _DragDropSelectionState extends State<DragDropSelection> {
-  Offset? start;
-  Offset? end;
+  SelectionState? state;
 
   @override
   Widget build(BuildContext context) {
     var onEnd = (DragEndDetails e) {
-      widget.onSelect(Rect.fromPoints(start!, end!));
+      widget.onSelect(Rect.fromPoints(state!.start, state!.end));
       setState(() {
-        start = null;
-        end = null;
+        state = null;
       });
     };
     var onStart = (DragStartDetails e) {
       setState(() {
-        start = e.localPosition;
-        end = e.localPosition;
+        state = SelectionState(e.localPosition);
+        widget.onUpdate(state!);
       });
     };
     var onUpdate = (DragUpdateDetails e) {
       setState(() {
-        end = e.localPosition;
+        state!.end = e.localPosition;
+        widget.onUpdate(state!);
       });
     };
     return RawGestureDetector(
@@ -331,12 +393,33 @@ class _DragDropSelectionState extends State<DragDropSelection> {
             ..onUpdate = onUpdate;
         })
       },
-      child: CustomPaint(
-        size: Size(1000, 1000),
-        foregroundPainter: DragPainter(start, end),
+      child: SizedBox(
+        width: 1000,
+        height: 1000,
       ),
     );
   }
+}
+
+class SelectionIndicator extends StatelessWidget {
+  final SelectionState state;
+
+  const SelectionIndicator(this.state, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: Size(1000, 1000),
+      foregroundPainter: DragPainter(state.start, state.end),
+    );
+  }
+}
+
+class SelectionState {
+  Offset start;
+  Offset end;
+
+  SelectionState(Offset start) : this.start = start, this.end = start;
 }
 
 class DragPainter extends CustomPainter {
@@ -370,4 +453,8 @@ class DragPainter extends CustomPainter {
 
 Offset _convertToScreenPosition(FixturePosition fixture) {
   return Offset(fixture.x.toDouble(), fixture.y.toDouble()) * fieldSize;
+}
+
+Offset _convertFromScreenPosition(Offset offset) {
+  return offset / fieldSize;
 }

@@ -10,6 +10,7 @@ use mizer_nodes::Node;
 use mizer_plan::Plan;
 use mizer_runtime::NodeDescriptor;
 use mizer_session::SessionState;
+use mizer_fixtures::FixtureId;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -46,12 +47,11 @@ pub trait RuntimeApi: Clone + Send + Sync {
     );
 
     fn plans(&self) -> Vec<Plan>;
-
     fn add_plan(&self, name: String);
-
     fn remove_plan(&self, id: String);
-
     fn rename_plan(&self, id: String, name: String);
+    fn add_fixtures_to_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>);
+    fn move_fixtures_in_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>, offset: (i32, i32));
 
     fn add_node(
         &self,

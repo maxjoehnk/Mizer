@@ -11,10 +11,11 @@ use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
 use mizer_message_bus::Subscriber;
-use mizer_plan::Plan;
+use mizer_plan::{FixturePosition, Plan};
 use mizer_protocol_midi::MidiEvent;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+use mizer_fixtures::FixtureId;
 
 #[derive(Clone)]
 pub struct Api {
@@ -119,7 +120,6 @@ impl RuntimeApi for Api {
     fn plans(&self) -> Vec<mizer_plan::Plan> {
         self.access.plans.read()
     }
-
     fn add_plan(&self, name: String) {
         let mut plans = self.access.plans.read();
         plans.push(Plan {
@@ -128,17 +128,37 @@ impl RuntimeApi for Api {
         });
         self.access.plans.set(plans);
     }
-
     fn remove_plan(&self, id: String) {
         let mut plans = self.access.plans.read();
         plans.retain(|plan| plan.name != id);
         self.access.plans.set(plans);
     }
-
     fn rename_plan(&self, id: String, name: String) {
         self.update_plan(id, |plan| {
             plan.name = name;
         });
+    }
+    fn add_fixtures_to_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>) {
+        self.update_plan(plan_id, |plan| {
+            for (i, fixture_id) in fixture_ids.into_iter().enumerate() {
+                plan.fixtures.push(FixturePosition {
+                    fixture: fixture_id,
+                    x: i as i32,
+                    y: 0,
+                });
+            }
+        });
+    }
+    fn move_fixtures_in_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>, (x, y): (i32, i32)) {
+        self.update_plan(plan_id, |plan| {
+            dbg!(&fixture_ids);
+            for position in plan.fixtures.iter_mut().filter(|position| fixture_ids.contains(&position.fixture)) {
+                dbg!(&position);
+                position.x += x;
+                position.y += y;
+                dbg!(&position);
+            }
+        })
     }
 
     fn add_node(

@@ -169,6 +169,7 @@ class PlanLayout extends StatefulWidget {
 }
 
 class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateMixin {
+  final TransformationController _transformationController = TransformationController();
   FixturesRefPointer? _fixturesPointer;
   SelectionState? _selectionState;
 
@@ -194,44 +195,51 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
     if (_fixturesPointer == null) {
       return Container();
     }
-    return DragTarget(
-      onWillAccept: (details) => details is FixturePosition,
-      onAcceptWithDetails: (details) {
-        var renderBox = context.findRenderObject() as RenderBox;
-        var local = renderBox.globalToLocal(details.offset);
-        var newPosition = _convertFromScreenPosition(local);
-        var fixturePosition = details.data as FixturePosition;
-        var movement = Offset(newPosition.dx - fixturePosition.x, newPosition.dy - fixturePosition.y);
+    return InteractiveViewer(
+      minScale: 0.5,
+      maxScale: 5,
+      scaleFactor: 500,
+      transformationController: _transformationController,
+      child: DragTarget(
+        onWillAccept: (details) => details is FixturePosition,
+        onAcceptWithDetails: (details) {
+          var renderBox = context.findRenderObject() as RenderBox;
+          var local = renderBox.globalToLocal(details.offset);
+          var scene = _transformationController.toScene(local);
+          var newPosition = _convertFromScreenPosition(scene);
+          var fixturePosition = details.data as FixturePosition;
+          var movement = Offset(newPosition.dx - fixturePosition.x, newPosition.dy - fixturePosition.y);
 
-        PlansBloc bloc = context.read();
-        if (widget.programmerState?.fixtures.isEmpty ?? true) {
-          bloc.add(MoveFixture(id: fixturePosition.id, x: movement.dx, y: movement.dy));
-        }else {
-          bloc.add(MoveFixtureSelection(x: movement.dx, y: movement.dy));
-        }
+          PlansBloc bloc = context.read();
+          if (widget.programmerState?.fixtures.isEmpty ?? true) {
+            bloc.add(MoveFixture(id: fixturePosition.id, x: movement.dx, y: movement.dy));
+          }else {
+            bloc.add(MoveFixtureSelection(x: movement.dx, y: movement.dy));
+          }
 
-      },
-      builder: (context, candidates, rejects) => Stack(
-        fit: StackFit.expand,
-        children: [
-          SizedBox(width: 1000, height: 1000, child: DragDropSelection(onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
-          CustomMultiChildLayout(
-              delegate: PlanLayoutDelegate(widget.plan),
-              children: widget.plan.positions.map((p) {
-                var selected =
-                    widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
-                var child = Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected);
-                return LayoutId(
-                    id: p.id,
-                    child: widget.setupMode ? Draggable(
-                      hitTestBehavior: HitTestBehavior.translucent,
-                      data: p,
-                      feedback: _getDragFeedback(p),
-                      child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
-                    ) : child);
-              }).toList()),
-          if (_selectionState != null) SelectionIndicator(_selectionState!),
-        ],
+        },
+        builder: (context, candidates, rejects) => Stack(
+          fit: StackFit.expand,
+          children: [
+            SizedBox(width: 1000, height: 1000, child: DragDropSelection(onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
+            CustomMultiChildLayout(
+                delegate: PlanLayoutDelegate(widget.plan),
+                children: widget.plan.positions.map((p) {
+                  var selected =
+                      widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
+                  var child = Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected);
+                  return LayoutId(
+                      id: p.id,
+                      child: widget.setupMode ? Draggable(
+                        hitTestBehavior: HitTestBehavior.translucent,
+                        data: p,
+                        feedback: _getDragFeedback(p),
+                        child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
+                      ) : child);
+                }).toList()),
+            if (_selectionState != null) SelectionIndicator(_selectionState!),
+          ],
+        ),
       ),
     );
   }
@@ -317,6 +325,7 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    double fontSize = 6;
     return Container(
         width: fieldSize,
         height: fieldSize,
@@ -334,7 +343,7 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
               color: state.getColor(),
             ),
             child:
-                Align(alignment: Alignment.topLeft, child: Text(widget.fixture.id.toDisplay(), style: widget.textStyle?.copyWith(fontSize: 8) ?? TextStyle(fontSize: 8)))));
+                Align(alignment: Alignment.topLeft, child: Text(widget.fixture.id.toDisplay(), style: widget.textStyle?.copyWith(fontSize: fontSize) ?? TextStyle(fontSize: fontSize)))));
   }
 }
 

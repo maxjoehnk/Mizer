@@ -42,4 +42,9 @@ class SequencerGrpcApi implements SequencerApi {
   Future<SequencerPointer?> getSequencerPointer() async {
     return null;
   }
+
+  @override
+  Future<Sequences> updateCueName(int sequence, int cue, String name) {
+    return this.client.updateCueName(CueNameRequest(sequence: sequence, cue: cue, name: name));
+  }
 }

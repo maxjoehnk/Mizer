@@ -21,8 +21,8 @@ class _GroupNameDialogState extends State<GroupNameDialog> {
         decoration: InputDecoration(labelText: "Name"),
       ),
       actions: [
-        DialogAction("Confirm", () => _close(context, name: nameController.text)),
-        DialogAction("Cancel", () => _close(context)),
+        PopupAction("Confirm", () => _close(context, name: nameController.text)),
+        PopupAction("Cancel", () => _close(context)),
       ],
     );
   }

@@ -6,8 +6,8 @@ import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/nodes/widgets/toolbar.dart';
-import 'package:mizer/widgets/popup_menu/popup_menu.dart';
-import 'package:mizer/widgets/popup_menu/popup_menu_route.dart';
+import 'package:mizer/widgets/popup/popup_menu.dart';
+import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:provider/provider.dart';
 
 import 'models/node_editor_model.dart';
@@ -64,7 +64,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         children: [
           GestureDetector(
             onSecondaryTapUp: (event) {
-              Navigator.of(context).push(PopupMenuRoute(
+              Navigator.of(context).push(MizerPopupRoute(
                   position: event.globalPosition,
                   child: PopupMenu<Node_NodeType>(
                       categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));

@@ -42,7 +42,7 @@ class SelectSequenceDialog extends StatelessWidget {
                   ]);
             }),
       ),
-      actions: [DialogAction("Cancel", () => Navigator.of(context).pop())],
+      actions: [PopupAction("Cancel", () => Navigator.of(context).pop())],
     );
   }
 }

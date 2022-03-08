@@ -59,6 +59,14 @@ class SequencerPluginApi implements SequencerApi {
     return this.bindings.openSequencer(pointer);
   }
 
+  @override
+  Future<Sequences> updateCueName(int sequence, int cue, String name) async {
+    var request = CueNameRequest(sequence: sequence, cue: cue, name: name);
+    var response = await channel.invokeMethod("updateCueName", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

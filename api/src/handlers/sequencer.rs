@@ -2,7 +2,7 @@ use mizer_node::NodeType;
 use mizer_nodes::Node;
 use mizer_sequencer::{Sequencer, SequencerView};
 
-use crate::models::{CueTriggerRequest, Sequence, Sequences};
+use crate::models::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]
@@ -73,6 +73,15 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .update_sequence(request.sequence, |sequence| {
                 if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue) {
                     cue.trigger = request.trigger.into();
+                }
+            });
+    }
+
+    pub fn update_cue_name(&self, request: CueNameRequest) {
+        self.sequencer
+            .update_sequence(request.sequence, |sequence| {
+                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue) {
+                    cue.name = request.name.into();
                 }
             });
     }

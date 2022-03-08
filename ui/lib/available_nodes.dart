@@ -1,5 +1,5 @@
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/widgets/popup_menu/popup_menu.dart';
+import 'package:mizer/widgets/popup/popup_menu.dart';
 
 const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Clock: "Clock",

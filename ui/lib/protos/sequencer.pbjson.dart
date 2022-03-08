@@ -100,6 +100,18 @@ const CueTriggerRequest$json = const {
 
 /// Descriptor for `CueTriggerRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cueTriggerRequestDescriptor = $convert.base64Decode('ChFDdWVUcmlnZ2VyUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2USEAoDY3VlGAIgASgNUgNjdWUSNQoHdHJpZ2dlchgDIAEoDjIbLm1pemVyLnNlcXVlbmNlci5DdWVUcmlnZ2VyUgd0cmlnZ2Vy');
+@$core.Deprecated('Use cueNameRequestDescriptor instead')
+const CueNameRequest$json = const {
+  '1': 'CueNameRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+    const {'1': 'cue', '3': 2, '4': 1, '5': 13, '10': 'cue'},
+    const {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `CueNameRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueNameRequestDescriptor = $convert.base64Decode('Cg5DdWVOYW1lUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2USEAoDY3VlGAIgASgNUgNjdWUSEgoEbmFtZRgDIAEoCVIEbmFtZQ==');
 @$core.Deprecated('Use emptyResponseDescriptor instead')
 const EmptyResponse$json = const {
   '1': 'EmptyResponse',

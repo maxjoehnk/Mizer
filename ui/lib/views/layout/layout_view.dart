@@ -13,7 +13,7 @@ import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
-import 'package:mizer/widgets/popup_menu/popup_menu_route.dart';
+import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
 
 import 'add_control_popup.dart';
@@ -149,7 +149,7 @@ class ControlLayout extends StatelessWidget {
                       int x = (details.localPosition.dx / MULTIPLIER).floor();
                       int y = (details.localPosition.dy / MULTIPLIER).floor();
                       var position = ControlPosition(x: Int64(x), y: Int64(y));
-                      Navigator.of(context).push(PopupMenuRoute(
+                      Navigator.of(context).push(MizerPopupRoute(
                           position: details.globalPosition,
                           child: AddControlPopup(
                               nodes: nodes,

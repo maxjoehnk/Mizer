@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/widgets/popup_menu/popup_menu.dart';
+import 'package:mizer/widgets/popup/popup_menu.dart';
 
 class AddControlPopup extends StatelessWidget {
   final Nodes nodes;

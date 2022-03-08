@@ -9,8 +9,8 @@ class DeleteFixtureDialog extends StatelessWidget {
     return ActionDialog(
       title: "Delete Fixture",
       actions: [
-        DialogAction("Confirm", () => _close(context, true)),
-        DialogAction("Cancel", () => _close(context, false)),
+        PopupAction("Confirm", () => _close(context, true)),
+        PopupAction("Cancel", () => _close(context, false)),
       ],
     );
   }

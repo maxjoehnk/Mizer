@@ -1,12 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class PopupMenuRoute extends PopupRoute {
+class MizerPopupRoute extends PopupRoute {
   final Offset position;
   final Widget? child;
 
-  PopupMenuRoute({required this.position, this.child});
+  MizerPopupRoute({required this.position, this.child});
 
   @override
   Color? get barrierColor => null;
@@ -25,7 +23,7 @@ class PopupMenuRoute extends PopupRoute {
       Positioned(
         top: position.dy,
         left: position.dx,
-        child: Material(textStyle: theme.bodyText2, child: child),
+        child: Material(textStyle: theme.bodyText2, child: child, color: Colors.transparent),
       )
     ]);
   }

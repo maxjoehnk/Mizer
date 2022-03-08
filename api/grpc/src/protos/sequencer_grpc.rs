@@ -33,6 +33,8 @@ pub trait SequencerApi {
     fn sequence_go(&self, req: ::grpc::ServerRequestSingle<super::sequencer::SequenceGoRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::EmptyResponse>) -> ::grpc::Result<()>;
 
     fn update_cue_trigger(&self, req: ::grpc::ServerRequestSingle<super::sequencer::CueTriggerRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequences>) -> ::grpc::Result<()>;
+
+    fn update_cue_name(&self, req: ::grpc::ServerRequestSingle<super::sequencer::CueNameRequest>, resp: ::grpc::ServerResponseUnarySink<super::sequencer::Sequences>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -103,6 +105,16 @@ impl SequencerApiClient {
     pub fn update_cue_trigger(&self, o: ::grpc::RequestOptions, req: super::sequencer::CueTriggerRequest) -> ::grpc::SingleResponse<super::sequencer::Sequences> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/UpdateCueTrigger"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn update_cue_name(&self, o: ::grpc::RequestOptions, req: super::sequencer::CueNameRequest) -> ::grpc::SingleResponse<super::sequencer::Sequences> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/UpdateCueName"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -191,6 +203,18 @@ impl SequencerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_cue_trigger(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.sequencer.SequencerApi/UpdateCueName"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_cue_name(req, resp))
                     },
                 ),
             ],

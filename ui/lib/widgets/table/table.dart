@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/widgets/popup/popup_route.dart';
 
 class MizerTable extends StatefulWidget {
   final List<Widget> columns;
   final List<MizerTableRow> rows;
   final Map<int, TableColumnWidth>? columnWidths;
 
-  const MizerTable({required this.columns, required this.rows, this.columnWidths, Key? key}) : super(key: key);
+  const MizerTable({required this.columns, required this.rows, this.columnWidths, Key? key})
+      : super(key: key);
 
   @override
   State<MizerTable> createState() => _MizerTableState();
@@ -45,7 +47,9 @@ class _MizerTableState extends State<MizerTable> {
     Widget cellContent = Container(
         alignment: Alignment.centerLeft,
         height: 48,
-        color: row.selected ? Colors.white24 : (_hoveredRow == row ? Colors.white10 : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
+        color: row.selected ? Colors.white24 : (_hoveredRow == row ? Colors.white10 : (row.highlight
+            ? Colors.deepOrange.withOpacity(0.1)
+            : null)),
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: cell);
 
@@ -80,5 +84,26 @@ class MizerTableRow {
   final void Function()? onDoubleTap;
   final void Function()? onSecondaryTap;
 
-  MizerTableRow({required this.cells, this.selected = false, this.highlight = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
+  MizerTableRow(
+      {required this.cells, this.selected = false, this.highlight = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
+}
+
+class PopupTableCell extends StatelessWidget {
+  final Widget child;
+  final Widget popup;
+  final Function()? onTap;
+
+  PopupTableCell({ required this.child, required this.popup, required this.onTap });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        child: child,
+        behavior: HitTestBehavior.translucent,
+        onTap: onTap,
+        onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
+              position: details.globalPosition,
+              child: popup
+          )));
+  }
 }

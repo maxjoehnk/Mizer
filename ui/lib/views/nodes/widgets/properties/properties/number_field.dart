@@ -10,8 +10,9 @@ class NumberField extends StatefulWidget {
   final num value;
   final num? min;
   final num? max;
-  num? minHint;
-  num? maxHint;
+  late final num step;
+  late final num minHint;
+  late final num maxHint;
   final bool fractions;
   final Function(num) onUpdate;
 
@@ -20,12 +21,14 @@ class NumberField extends StatefulWidget {
       required this.value,
       this.min,
       this.max,
-      this.minHint,
-      this.maxHint,
+      num? minHint,
+      num? maxHint,
       this.fractions = false,
+      num? step,
       required this.onUpdate}) {
-    this.minHint = this.minHint ?? this.min ?? 0;
-    this.maxHint = this.maxHint ?? this.max ?? 1;
+    this.minHint = minHint ?? this.min ?? 0;
+    this.maxHint = maxHint ?? this.max ?? 1;
+    this.step = step ?? (this.fractions ? 0.1 : 1);
   }
 
   @override
@@ -109,7 +112,11 @@ class _NumberFieldState extends State<NumberField> {
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
       child: GestureDetector(
-        onHorizontalDragUpdate: (update) => _dragValue(this.value + (update.primaryDelta ?? 0)),
+        onHorizontalDragUpdate: (update) {
+          var delta = (update.primaryDelta ?? 0) * widget.step;
+          var next = this.value + delta;
+          _dragValue(num.parse(next.toStringAsFixed(3)));
+        },
         onTap: () => setState(() => this.isEditing = true),
         child: Field(
           label: this.widget.label,

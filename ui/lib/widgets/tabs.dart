@@ -63,6 +63,7 @@ class _TabsState extends State<Tabs> {
           ]),
         ),
         if (this.active != null) Expanded(child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: Padding(

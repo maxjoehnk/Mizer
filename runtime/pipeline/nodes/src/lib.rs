@@ -13,7 +13,7 @@ pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
-pub use mizer_port_operation_nodes::{MergeNode, SelectNode};
+pub use mizer_port_operation_nodes::{MergeNode, SelectNode, ThresholdNode};
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_sequencer_nodes::SequencerNode;
@@ -31,6 +31,7 @@ pub enum Node {
     Envelope(EnvelopeNode),
     Merge(MergeNode),
     Select(SelectNode),
+    Threshold(ThresholdNode),
     Fixture(FixtureNode),
     Programmer(ProgrammerNode),
     Sequencer(SequencerNode),
@@ -68,6 +69,7 @@ impl From<NodeType> for Node {
             NodeType::Sequence => SequenceNode::default().into(),
             NodeType::Merge => MergeNode::default().into(),
             NodeType::Select => SelectNode::default().into(),
+            NodeType::Threshold => ThresholdNode::default().into(),
             NodeType::Fixture => FixtureNode::default().into(),
             NodeType::Programmer => ProgrammerNode::default().into(),
             NodeType::Group => GroupNode::default().into(),
@@ -108,6 +110,7 @@ impl Node {
             Envelope(_) => NodeType::Envelope,
             Merge(_) => NodeType::Merge,
             Select(_) => NodeType::Select,
+            Threshold(_) => NodeType::Threshold,
             Fixture(_) => NodeType::Fixture,
             Programmer(_) => NodeType::Programmer,
             Group(_) => NodeType::Group,

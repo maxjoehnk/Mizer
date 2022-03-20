@@ -18,6 +18,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             Envelope(envelope) => Self::envelopeConfig(envelope.into()),
             Select(select) => Self::selectConfig(select.into()),
             Merge(merge) => Self::mergeConfig(merge.into()),
+            Threshold(threshold) => Self::thresholdConfig(threshold.into()),
             Fixture(fixture) => Self::fixtureConfig(fixture.into()),
             Programmer(programmer) => Self::programmerConfig(programmer.into()),
             Group(group) => Self::groupConfig(group.into()),
@@ -61,6 +62,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::envelopeConfig(envelope) => Self::Envelope(envelope.into()),
             NodeConfig_oneof_type::selectConfig(select) => Self::Select(select.into()),
             NodeConfig_oneof_type::mergeConfig(merge) => Self::Merge(merge.into()),
+            NodeConfig_oneof_type::thresholdConfig(threshold) => Self::Threshold(threshold.into()),
             NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
             NodeConfig_oneof_type::programmerConfig(programmer) => {
                 Self::Programmer(programmer.into())
@@ -837,6 +839,27 @@ impl From<MergeNodeConfig> for mizer_nodes::MergeNode {
     }
 }
 
+impl From<mizer_nodes::ThresholdNode> for ThresholdNodeConfig {
+    fn from(node: mizer_nodes::ThresholdNode) -> Self {
+        Self {
+            threshold: node.threshold,
+            active_value: node.active_value,
+            inactive_value: node.inactive_value,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<ThresholdNodeConfig> for mizer_nodes::ThresholdNode {
+    fn from(config: ThresholdNodeConfig) -> Self {
+        Self {
+            threshold: config.threshold,
+            active_value: config.active_value,
+            inactive_value: config.inactive_value,
+        }
+    }
+}
+
 impl From<mizer_nodes::HsvColorNode> for ColorHsvNodeConfig {
     fn from(_: mizer_nodes::HsvColorNode) -> Self {
         Default::default()
@@ -889,6 +912,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::Envelope => Node_NodeType::Envelope,
             NodeType::Select => Node_NodeType::Select,
             NodeType::Merge => Node_NodeType::Merge,
+            NodeType::Threshold => Node_NodeType::Threshold,
             NodeType::MidiInput => Node_NodeType::MidiInput,
             NodeType::MidiOutput => Node_NodeType::MidiOutput,
             NodeType::Laser => Node_NodeType::Laser,
@@ -928,6 +952,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::Envelope => NodeType::Envelope,
             Node_NodeType::Select => NodeType::Select,
             Node_NodeType::Merge => NodeType::Merge,
+            Node_NodeType::Threshold => NodeType::Threshold,
             Node_NodeType::MidiInput => NodeType::MidiInput,
             Node_NodeType::MidiOutput => NodeType::MidiOutput,
             Node_NodeType::Laser => NodeType::Laser,

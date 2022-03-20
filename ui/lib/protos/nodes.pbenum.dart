@@ -50,6 +50,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Sequence = Node_NodeType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sequence');
   static const Node_NodeType Select = Node_NodeType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
   static const Node_NodeType Merge = Node_NodeType._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');
+  static const Node_NodeType Threshold = Node_NodeType._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Threshold');
   static const Node_NodeType DmxOutput = Node_NodeType._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DmxOutput');
   static const Node_NodeType OscInput = Node_NodeType._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscInput');
   static const Node_NodeType OscOutput = Node_NodeType._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OscOutput');
@@ -84,6 +85,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Sequence,
     Select,
     Merge,
+    Threshold,
     DmxOutput,
     OscInput,
     OscOutput,

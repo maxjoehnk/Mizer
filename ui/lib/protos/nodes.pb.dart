@@ -874,6 +874,7 @@ enum NodeConfig_Type {
   colorRgbConfig, 
   colorHsvConfig, 
   gamepadNodeConfig, 
+  thresholdConfig, 
   notSet
 }
 
@@ -911,10 +912,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     40 : NodeConfig_Type.colorRgbConfig,
     41 : NodeConfig_Type.colorHsvConfig,
     42 : NodeConfig_Type.gamepadNodeConfig,
+    43 : NodeConfig_Type.thresholdConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -947,6 +949,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<ColorRgbNodeConfig>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorRgbConfig', protoName: 'colorRgbConfig', subBuilder: ColorRgbNodeConfig.create)
     ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
     ..aOM<GamepadNodeConfig>(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepadNodeConfig', protoName: 'gamepadNodeConfig', subBuilder: GamepadNodeConfig.create)
+    ..aOM<ThresholdNodeConfig>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thresholdConfig', protoName: 'thresholdConfig', subBuilder: ThresholdNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -984,6 +987,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ColorRgbNodeConfig? colorRgbConfig,
     ColorHsvNodeConfig? colorHsvConfig,
     GamepadNodeConfig? gamepadNodeConfig,
+    ThresholdNodeConfig? thresholdConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1081,6 +1085,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (gamepadNodeConfig != null) {
       _result.gamepadNodeConfig = gamepadNodeConfig;
+    }
+    if (thresholdConfig != null) {
+      _result.thresholdConfig = thresholdConfig;
     }
     return _result;
   }
@@ -1459,6 +1466,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearGamepadNodeConfig() => clearField(42);
   @$pb.TagNumber(42)
   GamepadNodeConfig ensureGamepadNodeConfig() => $_ensure(31);
+
+  @$pb.TagNumber(43)
+  ThresholdNodeConfig get thresholdConfig => $_getN(32);
+  @$pb.TagNumber(43)
+  set thresholdConfig(ThresholdNodeConfig v) { setField(43, v); }
+  @$pb.TagNumber(43)
+  $core.bool hasThresholdConfig() => $_has(32);
+  @$pb.TagNumber(43)
+  void clearThresholdConfig() => clearField(43);
+  @$pb.TagNumber(43)
+  ThresholdNodeConfig ensureThresholdConfig() => $_ensure(32);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -3094,6 +3112,81 @@ class MergeNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static MergeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MergeNodeConfig>(create);
   static MergeNodeConfig? _defaultInstance;
+}
+
+class ThresholdNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ThresholdNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'threshold', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeValue', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inactiveValue', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  ThresholdNodeConfig._() : super();
+  factory ThresholdNodeConfig({
+    $core.double? threshold,
+    $core.double? activeValue,
+    $core.double? inactiveValue,
+  }) {
+    final _result = create();
+    if (threshold != null) {
+      _result.threshold = threshold;
+    }
+    if (activeValue != null) {
+      _result.activeValue = activeValue;
+    }
+    if (inactiveValue != null) {
+      _result.inactiveValue = inactiveValue;
+    }
+    return _result;
+  }
+  factory ThresholdNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ThresholdNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ThresholdNodeConfig clone() => ThresholdNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ThresholdNodeConfig copyWith(void Function(ThresholdNodeConfig) updates) => super.copyWith((message) => updates(message as ThresholdNodeConfig)) as ThresholdNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ThresholdNodeConfig create() => ThresholdNodeConfig._();
+  ThresholdNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ThresholdNodeConfig> createRepeated() => $pb.PbList<ThresholdNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ThresholdNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ThresholdNodeConfig>(create);
+  static ThresholdNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get threshold => $_getN(0);
+  @$pb.TagNumber(1)
+  set threshold($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasThreshold() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearThreshold() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get activeValue => $_getN(1);
+  @$pb.TagNumber(2)
+  set activeValue($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasActiveValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearActiveValue() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get inactiveValue => $_getN(2);
+  @$pb.TagNumber(3)
+  set inactiveValue($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasInactiveValue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearInactiveValue() => clearField(3);
 }
 
 class ColorRgbNodeConfig extends $pb.GeneratedMessage {

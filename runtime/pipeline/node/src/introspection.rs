@@ -39,6 +39,7 @@ pub enum NodeType {
     Gamepad,
     Select,
     Merge,
+    Threshold,
     ColorRgb,
     ColorHsv,
 }
@@ -78,6 +79,7 @@ impl NodeType {
             Gamepad => "gamepad",
             Select => "select",
             Merge => "merge",
+            Threshold => "threshold",
             ColorHsv => "color-hsv",
             ColorRgb => "color-rgb",
         }

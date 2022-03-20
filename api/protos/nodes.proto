@@ -79,6 +79,7 @@ message Node {
     Sequence = 6;
     Select = 7;
     Merge = 8;
+    Threshold = 9;
 //    DmxInput = 10;
     DmxOutput = 10;
     OscInput = 11;
@@ -156,6 +157,7 @@ message NodeConfig {
     ColorRgbNodeConfig colorRgbConfig = 40;
     ColorHsvNodeConfig colorHsvConfig = 41;
     GamepadNodeConfig gamepadNodeConfig = 42;
+    ThresholdNodeConfig thresholdConfig = 43;
   }
 }
 
@@ -307,6 +309,11 @@ message VideoTransformNodeConfig {}
 
 message SelectNodeConfig {}
 message MergeNodeConfig {}
+message ThresholdNodeConfig {
+  double threshold = 1;
+  double active_value = 2;
+  double inactive_value = 3;
+}
 
 message ColorRgbNodeConfig {}
 message ColorHsvNodeConfig {}

@@ -5,6 +5,7 @@ import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
 
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/fixture_properties.dart';
@@ -98,6 +99,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(GamepadProperties(node.config.gamepadNodeConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
           path: node.path, config: NodeConfig(gamepadNodeConfig: config)))));
+    }
+    if (node.config.hasThresholdConfig()) {
+      widgets.add(ThresholdProperties(node.config.thresholdConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(thresholdConfig: config)))));
     }
     return widgets;
   }

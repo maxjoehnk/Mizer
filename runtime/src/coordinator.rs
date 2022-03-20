@@ -93,6 +93,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             Envelope(node) => self.add_node(path, node),
             Merge(node) => self.add_node(path, node),
             Select(node) => self.add_node(path, node),
+            Threshold(node) => self.add_node(path, node),
             Fixture(mut node) => {
                 node.fixture_manager = self.injector.get().cloned();
                 self.add_node(path, node)
@@ -554,6 +555,12 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut GamepadNode = node.downcast_mut()?;
             node.device_id = config.device_id.clone();
         }
+        (NodeType::Threshold, Node::Threshold(config)) => {
+            let node: &mut ThresholdNode = node.downcast_mut()?;
+            node.threshold = config.threshold;
+            node.active_value = config.active_value;
+            node.inactive_value = config.inactive_value;
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,
@@ -573,6 +580,7 @@ pub fn downcast(node: &Box<dyn ProcessingNodeExt>) -> Node {
         NodeType::Envelope => Node::Envelope(downcast_node(node).unwrap()),
         NodeType::Select => Node::Select(downcast_node(node).unwrap()),
         NodeType::Merge => Node::Merge(downcast_node(node).unwrap()),
+        NodeType::Threshold => Node::Threshold(downcast_node(node).unwrap()),
         NodeType::Fixture => Node::Fixture(downcast_node(node).unwrap()),
         NodeType::Programmer => Node::Programmer(downcast_node(node).unwrap()),
         NodeType::Group => Node::Group(downcast_node(node).unwrap()),

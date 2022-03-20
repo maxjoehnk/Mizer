@@ -1,3 +1,4 @@
+use std::ops::Deref;
 use flume::r#async::RecvStream;
 use flume::TryRecvError;
 use futures::Stream;
@@ -9,6 +10,7 @@ use std::task::{Context, Poll};
 #[derive(Clone)]
 pub struct MessageBus<T: Clone + Send + Sync> {
     senders: Arc<RwLock<Vec<Weak<flume::Sender<T>>>>>,
+    last_event: Arc<RwLock<Option<T>>>,
 }
 
 impl<T: Clone + Send + Sync + 'static> Default for MessageBus<T> {
@@ -21,6 +23,7 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
     pub fn new() -> Self {
         Self {
             senders: Default::default(),
+            last_event: Default::default(),
         }
     }
 
@@ -40,6 +43,9 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
             }
         }
 
+        let mut last_event = self.last_event.write();
+        *last_event = Some(msg);
+
         log::trace!(
             "Send msg to {} / {} subscribers. {} dropped subscribers remaining",
             active_count,
@@ -51,6 +57,9 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
     pub fn subscribe(&self) -> Subscriber<T> {
         let mut senders = self.senders.write();
         let (tx, rx) = flume::unbounded();
+        if let Some(last_event) = self.last_event.read().deref() {
+            tx.send(last_event.clone()).unwrap();
+        }
         let sender = Arc::new(tx);
         senders.push(Arc::downgrade(&sender));
 

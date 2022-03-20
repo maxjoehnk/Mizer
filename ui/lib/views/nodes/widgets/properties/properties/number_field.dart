@@ -16,6 +16,8 @@ class NumberField extends StatefulWidget {
   final bool fractions;
   final Function(num) onUpdate;
 
+  static final floatsOnly = FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'));
+
   NumberField(
       {required this.label,
       required this.value,
@@ -152,8 +154,9 @@ class _NumberFieldState extends State<NumberField> {
               keyboardType: TextInputType.number,
               autofocus: true,
               inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                FilteringTextInputFormatter.singleLineFormatter
+                if (!widget.fractions) FilteringTextInputFormatter.digitsOnly,
+                if (widget.fractions) NumberField.floatsOnly,
+                FilteringTextInputFormatter.singleLineFormatter,
               ],
             ),
           ),

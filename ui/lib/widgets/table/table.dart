@@ -55,6 +55,8 @@ class _MizerTableState extends State<MizerTable> {
 
     // The cell has probably interactive elements if it's not a text widget so we don't apply the tap handling
     if (cell is Text) {
+      // We use the Listener as well as the GestureDetector because the onTap event
+      // of the GestureDetector has a delay when used with onDoubleTap
       cellContent = Listener(
         onPointerUp: (_) => row.onTap!(),
         behavior: HitTestBehavior.opaque,
@@ -70,8 +72,6 @@ class _MizerTableState extends State<MizerTable> {
         cursor: row.onTap != null ? SystemMouseCursors.click : SystemMouseCursors.basic,
         onHover: row.onTap != null ? (_) => setState(() => _hoveredRow = row) : null,
         onExit: row.onTap != null ? (_) => setState(() => _hoveredRow = null) : null,
-        // We use the Listener as well as the GestureDetector because the onTap event
-        // of the GestureDetector has a delay when used with onDoubleTap
         child: cellContent);
   }
 }

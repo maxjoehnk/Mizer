@@ -67,6 +67,22 @@ class SequencerPluginApi implements SequencerApi {
     return Sequences.fromBuffer(_convertBuffer(response));
   }
 
+  @override
+  Future<Sequences> updateSequenceName(int sequence, String name) async {
+    var request = SequenceNameRequest(sequence: sequence, name: name);
+    var response = await channel.invokeMethod("updateSequenceName", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<Sequences> updateWrapAround(int sequence, bool wrapAround) async {
+    var request = SequenceWrapAroundRequest(sequence: sequence, wrapAround: wrapAround);
+    var response = await channel.invokeMethod("updateSequenceWrapAround", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

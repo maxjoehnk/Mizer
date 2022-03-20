@@ -112,6 +112,28 @@ const CueNameRequest$json = const {
 
 /// Descriptor for `CueNameRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cueNameRequestDescriptor = $convert.base64Decode('Cg5DdWVOYW1lUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2USEAoDY3VlGAIgASgNUgNjdWUSEgoEbmFtZRgDIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use sequenceWrapAroundRequestDescriptor instead')
+const SequenceWrapAroundRequest$json = const {
+  '1': 'SequenceWrapAroundRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+    const {'1': 'wrapAround', '3': 2, '4': 1, '5': 8, '10': 'wrapAround'},
+  ],
+};
+
+/// Descriptor for `SequenceWrapAroundRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceWrapAroundRequestDescriptor = $convert.base64Decode('ChlTZXF1ZW5jZVdyYXBBcm91bmRSZXF1ZXN0EhoKCHNlcXVlbmNlGAEgASgNUghzZXF1ZW5jZRIeCgp3cmFwQXJvdW5kGAIgASgIUgp3cmFwQXJvdW5k');
+@$core.Deprecated('Use sequenceNameRequestDescriptor instead')
+const SequenceNameRequest$json = const {
+  '1': 'SequenceNameRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `SequenceNameRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceNameRequestDescriptor = $convert.base64Decode('ChNTZXF1ZW5jZU5hbWVSZXF1ZXN0EhoKCHNlcXVlbmNlGAEgASgNUghzZXF1ZW5jZRISCgRuYW1lGAIgASgJUgRuYW1l');
 @$core.Deprecated('Use emptyResponseDescriptor instead')
 const EmptyResponse$json = const {
   '1': 'EmptyResponse',

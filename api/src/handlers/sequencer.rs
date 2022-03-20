@@ -86,6 +86,20 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             });
     }
 
+    pub fn update_sequence_wrap_around(&self, request: SequenceWrapAroundRequest) {
+        self.sequencer
+            .update_sequence(request.sequence, |sequence| {
+                sequence.wrap_around = request.wrapAround;
+            });
+    }
+
+    pub fn update_sequence_name(&self, request: SequenceNameRequest) {
+        self.sequencer
+            .update_sequence(request.sequence, |sequence| {
+                sequence.name = request.name;
+            });
+    }
+
     pub fn sequencer_view(&self) -> SequencerView {
         self.sequencer.get_sequencer_view()
     }

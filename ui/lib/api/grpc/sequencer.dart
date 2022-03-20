@@ -47,4 +47,14 @@ class SequencerGrpcApi implements SequencerApi {
   Future<Sequences> updateCueName(int sequence, int cue, String name) {
     return this.client.updateCueName(CueNameRequest(sequence: sequence, cue: cue, name: name));
   }
+
+  @override
+  Future<Sequences> updateSequenceName(int sequence, String name) {
+    return this.client.updateSequenceName(CueNameRequest(sequence: sequence, name: name));
+  }
+
+  @override
+  Future<Sequences> updateWrapAround(int sequence, bool wrapAround) {
+    return this.client.updateSequenceWrapAround(SequenceWrapAroundRequest(sequence: sequence, wrapAround: wrapAround));
+  }
 }

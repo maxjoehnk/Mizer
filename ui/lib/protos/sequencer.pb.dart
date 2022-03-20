@@ -364,6 +364,128 @@ class CueNameRequest extends $pb.GeneratedMessage {
   void clearName() => clearField(3);
 }
 
+class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceWrapAroundRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
+    ..hasRequiredFields = false
+  ;
+
+  SequenceWrapAroundRequest._() : super();
+  factory SequenceWrapAroundRequest({
+    $core.int? sequence,
+    $core.bool? wrapAround,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (wrapAround != null) {
+      _result.wrapAround = wrapAround;
+    }
+    return _result;
+  }
+  factory SequenceWrapAroundRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceWrapAroundRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequenceWrapAroundRequest clone() => SequenceWrapAroundRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequenceWrapAroundRequest copyWith(void Function(SequenceWrapAroundRequest) updates) => super.copyWith((message) => updates(message as SequenceWrapAroundRequest)) as SequenceWrapAroundRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequenceWrapAroundRequest create() => SequenceWrapAroundRequest._();
+  SequenceWrapAroundRequest createEmptyInstance() => create();
+  static $pb.PbList<SequenceWrapAroundRequest> createRepeated() => $pb.PbList<SequenceWrapAroundRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SequenceWrapAroundRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceWrapAroundRequest>(create);
+  static SequenceWrapAroundRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get wrapAround => $_getBF(1);
+  @$pb.TagNumber(2)
+  set wrapAround($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasWrapAround() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearWrapAround() => clearField(2);
+}
+
+class SequenceNameRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceNameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  SequenceNameRequest._() : super();
+  factory SequenceNameRequest({
+    $core.int? sequence,
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory SequenceNameRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceNameRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequenceNameRequest clone() => SequenceNameRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequenceNameRequest copyWith(void Function(SequenceNameRequest) updates) => super.copyWith((message) => updates(message as SequenceNameRequest)) as SequenceNameRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequenceNameRequest create() => SequenceNameRequest._();
+  SequenceNameRequest createEmptyInstance() => create();
+  static $pb.PbList<SequenceNameRequest> createRepeated() => $pb.PbList<SequenceNameRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SequenceNameRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceNameRequest>(create);
+  static SequenceNameRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+}
+
 class EmptyResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EmptyResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..hasRequiredFields = false

@@ -1181,6 +1181,393 @@ impl ::protobuf::reflect::ProtobufValue for CueNameRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct SequenceWrapAroundRequest {
+    // message fields
+    pub sequence: u32,
+    pub wrapAround: bool,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SequenceWrapAroundRequest {
+    fn default() -> &'a SequenceWrapAroundRequest {
+        <SequenceWrapAroundRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SequenceWrapAroundRequest {
+    pub fn new() -> SequenceWrapAroundRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 sequence = 1;
+
+
+    pub fn get_sequence(&self) -> u32 {
+        self.sequence
+    }
+    pub fn clear_sequence(&mut self) {
+        self.sequence = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequence(&mut self, v: u32) {
+        self.sequence = v;
+    }
+
+    // bool wrapAround = 2;
+
+
+    pub fn get_wrapAround(&self) -> bool {
+        self.wrapAround
+    }
+    pub fn clear_wrapAround(&mut self) {
+        self.wrapAround = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_wrapAround(&mut self, v: bool) {
+        self.wrapAround = v;
+    }
+}
+
+impl ::protobuf::Message for SequenceWrapAroundRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.sequence = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.wrapAround = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.sequence != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.sequence, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.wrapAround != false {
+            my_size += 2;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.sequence != 0 {
+            os.write_uint32(1, self.sequence)?;
+        }
+        if self.wrapAround != false {
+            os.write_bool(2, self.wrapAround)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SequenceWrapAroundRequest {
+        SequenceWrapAroundRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "sequence",
+                |m: &SequenceWrapAroundRequest| { &m.sequence },
+                |m: &mut SequenceWrapAroundRequest| { &mut m.sequence },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                "wrapAround",
+                |m: &SequenceWrapAroundRequest| { &m.wrapAround },
+                |m: &mut SequenceWrapAroundRequest| { &mut m.wrapAround },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SequenceWrapAroundRequest>(
+                "SequenceWrapAroundRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SequenceWrapAroundRequest {
+        static instance: ::protobuf::rt::LazyV2<SequenceWrapAroundRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SequenceWrapAroundRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for SequenceWrapAroundRequest {
+    fn clear(&mut self) {
+        self.sequence = 0;
+        self.wrapAround = false;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SequenceWrapAroundRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SequenceWrapAroundRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct SequenceNameRequest {
+    // message fields
+    pub sequence: u32,
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SequenceNameRequest {
+    fn default() -> &'a SequenceNameRequest {
+        <SequenceNameRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SequenceNameRequest {
+    pub fn new() -> SequenceNameRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 sequence = 1;
+
+
+    pub fn get_sequence(&self) -> u32 {
+        self.sequence
+    }
+    pub fn clear_sequence(&mut self) {
+        self.sequence = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequence(&mut self, v: u32) {
+        self.sequence = v;
+    }
+
+    // string name = 2;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for SequenceNameRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.sequence = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.sequence != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.sequence, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.sequence != 0 {
+            os.write_uint32(1, self.sequence)?;
+        }
+        if !self.name.is_empty() {
+            os.write_string(2, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SequenceNameRequest {
+        SequenceNameRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "sequence",
+                |m: &SequenceNameRequest| { &m.sequence },
+                |m: &mut SequenceNameRequest| { &mut m.sequence },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &SequenceNameRequest| { &m.name },
+                |m: &mut SequenceNameRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SequenceNameRequest>(
+                "SequenceNameRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SequenceNameRequest {
+        static instance: ::protobuf::rt::LazyV2<SequenceNameRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SequenceNameRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for SequenceNameRequest {
+    fn clear(&mut self) {
+        self.sequence = 0;
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SequenceNameRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SequenceNameRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct EmptyResponse {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -3808,52 +4195,59 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     5\n\x07trigger\x18\x03\x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07\
     trigger\"R\n\x0eCueNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\
     \x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\x12\n\x04na\
-    me\x18\x03\x20\x01(\tR\x04name\"\x0f\n\rEmptyResponse\"D\n\tSequences\
-    \x127\n\tsequences\x18\x01\x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\t\
-    sequences\"x\n\x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
-    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\
-    \x03(\x0b2\x14.mizer.sequencer.CueR\x04cues\x12\x1e\n\nwrapAround\x18\
-    \x04\x20\x01(\x08R\nwrapAround\"\xad\x01\n\x03Cue\x12\x0e\n\x02id\x18\
-    \x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\
-    5\n\x07trigger\x18\x03\x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07\
-    trigger\x12\x12\n\x04loop\x18\x04\x20\x01(\x08R\x04loop\x127\n\x08channe\
-    ls\x18\x05\x20\x03(\x0b2\x1b.mizer.sequencer.CueChannelR\x08channels\"\
-    \x8b\x02\n\nCueChannel\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mize\
-    r.fixtures.FixtureIdR\x08fixtures\x125\n\x07control\x18\x02\x20\x01(\x0e\
-    2\x1b.mizer.sequencer.CueControlR\x07control\x12/\n\x05value\x18\x03\x20\
-    \x01(\x0b2\x19.mizer.sequencer.CueValueR\x05value\x12-\n\x04fade\x18\x04\
-    \x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\
-    \x05\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05delay\"e\n\x08CueVal\
-    ue\x12\x18\n\x06direct\x18\x03\x20\x01(\x01H\0R\x06direct\x126\n\x05rang\
-    e\x18\x04\x20\x01(\x0b2\x1e.mizer.sequencer.CueValueRangeH\0R\x05rangeB\
-    \x07\n\x05value\"\x9b\x01\n\x08CueTimer\x12\x1a\n\x08hasTimer\x18\x01\
-    \x20\x01(\x08R\x08hasTimer\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mi\
-    zer.sequencer.CueTimeH\0R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b\
-    2\x1e.mizer.sequencer.CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rC\
-    ueValueRange\x12\x12\n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\
-    \x02to\x18\x02\x20\x01(\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\
-    \x18\x01\x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\
-    \x01H\0R\x05beatsB\x06\n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\
-    \x01\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\
-    \x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02to*C\n\nCueTrigger\
-    \x12\x06\n\x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\
-    \x02\x12\t\n\x05BEATS\x10\x03\x12\x0c\n\x08TIMECODE\x10\x04*\xad\x01\n\n\
-    CueControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\
-    \tCOLOR_RED\x10\x02\x12\x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BL\
-    UE\x10\x04\x12\x07\n\x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\
-    \x05FOCUS\x10\x07\x12\x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\
-    \x08\n\x04IRIS\x10\n\x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\
-    \x0c2\xd6\x04\n\x0cSequencerApi\x12R\n\x0cGetSequences\x12$.mizer.sequen\
-    cer.GetSequencesRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0b\
-    GetSequence\x12#.mizer.sequencer.GetSequenceRequest\x1a\x19.mizer.sequen\
-    cer.Sequence\"\0\x12O\n\x0bAddSequence\x12#.mizer.sequencer.AddSequenceR\
-    equest\x1a\x19.mizer.sequencer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12\
-    &.mizer.sequencer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequence\
-    s\"\0\x12R\n\nSequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e\
-    .mizer.sequencer.EmptyResponse\"\0\x12T\n\x10UpdateCueTrigger\x12\".mize\
-    r.sequencer.CueTriggerRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12N\
-    \n\rUpdateCueName\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.s\
-    equencer.Sequences\"\0b\x06proto3\
+    me\x18\x03\x20\x01(\tR\x04name\"W\n\x19SequenceWrapAroundRequest\x12\x1a\
+    \n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x1e\n\nwrapAround\x18\
+    \x02\x20\x01(\x08R\nwrapAround\"E\n\x13SequenceNameRequest\x12\x1a\n\x08\
+    sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\
+    \x01(\tR\x04name\"\x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequence\
+    s\x18\x01\x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\"x\n\
+    \x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mi\
+    zer.sequencer.CueR\x04cues\x12\x1e\n\nwrapAround\x18\x04\x20\x01(\x08R\n\
+    wrapAround\"\xad\x01\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
+    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\
+    \x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x12\x12\n\x04l\
+    oop\x18\x04\x20\x01(\x08R\x04loop\x127\n\x08channels\x18\x05\x20\x03(\
+    \x0b2\x1b.mizer.sequencer.CueChannelR\x08channels\"\x8b\x02\n\nCueChanne\
+    l\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
+    \x08fixtures\x125\n\x07control\x18\x02\x20\x01(\x0e2\x1b.mizer.sequencer\
+    .CueControlR\x07control\x12/\n\x05value\x18\x03\x20\x01(\x0b2\x19.mizer.\
+    sequencer.CueValueR\x05value\x12-\n\x04fade\x18\x04\x20\x01(\x0b2\x19.mi\
+    zer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\x05\x20\x01(\x0b2\
+    \x19.mizer.sequencer.CueTimerR\x05delay\"e\n\x08CueValue\x12\x18\n\x06di\
+    rect\x18\x03\x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01(\
+    \x0b2\x1e.mizer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\
+    \x9b\x01\n\x08CueTimer\x12\x1a\n\x08hasTimer\x18\x01\x20\x01(\x08R\x08ha\
+    sTimer\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTim\
+    eH\0R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.mizer.sequence\
+    r.CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\
+    \n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01\
+    (\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\
+    \0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\
+    \n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.\
+    mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.\
+    mizer.sequencer.CueTimeR\x02to*C\n\nCueTrigger\x12\x06\n\x02GO\x10\0\x12\
+    \n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\
+    \x03\x12\x0c\n\x08TIMECODE\x10\x04*\xad\x01\n\nCueControl\x12\r\n\tINTEN\
+    SITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\
+    \x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x07\n\
+    \x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\x07\x12\
+    \x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\x10\n\
+    \x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x91\x06\n\x0cSeq\
+    uencerApi\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequencesReques\
+    t\x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12#.mizer\
+    .sequencer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\0\x12O\
+    \n\x0bAddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\x19.mizer.\
+    sequencer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequencer.Del\
+    eteSequenceRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\nSequenc\
+    eGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequencer.Empt\
+    yResponse\"\0\x12T\n\x10UpdateCueTrigger\x12\".mizer.sequencer.CueTrigge\
+    rRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12N\n\rUpdateCueName\x12\
+    \x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequences\"\
+    \0\x12d\n\x18UpdateSequenceWrapAround\x12*.mizer.sequencer.SequenceWrapA\
+    roundRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12S\n\x12UpdateSeque\
+    nceName\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.S\
+    equences\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

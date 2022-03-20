@@ -18,5 +18,8 @@ abstract class SequencerApi {
   Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger);
   Future<Sequences> updateCueName(int sequence, int cue, String name);
 
+  Future<Sequences> updateWrapAround(int sequence, bool wrapAround);
+  Future<Sequences> updateSequenceName(int sequence, String name);
+
   Future<SequencerPointer?> getSequencerPointer();
 }

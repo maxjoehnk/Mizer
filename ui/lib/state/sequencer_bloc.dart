@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 
+@immutable
 abstract class SequencerCommand {}
 
 class FetchSequences extends SequencerCommand {}
@@ -11,43 +13,58 @@ class FetchSequences extends SequencerCommand {}
 class AddSequence extends SequencerCommand {}
 
 class DeleteSequence extends SequencerCommand {
-  int id;
+  final int id;
 
   DeleteSequence(this.id);
 }
 
 class UpdateCueTrigger extends SequencerCommand {
-  int sequence;
-  int cue;
-  CueTrigger trigger;
+  final int sequence;
+  final int cue;
+  final CueTrigger trigger;
 
   UpdateCueTrigger({ required this.sequence, required this.cue, required this.trigger });
 }
 
 class UpdateCueName extends SequencerCommand {
-  int sequence;
-  int cue;
-  String name;
+  final int sequence;
+  final int cue;
+  final String name;
 
   UpdateCueName({ required this.sequence, required this.cue, required this.name });
 }
 
+class UpdateSequenceName extends SequencerCommand {
+  final int sequence;
+  final String name;
+
+  UpdateSequenceName({ required this.sequence, required this.name });
+}
+
+class UpdateWrapAround extends SequencerCommand {
+  final int sequence;
+  final bool wrapAround;
+
+  UpdateWrapAround({ required this.sequence, required this.wrapAround });
+}
+
 class SelectSequence extends SequencerCommand {
-  int sequence;
+  final int sequence;
 
   SelectSequence({ required this.sequence });
 }
 
 class SelectCue extends SequencerCommand {
-  int cue;
+  final int cue;
 
   SelectCue({ required this.cue });
 }
 
+@immutable
 class SequencerState {
-  List<Sequence> sequences;
-  int? selectedSequenceId;
-  int? selectedCueId;
+  final List<Sequence> sequences;
+  final int? selectedSequenceId;
+  final int? selectedCueId;
   
   SequencerState({ required this.sequences, this.selectedSequenceId, this.selectedCueId });
 
@@ -99,6 +116,12 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     if (event is UpdateCueName) {
       yield await _updateCueName(event);
     }
+    if (event is UpdateWrapAround) {
+      yield await _updateSequenceWrapAround(event);
+    }
+    if (event is UpdateSequenceName) {
+      yield await _updateSequenceName(event);
+    }
     if (event is SelectSequence) {
       yield _selectSequence(event);
     }
@@ -142,6 +165,22 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   Future<SequencerState> _updateCueName(UpdateCueName event) async {
     log("update cue name ${event.sequence}.${event.cue} ${event.name}", name: "SequencerBloc");
     var sequences = await api.updateCueName(event.sequence, event.cue, event.name);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateSequenceWrapAround(UpdateWrapAround event) async {
+    log("update sequence wrap around ${event.sequence} ${event.wrapAround}", name: "SequencerBloc");
+    var sequences = await api.updateWrapAround(event.sequence, event.wrapAround);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateSequenceName(UpdateSequenceName event) async {
+    log("update sequence name ${event.sequence} ${event.name}", name: "SequencerBloc");
+    var sequences = await api.updateSequenceName(event.sequence, event.name);
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);

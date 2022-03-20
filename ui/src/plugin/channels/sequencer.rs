@@ -3,7 +3,7 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 use std::sync::Arc;
 
 use mizer_api::handlers::SequencerHandler;
-use mizer_api::models::{CueTriggerRequest, CueNameRequest, Sequence, Sequences};
+use mizer_api::models::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, Sequencer};
 
@@ -62,6 +62,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                 let result = call.arguments().map(|req| self.update_cue_name(req));
                 resp.respond_result(result);
             }
+            "updateSequenceWrapAround" => {
+                let result = call.arguments().map(|req| self.update_sequence_wrap_around(req));
+                resp.respond_result(result);
+            }
+            "updateSequenceName" => {
+                let result = call.arguments().map(|req| self.update_sequence_name(req));
+                resp.respond_result(result);
+            }
             "getSequencerPointer" => match self.get_sequencer_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
@@ -110,6 +118,18 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
 
     pub fn update_cue_name(&self, request: CueNameRequest) -> Sequences {
         self.handler.update_cue_name(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_sequence_wrap_around(&self, request: SequenceWrapAroundRequest) -> Sequences {
+        self.handler.update_sequence_wrap_around(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_sequence_name(&self, request: SequenceNameRequest) -> Sequences {
+        self.handler.update_sequence_name(request);
 
         self.get_sequences()
     }

@@ -871,6 +871,7 @@ impl ::protobuf::reflect::ProtobufValue for SessionRequest {
 pub struct Session {
     // message fields
     pub devices: ::protobuf::RepeatedField<SessionDevice>,
+    pub projectHistory: ::protobuf::RepeatedField<::std::string::String>,
     // message oneof groups
     pub _filePath: ::std::option::Option<Session_oneof__filePath>,
     // special fields
@@ -970,6 +971,31 @@ impl Session {
     pub fn take_devices(&mut self) -> ::protobuf::RepeatedField<SessionDevice> {
         ::std::mem::replace(&mut self.devices, ::protobuf::RepeatedField::new())
     }
+
+    // repeated string projectHistory = 3;
+
+
+    pub fn get_projectHistory(&self) -> &[::std::string::String] {
+        &self.projectHistory
+    }
+    pub fn clear_projectHistory(&mut self) {
+        self.projectHistory.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_projectHistory(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.projectHistory = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_projectHistory(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.projectHistory
+    }
+
+    // Take field
+    pub fn take_projectHistory(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.projectHistory, ::protobuf::RepeatedField::new())
+    }
 }
 
 impl ::protobuf::Message for Session {
@@ -995,6 +1021,9 @@ impl ::protobuf::Message for Session {
                 2 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.devices)?;
                 },
+                3 => {
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.projectHistory)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1010,6 +1039,9 @@ impl ::protobuf::Message for Session {
         for value in &self.devices {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        for value in &self.projectHistory {
+            my_size += ::protobuf::rt::string_size(3, &value);
         };
         if let ::std::option::Option::Some(ref v) = self._filePath {
             match v {
@@ -1028,6 +1060,9 @@ impl ::protobuf::Message for Session {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.projectHistory {
+            os.write_string(3, &v)?;
         };
         if let ::std::option::Option::Some(ref v) = self._filePath {
             match v {
@@ -1084,6 +1119,11 @@ impl ::protobuf::Message for Session {
                 |m: &Session| { &m.devices },
                 |m: &mut Session| { &mut m.devices },
             ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "projectHistory",
+                |m: &Session| { &m.projectHistory },
+                |m: &mut Session| { &mut m.projectHistory },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Session>(
                 "Session",
                 fields,
@@ -1102,6 +1142,7 @@ impl ::protobuf::Clear for Session {
     fn clear(&mut self) {
         self._filePath = ::std::option::Option::None;
         self.devices.clear();
+        self.projectHistory.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1608,21 +1649,22 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"*\n\x14SavePr\
     ojectAsRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x11\n\x0f\
     ProjectResponse\"(\n\x12ClientAnnouncement\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"g\n\x07Session\x12\x1f\n\x08\
-    filePath\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\x07device\
-    s\x18\x02\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devicesB\x0b\n\t_fil\
-    ePath\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\x20\
-    \x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\x20\
-    \x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\x20\
-    \x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05drift2\
-    \x8c\x03\n\nSessionApi\x127\n\nGetSession\x12\x15.mizer.SessionRequest\
-    \x1a\x0e.mizer.Session\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.Clie\
-    ntAnnouncement\x1a\x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\x15.mize\
-    r.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLoadProject\
-    \x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12>\
-    \n\x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectResp\
-    onse\"\0\x12F\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\
+    \x01(\tR\x04name\"\x10\n\x0eSessionRequest\"\x8f\x01\n\x07Session\x12\
+    \x1f\n\x08filePath\x18\x01\x20\x01(\tH\0R\x08filePath\x88\x01\x01\x12.\n\
+    \x07devices\x18\x02\x20\x03(\x0b2\x14.mizer.SessionDeviceR\x07devices\
+    \x12&\n\x0eprojectHistory\x18\x03\x20\x03(\tR\x0eprojectHistoryB\x0b\n\t\
+    _filePath\"s\n\rSessionDevice\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04n\
+    ame\x12\x10\n\x03ips\x18\x02\x20\x03(\tR\x03ips\x12(\n\x05clock\x18\x03\
+    \x20\x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\
+    \x20\x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\
+    \x20\x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05dri\
+    ft2\x8c\x03\n\nSessionApi\x127\n\nGetSession\x12\x15.mizer.SessionReques\
+    t\x1a\x0e.mizer.Session\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.Cli\
+    entAnnouncement\x1a\x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\x15.miz\
+    er.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLoadProjec\
+    t\x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12\
+    >\n\x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectRes\
+    ponse\"\0\x12F\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\
     \x16.mizer.ProjectResponse\"\0b\x06proto3\
 ";
 

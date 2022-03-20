@@ -241,6 +241,7 @@ class Session extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Session', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath', protoName: 'filePath')
     ..pc<SessionDevice>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'devices', $pb.PbFieldType.PM, subBuilder: SessionDevice.create)
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'projectHistory', protoName: 'projectHistory')
     ..hasRequiredFields = false
   ;
 
@@ -248,6 +249,7 @@ class Session extends $pb.GeneratedMessage {
   factory Session({
     $core.String? filePath,
     $core.Iterable<SessionDevice>? devices,
+    $core.Iterable<$core.String>? projectHistory,
   }) {
     final _result = create();
     if (filePath != null) {
@@ -255,6 +257,9 @@ class Session extends $pb.GeneratedMessage {
     }
     if (devices != null) {
       _result.devices.addAll(devices);
+    }
+    if (projectHistory != null) {
+      _result.projectHistory.addAll(projectHistory);
     }
     return _result;
   }
@@ -290,6 +295,9 @@ class Session extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<SessionDevice> get devices => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.String> get projectHistory => $_getList(2);
 }
 
 class SessionDevice extends $pb.GeneratedMessage {

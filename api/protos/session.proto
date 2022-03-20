@@ -29,6 +29,7 @@ message SessionRequest {}
 message Session {
   optional string filePath = 1;
   repeated SessionDevice devices = 2;
+  repeated string projectHistory = 3;
 }
 
 message SessionDevice {

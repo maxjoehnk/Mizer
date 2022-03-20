@@ -22,15 +22,7 @@ class IntegratedMenuBar extends StatelessWidget {
     var menus = menu.items
         .map((e) => nativeshell.MenuItem.children(
             title: "&${(e as SubMenu).title}",
-            children: (e as SubMenu).children.map((i) {
-              if (i is MenuDivider) {
-                return nativeshell.MenuItem.separator();
-              }
-              if (i is MenuItem) {
-                return i.toNative();
-              }
-              throw new AssertionError("Invalid menu item");
-            }).toList()))
+            children: e.children.map(_toMenuItem).toList()))
         .toList();
 
     return nativeshell.Menu(() => menus);
@@ -68,4 +60,17 @@ class IntegratedMenuBar extends StatelessWidget {
       ),
     );
   }
+}
+
+nativeshell.MenuItem _toMenuItem(MenuBaseItem i) {
+  if (i is MenuDivider) {
+    return nativeshell.MenuItem.separator();
+  }
+  if (i is MenuItem) {
+    return i.toNative();
+  }
+  if (i is SubMenu) {
+    return nativeshell.MenuItem.children(title: i.title, children: i.children.map(_toMenuItem).toList());
+  }
+  throw new AssertionError("Invalid menu item");
 }

@@ -13,7 +13,7 @@ use mizer_media::api::MediaServerApi;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
-use mizer_project_files::{Project, ProjectManager, ProjectManagerMut};
+use mizer_project_files::{Project, ProjectManager, ProjectManagerMut, history::ProjectHistory};
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::{MidiConnectionManager, MidiModule};
 use mizer_runtime::DefaultRuntime;
@@ -75,6 +75,7 @@ pub fn build_runtime(
         settings,
         media_server_api,
         session_events: MessageBus::new(),
+        project_history: ProjectHistory,
     };
     if has_project_file {
         mizer.load_project()?;
@@ -95,6 +96,7 @@ pub struct Mizer {
     settings: Arc<NonEmptyPinboard<Settings>>,
     media_server_api: MediaServerApi,
     session_events: MessageBus<SessionState>,
+    project_history: ProjectHistory,
 }
 
 impl Mizer {
@@ -166,6 +168,7 @@ impl Mizer {
             if self.flags.generate_graph {
                 self.runtime.generate_pipeline_graph()?;
             }
+            self.project_history.add_project(path)?;
             self.send_session_update();
         }
 
@@ -173,8 +176,9 @@ impl Mizer {
     }
 
     fn save_project_as(&mut self, path: PathBuf) -> anyhow::Result<()> {
-        self.project_path = Some(path);
+        self.project_path = Some(path.clone());
         self.save_project()?;
+        self.project_history.add_project(&path)?;
         self.send_session_update();
 
         Ok(())
@@ -221,12 +225,14 @@ impl Mizer {
     }
 
     fn send_session_update(&self) {
+        let history = self.project_history.load().unwrap_or_default();
         self.session_events.send(SessionState {
             project_path: self.project_path.clone().map(|path| {
                 path.into_os_string()
                     .into_string()
                     .expect("Could not convert path to string")
             }),
+            project_history: history.into_iter().map(|history| history.path.to_string_lossy().to_string()).collect(),
         });
     }
 }

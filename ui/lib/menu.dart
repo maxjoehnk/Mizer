@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -40,6 +42,14 @@ class ApplicationMenu extends StatelessWidget {
                   label: "Open Project",
                   action: () => _openProject(context, context.read()),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyO)),
+              SubMenu(
+                title: "Open Recent",
+                children: state.projectHistory
+                    .map((history) => MenuItem(
+                        label: history.split(io.Platform.pathSeparator).last,
+                        action: () => _openProjectFromHistory(context, context.read(), history)))
+                    .toList(),
+              ),
               MenuItem(
                   disabled: state.filePath.isEmpty,
                   label: 'Save Project',
@@ -48,7 +58,8 @@ class ApplicationMenu extends StatelessWidget {
               MenuItem(
                   label: 'Save Project as',
                   action: () => _saveProjectAs(context, context.read()),
-                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift, LogicalKeyboardKey.keyS)),
+                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
+                      LogicalKeyboardKey.keyS)),
               MenuDivider(),
               MenuItem(label: 'Preferences'),
               MenuItem(
@@ -62,11 +73,12 @@ class ApplicationMenu extends StatelessWidget {
                     .mapEnumerated((route, index) =>
                         MenuActionItem(label: route.label, action: OpenViewIntent(index)))
                     .toList()),
-            if (!context.platform.isStandalone) SubMenu(title: 'Window', children: [
-              MenuItem(
-                  label: 'New Window',
-                  action: () => Window.create({}).then((window) => window.show()))
-            ])
+            if (!context.platform.isStandalone)
+              SubMenu(title: 'Window', children: [
+                MenuItem(
+                    label: 'New Window',
+                    action: () => Window.create({}).then((window) => window.show()))
+              ])
           ])),
     );
   }
@@ -83,6 +95,12 @@ class ApplicationMenu extends StatelessWidget {
       return;
     }
     await api.loadProject(file.path);
+    _refreshViews(context);
+  }
+
+  Future<void> _openProjectFromHistory(
+      BuildContext context, SessionApi api, String filePath) async {
+    await api.loadProject(filePath);
     _refreshViews(context);
   }
 

@@ -18,6 +18,7 @@ mod connections;
 mod effects;
 mod fixtures;
 mod sequencer;
+pub mod history;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(

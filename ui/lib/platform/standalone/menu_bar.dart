@@ -18,21 +18,29 @@ class StandaloneMenuBar extends StatelessWidget {
     var menus = menu.items
         .map((e) => menubar.Submenu(
             label: (e as SubMenu).title,
-            children: (e as SubMenu).children.map((i) {
-              if (i is MenuDivider) {
-                return menubar.MenuDivider();
-              }
-              if (i is MenuItem) {
-                return menubar.MenuItem(
-                  label: i.label,
-                  onClicked: i.action,
-                  shortcut: i.shortcut,
-                );
-              }
-              throw new AssertionError("Invalid menu item");
-            }).toList()))
+            children: e.children.map(_toMenuItem).toList()))
         .toList();
 
     return menubar.setApplicationMenu(menus);
   }
+}
+
+menubar.AbstractMenuItem _toMenuItem(MenuBaseItem i) {
+  if (i is MenuDivider) {
+    return menubar.MenuDivider();
+  }
+  if (i is MenuItem) {
+    return menubar.MenuItem(
+      label: i.label,
+      onClicked: i.action,
+      shortcut: i.shortcut,
+    );
+  }
+  if (i is SubMenu) {
+    return menubar.Submenu(
+        label: i.title,
+        children: i.children.map(_toMenuItem).toList(),
+    );
+  }
+  throw new AssertionError("Invalid menu item");
 }

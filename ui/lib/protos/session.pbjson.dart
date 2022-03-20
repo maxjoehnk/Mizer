@@ -65,6 +65,7 @@ const Session$json = const {
   '2': const [
     const {'1': 'filePath', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'filePath', '17': true},
     const {'1': 'devices', '3': 2, '4': 3, '5': 11, '6': '.mizer.SessionDevice', '10': 'devices'},
+    const {'1': 'projectHistory', '3': 3, '4': 3, '5': 9, '10': 'projectHistory'},
   ],
   '8': const [
     const {'1': '_filePath'},
@@ -72,7 +73,7 @@ const Session$json = const {
 };
 
 /// Descriptor for `Session`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEh8KCGZpbGVQYXRoGAEgASgJSABSCGZpbGVQYXRoiAEBEi4KB2RldmljZXMYAiADKAsyFC5taXplci5TZXNzaW9uRGV2aWNlUgdkZXZpY2VzQgsKCV9maWxlUGF0aA==');
+final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEh8KCGZpbGVQYXRoGAEgASgJSABSCGZpbGVQYXRoiAEBEi4KB2RldmljZXMYAiADKAsyFC5taXplci5TZXNzaW9uRGV2aWNlUgdkZXZpY2VzEiYKDnByb2plY3RIaXN0b3J5GAMgAygJUg5wcm9qZWN0SGlzdG9yeUILCglfZmlsZVBhdGg=');
 @$core.Deprecated('Use sessionDeviceDescriptor instead')
 const SessionDevice$json = const {
   '1': 'SessionDevice',

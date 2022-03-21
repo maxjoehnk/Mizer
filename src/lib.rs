@@ -1,7 +1,9 @@
 use std::path::PathBuf;
+use std::sync::Arc;
 use std::time::Duration;
 
 use anyhow::Context;
+use pinboard::NonEmptyPinboard;
 
 use mizer_api::handlers::Handlers;
 use mizer_devices::DeviceModule;
@@ -11,21 +13,21 @@ use mizer_fixtures::FixtureModule;
 use mizer_gdtf_provider::GdtfProvider;
 use mizer_media::api::MediaServerApi;
 use mizer_media::{MediaDiscovery, MediaServer};
+use mizer_message_bus::MessageBus;
 use mizer_module::{Module, Runtime};
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
-use mizer_project_files::{Project, ProjectManager, ProjectManagerMut, history::ProjectHistory};
+use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, ProjectManagerMut};
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::{MidiConnectionManager, MidiModule};
+use mizer_qlcplus_provider::QlcPlusProvider;
 use mizer_runtime::DefaultRuntime;
+use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
+use mizer_settings::Settings;
+use rayon::prelude::*;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
-use mizer_message_bus::MessageBus;
-use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
-use mizer_settings::Settings;
-use pinboard::NonEmptyPinboard;
-use std::sync::Arc;
 
 mod api;
 mod flags;
@@ -232,7 +234,10 @@ impl Mizer {
                     .into_string()
                     .expect("Could not convert path to string")
             }),
-            project_history: history.into_iter().map(|history| history.path.to_string_lossy().to_string()).collect(),
+            project_history: history
+                .into_iter()
+                .map(|history| history.path.to_string_lossy().to_string())
+                .collect(),
         });
     }
 }
@@ -288,10 +293,15 @@ fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
 fn register_fixtures_module(
     runtime: &mut DefaultRuntime,
 ) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
-    let ofl_provider = load_ofl_provider()?;
-    let gdtf_provider = load_gdtf_provider()?;
-    let providers: Vec<Box<dyn FixtureLibraryProvider>> =
-        vec![Box::new(ofl_provider), Box::new(gdtf_provider)];
+    let providers = [
+        load_ofl_provider,
+        load_gdtf_provider,
+        load_qlcplus_provider,
+    ];
+    let providers = providers
+        .into_par_iter()
+        .map(|loader| loader())
+        .collect();
 
     let (fixture_module, fixture_manager, fixture_library) = FixtureModule::new(providers);
     fixture_module.register(runtime)?;
@@ -299,7 +309,7 @@ fn register_fixtures_module(
     Ok((fixture_manager, fixture_library))
 }
 
-fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
+fn load_ofl_provider() -> Box<dyn FixtureLibraryProvider> {
     log::info!("Loading open fixture library...");
     let mut ofl_provider = OpenFixtureLibraryProvider::new(
         "components/fixtures/open-fixture-library/.fixtures".to_string(),
@@ -310,10 +320,10 @@ fn load_ofl_provider() -> anyhow::Result<OpenFixtureLibraryProvider> {
         log::info!("Loading open fixture library...Done");
     }
 
-    Ok(ofl_provider)
+    Box::new(ofl_provider)
 }
 
-fn load_gdtf_provider() -> anyhow::Result<GdtfProvider> {
+fn load_gdtf_provider() -> Box<dyn FixtureLibraryProvider> {
     log::info!("Loading GDTF fixture library...");
     let mut gdtf_provider = GdtfProvider::new("components/fixtures/gdtf/.fixtures".to_string());
     if let Err(err) = gdtf_provider.load() {
@@ -322,8 +332,22 @@ fn load_gdtf_provider() -> anyhow::Result<GdtfProvider> {
         log::info!("Loading GDTF fixture library...Done");
     }
 
-    Ok(gdtf_provider)
+    Box::new(gdtf_provider)
 }
+
+fn load_qlcplus_provider() -> Box<dyn FixtureLibraryProvider> {
+    log::info!("Loading QLC+ fixture library...");
+    let mut qlcplus_provider =
+        QlcPlusProvider::new("components/fixtures/qlcplus/.fixtures".to_string());
+    if let Err(err) = qlcplus_provider.load() {
+        log::warn!("Could not load QLC+ fixture library {:?}", err);
+    } else {
+        log::info!("Loading QLC+ fixture library...Done");
+    }
+
+    Box::new(qlcplus_provider)
+}
+
 fn import_media_files(
     media_paths: &[String],
     media_server_api: &MediaServerApi,

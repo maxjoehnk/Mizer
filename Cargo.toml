@@ -14,6 +14,7 @@ members = [
     "components/fixtures",
     "components/fixtures/gdtf",
     "components/fixtures/open-fixture-library",
+    "components/fixtures/qlcplus",
     "components/plan",
     "components/media",
     "components/sequencer",
@@ -90,6 +91,7 @@ mizer-project-files = { path = "runtime/projects" }
 mizer-fixtures = { path = "components/fixtures" }
 mizer-gdtf-provider = { path = "components/fixtures/gdtf" }
 mizer-open-fixture-library-provider = { path = "components/fixtures/open-fixture-library" }
+mizer-qlcplus-provider = { path = "components/fixtures/qlcplus" }
 mizer-plan = { path = "components/plan" }
 mizer-pipeline = { path = "runtime/pipeline" }
 mizer-api = { path = "api" }
@@ -118,6 +120,7 @@ pinboard = "2.1"
 dashmap = "4"
 flume = "0.10"
 profiling = "1.0"
+rayon = "1.5"
 
 [dev-dependencies]
 test-case = "1.2"

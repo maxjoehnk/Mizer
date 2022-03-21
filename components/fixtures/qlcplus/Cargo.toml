@@ -1,0 +1,21 @@
+[package]
+name = "mizer-qlcplus-provider"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+log = "0.4"
+anyhow = "1"
+mizer-fixtures = { path = ".." }
+rayon = "1.5"
+strong-xml = "0.6"
+custom_derive = "0.1"
+enum_derive = { git = "https://github.com/maxjoehnk/rust-custom-derive", branch = "feature/better-error-reporting" }
+htmlentity = "1.2"
+
+[build-dependencies]
+ureq = "2.4"
+zip = "0.5"
+temp-dir = "0.1"
+fs_extra = "1.2"

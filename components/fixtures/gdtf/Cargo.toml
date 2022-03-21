@@ -11,6 +11,3 @@ mizer-fixtures = { path = ".." }
 zip = "0.5"
 strong-xml = "0.6"
 rayon = "1.5"
-
-[build-dependencies]
-ureq = "2.4"

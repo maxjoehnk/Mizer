@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -80,6 +81,7 @@ class _NumberFieldState extends State<NumberField> {
   @override
   void dispose() {
     focusNode.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -95,14 +97,14 @@ class _NumberFieldState extends State<NumberField> {
     if (widget.max != null) {
       return widget.max!;
     }
-    return widget.maxHint!;
+    return widget.maxHint;
   }
 
   num get _minHint {
     if (widget.min != null) {
       return widget.min!;
     }
-    return widget.minHint!;
+    return widget.minHint;
   }
 
   double get _valueHint {
@@ -113,22 +115,31 @@ class _NumberFieldState extends State<NumberField> {
     TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
     return MouseRegion(
       cursor: SystemMouseCursors.resizeLeftRight,
-      child: GestureDetector(
-        onHorizontalDragUpdate: (update) {
-          var delta = (update.primaryDelta ?? 0) * widget.step;
-          var next = this.value + delta;
-          _dragValue(num.parse(next.toStringAsFixed(3)));
+      child: Listener(
+        onPointerSignal: (e) {
+          if (e is PointerScrollEvent) {
+            var delta = e.scrollDelta.dy > 0 ? -widget.step : widget.step;
+            var next = this.value + delta;
+            _dragValue(num.parse(next.toStringAsFixed(3)));
+          }
         },
-        onTap: () => setState(() => this.isEditing = true),
-        child: Field(
-          label: this.widget.label,
-          child: _Bar(
-              value: this._valueHint,
-              child: Text(
-                controller.text,
-                style: textStyle,
-                textAlign: TextAlign.center,
-              )),
+        child: GestureDetector(
+          onHorizontalDragUpdate: (update) {
+            var delta = (update.primaryDelta ?? 0) * widget.step;
+            var next = this.value + delta;
+            _dragValue(num.parse(next.toStringAsFixed(3)));
+          },
+          onTap: () => setState(() => this.isEditing = true),
+          child: Field(
+            label: this.widget.label,
+            child: _Bar(
+                value: this._valueHint,
+                child: Text(
+                  controller.text,
+                  style: textStyle,
+                  textAlign: TextAlign.center,
+                )),
+          ),
         ),
       ),
     );
@@ -137,30 +148,28 @@ class _NumberFieldState extends State<NumberField> {
   Widget _editView(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.bodyText2!;
 
-    return MouseRegion(
-        cursor: SystemMouseCursors.resizeLeftRight,
-        child: Field(
-          label: this.widget.label,
-          child: _Bar(
-            value: this._valueHint,
-            child: EditableText(
-              focusNode: focusNode,
-              controller: controller,
-              cursorColor: Colors.black87,
-              backgroundCursorColor: Colors.black12,
-              style: textStyle,
-              textAlign: TextAlign.center,
-              selectionColor: Colors.black38,
-              keyboardType: TextInputType.number,
-              autofocus: true,
-              inputFormatters: [
-                if (!widget.fractions) FilteringTextInputFormatter.digitsOnly,
-                if (widget.fractions) NumberField.floatsOnly,
-                FilteringTextInputFormatter.singleLineFormatter,
-              ],
-            ),
-          ),
-        ));
+    return Field(
+      label: this.widget.label,
+      child: _Bar(
+        value: this._valueHint,
+        child: EditableText(
+          focusNode: focusNode,
+          controller: controller,
+          cursorColor: Colors.black87,
+          backgroundCursorColor: Colors.black12,
+          style: textStyle,
+          textAlign: TextAlign.center,
+          selectionColor: Colors.black38,
+          keyboardType: TextInputType.number,
+          autofocus: true,
+          inputFormatters: [
+            if (!widget.fractions) FilteringTextInputFormatter.digitsOnly,
+            if (widget.fractions) NumberField.floatsOnly,
+            FilteringTextInputFormatter.singleLineFormatter,
+          ],
+        ),
+      ),
+    );
   }
 
   void _dragValue(num value) {

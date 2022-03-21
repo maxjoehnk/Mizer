@@ -159,6 +159,7 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
             }],
             physical: Default::default(),
             tags: Vec::new(),
+            provider: "Test"
         },
         Some("Default".into()),
         None,

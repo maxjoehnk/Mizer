@@ -84,7 +84,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                   transform: model.transformationController.value,
                   child: IgnorePointer(child: GraphPaintLayer(model: model))),
               CanvasDropLayer(),
-              NodesTarget(),
+              Overlay(
+                initialEntries: [
+                  OverlayEntry(builder: (context) => NodesTarget()),
+                ],
+              )
             ]),
           ),
           Positioned(

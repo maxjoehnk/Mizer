@@ -24,14 +24,13 @@ class FixtureTable extends StatelessWidget {
     return SingleChildScrollView(
       child: MizerTable(columnWidths: {
         0: FixedColumnWidth(64),
-        4: FixedColumnWidth(128),
       }, columns: const [
         Text("Id"),
         Text("Name"),
+        Text("Address"),
         Text("Manufacturer"),
         Text("Model"),
         Text("Mode"),
-        Text("Address"),
       ], rows: rows),
     );
   }
@@ -52,10 +51,10 @@ class FixtureTable extends StatelessWidget {
       cells: [
         Text(fixture.id.toString()),
         Text(fixture.name),
+        Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, "0")}"),
         Text(fixture.manufacturer),
         Text(fixture.model),
         Text(fixture.mode),
-        Text("${fixture.universe}:${fixture.channel} - ${fixture.channel + fixture.channelCount - 1}"),
       ],
       onTap: () => onSelect(fixture.id, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),

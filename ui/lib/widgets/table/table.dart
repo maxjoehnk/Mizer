@@ -95,17 +95,22 @@ class PopupTableCell extends StatelessWidget {
   final Widget popup;
   final Function()? onTap;
 
-  PopupTableCell({ required this.child, required this.popup, required this.onTap });
+  PopupTableCell({ required this.child, required this.popup, this.onTap });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        child: child,
-        behavior: HitTestBehavior.translucent,
-        onTap: onTap,
-        onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
               position: details.globalPosition,
               child: popup
-          )));
+          )),
+      child: Container(
+        alignment: AlignmentDirectional.centerStart,
+        child: child,
+        constraints: BoxConstraints.expand(),
+      ),
+    );
   }
 }

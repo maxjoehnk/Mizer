@@ -1,6 +1,6 @@
 use mizer_node::NodeType;
 use mizer_nodes::Node;
-use mizer_sequencer::{Sequencer, SequencerValue, SequencerTime, SequencerView};
+use mizer_sequencer::{Sequencer, SequencerTime, SequencerValue, SequencerView};
 
 use crate::models::*;
 use crate::RuntimeApi;
@@ -93,7 +93,11 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     pub fn update_cue_value(&self, request: CueValueRequest) {
         self.sequencer
             .update_sequence(request.sequence_id, |sequence| {
-                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue_id) {
+                if let Some(cue) = sequence
+                    .cues
+                    .iter_mut()
+                    .find(|cue| cue.id == request.cue_id)
+                {
                     if let Some(control) = cue.controls.get_mut(request.control_index as usize) {
                         control.value = request.value.unwrap().into();
                     }
@@ -104,8 +108,15 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     pub fn update_control_fade_time(&self, request: CueTimingRequest) {
         self.sequencer
             .update_sequence(request.sequence_id, |sequence| {
-                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue_id) {
-                    cue.cue_fade = request.time.into_option().and_then(Option::<SequencerValue<SequencerTime>>::from);
+                if let Some(cue) = sequence
+                    .cues
+                    .iter_mut()
+                    .find(|cue| cue.id == request.cue_id)
+                {
+                    cue.cue_fade = request
+                        .time
+                        .into_option()
+                        .and_then(Option::<SequencerValue<SequencerTime>>::from);
                 }
             });
     }
@@ -113,8 +124,15 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     pub fn update_control_delay_time(&self, request: CueTimingRequest) {
         self.sequencer
             .update_sequence(request.sequence_id, |sequence| {
-                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue_id) {
-                    cue.cue_delay = request.time.into_option().and_then(Option::<SequencerValue<SequencerTime>>::from);
+                if let Some(cue) = sequence
+                    .cues
+                    .iter_mut()
+                    .find(|cue| cue.id == request.cue_id)
+                {
+                    cue.cue_delay = request
+                        .time
+                        .into_option()
+                        .and_then(Option::<SequencerValue<SequencerTime>>::from);
                 }
             });
     }

@@ -17,8 +17,8 @@ use mizer_sequencer::{Effect, Sequence};
 mod connections;
 mod effects;
 mod fixtures;
-mod sequencer;
 pub mod history;
+mod sequencer;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(

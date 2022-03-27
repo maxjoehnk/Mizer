@@ -106,8 +106,7 @@ impl SequenceState {
         control: FixtureFaderControl,
         value: f64,
     ) {
-        self.fixture_values
-            .insert((fixture_id, control), value);
+        self.fixture_values.insert((fixture_id, control), value);
     }
 
     pub fn get_next_cue<'a>(&self, sequence: &'a Sequence) -> Option<&'a Cue> {

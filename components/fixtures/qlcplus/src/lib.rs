@@ -7,9 +7,9 @@ use std::io::Read;
 use std::path::Path;
 use strong_xml::XmlRead;
 
+pub use self::definition::QlcPlusFixtureDefinition;
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
-pub use self::definition::QlcPlusFixtureDefinition;
 
 mod conversion;
 mod definition;
@@ -45,14 +45,29 @@ impl FixtureLibraryProvider for QlcPlusProvider {
             .filter_map(|file: std::io::Result<DirEntry>| file.ok())
             .filter(|file| file.metadata().is_ok())
             .filter(|file| file.metadata().unwrap().is_file())
-            .filter(|file| file.file_name().to_string_lossy().to_string().ends_with(".qxf"))
+            .filter(|file| {
+                file.file_name()
+                    .to_string_lossy()
+                    .to_string()
+                    .ends_with(".qxf")
+            })
             .filter_map(|file| {
                 let path = file.path();
-                log::trace!("Loading QLC+ Fixture from '{:?}'...", path.file_name().unwrap());
+                log::trace!(
+                    "Loading QLC+ Fixture from '{:?}'...",
+                    path.file_name().unwrap()
+                );
                 match read_definition(&path) {
-                    Ok(definition) => Some((format!("{}:{}", definition.manufacturer, definition.model), definition)),
+                    Ok(definition) => Some((
+                        format!("{}:{}", definition.manufacturer, definition.model),
+                        definition,
+                    )),
                     Err(err) => {
-                        log::error!("Could not load QLC+ Fixture from '{:?}': {:?}", path.file_name().unwrap(), err);
+                        log::error!(
+                            "Could not load QLC+ Fixture from '{:?}': {:?}",
+                            path.file_name().unwrap(),
+                            err
+                        );
                         None
                     }
                 }
@@ -90,7 +105,10 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
     file.read_to_string(&mut content)?;
 
     let definition = QlcPlusFixtureDefinition::from_str(&content)?;
-    log::debug!("Loaded QLC+ Fixture from '{:?}'.", path.file_name().unwrap());
+    log::debug!(
+        "Loaded QLC+ Fixture from '{:?}'.",
+        path.file_name().unwrap()
+    );
 
     Ok(definition)
 }

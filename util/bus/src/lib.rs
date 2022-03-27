@@ -1,8 +1,8 @@
-use std::ops::Deref;
 use flume::r#async::RecvStream;
 use flume::TryRecvError;
 use futures::Stream;
 use parking_lot::RwLock;
+use std::ops::Deref;
 use std::pin::Pin;
 use std::sync::{Arc, Weak};
 use std::task::{Context, Poll};

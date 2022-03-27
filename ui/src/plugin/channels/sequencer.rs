@@ -74,15 +74,21 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                 resp.respond_result(result);
             }
             "updateCueFadeTime" => {
-                let result = call.arguments().map(|req| self.update_control_fade_time(req));
+                let result = call
+                    .arguments()
+                    .map(|req| self.update_control_fade_time(req));
                 resp.respond_result(result);
             }
             "updateCueDelayTime" => {
-                let result = call.arguments().map(|req| self.update_control_delay_time(req));
+                let result = call
+                    .arguments()
+                    .map(|req| self.update_control_delay_time(req));
                 resp.respond_result(result);
             }
             "updateSequenceWrapAround" => {
-                let result = call.arguments().map(|req| self.update_sequence_wrap_around(req));
+                let result = call
+                    .arguments()
+                    .map(|req| self.update_sequence_wrap_around(req));
                 resp.respond_result(result);
             }
             "updateSequenceName" => {

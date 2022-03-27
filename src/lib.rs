@@ -293,15 +293,8 @@ fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
 fn register_fixtures_module(
     runtime: &mut DefaultRuntime,
 ) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
-    let providers = [
-        load_ofl_provider,
-        load_gdtf_provider,
-        load_qlcplus_provider,
-    ];
-    let providers = providers
-        .into_par_iter()
-        .map(|loader| loader())
-        .collect();
+    let providers = [load_ofl_provider, load_gdtf_provider, load_qlcplus_provider];
+    let providers = providers.into_par_iter().map(|loader| loader()).collect();
 
     let (fixture_module, fixture_manager, fixture_library) = FixtureModule::new(providers);
     fixture_module.register(runtime)?;

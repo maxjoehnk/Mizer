@@ -1,7 +1,7 @@
 use std::cmp::Ordering;
 
-use serde::{Deserialize, Serialize};
 use mizer_fixtures::FixtureId;
+use serde::{Deserialize, Serialize};
 
 use crate::contracts::*;
 use crate::cue::*;

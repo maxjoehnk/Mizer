@@ -1,6 +1,6 @@
-use strong_xml::XmlRead;
 use mizer_fixtures::definition::*;
 use mizer_qlcplus_provider::QlcPlusFixtureDefinition;
+use strong_xml::XmlRead;
 
 const GENERIC_RGB_DEFINITION: &str = include_str!("Generic-Generic-RGB.qxf");
 const GENERIC_RGBW_DEFINITION: &str = include_str!("Generic-Generic-RGBW.qxf");
@@ -24,14 +24,23 @@ fn generic_rgb() {
     assert_eq!(definition.modes[4].name, "Dimmer RGB");
     assert_eq!(definition.modes[4].channels.len(), 4);
     for mode in &definition.modes {
-        assert_eq!(mode.controls.color, Some(ColorGroup {
-            red: FixtureControlChannel::Channel("Red".into()),
-            green: FixtureControlChannel::Channel("Green".into()),
-            blue: FixtureControlChannel::Channel("Blue".into()),
-        }));
+        assert_eq!(
+            mode.controls.color,
+            Some(ColorGroup {
+                red: FixtureControlChannel::Channel("Red".into()),
+                green: FixtureControlChannel::Channel("Green".into()),
+                blue: FixtureControlChannel::Channel("Blue".into()),
+            })
+        );
     }
-    assert_eq!(definition.modes[3].controls.intensity, Some(FixtureControlChannel::Channel("Dimmer".into())));
-    assert_eq!(definition.modes[4].controls.intensity, Some(FixtureControlChannel::Channel("Dimmer".into())));
+    assert_eq!(
+        definition.modes[3].controls.intensity,
+        Some(FixtureControlChannel::Channel("Dimmer".into()))
+    );
+    assert_eq!(
+        definition.modes[4].controls.intensity,
+        Some(FixtureControlChannel::Channel("Dimmer".into()))
+    );
 }
 
 #[test]
@@ -54,16 +63,31 @@ fn generic_rgbw() {
     assert_eq!(definition.modes[5].name, "Dimmer WRGB");
     assert_eq!(definition.modes[5].channels.len(), 5);
     for mode in &definition.modes {
-        assert_eq!(mode.controls.color, Some(ColorGroup {
-            red: FixtureControlChannel::Channel("Red".into()),
-            green: FixtureControlChannel::Channel("Green".into()),
-            blue: FixtureControlChannel::Channel("Blue".into()),
-        }));
+        assert_eq!(
+            mode.controls.color,
+            Some(ColorGroup {
+                red: FixtureControlChannel::Channel("Red".into()),
+                green: FixtureControlChannel::Channel("Green".into()),
+                blue: FixtureControlChannel::Channel("Blue".into()),
+            })
+        );
     }
-    assert_eq!(definition.modes[2].controls.intensity, Some(FixtureControlChannel::Channel("Dimmer".into())));
-    assert_eq!(definition.modes[3].controls.intensity, Some(FixtureControlChannel::Channel("Dimmer".into())));
-    assert_eq!(definition.modes[4].controls.intensity, Some(FixtureControlChannel::Channel("Dimmer".into())));
-    assert_eq!(definition.modes[5].controls.intensity, Some(FixtureControlChannel::Channel("Dimmer".into())));
+    assert_eq!(
+        definition.modes[2].controls.intensity,
+        Some(FixtureControlChannel::Channel("Dimmer".into()))
+    );
+    assert_eq!(
+        definition.modes[3].controls.intensity,
+        Some(FixtureControlChannel::Channel("Dimmer".into()))
+    );
+    assert_eq!(
+        definition.modes[4].controls.intensity,
+        Some(FixtureControlChannel::Channel("Dimmer".into()))
+    );
+    assert_eq!(
+        definition.modes[5].controls.intensity,
+        Some(FixtureControlChannel::Channel("Dimmer".into()))
+    );
 }
 
 #[test]

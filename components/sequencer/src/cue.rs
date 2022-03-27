@@ -1,6 +1,7 @@
 use crate::contracts::Clock;
 use crate::state::{CueChannelState, SequenceState};
 use crate::value::*;
+use crate::Sequence;
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
 use mizer_util::LerpExt;
@@ -8,7 +9,6 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
-use crate::Sequence;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -60,11 +60,15 @@ impl Cue {
                     .fixtures
                     .retain(|fixture_id| !control.fixtures.contains(fixture_id));
             }
-            if let Some(target) = self.controls.iter_mut().find(|c| c.control == control.control && c.value == control.value) {
+            if let Some(target) = self
+                .controls
+                .iter_mut()
+                .find(|c| c.control == control.control && c.value == control.value)
+            {
                 for fixture in control.fixtures.iter() {
                     target.fixtures.push(*fixture);
                 }
-            }else {
+            } else {
                 self.controls.push(control);
             }
         }
@@ -102,7 +106,12 @@ impl Cue {
         false
     }
 
-    pub(crate) fn update_state(&self, sequence: &Sequence, state: &mut SequenceState, clock: &impl Clock) {
+    pub(crate) fn update_state(
+        &self,
+        sequence: &Sequence,
+        state: &mut SequenceState,
+        clock: &impl Clock,
+    ) {
         if state.cue_finished_at.is_some() {
             return;
         }
@@ -156,13 +165,15 @@ impl Cue {
                 .map(|fixture_id| (*fixture_id, Duration::from_secs_f64(seconds)))
                 .collect(),
             Some(SequencerValue::Range((
-                                           SequencerTime::Seconds(from),
-                                           SequencerTime::Seconds(to),
-                                       ))) => {
+                SequencerTime::Seconds(from),
+                SequencerTime::Seconds(to),
+            ))) => {
                 let mut map = HashMap::new();
                 for (i, id) in sequence.fixtures.iter().enumerate() {
-                    let delay: f64 = (i as f64)
-                        .linear_extrapolate((0., (sequence.fixtures.len() as f64) - 1.), (from, to));
+                    let delay: f64 = (i as f64).linear_extrapolate(
+                        (0., (sequence.fixtures.len() as f64) - 1.),
+                        (from, to),
+                    );
                     map.insert(*id, Duration::from_secs_f64(delay));
                 }
                 map
@@ -277,9 +288,9 @@ impl CueControl {
                 }
             }
             Some(SequencerValue::Range((
-                                           SequencerTime::Seconds(from),
-                                           SequencerTime::Seconds(to),
-                                       ))) => {
+                SequencerTime::Seconds(from),
+                SequencerTime::Seconds(to),
+            ))) => {
                 for i in 0..self.fixtures.len() {
                     let delay: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
@@ -322,9 +333,9 @@ impl CueControl {
                 }
             }
             Some(SequencerValue::Range((
-                                           SequencerTime::Seconds(from),
-                                           SequencerTime::Seconds(to),
-                                       ))) => {
+                SequencerTime::Seconds(from),
+                SequencerTime::Seconds(to),
+            ))) => {
                 for i in 0..self.fixtures.len() {
                     let duration: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
@@ -364,10 +375,10 @@ impl<T: PartialEq> VecExtension for Vec<T> {
 
 #[cfg(test)]
 mod tests {
-    use mockall::predicate::ne;
+    use crate::{Cue, CueControl, SequencerValue};
     use mizer_fixtures::definition::FixtureFaderControl;
     use mizer_fixtures::FixtureId;
-    use crate::{Cue, CueControl, SequencerValue};
+    use mockall::predicate::ne;
 
     #[test]
     fn merge_should_combine_different_controls() {
@@ -396,11 +407,15 @@ mod tests {
             value: SequencerValue::Direct(1.),
             control: FixtureFaderControl::Intensity,
         };
-        let mut cue = Cue::new(1, "", vec![CueControl {
-            fixtures: vec![FixtureId::Fixture(1)],
-            value: SequencerValue::Direct(1.),
-            control: FixtureFaderControl::Intensity,
-        }]);
+        let mut cue = Cue::new(
+            1,
+            "",
+            vec![CueControl {
+                fixtures: vec![FixtureId::Fixture(1)],
+                value: SequencerValue::Direct(1.),
+                control: FixtureFaderControl::Intensity,
+            }],
+        );
         let controls = vec![CueControl {
             fixtures: vec![FixtureId::Fixture(2)],
             value: SequencerValue::Direct(1.),
@@ -414,20 +429,27 @@ mod tests {
 
     #[test]
     fn merge_should_merge_overlapping_controls() {
-        let expected = vec![CueControl {
-            fixtures: vec![FixtureId::Fixture(1)],
-            value: SequencerValue::Direct(1.),
-            control: FixtureFaderControl::Intensity,
-        }, CueControl {
-            fixtures: vec![FixtureId::Fixture(1)],
-            value: SequencerValue::Direct(1.),
-            control: FixtureFaderControl::Shutter,
-        }];
-        let mut cue = Cue::new(1, "", vec![CueControl {
-            fixtures: vec![FixtureId::Fixture(1)],
-            value: SequencerValue::Direct(1.),
-            control: FixtureFaderControl::Intensity,
-        }]);
+        let expected = vec![
+            CueControl {
+                fixtures: vec![FixtureId::Fixture(1)],
+                value: SequencerValue::Direct(1.),
+                control: FixtureFaderControl::Intensity,
+            },
+            CueControl {
+                fixtures: vec![FixtureId::Fixture(1)],
+                value: SequencerValue::Direct(1.),
+                control: FixtureFaderControl::Shutter,
+            },
+        ];
+        let mut cue = Cue::new(
+            1,
+            "",
+            vec![CueControl {
+                fixtures: vec![FixtureId::Fixture(1)],
+                value: SequencerValue::Direct(1.),
+                control: FixtureFaderControl::Intensity,
+            }],
+        );
 
         cue.merge(expected.clone());
 

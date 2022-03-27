@@ -794,9 +794,21 @@ mod tests {
                     "",
                     vec![
                         CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
-                        CueControl::new(FixtureFaderControl::Color(ColorChannel::Red), 1f64, vec![fixture_id]),
-                        CueControl::new(FixtureFaderControl::Color(ColorChannel::Green), 0f64, vec![fixture_id]),
-                        CueControl::new(FixtureFaderControl::Color(ColorChannel::Blue), 0f64, vec![fixture_id]),
+                        CueControl::new(
+                            FixtureFaderControl::Color(ColorChannel::Red),
+                            1f64,
+                            vec![fixture_id],
+                        ),
+                        CueControl::new(
+                            FixtureFaderControl::Color(ColorChannel::Green),
+                            0f64,
+                            vec![fixture_id],
+                        ),
+                        CueControl::new(
+                            FixtureFaderControl::Color(ColorChannel::Blue),
+                            0f64,
+                            vec![fixture_id],
+                        ),
                     ],
                 ),
                 Cue {
@@ -806,9 +818,21 @@ mod tests {
                         "",
                         vec![
                             CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
-                            CueControl::new(FixtureFaderControl::Color(ColorChannel::Red), 0f64, vec![fixture_id]),
-                            CueControl::new(FixtureFaderControl::Color(ColorChannel::Green), 1f64, vec![fixture_id]),
-                            CueControl::new(FixtureFaderControl::Color(ColorChannel::Blue), 0f64, vec![fixture_id]),
+                            CueControl::new(
+                                FixtureFaderControl::Color(ColorChannel::Red),
+                                0f64,
+                                vec![fixture_id],
+                            ),
+                            CueControl::new(
+                                FixtureFaderControl::Color(ColorChannel::Green),
+                                1f64,
+                                vec![fixture_id],
+                            ),
+                            CueControl::new(
+                                FixtureFaderControl::Color(ColorChannel::Blue),
+                                0f64,
+                                vec![fixture_id],
+                            ),
                         ],
                     )
                 },

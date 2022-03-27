@@ -1,9 +1,9 @@
+use custom_derive::custom_derive;
+use enum_derive::*;
 use std::fmt::{Display, Formatter};
 use std::ops::Deref;
 use std::str::FromStr;
 use strong_xml::XmlRead;
-use custom_derive::custom_derive;
-use enum_derive::*;
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "FixtureDefinition")]
@@ -24,8 +24,7 @@ pub struct QlcPlusFixtureDefinition {
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "Physical")]
-pub struct PhysicalType {
-}
+pub struct PhysicalType {}
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "Channel")]
@@ -88,7 +87,7 @@ pub struct ModeType {
     #[xml(child = "Physical")]
     pub physical: Vec<PhysicalType>,
     #[xml(child = "Head")]
-    pub heads: Vec<HeadType>
+    pub heads: Vec<HeadType>,
 }
 
 #[derive(Debug, Clone, XmlRead)]

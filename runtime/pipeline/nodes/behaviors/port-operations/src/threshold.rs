@@ -1,5 +1,8 @@
+use mizer_node::{
+    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
+    PortType, PreviewType, ProcessingNode,
+};
 use serde::{Deserialize, Serialize};
-use mizer_node::{NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata, PortType, PreviewType, ProcessingNode};
 
 const VALUE_INPUT: &str = "value";
 const VALUE_OUTPUT: &str = "value";
@@ -31,16 +34,22 @@ impl PipelineNode for ThresholdNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (VALUE_INPUT.into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            }),
-            (VALUE_OUTPUT.into(), PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            }),
+            (
+                VALUE_INPUT.into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
+            (
+                VALUE_OUTPUT.into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Output,
+                    ..Default::default()
+                },
+            ),
         ]
     }
 
@@ -56,7 +65,7 @@ impl ProcessingNode for ThresholdNode {
         if let Some(value) = context.read_port_changes::<_, f64>(VALUE_INPUT) {
             let value = if value >= self.threshold {
                 self.active_value
-            }else {
+            } else {
                 self.inactive_value
             };
             context.write_port(VALUE_OUTPUT, value);

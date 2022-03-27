@@ -23,7 +23,9 @@ impl From<mizer_sequencer::Cue> for Cue {
             name: cue.name,
             trigger: SingularPtrField::some(CueTrigger {
                 field_type: cue.trigger.into(),
-                _time: cue.trigger_time.map(|time| CueTrigger_oneof__time::time(CueTime::from(time))),
+                _time: cue
+                    .trigger_time
+                    .map(|time| CueTrigger_oneof__time::time(CueTime::from(time))),
                 ..Default::default()
             }),
             // field_loop: matches!(cue.loop_mode, mizer_sequencer::LoopMode::JumpTo(_)),
@@ -176,7 +178,10 @@ impl From<CueTimer> for Option<SequencerValue<mizer_sequencer::SequencerTime>> {
         match timer.timer {
             None => None,
             Some(CueTimer_oneof_timer::direct(time)) => Some(SequencerValue::Direct(time.into())),
-            Some(CueTimer_oneof_timer::range(range)) => Some(SequencerValue::Range((range.from.unwrap().into(), range.to.unwrap().into()))),
+            Some(CueTimer_oneof_timer::range(range)) => Some(SequencerValue::Range((
+                range.from.unwrap().into(),
+                range.to.unwrap().into(),
+            ))),
         }
     }
 }

@@ -7,6 +7,8 @@ COMPILER = protoc -I=$(SRC_DIR) --dart_out=grpc:$(OUT_DIR)
 SRCS := $(shell find $(SRC_DIR) -name *.proto)
 PROTOS := $(SRCS:$(SRC_DIR)/%.proto=$(OUT_DIR)/%.pb.dart)
 
+.PHONY: widgetbook
+
 build: proto ffi
 
 deps:
@@ -30,3 +32,6 @@ build_ffi:
 
 attach:
 	flutter attach -d linux --debug-url $(FLUTTER_DEBUG_URL) -t lib/integrated.dart
+
+widgetbook:
+	flutter run -t widgetbook/main.dart

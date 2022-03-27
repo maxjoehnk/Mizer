@@ -7,7 +7,7 @@ class MizerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = _getTheme();
+    ThemeData theme = getTheme();
     return MaterialApp(
       title: 'Mizer',
       darkTheme: theme,
@@ -16,7 +16,7 @@ class MizerApp extends StatelessWidget {
     );
   }
 
-  ThemeData _getTheme() {
+  static ThemeData getTheme() {
     final theme = ThemeData.dark();
     return theme
         .copyWith(

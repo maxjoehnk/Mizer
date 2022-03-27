@@ -1,17 +1,34 @@
 ---
 nodes:
-  - path: /midi-input-1
-    type: midi-input
+  - path: /fixture-0
+    type: fixture
     config:
-      device: "Launch Control:Launch Control MIDI 1 28:0"
-      type: control
-      page: User 1
-      control: button-0-7
+      fixture: 1
     designer:
       position:
-        x: -2.0078636413076447
-        y: 12.708417480674877
-      scale: 1.0
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: false
+  - path: /fixture-1
+    type: fixture
+    config:
+      fixture: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: false
+  - path: /sequencer-2
+    type: sequencer
+    config:
+      sequence: 3
+    designer:
+      position:
+        x: 6.831420315865062
+        y: 6.740239201595003
+      scale: 0.0
       hidden: false
   - path: /midi-input-0
     type: midi-input
@@ -26,26 +43,6 @@ nodes:
         y: 10.449766605230861
       scale: 1.0
       hidden: false
-  - path: /sequencer-0
-    type: sequencer
-    config:
-      sequence: 1
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: false
-  - path: /fixture-0
-    type: fixture
-    config:
-      fixture: 1
-    designer:
-      position:
-        x: 0.0
-        y: 0.0
-      scale: 0.0
-      hidden: false
   - path: /sequencer-1
     type: sequencer
     config:
@@ -56,10 +53,32 @@ nodes:
         y: 12.269195031535856
       scale: 0.0
       hidden: false
-  - path: /fixture-1
-    type: fixture
+  - path: /programmer
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -5.0
+        y: 0.0
+      scale: 1.0
+      hidden: false
+  - path: /midi-input-1
+    type: midi-input
     config:
-      fixture: 2
+      device: "Launch Control:Launch Control MIDI 1 28:0"
+      type: control
+      page: User 1
+      control: button-0-7
+    designer:
+      position:
+        x: -2.0078636413076447
+        y: 12.708417480674877
+      scale: 1.0
+      hidden: false
+  - path: /sequencer-0
+    type: sequencer
+    config:
+      sequence: 1
     designer:
       position:
         x: 0.0
@@ -79,44 +98,10 @@ nodes:
         y: 11.900941384665348
       scale: 1.0
       hidden: false
-  - path: /sequencer-2
-    type: sequencer
-    config:
-      sequence: 3
-    designer:
-      position:
-        x: 6.831420315865062
-        y: 6.740239201595003
-      scale: 0.0
-      hidden: false
-  - path: /programmer
-    type: programmer
-    config: ~
-    designer:
-      position:
-        x: -5.0
-        y: 0.0
-      scale: 1.0
-      hidden: false
 channels:
   - value@/midi-input-0 -> Go+@/sequencer-1
   - value@/midi-input-1 -> Stop@/sequencer-1
   - Active@/sequencer-1 -> value@/midi-output-0
-fixtures:
-  - id: 2
-    name: LED Bar 1
-    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
-    channel: 11
-    universe: 1
-    mode: 10-channel
-    output: ~
-  - id: 1
-    name: LED Bar 2
-    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
-    channel: 1
-    universe: 1
-    mode: 10-channel
-    output: ~
 media: []
 layouts:
   Default:
@@ -156,119 +141,315 @@ connections:
     type: artnet
     host: 0.0.0.0
     port: 6454
+fixtures:
+  - id: 2
+    name: LED Bar 1
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 11
+    universe: 1
+    mode: 10-channel
+    output: ~
+  - id: 1
+    name: LED Bar 2
+    fixture: "ofl:eurolite:led-bar-3-hcl-bar"
+    channel: 1
+    universe: 1
+    mode: 10-channel
+    output: ~
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
 sequences:
   - id: 3
     name: Sequence 3
+    fixtures:
+      - 2
     cues:
       - id: 1
         name: Cue 1
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
-              - 2
-            control: Intensity
+        trigger_time: ~
+        controls:
+          - control: Intensity
             value: 1.0
-            fade: ~
-            delay: ~
-        loop_mode: ~
+            fixtures:
+              - 2
+        effects: []
+        cue_fade: ~
+        cue_delay: ~
     wrap_around: false
-  - id: 2
-    name: Sequence 2
+  - id: 4
+    name: Colors
+    fixtures:
+      - 1
+      - 2
     cues:
       - id: 1
         name: Cue 1
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
+        trigger_time: ~
+        controls:
+          - control:
+              Color: Red
+            value: 1.0
+            fixtures:
               - 2
               - 1
-            control: Intensity
-            value: 1.0
-            fade: ~
-            delay: ~
-        loop_mode: ~
+          - control:
+              Color: Green
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Blue
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 0.5
+        cue_delay: ~
       - id: 2
         name: Cue 2
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
+        trigger_time: ~
+        controls:
+          - control:
+              Color: Green
+            value: 1.0
+            fixtures:
               - 2
               - 1
-            control: Intensity
+          - control:
+              Color: Red
             value: 0.0
-            fade: ~
-            delay: ~
-        loop_mode: ~
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Blue
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 0.5
+        cue_delay: ~
       - id: 3
         name: Cue 3
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
+        trigger_time: ~
+        controls:
+          - control:
+              Color: Blue
+            value: 1.0
+            fixtures:
               - 2
               - 1
-            control: Intensity
-            value: 0.5
-            fade: ~
-            delay: ~
-        loop_mode: ~
+          - control:
+              Color: Red
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Green
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 0.5
+        cue_delay: ~
+      - id: 4
+        name: Cue 4
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control:
+              Color: Red
+            value: 1.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Green
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Blue
+            value: 1.0
+            fixtures:
+              - 2
+              - 1
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 0.5
+        cue_delay: ~
+      - id: 5
+        name: Cue 5
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control:
+              Color: Green
+            value: 1.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Blue
+            value: 1.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Red
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 0.5
+        cue_delay: ~
+      - id: 6
+        name: Cue 6
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control:
+              Color: Red
+            value: 1.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Green
+            value: 1.0
+            fixtures:
+              - 2
+              - 1
+          - control:
+              Color: Blue
+            value: 0.0
+            fixtures:
+              - 2
+              - 1
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 0.5
+        cue_delay: ~
     wrap_around: true
   - id: 1
     name: Sequence 1
+    fixtures:
+      - 1
+      - 2
     cues:
       - id: 1
         name: Cue 1
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 1.0
+            fixtures:
               - 1
               - 2
-            control: Intensity
+        effects: []
+        cue_fade:
+          - unit: seconds
+            value: 0.0
+          - unit: seconds
             value: 1.0
-            fade:
-              - unit: seconds
-                value: 0.0
-              - unit: seconds
-                value: 1.0
-            delay: ~
-          - fixtures:
-              - 1
-              - 2
-            control:
-              Generic: White
-            value: 1.0
-            fade: ~
-            delay: ~
-        loop_mode: ~
+        cue_delay: ~
       - id: 2
         name: Cue 2
         trigger: Follow
-        time: ~
-        channels:
-          - fixtures:
-              - 1
-            control:
-              Color: Red
-            value: 1.0
-            fade:
-              unit: seconds
-              value: 1.0
-            delay: ~
-          - fixtures:
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 0.0
+            fixtures:
               - 1
               - 2
-            control:
-              Generic: White
+        effects: []
+        cue_fade:
+          unit: seconds
+          value: 1.0
+        cue_delay:
+          unit: seconds
+          value: 1.0
+    wrap_around: true
+  - id: 2
+    name: Sequence 2
+    fixtures:
+      - 1
+      - 2
+    cues:
+      - id: 1
+        name: Cue 1
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 1.0
+            fixtures:
+              - 1
+              - 2
+        effects: []
+        cue_fade: ~
+        cue_delay: ~
+      - id: 2
+        name: Cue 2
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
             value: 0.0
-            fade: ~
-            delay:
-              - unit: seconds
-                value: 0.0
-              - unit: seconds
-                value: 1.0
-        loop_mode: ~
-    wrap_around: false
+            fixtures:
+              - 1
+              - 2
+        effects: []
+        cue_fade: ~
+        cue_delay: ~
+      - id: 3
+        name: Cue 3
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control: Intensity
+            value: 0.5
+            fixtures:
+              - 1
+              - 2
+        effects: []
+        cue_fade: ~
+        cue_delay: ~
+    wrap_around: true
+effects: []
+plans:
+  - name: Test
+    fixtures:
+      - fixture: 2
+        x: 1
+        y: 0
+      - fixture: 1
+        x: 0
+        y: 0

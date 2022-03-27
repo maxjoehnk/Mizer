@@ -17,7 +17,7 @@ mod processor;
 // TODO: should probably find a better name
 pub mod programmer;
 
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, Hash)]
+#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[serde(untagged)]
 pub enum FixtureId {
     Fixture(u32),

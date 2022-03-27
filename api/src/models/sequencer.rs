@@ -728,11 +728,166 @@ impl ::protobuf::reflect::ProtobufValue for SequenceGoRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct SequenceStopRequest {
+    // message fields
+    pub sequence: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a SequenceStopRequest {
+    fn default() -> &'a SequenceStopRequest {
+        <SequenceStopRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SequenceStopRequest {
+    pub fn new() -> SequenceStopRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 sequence = 1;
+
+
+    pub fn get_sequence(&self) -> u32 {
+        self.sequence
+    }
+    pub fn clear_sequence(&mut self) {
+        self.sequence = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequence(&mut self, v: u32) {
+        self.sequence = v;
+    }
+}
+
+impl ::protobuf::Message for SequenceStopRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.sequence = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.sequence != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.sequence, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.sequence != 0 {
+            os.write_uint32(1, self.sequence)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> SequenceStopRequest {
+        SequenceStopRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "sequence",
+                |m: &SequenceStopRequest| { &m.sequence },
+                |m: &mut SequenceStopRequest| { &mut m.sequence },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SequenceStopRequest>(
+                "SequenceStopRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static SequenceStopRequest {
+        static instance: ::protobuf::rt::LazyV2<SequenceStopRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SequenceStopRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for SequenceStopRequest {
+    fn clear(&mut self) {
+        self.sequence = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for SequenceStopRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SequenceStopRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct CueTriggerRequest {
     // message fields
     pub sequence: u32,
     pub cue: u32,
-    pub trigger: CueTrigger,
+    pub trigger: CueTrigger_Type,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -781,18 +936,18 @@ impl CueTriggerRequest {
         self.cue = v;
     }
 
-    // .mizer.sequencer.CueTrigger trigger = 3;
+    // .mizer.sequencer.CueTrigger.Type trigger = 3;
 
 
-    pub fn get_trigger(&self) -> CueTrigger {
+    pub fn get_trigger(&self) -> CueTrigger_Type {
         self.trigger
     }
     pub fn clear_trigger(&mut self) {
-        self.trigger = CueTrigger::GO;
+        self.trigger = CueTrigger_Type::GO;
     }
 
     // Param is passed by value, moved
-    pub fn set_trigger(&mut self, v: CueTrigger) {
+    pub fn set_trigger(&mut self, v: CueTrigger_Type) {
         self.trigger = v;
     }
 }
@@ -841,7 +996,7 @@ impl ::protobuf::Message for CueTriggerRequest {
         if self.cue != 0 {
             my_size += ::protobuf::rt::value_size(2, self.cue, ::protobuf::wire_format::WireTypeVarint);
         }
-        if self.trigger != CueTrigger::GO {
+        if self.trigger != CueTrigger_Type::GO {
             my_size += ::protobuf::rt::enum_size(3, self.trigger);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -856,7 +1011,7 @@ impl ::protobuf::Message for CueTriggerRequest {
         if self.cue != 0 {
             os.write_uint32(2, self.cue)?;
         }
-        if self.trigger != CueTrigger::GO {
+        if self.trigger != CueTrigger_Type::GO {
             os.write_enum(3, ::protobuf::ProtobufEnum::value(&self.trigger))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
@@ -907,7 +1062,7 @@ impl ::protobuf::Message for CueTriggerRequest {
                 |m: &CueTriggerRequest| { &m.cue },
                 |m: &mut CueTriggerRequest| { &mut m.cue },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueTrigger>>(
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueTrigger_Type>>(
                 "trigger",
                 |m: &CueTriggerRequest| { &m.trigger },
                 |m: &mut CueTriggerRequest| { &mut m.trigger },
@@ -930,7 +1085,7 @@ impl ::protobuf::Clear for CueTriggerRequest {
     fn clear(&mut self) {
         self.sequence = 0;
         self.cue = 0;
-        self.trigger = CueTrigger::GO;
+        self.trigger = CueTrigger_Type::GO;
         self.unknown_fields.clear();
     }
 }
@@ -1174,6 +1329,535 @@ impl ::std::fmt::Debug for CueNameRequest {
 }
 
 impl ::protobuf::reflect::ProtobufValue for CueNameRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct CueValueRequest {
+    // message fields
+    pub sequence_id: u32,
+    pub cue_id: u32,
+    pub control_index: u32,
+    pub value: ::protobuf::SingularPtrField<CueValue>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CueValueRequest {
+    fn default() -> &'a CueValueRequest {
+        <CueValueRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CueValueRequest {
+    pub fn new() -> CueValueRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 sequence_id = 1;
+
+
+    pub fn get_sequence_id(&self) -> u32 {
+        self.sequence_id
+    }
+    pub fn clear_sequence_id(&mut self) {
+        self.sequence_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequence_id(&mut self, v: u32) {
+        self.sequence_id = v;
+    }
+
+    // uint32 cue_id = 2;
+
+
+    pub fn get_cue_id(&self) -> u32 {
+        self.cue_id
+    }
+    pub fn clear_cue_id(&mut self) {
+        self.cue_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cue_id(&mut self, v: u32) {
+        self.cue_id = v;
+    }
+
+    // uint32 control_index = 3;
+
+
+    pub fn get_control_index(&self) -> u32 {
+        self.control_index
+    }
+    pub fn clear_control_index(&mut self) {
+        self.control_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_control_index(&mut self, v: u32) {
+        self.control_index = v;
+    }
+
+    // .mizer.sequencer.CueValue value = 4;
+
+
+    pub fn get_value(&self) -> &CueValue {
+        self.value.as_ref().unwrap_or_else(|| <CueValue as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_value(&mut self) {
+        self.value.clear();
+    }
+
+    pub fn has_value(&self) -> bool {
+        self.value.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: CueValue) {
+        self.value = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_value(&mut self) -> &mut CueValue {
+        if self.value.is_none() {
+            self.value.set_default();
+        }
+        self.value.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_value(&mut self) -> CueValue {
+        self.value.take().unwrap_or_else(|| CueValue::new())
+    }
+}
+
+impl ::protobuf::Message for CueValueRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.sequence_id = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.cue_id = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.control_index = tmp;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.value)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.sequence_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.sequence_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.cue_id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.cue_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.control_index != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.control_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let Some(ref v) = self.value.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.sequence_id != 0 {
+            os.write_uint32(1, self.sequence_id)?;
+        }
+        if self.cue_id != 0 {
+            os.write_uint32(2, self.cue_id)?;
+        }
+        if self.control_index != 0 {
+            os.write_uint32(3, self.control_index)?;
+        }
+        if let Some(ref v) = self.value.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CueValueRequest {
+        CueValueRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "sequence_id",
+                |m: &CueValueRequest| { &m.sequence_id },
+                |m: &mut CueValueRequest| { &mut m.sequence_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "cue_id",
+                |m: &CueValueRequest| { &m.cue_id },
+                |m: &mut CueValueRequest| { &mut m.cue_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "control_index",
+                |m: &CueValueRequest| { &m.control_index },
+                |m: &mut CueValueRequest| { &mut m.control_index },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueValue>>(
+                "value",
+                |m: &CueValueRequest| { &m.value },
+                |m: &mut CueValueRequest| { &mut m.value },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CueValueRequest>(
+                "CueValueRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CueValueRequest {
+        static instance: ::protobuf::rt::LazyV2<CueValueRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CueValueRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for CueValueRequest {
+    fn clear(&mut self) {
+        self.sequence_id = 0;
+        self.cue_id = 0;
+        self.control_index = 0;
+        self.value.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CueValueRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueValueRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct CueTimingRequest {
+    // message fields
+    pub sequence_id: u32,
+    pub cue_id: u32,
+    pub time: ::protobuf::SingularPtrField<CueTimer>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CueTimingRequest {
+    fn default() -> &'a CueTimingRequest {
+        <CueTimingRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CueTimingRequest {
+    pub fn new() -> CueTimingRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 sequence_id = 1;
+
+
+    pub fn get_sequence_id(&self) -> u32 {
+        self.sequence_id
+    }
+    pub fn clear_sequence_id(&mut self) {
+        self.sequence_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sequence_id(&mut self, v: u32) {
+        self.sequence_id = v;
+    }
+
+    // uint32 cue_id = 2;
+
+
+    pub fn get_cue_id(&self) -> u32 {
+        self.cue_id
+    }
+    pub fn clear_cue_id(&mut self) {
+        self.cue_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cue_id(&mut self, v: u32) {
+        self.cue_id = v;
+    }
+
+    // .mizer.sequencer.CueTimer time = 3;
+
+
+    pub fn get_time(&self) -> &CueTimer {
+        self.time.as_ref().unwrap_or_else(|| <CueTimer as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_time(&mut self) {
+        self.time.clear();
+    }
+
+    pub fn has_time(&self) -> bool {
+        self.time.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_time(&mut self, v: CueTimer) {
+        self.time = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_time(&mut self) -> &mut CueTimer {
+        if self.time.is_none() {
+            self.time.set_default();
+        }
+        self.time.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_time(&mut self) -> CueTimer {
+        self.time.take().unwrap_or_else(|| CueTimer::new())
+    }
+}
+
+impl ::protobuf::Message for CueTimingRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.time {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.sequence_id = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.cue_id = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.time)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.sequence_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.sequence_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.cue_id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.cue_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let Some(ref v) = self.time.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.sequence_id != 0 {
+            os.write_uint32(1, self.sequence_id)?;
+        }
+        if self.cue_id != 0 {
+            os.write_uint32(2, self.cue_id)?;
+        }
+        if let Some(ref v) = self.time.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CueTimingRequest {
+        CueTimingRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "sequence_id",
+                |m: &CueTimingRequest| { &m.sequence_id },
+                |m: &mut CueTimingRequest| { &mut m.sequence_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "cue_id",
+                |m: &CueTimingRequest| { &m.cue_id },
+                |m: &mut CueTimingRequest| { &mut m.cue_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimer>>(
+                "time",
+                |m: &CueTimingRequest| { &m.time },
+                |m: &mut CueTimingRequest| { &mut m.time },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CueTimingRequest>(
+                "CueTimingRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CueTimingRequest {
+        static instance: ::protobuf::rt::LazyV2<CueTimingRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CueTimingRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for CueTimingRequest {
+    fn clear(&mut self) {
+        self.sequence_id = 0;
+        self.cue_id = 0;
+        self.time.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CueTimingRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueTimingRequest {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -1861,6 +2545,7 @@ pub struct Sequence {
     pub id: u32,
     pub name: ::std::string::String,
     pub cues: ::protobuf::RepeatedField<Cue>,
+    pub fixtures: ::protobuf::RepeatedField<super::fixtures::FixtureId>,
     pub wrapAround: bool,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -1946,7 +2631,32 @@ impl Sequence {
         ::std::mem::replace(&mut self.cues, ::protobuf::RepeatedField::new())
     }
 
-    // bool wrapAround = 4;
+    // repeated .mizer.fixtures.FixtureId fixtures = 4;
+
+
+    pub fn get_fixtures(&self) -> &[super::fixtures::FixtureId] {
+        &self.fixtures
+    }
+    pub fn clear_fixtures(&mut self) {
+        self.fixtures.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixtures(&mut self, v: ::protobuf::RepeatedField<super::fixtures::FixtureId>) {
+        self.fixtures = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_fixtures(&mut self) -> &mut ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        &mut self.fixtures
+    }
+
+    // Take field
+    pub fn take_fixtures(&mut self) -> ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        ::std::mem::replace(&mut self.fixtures, ::protobuf::RepeatedField::new())
+    }
+
+    // bool wrapAround = 5;
 
 
     pub fn get_wrapAround(&self) -> bool {
@@ -1965,6 +2675,11 @@ impl Sequence {
 impl ::protobuf::Message for Sequence {
     fn is_initialized(&self) -> bool {
         for v in &self.cues {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.fixtures {
             if !v.is_initialized() {
                 return false;
             }
@@ -1990,6 +2705,9 @@ impl ::protobuf::Message for Sequence {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.cues)?;
                 },
                 4 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fixtures)?;
+                },
+                5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
@@ -2018,6 +2736,10 @@ impl ::protobuf::Message for Sequence {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        for value in &self.fixtures {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         if self.wrapAround != false {
             my_size += 2;
         }
@@ -2038,8 +2760,13 @@ impl ::protobuf::Message for Sequence {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        for v in &self.fixtures {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         if self.wrapAround != false {
-            os.write_bool(4, self.wrapAround)?;
+            os.write_bool(5, self.wrapAround)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2094,6 +2821,11 @@ impl ::protobuf::Message for Sequence {
                 |m: &Sequence| { &m.cues },
                 |m: &mut Sequence| { &mut m.cues },
             ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::fixtures::FixtureId>>(
+                "fixtures",
+                |m: &Sequence| { &m.fixtures },
+                |m: &mut Sequence| { &mut m.fixtures },
+            ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
                 "wrapAround",
                 |m: &Sequence| { &m.wrapAround },
@@ -2118,6 +2850,7 @@ impl ::protobuf::Clear for Sequence {
         self.id = 0;
         self.name.clear();
         self.cues.clear();
+        self.fixtures.clear();
         self.wrapAround = false;
         self.unknown_fields.clear();
     }
@@ -2141,9 +2874,12 @@ pub struct Cue {
     // message fields
     pub id: u32,
     pub name: ::std::string::String,
-    pub trigger: CueTrigger,
-    pub field_loop: bool,
-    pub channels: ::protobuf::RepeatedField<CueChannel>,
+    pub trigger: ::protobuf::SingularPtrField<CueTrigger>,
+    pub controls: ::protobuf::RepeatedField<CueControl>,
+    pub cue_timings: ::protobuf::SingularPtrField<CueTimings>,
+    pub dimmer_timings: ::protobuf::SingularPtrField<CueTimings>,
+    pub position_timings: ::protobuf::SingularPtrField<CueTimings>,
+    pub color_timings: ::protobuf::SingularPtrField<CueTimings>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -2206,62 +2942,222 @@ impl Cue {
     // .mizer.sequencer.CueTrigger trigger = 3;
 
 
-    pub fn get_trigger(&self) -> CueTrigger {
-        self.trigger
+    pub fn get_trigger(&self) -> &CueTrigger {
+        self.trigger.as_ref().unwrap_or_else(|| <CueTrigger as ::protobuf::Message>::default_instance())
     }
     pub fn clear_trigger(&mut self) {
-        self.trigger = CueTrigger::GO;
+        self.trigger.clear();
+    }
+
+    pub fn has_trigger(&self) -> bool {
+        self.trigger.is_some()
     }
 
     // Param is passed by value, moved
     pub fn set_trigger(&mut self, v: CueTrigger) {
-        self.trigger = v;
-    }
-
-    // bool loop = 4;
-
-
-    pub fn get_field_loop(&self) -> bool {
-        self.field_loop
-    }
-    pub fn clear_field_loop(&mut self) {
-        self.field_loop = false;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_field_loop(&mut self, v: bool) {
-        self.field_loop = v;
-    }
-
-    // repeated .mizer.sequencer.CueChannel channels = 5;
-
-
-    pub fn get_channels(&self) -> &[CueChannel] {
-        &self.channels
-    }
-    pub fn clear_channels(&mut self) {
-        self.channels.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_channels(&mut self, v: ::protobuf::RepeatedField<CueChannel>) {
-        self.channels = v;
+        self.trigger = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
-    pub fn mut_channels(&mut self) -> &mut ::protobuf::RepeatedField<CueChannel> {
-        &mut self.channels
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_trigger(&mut self) -> &mut CueTrigger {
+        if self.trigger.is_none() {
+            self.trigger.set_default();
+        }
+        self.trigger.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_channels(&mut self) -> ::protobuf::RepeatedField<CueChannel> {
-        ::std::mem::replace(&mut self.channels, ::protobuf::RepeatedField::new())
+    pub fn take_trigger(&mut self) -> CueTrigger {
+        self.trigger.take().unwrap_or_else(|| CueTrigger::new())
+    }
+
+    // repeated .mizer.sequencer.CueControl controls = 4;
+
+
+    pub fn get_controls(&self) -> &[CueControl] {
+        &self.controls
+    }
+    pub fn clear_controls(&mut self) {
+        self.controls.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_controls(&mut self, v: ::protobuf::RepeatedField<CueControl>) {
+        self.controls = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_controls(&mut self) -> &mut ::protobuf::RepeatedField<CueControl> {
+        &mut self.controls
+    }
+
+    // Take field
+    pub fn take_controls(&mut self) -> ::protobuf::RepeatedField<CueControl> {
+        ::std::mem::replace(&mut self.controls, ::protobuf::RepeatedField::new())
+    }
+
+    // .mizer.sequencer.CueTimings cue_timings = 5;
+
+
+    pub fn get_cue_timings(&self) -> &CueTimings {
+        self.cue_timings.as_ref().unwrap_or_else(|| <CueTimings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_cue_timings(&mut self) {
+        self.cue_timings.clear();
+    }
+
+    pub fn has_cue_timings(&self) -> bool {
+        self.cue_timings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cue_timings(&mut self, v: CueTimings) {
+        self.cue_timings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_cue_timings(&mut self) -> &mut CueTimings {
+        if self.cue_timings.is_none() {
+            self.cue_timings.set_default();
+        }
+        self.cue_timings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_cue_timings(&mut self) -> CueTimings {
+        self.cue_timings.take().unwrap_or_else(|| CueTimings::new())
+    }
+
+    // .mizer.sequencer.CueTimings dimmer_timings = 6;
+
+
+    pub fn get_dimmer_timings(&self) -> &CueTimings {
+        self.dimmer_timings.as_ref().unwrap_or_else(|| <CueTimings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_dimmer_timings(&mut self) {
+        self.dimmer_timings.clear();
+    }
+
+    pub fn has_dimmer_timings(&self) -> bool {
+        self.dimmer_timings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_dimmer_timings(&mut self, v: CueTimings) {
+        self.dimmer_timings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_dimmer_timings(&mut self) -> &mut CueTimings {
+        if self.dimmer_timings.is_none() {
+            self.dimmer_timings.set_default();
+        }
+        self.dimmer_timings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_dimmer_timings(&mut self) -> CueTimings {
+        self.dimmer_timings.take().unwrap_or_else(|| CueTimings::new())
+    }
+
+    // .mizer.sequencer.CueTimings position_timings = 7;
+
+
+    pub fn get_position_timings(&self) -> &CueTimings {
+        self.position_timings.as_ref().unwrap_or_else(|| <CueTimings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_position_timings(&mut self) {
+        self.position_timings.clear();
+    }
+
+    pub fn has_position_timings(&self) -> bool {
+        self.position_timings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_position_timings(&mut self, v: CueTimings) {
+        self.position_timings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_position_timings(&mut self) -> &mut CueTimings {
+        if self.position_timings.is_none() {
+            self.position_timings.set_default();
+        }
+        self.position_timings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_position_timings(&mut self) -> CueTimings {
+        self.position_timings.take().unwrap_or_else(|| CueTimings::new())
+    }
+
+    // .mizer.sequencer.CueTimings color_timings = 8;
+
+
+    pub fn get_color_timings(&self) -> &CueTimings {
+        self.color_timings.as_ref().unwrap_or_else(|| <CueTimings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_color_timings(&mut self) {
+        self.color_timings.clear();
+    }
+
+    pub fn has_color_timings(&self) -> bool {
+        self.color_timings.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color_timings(&mut self, v: CueTimings) {
+        self.color_timings = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_color_timings(&mut self) -> &mut CueTimings {
+        if self.color_timings.is_none() {
+            self.color_timings.set_default();
+        }
+        self.color_timings.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_color_timings(&mut self) -> CueTimings {
+        self.color_timings.take().unwrap_or_else(|| CueTimings::new())
     }
 }
 
 impl ::protobuf::Message for Cue {
     fn is_initialized(&self) -> bool {
-        for v in &self.channels {
+        for v in &self.trigger {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.controls {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.cue_timings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.dimmer_timings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.position_timings {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.color_timings {
             if !v.is_initialized() {
                 return false;
             }
@@ -2284,17 +3180,22 @@ impl ::protobuf::Message for Cue {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.trigger, 3, &mut self.unknown_fields)?
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.trigger)?;
                 },
                 4 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    let tmp = is.read_bool()?;
-                    self.field_loop = tmp;
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.controls)?;
                 },
                 5 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.channels)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cue_timings)?;
+                },
+                6 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.dimmer_timings)?;
+                },
+                7 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.position_timings)?;
+                },
+                8 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.color_timings)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -2314,16 +3215,30 @@ impl ::protobuf::Message for Cue {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.name);
         }
-        if self.trigger != CueTrigger::GO {
-            my_size += ::protobuf::rt::enum_size(3, self.trigger);
+        if let Some(ref v) = self.trigger.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if self.field_loop != false {
-            my_size += 2;
-        }
-        for value in &self.channels {
+        for value in &self.controls {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if let Some(ref v) = self.cue_timings.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.dimmer_timings.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.position_timings.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.color_timings.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2336,17 +3251,36 @@ impl ::protobuf::Message for Cue {
         if !self.name.is_empty() {
             os.write_string(2, &self.name)?;
         }
-        if self.trigger != CueTrigger::GO {
-            os.write_enum(3, ::protobuf::ProtobufEnum::value(&self.trigger))?;
+        if let Some(ref v) = self.trigger.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         }
-        if self.field_loop != false {
-            os.write_bool(4, self.field_loop)?;
-        }
-        for v in &self.channels {
-            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+        for v in &self.controls {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if let Some(ref v) = self.cue_timings.as_ref() {
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.dimmer_timings.as_ref() {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.position_timings.as_ref() {
+            os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.color_timings.as_ref() {
+            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -2395,20 +3329,35 @@ impl ::protobuf::Message for Cue {
                 |m: &Cue| { &m.name },
                 |m: &mut Cue| { &mut m.name },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueTrigger>>(
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTrigger>>(
                 "trigger",
                 |m: &Cue| { &m.trigger },
                 |m: &mut Cue| { &mut m.trigger },
             ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
-                "loop",
-                |m: &Cue| { &m.field_loop },
-                |m: &mut Cue| { &mut m.field_loop },
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueControl>>(
+                "controls",
+                |m: &Cue| { &m.controls },
+                |m: &mut Cue| { &mut m.controls },
             ));
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueChannel>>(
-                "channels",
-                |m: &Cue| { &m.channels },
-                |m: &mut Cue| { &mut m.channels },
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimings>>(
+                "cue_timings",
+                |m: &Cue| { &m.cue_timings },
+                |m: &mut Cue| { &mut m.cue_timings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimings>>(
+                "dimmer_timings",
+                |m: &Cue| { &m.dimmer_timings },
+                |m: &mut Cue| { &mut m.dimmer_timings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimings>>(
+                "position_timings",
+                |m: &Cue| { &m.position_timings },
+                |m: &mut Cue| { &mut m.position_timings },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimings>>(
+                "color_timings",
+                |m: &Cue| { &m.color_timings },
+                |m: &mut Cue| { &mut m.color_timings },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Cue>(
                 "Cue",
@@ -2428,9 +3377,12 @@ impl ::protobuf::Clear for Cue {
     fn clear(&mut self) {
         self.id = 0;
         self.name.clear();
-        self.trigger = CueTrigger::GO;
-        self.field_loop = false;
-        self.channels.clear();
+        self.trigger.clear();
+        self.controls.clear();
+        self.cue_timings.clear();
+        self.dimmer_timings.clear();
+        self.position_timings.clear();
+        self.color_timings.clear();
         self.unknown_fields.clear();
     }
 }
@@ -2449,11 +3401,8 @@ impl ::protobuf::reflect::ProtobufValue for Cue {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct CueChannel {
+pub struct CueTimings {
     // message fields
-    pub fixtures: ::protobuf::RepeatedField<super::fixtures::FixtureId>,
-    pub control: CueControl,
-    pub value: ::protobuf::SingularPtrField<CueValue>,
     pub fade: ::protobuf::SingularPtrField<CueTimer>,
     pub delay: ::protobuf::SingularPtrField<CueTimer>,
     // special fields
@@ -2463,91 +3412,18 @@ pub struct CueChannel {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a CueChannel {
-    fn default() -> &'a CueChannel {
-        <CueChannel as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a CueTimings {
+    fn default() -> &'a CueTimings {
+        <CueTimings as ::protobuf::Message>::default_instance()
     }
 }
 
-impl CueChannel {
-    pub fn new() -> CueChannel {
+impl CueTimings {
+    pub fn new() -> CueTimings {
         ::std::default::Default::default()
     }
 
-    // repeated .mizer.fixtures.FixtureId fixtures = 1;
-
-
-    pub fn get_fixtures(&self) -> &[super::fixtures::FixtureId] {
-        &self.fixtures
-    }
-    pub fn clear_fixtures(&mut self) {
-        self.fixtures.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_fixtures(&mut self, v: ::protobuf::RepeatedField<super::fixtures::FixtureId>) {
-        self.fixtures = v;
-    }
-
-    // Mutable pointer to the field.
-    pub fn mut_fixtures(&mut self) -> &mut ::protobuf::RepeatedField<super::fixtures::FixtureId> {
-        &mut self.fixtures
-    }
-
-    // Take field
-    pub fn take_fixtures(&mut self) -> ::protobuf::RepeatedField<super::fixtures::FixtureId> {
-        ::std::mem::replace(&mut self.fixtures, ::protobuf::RepeatedField::new())
-    }
-
-    // .mizer.sequencer.CueControl control = 2;
-
-
-    pub fn get_control(&self) -> CueControl {
-        self.control
-    }
-    pub fn clear_control(&mut self) {
-        self.control = CueControl::INTENSITY;
-    }
-
-    // Param is passed by value, moved
-    pub fn set_control(&mut self, v: CueControl) {
-        self.control = v;
-    }
-
-    // .mizer.sequencer.CueValue value = 3;
-
-
-    pub fn get_value(&self) -> &CueValue {
-        self.value.as_ref().unwrap_or_else(|| <CueValue as ::protobuf::Message>::default_instance())
-    }
-    pub fn clear_value(&mut self) {
-        self.value.clear();
-    }
-
-    pub fn has_value(&self) -> bool {
-        self.value.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_value(&mut self, v: CueValue) {
-        self.value = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_value(&mut self) -> &mut CueValue {
-        if self.value.is_none() {
-            self.value.set_default();
-        }
-        self.value.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_value(&mut self) -> CueValue {
-        self.value.take().unwrap_or_else(|| CueValue::new())
-    }
-
-    // .mizer.sequencer.CueTimer fade = 4;
+    // .mizer.sequencer.CueTimer fade = 8;
 
 
     pub fn get_fade(&self) -> &CueTimer {
@@ -2580,7 +3456,7 @@ impl CueChannel {
         self.fade.take().unwrap_or_else(|| CueTimer::new())
     }
 
-    // .mizer.sequencer.CueTimer delay = 5;
+    // .mizer.sequencer.CueTimer delay = 9;
 
 
     pub fn get_delay(&self) -> &CueTimer {
@@ -2614,18 +3490,8 @@ impl CueChannel {
     }
 }
 
-impl ::protobuf::Message for CueChannel {
+impl ::protobuf::Message for CueTimings {
     fn is_initialized(&self) -> bool {
-        for v in &self.fixtures {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
-        for v in &self.value {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
         for v in &self.fade {
             if !v.is_initialized() {
                 return false;
@@ -2643,19 +3509,10 @@ impl ::protobuf::Message for CueChannel {
         while !is.eof()? {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
-                1 => {
-                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fixtures)?;
-                },
-                2 => {
-                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 2, &mut self.unknown_fields)?
-                },
-                3 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.value)?;
-                },
-                4 => {
+                8 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.fade)?;
                 },
-                5 => {
+                9 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.delay)?;
                 },
                 _ => {
@@ -2670,17 +3527,6 @@ impl ::protobuf::Message for CueChannel {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        for value in &self.fixtures {
-            let len = value.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        };
-        if self.control != CueControl::INTENSITY {
-            my_size += ::protobuf::rt::enum_size(2, self.control);
-        }
-        if let Some(ref v) = self.value.as_ref() {
-            let len = v.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        }
         if let Some(ref v) = self.fade.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
@@ -2695,26 +3541,13 @@ impl ::protobuf::Message for CueChannel {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        for v in &self.fixtures {
-            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        };
-        if self.control != CueControl::INTENSITY {
-            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.control))?;
-        }
-        if let Some(ref v) = self.value.as_ref() {
-            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        }
         if let Some(ref v) = self.fade.as_ref() {
-            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(8, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
         if let Some(ref v) = self.delay.as_ref() {
-            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_tag(9, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -2748,73 +3581,698 @@ impl ::protobuf::Message for CueChannel {
         Self::descriptor_static()
     }
 
-    fn new() -> CueChannel {
-        CueChannel::new()
+    fn new() -> CueTimings {
+        CueTimings::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
-            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::fixtures::FixtureId>>(
-                "fixtures",
-                |m: &CueChannel| { &m.fixtures },
-                |m: &mut CueChannel| { &mut m.fixtures },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueControl>>(
-                "control",
-                |m: &CueChannel| { &m.control },
-                |m: &mut CueChannel| { &mut m.control },
-            ));
-            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueValue>>(
-                "value",
-                |m: &CueChannel| { &m.value },
-                |m: &mut CueChannel| { &mut m.value },
-            ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimer>>(
                 "fade",
-                |m: &CueChannel| { &m.fade },
-                |m: &mut CueChannel| { &mut m.fade },
+                |m: &CueTimings| { &m.fade },
+                |m: &mut CueTimings| { &mut m.fade },
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueTimer>>(
                 "delay",
-                |m: &CueChannel| { &m.delay },
-                |m: &mut CueChannel| { &mut m.delay },
+                |m: &CueTimings| { &m.delay },
+                |m: &mut CueTimings| { &mut m.delay },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CueChannel>(
-                "CueChannel",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CueTimings>(
+                "CueTimings",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static CueChannel {
-        static instance: ::protobuf::rt::LazyV2<CueChannel> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(CueChannel::new)
+    fn default_instance() -> &'static CueTimings {
+        static instance: ::protobuf::rt::LazyV2<CueTimings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CueTimings::new)
     }
 }
 
-impl ::protobuf::Clear for CueChannel {
+impl ::protobuf::Clear for CueTimings {
     fn clear(&mut self) {
-        self.fixtures.clear();
-        self.control = CueControl::INTENSITY;
-        self.value.clear();
         self.fade.clear();
         self.delay.clear();
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for CueChannel {
+impl ::std::fmt::Debug for CueTimings {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for CueChannel {
+impl ::protobuf::reflect::ProtobufValue for CueTimings {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct CueTrigger {
+    // message fields
+    pub field_type: CueTrigger_Type,
+    // message oneof groups
+    pub _time: ::std::option::Option<CueTrigger_oneof__time>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CueTrigger {
+    fn default() -> &'a CueTrigger {
+        <CueTrigger as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum CueTrigger_oneof__time {
+    time(CueTime),
+}
+
+impl CueTrigger {
+    pub fn new() -> CueTrigger {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.sequencer.CueTrigger.Type type = 1;
+
+
+    pub fn get_field_type(&self) -> CueTrigger_Type {
+        self.field_type
+    }
+    pub fn clear_field_type(&mut self) {
+        self.field_type = CueTrigger_Type::GO;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_type(&mut self, v: CueTrigger_Type) {
+        self.field_type = v;
+    }
+
+    // .mizer.sequencer.CueTime time = 2;
+
+
+    pub fn get_time(&self) -> &CueTime {
+        match self._time {
+            ::std::option::Option::Some(CueTrigger_oneof__time::time(ref v)) => v,
+            _ => <CueTime as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_time(&mut self) {
+        self._time = ::std::option::Option::None;
+    }
+
+    pub fn has_time(&self) -> bool {
+        match self._time {
+            ::std::option::Option::Some(CueTrigger_oneof__time::time(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_time(&mut self, v: CueTime) {
+        self._time = ::std::option::Option::Some(CueTrigger_oneof__time::time(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_time(&mut self) -> &mut CueTime {
+        if let ::std::option::Option::Some(CueTrigger_oneof__time::time(_)) = self._time {
+        } else {
+            self._time = ::std::option::Option::Some(CueTrigger_oneof__time::time(CueTime::new()));
+        }
+        match self._time {
+            ::std::option::Option::Some(CueTrigger_oneof__time::time(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_time(&mut self) -> CueTime {
+        if self.has_time() {
+            match self._time.take() {
+                ::std::option::Option::Some(CueTrigger_oneof__time::time(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CueTime::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for CueTrigger {
+    fn is_initialized(&self) -> bool {
+        if let Some(CueTrigger_oneof__time::time(ref v)) = self._time {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 1, &mut self.unknown_fields)?
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._time = ::std::option::Option::Some(CueTrigger_oneof__time::time(is.read_message()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.field_type != CueTrigger_Type::GO {
+            my_size += ::protobuf::rt::enum_size(1, self.field_type);
+        }
+        if let ::std::option::Option::Some(ref v) = self._time {
+            match v {
+                &CueTrigger_oneof__time::time(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.field_type != CueTrigger_Type::GO {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.field_type))?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._time {
+            match v {
+                &CueTrigger_oneof__time::time(ref v) => {
+                    os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CueTrigger {
+        CueTrigger::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueTrigger_Type>>(
+                "type",
+                |m: &CueTrigger| { &m.field_type },
+                |m: &mut CueTrigger| { &mut m.field_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, CueTime>(
+                "time",
+                CueTrigger::has_time,
+                CueTrigger::get_time,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CueTrigger>(
+                "CueTrigger",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CueTrigger {
+        static instance: ::protobuf::rt::LazyV2<CueTrigger> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CueTrigger::new)
+    }
+}
+
+impl ::protobuf::Clear for CueTrigger {
+    fn clear(&mut self) {
+        self.field_type = CueTrigger_Type::GO;
+        self._time = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CueTrigger {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueTrigger {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum CueTrigger_Type {
+    GO = 0,
+    FOLLOW = 1,
+    TIME = 2,
+    BEATS = 3,
+    TIMECODE = 4,
+}
+
+impl ::protobuf::ProtobufEnum for CueTrigger_Type {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<CueTrigger_Type> {
+        match value {
+            0 => ::std::option::Option::Some(CueTrigger_Type::GO),
+            1 => ::std::option::Option::Some(CueTrigger_Type::FOLLOW),
+            2 => ::std::option::Option::Some(CueTrigger_Type::TIME),
+            3 => ::std::option::Option::Some(CueTrigger_Type::BEATS),
+            4 => ::std::option::Option::Some(CueTrigger_Type::TIMECODE),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [CueTrigger_Type] = &[
+            CueTrigger_Type::GO,
+            CueTrigger_Type::FOLLOW,
+            CueTrigger_Type::TIME,
+            CueTrigger_Type::BEATS,
+            CueTrigger_Type::TIMECODE,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<CueTrigger_Type>("CueTrigger.Type", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for CueTrigger_Type {
+}
+
+impl ::std::default::Default for CueTrigger_Type {
+    fn default() -> Self {
+        CueTrigger_Type::GO
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueTrigger_Type {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct CueControl {
+    // message fields
+    pub field_type: CueControl_Type,
+    pub value: ::protobuf::SingularPtrField<CueValue>,
+    pub fixtures: ::protobuf::RepeatedField<super::fixtures::FixtureId>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CueControl {
+    fn default() -> &'a CueControl {
+        <CueControl as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CueControl {
+    pub fn new() -> CueControl {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.sequencer.CueControl.Type type = 1;
+
+
+    pub fn get_field_type(&self) -> CueControl_Type {
+        self.field_type
+    }
+    pub fn clear_field_type(&mut self) {
+        self.field_type = CueControl_Type::INTENSITY;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_field_type(&mut self, v: CueControl_Type) {
+        self.field_type = v;
+    }
+
+    // .mizer.sequencer.CueValue value = 2;
+
+
+    pub fn get_value(&self) -> &CueValue {
+        self.value.as_ref().unwrap_or_else(|| <CueValue as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_value(&mut self) {
+        self.value.clear();
+    }
+
+    pub fn has_value(&self) -> bool {
+        self.value.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: CueValue) {
+        self.value = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_value(&mut self) -> &mut CueValue {
+        if self.value.is_none() {
+            self.value.set_default();
+        }
+        self.value.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_value(&mut self) -> CueValue {
+        self.value.take().unwrap_or_else(|| CueValue::new())
+    }
+
+    // repeated .mizer.fixtures.FixtureId fixtures = 3;
+
+
+    pub fn get_fixtures(&self) -> &[super::fixtures::FixtureId] {
+        &self.fixtures
+    }
+    pub fn clear_fixtures(&mut self) {
+        self.fixtures.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixtures(&mut self, v: ::protobuf::RepeatedField<super::fixtures::FixtureId>) {
+        self.fixtures = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_fixtures(&mut self) -> &mut ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        &mut self.fixtures
+    }
+
+    // Take field
+    pub fn take_fixtures(&mut self) -> ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        ::std::mem::replace(&mut self.fixtures, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for CueControl {
+    fn is_initialized(&self) -> bool {
+        for v in &self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.fixtures {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.field_type, 1, &mut self.unknown_fields)?
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.value)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fixtures)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.field_type != CueControl_Type::INTENSITY {
+            my_size += ::protobuf::rt::enum_size(1, self.field_type);
+        }
+        if let Some(ref v) = self.value.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        for value in &self.fixtures {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.field_type != CueControl_Type::INTENSITY {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.field_type))?;
+        }
+        if let Some(ref v) = self.value.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        for v in &self.fixtures {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CueControl {
+        CueControl::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<CueControl_Type>>(
+                "type",
+                |m: &CueControl| { &m.field_type },
+                |m: &mut CueControl| { &mut m.field_type },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<CueValue>>(
+                "value",
+                |m: &CueControl| { &m.value },
+                |m: &mut CueControl| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::fixtures::FixtureId>>(
+                "fixtures",
+                |m: &CueControl| { &m.fixtures },
+                |m: &mut CueControl| { &mut m.fixtures },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<CueControl>(
+                "CueControl",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static CueControl {
+        static instance: ::protobuf::rt::LazyV2<CueControl> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(CueControl::new)
+    }
+}
+
+impl ::protobuf::Clear for CueControl {
+    fn clear(&mut self) {
+        self.field_type = CueControl_Type::INTENSITY;
+        self.value.clear();
+        self.fixtures.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for CueControl {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueControl {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum CueControl_Type {
+    INTENSITY = 0,
+    SHUTTER = 1,
+    COLOR_RED = 2,
+    COLOR_GREEN = 3,
+    COLOR_BLUE = 4,
+    PAN = 5,
+    TILT = 6,
+    FOCUS = 7,
+    ZOOM = 8,
+    PRISM = 9,
+    IRIS = 10,
+    FROST = 11,
+    GENERIC = 12,
+}
+
+impl ::protobuf::ProtobufEnum for CueControl_Type {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<CueControl_Type> {
+        match value {
+            0 => ::std::option::Option::Some(CueControl_Type::INTENSITY),
+            1 => ::std::option::Option::Some(CueControl_Type::SHUTTER),
+            2 => ::std::option::Option::Some(CueControl_Type::COLOR_RED),
+            3 => ::std::option::Option::Some(CueControl_Type::COLOR_GREEN),
+            4 => ::std::option::Option::Some(CueControl_Type::COLOR_BLUE),
+            5 => ::std::option::Option::Some(CueControl_Type::PAN),
+            6 => ::std::option::Option::Some(CueControl_Type::TILT),
+            7 => ::std::option::Option::Some(CueControl_Type::FOCUS),
+            8 => ::std::option::Option::Some(CueControl_Type::ZOOM),
+            9 => ::std::option::Option::Some(CueControl_Type::PRISM),
+            10 => ::std::option::Option::Some(CueControl_Type::IRIS),
+            11 => ::std::option::Option::Some(CueControl_Type::FROST),
+            12 => ::std::option::Option::Some(CueControl_Type::GENERIC),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [CueControl_Type] = &[
+            CueControl_Type::INTENSITY,
+            CueControl_Type::SHUTTER,
+            CueControl_Type::COLOR_RED,
+            CueControl_Type::COLOR_GREEN,
+            CueControl_Type::COLOR_BLUE,
+            CueControl_Type::PAN,
+            CueControl_Type::TILT,
+            CueControl_Type::FOCUS,
+            CueControl_Type::ZOOM,
+            CueControl_Type::PRISM,
+            CueControl_Type::IRIS,
+            CueControl_Type::FROST,
+            CueControl_Type::GENERIC,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<CueControl_Type>("CueControl.Type", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for CueControl_Type {
+}
+
+impl ::std::default::Default for CueControl_Type {
+    fn default() -> Self {
+        CueControl_Type::INTENSITY
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueControl_Type {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
 }
 
@@ -4040,214 +5498,93 @@ impl ::protobuf::reflect::ProtobufValue for CueTimerRange {
     }
 }
 
-#[derive(Clone,PartialEq,Eq,Debug,Hash)]
-#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum CueTrigger {
-    GO = 0,
-    FOLLOW = 1,
-    TIME = 2,
-    BEATS = 3,
-    TIMECODE = 4,
-}
-
-impl ::protobuf::ProtobufEnum for CueTrigger {
-    fn value(&self) -> i32 {
-        *self as i32
-    }
-
-    fn from_i32(value: i32) -> ::std::option::Option<CueTrigger> {
-        match value {
-            0 => ::std::option::Option::Some(CueTrigger::GO),
-            1 => ::std::option::Option::Some(CueTrigger::FOLLOW),
-            2 => ::std::option::Option::Some(CueTrigger::TIME),
-            3 => ::std::option::Option::Some(CueTrigger::BEATS),
-            4 => ::std::option::Option::Some(CueTrigger::TIMECODE),
-            _ => ::std::option::Option::None
-        }
-    }
-
-    fn values() -> &'static [Self] {
-        static values: &'static [CueTrigger] = &[
-            CueTrigger::GO,
-            CueTrigger::FOLLOW,
-            CueTrigger::TIME,
-            CueTrigger::BEATS,
-            CueTrigger::TIMECODE,
-        ];
-        values
-    }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<CueTrigger>("CueTrigger", file_descriptor_proto())
-        })
-    }
-}
-
-impl ::std::marker::Copy for CueTrigger {
-}
-
-impl ::std::default::Default for CueTrigger {
-    fn default() -> Self {
-        CueTrigger::GO
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for CueTrigger {
-    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
-        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
-    }
-}
-
-#[derive(Clone,PartialEq,Eq,Debug,Hash)]
-#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum CueControl {
-    INTENSITY = 0,
-    SHUTTER = 1,
-    COLOR_RED = 2,
-    COLOR_GREEN = 3,
-    COLOR_BLUE = 4,
-    PAN = 5,
-    TILT = 6,
-    FOCUS = 7,
-    ZOOM = 8,
-    PRISM = 9,
-    IRIS = 10,
-    FROST = 11,
-    GENERIC = 12,
-}
-
-impl ::protobuf::ProtobufEnum for CueControl {
-    fn value(&self) -> i32 {
-        *self as i32
-    }
-
-    fn from_i32(value: i32) -> ::std::option::Option<CueControl> {
-        match value {
-            0 => ::std::option::Option::Some(CueControl::INTENSITY),
-            1 => ::std::option::Option::Some(CueControl::SHUTTER),
-            2 => ::std::option::Option::Some(CueControl::COLOR_RED),
-            3 => ::std::option::Option::Some(CueControl::COLOR_GREEN),
-            4 => ::std::option::Option::Some(CueControl::COLOR_BLUE),
-            5 => ::std::option::Option::Some(CueControl::PAN),
-            6 => ::std::option::Option::Some(CueControl::TILT),
-            7 => ::std::option::Option::Some(CueControl::FOCUS),
-            8 => ::std::option::Option::Some(CueControl::ZOOM),
-            9 => ::std::option::Option::Some(CueControl::PRISM),
-            10 => ::std::option::Option::Some(CueControl::IRIS),
-            11 => ::std::option::Option::Some(CueControl::FROST),
-            12 => ::std::option::Option::Some(CueControl::GENERIC),
-            _ => ::std::option::Option::None
-        }
-    }
-
-    fn values() -> &'static [Self] {
-        static values: &'static [CueControl] = &[
-            CueControl::INTENSITY,
-            CueControl::SHUTTER,
-            CueControl::COLOR_RED,
-            CueControl::COLOR_GREEN,
-            CueControl::COLOR_BLUE,
-            CueControl::PAN,
-            CueControl::TILT,
-            CueControl::FOCUS,
-            CueControl::ZOOM,
-            CueControl::PRISM,
-            CueControl::IRIS,
-            CueControl::FROST,
-            CueControl::GENERIC,
-        ];
-        values
-    }
-
-    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
-        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
-        descriptor.get(|| {
-            ::protobuf::reflect::EnumDescriptor::new_pb_name::<CueControl>("CueControl", file_descriptor_proto())
-        })
-    }
-}
-
-impl ::std::marker::Copy for CueControl {
-}
-
-impl ::std::default::Default for CueControl {
-    fn default() -> Self {
-        CueControl::INTENSITY
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for CueControl {
-    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
-        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
-    }
-}
-
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0fsequencer.proto\x12\x0fmizer.sequencer\x1a\x0efixtures.proto\"\x15\
     \n\x13GetSequencesRequest\"0\n\x12GetSequenceRequest\x12\x1a\n\x08sequen\
     ce\x18\x01\x20\x01(\rR\x08sequence\"\x14\n\x12AddSequenceRequest\"3\n\
     \x15DeleteSequenceRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08s\
     equence\"/\n\x11SequenceGoRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\
-    \rR\x08sequence\"x\n\x11CueTriggerRequest\x12\x1a\n\x08sequence\x18\x01\
-    \x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\
-    5\n\x07trigger\x18\x03\x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07\
-    trigger\"R\n\x0eCueNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\
-    \x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\x12\n\x04na\
-    me\x18\x03\x20\x01(\tR\x04name\"W\n\x19SequenceWrapAroundRequest\x12\x1a\
-    \n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x1e\n\nwrapAround\x18\
-    \x02\x20\x01(\x08R\nwrapAround\"E\n\x13SequenceNameRequest\x12\x1a\n\x08\
-    sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\
-    \x01(\tR\x04name\"\x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequence\
-    s\x18\x01\x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\"x\n\
-    \x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
-    \x18\x02\x20\x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mi\
-    zer.sequencer.CueR\x04cues\x12\x1e\n\nwrapAround\x18\x04\x20\x01(\x08R\n\
-    wrapAround\"\xad\x01\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
-    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\
-    \x20\x01(\x0e2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x12\x12\n\x04l\
-    oop\x18\x04\x20\x01(\x08R\x04loop\x127\n\x08channels\x18\x05\x20\x03(\
-    \x0b2\x1b.mizer.sequencer.CueChannelR\x08channels\"\x8b\x02\n\nCueChanne\
-    l\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
-    \x08fixtures\x125\n\x07control\x18\x02\x20\x01(\x0e2\x1b.mizer.sequencer\
-    .CueControlR\x07control\x12/\n\x05value\x18\x03\x20\x01(\x0b2\x19.mizer.\
-    sequencer.CueValueR\x05value\x12-\n\x04fade\x18\x04\x20\x01(\x0b2\x19.mi\
-    zer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\x05\x20\x01(\x0b2\
-    \x19.mizer.sequencer.CueTimerR\x05delay\"e\n\x08CueValue\x12\x18\n\x06di\
-    rect\x18\x03\x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01(\
-    \x0b2\x1e.mizer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\
-    \x9b\x01\n\x08CueTimer\x12\x1a\n\x08hasTimer\x18\x01\x20\x01(\x08R\x08ha\
-    sTimer\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTim\
-    eH\0R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.mizer.sequence\
-    r.CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\
-    \n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01\
-    (\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\
-    \0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\
-    \n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.\
-    mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.\
-    mizer.sequencer.CueTimeR\x02to*C\n\nCueTrigger\x12\x06\n\x02GO\x10\0\x12\
-    \n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\
-    \x03\x12\x0c\n\x08TIMECODE\x10\x04*\xad\x01\n\nCueControl\x12\r\n\tINTEN\
-    SITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\
-    \x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x07\n\
-    \x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\x07\x12\
-    \x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\x10\n\
-    \x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\x91\x06\n\x0cSeq\
-    uencerApi\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequencesReques\
-    t\x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12#.mizer\
-    .sequencer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\0\x12O\
-    \n\x0bAddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\x19.mizer.\
-    sequencer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequencer.Del\
-    eteSequenceRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\nSequenc\
-    eGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequencer.Empt\
-    yResponse\"\0\x12T\n\x10UpdateCueTrigger\x12\".mizer.sequencer.CueTrigge\
-    rRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12N\n\rUpdateCueName\x12\
-    \x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequences\"\
-    \0\x12d\n\x18UpdateSequenceWrapAround\x12*.mizer.sequencer.SequenceWrapA\
-    roundRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12S\n\x12UpdateSeque\
-    nceName\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.S\
-    equences\"\0b\x06proto3\
+    \rR\x08sequence\"1\n\x13SequenceStopRequest\x12\x1a\n\x08sequence\x18\
+    \x01\x20\x01(\rR\x08sequence\"}\n\x11CueTriggerRequest\x12\x1a\n\x08sequ\
+    ence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\r\
+    R\x03cue\x12:\n\x07trigger\x18\x03\x20\x01(\x0e2\x20.mizer.sequencer.Cue\
+    Trigger.TypeR\x07trigger\"R\n\x0eCueNameRequest\x12\x1a\n\x08sequence\
+    \x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\
+    \x03cue\x12\x12\n\x04name\x18\x03\x20\x01(\tR\x04name\"\x9f\x01\n\x0fCue\
+    ValueRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\
+    \x12\x15\n\x06cue_id\x18\x02\x20\x01(\rR\x05cueId\x12#\n\rcontrol_index\
+    \x18\x03\x20\x01(\rR\x0ccontrolIndex\x12/\n\x05value\x18\x04\x20\x01(\
+    \x0b2\x19.mizer.sequencer.CueValueR\x05value\"y\n\x10CueTimingRequest\
+    \x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06c\
+    ue_id\x18\x02\x20\x01(\rR\x05cueId\x12-\n\x04time\x18\x03\x20\x01(\x0b2\
+    \x19.mizer.sequencer.CueTimerR\x04time\"W\n\x19SequenceWrapAroundRequest\
+    \x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x1e\n\nwrapAr\
+    ound\x18\x02\x20\x01(\x08R\nwrapAround\"E\n\x13SequenceNameRequest\x12\
+    \x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\
+    \x02\x20\x01(\tR\x04name\"\x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\t\
+    sequences\x18\x01\x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\
+    \"\xaf\x01\n\x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
+    \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\
+    \x03(\x0b2\x14.mizer.sequencer.CueR\x04cues\x125\n\x08fixtures\x18\x04\
+    \x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\x12\x1e\n\nwrap\
+    Around\x18\x05\x20\x01(\x08R\nwrapAround\"\xa5\x03\n\x03Cue\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\x125\n\x07trigger\x18\x03\x20\x01(\x0b2\x1b.mizer.sequencer.Cue\
+    TriggerR\x07trigger\x127\n\x08controls\x18\x04\x20\x03(\x0b2\x1b.mizer.s\
+    equencer.CueControlR\x08controls\x12<\n\x0bcue_timings\x18\x05\x20\x01(\
+    \x0b2\x1b.mizer.sequencer.CueTimingsR\ncueTimings\x12B\n\x0edimmer_timin\
+    gs\x18\x06\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\rdimmerTimings\
+    \x12F\n\x10position_timings\x18\x07\x20\x01(\x0b2\x1b.mizer.sequencer.Cu\
+    eTimingsR\x0fpositionTimings\x12@\n\rcolor_timings\x18\x08\x20\x01(\x0b2\
+    \x1b.mizer.sequencer.CueTimingsR\x0ccolorTimings\"l\n\nCueTimings\x12-\n\
+    \x04fade\x18\x08\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12\
+    /\n\x05delay\x18\t\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05delay\
+    \"\xbd\x01\n\nCueTrigger\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.\
+    sequencer.CueTrigger.TypeR\x04type\x121\n\x04time\x18\x02\x20\x01(\x0b2\
+    \x18.mizer.sequencer.CueTimeH\0R\x04time\x88\x01\x01\"=\n\x04Type\x12\
+    \x06\n\x02GO\x10\0\x12\n\n\x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\
+    \x12\t\n\x05BEATS\x10\x03\x12\x0c\n\x08TIMECODE\x10\x04B\x07\n\x05_time\
+    \"\xd4\x02\n\nCueControl\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.\
+    sequencer.CueControl.TypeR\x04type\x12/\n\x05value\x18\x02\x20\x01(\x0b2\
+    \x19.mizer.sequencer.CueValueR\x05value\x125\n\x08fixtures\x18\x03\x20\
+    \x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"\xa7\x01\n\x04Type\
+    \x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RE\
+    D\x10\x02\x12\x0f\n\x0bCOLOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\
+    \x12\x07\n\x03PAN\x10\x05\x12\x08\n\x04TILT\x10\x06\x12\t\n\x05FOCUS\x10\
+    \x07\x12\x08\n\x04ZOOM\x10\x08\x12\t\n\x05PRISM\x10\t\x12\x08\n\x04IRIS\
+    \x10\n\x12\t\n\x05FROST\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c\"e\n\x08Cue\
+    Value\x12\x18\n\x06direct\x18\x03\x20\x01(\x01H\0R\x06direct\x126\n\x05r\
+    ange\x18\x04\x20\x01(\x0b2\x1e.mizer.sequencer.CueValueRangeH\0R\x05rang\
+    eB\x07\n\x05value\"\x9b\x01\n\x08CueTimer\x12\x1a\n\x08hasTimer\x18\x01\
+    \x20\x01(\x08R\x08hasTimer\x122\n\x06direct\x18\x02\x20\x01(\x0b2\x18.mi\
+    zer.sequencer.CueTimeH\0R\x06direct\x126\n\x05range\x18\x03\x20\x01(\x0b\
+    2\x1e.mizer.sequencer.CueTimerRangeH\0R\x05rangeB\x07\n\x05timer\"3\n\rC\
+    ueValueRange\x12\x12\n\x04from\x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\
+    \x02to\x18\x02\x20\x01(\x01R\x02to\"E\n\x07CueTime\x12\x1a\n\x07seconds\
+    \x18\x01\x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05beats\x18\x02\x20\x01(\
+    \x01H\0R\x05beatsB\x06\n\x04time\"g\n\rCueTimerRange\x12,\n\x04from\x18\
+    \x01\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x04from\x12(\n\x02to\x18\
+    \x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02to2\xe8\x08\n\x0cSequ\
+    encerApi\x12R\n\x0cGetSequences\x12$.mizer.sequencer.GetSequencesRequest\
+    \x1a\x1a.mizer.sequencer.Sequences\"\0\x12O\n\x0bGetSequence\x12#.mizer.\
+    sequencer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequence\"\0\x12O\n\
+    \x0bAddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\x19.mizer.se\
+    quencer.Sequence\"\0\x12V\n\x0eDeleteSequence\x12&.mizer.sequencer.Delet\
+    eSequenceRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12R\n\nSequenceG\
+    o\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequencer.EmptyR\
+    esponse\"\0\x12V\n\x0cSequenceStop\x12$.mizer.sequencer.SequenceStopRequ\
+    est\x1a\x1e.mizer.sequencer.EmptyResponse\"\0\x12T\n\x10UpdateCueTrigger\
+    \x12\".mizer.sequencer.CueTriggerRequest\x1a\x1a.mizer.sequencer.Sequenc\
+    es\"\0\x12N\n\rUpdateCueName\x12\x1f.mizer.sequencer.CueNameRequest\x1a\
+    \x1a.mizer.sequencer.Sequences\"\0\x12P\n\x0eUpdateCueValue\x12\x20.mize\
+    r.sequencer.CueValueRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12T\n\
+    \x11UpdateCueFadeTime\x12!.mizer.sequencer.CueTimingRequest\x1a\x1a.mize\
+    r.sequencer.Sequences\"\0\x12U\n\x12UpdateCueDelayTime\x12!.mizer.sequen\
+    cer.CueTimingRequest\x1a\x1a.mizer.sequencer.Sequences\"\0\x12d\n\x18Upd\
+    ateSequenceWrapAround\x12*.mizer.sequencer.SequenceWrapAroundRequest\x1a\
+    \x1a.mizer.sequencer.Sequences\"\0\x12S\n\x12UpdateSequenceName\x12\x1f.\
+    mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequences\"\0b\
+    \x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

@@ -4,7 +4,7 @@ use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::ProgrammerView;
-use mizer_sequencer::{CueChannel, Sequencer, SequencerValue};
+use mizer_sequencer::{CueControl, Sequencer, SequencerValue};
 use std::ops::Deref;
 
 #[derive(Clone)]
@@ -62,6 +62,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         let programmer = self.fixture_manager.get_programmer();
         let controls = programmer.get_controls();
         self.sequencer.update_sequence(sequence_id, |sequence| {
+            let mut fixtures = controls.iter().flat_map(|c| c.fixtures.clone()).collect();
             let cue = if store_mode == StoreRequest_Mode::AddCue || sequence.cues.is_empty() {
                 let cue_id = sequence.add_cue();
                 sequence.cues.iter_mut().find(|c| c.id == cue_id)
@@ -71,19 +72,20 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .unwrap();
             let cue_channels = controls
                 .into_iter()
-                .map(|control| CueChannel {
+                .map(|control| CueControl {
                     control: control.control,
-                    fixtures: control.fixtures,
+                    fixtures: control.fixtures.clone(),
                     value: SequencerValue::Direct(control.value),
-                    fade: None,
-                    delay: None,
                 })
                 .collect();
             if store_mode == StoreRequest_Mode::Merge {
                 cue.merge(cue_channels);
             } else {
-                cue.channels = cue_channels;
+                cue.controls = cue_channels;
             }
+            sequence.fixtures.append(&mut fixtures);
+            sequence.fixtures.sort();
+            sequence.fixtures.dedup();
         })
     }
 

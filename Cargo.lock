@@ -1423,10 +1423,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e25ea47919b1560c4e3b7fe0aaab9becf5b84a10325ddf7db0f0ba5e1026499"
 
 [[package]]
-name = "difference"
-version = "2.0.0"
+name = "difflib"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "524cbf6897b527295dff137cec09ecf3a05f4fddffd7dfcd1585403449e74198"
+checksum = "6184e33543162437515c2e2b48714794e37845ec9851711914eec9d308f6ebe8"
 
 [[package]]
 name = "digest"
@@ -1469,12 +1469,6 @@ name = "dispatch"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd0c93bb4b0c6d9b77f4435b0ae98c24d17f1c45b2ff844c6151a07256ca923b"
-
-[[package]]
-name = "downcast"
-version = "0.10.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4bb454f0228b18c7f4c3b0ebbee346ed9c52e7443b0999cd543ff3571205701d"
 
 [[package]]
 name = "downcast"
@@ -1793,15 +1787,6 @@ dependencies = [
  "crc32fast",
  "libc",
  "miniz_oxide",
-]
-
-[[package]]
-name = "float-cmp"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e1267f4ac4f343772758f7b1bdcbe767c218bbab93bb432acbf5162bbf85a6c4"
-dependencies = [
- "num-traits",
 ]
 
 [[package]]
@@ -3525,7 +3510,7 @@ name = "mizer-node"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "downcast 0.11.0",
+ "downcast",
  "log",
  "mizer-clock",
  "mizer-injector",
@@ -3619,7 +3604,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "downcast 0.11.0",
+ "downcast",
  "flume",
  "gstreamer",
  "log",
@@ -3800,7 +3785,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap",
- "downcast 0.11.0",
+ "downcast",
  "env_logger 0.7.1",
  "flume",
  "insta",
@@ -3964,12 +3949,12 @@ dependencies = [
 
 [[package]]
 name = "mockall"
-version = "0.10.2"
+version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6ab571328afa78ae322493cacca3efac6a0f2e0a67305b4df31fd439ef129ac0"
+checksum = "3d4d70639a72f972725db16350db56da68266ca368b2a1fe26724a903ad3d6b8"
 dependencies = [
  "cfg-if 1.0.0",
- "downcast 0.10.0",
+ "downcast",
  "fragile",
  "lazy_static",
  "mockall_derive",
@@ -3979,9 +3964,9 @@ dependencies = [
 
 [[package]]
 name = "mockall_derive"
-version = "0.10.2"
+version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e7e25b214433f669161f414959594216d8e6ba83b6679d3db96899c0b4639033"
+checksum = "79ef208208a0dea3f72221e26e904cdc6db2e481d9ade89081ddd494f1dbaa6b"
 dependencies = [
  "cfg-if 1.0.0",
  "proc-macro2",
@@ -4625,12 +4610,13 @@ checksum = "eb9f9e6e233e5c4a35559a617bf40a4ec447db2e84c20b55a6f83167b7e57872"
 
 [[package]]
 name = "predicates"
-version = "1.0.8"
+version = "2.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f49cfaf7fdaa3bfacc6fa3e7054e65148878354a5cfddcf661df4c851f8021df"
+checksum = "a5aab5be6e4732b473071984b3164dbbfb7a3674d30ea5ff44410b6bcd960c3c"
 dependencies = [
- "difference",
- "float-cmp 0.8.0",
+ "difflib",
+ "float-cmp",
+ "itertools",
  "normalize-line-endings",
  "predicates-core",
  "regex",
@@ -5755,7 +5741,7 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "639abcebc15fdc2df179f37d6f5463d660c1c79cd552c12343a4600827a04bce"
 dependencies = [
- "float-cmp 0.9.0",
+ "float-cmp",
  "rgb",
 ]
 
@@ -6320,7 +6306,7 @@ dependencies = [
  "base64 0.13.0",
  "data-url",
  "flate2",
- "float-cmp 0.9.0",
+ "float-cmp",
  "fontdb",
  "kurbo",
  "log",
@@ -6381,7 +6367,7 @@ version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0393efdd7d82f856a927b0fcafa80bca45911f5c89ef6b9d80197bebc284f72e"
 dependencies = [
- "float-cmp 0.9.0",
+ "float-cmp",
  "halfbrown",
  "itoa 0.4.8",
  "ryu",

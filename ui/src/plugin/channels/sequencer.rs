@@ -54,12 +54,31 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "sequenceStop" => {
+                if let Value::I64(sequence) = call.args {
+                    self.sequence_stop(sequence as u32);
+
+                    resp.send_ok(Value::Null);
+                }
+            }
             "updateCueTrigger" => {
                 let result = call.arguments().map(|req| self.update_cue_trigger(req));
                 resp.respond_result(result);
             }
             "updateCueName" => {
                 let result = call.arguments().map(|req| self.update_cue_name(req));
+                resp.respond_result(result);
+            }
+            "updateCueValue" => {
+                let result = call.arguments().map(|req| self.update_cue_value(req));
+                resp.respond_result(result);
+            }
+            "updateCueFadeTime" => {
+                let result = call.arguments().map(|req| self.update_control_fade_time(req));
+                resp.respond_result(result);
+            }
+            "updateCueDelayTime" => {
+                let result = call.arguments().map(|req| self.update_control_delay_time(req));
                 resp.respond_result(result);
             }
             "updateSequenceWrapAround" => {
@@ -104,6 +123,10 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
         self.handler.sequence_go(sequence);
     }
 
+    pub fn sequence_stop(&self, sequence: u32) {
+        self.handler.sequence_stop(sequence);
+    }
+
     pub fn delete_sequence(&self, sequence_id: u32) -> anyhow::Result<Sequences> {
         self.handler.delete_sequence(sequence_id)?;
 
@@ -118,6 +141,24 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
 
     pub fn update_cue_name(&self, request: CueNameRequest) -> Sequences {
         self.handler.update_cue_name(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_cue_value(&self, request: CueValueRequest) -> Sequences {
+        self.handler.update_cue_value(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_control_fade_time(&self, request: CueTimingRequest) -> Sequences {
+        self.handler.update_control_fade_time(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_control_delay_time(&self, request: CueTimingRequest) -> Sequences {
+        self.handler.update_control_delay_time(request);
 
         self.get_sequences()
     }

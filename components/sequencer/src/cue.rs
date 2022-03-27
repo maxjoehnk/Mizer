@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
+use crate::Sequence;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -17,13 +18,15 @@ pub struct Cue {
     /// Time for Follow and Time trigger modes
     /// CueTrigger::Follow => pause between cues
     /// CueTrigger::Time => time after previous cue was triggered until this cue is triggered
-    pub time: Option<SequencerTime>,
+    pub trigger_time: Option<SequencerTime>,
     #[serde(default)]
-    pub channels: Vec<CueChannel>,
+    pub controls: Vec<CueControl>,
     #[serde(default)]
     pub effects: Vec<CueEffect>,
     #[serde(default)]
-    pub loop_mode: LoopMode,
+    pub cue_fade: Option<SequencerValue<SequencerTime>>,
+    #[serde(default)]
+    pub cue_delay: Option<SequencerValue<SequencerTime>>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
@@ -32,57 +35,45 @@ pub struct CueEffect {
     pub effect: u32,
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
-#[serde(untagged)]
-pub enum LoopMode {
-    None,
-    JumpTo(u32),
-}
-
-impl Default for LoopMode {
-    fn default() -> Self {
-        Self::None
-    }
-}
-
 impl Cue {
-    pub(crate) fn new(id: u32, name: String, channels: Vec<CueChannel>) -> Self {
+    pub(crate) fn new(id: u32, name: impl Into<String>, controls: Vec<CueControl>) -> Self {
         Self {
             id,
-            name,
-            channels,
+            name: name.into(),
+            controls,
             effects: Vec::new(),
             trigger: Default::default(),
-            time: Default::default(),
-            loop_mode: Default::default(),
+            trigger_time: Default::default(),
+            cue_fade: None,
+            cue_delay: None,
         }
     }
 
-    pub fn merge(&mut self, channels: Vec<CueChannel>) {
-        for channel in channels {
+    pub fn merge(&mut self, controls: Vec<CueControl>) {
+        for control in controls {
             if let Some(target) = self
-                .channels
+                .controls
                 .iter_mut()
-                .find(|c| c.control == channel.control && c.fixtures.overlaps(&channel.fixtures))
+                .find(|c| c.control == control.control && c.fixtures.overlaps(&control.fixtures))
             {
                 target
                     .fixtures
-                    .retain(|fixture_id| !channel.fixtures.contains(fixture_id));
+                    .retain(|fixture_id| !control.fixtures.contains(fixture_id));
             }
-            self.channels.push(channel);
+            if let Some(target) = self.controls.iter_mut().find(|c| c.control == control.control && c.value == control.value) {
+                for fixture in control.fixtures.iter() {
+                    target.fixtures.push(*fixture);
+                }
+            }else {
+                self.controls.push(control);
+            }
         }
-        self.channels.retain(|c| !c.fixtures.is_empty());
+        self.controls.retain(|c| !c.fixtures.is_empty());
     }
 
     pub(crate) fn is_done(&self, state: &SequenceState, clock: &impl Clock) -> bool {
         let cue_active = state.get_timer(clock);
-        if let Some(longest_cue_duration) =
-            self.channels.iter().map(|channel| channel.duration()).max()
-        {
-            longest_cue_duration < cue_active
-        } else {
-            true
-        }
+        self.duration() < cue_active
     }
 
     pub(crate) fn should_go(&self, state: &SequenceState, clock: &impl Clock) -> bool {
@@ -91,13 +82,13 @@ impl Cue {
             .cue_finished_at
             .map(|finished| Instant::now().duration_since(finished));
         if self.trigger == CueTrigger::Time {
-            if let Some(SequencerTime::Seconds(seconds)) = self.time {
+            if let Some(SequencerTime::Seconds(seconds)) = self.trigger_time {
                 let delay = Duration::from_secs_f64(seconds);
                 return delay > prev_cue_active;
             }
         }
         if self.trigger == CueTrigger::Follow && state.is_cue_finished() {
-            return if let Some(SequencerTime::Seconds(seconds)) = self.time {
+            return if let Some(SequencerTime::Seconds(seconds)) = self.trigger_time {
                 if let Some(prev_cue_finished) = prev_cue_finished {
                     let delay = Duration::from_secs_f64(seconds);
                     delay > prev_cue_finished
@@ -111,16 +102,16 @@ impl Cue {
         false
     }
 
-    pub(crate) fn update_state(&self, state: &mut SequenceState, clock: &impl Clock) {
+    pub(crate) fn update_state(&self, sequence: &Sequence, state: &mut SequenceState, clock: &impl Clock) {
         if state.cue_finished_at.is_some() {
             return;
         }
         if self.is_done(state, clock) {
             state.cue_finished_at = Some(clock.now());
         }
-        for channel in &self.channels {
-            let delay_durations = channel.delay_durations();
-            for fixture in &channel.fixtures {
+        for channel in &self.controls {
+            let delay_durations = self.delay_durations(sequence);
+            for fixture in &sequence.fixtures {
                 match state
                     .channel_state
                     .get(&(*fixture, channel.control.clone()))
@@ -136,6 +127,62 @@ impl Cue {
                     _ => {}
                 }
             }
+        }
+    }
+
+    pub(crate) fn duration(&self) -> Duration {
+        let fade_duration = self.fade_duration();
+        let delay_duration = self.delay_duration();
+
+        fade_duration + delay_duration
+    }
+
+    fn delay_duration(&self) -> Duration {
+        if let Some(ref delay) = self.cue_delay {
+            match delay.highest() {
+                SequencerTime::Beats(_) => Duration::default(),
+                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
+            }
+        } else {
+            Duration::default()
+        }
+    }
+
+    fn delay_durations(&self, sequence: &Sequence) -> HashMap<FixtureId, Duration> {
+        match self.cue_delay {
+            Some(SequencerValue::Direct(SequencerTime::Seconds(seconds))) => sequence
+                .fixtures
+                .iter()
+                .map(|fixture_id| (*fixture_id, Duration::from_secs_f64(seconds)))
+                .collect(),
+            Some(SequencerValue::Range((
+                                           SequencerTime::Seconds(from),
+                                           SequencerTime::Seconds(to),
+                                       ))) => {
+                let mut map = HashMap::new();
+                for (i, id) in sequence.fixtures.iter().enumerate() {
+                    let delay: f64 = (i as f64)
+                        .linear_extrapolate((0., (sequence.fixtures.len() as f64) - 1.), (from, to));
+                    map.insert(*id, Duration::from_secs_f64(delay));
+                }
+                map
+            }
+            _ => sequence
+                .fixtures
+                .iter()
+                .map(|fixture_id| (*fixture_id, Duration::default()))
+                .collect(),
+        }
+    }
+
+    fn fade_duration(&self) -> Duration {
+        if let Some(ref fade) = self.cue_fade {
+            match fade.highest() {
+                SequencerTime::Beats(_) => Duration::default(),
+                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
+            }
+        } else {
+            Duration::default()
         }
     }
 }
@@ -165,97 +212,37 @@ impl Default for CueTrigger {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
-pub struct CueChannel {
-    pub fixtures: Vec<FixtureId>,
+pub struct CueControl {
     pub control: FixtureFaderControl,
     pub value: SequencerValue<f64>,
-    #[serde(default)]
-    pub fade: Option<SequencerValue<SequencerTime>>,
-    #[serde(default)]
-    pub delay: Option<SequencerValue<SequencerTime>>,
+    pub fixtures: Vec<FixtureId>,
 }
 
-impl CueChannel {
+impl CueControl {
     pub(crate) fn new(
         control: FixtureFaderControl,
         value: impl Into<SequencerValue<f64>>,
         fixtures: Vec<FixtureId>,
     ) -> Self {
         Self {
-            fixtures,
             control,
             value: value.into(),
-            fade: Default::default(),
-            delay: Default::default(),
-        }
-    }
-
-    pub(crate) fn duration(&self) -> Duration {
-        let fade_duration = self.fade_duration();
-        let delay_duration = self.delay_duration();
-
-        fade_duration + delay_duration
-    }
-
-    fn delay_duration(&self) -> Duration {
-        if let Some(ref delay) = self.delay {
-            match delay.highest() {
-                SequencerTime::Beats(_) => Duration::default(),
-                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
-            }
-        } else {
-            Duration::default()
-        }
-    }
-
-    fn delay_durations(&self) -> HashMap<FixtureId, Duration> {
-        match self.delay {
-            Some(SequencerValue::Direct(SequencerTime::Seconds(seconds))) => self
-                .fixtures
-                .iter()
-                .map(|fixture_id| (*fixture_id, Duration::from_secs_f64(seconds)))
-                .collect(),
-            Some(SequencerValue::Range((
-                SequencerTime::Seconds(from),
-                SequencerTime::Seconds(to),
-            ))) => {
-                let mut map = HashMap::new();
-                for (i, id) in self.fixtures.iter().enumerate() {
-                    let delay: f64 = (i as f64)
-                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    map.insert(*id, Duration::from_secs_f64(delay));
-                }
-                map
-            }
-            _ => self
-                .fixtures
-                .iter()
-                .map(|fixture_id| (*fixture_id, Duration::default()))
-                .collect(),
-        }
-    }
-
-    fn fade_duration(&self) -> Duration {
-        if let Some(ref fade) = self.fade {
-            match fade.highest() {
-                SequencerTime::Beats(_) => Duration::default(),
-                SequencerTime::Seconds(seconds) => Duration::from_secs_f64(seconds),
-            }
-        } else {
-            Duration::default()
+            fixtures,
         }
     }
 
     pub(crate) fn values(
         &self,
+        sequence: &Sequence,
+        cue: &Cue,
         state: &SequenceState,
         clock: &impl Clock,
     ) -> Vec<(FixtureId, Option<f64>)> {
         let mut values = vec![None; self.fixtures.len()];
 
         self.fill_values(state, &mut values);
-        self.delay_values(state, &mut values, clock);
-        self.fade_values(state, &mut values, clock);
+        self.delay_values(cue, state, &mut values, clock);
+        self.fade_values(sequence, cue, state, &mut values, clock);
 
         self.fixtures.iter().copied().zip(values).collect()
     }
@@ -277,11 +264,12 @@ impl CueChannel {
 
     pub(crate) fn delay_values(
         &self,
+        cue: &Cue,
         state: &SequenceState,
         values: &mut Vec<Option<f64>>,
         clock: &impl Clock,
     ) {
-        match self.delay {
+        match cue.cue_delay {
             None => {}
             Some(SequencerValue::Direct(SequencerTime::Seconds(delay))) => {
                 if state.get_timer(clock) < Duration::from_secs_f64(delay) {
@@ -289,9 +277,9 @@ impl CueChannel {
                 }
             }
             Some(SequencerValue::Range((
-                SequencerTime::Seconds(from),
-                SequencerTime::Seconds(to),
-            ))) => {
+                                           SequencerTime::Seconds(from),
+                                           SequencerTime::Seconds(to),
+                                       ))) => {
                 for i in 0..self.fixtures.len() {
                     let delay: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
@@ -306,14 +294,16 @@ impl CueChannel {
 
     pub(crate) fn fade_values(
         &self,
+        sequence: &Sequence,
+        cue: &Cue,
         state: &SequenceState,
         values: &mut Vec<Option<f64>>,
         clock: &impl Clock,
     ) {
         // TODO[maxjoehnk]: this should probably be solved in a better way
         let time = state.get_timer(clock);
-        let delay_durations = self.delay_durations();
-        match self.fade {
+        let delay_durations = cue.delay_durations(sequence);
+        match cue.cue_fade {
             None => {}
             Some(SequencerValue::Direct(SequencerTime::Seconds(duration))) => {
                 for i in 0..self.fixtures.len() {
@@ -332,9 +322,9 @@ impl CueChannel {
                 }
             }
             Some(SequencerValue::Range((
-                SequencerTime::Seconds(from),
-                SequencerTime::Seconds(to),
-            ))) => {
+                                           SequencerTime::Seconds(from),
+                                           SequencerTime::Seconds(to),
+                                       ))) => {
                 for i in 0..self.fixtures.len() {
                     let duration: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
@@ -369,5 +359,78 @@ impl<T: PartialEq> VecExtension for Vec<T> {
             }
         }
         false
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use mockall::predicate::ne;
+    use mizer_fixtures::definition::FixtureFaderControl;
+    use mizer_fixtures::FixtureId;
+    use crate::{Cue, CueControl, SequencerValue};
+
+    #[test]
+    fn merge_should_combine_different_controls() {
+        let old_control = CueControl {
+            fixtures: vec![FixtureId::Fixture(1)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Intensity,
+        };
+        let new_control = CueControl {
+            fixtures: vec![FixtureId::Fixture(1)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Shutter,
+        };
+        let mut cue = Cue::new(1, "", vec![old_control.clone()]);
+        let controls = vec![new_control.clone()];
+
+        cue.merge(controls);
+
+        assert_eq!(vec![old_control, new_control], cue.controls);
+    }
+
+    #[test]
+    fn merge_should_combine_different_fixtures() {
+        let expected = CueControl {
+            fixtures: vec![FixtureId::Fixture(1), FixtureId::Fixture(2)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Intensity,
+        };
+        let mut cue = Cue::new(1, "", vec![CueControl {
+            fixtures: vec![FixtureId::Fixture(1)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Intensity,
+        }]);
+        let controls = vec![CueControl {
+            fixtures: vec![FixtureId::Fixture(2)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Intensity,
+        }];
+
+        cue.merge(controls);
+
+        assert_eq!(vec![expected], cue.controls);
+    }
+
+    #[test]
+    fn merge_should_merge_overlapping_controls() {
+        let expected = vec![CueControl {
+            fixtures: vec![FixtureId::Fixture(1)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Intensity,
+        }, CueControl {
+            fixtures: vec![FixtureId::Fixture(1)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Shutter,
+        }];
+        let mut cue = Cue::new(1, "", vec![CueControl {
+            fixtures: vec![FixtureId::Fixture(1)],
+            value: SequencerValue::Direct(1.),
+            control: FixtureFaderControl::Intensity,
+        }]);
+
+        cue.merge(expected.clone());
+
+        assert_eq!(expected, cue.controls);
     }
 }

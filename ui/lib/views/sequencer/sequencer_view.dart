@@ -6,11 +6,12 @@ import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/views/sequencer/sequencer_settings.dart';
 import 'package:mizer/widgets/panel.dart';
 
-import 'cue_contents.dart';
 import 'cue_list.dart';
 import 'sequence_list.dart';
+import 'track_sheet.dart';
 
 class SequencerView extends StatefulWidget {
   const SequencerView({Key? key}) : super(key: key);
@@ -23,6 +24,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   SequencerPointer? _pointer;
   Map<int, SequenceState> sequenceStates = {};
   Ticker? ticker;
+  SequenceViewMode _viewMode = SequenceViewMode.CUE_LIST;
 
   @override
   void initState() {
@@ -53,9 +55,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
     context.read<SequencerBloc>().add(FetchSequences());
     return HotkeyProvider(
       hotkeySelector: (hotkeys) => hotkeys.sequencer,
-      hotkeyMap: {
-        "add_sequence": () => _addSequence(),
-      },
+      hotkeyMap: {},
       child: BlocBuilder<SequencerBloc, SequencerState>(
         builder: (context, state) {
           return Column(
@@ -65,7 +65,8 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                   label: "Sequences",
                   child: SequenceList(selectSequence: _selectSequence, selectedSequence: state.selectedSequence, sequenceStates: sequenceStates),
                   actions: [
-                    PanelAction(hotkeyId: "add_sequence", label: "Add", onClick: () => _addSequence()),
+                    PanelAction(label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!)),
+                    PanelAction(label: "Stop", onClick: () => _sequenceStop(state.selectedSequenceId!)),
                     PanelAction(hotkeyId: "delete", label: "Delete", onClick: () => _deleteSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
                   ],
                 ),
@@ -73,16 +74,15 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
               if (state.selectedSequence != null)
                 Expanded(
                   child: Panel(
-                    label: "Cue List - ${state.selectedSequence!.name}",
-                    child: CueList(sequence: state.selectedSequence!, onSelectCue: _selectCue, selectedCue: state.selectedCue, activeCue: sequenceStates[state.selectedSequenceId]?.cueId),
+                    label: "${state.selectedSequence!.name}",
+                    child: _sequencerView(state),
                     actions: [
-                      PanelAction(label: "Go", onClick: () => _sequenceGo(state.selectedSequenceId!)),
+                      PanelAction(label: "Cue List", onClick: () => _selectSequenceView(SequenceViewMode.CUE_LIST), activated: _viewMode == SequenceViewMode.CUE_LIST),
+                      PanelAction(label: "Track Sheet", onClick: () => _selectSequenceView(SequenceViewMode.TRACK_SHEET), activated: _viewMode == SequenceViewMode.TRACK_SHEET),
+                      PanelAction(label: "Sequence Settings", onClick: () => _selectSequenceView(SequenceViewMode.SETTINGS), activated: _viewMode == SequenceViewMode.SETTINGS),
                     ],
                   ),
                 ),
-              if (state.selectedCue != null)
-                Expanded(
-                    child: Panel(label: "Cue Contents - ${state.selectedCue!.name}", child: CueContents(cue: state.selectedCue!)))
             ],
           );
         }
@@ -90,8 +90,15 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
     );
   }
 
-  _addSequence() {
-    context.read<SequencerBloc>().add(AddSequence());
+  Widget _sequencerView(SequencerState state) {
+    switch (_viewMode) {
+      case SequenceViewMode.CUE_LIST:
+        return CueList(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId);
+      case SequenceViewMode.TRACK_SHEET:
+        return TrackSheet(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId);
+      case SequenceViewMode.SETTINGS:
+        return SequencerSettings(sequence: state.selectedSequence!);
+    }
   }
 
   _deleteSequence(int sequenceId) {
@@ -99,14 +106,26 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   }
 
   _sequenceGo(int sequenceId) {
-    context.read<SequencerApi>().sequenceGo(sequenceId);
+    context.read<SequencerApi>().sequenceGoForward(sequenceId);
+  }
+
+  _sequenceStop(int sequenceId) {
+    context.read<SequencerApi>().sequenceStop(sequenceId);
   }
 
   _selectSequence(Sequence sequence) {
     context.read<SequencerBloc>().add(SelectSequence(sequence: sequence.id));
   }
 
-  _selectCue(Cue cue) {
-    context.read<SequencerBloc>().add(SelectCue(cue: cue.id));
+  _selectSequenceView(SequenceViewMode viewMode) {
+    setState(() {
+      this._viewMode = viewMode;
+    });
   }
+}
+
+enum SequenceViewMode {
+  CUE_LIST,
+  TRACK_SHEET,
+  SETTINGS,
 }

@@ -261,7 +261,7 @@ impl Default for SequencerValue<SequencerTime> {
 
 impl Display for SequencerValue<f64> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        todo!()
+        write!(f, "{:?}", self)
     }
 }
 

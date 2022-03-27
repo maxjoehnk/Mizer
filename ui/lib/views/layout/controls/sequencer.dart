@@ -48,7 +48,7 @@ class SequencerControl extends StatelessWidget {
   }
 
   void _sequenceGo(SequencerApi sequencerApi) {
-    sequencerApi.sequenceGo(node.config.sequencerConfig.sequenceId);
+    sequencerApi.sequenceGoForward(node.config.sequencerConfig.sequenceId);
   }
 
   Widget _cueView(Sequence sequence, TextTheme textTheme) {

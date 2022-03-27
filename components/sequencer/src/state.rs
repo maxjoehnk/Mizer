@@ -1,5 +1,5 @@
 use crate::contracts::Clock;
-use crate::{Cue, CueChannel, CueEffect, EffectEngine, EffectInstanceId, Sequence};
+use crate::{Cue, CueEffect, EffectEngine, EffectInstanceId, Sequence};
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
 use std::collections::HashMap;
@@ -46,7 +46,7 @@ impl SequenceState {
             self.active = true;
             self.active_cue_index = 0;
         } else {
-            self.next_cue(sequence);
+            self.next_cue(sequence, clock, effect_engine);
         }
         self.update_channel_states(sequence);
     }
@@ -54,11 +54,12 @@ impl SequenceState {
     pub fn stop(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
         self.active = false;
         self.active_cue_index = 0;
+        self.fixture_values.clear();
         self.update_channel_states(sequence);
         self.stop_effects(effect_engine);
     }
 
-    fn next_cue(&mut self, sequence: &Sequence) {
+    fn next_cue(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
         self.active_cue_index += 1;
         if self.active_cue_index >= sequence.cues.len() {
             if sequence.wrap_around {
@@ -67,16 +68,18 @@ impl SequenceState {
             }
             self.active_cue_index = 0;
             self.active = false;
+            self.stop(sequence, clock, effect_engine);
         }
     }
 
     fn update_channel_states(&mut self, sequence: &Sequence) {
         self.channel_state.clear();
-        for channel in &sequence.cues[self.active_cue_index].channels {
-            let state = channel.initial_channel_state();
-            for fixture in &channel.fixtures {
+        let cue = &sequence.cues[self.active_cue_index];
+        for control in &cue.controls {
+            let state = cue.initial_channel_state();
+            for fixture in &sequence.fixtures {
                 self.channel_state
-                    .insert((*fixture, channel.control.clone()), state);
+                    .insert((*fixture, control.control.clone()), state);
             }
         }
     }
@@ -95,6 +98,16 @@ impl SequenceState {
         self.fixture_values
             .get(&(fixture_id, control.clone()))
             .copied()
+    }
+
+    pub fn set_fixture_value(
+        &mut self,
+        fixture_id: FixtureId,
+        control: FixtureFaderControl,
+        value: f64,
+    ) {
+        self.fixture_values
+            .insert((fixture_id, control), value);
     }
 
     pub fn get_next_cue<'a>(&self, sequence: &'a Sequence) -> Option<&'a Cue> {
@@ -118,11 +131,11 @@ impl SequenceState {
     }
 }
 
-impl CueChannel {
+impl Cue {
     fn initial_channel_state(&self) -> CueChannelState {
-        if self.delay.is_some() {
+        if self.cue_delay.is_some() {
             CueChannelState::Delay
-        } else if self.fade.is_some() {
+        } else if self.cue_fade.is_some() {
             CueChannelState::Fading
         } else {
             CueChannelState::Active

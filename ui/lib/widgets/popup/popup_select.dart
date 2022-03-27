@@ -18,7 +18,7 @@ class PopupSelect extends StatelessWidget {
             children: items
                 .map((item) => ListTile(
                       title: Text(item.title),
-                      hoverColor: Colors.black12,
+                      hoverColor: Colors.white24,
                       onTap: item.onTap,
                     ))
                 .toList()));

@@ -9,14 +9,14 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class CueTrigger extends $pb.ProtobufEnum {
-  static const CueTrigger GO = CueTrigger._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GO');
-  static const CueTrigger FOLLOW = CueTrigger._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOLLOW');
-  static const CueTrigger TIME = CueTrigger._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIME');
-  static const CueTrigger BEATS = CueTrigger._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BEATS');
-  static const CueTrigger TIMECODE = CueTrigger._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
+class CueTrigger_Type extends $pb.ProtobufEnum {
+  static const CueTrigger_Type GO = CueTrigger_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GO');
+  static const CueTrigger_Type FOLLOW = CueTrigger_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOLLOW');
+  static const CueTrigger_Type TIME = CueTrigger_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIME');
+  static const CueTrigger_Type BEATS = CueTrigger_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BEATS');
+  static const CueTrigger_Type TIMECODE = CueTrigger_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TIMECODE');
 
-  static const $core.List<CueTrigger> values = <CueTrigger> [
+  static const $core.List<CueTrigger_Type> values = <CueTrigger_Type> [
     GO,
     FOLLOW,
     TIME,
@@ -24,28 +24,28 @@ class CueTrigger extends $pb.ProtobufEnum {
     TIMECODE,
   ];
 
-  static final $core.Map<$core.int, CueTrigger> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CueTrigger? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, CueTrigger_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static CueTrigger_Type? valueOf($core.int value) => _byValue[value];
 
-  const CueTrigger._($core.int v, $core.String n) : super(v, n);
+  const CueTrigger_Type._($core.int v, $core.String n) : super(v, n);
 }
 
-class CueControl extends $pb.ProtobufEnum {
-  static const CueControl INTENSITY = CueControl._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INTENSITY');
-  static const CueControl SHUTTER = CueControl._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SHUTTER');
-  static const CueControl COLOR_RED = CueControl._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_RED');
-  static const CueControl COLOR_GREEN = CueControl._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_GREEN');
-  static const CueControl COLOR_BLUE = CueControl._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_BLUE');
-  static const CueControl PAN = CueControl._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
-  static const CueControl TILT = CueControl._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
-  static const CueControl FOCUS = CueControl._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOCUS');
-  static const CueControl ZOOM = CueControl._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZOOM');
-  static const CueControl PRISM = CueControl._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
-  static const CueControl IRIS = CueControl._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
-  static const CueControl FROST = CueControl._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
-  static const CueControl GENERIC = CueControl._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
+class CueControl_Type extends $pb.ProtobufEnum {
+  static const CueControl_Type INTENSITY = CueControl_Type._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INTENSITY');
+  static const CueControl_Type SHUTTER = CueControl_Type._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SHUTTER');
+  static const CueControl_Type COLOR_RED = CueControl_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_RED');
+  static const CueControl_Type COLOR_GREEN = CueControl_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_GREEN');
+  static const CueControl_Type COLOR_BLUE = CueControl_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_BLUE');
+  static const CueControl_Type PAN = CueControl_Type._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
+  static const CueControl_Type TILT = CueControl_Type._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
+  static const CueControl_Type FOCUS = CueControl_Type._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOCUS');
+  static const CueControl_Type ZOOM = CueControl_Type._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZOOM');
+  static const CueControl_Type PRISM = CueControl_Type._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
+  static const CueControl_Type IRIS = CueControl_Type._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
+  static const CueControl_Type FROST = CueControl_Type._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
+  static const CueControl_Type GENERIC = CueControl_Type._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
 
-  static const $core.List<CueControl> values = <CueControl> [
+  static const $core.List<CueControl_Type> values = <CueControl_Type> [
     INTENSITY,
     SHUTTER,
     COLOR_RED,
@@ -61,9 +61,9 @@ class CueControl extends $pb.ProtobufEnum {
     GENERIC,
   ];
 
-  static final $core.Map<$core.int, CueControl> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static CueControl? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, CueControl_Type> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static CueControl_Type? valueOf($core.int value) => _byValue[value];
 
-  const CueControl._($core.int v, $core.String n) : super(v, n);
+  const CueControl_Type._($core.int v, $core.String n) : super(v, n);
 }
 

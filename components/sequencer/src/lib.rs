@@ -1,3 +1,10 @@
+pub use self::cue::*;
+pub use self::effects::*;
+pub use self::module::*;
+pub use self::sequencer::{SequenceView, Sequencer, SequencerView};
+pub use self::sequences::*;
+pub use self::value::*;
+
 mod contracts;
 mod cue;
 pub mod effects;
@@ -8,24 +15,19 @@ mod sequences;
 mod state;
 mod value;
 
-pub use self::cue::*;
-pub use self::effects::*;
-pub use self::module::*;
-pub use self::sequencer::{SequenceView, Sequencer, SequencerView};
-pub use self::sequences::*;
-pub use self::value::*;
-
 #[cfg(test)]
 mod tests {
-    use mockall::predicate;
     use std::time::{Duration, Instant};
+
+    use mockall::predicate;
     use test_case::test_case;
+
+    use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
+    use mizer_fixtures::FixtureId;
 
     use crate::contracts::*;
     use crate::state::SequenceState;
-    use crate::{Cue, CueChannel, EffectEngine, Sequence, SequencerTime};
-    use mizer_fixtures::definition::FixtureFaderControl;
-    use mizer_fixtures::FixtureId;
+    use crate::{Cue, CueControl, EffectEngine, Sequence, SequencerTime, SequencerValue};
 
     #[test_case(FixtureId::Fixture(1), 1f64, FixtureFaderControl::Intensity)]
     #[test_case(FixtureId::SubFixture(1, 1), 1f64, FixtureFaderControl::Shutter)]
@@ -46,10 +48,11 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
+            fixtures: vec![fixture_id],
             cues: vec![Cue::new(
                 1,
-                Default::default(),
-                vec![CueChannel::new(control, value, vec![fixture_id])],
+                "",
+                vec![CueControl::new(control, value, vec![fixture_id])],
             )],
             ..Default::default()
         };
@@ -93,16 +96,17 @@ mod tests {
             .once()
             .return_const(());
         let sequence = Sequence {
+            fixtures: vec![fixture_id],
             cues: vec![
                 Cue::new(
                     1,
-                    Default::default(),
-                    vec![CueChannel::new(control.clone(), 1f64, vec![fixture_id])],
+                    "",
+                    vec![CueControl::new(control.clone(), 1f64, vec![fixture_id])],
                 ),
                 Cue::new(
                     2,
-                    Default::default(),
-                    vec![CueChannel::new(control, 0.5f64, vec![fixture_id])],
+                    "",
+                    vec![CueControl::new(control, 0.5f64, vec![fixture_id])],
                 ),
             ],
             ..Default::default()
@@ -139,7 +143,7 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
-            .collect();
+            .collect::<Vec<_>>();
         for (i, value) in expected.into_iter().enumerate() {
             context
                 .fixture_controller
@@ -153,10 +157,11 @@ mod tests {
                 .return_const(());
         }
         let sequence = Sequence {
+            fixtures: fixture_ids.clone(),
             cues: vec![Cue::new(
                 1,
-                Default::default(),
-                vec![CueChannel::new(control, value, fixture_ids)],
+                "",
+                vec![CueControl::new(control, value, fixture_ids)],
             )],
             ..Default::default()
         };
@@ -190,17 +195,19 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control,
-                    value: 1f64.into(),
-                    fixtures: vec![fixture_id],
-                    delay: Some(SequencerTime::Seconds(1f64).into()),
-                    fade: None,
-                }],
-            )],
+            fixtures: vec![fixture_id],
+            cues: vec![Cue {
+                cue_delay: Some(SequencerTime::Seconds(1f64).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control,
+                        value: 1f64.into(),
+                        fixtures: vec![fixture_id],
+                    }],
+                )
+            }],
             ..Default::default()
         };
 
@@ -234,17 +241,19 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control: control.clone(),
-                    value: 1f64.into(),
-                    fixtures: vec![fixture_id],
-                    delay: Some(SequencerTime::Seconds(delay).into()),
-                    fade: None,
-                }],
-            )],
+            fixtures: vec![fixture_id],
+            cues: vec![Cue {
+                cue_delay: Some(SequencerTime::Seconds(delay).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control,
+                        value: 1f64.into(),
+                        fixtures: vec![fixture_id],
+                    }],
+                )
+            }],
             ..Default::default()
         };
         context
@@ -285,7 +294,7 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
-            .collect();
+            .collect::<Vec<_>>();
         for (i, got_value) in fixtures.into_iter().enumerate() {
             if got_value {
                 context
@@ -311,23 +320,25 @@ mod tests {
             }
         }
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control: control.clone(),
-                    value: value.into(),
-                    fixtures: fixture_ids,
-                    delay: Some(
-                        (
-                            SequencerTime::Seconds(delay.0),
-                            SequencerTime::Seconds(delay.1),
-                        )
-                            .into(),
-                    ),
-                    fade: None,
-                }],
-            )],
+            fixtures: fixture_ids.clone(),
+            cues: vec![Cue {
+                cue_delay: Some(
+                    (
+                        SequencerTime::Seconds(delay.0),
+                        SequencerTime::Seconds(delay.1),
+                    )
+                        .into(),
+                ),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control: control.clone(),
+                        value: value.into(),
+                        fixtures: fixture_ids,
+                    }],
+                )
+            }],
             ..Default::default()
         };
         context
@@ -367,17 +378,19 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control,
-                    value: 1f64.into(),
-                    fixtures: vec![fixture_id],
-                    fade: Some(SequencerTime::Seconds(1f64).into()),
-                    delay: None,
-                }],
-            )],
+            fixtures: vec![fixture_id],
+            cues: vec![Cue {
+                cue_fade: Some(SequencerTime::Seconds(1f64).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control,
+                        value: 1f64.into(),
+                        fixtures: vec![fixture_id],
+                    }],
+                )
+            }],
             ..Default::default()
         };
 
@@ -427,17 +440,19 @@ mod tests {
             )
             .return_const(());
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control: control.clone(),
-                    value: value.into(),
-                    fixtures: vec![fixture_id],
-                    fade: Some(SequencerTime::Seconds(fade_duration).into()),
-                    delay: None,
-                }],
-            )],
+            fixtures: vec![fixture_id],
+            cues: vec![Cue {
+                cue_fade: Some(SequencerTime::Seconds(fade_duration).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control: control.clone(),
+                        value: value.into(),
+                        fixtures: vec![fixture_id],
+                    }],
+                )
+            }],
             ..Default::default()
         };
         context
@@ -480,26 +495,28 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
-            .collect();
+            .collect::<Vec<_>>();
         context.fixture_controller.expect_write().return_const(());
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control: control.clone(),
-                    value: value.into(),
-                    fixtures: fixture_ids,
-                    fade: Some(
-                        (
-                            SequencerTime::Seconds(fade.0),
-                            SequencerTime::Seconds(fade.1),
-                        )
-                            .into(),
-                    ),
-                    delay: None,
-                }],
-            )],
+            fixtures: fixture_ids.clone(),
+            cues: vec![Cue {
+                cue_fade: Some(
+                    (
+                        SequencerTime::Seconds(fade.0),
+                        SequencerTime::Seconds(fade.1),
+                    )
+                        .into(),
+                ),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control: control.clone(),
+                        value: value.into(),
+                        fixtures: fixture_ids,
+                    }],
+                )
+            }],
             ..Default::default()
         };
         context
@@ -541,17 +558,20 @@ mod tests {
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control: control.clone(),
-                    value: value.into(),
-                    fixtures: vec![FixtureId::Fixture(1)],
-                    fade: Some(SequencerTime::Seconds(1f64).into()),
-                    delay: Some(SequencerTime::Seconds(1f64).into()),
-                }],
-            )],
+            fixtures: vec![FixtureId::Fixture(1)],
+            cues: vec![Cue {
+                cue_fade: Some(SequencerTime::Seconds(1f64).into()),
+                cue_delay: Some(SequencerTime::Seconds(1f64).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control: control.clone(),
+                        value: value.into(),
+                        fixtures: vec![FixtureId::Fixture(1)],
+                    }],
+                )
+            }],
             ..Default::default()
         };
         context.fixture_controller.expect_write().never();
@@ -602,31 +622,34 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
-            .collect();
+            .collect::<Vec<_>>();
         let sequence = Sequence {
-            cues: vec![Cue::new(
-                1,
-                Default::default(),
-                vec![CueChannel {
-                    control: control.clone(),
-                    value: 1f64.into(),
-                    fixtures: fixture_ids,
-                    fade: Some(
-                        (
-                            SequencerTime::Seconds(fade.0),
-                            SequencerTime::Seconds(fade.1),
-                        )
-                            .into(),
-                    ),
-                    delay: Some(
-                        (
-                            SequencerTime::Seconds(delay.0),
-                            SequencerTime::Seconds(delay.1),
-                        )
-                            .into(),
-                    ),
-                }],
-            )],
+            fixtures: fixture_ids.clone(),
+            cues: vec![Cue {
+                cue_fade: Some(
+                    (
+                        SequencerTime::Seconds(fade.0),
+                        SequencerTime::Seconds(fade.1),
+                    )
+                        .into(),
+                ),
+                cue_delay: Some(
+                    (
+                        SequencerTime::Seconds(delay.0),
+                        SequencerTime::Seconds(delay.1),
+                    )
+                        .into(),
+                ),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control: control.clone(),
+                        value: 1f64.into(),
+                        fixtures: fixture_ids,
+                    }],
+                )
+            }],
             ..Default::default()
         };
         context.fixture_controller.expect_write().return_const(());
@@ -671,6 +694,158 @@ mod tests {
         context.fixture_controller.checkpoint();
     }
 
+    #[test]
+    fn sequence_should_fade_between_cues() {
+        let fixture_id = FixtureId::Fixture(1);
+        let mut context = TestContext::default();
+        let mut red_sequence = mockall::Sequence::new();
+        let mut green_sequence = mockall::Sequence::new();
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Intensity),
+                predicate::float::is_close(1f64),
+            )
+            .times(3)
+            .return_const(());
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Blue)),
+                predicate::float::is_close(0f64),
+            )
+            .times(3)
+            .return_const(());
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Red)),
+                predicate::float::is_close(1f64),
+            )
+            .once()
+            .return_const(())
+            .in_sequence(&mut red_sequence);
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Red)),
+                predicate::float::is_close(0.5f64),
+            )
+            .once()
+            .return_const(())
+            .in_sequence(&mut red_sequence);
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Red)),
+                predicate::float::is_close(0f64),
+            )
+            .once()
+            .return_const(())
+            .in_sequence(&mut red_sequence);
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Green)),
+                predicate::float::is_close(0f64),
+            )
+            .once()
+            .return_const(())
+            .in_sequence(&mut green_sequence);
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Green)),
+                predicate::float::is_close(0.5f64),
+            )
+            .once()
+            .return_const(())
+            .in_sequence(&mut green_sequence);
+        context
+            .fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(FixtureFaderControl::Color(ColorChannel::Green)),
+                predicate::float::is_close(1f64),
+            )
+            .once()
+            .return_const(())
+            .in_sequence(&mut green_sequence);
+        let sequence = Sequence {
+            fixtures: vec![fixture_id],
+            cues: vec![
+                Cue::new(
+                    1,
+                    "",
+                    vec![
+                        CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
+                        CueControl::new(FixtureFaderControl::Color(ColorChannel::Red), 1f64, vec![fixture_id]),
+                        CueControl::new(FixtureFaderControl::Color(ColorChannel::Green), 0f64, vec![fixture_id]),
+                        CueControl::new(FixtureFaderControl::Color(ColorChannel::Blue), 0f64, vec![fixture_id]),
+                    ],
+                ),
+                Cue {
+                    cue_fade: Some(SequencerValue::Direct(SequencerTime::Seconds(1.))),
+                    ..Cue::new(
+                        2,
+                        "",
+                        vec![
+                            CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
+                            CueControl::new(FixtureFaderControl::Color(ColorChannel::Red), 0f64, vec![fixture_id]),
+                            CueControl::new(FixtureFaderControl::Color(ColorChannel::Green), 1f64, vec![fixture_id]),
+                            CueControl::new(FixtureFaderControl::Color(ColorChannel::Blue), 0f64, vec![fixture_id]),
+                        ],
+                    )
+                },
+            ],
+            ..Default::default()
+        };
+
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
+        sequence.run(
+            &mut context.state,
+            &context.clock,
+            &context.fixture_controller,
+            &context.effect_engine,
+        );
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine);
+        context.forward_clock(0.5);
+        sequence.run(
+            &mut context.state,
+            &context.clock,
+            &context.fixture_controller,
+            &context.effect_engine,
+        );
+        context.forward_clock(0.5);
+        sequence.run(
+            &mut context.state,
+            &context.clock,
+            &context.fixture_controller,
+            &context.effect_engine,
+        );
+
+        context.fixture_controller.checkpoint();
+    }
+
     struct TestContext {
         now: Instant,
         clock: MockClock,
@@ -698,6 +873,7 @@ mod tests {
     impl TestContext {
         fn forward_clock(&mut self, seconds: f64) {
             let trigger_time = self.now + Duration::from_secs_f64(seconds);
+            self.now = trigger_time;
             self.clock.checkpoint();
             self.clock.expect_now().returning(move || trigger_time);
         }

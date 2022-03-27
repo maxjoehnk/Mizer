@@ -19,8 +19,13 @@ class SequencerGrpcApi implements SequencerApi {
   }
 
   @override
-  Future<void> sequenceGo(int sequence) {
+  Future<void> sequenceGoForward(int sequence) {
     return this.client.sequenceGo(SequenceGoRequest(sequence: sequence));
+  }
+
+  @override
+  Future<void> sequenceStop(int sequence) {
+    return this.client.sequenceStop(SequenceStopRequest(sequence: sequence));
   }
 
   @override
@@ -34,7 +39,7 @@ class SequencerGrpcApi implements SequencerApi {
   }
 
   @override
-  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger) {
+  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger_Type trigger) {
     return this.client.updateCueTrigger(CueTriggerRequest(sequence: sequence, cue: cue, trigger: trigger));
   }
 
@@ -46,6 +51,21 @@ class SequencerGrpcApi implements SequencerApi {
   @override
   Future<Sequences> updateCueName(int sequence, int cue, String name) {
     return this.client.updateCueName(CueNameRequest(sequence: sequence, cue: cue, name: name));
+  }
+
+  @override
+  Future<Sequences> updateCueValue(int sequenceId, int cueId, int controlIndex, CueValue value) {
+    return this.client.updateCueValue(CueValueRequest(sequenceId: sequenceId, cueId: cueId, controlIndex: controlIndex, value: value));
+  }
+
+  @override
+  Future<Sequences> updateCueFadeTime(int sequenceId, int cueId, CueTimer? value) {
+    return this.client.updateCueFadeTime(CueTimingRequest(sequenceId: sequenceId, cueId: cueId, time: value));
+  }
+
+  @override
+  Future<Sequences> updateCueDelayTime(int sequenceId, int cueId, CueTimer? value) {
+    return this.client.updateCueDelayTime(CueTimingRequest(sequenceId: sequenceId, cueId: cueId, time: value));
   }
 
   @override

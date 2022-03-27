@@ -21,7 +21,7 @@ class DeleteSequence extends SequencerCommand {
 class UpdateCueTrigger extends SequencerCommand {
   final int sequence;
   final int cue;
-  final CueTrigger trigger;
+  final CueTrigger_Type trigger;
 
   UpdateCueTrigger({ required this.sequence, required this.cue, required this.trigger });
 }
@@ -32,6 +32,20 @@ class UpdateCueName extends SequencerCommand {
   final String name;
 
   UpdateCueName({ required this.sequence, required this.cue, required this.name });
+}
+
+class UpdateCueFade extends SequencerCommand {
+  final int cue;
+  final CueTimer? time;
+
+  UpdateCueFade({ required this.cue, this.time });
+}
+
+class UpdateCueDelay extends SequencerCommand {
+  final int cue;
+  final CueTimer? time;
+
+  UpdateCueDelay({ required this.cue, this.time });
 }
 
 class UpdateSequenceName extends SequencerCommand {
@@ -116,6 +130,12 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     if (event is UpdateCueName) {
       yield await _updateCueName(event);
     }
+    if (event is UpdateCueFade) {
+      yield await _updateCueFadeTime(event);
+    }
+    if (event is UpdateCueDelay) {
+      yield await _updateCueDelayTime(event);
+    }
     if (event is UpdateWrapAround) {
       yield await _updateSequenceWrapAround(event);
     }
@@ -181,6 +201,22 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   Future<SequencerState> _updateSequenceName(UpdateSequenceName event) async {
     log("update sequence name ${event.sequence} ${event.name}", name: "SequencerBloc");
     var sequences = await api.updateSequenceName(event.sequence, event.name);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateCueFadeTime(UpdateCueFade event) async {
+    log("update cue fade ${state.selectedSequenceId} ${event.cue} ${event.time}", name: "SequencerBloc");
+    var sequences = await api.updateCueFadeTime(state.selectedSequenceId!, event.cue, event.time);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateCueDelayTime(UpdateCueDelay event) async {
+    log("update cue fade ${state.selectedSequenceId} ${event.cue} ${event.time}", name: "SequencerBloc");
+    var sequences = await api.updateCueDelayTime(state.selectedSequenceId!, event.cue, event.time);
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);

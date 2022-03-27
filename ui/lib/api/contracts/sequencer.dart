@@ -11,12 +11,16 @@ abstract class SequencerApi {
 
   Future<Sequence> addSequence();
 
-  Future<void> sequenceGo(int sequence);
+  Future<void> sequenceGoForward(int sequence);
+  Future<void> sequenceStop(int sequence);
 
   Future<Sequences> deleteSequence(int sequence);
 
-  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger);
+  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger_Type trigger);
   Future<Sequences> updateCueName(int sequence, int cue, String name);
+  Future<Sequences> updateCueValue(int sequenceId, int cueId, int controlIndex, CueValue value);
+  Future<Sequences> updateCueFadeTime(int sequenceId, int cueId, CueTimer? timer);
+  Future<Sequences> updateCueDelayTime(int sequenceId, int cueId, CueTimer? timer);
 
   Future<Sequences> updateWrapAround(int sequence, bool wrapAround);
   Future<Sequences> updateSequenceName(int sequence, String name);

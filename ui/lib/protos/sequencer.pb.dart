@@ -214,11 +214,58 @@ class SequenceGoRequest extends $pb.GeneratedMessage {
   void clearSequence() => clearField(1);
 }
 
+class SequenceStopRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceStopRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  SequenceStopRequest._() : super();
+  factory SequenceStopRequest({
+    $core.int? sequence,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    return _result;
+  }
+  factory SequenceStopRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceStopRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequenceStopRequest clone() => SequenceStopRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequenceStopRequest copyWith(void Function(SequenceStopRequest) updates) => super.copyWith((message) => updates(message as SequenceStopRequest)) as SequenceStopRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequenceStopRequest create() => SequenceStopRequest._();
+  SequenceStopRequest createEmptyInstance() => create();
+  static $pb.PbList<SequenceStopRequest> createRepeated() => $pb.PbList<SequenceStopRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SequenceStopRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceStopRequest>(create);
+  static SequenceStopRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+}
+
 class CueTriggerRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTriggerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
-    ..e<CueTrigger>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trigger', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger.GO, valueOf: CueTrigger.valueOf, enumValues: CueTrigger.values)
+    ..e<CueTrigger_Type>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trigger', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger_Type.GO, valueOf: CueTrigger_Type.valueOf, enumValues: CueTrigger_Type.values)
     ..hasRequiredFields = false
   ;
 
@@ -226,7 +273,7 @@ class CueTriggerRequest extends $pb.GeneratedMessage {
   factory CueTriggerRequest({
     $core.int? sequence,
     $core.int? cue,
-    CueTrigger? trigger,
+    CueTrigger_Type? trigger,
   }) {
     final _result = create();
     if (sequence != null) {
@@ -280,9 +327,9 @@ class CueTriggerRequest extends $pb.GeneratedMessage {
   void clearCue() => clearField(2);
 
   @$pb.TagNumber(3)
-  CueTrigger get trigger => $_getN(2);
+  CueTrigger_Type get trigger => $_getN(2);
   @$pb.TagNumber(3)
-  set trigger(CueTrigger v) { setField(3, v); }
+  set trigger(CueTrigger_Type v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasTrigger() => $_has(2);
   @$pb.TagNumber(3)
@@ -362,6 +409,174 @@ class CueNameRequest extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(2);
   @$pb.TagNumber(3)
   void clearName() => clearField(3);
+}
+
+class CueValueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueValueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlIndex', $pb.PbFieldType.OU3)
+    ..aOM<CueValue>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: CueValue.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueValueRequest._() : super();
+  factory CueValueRequest({
+    $core.int? sequenceId,
+    $core.int? cueId,
+    $core.int? controlIndex,
+    CueValue? value,
+  }) {
+    final _result = create();
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    if (cueId != null) {
+      _result.cueId = cueId;
+    }
+    if (controlIndex != null) {
+      _result.controlIndex = controlIndex;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory CueValueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueValueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueValueRequest clone() => CueValueRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueValueRequest copyWith(void Function(CueValueRequest) updates) => super.copyWith((message) => updates(message as CueValueRequest)) as CueValueRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueValueRequest create() => CueValueRequest._();
+  CueValueRequest createEmptyInstance() => create();
+  static $pb.PbList<CueValueRequest> createRepeated() => $pb.PbList<CueValueRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CueValueRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueValueRequest>(create);
+  static CueValueRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequenceId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequenceId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequenceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequenceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get cueId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set cueId($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCueId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCueId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get controlIndex => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set controlIndex($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasControlIndex() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearControlIndex() => clearField(3);
+
+  @$pb.TagNumber(4)
+  CueValue get value => $_getN(3);
+  @$pb.TagNumber(4)
+  set value(CueValue v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasValue() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearValue() => clearField(4);
+  @$pb.TagNumber(4)
+  CueValue ensureValue() => $_ensure(3);
+}
+
+class CueTimingRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimingRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueId', $pb.PbFieldType.OU3)
+    ..aOM<CueTimer>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', subBuilder: CueTimer.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTimingRequest._() : super();
+  factory CueTimingRequest({
+    $core.int? sequenceId,
+    $core.int? cueId,
+    CueTimer? time,
+  }) {
+    final _result = create();
+    if (sequenceId != null) {
+      _result.sequenceId = sequenceId;
+    }
+    if (cueId != null) {
+      _result.cueId = cueId;
+    }
+    if (time != null) {
+      _result.time = time;
+    }
+    return _result;
+  }
+  factory CueTimingRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueTimingRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueTimingRequest clone() => CueTimingRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueTimingRequest copyWith(void Function(CueTimingRequest) updates) => super.copyWith((message) => updates(message as CueTimingRequest)) as CueTimingRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueTimingRequest create() => CueTimingRequest._();
+  CueTimingRequest createEmptyInstance() => create();
+  static $pb.PbList<CueTimingRequest> createRepeated() => $pb.PbList<CueTimingRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CueTimingRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTimingRequest>(create);
+  static CueTimingRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequenceId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequenceId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequenceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequenceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get cueId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set cueId($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCueId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCueId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  CueTimer get time => $_getN(2);
+  @$pb.TagNumber(3)
+  set time(CueTimer v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTime() => clearField(3);
+  @$pb.TagNumber(3)
+  CueTimer ensureTime() => $_ensure(2);
 }
 
 class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
@@ -561,7 +776,8 @@ class Sequence extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..pc<Cue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
-    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
+    ..pc<$0.FixtureId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
     ..hasRequiredFields = false
   ;
 
@@ -570,6 +786,7 @@ class Sequence extends $pb.GeneratedMessage {
     $core.int? id,
     $core.String? name,
     $core.Iterable<Cue>? cues,
+    $core.Iterable<$0.FixtureId>? fixtures,
     $core.bool? wrapAround,
   }) {
     final _result = create();
@@ -581,6 +798,9 @@ class Sequence extends $pb.GeneratedMessage {
     }
     if (cues != null) {
       _result.cues.addAll(cues);
+    }
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
     }
     if (wrapAround != null) {
       _result.wrapAround = wrapAround;
@@ -630,22 +850,28 @@ class Sequence extends $pb.GeneratedMessage {
   $core.List<Cue> get cues => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.bool get wrapAround => $_getBF(3);
-  @$pb.TagNumber(4)
-  set wrapAround($core.bool v) { $_setBool(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasWrapAround() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearWrapAround() => clearField(4);
+  $core.List<$0.FixtureId> get fixtures => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.bool get wrapAround => $_getBF(4);
+  @$pb.TagNumber(5)
+  set wrapAround($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasWrapAround() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearWrapAround() => clearField(5);
 }
 
 class Cue extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Cue', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..e<CueTrigger>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trigger', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger.GO, valueOf: CueTrigger.valueOf, enumValues: CueTrigger.values)
-    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'loop')
-    ..pc<CueChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: CueChannel.create)
+    ..aOM<CueTrigger>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'trigger', subBuilder: CueTrigger.create)
+    ..pc<CueControl>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: CueControl.create)
+    ..aOM<CueTimings>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueTimings', subBuilder: CueTimings.create)
+    ..aOM<CueTimings>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dimmerTimings', subBuilder: CueTimings.create)
+    ..aOM<CueTimings>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positionTimings', subBuilder: CueTimings.create)
+    ..aOM<CueTimings>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorTimings', subBuilder: CueTimings.create)
     ..hasRequiredFields = false
   ;
 
@@ -654,8 +880,11 @@ class Cue extends $pb.GeneratedMessage {
     $core.int? id,
     $core.String? name,
     CueTrigger? trigger,
-    $core.bool? loop,
-    $core.Iterable<CueChannel>? channels,
+    $core.Iterable<CueControl>? controls,
+    CueTimings? cueTimings,
+    CueTimings? dimmerTimings,
+    CueTimings? positionTimings,
+    CueTimings? colorTimings,
   }) {
     final _result = create();
     if (id != null) {
@@ -667,11 +896,20 @@ class Cue extends $pb.GeneratedMessage {
     if (trigger != null) {
       _result.trigger = trigger;
     }
-    if (loop != null) {
-      _result.loop = loop;
+    if (controls != null) {
+      _result.controls.addAll(controls);
     }
-    if (channels != null) {
-      _result.channels.addAll(channels);
+    if (cueTimings != null) {
+      _result.cueTimings = cueTimings;
+    }
+    if (dimmerTimings != null) {
+      _result.dimmerTimings = dimmerTimings;
+    }
+    if (positionTimings != null) {
+      _result.positionTimings = positionTimings;
+    }
+    if (colorTimings != null) {
+      _result.colorTimings = colorTimings;
     }
     return _result;
   }
@@ -722,48 +960,70 @@ class Cue extends $pb.GeneratedMessage {
   $core.bool hasTrigger() => $_has(2);
   @$pb.TagNumber(3)
   void clearTrigger() => clearField(3);
+  @$pb.TagNumber(3)
+  CueTrigger ensureTrigger() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  $core.bool get loop => $_getBF(3);
-  @$pb.TagNumber(4)
-  set loop($core.bool v) { $_setBool(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasLoop() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearLoop() => clearField(4);
+  $core.List<CueControl> get controls => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.List<CueChannel> get channels => $_getList(4);
+  CueTimings get cueTimings => $_getN(4);
+  @$pb.TagNumber(5)
+  set cueTimings(CueTimings v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasCueTimings() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearCueTimings() => clearField(5);
+  @$pb.TagNumber(5)
+  CueTimings ensureCueTimings() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  CueTimings get dimmerTimings => $_getN(5);
+  @$pb.TagNumber(6)
+  set dimmerTimings(CueTimings v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasDimmerTimings() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearDimmerTimings() => clearField(6);
+  @$pb.TagNumber(6)
+  CueTimings ensureDimmerTimings() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  CueTimings get positionTimings => $_getN(6);
+  @$pb.TagNumber(7)
+  set positionTimings(CueTimings v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasPositionTimings() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPositionTimings() => clearField(7);
+  @$pb.TagNumber(7)
+  CueTimings ensurePositionTimings() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  CueTimings get colorTimings => $_getN(7);
+  @$pb.TagNumber(8)
+  set colorTimings(CueTimings v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasColorTimings() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearColorTimings() => clearField(8);
+  @$pb.TagNumber(8)
+  CueTimings ensureColorTimings() => $_ensure(7);
 }
 
-class CueChannel extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
-    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..e<CueControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: CueControl.INTENSITY, valueOf: CueControl.valueOf, enumValues: CueControl.values)
-    ..aOM<CueValue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: CueValue.create)
-    ..aOM<CueTimer>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fade', subBuilder: CueTimer.create)
-    ..aOM<CueTimer>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delay', subBuilder: CueTimer.create)
+class CueTimings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTimings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..aOM<CueTimer>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fade', subBuilder: CueTimer.create)
+    ..aOM<CueTimer>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delay', subBuilder: CueTimer.create)
     ..hasRequiredFields = false
   ;
 
-  CueChannel._() : super();
-  factory CueChannel({
-    $core.Iterable<$0.FixtureId>? fixtures,
-    CueControl? control,
-    CueValue? value,
+  CueTimings._() : super();
+  factory CueTimings({
     CueTimer? fade,
     CueTimer? delay,
   }) {
     final _result = create();
-    if (fixtures != null) {
-      _result.fixtures.addAll(fixtures);
-    }
-    if (control != null) {
-      _result.control = control;
-    }
-    if (value != null) {
-      _result.value = value;
-    }
     if (fade != null) {
       _result.fade = fade;
     }
@@ -772,71 +1032,182 @@ class CueChannel extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory CueChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory CueChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory CueTimings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueTimings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  CueChannel clone() => CueChannel()..mergeFromMessage(this);
+  CueTimings clone() => CueTimings()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CueChannel copyWith(void Function(CueChannel) updates) => super.copyWith((message) => updates(message as CueChannel)) as CueChannel; // ignore: deprecated_member_use
+  CueTimings copyWith(void Function(CueTimings) updates) => super.copyWith((message) => updates(message as CueTimings)) as CueTimings; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static CueChannel create() => CueChannel._();
-  CueChannel createEmptyInstance() => create();
-  static $pb.PbList<CueChannel> createRepeated() => $pb.PbList<CueChannel>();
+  static CueTimings create() => CueTimings._();
+  CueTimings createEmptyInstance() => create();
+  static $pb.PbList<CueTimings> createRepeated() => $pb.PbList<CueTimings>();
   @$core.pragma('dart2js:noInline')
-  static CueChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueChannel>(create);
-  static CueChannel? _defaultInstance;
+  static CueTimings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTimings>(create);
+  static CueTimings? _defaultInstance;
+
+  @$pb.TagNumber(8)
+  CueTimer get fade => $_getN(0);
+  @$pb.TagNumber(8)
+  set fade(CueTimer v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasFade() => $_has(0);
+  @$pb.TagNumber(8)
+  void clearFade() => clearField(8);
+  @$pb.TagNumber(8)
+  CueTimer ensureFade() => $_ensure(0);
+
+  @$pb.TagNumber(9)
+  CueTimer get delay => $_getN(1);
+  @$pb.TagNumber(9)
+  set delay(CueTimer v) { setField(9, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasDelay() => $_has(1);
+  @$pb.TagNumber(9)
+  void clearDelay() => clearField(9);
+  @$pb.TagNumber(9)
+  CueTimer ensureDelay() => $_ensure(1);
+}
+
+class CueTrigger extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTrigger', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..e<CueTrigger_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueTrigger_Type.GO, valueOf: CueTrigger_Type.valueOf, enumValues: CueTrigger_Type.values)
+    ..aOM<CueTime>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', subBuilder: CueTime.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTrigger._() : super();
+  factory CueTrigger({
+    CueTrigger_Type? type,
+    CueTime? time,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (time != null) {
+      _result.time = time;
+    }
+    return _result;
+  }
+  factory CueTrigger.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueTrigger.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueTrigger clone() => CueTrigger()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueTrigger copyWith(void Function(CueTrigger) updates) => super.copyWith((message) => updates(message as CueTrigger)) as CueTrigger; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueTrigger create() => CueTrigger._();
+  CueTrigger createEmptyInstance() => create();
+  static $pb.PbList<CueTrigger> createRepeated() => $pb.PbList<CueTrigger>();
+  @$core.pragma('dart2js:noInline')
+  static CueTrigger getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTrigger>(create);
+  static CueTrigger? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.FixtureId> get fixtures => $_getList(0);
+  CueTrigger_Type get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(CueTrigger_Type v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
 
   @$pb.TagNumber(2)
-  CueControl get control => $_getN(1);
+  CueTime get time => $_getN(1);
   @$pb.TagNumber(2)
-  set control(CueControl v) { setField(2, v); }
+  set time(CueTime v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasControl() => $_has(1);
+  $core.bool hasTime() => $_has(1);
   @$pb.TagNumber(2)
-  void clearControl() => clearField(2);
+  void clearTime() => clearField(2);
+  @$pb.TagNumber(2)
+  CueTime ensureTime() => $_ensure(1);
+}
+
+class CueControl extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..e<CueControl_Type>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CueControl_Type.INTENSITY, valueOf: CueControl_Type.valueOf, enumValues: CueControl_Type.values)
+    ..aOM<CueValue>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', subBuilder: CueValue.create)
+    ..pc<$0.FixtureId>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueControl._() : super();
+  factory CueControl({
+    CueControl_Type? type,
+    CueValue? value,
+    $core.Iterable<$0.FixtureId>? fixtures,
+  }) {
+    final _result = create();
+    if (type != null) {
+      _result.type = type;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    return _result;
+  }
+  factory CueControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueControl clone() => CueControl()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueControl copyWith(void Function(CueControl) updates) => super.copyWith((message) => updates(message as CueControl)) as CueControl; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueControl create() => CueControl._();
+  CueControl createEmptyInstance() => create();
+  static $pb.PbList<CueControl> createRepeated() => $pb.PbList<CueControl>();
+  @$core.pragma('dart2js:noInline')
+  static CueControl getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueControl>(create);
+  static CueControl? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  CueControl_Type get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(CueControl_Type v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  CueValue get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value(CueValue v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
+  @$pb.TagNumber(2)
+  CueValue ensureValue() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  CueValue get value => $_getN(2);
-  @$pb.TagNumber(3)
-  set value(CueValue v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasValue() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearValue() => clearField(3);
-  @$pb.TagNumber(3)
-  CueValue ensureValue() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  CueTimer get fade => $_getN(3);
-  @$pb.TagNumber(4)
-  set fade(CueTimer v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasFade() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearFade() => clearField(4);
-  @$pb.TagNumber(4)
-  CueTimer ensureFade() => $_ensure(3);
-
-  @$pb.TagNumber(5)
-  CueTimer get delay => $_getN(4);
-  @$pb.TagNumber(5)
-  set delay(CueTimer v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasDelay() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearDelay() => clearField(5);
-  @$pb.TagNumber(5)
-  CueTimer ensureDelay() => $_ensure(4);
+  $core.List<$0.FixtureId> get fixtures => $_getList(2);
 }
 
 enum CueValue_Value {

@@ -39,6 +39,11 @@ class SequencerApiClient extends $grpc.Client {
           '/mizer.sequencer.SequencerApi/SequenceGo',
           ($1.SequenceGoRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
+  static final _$sequenceStop =
+      $grpc.ClientMethod<$1.SequenceStopRequest, $1.EmptyResponse>(
+          '/mizer.sequencer.SequencerApi/SequenceStop',
+          ($1.SequenceStopRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.EmptyResponse.fromBuffer(value));
   static final _$updateCueTrigger =
       $grpc.ClientMethod<$1.CueTriggerRequest, $1.Sequences>(
           '/mizer.sequencer.SequencerApi/UpdateCueTrigger',
@@ -48,6 +53,21 @@ class SequencerApiClient extends $grpc.Client {
       $grpc.ClientMethod<$1.CueNameRequest, $1.Sequences>(
           '/mizer.sequencer.SequencerApi/UpdateCueName',
           ($1.CueNameRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
+  static final _$updateCueValue =
+      $grpc.ClientMethod<$1.CueValueRequest, $1.Sequences>(
+          '/mizer.sequencer.SequencerApi/UpdateCueValue',
+          ($1.CueValueRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
+  static final _$updateCueFadeTime =
+      $grpc.ClientMethod<$1.CueTimingRequest, $1.Sequences>(
+          '/mizer.sequencer.SequencerApi/UpdateCueFadeTime',
+          ($1.CueTimingRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
+  static final _$updateCueDelayTime =
+      $grpc.ClientMethod<$1.CueTimingRequest, $1.Sequences>(
+          '/mizer.sequencer.SequencerApi/UpdateCueDelayTime',
+          ($1.CueTimingRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
   static final _$updateSequenceWrapAround =
       $grpc.ClientMethod<$1.SequenceWrapAroundRequest, $1.Sequences>(
@@ -93,6 +113,12 @@ class SequencerApiClient extends $grpc.Client {
     return $createUnaryCall(_$sequenceGo, request, options: options);
   }
 
+  $grpc.ResponseFuture<$1.EmptyResponse> sequenceStop(
+      $1.SequenceStopRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$sequenceStop, request, options: options);
+  }
+
   $grpc.ResponseFuture<$1.Sequences> updateCueTrigger(
       $1.CueTriggerRequest request,
       {$grpc.CallOptions? options}) {
@@ -102,6 +128,23 @@ class SequencerApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Sequences> updateCueName($1.CueNameRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateCueName, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequences> updateCueValue($1.CueValueRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateCueValue, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequences> updateCueFadeTime(
+      $1.CueTimingRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateCueFadeTime, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequences> updateCueDelayTime(
+      $1.CueTimingRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateCueDelayTime, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.Sequences> updateSequenceWrapAround(
@@ -161,6 +204,14 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $1.SequenceGoRequest.fromBuffer(value),
         ($1.EmptyResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.SequenceStopRequest, $1.EmptyResponse>(
+        'SequenceStop',
+        sequenceStop_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.SequenceStopRequest.fromBuffer(value),
+        ($1.EmptyResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.CueTriggerRequest, $1.Sequences>(
         'UpdateCueTrigger',
         updateCueTrigger_Pre,
@@ -174,6 +225,27 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
         false,
         false,
         ($core.List<$core.int> value) => $1.CueNameRequest.fromBuffer(value),
+        ($1.Sequences value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CueValueRequest, $1.Sequences>(
+        'UpdateCueValue',
+        updateCueValue_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.CueValueRequest.fromBuffer(value),
+        ($1.Sequences value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CueTimingRequest, $1.Sequences>(
+        'UpdateCueFadeTime',
+        updateCueFadeTime_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.CueTimingRequest.fromBuffer(value),
+        ($1.Sequences value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.CueTimingRequest, $1.Sequences>(
+        'UpdateCueDelayTime',
+        updateCueDelayTime_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $1.CueTimingRequest.fromBuffer(value),
         ($1.Sequences value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.SequenceWrapAroundRequest, $1.Sequences>(
         'UpdateSequenceWrapAround',
@@ -217,6 +289,11 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
     return sequenceGo(call, await request);
   }
 
+  $async.Future<$1.EmptyResponse> sequenceStop_Pre($grpc.ServiceCall call,
+      $async.Future<$1.SequenceStopRequest> request) async {
+    return sequenceStop(call, await request);
+  }
+
   $async.Future<$1.Sequences> updateCueTrigger_Pre($grpc.ServiceCall call,
       $async.Future<$1.CueTriggerRequest> request) async {
     return updateCueTrigger(call, await request);
@@ -225,6 +302,21 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
   $async.Future<$1.Sequences> updateCueName_Pre(
       $grpc.ServiceCall call, $async.Future<$1.CueNameRequest> request) async {
     return updateCueName(call, await request);
+  }
+
+  $async.Future<$1.Sequences> updateCueValue_Pre(
+      $grpc.ServiceCall call, $async.Future<$1.CueValueRequest> request) async {
+    return updateCueValue(call, await request);
+  }
+
+  $async.Future<$1.Sequences> updateCueFadeTime_Pre($grpc.ServiceCall call,
+      $async.Future<$1.CueTimingRequest> request) async {
+    return updateCueFadeTime(call, await request);
+  }
+
+  $async.Future<$1.Sequences> updateCueDelayTime_Pre($grpc.ServiceCall call,
+      $async.Future<$1.CueTimingRequest> request) async {
+    return updateCueDelayTime(call, await request);
   }
 
   $async.Future<$1.Sequences> updateSequenceWrapAround_Pre(
@@ -248,10 +340,18 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.DeleteSequenceRequest request);
   $async.Future<$1.EmptyResponse> sequenceGo(
       $grpc.ServiceCall call, $1.SequenceGoRequest request);
+  $async.Future<$1.EmptyResponse> sequenceStop(
+      $grpc.ServiceCall call, $1.SequenceStopRequest request);
   $async.Future<$1.Sequences> updateCueTrigger(
       $grpc.ServiceCall call, $1.CueTriggerRequest request);
   $async.Future<$1.Sequences> updateCueName(
       $grpc.ServiceCall call, $1.CueNameRequest request);
+  $async.Future<$1.Sequences> updateCueValue(
+      $grpc.ServiceCall call, $1.CueValueRequest request);
+  $async.Future<$1.Sequences> updateCueFadeTime(
+      $grpc.ServiceCall call, $1.CueTimingRequest request);
+  $async.Future<$1.Sequences> updateCueDelayTime(
+      $grpc.ServiceCall call, $1.CueTimingRequest request);
   $async.Future<$1.Sequences> updateSequenceWrapAround(
       $grpc.ServiceCall call, $1.SequenceWrapAroundRequest request);
   $async.Future<$1.Sequences> updateSequenceName(

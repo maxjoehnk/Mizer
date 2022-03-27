@@ -35,17 +35,17 @@ layouts: {}
 sequences:
   - id: 1
     name: Sequence 1
+    fixtures: [1, 2, 3, 4]
     cues:
       - id: 1
         name: Cue 1
         trigger: Go
-        channels:
-          - fixtures: [1, 2, 3, 4]
-            control: Intensity
+        controls:
+          - control: Intensity
             value: 1
+            fixtures: [1, 2, 3, 4]
         effects:
-          - fixtures: [1, 2, 3, 4]
-            effect: 1
+          - effect: 1
 effects:
   - id: 1
     name: Test

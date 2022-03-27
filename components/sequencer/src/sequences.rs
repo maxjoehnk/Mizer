@@ -1,6 +1,7 @@
 use std::cmp::Ordering;
 
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::FixtureId;
 
 use crate::contracts::*;
 use crate::cue::*;
@@ -11,6 +12,7 @@ use crate::EffectEngine;
 pub struct Sequence {
     pub id: u32,
     pub name: String,
+    pub fixtures: Vec<FixtureId>,
     pub cues: Vec<Cue>,
     #[serde(default)]
     pub wrap_around: bool,
@@ -29,6 +31,7 @@ impl Sequence {
             id,
             name: format!("Sequence {}", id),
             cues: Vec::new(),
+            fixtures: Vec::new(),
             wrap_around: false,
         }
     }
@@ -50,11 +53,12 @@ impl Sequence {
                 state.go(self, clock, effect_engine);
             }
         }
-        cue.update_state(state, clock);
-        for channel in &cue.channels {
-            for (fixture_id, value) in channel.values(state, clock) {
+        cue.update_state(self, state, clock);
+        for control in &cue.controls {
+            for (fixture_id, value) in control.values(self, cue, state, clock) {
                 if let Some(value) = value {
-                    fixture_controller.write(fixture_id, channel.control.clone(), value);
+                    fixture_controller.write(fixture_id, control.control.clone(), value);
+                    state.set_fixture_value(fixture_id, control.control.clone(), value);
                 }
             }
         }
@@ -69,15 +73,7 @@ impl Sequence {
     }
 
     fn current_cue(&self, state: &mut SequenceState, clock: &impl Clock) -> &Cue {
-        let cue = &self.cues[state.active_cue_index];
-        if state.is_cue_finished() {
-            if let LoopMode::JumpTo(cue_id) = cue.loop_mode {
-                state.jump_to(self, cue_id, clock);
-                return &self.cues[state.active_cue_index];
-            }
-        }
-
-        cue
+        &self.cues[state.active_cue_index]
     }
 
     /// Returns cue id
@@ -86,11 +82,12 @@ impl Sequence {
         let cue = Cue {
             id,
             name: format!("Cue {}", id),
-            channels: Vec::new(),
+            controls: Vec::new(),
             effects: Vec::new(),
             trigger: CueTrigger::Go,
-            loop_mode: LoopMode::None,
-            time: None,
+            trigger_time: None,
+            cue_fade: None,
+            cue_delay: None,
         };
         self.cues.push(cue);
 

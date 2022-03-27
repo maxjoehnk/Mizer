@@ -26,8 +26,13 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
-  Future<void> sequenceGo(int sequence) async {
+  Future<void> sequenceGoForward(int sequence) async {
     await channel.invokeMethod("sequenceGo", sequence);
+  }
+
+  @override
+  Future<void> sequenceStop(int sequence) async {
+    await channel.invokeMethod("sequenceStop", sequence);
   }
 
   @override
@@ -45,7 +50,7 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
-  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger trigger) async {
+  Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger_Type trigger) async {
     var request = CueTriggerRequest(sequence: sequence, cue: cue, trigger: trigger);
     var response = await channel.invokeMethod("updateCueTrigger", request.writeToBuffer());
 
@@ -63,6 +68,30 @@ class SequencerPluginApi implements SequencerApi {
   Future<Sequences> updateCueName(int sequence, int cue, String name) async {
     var request = CueNameRequest(sequence: sequence, cue: cue, name: name);
     var response = await channel.invokeMethod("updateCueName", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<Sequences> updateCueValue(int sequenceId, int cueId, int controlIndex, CueValue value) async {
+    var request = CueValueRequest(sequenceId: sequenceId, cueId: cueId, controlIndex: controlIndex, value: value);
+    var response = await channel.invokeMethod("updateCueValue", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<Sequences> updateCueFadeTime(int sequenceId, int cueId, CueTimer? value) async {
+    var request = CueTimingRequest(sequenceId: sequenceId, cueId: cueId, time: value);
+    var response = await channel.invokeMethod("updateCueFadeTime", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<Sequences> updateCueDelayTime(int sequenceId, int cueId, CueTimer? value) async {
+    var request = CueTimingRequest(sequenceId: sequenceId, cueId: cueId, time: value);
+    var response = await channel.invokeMethod("updateCueDelayTime", request.writeToBuffer());
 
     return Sequences.fromBuffer(_convertBuffer(response));
   }

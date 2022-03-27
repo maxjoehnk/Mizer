@@ -264,108 +264,169 @@ presets:
 sequences:
   - id: 1
     name: Sequence 1
+    fixtures:
+      - 1
+      - 4
+      - 3
+      - 5
+      - 2
+      - 9
+      - 6
+      - 8
+      - 10
+      - 7
     cues:
       - id: 1
         name: Cue 1
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
-              - 1
-              - 4
-              - 3
-              - 5
-              - 2
-            control:
+        controls:
+          - control:
               Color: Green
             value: 1.0
-            fade: ~
-            delay: ~
-          - fixtures:
+            fixtures:
               - 1
               - 4
               - 3
               - 5
               - 2
-            control:
+          - control:
               Color: Red
             value: 1.0
-            fade: ~
-            delay: ~
-          - fixtures:
+            fixtures:
               - 1
               - 4
               - 3
               - 5
               - 2
-            control:
+          - control:
               Color: Blue
             value: 1.0
-            fade: ~
-            delay: ~
-          - fixtures:
+            fixtures:
               - 1
               - 4
               - 3
               - 5
               - 2
-            control: Intensity
+          - control: Intensity
             value: 1.0
-            fade: ~
-            delay: ~
+            fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+          - control:
+              Color: Green
+            value: 0.0
+            fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+          - control:
+              Color: Blue
+            value: 0.0
+            fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+          - control:
+              Color: Red
+            value: 0.0
+            fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
+          - control: Intensity
+            value: 0.0
+            fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
         effects: []
-        loop_mode: ~
       - id: 2
         name: Cue 2
         trigger: Go
-        time: ~
-        channels:
-          - fixtures:
-              - 9
-              - 6
-              - 8
-              - 10
-              - 7
-            control:
+        controls:
+          - control:
+              Color: Green
+            value: 0.0
+            fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+          - control:
+              Color: Red
+            value: 0.0
+            fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+          - control:
+              Color: Blue
+            value: 0.0
+            fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+          - control: Intensity
+            value: 0.0
+            fixtures:
+              - 1
+              - 4
+              - 3
+              - 5
+              - 2
+          - control:
               Color: Green
             value: 1.0
-            fade: ~
-            delay: ~
-          - fixtures:
+            fixtures:
               - 9
               - 6
               - 8
               - 10
               - 7
-            control:
+          - control:
               Color: Blue
             value: 1.0
-            fade: ~
-            delay: ~
-          - fixtures:
+            fixtures:
               - 9
               - 6
               - 8
               - 10
               - 7
-            control:
+          - control:
               Color: Red
             value: 1.0
-            fade: ~
-            delay: ~
-          - fixtures:
+            fixtures:
               - 9
               - 6
               - 8
               - 10
               - 7
-            control: Intensity
+          - control: Intensity
             value: 1.0
-            fade: ~
-            delay: ~
+            fixtures:
+              - 9
+              - 6
+              - 8
+              - 10
+              - 7
         effects: []
-        loop_mode: ~
-    wrap_around: true
+    wrap_around: false
 effects:
   - id: 1
     name: Circle

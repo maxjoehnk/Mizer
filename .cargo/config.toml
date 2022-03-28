@@ -1,5 +1,5 @@
 [target.'cfg(target_os = "macos")']
-rustflags = ["-C", "target-cpu=native", "-C", "link-arg=-Wl,-rpath,@executable_path"]
+rustflags = ["-C", "target-cpu=native", "-C", "target-feature=-aes", "-C", "link-arg=-Wl,-rpath,@executable_path"]
 
 [target.'cfg(target_os = "linux")']
 rustflags = ["-C", "target-feature=+avx2,+sse4.2", "-C", "link-arg=-Wl,-rpath,$ORIGIN/lib"]

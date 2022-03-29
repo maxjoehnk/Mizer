@@ -8,9 +8,6 @@ fn main() -> anyhow::Result<()> {
     artifact.link("mizer")?;
     artifact.link("data")?;
     artifact.link("lib")?;
-    // artifact.link("libmizer_ui_ffi.so")?;
-    // artifact.link("deps/libflutter_linux_gtk.so")?;
-    artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
     artifact.link_source("components/fixtures/open-fixture-library/.fixtures", "fixtures/open-fixture-library")?;
     artifact.link_source("components/fixtures/qlcplus/.fixtures", "fixtures/qlcplus")?;
     artifact.link_source("components/fixtures/gdtf/.fixtures", "fixtures/gdtf")?;

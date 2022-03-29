@@ -1,5 +1,5 @@
 import 'dart:ffi' as ffi;
-import 'dart:io' show Directory;
+import 'dart:io' show Platform;
 import 'package:path/path.dart' as path;
 
 import 'programmer.dart';
@@ -16,8 +16,7 @@ extension DoubleArray on Array_f64 {
 }
 
 FFIBindings openBindings() {
-  var libraryPath = path.join(Directory.current.path, 'target', 'debug', 'libmizer_ui_ffi.so');
-  final dylib = ffi.DynamicLibrary.open(libraryPath);
+  final dylib = ffi.DynamicLibrary.open('libmizer_ui_ffi.so');
 
   return FFIBindings(dylib);
 }

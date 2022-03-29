@@ -3603,7 +3603,7 @@ name = "mizer-package"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "mizer",
+ "mizer-settings",
 ]
 
 [[package]]

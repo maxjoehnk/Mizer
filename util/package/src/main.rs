@@ -1,5 +1,6 @@
 use std::fs;
 use std::path::{Path, PathBuf};
+use mizer_settings::Settings;
 
 #[cfg(target_os = "linux")]
 fn main() -> anyhow::Result<()> {
@@ -7,6 +8,19 @@ fn main() -> anyhow::Result<()> {
     artifact.link("mizer")?;
     artifact.link("data")?;
     artifact.link("lib")?;
+    // artifact.link("libmizer_ui_ffi.so")?;
+    // artifact.link("deps/libflutter_linux_gtk.so")?;
+    artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
+    artifact.link_source("components/fixtures/open-fixture-library/.fixtures", "fixtures/open-fixture-library")?;
+    artifact.link_source("components/fixtures/qlcplus/.fixtures", "fixtures/qlcplus")?;
+    artifact.link_source("components/fixtures/gdtf/.fixtures", "fixtures/gdtf")?;
+    artifact.link_source("components/connections/protocols/midi/device-profiles/profiles", "device-profiles/midi")?;
+    artifact.copy_settings("settings.toml", |settings| {
+        settings.paths.midi_device_profiles = PathBuf::from("device-profiles/midi");
+        settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from("fixtures/open-fixture-library"));
+        settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
+        settings.paths.fixture_libraries.gdtf = Some(PathBuf::from("fixtures/gdtf"));
+    })?;
 
     Ok(())
 }
@@ -22,18 +36,12 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn build_dir() -> PathBuf {
-    let out_dir = std::env::var("OUT_DIR").unwrap();
-    let mut path = PathBuf::from(out_dir);
-    path.pop();
-    path.pop();
-    path.pop();
-
-    path
+fn build_dir(cwd: &Path) -> PathBuf {
+    cwd.join("target/release")
 }
 
-fn create_artifact_dir(build_dir: &Path) -> anyhow::Result<PathBuf> {
-    let artifact_path = build_dir.join("artifact");
+fn create_artifact_dir(cwd: &Path) -> anyhow::Result<PathBuf> {
+    let artifact_path = cwd.join("artifact");
     if artifact_path.exists() {
         fs::remove_dir_all(&artifact_path)?;
     } else {
@@ -44,16 +52,19 @@ fn create_artifact_dir(build_dir: &Path) -> anyhow::Result<PathBuf> {
 }
 
 struct Artifact {
+    cwd: PathBuf,
     build_dir: PathBuf,
     artifact_dir: PathBuf,
 }
 
 impl Artifact {
     fn new() -> anyhow::Result<Self> {
-        let path = build_dir();
-        let artifact_dir = create_artifact_dir(&path)?;
+        let cwd = std::env::current_dir()?;
+        let path = build_dir(&cwd);
+        let artifact_dir = create_artifact_dir(&cwd)?;
 
         Ok(Artifact {
+            cwd,
             build_dir: path,
             artifact_dir,
         })
@@ -74,6 +85,32 @@ impl Artifact {
             println!("Linking from {:?} to {:?}", from, to);
             std::os::unix::fs::symlink(&from, &to)?;
         }
+
+        Ok(())
+    }
+
+    fn link_source<P: AsRef<Path>, Q: AsRef<Path>>(&self, from: P, to: Q) -> anyhow::Result<()> {
+        let from = self.cwd.join(from);
+        let to = self.artifact_dir.join(to);
+
+        if let Some(parent) = to.parent() {
+            fs::create_dir_all(parent)?;
+        }
+
+        #[cfg(target_family = "unix")]
+        {
+            println!("Linking from {:?} to {:?}", from, to);
+            std::os::unix::fs::symlink(&from, &to)?;
+        }
+
+        Ok(())
+    }
+
+    fn copy_settings<P: AsRef<Path>, F: FnOnce(&mut Settings)>(&self, to: P, editor: F) -> anyhow::Result<()> {
+        let to = self.artifact_dir.join(to);
+        let mut settings = Settings::load()?;
+        editor(&mut settings);
+        settings.save_to(to)?;
 
         Ok(())
     }

@@ -4,6 +4,7 @@ use std::time::Duration;
 
 use anyhow::Context;
 use pinboard::NonEmptyPinboard;
+use rayon::prelude::*;
 
 use mizer_api::handlers::Handlers;
 use mizer_devices::DeviceModule;
@@ -24,7 +25,6 @@ use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
 use mizer_settings::Settings;
-use rayon::prelude::*;
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
@@ -48,8 +48,8 @@ pub fn build_runtime(
     let effect_engine = register_effects_module(&mut runtime)?;
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
-    register_midi_module(&mut runtime)?;
-    let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime)?;
+    register_midi_module(&mut runtime, &settings.read())?;
+    let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime, &settings.read())?;
 
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
@@ -277,24 +277,29 @@ fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     DmxModule.register(runtime)
 }
 
-fn register_midi_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+fn register_midi_module(runtime: &mut DefaultRuntime, settings: &Settings) -> anyhow::Result<()> {
     MidiModule.register(runtime)?;
 
     let connection_manager = runtime
         .injector_mut()
         .get_mut::<MidiConnectionManager>()
         .unwrap();
-    connection_manager
-        .load_device_profiles("components/connections/protocols/midi/device-profiles/profiles")?;
+    if settings.paths.midi_device_profiles.exists() {
+        connection_manager.load_device_profiles(&settings.paths.midi_device_profiles)?;
+    }
 
     Ok(())
 }
 
 fn register_fixtures_module(
     runtime: &mut DefaultRuntime,
+    settings: &Settings,
 ) -> anyhow::Result<(FixtureManager, FixtureLibrary)> {
     let providers = [load_ofl_provider, load_gdtf_provider, load_qlcplus_provider];
-    let providers = providers.into_par_iter().map(|loader| loader()).collect();
+    let providers = providers
+        .into_par_iter()
+        .filter_map(|loader| loader(settings))
+        .collect();
 
     let (fixture_module, fixture_manager, fixture_library) = FixtureModule::new(providers);
     fixture_module.register(runtime)?;
@@ -302,43 +307,57 @@ fn register_fixtures_module(
     Ok((fixture_manager, fixture_library))
 }
 
-fn load_ofl_provider() -> Box<dyn FixtureLibraryProvider> {
-    log::info!("Loading open fixture library...");
-    let mut ofl_provider = OpenFixtureLibraryProvider::new(
-        "components/fixtures/open-fixture-library/.fixtures".to_string(),
-    );
-    if let Err(err) = ofl_provider.load() {
-        log::warn!("Could not load open fixture library {:?}", err);
-    } else {
-        log::info!("Loading open fixture library...Done");
-    }
+fn load_ofl_provider(settings: &Settings) -> Option<Box<dyn FixtureLibraryProvider>> {
+    settings
+        .paths
+        .fixture_libraries
+        .open_fixture_library
+        .as_ref()
+        .map(|path| {
+            log::info!("Loading open fixture library...");
+            let mut ofl_provider =
+                OpenFixtureLibraryProvider::new(path.to_string_lossy().to_string());
+            if let Err(err) = ofl_provider.load() {
+                log::warn!("Could not load open fixture library {:?}", err);
+            } else {
+                log::info!("Loading open fixture library...Done");
+            }
 
-    Box::new(ofl_provider)
+            Box::new(ofl_provider) as Box<dyn FixtureLibraryProvider>
+        })
 }
 
-fn load_gdtf_provider() -> Box<dyn FixtureLibraryProvider> {
-    log::info!("Loading GDTF fixture library...");
-    let mut gdtf_provider = GdtfProvider::new("components/fixtures/gdtf/.fixtures".to_string());
-    if let Err(err) = gdtf_provider.load() {
-        log::warn!("Could not load GDTF fixture library {:?}", err);
-    } else {
-        log::info!("Loading GDTF fixture library...Done");
-    }
+fn load_gdtf_provider(settings: &Settings) -> Option<Box<dyn FixtureLibraryProvider>> {
+    settings.paths.fixture_libraries.gdtf.as_ref().map(|path| {
+        log::info!("Loading GDTF fixture library...");
+        let mut gdtf_provider = GdtfProvider::new(path.to_string_lossy().to_string());
+        if let Err(err) = gdtf_provider.load() {
+            log::warn!("Could not load GDTF fixture library {:?}", err);
+        } else {
+            log::info!("Loading GDTF fixture library...Done");
+        }
 
-    Box::new(gdtf_provider)
+        Box::new(gdtf_provider) as Box<dyn FixtureLibraryProvider>
+    })
 }
 
-fn load_qlcplus_provider() -> Box<dyn FixtureLibraryProvider> {
-    log::info!("Loading QLC+ fixture library...");
-    let mut qlcplus_provider =
-        QlcPlusProvider::new("components/fixtures/qlcplus/.fixtures".to_string());
-    if let Err(err) = qlcplus_provider.load() {
-        log::warn!("Could not load QLC+ fixture library {:?}", err);
-    } else {
-        log::info!("Loading QLC+ fixture library...Done");
-    }
+fn load_qlcplus_provider(settings: &Settings) -> Option<Box<dyn FixtureLibraryProvider>> {
+    settings
+        .paths
+        .fixture_libraries
+        .qlcplus
+        .as_ref()
+        .map(|path| {
+            log::info!("Loading QLC+ fixture library...");
+            let mut qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
+            if let Err(err) = qlcplus_provider.load() {
+                log::warn!("Could not load QLC+ fixture library {:?}", err);
+            } else {
+                log::info!("Loading QLC+ fixture library...Done");
+            }
 
-    Box::new(qlcplus_provider)
+            Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
+        })
 }
 
 fn import_media_files(

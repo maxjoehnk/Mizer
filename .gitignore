@@ -2,3 +2,4 @@
 .storage
 *.snap.new
 pipeline.dot
+/artifact

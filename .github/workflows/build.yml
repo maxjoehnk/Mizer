@@ -30,11 +30,13 @@ jobs:
           path: target/release/mizer
           if-no-files-found: error
       - name: Build
-        run: make build
+        run: make build-release
+      - name: Package
+        run: make package
       - uses: actions/upload-artifact@v2
         with:
           name: linux-full
-          path: target/release/artifact
+          path: artifact
           if-no-files-found: error
   build-macos:
     runs-on: macos-latest
@@ -48,15 +50,14 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: dev
-      - name: Get flutter deps
-        run: flutter pub get
-        working-directory: ui
       - name: Build
-        run: make build
+        run: make build-release
+      - name: Package
+        run: make package
       - uses: actions/upload-artifact@v2
         with:
           name: macos-full
-          path: target/release/artifact
+          path: artifact
           if-no-files-found: error
 
   build-windows:

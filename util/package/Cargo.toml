@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 anyhow = "1"
 mizer-settings = { path = "../../runtime/settings" }
+apple-bundle = "0.1.2"

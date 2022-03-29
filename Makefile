@@ -21,6 +21,5 @@ run: build
 	target/debug/mizer
 
 package:
-	ls -l artifact
 	ls -l target/release
 	cargo run -p mizer-package

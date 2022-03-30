@@ -56,8 +56,11 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: dev
-      - name: Prepare UI
-        run: make
+      - name: Generate FFI bindings
+        run: make generate_bindings
+        working-directory: ui
+      - name: Generate protobuf code
+        run: make proto
         working-directory: ui
       - run: flutter test
         working-directory: ui

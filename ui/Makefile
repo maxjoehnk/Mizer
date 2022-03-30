@@ -21,17 +21,17 @@ proto: $(PROTOS)
 $(OUT_DIR)/%.pb.dart : $(SRC_DIR)/%.proto
 	$(COMPILER) $<
 
-ffi: generate_header generate_bindings
+ffi: generate_bindings
 	cargo build -p mizer-ui-ffi
 	cp ../target/debug/libmizer_ui_ffi.so ../target/debug/lib/
 
-ffi_release: generate_header generate_bindings
+ffi_release: generate_bindings
 	cargo build --release -p mizer-ui-ffi
 
 generate_header:
 	cbindgen --config ffi/cbindgen.toml --crate mizer-ui-ffi --output ffi.h --lang c
 
-generate_bindings: deps
+generate_bindings: generate_header deps
 	flutter pub run ffigen
 
 attach:

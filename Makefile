@@ -21,5 +21,4 @@ run: build
 	target/debug/mizer
 
 package:
-	ls -l target/release
 	cargo run -p mizer-package

@@ -27,7 +27,7 @@ fn main() -> anyhow::Result<()> {
 fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.link("Mizer.app")?;
-    artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/MacOS")?;
+    artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
     artifact.link_source("components/fixtures/open-fixture-library/.fixtures", "Mizer.app/Contents/Resources/fixtures/open-fixture-library")?;
     artifact.link_source("components/fixtures/qlcplus/.fixtures", "Mizer.app/Contents/Resources/fixtures/qlcplus")?;

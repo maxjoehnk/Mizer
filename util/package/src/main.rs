@@ -29,6 +29,16 @@ fn main() -> anyhow::Result<()> {
     artifact.link("Mizer.app")?;
     artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/MacOS")?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
+    artifact.link_source("components/fixtures/open-fixture-library/.fixtures", "Mizer.app/Contents/Resources/fixtures/open-fixture-library")?;
+    artifact.link_source("components/fixtures/qlcplus/.fixtures", "Mizer.app/Contents/Resources/fixtures/qlcplus")?;
+    artifact.link_source("components/fixtures/gdtf/.fixtures", "Mizer.app/Contents/Resources/fixtures/gdtf")?;
+    artifact.link_source("components/connections/protocols/midi/device-profiles/profiles", "Mizer.app/Contents/Resources/device-profiles/midi")?;
+    artifact.copy_settings("Mizer.app/Contents/MacOS/settings.toml", |settings| {
+        settings.paths.midi_device_profiles = PathBuf::from("../Resources/device-profiles/midi");
+        settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from("../Resources/fixtures/open-fixture-library"));
+        settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("../Resources/fixtures/qlcplus"));
+        settings.paths.fixture_libraries.gdtf = Some(PathBuf::from("../Resources/fixtures/gdtf"));
+    })?;
 
     Ok(())
 }

@@ -15,8 +15,8 @@ extension DoubleArray on Array_f64 {
 }
 
 FFIBindings openBindings() {
-  final _dylibName = io.Platform.isWindows ? 'mizer_ui_ffi.dll' : 'libmizer_ui_ffi.so';
-  final dylib = io.Platform.isMacOS ? ffi.DynamicLibrary.executable() : ffi.DynamicLibrary.open(_dylibName);
+  final _dylibName = io.Platform.isMacOS ? 'libmizer_ui_ffi.dylib' : (io.Platform.isWindows ? 'mizer_ui_ffi.dll' : 'libmizer_ui_ffi.so');
+  final dylib = ffi.DynamicLibrary.open(_dylibName);
 
   return FFIBindings(dylib);
 }

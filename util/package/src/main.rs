@@ -26,45 +26,8 @@ fn main() -> anyhow::Result<()> {
 fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.link("Mizer.app")?;
-    artifact.link_to("mizer", "Mizer.app/Contents/MacOS/mizer")?;
     artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/MacOS")?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
-    artifact.write_file("Mizer.app/Contents/Info.plist", generate_info_plist)?;
-
-    Ok(())
-}
-
-fn generate_info_plist(file: &mut fs::File) -> anyhow::Result<()> {
-    use apple_bundle::info_plist::prelude::*;
-    let plist = InfoPlist {
-        identification: Identification {
-            bundle_identifier: "me.maxjoehnk.mizer".into(),
-            ..Default::default()
-        },
-        naming: Naming {
-            bundle_name: Some("Mizer".into()),
-            ..Default::default()
-        },
-        bundle_version: BundleVersion {
-            // TODO: read from Cargo.toml
-            bundle_short_version_string: Some("0.1.0".into()),
-            ..Default::default()
-        },
-        operating_system_version: OperatingSystemVersion {
-            minimum_system_version: Some("10.13".into()),
-            ..Default::default()
-        },
-        launch: Launch {
-            bundle_executable: Some("mizer".into()),
-            ..Default::default()
-        },
-        graphics: Graphics {
-            high_resolution_capable: Some(true),
-            ..Default::default()
-        },
-        ..Default::default()
-    };
-    apple_bundle::plist::to_writer_xml(file, &plist)?;
 
     Ok(())
 }
@@ -144,14 +107,6 @@ impl Artifact {
         let mut settings = Settings::load()?;
         editor(&mut settings);
         settings.save_to(to)?;
-
-        Ok(())
-    }
-
-    fn write_file<P: AsRef<Path>, F: FnOnce(&mut fs::File) -> anyhow::Result<()>>(&self, path: P, writer: F) -> anyhow::Result<()> {
-        let path = self.artifact_dir.join(path);
-        let mut file = std::fs::File::create(path)?;
-        writer(&mut file)?;
 
         Ok(())
     }

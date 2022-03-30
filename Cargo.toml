@@ -53,7 +53,8 @@ members = [
     "ui",
     "ui/ffi",
     "util",
-    "util/bus"
+    "util/bus",
+    "util/package"
 ]
 
 [lib]
@@ -132,3 +133,6 @@ harness = false
 
 [profile.bench]
 lto = true
+
+[target.'cfg(target_os = "macos")'.dependencies]
+oslog = "0.2"

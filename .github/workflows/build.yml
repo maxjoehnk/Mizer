@@ -27,21 +27,16 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: linux-headless
-          path: |
-            target/release/mizer
-            components/fixtures/open-fixture-library/.fixtures
+          path: target/release/mizer
           if-no-files-found: error
       - name: Build
-        run: make build
+        run: make build-release
+      - name: Package
+        run: make package
       - uses: actions/upload-artifact@v2
         with:
           name: linux-full
-          path: |
-            target/debug/mizer
-            target/debug/libmizer_ui_ffi.so
-            target/debug/lib
-            target/debug/data
-            components/fixtures/open-fixture-library/.fixtures
+          path: artifact
           if-no-files-found: error
   build-macos:
     runs-on: macos-latest
@@ -55,23 +50,14 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: dev
-      - name: Get flutter deps
-        run: flutter pub get
-        working-directory: ui
       - name: Build
-        run: make build
+        run: make build-release
+      - name: Package
+        run: make package
       - uses: actions/upload-artifact@v2
         with:
           name: macos-full
-          path: |
-            target/debug/
-            !target/debug/deps/**
-            !target/debug/build/**
-            !target/debug/incremental/**
-            !target/debug/examples/**
-            !target/debug/libmizer*
-            !target/debug/.fingerprint/**
-            components/fixtures/open-fixture-library/.fixtures
+          path: artifact
           if-no-files-found: error
 
   build-windows:
@@ -141,8 +127,11 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: master
-      - name: Prepare UI
-        run: make
+      - name: Generate FFI bindings
+        run: make generate_bindings
+        working-directory: ui
+      - name: Generate protobuf code
+        run: make proto
         working-directory: ui
       - run: flutter build apk
         working-directory: ui

@@ -11,7 +11,14 @@ build-headless:
 
 build:
 	cd ui && make
-	cargo build
+	cargo build -p mizer
+
+build-release:
+	cd ui && make release
+	cargo build --release -p mizer
 
 run: build
 	target/debug/mizer
+
+package:
+	cargo run -p mizer-package

@@ -1,6 +1,5 @@
 import 'dart:ffi' as ffi;
-import 'dart:io' show Directory;
-import 'package:path/path.dart' as path;
+import 'dart:io' as io;
 
 import 'programmer.dart';
 import 'sequencer.dart';
@@ -16,8 +15,8 @@ extension DoubleArray on Array_f64 {
 }
 
 FFIBindings openBindings() {
-  var libraryPath = path.join(Directory.current.path, 'target', 'debug', 'libmizer_ui_ffi.so');
-  final dylib = ffi.DynamicLibrary.open(libraryPath);
+  final _dylibName = io.Platform.isMacOS ? 'libmizer_ui_ffi.dylib' : (io.Platform.isWindows ? 'mizer_ui_ffi.dll' : 'libmizer_ui_ffi.so');
+  final dylib = ffi.DynamicLibrary.open(_dylibName);
 
   return FFIBindings(dylib);
 }

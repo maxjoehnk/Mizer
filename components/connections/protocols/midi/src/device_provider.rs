@@ -1,6 +1,7 @@
 use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
 use mizer_midi_device_profiles::{load_profiles, DeviceProfile};
 use std::collections::HashMap;
+use std::path::Path;
 
 use crate::device::MidiDevice;
 
@@ -38,7 +39,7 @@ impl MidiDeviceProvider {
         }
     }
 
-    pub fn load_device_profiles(&mut self, path: &str) -> anyhow::Result<()> {
+    pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {
         self.profiles = load_profiles(path)?;
 
         Ok(())

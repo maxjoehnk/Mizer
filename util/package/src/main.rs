@@ -123,15 +123,14 @@ impl Artifact {
             .map(|file| {
                 let file = file?;
 
-                let is_file = file.file_type()?.is_file();
                 let filename_matches = file
                     .file_name()
                     .into_string()
                     .unwrap_or_default()
                     .ends_with(suffix);
 
-                println!("Matching {:?} with suffix {} = {}", &file, suffix, is_file && filename_matches);
-                if is_file && filename_matches {
+                println!("Matching {:?} with suffix {} = {}", &file, suffix, filename_matches);
+                if filename_matches {
                     Ok(Some(file))
                 } else {
                     Ok(None)

@@ -2,6 +2,7 @@ use env_logger::fmt::Formatter;
 use log::Record;
 use std::io::Write;
 
+#[cfg(not(target_os = "macos"))]
 pub fn init() {
     env_logger::builder()
         .format(|buf, record| {
@@ -17,6 +18,17 @@ pub fn init() {
             Ok(())
         })
         .init();
+}
+
+#[cfg(target_os = "macos")]
+pub fn init() {
+    use oslog::*;
+    use log::LevelFilter;
+
+    OsLogger::new("live.mizer")
+        .level_filter(LevelFilter::Debug)
+        .init()
+        .unwrap();
 }
 
 #[cfg(debug_assertions)]

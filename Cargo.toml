@@ -133,3 +133,6 @@ harness = false
 
 [profile.bench]
 lto = true
+
+[target.'cfg(target_os = "macos")'.dependencies]
+oslog = "0.2"

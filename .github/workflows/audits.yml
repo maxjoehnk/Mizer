@@ -1,3 +1,4 @@
+---
 name: Security Audit
 on:
   push:

@@ -1,3 +1,4 @@
+---
 on: [push]
 
 name: Build
@@ -7,14 +8,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install native dependencies
-        run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev xorg-dev libgtk-3-dev curl libclang-dev libudev-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev xorg-dev libgtk-3-dev curl libclang-dev libudev-dev
       - name: Install Protoc 3.17.3
         run: |
           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip
           unzip protoc-3.17.3-linux-x86_64.zip
-          mkdir -p $HOME/.local/bin
-          cp bin/protoc $HOME/.local/bin/
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          mkdir -p "$HOME/.local/bin"
+          cp bin/protoc "$HOME/.local/bin/"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
@@ -78,8 +81,10 @@ jobs:
           key: ${{needs.gvsbuild.outputs.cachekey}}
       - name: Set up env
         run: |
-          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
-          echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+          # shellcheck disable=SC2028
+          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> "$GITHUB_ENV"
+          # shellcheck disable=SC2028
+          echo "C:\gtk-build\gtk\x64\release\bin" >> "$GITHUB_PATH"
         shell: bash
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1

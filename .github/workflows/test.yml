@@ -1,3 +1,4 @@
+---
 on: [push]
 
 name: Tests
@@ -9,7 +10,9 @@ jobs:
     if: ${{ false }}
     steps:
       - name: Install native dependencies
-        run: sudo apt-get update && sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler xorg-dev libgtk-3-dev curl libclang-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev protobuf-compiler xorg-dev libgtk-3-dev curl libclang-dev
       - uses: actions/checkout@v2
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -43,7 +46,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install native dependencies
-        run: sudo apt-get update && sudo apt-get install libclang-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install libclang-dev
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

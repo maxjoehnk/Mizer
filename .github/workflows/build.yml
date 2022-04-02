@@ -17,7 +17,7 @@ jobs:
           unzip protoc-3.17.3-linux-x86_64.zip
           mkdir -p "$HOME/.local/bin"
           cp bin/protoc "$HOME/.local/bin/"
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
@@ -95,8 +95,10 @@ jobs:
           key: ${{needs.gvsbuild.outputs.cachekey}}
       - name: Set up env
         run: |
-          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
-          echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+          # shellcheck disable=SC2028
+          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> "$GITHUB_ENV"
+          # shellcheck disable=SC2028
+          echo "C:\gtk-build\gtk\x64\release\bin" >> "$GITHUB_PATH"
         shell: bash
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1

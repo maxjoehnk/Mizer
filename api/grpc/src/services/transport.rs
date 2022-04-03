@@ -36,9 +36,11 @@ impl<R: RuntimeApi> TransportApi for TransportHandler<R> {
 
     fn set_bpm(
         &self,
-        _: ::grpc::ServerRequestSingle<super::transport::SetBpmRequest>,
-        _: ::grpc::ServerResponseUnarySink<super::transport::Transport>,
+        req: ::grpc::ServerRequestSingle<super::transport::SetBpmRequest>,
+        resp: ::grpc::ServerResponseUnarySink<super::transport::Transport>,
     ) -> ::grpc::Result<()> {
-        unimplemented!()
+        self.set_bpm(req.message.bpm).unwrap();
+
+        resp.finish(Default::default())
     }
 }

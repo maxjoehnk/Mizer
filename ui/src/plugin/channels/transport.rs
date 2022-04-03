@@ -39,6 +39,15 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
                     }
                 }
             }
+            "setBPM" => {
+                if let Value::F64(bpm) = call.args {
+                    if let Err(err) = self.set_bpm(bpm) {
+                        resp.respond_error(err)
+                    }else {
+                        resp.send_ok(Value::Null);
+                    }
+                }
+            }
             "getTransportPointer" => match self.get_transport_pointer() {
                 Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                 Err(err) => resp.respond_error(err),
@@ -59,6 +68,11 @@ impl<R: RuntimeApi + 'static> TransportChannel<R> {
 
     fn set_state(&self, state: TransportState) -> anyhow::Result<()> {
         self.handler.set_state(state)?;
+        Ok(())
+    }
+
+    fn set_bpm(&self, bpm: f64) -> anyhow::Result<()> {
+        self.handler.set_bpm(bpm)?;
         Ok(())
     }
 

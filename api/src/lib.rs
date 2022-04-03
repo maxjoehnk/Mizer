@@ -85,6 +85,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn delete_node(&self, path: NodePath) -> anyhow::Result<()>;
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
+    fn set_bpm(&self, bpm: f64) -> anyhow::Result<()>;
 
     fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>>;
     fn new_project(&self) -> anyhow::Result<()>;

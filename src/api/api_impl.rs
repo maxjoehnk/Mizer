@@ -312,6 +312,12 @@ impl RuntimeApi for Api {
         Ok(())
     }
 
+    fn set_bpm(&self, bpm: f64) -> anyhow::Result<()> {
+        self.sender.send(ApiCommand::SetBpm(bpm))?;
+
+        Ok(())
+    }
+
     fn observe_session(&self) -> anyhow::Result<Subscriber<SessionState>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::ObserveSession(tx))?;

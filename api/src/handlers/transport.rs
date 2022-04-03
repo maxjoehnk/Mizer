@@ -28,6 +28,12 @@ impl<R: RuntimeApi> TransportHandler<R> {
         Ok(())
     }
 
+    pub fn set_bpm(&self, bpm: f64) -> anyhow::Result<()> {
+        self.runtime.set_bpm(bpm)?;
+
+        Ok(())
+    }
+
     pub fn clock_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>> {
         self.runtime.get_clock_snapshot_ref()
     }

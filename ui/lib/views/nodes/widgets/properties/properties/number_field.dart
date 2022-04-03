@@ -174,7 +174,7 @@ class _NumberFieldState extends State<NumberField> {
 
   void _dragValue(num value) {
     value = _validateValue(value);
-    this.controller.text = this.value.toString();
+    this.controller.text = value.toString();
     _setValue(value);
   }
 

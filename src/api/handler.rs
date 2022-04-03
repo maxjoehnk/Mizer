@@ -78,6 +78,10 @@ impl ApiHandler {
             ApiCommand::SetClockState(state) => {
                 mizer.runtime.clock.set_state(state);
             }
+            ApiCommand::SetBpm(bpm) => {
+                let speed = mizer.runtime.clock.speed_mut();
+                *speed = bpm;
+            },
             ApiCommand::SaveProject(sender) => {
                 let result = mizer.save_project();
                 sender

@@ -28,6 +28,7 @@ pub enum ApiCommand {
     UpdateNode(NodePath, Node, flume::Sender<anyhow::Result<()>>),
     DeleteNode(NodePath, flume::Sender<()>),
     SetClockState(ClockState),
+    SetBpm(f64),
     GetConnections(flume::Sender<Vec<Connection>>),
     GetMidiDeviceProfiles(flume::Sender<Vec<DeviceProfile>>),
     AddSacnConnection(String, flume::Sender<anyhow::Result<()>>),

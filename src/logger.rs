@@ -22,8 +22,8 @@ pub fn init() {
 
 #[cfg(target_os = "macos")]
 pub fn init() {
-    use oslog::*;
     use log::LevelFilter;
+    use oslog::*;
 
     OsLogger::new("live.mizer")
         .level_filter(LevelFilter::Debug)

@@ -43,7 +43,7 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for TransportChannel<R> {
                 if let Value::F64(bpm) = call.args {
                     if let Err(err) = self.set_bpm(bpm) {
                         resp.respond_error(err)
-                    }else {
+                    } else {
                         resp.send_ok(Value::Null);
                     }
                 }

@@ -77,7 +77,11 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
         resp.finish(DeleteNodeResponse::default())
     }
 
-    fn hide_node(&self, req: ServerRequestSingle<HideNodeRequest>, resp: ServerResponseUnarySink<HideNodeResponse>) -> grpc::Result<()> {
+    fn hide_node(
+        &self,
+        req: ServerRequestSingle<HideNodeRequest>,
+        resp: ServerResponseUnarySink<HideNodeResponse>,
+    ) -> grpc::Result<()> {
         self.hide_node(req.message.path.into()).unwrap();
 
         resp.finish(HideNodeResponse::default())

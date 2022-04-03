@@ -30,7 +30,7 @@ impl Settings {
         if Path::new("settings.toml").exists() {
             let mut file = std::fs::File::open("settings.toml")?;
             file.read_to_string(&mut buffer)?;
-        }else {
+        } else {
             buffer = DEFAULT_SETTINGS.to_string();
         }
         let settings = toml::from_str(&buffer)?;

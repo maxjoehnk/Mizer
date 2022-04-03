@@ -49,7 +49,8 @@ pub fn build_runtime(
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
     register_midi_module(&mut runtime, &settings.read())?;
-    let (fixture_manager, fixture_library) = register_fixtures_module(&mut runtime, &settings.read())?;
+    let (fixture_manager, fixture_library) =
+        register_fixtures_module(&mut runtime, &settings.read())?;
 
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();

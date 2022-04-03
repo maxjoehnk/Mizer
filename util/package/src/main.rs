@@ -1,6 +1,6 @@
+use mizer_settings::Settings;
 use std::fs;
 use std::path::{Path, PathBuf};
-use mizer_settings::Settings;
 
 #[cfg(target_os = "linux")]
 fn main() -> anyhow::Result<()> {
@@ -9,13 +9,20 @@ fn main() -> anyhow::Result<()> {
     artifact.link("data")?;
     artifact.link("lib")?;
     artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
-    artifact.link_source("components/fixtures/open-fixture-library/.fixtures", "fixtures/open-fixture-library")?;
+    artifact.link_source(
+        "components/fixtures/open-fixture-library/.fixtures",
+        "fixtures/open-fixture-library",
+    )?;
     artifact.link_source("components/fixtures/qlcplus/.fixtures", "fixtures/qlcplus")?;
     artifact.link_source("components/fixtures/gdtf/.fixtures", "fixtures/gdtf")?;
-    artifact.link_source("components/connections/protocols/midi/device-profiles/profiles", "device-profiles/midi")?;
+    artifact.link_source(
+        "components/connections/protocols/midi/device-profiles/profiles",
+        "device-profiles/midi",
+    )?;
     artifact.copy_settings("settings.toml", |settings| {
         settings.paths.midi_device_profiles = PathBuf::from("device-profiles/midi");
-        settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from("fixtures/open-fixture-library"));
+        settings.paths.fixture_libraries.open_fixture_library =
+            Some(PathBuf::from("fixtures/open-fixture-library"));
         settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
         settings.paths.fixture_libraries.gdtf = Some(PathBuf::from("fixtures/gdtf"));
     })?;
@@ -29,15 +36,32 @@ fn main() -> anyhow::Result<()> {
     artifact.link("Mizer.app")?;
     artifact.link_all_with_suffix_to(".dylib", "Mizer.app/Contents/Frameworks")?;
     artifact.link_all_with_suffix_to(".framework", "Mizer.app/Contents/Frameworks")?;
-    artifact.link_source("components/fixtures/open-fixture-library/.fixtures", "Mizer.app/Contents/Resources/fixtures/open-fixture-library")?;
-    artifact.link_source("components/fixtures/qlcplus/.fixtures", "Mizer.app/Contents/Resources/fixtures/qlcplus")?;
-    artifact.link_source("components/fixtures/gdtf/.fixtures", "Mizer.app/Contents/Resources/fixtures/gdtf")?;
-    artifact.link_source("components/connections/protocols/midi/device-profiles/profiles", "Mizer.app/Contents/Resources/device-profiles/midi")?;
+    artifact.link_source(
+        "components/fixtures/open-fixture-library/.fixtures",
+        "Mizer.app/Contents/Resources/fixtures/open-fixture-library",
+    )?;
+    artifact.link_source(
+        "components/fixtures/qlcplus/.fixtures",
+        "Mizer.app/Contents/Resources/fixtures/qlcplus",
+    )?;
+    artifact.link_source(
+        "components/fixtures/gdtf/.fixtures",
+        "Mizer.app/Contents/Resources/fixtures/gdtf",
+    )?;
+    artifact.link_source(
+        "components/connections/protocols/midi/device-profiles/profiles",
+        "Mizer.app/Contents/Resources/device-profiles/midi",
+    )?;
     artifact.copy_settings("Mizer.app/Contents/MacOS/settings.toml", |settings| {
-        settings.paths.midi_device_profiles = PathBuf::from("Contents/Resources/device-profiles/midi");
-        settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from("Contents/Resources/fixtures/open-fixture-library"));
-        settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("Contents/Resources/fixtures/qlcplus"));
-        settings.paths.fixture_libraries.gdtf = Some(PathBuf::from("Contents/Resources/fixtures/gdtf"));
+        settings.paths.midi_device_profiles =
+            PathBuf::from("Contents/Resources/device-profiles/midi");
+        settings.paths.fixture_libraries.open_fixture_library = Some(PathBuf::from(
+            "Contents/Resources/fixtures/open-fixture-library",
+        ));
+        settings.paths.fixture_libraries.qlcplus =
+            Some(PathBuf::from("Contents/Resources/fixtures/qlcplus"));
+        settings.paths.fixture_libraries.gdtf =
+            Some(PathBuf::from("Contents/Resources/fixtures/gdtf"));
     })?;
 
     Ok(())
@@ -113,7 +137,11 @@ impl Artifact {
         Ok(())
     }
 
-    fn copy_settings<P: AsRef<Path>, F: FnOnce(&mut Settings)>(&self, to: P, editor: F) -> anyhow::Result<()> {
+    fn copy_settings<P: AsRef<Path>, F: FnOnce(&mut Settings)>(
+        &self,
+        to: P,
+        editor: F,
+    ) -> anyhow::Result<()> {
         let to = self.artifact_dir.join(to);
         let mut settings = Settings::load()?;
         editor(&mut settings);
@@ -139,7 +167,10 @@ impl Artifact {
                     .unwrap_or_default()
                     .ends_with(suffix);
 
-                println!("Matching {:?} with suffix {} = {}", &file, suffix, filename_matches);
+                println!(
+                    "Matching {:?} with suffix {} = {}",
+                    &file, suffix, filename_matches
+                );
                 if filename_matches {
                     Ok(Some(file))
                 } else {

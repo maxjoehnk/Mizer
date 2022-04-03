@@ -110,6 +110,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    pub fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
+        self.runtime.hide_node(path)
+    }
+
     pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.delete_node(path)
     }

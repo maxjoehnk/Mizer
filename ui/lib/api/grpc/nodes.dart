@@ -49,4 +49,9 @@ class NodesGrpcApi implements NodesApi {
   Future<void> showNode(ShowNodeRequest request) {
     return this.client.showNode(request);
   }
+
+  @override
+  Future<void> hideNode(String path) {
+    return this.client.hideNode(HideNodeRequest(path: path));
+  }
 }

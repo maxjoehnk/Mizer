@@ -43,7 +43,10 @@ class BaseNode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContextMenu(
-      menu: Menu(items: [MenuItem(label: "Delete", action: () => _onDeleteNode(context))]),
+      menu: Menu(items: [
+        MenuItem(label: "Hide", action: () => _onHideNode(context)),
+        MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
+      ]),
       child: Container(
         width: NODE_BASE_WIDTH,
         child: GestureDetector(
@@ -93,6 +96,10 @@ class BaseNode extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: NodePreview(this.node),
     );
+  }
+
+  void _onHideNode(BuildContext context) async {
+    context.read<NodesBloc>().add(HideNode(node.path));
   }
 
   void _onDeleteNode(BuildContext context) async {

@@ -81,6 +81,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()>;
     fn update_node_position(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()>;
     fn show_node(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()>;
+    fn hide_node(&self, path: NodePath) -> anyhow::Result<()>;
     fn delete_node(&self, path: NodePath) -> anyhow::Result<()>;
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;

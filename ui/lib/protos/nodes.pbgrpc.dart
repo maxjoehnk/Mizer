@@ -50,6 +50,12 @@ class NodesApiClient extends $grpc.Client {
           ($0.DeleteNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.DeleteNodeResponse.fromBuffer(value));
+  static final _$hideNode =
+      $grpc.ClientMethod<$0.HideNodeRequest, $0.HideNodeResponse>(
+          '/mizer.NodesApi/HideNode',
+          ($0.HideNodeRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.HideNodeResponse.fromBuffer(value));
   static final _$showNode =
       $grpc.ClientMethod<$0.ShowNodeRequest, $0.ShowNodeResponse>(
           '/mizer.NodesApi/ShowNode',
@@ -98,6 +104,11 @@ class NodesApiClient extends $grpc.Client {
       $0.DeleteNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$deleteNode, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.HideNodeResponse> hideNode($0.HideNodeRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$hideNode, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ShowNodeResponse> showNode($0.ShowNodeRequest request,
@@ -161,6 +172,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.DeleteNodeRequest.fromBuffer(value),
         ($0.DeleteNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.HideNodeRequest, $0.HideNodeResponse>(
+        'HideNode',
+        hideNode_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.HideNodeRequest.fromBuffer(value),
+        ($0.HideNodeResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.ShowNodeRequest, $0.ShowNodeResponse>(
         'ShowNode',
         showNode_Pre,
@@ -206,6 +224,11 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return deleteNode(call, await request);
   }
 
+  $async.Future<$0.HideNodeResponse> hideNode_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.HideNodeRequest> request) async {
+    return hideNode(call, await request);
+  }
+
   $async.Future<$0.ShowNodeResponse> showNode_Pre(
       $grpc.ServiceCall call, $async.Future<$0.ShowNodeRequest> request) async {
     return showNode(call, await request);
@@ -225,6 +248,8 @@ abstract class NodesApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.MoveNodeRequest request);
   $async.Future<$0.DeleteNodeResponse> deleteNode(
       $grpc.ServiceCall call, $0.DeleteNodeRequest request);
+  $async.Future<$0.HideNodeResponse> hideNode(
+      $grpc.ServiceCall call, $0.HideNodeRequest request);
   $async.Future<$0.ShowNodeResponse> showNode(
       $grpc.ServiceCall call, $0.ShowNodeRequest request);
 }

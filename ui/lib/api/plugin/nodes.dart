@@ -68,4 +68,9 @@ class NodesPluginApi implements NodesApi {
   Future<void> showNode(ShowNodeRequest request) async {
     await channel.invokeMethod("showNode", request.writeToBuffer());
   }
+
+  @override
+  Future<void> hideNode(String path) async {
+    await channel.invokeMethod("hideNode", path);
+  }
 }

@@ -49,6 +49,12 @@ class DeleteNode extends NodesEvent {
   DeleteNode(this.node);
 }
 
+class HideNode extends NodesEvent {
+  final String node;
+
+  HideNode(this.node);
+}
+
 class ShowNode extends NodesEvent {
   final String node;
   final Offset position;
@@ -113,6 +119,11 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       var nodes = state.nodes.where((element) => element.path != event.node).toList();
       var channels = state.channels.where((channel) => channel.sourceNode != event.node && channel.targetNode != event.node).toList();
       yield Nodes(channels: channels, nodes: nodes);
+    }
+    if (event is HideNode) {
+      await api.hideNode(event.node);
+      var nodes = await api.getNodes();
+      yield nodes;
     }
     if (event is ShowNode) {
       var request = event.into();

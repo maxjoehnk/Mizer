@@ -135,6 +135,23 @@ const DeleteNodeResponse$json = const {
 
 /// Descriptor for `DeleteNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteNodeResponseDescriptor = $convert.base64Decode('ChJEZWxldGVOb2RlUmVzcG9uc2U=');
+@$core.Deprecated('Use hideNodeRequestDescriptor instead')
+const HideNodeRequest$json = const {
+  '1': 'HideNodeRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+  ],
+};
+
+/// Descriptor for `HideNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hideNodeRequestDescriptor = $convert.base64Decode('Cg9IaWRlTm9kZVJlcXVlc3QSEgoEcGF0aBgBIAEoCVIEcGF0aA==');
+@$core.Deprecated('Use hideNodeResponseDescriptor instead')
+const HideNodeResponse$json = const {
+  '1': 'HideNodeResponse',
+};
+
+/// Descriptor for `HideNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List hideNodeResponseDescriptor = $convert.base64Decode('ChBIaWRlTm9kZVJlc3BvbnNl');
 @$core.Deprecated('Use nodesDescriptor instead')
 const Nodes$json = const {
   '1': 'Nodes',

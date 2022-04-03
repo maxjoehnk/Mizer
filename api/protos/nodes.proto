@@ -10,6 +10,7 @@ service NodesApi {
   rpc UpdateNodeProperty (UpdateNodeConfigRequest) returns (UpdateNodeConfigResponse) {}
   rpc MoveNode (MoveNodeRequest) returns (MoveNodeResponse) {}
   rpc DeleteNode (DeleteNodeRequest) returns (DeleteNodeResponse) {}
+  rpc HideNode (HideNodeRequest) returns (HideNodeResponse) {}
   rpc ShowNode (ShowNodeRequest) returns (ShowNodeResponse) {}
 }
 
@@ -54,6 +55,12 @@ message DeleteNodeRequest {
 }
 
 message DeleteNodeResponse {}
+
+message HideNodeRequest {
+  string path = 1;
+}
+
+message HideNodeResponse {}
 
 message Nodes {
   repeated Node nodes = 1;

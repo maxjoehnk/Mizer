@@ -46,6 +46,7 @@ sequences:
             fixtures: [1, 2, 3, 4]
         effects:
           - effect: 1
+            fixtures: [1, 2, 3, 4]
 effects:
   - id: 1
     name: Test

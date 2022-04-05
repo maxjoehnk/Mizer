@@ -120,7 +120,23 @@ pub struct Wheels {
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "Wheel")]
-pub struct Wheel {}
+pub struct Wheel {
+    #[xml(attr = "Name")]
+    pub name: String,
+    #[xml(child = "Slot")]
+    pub slots: Vec<WheelSlot>,
+}
+
+#[derive(Debug, Clone, XmlRead)]
+#[xml(tag = "Slot")]
+pub struct WheelSlot {
+    #[xml(attr = "Name")]
+    pub name: String,
+    #[xml(attr = "Color")]
+    pub color: String,
+    #[xml(attr = "MediaFileName")]
+    pub media_file_name: Option<String>,
+}
 
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "PhysicalDescriptions")]

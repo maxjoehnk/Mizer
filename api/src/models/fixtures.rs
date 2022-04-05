@@ -2277,6 +2277,7 @@ pub enum FixtureControls_oneof_value {
     fader(FaderChannel),
     color(ColorChannel),
     axis(AxisChannel),
+    gobo(GoboChannel),
     generic(GenericChannel),
 }
 
@@ -2447,7 +2448,56 @@ impl FixtureControls {
         }
     }
 
-    // .mizer.fixtures.GenericChannel generic = 5;
+    // .mizer.fixtures.GoboChannel gobo = 5;
+
+
+    pub fn get_gobo(&self) -> &GoboChannel {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::gobo(ref v)) => v,
+            _ => <GoboChannel as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_gobo(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_gobo(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::gobo(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_gobo(&mut self, v: GoboChannel) {
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::gobo(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_gobo(&mut self) -> &mut GoboChannel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::gobo(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::gobo(GoboChannel::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::gobo(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_gobo(&mut self) -> GoboChannel {
+        if self.has_gobo() {
+            match self.value.take() {
+                ::std::option::Option::Some(FixtureControls_oneof_value::gobo(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            GoboChannel::new()
+        }
+    }
+
+    // .mizer.fixtures.GenericChannel generic = 6;
 
 
     pub fn get_generic(&self) -> &GenericChannel {
@@ -2514,6 +2564,11 @@ impl ::protobuf::Message for FixtureControls {
                 return false;
             }
         }
+        if let Some(FixtureControls_oneof_value::gobo(ref v)) = self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         if let Some(FixtureControls_oneof_value::generic(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
@@ -2551,6 +2606,12 @@ impl ::protobuf::Message for FixtureControls {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::gobo(is.read_message()?));
+                },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
                     self.value = ::std::option::Option::Some(FixtureControls_oneof_value::generic(is.read_message()?));
                 },
                 _ => {
@@ -2579,6 +2640,10 @@ impl ::protobuf::Message for FixtureControls {
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &FixtureControls_oneof_value::axis(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &FixtureControls_oneof_value::gobo(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2614,8 +2679,13 @@ impl ::protobuf::Message for FixtureControls {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureControls_oneof_value::generic(ref v) => {
+                &FixtureControls_oneof_value::gobo(ref v) => {
                     os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &FixtureControls_oneof_value::generic(ref v) => {
+                    os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -2679,6 +2749,11 @@ impl ::protobuf::Message for FixtureControls {
                 FixtureControls::has_axis,
                 FixtureControls::get_axis,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GoboChannel>(
+                "gobo",
+                FixtureControls::has_gobo,
+                FixtureControls::get_gobo,
+            ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, GenericChannel>(
                 "generic",
                 FixtureControls::has_generic,
@@ -2701,6 +2776,7 @@ impl ::protobuf::Message for FixtureControls {
 impl ::protobuf::Clear for FixtureControls {
     fn clear(&mut self) {
         self.control = FixtureControl::INTENSITY;
+        self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
@@ -3321,6 +3397,558 @@ impl ::std::fmt::Debug for AxisChannel {
 }
 
 impl ::protobuf::reflect::ProtobufValue for AxisChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct GoboChannel {
+    // message fields
+    pub value: f64,
+    pub gobos: ::protobuf::RepeatedField<Gobo>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a GoboChannel {
+    fn default() -> &'a GoboChannel {
+        <GoboChannel as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl GoboChannel {
+    pub fn new() -> GoboChannel {
+        ::std::default::Default::default()
+    }
+
+    // double value = 1;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+
+    // repeated .mizer.fixtures.Gobo gobos = 2;
+
+
+    pub fn get_gobos(&self) -> &[Gobo] {
+        &self.gobos
+    }
+    pub fn clear_gobos(&mut self) {
+        self.gobos.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_gobos(&mut self, v: ::protobuf::RepeatedField<Gobo>) {
+        self.gobos = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_gobos(&mut self) -> &mut ::protobuf::RepeatedField<Gobo> {
+        &mut self.gobos
+    }
+
+    // Take field
+    pub fn take_gobos(&mut self) -> ::protobuf::RepeatedField<Gobo> {
+        ::std::mem::replace(&mut self.gobos, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for GoboChannel {
+    fn is_initialized(&self) -> bool {
+        for v in &self.gobos {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.gobos)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.value != 0. {
+            my_size += 9;
+        }
+        for value in &self.gobos {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.value != 0. {
+            os.write_double(1, self.value)?;
+        }
+        for v in &self.gobos {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> GoboChannel {
+        GoboChannel::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &GoboChannel| { &m.value },
+                |m: &mut GoboChannel| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Gobo>>(
+                "gobos",
+                |m: &GoboChannel| { &m.gobos },
+                |m: &mut GoboChannel| { &mut m.gobos },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<GoboChannel>(
+                "GoboChannel",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static GoboChannel {
+        static instance: ::protobuf::rt::LazyV2<GoboChannel> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(GoboChannel::new)
+    }
+}
+
+impl ::protobuf::Clear for GoboChannel {
+    fn clear(&mut self) {
+        self.value = 0.;
+        self.gobos.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for GoboChannel {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GoboChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct Gobo {
+    // message fields
+    pub name: ::std::string::String,
+    pub value: f64,
+    // message oneof groups
+    pub image: ::std::option::Option<Gobo_oneof_image>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a Gobo {
+    fn default() -> &'a Gobo {
+        <Gobo as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum Gobo_oneof_image {
+    svg(::std::string::String),
+    raster(::std::vec::Vec<u8>),
+}
+
+impl Gobo {
+    pub fn new() -> Gobo {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // double value = 2;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+
+    // string svg = 3;
+
+
+    pub fn get_svg(&self) -> &str {
+        match self.image {
+            ::std::option::Option::Some(Gobo_oneof_image::svg(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_svg(&mut self) {
+        self.image = ::std::option::Option::None;
+    }
+
+    pub fn has_svg(&self) -> bool {
+        match self.image {
+            ::std::option::Option::Some(Gobo_oneof_image::svg(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_svg(&mut self, v: ::std::string::String) {
+        self.image = ::std::option::Option::Some(Gobo_oneof_image::svg(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_svg(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(Gobo_oneof_image::svg(_)) = self.image {
+        } else {
+            self.image = ::std::option::Option::Some(Gobo_oneof_image::svg(::std::string::String::new()));
+        }
+        match self.image {
+            ::std::option::Option::Some(Gobo_oneof_image::svg(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_svg(&mut self) -> ::std::string::String {
+        if self.has_svg() {
+            match self.image.take() {
+                ::std::option::Option::Some(Gobo_oneof_image::svg(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // bytes raster = 4;
+
+
+    pub fn get_raster(&self) -> &[u8] {
+        match self.image {
+            ::std::option::Option::Some(Gobo_oneof_image::raster(ref v)) => v,
+            _ => &[],
+        }
+    }
+    pub fn clear_raster(&mut self) {
+        self.image = ::std::option::Option::None;
+    }
+
+    pub fn has_raster(&self) -> bool {
+        match self.image {
+            ::std::option::Option::Some(Gobo_oneof_image::raster(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_raster(&mut self, v: ::std::vec::Vec<u8>) {
+        self.image = ::std::option::Option::Some(Gobo_oneof_image::raster(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_raster(&mut self) -> &mut ::std::vec::Vec<u8> {
+        if let ::std::option::Option::Some(Gobo_oneof_image::raster(_)) = self.image {
+        } else {
+            self.image = ::std::option::Option::Some(Gobo_oneof_image::raster(::std::vec::Vec::new()));
+        }
+        match self.image {
+            ::std::option::Option::Some(Gobo_oneof_image::raster(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_raster(&mut self) -> ::std::vec::Vec<u8> {
+        if self.has_raster() {
+            match self.image.take() {
+                ::std::option::Option::Some(Gobo_oneof_image::raster(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::vec::Vec::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for Gobo {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.image = ::std::option::Option::Some(Gobo_oneof_image::svg(is.read_string()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.image = ::std::option::Option::Some(Gobo_oneof_image::raster(is.read_bytes()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.value != 0. {
+            my_size += 9;
+        }
+        if let ::std::option::Option::Some(ref v) = self.image {
+            match v {
+                &Gobo_oneof_image::svg(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+                &Gobo_oneof_image::raster(ref v) => {
+                    my_size += ::protobuf::rt::bytes_size(4, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.value != 0. {
+            os.write_double(2, self.value)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.image {
+            match v {
+                &Gobo_oneof_image::svg(ref v) => {
+                    os.write_string(3, v)?;
+                },
+                &Gobo_oneof_image::raster(ref v) => {
+                    os.write_bytes(4, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> Gobo {
+        Gobo::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &Gobo| { &m.name },
+                |m: &mut Gobo| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &Gobo| { &m.value },
+                |m: &mut Gobo| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "svg",
+                Gobo::has_svg,
+                Gobo::get_svg,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_bytes_accessor::<_>(
+                "raster",
+                Gobo::has_raster,
+                Gobo::get_raster,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<Gobo>(
+                "Gobo",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static Gobo {
+        static instance: ::protobuf::rt::LazyV2<Gobo> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(Gobo::new)
+    }
+}
+
+impl ::protobuf::Clear for Gobo {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.value = 0.;
+        self.image = ::std::option::Option::None;
+        self.image = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Gobo {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Gobo {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -5705,7 +6333,8 @@ pub enum FixtureControl {
     PRISM = 7,
     IRIS = 8,
     FROST = 9,
-    GENERIC = 10,
+    GOBO = 10,
+    GENERIC = 11,
 }
 
 impl ::protobuf::ProtobufEnum for FixtureControl {
@@ -5725,7 +6354,8 @@ impl ::protobuf::ProtobufEnum for FixtureControl {
             7 => ::std::option::Option::Some(FixtureControl::PRISM),
             8 => ::std::option::Option::Some(FixtureControl::IRIS),
             9 => ::std::option::Option::Some(FixtureControl::FROST),
-            10 => ::std::option::Option::Some(FixtureControl::GENERIC),
+            10 => ::std::option::Option::Some(FixtureControl::GOBO),
+            11 => ::std::option::Option::Some(FixtureControl::GENERIC),
             _ => ::std::option::Option::None
         }
     }
@@ -5742,6 +6372,7 @@ impl ::protobuf::ProtobufEnum for FixtureControl {
             FixtureControl::PRISM,
             FixtureControl::IRIS,
             FixtureControl::FROST,
+            FixtureControl::GOBO,
             FixtureControl::GENERIC,
         ];
         values
@@ -5796,58 +6427,64 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     6\n\x08children\x18\n\x20\x03(\x0b2\x1a.mizer.fixtures.SubFixtureR\x08ch\
     ildren\"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
     \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08controls\x18\x03\
-    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xaf\x02\
+    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xe2\x02\
     \n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.\
     fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\x02\x20\x01(\x0b\
     2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x124\n\x05color\x18\x03\
     \x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannelH\0R\x05color\x121\n\x04ax\
-    is\x18\x04\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x12:\
-    \n\x07generic\x18\x05\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChannelH\0\
-    R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05value\x18\
-    \x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\n\x03red\x18\
-    \x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05gr\
-    een\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\x0bAxisChannel\
-    \x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\
-    \x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\
-    \x01R\x07angleTo\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\
-    \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
-    \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
-    definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
-    definitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
-    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
-    \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
-    al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
-    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\x1a\n\x08provider\
-    \x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\x20\x03(\x0b2\
-    \x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\n\x0eFixtureCh\
-    annel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\n\x06coarse\x18\
-    \x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.CoarseResolutionH\0R\
-    \x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fixtures.FixtureC\
-    hannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\x20\x01(\x0b2\
-    /.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\
-    \x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
-    \x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\
-    \x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\
-    \x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\x01\x20\x01\
-    (\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfine\
-    Channel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\
-    \nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\
-    \x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\
-    \x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\
-    \x18\x04\x20\x01(\x02R\x06weight*\x8c\x01\n\x0eFixtureControl\x12\r\n\tI\
-    NTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\n\x05COLOR\x10\x02\x12\
-    \x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\x12\t\n\x05FOCUS\x10\x05\
-    \x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\x07\x12\x08\n\x04IRIS\
-    \x10\x08\x12\t\n\x05FROST\x10\t\x12\x0b\n\x07GENERIC\x10\n2\xed\x02\n\
-    \x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixturesRe\
-    quest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixtureDefinition\
-    s\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.\
-    FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFix\
-    turesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixture\
-    s\x12%.mizer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtu\
-    res\"\0b\x06proto3\
+    is\x18\x04\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x121\
+    \n\x04gobo\x18\x05\x20\x01(\x0b2\x1b.mizer.fixtures.GoboChannelH\0R\x04g\
+    obo\x12:\n\x07generic\x18\x06\x20\x01(\x0b2\x1e.mizer.fixtures.GenericCh\
+    annelH\0R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05v\
+    alue\x18\x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\n\x03re\
+    d\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\
+    \x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\x0bAxisCh\
+    annel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle\
+    _from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\
+    \x01(\x01R\x07angleTo\"O\n\x0bGoboChannel\x12\x14\n\x05value\x18\x01\x20\
+    \x01(\x01R\x05value\x12*\n\x05gobos\x18\x02\x20\x03(\x0b2\x14.mizer.fixt\
+    ures.GoboR\x05gobos\"g\n\x04Gobo\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x03\
+    svg\x18\x03\x20\x01(\tH\0R\x03svg\x12\x18\n\x06raster\x18\x04\x20\x01(\
+    \x0cH\0R\x06rasterB\x07\n\x05image\":\n\x0eGenericChannel\x12\x14\n\x05v\
+    alue\x18\x01\x20\x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\t\
+    R\x04name\"\x1e\n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinit\
+    ions\x12C\n\x0bdefinitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.Fixture\
+    DefinitionR\x0bdefinitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12\
+    1\n\x05modes\x18\x04\x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05mo\
+    des\x12?\n\x08physical\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhys\
+    icalDataR\x08physical\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\
+    \x1a\n\x08provider\x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\
+    \x02\x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\
+    \x04\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x12I\n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.C\
+    oarseResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mize\
+    r.fixtures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\
+    \x18\x04\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\
+    \0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\
+    \x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChanne\
+    l\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\
+    \x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinest\
+    Channel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\
+    \x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\r\
+    R\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\
+    \n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\
+    \x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05dep\
+    th\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight*\x96\x01\n\x0eFix\
+    tureControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\
+    \n\x05COLOR\x10\x02\x12\x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\
+    \x12\t\n\x05FOCUS\x10\x05\x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\
+    \x07\x12\x08\n\x04IRIS\x10\x08\x12\t\n\x05FROST\x10\t\x12\x08\n\x04GOBO\
+    \x10\n\x12\x0b\n\x07GENERIC\x10\x0b2\xed\x02\n\x0bFixturesApi\x12M\n\x0b\
+    GetFixtures\x12\".mizer.fixtures.GetFixturesRequest\x1a\x18.mizer.fixtur\
+    es.Fixtures\"\0\x12k\n\x15GetFixtureDefinitions\x12,.mizer.fixtures.GetF\
+    ixtureDefinitionsRequest\x1a\".mizer.fixtures.FixtureDefinitions\"\0\x12\
+    M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixturesRequest\x1a\x18.mizer\
+    .fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixtures\x12%.mizer.fixtures.Dele\
+    teFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

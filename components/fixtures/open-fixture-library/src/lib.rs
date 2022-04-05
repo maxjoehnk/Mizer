@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
+use mizer_util::LerpExt;
 
 #[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
@@ -119,6 +120,37 @@ pub struct OpenFixtureLibraryFixtureDefinition {
     pub physical: Physical,
     #[serde(default)]
     pub matrix: Option<Matrix>,
+    #[serde(default)]
+    pub wheels: HashMap<String, WheelDefinition>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WheelDefinition {
+    pub slots: Vec<WheelSlotDefinition>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type")]
+pub enum WheelSlotDefinition {
+    Open,
+    Closed,
+    Color {
+        #[serde(default)]
+        name: Option<String>,
+        #[serde(default)]
+        colors: Vec<String>,
+    },
+    Gobo {
+        #[serde(default)]
+        name: Option<String>,
+        #[serde(default)]
+        resource: Option<Resource>,
+    },
+    Prism,
+    Iris,
+    Frost,
+    AnimationGoboStart,
+    AnimationGoboEnd,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -242,6 +274,8 @@ pub enum WheelSlot {
     Single {
         #[serde(rename = "slotNumber")]
         slot_number: f32,
+        #[serde(rename = "dmxRange")]
+        dmx_range: (u8, u8),
     },
     Range {
         #[serde(rename = "slotNumberStart")]
@@ -283,9 +317,28 @@ pub enum MatrixPixels {
     PixelCount([u32; 3]),
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Resource {
+    pub name: String,
+    pub key: String,
+    #[serde(rename = "type")]
+    pub resource_type: String,
+    pub image: ResourceImage,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResourceImage {
+    pub mime_type: String,
+    pub extension: String,
+    pub data: String,
+    pub encoding: String,
+}
+
 impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     fn from(def: OpenFixtureLibraryFixtureDefinition) -> Self {
         let available_channels = def.available_channels;
+        let wheels = def.wheels;
         FixtureDefinition {
             id: format!(
                 "ofl:{}:{}",
@@ -297,7 +350,7 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
             modes: def
                 .modes
                 .into_iter()
-                .map(|mode| build_fixture_mode(mode, &available_channels))
+                .map(|mode| build_fixture_mode(mode, &available_channels, &wheels))
                 .collect(),
             tags: def.categories,
             physical: PhysicalFixtureData {
@@ -309,7 +362,11 @@ impl From<OpenFixtureLibraryFixtureDefinition> for FixtureDefinition {
     }
 }
 
-fn build_fixture_mode(mode: Mode, available_channels: &HashMap<String, Channel>) -> FixtureMode {
+fn build_fixture_mode(
+    mode: Mode,
+    available_channels: &HashMap<String, Channel>,
+    wheels: &HashMap<String, WheelDefinition>,
+) -> FixtureMode {
     let all_channels = mode.channels.into_iter().flatten().collect::<Vec<_>>();
 
     let (pixels, channels): (Vec<_>, Vec<_>) = all_channels
@@ -317,8 +374,8 @@ fn build_fixture_mode(mode: Mode, available_channels: &HashMap<String, Channel>)
         .into_iter()
         .partition(|name| is_pixel_channel(name, available_channels));
     let mut controls: FixtureControls<FixtureControlChannel> =
-        group_controls(available_channels, &channels).into();
-    let sub_fixtures = group_sub_fixtures(available_channels, pixels);
+        group_controls(available_channels, &channels, wheels).into();
+    let sub_fixtures = group_sub_fixtures(available_channels, pixels, wheels);
     if sub_fixtures.iter().any(|f| f.controls.color.is_some()) {
         controls.color = Some(ColorGroup {
             red: FixtureControlChannel::Delegate,
@@ -424,6 +481,7 @@ fn convert_dimensions(dimensions: Vec<f32>) -> Option<FixtureDimensions> {
 fn group_sub_fixtures(
     available_channels: &HashMap<String, Channel>,
     pixels: Vec<String>,
+    wheels: &HashMap<String, WheelDefinition>,
 ) -> Vec<SubFixtureDefinition> {
     let mut pixel_groups = HashMap::<String, Vec<String>>::new();
 
@@ -437,7 +495,7 @@ fn group_sub_fixtures(
 
     let mut sub_fixtures: Vec<_> = pixel_groups
         .into_iter()
-        .map(|(key, channels)| build_sub_fixture(key, available_channels, channels))
+        .map(|(key, channels)| build_sub_fixture(key, available_channels, channels, wheels))
         .collect();
 
     sub_fixtures.sort_by_key(|f| f.id);
@@ -449,13 +507,14 @@ fn build_sub_fixture(
     key: String,
     available_channels: &HashMap<String, Channel>,
     channels: Vec<String>,
+    wheels: &HashMap<String, WheelDefinition>,
 ) -> SubFixtureDefinition {
     let definition = SubFixtureDefinition {
         id: key
             .parse::<u32>()
             .expect(&format!("'{}' is not a number", key)),
         name: format!("Pixel {}", key),
-        controls: group_controls(available_channels, &channels),
+        controls: group_controls(available_channels, &channels, wheels),
     };
 
     definition
@@ -464,6 +523,7 @@ fn build_sub_fixture(
 fn group_controls(
     available_channels: &HashMap<String, Channel>,
     enabled_channels: &[String],
+    wheels: &HashMap<String, WheelDefinition>,
 ) -> FixtureControls<String> {
     let channels = enabled_channels
         .iter()
@@ -485,6 +545,56 @@ fn group_controls(
         {
             log::trace!("skipping capability {} as it has no functions", name);
             continue;
+        }
+        if channel
+            .capabilities
+            .iter()
+            .any(|c| matches!(c, Capability::WheelSlot(_)))
+        {
+            if let Some(wheel) = wheels.get(&name) {
+                let used_slots = channel.capabilities.iter().filter_map(|c| {
+                    if let Capability::WheelSlot(WheelSlot::Single {
+                        slot_number,
+                        dmx_range,
+                    }) = c
+                    {
+                        Some((slot_number, dmx_range))
+                    } else {
+                        None
+                    }
+                });
+                if wheel
+                    .slots
+                    .iter()
+                    .any(|s| matches!(s, WheelSlotDefinition::Gobo { .. }))
+                {
+                    controls.gobo = Some(dbg!(GoboGroup {
+                        channel: name,
+                        gobos: used_slots
+                            .filter_map(|(slot_index, dmx_range)| {
+                                let value =
+                                    dmx_range.0.linear_extrapolate((u8::MIN, u8::MAX), (0., 1.));
+                                if let WheelSlotDefinition::Gobo { name, resource } =
+                                    &wheel.slots[(*slot_index as usize) - 1]
+                                {
+                                    let name = name
+                                        .clone()
+                                        .unwrap_or_else(|| format!("Gobo {}", slot_index));
+
+                                    Some(Gobo {
+                                        name: format!("Gobo {}", slot_index),
+                                        value,
+                                        image: resource.clone().map(GoboImage::from),
+                                    })
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect(),
+                    }));
+                    continue;
+                }
+            }
         }
         match channel
             .capabilities
@@ -556,6 +666,15 @@ fn group_controls(
     controls.color = color_group.build();
 
     controls
+}
+
+impl From<Resource> for GoboImage {
+    fn from(resource: Resource) -> Self {
+        match resource.image.encoding.as_str() {
+            "utf8" => GoboImage::Svg(resource.image.data),
+            _ => GoboImage::Raster(Box::new(base64::decode(resource.image.data).unwrap())),
+        }
+    }
 }
 
 #[derive(Default)]
@@ -638,7 +757,7 @@ mod tests {
             },
         );
 
-        let controls = group_controls(&available_channels, &enabled_channels);
+        let controls = group_controls(&available_channels, &enabled_channels, &Default::default());
 
         assert!(controls.color.is_some());
         assert_eq!(
@@ -665,7 +784,7 @@ mod tests {
             },
         );
 
-        let groups = group_controls(&available_channels, &enabled_channels);
+        let groups = group_controls(&available_channels, &enabled_channels, &Default::default());
 
         assert_eq!(groups.generic.len(), 1);
         assert_eq!(

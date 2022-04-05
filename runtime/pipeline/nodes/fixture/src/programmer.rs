@@ -97,6 +97,14 @@ impl PipelineNode for ProgrammerNode {
                     ..Default::default()
                 },
             ),
+            (
+                "Gobo".into(),
+                PortMetadata {
+                    port_type: PortType::Single,
+                    direction: PortDirection::Input,
+                    ..Default::default()
+                },
+            ),
         ]
     }
 
@@ -144,6 +152,9 @@ impl ProcessingNode for ProgrammerNode {
             }
             if let Some(frost) = context.read_port_changes::<_, f64>("Frost") {
                 programmer.write_control(FixtureControlValue::Frost(frost));
+            }
+            if let Some(gobo) = context.read_port_changes::<_, f64>("Gobo") {
+                programmer.write_control(FixtureControlValue::Gobo(gobo));
             }
         }
 

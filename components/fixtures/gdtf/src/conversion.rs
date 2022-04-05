@@ -1,7 +1,9 @@
+use std::collections::HashMap;
+
+use mizer_fixtures::definition::*;
+
 use crate::definition::*;
 use crate::types::*;
-use mizer_fixtures::definition::*;
-use std::collections::HashMap;
 
 impl From<GdtfFixtureDefinition> for FixtureDefinition {
     fn from(definition: GdtfFixtureDefinition) -> Self {
@@ -122,6 +124,14 @@ impl GdtfState {
                             "Zoom1" => controls.zoom = Some(channel),
                             _ => {}
                         },
+                        "Gobo" => {
+                            if attribute.name.as_str() == "Gobo1" {
+                                controls.gobo = Some(GoboGroup {
+                                    channel,
+                                    gobos: vec![], // TODO: read gobo wheel variants
+                                })
+                            }
+                        }
                         _ => {}
                     }
                 }

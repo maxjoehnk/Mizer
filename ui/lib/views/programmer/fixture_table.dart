@@ -46,6 +46,7 @@ class FixtureTable extends StatelessWidget {
         Text("Blue"),
         Text("Pan"),
         Text("Tilt"),
+        Text("Gobo"),
       ], rows: rows),
     );
   }
@@ -84,6 +85,7 @@ class FixtureTable extends StatelessWidget {
         Text(_colorState(fixtureState, (color) => color.blue)),
         Text(_faderState(fixtureState, FixtureControl.PAN)),
         Text(_faderState(fixtureState, FixtureControl.TILT)),
+        Text(_faderState(fixtureState, FixtureControl.GOBO)),
       ],
       onTap: () => onSelect(fixtureId, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),

@@ -46,6 +46,8 @@ pub struct ChannelType {
 #[derive(Debug, Clone, XmlRead)]
 #[xml(tag = "Capability")]
 pub struct CapabilityType {
+    #[xml(text)]
+    pub name: HtmlEntityString,
     #[xml(attr = "Min")]
     pub min: DmxValueType,
     #[xml(attr = "Max")]

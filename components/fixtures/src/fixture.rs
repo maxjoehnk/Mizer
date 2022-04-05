@@ -270,6 +270,7 @@ impl<TChannel> FixtureControls<TChannel> {
             FixtureFaderControl::Color(ColorChannel::Blue) => self.color.as_ref().map(|c| &c.blue),
             FixtureFaderControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
+            FixtureFaderControl::Gobo => self.gobo.as_ref().map(|gobo| &gobo.channel),
             FixtureFaderControl::Generic(ref channel) => self
                 .generic
                 .iter()

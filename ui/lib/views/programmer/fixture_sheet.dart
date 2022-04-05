@@ -44,7 +44,7 @@ class _FixtureSheetState extends State<FixtureSheet> {
             children: [
               Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
               Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
-              Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures)),
+              Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
               Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
               Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
               Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),

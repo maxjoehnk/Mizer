@@ -192,6 +192,19 @@ impl FixtureControls {
                 ..Default::default()
             })
         }
+        if let Some(gobo) = fixture_controls.gobo {
+            controls.push(FixtureControls {
+                control: FixtureControl::GOBO,
+                value: Some(FixtureControls_oneof_value::gobo(GoboChannel {
+                    gobos: gobo.gobos.into_iter().map(Gobo::from).collect(),
+                    value: fixture
+                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Gobo)
+                        .unwrap_or_default(),
+                    ..Default::default()
+                })),
+                ..Default::default()
+            })
+        }
         for channel in fixture_controls.generic {
             let value = fixture.read_control(
                 mizer_fixtures::definition::FixtureFaderControl::Generic(channel.label.clone()),
@@ -210,6 +223,27 @@ impl FixtureControls {
         }
 
         controls
+    }
+}
+
+impl From<mizer_fixtures::definition::Gobo> for Gobo {
+    fn from(gobo: mizer_fixtures::definition::Gobo) -> Self {
+        Self {
+            name: gobo.name,
+            value: gobo.value,
+            image: gobo.image.map(Gobo_oneof_image::from),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_fixtures::definition::GoboImage> for Gobo_oneof_image {
+    fn from(image: mizer_fixtures::definition::GoboImage) -> Self {
+        use mizer_fixtures::definition::GoboImage::*;
+        match image {
+            Raster(bytes) => Self::raster(*bytes),
+            Svg(svg) => Self::svg(svg),
+        }
     }
 }
 
@@ -288,6 +322,7 @@ impl From<definition::FixtureFaderControl> for models::FixtureControl {
             Generic(_) => Self::GENERIC,
             Zoom => Self::ZOOM,
             Focus => Self::FOCUS,
+            Gobo => Self::GOBO,
         }
     }
 }

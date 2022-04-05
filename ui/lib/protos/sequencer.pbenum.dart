@@ -43,7 +43,8 @@ class CueControl_Type extends $pb.ProtobufEnum {
   static const CueControl_Type PRISM = CueControl_Type._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
   static const CueControl_Type IRIS = CueControl_Type._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
   static const CueControl_Type FROST = CueControl_Type._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
-  static const CueControl_Type GENERIC = CueControl_Type._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
+  static const CueControl_Type GOBO = CueControl_Type._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
+  static const CueControl_Type GENERIC = CueControl_Type._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
 
   static const $core.List<CueControl_Type> values = <CueControl_Type> [
     INTENSITY,
@@ -58,6 +59,7 @@ class CueControl_Type extends $pb.ProtobufEnum {
     PRISM,
     IRIS,
     FROST,
+    GOBO,
     GENERIC,
   ];
 

@@ -65,6 +65,7 @@ pub struct FixtureControls<TChannel> {
     pub color: Option<ColorGroup<TChannel>>,
     pub pan: Option<AxisGroup<TChannel>>,
     pub tilt: Option<AxisGroup<TChannel>>,
+    pub gobo: Option<GoboGroup<TChannel>>,
     pub focus: Option<TChannel>,
     pub zoom: Option<TChannel>,
     pub prism: Option<TChannel>,
@@ -86,6 +87,7 @@ impl<TChannel> Default for FixtureControls<TChannel> {
             prism: None,
             iris: None,
             frost: None,
+            gobo: None,
             generic: Vec::default(),
         }
     }
@@ -114,6 +116,10 @@ impl From<FixtureControls<String>> for FixtureControls<FixtureControlChannel> {
             prism: controls.prism.map(FixtureControlChannel::Channel),
             iris: controls.iris.map(FixtureControlChannel::Channel),
             frost: controls.frost.map(FixtureControlChannel::Channel),
+            gobo: controls.gobo.map(|gobo| GoboGroup {
+                channel: FixtureControlChannel::Channel(gobo.channel),
+                gobos: gobo.gobos,
+            }),
             generic: controls
                 .generic
                 .into_iter()
@@ -172,6 +178,16 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
             prism: controls.prism.and_then(FixtureControlChannel::into_channel),
             iris: controls.iris.and_then(FixtureControlChannel::into_channel),
             frost: controls.frost.and_then(FixtureControlChannel::into_channel),
+            gobo: controls.gobo.and_then(|gobo| {
+                if let FixtureControlChannel::Channel(channel) = gobo.channel {
+                    Some(GoboGroup {
+                        channel,
+                        gobos: gobo.gobos,
+                    })
+                } else {
+                    None
+                }
+            }),
             generic: controls
                 .generic
                 .into_iter()
@@ -278,6 +294,34 @@ pub struct Angle {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+pub struct GoboGroup<TChannel> {
+    pub channel: TChannel,
+    pub gobos: Vec<Gobo>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Gobo {
+    pub value: f64,
+    pub name: String,
+    pub image: Option<GoboImage>,
+}
+
+#[derive(Clone, PartialEq)]
+pub enum GoboImage {
+    Svg(String),
+    Raster(Box<Vec<u8>>),
+}
+
+impl std::fmt::Debug for GoboImage {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match &self {
+            Self::Raster(_) => f.debug_struct("Raster").finish(),
+            Self::Svg(_) => f.debug_struct("SVG").finish(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
 pub struct GenericControl<TChannel> {
     pub label: String,
     pub channel: TChannel,
@@ -298,6 +342,7 @@ pub enum FixtureControl {
     Prism,
     Iris,
     Frost,
+    Gobo,
     Generic(String),
 }
 
@@ -314,6 +359,7 @@ impl ToString for FixtureControl {
             Self::Prism => "Prism".into(),
             Self::Iris => "Iris".into(),
             Self::Frost => "Frost".into(),
+            Self::Gobo => "Gobo".into(),
             Self::Generic(control) => control.clone(),
         }
     }
@@ -332,6 +378,7 @@ impl From<&str> for FixtureControl {
             "Prism" => Self::Prism,
             "Iris" => Self::Iris,
             "Frost" => Self::Frost,
+            "Gobo" => Self::Gobo,
             control => Self::Generic(control.into()),
         }
     }
@@ -366,6 +413,7 @@ impl TryFrom<FixtureControl> for FixtureFaderControl {
             FixtureControl::Prism => Ok(Self::Prism),
             FixtureControl::Iris => Ok(Self::Iris),
             FixtureControl::Frost => Ok(Self::Frost),
+            FixtureControl::Gobo => Ok(Self::Gobo),
             FixtureControl::Generic(name) => Ok(Self::Generic(name)),
         }
     }
@@ -384,6 +432,7 @@ pub enum FixtureFaderControl {
     Prism,
     Iris,
     Frost,
+    Gobo,
     Generic(String),
 }
 
@@ -405,6 +454,7 @@ impl FixtureControl {
             Prism => vec![FixtureFaderControl::Prism],
             Iris => vec![FixtureFaderControl::Iris],
             Frost => vec![FixtureFaderControl::Frost],
+            Gobo => vec![FixtureFaderControl::Gobo],
             Generic(generic) => vec![FixtureFaderControl::Generic(generic)],
         }
     }
@@ -429,6 +479,7 @@ pub enum FixtureControlValue {
     Prism(f64),
     Iris(f64),
     Frost(f64),
+    Gobo(f64),
     Generic(String, f64),
 }
 
@@ -446,6 +497,7 @@ impl From<FixtureControlValue> for FixtureControl {
             Prism(_) => Self::Prism,
             Iris(_) => Self::Iris,
             Frost(_) => Self::Frost,
+            Gobo(_) => Self::Gobo,
             Generic(channel, _) => Self::Generic(channel),
         }
     }

@@ -677,6 +677,7 @@ enum FixtureControls_Value {
   fader, 
   color, 
   axis, 
+  gobo, 
   generic, 
   notSet
 }
@@ -686,16 +687,18 @@ class FixtureControls extends $pb.GeneratedMessage {
     2 : FixtureControls_Value.fader,
     3 : FixtureControls_Value.color,
     4 : FixtureControls_Value.axis,
-    5 : FixtureControls_Value.generic,
+    5 : FixtureControls_Value.gobo,
+    6 : FixtureControls_Value.generic,
     0 : FixtureControls_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureControls', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5])
+    ..oo(0, [2, 3, 4, 5, 6])
     ..e<FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.INTENSITY, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
     ..aOM<FaderChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', subBuilder: FaderChannel.create)
     ..aOM<ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: ColorChannel.create)
     ..aOM<AxisChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'axis', subBuilder: AxisChannel.create)
-    ..aOM<GenericChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
+    ..aOM<GoboChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gobo', subBuilder: GoboChannel.create)
+    ..aOM<GenericChannel>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -705,6 +708,7 @@ class FixtureControls extends $pb.GeneratedMessage {
     FaderChannel? fader,
     ColorChannel? color,
     AxisChannel? axis,
+    GoboChannel? gobo,
     GenericChannel? generic,
   }) {
     final _result = create();
@@ -719,6 +723,9 @@ class FixtureControls extends $pb.GeneratedMessage {
     }
     if (axis != null) {
       _result.axis = axis;
+    }
+    if (gobo != null) {
+      _result.gobo = gobo;
     }
     if (generic != null) {
       _result.generic = generic;
@@ -792,15 +799,26 @@ class FixtureControls extends $pb.GeneratedMessage {
   AxisChannel ensureAxis() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  GenericChannel get generic => $_getN(4);
+  GoboChannel get gobo => $_getN(4);
   @$pb.TagNumber(5)
-  set generic(GenericChannel v) { setField(5, v); }
+  set gobo(GoboChannel v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasGeneric() => $_has(4);
+  $core.bool hasGobo() => $_has(4);
   @$pb.TagNumber(5)
-  void clearGeneric() => clearField(5);
+  void clearGobo() => clearField(5);
   @$pb.TagNumber(5)
-  GenericChannel ensureGeneric() => $_ensure(4);
+  GoboChannel ensureGobo() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  GenericChannel get generic => $_getN(5);
+  @$pb.TagNumber(6)
+  set generic(GenericChannel v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasGeneric() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearGeneric() => clearField(6);
+  @$pb.TagNumber(6)
+  GenericChannel ensureGeneric() => $_ensure(5);
 }
 
 class FaderChannel extends $pb.GeneratedMessage {
@@ -998,6 +1016,165 @@ class AxisChannel extends $pb.GeneratedMessage {
   $core.bool hasAngleTo() => $_has(2);
   @$pb.TagNumber(3)
   void clearAngleTo() => clearField(3);
+}
+
+class GoboChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GoboChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..pc<Gobo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gobos', $pb.PbFieldType.PM, subBuilder: Gobo.create)
+    ..hasRequiredFields = false
+  ;
+
+  GoboChannel._() : super();
+  factory GoboChannel({
+    $core.double? value,
+    $core.Iterable<Gobo>? gobos,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (gobos != null) {
+      _result.gobos.addAll(gobos);
+    }
+    return _result;
+  }
+  factory GoboChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GoboChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GoboChannel clone() => GoboChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GoboChannel copyWith(void Function(GoboChannel) updates) => super.copyWith((message) => updates(message as GoboChannel)) as GoboChannel; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GoboChannel create() => GoboChannel._();
+  GoboChannel createEmptyInstance() => create();
+  static $pb.PbList<GoboChannel> createRepeated() => $pb.PbList<GoboChannel>();
+  @$core.pragma('dart2js:noInline')
+  static GoboChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GoboChannel>(create);
+  static GoboChannel? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
+  set value($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<Gobo> get gobos => $_getList(1);
+}
+
+enum Gobo_Image {
+  svg, 
+  raster, 
+  notSet
+}
+
+class Gobo extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, Gobo_Image> _Gobo_ImageByTag = {
+    3 : Gobo_Image.svg,
+    4 : Gobo_Image.raster,
+    0 : Gobo_Image.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Gobo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..oo(0, [3, 4])
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'svg')
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'raster', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
+  Gobo._() : super();
+  factory Gobo({
+    $core.String? name,
+    $core.double? value,
+    $core.String? svg,
+    $core.List<$core.int>? raster,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    if (svg != null) {
+      _result.svg = svg;
+    }
+    if (raster != null) {
+      _result.raster = raster;
+    }
+    return _result;
+  }
+  factory Gobo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Gobo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Gobo clone() => Gobo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Gobo copyWith(void Function(Gobo) updates) => super.copyWith((message) => updates(message as Gobo)) as Gobo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Gobo create() => Gobo._();
+  Gobo createEmptyInstance() => create();
+  static $pb.PbList<Gobo> createRepeated() => $pb.PbList<Gobo>();
+  @$core.pragma('dart2js:noInline')
+  static Gobo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Gobo>(create);
+  static Gobo? _defaultInstance;
+
+  Gobo_Image whichImage() => _Gobo_ImageByTag[$_whichOneof(0)]!;
+  void clearImage() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get svg => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set svg($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSvg() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSvg() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get raster => $_getN(3);
+  @$pb.TagNumber(4)
+  set raster($core.List<$core.int> v) { $_setBytes(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRaster() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRaster() => clearField(4);
 }
 
 class GenericChannel extends $pb.GeneratedMessage {

@@ -2,52 +2,56 @@ use std::collections::HashMap;
 use std::ops::Deref;
 
 use mizer_fixtures::definition::*;
+use mizer_util::LerpExt;
 
 use crate::definition::*;
+use crate::resource_reader::ResourceReader;
 
-impl From<QlcPlusFixtureDefinition> for FixtureDefinition {
-    fn from(definition: QlcPlusFixtureDefinition) -> Self {
-        let channels = definition
-            .channels
+pub fn map_fixture_definition(
+    definition: QlcPlusFixtureDefinition,
+    resource_reader: &ResourceReader,
+) -> FixtureDefinition {
+    let channels = definition
+        .channels
+        .into_iter()
+        .map(|channel| (channel.name.to_string(), channel))
+        .collect::<HashMap<_, _>>();
+
+    FixtureDefinition {
+        id: format!("qlc:{}:{}", definition.manufacturer, definition.model),
+        manufacturer: definition.manufacturer,
+        name: definition.model,
+        provider: "QLC+",
+        modes: definition
+            .modes
             .into_iter()
-            .map(|channel| (channel.name.to_string(), channel))
-            .collect::<HashMap<_, _>>();
+            .map(|mode| FixtureMode {
+                controls: create_controls(&mode, &channels, resource_reader),
+                sub_fixtures: create_sub_fixtures(&mode, &channels, resource_reader),
+                name: mode.name,
+                channels: mode
+                    .channels
+                    .into_iter()
+                    .map(|mode_channel| {
+                        let channel = &channels[mode_channel.channel.deref()];
 
-        FixtureDefinition {
-            id: format!("qlc:{}:{}", definition.manufacturer, definition.model),
-            manufacturer: definition.manufacturer,
-            name: definition.model,
-            provider: "QLC+",
-            modes: definition
-                .modes
-                .into_iter()
-                .map(|mode| FixtureMode {
-                    controls: create_controls(&mode, &channels),
-                    sub_fixtures: create_sub_fixtures(&mode, &channels),
-                    name: mode.name,
-                    channels: mode
-                        .channels
-                        .into_iter()
-                        .map(|mode_channel| {
-                            let channel = &channels[mode_channel.channel.deref()];
-
-                            FixtureChannelDefinition {
-                                name: channel.name.to_string(),
-                                resolution: ChannelResolution::Coarse(mode_channel.number as u8),
-                            }
-                        })
-                        .collect(),
-                })
-                .collect(),
-            tags: vec![definition.fixture_type],
-            physical: PhysicalFixtureData::default(),
-        }
+                        FixtureChannelDefinition {
+                            name: channel.name.to_string(),
+                            resolution: ChannelResolution::Coarse(mode_channel.number as u8),
+                        }
+                    })
+                    .collect(),
+            })
+            .collect(),
+        tags: vec![definition.fixture_type],
+        physical: PhysicalFixtureData::default(),
     }
 }
 
 fn create_controls(
     mode: &ModeType,
     channels: &HashMap<String, ChannelType>,
+    resource_reader: &ResourceReader<'_>,
 ) -> FixtureControls<FixtureControlChannel> {
     let channels = mode
         .channels
@@ -55,14 +59,17 @@ fn create_controls(
         .map(|mode_channel| channels[mode_channel.channel.deref()].clone())
         .collect::<Vec<_>>();
 
-    build_controls(channels, |channel| {
-        FixtureControlChannel::Channel(channel.name.to_string())
-    })
+    build_controls(
+        channels,
+        |channel| FixtureControlChannel::Channel(channel.name.to_string()),
+        resource_reader,
+    )
 }
 
 fn create_sub_fixtures(
     mode: &ModeType,
     channels: &HashMap<String, ChannelType>,
+    resource_reader: &ResourceReader<'_>,
 ) -> Vec<SubFixtureDefinition> {
     mode.heads
         .iter()
@@ -81,19 +88,27 @@ fn create_sub_fixtures(
             SubFixtureDefinition {
                 id,
                 name: format!("Head {id}"),
-                controls: create_sub_fixture_controls(head_channels),
+                controls: create_sub_fixture_controls(head_channels, resource_reader),
             }
         })
         .collect()
 }
 
-fn create_sub_fixture_controls(channels: Vec<ChannelType>) -> FixtureControls<String> {
-    build_controls(channels, |channel| channel.name.to_string())
+fn create_sub_fixture_controls(
+    channels: Vec<ChannelType>,
+    resource_reader: &ResourceReader<'_>,
+) -> FixtureControls<String> {
+    build_controls(
+        channels,
+        |channel| channel.name.to_string(),
+        resource_reader,
+    )
 }
 
 fn build_controls<TChannel>(
     channels: Vec<ChannelType>,
     control_channel_builder: impl Fn(&ChannelType) -> TChannel,
+    resource_reader: &ResourceReader<'_>,
 ) -> FixtureControls<TChannel> {
     let mut controls = FixtureControls::default();
     let mut color_builder = ColorGroup::<Option<TChannel>> {
@@ -118,6 +133,23 @@ fn build_controls<TChannel>(
                     controls.tilt = Some(AxisGroup {
                         channel: control_channel,
                         angle: None,
+                    })
+                }
+                GroupEnumType::Gobo => {
+                    controls.gobo = Some(GoboGroup {
+                        channel: control_channel,
+                        gobos: channel
+                            .capabilities
+                            .into_iter()
+                            .map(|capability| Gobo {
+                                name: capability.name.to_string(),
+                                value: (capability.min as u8)
+                                    .linear_extrapolate((0, 255), (0., 1.)),
+                                image: capability
+                                    .resource1
+                                    .and_then(|file_name| resource_reader.read_gobo(&file_name)),
+                            })
+                            .collect(),
                     })
                 }
                 _ => controls.generic.push(GenericControl {

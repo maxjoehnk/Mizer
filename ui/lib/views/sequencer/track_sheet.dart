@@ -19,6 +19,7 @@ const LABELS = {
   CueControl_Type.PRISM: 'Prism',
   CueControl_Type.IRIS: 'Iris',
   CueControl_Type.FROST: 'Frost',
+  CueControl_Type.GOBO: 'Gobo',
   CueControl_Type.GENERIC: 'Generic',
 };
 

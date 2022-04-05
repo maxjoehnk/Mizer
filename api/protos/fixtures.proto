@@ -75,7 +75,8 @@ enum FixtureControl {
   PRISM = 7;
   IRIS = 8;
   FROST = 9;
-  GENERIC = 10;
+  GOBO = 10;
+  GENERIC = 11;
 }
 
 message FixtureControls {
@@ -84,7 +85,8 @@ message FixtureControls {
     FaderChannel fader = 2;
     ColorChannel color = 3;
     AxisChannel axis = 4;
-    GenericChannel generic = 5;
+    GoboChannel gobo = 5;
+    GenericChannel generic = 6;
   }
 }
 
@@ -103,6 +105,21 @@ message AxisChannel {
   double angle_from = 2;
   double angle_to = 3;
 }
+
+message GoboChannel {
+  double value = 1;
+  repeated Gobo gobos = 2;
+}
+
+message Gobo {
+  string name = 1;
+  double value = 2;
+  oneof image {
+    string svg = 3;
+    bytes raster = 4;
+  }
+}
+
 
 message GenericChannel {
   double value = 1;

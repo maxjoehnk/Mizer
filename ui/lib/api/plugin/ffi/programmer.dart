@@ -16,6 +16,7 @@ Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Prism: FixtureControl.PRISM,
   FFIFixtureFaderControl.Iris: FixtureControl.IRIS,
   FFIFixtureFaderControl.Frost: FixtureControl.FROST,
+  FFIFixtureFaderControl.Gobo: FixtureControl.GOBO,
 };
 
 class ProgrammerStatePointer {

@@ -20,7 +20,8 @@ class FixtureControl extends $pb.ProtobufEnum {
   static const FixtureControl PRISM = FixtureControl._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
   static const FixtureControl IRIS = FixtureControl._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
   static const FixtureControl FROST = FixtureControl._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
-  static const FixtureControl GENERIC = FixtureControl._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
+  static const FixtureControl GOBO = FixtureControl._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
+  static const FixtureControl GENERIC = FixtureControl._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
 
   static const $core.List<FixtureControl> values = <FixtureControl> [
     INTENSITY,
@@ -33,6 +34,7 @@ class FixtureControl extends $pb.ProtobufEnum {
     PRISM,
     IRIS,
     FROST,
+    GOBO,
     GENERIC,
   ];
 

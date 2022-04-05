@@ -42,6 +42,9 @@ impl WriteControlRequest {
             (GENERIC, Some(WriteControlRequest_oneof_value::generic(value))) => {
                 FixtureControlValue::Generic(value.name, value.value)
             }
+            (GOBO, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                FixtureControlValue::Gobo(value)
+            }
             _ => unreachable!(),
         }
     }
@@ -240,6 +243,10 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
                     blue,
                     ..Default::default()
                 }),
+            ),
+            Gobo(value) => (
+                FixtureControl::GOBO,
+                ProgrammerChannel_oneof_value::fader(value),
             ),
             Generic(name, value) => (
                 FixtureControl::GENERIC,

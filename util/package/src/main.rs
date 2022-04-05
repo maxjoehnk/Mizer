@@ -24,6 +24,7 @@ fn main() -> anyhow::Result<()> {
         settings.paths.fixture_libraries.open_fixture_library =
             Some(PathBuf::from("fixtures/open-fixture-library"));
         settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
+        settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
         settings.paths.fixture_libraries.gdtf = Some(PathBuf::from("fixtures/gdtf"));
     })?;
 

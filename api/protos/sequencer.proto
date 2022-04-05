@@ -138,7 +138,8 @@ message CueControl {
     PRISM = 9;
     IRIS = 10;
     FROST = 11;
-    GENERIC = 12;
+    GOBO = 12;
+    GENERIC = 13;
   }
 }
 

@@ -225,6 +225,7 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for CueControl_Type {
             Frost => Self::FROST,
             Pan => Self::PAN,
             Tilt => Self::TILT,
+            Gobo => Self::GOBO,
             Color(ColorChannel::Red) => Self::COLOR_RED,
             Color(ColorChannel::Green) => Self::COLOR_GREEN,
             Color(ColorChannel::Blue) => Self::COLOR_BLUE,

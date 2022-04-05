@@ -49,6 +49,7 @@ pub struct FixtureProgrammer {
     prism: Option<f64>,
     iris: Option<f64>,
     frost: Option<f64>,
+    gobo: Option<f64>,
     generic: HashMap<String, f64>,
 }
 
@@ -98,6 +99,10 @@ impl FixtureProgrammer {
             .frost
             .iter()
             .map(|value| FixtureControlValue::Frost(*value));
+        let gobo = self
+            .gobo
+            .iter()
+            .map(|value| FixtureControlValue::Gobo(*value));
         let generic = self
             .generic
             .iter()
@@ -113,6 +118,7 @@ impl FixtureProgrammer {
             .chain(prism)
             .chain(iris)
             .chain(frost)
+            .chain(gobo)
             .chain(generic)
     }
 
@@ -160,6 +166,10 @@ impl FixtureProgrammer {
             .frost
             .iter()
             .map(|value| (FixtureFaderControl::Frost, *value));
+        let gobo = self
+            .gobo
+            .iter()
+            .map(|value| (FixtureFaderControl::Gobo, *value));
         let generic = self
             .generic
             .iter()
@@ -175,6 +185,7 @@ impl FixtureProgrammer {
             .chain(prism)
             .chain(iris)
             .chain(frost)
+            .chain(gobo)
             .chain(generic)
     }
 }
@@ -289,6 +300,7 @@ impl Programmer {
                 FixtureControlValue::Prism(value) => programmer.prism = Some(value),
                 FixtureControlValue::Iris(value) => programmer.iris = Some(value),
                 FixtureControlValue::Frost(value) => programmer.frost = Some(value),
+                FixtureControlValue::Gobo(value) => programmer.gobo = Some(value),
                 FixtureControlValue::Generic(ref name, value) => {
                     programmer.generic.insert(name.clone(), value);
                 }

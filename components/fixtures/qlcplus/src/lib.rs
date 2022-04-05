@@ -8,11 +8,14 @@ use std::path::Path;
 use strong_xml::XmlRead;
 
 pub use self::definition::QlcPlusFixtureDefinition;
+use crate::conversion::map_fixture_definition;
+use crate::resource_reader::ResourceReader;
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 
 mod conversion;
 mod definition;
+mod resource_reader;
 
 #[derive(Default)]
 pub struct QlcPlusProvider {
@@ -34,7 +37,7 @@ impl FixtureLibraryProvider for QlcPlusProvider {
         if !Path::new(&self.file_path).exists() {
             return Ok(());
         }
-        let files = std::fs::read_dir(&self.file_path)?;
+        let files = std::fs::read_dir(Path::new(&self.file_path).join("fixtures"))?;
         let definitions = files
             .par_bridge()
             .filter_map(|file| file.ok())
@@ -84,17 +87,21 @@ impl FixtureLibraryProvider for QlcPlusProvider {
         if !id.starts_with("qlc:") {
             return None;
         }
+        let resource_reader = ResourceReader::new(Path::new(&self.file_path));
+
         self.definitions
             .get(&id["qlc:".len()..])
             .cloned()
-            .map(FixtureDefinition::from)
+            .map(|definition| map_fixture_definition(definition, &resource_reader))
     }
 
     fn list_definitions(&self) -> Vec<FixtureDefinition> {
+        let resource_reader = ResourceReader::new(Path::new(&self.file_path));
+
         self.definitions
             .values()
             .cloned()
-            .map(FixtureDefinition::from)
+            .map(|definition| map_fixture_definition(definition, &resource_reader))
             .collect()
     }
 }
@@ -111,4 +118,110 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
     );
 
     Ok(definition)
+}
+
+#[cfg(test)]
+mod tests {
+    use std::path::Path;
+    use mizer_fixtures::definition::*;
+    use super::{QlcPlusFixtureDefinition, conversion::map_fixture_definition, ResourceReader};
+    use strong_xml::XmlRead;
+
+    const GENERIC_RGB_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGB.qxf");
+    const GENERIC_RGBW_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGBW.qxf");
+    const GENERIC_SMOKE_DEFINITION: &str = include_str!("../tests/Generic-Generic-Smoke.qxf");
+
+    #[test]
+    fn generic_rgb() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGB_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+        let definition = map_fixture_definition(file, &resource_reader);
+
+        assert_eq!(definition.name, "Generic RGB");
+        assert_eq!(definition.modes.len(), 5);
+        assert_eq!(definition.modes[0].name, "RGB");
+        assert_eq!(definition.modes[0].channels.len(), 3);
+        assert_eq!(definition.modes[1].name, "GRB");
+        assert_eq!(definition.modes[1].channels.len(), 3);
+        assert_eq!(definition.modes[2].name, "BGR");
+        assert_eq!(definition.modes[2].channels.len(), 3);
+        assert_eq!(definition.modes[3].name, "RGB Dimmer");
+        assert_eq!(definition.modes[3].channels.len(), 4);
+        assert_eq!(definition.modes[4].name, "Dimmer RGB");
+        assert_eq!(definition.modes[4].channels.len(), 4);
+        for mode in &definition.modes {
+            assert_eq!(
+                mode.controls.color,
+                Some(ColorGroup {
+                    red: FixtureControlChannel::Channel("Red".into()),
+                    green: FixtureControlChannel::Channel("Green".into()),
+                    blue: FixtureControlChannel::Channel("Blue".into()),
+                })
+            );
+        }
+        assert_eq!(
+            definition.modes[3].controls.intensity,
+            Some(FixtureControlChannel::Channel("Dimmer".into()))
+        );
+        assert_eq!(
+            definition.modes[4].controls.intensity,
+            Some(FixtureControlChannel::Channel("Dimmer".into()))
+        );
+    }
+
+    #[test]
+    fn generic_rgbw() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_RGBW_DEFINITION).unwrap();
+        let resource_reader = ResourceReader::new(Path::new("."));
+        let definition = map_fixture_definition(file, &resource_reader);
+
+        assert_eq!(definition.name, "Generic RGBW");
+        assert_eq!(definition.modes.len(), 6);
+        assert_eq!(definition.modes[0].name, "RGBW");
+        assert_eq!(definition.modes[0].channels.len(), 4);
+        assert_eq!(definition.modes[1].name, "WRGB");
+        assert_eq!(definition.modes[1].channels.len(), 4);
+        assert_eq!(definition.modes[2].name, "RGBW Dimmer");
+        assert_eq!(definition.modes[2].channels.len(), 5);
+        assert_eq!(definition.modes[3].name, "WRGB Dimmer");
+        assert_eq!(definition.modes[3].channels.len(), 5);
+        assert_eq!(definition.modes[4].name, "Dimmer RGBW");
+        assert_eq!(definition.modes[4].channels.len(), 5);
+        assert_eq!(definition.modes[5].name, "Dimmer WRGB");
+        assert_eq!(definition.modes[5].channels.len(), 5);
+        for mode in &definition.modes {
+            assert_eq!(
+                mode.controls.color,
+                Some(ColorGroup {
+                    red: FixtureControlChannel::Channel("Red".into()),
+                    green: FixtureControlChannel::Channel("Green".into()),
+                    blue: FixtureControlChannel::Channel("Blue".into()),
+                })
+            );
+        }
+        assert_eq!(
+            definition.modes[2].controls.intensity,
+            Some(FixtureControlChannel::Channel("Dimmer".into()))
+        );
+        assert_eq!(
+            definition.modes[3].controls.intensity,
+            Some(FixtureControlChannel::Channel("Dimmer".into()))
+        );
+        assert_eq!(
+            definition.modes[4].controls.intensity,
+            Some(FixtureControlChannel::Channel("Dimmer".into()))
+        );
+        assert_eq!(
+            definition.modes[5].controls.intensity,
+            Some(FixtureControlChannel::Channel("Dimmer".into()))
+        );
+    }
+
+    #[test]
+    fn generic_smoke() {
+        let file = QlcPlusFixtureDefinition::from_str(GENERIC_SMOKE_DEFINITION);
+
+        println!("{:#?}", file);
+        assert!(file.is_ok());
+    }
 }

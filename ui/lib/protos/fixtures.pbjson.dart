@@ -22,12 +22,13 @@ const FixtureControl$json = const {
     const {'1': 'PRISM', '2': 7},
     const {'1': 'IRIS', '2': 8},
     const {'1': 'FROST', '2': 9},
-    const {'1': 'GENERIC', '2': 10},
+    const {'1': 'GOBO', '2': 10},
+    const {'1': 'GENERIC', '2': 11},
   ],
 };
 
 /// Descriptor for `FixtureControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESCQoFQ09MT1IQAhIHCgNQQU4QAxIICgRUSUxUEAQSCQoFRk9DVVMQBRIICgRaT09NEAYSCQoFUFJJU00QBxIICgRJUklTEAgSCQoFRlJPU1QQCRILCgdHRU5FUklDEAo=');
+final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESCQoFQ09MT1IQAhIHCgNQQU4QAxIICgRUSUxUEAQSCQoFRk9DVVMQBRIICgRaT09NEAYSCQoFUFJJU00QBxIICgRJUklTEAgSCQoFRlJPU1QQCRIICgRHT0JPEAoSCwoHR0VORVJJQxAL');
 @$core.Deprecated('Use addFixturesRequestDescriptor instead')
 const AddFixturesRequest$json = const {
   '1': 'AddFixturesRequest',
@@ -145,7 +146,8 @@ const FixtureControls$json = const {
     const {'1': 'fader', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FaderChannel', '9': 0, '10': 'fader'},
     const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
     const {'1': 'axis', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.AxisChannel', '9': 0, '10': 'axis'},
-    const {'1': 'generic', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.GenericChannel', '9': 0, '10': 'generic'},
+    const {'1': 'gobo', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.GoboChannel', '9': 0, '10': 'gobo'},
+    const {'1': 'generic', '3': 6, '4': 1, '5': 11, '6': '.mizer.fixtures.GenericChannel', '9': 0, '10': 'generic'},
   ],
   '8': const [
     const {'1': 'value'},
@@ -153,7 +155,7 @@ const FixtureControls$json = const {
 };
 
 /// Descriptor for `FixtureControls`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureControlsDescriptor = $convert.base64Decode('Cg9GaXh0dXJlQ29udHJvbHMSOAoHY29udHJvbBgBIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEjQKBWZhZGVyGAIgASgLMhwubWl6ZXIuZml4dHVyZXMuRmFkZXJDaGFubmVsSABSBWZhZGVyEjQKBWNvbG9yGAMgASgLMhwubWl6ZXIuZml4dHVyZXMuQ29sb3JDaGFubmVsSABSBWNvbG9yEjEKBGF4aXMYBCABKAsyGy5taXplci5maXh0dXJlcy5BeGlzQ2hhbm5lbEgAUgRheGlzEjoKB2dlbmVyaWMYBSABKAsyHi5taXplci5maXh0dXJlcy5HZW5lcmljQ2hhbm5lbEgAUgdnZW5lcmljQgcKBXZhbHVl');
+final $typed_data.Uint8List fixtureControlsDescriptor = $convert.base64Decode('Cg9GaXh0dXJlQ29udHJvbHMSOAoHY29udHJvbBgBIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEjQKBWZhZGVyGAIgASgLMhwubWl6ZXIuZml4dHVyZXMuRmFkZXJDaGFubmVsSABSBWZhZGVyEjQKBWNvbG9yGAMgASgLMhwubWl6ZXIuZml4dHVyZXMuQ29sb3JDaGFubmVsSABSBWNvbG9yEjEKBGF4aXMYBCABKAsyGy5taXplci5maXh0dXJlcy5BeGlzQ2hhbm5lbEgAUgRheGlzEjEKBGdvYm8YBSABKAsyGy5taXplci5maXh0dXJlcy5Hb2JvQ2hhbm5lbEgAUgRnb2JvEjoKB2dlbmVyaWMYBiABKAsyHi5taXplci5maXh0dXJlcy5HZW5lcmljQ2hhbm5lbEgAUgdnZW5lcmljQgcKBXZhbHVl');
 @$core.Deprecated('Use faderChannelDescriptor instead')
 const FaderChannel$json = const {
   '1': 'FaderChannel',
@@ -188,6 +190,33 @@ const AxisChannel$json = const {
 
 /// Descriptor for `AxisChannel`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List axisChannelDescriptor = $convert.base64Decode('CgtBeGlzQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSHQoKYW5nbGVfZnJvbRgCIAEoAVIJYW5nbGVGcm9tEhkKCGFuZ2xlX3RvGAMgASgBUgdhbmdsZVRv');
+@$core.Deprecated('Use goboChannelDescriptor instead')
+const GoboChannel$json = const {
+  '1': 'GoboChannel',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
+    const {'1': 'gobos', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.Gobo', '10': 'gobos'},
+  ],
+};
+
+/// Descriptor for `GoboChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List goboChannelDescriptor = $convert.base64Decode('CgtHb2JvQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSKgoFZ29ib3MYAiADKAsyFC5taXplci5maXh0dXJlcy5Hb2JvUgVnb2Jvcw==');
+@$core.Deprecated('Use goboDescriptor instead')
+const Gobo$json = const {
+  '1': 'Gobo',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
+    const {'1': 'svg', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'svg'},
+    const {'1': 'raster', '3': 4, '4': 1, '5': 12, '9': 0, '10': 'raster'},
+  ],
+  '8': const [
+    const {'1': 'image'},
+  ],
+};
+
+/// Descriptor for `Gobo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List goboDescriptor = $convert.base64Decode('CgRHb2JvEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlEhIKA3N2ZxgDIAEoCUgAUgNzdmcSGAoGcmFzdGVyGAQgASgMSABSBnJhc3RlckIHCgVpbWFnZQ==');
 @$core.Deprecated('Use genericChannelDescriptor instead')
 const GenericChannel$json = const {
   '1': 'GenericChannel',

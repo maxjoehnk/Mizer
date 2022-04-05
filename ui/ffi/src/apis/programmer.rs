@@ -105,6 +105,7 @@ pub enum FFIFixtureFaderControl {
     Prism = 7,
     Iris = 8,
     Frost = 9,
+    Gobo = 10,
 }
 
 impl From<ProgrammerChannel> for FFIProgrammerChannel {
@@ -145,6 +146,10 @@ impl From<ProgrammerChannel> for FFIProgrammerChannel {
             ),
             Frost(value) => (
                 FFIFixtureFaderControl::Frost,
+                ProgrammerChannelValue { fader: value },
+            ),
+            Gobo(value) => (
+                FFIFixtureFaderControl::Gobo,
                 ProgrammerChannelValue { fader: value },
             ),
             Color(red, green, blue) => (

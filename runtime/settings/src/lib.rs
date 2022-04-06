@@ -1,7 +1,10 @@
-use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fs::File;
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
+
+use directories_next::ProjectDirs;
+use serde::{Deserialize, Serialize};
 
 const DEFAULT_SETTINGS: &str = include_str!("../settings.toml");
 
@@ -9,6 +12,12 @@ const DEFAULT_SETTINGS: &str = include_str!("../settings.toml");
 pub struct Settings {
     pub hotkeys: Hotkeys,
     pub paths: FilePaths,
+}
+
+#[derive(Debug, Clone)]
+pub struct SettingsManager {
+    pub settings: Settings,
+    pub file_path: Option<PathBuf>,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -44,6 +53,50 @@ impl Settings {
         file.write_all(&file_contents)?;
 
         Ok(())
+    }
+}
+
+impl SettingsManager {
+    pub fn new() -> anyhow::Result<Self> {
+        let settings = toml::from_str(DEFAULT_SETTINGS)?;
+
+        Ok(Self {
+            settings,
+            file_path: None,
+        })
+    }
+
+    pub fn load(&mut self) -> anyhow::Result<()> {
+        let mut paths = vec![PathBuf::from("settings.toml")];
+        if let Some(dir) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
+            .map(|dirs| dirs.config_dir().join("settings.toml"))
+        {
+            paths.push(dir);
+        }
+        if let Some(path) = paths.iter().find(|path| path.exists()) {
+            let mut file = std::fs::File::open(path)?;
+            let mut buffer = String::new();
+            file.read_to_string(&mut buffer)?;
+
+            self.settings = toml::from_str(&buffer)?;
+            self.file_path = Some(path.to_path_buf());
+        }
+
+        Ok(())
+    }
+
+    pub fn save(&self) -> anyhow::Result<()> {
+        let file_path = if let Some(ref path) = self.file_path {
+            path.clone()
+        } else if let Some(path) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
+            .map(|dirs| dirs.config_dir().join("settings.toml"))
+        {
+            path
+        } else {
+            PathBuf::from("settings.toml")
+        };
+
+        self.settings.save_to(file_path)
     }
 }
 

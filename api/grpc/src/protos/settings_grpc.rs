@@ -23,6 +23,8 @@
 
 pub trait SettingsApi {
     fn load_settings(&self, req: ::grpc::ServerRequestSingle<super::settings::RequestSettings>, resp: ::grpc::ServerResponseUnarySink<super::settings::Settings>) -> ::grpc::Result<()>;
+
+    fn save_settings(&self, req: ::grpc::ServerRequestSingle<super::settings::Settings>, resp: ::grpc::ServerResponseUnarySink<super::settings::Settings>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -43,6 +45,16 @@ impl SettingsApiClient {
     pub fn load_settings(&self, o: ::grpc::RequestOptions, req: super::settings::RequestSettings) -> ::grpc::SingleResponse<super::settings::Settings> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.settings.SettingsApi/LoadSettings"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn save_settings(&self, o: ::grpc::RequestOptions, req: super::settings::Settings) -> ::grpc::SingleResponse<super::settings::Settings> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.settings.SettingsApi/SaveSettings"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -71,6 +83,18 @@ impl SettingsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).load_settings(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.settings.SettingsApi/SaveSettings"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).save_settings(req, resp))
                     },
                 ),
             ],

@@ -14,6 +14,7 @@ use mizer_fixtures::FixtureId;
 use mizer_message_bus::Subscriber;
 use mizer_plan::{FixturePosition, Plan};
 use mizer_protocol_midi::MidiEvent;
+use mizer_settings::{Settings, SettingsManager};
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -21,6 +22,7 @@ use std::sync::Arc;
 pub struct Api {
     access: RuntimeAccess,
     sender: flume::Sender<ApiCommand>,
+    settings: Arc<NonEmptyPinboard<SettingsManager>>,
 }
 
 impl RuntimeApi for Api {
@@ -422,14 +424,36 @@ impl RuntimeApi for Api {
 
         rx.recv()?
     }
+
+    fn read_settings(&self) -> Settings {
+        self.settings.read().settings
+    }
+
+    fn save_settings(&self, settings: Settings) -> anyhow::Result<()> {
+        let mut settings_manager = self.settings.read();
+        settings_manager.settings = settings;
+        settings_manager.save()?;
+
+        Ok(())
+    }
 }
 
 impl Api {
-    pub fn setup(runtime: &DefaultRuntime) -> (ApiHandler, Api) {
+    pub fn setup(
+        runtime: &DefaultRuntime,
+        settings: Arc<NonEmptyPinboard<SettingsManager>>,
+    ) -> (ApiHandler, Api) {
         let (tx, rx) = flume::unbounded();
         let access = runtime.access();
 
-        (ApiHandler { recv: rx }, Api { sender: tx, access })
+        (
+            ApiHandler { recv: rx },
+            Api {
+                sender: tx,
+                access,
+                settings,
+            },
+        )
     }
 
     fn add_node_internal(

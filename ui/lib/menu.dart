@@ -15,6 +15,7 @@ import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
+import 'package:mizer/windows/preferences_window.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 
 import 'actions/actions.dart';
@@ -61,7 +62,12 @@ class ApplicationMenu extends StatelessWidget {
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
                       LogicalKeyboardKey.keyS)),
               MenuDivider(),
-              MenuItem(label: 'Preferences'),
+              MenuItem(
+                  label: 'Preferences',
+                  action: () {
+                    return Window.create(PreferencesWindow.toInitData())
+                      .then((window) => window.showModal());
+                  }),
               MenuItem(
                   label: "Exit",
                   action: () => context.read<ApplicationPluginApi>().exit(),

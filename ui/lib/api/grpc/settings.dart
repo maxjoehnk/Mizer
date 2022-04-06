@@ -11,4 +11,9 @@ class SettingsGrpcApi implements SettingsApi {
   Future<Settings> loadSettings() {
     return client.loadSettings(RequestSettings());
   }
+
+  @override
+  Future<void> saveSettings(Settings settings) {
+    return client.saveSettings(settings);
+  }
 }

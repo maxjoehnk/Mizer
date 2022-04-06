@@ -147,6 +147,7 @@ impl ::protobuf::reflect::ProtobufValue for RequestSettings {
 pub struct Settings {
     // message fields
     pub hotkeys: ::protobuf::SingularPtrField<Hotkeys>,
+    pub paths: ::protobuf::SingularPtrField<PathSettings>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -197,11 +198,49 @@ impl Settings {
     pub fn take_hotkeys(&mut self) -> Hotkeys {
         self.hotkeys.take().unwrap_or_else(|| Hotkeys::new())
     }
+
+    // .mizer.settings.PathSettings paths = 2;
+
+
+    pub fn get_paths(&self) -> &PathSettings {
+        self.paths.as_ref().unwrap_or_else(|| <PathSettings as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_paths(&mut self) {
+        self.paths.clear();
+    }
+
+    pub fn has_paths(&self) -> bool {
+        self.paths.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_paths(&mut self, v: PathSettings) {
+        self.paths = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_paths(&mut self) -> &mut PathSettings {
+        if self.paths.is_none() {
+            self.paths.set_default();
+        }
+        self.paths.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_paths(&mut self) -> PathSettings {
+        self.paths.take().unwrap_or_else(|| PathSettings::new())
+    }
 }
 
 impl ::protobuf::Message for Settings {
     fn is_initialized(&self) -> bool {
         for v in &self.hotkeys {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.paths {
             if !v.is_initialized() {
                 return false;
             }
@@ -215,6 +254,9 @@ impl ::protobuf::Message for Settings {
             match field_number {
                 1 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.hotkeys)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.paths)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -232,6 +274,10 @@ impl ::protobuf::Message for Settings {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.paths.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -240,6 +286,11 @@ impl ::protobuf::Message for Settings {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
         if let Some(ref v) = self.hotkeys.as_ref() {
             os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.paths.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -286,6 +337,11 @@ impl ::protobuf::Message for Settings {
                 |m: &Settings| { &m.hotkeys },
                 |m: &mut Settings| { &mut m.hotkeys },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<PathSettings>>(
+                "paths",
+                |m: &Settings| { &m.paths },
+                |m: &mut Settings| { &mut m.paths },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Settings>(
                 "Settings",
                 fields,
@@ -303,6 +359,7 @@ impl ::protobuf::Message for Settings {
 impl ::protobuf::Clear for Settings {
     fn clear(&mut self) {
         self.hotkeys.clear();
+        self.paths.clear();
         self.unknown_fields.clear();
     }
 }
@@ -314,6 +371,415 @@ impl ::std::fmt::Debug for Settings {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Settings {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PathSettings {
+    // message fields
+    pub midi_device_profiles: ::std::string::String,
+    // message oneof groups
+    pub _open_fixture_library: ::std::option::Option<PathSettings_oneof__open_fixture_library>,
+    pub _qlcplus: ::std::option::Option<PathSettings_oneof__qlcplus>,
+    pub _gdtf: ::std::option::Option<PathSettings_oneof__gdtf>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PathSettings {
+    fn default() -> &'a PathSettings {
+        <PathSettings as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum PathSettings_oneof__open_fixture_library {
+    open_fixture_library(::std::string::String),
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum PathSettings_oneof__qlcplus {
+    qlcplus(::std::string::String),
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum PathSettings_oneof__gdtf {
+    gdtf(::std::string::String),
+}
+
+impl PathSettings {
+    pub fn new() -> PathSettings {
+        ::std::default::Default::default()
+    }
+
+    // string midi_device_profiles = 1;
+
+
+    pub fn get_midi_device_profiles(&self) -> &str {
+        &self.midi_device_profiles
+    }
+    pub fn clear_midi_device_profiles(&mut self) {
+        self.midi_device_profiles.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_midi_device_profiles(&mut self, v: ::std::string::String) {
+        self.midi_device_profiles = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_midi_device_profiles(&mut self) -> &mut ::std::string::String {
+        &mut self.midi_device_profiles
+    }
+
+    // Take field
+    pub fn take_midi_device_profiles(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.midi_device_profiles, ::std::string::String::new())
+    }
+
+    // string open_fixture_library = 2;
+
+
+    pub fn get_open_fixture_library(&self) -> &str {
+        match self._open_fixture_library {
+            ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_open_fixture_library(&mut self) {
+        self._open_fixture_library = ::std::option::Option::None;
+    }
+
+    pub fn has_open_fixture_library(&self) -> bool {
+        match self._open_fixture_library {
+            ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_open_fixture_library(&mut self, v: ::std::string::String) {
+        self._open_fixture_library = ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_open_fixture_library(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(_)) = self._open_fixture_library {
+        } else {
+            self._open_fixture_library = ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(::std::string::String::new()));
+        }
+        match self._open_fixture_library {
+            ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_open_fixture_library(&mut self) -> ::std::string::String {
+        if self.has_open_fixture_library() {
+            match self._open_fixture_library.take() {
+                ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // string qlcplus = 3;
+
+
+    pub fn get_qlcplus(&self) -> &str {
+        match self._qlcplus {
+            ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_qlcplus(&mut self) {
+        self._qlcplus = ::std::option::Option::None;
+    }
+
+    pub fn has_qlcplus(&self) -> bool {
+        match self._qlcplus {
+            ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_qlcplus(&mut self, v: ::std::string::String) {
+        self._qlcplus = ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_qlcplus(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(_)) = self._qlcplus {
+        } else {
+            self._qlcplus = ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(::std::string::String::new()));
+        }
+        match self._qlcplus {
+            ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_qlcplus(&mut self) -> ::std::string::String {
+        if self.has_qlcplus() {
+            match self._qlcplus.take() {
+                ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // string gdtf = 4;
+
+
+    pub fn get_gdtf(&self) -> &str {
+        match self._gdtf {
+            ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_gdtf(&mut self) {
+        self._gdtf = ::std::option::Option::None;
+    }
+
+    pub fn has_gdtf(&self) -> bool {
+        match self._gdtf {
+            ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_gdtf(&mut self, v: ::std::string::String) {
+        self._gdtf = ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_gdtf(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(_)) = self._gdtf {
+        } else {
+            self._gdtf = ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(::std::string::String::new()));
+        }
+        match self._gdtf {
+            ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_gdtf(&mut self) -> ::std::string::String {
+        if self.has_gdtf() {
+            match self._gdtf.take() {
+                ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for PathSettings {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.midi_device_profiles)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._open_fixture_library = ::std::option::Option::Some(PathSettings_oneof__open_fixture_library::open_fixture_library(is.read_string()?));
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._qlcplus = ::std::option::Option::Some(PathSettings_oneof__qlcplus::qlcplus(is.read_string()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._gdtf = ::std::option::Option::Some(PathSettings_oneof__gdtf::gdtf(is.read_string()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.midi_device_profiles.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.midi_device_profiles);
+        }
+        if let ::std::option::Option::Some(ref v) = self._open_fixture_library {
+            match v {
+                &PathSettings_oneof__open_fixture_library::open_fixture_library(ref v) => {
+                    my_size += ::protobuf::rt::string_size(2, &v);
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._qlcplus {
+            match v {
+                &PathSettings_oneof__qlcplus::qlcplus(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._gdtf {
+            match v {
+                &PathSettings_oneof__gdtf::gdtf(ref v) => {
+                    my_size += ::protobuf::rt::string_size(4, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.midi_device_profiles.is_empty() {
+            os.write_string(1, &self.midi_device_profiles)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._open_fixture_library {
+            match v {
+                &PathSettings_oneof__open_fixture_library::open_fixture_library(ref v) => {
+                    os.write_string(2, v)?;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._qlcplus {
+            match v {
+                &PathSettings_oneof__qlcplus::qlcplus(ref v) => {
+                    os.write_string(3, v)?;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._gdtf {
+            match v {
+                &PathSettings_oneof__gdtf::gdtf(ref v) => {
+                    os.write_string(4, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PathSettings {
+        PathSettings::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "midi_device_profiles",
+                |m: &PathSettings| { &m.midi_device_profiles },
+                |m: &mut PathSettings| { &mut m.midi_device_profiles },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "open_fixture_library",
+                PathSettings::has_open_fixture_library,
+                PathSettings::get_open_fixture_library,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "qlcplus",
+                PathSettings::has_qlcplus,
+                PathSettings::get_qlcplus,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "gdtf",
+                PathSettings::has_gdtf,
+                PathSettings::get_gdtf,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PathSettings>(
+                "PathSettings",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PathSettings {
+        static instance: ::protobuf::rt::LazyV2<PathSettings> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PathSettings::new)
+    }
+}
+
+impl ::protobuf::Clear for PathSettings {
+    fn clear(&mut self) {
+        self.midi_device_profiles.clear();
+        self._open_fixture_library = ::std::option::Option::None;
+        self._qlcplus = ::std::option::Option::None;
+        self._gdtf = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PathSettings {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PathSettings {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -699,31 +1165,40 @@ impl ::protobuf::reflect::ProtobufValue for Hotkeys {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"=\
+    \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"q\
     \n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer.setting\
-    s.HotkeysR\x07hotkeys\"\xe1\x06\n\x07Hotkeys\x12;\n\x06global\x18\x01\
-    \x20\x03(\x0b2#.mizer.settings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07\
-    layouts\x18\x02\x20\x03(\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07l\
-    ayouts\x12G\n\nprogrammer\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.\
-    ProgrammerEntryR\nprogrammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".miz\
-    er.settings.Hotkeys.NodesEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03\
-    (\x0b2\".mizer.settings.Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\
-    \x18\x06\x20\x03(\x0b2&.mizer.settings.Hotkeys.SequencerEntryR\tsequence\
-    r\x125\n\x04plan\x18\x07\x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntry\
-    R\x04plan\x1a9\n\x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03\
-    key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0c\
-    LayoutsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05va\
-    lue\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\
-    \x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\
-    \x01(\tR\x05value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\
-    \x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x02\
-    8\x01\x1a8\n\nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
-    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequenc\
-    erEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\
-    \x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03k\
-    ey\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05\
-    value:\x028\x012Z\n\x0bSettingsApi\x12K\n\x0cLoadSettings\x12\x1f.mizer.\
-    settings.RequestSettings\x1a\x18.mizer.settings.Settings\"\0b\x06proto3\
+    s.HotkeysR\x07hotkeys\x122\n\x05paths\x18\x02\x20\x01(\x0b2\x1c.mizer.se\
+    ttings.PathSettingsR\x05paths\"\xdd\x01\n\x0cPathSettings\x120\n\x14midi\
+    _device_profiles\x18\x01\x20\x01(\tR\x12midiDeviceProfiles\x125\n\x14ope\
+    n_fixture_library\x18\x02\x20\x01(\tH\0R\x12openFixtureLibrary\x88\x01\
+    \x01\x12\x1d\n\x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcplus\x88\x01\
+    \x01\x12\x17\n\x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\x01\x01B\x17\
+    \n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdtf\"\xe1\x06\n\
+    \x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.settings.Hotke\
+    ys.GlobalEntryR\x06global\x12>\n\x07layouts\x18\x02\x20\x03(\x0b2$.mizer\
+    .settings.Hotkeys.LayoutsEntryR\x07layouts\x12G\n\nprogrammer\x18\x03\
+    \x20\x03(\x0b2'.mizer.settings.Hotkeys.ProgrammerEntryR\nprogrammer\x128\
+    \n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer.settings.Hotkeys.NodesEntryR\
+    \x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\".mizer.settings.Hotkeys\
+    .PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\x20\x03(\x0b2&.mizer.set\
+    tings.Hotkeys.SequencerEntryR\tsequencer\x125\n\x04plan\x18\x07\x20\x03(\
+    \x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x1a9\n\x0bGlobalEntry\
+    \x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
+    \x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03key\
+    \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
+    lue:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03key\x18\x01\x20\x01\
+    (\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\
+    \x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
+    \n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nPatchEntry\
+    \x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
+    \x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEntry\x12\x10\n\x03ke\
+    y\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05v\
+    alue:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
+    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x012\xa0\
+    \x01\n\x0bSettingsApi\x12K\n\x0cLoadSettings\x12\x1f.mizer.settings.Requ\
+    estSettings\x1a\x18.mizer.settings.Settings\"\0\x12D\n\x0cSaveSettings\
+    \x12\x18.mizer.settings.Settings\x1a\x18.mizer.settings.Settings\"\0b\
+    \x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

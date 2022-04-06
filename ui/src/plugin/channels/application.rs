@@ -2,16 +2,19 @@ use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::SettingsHandler;
+use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;
-use crate::LifecycleHandler;
+use crate::{LifecycleHandler, MethodCallExt};
 
-pub struct ApplicationChannel<LH: LifecycleHandler + 'static> {
-    handler: SettingsHandler,
+pub struct ApplicationChannel<LH: LifecycleHandler + 'static, R: RuntimeApi> {
+    handler: SettingsHandler<R>,
     lifecycle_handler: Option<LH>,
 }
 
-impl<LH: LifecycleHandler + 'static> MethodCallHandler for ApplicationChannel<LH> {
+impl<LH: LifecycleHandler + 'static, R: RuntimeApi + 'static> MethodCallHandler
+    for ApplicationChannel<LH, R>
+{
     fn on_method_call(
         &mut self,
         call: MethodCall<Value>,
@@ -30,13 +33,23 @@ impl<LH: LifecycleHandler + 'static> MethodCallHandler for ApplicationChannel<LH
 
                 reply.respond_msg(settings);
             }
+            "saveSettings" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|args| self.handler.save_settings(args))
+                {
+                    reply.respond_error(err);
+                } else {
+                    reply.send_ok(Value::Null);
+                }
+            }
             _ => reply.not_implemented(),
         }
     }
 }
 
-impl<LH: LifecycleHandler + 'static> ApplicationChannel<LH> {
-    pub fn new(handler: SettingsHandler, lifecycle_handler: LH) -> Self {
+impl<LH: LifecycleHandler + 'static, R: RuntimeApi + 'static> ApplicationChannel<LH, R> {
+    pub fn new(handler: SettingsHandler<R>, lifecycle_handler: LH) -> Self {
         Self {
             handler,
             lifecycle_handler: Some(lifecycle_handler),

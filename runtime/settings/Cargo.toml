@@ -9,3 +9,4 @@ anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
 toml = "0.5"
+directories-next = "2.0"

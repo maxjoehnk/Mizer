@@ -19,6 +19,10 @@ class SettingsApiClient extends $grpc.Client {
           '/mizer.settings.SettingsApi/LoadSettings',
           ($0.RequestSettings value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Settings.fromBuffer(value));
+  static final _$saveSettings = $grpc.ClientMethod<$0.Settings, $0.Settings>(
+      '/mizer.settings.SettingsApi/SaveSettings',
+      ($0.Settings value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.Settings.fromBuffer(value));
 
   SettingsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -28,6 +32,11 @@ class SettingsApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.Settings> loadSettings($0.RequestSettings request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$loadSettings, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Settings> saveSettings($0.Settings request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$saveSettings, request, options: options);
   }
 }
 
@@ -42,6 +51,13 @@ abstract class SettingsApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.RequestSettings.fromBuffer(value),
         ($0.Settings value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Settings, $0.Settings>(
+        'SaveSettings',
+        saveSettings_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Settings.fromBuffer(value),
+        ($0.Settings value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Settings> loadSettings_Pre(
@@ -49,6 +65,13 @@ abstract class SettingsApiServiceBase extends $grpc.Service {
     return loadSettings(call, await request);
   }
 
+  $async.Future<$0.Settings> saveSettings_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Settings> request) async {
+    return saveSettings(call, await request);
+  }
+
   $async.Future<$0.Settings> loadSettings(
       $grpc.ServiceCall call, $0.RequestSettings request);
+  $async.Future<$0.Settings> saveSettings(
+      $grpc.ServiceCall call, $0.Settings request);
 }

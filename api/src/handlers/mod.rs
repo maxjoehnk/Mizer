@@ -15,9 +15,6 @@ use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_media::api::MediaServerApi;
 use mizer_sequencer::{EffectEngine, Sequencer};
-use mizer_settings::Settings;
-use pinboard::NonEmptyPinboard;
-use std::sync::Arc;
 
 mod connections;
 mod effects;
@@ -43,7 +40,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub transport: TransportHandler<R>,
     pub sequencer: SequencerHandler<R>,
     pub programmer: ProgrammerHandler<R>,
-    pub settings: SettingsHandler,
+    pub settings: SettingsHandler<R>,
     pub effects: EffectsHandler,
     pub plans: PlansHandler<R>,
 }
@@ -56,7 +53,6 @@ impl<R: RuntimeApi> Handlers<R> {
         media_server: MediaServerApi,
         sequencer: Sequencer,
         effect_engine: EffectEngine,
-        settings: Arc<NonEmptyPinboard<Settings>>,
     ) -> Self {
         Handlers {
             connections: ConnectionsHandler::new(runtime.clone()),
@@ -73,7 +69,7 @@ impl<R: RuntimeApi> Handlers<R> {
             sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
             effects: EffectsHandler::new(effect_engine),
             programmer: ProgrammerHandler::new(fixture_manager.clone(), sequencer, runtime.clone()),
-            settings: SettingsHandler::new(settings),
+            settings: SettingsHandler::new(runtime.clone()),
             plans: PlansHandler::new(fixture_manager, runtime),
         }
     }

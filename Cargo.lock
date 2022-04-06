@@ -3974,6 +3974,7 @@ name = "mizer-settings"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "directories-next",
  "log",
  "serde",
  "toml",

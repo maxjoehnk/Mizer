@@ -11,6 +11,7 @@ use mizer_nodes::Node;
 use mizer_plan::Plan;
 use mizer_runtime::NodeDescriptor;
 use mizer_session::SessionState;
+use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -112,4 +113,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_midi_monitor(&self, name: String) -> anyhow::Result<Subscriber<MidiEvent>>;
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
+
+    fn read_settings(&self) -> Settings;
+    fn save_settings(&self, settings: Settings) -> anyhow::Result<()>;
 }

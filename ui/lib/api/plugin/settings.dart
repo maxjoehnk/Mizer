@@ -11,6 +11,11 @@ class SettingsPluginApi implements SettingsApi {
     return Settings.fromBuffer(_convertBuffer(settings));
   }
 
+  @override
+  Future<void> saveSettings(Settings settings) async {
+    await channel.invokeMethod("saveSettings", settings);
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

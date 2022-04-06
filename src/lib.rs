@@ -24,7 +24,7 @@ use mizer_qlcplus_provider::QlcPlusProvider;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
-use mizer_settings::Settings;
+use mizer_settings::{Settings, SettingsManager};
 
 pub use crate::api::*;
 pub use crate::flags::Flags;
@@ -38,19 +38,19 @@ pub fn build_runtime(
     handle: tokio::runtime::Handle,
     flags: Flags,
 ) -> anyhow::Result<(Mizer, ApiHandler)> {
-    let settings = Settings::load()?;
+    let settings = SettingsManager::new()?;
     let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
-    let (api_handler, api) = Api::setup(&runtime);
+    let (api_handler, api) = Api::setup(&runtime, settings.clone());
 
     let sequencer = register_sequencer_module(&mut runtime)?;
     let effect_engine = register_effects_module(&mut runtime)?;
     register_device_module(&mut runtime, &handle)?;
     register_dmx_module(&mut runtime)?;
-    register_midi_module(&mut runtime, &settings.read())?;
+    register_midi_module(&mut runtime, &settings.read().settings)?;
     let (fixture_manager, fixture_library) =
-        register_fixtures_module(&mut runtime, &settings.read())?;
+        register_fixtures_module(&mut runtime, &settings.read().settings)?;
 
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
@@ -63,7 +63,6 @@ pub fn build_runtime(
         media_server_api.clone(),
         sequencer,
         effect_engine,
-        settings.clone(),
     );
 
     let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
@@ -75,7 +74,6 @@ pub fn build_runtime(
         runtime,
         grpc,
         handlers,
-        settings,
         media_server_api,
         session_events: MessageBus::new(),
         project_history: ProjectHistory,
@@ -96,7 +94,6 @@ pub struct Mizer {
     grpc: Option<mizer_grpc_api::Server>,
     pub handlers: Handlers<Api>,
     project_path: Option<PathBuf>,
-    settings: Arc<NonEmptyPinboard<Settings>>,
     media_server_api: MediaServerApi,
     session_events: MessageBus<SessionState>,
     project_history: ProjectHistory,

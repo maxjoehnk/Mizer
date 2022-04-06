@@ -41,16 +41,21 @@ class RequestSettings extends $pb.GeneratedMessage {
 class Settings extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Settings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOM<Hotkeys>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkeys', subBuilder: Hotkeys.create)
+    ..aOM<PathSettings>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths', subBuilder: PathSettings.create)
     ..hasRequiredFields = false
   ;
 
   Settings._() : super();
   factory Settings({
     Hotkeys? hotkeys,
+    PathSettings? paths,
   }) {
     final _result = create();
     if (hotkeys != null) {
       _result.hotkeys = hotkeys;
+    }
+    if (paths != null) {
+      _result.paths = paths;
     }
     return _result;
   }
@@ -85,6 +90,106 @@ class Settings extends $pb.GeneratedMessage {
   void clearHotkeys() => clearField(1);
   @$pb.TagNumber(1)
   Hotkeys ensureHotkeys() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  PathSettings get paths => $_getN(1);
+  @$pb.TagNumber(2)
+  set paths(PathSettings v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPaths() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPaths() => clearField(2);
+  @$pb.TagNumber(2)
+  PathSettings ensurePaths() => $_ensure(1);
+}
+
+class PathSettings extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PathSettings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midiDeviceProfiles')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'openFixtureLibrary')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'qlcplus')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gdtf')
+    ..hasRequiredFields = false
+  ;
+
+  PathSettings._() : super();
+  factory PathSettings({
+    $core.String? midiDeviceProfiles,
+    $core.String? openFixtureLibrary,
+    $core.String? qlcplus,
+    $core.String? gdtf,
+  }) {
+    final _result = create();
+    if (midiDeviceProfiles != null) {
+      _result.midiDeviceProfiles = midiDeviceProfiles;
+    }
+    if (openFixtureLibrary != null) {
+      _result.openFixtureLibrary = openFixtureLibrary;
+    }
+    if (qlcplus != null) {
+      _result.qlcplus = qlcplus;
+    }
+    if (gdtf != null) {
+      _result.gdtf = gdtf;
+    }
+    return _result;
+  }
+  factory PathSettings.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PathSettings.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PathSettings clone() => PathSettings()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PathSettings copyWith(void Function(PathSettings) updates) => super.copyWith((message) => updates(message as PathSettings)) as PathSettings; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PathSettings create() => PathSettings._();
+  PathSettings createEmptyInstance() => create();
+  static $pb.PbList<PathSettings> createRepeated() => $pb.PbList<PathSettings>();
+  @$core.pragma('dart2js:noInline')
+  static PathSettings getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PathSettings>(create);
+  static PathSettings? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get midiDeviceProfiles => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set midiDeviceProfiles($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMidiDeviceProfiles() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMidiDeviceProfiles() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get openFixtureLibrary => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set openFixtureLibrary($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasOpenFixtureLibrary() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearOpenFixtureLibrary() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get qlcplus => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set qlcplus($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasQlcplus() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearQlcplus() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get gdtf => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set gdtf($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasGdtf() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearGdtf() => clearField(4);
 }
 
 class Hotkeys extends $pb.GeneratedMessage {

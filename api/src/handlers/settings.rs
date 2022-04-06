@@ -1,19 +1,20 @@
-use crate::models;
-use mizer_settings::Settings;
-use pinboard::NonEmptyPinboard;
-use std::sync::Arc;
+use crate::{models, RuntimeApi};
 
 #[derive(Clone)]
-pub struct SettingsHandler {
-    settings: Arc<NonEmptyPinboard<Settings>>,
+pub struct SettingsHandler<R: RuntimeApi> {
+    runtime: R,
 }
 
-impl SettingsHandler {
-    pub fn new(settings: Arc<NonEmptyPinboard<Settings>>) -> Self {
-        Self { settings }
+impl<R: RuntimeApi> SettingsHandler<R> {
+    pub fn new(runtime: R) -> Self {
+        Self { runtime }
     }
 
     pub fn get_settings(&self) -> models::Settings {
-        self.settings.read().into()
+        self.runtime.read_settings().into()
+    }
+
+    pub fn save_settings(&self, settings: models::Settings) -> anyhow::Result<()> {
+        self.runtime.save_settings(settings.into())
     }
 }

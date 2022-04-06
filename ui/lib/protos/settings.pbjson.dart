@@ -20,11 +20,30 @@ const Settings$json = const {
   '1': 'Settings',
   '2': const [
     const {'1': 'hotkeys', '3': 1, '4': 1, '5': 11, '6': '.mizer.settings.Hotkeys', '10': 'hotkeys'},
+    const {'1': 'paths', '3': 2, '4': 1, '5': 11, '6': '.mizer.settings.PathSettings', '10': 'paths'},
   ],
 };
 
 /// Descriptor for `Settings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode('CghTZXR0aW5ncxIxCgdob3RrZXlzGAEgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IHaG90a2V5cw==');
+final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode('CghTZXR0aW5ncxIxCgdob3RrZXlzGAEgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IHaG90a2V5cxIyCgVwYXRocxgCIAEoCzIcLm1pemVyLnNldHRpbmdzLlBhdGhTZXR0aW5nc1IFcGF0aHM=');
+@$core.Deprecated('Use pathSettingsDescriptor instead')
+const PathSettings$json = const {
+  '1': 'PathSettings',
+  '2': const [
+    const {'1': 'midi_device_profiles', '3': 1, '4': 1, '5': 9, '10': 'midiDeviceProfiles'},
+    const {'1': 'open_fixture_library', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'openFixtureLibrary', '17': true},
+    const {'1': 'qlcplus', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'qlcplus', '17': true},
+    const {'1': 'gdtf', '3': 4, '4': 1, '5': 9, '9': 2, '10': 'gdtf', '17': true},
+  ],
+  '8': const [
+    const {'1': '_open_fixture_library'},
+    const {'1': '_qlcplus'},
+    const {'1': '_gdtf'},
+  ],
+};
+
+/// Descriptor for `PathSettings`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pathSettingsDescriptor = $convert.base64Decode('CgxQYXRoU2V0dGluZ3MSMAoUbWlkaV9kZXZpY2VfcHJvZmlsZXMYASABKAlSEm1pZGlEZXZpY2VQcm9maWxlcxI1ChRvcGVuX2ZpeHR1cmVfbGlicmFyeRgCIAEoCUgAUhJvcGVuRml4dHVyZUxpYnJhcnmIAQESHQoHcWxjcGx1cxgDIAEoCUgBUgdxbGNwbHVziAEBEhcKBGdkdGYYBCABKAlIAlIEZ2R0ZogBAUIXChVfb3Blbl9maXh0dXJlX2xpYnJhcnlCCgoIX3FsY3BsdXNCBwoFX2dkdGY=');
 @$core.Deprecated('Use hotkeysDescriptor instead')
 const Hotkeys$json = const {
   '1': 'Hotkeys',

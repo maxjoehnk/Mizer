@@ -190,6 +190,6 @@ fn create_definition() -> OpenFixtureLibraryFixtureDefinition {
                 Some("3".into()),
             ]]]),
         }),
-        wheels: Default::default()
+        wheels: Default::default(),
     }
 }

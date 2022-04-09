@@ -7,9 +7,9 @@ use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType, PortId};
 use mizer_nodes::Node;
 use mizer_protocol_midi::MidiEvent;
 use mizer_session::SessionState;
+use mizer_settings::FixtureLibraryPaths;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
-use mizer_settings::FixtureLibraryPaths;
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {

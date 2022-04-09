@@ -10,8 +10,8 @@ use mizer_module::Runtime;
 use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 
-use crate::{ApiCommand, Mizer};
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
+use crate::{ApiCommand, Mizer};
 
 pub struct ApiHandler {
     pub(super) recv: flume::Receiver<ApiCommand>,
@@ -154,7 +154,9 @@ impl ApiHandler {
                 let library = injector.get::<FixtureLibrary>().unwrap();
                 let result = FixtureLibrariesLoader(library.clone()).reload(paths);
 
-                sender.send(result).expect("api command sender disconnected");
+                sender
+                    .send(result)
+                    .expect("api command sender disconnected");
             }
         }
     }

@@ -7,7 +7,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_api::handlers::Handlers;
 use mizer_devices::DeviceModule;
-use mizer_fixtures::library::{FixtureLibrary};
+use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
 use mizer_media::api::MediaServerApi;
@@ -27,8 +27,8 @@ use crate::fixture_libraries_loader::FixtureLibrariesLoader;
 pub use crate::flags::Flags;
 
 mod api;
-mod flags;
 mod fixture_libraries_loader;
+mod flags;
 
 const FRAME_DELAY_60FPS: Duration = Duration::from_millis(16);
 

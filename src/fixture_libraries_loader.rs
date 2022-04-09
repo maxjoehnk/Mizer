@@ -55,12 +55,9 @@ fn load_gdtf_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibr
 }
 
 fn load_qlcplus_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibraryProvider>> {
-    paths
-        .qlcplus
-        .as_ref()
-        .map(|path| {
-            let qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
+    paths.qlcplus.as_ref().map(|path| {
+        let qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
 
-            Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
-        })
+        Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
+    })
 }

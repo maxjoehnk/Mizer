@@ -431,12 +431,16 @@ impl RuntimeApi for Api {
 
     fn save_settings(&self, settings: Settings) -> anyhow::Result<()> {
         let mut settings_manager = self.settings.read();
-        let refresh_fixture_libraries = settings_manager.settings.paths.fixture_libraries != settings.paths.fixture_libraries;
+        let refresh_fixture_libraries =
+            settings_manager.settings.paths.fixture_libraries != settings.paths.fixture_libraries;
         settings_manager.settings = settings;
         settings_manager.save()?;
         if refresh_fixture_libraries {
             let (tx, rx) = flume::bounded(1);
-            self.sender.send(ApiCommand::ReloadFixtureLibraries(settings_manager.settings.paths.fixture_libraries.clone(), tx))?;
+            self.sender.send(ApiCommand::ReloadFixtureLibraries(
+                settings_manager.settings.paths.fixture_libraries.clone(),
+                tx,
+            ))?;
             rx.recv()?;
         }
 

@@ -123,9 +123,9 @@ fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
 
 #[cfg(test)]
 mod tests {
-    use std::path::Path;
+    use super::{conversion::map_fixture_definition, QlcPlusFixtureDefinition, ResourceReader};
     use mizer_fixtures::definition::*;
-    use super::{QlcPlusFixtureDefinition, conversion::map_fixture_definition, ResourceReader};
+    use std::path::Path;
     use strong_xml::XmlRead;
 
     const GENERIC_RGB_DEFINITION: &str = include_str!("../tests/Generic-Generic-RGB.qxf");

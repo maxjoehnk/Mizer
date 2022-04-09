@@ -155,6 +155,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  device_frame:
+    dependency: transitive
+    description:
+      name: device_frame
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   diff_match_patch:
     dependency: transitive
     description:
@@ -289,6 +296,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  go_router:
+    dependency: transitive
+    description:
+      name: go_router
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.7"
   googleapis_auth:
     dependency: transitive
     description:
@@ -523,7 +537,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1"
+    version: "6.0.2"
   pub_semver:
     dependency: transitive
     description:
@@ -717,7 +731,7 @@ packages:
       name: widgetbook
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "2.0.9"
   widgetbook_models:
     dependency: transitive
     description:

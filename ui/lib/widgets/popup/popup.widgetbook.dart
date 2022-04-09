@@ -5,7 +5,7 @@ import 'popup_value_input.dart';
 
 WidgetbookFolder popupWidgets() {
   return WidgetbookFolder(name: "Popup", widgets: [
-    WidgetbookWidget(name: '$PopupSelect', useCases: [
+    WidgetbookComponent(name: '$PopupSelect', useCases: [
       WidgetbookUseCase(
           name: 'Default',
           builder: (context) => PopupSelect(title: "Select", items: [
@@ -14,13 +14,13 @@ WidgetbookFolder popupWidgets() {
             SelectItem(title: "Item 3", onTap: () {}),
           ]))
     ]),
-    WidgetbookWidget(name: '$PopupValueInput', useCases: [
+    WidgetbookComponent(name: '$PopupValueInput', useCases: [
       WidgetbookUseCase(
           name: 'Default',
           builder: (context) => PopupValueInput()
       )
     ]),
-    WidgetbookWidget(name: '$PopupTimeInput', useCases: [
+    WidgetbookComponent(name: '$PopupTimeInput', useCases: [
       WidgetbookUseCase(
           name: 'Default',
           builder: (context) => PopupTimeInput()

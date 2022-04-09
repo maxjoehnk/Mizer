@@ -8,7 +8,7 @@ WidgetbookFolder controlWidgets() {
   ]);
 }
 
-WidgetbookWidget _buttonWidget = WidgetbookWidget(name: '$MizerButton', useCases: [
+WidgetbookComponent _buttonWidget = WidgetbookComponent(name: '$MizerButton', useCases: [
   WidgetbookUseCase(
       name: 'Default',
       builder: (context) => MizerButton(child: Text("Text")))

@@ -113,18 +113,20 @@ class FixtureTable extends StatelessWidget {
 
   MizerTableRow _subFixtureRow(Fixture fixture, SubFixture subFixture) {
     var fixtureId = FixtureId(subFixture: SubFixtureId(fixtureId: fixture.id, childId: subFixture.id));
+    var fixtureState = state?.controls.where((channel) => channel.fixtures.any((f) => f.subFixture == fixtureId.subFixture));
     var selected = selectedIds.contains(fixtureId);
     var row = MizerTableRow(
       cells: [
         Text(""),
         Text(fixtureId.toDisplay()),
         Text(subFixture.name),
-        Text(""),
-        Text(""),
-        Text(""),
-        Text(""),
-        Text(""),
-        Text(""),
+        Text(_faderState(fixtureState, FixtureControl.INTENSITY)),
+        Text(_colorState(fixtureState, (color) => color.red)),
+        Text(_colorState(fixtureState, (color) => color.green)),
+        Text(_colorState(fixtureState, (color) => color.blue)),
+        Text(_faderState(fixtureState, FixtureControl.PAN)),
+        Text(_faderState(fixtureState, FixtureControl.TILT)),
+        Text(_faderState(fixtureState, FixtureControl.GOBO)),
       ],
       onTap: () => onSelect(fixtureId, !selected),
       onDoubleTap: () => onSelectChildren(fixture),

@@ -26,7 +26,7 @@ pub struct FilePaths {
     pub fixture_libraries: FixtureLibraryPaths,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct FixtureLibraryPaths {
     pub open_fixture_library: Option<PathBuf>,
     pub qlcplus: Option<PathBuf>,

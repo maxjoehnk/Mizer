@@ -3412,6 +3412,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "parking_lot 0.12.0",
  "pinboard",
  "postage",
  "profiling",

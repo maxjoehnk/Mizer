@@ -4,12 +4,14 @@ use std::path::PathBuf;
 use mizer_clock::Clock;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, DmxView, MidiView};
 use mizer_devices::DeviceManager;
+use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
 use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 
 use crate::{ApiCommand, Mizer};
+use crate::fixture_libraries_loader::FixtureLibrariesLoader;
 
 pub struct ApiHandler {
     pub(super) recv: flume::Receiver<ApiCommand>,
@@ -146,6 +148,13 @@ impl ApiHandler {
                 sender
                     .send(mizer.session_events.subscribe())
                     .expect("api command sender disconnected");
+            }
+            ApiCommand::ReloadFixtureLibraries(paths, sender) => {
+                let injector = mizer.runtime.injector();
+                let library = injector.get::<FixtureLibrary>().unwrap();
+                let result = FixtureLibrariesLoader(library.clone()).reload(paths);
+
+                sender.send(result).expect("api command sender disconnected");
             }
         }
     }

@@ -9,6 +9,7 @@ use mizer_protocol_midi::MidiEvent;
 use mizer_session::SessionState;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
+use mizer_settings::FixtureLibraryPaths;
 
 #[derive(Debug, Clone)]
 pub enum ApiCommand {
@@ -47,4 +48,5 @@ pub enum ApiCommand {
     NewProject(flume::Sender<anyhow::Result<()>>),
     LoadProject(String, flume::Sender<anyhow::Result<()>>),
     ObserveSession(flume::Sender<Subscriber<SessionState>>),
+    ReloadFixtureLibraries(FixtureLibraryPaths, flume::Sender<anyhow::Result<()>>),
 }

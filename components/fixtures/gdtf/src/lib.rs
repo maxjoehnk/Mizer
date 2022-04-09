@@ -31,6 +31,7 @@ impl GdtfProvider {
 
 impl FixtureLibraryProvider for GdtfProvider {
     fn load(&mut self) -> anyhow::Result<()> {
+        log::info!("Loading GDTF fixture library...");
         if !Path::new(&self.file_path).exists() {
             return Ok(());
         }

@@ -39,6 +39,7 @@ impl OpenFixtureLibraryProvider {
 
 impl FixtureLibraryProvider for OpenFixtureLibraryProvider {
     fn load(&mut self) -> anyhow::Result<()> {
+        log::info!("Loading open fixture library...");
         if !Path::new(&self.file_path).exists() {
             return Ok(());
         }

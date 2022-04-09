@@ -34,6 +34,7 @@ impl QlcPlusProvider {
 
 impl FixtureLibraryProvider for QlcPlusProvider {
     fn load(&mut self) -> anyhow::Result<()> {
+        log::info!("Loading QLC+ fixture library...");
         if !Path::new(&self.file_path).exists() {
             return Ok(());
         }

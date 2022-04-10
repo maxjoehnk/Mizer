@@ -1,5 +1,7 @@
 # Mizer
 
+<img src="assets/logo@512.png" width="256px" />
+
 A node based visualization tool for live scenarios (e.g. concerts and clubs).
 
 ![Nodes View](docs/screenshots/nodes_view.png)

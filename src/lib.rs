@@ -36,7 +36,8 @@ pub fn build_runtime(
     handle: tokio::runtime::Handle,
     flags: Flags,
 ) -> anyhow::Result<(Mizer, ApiHandler)> {
-    let settings = SettingsManager::new()?;
+    let mut settings = SettingsManager::new()?;
+    settings.load()?;
     let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();

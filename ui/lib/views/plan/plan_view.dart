@@ -9,6 +9,7 @@ import 'package:mizer/api/plugin/ffi/plans.dart';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/extensions/fixture_id_extensions.dart';
 import 'package:mizer/platform/contracts/menu.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/plans_bloc.dart';
@@ -250,7 +251,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
   }
 
   void _onSelection(Rect rect) {
-    var selection = this
+    List<FixtureId> selection = this
         .widget
         .plan
         .positions
@@ -263,6 +264,8 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
         })
         .map((fixture) => fixture.id)
         .toList();
+    selection.addAll(widget.programmerState!.fixtures);
+    selection = selection.toSet().toList();
 
     ProgrammerApi programmerApi = context.read();
     programmerApi.selectFixtures(selection);

@@ -67,6 +67,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
         hotkeyMap: {
           "store": _storeInGroup,
           "highlight": _highlight,
+          "clear": _clear,
         },
         child: tabs.Tabs(
           tabIndex: state.tabIndex,

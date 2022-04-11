@@ -26,6 +26,7 @@ add_layout = "alt+a"
 [hotkeys.plan]
 store = "insert"
 highlight = "home"
+clear = "backspace"
 
 [hotkeys.programmer]
 select_all = "ctrl+a"

@@ -85,6 +85,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
           actions: [
             PanelAction(hotkeyId: "highlight", label: "Highlight", onClick: _highlight, activated: _programmerState?.highlight ?? false),
             PanelAction(hotkeyId: "store", label: "Store", onClick: _storeInGroup),
+            PanelAction(hotkeyId: "clear", label: "Clear", onClick: _clear),
             PanelAction(label: "Place Fixture Selection", onClick: () => _placeFixtureSelection(plansBloc)),
             PanelAction(label: "Setup", activated: _setupMode, onClick: _setup),
           ],
@@ -146,6 +147,10 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
   void _highlight() {
     ProgrammerApi programmerApi = context.read();
     programmerApi.highlight(!(_programmerState?.highlight ?? false));
+  }
+
+  void _clear() {
+    context.read<ProgrammerApi>().selectFixtures([]);
   }
 
   Future _placeFixtureSelection(PlansBloc bloc) async {

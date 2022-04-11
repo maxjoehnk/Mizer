@@ -43,6 +43,7 @@ dev_dependencies:
   bloc_test: ^8.2.0
   ffigen: ^4.1.2
   widgetbook: ^2.0.9
+  flutter_launcher_icons: ^0.9.2
 
 flutter:
   uses-material-design: true
@@ -57,3 +58,8 @@ ffigen:
       - 'ffi.h'
     include-directives:
       - 'ffi.h'
+
+flutter_icons:
+  image_path: ../assets/logo@512.png
+  android: true
+  ios: true

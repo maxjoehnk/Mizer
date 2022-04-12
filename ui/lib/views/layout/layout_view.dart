@@ -12,6 +12,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
@@ -34,11 +35,12 @@ class LayoutView extends StatelessWidget {
         hotkeyMap: {
           "add_layout": () => _addLayout(context, layoutsBloc),
         },
-        child: tabs.Tabs(
+        child: Panel.tabs(
+          label: "Layout",
           tabIndex: state.tabIndex,
           onSelectTab: (index) => layoutsBloc.add(SelectLayoutTab(tabIndex: index)),
           padding: false,
-          children: state.layouts
+          tabs: state.layouts
               .map((layout) => tabs.Tab(
                   header: (active, setActive) => ContextMenu(
                       menu: Menu(items: [

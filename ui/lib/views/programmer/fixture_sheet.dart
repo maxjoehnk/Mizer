@@ -39,17 +39,15 @@ class _FixtureSheetState extends State<FixtureSheet> {
         "store": () => _store(),
         "highlight": () => _highlight(),
       },
-      child: Panel(
-          child: Tabs(
-            children: [
-              Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
-              Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
-              Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
-              Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
-              Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
-              Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
-            ],
-          ),
+      child: Panel.tabs(
+          tabs: [
+            Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
+            Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
+            Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
+            Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
+            Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
+            Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
+          ],
           actions: [
             PanelAction(
                 hotkeyId: "highlight",

@@ -8,6 +8,7 @@ import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/views/sequencer/sequencer_settings.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/tabs.dart' as tabs;
 
 import 'cue_list.dart';
 import 'sequence_list.dart';
@@ -73,13 +74,12 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
               ),
               if (state.selectedSequence != null)
                 Expanded(
-                  child: Panel(
+                  child: Panel.tabs(
                     label: "${state.selectedSequence!.name}",
-                    child: _sequencerView(state),
-                    actions: [
-                      PanelAction(label: "Cue List", onClick: () => _selectSequenceView(SequenceViewMode.CUE_LIST), activated: _viewMode == SequenceViewMode.CUE_LIST),
-                      PanelAction(label: "Track Sheet", onClick: () => _selectSequenceView(SequenceViewMode.TRACK_SHEET), activated: _viewMode == SequenceViewMode.TRACK_SHEET),
-                      PanelAction(label: "Sequence Settings", onClick: () => _selectSequenceView(SequenceViewMode.SETTINGS), activated: _viewMode == SequenceViewMode.SETTINGS),
+                    tabs: [
+                      tabs.Tab(label: "Cue List", child: CueList(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
+                      tabs.Tab(label: "Track Sheet", child: TrackSheet(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
+                      tabs.Tab(label: "Sequence Settings", child: SequencerSettings(sequence: state.selectedSequence!)),
                     ],
                   ),
                 ),
@@ -88,17 +88,6 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
         }
       ),
     );
-  }
-
-  Widget _sequencerView(SequencerState state) {
-    switch (_viewMode) {
-      case SequenceViewMode.CUE_LIST:
-        return CueList(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId);
-      case SequenceViewMode.TRACK_SHEET:
-        return TrackSheet(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId);
-      case SequenceViewMode.SETTINGS:
-        return SequencerSettings(sequence: state.selectedSequence!);
-    }
   }
 
   _deleteSequence(int sequenceId) {

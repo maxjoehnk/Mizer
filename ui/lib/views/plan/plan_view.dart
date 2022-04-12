@@ -69,11 +69,12 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
           "highlight": _highlight,
           "clear": _clear,
         },
-        child: tabs.Tabs(
+        child: Panel.tabs(
+          label: "2D Plan",
           tabIndex: state.tabIndex,
           onSelectTab: (index) => plansBloc.add(SelectPlanTab(index)),
           padding: false,
-          children: state.plans
+          tabs: state.plans
               .map((plan) => tabs.Tab(
                   header: (active, setActive) => ContextMenu(
                       menu: Menu(items: [

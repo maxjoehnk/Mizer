@@ -25,7 +25,6 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   SequencerPointer? _pointer;
   Map<int, SequenceState> sequenceStates = {};
   Ticker? ticker;
-  SequenceViewMode _viewMode = SequenceViewMode.CUE_LIST;
 
   @override
   void initState() {
@@ -105,16 +104,4 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   _selectSequence(Sequence sequence) {
     context.read<SequencerBloc>().add(SelectSequence(sequence: sequence.id));
   }
-
-  _selectSequenceView(SequenceViewMode viewMode) {
-    setState(() {
-      this._viewMode = viewMode;
-    });
-  }
-}
-
-enum SequenceViewMode {
-  CUE_LIST,
-  TRACK_SHEET,
-  SETTINGS,
 }

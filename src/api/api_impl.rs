@@ -158,16 +158,13 @@ impl RuntimeApi for Api {
         (x, y): (i32, i32),
     ) {
         self.update_plan(plan_id, |plan| {
-            dbg!(&fixture_ids);
             for position in plan
                 .fixtures
                 .iter_mut()
                 .filter(|position| fixture_ids.contains(&position.fixture))
             {
-                dbg!(&position);
                 position.x += x;
                 position.y += y;
-                dbg!(&position);
             }
         })
     }

@@ -83,28 +83,19 @@ impl From<model::PathSettings> for settings::FilePaths {
         Self {
             fixture_libraries: settings::FixtureLibraryPaths {
                 gdtf: paths._gdtf.map(|path| {
-                    if let model::PathSettings_oneof__gdtf::gdtf(path) = path {
-                        PathBuf::from(path)
-                    } else {
-                        unreachable!()
-                    }
+                    let model::PathSettings_oneof__gdtf::gdtf(path) = path;
+                    PathBuf::from(path)
                 }),
-                open_fixture_library: paths._open_fixture_library.map(|path| {
-                    if let model::PathSettings_oneof__open_fixture_library::open_fixture_library(
-                        path,
-                    ) = path
-                    {
+                open_fixture_library:
+                    paths._open_fixture_library.map(|path| {
+                        let model::PathSettings_oneof__open_fixture_library::open_fixture_library(
+                            path,
+                        ) = path;
                         PathBuf::from(path)
-                    } else {
-                        unreachable!()
-                    }
-                }),
+                    }),
                 qlcplus: paths._qlcplus.map(|path| {
-                    if let model::PathSettings_oneof__qlcplus::qlcplus(path) = path {
-                        PathBuf::from(path)
-                    } else {
-                        unreachable!()
-                    }
+                    let model::PathSettings_oneof__qlcplus::qlcplus(path) = path;
+                    PathBuf::from(path)
                 }),
             },
             midi_device_profiles: PathBuf::from(paths.midi_device_profiles),

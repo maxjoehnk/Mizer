@@ -121,8 +121,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance!.addObserver(this);
       afterLayout(context);
     });
     super.initState();
@@ -130,7 +130,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 

@@ -50,7 +50,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       afterLayout(context);
     });
 

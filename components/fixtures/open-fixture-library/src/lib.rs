@@ -583,7 +583,7 @@ fn group_controls(
                                         .unwrap_or_else(|| format!("Gobo {}", slot_index));
 
                                     Some(Gobo {
-                                        name: format!("Gobo {}", slot_index),
+                                        name,
                                         value,
                                         image: resource.clone().map(GoboImage::from),
                                     })

@@ -226,7 +226,13 @@ impl Mizer {
     }
 
     fn send_session_update(&self) {
-        let history = self.project_history.load().unwrap_or_default();
+        let history = match self.project_history.load() {
+            Ok(history) => history,
+            Err(err) => {
+                log::error!("Error loading project history {:?}", err);
+                Default::default()
+            }
+        };
         self.session_events.send(SessionState {
             project_path: self.project_path.clone().map(|path| {
                 path.into_os_string()

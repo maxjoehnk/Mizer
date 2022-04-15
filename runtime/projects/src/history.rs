@@ -53,7 +53,7 @@ impl ProjectHistory {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ProjectHistoryItem {
     pub path: PathBuf,
     load_count: u32,

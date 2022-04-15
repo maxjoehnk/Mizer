@@ -569,7 +569,7 @@ fn group_controls(
                     .iter()
                     .any(|s| matches!(s, WheelSlotDefinition::Gobo { .. }))
                 {
-                    controls.gobo = Some(dbg!(GoboGroup {
+                    controls.gobo = Some(GoboGroup {
                         channel: name,
                         gobos: used_slots
                             .filter_map(|(slot_index, dmx_range)| {
@@ -592,7 +592,7 @@ fn group_controls(
                                 }
                             })
                             .collect(),
-                    }));
+                    });
                     continue;
                 }
             }

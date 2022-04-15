@@ -438,10 +438,11 @@ impl RuntimeApi for Api {
                 settings_manager.settings.paths.fixture_libraries.clone(),
                 tx,
             ))?;
-            rx.recv()?;
-        }
 
-        Ok(())
+            rx.recv()?
+        } else {
+            Ok(())
+        }
     }
 }
 

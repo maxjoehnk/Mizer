@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
@@ -68,7 +69,7 @@ class SequenceList extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Text(sequence.id.toString(), textAlign: TextAlign.start),
             Spacer(),
-            Text(sequence.name, textAlign: TextAlign.center),
+            AutoSizeText(sequence.name, textAlign: TextAlign.center, maxLines: 2),
             Container(height: 24, child: active ? Icon(Icons.play_arrow) : null),
           ]),
         ),

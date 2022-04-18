@@ -2,6 +2,7 @@ use crate::contracts::Clock;
 use crate::{Cue, CueEffect, EffectEngine, EffectInstanceId, Sequence};
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::FixtureId;
+use mizer_module::ClockFrame;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
 
@@ -9,15 +10,55 @@ use std::time::{Duration, Instant};
 pub(crate) struct SequenceState {
     pub active_cue_index: usize,
     pub active: bool,
-    last_go: Option<Instant>,
+    last_go: Option<SequenceTimestamp>,
     /// Timestamp when the currently active cue has finished
-    pub cue_finished_at: Option<Instant>,
+    pub cue_finished_at: Option<SequenceTimestamp>,
     pub fixture_values: HashMap<(FixtureId, FixtureFaderControl), f64>,
-    pub channel_state: HashMap<(FixtureId, FixtureFaderControl), CueChannelState>,
+    pub channel_state: HashMap<(FixtureId, FixtureFaderControl), CueChannel>,
     pub running_effects: HashMap<CueEffect, EffectInstanceId>,
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Debug, Copy, Clone)]
+pub struct SequenceTimestamp {
+    pub time: Instant,
+    pub beat: f64,
+}
+
+impl SequenceTimestamp {
+    pub(crate) fn has_passed(
+        &self,
+        clock: &impl Clock,
+        frame: ClockFrame,
+        duration: SequenceDuration,
+    ) -> bool {
+        match duration {
+            SequenceDuration::Beats(beats) => self.beat + beats <= frame.frame,
+            SequenceDuration::Seconds(duration) => {
+                clock.now().duration_since(self.time) >= duration
+            }
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum SequenceDuration {
+    Seconds(Duration),
+    Beats(f64),
+}
+
+impl Default for SequenceDuration {
+    fn default() -> Self {
+        Self::Seconds(Duration::default())
+    }
+}
+
+#[derive(Debug, Copy, Clone)]
+pub struct CueChannel {
+    pub start_time: SequenceTimestamp,
+    pub state: CueChannelState,
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum CueChannelState {
     Delay,
     Fading,
@@ -29,37 +70,49 @@ impl SequenceState {
         self.cue_finished_at.is_some()
     }
 
-    pub fn jump_to(&mut self, sequence: &Sequence, cue_id: u32, clock: &impl Clock) {
-        if let Some(cue_index) = sequence.cues.iter().position(|cue| cue.id == cue_id) {
-            self.cue_finished_at = None;
-            self.active_cue_index = cue_index;
-            self.last_go = Some(clock.now());
-            self.update_channel_states(sequence);
-        }
-    }
-
-    pub fn go(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
-        self.last_go = Some(clock.now());
+    pub fn go(
+        &mut self,
+        sequence: &Sequence,
+        clock: &impl Clock,
+        effect_engine: &EffectEngine,
+        frame: ClockFrame,
+    ) {
+        self.last_go = Some(SequenceTimestamp {
+            time: clock.now(),
+            beat: frame.frame,
+        });
         self.cue_finished_at = None;
         self.stop_effects(effect_engine);
         if !self.active {
             self.active = true;
             self.active_cue_index = 0;
         } else {
-            self.next_cue(sequence, clock, effect_engine);
+            self.next_cue(sequence, effect_engine, clock, frame);
         }
-        self.update_channel_states(sequence);
+        self.update_channel_states(sequence, clock, frame);
     }
 
-    pub fn stop(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
+    pub fn stop(
+        &mut self,
+        sequence: &Sequence,
+        effect_engine: &EffectEngine,
+        clock: &impl Clock,
+        frame: ClockFrame,
+    ) {
         self.active = false;
         self.active_cue_index = 0;
         self.fixture_values.clear();
-        self.update_channel_states(sequence);
+        self.update_channel_states(sequence, clock, frame);
         self.stop_effects(effect_engine);
     }
 
-    fn next_cue(&mut self, sequence: &Sequence, clock: &impl Clock, effect_engine: &EffectEngine) {
+    fn next_cue(
+        &mut self,
+        sequence: &Sequence,
+        effect_engine: &EffectEngine,
+        clock: &impl Clock,
+        frame: ClockFrame,
+    ) {
         self.active_cue_index += 1;
         if self.active_cue_index >= sequence.cues.len() {
             if sequence.wrap_around {
@@ -68,26 +121,50 @@ impl SequenceState {
             }
             self.active_cue_index = 0;
             self.active = false;
-            self.stop(sequence, clock, effect_engine);
+            self.stop(sequence, effect_engine, clock, frame);
         }
     }
 
-    fn update_channel_states(&mut self, sequence: &Sequence) {
+    fn update_channel_states(
+        &mut self,
+        sequence: &Sequence,
+        clock: &impl Clock,
+        frame: ClockFrame,
+    ) {
         self.channel_state.clear();
         let cue = &sequence.cues[self.active_cue_index];
         for control in &cue.controls {
             let state = cue.initial_channel_state();
+            let channel = CueChannel {
+                state,
+                start_time: SequenceTimestamp {
+                    time: clock.now(),
+                    beat: frame.frame,
+                },
+            };
             for fixture in &sequence.fixtures {
                 self.channel_state
-                    .insert((*fixture, control.control.clone()), state);
+                    .insert((*fixture, control.control.clone()), channel);
             }
         }
     }
 
     pub fn get_timer(&self, clock: &impl Clock) -> Duration {
-        clock
-            .now()
-            .duration_since(self.last_go.unwrap_or_else(|| clock.now()))
+        clock.now().duration_since(
+            self.last_go
+                .map(|last_go| last_go.time)
+                .unwrap_or_else(|| clock.now()),
+        )
+    }
+
+    pub fn get_beats_passed(&self, frame: ClockFrame) -> f64 {
+        let now = frame.frame;
+        let last_go = self
+            .last_go
+            .map(|last_go| last_go.beat)
+            .unwrap_or_else(|| frame.frame);
+
+        now - last_go
     }
 
     pub fn get_fixture_value(
@@ -139,5 +216,61 @@ impl Cue {
         } else {
             CueChannelState::Active
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::contracts::*;
+    use crate::state::{SequenceDuration, SequenceTimestamp};
+    use mizer_module::ClockFrame;
+    use std::time::Instant;
+    use test_case::test_case;
+
+    #[test_case(0., 0., 1.)]
+    #[test_case(0.5, 1., 2.)]
+    fn sequence_timestamp_has_passed_should_return_false_when_beats_have_not_passed(
+        start_beat: f64,
+        current_beat: f64,
+        duration: f64,
+    ) {
+        let clock = MockClock::new();
+        let timestamp = SequenceTimestamp {
+            beat: start_beat,
+            time: Instant::now(),
+        };
+        let frame = ClockFrame {
+            frame: current_beat,
+            ..Default::default()
+        };
+        let duration = SequenceDuration::Beats(duration);
+
+        let result = timestamp.has_passed(&clock, frame, duration);
+
+        assert!(!result);
+    }
+
+    #[test_case(0., 1., 1.)]
+    #[test_case(0., 3., 2.)]
+    #[test_case(0.5, 2.5, 2.)]
+    fn sequence_timestamp_has_passed_should_return_true_when_beats_have_passed(
+        start_beat: f64,
+        current_beat: f64,
+        duration: f64,
+    ) {
+        let clock = MockClock::new();
+        let timestamp = SequenceTimestamp {
+            beat: start_beat,
+            time: Instant::now(),
+        };
+        let frame = ClockFrame {
+            frame: current_beat,
+            ..Default::default()
+        };
+        let duration = SequenceDuration::Beats(duration);
+
+        let result = timestamp.has_passed(&clock, frame, duration);
+
+        assert!(result);
     }
 }

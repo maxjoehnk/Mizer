@@ -1,6 +1,7 @@
 use std::cmp::Ordering;
 
 use mizer_fixtures::FixtureId;
+use mizer_module::ClockFrame;
 use serde::{Deserialize, Serialize};
 
 use crate::contracts::*;
@@ -42,6 +43,7 @@ impl Sequence {
         clock: &impl Clock,
         fixture_controller: &impl FixtureController,
         effect_engine: &EffectEngine,
+        frame: ClockFrame,
     ) {
         if !state.active {
             return;
@@ -50,12 +52,12 @@ impl Sequence {
         let cue = self.current_cue(state, clock);
         if let Some(next_cue) = state.get_next_cue(self) {
             if next_cue.should_go(state, clock) {
-                state.go(self, clock, effect_engine);
+                state.go(self, clock, effect_engine, frame);
             }
         }
-        cue.update_state(self, state, clock);
+        cue.update_state(self, state, clock, frame);
         for control in &cue.controls {
-            for (fixture_id, value) in control.values(self, cue, state, clock) {
+            for (fixture_id, value) in control.values(self, cue, state, clock, frame) {
                 if let Some(value) = value {
                     fixture_controller.write(fixture_id, control.control.clone(), value);
                     state.set_fixture_value(fixture_id, control.control.clone(), value);

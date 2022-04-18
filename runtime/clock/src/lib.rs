@@ -91,11 +91,15 @@ impl Clock for SystemClock {
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct ClockFrame {
+    /// Speed in BPM
     pub speed: f64,
+    /// Total count of beats
     pub frame: f64,
-    /// Current beat from 0-4
+    /// Current beat from 0 to 4
     pub beat: f64,
+    /// Beats passed since last frame
     pub delta: f64,
+    /// Indicates whether this frame was the first beat of a new bar
     pub downbeat: bool,
 }
 

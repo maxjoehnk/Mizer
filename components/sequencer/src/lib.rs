@@ -24,6 +24,7 @@ mod tests {
 
     use mizer_fixtures::definition::{ColorChannel, FixtureFaderControl};
     use mizer_fixtures::FixtureId;
+    use mizer_module::ClockFrame;
 
     use crate::contracts::*;
     use crate::state::SequenceState;
@@ -37,6 +38,7 @@ mod tests {
         control: FixtureFaderControl,
     ) {
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         context
             .fixture_controller
             .expect_write()
@@ -59,12 +61,13 @@ mod tests {
 
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -75,6 +78,7 @@ mod tests {
         let fixture_id = FixtureId::Fixture(1);
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         context
             .fixture_controller
             .expect_write()
@@ -114,21 +118,23 @@ mod tests {
 
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -139,6 +145,7 @@ mod tests {
     fn sequence_with_value_range_should_spread_values(value: (f64, f64), expected: Vec<f64>) {
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         let fixture_ids = expected
             .iter()
             .enumerate()
@@ -168,12 +175,13 @@ mod tests {
 
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -184,6 +192,7 @@ mod tests {
         let fixture_id = FixtureId::Fixture(1);
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         context
             .fixture_controller
             .expect_write()
@@ -213,12 +222,60 @@ mod tests {
 
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
+        );
+
+        context.fixture_controller.checkpoint();
+    }
+
+    #[test]
+    fn sequence_with_beat_delay_should_not_write_values() {
+        let fixture_id = FixtureId::Fixture(1);
+        let control = FixtureFaderControl::Intensity;
+        let mut context = TestContext::default();
+        let frame = ClockFrame::default();
+        context
+            .fixture_controller
+            .expect_write()
+            .never()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(control.clone()),
+                predicate::always(),
+            )
+            .return_const(());
+        let sequence = Sequence {
+            fixtures: vec![fixture_id],
+            cues: vec![Cue {
+                cue_delay: Some(SequencerTime::Beats(1f64).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control,
+                        value: 1f64.into(),
+                        fixtures: vec![fixture_id],
+                    }],
+                )
+            }],
+            ..Default::default()
+        };
+
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
+        sequence.run(
+            &mut context.state,
+            &context.clock,
+            &context.fixture_controller,
+            &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -230,6 +287,7 @@ mod tests {
         let fixture_id = FixtureId::Fixture(1);
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         context
             .fixture_controller
             .expect_write()
@@ -258,12 +316,13 @@ mod tests {
         };
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.forward_clock(delay);
 
@@ -272,6 +331,68 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
+        );
+
+        context.fixture_controller.checkpoint();
+    }
+
+    #[test_case(2f64)]
+    #[test_case(5f64)]
+    fn sequence_with_beat_delay_should_write_values_after_delay_has_passed(delay: f64) {
+        let fixture_id = FixtureId::Fixture(1);
+        let control = FixtureFaderControl::Intensity;
+        let mut context = TestContext::default();
+        let frame = ClockFrame::default();
+        context
+            .fixture_controller
+            .expect_write()
+            .once()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(control.clone()),
+                predicate::eq(1f64),
+            )
+            .return_const(());
+        let sequence = Sequence {
+            fixtures: vec![fixture_id],
+            cues: vec![Cue {
+                cue_delay: Some(SequencerTime::Beats(delay).into()),
+                ..Cue::new(
+                    1,
+                    "",
+                    vec![CueControl {
+                        control,
+                        value: 1f64.into(),
+                        fixtures: vec![fixture_id],
+                    }],
+                )
+            }],
+            ..Default::default()
+        };
+        context
+            .state
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
+        sequence.run(
+            &mut context.state,
+            &context.clock,
+            &context.fixture_controller,
+            &context.effect_engine,
+            frame,
+        );
+        let frame = ClockFrame {
+            frame: delay,
+            delta: delay,
+            beat: delay,
+            ..Default::default()
+        };
+
+        sequence.run(
+            &mut context.state,
+            &context.clock,
+            &context.fixture_controller,
+            &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -288,6 +409,7 @@ mod tests {
         time: f64,
     ) {
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let fixture_ids = fixtures
@@ -343,12 +465,13 @@ mod tests {
         };
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.forward_clock(time);
 
@@ -357,6 +480,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -367,6 +491,7 @@ mod tests {
         let fixture_id = FixtureId::Fixture(1);
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         context
             .fixture_controller
             .expect_write()
@@ -396,12 +521,13 @@ mod tests {
 
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -419,6 +545,7 @@ mod tests {
         let fixture_id = FixtureId::Fixture(1);
         let control = FixtureFaderControl::Intensity;
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         context
             .fixture_controller
             .expect_write()
@@ -457,12 +584,13 @@ mod tests {
         };
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.forward_clock(time);
 
@@ -471,6 +599,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -489,6 +618,7 @@ mod tests {
         time: f64,
     ) {
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let fixture_ids = fixtures
@@ -521,12 +651,13 @@ mod tests {
         };
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.forward_clock(time);
         context.fixture_controller.checkpoint();
@@ -547,6 +678,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
@@ -555,6 +687,7 @@ mod tests {
     #[test]
     fn sequence_with_fade_and_delay_should_start_fade_after_delay() {
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
         let sequence = Sequence {
@@ -577,12 +710,13 @@ mod tests {
         context.fixture_controller.expect_write().never();
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.fixture_controller.checkpoint();
         context.forward_clock(1f64);
@@ -602,23 +736,32 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();
     }
 
-    #[test_case((1f64, 2f64), (1f64, 2f64), vec![Some(0f64), None], 1f64)]
-    #[test_case((1f64, 2f64), (1f64, 2f64), vec![Some(1f64), Some(0f64)], 2f64)]
-    #[test_case((1f64, 2f64), (1f64, 2f64), vec![Some(1f64), Some(1f64)], 4f64)]
-    fn sequence_with_fade_and_delay_ranges_should_start_fade_after_delay_for_each_fixture(
-        fade: (f64, f64),
-        delay: (f64, f64),
-        expected: Vec<Option<f64>>,
-        time: f64,
-    ) {
+    // Time | Fixture 0 | Fixture 1
+    // 0    | -         | -
+    // 1    | 0         | -
+    // 2    | 1         | 0
+    // 3    | 1         | 0.5
+    // 4    | 1         | 1
+    #[test]
+    fn sequence_with_fade_and_delay_ranges_should_start_fade_after_delay_for_each_fixture() {
+        let fade = (1f64, 2f64);
+        let delay = (1f64, 2f64);
+        let frames = vec![
+            (0f64, vec![None, None]),
+            (1f64, vec![Some(0f64), None]),
+            (2f64, vec![Some(1f64), Some(0f64)]),
+            (4f64, vec![Some(1f64), Some(1f64)]),
+        ];
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         let control = FixtureFaderControl::Intensity;
-        let fixture_ids = expected
+        let fixture_ids = vec![0, 1]
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
@@ -655,49 +798,55 @@ mod tests {
         context.fixture_controller.expect_write().return_const(());
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.fixture_controller.checkpoint();
-        context.forward_clock(time);
-        for (i, value) in expected.into_iter().enumerate() {
-            let expectation = context.fixture_controller.expect_write();
-            if let Some(value) = value {
-                expectation
-                    .once()
-                    .with(
+
+        for (time, expected) in frames {
+            context.forward_clock(time);
+            for (i, value) in expected.into_iter().enumerate() {
+                let expectation = context.fixture_controller.expect_write();
+                if let Some(value) = value {
+                    expectation
+                        .once()
+                        .with(
+                            predicate::eq(FixtureId::Fixture(i as u32)),
+                            predicate::eq(control.clone()),
+                            predicate::eq(value),
+                        )
+                        .return_const(());
+                } else {
+                    expectation.never().with(
                         predicate::eq(FixtureId::Fixture(i as u32)),
                         predicate::eq(control.clone()),
-                        predicate::eq(value),
-                    )
-                    .return_const(());
-            } else {
-                expectation.never().with(
-                    predicate::eq(FixtureId::Fixture(i as u32)),
-                    predicate::eq(control.clone()),
-                    predicate::always(),
-                );
+                        predicate::always(),
+                    );
+                }
             }
+
+            sequence.run(
+                &mut context.state,
+                &context.clock,
+                &context.fixture_controller,
+                &context.effect_engine,
+                frame,
+            );
+
+            context.fixture_controller.checkpoint();
         }
-
-        sequence.run(
-            &mut context.state,
-            &context.clock,
-            &context.fixture_controller,
-            &context.effect_engine,
-        );
-
-        context.fixture_controller.checkpoint();
     }
 
     #[test]
     fn sequence_should_fade_between_cues() {
         let fixture_id = FixtureId::Fixture(1);
         let mut context = TestContext::default();
+        let frame = ClockFrame::default();
         let mut red_sequence = mockall::Sequence::new();
         let mut green_sequence = mockall::Sequence::new();
         context
@@ -842,22 +991,24 @@ mod tests {
 
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context
             .state
-            .go(&sequence, &context.clock, &context.effect_engine);
+            .go(&sequence, &context.clock, &context.effect_engine, frame);
         context.forward_clock(0.5);
         sequence.run(
             &mut context.state,
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
         context.forward_clock(0.5);
         sequence.run(
@@ -865,6 +1016,7 @@ mod tests {
             &context.clock,
             &context.fixture_controller,
             &context.effect_engine,
+            frame,
         );
 
         context.fixture_controller.checkpoint();

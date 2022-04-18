@@ -9,10 +9,11 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_util::ThreadPinned;
 
-use crate::contracts::StdClock;
+use crate::contracts::{Clock, StdClock};
 use crate::state::SequenceState;
 use crate::{EffectEngine, Sequence};
 use mizer_fixtures::manager::FixtureManager;
+use mizer_module::ClockFrame;
 
 #[derive(Clone)]
 pub struct Sequencer {
@@ -50,12 +51,19 @@ impl Sequencer {
         &self,
         fixture_manager: &FixtureManager,
         effect_engine: &EffectEngine,
+        frame: ClockFrame,
     ) {
         let sequences = self.sequences.read();
         let mut states = self.sequence_states.deref().deref().borrow_mut();
         let mut view = self.sequence_view.read();
-        self.handle_commands(&sequences, &mut states, effect_engine);
-        self.handle_sequences(&sequences, &mut states, fixture_manager, effect_engine);
+        self.handle_commands(&sequences, &mut states, effect_engine, frame);
+        self.handle_sequences(
+            &sequences,
+            &mut states,
+            fixture_manager,
+            effect_engine,
+            frame,
+        );
         for (id, state) in states.iter() {
             if let Some(sequence) = sequences.get(id) {
                 let view = view.entry(*id).or_default();
@@ -72,27 +80,28 @@ impl Sequencer {
         sequences: &HashMap<u32, Sequence>,
         states: &mut HashMap<u32, SequenceState>,
         effect_engine: &EffectEngine,
+        frame: ClockFrame,
     ) {
         for command in self.commands.1.try_iter() {
             match command {
                 SequencerCommands::Go(sequence_id) => {
                     if let Some(state) = states.get_mut(&sequence_id) {
                         if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.go(sequence, &self.clock, effect_engine);
+                            state.go(sequence, &self.clock, effect_engine, frame);
                         }
                     }
                 }
                 SequencerCommands::Stop(sequence_id) => {
                     if let Some(state) = states.get_mut(&sequence_id) {
                         if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.stop(sequence, &self.clock, effect_engine);
+                            state.stop(sequence, effect_engine, &self.clock, frame);
                         }
                     }
                 }
                 SequencerCommands::DropState(sequence_id) => {
                     if let Some(state) = states.get_mut(&sequence_id) {
                         if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.stop(sequence, &self.clock, effect_engine);
+                            state.stop(sequence, effect_engine, &self.clock, frame);
                         }
                     }
                     states.remove(&sequence_id);
@@ -107,10 +116,11 @@ impl Sequencer {
         states: &mut HashMap<u32, SequenceState>,
         fixture_manager: &FixtureManager,
         effect_engine: &EffectEngine,
+        frame: ClockFrame,
     ) {
         for (i, sequence) in sequences {
             let state = states.entry(*i).or_default();
-            sequence.run(state, &self.clock, fixture_manager, effect_engine);
+            sequence.run(state, &self.clock, fixture_manager, effect_engine, frame);
         }
     }
 

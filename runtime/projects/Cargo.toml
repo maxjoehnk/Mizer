@@ -20,6 +20,7 @@ mizer-sequencer = { path = "../../components/sequencer" }
 mizer-plan = { path = "../../components/plan" }
 mizer-protocol-dmx = { path = "../../components/connections/protocols/dmx" }
 directories-next = "2.0"
+fs2 = "0.4"
 
 [dev-dependencies]
 test-case = "1.0"

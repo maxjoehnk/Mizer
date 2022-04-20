@@ -3784,6 +3784,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "directories-next",
+ "fs2",
  "lazy_static",
  "log",
  "mizer-fixtures",

@@ -36,20 +36,26 @@ pub fn build_runtime(
     handle: tokio::runtime::Handle,
     flags: Flags,
 ) -> anyhow::Result<(Mizer, ApiHandler)> {
-    let mut settings = SettingsManager::new()?;
-    settings.load()?;
+    let mut settings = SettingsManager::new().context("Failed to load default settings")?;
+    settings
+        .load()
+        .context("Failed to load settings from disk")?;
     let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
     let (api_handler, api) = Api::setup(&runtime, settings.clone());
 
-    let sequencer = register_sequencer_module(&mut runtime)?;
-    let effect_engine = register_effects_module(&mut runtime)?;
-    register_device_module(&mut runtime, &handle)?;
-    register_dmx_module(&mut runtime)?;
-    register_midi_module(&mut runtime, &settings.read().settings)?;
+    let sequencer =
+        register_sequencer_module(&mut runtime).context("Failed to register sequencer module")?;
+    let effect_engine =
+        register_effects_module(&mut runtime).context("Failed to register effects module")?;
+    register_device_module(&mut runtime, &handle).context("Failed to register devices module")?;
+    register_dmx_module(&mut runtime).context("failed to register dmx module")?;
+    register_midi_module(&mut runtime, &settings.read().settings)
+        .context("Failed to register midi module")?;
     let (fixture_manager, fixture_library) =
-        register_fixtures_module(&mut runtime, &settings.read().settings)?;
+        register_fixtures_module(&mut runtime, &settings.read().settings)
+            .context("Failed to register fixtures module")?;
 
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
@@ -66,9 +72,11 @@ pub fn build_runtime(
         effect_engine,
     );
 
-    let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())?;
-    setup_media_api(handle, &flags, media_server_api.clone())?;
-    let has_project_file = flags.file.is_some();
+    let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())
+        .context("Failed to setup grpc api")?;
+    setup_media_api(handle, &flags, media_server_api.clone())
+        .context("Failed to setup media api")?;
+    let project_file = flags.file.clone();
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
         flags,
@@ -79,8 +87,11 @@ pub fn build_runtime(
         session_events: MessageBus::new(),
         project_history: ProjectHistory,
     };
-    if has_project_file {
-        mizer.load_project()?;
+    if project_file.is_some() {
+        mizer.load_project().context(format!(
+            "Failed to load project file {:?}",
+            project_file.unwrap()
+        ))?;
     } else {
         mizer.new_project();
     }
@@ -158,18 +169,23 @@ impl Mizer {
                 let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
                 effects_engine.load(&project)?;
                 let sequencer = injector.get::<Sequencer>().unwrap();
-                sequencer.load(&project)?;
+                sequencer.load(&project).context("loading sequences")?;
                 let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
-                dmx_manager.load(&project)?;
+                dmx_manager
+                    .load(&project)
+                    .context("loading dmx connections")?;
             }
-            import_media_files(&media_paths, &self.media_server_api)?;
+            import_media_files(&media_paths, &self.media_server_api)
+                .context("loading media files")?;
             self.runtime.load(&project).context("loading project")?;
             log::info!("Loading project...Done");
 
             if self.flags.generate_graph {
                 self.runtime.generate_pipeline_graph()?;
             }
-            self.project_history.add_project(path)?;
+            self.project_history
+                .add_project(path)
+                .context("updating history")?;
             self.send_session_update();
         }
 

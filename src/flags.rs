@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use structopt::StructOpt;
 
-#[derive(StructOpt, Debug, Clone)]
+#[derive(StructOpt, Debug, Clone, Default)]
 pub struct Flags {
     #[structopt(long)]
     pub generate_graph: bool,

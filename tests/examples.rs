@@ -23,6 +23,7 @@ async fn test_build_project_pipeline(project: &str) {
         disable_media_api: true,
         disable_grpc_api: true,
         headless: true,
+        ..Default::default()
     };
 
     build_runtime(handle, flags).unwrap();

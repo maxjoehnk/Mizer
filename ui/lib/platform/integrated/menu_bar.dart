@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:mizer/platform/integrated/menu.dart';
 import 'package:nativeshell/nativeshell.dart' as nativeshell;
 

@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' hide MenuItem;
 import 'package:mizer/platform/platform.dart';
 
 class MenuActionItem extends MenuItem {

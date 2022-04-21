@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart' hide MenuItem;
 
 class Menu {
   final List<MenuBaseItem> items;

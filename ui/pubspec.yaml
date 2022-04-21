@@ -20,11 +20,6 @@ dependencies:
   file_selector_linux: ^0.0.2
   file_selector_macos: ^0.0.4
   multicast_dns: ^0.3.1
-  menubar:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding
-      path: plugins/menubar
-      ref: a8ca32b
   select_form_field: ^2.2.0
   collection: ^1.15.0
   nativeshell: ^0.1.13

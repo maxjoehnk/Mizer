@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/platform/integrated/menu_bar.dart';
-import 'package:mizer/platform/standalone/menu_bar.dart';
 
 import '../platform.dart';
 import 'menu.dart';
@@ -13,7 +12,7 @@ class MenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (context.platform.isStandalone) {
-      return StandaloneMenuBar(menu: menu, child: child);
+      throw Exception("Not implemented");
     }else {
       return IntegratedMenuBar(menu: menu, child: child);
     }

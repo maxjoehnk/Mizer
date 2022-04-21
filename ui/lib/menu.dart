@@ -2,7 +2,7 @@ import 'dart:io' as io;
 
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/platform/platform.dart';

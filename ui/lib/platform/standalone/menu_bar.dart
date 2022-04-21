@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:menubar/menubar.dart' as menubar;
 
 import '../platform.dart';

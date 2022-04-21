@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:mizer/widgets/hoverable.dart';
 
 import '../platform.dart';

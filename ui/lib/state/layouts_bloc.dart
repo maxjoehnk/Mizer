@@ -144,6 +144,11 @@ class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
       var layouts = await api.getLayouts();
       yield state.copyWith(layouts: layouts.layouts);
     }
+    if (event is MoveControl) {
+      await api.moveControl(event.layoutId, event.controlId, event.position);
+      var layouts = await api.getLayouts();
+      yield state.copyWith(layouts: layouts.layouts);
+    }
     if (event is SelectLayoutTab) {
       yield state.copyWith(tabIndex: event.tabIndex);
     }

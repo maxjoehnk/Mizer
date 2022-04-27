@@ -21,8 +21,9 @@ class LayoutControlView extends StatelessWidget {
   final LayoutControl control;
   final String layoutId;
   final Map<int, SequenceState> sequencerState;
+  final void Function() onMove;
 
-  LayoutControlView(this.layoutId, this.control, this.sequencerState);
+  LayoutControlView(this.layoutId, this.control, this.sequencerState, this.onMove);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,7 @@ class LayoutControlView extends StatelessWidget {
       menu: Menu(items: [
         MenuItem(label: "Rename", action: () => _renameControl(context)),
         MenuItem(label: "Edit", action: () => _editControl(context)),
-        // TODO: implement moving of controls
-        MenuItem(label: "Move"),
+        MenuItem(label: "Move", action: () => onMove()),
         MenuItem(label: "Delete", action: () => _deleteControl(context)),
       ]),
       child: Padding(

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter/scheduler.dart';
@@ -12,6 +13,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
@@ -153,80 +155,89 @@ class _ControlLayoutState extends State<ControlLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NodesBloc, Nodes>(
-        builder: (context, nodes) {
-          return Container(
-            width: 20 * MULTIPLIER,
-            height: 10 * MULTIPLIER,
-            child: Listener(
-              behavior: HitTestBehavior.translucent,
-              onPointerHover: (event) {
-                if (_movingNode == null) {
-                  return;
-                }
-                _movingNodePosition = _movingNodePosition! + event.localDelta;
-              },
-              onPointerDown: (e) {
-                if (_movingNode == null) {
-                  return;
-                }
-                _placeNode();
-              },
-              child: Stack(
-                children: [
-                  GestureDetector(
-                    onSecondaryTapDown: (details) {
-                      LayoutsBloc bloc = context.read();
-                      int x = (details.localPosition.dx / MULTIPLIER).floor();
-                      int y = (details.localPosition.dy / MULTIPLIER).floor();
-                      var position = ControlPosition(x: Int64(x), y: Int64(y));
-                      Navigator.of(context).push(MizerPopupRoute(
-                          position: details.globalPosition,
-                          child: AddControlPopup(
-                              nodes: nodes,
-                              onCreateControl: (nodeType) =>
-                                  bloc.add(AddControl(
-                                      layoutId: widget.layout.id,
-                                      nodeType: nodeType,
-                                      position: position)),
-                              onAddControlForExisting: (node) =>
-                                  bloc.add(AddExistingControl(
-                                      layoutId: widget.layout.id,
-                                      node: node,
-                                      position: position)))));
-                    },
+    return BlocBuilder<SequencerBloc, SequencerState>(
+      builder: (context, sequences) {
+        return BlocBuilder<NodesBloc, Nodes>(
+            builder: (context, nodes) {
+              return Container(
+                width: 20 * MULTIPLIER,
+                height: 10 * MULTIPLIER,
+                child: Listener(
+                  behavior: HitTestBehavior.translucent,
+                  onPointerHover: (event) {
+                    if (_movingNode == null) {
+                      return;
+                    }
+                    _movingNodePosition = _movingNodePosition! + event.localDelta;
+                  },
+                  onPointerDown: (e) {
+                    if (_movingNode == null) {
+                      return;
+                    }
+                    _placeNode();
+                  },
+                  child: Stack(
+                    children: [
+                      GestureDetector(
+                        onSecondaryTapDown: (details) {
+                          LayoutsBloc bloc = context.read();
+                          int x = (details.localPosition.dx / MULTIPLIER).floor();
+                          int y = (details.localPosition.dy / MULTIPLIER).floor();
+                          var position = ControlPosition(x: Int64(x), y: Int64(y));
+                          Navigator.of(context).push(MizerPopupRoute(
+                              position: details.globalPosition,
+                              child: AddControlPopup(
+                                  nodes: nodes.nodes.where((node) {
+                                    var control = widget.layout.controls.firstWhereOrNull((c) => c.node == node.path);
+
+                                    return control == null;
+                                  }).toList(),
+                                  sequences: sequences.sequences,
+                                  onCreateControl: (nodeType) =>
+                                      bloc.add(AddControl(
+                                          layoutId: widget.layout.id,
+                                          nodeType: nodeType,
+                                          position: position)),
+                                  onAddControlForExisting: (node) =>
+                                      bloc.add(AddExistingControl(
+                                          layoutId: widget.layout.id,
+                                          node: node,
+                                          position: position)))));
+                        },
+                      ),
+                      CustomMultiChildLayout(
+                          delegate: ControlsLayoutDelegate(
+                              widget.layout, _movingNode?.node, _movingNodePosition),
+                          children: [
+                            if (_movingNode != null)
+                              LayoutId(
+                                  id: MovingNodeIndicatorLayoutId,
+                                  child: Container(
+                                      decoration:
+                                      ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                            color: Colors.deepOrange.withAlpha(128),
+                                            width: 4,
+                                            style: BorderStyle.solid,
+                                          ),
+                                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                                        ),
+                                        color: Colors.deepOrange.shade100.withAlpha(10),
+                                      ))),
+                            ...widget.layout.controls.map((e) =>
+                                LayoutId(
+                                    id: e.node,
+                                    child: LayoutControlView(widget.layout.id, e, widget.sequencerState,
+                                            () => _startMove(e)))),
+                          ]),
+                    ],
                   ),
-                  CustomMultiChildLayout(
-                      delegate: ControlsLayoutDelegate(
-                          widget.layout, _movingNode?.node, _movingNodePosition),
-                      children: [
-                        if (_movingNode != null)
-                          LayoutId(
-                              id: MovingNodeIndicatorLayoutId,
-                              child: Container(
-                                  decoration:
-                                  ShapeDecoration(
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                        color: Colors.deepOrange.withAlpha(128),
-                                        width: 4,
-                                        style: BorderStyle.solid,
-                                      ),
-                                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                                    ),
-                                    color: Colors.deepOrange.shade100.withAlpha(10),
-                                  ))),
-                        ...widget.layout.controls.map((e) =>
-                            LayoutId(
-                                id: e.node,
-                                child: LayoutControlView(widget.layout.id, e, widget.sequencerState,
-                                        () => _startMove(e)))),
-                      ]),
-                ],
-              ),
-            ),
-          );
-        });
+                ),
+              );
+            });
+      }
+    );
   }
 
   _startMove(LayoutControl control) {

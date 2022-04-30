@@ -20,13 +20,14 @@ const ProgrammerState$json = const {
   '1': 'ProgrammerState',
   '2': const [
     const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
-    const {'1': 'highlight', '3': 2, '4': 1, '5': 8, '10': 'highlight'},
+    const {'1': 'active_fixtures', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'activeFixtures'},
     const {'1': 'controls', '3': 3, '4': 3, '5': 11, '6': '.mizer.programmer.ProgrammerChannel', '10': 'controls'},
+    const {'1': 'highlight', '3': 4, '4': 1, '5': 8, '10': 'highlight'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEhwKCWhpZ2hsaWdodBgCIAEoCFIJaGlnaGxpZ2h0Ej8KCGNvbnRyb2xzGAMgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHM=');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSPwoIY29udHJvbHMYAyADKAsyIy5taXplci5wcm9ncmFtbWVyLlByb2dyYW1tZXJDaGFubmVsUghjb250cm9scxIcCgloaWdobGlnaHQYBCABKAhSCWhpZ2hsaWdodA==');
 @$core.Deprecated('Use programmerChannelDescriptor instead')
 const ProgrammerChannel$json = const {
   '1': 'ProgrammerChannel',

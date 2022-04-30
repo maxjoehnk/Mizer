@@ -7,6 +7,7 @@ use postage::prelude::Sink;
 use postage::watch;
 
 use futures::stream::Stream;
+use indexmap::{IndexMap, IndexSet};
 
 use crate::definition::{
     ColorChannel, ColorGroup, FixtureControl, FixtureControlValue, FixtureFaderControl,
@@ -23,18 +24,33 @@ mod presets;
 
 pub struct Programmer {
     highlight: bool,
-    selected_fixtures: HashMap<FixtureId, FixtureProgrammer>,
+    selected_fixtures: IndexMap<FixtureId, FixtureProgrammer>,
+    active_fixtures: IndexSet<FixtureId>,
     fixtures: Arc<DashMap<u32, Fixture>>,
     message_bus: watch::Sender<ProgrammerState>,
     message_subscriber: watch::Receiver<ProgrammerState>,
     programmer_view: Arc<NonEmptyPinboard<ProgrammerState>>,
+    has_written_to_selection: bool,
 }
 
 #[derive(Debug, Clone, Default)]
 pub struct ProgrammerState {
-    pub fixtures: Vec<FixtureId>,
+    pub active_fixtures: Vec<FixtureId>,
+    pub tracked_fixtures: Vec<FixtureId>,
     pub highlight: bool,
     pub channels: Vec<ProgrammerChannel>,
+}
+
+impl ProgrammerState {
+    pub fn all_fixtures(&self) -> Vec<FixtureId> {
+        self.active_fixtures
+            .iter()
+            .chain(self.tracked_fixtures.iter())
+            .copied()
+            .collect::<IndexSet<_>>()
+            .into_iter()
+            .collect()
+    }
 }
 
 #[derive(Debug, Default)]
@@ -54,10 +70,6 @@ pub struct FixtureProgrammer {
 }
 
 impl FixtureProgrammer {
-    fn clear(&mut self) {
-        *self = Default::default();
-    }
-
     fn controls(&self) -> impl Iterator<Item = FixtureControlValue> + '_ {
         let intensity = self
             .intensity
@@ -210,9 +222,11 @@ impl Programmer {
             fixtures,
             highlight: false,
             selected_fixtures: Default::default(),
+            active_fixtures: Default::default(),
             message_bus: tx,
             message_subscriber: rx,
             programmer_view: Arc::new(NonEmptyPinboard::new(Default::default())),
+            has_written_to_selection: false,
         }
     }
 
@@ -226,9 +240,6 @@ impl Programmer {
                         for (control, value) in state.fader_controls() {
                             fixture.write_control(control.clone(), value);
                         }
-                        if self.highlight {
-                            fixture.highlight();
-                        }
                     }
                 }
                 FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
@@ -237,7 +248,23 @@ impl Programmer {
                             for (control, value) in state.fader_controls() {
                                 sub_fixture.write_control(control.clone(), value);
                             }
-                            if self.highlight {
+                        }
+                    }
+                }
+            }
+        }
+        if self.highlight {
+            for fixture_id in self.active_fixtures.iter() {
+                match fixture_id {
+                    FixtureId::Fixture(fixture_id) => {
+                        if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
+                            fixture.highlight();
+                        }
+                    }
+                    FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
+                        if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
+                            if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id)
+                            {
                                 sub_fixture.highlight();
                             }
                         }
@@ -248,21 +275,21 @@ impl Programmer {
     }
 
     pub fn clear(&mut self) {
-        for (_, state) in self.selected_fixtures.iter_mut() {
-            state.clear();
+        if !self.active_fixtures.is_empty() {
+            self.active_fixtures.clear();
+        } else {
+            self.selected_fixtures.clear();
         }
         self.emit_state();
     }
 
     pub fn select_fixtures(&mut self, fixtures: Vec<FixtureId>) {
-        let selected_fixtures = self.selected_fixtures.keys().copied().collect::<Vec<_>>();
-        for id in selected_fixtures {
-            if !fixtures.contains(&id) {
-                self.selected_fixtures.remove(&id);
-            }
+        if self.has_written_to_selection {
+            self.active_fixtures.clear();
+            self.has_written_to_selection = false;
         }
-        for id in fixtures {
-            self.selected_fixtures.entry(id).or_default();
+        for fixture in fixtures {
+            self.active_fixtures.insert(fixture);
         }
         self.emit_state();
     }
@@ -286,7 +313,8 @@ impl Programmer {
     }
 
     pub fn write_control(&mut self, value: FixtureControlValue) {
-        for (_, programmer) in self.selected_fixtures.iter_mut() {
+        for fixture_id in self.active_fixtures.iter() {
+            let programmer = self.selected_fixtures.entry(*fixture_id).or_default();
             match value {
                 FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
                 FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
@@ -306,56 +334,64 @@ impl Programmer {
                 }
             }
         }
+        self.has_written_to_selection = true;
         self.emit_state();
     }
 
-    pub fn store_highlight(&mut self, highlight: bool) {
+    pub fn set_highlight(&mut self, highlight: bool) {
         self.highlight = highlight;
         self.emit_state();
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerControl> {
-        let mut controls: HashMap<FixtureFaderControl, (Vec<FixtureId>, f64)> = HashMap::new();
+        let mut controls: HashMap<FixtureFaderControl, Vec<(Vec<FixtureId>, f64)>> = HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
             for (control, value) in state.fader_controls() {
-                let entry = controls
-                    .entry(control.clone())
-                    .or_insert((Vec::new(), value));
-                if (entry.1 - value).abs() < f64::EPSILON {
-                    entry.0.push(*fixture_id);
+                let values = controls.entry(control.clone()).or_default();
+                if let Some((fixtures, _)) = values
+                    .iter_mut()
+                    .find(|(_, v)| (value - v).abs() < f64::EPSILON)
+                {
+                    fixtures.push(*fixture_id)
                 } else {
-                    controls.insert(control.clone(), (vec![*fixture_id], value));
+                    values.push((vec![*fixture_id], value));
                 }
             }
         }
         controls
             .into_iter()
-            .map(|(control, (fixtures, value))| ProgrammerControl {
-                value,
-                control,
-                fixtures,
+            .flat_map(|(control, fixtures)| {
+                fixtures
+                    .into_iter()
+                    .map(move |(fixtures, value)| ProgrammerControl {
+                        control: control.clone(),
+                        fixtures,
+                        value,
+                    })
             })
             .collect()
     }
 
     fn get_channels(&self) -> Vec<ProgrammerChannel> {
-        let mut controls: HashMap<FixtureControl, (Vec<FixtureId>, FixtureControlValue)> =
+        let mut controls: HashMap<FixtureControl, Vec<(Vec<FixtureId>, FixtureControlValue)>> =
             HashMap::new();
         for (fixture_id, state) in self.selected_fixtures.iter() {
             for value in state.controls() {
-                let (fixture_ids, control_value) = controls
-                    .entry(value.clone().into())
-                    .or_insert((Vec::new(), value.clone()));
-                if control_value == &value {
-                    fixture_ids.push(*fixture_id);
+                let values = controls.entry(value.clone().into()).or_default();
+                if let Some((fixtures, _)) = values.iter_mut().find(|(_, v)| &value == v) {
+                    fixtures.push(*fixture_id)
                 } else {
-                    controls.insert(value.clone().into(), (vec![*fixture_id], value));
+                    values.push((vec![*fixture_id], value));
                 }
             }
         }
         controls
             .into_iter()
-            .map(|(_, (fixtures, value))| ProgrammerChannel { value, fixtures })
+            .flat_map(|(_, fixtures)| {
+                fixtures
+                    .into_iter()
+                    .map(|(fixtures, value)| ProgrammerChannel { fixtures, value })
+            })
             .collect()
     }
 
@@ -369,7 +405,8 @@ impl Programmer {
 
     fn emit_state(&mut self) {
         let state = ProgrammerState {
-            fixtures: self.selected_fixtures.keys().copied().collect(),
+            tracked_fixtures: self.selected_fixtures.keys().copied().collect(),
+            active_fixtures: self.active_fixtures.iter().copied().collect(),
             highlight: self.highlight,
             channels: self.get_channels(),
         };
@@ -388,5 +425,233 @@ pub struct ProgrammerView(Arc<NonEmptyPinboard<ProgrammerState>>);
 impl ProgrammerView {
     pub fn read(&self) -> ProgrammerState {
         self.0.read()
+    }
+}
+
+trait OptionExt<T> {
+    fn keep_or_replace(&mut self, value: Option<T>);
+}
+
+impl<T> OptionExt<T> for Option<T> {
+    fn keep_or_replace(&mut self, value: Option<T>) {
+        if let Some(value) = value {
+            *self = Some(value);
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::definition::{FixtureControlValue, FixtureFaderControl};
+    use crate::programmer::Programmer;
+    use crate::FixtureId;
+    use dashmap::DashMap;
+    use spectral::prelude::*;
+    use std::sync::Arc;
+
+    #[test]
+    fn selecting_fixtures_should_select_fixtures() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let fixtures = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+
+        programmer.select_fixtures(fixtures.clone());
+
+        let state = programmer.view().read();
+        assert_that!(state.active_fixtures).is_equal_to(fixtures);
+    }
+
+    #[test]
+    fn selecting_fixtures_in_multiple_steps_should_combine_selections() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let expected = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+
+        programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
+        programmer.select_fixtures(vec![FixtureId::Fixture(2)]);
+
+        let state = programmer.view().read();
+        assert_that!(state.active_fixtures).is_equal_to(expected);
+    }
+
+    #[test]
+    fn writing_controls_should_set_values_for_selection() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+        programmer.select_fixtures(selection.clone());
+        let value = FixtureControlValue::Intensity(1.);
+
+        programmer.write_control(value.clone());
+
+        let state = programmer.view().read();
+        let channel = &state.channels[0];
+        assert_that!(channel.fixtures.iter()).contains_all_of(&selection.iter());
+        assert_that!(channel.value).is_equal_to(value);
+    }
+
+    #[test]
+    fn writing_controls_should_track_selection() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+        programmer.select_fixtures(selection.clone());
+        let value = FixtureControlValue::Intensity(1.);
+
+        programmer.write_control(value);
+
+        let state = programmer.view().read();
+        assert_that!(state.tracked_fixtures).is_equal_to(&selection);
+    }
+
+    #[test]
+    fn selecting_fixtures_after_writing_controls_should_track_previous_selection() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let first_selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+        let second_selection = vec![FixtureId::Fixture(3), FixtureId::Fixture(4)];
+        programmer.select_fixtures(first_selection.clone());
+        let value = FixtureControlValue::Intensity(1.);
+        programmer.write_control(value.clone());
+
+        programmer.select_fixtures(second_selection.clone());
+
+        let state = programmer.view().read();
+        assert_that!(state.active_fixtures).is_equal_to(&second_selection);
+        assert_that!(state.tracked_fixtures).is_equal_to(&first_selection);
+        let tracked_channel = &state.channels[0];
+        assert_that!(tracked_channel.fixtures).is_equal_to(&first_selection);
+        assert_that!(tracked_channel.value).is_equal_to(value);
+    }
+
+    #[test]
+    fn clearing_fresh_selection_should_clear_active_fixtures() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let fixtures = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+        programmer.select_fixtures(fixtures);
+
+        programmer.clear();
+
+        let state = programmer.view().read();
+        assert_that!(state.active_fixtures).is_empty();
+    }
+
+    #[test]
+    fn clearing_after_writing_should_clear_only_active_selection() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+        programmer.select_fixtures(selection.clone());
+        let value = FixtureControlValue::Intensity(1.);
+        programmer.write_control(value.clone());
+
+        programmer.clear();
+
+        let state = programmer.view().read();
+        assert_that!(state.tracked_fixtures).is_equal_to(&selection);
+        assert_that!(state.active_fixtures).is_empty();
+        let channel = &state.channels[0];
+        assert_that!(channel.fixtures).is_equal_to(&selection);
+        assert_that!(channel.value).is_equal_to(value);
+    }
+
+    #[test]
+    fn clearing_twice_after_writing_should_clear_active_and_tracked_selection() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        programmer.select_fixtures(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
+        programmer.write_control(FixtureControlValue::Intensity(1.));
+
+        programmer.clear();
+        programmer.clear();
+
+        let state = programmer.view().read();
+        assert_that!(state.tracked_fixtures).is_empty();
+        assert_that!(state.active_fixtures).is_empty();
+        assert_that!(state.channels).is_empty();
+    }
+
+    #[test]
+    fn writing_two_active_selection_should_keep_tracked_values() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let first_fixtures = vec![FixtureId::Fixture(1)];
+        let first_value = FixtureControlValue::Intensity(1.);
+        let second_fixtures = vec![FixtureId::Fixture(2)];
+        let second_value = FixtureControlValue::Intensity(0.5);
+        programmer.select_fixtures(first_fixtures.clone());
+        programmer.write_control(first_value.clone());
+
+        programmer.select_fixtures(second_fixtures.clone());
+        programmer.write_control(second_value.clone());
+
+        let state = programmer.view().read();
+        assert_that!(state.tracked_fixtures)
+            .is_equal_to(&vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
+        assert_that!(state.channels).has_length(2);
+        let first_channel = &state.channels[0];
+        assert_that!(first_channel.value).is_equal_to(&first_value);
+        assert_that!(first_channel.fixtures).is_equal_to(&first_fixtures);
+        let second_channel = &state.channels[1];
+        assert_that!(second_channel.value).is_equal_to(&second_value);
+        assert_that!(second_channel.fixtures).is_equal_to(&second_fixtures);
+    }
+
+    #[test]
+    fn selecting_same_fixture_twice_should_only_keep_one_id() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let fixtures = vec![FixtureId::Fixture(1)];
+
+        programmer.select_fixtures(fixtures.clone());
+        programmer.select_fixtures(fixtures.clone());
+
+        let state = programmer.view().read();
+        assert_that!(state.active_fixtures).is_equal_to(&fixtures);
+    }
+
+    #[test]
+    fn get_controls_should_return_written_values() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
+        programmer.select_fixtures(selection.clone());
+        let value = FixtureControlValue::Intensity(1.);
+        programmer.write_control(value);
+
+        let result = programmer.get_controls();
+
+        assert_that!(result).has_length(1);
+        let control = &result[0];
+        assert_that!(control.fixtures).is_equal_to(&selection);
+        assert_that!(control.value).is_equal_to(1.);
+        assert_that!(control.control).is_equal_to(FixtureFaderControl::Intensity);
+    }
+
+    #[test]
+    fn get_controls_should_return_writing_two_active_selection() {
+        let fixtures = Arc::new(DashMap::new());
+        let mut programmer = Programmer::new(fixtures);
+        let first_fixtures = vec![FixtureId::Fixture(1)];
+        let first_value = FixtureControlValue::Intensity(1.);
+        let second_fixtures = vec![FixtureId::Fixture(2)];
+        let second_value = FixtureControlValue::Intensity(0.5);
+        programmer.select_fixtures(first_fixtures.clone());
+        programmer.write_control(first_value);
+        programmer.select_fixtures(second_fixtures.clone());
+        programmer.write_control(second_value);
+
+        let result = programmer.get_controls();
+
+        assert_that!(result).has_length(2);
+        let first_control = &result[0];
+        assert_that!(first_control.fixtures).is_equal_to(&first_fixtures);
+        assert_that!(first_control.value).is_equal_to(1.);
+        assert_that!(first_control.control).is_equal_to(FixtureFaderControl::Intensity);
+        let second_control = &result[1];
+        assert_that!(second_control.fixtures).is_equal_to(&second_fixtures);
+        assert_that!(second_control.value).is_equal_to(0.5);
+        assert_that!(second_control.control).is_equal_to(FixtureFaderControl::Intensity);
     }
 }

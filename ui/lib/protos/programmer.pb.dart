@@ -48,26 +48,31 @@ class SubscribeProgrammerRequest extends $pb.GeneratedMessage {
 class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
+    ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeFixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..pc<ProgrammerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
     ..hasRequiredFields = false
   ;
 
   ProgrammerState._() : super();
   factory ProgrammerState({
     $core.Iterable<$0.FixtureId>? fixtures,
-    $core.bool? highlight,
+    $core.Iterable<$0.FixtureId>? activeFixtures,
     $core.Iterable<ProgrammerChannel>? controls,
+    $core.bool? highlight,
   }) {
     final _result = create();
     if (fixtures != null) {
       _result.fixtures.addAll(fixtures);
     }
-    if (highlight != null) {
-      _result.highlight = highlight;
+    if (activeFixtures != null) {
+      _result.activeFixtures.addAll(activeFixtures);
     }
     if (controls != null) {
       _result.controls.addAll(controls);
+    }
+    if (highlight != null) {
+      _result.highlight = highlight;
     }
     return _result;
   }
@@ -96,16 +101,19 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.List<$0.FixtureId> get fixtures => $_getList(0);
 
   @$pb.TagNumber(2)
-  $core.bool get highlight => $_getBF(1);
-  @$pb.TagNumber(2)
-  set highlight($core.bool v) { $_setBool(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasHighlight() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearHighlight() => clearField(2);
+  $core.List<$0.FixtureId> get activeFixtures => $_getList(1);
 
   @$pb.TagNumber(3)
   $core.List<ProgrammerChannel> get controls => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.bool get highlight => $_getBF(3);
+  @$pb.TagNumber(4)
+  set highlight($core.bool v) { $_setBool(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasHighlight() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearHighlight() => clearField(4);
 }
 
 class ProgrammerChannel_GenericValue extends $pb.GeneratedMessage {

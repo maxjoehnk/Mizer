@@ -153,7 +153,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
   }
 
   void _clear() {
-    context.read<ProgrammerApi>().selectFixtures([]);
+    context.read<ProgrammerApi>().clear();
   }
 
   Future _placeFixtureSelection(PlansBloc bloc) async {
@@ -234,7 +234,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
                 delegate: PlanLayoutDelegate(widget.plan),
                 children: widget.plan.positions.map((p) {
                   var selected =
-                      widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
+                      widget.programmerState?.activeFixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
                   var child = Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected);
                   return LayoutId(
                       id: p.id,

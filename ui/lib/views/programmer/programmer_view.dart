@@ -72,15 +72,9 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
                     fixtures: fixtures.fixtures,
                     state: state,
                     selectedIds: selectedIds,
+                    trackedIds: trackedIds,
                     expandedIds: expandedIds,
-                    onSelect: (id, selected) => setState(() {
-                          if (selected) {
-                            _setSelectedIds([...selectedIds, id]);
-                          } else {
-                            _setSelectedIds(
-                                selectedIds.where((fixtureId) => fixtureId != id).toList());
-                          }
-                        }),
+                    onSelect: (id, selected) => _setSelectedIds([id]),
                     onSelectSimilar: (fixture) {
                       _setSelectedIds(fixtures.fixtures
                           .where((f) =>
@@ -101,7 +95,7 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
                   PanelAction(hotkeyId: "select_all", label: "Select All", onClick: () => _selectAll(fixtures.fixtures)),
                   PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
                   PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
-                  PanelAction(hotkeyId: "clear", label: "Clear", onClick: _clear, disabled: selectedIds.isEmpty),
+                  PanelAction(hotkeyId: "clear", label: "Clear", onClick: _clear, disabled: trackedIds.isEmpty && selectedIds.isEmpty),
                 ],
               ),
             ),
@@ -109,7 +103,8 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
               height: SHEET_CONTAINER_HEIGHT,
               child: FixtureSheet(
                   highlight: state.highlight,
-                  channels: state.controls,
+                  channels: state.controls.where((c) => c.fixtures.any((fixtureId) => selectedIds.contains(fixtureId))).toList(),
+                  isEmpty: selectedIds.isEmpty && trackedIds.isEmpty,
                   fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
                   api: context.read()),
             ),
@@ -119,8 +114,12 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
     });
   }
 
-  List<FixtureId> get selectedIds {
+  List<FixtureId> get trackedIds {
     return state.fixtures;
+  }
+
+  List<FixtureId> get selectedIds {
+    return state.activeFixtures;
   }
 
   List<FixtureInstance> getSelectedInstances(List<FixtureId> selectedIds, List<Fixture> fixtures) {
@@ -152,16 +151,10 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
   }
 
   _clear() {
-    _setSelectedIds([]);
+    context.read<ProgrammerApi>().clear();
   }
 
   _setSelectedIds(List<FixtureId> ids) {
     context.read<ProgrammerApi>().selectFixtures(ids);
-    // this.setState(() {
-    //   this.state = ProgrammerState(
-    //     fixtures: ids,
-    //     highlight: this.state.highlight,
-    //   );
-    // });
   }
 }

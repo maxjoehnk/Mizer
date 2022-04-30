@@ -26,6 +26,7 @@ pub extern "C" fn drop_programmer_pointer(ptr: *const Programmer) {
 
 #[repr(C)]
 pub struct FFIProgrammerState {
+    pub active_fixtures: Array<FFIFixtureId>,
     pub fixtures: Array<FFIFixtureId>,
     pub channels: Array<FFIProgrammerChannel>,
     pub highlight: u8,
@@ -34,8 +35,14 @@ pub struct FFIProgrammerState {
 impl From<ProgrammerState> for FFIProgrammerState {
     fn from(state: ProgrammerState) -> Self {
         Self {
+            active_fixtures: state
+                .active_fixtures
+                .into_iter()
+                .map(FFIFixtureId::from)
+                .collect::<Vec<_>>()
+                .into(),
             fixtures: state
-                .fixtures
+                .tracked_fixtures
                 .into_iter()
                 .map(FFIFixtureId::from)
                 .collect::<Vec<_>>()

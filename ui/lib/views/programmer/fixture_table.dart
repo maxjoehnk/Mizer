@@ -9,6 +9,7 @@ import 'package:mizer/widgets/table/table.dart';
 class FixtureTable extends StatelessWidget {
   final List<Fixture> fixtures;
   final List<FixtureId> selectedIds;
+  final List<FixtureId> trackedIds;
   final List<int> expandedIds;
   final ProgrammerState? state;
   final Function(FixtureId, bool) onSelect;
@@ -19,6 +20,7 @@ class FixtureTable extends StatelessWidget {
   FixtureTable(
       {required this.fixtures,
       required this.selectedIds,
+      required this.trackedIds,
       required this.expandedIds,
       this.state,
       required this.onSelect,
@@ -69,6 +71,8 @@ class FixtureTable extends StatelessWidget {
   MizerTableRow _fixtureRow(Fixture fixture, bool expanded) {
     var fixtureId = FixtureId(fixture: fixture.id);
     var selected = selectedIds.contains(fixtureId);
+    var tracked = trackedIds.contains(fixtureId);
+    var textStyle = tracked ? TextStyle(color: Colors.deepOrange) : TextStyle();
     var fixtureState = state?.controls.where((channel) => channel.fixtures.contains(fixtureId));
     var row = MizerTableRow(
       cells: [
@@ -77,15 +81,15 @@ class FixtureTable extends StatelessWidget {
           icon: expanded ? Icons.arrow_drop_down : Icons.arrow_right,
           label: "Expand",
         ),
-        Text(fixtureId.toDisplay()),
-        Text(fixture.name),
-        Text(_faderState(fixtureState, FixtureControl.INTENSITY)),
-        Text(_colorState(fixtureState, (color) => color.red)),
-        Text(_colorState(fixtureState, (color) => color.green)),
-        Text(_colorState(fixtureState, (color) => color.blue)),
-        Text(_faderState(fixtureState, FixtureControl.PAN)),
-        Text(_faderState(fixtureState, FixtureControl.TILT)),
-        Text(_faderState(fixtureState, FixtureControl.GOBO)),
+        Text(fixtureId.toDisplay(), style: textStyle),
+        Text(fixture.name, style: textStyle),
+        Text(_faderState(fixtureState, FixtureControl.INTENSITY), style: textStyle),
+        Text(_colorState(fixtureState, (color) => color.red), style: textStyle),
+        Text(_colorState(fixtureState, (color) => color.green), style: textStyle),
+        Text(_colorState(fixtureState, (color) => color.blue), style: textStyle),
+        Text(_faderState(fixtureState, FixtureControl.PAN), style: textStyle),
+        Text(_faderState(fixtureState, FixtureControl.TILT), style: textStyle),
+        Text(_faderState(fixtureState, FixtureControl.GOBO), style: textStyle),
       ],
       onTap: () => onSelect(fixtureId, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),

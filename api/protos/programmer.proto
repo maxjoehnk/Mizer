@@ -24,8 +24,9 @@ message SubscribeProgrammerRequest {}
 
 message ProgrammerState {
   repeated mizer.fixtures.FixtureId fixtures = 1;
-  bool highlight = 2;
+  repeated mizer.fixtures.FixtureId active_fixtures = 2;
   repeated ProgrammerChannel controls = 3;
+  bool highlight = 4;
 }
 
 message ProgrammerChannel {

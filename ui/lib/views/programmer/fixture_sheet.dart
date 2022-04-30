@@ -20,10 +20,11 @@ import 'sheets/position_sheet.dart';
 class FixtureSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
   final List<ProgrammerChannel> channels;
+  final bool isEmpty;
   final ProgrammerApi api;
   final bool highlight;
 
-  const FixtureSheet({required this.fixtures, required this.channels, required this.api, required this.highlight, Key? key}) : super(key: key);
+  const FixtureSheet({required this.fixtures, required this.channels, required this.api, required this.isEmpty, required this.highlight, Key? key}) : super(key: key);
 
   @override
   State<FixtureSheet> createState() => _FixtureSheetState();
@@ -35,11 +36,11 @@ class _FixtureSheetState extends State<FixtureSheet> {
     return HotkeyProvider(
       hotkeySelector: (hotkeys) => hotkeys.programmer,
       hotkeyMap: {
-        "clear": () => widget.api.clear(),
         "store": () => _store(),
         "highlight": () => _highlight(),
       },
       child: Panel.tabs(
+          label: "Programmer",
           tabs: [
             Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
             Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
@@ -53,12 +54,8 @@ class _FixtureSheetState extends State<FixtureSheet> {
                 hotkeyId: "highlight",
                 label: "Highlight",
                 activated: widget.highlight,
-                onClick: _highlight,
-                disabled: widget.fixtures.isEmpty),
-            PanelAction(hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.fixtures.isEmpty),
-            PanelAction(
-              hotkeyId: "clear",
-                label: "Clear", onClick: () => widget.api.clear(), disabled: widget.fixtures.isEmpty),
+                onClick: _highlight),
+            PanelAction(hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
           ]),
     );
   }

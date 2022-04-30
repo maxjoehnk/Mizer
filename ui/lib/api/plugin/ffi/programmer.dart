@@ -27,10 +27,12 @@ class ProgrammerStatePointer {
 
   ProgrammerState readState() {
     var state = this._bindings.read_programmer_state(_ptr);
+    var activeFixtures = _readFixtureSelection(state.active_fixtures);
     var fixtures = _readFixtureSelection(state.fixtures);
     var channels = _readProgrammerChannel(state.channels);
 
     return ProgrammerState(
+      activeFixtures: activeFixtures,
       fixtures: fixtures,
       controls: channels,
       highlight: state.highlight == 1,

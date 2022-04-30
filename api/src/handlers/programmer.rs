@@ -55,7 +55,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     pub fn highlight(&self, highlight: bool) {
         let mut programmer = self.fixture_manager.get_programmer();
-        programmer.store_highlight(highlight);
+        programmer.set_highlight(highlight);
     }
 
     pub fn store(&self, sequence_id: u32, store_mode: StoreRequest_Mode) {
@@ -166,7 +166,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         if let Some(mut group) = self.fixture_manager.groups.get_mut(&group_id) {
             let programmer = self.fixture_manager.get_programmer();
             let state = programmer.view().read();
-            let mut fixture_ids = state.fixtures.clone();
+            let mut fixture_ids = state.all_fixtures();
             group.fixtures.append(&mut fixture_ids);
         }
     }

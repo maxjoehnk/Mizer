@@ -69,6 +69,7 @@ impl ProjectHistory {
         history.sort_by_key(|i| i.last_loaded_at);
         history.reverse();
         history.truncate(10);
+        file.truncate()?;
         serde_json::to_writer(&mut file, &history).context("writing to file")?;
 
         Ok(())
@@ -101,6 +102,12 @@ impl HistoryFile {
         file.lock_exclusive()?;
 
         Ok(Self(file))
+    }
+
+    pub fn truncate(&mut self) -> anyhow::Result<()> {
+        self.0.set_len(0)?;
+
+        Ok(())
     }
 }
 

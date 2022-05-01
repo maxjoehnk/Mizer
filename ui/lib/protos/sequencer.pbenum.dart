@@ -36,15 +36,16 @@ class CueControl_Type extends $pb.ProtobufEnum {
   static const CueControl_Type COLOR_RED = CueControl_Type._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_RED');
   static const CueControl_Type COLOR_GREEN = CueControl_Type._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_GREEN');
   static const CueControl_Type COLOR_BLUE = CueControl_Type._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_BLUE');
-  static const CueControl_Type PAN = CueControl_Type._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
-  static const CueControl_Type TILT = CueControl_Type._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
-  static const CueControl_Type FOCUS = CueControl_Type._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOCUS');
-  static const CueControl_Type ZOOM = CueControl_Type._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZOOM');
-  static const CueControl_Type PRISM = CueControl_Type._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
-  static const CueControl_Type IRIS = CueControl_Type._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
-  static const CueControl_Type FROST = CueControl_Type._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
-  static const CueControl_Type GOBO = CueControl_Type._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
-  static const CueControl_Type GENERIC = CueControl_Type._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
+  static const CueControl_Type COLOR_WHEEL = CueControl_Type._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_WHEEL');
+  static const CueControl_Type PAN = CueControl_Type._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
+  static const CueControl_Type TILT = CueControl_Type._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
+  static const CueControl_Type FOCUS = CueControl_Type._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOCUS');
+  static const CueControl_Type ZOOM = CueControl_Type._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZOOM');
+  static const CueControl_Type PRISM = CueControl_Type._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
+  static const CueControl_Type IRIS = CueControl_Type._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
+  static const CueControl_Type FROST = CueControl_Type._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
+  static const CueControl_Type GOBO = CueControl_Type._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
+  static const CueControl_Type GENERIC = CueControl_Type._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
 
   static const $core.List<CueControl_Type> values = <CueControl_Type> [
     INTENSITY,
@@ -52,6 +53,7 @@ class CueControl_Type extends $pb.ProtobufEnum {
     COLOR_RED,
     COLOR_GREEN,
     COLOR_BLUE,
+    COLOR_WHEEL,
     PAN,
     TILT,
     FOCUS,

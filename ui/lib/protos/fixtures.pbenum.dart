@@ -12,21 +12,23 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class FixtureControl extends $pb.ProtobufEnum {
   static const FixtureControl INTENSITY = FixtureControl._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INTENSITY');
   static const FixtureControl SHUTTER = FixtureControl._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SHUTTER');
-  static const FixtureControl COLOR = FixtureControl._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR');
-  static const FixtureControl PAN = FixtureControl._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
-  static const FixtureControl TILT = FixtureControl._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
-  static const FixtureControl FOCUS = FixtureControl._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOCUS');
-  static const FixtureControl ZOOM = FixtureControl._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZOOM');
-  static const FixtureControl PRISM = FixtureControl._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
-  static const FixtureControl IRIS = FixtureControl._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
-  static const FixtureControl FROST = FixtureControl._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
-  static const FixtureControl GOBO = FixtureControl._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
-  static const FixtureControl GENERIC = FixtureControl._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
+  static const FixtureControl COLOR_MIXER = FixtureControl._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_MIXER');
+  static const FixtureControl COLOR_WHEEL = FixtureControl._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR_WHEEL');
+  static const FixtureControl PAN = FixtureControl._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PAN');
+  static const FixtureControl TILT = FixtureControl._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TILT');
+  static const FixtureControl FOCUS = FixtureControl._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FOCUS');
+  static const FixtureControl ZOOM = FixtureControl._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ZOOM');
+  static const FixtureControl PRISM = FixtureControl._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PRISM');
+  static const FixtureControl IRIS = FixtureControl._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IRIS');
+  static const FixtureControl FROST = FixtureControl._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FROST');
+  static const FixtureControl GOBO = FixtureControl._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GOBO');
+  static const FixtureControl GENERIC = FixtureControl._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GENERIC');
 
   static const $core.List<FixtureControl> values = <FixtureControl> [
     INTENSITY,
     SHUTTER,
-    COLOR,
+    COLOR_MIXER,
+    COLOR_WHEEL,
     PAN,
     TILT,
     FOCUS,

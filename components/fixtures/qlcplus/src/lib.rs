@@ -152,7 +152,7 @@ mod tests {
         assert_eq!(definition.modes[4].channels.len(), 4);
         for mode in &definition.modes {
             assert_eq!(
-                mode.controls.color,
+                mode.controls.color_mixer,
                 Some(ColorGroup {
                     red: FixtureControlChannel::Channel("Red".into()),
                     green: FixtureControlChannel::Channel("Green".into()),
@@ -192,7 +192,7 @@ mod tests {
         assert_eq!(definition.modes[5].channels.len(), 5);
         for mode in &definition.modes {
             assert_eq!(
-                mode.controls.color,
+                mode.controls.color_mixer,
                 Some(ColorGroup {
                     red: FixtureControlChannel::Channel("Red".into()),
                     green: FixtureControlChannel::Channel("Green".into()),

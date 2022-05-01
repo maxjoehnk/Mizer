@@ -168,27 +168,56 @@ impl FixtureControls {
                 ..Default::default()
             });
         }
-        if let Some(_) = fixture_controls.color {
+        if let Some(_) = fixture_controls.color_mixer {
             controls.push(FixtureControls {
-                control: FixtureControl::COLOR,
-                value: Some(FixtureControls_oneof_value::color(ColorChannel {
-                    red: fixture
-                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Color(
-                            mizer_fixtures::definition::ColorChannel::Red,
-                        ))
-                        .unwrap_or_default(),
-                    green: fixture
-                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Color(
-                            mizer_fixtures::definition::ColorChannel::Red,
-                        ))
-                        .unwrap_or_default(),
-                    blue: fixture
-                        .read_control(mizer_fixtures::definition::FixtureFaderControl::Color(
-                            mizer_fixtures::definition::ColorChannel::Red,
-                        ))
-                        .unwrap_or_default(),
-                    ..Default::default()
-                })),
+                control: FixtureControl::COLOR_MIXER,
+                value: Some(FixtureControls_oneof_value::color_mixer(
+                    ColorMixerChannel {
+                        red: fixture
+                            .read_control(
+                                mizer_fixtures::definition::FixtureFaderControl::ColorMixer(
+                                    mizer_fixtures::definition::ColorChannel::Red,
+                                ),
+                            )
+                            .unwrap_or_default(),
+                        green: fixture
+                            .read_control(
+                                mizer_fixtures::definition::FixtureFaderControl::ColorMixer(
+                                    mizer_fixtures::definition::ColorChannel::Red,
+                                ),
+                            )
+                            .unwrap_or_default(),
+                        blue: fixture
+                            .read_control(
+                                mizer_fixtures::definition::FixtureFaderControl::ColorMixer(
+                                    mizer_fixtures::definition::ColorChannel::Red,
+                                ),
+                            )
+                            .unwrap_or_default(),
+                        ..Default::default()
+                    },
+                )),
+                ..Default::default()
+            })
+        }
+        if let Some(color_wheel) = fixture_controls.color_wheel {
+            controls.push(FixtureControls {
+                control: FixtureControl::COLOR_WHEEL,
+                value: Some(FixtureControls_oneof_value::color_wheel(
+                    ColorWheelChannel {
+                        colors: color_wheel
+                            .colors
+                            .into_iter()
+                            .map(ColorWheelSlot::from)
+                            .collect(),
+                        value: fixture
+                            .read_control(
+                                mizer_fixtures::definition::FixtureFaderControl::ColorWheel,
+                            )
+                            .unwrap_or_default(),
+                        ..Default::default()
+                    },
+                )),
                 ..Default::default()
             })
         }
@@ -223,6 +252,17 @@ impl FixtureControls {
         }
 
         controls
+    }
+}
+
+impl From<mizer_fixtures::definition::ColorWheelSlot> for ColorWheelSlot {
+    fn from(color: mizer_fixtures::definition::ColorWheelSlot) -> Self {
+        Self {
+            name: color.name,
+            value: color.value,
+            _color: color.color.map(ColorWheelSlot_oneof__color::color),
+            ..Default::default()
+        }
     }
 }
 
@@ -318,7 +358,8 @@ impl From<definition::FixtureFaderControl> for models::FixtureControl {
             Prism => Self::PRISM,
             Iris => Self::IRIS,
             Frost => Self::FROST,
-            Color(_) => Self::COLOR,
+            ColorMixer(_) => Self::COLOR_MIXER,
+            ColorWheel => Self::COLOR_WHEEL,
             Generic(_) => Self::GENERIC,
             Zoom => Self::ZOOM,
             Focus => Self::FOCUS,

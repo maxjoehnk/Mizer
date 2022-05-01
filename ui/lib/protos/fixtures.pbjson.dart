@@ -14,21 +14,22 @@ const FixtureControl$json = const {
   '2': const [
     const {'1': 'INTENSITY', '2': 0},
     const {'1': 'SHUTTER', '2': 1},
-    const {'1': 'COLOR', '2': 2},
-    const {'1': 'PAN', '2': 3},
-    const {'1': 'TILT', '2': 4},
-    const {'1': 'FOCUS', '2': 5},
-    const {'1': 'ZOOM', '2': 6},
-    const {'1': 'PRISM', '2': 7},
-    const {'1': 'IRIS', '2': 8},
-    const {'1': 'FROST', '2': 9},
-    const {'1': 'GOBO', '2': 10},
-    const {'1': 'GENERIC', '2': 11},
+    const {'1': 'COLOR_MIXER', '2': 2},
+    const {'1': 'COLOR_WHEEL', '2': 3},
+    const {'1': 'PAN', '2': 4},
+    const {'1': 'TILT', '2': 5},
+    const {'1': 'FOCUS', '2': 6},
+    const {'1': 'ZOOM', '2': 7},
+    const {'1': 'PRISM', '2': 8},
+    const {'1': 'IRIS', '2': 9},
+    const {'1': 'FROST', '2': 10},
+    const {'1': 'GOBO', '2': 11},
+    const {'1': 'GENERIC', '2': 12},
   ],
 };
 
 /// Descriptor for `FixtureControl`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESCQoFQ09MT1IQAhIHCgNQQU4QAxIICgRUSUxUEAQSCQoFRk9DVVMQBRIICgRaT09NEAYSCQoFUFJJU00QBxIICgRJUklTEAgSCQoFRlJPU1QQCRIICgRHT0JPEAoSCwoHR0VORVJJQxAL');
+final $typed_data.Uint8List fixtureControlDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQ29udHJvbBINCglJTlRFTlNJVFkQABILCgdTSFVUVEVSEAESDwoLQ09MT1JfTUlYRVIQAhIPCgtDT0xPUl9XSEVFTBADEgcKA1BBThAEEggKBFRJTFQQBRIJCgVGT0NVUxAGEggKBFpPT00QBxIJCgVQUklTTRAIEggKBElSSVMQCRIJCgVGUk9TVBAKEggKBEdPQk8QCxILCgdHRU5FUklDEAw=');
 @$core.Deprecated('Use addFixturesRequestDescriptor instead')
 const AddFixturesRequest$json = const {
   '1': 'AddFixturesRequest',
@@ -144,10 +145,11 @@ const FixtureControls$json = const {
   '2': const [
     const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
     const {'1': 'fader', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FaderChannel', '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
-    const {'1': 'axis', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.AxisChannel', '9': 0, '10': 'axis'},
-    const {'1': 'gobo', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.GoboChannel', '9': 0, '10': 'gobo'},
-    const {'1': 'generic', '3': 6, '4': 1, '5': 11, '6': '.mizer.fixtures.GenericChannel', '9': 0, '10': 'generic'},
+    const {'1': 'color_mixer', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 0, '10': 'colorMixer'},
+    const {'1': 'color_wheel', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorWheelChannel', '9': 0, '10': 'colorWheel'},
+    const {'1': 'axis', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.AxisChannel', '9': 0, '10': 'axis'},
+    const {'1': 'gobo', '3': 6, '4': 1, '5': 11, '6': '.mizer.fixtures.GoboChannel', '9': 0, '10': 'gobo'},
+    const {'1': 'generic', '3': 7, '4': 1, '5': 11, '6': '.mizer.fixtures.GenericChannel', '9': 0, '10': 'generic'},
   ],
   '8': const [
     const {'1': 'value'},
@@ -155,7 +157,7 @@ const FixtureControls$json = const {
 };
 
 /// Descriptor for `FixtureControls`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureControlsDescriptor = $convert.base64Decode('Cg9GaXh0dXJlQ29udHJvbHMSOAoHY29udHJvbBgBIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEjQKBWZhZGVyGAIgASgLMhwubWl6ZXIuZml4dHVyZXMuRmFkZXJDaGFubmVsSABSBWZhZGVyEjQKBWNvbG9yGAMgASgLMhwubWl6ZXIuZml4dHVyZXMuQ29sb3JDaGFubmVsSABSBWNvbG9yEjEKBGF4aXMYBCABKAsyGy5taXplci5maXh0dXJlcy5BeGlzQ2hhbm5lbEgAUgRheGlzEjEKBGdvYm8YBSABKAsyGy5taXplci5maXh0dXJlcy5Hb2JvQ2hhbm5lbEgAUgRnb2JvEjoKB2dlbmVyaWMYBiABKAsyHi5taXplci5maXh0dXJlcy5HZW5lcmljQ2hhbm5lbEgAUgdnZW5lcmljQgcKBXZhbHVl');
+final $typed_data.Uint8List fixtureControlsDescriptor = $convert.base64Decode('Cg9GaXh0dXJlQ29udHJvbHMSOAoHY29udHJvbBgBIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEjQKBWZhZGVyGAIgASgLMhwubWl6ZXIuZml4dHVyZXMuRmFkZXJDaGFubmVsSABSBWZhZGVyEkQKC2NvbG9yX21peGVyGAMgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAFIKY29sb3JNaXhlchJECgtjb2xvcl93aGVlbBgEIAEoCzIhLm1pemVyLmZpeHR1cmVzLkNvbG9yV2hlZWxDaGFubmVsSABSCmNvbG9yV2hlZWwSMQoEYXhpcxgFIAEoCzIbLm1pemVyLmZpeHR1cmVzLkF4aXNDaGFubmVsSABSBGF4aXMSMQoEZ29ibxgGIAEoCzIbLm1pemVyLmZpeHR1cmVzLkdvYm9DaGFubmVsSABSBGdvYm8SOgoHZ2VuZXJpYxgHIAEoCzIeLm1pemVyLmZpeHR1cmVzLkdlbmVyaWNDaGFubmVsSABSB2dlbmVyaWNCBwoFdmFsdWU=');
 @$core.Deprecated('Use faderChannelDescriptor instead')
 const FaderChannel$json = const {
   '1': 'FaderChannel',
@@ -166,9 +168,9 @@ const FaderChannel$json = const {
 
 /// Descriptor for `FaderChannel`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List faderChannelDescriptor = $convert.base64Decode('CgxGYWRlckNoYW5uZWwSFAoFdmFsdWUYASABKAFSBXZhbHVl');
-@$core.Deprecated('Use colorChannelDescriptor instead')
-const ColorChannel$json = const {
-  '1': 'ColorChannel',
+@$core.Deprecated('Use colorMixerChannelDescriptor instead')
+const ColorMixerChannel$json = const {
+  '1': 'ColorMixerChannel',
   '2': const [
     const {'1': 'red', '3': 1, '4': 1, '5': 1, '10': 'red'},
     const {'1': 'green', '3': 2, '4': 1, '5': 1, '10': 'green'},
@@ -176,8 +178,34 @@ const ColorChannel$json = const {
   ],
 };
 
-/// Descriptor for `ColorChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List colorChannelDescriptor = $convert.base64Decode('CgxDb2xvckNoYW5uZWwSEAoDcmVkGAEgASgBUgNyZWQSFAoFZ3JlZW4YAiABKAFSBWdyZWVuEhIKBGJsdWUYAyABKAFSBGJsdWU=');
+/// Descriptor for `ColorMixerChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List colorMixerChannelDescriptor = $convert.base64Decode('ChFDb2xvck1peGVyQ2hhbm5lbBIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZQ==');
+@$core.Deprecated('Use colorWheelChannelDescriptor instead')
+const ColorWheelChannel$json = const {
+  '1': 'ColorWheelChannel',
+  '2': const [
+    const {'1': 'value', '3': 1, '4': 1, '5': 1, '10': 'value'},
+    const {'1': 'colors', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.ColorWheelSlot', '10': 'colors'},
+  ],
+};
+
+/// Descriptor for `ColorWheelChannel`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List colorWheelChannelDescriptor = $convert.base64Decode('ChFDb2xvcldoZWVsQ2hhbm5lbBIUCgV2YWx1ZRgBIAEoAVIFdmFsdWUSNgoGY29sb3JzGAIgAygLMh4ubWl6ZXIuZml4dHVyZXMuQ29sb3JXaGVlbFNsb3RSBmNvbG9ycw==');
+@$core.Deprecated('Use colorWheelSlotDescriptor instead')
+const ColorWheelSlot$json = const {
+  '1': 'ColorWheelSlot',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
+    const {'1': 'color', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'color', '17': true},
+  ],
+  '8': const [
+    const {'1': '_color'},
+  ],
+};
+
+/// Descriptor for `ColorWheelSlot`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List colorWheelSlotDescriptor = $convert.base64Decode('Cg5Db2xvcldoZWVsU2xvdBISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YWx1ZRIZCgVjb2xvchgDIAEoCUgAUgVjb2xvcogBAUIICgZfY29sb3I=');
 @$core.Deprecated('Use axisChannelDescriptor instead')
 const AxisChannel$json = const {
   '1': 'AxisChannel',

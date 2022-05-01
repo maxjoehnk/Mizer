@@ -193,19 +193,19 @@ sequences:
         trigger_time: ~
         controls:
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 0.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 0.0
             fixtures:
               - 2
@@ -221,19 +221,19 @@ sequences:
         trigger_time: ~
         controls:
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 0.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 0.0
             fixtures:
               - 2
@@ -249,19 +249,19 @@ sequences:
         trigger_time: ~
         controls:
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 0.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 0.0
             fixtures:
               - 2
@@ -277,19 +277,19 @@ sequences:
         trigger_time: ~
         controls:
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 0.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 1.0
             fixtures:
               - 2
@@ -305,19 +305,19 @@ sequences:
         trigger_time: ~
         controls:
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 0.0
             fixtures:
               - 2
@@ -333,19 +333,19 @@ sequences:
         trigger_time: ~
         controls:
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 1.0
             fixtures:
               - 2
               - 1
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 0.0
             fixtures:
               - 2

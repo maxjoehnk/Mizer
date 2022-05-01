@@ -281,7 +281,7 @@ sequences:
         trigger: Go
         controls:
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 1.0
             fixtures:
               - 1
@@ -290,7 +290,7 @@ sequences:
               - 5
               - 2
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 1.0
             fixtures:
               - 1
@@ -299,7 +299,7 @@ sequences:
               - 5
               - 2
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 1.0
             fixtures:
               - 1
@@ -316,7 +316,7 @@ sequences:
               - 5
               - 2
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 0.0
             fixtures:
               - 9
@@ -325,7 +325,7 @@ sequences:
               - 10
               - 7
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 0.0
             fixtures:
               - 9
@@ -334,7 +334,7 @@ sequences:
               - 10
               - 7
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 0.0
             fixtures:
               - 9
@@ -356,7 +356,7 @@ sequences:
         trigger: Go
         controls:
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 0.0
             fixtures:
               - 1
@@ -365,7 +365,7 @@ sequences:
               - 5
               - 2
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 0.0
             fixtures:
               - 1
@@ -374,7 +374,7 @@ sequences:
               - 5
               - 2
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 0.0
             fixtures:
               - 1
@@ -391,7 +391,7 @@ sequences:
               - 5
               - 2
           - control:
-              Color: Green
+              ColorMixer: Green
             value: 1.0
             fixtures:
               - 9
@@ -400,7 +400,7 @@ sequences:
               - 10
               - 7
           - control:
-              Color: Blue
+              ColorMixer: Blue
             value: 1.0
             fixtures:
               - 9
@@ -409,7 +409,7 @@ sequences:
               - 10
               - 7
           - control:
-              Color: Red
+              ColorMixer: Red
             value: 1.0
             fixtures:
               - 9

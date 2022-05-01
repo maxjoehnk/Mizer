@@ -36,8 +36,11 @@ impl WriteControlRequest {
             (TILT, Some(WriteControlRequest_oneof_value::fader(value))) => {
                 FixtureControlValue::Tilt(value)
             }
-            (COLOR, Some(WriteControlRequest_oneof_value::color(value))) => {
-                FixtureControlValue::Color(value.red, value.green, value.blue)
+            (COLOR_MIXER, Some(WriteControlRequest_oneof_value::color(value))) => {
+                FixtureControlValue::ColorMixer(value.red, value.green, value.blue)
+            }
+            (COLOR_WHEEL, Some(WriteControlRequest_oneof_value::fader(value))) => {
+                FixtureControlValue::ColorWheel(value)
             }
             (GENERIC, Some(WriteControlRequest_oneof_value::generic(value))) => {
                 FixtureControlValue::Generic(value.name, value.value)
@@ -244,14 +247,18 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
                 FixtureControl::FROST,
                 ProgrammerChannel_oneof_value::fader(value),
             ),
-            Color(red, green, blue) => (
-                FixtureControl::COLOR,
-                ProgrammerChannel_oneof_value::color(crate::models::ColorChannel {
+            ColorMixer(red, green, blue) => (
+                FixtureControl::COLOR_MIXER,
+                ProgrammerChannel_oneof_value::color(crate::models::ColorMixerChannel {
                     red,
                     green,
                     blue,
                     ..Default::default()
                 }),
+            ),
+            ColorWheel(value) => (
+                FixtureControl::COLOR_WHEEL,
+                ProgrammerChannel_oneof_value::fader(value),
             ),
             Gobo(value) => (
                 FixtureControl::GOBO,

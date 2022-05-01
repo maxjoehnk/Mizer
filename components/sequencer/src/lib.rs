@@ -864,7 +864,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Blue)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Blue)),
                 predicate::float::is_close(0f64),
             )
             .times(3)
@@ -874,7 +874,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Red)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Red)),
                 predicate::float::is_close(1f64),
             )
             .once()
@@ -885,7 +885,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Red)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Red)),
                 predicate::float::is_close(0.5f64),
             )
             .once()
@@ -896,7 +896,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Red)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Red)),
                 predicate::float::is_close(0f64),
             )
             .once()
@@ -907,7 +907,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Green)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Green)),
                 predicate::float::is_close(0f64),
             )
             .once()
@@ -918,7 +918,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Green)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Green)),
                 predicate::float::is_close(0.5f64),
             )
             .once()
@@ -929,7 +929,7 @@ mod tests {
             .expect_write()
             .with(
                 predicate::eq(fixture_id),
-                predicate::eq(FixtureFaderControl::Color(ColorChannel::Green)),
+                predicate::eq(FixtureFaderControl::ColorMixer(ColorChannel::Green)),
                 predicate::float::is_close(1f64),
             )
             .once()
@@ -944,17 +944,17 @@ mod tests {
                     vec![
                         CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
                         CueControl::new(
-                            FixtureFaderControl::Color(ColorChannel::Red),
+                            FixtureFaderControl::ColorMixer(ColorChannel::Red),
                             1f64,
                             vec![fixture_id],
                         ),
                         CueControl::new(
-                            FixtureFaderControl::Color(ColorChannel::Green),
+                            FixtureFaderControl::ColorMixer(ColorChannel::Green),
                             0f64,
                             vec![fixture_id],
                         ),
                         CueControl::new(
-                            FixtureFaderControl::Color(ColorChannel::Blue),
+                            FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                             0f64,
                             vec![fixture_id],
                         ),
@@ -968,17 +968,17 @@ mod tests {
                         vec![
                             CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
                             CueControl::new(
-                                FixtureFaderControl::Color(ColorChannel::Red),
+                                FixtureFaderControl::ColorMixer(ColorChannel::Red),
                                 0f64,
                                 vec![fixture_id],
                             ),
                             CueControl::new(
-                                FixtureFaderControl::Color(ColorChannel::Green),
+                                FixtureFaderControl::ColorMixer(ColorChannel::Green),
                                 1f64,
                                 vec![fixture_id],
                             ),
                             CueControl::new(
-                                FixtureFaderControl::Color(ColorChannel::Blue),
+                                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                                 0f64,
                                 vec![fixture_id],
                             ),

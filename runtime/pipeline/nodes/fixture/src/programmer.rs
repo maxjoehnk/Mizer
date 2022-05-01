@@ -126,7 +126,7 @@ impl ProcessingNode for ProgrammerNode {
                 programmer.write_control(FixtureControlValue::Shutter(shutter));
             }
             if let Some(color) = context.read_port_changes::<_, Color>("Color") {
-                programmer.write_control(FixtureControlValue::Color(
+                programmer.write_control(FixtureControlValue::ColorMixer(
                     color.red,
                     color.green,
                     color.blue,

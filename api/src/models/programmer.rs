@@ -469,7 +469,7 @@ impl<'a> ::std::default::Default for &'a ProgrammerChannel {
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum ProgrammerChannel_oneof_value {
     fader(f64),
-    color(super::fixtures::ColorChannel),
+    color(super::fixtures::ColorMixerChannel),
     generic(ProgrammerChannel_GenericValue),
 }
 
@@ -543,13 +543,13 @@ impl ProgrammerChannel {
         self.value = ::std::option::Option::Some(ProgrammerChannel_oneof_value::fader(v))
     }
 
-    // .mizer.fixtures.ColorChannel color = 4;
+    // .mizer.fixtures.ColorMixerChannel color = 4;
 
 
-    pub fn get_color(&self) -> &super::fixtures::ColorChannel {
+    pub fn get_color(&self) -> &super::fixtures::ColorMixerChannel {
         match self.value {
             ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(ref v)) => v,
-            _ => <super::fixtures::ColorChannel as ::protobuf::Message>::default_instance(),
+            _ => <super::fixtures::ColorMixerChannel as ::protobuf::Message>::default_instance(),
         }
     }
     pub fn clear_color(&mut self) {
@@ -564,15 +564,15 @@ impl ProgrammerChannel {
     }
 
     // Param is passed by value, moved
-    pub fn set_color(&mut self, v: super::fixtures::ColorChannel) {
+    pub fn set_color(&mut self, v: super::fixtures::ColorMixerChannel) {
         self.value = ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_color(&mut self) -> &mut super::fixtures::ColorChannel {
+    pub fn mut_color(&mut self) -> &mut super::fixtures::ColorMixerChannel {
         if let ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(_)) = self.value {
         } else {
-            self.value = ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(super::fixtures::ColorChannel::new()));
+            self.value = ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(super::fixtures::ColorMixerChannel::new()));
         }
         match self.value {
             ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(ref mut v)) => v,
@@ -581,14 +581,14 @@ impl ProgrammerChannel {
     }
 
     // Take field
-    pub fn take_color(&mut self) -> super::fixtures::ColorChannel {
+    pub fn take_color(&mut self) -> super::fixtures::ColorMixerChannel {
         if self.has_color() {
             match self.value.take() {
                 ::std::option::Option::Some(ProgrammerChannel_oneof_value::color(v)) => v,
                 _ => panic!(),
             }
         } else {
-            super::fixtures::ColorChannel::new()
+            super::fixtures::ColorMixerChannel::new()
         }
     }
 
@@ -808,7 +808,7 @@ impl ::protobuf::Message for ProgrammerChannel {
                 ProgrammerChannel::has_fader,
                 ProgrammerChannel::get_fader,
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::fixtures::ColorChannel>(
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::fixtures::ColorMixerChannel>(
                 "color",
                 ProgrammerChannel::has_color,
                 ProgrammerChannel::get_color,
@@ -1130,7 +1130,7 @@ impl<'a> ::std::default::Default for &'a WriteControlRequest {
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum WriteControlRequest_oneof_value {
     fader(f64),
-    color(super::fixtures::ColorChannel),
+    color(super::fixtures::ColorMixerChannel),
     generic(WriteControlRequest_GenericValue),
 }
 
@@ -1179,13 +1179,13 @@ impl WriteControlRequest {
         self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::fader(v))
     }
 
-    // .mizer.fixtures.ColorChannel color = 3;
+    // .mizer.fixtures.ColorMixerChannel color = 3;
 
 
-    pub fn get_color(&self) -> &super::fixtures::ColorChannel {
+    pub fn get_color(&self) -> &super::fixtures::ColorMixerChannel {
         match self.value {
             ::std::option::Option::Some(WriteControlRequest_oneof_value::color(ref v)) => v,
-            _ => <super::fixtures::ColorChannel as ::protobuf::Message>::default_instance(),
+            _ => <super::fixtures::ColorMixerChannel as ::protobuf::Message>::default_instance(),
         }
     }
     pub fn clear_color(&mut self) {
@@ -1200,15 +1200,15 @@ impl WriteControlRequest {
     }
 
     // Param is passed by value, moved
-    pub fn set_color(&mut self, v: super::fixtures::ColorChannel) {
+    pub fn set_color(&mut self, v: super::fixtures::ColorMixerChannel) {
         self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::color(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_color(&mut self) -> &mut super::fixtures::ColorChannel {
+    pub fn mut_color(&mut self) -> &mut super::fixtures::ColorMixerChannel {
         if let ::std::option::Option::Some(WriteControlRequest_oneof_value::color(_)) = self.value {
         } else {
-            self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::color(super::fixtures::ColorChannel::new()));
+            self.value = ::std::option::Option::Some(WriteControlRequest_oneof_value::color(super::fixtures::ColorMixerChannel::new()));
         }
         match self.value {
             ::std::option::Option::Some(WriteControlRequest_oneof_value::color(ref mut v)) => v,
@@ -1217,14 +1217,14 @@ impl WriteControlRequest {
     }
 
     // Take field
-    pub fn take_color(&mut self) -> super::fixtures::ColorChannel {
+    pub fn take_color(&mut self) -> super::fixtures::ColorMixerChannel {
         if self.has_color() {
             match self.value.take() {
                 ::std::option::Option::Some(WriteControlRequest_oneof_value::color(v)) => v,
                 _ => panic!(),
             }
         } else {
-            super::fixtures::ColorChannel::new()
+            super::fixtures::ColorMixerChannel::new()
         }
     }
 
@@ -1422,7 +1422,7 @@ impl ::protobuf::Message for WriteControlRequest {
                 WriteControlRequest::has_fader,
                 WriteControlRequest::get_fader,
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::fixtures::ColorChannel>(
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, super::fixtures::ColorMixerChannel>(
                 "color",
                 WriteControlRequest::has_color,
                 WriteControlRequest::get_color,
@@ -6031,36 +6031,36 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     xtures\x12B\n\x0factive_fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixture\
     s.FixtureIdR\x0eactiveFixtures\x12?\n\x08controls\x18\x03\x20\x03(\x0b2#\
     .mizer.programmer.ProgrammerChannelR\x08controls\x12\x1c\n\thighlight\
-    \x18\x04\x20\x01(\x08R\thighlight\"\x91\x03\n\x11ProgrammerChannel\x125\
+    \x18\x04\x20\x01(\x08R\thighlight\"\x96\x03\n\x11ProgrammerChannel\x125\
     \n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fi\
     xtures\x128\n\x07control\x18\x02\x20\x01(\x0e2\x1e.mizer.fixtures.Fixtur\
     eControlR\x07control\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fade\
-    r\x124\n\x05color\x18\x04\x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannelH\
-    \0R\x05color\x12L\n\x07generic\x18\x05\x20\x01(\x0b20.mizer.programmer.P\
-    rogrammerChannel.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03Red\x10\0\x12\
-    \t\n\x05Green\x10\x01\x12\x08\n\x04Blue\x10\x02B\x07\n\x05value\"\xb0\
-    \x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\x0e2\
-    \x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\x18\
-    \x02\x20\x01(\x01H\0R\x05fader\x124\n\x05color\x18\x03\x20\x01(\x0b2\x1c\
-    .mizer.fixtures.ColorChannelH\0R\x05color\x12N\n\x07generic\x18\x04\x20\
-    \x01(\x0b22.mizer.programmer.WriteControlRequest.GenericValueH\0R\x07gen\
-    eric\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04nam\
-    e\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05value\"\
-    \x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\x08f\
-    ixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\
-    \"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearRequest\"\x0f\n\rClea\
-    rResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\x18\x01\x20\x01(\
-    \x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\n\x0cStoreReques\
-    t\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\nstore\
-    _mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\tstoreM\
-    ode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\x12\n\
-    \n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse\"\x10\n\x0ePresetsRequest\"\
-    \x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x129\n\
-    \x04type\x18\x02\x20\x01(\x0e2%.mizer.programmer.PresetId.PresetTypeR\
-    \x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\x12\x0b\n\x07Shutter\
-    \x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Position\x10\x03\"\xdf\
+    r\x129\n\x05color\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChanne\
+    lH\0R\x05color\x12L\n\x07generic\x18\x05\x20\x01(\x0b20.mizer.programmer\
+    .ProgrammerChannel.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03Red\x10\0\
+    \x12\t\n\x05Green\x10\x01\x12\x08\n\x04Blue\x10\x02B\x07\n\x05value\"\
+    \xb5\x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\x0e\
+    2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\x18\
+    \x02\x20\x01(\x01H\0R\x05fader\x129\n\x05color\x18\x03\x20\x01(\x0b2!.mi\
+    zer.fixtures.ColorMixerChannelH\0R\x05color\x12N\n\x07generic\x18\x04\
+    \x20\x01(\x0b22.mizer.programmer.WriteControlRequest.GenericValueH\0R\
+    \x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05val\
+    ue\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\
+    \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
+    ures\"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearRequest\"\x0f\n\r\
+    ClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\x18\x01\x20\
+    \x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\n\x0cStoreR\
+    equest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\n\
+    store_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\ts\
+    toreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\
+    \x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse\"\x10\n\x0ePresetsRequ\
+    est\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
+    \x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.programmer.PresetId.PresetT\
+    ypeR\x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\x12\x0b\n\x07Shut\
+    ter\x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Position\x10\x03\"\xdf\
     \x01\n\x07Presets\x12:\n\x0bintensities\x18\x01\x20\x03(\x0b2\x18.mizer.\
     programmer.PresetR\x0bintensities\x122\n\x07shutter\x18\x02\x20\x03(\x0b\
     2\x18.mizer.programmer.PresetR\x07shutter\x12.\n\x05color\x18\x03\x20\

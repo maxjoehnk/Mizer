@@ -35,7 +35,7 @@ const ProgrammerChannel$json = const {
     const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
     const {'1': 'control', '3': 2, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
     const {'1': 'fader', '3': 3, '4': 1, '5': 1, '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
+    const {'1': 'color', '3': 4, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 0, '10': 'color'},
     const {'1': 'generic', '3': 5, '4': 1, '5': 11, '6': '.mizer.programmer.ProgrammerChannel.GenericValue', '9': 0, '10': 'generic'},
   ],
   '3': const [ProgrammerChannel_GenericValue$json],
@@ -65,14 +65,14 @@ const ProgrammerChannel_ColorChannel$json = const {
 };
 
 /// Descriptor for `ProgrammerChannel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerChannelDescriptor = $convert.base64Decode('ChFQcm9ncmFtbWVyQ2hhbm5lbBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSOAoHY29udHJvbBgCIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEhYKBWZhZGVyGAMgASgBSABSBWZhZGVyEjQKBWNvbG9yGAQgASgLMhwubWl6ZXIuZml4dHVyZXMuQ29sb3JDaGFubmVsSABSBWNvbG9yEkwKB2dlbmVyaWMYBSABKAsyMC5taXplci5wcm9ncmFtbWVyLlByb2dyYW1tZXJDaGFubmVsLkdlbmVyaWNWYWx1ZUgAUgdnZW5lcmljGjgKDEdlbmVyaWNWYWx1ZRISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YWx1ZSIsCgxDb2xvckNoYW5uZWwSBwoDUmVkEAASCQoFR3JlZW4QARIICgRCbHVlEAJCBwoFdmFsdWU=');
+final $typed_data.Uint8List programmerChannelDescriptor = $convert.base64Decode('ChFQcm9ncmFtbWVyQ2hhbm5lbBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSOAoHY29udHJvbBgCIAEoDjIeLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sUgdjb250cm9sEhYKBWZhZGVyGAMgASgBSABSBWZhZGVyEjkKBWNvbG9yGAQgASgLMiEubWl6ZXIuZml4dHVyZXMuQ29sb3JNaXhlckNoYW5uZWxIAFIFY29sb3ISTAoHZ2VuZXJpYxgFIAEoCzIwLm1pemVyLnByb2dyYW1tZXIuUHJvZ3JhbW1lckNoYW5uZWwuR2VuZXJpY1ZhbHVlSABSB2dlbmVyaWMaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlIiwKDENvbG9yQ2hhbm5lbBIHCgNSZWQQABIJCgVHcmVlbhABEggKBEJsdWUQAkIHCgV2YWx1ZQ==');
 @$core.Deprecated('Use writeControlRequestDescriptor instead')
 const WriteControlRequest$json = const {
   '1': 'WriteControlRequest',
   '2': const [
     const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
     const {'1': 'fader', '3': 2, '4': 1, '5': 1, '9': 0, '10': 'fader'},
-    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorChannel', '9': 0, '10': 'color'},
+    const {'1': 'color', '3': 3, '4': 1, '5': 11, '6': '.mizer.fixtures.ColorMixerChannel', '9': 0, '10': 'color'},
     const {'1': 'generic', '3': 4, '4': 1, '5': 11, '6': '.mizer.programmer.WriteControlRequest.GenericValue', '9': 0, '10': 'generic'},
   ],
   '3': const [WriteControlRequest_GenericValue$json],
@@ -91,7 +91,7 @@ const WriteControlRequest_GenericValue$json = const {
 };
 
 /// Descriptor for `WriteControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List writeControlRequestDescriptor = $convert.base64Decode('ChNXcml0ZUNvbnRyb2xSZXF1ZXN0EjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBIWCgVmYWRlchgCIAEoAUgAUgVmYWRlchI0CgVjb2xvchgDIAEoCzIcLm1pemVyLmZpeHR1cmVzLkNvbG9yQ2hhbm5lbEgAUgVjb2xvchJOCgdnZW5lcmljGAQgASgLMjIubWl6ZXIucHJvZ3JhbW1lci5Xcml0ZUNvbnRyb2xSZXF1ZXN0LkdlbmVyaWNWYWx1ZUgAUgdnZW5lcmljGjgKDEdlbmVyaWNWYWx1ZRISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YWx1ZUIHCgV2YWx1ZQ==');
+final $typed_data.Uint8List writeControlRequestDescriptor = $convert.base64Decode('ChNXcml0ZUNvbnRyb2xSZXF1ZXN0EjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBIWCgVmYWRlchgCIAEoAUgAUgVmYWRlchI5CgVjb2xvchgDIAEoCzIhLm1pemVyLmZpeHR1cmVzLkNvbG9yTWl4ZXJDaGFubmVsSABSBWNvbG9yEk4KB2dlbmVyaWMYBCABKAsyMi5taXplci5wcm9ncmFtbWVyLldyaXRlQ29udHJvbFJlcXVlc3QuR2VuZXJpY1ZhbHVlSABSB2dlbmVyaWMaOAoMR2VuZXJpY1ZhbHVlEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFdmFsdWUYAiABKAFSBXZhbHVlQgcKBXZhbHVl');
 @$core.Deprecated('Use writeControlResponseDescriptor instead')
 const WriteControlResponse$json = const {
   '1': 'WriteControlResponse',

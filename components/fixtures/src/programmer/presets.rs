@@ -68,7 +68,7 @@ impl Presets {
 
     fn color_value(presets: &DashMap<u32, Preset<Color>>, id: u32) -> Vec<FixtureControlValue> {
         if let Some(preset) = presets.get(&id) {
-            vec![FixtureControlValue::Color(
+            vec![FixtureControlValue::ColorMixer(
                 preset.value.0,
                 preset.value.1,
                 preset.value.2,

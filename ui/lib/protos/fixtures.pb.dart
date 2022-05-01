@@ -675,7 +675,8 @@ class SubFixture extends $pb.GeneratedMessage {
 
 enum FixtureControls_Value {
   fader, 
-  color, 
+  colorMixer, 
+  colorWheel, 
   axis, 
   gobo, 
   generic, 
@@ -685,20 +686,22 @@ enum FixtureControls_Value {
 class FixtureControls extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, FixtureControls_Value> _FixtureControls_ValueByTag = {
     2 : FixtureControls_Value.fader,
-    3 : FixtureControls_Value.color,
-    4 : FixtureControls_Value.axis,
-    5 : FixtureControls_Value.gobo,
-    6 : FixtureControls_Value.generic,
+    3 : FixtureControls_Value.colorMixer,
+    4 : FixtureControls_Value.colorWheel,
+    5 : FixtureControls_Value.axis,
+    6 : FixtureControls_Value.gobo,
+    7 : FixtureControls_Value.generic,
     0 : FixtureControls_Value.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureControls', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6])
+    ..oo(0, [2, 3, 4, 5, 6, 7])
     ..e<FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.INTENSITY, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
     ..aOM<FaderChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', subBuilder: FaderChannel.create)
-    ..aOM<ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: ColorChannel.create)
-    ..aOM<AxisChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'axis', subBuilder: AxisChannel.create)
-    ..aOM<GoboChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gobo', subBuilder: GoboChannel.create)
-    ..aOM<GenericChannel>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
+    ..aOM<ColorMixerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorMixer', subBuilder: ColorMixerChannel.create)
+    ..aOM<ColorWheelChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorWheel', subBuilder: ColorWheelChannel.create)
+    ..aOM<AxisChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'axis', subBuilder: AxisChannel.create)
+    ..aOM<GoboChannel>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gobo', subBuilder: GoboChannel.create)
+    ..aOM<GenericChannel>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: GenericChannel.create)
     ..hasRequiredFields = false
   ;
 
@@ -706,7 +709,8 @@ class FixtureControls extends $pb.GeneratedMessage {
   factory FixtureControls({
     FixtureControl? control,
     FaderChannel? fader,
-    ColorChannel? color,
+    ColorMixerChannel? colorMixer,
+    ColorWheelChannel? colorWheel,
     AxisChannel? axis,
     GoboChannel? gobo,
     GenericChannel? generic,
@@ -718,8 +722,11 @@ class FixtureControls extends $pb.GeneratedMessage {
     if (fader != null) {
       _result.fader = fader;
     }
-    if (color != null) {
-      _result.color = color;
+    if (colorMixer != null) {
+      _result.colorMixer = colorMixer;
+    }
+    if (colorWheel != null) {
+      _result.colorWheel = colorWheel;
     }
     if (axis != null) {
       _result.axis = axis;
@@ -777,48 +784,59 @@ class FixtureControls extends $pb.GeneratedMessage {
   FaderChannel ensureFader() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  ColorChannel get color => $_getN(2);
+  ColorMixerChannel get colorMixer => $_getN(2);
   @$pb.TagNumber(3)
-  set color(ColorChannel v) { setField(3, v); }
+  set colorMixer(ColorMixerChannel v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasColor() => $_has(2);
+  $core.bool hasColorMixer() => $_has(2);
   @$pb.TagNumber(3)
-  void clearColor() => clearField(3);
+  void clearColorMixer() => clearField(3);
   @$pb.TagNumber(3)
-  ColorChannel ensureColor() => $_ensure(2);
+  ColorMixerChannel ensureColorMixer() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  AxisChannel get axis => $_getN(3);
+  ColorWheelChannel get colorWheel => $_getN(3);
   @$pb.TagNumber(4)
-  set axis(AxisChannel v) { setField(4, v); }
+  set colorWheel(ColorWheelChannel v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasAxis() => $_has(3);
+  $core.bool hasColorWheel() => $_has(3);
   @$pb.TagNumber(4)
-  void clearAxis() => clearField(4);
+  void clearColorWheel() => clearField(4);
   @$pb.TagNumber(4)
-  AxisChannel ensureAxis() => $_ensure(3);
+  ColorWheelChannel ensureColorWheel() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  GoboChannel get gobo => $_getN(4);
+  AxisChannel get axis => $_getN(4);
   @$pb.TagNumber(5)
-  set gobo(GoboChannel v) { setField(5, v); }
+  set axis(AxisChannel v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasGobo() => $_has(4);
+  $core.bool hasAxis() => $_has(4);
   @$pb.TagNumber(5)
-  void clearGobo() => clearField(5);
+  void clearAxis() => clearField(5);
   @$pb.TagNumber(5)
-  GoboChannel ensureGobo() => $_ensure(4);
+  AxisChannel ensureAxis() => $_ensure(4);
 
   @$pb.TagNumber(6)
-  GenericChannel get generic => $_getN(5);
+  GoboChannel get gobo => $_getN(5);
   @$pb.TagNumber(6)
-  set generic(GenericChannel v) { setField(6, v); }
+  set gobo(GoboChannel v) { setField(6, v); }
   @$pb.TagNumber(6)
-  $core.bool hasGeneric() => $_has(5);
+  $core.bool hasGobo() => $_has(5);
   @$pb.TagNumber(6)
-  void clearGeneric() => clearField(6);
+  void clearGobo() => clearField(6);
   @$pb.TagNumber(6)
-  GenericChannel ensureGeneric() => $_ensure(5);
+  GoboChannel ensureGobo() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  GenericChannel get generic => $_getN(6);
+  @$pb.TagNumber(7)
+  set generic(GenericChannel v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasGeneric() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearGeneric() => clearField(7);
+  @$pb.TagNumber(7)
+  GenericChannel ensureGeneric() => $_ensure(6);
 }
 
 class FaderChannel extends $pb.GeneratedMessage {
@@ -868,16 +886,16 @@ class FaderChannel extends $pb.GeneratedMessage {
   void clearValue() => clearField(1);
 }
 
-class ColorChannel extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+class ColorMixerChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorMixerChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OD)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OD)
     ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
-  ColorChannel._() : super();
-  factory ColorChannel({
+  ColorMixerChannel._() : super();
+  factory ColorMixerChannel({
     $core.double? red,
     $core.double? green,
     $core.double? blue,
@@ -894,26 +912,26 @@ class ColorChannel extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory ColorChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ColorChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ColorMixerChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ColorMixerChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  ColorChannel clone() => ColorChannel()..mergeFromMessage(this);
+  ColorMixerChannel clone() => ColorMixerChannel()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ColorChannel copyWith(void Function(ColorChannel) updates) => super.copyWith((message) => updates(message as ColorChannel)) as ColorChannel; // ignore: deprecated_member_use
+  ColorMixerChannel copyWith(void Function(ColorMixerChannel) updates) => super.copyWith((message) => updates(message as ColorMixerChannel)) as ColorMixerChannel; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static ColorChannel create() => ColorChannel._();
-  ColorChannel createEmptyInstance() => create();
-  static $pb.PbList<ColorChannel> createRepeated() => $pb.PbList<ColorChannel>();
+  static ColorMixerChannel create() => ColorMixerChannel._();
+  ColorMixerChannel createEmptyInstance() => create();
+  static $pb.PbList<ColorMixerChannel> createRepeated() => $pb.PbList<ColorMixerChannel>();
   @$core.pragma('dart2js:noInline')
-  static ColorChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorChannel>(create);
-  static ColorChannel? _defaultInstance;
+  static ColorMixerChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorMixerChannel>(create);
+  static ColorMixerChannel? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.double get red => $_getN(0);
@@ -941,6 +959,136 @@ class ColorChannel extends $pb.GeneratedMessage {
   $core.bool hasBlue() => $_has(2);
   @$pb.TagNumber(3)
   void clearBlue() => clearField(3);
+}
+
+class ColorWheelChannel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorWheelChannel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..pc<ColorWheelSlot>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colors', $pb.PbFieldType.PM, subBuilder: ColorWheelSlot.create)
+    ..hasRequiredFields = false
+  ;
+
+  ColorWheelChannel._() : super();
+  factory ColorWheelChannel({
+    $core.double? value,
+    $core.Iterable<ColorWheelSlot>? colors,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    if (colors != null) {
+      _result.colors.addAll(colors);
+    }
+    return _result;
+  }
+  factory ColorWheelChannel.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ColorWheelChannel.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ColorWheelChannel clone() => ColorWheelChannel()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ColorWheelChannel copyWith(void Function(ColorWheelChannel) updates) => super.copyWith((message) => updates(message as ColorWheelChannel)) as ColorWheelChannel; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ColorWheelChannel create() => ColorWheelChannel._();
+  ColorWheelChannel createEmptyInstance() => create();
+  static $pb.PbList<ColorWheelChannel> createRepeated() => $pb.PbList<ColorWheelChannel>();
+  @$core.pragma('dart2js:noInline')
+  static ColorWheelChannel getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorWheelChannel>(create);
+  static ColorWheelChannel? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get value => $_getN(0);
+  @$pb.TagNumber(1)
+  set value($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<ColorWheelSlot> get colors => $_getList(1);
+}
+
+class ColorWheelSlot extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorWheelSlot', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color')
+    ..hasRequiredFields = false
+  ;
+
+  ColorWheelSlot._() : super();
+  factory ColorWheelSlot({
+    $core.String? name,
+    $core.double? value,
+    $core.String? color,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (value != null) {
+      _result.value = value;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    return _result;
+  }
+  factory ColorWheelSlot.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ColorWheelSlot.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ColorWheelSlot clone() => ColorWheelSlot()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ColorWheelSlot copyWith(void Function(ColorWheelSlot) updates) => super.copyWith((message) => updates(message as ColorWheelSlot)) as ColorWheelSlot; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ColorWheelSlot create() => ColorWheelSlot._();
+  ColorWheelSlot createEmptyInstance() => create();
+  static $pb.PbList<ColorWheelSlot> createRepeated() => $pb.PbList<ColorWheelSlot>();
+  @$core.pragma('dart2js:noInline')
+  static ColorWheelSlot getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorWheelSlot>(create);
+  static ColorWheelSlot? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get value => $_getN(1);
+  @$pb.TagNumber(2)
+  set value($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasValue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearValue() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get color => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set color($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasColor() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearColor() => clearField(3);
 }
 
 class AxisChannel extends $pb.GeneratedMessage {

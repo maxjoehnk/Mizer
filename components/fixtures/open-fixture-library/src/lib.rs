@@ -377,8 +377,11 @@ fn build_fixture_mode(
     let mut controls: FixtureControls<FixtureControlChannel> =
         group_controls(available_channels, &channels, wheels).into();
     let sub_fixtures = group_sub_fixtures(available_channels, pixels, wheels);
-    if sub_fixtures.iter().any(|f| f.controls.color.is_some()) {
-        controls.color = Some(ColorGroup {
+    if sub_fixtures
+        .iter()
+        .any(|f| f.controls.color_mixer.is_some())
+    {
+        controls.color_mixer = Some(ColorGroup {
             red: FixtureControlChannel::Delegate,
             green: FixtureControlChannel::Delegate,
             blue: FixtureControlChannel::Delegate,
@@ -595,6 +598,37 @@ fn group_controls(
                     });
                     continue;
                 }
+                if wheel
+                    .slots
+                    .iter()
+                    .any(|s| matches!(s, WheelSlotDefinition::Color { .. }))
+                {
+                    controls.color_wheel = Some(ColorWheelGroup {
+                        channel: name,
+                        colors: used_slots
+                            .filter_map(|(slot_index, dmx_range)| {
+                                let value =
+                                    dmx_range.0.linear_extrapolate((u8::MIN, u8::MAX), (0., 1.));
+                                if let WheelSlotDefinition::Color { name, colors } =
+                                    &wheel.slots[(*slot_index as usize) - 1]
+                                {
+                                    let name = name
+                                        .clone()
+                                        .unwrap_or_else(|| format!("Color {}", slot_index));
+
+                                    Some(ColorWheelSlot {
+                                        name,
+                                        value,
+                                        color: colors.first().cloned(),
+                                    })
+                                } else {
+                                    None
+                                }
+                            })
+                            .collect(),
+                    });
+                    continue;
+                }
             }
         }
         match channel
@@ -664,7 +698,7 @@ fn group_controls(
         }
     }
 
-    controls.color = color_group.build();
+    controls.color_mixer = color_group.build();
 
     controls
 }
@@ -760,9 +794,9 @@ mod tests {
 
         let controls = group_controls(&available_channels, &enabled_channels, &Default::default());
 
-        assert!(controls.color.is_some());
+        assert!(controls.color_mixer.is_some());
         assert_eq!(
-            controls.color.unwrap(),
+            controls.color_mixer.unwrap(),
             ColorGroup {
                 red: "Red".into(),
                 green: "Green".into(),

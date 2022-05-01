@@ -2275,7 +2275,8 @@ impl<'a> ::std::default::Default for &'a FixtureControls {
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum FixtureControls_oneof_value {
     fader(FaderChannel),
-    color(ColorChannel),
+    color_mixer(ColorMixerChannel),
+    color_wheel(ColorWheelChannel),
     axis(AxisChannel),
     gobo(GoboChannel),
     generic(GenericChannel),
@@ -2350,56 +2351,105 @@ impl FixtureControls {
         }
     }
 
-    // .mizer.fixtures.ColorChannel color = 3;
+    // .mizer.fixtures.ColorMixerChannel color_mixer = 3;
 
 
-    pub fn get_color(&self) -> &ColorChannel {
+    pub fn get_color_mixer(&self) -> &ColorMixerChannel {
         match self.value {
-            ::std::option::Option::Some(FixtureControls_oneof_value::color(ref v)) => v,
-            _ => <ColorChannel as ::protobuf::Message>::default_instance(),
+            ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(ref v)) => v,
+            _ => <ColorMixerChannel as ::protobuf::Message>::default_instance(),
         }
     }
-    pub fn clear_color(&mut self) {
+    pub fn clear_color_mixer(&mut self) {
         self.value = ::std::option::Option::None;
     }
 
-    pub fn has_color(&self) -> bool {
+    pub fn has_color_mixer(&self) -> bool {
         match self.value {
-            ::std::option::Option::Some(FixtureControls_oneof_value::color(..)) => true,
+            ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(..)) => true,
             _ => false,
         }
     }
 
     // Param is passed by value, moved
-    pub fn set_color(&mut self, v: ColorChannel) {
-        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color(v))
+    pub fn set_color_mixer(&mut self, v: ColorMixerChannel) {
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(v))
     }
 
     // Mutable pointer to the field.
-    pub fn mut_color(&mut self) -> &mut ColorChannel {
-        if let ::std::option::Option::Some(FixtureControls_oneof_value::color(_)) = self.value {
+    pub fn mut_color_mixer(&mut self) -> &mut ColorMixerChannel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(_)) = self.value {
         } else {
-            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color(ColorChannel::new()));
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(ColorMixerChannel::new()));
         }
         match self.value {
-            ::std::option::Option::Some(FixtureControls_oneof_value::color(ref mut v)) => v,
+            ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(ref mut v)) => v,
             _ => panic!(),
         }
     }
 
     // Take field
-    pub fn take_color(&mut self) -> ColorChannel {
-        if self.has_color() {
+    pub fn take_color_mixer(&mut self) -> ColorMixerChannel {
+        if self.has_color_mixer() {
             match self.value.take() {
-                ::std::option::Option::Some(FixtureControls_oneof_value::color(v)) => v,
+                ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(v)) => v,
                 _ => panic!(),
             }
         } else {
-            ColorChannel::new()
+            ColorMixerChannel::new()
         }
     }
 
-    // .mizer.fixtures.AxisChannel axis = 4;
+    // .mizer.fixtures.ColorWheelChannel color_wheel = 4;
+
+
+    pub fn get_color_wheel(&self) -> &ColorWheelChannel {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(ref v)) => v,
+            _ => <ColorWheelChannel as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_color_wheel(&mut self) {
+        self.value = ::std::option::Option::None;
+    }
+
+    pub fn has_color_wheel(&self) -> bool {
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color_wheel(&mut self, v: ColorWheelChannel) {
+        self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_color_wheel(&mut self) -> &mut ColorWheelChannel {
+        if let ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(_)) = self.value {
+        } else {
+            self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(ColorWheelChannel::new()));
+        }
+        match self.value {
+            ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_color_wheel(&mut self) -> ColorWheelChannel {
+        if self.has_color_wheel() {
+            match self.value.take() {
+                ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ColorWheelChannel::new()
+        }
+    }
+
+    // .mizer.fixtures.AxisChannel axis = 5;
 
 
     pub fn get_axis(&self) -> &AxisChannel {
@@ -2448,7 +2498,7 @@ impl FixtureControls {
         }
     }
 
-    // .mizer.fixtures.GoboChannel gobo = 5;
+    // .mizer.fixtures.GoboChannel gobo = 6;
 
 
     pub fn get_gobo(&self) -> &GoboChannel {
@@ -2497,7 +2547,7 @@ impl FixtureControls {
         }
     }
 
-    // .mizer.fixtures.GenericChannel generic = 6;
+    // .mizer.fixtures.GenericChannel generic = 7;
 
 
     pub fn get_generic(&self) -> &GenericChannel {
@@ -2554,7 +2604,12 @@ impl ::protobuf::Message for FixtureControls {
                 return false;
             }
         }
-        if let Some(FixtureControls_oneof_value::color(ref v)) = self.value {
+        if let Some(FixtureControls_oneof_value::color_mixer(ref v)) = self.value {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(FixtureControls_oneof_value::color_wheel(ref v)) = self.value {
             if !v.is_initialized() {
                 return false;
             }
@@ -2594,21 +2649,27 @@ impl ::protobuf::Message for FixtureControls {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color_mixer(is.read_message()?));
                 },
                 4 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::axis(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::color_wheel(is.read_message()?));
                 },
                 5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
-                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::gobo(is.read_message()?));
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::axis(is.read_message()?));
                 },
                 6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.value = ::std::option::Option::Some(FixtureControls_oneof_value::gobo(is.read_message()?));
+                },
+                7 => {
                     if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
@@ -2635,7 +2696,11 @@ impl ::protobuf::Message for FixtureControls {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
-                &FixtureControls_oneof_value::color(ref v) => {
+                &FixtureControls_oneof_value::color_mixer(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &FixtureControls_oneof_value::color_wheel(ref v) => {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -2669,23 +2734,28 @@ impl ::protobuf::Message for FixtureControls {
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureControls_oneof_value::color(ref v) => {
+                &FixtureControls_oneof_value::color_mixer(ref v) => {
                     os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureControls_oneof_value::axis(ref v) => {
+                &FixtureControls_oneof_value::color_wheel(ref v) => {
                     os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureControls_oneof_value::gobo(ref v) => {
+                &FixtureControls_oneof_value::axis(ref v) => {
                     os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
-                &FixtureControls_oneof_value::generic(ref v) => {
+                &FixtureControls_oneof_value::gobo(ref v) => {
                     os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &FixtureControls_oneof_value::generic(ref v) => {
+                    os.write_tag(7, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -2739,10 +2809,15 @@ impl ::protobuf::Message for FixtureControls {
                 FixtureControls::has_fader,
                 FixtureControls::get_fader,
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ColorChannel>(
-                "color",
-                FixtureControls::has_color,
-                FixtureControls::get_color,
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ColorMixerChannel>(
+                "color_mixer",
+                FixtureControls::has_color_mixer,
+                FixtureControls::get_color_mixer,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ColorWheelChannel>(
+                "color_wheel",
+                FixtureControls::has_color_wheel,
+                FixtureControls::get_color_wheel,
             ));
             fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, AxisChannel>(
                 "axis",
@@ -2776,6 +2851,7 @@ impl ::protobuf::Message for FixtureControls {
 impl ::protobuf::Clear for FixtureControls {
     fn clear(&mut self) {
         self.control = FixtureControl::INTENSITY;
+        self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
         self.value = ::std::option::Option::None;
@@ -2954,7 +3030,7 @@ impl ::protobuf::reflect::ProtobufValue for FaderChannel {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct ColorChannel {
+pub struct ColorMixerChannel {
     // message fields
     pub red: f64,
     pub green: f64,
@@ -2966,14 +3042,14 @@ pub struct ColorChannel {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a ColorChannel {
-    fn default() -> &'a ColorChannel {
-        <ColorChannel as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a ColorMixerChannel {
+    fn default() -> &'a ColorMixerChannel {
+        <ColorMixerChannel as ::protobuf::Message>::default_instance()
     }
 }
 
-impl ColorChannel {
-    pub fn new() -> ColorChannel {
+impl ColorMixerChannel {
+    pub fn new() -> ColorMixerChannel {
         ::std::default::Default::default()
     }
 
@@ -3023,7 +3099,7 @@ impl ColorChannel {
     }
 }
 
-impl ::protobuf::Message for ColorChannel {
+impl ::protobuf::Message for ColorMixerChannel {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -3119,8 +3195,8 @@ impl ::protobuf::Message for ColorChannel {
         Self::descriptor_static()
     }
 
-    fn new() -> ColorChannel {
-        ColorChannel::new()
+    fn new() -> ColorMixerChannel {
+        ColorMixerChannel::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -3129,34 +3205,34 @@ impl ::protobuf::Message for ColorChannel {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
                 "red",
-                |m: &ColorChannel| { &m.red },
-                |m: &mut ColorChannel| { &mut m.red },
+                |m: &ColorMixerChannel| { &m.red },
+                |m: &mut ColorMixerChannel| { &mut m.red },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
                 "green",
-                |m: &ColorChannel| { &m.green },
-                |m: &mut ColorChannel| { &mut m.green },
+                |m: &ColorMixerChannel| { &m.green },
+                |m: &mut ColorMixerChannel| { &mut m.green },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
                 "blue",
-                |m: &ColorChannel| { &m.blue },
-                |m: &mut ColorChannel| { &mut m.blue },
+                |m: &ColorMixerChannel| { &m.blue },
+                |m: &mut ColorMixerChannel| { &mut m.blue },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ColorChannel>(
-                "ColorChannel",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ColorMixerChannel>(
+                "ColorMixerChannel",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static ColorChannel {
-        static instance: ::protobuf::rt::LazyV2<ColorChannel> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(ColorChannel::new)
+    fn default_instance() -> &'static ColorMixerChannel {
+        static instance: ::protobuf::rt::LazyV2<ColorMixerChannel> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ColorMixerChannel::new)
     }
 }
 
-impl ::protobuf::Clear for ColorChannel {
+impl ::protobuf::Clear for ColorMixerChannel {
     fn clear(&mut self) {
         self.red = 0.;
         self.green = 0.;
@@ -3165,13 +3241,497 @@ impl ::protobuf::Clear for ColorChannel {
     }
 }
 
-impl ::std::fmt::Debug for ColorChannel {
+impl ::std::fmt::Debug for ColorMixerChannel {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for ColorChannel {
+impl ::protobuf::reflect::ProtobufValue for ColorMixerChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct ColorWheelChannel {
+    // message fields
+    pub value: f64,
+    pub colors: ::protobuf::RepeatedField<ColorWheelSlot>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ColorWheelChannel {
+    fn default() -> &'a ColorWheelChannel {
+        <ColorWheelChannel as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ColorWheelChannel {
+    pub fn new() -> ColorWheelChannel {
+        ::std::default::Default::default()
+    }
+
+    // double value = 1;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+
+    // repeated .mizer.fixtures.ColorWheelSlot colors = 2;
+
+
+    pub fn get_colors(&self) -> &[ColorWheelSlot] {
+        &self.colors
+    }
+    pub fn clear_colors(&mut self) {
+        self.colors.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_colors(&mut self, v: ::protobuf::RepeatedField<ColorWheelSlot>) {
+        self.colors = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_colors(&mut self) -> &mut ::protobuf::RepeatedField<ColorWheelSlot> {
+        &mut self.colors
+    }
+
+    // Take field
+    pub fn take_colors(&mut self) -> ::protobuf::RepeatedField<ColorWheelSlot> {
+        ::std::mem::replace(&mut self.colors, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for ColorWheelChannel {
+    fn is_initialized(&self) -> bool {
+        for v in &self.colors {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.colors)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.value != 0. {
+            my_size += 9;
+        }
+        for value in &self.colors {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.value != 0. {
+            os.write_double(1, self.value)?;
+        }
+        for v in &self.colors {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ColorWheelChannel {
+        ColorWheelChannel::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &ColorWheelChannel| { &m.value },
+                |m: &mut ColorWheelChannel| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<ColorWheelSlot>>(
+                "colors",
+                |m: &ColorWheelChannel| { &m.colors },
+                |m: &mut ColorWheelChannel| { &mut m.colors },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ColorWheelChannel>(
+                "ColorWheelChannel",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ColorWheelChannel {
+        static instance: ::protobuf::rt::LazyV2<ColorWheelChannel> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ColorWheelChannel::new)
+    }
+}
+
+impl ::protobuf::Clear for ColorWheelChannel {
+    fn clear(&mut self) {
+        self.value = 0.;
+        self.colors.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ColorWheelChannel {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ColorWheelChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct ColorWheelSlot {
+    // message fields
+    pub name: ::std::string::String,
+    pub value: f64,
+    // message oneof groups
+    pub _color: ::std::option::Option<ColorWheelSlot_oneof__color>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ColorWheelSlot {
+    fn default() -> &'a ColorWheelSlot {
+        <ColorWheelSlot as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum ColorWheelSlot_oneof__color {
+    color(::std::string::String),
+}
+
+impl ColorWheelSlot {
+    pub fn new() -> ColorWheelSlot {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+
+    // double value = 2;
+
+
+    pub fn get_value(&self) -> f64 {
+        self.value
+    }
+    pub fn clear_value(&mut self) {
+        self.value = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_value(&mut self, v: f64) {
+        self.value = v;
+    }
+
+    // string color = 3;
+
+
+    pub fn get_color(&self) -> &str {
+        match self._color {
+            ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_color(&mut self) {
+        self._color = ::std::option::Option::None;
+    }
+
+    pub fn has_color(&self) -> bool {
+        match self._color {
+            ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color(&mut self, v: ::std::string::String) {
+        self._color = ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_color(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(_)) = self._color {
+        } else {
+            self._color = ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(::std::string::String::new()));
+        }
+        match self._color {
+            ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_color(&mut self) -> ::std::string::String {
+        if self.has_color() {
+            match self._color.take() {
+                ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for ColorWheelSlot {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.value = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._color = ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(is.read_string()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        if self.value != 0. {
+            my_size += 9;
+        }
+        if let ::std::option::Option::Some(ref v) = self._color {
+            match v {
+                &ColorWheelSlot_oneof__color::color(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        if self.value != 0. {
+            os.write_double(2, self.value)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._color {
+            match v {
+                &ColorWheelSlot_oneof__color::color(ref v) => {
+                    os.write_string(3, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ColorWheelSlot {
+        ColorWheelSlot::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &ColorWheelSlot| { &m.name },
+                |m: &mut ColorWheelSlot| { &mut m.name },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "value",
+                |m: &ColorWheelSlot| { &m.value },
+                |m: &mut ColorWheelSlot| { &mut m.value },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "color",
+                ColorWheelSlot::has_color,
+                ColorWheelSlot::get_color,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ColorWheelSlot>(
+                "ColorWheelSlot",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ColorWheelSlot {
+        static instance: ::protobuf::rt::LazyV2<ColorWheelSlot> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ColorWheelSlot::new)
+    }
+}
+
+impl ::protobuf::Clear for ColorWheelSlot {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.value = 0.;
+        self._color = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ColorWheelSlot {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ColorWheelSlot {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -6325,16 +6885,17 @@ impl ::protobuf::reflect::ProtobufValue for FixturePhysicalData {
 pub enum FixtureControl {
     INTENSITY = 0,
     SHUTTER = 1,
-    COLOR = 2,
-    PAN = 3,
-    TILT = 4,
-    FOCUS = 5,
-    ZOOM = 6,
-    PRISM = 7,
-    IRIS = 8,
-    FROST = 9,
-    GOBO = 10,
-    GENERIC = 11,
+    COLOR_MIXER = 2,
+    COLOR_WHEEL = 3,
+    PAN = 4,
+    TILT = 5,
+    FOCUS = 6,
+    ZOOM = 7,
+    PRISM = 8,
+    IRIS = 9,
+    FROST = 10,
+    GOBO = 11,
+    GENERIC = 12,
 }
 
 impl ::protobuf::ProtobufEnum for FixtureControl {
@@ -6346,16 +6907,17 @@ impl ::protobuf::ProtobufEnum for FixtureControl {
         match value {
             0 => ::std::option::Option::Some(FixtureControl::INTENSITY),
             1 => ::std::option::Option::Some(FixtureControl::SHUTTER),
-            2 => ::std::option::Option::Some(FixtureControl::COLOR),
-            3 => ::std::option::Option::Some(FixtureControl::PAN),
-            4 => ::std::option::Option::Some(FixtureControl::TILT),
-            5 => ::std::option::Option::Some(FixtureControl::FOCUS),
-            6 => ::std::option::Option::Some(FixtureControl::ZOOM),
-            7 => ::std::option::Option::Some(FixtureControl::PRISM),
-            8 => ::std::option::Option::Some(FixtureControl::IRIS),
-            9 => ::std::option::Option::Some(FixtureControl::FROST),
-            10 => ::std::option::Option::Some(FixtureControl::GOBO),
-            11 => ::std::option::Option::Some(FixtureControl::GENERIC),
+            2 => ::std::option::Option::Some(FixtureControl::COLOR_MIXER),
+            3 => ::std::option::Option::Some(FixtureControl::COLOR_WHEEL),
+            4 => ::std::option::Option::Some(FixtureControl::PAN),
+            5 => ::std::option::Option::Some(FixtureControl::TILT),
+            6 => ::std::option::Option::Some(FixtureControl::FOCUS),
+            7 => ::std::option::Option::Some(FixtureControl::ZOOM),
+            8 => ::std::option::Option::Some(FixtureControl::PRISM),
+            9 => ::std::option::Option::Some(FixtureControl::IRIS),
+            10 => ::std::option::Option::Some(FixtureControl::FROST),
+            11 => ::std::option::Option::Some(FixtureControl::GOBO),
+            12 => ::std::option::Option::Some(FixtureControl::GENERIC),
             _ => ::std::option::Option::None
         }
     }
@@ -6364,7 +6926,8 @@ impl ::protobuf::ProtobufEnum for FixtureControl {
         static values: &'static [FixtureControl] = &[
             FixtureControl::INTENSITY,
             FixtureControl::SHUTTER,
-            FixtureControl::COLOR,
+            FixtureControl::COLOR_MIXER,
+            FixtureControl::COLOR_WHEEL,
             FixtureControl::PAN,
             FixtureControl::TILT,
             FixtureControl::FOCUS,
@@ -6427,64 +6990,72 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     6\n\x08children\x18\n\x20\x03(\x0b2\x1a.mizer.fixtures.SubFixtureR\x08ch\
     ildren\"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\
     \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08controls\x18\x03\
-    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xe2\x02\
+    \x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\"\xb8\x03\
     \n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.\
     fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\x02\x20\x01(\x0b\
-    2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x124\n\x05color\x18\x03\
-    \x20\x01(\x0b2\x1c.mizer.fixtures.ColorChannelH\0R\x05color\x121\n\x04ax\
-    is\x18\x04\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x121\
-    \n\x04gobo\x18\x05\x20\x01(\x0b2\x1b.mizer.fixtures.GoboChannelH\0R\x04g\
-    obo\x12:\n\x07generic\x18\x06\x20\x01(\x0b2\x1e.mizer.fixtures.GenericCh\
-    annelH\0R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05v\
-    alue\x18\x01\x20\x01(\x01R\x05value\"J\n\x0cColorChannel\x12\x10\n\x03re\
-    d\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\
-    \x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"]\n\x0bAxisCh\
-    annel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle\
-    _from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\
-    \x01(\x01R\x07angleTo\"O\n\x0bGoboChannel\x12\x14\n\x05value\x18\x01\x20\
-    \x01(\x01R\x05value\x12*\n\x05gobos\x18\x02\x20\x03(\x0b2\x14.mizer.fixt\
-    ures.GoboR\x05gobos\"g\n\x04Gobo\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x03\
-    svg\x18\x03\x20\x01(\tH\0R\x03svg\x12\x18\n\x06raster\x18\x04\x20\x01(\
-    \x0cH\0R\x06rasterB\x07\n\x05image\":\n\x0eGenericChannel\x12\x14\n\x05v\
-    alue\x18\x01\x20\x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\t\
-    R\x04name\"\x1e\n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinit\
-    ions\x12C\n\x0bdefinitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.Fixture\
-    DefinitionR\x0bdefinitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12\
-    1\n\x05modes\x18\x04\x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05mo\
-    des\x12?\n\x08physical\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhys\
-    icalDataR\x08physical\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\
-    \x1a\n\x08provider\x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\
-    \x02\x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\
-    \x04\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x12I\n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.C\
-    oarseResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mize\
-    r.fixtures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\
-    \x18\x04\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestResolutionH\
-    \0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\x18\x01\
-    \x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChanne\
-    l\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\
-    \x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinest\
-    Channel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\
-    \x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\r\
-    R\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\x12\x14\
-    \n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\
-    \x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05dep\
-    th\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight*\x96\x01\n\x0eFix\
-    tureControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\t\
-    \n\x05COLOR\x10\x02\x12\x07\n\x03PAN\x10\x03\x12\x08\n\x04TILT\x10\x04\
-    \x12\t\n\x05FOCUS\x10\x05\x12\x08\n\x04ZOOM\x10\x06\x12\t\n\x05PRISM\x10\
-    \x07\x12\x08\n\x04IRIS\x10\x08\x12\t\n\x05FROST\x10\t\x12\x08\n\x04GOBO\
-    \x10\n\x12\x0b\n\x07GENERIC\x10\x0b2\xed\x02\n\x0bFixturesApi\x12M\n\x0b\
-    GetFixtures\x12\".mizer.fixtures.GetFixturesRequest\x1a\x18.mizer.fixtur\
-    es.Fixtures\"\0\x12k\n\x15GetFixtureDefinitions\x12,.mizer.fixtures.GetF\
-    ixtureDefinitionsRequest\x1a\".mizer.fixtures.FixtureDefinitions\"\0\x12\
-    M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixturesRequest\x1a\x18.mizer\
-    .fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixtures\x12%.mizer.fixtures.Dele\
-    teFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\x06proto3\
+    2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x12D\n\x0bcolor_mixer\x18\
+    \x03\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\ncolorMixer\x12\
+    D\n\x0bcolor_wheel\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorWheelChann\
+    elH\0R\ncolorWheel\x121\n\x04axis\x18\x05\x20\x01(\x0b2\x1b.mizer.fixtur\
+    es.AxisChannelH\0R\x04axis\x121\n\x04gobo\x18\x06\x20\x01(\x0b2\x1b.mize\
+    r.fixtures.GoboChannelH\0R\x04gobo\x12:\n\x07generic\x18\x07\x20\x01(\
+    \x0b2\x1e.mizer.fixtures.GenericChannelH\0R\x07genericB\x07\n\x05value\"\
+    $\n\x0cFaderChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\"O\
+    \n\x11ColorMixerChannel\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\
+    \x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\
+    \x03\x20\x01(\x01R\x04blue\"a\n\x11ColorWheelChannel\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\x01R\x05value\x126\n\x06colors\x18\x02\x20\x03(\x0b2\
+    \x1e.mizer.fixtures.ColorWheelSlotR\x06colors\"_\n\x0eColorWheelSlot\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\
+    \x20\x01(\x01R\x05value\x12\x19\n\x05color\x18\x03\x20\x01(\tH\0R\x05col\
+    or\x88\x01\x01B\x08\n\x06_color\"]\n\x0bAxisChannel\x12\x14\n\x05value\
+    \x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01(\
+    \x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\
+    \"O\n\x0bGoboChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
+    \x12*\n\x05gobos\x18\x02\x20\x03(\x0b2\x14.mizer.fixtures.GoboR\x05gobos\
+    \"g\n\x04Gobo\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\
+    \x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x03svg\x18\x03\x20\
+    \x01(\tH\0R\x03svg\x12\x18\n\x06raster\x18\x04\x20\x01(\x0cH\0R\x06raste\
+    rB\x07\n\x05image\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\
+    \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
+    \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
+    definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
+    definitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
+    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
+    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
+    \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
+    al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
+    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\x1a\n\x08provider\
+    \x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\x20\x03(\x0b2\
+    \x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\n\x0eFixtureCh\
+    annel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\n\x06coarse\x18\
+    \x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.CoarseResolutionH\0R\
+    \x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fixtures.FixtureC\
+    hannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\x20\x01(\x0b2\
+    /.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\
+    \x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
+    \x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\
+    \x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\
+    \x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\x01\x20\x01\
+    (\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfine\
+    Channel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\
+    \nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\
+    \x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\
+    \x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\
+    \x18\x04\x20\x01(\x02R\x06weight*\xad\x01\n\x0eFixtureControl\x12\r\n\tI\
+    NTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\x0f\n\x0bCOLOR_MIXER\x10\
+    \x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PAN\x10\x04\x12\x08\n\
+    \x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\x04ZOOM\x10\x07\x12\
+    \t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\n\x05FROST\x10\n\x12\
+    \x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\xed\x02\n\x0bFixtur\
+    esApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixturesRequest\x1a\
+    \x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixtureDefinitions\x12,.mi\
+    zer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.FixtureDe\
+    finitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixturesRequ\
+    est\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixtures\x12%.mi\
+    zer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\
+    \x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

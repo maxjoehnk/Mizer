@@ -131,15 +131,16 @@ message CueControl {
     COLOR_RED = 2;
     COLOR_GREEN = 3;
     COLOR_BLUE = 4;
-    PAN = 5;
-    TILT = 6;
-    FOCUS = 7;
-    ZOOM = 8;
-    PRISM = 9;
-    IRIS = 10;
-    FROST = 11;
-    GOBO = 12;
-    GENERIC = 13;
+    COLOR_WHEEL = 5;
+    PAN = 6;
+    TILT = 7;
+    FOCUS = 8;
+    ZOOM = 9;
+    PRISM = 10;
+    IRIS = 11;
+    FROST = 12;
+    GOBO = 13;
+    GENERIC = 14;
   }
 }
 

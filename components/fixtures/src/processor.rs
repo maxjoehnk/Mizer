@@ -54,9 +54,9 @@ fn update_state(
 ) {
     let fixture_state = state.entry(id).or_default();
     fixture_state.brightness = fixture.read_control(FixtureFaderControl::Intensity);
-    let red = fixture.read_control(FixtureFaderControl::Color(ColorChannel::Red));
-    let green = fixture.read_control(FixtureFaderControl::Color(ColorChannel::Green));
-    let blue = fixture.read_control(FixtureFaderControl::Color(ColorChannel::Blue));
+    let red = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Red));
+    let green = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Green));
+    let blue = fixture.read_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue));
     fixture_state.color = red
         .zip(green)
         .zip(blue)

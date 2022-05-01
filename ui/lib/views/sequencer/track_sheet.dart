@@ -12,6 +12,7 @@ const LABELS = {
   CueControl_Type.COLOR_RED: 'Red',
   CueControl_Type.COLOR_GREEN: 'Green',
   CueControl_Type.COLOR_BLUE: 'Blue',
+  CueControl_Type.COLOR_WHEEL: 'Color',
   CueControl_Type.PAN: 'Pan',
   CueControl_Type.TILT: 'Tilt',
   CueControl_Type.FOCUS: 'Focus',

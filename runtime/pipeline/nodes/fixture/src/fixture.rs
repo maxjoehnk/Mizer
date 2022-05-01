@@ -82,15 +82,15 @@ impl ProcessingNode for FixtureNode {
                                     context.read_port_changes::<_, Color>(port.clone())
                                 {
                                     fixture.write_control(
-                                        FixtureFaderControl::Color(ColorChannel::Red),
+                                        FixtureFaderControl::ColorMixer(ColorChannel::Red),
                                         value.red,
                                     );
                                     fixture.write_control(
-                                        FixtureFaderControl::Color(ColorChannel::Green),
+                                        FixtureFaderControl::ColorMixer(ColorChannel::Green),
                                         value.green,
                                     );
                                     fixture.write_control(
-                                        FixtureFaderControl::Color(ColorChannel::Blue),
+                                        FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                                         value.blue,
                                     );
                                 }

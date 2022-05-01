@@ -67,26 +67,28 @@ message SubFixture {
 enum FixtureControl {
   INTENSITY = 0;
   SHUTTER = 1;
-  COLOR = 2;
-  PAN = 3;
-  TILT = 4;
-  FOCUS = 5;
-  ZOOM = 6;
-  PRISM = 7;
-  IRIS = 8;
-  FROST = 9;
-  GOBO = 10;
-  GENERIC = 11;
+  COLOR_MIXER = 2;
+  COLOR_WHEEL = 3;
+  PAN = 4;
+  TILT = 5;
+  FOCUS = 6;
+  ZOOM = 7;
+  PRISM = 8;
+  IRIS = 9;
+  FROST = 10;
+  GOBO = 11;
+  GENERIC = 12;
 }
 
 message FixtureControls {
   FixtureControl control = 1;
   oneof value {
     FaderChannel fader = 2;
-    ColorChannel color = 3;
-    AxisChannel axis = 4;
-    GoboChannel gobo = 5;
-    GenericChannel generic = 6;
+    ColorMixerChannel color_mixer = 3;
+    ColorWheelChannel color_wheel = 4;
+    AxisChannel axis = 5;
+    GoboChannel gobo = 6;
+    GenericChannel generic = 7;
   }
 }
 
@@ -94,10 +96,21 @@ message FaderChannel {
   double value = 1;
 }
 
-message ColorChannel {
+message ColorMixerChannel {
   double red = 1;
   double green = 2;
   double blue = 3;
+}
+
+message ColorWheelChannel {
+  double value = 1;
+  repeated ColorWheelSlot colors = 2;
+}
+
+message ColorWheelSlot {
+  string name = 1;
+  double value = 2;
+  optional string color = 3;
 }
 
 message AxisChannel {

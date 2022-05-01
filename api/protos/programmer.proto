@@ -34,7 +34,7 @@ message ProgrammerChannel {
   mizer.fixtures.FixtureControl control = 2;
   oneof value {
     double fader = 3;
-    mizer.fixtures.ColorChannel color = 4;
+    mizer.fixtures.ColorMixerChannel color = 4;
     GenericValue generic = 5;
   }
 
@@ -54,7 +54,7 @@ message WriteControlRequest {
   mizer.fixtures.FixtureControl control = 1;
   oneof value {
     double fader = 2;
-    mizer.fixtures.ColorChannel color = 3;
+    mizer.fixtures.ColorMixerChannel color = 3;
     GenericValue generic = 4;
   }
 

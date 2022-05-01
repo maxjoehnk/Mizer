@@ -196,7 +196,7 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..e<$0.FixtureControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
     ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
-    ..aOM<$0.ColorChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorChannel.create)
+    ..aOM<$0.ColorMixerChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorMixerChannel.create)
     ..aOM<ProgrammerChannel_GenericValue>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: ProgrammerChannel_GenericValue.create)
     ..hasRequiredFields = false
   ;
@@ -206,7 +206,7 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
     $core.Iterable<$0.FixtureId>? fixtures,
     $0.FixtureControl? control,
     $core.double? fader,
-    $0.ColorChannel? color,
+    $0.ColorMixerChannel? color,
     ProgrammerChannel_GenericValue? generic,
   }) {
     final _result = create();
@@ -273,15 +273,15 @@ class ProgrammerChannel extends $pb.GeneratedMessage {
   void clearFader() => clearField(3);
 
   @$pb.TagNumber(4)
-  $0.ColorChannel get color => $_getN(3);
+  $0.ColorMixerChannel get color => $_getN(3);
   @$pb.TagNumber(4)
-  set color($0.ColorChannel v) { setField(4, v); }
+  set color($0.ColorMixerChannel v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasColor() => $_has(3);
   @$pb.TagNumber(4)
   void clearColor() => clearField(4);
   @$pb.TagNumber(4)
-  $0.ColorChannel ensureColor() => $_ensure(3);
+  $0.ColorMixerChannel ensureColor() => $_ensure(3);
 
   @$pb.TagNumber(5)
   ProgrammerChannel_GenericValue get generic => $_getN(4);
@@ -374,7 +374,7 @@ class WriteControlRequest extends $pb.GeneratedMessage {
     ..oo(0, [2, 3, 4])
     ..e<$0.FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: $0.FixtureControl.INTENSITY, valueOf: $0.FixtureControl.valueOf, enumValues: $0.FixtureControl.values)
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fader', $pb.PbFieldType.OD)
-    ..aOM<$0.ColorChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorChannel.create)
+    ..aOM<$0.ColorMixerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: $0.ColorMixerChannel.create)
     ..aOM<WriteControlRequest_GenericValue>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'generic', subBuilder: WriteControlRequest_GenericValue.create)
     ..hasRequiredFields = false
   ;
@@ -383,7 +383,7 @@ class WriteControlRequest extends $pb.GeneratedMessage {
   factory WriteControlRequest({
     $0.FixtureControl? control,
     $core.double? fader,
-    $0.ColorChannel? color,
+    $0.ColorMixerChannel? color,
     WriteControlRequest_GenericValue? generic,
   }) {
     final _result = create();
@@ -444,15 +444,15 @@ class WriteControlRequest extends $pb.GeneratedMessage {
   void clearFader() => clearField(2);
 
   @$pb.TagNumber(3)
-  $0.ColorChannel get color => $_getN(2);
+  $0.ColorMixerChannel get color => $_getN(2);
   @$pb.TagNumber(3)
-  set color($0.ColorChannel v) { setField(3, v); }
+  set color($0.ColorMixerChannel v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasColor() => $_has(2);
   @$pb.TagNumber(3)
   void clearColor() => clearField(3);
   @$pb.TagNumber(3)
-  $0.ColorChannel ensureColor() => $_ensure(2);
+  $0.ColorMixerChannel ensureColor() => $_ensure(2);
 
   @$pb.TagNumber(4)
   WriteControlRequest_GenericValue get generic => $_getN(3);

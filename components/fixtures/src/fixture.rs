@@ -213,9 +213,9 @@ pub trait IFixtureMut: IFixture {
     fn write_control(&mut self, control: FixtureFaderControl, value: f64);
     fn highlight(&mut self) {
         self.write_control(FixtureFaderControl::Intensity, 1f64);
-        self.write_control(FixtureFaderControl::Color(ColorChannel::Red), 1f64);
-        self.write_control(FixtureFaderControl::Color(ColorChannel::Green), 1f64);
-        self.write_control(FixtureFaderControl::Color(ColorChannel::Blue), 1f64);
+        self.write_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), 1f64);
+        self.write_control(FixtureFaderControl::ColorMixer(ColorChannel::Green), 1f64);
+        self.write_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue), 1f64);
     }
 }
 
@@ -263,11 +263,18 @@ impl<TChannel> FixtureControls<TChannel> {
             FixtureFaderControl::Iris => self.iris.as_ref(),
             FixtureFaderControl::Prism => self.prism.as_ref(),
             FixtureFaderControl::Frost => self.frost.as_ref(),
-            FixtureFaderControl::Color(ColorChannel::Red) => self.color.as_ref().map(|c| &c.red),
-            FixtureFaderControl::Color(ColorChannel::Green) => {
-                self.color.as_ref().map(|c| &c.green)
+            FixtureFaderControl::ColorMixer(ColorChannel::Red) => {
+                self.color_mixer.as_ref().map(|c| &c.red)
             }
-            FixtureFaderControl::Color(ColorChannel::Blue) => self.color.as_ref().map(|c| &c.blue),
+            FixtureFaderControl::ColorMixer(ColorChannel::Green) => {
+                self.color_mixer.as_ref().map(|c| &c.green)
+            }
+            FixtureFaderControl::ColorMixer(ColorChannel::Blue) => {
+                self.color_mixer.as_ref().map(|c| &c.blue)
+            }
+            FixtureFaderControl::ColorWheel => {
+                self.color_wheel.as_ref().map(|color| &color.channel)
+            }
             FixtureFaderControl::Pan => self.pan.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Tilt => self.tilt.as_ref().map(|axis| &axis.channel),
             FixtureFaderControl::Gobo => self.gobo.as_ref().map(|gobo| &gobo.channel),

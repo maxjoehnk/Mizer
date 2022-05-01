@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:from_css_color/from_css_color.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -14,7 +15,7 @@ class Control {
   final String? label;
   final WriteControlRequest Function(dynamic) update;
   final FaderChannel? fader;
-  final ColorChannel? color;
+  final ColorMixerChannel? colorMixer;
   final AxisChannel? axis;
   final GenericChannel? generic;
   final ProgrammerChannel? channel;
@@ -24,7 +25,7 @@ class Control {
       {required this.update,
       this.fader,
       this.generic,
-      this.color,
+      this.colorMixer,
       this.axis,
       this.presets,
       required this.channel});
@@ -38,7 +39,7 @@ class Control {
   }
 
   bool get hasColor {
-    return color != null;
+    return colorMixer != null;
   }
 
   bool get hasAxis {
@@ -54,12 +55,19 @@ class ControlPreset {
   final double value;
   final String name;
   final ControlPresetImage? image;
+  late final Color? color;
 
-  ControlPreset(this.value, {required this.name, this.image});
+  ControlPreset(this.value, {required this.name, this.image, String? color}) {
+    if (color != null) {
+      this.color = fromCssColor(color);
+    }else {
+      this.color = null;
+    }
+  }
 
   @override
   String toString() {
-    return "ControlPreset(value: $value, name: $name, image: $image)";
+    return "ControlPreset(value: $value, name: $name, image: $image, color: $color)";
   }
 }
 
@@ -67,7 +75,7 @@ class ControlPresetImage {
   final String? svg;
   final Uint8List? raster;
 
-  ControlPresetImage({ this.svg, this.raster });
+  ControlPresetImage({this.svg, this.raster});
 }
 
 class FixtureGroupControl extends StatelessWidget {
@@ -138,9 +146,10 @@ class FixtureControlPresets extends StatelessWidget {
             .map((p) => Hoverable(
                   onTap: () => onSelect(p.value),
                   builder: (hovered) => Container(
-                    decoration: ControlDecoration(color: hovered ? Colors.grey.shade900 : Colors.grey.shade700),
+                    decoration: ControlDecoration(
+                            color: hovered ? Colors.grey.shade900 : Colors.grey.shade700),
                     padding: const EdgeInsets.all(8),
-                    child: p.image != null ? _image(p.image!) : Center(child: Text(p.name, textAlign: TextAlign.center)),
+                    child: _child(p),
                   ),
                 ))
             .toList(),
@@ -148,10 +157,21 @@ class FixtureControlPresets extends StatelessWidget {
     );
   }
 
+  Widget _child(ControlPreset preset) {
+    if (preset.image != null) {
+      return _image(preset.image!);
+    }
+    if (preset.color != null) {
+      return Container(
+          decoration: BoxDecoration(color: preset.color!, borderRadius: BorderRadius.circular(4)));
+    }
+    return Center(child: Text(preset.name, textAlign: TextAlign.center));
+  }
+
   Widget _image(ControlPresetImage image) {
     if (image.raster != null) {
       return Image.memory(image.raster!);
-    }else {
+    } else {
       return SvgPicture.string(image.svg!);
     }
   }

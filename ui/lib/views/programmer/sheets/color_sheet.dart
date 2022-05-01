@@ -8,20 +8,9 @@ import 'package:mizer/widgets/inputs/color.dart';
 import 'fixture_group_control.dart';
 
 const CONTROLS = [
-  FixtureControl.COLOR,
-  FixtureControl.FOCUS,
-  FixtureControl.PRISM,
-  FixtureControl.FROST,
-  FixtureControl.IRIS,
+  FixtureControl.COLOR_MIXER,
+  FixtureControl.COLOR_WHEEL,
 ];
-
-const NAMES = {
-  FixtureControl.ZOOM: "Zoom",
-  FixtureControl.FOCUS: "Focus",
-  FixtureControl.PRISM: "Prism",
-  FixtureControl.FROST: "Frost",
-  FixtureControl.IRIS: "Iris",
-};
 
 class ColorSheet extends StatelessWidget {
   final List<FixtureInstance> fixtures;
@@ -35,8 +24,7 @@ class ColorSheet extends StatelessWidget {
       child: controls.isNotEmpty
           ? ListView(
               scrollDirection: Axis.horizontal,
-              children:
-                  controls.map((control) => FixtureGroupControl(control)).toList())
+              children: controls.map((control) => FixtureGroupControl(control)).toList())
           : null,
     );
   }
@@ -46,16 +34,34 @@ class ColorSheet extends StatelessWidget {
       return [];
     }
     return fixtures.first.controls
-        .where((control) => control.control == FixtureControl.COLOR)
-        .map((control) => Control("Color",
-            color: control.color,
+        .where((control) => CONTROLS.contains(control.control))
+        .map((control) {
+      if (control.control == FixtureControl.COLOR_MIXER) {
+        return Control("Color",
+            colorMixer: control.colorMixer,
             channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
             update: (v) {
-              ColorValue value = v;
-              return WriteControlRequest(
+          ColorValue value = v;
+          return WriteControlRequest(
+            control: control.control,
+            color: ColorMixerChannel(red: value.red, green: value.green, blue: value.blue),
+          );
+        });
+      }
+      if (control.control == FixtureControl.COLOR_WHEEL) {
+        return Control("Color Wheel",
+            fader: control.fader,
+            presets: control.colorWheel.colors
+                .map((color) => ControlPreset(color.value,
+                    name: color.name, color: color.hasColor() ? color.color : null))
+                .toList(),
+            channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
+            update: (v) => WriteControlRequest(
                   control: control.control,
-                  color: ColorChannel(red: value.red, green: value.green, blue: value.blue),
-                );
-            }));
+                  fader: v,
+                ));
+      }
+      throw new Exception("Invalid color control");
+    });
   }
 }

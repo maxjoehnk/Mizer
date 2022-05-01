@@ -239,20 +239,21 @@ const CueControl_Type$json = const {
     const {'1': 'COLOR_RED', '2': 2},
     const {'1': 'COLOR_GREEN', '2': 3},
     const {'1': 'COLOR_BLUE', '2': 4},
-    const {'1': 'PAN', '2': 5},
-    const {'1': 'TILT', '2': 6},
-    const {'1': 'FOCUS', '2': 7},
-    const {'1': 'ZOOM', '2': 8},
-    const {'1': 'PRISM', '2': 9},
-    const {'1': 'IRIS', '2': 10},
-    const {'1': 'FROST', '2': 11},
-    const {'1': 'GOBO', '2': 12},
-    const {'1': 'GENERIC', '2': 13},
+    const {'1': 'COLOR_WHEEL', '2': 5},
+    const {'1': 'PAN', '2': 6},
+    const {'1': 'TILT', '2': 7},
+    const {'1': 'FOCUS', '2': 8},
+    const {'1': 'ZOOM', '2': 9},
+    const {'1': 'PRISM', '2': 10},
+    const {'1': 'IRIS', '2': 11},
+    const {'1': 'FROST', '2': 12},
+    const {'1': 'GOBO', '2': 13},
+    const {'1': 'GENERIC', '2': 14},
   ],
 };
 
 /// Descriptor for `CueControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List cueControlDescriptor = $convert.base64Decode('CgpDdWVDb250cm9sEjQKBHR5cGUYASABKA4yIC5taXplci5zZXF1ZW5jZXIuQ3VlQ29udHJvbC5UeXBlUgR0eXBlEi8KBXZhbHVlGAIgASgLMhkubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUgV2YWx1ZRI1CghmaXh0dXJlcxgDIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMisQEKBFR5cGUSDQoJSU5URU5TSVRZEAASCwoHU0hVVFRFUhABEg0KCUNPTE9SX1JFRBACEg8KC0NPTE9SX0dSRUVOEAMSDgoKQ09MT1JfQkxVRRAEEgcKA1BBThAFEggKBFRJTFQQBhIJCgVGT0NVUxAHEggKBFpPT00QCBIJCgVQUklTTRAJEggKBElSSVMQChIJCgVGUk9TVBALEggKBEdPQk8QDBILCgdHRU5FUklDEA0=');
+final $typed_data.Uint8List cueControlDescriptor = $convert.base64Decode('CgpDdWVDb250cm9sEjQKBHR5cGUYASABKA4yIC5taXplci5zZXF1ZW5jZXIuQ3VlQ29udHJvbC5UeXBlUgR0eXBlEi8KBXZhbHVlGAIgASgLMhkubWl6ZXIuc2VxdWVuY2VyLkN1ZVZhbHVlUgV2YWx1ZRI1CghmaXh0dXJlcxgDIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMiwgEKBFR5cGUSDQoJSU5URU5TSVRZEAASCwoHU0hVVFRFUhABEg0KCUNPTE9SX1JFRBACEg8KC0NPTE9SX0dSRUVOEAMSDgoKQ09MT1JfQkxVRRAEEg8KC0NPTE9SX1dIRUVMEAUSBwoDUEFOEAYSCAoEVElMVBAHEgkKBUZPQ1VTEAgSCAoEWk9PTRAJEgkKBVBSSVNNEAoSCAoESVJJUxALEgkKBUZST1NUEAwSCAoER09CTxANEgsKB0dFTkVSSUMQDg==');
 @$core.Deprecated('Use cueValueDescriptor instead')
 const CueValue$json = const {
   '1': 'CueValue',

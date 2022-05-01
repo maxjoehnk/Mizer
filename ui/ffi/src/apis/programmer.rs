@@ -104,15 +104,16 @@ pub struct FFIColorValue {
 pub enum FFIFixtureFaderControl {
     Intensity = 0,
     Shutter = 1,
-    Color = 2,
-    Pan = 3,
-    Tilt = 4,
-    Focus = 5,
-    Zoom = 6,
-    Prism = 7,
-    Iris = 8,
-    Frost = 9,
-    Gobo = 10,
+    ColorMixer = 2,
+    ColorWheel = 3,
+    Pan = 4,
+    Tilt = 5,
+    Focus = 6,
+    Zoom = 7,
+    Prism = 8,
+    Iris = 9,
+    Frost = 10,
+    Gobo = 11,
 }
 
 impl From<ProgrammerChannel> for FFIProgrammerChannel {
@@ -159,11 +160,15 @@ impl From<ProgrammerChannel> for FFIProgrammerChannel {
                 FFIFixtureFaderControl::Gobo,
                 ProgrammerChannelValue { fader: value },
             ),
-            Color(red, green, blue) => (
-                FFIFixtureFaderControl::Color,
+            ColorMixer(red, green, blue) => (
+                FFIFixtureFaderControl::ColorMixer,
                 ProgrammerChannelValue {
                     color: FFIColorValue { red, green, blue },
                 },
+            ),
+            ColorWheel(value) => (
+                FFIFixtureFaderControl::ColorWheel,
+                ProgrammerChannelValue { fader: value },
             ),
             Generic(_, _) => todo!(),
         };

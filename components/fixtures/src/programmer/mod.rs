@@ -57,7 +57,8 @@ impl ProgrammerState {
 pub struct FixtureProgrammer {
     intensity: Option<f64>,
     shutter: Option<f64>,
-    color: Option<ColorGroup<f64>>,
+    color_mixer: Option<ColorGroup<f64>>,
+    color_wheel: Option<f64>,
     pan: Option<f64>,
     tilt: Option<f64>,
     focus: Option<f64>,
@@ -79,10 +80,14 @@ impl FixtureProgrammer {
             .shutter
             .iter()
             .map(|value| FixtureControlValue::Shutter(*value));
-        let color = self
-            .color
+        let color_mixer = self
+            .color_mixer
             .iter()
-            .map(|value| FixtureControlValue::Color(value.red, value.green, value.blue));
+            .map(|value| FixtureControlValue::ColorMixer(value.red, value.green, value.blue));
+        let color_wheel = self
+            .color_wheel
+            .iter()
+            .map(|value| FixtureControlValue::ColorWheel(*value));
         let pan = self
             .pan
             .iter()
@@ -122,7 +127,8 @@ impl FixtureProgrammer {
 
         intensity
             .chain(shutter)
-            .chain(color)
+            .chain(color_mixer)
+            .chain(color_wheel)
             .chain(pan)
             .chain(tilt)
             .chain(focus)
@@ -143,13 +149,26 @@ impl FixtureProgrammer {
             .shutter
             .iter()
             .map(|value| (FixtureFaderControl::Shutter, *value));
-        let color = self.color.iter().flat_map(|value| {
+        let color_mixer = self.color_mixer.iter().flat_map(|value| {
             vec![
-                (FixtureFaderControl::Color(ColorChannel::Red), value.red),
-                (FixtureFaderControl::Color(ColorChannel::Green), value.green),
-                (FixtureFaderControl::Color(ColorChannel::Blue), value.blue),
+                (
+                    FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                    value.red,
+                ),
+                (
+                    FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                    value.green,
+                ),
+                (
+                    FixtureFaderControl::ColorMixer(ColorChannel::Blue),
+                    value.blue,
+                ),
             ]
         });
+        let color_wheel = self
+            .color_wheel
+            .iter()
+            .map(|value| (FixtureFaderControl::ColorWheel, *value));
         let pan = self
             .pan
             .iter()
@@ -189,7 +208,8 @@ impl FixtureProgrammer {
 
         intensity
             .chain(shutter)
-            .chain(color)
+            .chain(color_mixer)
+            .chain(color_wheel)
             .chain(pan)
             .chain(tilt)
             .chain(focus)
@@ -318,9 +338,10 @@ impl Programmer {
             match value {
                 FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
                 FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
-                FixtureControlValue::Color(red, green, blue) => {
-                    programmer.color = Some(ColorGroup { red, green, blue })
+                FixtureControlValue::ColorMixer(red, green, blue) => {
+                    programmer.color_mixer = Some(ColorGroup { red, green, blue })
                 }
+                FixtureControlValue::ColorWheel(value) => programmer.color_wheel = Some(value),
                 FixtureControlValue::Pan(value) => programmer.pan = Some(value),
                 FixtureControlValue::Tilt(value) => programmer.tilt = Some(value),
                 FixtureControlValue::Focus(value) => programmer.focus = Some(value),

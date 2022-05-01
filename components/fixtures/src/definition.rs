@@ -54,7 +54,7 @@ impl FixtureMode {
     }
 
     pub fn color(&self) -> Option<ColorGroup<FixtureControlChannel>> {
-        self.controls.color.clone()
+        self.controls.color_mixer.clone()
     }
 }
 
@@ -62,7 +62,8 @@ impl FixtureMode {
 pub struct FixtureControls<TChannel> {
     pub intensity: Option<TChannel>,
     pub shutter: Option<TChannel>,
-    pub color: Option<ColorGroup<TChannel>>,
+    pub color_mixer: Option<ColorGroup<TChannel>>,
+    pub color_wheel: Option<ColorWheelGroup<TChannel>>,
     pub pan: Option<AxisGroup<TChannel>>,
     pub tilt: Option<AxisGroup<TChannel>>,
     pub gobo: Option<GoboGroup<TChannel>>,
@@ -79,7 +80,8 @@ impl<TChannel> Default for FixtureControls<TChannel> {
         Self {
             intensity: None,
             shutter: None,
-            color: None,
+            color_mixer: None,
+            color_wheel: None,
             pan: None,
             tilt: None,
             focus: None,
@@ -98,10 +100,14 @@ impl From<FixtureControls<String>> for FixtureControls<FixtureControlChannel> {
         Self {
             intensity: controls.intensity.map(FixtureControlChannel::Channel),
             shutter: controls.shutter.map(FixtureControlChannel::Channel),
-            color: controls.color.map(|color| ColorGroup {
+            color_mixer: controls.color_mixer.map(|color| ColorGroup {
                 red: FixtureControlChannel::Channel(color.red),
                 green: FixtureControlChannel::Channel(color.green),
                 blue: FixtureControlChannel::Channel(color.blue),
+            }),
+            color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
+                channel: FixtureControlChannel::Channel(wheel.channel),
+                colors: wheel.colors,
             }),
             pan: controls.pan.map(|axis| AxisGroup {
                 channel: FixtureControlChannel::Channel(axis.channel),
@@ -141,7 +147,7 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
             shutter: controls
                 .shutter
                 .and_then(FixtureControlChannel::into_channel),
-            color: controls.color.and_then(|color| {
+            color_mixer: controls.color_mixer.and_then(|color| {
                 if let (
                     FixtureControlChannel::Channel(red),
                     FixtureControlChannel::Channel(green),
@@ -149,6 +155,16 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
                 ) = (color.red, color.green, color.blue)
                 {
                     Some(ColorGroup { red, green, blue })
+                } else {
+                    None
+                }
+            }),
+            color_wheel: controls.color_wheel.and_then(|color_wheel| {
+                if let FixtureControlChannel::Channel(channel) = color_wheel.channel {
+                    Some(ColorWheelGroup {
+                        channel,
+                        colors: color_wheel.colors,
+                    })
                 } else {
                     None
                 }
@@ -242,8 +258,11 @@ impl<TChannel> FixtureControls<TChannel> {
         if self.tilt.is_some() {
             controls.push((FixtureControl::Tilt, FixtureControlType::Fader));
         }
-        if self.color.is_some() {
-            controls.push((FixtureControl::Color, FixtureControlType::Color));
+        if self.color_mixer.is_some() {
+            controls.push((FixtureControl::ColorMixer, FixtureControlType::Color));
+        }
+        if self.color_wheel.is_some() {
+            controls.push((FixtureControl::ColorWheel, FixtureControlType::Fader));
         }
         for channel in &self.generic {
             controls.push((
@@ -279,6 +298,19 @@ pub struct ColorGroup<TChannel> {
     pub red: TChannel,
     pub green: TChannel,
     pub blue: TChannel,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct ColorWheelGroup<TChannel> {
+    pub channel: TChannel,
+    pub colors: Vec<ColorWheelSlot>,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct ColorWheelSlot {
+    pub value: f64,
+    pub name: String,
+    pub color: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -334,7 +366,8 @@ pub struct GenericControl<TChannel> {
 pub enum FixtureControl {
     Intensity,
     Shutter,
-    Color,
+    ColorMixer,
+    ColorWheel,
     Pan,
     Tilt,
     Focus,
@@ -351,7 +384,8 @@ impl ToString for FixtureControl {
         match self {
             Self::Intensity => "Intensity".into(),
             Self::Shutter => "Shutter".into(),
-            Self::Color => "Color".into(),
+            Self::ColorMixer => "ColorMixer".into(),
+            Self::ColorWheel => "ColorWheel".into(),
             Self::Pan => "Pan".into(),
             Self::Tilt => "Tilt".into(),
             Self::Focus => "Focus".into(),
@@ -370,7 +404,8 @@ impl From<&str> for FixtureControl {
         match s {
             "Intensity" => Self::Intensity,
             "Shutter" => Self::Shutter,
-            "Color" => Self::Color,
+            "ColorMixer" => Self::ColorMixer,
+            "ColorWheel" => Self::ColorWheel,
             "Pan" => Self::Pan,
             "Tilt" => Self::Tilt,
             "Focus" => Self::Focus,
@@ -405,7 +440,8 @@ impl TryFrom<FixtureControl> for FixtureFaderControl {
         match value {
             FixtureControl::Intensity => Ok(Self::Intensity),
             FixtureControl::Shutter => Ok(Self::Shutter),
-            FixtureControl::Color => Err(()),
+            FixtureControl::ColorMixer => Err(()),
+            FixtureControl::ColorWheel => Ok(Self::ColorWheel),
             FixtureControl::Pan => Ok(Self::Pan),
             FixtureControl::Tilt => Ok(Self::Tilt),
             FixtureControl::Focus => Ok(Self::Focus),
@@ -424,7 +460,8 @@ impl TryFrom<FixtureControl> for FixtureFaderControl {
 pub enum FixtureFaderControl {
     Intensity,
     Shutter,
-    Color(ColorChannel),
+    ColorMixer(ColorChannel),
+    ColorWheel,
     Pan,
     Tilt,
     Focus,
@@ -442,11 +479,12 @@ impl FixtureControl {
         match self {
             Intensity => vec![FixtureFaderControl::Intensity],
             Shutter => vec![FixtureFaderControl::Shutter],
-            Color => vec![
-                FixtureFaderControl::Color(ColorChannel::Red),
-                FixtureFaderControl::Color(ColorChannel::Green),
-                FixtureFaderControl::Color(ColorChannel::Blue),
+            ColorMixer => vec![
+                FixtureFaderControl::ColorMixer(ColorChannel::Red),
+                FixtureFaderControl::ColorMixer(ColorChannel::Green),
+                FixtureFaderControl::ColorMixer(ColorChannel::Blue),
             ],
+            ColorWheel => vec![FixtureFaderControl::ColorWheel],
             Pan => vec![FixtureFaderControl::Pan],
             Tilt => vec![FixtureFaderControl::Tilt],
             Focus => vec![FixtureFaderControl::Focus],
@@ -471,7 +509,8 @@ pub enum ColorChannel {
 pub enum FixtureControlValue {
     Intensity(f64),
     Shutter(f64),
-    Color(f64, f64, f64),
+    ColorMixer(f64, f64, f64),
+    ColorWheel(f64),
     Pan(f64),
     Tilt(f64),
     Focus(f64),
@@ -489,7 +528,8 @@ impl From<FixtureControlValue> for FixtureControl {
         match value {
             Intensity(_) => Self::Intensity,
             Shutter(_) => Self::Shutter,
-            Color(_, _, _) => Self::Color,
+            ColorMixer(_, _, _) => Self::ColorMixer,
+            ColorWheel(_) => Self::ColorWheel,
             Pan(_) => Self::Pan,
             Tilt(_) => Self::Tilt,
             Focus(_) => Self::Focus,

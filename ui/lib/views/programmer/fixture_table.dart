@@ -106,8 +106,8 @@ class FixtureTable extends StatelessWidget {
     return "${(value * 100).toStringAsFixed(1)}%";
   }
 
-  String _colorState(Iterable<ProgrammerChannel>? fixtureState, double Function(ColorChannel) colorAccessor) {
-    var color = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR)?.color;
+  String _colorState(Iterable<ProgrammerChannel>? fixtureState, double Function(ColorMixerChannel) colorAccessor) {
+    var color = fixtureState?.firstWhereOrNull((element) => element.control == FixtureControl.COLOR_MIXER)?.color;
     if (color == null) {
       return "";
     }

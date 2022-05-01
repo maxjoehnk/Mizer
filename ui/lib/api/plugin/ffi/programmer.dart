@@ -8,7 +8,8 @@ import 'bindings.dart';
 Map<int, FixtureControl> controlMappings = {
   FFIFixtureFaderControl.Intensity: FixtureControl.INTENSITY,
   FFIFixtureFaderControl.Shutter: FixtureControl.SHUTTER,
-  FFIFixtureFaderControl.Color: FixtureControl.COLOR,
+  FFIFixtureFaderControl.ColorMixer: FixtureControl.COLOR_MIXER,
+  FFIFixtureFaderControl.ColorWheel: FixtureControl.COLOR_WHEEL,
   FFIFixtureFaderControl.Pan: FixtureControl.PAN,
   FFIFixtureFaderControl.Tilt: FixtureControl.TILT,
   FFIFixtureFaderControl.Focus: FixtureControl.FOCUS,
@@ -62,8 +63,8 @@ class ProgrammerStatePointer {
           control: control,
           fixtures: fixtures,
       );
-      if (channel.control == FFIFixtureFaderControl.Color) {
-        result.color = ColorChannel(
+      if (channel.control == FFIFixtureFaderControl.ColorMixer) {
+        result.color = ColorMixerChannel(
           red: channel.value.color.red,
           green: channel.value.color.green,
           blue: channel.value.color.blue,

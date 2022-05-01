@@ -189,7 +189,7 @@ fn build_controls<TChannel>(
     if let (Some(red), Some(green), Some(blue)) =
         (color_builder.red, color_builder.green, color_builder.blue)
     {
-        controls.color = Some(ColorGroup { red, green, blue });
+        controls.color_mixer = Some(ColorGroup { red, green, blue });
     }
 
     controls

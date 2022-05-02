@@ -6,12 +6,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
+import 'package:mizer/widgets/controls/button.dart';
 
 import 'time_control.dart';
 
 const double TRANSPORT_CONTROLS_HEIGHT = 64;
 
 class TransportControls extends StatelessWidget {
+  final bool showProgrammer;
+  final Function() toggleProgrammer;
+
+
+  TransportControls({ required this.showProgrammer, required this.toggleProgrammer });
+
   @override
   Widget build(BuildContext context) {
     var api = context.read<TransportApi>();
@@ -27,6 +34,14 @@ class TransportControls extends StatelessWidget {
           ),
           RepaintBoundary(child: SpeedControl(stream.map((event) => event.speed).distinct())),
           RepaintBoundary(child: TransportControl(stream.map((event) => event.state).distinct())),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: MizerButton(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Programmer"),
+            ), active: showProgrammer, onClick: toggleProgrammer),
+          )
         ]));
   }
 }

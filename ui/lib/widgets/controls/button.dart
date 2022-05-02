@@ -39,7 +39,7 @@ class _MizerButtonState extends State<MizerButton> {
           behavior: HitTestBehavior.opaque,
           child: Container(
             decoration: BoxDecoration(
-              color: _active ? Colors.grey.shade700 : null,
+              color: _backgroundColor,
               borderRadius: BorderRadius.circular(2),
             ),
             margin: const EdgeInsets.all(2),
@@ -51,7 +51,14 @@ class _MizerButtonState extends State<MizerButton> {
     );
   }
 
-  bool get _active {
-    return widget.active || hovering || focused;
+  Color? get _backgroundColor {
+    if (hovering || focused) {
+      return Colors.grey.shade600;
+    }
+    if (widget.active) {
+      return Colors.grey.shade700;
+    }
+
+    return null;
   }
 }

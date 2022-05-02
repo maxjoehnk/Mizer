@@ -17,20 +17,20 @@ import 'sheets/dimmer_sheet.dart';
 import 'sheets/gobo_sheet.dart';
 import 'sheets/position_sheet.dart';
 
-class FixtureSheet extends StatefulWidget {
+class ProgrammerSheet extends StatefulWidget {
   final List<FixtureInstance> fixtures;
   final List<ProgrammerChannel> channels;
   final bool isEmpty;
   final ProgrammerApi api;
   final bool highlight;
 
-  const FixtureSheet({required this.fixtures, required this.channels, required this.api, required this.isEmpty, required this.highlight, Key? key}) : super(key: key);
+  const ProgrammerSheet({required this.fixtures, required this.channels, required this.api, required this.isEmpty, required this.highlight, Key? key}) : super(key: key);
 
   @override
-  State<FixtureSheet> createState() => _FixtureSheetState();
+  State<ProgrammerSheet> createState() => _ProgrammerSheetState();
 }
 
-class _FixtureSheetState extends State<FixtureSheet> {
+class _ProgrammerSheetState extends State<ProgrammerSheet> {
   @override
   Widget build(BuildContext context) {
     return HotkeyProvider(

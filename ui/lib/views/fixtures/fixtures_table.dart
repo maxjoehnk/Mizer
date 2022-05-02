@@ -6,7 +6,7 @@ import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/table/table.dart';
 
-class FixtureTable extends StatelessWidget {
+class FixturesTable extends StatelessWidget {
   final List<Fixture> fixtures;
   final List<FixtureId> selectedIds;
   final List<FixtureId> trackedIds;
@@ -17,7 +17,7 @@ class FixtureTable extends StatelessWidget {
   final Function(Fixture) onSelectSimilar;
   final Function(Fixture) onSelectChildren;
 
-  FixtureTable(
+  FixturesTable(
       {required this.fixtures,
       required this.selectedIds,
       required this.trackedIds,

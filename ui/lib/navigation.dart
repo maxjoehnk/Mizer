@@ -6,6 +6,7 @@ import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
+import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/plan/plan_view.dart';
 import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/programmer/programmer_view.dart';
@@ -21,13 +22,18 @@ import 'package:mizer/extensions/string_extensions.dart';
 import 'actions/actions.dart';
 import 'api/contracts/settings.dart';
 
+const double SHEET_SIZE = 320;
+const double SHEET_PADDING = 16;
+const double TAB_STRIP_HEIGHT = 32;
+const double SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
+
 List<Route> routes = [
   Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', View.Layout),
   Route(() => PlanView(), Icons.view_comfortable, '2D Plan', View.Plan),
   Route(() => Container(), MdiIcons.video3D, 'PreViz', View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', View.Nodes),
   Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', View.Sequencer),
-  Route(() => ProgrammerView(), MdiIcons.tuneVertical, 'Programmer', View.Programmer),
+  Route(() => FixturesView(), MdiIcons.tuneVertical, 'Fixtures', View.Programmer),
   Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets', View.Presets),
   Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects', View.Effects),
   Route(
@@ -56,6 +62,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   Widget? _currentWidget;
+  bool _showProgrammer = true;
 
   _HomeState() {
     _updateWidget();
@@ -100,7 +107,8 @@ class _HomeState extends State<Home> {
                                         decoration: BoxDecoration()),
                                   ),
                                 ),
-                                TransportControls()
+                                if (_showProgrammer) SizedBox(height: SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
+                                TransportControls(showProgrammer: _showProgrammer, toggleProgrammer: () => setState(() => _showProgrammer = !_showProgrammer))
                               ],
                             ))
                       ],

@@ -116,6 +116,16 @@ fn build_controls<TChannel>(
         blue: None,
         red: None,
     };
+    let gobo_channel = get_channel(
+        &channels,
+        GroupEnumType::Gobo,
+        CapabilityPresetType::GoboMacro,
+    );
+    let color_channel = get_channel(
+        &channels,
+        GroupEnumType::Colour,
+        CapabilityPresetType::ColorMacro,
+    );
     for channel in channels {
         let control_channel = control_channel_builder(&channel);
         if let Some(group) = channel.group {
@@ -135,7 +145,31 @@ fn build_controls<TChannel>(
                         angle: None,
                     })
                 }
-                GroupEnumType::Gobo => {
+                GroupEnumType::Colour if color_channel.as_ref() == Some(&channel) => {
+                    controls.color_wheel = Some(ColorWheelGroup {
+                        channel: control_channel,
+                        colors: channel
+                            .capabilities
+                            .into_iter()
+                            .filter(|capability| {
+                                capability.preset.is_none()
+                                    || capability.preset == Some(CapabilityPresetType::ColorMacro)
+                                    || capability.preset
+                                        == Some(CapabilityPresetType::ColorDoubleMacro)
+                            })
+                            .map(|capability| ColorWheelSlot {
+                                name: capability.name.to_string(),
+                                value: (capability.min as u8)
+                                    .linear_extrapolate((0, 255), (0., 1.)),
+                                color: vec![capability.resource1, capability.resource2]
+                                    .into_iter()
+                                    .flatten()
+                                    .collect(),
+                            })
+                            .collect(),
+                    })
+                }
+                GroupEnumType::Gobo if gobo_channel.as_ref() == Some(&channel) => {
                     controls.gobo = Some(GoboGroup {
                         channel: control_channel,
                         gobos: channel
@@ -193,4 +227,31 @@ fn build_controls<TChannel>(
     }
 
     controls
+}
+
+fn get_channel(
+    channels: &[ChannelType],
+    group_type: GroupEnumType,
+    preset_type: CapabilityPresetType,
+) -> Option<ChannelType> {
+    let is_channel = |c: &&ChannelType| {
+        matches!(
+            c.group,
+            Some(GroupType {
+                group,
+                ..
+            }) if group == group_type
+        )
+    };
+    channels
+        .iter()
+        .filter(is_channel)
+        .find(|channel| {
+            channel
+                .capabilities
+                .iter()
+                .any(|c| c.preset == Some(preset_type))
+        })
+        .or_else(|| channels.iter().find(is_channel))
+        .cloned()
 }

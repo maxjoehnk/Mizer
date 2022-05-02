@@ -26,7 +26,7 @@ pub struct QlcPlusFixtureDefinition {
 #[xml(tag = "Physical")]
 pub struct PhysicalType {}
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, PartialEq, XmlRead)]
 #[xml(tag = "Channel")]
 pub struct ChannelType {
     #[xml(attr = "Name")]
@@ -43,7 +43,7 @@ pub struct ChannelType {
     pub color: Option<ColorType>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, PartialEq, XmlRead)]
 #[xml(tag = "Capability")]
 pub struct CapabilityType {
     #[xml(text)]
@@ -68,7 +68,7 @@ pub struct CapabilityType {
     pub color2: Option<String>,
 }
 
-#[derive(Debug, Clone, XmlRead)]
+#[derive(Debug, Clone, PartialEq, XmlRead)]
 #[xml(tag = "Alias")]
 pub struct AliasType {
     #[xml(attr = "Mode")]
@@ -110,7 +110,7 @@ pub struct ModeChannelType {
     pub channel: HtmlEntityString,
 }
 
-#[derive(Debug, Clone, Copy, XmlRead)]
+#[derive(Debug, Clone, Copy, PartialEq, XmlRead)]
 #[xml(tag = "Group")]
 pub struct GroupType {
     #[xml(attr = "Byte")]
@@ -122,7 +122,7 @@ pub struct GroupType {
 pub type DmxValueType = u64;
 
 custom_derive! {
-    #[derive(Debug, Clone, Copy, EnumFromStr)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
     pub enum ChannelPresetType {
         IntensityMasterDimmer,
         IntensityMasterDimmerFine,
@@ -199,7 +199,7 @@ custom_derive! {
 }
 
 custom_derive! {
-    #[derive(Debug, Clone, Copy, EnumFromStr)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
     pub enum CapabilityPresetType {
         SlowToFast,
         FastToSlow,
@@ -269,7 +269,7 @@ custom_derive! {
 }
 
 custom_derive! {
-    #[derive(Debug, Clone, Copy, EnumFromStr)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
     pub enum GroupEnumType {
         Intensity,
         Colour,
@@ -287,7 +287,7 @@ custom_derive! {
 }
 
 custom_derive! {
-    #[derive(Debug, Clone, Copy, EnumFromStr)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, EnumFromStr)]
     pub enum ColorType {
         Generic,
         Red,

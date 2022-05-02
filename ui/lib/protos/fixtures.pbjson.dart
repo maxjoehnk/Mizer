@@ -197,15 +197,12 @@ const ColorWheelSlot$json = const {
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'value', '3': 2, '4': 1, '5': 1, '10': 'value'},
-    const {'1': 'color', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'color', '17': true},
-  ],
-  '8': const [
-    const {'1': '_color'},
+    const {'1': 'colors', '3': 3, '4': 3, '5': 9, '10': 'colors'},
   ],
 };
 
 /// Descriptor for `ColorWheelSlot`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List colorWheelSlotDescriptor = $convert.base64Decode('Cg5Db2xvcldoZWVsU2xvdBISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YWx1ZRIZCgVjb2xvchgDIAEoCUgAUgVjb2xvcogBAUIICgZfY29sb3I=');
+final $typed_data.Uint8List colorWheelSlotDescriptor = $convert.base64Decode('Cg5Db2xvcldoZWVsU2xvdBISCgRuYW1lGAEgASgJUgRuYW1lEhQKBXZhbHVlGAIgASgBUgV2YWx1ZRIWCgZjb2xvcnMYAyADKAlSBmNvbG9ycw==');
 @$core.Deprecated('Use axisChannelDescriptor instead')
 const AxisChannel$json = const {
   '1': 'AxisChannel',

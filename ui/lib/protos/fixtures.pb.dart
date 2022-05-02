@@ -1020,7 +1020,7 @@ class ColorWheelSlot extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ColorWheelSlot', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value', $pb.PbFieldType.OD)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colors')
     ..hasRequiredFields = false
   ;
 
@@ -1028,7 +1028,7 @@ class ColorWheelSlot extends $pb.GeneratedMessage {
   factory ColorWheelSlot({
     $core.String? name,
     $core.double? value,
-    $core.String? color,
+    $core.Iterable<$core.String>? colors,
   }) {
     final _result = create();
     if (name != null) {
@@ -1037,8 +1037,8 @@ class ColorWheelSlot extends $pb.GeneratedMessage {
     if (value != null) {
       _result.value = value;
     }
-    if (color != null) {
-      _result.color = color;
+    if (colors != null) {
+      _result.colors.addAll(colors);
     }
     return _result;
   }
@@ -1082,13 +1082,7 @@ class ColorWheelSlot extends $pb.GeneratedMessage {
   void clearValue() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get color => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set color($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasColor() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearColor() => clearField(3);
+  $core.List<$core.String> get colors => $_getList(2);
 }
 
 class AxisChannel extends $pb.GeneratedMessage {

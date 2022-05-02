@@ -260,7 +260,7 @@ impl From<mizer_fixtures::definition::ColorWheelSlot> for ColorWheelSlot {
         Self {
             name: color.name,
             value: color.value,
-            _color: color.color.map(ColorWheelSlot_oneof__color::color),
+            colors: color.color.into_iter().collect(),
             ..Default::default()
         }
     }

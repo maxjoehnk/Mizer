@@ -310,7 +310,7 @@ pub struct ColorWheelGroup<TChannel> {
 pub struct ColorWheelSlot {
     pub value: f64,
     pub name: String,
-    pub color: Option<String>,
+    pub color: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]

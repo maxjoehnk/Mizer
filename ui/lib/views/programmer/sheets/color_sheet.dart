@@ -53,7 +53,7 @@ class ColorSheet extends StatelessWidget {
             fader: control.fader,
             presets: control.colorWheel.colors
                 .map((color) => ControlPreset(color.value,
-                    name: color.name, color: color.hasColor() ? color.color : null))
+                    name: color.name, colors: color.colors))
                 .toList(),
             channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
             update: (v) => WriteControlRequest(

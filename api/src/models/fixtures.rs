@@ -3463,8 +3463,7 @@ pub struct ColorWheelSlot {
     // message fields
     pub name: ::std::string::String,
     pub value: f64,
-    // message oneof groups
-    pub _color: ::std::option::Option<ColorWheelSlot_oneof__color>,
+    pub colors: ::protobuf::RepeatedField<::std::string::String>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -3476,12 +3475,6 @@ impl<'a> ::std::default::Default for &'a ColorWheelSlot {
     fn default() -> &'a ColorWheelSlot {
         <ColorWheelSlot as ::protobuf::Message>::default_instance()
     }
-}
-
-#[derive(Clone,PartialEq,Debug)]
-#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub enum ColorWheelSlot_oneof__color {
-    color(::std::string::String),
 }
 
 impl ColorWheelSlot {
@@ -3530,53 +3523,29 @@ impl ColorWheelSlot {
         self.value = v;
     }
 
-    // string color = 3;
+    // repeated string colors = 3;
 
 
-    pub fn get_color(&self) -> &str {
-        match self._color {
-            ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(ref v)) => v,
-            _ => "",
-        }
+    pub fn get_colors(&self) -> &[::std::string::String] {
+        &self.colors
     }
-    pub fn clear_color(&mut self) {
-        self._color = ::std::option::Option::None;
-    }
-
-    pub fn has_color(&self) -> bool {
-        match self._color {
-            ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(..)) => true,
-            _ => false,
-        }
+    pub fn clear_colors(&mut self) {
+        self.colors.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_color(&mut self, v: ::std::string::String) {
-        self._color = ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(v))
+    pub fn set_colors(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
+        self.colors = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_color(&mut self) -> &mut ::std::string::String {
-        if let ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(_)) = self._color {
-        } else {
-            self._color = ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(::std::string::String::new()));
-        }
-        match self._color {
-            ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(ref mut v)) => v,
-            _ => panic!(),
-        }
+    pub fn mut_colors(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
+        &mut self.colors
     }
 
     // Take field
-    pub fn take_color(&mut self) -> ::std::string::String {
-        if self.has_color() {
-            match self._color.take() {
-                ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(v)) => v,
-                _ => panic!(),
-            }
-        } else {
-            ::std::string::String::new()
-        }
+    pub fn take_colors(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.colors, ::protobuf::RepeatedField::new())
     }
 }
 
@@ -3600,10 +3569,7 @@ impl ::protobuf::Message for ColorWheelSlot {
                     self.value = tmp;
                 },
                 3 => {
-                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
-                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
-                    }
-                    self._color = ::std::option::Option::Some(ColorWheelSlot_oneof__color::color(is.read_string()?));
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.colors)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3623,13 +3589,9 @@ impl ::protobuf::Message for ColorWheelSlot {
         if self.value != 0. {
             my_size += 9;
         }
-        if let ::std::option::Option::Some(ref v) = self._color {
-            match v {
-                &ColorWheelSlot_oneof__color::color(ref v) => {
-                    my_size += ::protobuf::rt::string_size(3, &v);
-                },
-            };
-        }
+        for value in &self.colors {
+            my_size += ::protobuf::rt::string_size(3, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3642,13 +3604,9 @@ impl ::protobuf::Message for ColorWheelSlot {
         if self.value != 0. {
             os.write_double(2, self.value)?;
         }
-        if let ::std::option::Option::Some(ref v) = self._color {
-            match v {
-                &ColorWheelSlot_oneof__color::color(ref v) => {
-                    os.write_string(3, v)?;
-                },
-            };
-        }
+        for v in &self.colors {
+            os.write_string(3, &v)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -3697,10 +3655,10 @@ impl ::protobuf::Message for ColorWheelSlot {
                 |m: &ColorWheelSlot| { &m.value },
                 |m: &mut ColorWheelSlot| { &mut m.value },
             ));
-            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
-                "color",
-                ColorWheelSlot::has_color,
-                ColorWheelSlot::get_color,
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "colors",
+                |m: &ColorWheelSlot| { &m.colors },
+                |m: &mut ColorWheelSlot| { &mut m.colors },
             ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<ColorWheelSlot>(
                 "ColorWheelSlot",
@@ -3720,7 +3678,7 @@ impl ::protobuf::Clear for ColorWheelSlot {
     fn clear(&mut self) {
         self.name.clear();
         self.value = 0.;
-        self._color = ::std::option::Option::None;
+        self.colors.clear();
         self.unknown_fields.clear();
     }
 }
@@ -7005,57 +6963,56 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\
     \x03\x20\x01(\x01R\x04blue\"a\n\x11ColorWheelChannel\x12\x14\n\x05value\
     \x18\x01\x20\x01(\x01R\x05value\x126\n\x06colors\x18\x02\x20\x03(\x0b2\
-    \x1e.mizer.fixtures.ColorWheelSlotR\x06colors\"_\n\x0eColorWheelSlot\x12\
+    \x1e.mizer.fixtures.ColorWheelSlotR\x06colors\"R\n\x0eColorWheelSlot\x12\
     \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\x01R\x05value\x12\x19\n\x05color\x18\x03\x20\x01(\tH\0R\x05col\
-    or\x88\x01\x01B\x08\n\x06_color\"]\n\x0bAxisChannel\x12\x14\n\x05value\
-    \x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01(\
-    \x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\
-    \"O\n\x0bGoboChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
-    \x12*\n\x05gobos\x18\x02\x20\x03(\x0b2\x14.mizer.fixtures.GoboR\x05gobos\
-    \"g\n\x04Gobo\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\
-    \x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x03svg\x18\x03\x20\
-    \x01(\tH\0R\x03svg\x12\x18\n\x06raster\x18\x04\x20\x01(\x0cH\0R\x06raste\
-    rB\x07\n\x05image\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\
-    \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
-    \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
-    definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
-    definitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
-    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
-    \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
-    al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
-    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\x1a\n\x08provider\
-    \x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\x20\x03(\x0b2\
-    \x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\n\x0eFixtureCh\
-    annel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\n\x06coarse\x18\
-    \x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.CoarseResolutionH\0R\
-    \x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fixtures.FixtureC\
-    hannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\x20\x01(\x0b2\
-    /.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\
-    \x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
-    \x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\
-    \x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\
-    \x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\x01\x20\x01\
-    (\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfine\
-    Channel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\
-    \nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\
-    \x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\
-    \x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\
-    \x18\x04\x20\x01(\x02R\x06weight*\xad\x01\n\x0eFixtureControl\x12\r\n\tI\
-    NTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\x0f\n\x0bCOLOR_MIXER\x10\
-    \x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PAN\x10\x04\x12\x08\n\
-    \x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\x04ZOOM\x10\x07\x12\
-    \t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\n\x05FROST\x10\n\x12\
-    \x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\xed\x02\n\x0bFixtur\
-    esApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixturesRequest\x1a\
-    \x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixtureDefinitions\x12,.mi\
-    zer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.FixtureDe\
-    finitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixturesRequ\
-    est\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixtures\x12%.mi\
-    zer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\
-    \x06proto3\
+    \x20\x01(\x01R\x05value\x12\x16\n\x06colors\x18\x03\x20\x03(\tR\x06color\
+    s\"]\n\x0bAxisChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
+    \x12\x1d\n\nangle_from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\n\x08ang\
+    le_to\x18\x03\x20\x01(\x01R\x07angleTo\"O\n\x0bGoboChannel\x12\x14\n\x05\
+    value\x18\x01\x20\x01(\x01R\x05value\x12*\n\x05gobos\x18\x02\x20\x03(\
+    \x0b2\x14.mizer.fixtures.GoboR\x05gobos\"g\n\x04Gobo\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\
+    \x05value\x12\x12\n\x03svg\x18\x03\x20\x01(\tH\0R\x03svg\x12\x18\n\x06ra\
+    ster\x18\x04\x20\x01(\x0cH\0R\x06rasterB\x07\n\x05image\":\n\x0eGenericC\
+    hannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x12\n\x04na\
+    me\x18\x02\x20\x01(\tR\x04name\"\x1e\n\x1cGetFixtureDefinitionsRequest\"\
+    Y\n\x12FixtureDefinitions\x12C\n\x0bdefinitions\x18\x01\x20\x03(\x0b2!.m\
+    izer.fixtures.FixtureDefinitionR\x0bdefinitions\"\xff\x01\n\x11FixtureDe\
+    finition\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\
+    \x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\x0c\
+    manufacturer\x121\n\x05modes\x18\x04\x20\x03(\x0b2\x1b.mizer.fixtures.Fi\
+    xtureModeR\x05modes\x12?\n\x08physical\x18\x05\x20\x01(\x0b2#.mizer.fixt\
+    ures.FixturePhysicalDataR\x08physical\x12\x12\n\x04tags\x18\x06\x20\x03(\
+    \tR\x04tags\x12\x1a\n\x08provider\x18\x07\x20\x01(\tR\x08provider\"]\n\
+    \x0bFixtureMode\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12:\n\x08\
+    channels\x18\x02\x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\x08cha\
+    nnels\"\x98\x04\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12I\n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.Fixture\
+    Channel.CoarseResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\
+    \x0b2-.mizer.fixtures.FixtureChannel.FineResolutionH\0R\x04fine\x12I\n\
+    \x06finest\x18\x04\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.FinestRe\
+    solutionH\0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channel\
+    \x18\x01\x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bfi\
+    neChannel\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\
+    \x02\x20\x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\
+    \rfinestChannel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChan\
+    nel\x18\x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\
+    \x01(\rR\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\
+    \x12\x14\n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\
+    \x18\x02\x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02\
+    R\x05depth\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight*\xad\x01\
+    \n\x0eFixtureControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\
+    \x01\x12\x0f\n\x0bCOLOR_MIXER\x10\x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\
+    \x12\x07\n\x03PAN\x10\x04\x12\x08\n\x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\
+    \x06\x12\x08\n\x04ZOOM\x10\x07\x12\t\n\x05PRISM\x10\x08\x12\x08\n\x04IRI\
+    S\x10\t\x12\t\n\x05FROST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GE\
+    NERIC\x10\x0c2\xed\x02\n\x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mize\
+    r.fixtures.GetFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\
+    \x15GetFixtureDefinitions\x12,.mizer.fixtures.GetFixtureDefinitionsReque\
+    st\x1a\".mizer.fixtures.FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\
+    \".mizer.fixtures.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\
+    \x12S\n\x0eDeleteFixtures\x12%.mizer.fixtures.DeleteFixturesRequest\x1a\
+    \x18.mizer.fixtures.Fixtures\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

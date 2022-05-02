@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:from_css_color/from_css_color.dart';
@@ -55,19 +56,19 @@ class ControlPreset {
   final double value;
   final String name;
   final ControlPresetImage? image;
-  late final Color? color;
+  late final List<Color>? colors;
 
-  ControlPreset(this.value, {required this.name, this.image, String? color}) {
-    if (color != null) {
-      this.color = fromCssColor(color);
+  ControlPreset(this.value, {required this.name, this.image, List<String>? colors}) {
+    if (colors != null) {
+      this.colors = colors.map(fromCssColor).toList();
     }else {
-      this.color = null;
+      this.colors = null;
     }
   }
 
   @override
   String toString() {
-    return "ControlPreset(value: $value, name: $name, image: $image, color: $color)";
+    return "ControlPreset(value: $value, name: $name, image: $image, colors: $colors)";
   }
 }
 
@@ -161,9 +162,18 @@ class FixtureControlPresets extends StatelessWidget {
     if (preset.image != null) {
       return _image(preset.image!);
     }
-    if (preset.color != null) {
+    if (preset.colors != null) {
+      var colors = List.generate(preset.colors!.length, (index) {
+        var color = preset.colors![index];
+        return [color, color];
+      }).flattened.toList();
+      var stops = List.generate(preset.colors!.length, (index) => [index, index + 1])
+          .flattened
+          .map((index) => index / preset.colors!.length)
+          .toList();
+      var gradient = SweepGradient(colors: colors, stops: stops);
       return Container(
-          decoration: BoxDecoration(color: preset.color!, borderRadius: BorderRadius.circular(4)));
+          decoration: BoxDecoration(gradient: gradient, borderRadius: BorderRadius.circular(4)));
     }
     return Center(child: Text(preset.name, textAlign: TextAlign.center));
   }

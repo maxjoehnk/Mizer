@@ -110,7 +110,7 @@ message ColorWheelChannel {
 message ColorWheelSlot {
   string name = 1;
   double value = 2;
-  optional string color = 3;
+  repeated string colors = 3;
 }
 
 message AxisChannel {

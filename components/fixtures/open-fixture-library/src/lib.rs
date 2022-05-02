@@ -619,7 +619,7 @@ fn group_controls(
                                     Some(ColorWheelSlot {
                                         name,
                                         value,
-                                        color: colors.first().cloned(),
+                                        color: colors.clone(),
                                     })
                                 } else {
                                     None

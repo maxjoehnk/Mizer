@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
 const double HEADER_BADGE_HEIGHT = 32;
@@ -89,10 +90,10 @@ class PlayingState extends StatelessWidget {
     CdjPlayback_State.Loading: Colors.grey,
   };
   final Map<CdjPlayback_State, String> labels = {
-    CdjPlayback_State.Playing: "Playing",
-    CdjPlayback_State.Cued: "Cued",
-    CdjPlayback_State.Cueing: "Cueing",
-    CdjPlayback_State.Loading: "Loading",
+    CdjPlayback_State.Playing: "Playing".i18n,
+    CdjPlayback_State.Cued: "Cued".i18n,
+    CdjPlayback_State.Cueing: "Cueing".i18n,
+    CdjPlayback_State.Loading: "Loading".i18n,
   };
 
   final CdjPlayback_State playerState;
@@ -201,7 +202,7 @@ class BPM extends StatelessWidget {
     return PlayerMetadata(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(bpm.toStringAsFixed(1), style: style.headline4),
-        Text("BPM",
+        Text("BPM".i18n,
             style: style.bodyText1!.copyWith(color: style.bodyText1!.color!.withAlpha(164)),
             textAlign: TextAlign.start),
       ]),

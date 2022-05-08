@@ -116,4 +116,5 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn read_settings(&self) -> Settings;
     fn save_settings(&self, settings: Settings) -> anyhow::Result<()>;
+    fn observe_settings(&self) -> Subscriber<Settings>;
 }

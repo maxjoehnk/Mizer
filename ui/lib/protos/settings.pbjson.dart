@@ -21,11 +21,12 @@ const Settings$json = const {
   '2': const [
     const {'1': 'hotkeys', '3': 1, '4': 1, '5': 11, '6': '.mizer.settings.Hotkeys', '10': 'hotkeys'},
     const {'1': 'paths', '3': 2, '4': 1, '5': 11, '6': '.mizer.settings.PathSettings', '10': 'paths'},
+    const {'1': 'general', '3': 3, '4': 1, '5': 11, '6': '.mizer.settings.General', '10': 'general'},
   ],
 };
 
 /// Descriptor for `Settings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode('CghTZXR0aW5ncxIxCgdob3RrZXlzGAEgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IHaG90a2V5cxIyCgVwYXRocxgCIAEoCzIcLm1pemVyLnNldHRpbmdzLlBhdGhTZXR0aW5nc1IFcGF0aHM=');
+final $typed_data.Uint8List settingsDescriptor = $convert.base64Decode('CghTZXR0aW5ncxIxCgdob3RrZXlzGAEgASgLMhcubWl6ZXIuc2V0dGluZ3MuSG90a2V5c1IHaG90a2V5cxIyCgVwYXRocxgCIAEoCzIcLm1pemVyLnNldHRpbmdzLlBhdGhTZXR0aW5nc1IFcGF0aHMSMQoHZ2VuZXJhbBgDIAEoCzIXLm1pemVyLnNldHRpbmdzLkdlbmVyYWxSB2dlbmVyYWw=');
 @$core.Deprecated('Use pathSettingsDescriptor instead')
 const PathSettings$json = const {
   '1': 'PathSettings',
@@ -131,3 +132,13 @@ const Hotkeys_PlanEntry$json = const {
 
 /// Descriptor for `Hotkeys`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List hotkeysDescriptor = $convert.base64Decode('CgdIb3RrZXlzEjsKBmdsb2JhbBgBIAMoCzIjLm1pemVyLnNldHRpbmdzLkhvdGtleXMuR2xvYmFsRW50cnlSBmdsb2JhbBI+CgdsYXlvdXRzGAIgAygLMiQubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5MYXlvdXRzRW50cnlSB2xheW91dHMSRwoKcHJvZ3JhbW1lchgDIAMoCzInLm1pemVyLnNldHRpbmdzLkhvdGtleXMuUHJvZ3JhbW1lckVudHJ5Ugpwcm9ncmFtbWVyEjgKBW5vZGVzGAQgAygLMiIubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5Ob2Rlc0VudHJ5UgVub2RlcxI4CgVwYXRjaBgFIAMoCzIiLm1pemVyLnNldHRpbmdzLkhvdGtleXMuUGF0Y2hFbnRyeVIFcGF0Y2gSRAoJc2VxdWVuY2VyGAYgAygLMiYubWl6ZXIuc2V0dGluZ3MuSG90a2V5cy5TZXF1ZW5jZXJFbnRyeVIJc2VxdWVuY2VyEjUKBHBsYW4YByADKAsyIS5taXplci5zZXR0aW5ncy5Ib3RrZXlzLlBsYW5FbnRyeVIEcGxhbho5CgtHbG9iYWxFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjoKDExheW91dHNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGj0KD1Byb2dyYW1tZXJFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdmFsdWU6AjgBGjgKCk5vZGVzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo4CgpQYXRjaEVudHJ5EhAKA2tleRgBIAEoCVIDa2V5EhQKBXZhbHVlGAIgASgJUgV2YWx1ZToCOAEaPAoOU2VxdWVuY2VyRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4ARo3CglQbGFuRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AQ==');
+@$core.Deprecated('Use generalDescriptor instead')
+const General$json = const {
+  '1': 'General',
+  '2': const [
+    const {'1': 'language', '3': 1, '4': 1, '5': 9, '10': 'language'},
+  ],
+};
+
+/// Descriptor for `General`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List generalDescriptor = $convert.base64Decode('CgdHZW5lcmFsEhoKCGxhbmd1YWdlGAEgASgJUghsYW5ndWFnZQ==');

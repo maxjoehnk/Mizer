@@ -11,7 +11,7 @@ use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
 use mizer_fixtures::FixtureId;
-use mizer_message_bus::Subscriber;
+use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_plan::{FixturePosition, Plan};
 use mizer_protocol_midi::MidiEvent;
 use mizer_settings::{Settings, SettingsManager};
@@ -23,6 +23,7 @@ pub struct Api {
     access: RuntimeAccess,
     sender: flume::Sender<ApiCommand>,
     settings: Arc<NonEmptyPinboard<SettingsManager>>,
+    settings_bus: MessageBus<Settings>,
 }
 
 impl RuntimeApi for Api {
@@ -431,6 +432,7 @@ impl RuntimeApi for Api {
         let refresh_fixture_libraries =
             settings_manager.settings.paths.fixture_libraries != settings.paths.fixture_libraries;
         settings_manager.settings = settings;
+        self.settings_bus.send(settings_manager.settings.clone());
         settings_manager.save()?;
         if refresh_fixture_libraries {
             let (tx, rx) = flume::bounded(1);
@@ -443,6 +445,10 @@ impl RuntimeApi for Api {
         } else {
             Ok(())
         }
+    }
+
+    fn observe_settings(&self) -> Subscriber<Settings> {
+        self.settings_bus.subscribe()
     }
 }
 
@@ -460,6 +466,7 @@ impl Api {
                 sender: tx,
                 access,
                 settings,
+                settings_bus: MessageBus::new(),
             },
         )
     }

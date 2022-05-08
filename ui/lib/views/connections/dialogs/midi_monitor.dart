@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/connections.pbgrpc.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
@@ -57,7 +58,7 @@ class _MidiMonitorState extends State<MidiMonitor> {
 
   @override
   Widget build(BuildContext context) {
-    return Panel(label: "Midi Messages", child: SingleChildScrollView(
+    return Panel(label: "Midi Messages".i18n, child: SingleChildScrollView(
       child: MizerTable(
         columnWidths: {
           0: FixedColumnWidth(128),
@@ -67,12 +68,12 @@ class _MidiMonitorState extends State<MidiMonitor> {
           4: FixedColumnWidth(128),
         },
         columns: [
-          const Text("Timestamp"),
-          const Text("Event"),
-          const Text("Channel"),
-          const Text("Note"),
-          const Text("Value"),
-          const Text("Data"),
+          Text("Timestamp".i18n),
+          Text("Event".i18n),
+          Text("Channel".i18n),
+          Text("Note".i18n),
+          Text("Value".i18n),
+          Text("Data".i18n),
         ],
         rows: events.reversed.map((event) => MizerTableRow(
           cells: [
@@ -91,15 +92,15 @@ class _MidiMonitorState extends State<MidiMonitor> {
   String _getEventType(MonitorMidiResponse event) {
     switch (event.whichMessage()) {
       case MonitorMidiResponse_Message.cc:
-        return "CC";
+        return "CC".i18n;
       case MonitorMidiResponse_Message.noteOn:
-        return "Note On";
+        return "Note On".i18n;
       case MonitorMidiResponse_Message.noteOff:
-        return "Note Off";
+        return "Note Off".i18n;
       case MonitorMidiResponse_Message.sysEx:
-        return "SysEx";
+        return "SysEx".i18n;
       default:
-        return "Unknown";
+        return "Unknown".i18n;
     }
   }
 

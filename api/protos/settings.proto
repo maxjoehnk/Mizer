@@ -12,6 +12,7 @@ message RequestSettings {}
 message Settings {
   Hotkeys hotkeys = 1;
   PathSettings paths = 2;
+  General general = 3;
 }
 
 message PathSettings {
@@ -29,4 +30,8 @@ message Hotkeys {
   map<string, string> patch = 5;
   map<string, string> sequencer = 6;
   map<string, string> plan = 7;
+}
+
+message General {
+  string language = 1;
 }

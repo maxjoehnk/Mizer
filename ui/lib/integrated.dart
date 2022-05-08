@@ -7,7 +7,11 @@ import 'package:mizer/windows/midi_monitor_window.dart';
 import 'package:mizer/windows/preferences_window.dart';
 import 'package:nativeshell/nativeshell.dart';
 
+import 'i18n.dart';
+
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MizerI18n.loadTranslations();
   runApp(MizerIntegratedUi());
 }
 

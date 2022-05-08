@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
 import 'package:nativeshell/nativeshell.dart';
@@ -19,11 +21,25 @@ class UpdateSettings implements SettingsEvent {
   UpdateSettings(this.update);
 }
 
+class _EmitSettings implements SettingsEvent {
+  final Settings settings;
+
+  _EmitSettings(this.settings);
+}
+
 class SettingsBloc extends Bloc<SettingsEvent, Settings> {
   final SettingsApi settingsApi;
+  StreamSubscription? subscription;
 
   SettingsBloc(this.settingsApi) : super(Settings()) {
     this.add(LoadSettings());
+    this.subscription = settingsApi.watchSettings().listen((settings) => this.add(_EmitSettings(settings)));
+  }
+
+  @override
+  Future<void> close() {
+    this.subscription!.cancel();
+    return super.close();
   }
 
   @override
@@ -37,6 +53,9 @@ class SettingsBloc extends Bloc<SettingsEvent, Settings> {
     }
     if (event is UpdateSettings) {
       yield event.update(state.deepCopy());
+    }
+    if (event is _EmitSettings) {
+      yield event.settings;
     }
   }
 }

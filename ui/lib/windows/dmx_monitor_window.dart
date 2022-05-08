@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/views/connections/dialogs/dmx_monitor.dart';
 import 'package:mizer/windows/base_window_state.dart';
@@ -14,7 +13,7 @@ class DmxMonitorWindow extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(child: WindowLayoutProbe(child: Scaffold(body: DmxMonitor(connection))));
+    return BaseWindowState(child: WindowLayoutProbe(child: LanguageSwitcher(child: Scaffold(body: DmxMonitor(connection)))));
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
@@ -28,20 +29,20 @@ const double TAB_STRIP_HEIGHT = 32;
 const double SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
 
 List<Route> routes = [
-  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout', View.Layout),
-  Route(() => PlanView(), Icons.view_comfortable, '2D Plan', View.Plan),
-  Route(() => Container(), MdiIcons.video3D, 'PreViz', View.PreViz),
-  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes', View.Nodes),
-  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer', View.Sequencer),
-  Route(() => FixturesView(), MdiIcons.tuneVertical, 'Fixtures', View.Programmer),
-  Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets', View.Presets),
-  Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects', View.Effects),
+  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
+  Route(() => PlanView(), Icons.view_comfortable, '2D Plan'.i18n, View.Plan),
+  Route(() => Container(), MdiIcons.video3D, 'PreViz'.i18n, View.PreViz),
+  Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes'.i18n, View.Nodes),
+  Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer'.i18n, View.Sequencer),
+  Route(() => FixturesView(), MdiIcons.tuneVertical, 'Fixtures'.i18n, View.Programmer),
+  Route(() => PresetsView(), MdiIcons.paletteSwatch, 'Presets'.i18n, View.Presets),
+  Route(() => EffectsView(), MdiIcons.vectorCircle, 'Effects'.i18n, View.Effects),
   Route(
-      () => MediaView(), Icons.perm_media_outlined, 'Media', View.Media),
-  Route(() => Container(), Icons.tv, 'Surfaces', View.Surfaces),
-  Route(() => ConnectionsView(), Icons.device_hub, 'Connections', View.Connections),
-  Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch', View.FixturePatch),
-  Route(() => SessionView(), Icons.mediation, 'Session', View.Session),
+      () => MediaView(), Icons.perm_media_outlined, 'Media'.i18n, View.Media),
+  Route(() => Container(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
+  Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
+  Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
+  Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
 ];
 
 Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);

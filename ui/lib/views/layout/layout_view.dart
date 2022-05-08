@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
@@ -39,7 +40,7 @@ class LayoutView extends StatelessWidget {
           "add_layout": () => _addLayout(context, layoutsBloc),
         },
         child: Panel.tabs(
-          label: "Layout",
+          label: "Layout".i18n,
           tabIndex: state.tabIndex,
           onSelectTab: (index) => layoutsBloc.add(SelectLayoutTab(tabIndex: index)),
           padding: false,
@@ -50,10 +51,10 @@ class LayoutView extends StatelessWidget {
                       ContextMenu(
                           menu: Menu(items: [
                             MenuItem(
-                                label: "Rename",
+                                label: "Rename".i18n,
                                 action: () => _onRename(context, layout, layoutsBloc)),
                             MenuItem(
-                                label: "Delete",
+                                label: "Delete".i18n,
                                 action: () => _onDelete(context, layout, layoutsBloc)),
                           ]),
                           child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
@@ -83,18 +84,18 @@ class LayoutView extends StatelessWidget {
         context: context,
         builder: (BuildContext context) =>
             AlertDialog(
-              title: Text("Delete Layout"),
+              title: Text("Delete Layout".i18n),
               content: SingleChildScrollView(
-                child: Text("Delete Layout ${layout.id}?"),
+                child: Text("Delete Layout ${layout.id}?".i18n),
               ),
               actions: [
                 TextButton(
-                  child: Text("Cancel"),
+                  child: Text("Cancel".i18n),
                   onPressed: () => Navigator.of(context).pop(false),
                 ),
                 TextButton(
                   autofocus: true,
-                  child: Text("Delete"),
+                  child: Text("Delete".i18n),
                   onPressed: () => Navigator.of(context).pop(true),
                 ),
               ],
@@ -124,11 +125,11 @@ class NameLayoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        title: Text(name != null ? "Rename Layout" : "Add Layout"),
+        title: Text(name != null ? "Rename Layout".i18n : "Add Layout".i18n),
         actions: [
           ElevatedButton(
               onPressed: () => Navigator.of(context).pop(nameController.text),
-              child: Text(name != null ? "Rename" : "Add"))
+              child: Text(name != null ? "Rename".i18n : "Add".i18n))
         ],
         content: TextField(
           controller: nameController,

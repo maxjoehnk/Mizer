@@ -9,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  i18n_extension: ^4.2.1
   protobuf: ^2.0.0
   grpc: ^3.0.0
   fixnum: ^1.0.0
@@ -46,6 +49,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/locales/
 
 ffigen:
   output: 'lib/api/plugin/ffi/bindings.dart'

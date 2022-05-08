@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class _EffectsViewState extends State<EffectsView> {
             children: [
               Expanded(
                 child: Panel(
-                  label: "Effects",
+                  label: "Effects".i18n,
                   child: ListView.builder(
                     itemCount: effects.length,
                     itemBuilder: (context, index) {
@@ -41,7 +42,7 @@ class _EffectsViewState extends State<EffectsView> {
                       );
                     },
                   ),
-                  actions: [PanelAction(label: "Add Effect")],
+                  actions: [PanelAction(label: "Add Effect".i18n)],
                 ),
               ),
               if (effect != null) Expanded(child: EffectEditor(effect: effect!))
@@ -79,7 +80,7 @@ class FrameEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Panel(
-        label: "Frames",
+        label: "Frames".i18n,
         child: ListView(
           children: effect.channels.map((channel) {
             return Padding(
@@ -202,7 +203,7 @@ class MovementEditor extends StatelessWidget {
     var tilt = effect.channels.firstWhere((element) => element.control == FixtureControl.TILT);
 
     return Panel(
-        label: "Movement",
+        label: "Movement".i18n,
         child: CustomPaint(painter: MovementPainter(pan, tilt), size: Size.infinite));
   }
 }

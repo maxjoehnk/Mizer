@@ -9,8 +9,18 @@ use crate::models::settings as model;
 impl From<settings::Settings> for model::Settings {
     fn from(settings: settings::Settings) -> Self {
         Self {
+            general: SingularPtrField::some(settings.general.into()),
             hotkeys: SingularPtrField::some(settings.hotkeys.into()),
             paths: SingularPtrField::some(settings.paths.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<settings::General> for model::General {
+    fn from(general: settings::General) -> Self {
+        Self {
+            language: general.language,
             ..Default::default()
         }
     }
@@ -58,8 +68,17 @@ impl From<settings::FilePaths> for model::PathSettings {
 impl From<model::Settings> for settings::Settings {
     fn from(settings: model::Settings) -> Self {
         Self {
+            general: settings.general.unwrap().into(),
             hotkeys: settings.hotkeys.unwrap().into(),
             paths: settings.paths.unwrap().into(),
+        }
+    }
+}
+
+impl From<model::General> for settings::General {
+    fn from(general: model::General) -> Self {
+        Self {
+            language: general.language,
         }
     }
 }

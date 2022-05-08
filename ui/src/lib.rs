@@ -50,10 +50,13 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
     let _sequencer = SequencerChannel::new(handlers.sequencer).channel(context.weak());
     let _programmer = ProgrammerChannel::new(handlers.programmer.clone()).channel(context.weak());
     let _programmer_events =
-        ProgrammerEventChannel::new(handlers.programmer, async_runtime, context.weak())
+        ProgrammerEventChannel::new(handlers.programmer, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
-    let _application =
-        ApplicationChannel::new(handlers.settings, lifecycle_handler).channel(context.weak());
+    let _application = ApplicationChannel::new(handlers.settings.clone(), lifecycle_handler)
+        .channel(context.weak());
+    let _application_events =
+        MonitorApplicationChannel::new(handlers.settings, async_runtime, context.weak())
+            .event_channel(context.weak());
     let _effects = EffectsChannel::new(handlers.effects).channel(context.weak());
     let _plans = PlansChannel::new(handlers.plans).channel(context.weak());
 

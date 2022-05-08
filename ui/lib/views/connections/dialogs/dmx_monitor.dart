@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/extensions/map_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/hoverable.dart';
@@ -79,7 +80,7 @@ class UniverseSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MonitorGroup(
-        title: "Universes",
+        title: "Universes".i18n,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Wrap(
@@ -126,7 +127,7 @@ class AddressObserver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MonitorGroup(
-        title: "DMX",
+        title: "DMX".i18n,
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Wrap(
@@ -158,7 +159,7 @@ class AddressHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MonitorGroup(title: "History", child: Container());
+    return MonitorGroup(title: "History".i18n, child: Container());
   }
 }
 

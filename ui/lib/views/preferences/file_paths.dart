@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/settings.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
@@ -15,7 +16,7 @@ class PathSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       return Column(mainAxisSize: MainAxisSize.min, children: [
-        PathSetting(label: "Midi Device Profiles", value: settings.paths.midiDeviceProfiles, update: (path) {
+        PathSetting(label: "Midi Device Profiles".i18n, value: settings.paths.midiDeviceProfiles, update: (path) {
           SettingsBloc bloc = context.read();
           bloc.add(UpdateSettings((settings) {
             settings.paths.midiDeviceProfiles = path;
@@ -23,8 +24,8 @@ class PathSettings extends StatelessWidget {
             return settings;
           }));
         }),
-        PreferencesCategory(label: "Fixture Libraries", children: [
-          PathSetting(label: "Open Fixture Library", value: settings.paths.openFixtureLibrary, update: (path) {
+        PreferencesCategory(label: "Fixture Libraries".i18n, children: [
+          PathSetting(label: "Open Fixture Library".i18n, value: settings.paths.openFixtureLibrary, update: (path) {
             SettingsBloc bloc = context.read();
             bloc.add(UpdateSettings((settings) {
               settings.paths.openFixtureLibrary = path;
@@ -32,7 +33,7 @@ class PathSettings extends StatelessWidget {
               return settings;
             }));
           }),
-          PathSetting(label: "QLC+", value: settings.paths.qlcplus, update: (path) {
+          PathSetting(label: "QLC+".i18n, value: settings.paths.qlcplus, update: (path) {
             SettingsBloc bloc = context.read();
             bloc.add(UpdateSettings((settings) {
               settings.paths.qlcplus = path;
@@ -40,7 +41,7 @@ class PathSettings extends StatelessWidget {
               return settings;
             }));
           }),
-          PathSetting(label: "GDTF", value: settings.paths.gdtf, update: (path) {
+          PathSetting(label: "GDTF".i18n, value: settings.paths.gdtf, update: (path) {
             SettingsBloc bloc = context.read();
             bloc.add(UpdateSettings((settings) {
               settings.paths.gdtf = path;

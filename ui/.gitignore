@@ -48,3 +48,5 @@ app.*.map.json
 # FFI Generated code
 ffi.h
 lib/api/plugin/ffi/bindings.dart
+
+assets/locales/*.mo

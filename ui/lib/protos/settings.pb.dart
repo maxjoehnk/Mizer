@@ -42,6 +42,7 @@ class Settings extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Settings', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
     ..aOM<Hotkeys>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotkeys', subBuilder: Hotkeys.create)
     ..aOM<PathSettings>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'paths', subBuilder: PathSettings.create)
+    ..aOM<General>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'general', subBuilder: General.create)
     ..hasRequiredFields = false
   ;
 
@@ -49,6 +50,7 @@ class Settings extends $pb.GeneratedMessage {
   factory Settings({
     Hotkeys? hotkeys,
     PathSettings? paths,
+    General? general,
   }) {
     final _result = create();
     if (hotkeys != null) {
@@ -56,6 +58,9 @@ class Settings extends $pb.GeneratedMessage {
     }
     if (paths != null) {
       _result.paths = paths;
+    }
+    if (general != null) {
+      _result.general = general;
     }
     return _result;
   }
@@ -101,6 +106,17 @@ class Settings extends $pb.GeneratedMessage {
   void clearPaths() => clearField(2);
   @$pb.TagNumber(2)
   PathSettings ensurePaths() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  General get general => $_getN(2);
+  @$pb.TagNumber(3)
+  set general(General v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasGeneral() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearGeneral() => clearField(3);
+  @$pb.TagNumber(3)
+  General ensureGeneral() => $_ensure(2);
 }
 
 class PathSettings extends $pb.GeneratedMessage {
@@ -279,5 +295,52 @@ class Hotkeys extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.Map<$core.String, $core.String> get plan => $_getMap(6);
+}
+
+class General extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'General', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.settings'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'language')
+    ..hasRequiredFields = false
+  ;
+
+  General._() : super();
+  factory General({
+    $core.String? language,
+  }) {
+    final _result = create();
+    if (language != null) {
+      _result.language = language;
+    }
+    return _result;
+  }
+  factory General.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory General.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  General clone() => General()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  General copyWith(void Function(General) updates) => super.copyWith((message) => updates(message as General)) as General; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static General create() => General._();
+  General createEmptyInstance() => create();
+  static $pb.PbList<General> createRepeated() => $pb.PbList<General>();
+  @$core.pragma('dart2js:noInline')
+  static General getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<General>(create);
+  static General? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get language => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set language($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLanguage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLanguage() => clearField(1);
 }
 

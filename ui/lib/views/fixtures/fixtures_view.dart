@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
@@ -63,7 +64,7 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
           "clear": () => _clear(),
         },
         child: Panel(
-          label: "Fixtures",
+          label: "Fixtures".i18n,
           child: FixturesTable(
               fixtures: fixtures.fixtures,
               state: state,
@@ -88,10 +89,10 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
                   ? this.expandedIds.remove(id)
                   : this.expandedIds.add(id))),
           actions: [
-            PanelAction(hotkeyId: "select_all", label: "Select All", onClick: () => _selectAll(fixtures.fixtures)),
+            PanelAction(hotkeyId: "select_all", label: "Select All".i18n, onClick: () => _selectAll(fixtures.fixtures)),
             PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
             PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
-            PanelAction(hotkeyId: "clear", label: "Clear", onClick: _clear, disabled: trackedIds.isEmpty && selectedIds.isEmpty),
+            PanelAction(hotkeyId: "clear", label: "Clear".i18n, onClick: _clear, disabled: trackedIds.isEmpty && selectedIds.isEmpty),
           ],
         ),
       );

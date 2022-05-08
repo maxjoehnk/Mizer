@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
@@ -17,7 +18,7 @@ class MidiConnectionView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text("Device Profile:"),
+            Text("Device Profile:".i18n),
             Padding(padding: const EdgeInsets.all(8)),
             Expanded(
               child: MizerSelect(

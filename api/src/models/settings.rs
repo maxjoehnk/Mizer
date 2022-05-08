@@ -148,6 +148,7 @@ pub struct Settings {
     // message fields
     pub hotkeys: ::protobuf::SingularPtrField<Hotkeys>,
     pub paths: ::protobuf::SingularPtrField<PathSettings>,
+    pub general: ::protobuf::SingularPtrField<General>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -231,6 +232,39 @@ impl Settings {
     pub fn take_paths(&mut self) -> PathSettings {
         self.paths.take().unwrap_or_else(|| PathSettings::new())
     }
+
+    // .mizer.settings.General general = 3;
+
+
+    pub fn get_general(&self) -> &General {
+        self.general.as_ref().unwrap_or_else(|| <General as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_general(&mut self) {
+        self.general.clear();
+    }
+
+    pub fn has_general(&self) -> bool {
+        self.general.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_general(&mut self, v: General) {
+        self.general = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_general(&mut self) -> &mut General {
+        if self.general.is_none() {
+            self.general.set_default();
+        }
+        self.general.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_general(&mut self) -> General {
+        self.general.take().unwrap_or_else(|| General::new())
+    }
 }
 
 impl ::protobuf::Message for Settings {
@@ -241,6 +275,11 @@ impl ::protobuf::Message for Settings {
             }
         };
         for v in &self.paths {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.general {
             if !v.is_initialized() {
                 return false;
             }
@@ -257,6 +296,9 @@ impl ::protobuf::Message for Settings {
                 },
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.paths)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.general)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -278,6 +320,10 @@ impl ::protobuf::Message for Settings {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if let Some(ref v) = self.general.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -291,6 +337,11 @@ impl ::protobuf::Message for Settings {
         }
         if let Some(ref v) = self.paths.as_ref() {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.general.as_ref() {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -342,6 +393,11 @@ impl ::protobuf::Message for Settings {
                 |m: &Settings| { &m.paths },
                 |m: &mut Settings| { &mut m.paths },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<General>>(
+                "general",
+                |m: &Settings| { &m.general },
+                |m: &mut Settings| { &mut m.general },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Settings>(
                 "Settings",
                 fields,
@@ -360,6 +416,7 @@ impl ::protobuf::Clear for Settings {
     fn clear(&mut self) {
         self.hotkeys.clear();
         self.paths.clear();
+        self.general.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1164,37 +1221,201 @@ impl ::protobuf::reflect::ProtobufValue for Hotkeys {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct General {
+    // message fields
+    pub language: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a General {
+    fn default() -> &'a General {
+        <General as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl General {
+    pub fn new() -> General {
+        ::std::default::Default::default()
+    }
+
+    // string language = 1;
+
+
+    pub fn get_language(&self) -> &str {
+        &self.language
+    }
+    pub fn clear_language(&mut self) {
+        self.language.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_language(&mut self, v: ::std::string::String) {
+        self.language = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_language(&mut self) -> &mut ::std::string::String {
+        &mut self.language
+    }
+
+    // Take field
+    pub fn take_language(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.language, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for General {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.language)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.language.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.language);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.language.is_empty() {
+            os.write_string(1, &self.language)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> General {
+        General::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "language",
+                |m: &General| { &m.language },
+                |m: &mut General| { &mut m.language },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<General>(
+                "General",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static General {
+        static instance: ::protobuf::rt::LazyV2<General> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(General::new)
+    }
+}
+
+impl ::protobuf::Clear for General {
+    fn clear(&mut self) {
+        self.language.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for General {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for General {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"q\
-    \n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer.setting\
-    s.HotkeysR\x07hotkeys\x122\n\x05paths\x18\x02\x20\x01(\x0b2\x1c.mizer.se\
-    ttings.PathSettingsR\x05paths\"\xdd\x01\n\x0cPathSettings\x120\n\x14midi\
-    _device_profiles\x18\x01\x20\x01(\tR\x12midiDeviceProfiles\x125\n\x14ope\
-    n_fixture_library\x18\x02\x20\x01(\tH\0R\x12openFixtureLibrary\x88\x01\
-    \x01\x12\x1d\n\x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcplus\x88\x01\
-    \x01\x12\x17\n\x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\x01\x01B\x17\
-    \n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdtf\"\xe1\x06\n\
-    \x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.settings.Hotke\
-    ys.GlobalEntryR\x06global\x12>\n\x07layouts\x18\x02\x20\x03(\x0b2$.mizer\
-    .settings.Hotkeys.LayoutsEntryR\x07layouts\x12G\n\nprogrammer\x18\x03\
-    \x20\x03(\x0b2'.mizer.settings.Hotkeys.ProgrammerEntryR\nprogrammer\x128\
-    \n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer.settings.Hotkeys.NodesEntryR\
-    \x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\".mizer.settings.Hotkeys\
-    .PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\x20\x03(\x0b2&.mizer.set\
-    tings.Hotkeys.SequencerEntryR\tsequencer\x125\n\x04plan\x18\x07\x20\x03(\
-    \x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x1a9\n\x0bGlobalEntry\
-    \x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03key\
-    \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
-    lue:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03key\x18\x01\x20\x01\
-    (\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\
-    \x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
-    \n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nPatchEntry\
-    \x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
+    \n\x0esettings.proto\x12\x0emizer.settings\"\x11\n\x0fRequestSettings\"\
+    \xa4\x01\n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer\
+    .settings.HotkeysR\x07hotkeys\x122\n\x05paths\x18\x02\x20\x01(\x0b2\x1c.\
+    mizer.settings.PathSettingsR\x05paths\x121\n\x07general\x18\x03\x20\x01(\
+    \x0b2\x17.mizer.settings.GeneralR\x07general\"\xdd\x01\n\x0cPathSettings\
+    \x120\n\x14midi_device_profiles\x18\x01\x20\x01(\tR\x12midiDeviceProfile\
+    s\x125\n\x14open_fixture_library\x18\x02\x20\x01(\tH\0R\x12openFixtureLi\
+    brary\x88\x01\x01\x12\x1d\n\x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcpl\
+    us\x88\x01\x01\x12\x17\n\x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\
+    \x01\x01B\x17\n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdt\
+    f\"\xe1\x06\n\x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.s\
+    ettings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07layouts\x18\x02\x20\x03\
+    (\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07layouts\x12G\n\nprogramm\
+    er\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.ProgrammerEntryR\nprogr\
+    ammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer.settings.Hotkeys.Nod\
+    esEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\".mizer.settings\
+    .Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\x20\x03(\x0b2&.m\
+    izer.settings.Hotkeys.SequencerEntryR\tsequencer\x125\n\x04plan\x18\x07\
+    \x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x1a9\n\x0bGlob\
+    alEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\
+    \x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\
+    \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
+    R\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03key\x18\x01\
+    \x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x02\
+    8\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
+    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nPatchEntr\
+    y\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
     \x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEntry\x12\x10\n\x03ke\
     y\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05v\
     alue:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
-    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x012\xa0\
+    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"%\n\
+    \x07General\x12\x1a\n\x08language\x18\x01\x20\x01(\tR\x08language2\xa0\
     \x01\n\x0bSettingsApi\x12K\n\x0cLoadSettings\x12\x1f.mizer.settings.Requ\
     estSettings\x1a\x18.mizer.settings.Settings\"\0\x12D\n\x0cSaveSettings\
     \x12\x18.mizer.settings.Settings\x1a\x18.mizer.settings.Settings\"\0b\

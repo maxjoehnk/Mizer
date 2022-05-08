@@ -1,4 +1,3 @@
-pub use self::application::*;
 pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
@@ -8,14 +7,15 @@ pub use self::programmer::*;
 pub use self::sequencer::*;
 pub use self::transport::*;
 use anyhow::Error;
+pub use event::application::*;
 pub use event::connections::*;
 pub use event::session::*;
+pub use method::application::*;
 pub use method::connections::*;
 pub use method::plans::*;
 pub use method::session::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
-mod application;
 mod effects;
 mod event;
 mod fixtures;

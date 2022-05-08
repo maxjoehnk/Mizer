@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
@@ -30,16 +31,16 @@ class AddControlPopup extends StatelessWidget {
 
     return PopupMenu<dynamic>(
         categories: [
-          PopupCategory(label: "New", items: [
-            PopupItem(Node_NodeType.Button, "Button"),
-            PopupItem(Node_NodeType.Fader, "Fader"),
+          PopupCategory(label: "New".i18n, items: [
+            PopupItem(Node_NodeType.Button, "Button".i18n),
+            PopupItem(Node_NodeType.Fader, "Fader".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
-                label: "Control Nodes",
+                label: "Control Nodes".i18n,
                 items: controlNodes.map((node) => PopupItem(node, node.path)).toList()),
           if (sequenceNodes.isNotEmpty)
-            PopupCategory(label: "Sequences", items: sequenceNodes.map((e) => PopupItem(e.node, e.sequence.name)).toList())
+            PopupCategory(label: "Sequences".i18n, items: sequenceNodes.map((e) => PopupItem(e.node, e.sequence.name)).toList())
         ],
         onSelect: (value) {
           if (value is Node_NodeType) {

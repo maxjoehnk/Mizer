@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/plugin/app.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -34,17 +35,17 @@ class ApplicationMenu extends StatelessWidget {
       builder: (context, state) => MenuBar(
           child: child,
           menu: Menu(items: [
-            SubMenu(title: "File", children: [
+            SubMenu(title: "File".i18n, children: [
               MenuItem(
-                  label: "New Project",
+                  label: "New Project".i18n,
                   action: () => _newProject(context),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyN)),
               MenuItem(
-                  label: "Open Project",
+                  label: "Open Project".i18n,
                   action: () => _openProject(context, context.read()),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyO)),
               SubMenu(
-                title: "Open Recent",
+                title: "Open Recent".i18n,
                 children: state.projectHistory
                     .map((history) => MenuItem(
                         label: history.split(io.Platform.pathSeparator).last,
@@ -53,36 +54,36 @@ class ApplicationMenu extends StatelessWidget {
               ),
               MenuItem(
                   disabled: state.filePath.isEmpty,
-                  label: 'Save Project',
+                  label: 'Save Project'.i18n,
                   action: () => context.read<SessionApi>().saveProject(),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyS)),
               MenuItem(
-                  label: 'Save Project as',
+                  label: 'Save Project as'.i18n,
                   action: () => _saveProjectAs(context, context.read()),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
                       LogicalKeyboardKey.keyS)),
               MenuDivider(),
               MenuItem(
-                  label: 'Preferences',
+                  label: 'Preferences'.i18n,
                   action: () {
                     return Window.create(PreferencesWindow.toInitData())
                       .then((window) => window.showModal());
                   }),
               MenuItem(
-                  label: "Exit",
+                  label: "Exit".i18n,
                   action: () => context.read<ApplicationPluginApi>().exit(),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyQ))
             ]),
             SubMenu(
-                title: 'View',
+                title: 'View'.i18n,
                 children: routes
                     .mapEnumerated((route, index) =>
                         MenuActionItem(label: route.label, action: OpenViewIntent(index)))
                     .toList()),
             if (!context.platform.isStandalone)
-              SubMenu(title: 'Window', children: [
+              SubMenu(title: 'Window'.i18n, children: [
                 MenuItem(
-                    label: 'New Window',
+                    label: 'New Window'.i18n,
                     action: () => Window.create({}).then((window) => window.show()))
               ])
           ])),
@@ -95,7 +96,7 @@ class ApplicationMenu extends StatelessWidget {
   }
 
   Future<void> _openProject(BuildContext context, SessionApi api) async {
-    final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
+    final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: ['yml']);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
     if (file == null) {
       return;
@@ -111,7 +112,7 @@ class ApplicationMenu extends StatelessWidget {
   }
 
   Future<void> _saveProjectAs(BuildContext context, SessionApi api) async {
-    final typeGroup = XTypeGroup(label: 'Projects', extensions: ['yml']);
+    final typeGroup = XTypeGroup(label: 'Projects'.i18n, extensions: ['yml']);
     final path = await getSavePath(acceptedTypeGroups: [typeGroup]);
     if (path == null) {
       return;

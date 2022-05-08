@@ -13,7 +13,7 @@ class MidiMonitorWindow extends WindowState {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(child: WindowLayoutProbe(child: Scaffold(body: MidiMonitor(connection))));
+    return BaseWindowState(child: WindowLayoutProbe(child: LanguageSwitcher(child: Scaffold(body: MidiMonitor(connection)))));
   }
 
   @override

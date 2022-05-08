@@ -16,4 +16,10 @@ class SettingsGrpcApi implements SettingsApi {
   Future<void> saveSettings(Settings settings) {
     return client.saveSettings(settings);
   }
+
+  @override
+  Stream<Settings> watchSettings() {
+    // TODO: implement observeSettings
+    throw UnimplementedError();
+  }
 }

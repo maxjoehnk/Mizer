@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/extensions/color_extensions.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
 import 'package:mizer/protos/nodes.pb.dart';
@@ -39,10 +40,10 @@ class LayoutControlView extends StatelessWidget {
 
     return ContextMenu(
       menu: Menu(items: [
-        MenuItem(label: "Rename", action: () => _renameControl(context)),
-        MenuItem(label: "Edit", action: () => _editControl(context)),
-        MenuItem(label: "Move", action: () => onMove()),
-        MenuItem(label: "Delete", action: () => _deleteControl(context)),
+        MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
+        MenuItem(label: "Edit".i18n, action: () => _editControl(context)),
+        MenuItem(label: "Move".i18n, action: () => onMove()),
+        MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
       ]),
       child: Padding(
         padding: const EdgeInsets.all(2.0),

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
@@ -38,17 +39,17 @@ class FixturesTable extends StatelessWidget {
       child: MizerTable(columnWidths: {
         0: FixedColumnWidth(64),
         1: FixedColumnWidth(64),
-      }, columns: const [
+      }, columns: [
         Text(""),
-        Text("Id"),
-        Text("Name"),
-        Text("Intensity"),
-        Text("Red"),
-        Text("Green"),
-        Text("Blue"),
-        Text("Pan"),
-        Text("Tilt"),
-        Text("Gobo"),
+        Text("Id".i18n),
+        Text("Name".i18n),
+        Text("Intensity".i18n),
+        Text("Red".i18n),
+        Text("Green".i18n),
+        Text("Blue".i18n),
+        Text("Pan".i18n),
+        Text("Tilt".i18n),
+        Text("Gobo".i18n),
       ], rows: rows),
     );
   }
@@ -79,7 +80,7 @@ class FixturesTable extends StatelessWidget {
         fixture.children.isEmpty ? Container() : MizerIconButton(
           onClick: () => onExpand(fixture.id),
           icon: expanded ? Icons.arrow_drop_down : Icons.arrow_right,
-          label: "Expand",
+          label: "Expand".i18n,
         ),
         Text(fixtureId.toDisplay(), style: textStyle),
         Text(fixture.name, style: textStyle),

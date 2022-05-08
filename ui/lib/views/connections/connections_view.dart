@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
@@ -28,7 +29,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   @override
   Widget build(BuildContext context) {
     return Panel(
-        label: "Connections",
+        label: "Connections".i18n,
         child: ListView.builder(
             itemCount: connections.length,
             itemBuilder: (context, index) {
@@ -53,8 +54,8 @@ class _ConnectionsViewState extends State<ConnectionsView> {
               );
             }),
         actions: [
-          PanelAction(label: "Add sACN", onClick: _addSacn),
-          PanelAction(label: "Add Artnet", onClick: _addArtnet),
+          PanelAction(label: "Add sACN".i18n, onClick: _addSacn),
+          PanelAction(label: "Add Artnet".i18n, onClick: _addArtnet),
         ]);
   }
 
@@ -81,17 +82,17 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return [
         MizerIconButton(
             icon: MdiIcons.chartBar,
-            label: "Monitor",
+            label: "Monitor".i18n,
             onClick: () => _showDmxMonitor(context, connection))
       ];
     }
     if (connection.hasOsc()) {
-      return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor")];
+      return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor".i18n)];
     }
     if (connection.hasMidi()) {
       return [MizerIconButton(
           icon: MdiIcons.formatListBulleted,
-          label: "Monitor",
+          label: "Monitor".i18n,
           onClick: () => _showMidiMonitor(context, connection))
       ];
     }

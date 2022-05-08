@@ -40,3 +40,6 @@ attach:
 
 widgetbook:
 	flutter run -t widgetbook/main.dart
+
+i18n:
+	flutter pub run i18n_extension:getstrings

@@ -1,3 +1,6 @@
+[general]
+language = "en"
+
 [paths]
 midi_device_profiles = "components/connections/protocols/midi/device-profiles/profiles"
 

@@ -8,7 +8,7 @@ final windowClass = 'PreferencesWindow';
 class PreferencesWindow extends WindowState {
   @override
   Widget build(BuildContext context) {
-    return BaseWindowState(child: WindowLayoutProbe(child: Scaffold(body: PreferencesView())));
+    return BaseWindowState(child: WindowLayoutProbe(child: LanguageSwitcher(child: Scaffold(body: PreferencesView()))));
   }
 
   @override

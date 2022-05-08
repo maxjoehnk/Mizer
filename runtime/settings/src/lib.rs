@@ -9,6 +9,7 @@ const DEFAULT_SETTINGS: &str = include_str!("../settings.toml");
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Settings {
+    pub general: General,
     pub hotkeys: Hotkeys,
     pub paths: FilePaths,
 }
@@ -17,6 +18,11 @@ pub struct Settings {
 pub struct SettingsManager {
     pub settings: Settings,
     pub file_path: Option<PathBuf>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct General {
+    pub language: String,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]

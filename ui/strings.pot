@@ -1,101 +1,53 @@
-#: ./lib/menu.dart:38
-msgid "File"
+#: ./lib/views/connections/dialogs/add_artnet_connection.dart:26
+msgid "Add Artnet Connection"
 msgstr ""
 
-#: ./lib/menu.dart:40
-msgid "New Project"
+#: ./lib/views/connections/dialogs/add_sacn_connection.dart:28
+msgid "Name is required"
 msgstr ""
 
-#: ./lib/menu.dart:44
-msgid "Open Project"
+#: ./lib/views/fixtures/fixtures_table.dart:45
+msgid "Name"
 msgstr ""
 
-#: ./lib/menu.dart:48
-msgid "Open Recent"
+#: ./lib/views/connections/dialogs/add_artnet_connection.dart:44
+msgid "Host is required"
 msgstr ""
 
-#: ./lib/menu.dart:57
-msgid "Save Project"
+#: ./lib/views/connections/dialogs/add_artnet_connection.dart:48
+msgid "Host"
 msgstr ""
 
-#: ./lib/menu.dart:61
-msgid "Save Project as"
+#: ./lib/views/connections/dialogs/add_artnet_connection.dart:55
+msgid "Port is required"
 msgstr ""
 
-#: ./lib/menu.dart:67
-msgid "Preferences"
+#: ./lib/views/connections/dialogs/add_artnet_connection.dart:59
+msgid "Port"
 msgstr ""
 
-#: ./lib/menu.dart:73
-msgid "Exit"
+#: ./lib/views/preferences/preferences.dart:30
+msgid "Cancel"
 msgstr ""
 
-#: ./lib/menu.dart:78
-msgid "View"
-msgstr ""
-
-#: ./lib/menu.dart:84
-msgid "Window"
-msgstr ""
-
-#: ./lib/menu.dart:86
-msgid "New Window"
-msgstr ""
-
-#: ./lib/menu.dart:115
-msgid "Projects"
-msgstr ""
-
-#: ./lib/navigation.dart:39
-msgid "Effects"
-msgstr ""
-
-#: ./lib/views/effects/effects_view.dart:45
-msgid "Add Effect"
-msgstr ""
-
-#: ./lib/views/effects/effects_view.dart:83
-msgid "Frames"
-msgstr ""
-
-#: ./lib/views/effects/effects_view.dart:206
-msgid "Movement"
-msgstr ""
-
-#: ./lib/navigation.dart:43
-msgid "Connections"
-msgstr ""
-
-#: ./lib/views/connections/connections_view.dart:57
-msgid "Add sACN"
-msgstr ""
-
-#: ./lib/views/connections/connections_view.dart:58
-msgid "Add Artnet"
-msgstr ""
-
-#: ./lib/views/connections/connections_view.dart:95
-msgid "Monitor"
+#: ./lib/views/connections/dialogs/add_sacn_connection.dart:45
+msgid "Create"
 msgstr ""
 
 #: ./lib/views/connections/dialogs/add_sacn_connection.dart:21
 msgid "Add Sacn Connection"
 msgstr ""
 
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:33
-msgid "Name is required"
+#: ./lib/views/connections/dialogs/dmx_monitor.dart:83
+msgid "Universes"
 msgstr ""
 
-#: ./lib/views/layout/dialogs/rename_control_dialog.dart:24
-msgid "Name"
+#: ./lib/views/connections/dialogs/dmx_monitor.dart:130
+msgid "DMX"
 msgstr ""
 
-#: ./lib/views/layout/dialogs/delete_control_dialog.dart:19
-msgid "Cancel"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:72
-msgid "Create"
+#: ./lib/navigation.dart:47
+msgid "History"
 msgstr ""
 
 #: ./lib/views/connections/dialogs/midi_monitor.dart:61
@@ -146,36 +98,8 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: ./lib/views/connections/dialogs/dmx_monitor.dart:83
-msgid "Universes"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/dmx_monitor.dart:130
-msgid "DMX"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/dmx_monitor.dart:162
-msgid "History"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:26
-msgid "Add Artnet Connection"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:44
-msgid "Host is required"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:48
-msgid "Host"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:55
-msgid "Port is required"
-msgstr ""
-
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:59
-msgid "Port"
+#: ./lib/views/connections/types/midi_connection.dart:21
+msgid "Device Profile:"
 msgstr ""
 
 #: ./lib/views/connections/types/prodjlink_connection.dart:93
@@ -198,76 +122,112 @@ msgstr ""
 msgid "BPM"
 msgstr ""
 
-#: ./lib/views/connections/types/midi_connection.dart:21
-msgid "Device Profile:"
-msgstr ""
-
-#: ./lib/views/preferences/preferences.dart:22
-msgid "General"
-msgstr ""
-
-#: ./lib/views/preferences/preferences.dart:23
-msgid "File Paths"
-msgstr ""
-
-#: ./lib/views/preferences/preferences.dart:24
-msgid "Hotkeys"
-msgstr ""
-
-#: ./lib/views/preferences/preferences.dart:31
-msgid "Save"
-msgstr ""
-
-#: ./lib/views/preferences/file_paths.dart:19
-msgid "Midi Device Profiles"
-msgstr ""
-
-#: ./lib/views/preferences/file_paths.dart:27
-msgid "Fixture Libraries"
-msgstr ""
-
-#: ./lib/views/preferences/file_paths.dart:28
-msgid "Open Fixture Library"
-msgstr ""
-
-#: ./lib/views/preferences/file_paths.dart:36
-msgid "QLC+"
-msgstr ""
-
-#: ./lib/views/preferences/file_paths.dart:44
-msgid "GDTF"
-msgstr ""
-
-#: ./lib/views/preferences/general.dart:17
-msgid "Language"
-msgstr ""
-
-#: ./lib/views/preferences/hotkeys.dart:19
-msgid "Global"
-msgstr ""
-
-#: ./lib/views/preferences/hotkeys.dart:20
-msgid "Layouts"
-msgstr ""
-
-#: ./lib/views/preferences/hotkeys.dart:21
-msgid "Plan"
-msgstr ""
-
-#: ./lib/views/preferences/hotkeys.dart:22
-msgid "Programmer"
-msgstr ""
-
-#: ./lib/navigation.dart:35
-msgid "Nodes"
-msgstr ""
-
 #: ./lib/navigation.dart:44
-msgid "Patch"
+msgid "Connections"
 msgstr ""
 
-#: ./lib/navigation.dart:36
-msgid "Sequencer"
+#: ./lib/views/connections/connections_view.dart:57
+msgid "Add sACN"
+msgstr ""
+
+#: ./lib/views/connections/connections_view.dart:58
+msgid "Add Artnet"
+msgstr ""
+
+#: ./lib/views/connections/connections_view.dart:95
+msgid "Monitor"
+msgstr ""
+
+#: ./lib/views/layout/dialogs/delete_control_dialog.dart:13
+msgid "Delete Control"
+msgstr ""
+
+#: ./lib/views/layout/layout_view.dart:98
+msgid "Delete"
+msgstr ""
+
+#: ./lib/views/layout/dialogs/edit_control_dialog.dart:24
+msgid "Configure Control"
+msgstr ""
+
+#: ./lib/views/layout/dialogs/edit_control_dialog.dart:28
+msgid "Confirm"
+msgstr ""
+
+#: ./lib/views/layout/dialogs/edit_control_dialog.dart:35
+msgid "Color"
+msgstr ""
+
+#: ./lib/views/layout/dialogs/rename_control_dialog.dart:15
+msgid "Rename Control"
+msgstr ""
+
+#: ./lib/views/layout/layout_view.dart:132
+msgid "Rename"
+msgstr ""
+
+#: ./lib/views/layout/add_control_popup.dart:34
+msgid "New"
+msgstr ""
+
+#: ./lib/views/layout/add_control_popup.dart:35
+msgid "Button"
+msgstr ""
+
+#: ./lib/views/layout/add_control_popup.dart:36
+msgid "Fader"
+msgstr ""
+
+#: ./lib/views/layout/add_control_popup.dart:40
+msgid "Control Nodes"
+msgstr ""
+
+#: ./lib/views/layout/add_control_popup.dart:43
+msgid "Sequences"
+msgstr ""
+
+#: ./lib/menu.dart:77
+msgid "Edit"
+msgstr ""
+
+#: ./lib/views/layout/control.dart:45
+msgid "Move"
+msgstr ""
+
+#: ./lib/navigation.dart:33
+msgid "Layout"
+msgstr ""
+
+#: ./lib/views/layout/layout_view.dart:87
+msgid "Delete Layout"
+msgstr ""
+
+#: ./lib/views/layout/layout_view.dart:128
+msgid "Rename Layout"
+msgstr ""
+
+#: ./lib/views/layout/layout_view.dart:128
+msgid "Add Layout"
+msgstr ""
+
+#: ./lib/views/layout/layout_view.dart:132
+msgid "Add"
+msgstr ""
+
+#: ./lib/navigation.dart:40
+msgid "Effects"
+msgstr ""
+
+#: ./lib/views/effects/effects_view.dart:45
+msgid "Add Effect"
+msgstr ""
+
+#: ./lib/views/effects/effects_view.dart:83
+msgid "Frames"
+msgstr ""
+
+#: ./lib/views/effects/effects_view.dart:206
+msgid "Movement"
 msgstr ""
 
 #: ./lib/views/fixtures/fixtures_table.dart:44
@@ -306,7 +266,7 @@ msgstr ""
 msgid "Expand"
 msgstr ""
 
-#: ./lib/navigation.dart:37
+#: ./lib/navigation.dart:38
 msgid "Fixtures"
 msgstr ""
 
@@ -318,102 +278,150 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: ./lib/navigation.dart:32
-msgid "Layout"
+#: ./lib/views/preferences/file_paths.dart:19
+msgid "Midi Device Profiles"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:43
-msgid "Rename"
+#: ./lib/views/preferences/file_paths.dart:27
+msgid "Fixture Libraries"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:46
-msgid "Delete"
+#: ./lib/views/preferences/file_paths.dart:28
+msgid "Open Fixture Library"
 msgstr ""
 
-#: ./lib/views/layout/layout_view.dart:87
-msgid "Delete Layout"
+#: ./lib/views/preferences/file_paths.dart:36
+msgid "QLC+"
 msgstr ""
 
-#: ./lib/views/layout/layout_view.dart:128
-msgid "Rename Layout"
+#: ./lib/views/preferences/file_paths.dart:44
+msgid "GDTF"
 msgstr ""
 
-#: ./lib/views/layout/layout_view.dart:128
-msgid "Add Layout"
+#: ./lib/views/preferences/general.dart:18
+msgid "Language"
 msgstr ""
 
-#: ./lib/views/layout/layout_view.dart:132
-msgid "Add"
+#: ./lib/views/preferences/hotkeys.dart:19
+msgid "Global"
 msgstr ""
 
-#: ./lib/views/layout/add_control_popup.dart:34
-msgid "New"
+#: ./lib/views/preferences/hotkeys.dart:20
+msgid "Layouts"
 msgstr ""
 
-#: ./lib/views/layout/add_control_popup.dart:35
-msgid "Button"
+#: ./lib/views/preferences/hotkeys.dart:21
+msgid "Plan"
 msgstr ""
 
-#: ./lib/views/layout/add_control_popup.dart:36
-msgid "Fader"
+#: ./lib/views/preferences/hotkeys.dart:22
+msgid "Programmer"
 msgstr ""
 
-#: ./lib/views/layout/add_control_popup.dart:40
-msgid "Control Nodes"
-msgstr ""
-
-#: ./lib/views/layout/add_control_popup.dart:43
-msgid "Sequences"
-msgstr ""
-
-#: ./lib/views/layout/dialogs/rename_control_dialog.dart:15
-msgid "Rename Control"
-msgstr ""
-
-#: ./lib/views/layout/dialogs/delete_control_dialog.dart:13
-msgid "Delete Control"
-msgstr ""
-
-#: ./lib/views/layout/dialogs/edit_control_dialog.dart:24
-msgid "Configure Control"
-msgstr ""
-
-#: ./lib/views/layout/dialogs/edit_control_dialog.dart:28
-msgid "Confirm"
-msgstr ""
-
-#: ./lib/views/layout/dialogs/edit_control_dialog.dart:35
-msgid "Color"
-msgstr ""
-
-#: ./lib/views/layout/control.dart:44
-msgid "Edit"
-msgstr ""
-
-#: ./lib/views/layout/control.dart:45
-msgid "Move"
-msgstr ""
-
-#: ./lib/navigation.dart:33
-msgid "2D Plan"
-msgstr ""
-
-#: ./lib/navigation.dart:34
-msgid "PreViz"
-msgstr ""
-
-#: ./lib/navigation.dart:38
-msgid "Presets"
-msgstr ""
-
-#: ./lib/navigation.dart:41
-msgid "Media"
-msgstr ""
-
-#: ./lib/navigation.dart:42
-msgid "Surfaces"
+#: ./lib/navigation.dart:36
+msgid "Nodes"
 msgstr ""
 
 #: ./lib/navigation.dart:45
+msgid "Patch"
+msgstr ""
+
+#: ./lib/navigation.dart:37
+msgid "Sequencer"
+msgstr ""
+
+#: ./lib/views/preferences/preferences.dart:22
+msgid "General"
+msgstr ""
+
+#: ./lib/views/preferences/preferences.dart:23
+msgid "File Paths"
+msgstr ""
+
+#: ./lib/views/preferences/preferences.dart:24
+msgid "Hotkeys"
+msgstr ""
+
+#: ./lib/views/preferences/preferences.dart:31
+msgid "Save"
+msgstr ""
+
+#: ./lib/menu.dart:38
+msgid "File"
+msgstr ""
+
+#: ./lib/menu.dart:40
+msgid "New Project"
+msgstr ""
+
+#: ./lib/menu.dart:44
+msgid "Open Project"
+msgstr ""
+
+#: ./lib/menu.dart:48
+msgid "Open Recent"
+msgstr ""
+
+#: ./lib/menu.dart:57
+msgid "Save Project"
+msgstr ""
+
+#: ./lib/menu.dart:61
+msgid "Save Project as"
+msgstr ""
+
+#: ./lib/menu.dart:67
+msgid "Preferences"
+msgstr ""
+
+#: ./lib/menu.dart:73
+msgid "Exit"
+msgstr ""
+
+#: ./lib/menu.dart:79
+msgid "Undo"
+msgstr ""
+
+#: ./lib/menu.dart:86
+msgid "Redo"
+msgstr ""
+
+#: ./lib/menu.dart:95
+msgid "View"
+msgstr ""
+
+#: ./lib/menu.dart:101
+msgid "Window"
+msgstr ""
+
+#: ./lib/menu.dart:103
+msgid "New Window"
+msgstr ""
+
+#: ./lib/menu.dart:132
+msgid "Projects"
+msgstr ""
+
+#: ./lib/navigation.dart:34
+msgid "2D Plan"
+msgstr ""
+
+#: ./lib/navigation.dart:35
+msgid "PreViz"
+msgstr ""
+
+#: ./lib/navigation.dart:39
+msgid "Presets"
+msgstr ""
+
+#: ./lib/navigation.dart:42
+msgid "Media"
+msgstr ""
+
+#: ./lib/navigation.dart:43
+msgid "Surfaces"
+msgstr ""
+
+#: ./lib/navigation.dart:46
 msgid "Session"
 msgstr ""

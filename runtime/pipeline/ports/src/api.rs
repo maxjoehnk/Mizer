@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::any::Any;
 use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
@@ -142,5 +143,15 @@ impl Color {
 impl From<(f64, f64, f64)> for Color {
     fn from((r, g, b): (f64, f64, f64)) -> Self {
         Self::rgb(r, g, b)
+    }
+}
+
+#[allow(clippy::derive_hash_xor_eq)]
+impl Hash for Color {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.red.to_bits().hash(state);
+        self.green.to_bits().hash(state);
+        self.blue.to_bits().hash(state);
+        self.alpha.to_bits().hash(state);
     }
 }

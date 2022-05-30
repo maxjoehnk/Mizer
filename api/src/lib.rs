@@ -1,13 +1,11 @@
 use std::collections::HashMap;
 
 use mizer_clock::{ClockSnapshot, ClockState};
+use mizer_command_executor::SendableCommand;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, MidiEvent};
-use mizer_fixtures::FixtureId;
-use mizer_layouts::{ControlConfig, Layout};
-use mizer_layouts::{ControlPosition, ControlSize};
+use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
-use mizer_nodes::Node;
+use mizer_node::{NodeLink, NodePath, PortId};
 use mizer_plan::Plan;
 use mizer_runtime::NodeDescriptor;
 use mizer_session::SessionState;
@@ -20,58 +18,25 @@ mod mappings;
 pub mod models;
 
 pub trait RuntimeApi: Clone + Send + Sync {
+    fn run_command<'a, T: SendableCommand<'a> + 'static>(
+        &self,
+        command: T,
+    ) -> anyhow::Result<T::Result>;
+
+    fn undo(&self) -> anyhow::Result<()>;
+    fn redo(&self) -> anyhow::Result<()>;
+
+    fn observe_history(&self) -> Subscriber<(Vec<(String, u128)>, usize)>;
+
     fn nodes(&self) -> Vec<NodeDescriptor>;
 
     fn links(&self) -> Vec<NodeLink>;
 
     fn layouts(&self) -> Vec<Layout>;
 
-    fn add_layout(&self, name: String);
-
-    fn remove_layout(&self, id: String);
-
-    fn rename_layout(&self, id: String, name: String);
-
-    fn add_layout_control(
-        &self,
-        layout_id: String,
-        path: NodePath,
-        position: ControlPosition,
-        size: ControlSize,
-    );
-    fn delete_layout_control(&self, layout_id: String, control_id: String);
-    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(
-        &self,
-        layout_id: String,
-        control_id: String,
-        update: F,
-    );
-
     fn plans(&self) -> Vec<Plan>;
-    fn add_plan(&self, name: String);
-    fn remove_plan(&self, id: String);
-    fn rename_plan(&self, id: String, name: String);
-    fn add_fixtures_to_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>);
-    fn move_fixtures_in_plan(
-        &self,
-        plan_id: String,
-        fixture_ids: Vec<FixtureId>,
-        offset: (i32, i32),
-    );
-
-    fn add_node(
-        &self,
-        node_type: NodeType,
-        designer: NodeDesigner,
-    ) -> anyhow::Result<NodeDescriptor<'_>>;
-
-    fn add_node_for_fixture(&self, fixture_id: u32) -> anyhow::Result<NodeDescriptor<'_>>;
-    fn add_node_for_sequence(&self, sequence_id: u32) -> anyhow::Result<NodeDescriptor<'_>>;
-    fn add_node_for_group(&self, group_id: u32) -> anyhow::Result<NodeDescriptor<'_>>;
 
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()>;
-
-    fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()>;
 
     fn get_node_history_ref(
         &self,
@@ -79,11 +44,6 @@ pub trait RuntimeApi: Clone + Send + Sync {
     ) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>>;
 
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor>;
-    fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()>;
-    fn update_node_position(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()>;
-    fn show_node(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()>;
-    fn hide_node(&self, path: NodePath) -> anyhow::Result<()>;
-    fn delete_node(&self, path: NodePath) -> anyhow::Result<()>;
 
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()>;
     fn set_bpm(&self, bpm: f64) -> anyhow::Result<()>;

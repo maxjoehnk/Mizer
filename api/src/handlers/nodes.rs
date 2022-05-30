@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::RuntimeApi;
+use mizer_command_executor::*;
 use mizer_node::NodePath;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
@@ -59,16 +60,19 @@ impl<R: RuntimeApi> NodesHandler<R> {
             hidden: false,
         };
 
-        let node = self
-            .runtime
-            .add_node(request.field_type.into(), designer)
-            .unwrap();
+        let cmd = AddNodeCommand {
+            designer: designer.clone(),
+            node_type: request.field_type.into(),
+            node: None,
+        };
+        let descriptor = self.runtime.run_command(cmd).unwrap();
 
-        node.into()
+        descriptor.into()
     }
 
     pub fn add_link(&self, link: NodeConnection) -> anyhow::Result<()> {
-        self.runtime.link_nodes(link.into())?;
+        self.runtime
+            .run_command(AddLinkCommand { link: link.into() })?;
 
         Ok(())
     }
@@ -88,33 +92,42 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {
-        self.runtime.update_node(
-            request.path.into(),
-            request.config.unwrap().field_type.unwrap().into(),
-        )?;
+        self.runtime.run_command(UpdateNodeCommand {
+            path: request.path.into(),
+            config: request.config.unwrap().field_type.unwrap().into(),
+        })?;
 
         Ok(())
     }
 
     pub fn move_node(&self, request: MoveNodeRequest) -> anyhow::Result<()> {
-        self.runtime
-            .update_node_position(request.path.into(), request.position.unwrap().into())?;
+        self.runtime.run_command(MoveNodeCommand {
+            path: request.path.into(),
+            position: request.position.unwrap().into(),
+        })?;
 
         Ok(())
     }
 
     pub fn show_node(&self, request: ShowNodeRequest) -> anyhow::Result<()> {
-        self.runtime
-            .show_node(request.path.into(), request.position.unwrap().into())?;
+        self.runtime.run_command(ShowNodeCommand {
+            path: request.path.into(),
+            position: request.position.unwrap().into(),
+        })?;
 
         Ok(())
     }
 
     pub fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
-        self.runtime.hide_node(path)
+        self.runtime
+            .run_command(HideNodeCommand { path: path.into() })?;
+
+        Ok(())
     }
 
     pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
-        self.runtime.delete_node(path)
+        self.runtime.run_command(DeleteNodeCommand { path })?;
+
+        Ok(())
     }
 }

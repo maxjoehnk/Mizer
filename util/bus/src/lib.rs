@@ -58,6 +58,7 @@ impl<T: Clone + Send + Sync + 'static> MessageBus<T> {
         let mut senders = self.senders.write();
         let (tx, rx) = flume::unbounded();
         if let Some(last_event) = self.last_event.read().deref() {
+            log::trace!("Informing about last event");
             tx.send(last_event.clone()).unwrap();
         }
         let sender = Arc::new(tx);

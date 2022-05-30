@@ -282,3 +282,13 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
         }
     }
 }
+
+impl From<StoreRequest_Mode> for mizer_command_executor::StoreMode {
+    fn from(mode: StoreRequest_Mode) -> Self {
+        match mode {
+            StoreRequest_Mode::Merge => Self::Merge,
+            StoreRequest_Mode::AddCue => Self::AddCue,
+            StoreRequest_Mode::Overwrite => Self::Overwrite,
+        }
+    }
+}

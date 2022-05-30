@@ -1,0 +1,9 @@
+[package]
+name = "mizer-commander"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+mizer-injector = { path = "../injector" }
+anyhow = "1"

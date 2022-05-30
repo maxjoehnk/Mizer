@@ -15,6 +15,7 @@ struct InnerSubscriber {
 
 impl<E: Send + Sync + protobuf::Message> Subscriber<E> for EventSinkSubscriber {
     fn next(&self, event: E) {
+        log::trace!("send msg {:?}", event);
         if let Ok(msg) = event.write_to_bytes() {
             self.run_in_run_loop(move |inner| inner.send(msg));
         }
@@ -51,7 +52,11 @@ impl EventSinkSubscriber {
             if let Ok(capsule) = capsule {
                 if let Some(inner) = capsule.get_ref() {
                     cb(inner);
+                } else {
+                    log::error!("Could not acquire subscriber")
                 }
+            } else {
+                log::error!("Could not acquire capsule lock")
             }
         });
     }

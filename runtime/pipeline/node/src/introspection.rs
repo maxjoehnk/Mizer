@@ -1,5 +1,6 @@
 use crate::PreviewType;
 use serde::{Deserialize, Serialize};
+use std::hash::{Hash, Hasher};
 
 #[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct NodeDetails {
@@ -7,7 +8,7 @@ pub struct NodeDetails {
     pub preview_type: PreviewType,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize, Hash)]
 pub enum NodeType {
     Fader,
     Button,
@@ -42,6 +43,9 @@ pub enum NodeType {
     Threshold,
     ColorRgb,
     ColorHsv,
+    // TODO: should only be available in tests
+    #[doc(hidden)]
+    TestSink,
 }
 
 impl NodeType {
@@ -82,6 +86,7 @@ impl NodeType {
             Threshold => "threshold",
             ColorHsv => "color-hsv",
             ColorRgb => "color-rgb",
+            TestSink => "test-sink",
         }
         .to_string()
     }
@@ -95,8 +100,23 @@ pub struct NodeDesigner {
     pub hidden: bool,
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[allow(clippy::derive_hash_xor_eq)]
+impl Hash for NodeDesigner {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        state.write(format!("{:?}", self).as_bytes());
+    }
+}
+
+#[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq)]
 pub struct NodePosition {
     pub x: f64,
     pub y: f64,
+}
+
+#[allow(clippy::derive_hash_xor_eq)]
+impl Hash for NodePosition {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.x.to_bits().hash(state);
+        self.y.to_bits().hash(state);
+    }
 }

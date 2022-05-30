@@ -22,6 +22,8 @@ media_view = "f9"
 surfaces_view = "f10"
 connections_view = "f11"
 fixture_patch_view = "f12"
+undo = "ctrl+z"
+redo = "ctrl+shift+z"
 
 [hotkeys.layouts]
 add_layout = "alt+a"

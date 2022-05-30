@@ -8,6 +8,7 @@ import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
+import 'package:mizer/views/history/history_view.dart';
 import 'package:mizer/views/plan/plan_view.dart';
 import 'package:mizer/views/presets/presets_view.dart';
 import 'package:mizer/views/programmer/programmer_view.dart';
@@ -43,6 +44,7 @@ List<Route> routes = [
   Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
   Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
+  Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
 ];
 
 Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);

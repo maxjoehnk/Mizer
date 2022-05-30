@@ -20,6 +20,7 @@ enum View {
   Surfaces,
   FixturePatch,
   Session,
+  History,
 }
 
 const ViewHotkeyLabels = {
@@ -36,6 +37,7 @@ const ViewHotkeyLabels = {
   View.Surfaces: "surfaces_view",
   View.FixturePatch: "fixture_patch_view",
   View.Session: "session_view",
+  View.History: "history_view",
 };
 
 extension ViewToHotkey on View {

@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::hash::{Hash, Hasher};
 use std::sync::Arc;
 
 use dashmap::DashMap;
@@ -8,6 +9,7 @@ use postage::watch;
 
 use futures::stream::Stream;
 use indexmap::{IndexMap, IndexSet};
+use serde::{Deserialize, Serialize};
 
 use crate::definition::{
     ColorChannel, ColorGroup, FixtureControl, FixtureControlValue, FixtureFaderControl,
@@ -228,11 +230,19 @@ pub struct ProgrammerChannel {
     pub value: FixtureControlValue,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ProgrammerControl {
     pub fixtures: Vec<FixtureId>,
     pub control: FixtureFaderControl,
     pub value: f64,
+}
+
+impl Hash for ProgrammerControl {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.fixtures.hash(state);
+        self.control.hash(state);
+        self.value.to_bits().hash(state);
+    }
 }
 
 impl Programmer {

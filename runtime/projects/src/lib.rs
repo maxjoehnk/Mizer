@@ -266,6 +266,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::Gamepad(node) => Self::Gamepad(node),
             mizer_nodes::Node::ColorHsv(node) => Self::ColorHsv(node),
             mizer_nodes::Node::ColorRgb(node) => Self::ColorRgb(node),
+            mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }
 }

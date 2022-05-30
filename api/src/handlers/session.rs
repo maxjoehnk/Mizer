@@ -54,4 +54,37 @@ impl<R: RuntimeApi> SessionHandler<R> {
     pub fn save_project_as(&self, path: String) -> anyhow::Result<()> {
         self.runtime.save_project_as(path)
     }
+
+    pub fn undo(&self) -> anyhow::Result<()> {
+        self.runtime.undo()
+    }
+
+    pub fn redo(&self) -> anyhow::Result<()> {
+        self.runtime.redo()
+    }
+
+    pub fn watch_history(&self) -> impl Stream<Item = History> {
+        let stream = self
+            .runtime
+            .observe_history()
+            .into_stream()
+            .map(|(items, cursor)| {
+                let items = items
+                    .into_iter()
+                    .map(|(label, timestamp)| HistoryItem {
+                        label,
+                        timestamp: timestamp as u64,
+                        ..Default::default()
+                    })
+                    .collect();
+
+                History {
+                    items,
+                    pointer: cursor as u64,
+                    ..Default::default()
+                }
+            });
+
+        stream
+    }
 }

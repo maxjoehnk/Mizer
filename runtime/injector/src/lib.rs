@@ -1,9 +1,17 @@
 use std::any::{Any, TypeId};
 use std::collections::HashMap;
+use std::fmt::Formatter;
 
 #[derive(Default)]
 pub struct Injector {
+    // TODO: maybe use RefCell here
     services: HashMap<TypeId, Box<dyn Any>>,
+}
+
+impl std::fmt::Debug for Injector {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Injector").finish()
+    }
 }
 
 impl Injector {

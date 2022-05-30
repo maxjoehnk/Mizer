@@ -25,6 +25,7 @@ mizer-clock = { path = "../runtime/clock" }
 mizer-settings = { path = "../runtime/settings" }
 mizer-sequencer = { path = "../components/sequencer" }
 mizer-session = { path = "../runtime/session" }
+mizer-command-executor = { path = "../runtime/commander/executor" }
 mizer-message-bus = { path = "../util/bus" }
 flume = "0.10"
 futures = "0.3"

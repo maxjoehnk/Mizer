@@ -31,4 +31,21 @@ class SessionGrpcApi implements SessionApi {
   Future<void> saveProjectAs(String path) async {
     await client.saveProjectAs(SaveProjectAsRequest(path: path));
   }
+
+  @override
+  Future<void> redo() {
+    // TODO: implement redo
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> undo() {
+    // TODO: implement undo
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<History> getHistory() {
+    return client.loadHistory(LoadHistoryRequest());
+  }
 }

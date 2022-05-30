@@ -5,11 +5,19 @@ use std::ops::Deref;
 use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{NodeLink, NodePath, ProcessingNode};
+use mizer_node::{NodeLink, NodePath, PortId, PortType, ProcessingNode};
 
-#[derive(Debug, Clone, PartialOrd, PartialEq, Eq, Deserialize, Serialize)]
+#[derive(Default, Debug, Clone, PartialOrd, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ExecutionPlan {
     pub executors: Vec<PlannedExecutor>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+pub enum ExecutorCommand {
+    AddLink(NodeLink),
+    AddNode(ExecutionNode),
+    RemoveLink(NodeLink),
+    RemoveNode(NodePath),
 }
 
 impl ExecutionPlan {
@@ -25,6 +33,22 @@ impl ExecutionPlan {
 pub struct PlannedExecutor {
     pub id: ExecutorId,
     pub associated_nodes: Vec<ExecutionNode>,
+    pub links: Vec<ExecutorLink>,
+    pub commands: Vec<ExecutorCommand>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+pub struct ExecutorLink {
+    pub source: ExecutorLinkPort,
+    pub target: ExecutorLinkPort,
+    pub port_type: PortType,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
+pub struct ExecutorLinkPort {
+    pub executor: ExecutorId,
+    pub node: NodePath,
+    pub port: PortId,
 }
 
 impl PartialOrd for PlannedExecutor {
@@ -87,6 +111,14 @@ pub struct ExecutionPlanner {
     pub(crate) executors: HashMap<ExecutorId, Executor>,
     pub(crate) nodes: HashMap<NodePath, ExecutionNode>,
     pub(crate) links: Vec<NodeLink>,
+    commands: Vec<ExecutorCommand>,
+    last_plan: Option<ExecutionPlan>,
+}
+
+impl ExecutionPlanner {
+    pub fn should_rebuild(&self) -> bool {
+        !self.commands.is_empty()
+    }
 }
 
 impl ExecutionPlanner {
@@ -103,18 +135,35 @@ impl ExecutionPlanner {
     }
 
     pub fn add_node(&mut self, node: ExecutionNode) {
+        self.commands.push(ExecutorCommand::AddNode(node.clone()));
         self.nodes.insert(node.path.clone(), node);
     }
 
     pub fn add_link(&mut self, link: NodeLink) {
+        self.commands.push(ExecutorCommand::AddLink(link.clone()));
         self.links.push(link);
     }
 
+    pub fn remove_link(&mut self, link: &NodeLink) {
+        self.commands
+            .push(ExecutorCommand::RemoveLink(link.clone()));
+        self.links.retain(|l| l != link);
+    }
+
     pub fn remove_node(&mut self, path: &NodePath) {
+        self.commands
+            .push(ExecutorCommand::RemoveNode(path.clone()));
         self.nodes.remove(path);
     }
 
-    pub fn plan(&self) -> ExecutionPlan {
+    pub fn clear(&mut self) {
+        self.nodes.clear();
+        self.links.clear();
+        self.commands.clear();
+    }
+
+    pub fn plan(&mut self) -> ExecutionPlan {
+        let last_plan = self.last_plan.clone().unwrap_or_default();
         let mut executors = self
             .executors
             .values()
@@ -122,6 +171,8 @@ impl ExecutionPlanner {
             .map(|executor| PlannedExecutor {
                 id: executor.id.clone(),
                 associated_nodes: Vec::new(),
+                links: Default::default(),
+                commands: Default::default(),
             })
             .collect::<Vec<_>>();
         let nodes = self.group_nodes();
@@ -144,8 +195,55 @@ impl ExecutionPlanner {
                 i = 0;
             }
         }
+        for executor in &mut executors {
+            for link in &self.links {
+                if executor
+                    .associated_nodes
+                    .iter()
+                    .any(|n| link.source == n.path || link.target == n.path)
+                {
+                    executor.links.push(ExecutorLink {
+                        source: ExecutorLinkPort {
+                            node: link.source.clone(),
+                            port: link.source_port.clone(),
+                            executor: executor.id.clone(),
+                        },
+                        target: ExecutorLinkPort {
+                            node: link.target.clone(),
+                            port: link.target_port.clone(),
+                            executor: executor.id.clone(),
+                        },
+                        port_type: link.port_type,
+                    });
+                }
+            }
+        }
 
-        ExecutionPlan { executors }
+        self.commands.clear();
+
+        let mut plan = ExecutionPlan { executors };
+
+        for executor in &mut plan.executors {
+            for node in &executor.associated_nodes {
+                executor
+                    .commands
+                    .push(ExecutorCommand::AddNode(node.clone()));
+            }
+            for link in &executor.links {
+                executor.commands.push(ExecutorCommand::AddLink(NodeLink {
+                    source: link.source.node.clone(),
+                    source_port: link.source.port.clone(),
+                    target: link.target.node.clone(),
+                    target_port: link.target.port.clone(),
+                    local: true,
+                    port_type: link.port_type,
+                }));
+            }
+        }
+
+        self.last_plan = Some(plan.clone());
+
+        plan
     }
 
     fn group_nodes(&self) -> Vec<LinkedNodes> {
@@ -251,8 +349,10 @@ mod tests {
         });
         let expected = ExecutionPlan {
             executors: vec![PlannedExecutor {
-                id: executor_id.clone(),
-                associated_nodes: vec![node],
+                id: executor_id,
+                associated_nodes: vec![node.clone()],
+                links: vec![],
+                commands: vec![ExecutorCommand::AddNode(node)],
             }],
         };
 
@@ -285,11 +385,15 @@ mod tests {
             executors: vec![
                 PlannedExecutor {
                     id: "executor1".into(),
-                    associated_nodes: vec![node1],
+                    associated_nodes: vec![node1.clone()],
+                    links: vec![],
+                    commands: vec![ExecutorCommand::AddNode(node1)],
                 },
                 PlannedExecutor {
                     id: "executor2".into(),
-                    associated_nodes: vec![node2],
+                    associated_nodes: vec![node2.clone()],
+                    links: vec![],
+                    commands: vec![ExecutorCommand::AddNode(node2)],
                 },
             ],
         };
@@ -319,7 +423,12 @@ mod tests {
         let expected = ExecutionPlan {
             executors: vec![PlannedExecutor {
                 id: "orchestrator".into(),
-                associated_nodes: vec![node1, node2],
+                associated_nodes: vec![node1.clone(), node2.clone()],
+                links: vec![],
+                commands: vec![
+                    ExecutorCommand::AddNode(node1),
+                    ExecutorCommand::AddNode(node2),
+                ],
             }],
         };
 
@@ -352,11 +461,18 @@ mod tests {
             executors: vec![
                 PlannedExecutor {
                     id: "executor1".into(),
-                    associated_nodes: vec![node1, node2],
+                    associated_nodes: vec![node1.clone(), node2.clone()],
+                    links: vec![],
+                    commands: vec![
+                        ExecutorCommand::AddNode(node1),
+                        ExecutorCommand::AddNode(node2),
+                    ],
                 },
                 PlannedExecutor {
                     id: "executor2".into(),
                     associated_nodes: vec![],
+                    links: vec![],
+                    commands: vec![],
                 },
             ],
         };
@@ -380,14 +496,15 @@ mod tests {
         };
         planner.add_node(node1.clone());
         planner.add_node(node2.clone());
-        planner.add_link(NodeLink {
+        let link = NodeLink {
             source: "/node1".into(),
             source_port: "".into(),
             target: "/node2".into(),
             target_port: "".into(),
             local: true,
             port_type: PortType::Single,
-        });
+        };
+        planner.add_link(link.clone());
         planner.add_executor(Executor {
             id: "executor1".into(),
         });
@@ -398,11 +515,31 @@ mod tests {
             executors: vec![
                 PlannedExecutor {
                     id: "executor1".into(),
-                    associated_nodes: vec![node1, node2],
+                    associated_nodes: vec![node1.clone(), node2.clone()],
+                    links: vec![ExecutorLink {
+                        source: ExecutorLinkPort {
+                            node: "/node1".into(),
+                            executor: "executor1".into(),
+                            port: "".into(),
+                        },
+                        target: ExecutorLinkPort {
+                            node: "/node2".into(),
+                            executor: "executor1".into(),
+                            port: "".into(),
+                        },
+                        port_type: PortType::Single,
+                    }],
+                    commands: vec![
+                        ExecutorCommand::AddNode(node1),
+                        ExecutorCommand::AddNode(node2),
+                        ExecutorCommand::AddLink(link),
+                    ],
                 },
                 PlannedExecutor {
                     id: "executor2".into(),
                     associated_nodes: vec![],
+                    links: vec![],
+                    commands: vec![],
                 },
             ],
         };

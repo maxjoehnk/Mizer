@@ -1,3 +1,4 @@
+use crate::test_sink::TestSink;
 use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
@@ -8,7 +9,7 @@ pub use mizer_gamepad_nodes::GamepadNode;
 pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
-use mizer_node::NodeType;
+use mizer_node::{Injector, NodeType};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -20,8 +21,12 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, From)]
+#[doc(hidden)]
+pub mod test_sink;
+
+#[derive(Debug, Clone, From, Deserialize, Serialize)]
 pub enum Node {
     Clock(ClockNode),
     Oscillator(OscillatorNode),
@@ -56,6 +61,9 @@ pub enum Node {
     Gamepad(GamepadNode),
     ColorRgb(RgbColorNode),
     ColorHsv(HsvColorNode),
+    // TODO: should only be available in tests
+    #[doc(hidden)]
+    TestSink(TestSink),
 }
 
 impl From<NodeType> for Node {
@@ -94,6 +102,7 @@ impl From<NodeType> for Node {
             NodeType::Gamepad => GamepadNode::default().into(),
             NodeType::ColorRgb => RgbColorNode::default().into(),
             NodeType::ColorHsv => HsvColorNode::default().into(),
+            NodeType::TestSink => unimplemented!(),
         }
     }
 }
@@ -135,6 +144,13 @@ impl Node {
             Gamepad(_) => NodeType::Gamepad,
             ColorHsv(_) => NodeType::ColorHsv,
             ColorRgb(_) => NodeType::ColorRgb,
+            TestSink(_) => NodeType::TestSink,
+        }
+    }
+
+    pub fn prepare(&mut self, injector: &Injector) {
+        if let Node::Fixture(node) = self {
+            node.fixture_manager = injector.get().cloned();
         }
     }
 }

@@ -43,6 +43,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SessionChannel<R> {
                     }
                 }
             }
+            "undo" => match self.handler.undo() {
+                Ok(()) => resp.send_ok(Value::Null),
+                Err(e) => resp.respond_error(e),
+            },
+            "redo" => match self.handler.redo() {
+                Ok(()) => resp.send_ok(Value::Null),
+                Err(e) => resp.respond_error(e),
+            },
             _ => resp.not_implemented(),
         }
     }

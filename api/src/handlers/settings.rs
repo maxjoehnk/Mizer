@@ -1,6 +1,5 @@
 use crate::{models, RuntimeApi};
 use futures::{Stream, StreamExt};
-use mizer_message_bus::Subscriber;
 
 #[derive(Clone)]
 pub struct SettingsHandler<R: RuntimeApi> {

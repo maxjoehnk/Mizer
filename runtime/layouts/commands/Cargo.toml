@@ -1,0 +1,13 @@
+[package]
+name = "mizer-layout-commands"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+mizer-node = { path = "../../pipeline/node" }
+mizer-commander = { path = "../../commander" }
+mizer-runtime = { path = "../.." }
+mizer-layouts = { path = ".." }
+pinboard = "2.1"

@@ -1,0 +1,23 @@
+[package]
+name = "mizer-command-executor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+derive_more = "0.99"
+mizer-commander = { path = ".." }
+mizer-processing = { path = "../../processing" }
+mizer-module = { path = "../../module" }
+mizer-runtime = { path = "../.." }
+mizer-fixture-commands = { path = "../../../components/fixtures/commands" }
+mizer-sequencer-commands = { path = "../../../components/sequencer/commands" }
+mizer-plan = { path = "../../../components/plan" }
+mizer-layouts = { path = "../../layouts" }
+mizer-layout-commands = { path = "../../layouts/commands" }
+mizer-node = { path = "../../pipeline/node" }
+flume = "0.10"
+tracing = "0.1"

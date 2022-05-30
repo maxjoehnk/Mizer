@@ -12,17 +12,22 @@ members = [
     "components/connections/protocols/midi/messages",
     "components/connections/protocols/osc",
     "components/fixtures",
+    "components/fixtures/commands",
     "components/fixtures/gdtf",
     "components/fixtures/open-fixture-library",
     "components/fixtures/qlcplus",
     "components/plan",
     "components/media",
     "components/sequencer",
+    "components/sequencer/commands",
     "runtime",
     "runtime/clock",
+    "runtime/commander",
+    "runtime/commander/executor",
     "runtime/execution-planner",
     "runtime/injector",
     "runtime/layouts",
+    "runtime/layouts/commands",
     "runtime/module",
     "runtime/session",
     "runtime/pipeline",
@@ -81,7 +86,9 @@ tracing = ["profiling/profile-with-tracy"]
 
 [dependencies]
 derive_more = "0.99"
-env_logger = "0.9"
+#env_logger = "0.9"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 log = "0.4"
 anyhow = "1"
 gstreamer = "0.17"
@@ -115,6 +122,7 @@ mizer-ui = { path = "ui", optional = true }
 mizer-util = { path = "util" }
 mizer-message-bus = { path = "util/bus" }
 mizer-settings = { path = "runtime/settings" }
+mizer-command-executor = { path = "runtime/commander/executor" }
 tokio = { version = "1.16", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.1"

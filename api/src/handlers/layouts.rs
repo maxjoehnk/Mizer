@@ -1,5 +1,6 @@
 use crate::models::*;
 use crate::RuntimeApi;
+use mizer_command_executor::*;
 use mizer_node::NodePath;
 
 #[derive(Clone)]
@@ -26,26 +27,35 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     }
 
     pub fn add_layout(&self, name: String) -> Layouts {
-        self.runtime.add_layout(name);
+        self.runtime.run_command(AddLayoutCommand { name }).unwrap();
 
         self.get_layouts()
     }
 
     pub fn remove_layout(&self, id: String) -> Layouts {
-        self.runtime.remove_layout(id);
+        self.runtime
+            .run_command(RemoveLayoutCommand { id })
+            .unwrap();
 
         self.get_layouts()
     }
 
     pub fn rename_layout(&self, id: String, name: String) -> Layouts {
-        self.runtime.rename_layout(id, name);
+        self.runtime
+            .run_command(RenameLayoutCommand { id, name })
+            .unwrap();
 
         self.get_layouts()
     }
 
     pub fn remove_control(&self, layout_id: String, control_id: String) {
         log::debug!("Removing control {} in layout {}", control_id, layout_id);
-        self.runtime.delete_layout_control(layout_id, control_id);
+        self.runtime
+            .run_command(DeleteLayoutControlCommand {
+                layout_id,
+                control_id: control_id.into(),
+            })
+            .unwrap();
     }
 
     pub fn move_control(&self, layout_id: String, control_id: String, position: ControlPosition) {
@@ -57,7 +67,12 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             position
         );
         self.runtime
-            .update_layout_control(layout_id, control_id, |control| control.position = position);
+            .run_command(MoveLayoutControlCommand {
+                layout_id,
+                control_id,
+                position,
+            })
+            .unwrap();
     }
 
     pub fn update_control(
@@ -74,9 +89,12 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             decorations
         );
         self.runtime
-            .update_layout_control(layout_id, control_id, |control| {
-                control.decoration = decorations
-            });
+            .run_command(UpdateLayoutControlDecorationsCommand {
+                layout_id,
+                control_id,
+                decorations,
+            })
+            .unwrap();
     }
 
     pub fn rename_control(&self, layout_id: String, control_id: String, name: String) {
@@ -86,8 +104,14 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             layout_id,
             name
         );
+
         self.runtime
-            .update_layout_control(layout_id, control_id, |control| control.label = name.into());
+            .run_command(RenameLayoutControlCommand {
+                layout_id,
+                control_id,
+                name,
+            })
+            .unwrap();
     }
 
     pub fn add_control(
@@ -96,12 +120,11 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         node_type: Node_NodeType,
         position: ControlPosition,
     ) -> anyhow::Result<()> {
-        let node = self
-            .runtime
-            .add_node(node_type.into(), mizer_node::NodeDesigner::default())?;
-        let size = Self::get_default_size_for_node_type(node_type);
-        self.runtime
-            .add_layout_control(layout_id, node.path, position.into(), size.into());
+        self.runtime.run_command(AddLayoutControlWithNodeCommand {
+            layout_id,
+            node_type: node_type.into(),
+            position: position.into(),
+        })?;
 
         Ok(())
     }
@@ -112,37 +135,16 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         node_path: NodePath,
         position: ControlPosition,
     ) -> anyhow::Result<()> {
-        if let Some(node) = self.runtime.get_node(&node_path) {
-            let size = Self::get_default_size_for_node_type(node.node_type().into());
-            self.runtime
-                .add_layout_control(layout_id, node_path, position.into(), size.into());
-        }
+        self.runtime.run_command(AddLayoutControlCommand {
+            layout_id,
+            path: node_path,
+            position: position.into(),
+        })?;
 
         Ok(())
     }
 
     pub fn read_fader_value(&self, node_path: NodePath) -> Option<f64> {
         self.runtime.read_fader_value(node_path).ok()
-    }
-
-    fn get_default_size_for_node_type(node_type: Node_NodeType) -> ControlSize {
-        match node_type {
-            Node_NodeType::Fader => ControlSize {
-                height: 4,
-                width: 1,
-                ..Default::default()
-            },
-            Node_NodeType::Button => ControlSize {
-                height: 1,
-                width: 1,
-                ..Default::default()
-            },
-            Node_NodeType::Sequencer => ControlSize {
-                height: 1,
-                width: 1,
-                ..Default::default()
-            },
-            _ => ControlSize::default(),
-        }
     }
 }

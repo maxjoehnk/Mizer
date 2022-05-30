@@ -6,6 +6,7 @@ use anyhow::Context;
 use pinboard::NonEmptyPinboard;
 
 use mizer_api::handlers::Handlers;
+use mizer_command_executor::CommandExecutorModule;
 use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
@@ -43,7 +44,6 @@ pub fn build_runtime(
     let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
     let mut runtime = DefaultRuntime::new();
-    let (api_handler, api) = Api::setup(&runtime, settings.clone());
 
     let sequencer =
         register_sequencer_module(&mut runtime).context("Failed to register sequencer module")?;
@@ -56,12 +56,16 @@ pub fn build_runtime(
     let (fixture_manager, fixture_library) =
         register_fixtures_module(&mut runtime, &settings.read().settings)
             .context("Failed to register fixtures module")?;
+    let (module, command_executor_api) = CommandExecutorModule::new();
+    module.register(&mut runtime)?;
 
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
     let media_server = MediaServer::new()?;
     let media_server_api = media_server.get_api_handle();
     handle.spawn(media_server.run_api());
+
+    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings.clone());
 
     let handlers = Handlers::new(
         api,

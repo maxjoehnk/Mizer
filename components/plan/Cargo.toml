@@ -11,8 +11,10 @@ dashmap = { version = "4", features = ["serde"] }
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
 mizer-fixtures = { path = "../fixtures" }
+mizer-commander = { path = "../../runtime/commander" }
 profiling = "1"
 serde = { version = "1", features = ["derive"] }
+pinboard = "2.1"
 
 [dev-dependencies]
 test-case = "1.2"

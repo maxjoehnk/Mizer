@@ -1,4 +1,4 @@
-use std::any::Any;
+use std::any::{type_name, Any};
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::ops::Deref;
@@ -143,11 +143,19 @@ impl AnyPortReceiver {
                 self.push_receiver(transport);
             }
             _ => {
-                let receiver = self
-                    .receiver::<V>()
-                    .expect("Tried to add transport with invalid port value");
-                let mut transport_store = receiver.transport.borrow_mut();
-                transport_store.replace(transport);
+                if let Some(receiver) = self.receiver::<V>() {
+                    let mut transport_store = receiver.transport.borrow_mut();
+                    transport_store.replace(transport);
+                } else {
+                    tracing::error!(
+                        "Tried to add transport with invalid port value: {}",
+                        type_name::<V>()
+                    );
+                    panic!(
+                        "Tried to add transport with invalid port value: {}",
+                        type_name::<V>()
+                    );
+                }
             }
         }
     }

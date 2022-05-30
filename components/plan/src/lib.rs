@@ -1,5 +1,11 @@
 use mizer_fixtures::FixtureId;
+use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
+use std::sync::Arc;
+
+pub mod commands;
+
+pub type PlanStorage = Arc<NonEmptyPinboard<Vec<Plan>>>;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Plan {

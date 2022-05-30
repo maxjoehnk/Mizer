@@ -3,16 +3,14 @@ use std::collections::HashMap;
 use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
-use mizer_layouts::{ControlConfig, ControlPosition, ControlSize, Layout};
-use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePosition, NodeType, PortId};
-use mizer_nodes::{FixtureNode, GroupNode, Node, SequencerNode};
+use mizer_layouts::Layout;
+use mizer_node::{NodeDesigner, NodeLink, NodePath, PortId};
 use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
 use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
-use mizer_fixtures::FixtureId;
+use mizer_command_executor::{CommandExecutorApi, SendableCommand};
 use mizer_message_bus::{MessageBus, Subscriber};
-use mizer_plan::{FixturePosition, Plan};
 use mizer_protocol_midi::MidiEvent;
 use mizer_settings::{Settings, SettingsManager};
 use pinboard::NonEmptyPinboard;
@@ -21,12 +19,42 @@ use std::sync::Arc;
 #[derive(Clone)]
 pub struct Api {
     access: RuntimeAccess,
+    command_executor_api: CommandExecutorApi,
     sender: flume::Sender<ApiCommand>,
     settings: Arc<NonEmptyPinboard<SettingsManager>>,
     settings_bus: MessageBus<Settings>,
+    history_bus: MessageBus<(Vec<(String, u128)>, usize)>,
 }
 
 impl RuntimeApi for Api {
+    fn run_command<'a, T: SendableCommand<'a> + 'static>(
+        &self,
+        command: T,
+    ) -> anyhow::Result<T::Result> {
+        let result = self.command_executor_api.run_command(command)?;
+        self.emit_history()?;
+
+        Ok(result)
+    }
+
+    fn undo(&self) -> anyhow::Result<()> {
+        self.command_executor_api.undo()?;
+        self.emit_history()?;
+
+        Ok(())
+    }
+
+    fn redo(&self) -> anyhow::Result<()> {
+        self.command_executor_api.redo()?;
+        self.emit_history()?;
+
+        Ok(())
+    }
+
+    fn observe_history(&self) -> Subscriber<(Vec<(String, u128)>, usize)> {
+        self.history_bus.subscribe()
+    }
+
     fn nodes(&self) -> Vec<NodeDescriptor> {
         let designer = self.access.designer.read();
         self.access
@@ -45,195 +73,14 @@ impl RuntimeApi for Api {
         self.access.layouts.read()
     }
 
-    fn add_layout(&self, name: String) {
-        let mut layouts = self.access.layouts.read();
-        layouts.push(Layout {
-            id: name,
-            controls: Default::default(),
-        });
-        self.access.layouts.set(layouts);
-    }
-
-    fn remove_layout(&self, id: String) {
-        let mut layouts = self.access.layouts.read();
-        layouts.retain(|layout| layout.id != id);
-        self.access.layouts.set(layouts);
-    }
-
-    fn rename_layout(&self, id: String, name: String) {
-        self.update_layout(id, |layout| {
-            layout.id = name;
-        });
-    }
-
-    fn add_layout_control(
-        &self,
-        layout_id: String,
-        path: NodePath,
-        position: ControlPosition,
-        size: ControlSize,
-    ) {
-        log::debug!(
-            "add_layout_control {} {:?} {:?} {:?}",
-            layout_id,
-            path,
-            position,
-            size
-        );
-        self.update_layout(layout_id, |layout| {
-            layout.controls.push(ControlConfig {
-                node: path,
-                label: None,
-                position,
-                size,
-                decoration: Default::default(),
-            });
-        });
-    }
-
-    fn delete_layout_control(&self, layout_id: String, control_id: String) {
-        self.update_layout(layout_id, |layout| {
-            if let Some(index) = layout
-                .controls
-                .iter()
-                .position(|control| control.node == control_id)
-            {
-                layout.controls.remove(index);
-            }
-        });
-    }
-
-    fn update_layout_control<F: FnOnce(&mut ControlConfig)>(
-        &self,
-        layout_id: String,
-        control_id: String,
-        update: F,
-    ) {
-        self.update_layout(layout_id, |layout| {
-            if let Some(control) = layout
-                .controls
-                .iter_mut()
-                .find(|control| control.node == control_id)
-            {
-                update(control);
-            }
-        });
-    }
-
     fn plans(&self) -> Vec<mizer_plan::Plan> {
         self.access.plans.read()
-    }
-    fn add_plan(&self, name: String) {
-        let mut plans = self.access.plans.read();
-        plans.push(Plan {
-            name,
-            fixtures: Default::default(),
-        });
-        self.access.plans.set(plans);
-    }
-    fn remove_plan(&self, id: String) {
-        let mut plans = self.access.plans.read();
-        plans.retain(|plan| plan.name != id);
-        self.access.plans.set(plans);
-    }
-    fn rename_plan(&self, id: String, name: String) {
-        self.update_plan(id, |plan| {
-            plan.name = name;
-        });
-    }
-    fn add_fixtures_to_plan(&self, plan_id: String, fixture_ids: Vec<FixtureId>) {
-        self.update_plan(plan_id, |plan| {
-            for (i, fixture_id) in fixture_ids.into_iter().enumerate() {
-                plan.fixtures.push(FixturePosition {
-                    fixture: fixture_id,
-                    x: i as i32,
-                    y: 0,
-                });
-            }
-        });
-    }
-    fn move_fixtures_in_plan(
-        &self,
-        plan_id: String,
-        fixture_ids: Vec<FixtureId>,
-        (x, y): (i32, i32),
-    ) {
-        self.update_plan(plan_id, |plan| {
-            for position in plan
-                .fixtures
-                .iter_mut()
-                .filter(|position| fixture_ids.contains(&position.fixture))
-            {
-                position.x += x;
-                position.y += y;
-            }
-        })
-    }
-
-    fn add_node(
-        &self,
-        node_type: NodeType,
-        designer: NodeDesigner,
-    ) -> anyhow::Result<NodeDescriptor<'_>> {
-        self.add_node_internal(node_type, designer, None)
-    }
-
-    fn add_node_for_fixture(&self, fixture_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
-        let node = FixtureNode {
-            fixture_id,
-            ..Default::default()
-        };
-        self.add_node_internal(
-            NodeType::Fixture,
-            NodeDesigner {
-                hidden: true,
-                ..Default::default()
-            },
-            Some(node.into()),
-        )
-    }
-
-    fn add_node_for_sequence(&self, sequence_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
-        let node = SequencerNode {
-            sequence_id,
-            ..Default::default()
-        };
-        self.add_node_internal(
-            NodeType::Sequencer,
-            NodeDesigner {
-                hidden: true,
-                ..Default::default()
-            },
-            Some(node.into()),
-        )
-    }
-
-    fn add_node_for_group(&self, group_id: u32) -> anyhow::Result<NodeDescriptor<'_>> {
-        let node = GroupNode {
-            id: group_id,
-            ..Default::default()
-        };
-        self.add_node_internal(
-            NodeType::Group,
-            NodeDesigner {
-                hidden: true,
-                ..Default::default()
-            },
-            Some(node.into()),
-        )
     }
 
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender
             .send(ApiCommand::WritePort(node_path, port, value, tx))?;
-
-        rx.recv()?
-    }
-
-    fn link_nodes(&self, link: NodeLink) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::AddLink(link, tx))?;
 
         rx.recv()?
     }
@@ -260,52 +107,6 @@ impl RuntimeApi for Api {
             .map(|path| self.get_descriptor(path, &designer))
     }
 
-    fn update_node(&self, path: NodePath, config: Node) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::UpdateNode(path, config, tx))?;
-
-        rx.recv()?
-    }
-
-    fn update_node_position(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()> {
-        let mut nodes = self.access.designer.read();
-        if let Some(designer) = nodes.get_mut(&path) {
-            designer.position = position;
-        } // TODO: else return err?
-        self.access.designer.set(nodes);
-
-        Ok(())
-    }
-
-    fn show_node(&self, path: NodePath, position: NodePosition) -> anyhow::Result<()> {
-        let mut nodes = self.access.designer.read();
-        if let Some(designer) = nodes.get_mut(&path) {
-            designer.position = position;
-            designer.hidden = false;
-        } // TODO: else return err?
-        self.access.designer.set(nodes);
-
-        Ok(())
-    }
-
-    fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
-        let mut nodes = self.access.designer.read();
-        if let Some(designer) = nodes.get_mut(&path) {
-            designer.hidden = true;
-        } // TODO: else return err?
-        self.access.designer.set(nodes);
-
-        Ok(())
-    }
-
-    fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::DeleteNode(path, tx))?;
-        rx.recv()?;
-
-        Ok(())
-    }
-
     fn set_clock_state(&self, state: ClockState) -> anyhow::Result<()> {
         self.sender.send(ApiCommand::SetClockState(state))?;
 
@@ -328,8 +129,11 @@ impl RuntimeApi for Api {
     fn new_project(&self) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::NewProject(tx))?;
+        rx.recv()??;
 
-        rx.recv()?
+        self.emit_history()?;
+
+        Ok(())
     }
 
     fn save_project(&self) -> anyhow::Result<()> {
@@ -349,8 +153,11 @@ impl RuntimeApi for Api {
     fn load_project(&self, path: String) -> anyhow::Result<()> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::LoadProject(path, tx))?;
+        rx.recv()??;
 
-        rx.recv()?
+        self.emit_history()?;
+
+        Ok(())
     }
 
     fn transport_recv(&self) -> flume::Receiver<ClockSnapshot> {
@@ -455,6 +262,7 @@ impl RuntimeApi for Api {
 impl Api {
     pub fn setup(
         runtime: &DefaultRuntime,
+        command_executor_api: CommandExecutorApi,
         settings: Arc<NonEmptyPinboard<SettingsManager>>,
     ) -> (ApiHandler, Api) {
         let (tx, rx) = flume::unbounded();
@@ -464,34 +272,13 @@ impl Api {
             ApiHandler { recv: rx },
             Api {
                 sender: tx,
+                command_executor_api,
                 access,
                 settings,
                 settings_bus: MessageBus::new(),
+                history_bus: MessageBus::new(),
             },
         )
-    }
-
-    fn add_node_internal(
-        &self,
-        node_type: NodeType,
-        designer: NodeDesigner,
-        node: Option<Node>,
-    ) -> anyhow::Result<NodeDescriptor<'_>> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::AddNode(node_type, designer.clone(), node, tx))?;
-
-        // TODO: this blocks, we should use the async method
-        let path = rx.recv()??;
-        let node = self.access.nodes.get(&path).unwrap();
-        let ports = node.list_ports();
-
-        Ok(NodeDescriptor {
-            path,
-            node,
-            designer,
-            ports,
-        })
     }
 
     fn get_descriptor(
@@ -511,19 +298,14 @@ impl Api {
         }
     }
 
-    fn update_layout<Cb: FnOnce(&mut Layout)>(&self, layout_id: String, update: Cb) {
-        let mut layouts = self.access.layouts.read();
-        if let Some(layout) = layouts.iter_mut().find(|layout| layout.id == layout_id) {
-            update(layout);
-        }
-        self.access.layouts.set(layouts);
-    }
+    fn emit_history(&self) -> anyhow::Result<()> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::GetHistory(tx))?;
 
-    fn update_plan<Cb: FnOnce(&mut Plan)>(&self, plan_id: String, update: Cb) {
-        let mut plans = self.access.plans.read();
-        if let Some(plan) = plans.iter_mut().find(|plan| plan.name == plan_id) {
-            update(plan);
-        }
-        self.access.plans.set(plans);
+        let history = rx.recv()?;
+        log::debug!("Emitting history {:?}", history);
+        self.history_bus.send(history);
+
+        Ok(())
     }
 }

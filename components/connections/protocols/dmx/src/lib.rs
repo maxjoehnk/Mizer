@@ -59,10 +59,12 @@ impl DmxConnectionManager {
     }
 }
 
+#[derive(Debug)]
 struct DmxProcessor;
 
 impl Processor for DmxProcessor {
-    fn post_process(&self, injector: &Injector, _: ClockFrame) {
+    #[tracing::instrument]
+    fn post_process(&mut self, injector: &Injector, _: ClockFrame) {
         profiling::scope!("DmxProcessor::post_process");
         if let Some(dmx) = injector.get::<DmxConnectionManager>() {
             dmx.flush();

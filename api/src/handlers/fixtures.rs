@@ -1,11 +1,9 @@
+use mizer_command_executor::*;
 use regex::Regex;
 use std::ops::Deref;
-use std::str::FromStr;
 
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_node::NodeType;
-use mizer_nodes::Node;
 
 use crate::models::fixtures::*;
 use crate::RuntimeApi;
@@ -89,67 +87,22 @@ impl<R: RuntimeApi> FixturesHandler<R> {
 
     pub fn add_fixtures(&self, add_fixtures: AddFixturesRequest) {
         let request = add_fixtures.request.unwrap();
-        let definition = self
-            .fixture_library
-            .get_definition(&request.definitionId)
-            .unwrap();
-        let captures = FIXTURE_NAME_REGEX.captures(&request.name).unwrap();
-        if let Some(mode) = definition.get_mode(&request.mode) {
-            for i in 0..add_fixtures.count {
-                let fixture_id = request.id + i;
-                let name = Self::built_name(&captures, i);
-                let offset = mode.dmx_channels() * (i as u16);
-                self.fixture_manager.add_fixture(
-                    fixture_id,
-                    name,
-                    definition.clone(),
-                    request.mode.clone().into(),
-                    None,
-                    (request.channel as u16) + offset,
-                    Some(request.universe as u16),
-                );
-                self.runtime.add_node_for_fixture(fixture_id).unwrap();
-            }
-        }
-    }
-
-    fn built_name(captures: &regex::Captures, index: u32) -> String {
-        let base_name = &captures["name"];
-        if let Some(counter) = captures.name("counter") {
-            let counter = u32::from_str(counter.as_str()).unwrap();
-            let counter = counter + index;
-
-            format!("{}{}", base_name, counter)
-        } else {
-            base_name.to_string()
-        }
+        let cmd = PatchFixturesCommand {
+            definition_id: request.definitionId,
+            mode: request.mode,
+            start_id: request.id,
+            start_channel: request.channel,
+            universe: request.universe,
+            name: request.name,
+            count: add_fixtures.count,
+        };
+        self.runtime.run_command(cmd).unwrap();
     }
 
     pub fn delete_fixtures(&self, fixture_ids: Vec<u32>) -> anyhow::Result<()> {
-        for id in fixture_ids {
-            self.delete_fixture_node(id)?;
-            self.fixture_manager.delete_fixture(id);
-        }
-        Ok(())
-    }
+        let cmd = DeleteFixturesCommand { fixture_ids };
+        self.runtime.run_command(cmd)?;
 
-    fn delete_fixture_node(&self, id: u32) -> anyhow::Result<()> {
-        if let Some(path) = self
-            .runtime
-            .nodes()
-            .into_iter()
-            .filter(|node| node.node_type() == NodeType::Fixture)
-            .find(|node| {
-                if let Node::Fixture(fixture_node) = node.downcast() {
-                    fixture_node.fixture_id == id
-                } else {
-                    false
-                }
-            })
-            .map(|node| node.path)
-        {
-            self.runtime.delete_node(path)?;
-        }
         Ok(())
     }
 }

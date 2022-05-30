@@ -3,10 +3,12 @@ use crate::EffectEngine;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_module::*;
 
+#[derive(Debug)]
 pub(crate) struct SequenceProcessor;
 
 impl Processor for SequenceProcessor {
-    fn process(&self, injector: &Injector, frame: ClockFrame) {
+    #[tracing::instrument]
+    fn process(&mut self, injector: &Injector, frame: ClockFrame) {
         profiling::scope!("SequenceProcessor::process");
         let sequencer = injector.get::<Sequencer>().unwrap();
         let fixture_manager = injector

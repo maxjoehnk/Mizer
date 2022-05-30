@@ -9,7 +9,7 @@ use pinboard::NonEmptyPinboard;
 
 use mizer_util::ThreadPinned;
 
-use crate::contracts::{Clock, StdClock};
+use crate::contracts::StdClock;
 use crate::state::SequenceState;
 use crate::{EffectEngine, Sequence};
 use mizer_fixtures::manager::FixtureManager;
@@ -124,7 +124,7 @@ impl Sequencer {
         }
     }
 
-    pub fn add_sequence(&self) -> Sequence {
+    pub fn new_sequence(&self) -> Sequence {
         let i = self.sequence_counter.fetch_add(1, Ordering::AcqRel);
         let sequence = Sequence::new(i);
         let mut sequences = self.sequences.read();
@@ -137,11 +137,23 @@ impl Sequencer {
         sequence
     }
 
-    pub fn delete_sequence(&self, sequence: u32) {
+    pub fn add_sequence(&self, sequence: Sequence) {
+        let sequence_id = sequence.id;
         let mut sequences = self.sequences.read();
-        sequences.remove(&sequence);
+        sequences.insert(sequence_id, sequence);
+        self.sequences.set(sequences);
+        let mut view = self.sequence_view.read();
+        view.insert(sequence_id, SequenceView::default());
+        self.sequence_view.set(view);
+    }
+
+    pub fn delete_sequence(&self, sequence: u32) -> Option<Sequence> {
+        let mut sequences = self.sequences.read();
+        let result = sequences.remove(&sequence);
         self.sequences.set(sequences);
         self.commands.0.send(SequencerCommands::DropState(sequence));
+
+        result
     }
 
     pub fn sequence_go(&self, sequence: u32) {
@@ -152,12 +164,18 @@ impl Sequencer {
         self.commands.0.send(SequencerCommands::Stop(sequence));
     }
 
-    pub fn update_sequence<SU: FnOnce(&mut Sequence)>(&self, sequence: u32, update: SU) {
+    pub fn update_sequence<SU>(&self, sequence: u32, update: SU) -> anyhow::Result<()>
+    where
+        SU: FnOnce(&mut Sequence) -> anyhow::Result<()>,
+    {
         let mut sequences = self.sequences.read();
-        if let Some(sequence) = sequences.get_mut(&sequence) {
-            update(sequence);
-        }
+        let sequence = sequences
+            .get_mut(&sequence)
+            .ok_or_else(|| anyhow::anyhow!("Unknown sequence {}", sequence))?;
+        update(sequence)?;
         self.sequences.set(sequences);
+
+        Ok(())
     }
 
     pub fn clear(&self) {

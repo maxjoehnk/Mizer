@@ -7,10 +7,12 @@ use mizer_protocol_dmx::DmxConnectionManager;
 use std::collections::HashMap;
 use std::ops::Deref;
 
+#[derive(Debug)]
 pub struct FixtureProcessor;
 
 impl Processor for FixtureProcessor {
-    fn pre_process(&self, injector: &Injector, _: ClockFrame) {
+    #[tracing::instrument]
+    fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame) {
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
@@ -18,7 +20,8 @@ impl Processor for FixtureProcessor {
         fixture_manager.execute_programmers();
     }
 
-    fn process(&self, injector: &Injector, _: ClockFrame) {
+    #[tracing::instrument]
+    fn process(&mut self, injector: &Injector, _: ClockFrame) {
         profiling::scope!("FixtureProcessor::process");
         let fixture_manager = injector
             .get::<FixtureManager>()
@@ -29,7 +32,8 @@ impl Processor for FixtureProcessor {
         fixture_manager.write_outputs(dmx_manager);
     }
 
-    fn post_process(&self, injector: &Injector, _frame: ClockFrame) {
+    #[tracing::instrument]
+    fn post_process(&mut self, injector: &Injector, _frame: ClockFrame) {
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");

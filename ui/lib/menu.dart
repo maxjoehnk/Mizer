@@ -67,12 +67,29 @@ class ApplicationMenu extends StatelessWidget {
                   label: 'Preferences'.i18n,
                   action: () {
                     return Window.create(PreferencesWindow.toInitData())
-                      .then((window) => window.showModal());
+                        .then((window) => window.showModal());
                   }),
               MenuItem(
                   label: "Exit".i18n,
                   action: () => context.read<ApplicationPluginApi>().exit(),
                   shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyQ))
+            ]),
+            SubMenu(title: 'Edit'.i18n, children: [
+              MenuItem(
+                  label: 'Undo'.i18n,
+                  action: () async {
+                    await context.read<SessionApi>().undo();
+                    _refreshViews(context);
+                  },
+                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ)),
+              MenuItem(
+                  label: 'Redo'.i18n,
+                  action: () async {
+                    await context.read<SessionApi>().redo();
+                    _refreshViews(context);
+                  },
+                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
+                      LogicalKeyboardKey.keyZ))
             ]),
             SubMenu(
                 title: 'View'.i18n,

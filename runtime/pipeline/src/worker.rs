@@ -1,4 +1,4 @@
-use std::any::Any;
+use std::any::{type_name, Any};
 use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
@@ -106,7 +106,7 @@ impl PipelineWorker {
     }
 
     pub fn remove_node(&mut self, path: &NodePath, links: &[NodeLink]) {
-        self.disconnect_ports(path, links);
+        self.disconnect_ports(links);
         self.states.remove(path);
         self.receivers.remove(path);
         self.senders.remove(path);
@@ -114,12 +114,14 @@ impl PipelineWorker {
         self.dependencies.remove(path);
     }
 
+    #[tracing::instrument(err, skip(self))]
     pub fn connect_nodes(
         &mut self,
         link: NodeLink,
         source_meta: PortMetadata,
         target_meta: PortMetadata,
     ) -> anyhow::Result<()> {
+        tracing::trace!("Connect nodes");
         self.add_dependency(link.source.clone(), link.target.clone());
         self.connect_ports(link, source_meta, target_meta)?;
 
@@ -155,16 +157,20 @@ impl PipelineWorker {
         Ok(())
     }
 
-    fn disconnect_ports(&mut self, path: &NodePath, links: &[NodeLink]) {
+    fn disconnect_ports(&mut self, links: &[NodeLink]) {
         for link in links {
-            match link.port_type {
-                PortType::Single => self.disconnect_memory_ports::<f64>(path, link),
-                PortType::Color => self.disconnect_memory_ports::<Color>(path, link),
-                PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(path, link),
-                PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(path, link),
-                PortType::Gstreamer => self.disconnect_gst_ports(link),
-                _ => unimplemented!(),
-            }
+            self.disconnect_port(link);
+        }
+    }
+
+    pub fn disconnect_port(&mut self, link: &NodeLink) {
+        match link.port_type {
+            PortType::Single => self.disconnect_memory_ports::<f64>(link),
+            PortType::Color => self.disconnect_memory_ports::<Color>(link),
+            PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(link),
+            PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),
+            PortType::Gstreamer => self.disconnect_gst_ports(link),
+            _ => unimplemented!(),
         }
     }
 
@@ -174,6 +180,8 @@ impl PipelineWorker {
         source_meta: PortMetadata,
         target_meta: PortMetadata,
     ) {
+        let value_name = type_name::<V>();
+        tracing::trace!(value = value_name, "connect_memory_ports");
         let senders = self
             .senders
             .entry(link.source)
@@ -198,11 +206,7 @@ impl PipelineWorker {
         receivers.add(link.target_port, rx, source_meta);
     }
 
-    fn disconnect_memory_ports<V: PortValue + Default + 'static>(
-        &mut self,
-        _: &NodePath,
-        link: &NodeLink,
-    ) {
+    fn disconnect_memory_ports<V: PortValue + Default + 'static>(&mut self, link: &NodeLink) {
         if let Some(receivers) = self.receivers.get_mut(&link.target) {
             receivers.remove(&link.target_port);
         }

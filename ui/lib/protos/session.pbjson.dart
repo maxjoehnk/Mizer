@@ -98,3 +98,32 @@ const DeviceClock$json = const {
 
 /// Descriptor for `DeviceClock`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deviceClockDescriptor = $convert.base64Decode('CgtEZXZpY2VDbG9jaxIWCgZtYXN0ZXIYASABKAhSBm1hc3RlchIUCgVkcmlmdBgCIAEoAVIFZHJpZnQ=');
+@$core.Deprecated('Use loadHistoryRequestDescriptor instead')
+const LoadHistoryRequest$json = const {
+  '1': 'LoadHistoryRequest',
+};
+
+/// Descriptor for `LoadHistoryRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List loadHistoryRequestDescriptor = $convert.base64Decode('ChJMb2FkSGlzdG9yeVJlcXVlc3Q=');
+@$core.Deprecated('Use historyDescriptor instead')
+const History$json = const {
+  '1': 'History',
+  '2': const [
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.mizer.HistoryItem', '10': 'items'},
+    const {'1': 'pointer', '3': 2, '4': 1, '5': 4, '10': 'pointer'},
+  ],
+};
+
+/// Descriptor for `History`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyDescriptor = $convert.base64Decode('CgdIaXN0b3J5EigKBWl0ZW1zGAEgAygLMhIubWl6ZXIuSGlzdG9yeUl0ZW1SBWl0ZW1zEhgKB3BvaW50ZXIYAiABKARSB3BvaW50ZXI=');
+@$core.Deprecated('Use historyItemDescriptor instead')
+const HistoryItem$json = const {
+  '1': 'HistoryItem',
+  '2': const [
+    const {'1': 'label', '3': 1, '4': 1, '5': 9, '10': 'label'},
+    const {'1': 'timestamp', '3': 2, '4': 1, '5': 4, '10': 'timestamp'},
+  ],
+};
+
+/// Descriptor for `HistoryItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List historyItemDescriptor = $convert.base64Decode('CgtIaXN0b3J5SXRlbRIUCgVsYWJlbBgBIAEoCVIFbGFiZWwSHAoJdGltZXN0YW1wGAIgASgEUgl0aW1lc3RhbXA=');

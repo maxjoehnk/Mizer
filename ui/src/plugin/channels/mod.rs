@@ -9,6 +9,7 @@ pub use self::transport::*;
 use anyhow::Error;
 pub use event::application::*;
 pub use event::connections::*;
+pub use event::history::*;
 pub use event::session::*;
 pub use method::application::*;
 pub use method::connections::*;

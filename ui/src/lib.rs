@@ -44,8 +44,14 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
         TransportEventChannel::new(handlers.transport, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
     let _session = SessionChannel::new(handlers.session.clone()).channel(context.weak());
-    let _session_events =
-        MonitorSessionChannel::new(handlers.session, async_runtime.clone(), context.weak())
+    let _session_events = MonitorSessionChannel::new(
+        handlers.session.clone(),
+        async_runtime.clone(),
+        context.weak(),
+    )
+    .event_channel(context.weak());
+    let _history_events =
+        MonitorHistoryChannel::new(handlers.session, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
     let _sequencer = SequencerChannel::new(handlers.sequencer).channel(context.weak());
     let _programmer = ProgrammerChannel::new(handlers.programmer.clone()).channel(context.weak());

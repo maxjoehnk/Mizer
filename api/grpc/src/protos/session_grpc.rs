@@ -33,6 +33,8 @@ pub trait SessionApi {
     fn save_project(&self, req: ::grpc::ServerRequestSingle<super::session::ProjectRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
 
     fn save_project_as(&self, req: ::grpc::ServerRequestSingle<super::session::SaveProjectAsRequest>, resp: ::grpc::ServerResponseUnarySink<super::session::ProjectResponse>) -> ::grpc::Result<()>;
+
+    fn load_history(&self, req: ::grpc::ServerRequestSingle<super::session::LoadHistoryRequest>, resp: ::grpc::ServerResponseSink<super::session::History>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -108,6 +110,16 @@ impl SessionApiClient {
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
         });
         self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn load_history(&self, o: ::grpc::RequestOptions, req: super::session::LoadHistoryRequest) -> ::grpc::StreamingResponse<super::session::History> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/LoadHistory"),
+            streaming: ::grpc::rt::GrpcStreaming::ServerStreaming,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_server_streaming(o, req, descriptor)
     }
 }
 
@@ -191,6 +203,18 @@ impl SessionApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).save_project_as(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.SessionApi/LoadHistory"),
+                        streaming: ::grpc::rt::GrpcStreaming::ServerStreaming,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerServerStreaming::new(move |req, resp| (*handler_copy).load_history(req, resp))
                     },
                 ),
             ],

@@ -7,6 +7,7 @@ import 'package:mizer/protos/session.pb.dart';
 class SessionPluginApi implements SessionApi {
   final MethodChannel channel = const MethodChannel("mizer.live/session");
   final EventChannel sessionEvents = const EventChannel("mizer.live/session/watch");
+  final EventChannel historyEvents = const EventChannel("mizer.live/history/watch");
 
   @override
   Stream<Session> watchSession() {
@@ -39,5 +40,22 @@ class SessionPluginApi implements SessionApi {
 
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
+  }
+
+  @override
+  Future<void> redo() async {
+    await channel.invokeMethod("redo");
+  }
+
+  @override
+  Future<void> undo() async {
+    await channel.invokeMethod("undo");
+  }
+
+  @override
+  Stream<History> getHistory() {
+    return historyEvents.receiveBroadcastStream().map((buffer) {
+      return History.fromBuffer(_convertBuffer(buffer));
+    });
   }
 }

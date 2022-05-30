@@ -1,5 +1,4 @@
-use mizer_node::NodeType;
-use mizer_nodes::Node;
+use mizer_command_executor::*;
 use mizer_sequencer::{Sequencer, SequencerTime, SequencerValue, SequencerView};
 
 use crate::models::*;
@@ -31,8 +30,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     pub fn add_sequence(&self) -> Sequence {
-        let sequence = self.sequencer.add_sequence();
-        self.runtime.add_node_for_sequence(sequence.id).unwrap();
+        let sequence = self.runtime.run_command(AddSequenceCommand {}).unwrap();
 
         sequence.into()
     }
@@ -46,109 +44,86 @@ impl<R: RuntimeApi> SequencerHandler<R> {
     }
 
     pub fn delete_sequence(&self, sequence: u32) -> anyhow::Result<()> {
-        self.delete_sequence_node(sequence)?;
-        self.sequencer.delete_sequence(sequence);
+        self.runtime.run_command(DeleteSequenceCommand {
+            sequence_id: sequence,
+        })?;
 
-        Ok(())
-    }
-
-    fn delete_sequence_node(&self, id: u32) -> anyhow::Result<()> {
-        if let Some(path) = self
-            .runtime
-            .nodes()
-            .into_iter()
-            .filter(|node| node.node_type() == NodeType::Sequencer)
-            .find(|node| {
-                if let Node::Sequencer(sequencer_node) = node.downcast() {
-                    sequencer_node.sequence_id == id
-                } else {
-                    false
-                }
-            })
-            .map(|node| node.path)
-        {
-            self.runtime.delete_node(path)?;
-        }
         Ok(())
     }
 
     pub fn update_cue_trigger(&self, request: CueTriggerRequest) {
-        self.sequencer
-            .update_sequence(request.sequence, |sequence| {
-                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue) {
-                    cue.trigger = request.trigger.into();
-                }
-            });
+        self.runtime
+            .run_command(UpdateCueTriggerCommand {
+                sequence_id: request.sequence,
+                cue_id: request.cue,
+                trigger: request.trigger.into(),
+            })
+            .unwrap();
     }
 
     pub fn update_cue_name(&self, request: CueNameRequest) {
-        self.sequencer
-            .update_sequence(request.sequence, |sequence| {
-                if let Some(cue) = sequence.cues.iter_mut().find(|cue| cue.id == request.cue) {
-                    cue.name = request.name.into();
-                }
-            });
+        self.runtime
+            .run_command(RenameCueCommand {
+                sequence_id: request.sequence,
+                cue_id: request.cue,
+                name: request.name,
+            })
+            .unwrap();
     }
 
     pub fn update_cue_value(&self, request: CueValueRequest) {
-        self.sequencer
-            .update_sequence(request.sequence_id, |sequence| {
-                if let Some(cue) = sequence
-                    .cues
-                    .iter_mut()
-                    .find(|cue| cue.id == request.cue_id)
-                {
-                    if let Some(control) = cue.controls.get_mut(request.control_index as usize) {
-                        control.value = request.value.unwrap().into();
-                    }
-                }
-            });
+        self.runtime
+            .run_command(UpdateCueValueCommand {
+                sequence_id: request.sequence_id,
+                cue_id: request.cue_id,
+                control_index: request.control_index,
+                value: request.value.unwrap().into(),
+            })
+            .unwrap();
     }
 
     pub fn update_control_fade_time(&self, request: CueTimingRequest) {
-        self.sequencer
-            .update_sequence(request.sequence_id, |sequence| {
-                if let Some(cue) = sequence
-                    .cues
-                    .iter_mut()
-                    .find(|cue| cue.id == request.cue_id)
-                {
-                    cue.cue_fade = request
-                        .time
-                        .into_option()
-                        .and_then(Option::<SequencerValue<SequencerTime>>::from);
-                }
-            });
+        self.runtime
+            .run_command(UpdateControlFadeTimeCommand {
+                sequence_id: request.sequence_id,
+                cue_id: request.cue_id,
+                fade_time: request
+                    .time
+                    .into_option()
+                    .and_then(Option::<SequencerValue<SequencerTime>>::from),
+            })
+            .unwrap();
     }
 
     pub fn update_control_delay_time(&self, request: CueTimingRequest) {
-        self.sequencer
-            .update_sequence(request.sequence_id, |sequence| {
-                if let Some(cue) = sequence
-                    .cues
-                    .iter_mut()
-                    .find(|cue| cue.id == request.cue_id)
-                {
-                    cue.cue_delay = request
-                        .time
-                        .into_option()
-                        .and_then(Option::<SequencerValue<SequencerTime>>::from);
-                }
-            });
+        self.runtime
+            .run_command(UpdateControlDelayTimeCommand {
+                sequence_id: request.sequence_id,
+                cue_id: request.cue_id,
+                delay_time: request
+                    .time
+                    .into_option()
+                    .and_then(Option::<SequencerValue<SequencerTime>>::from),
+            })
+            .unwrap();
     }
 
     pub fn update_sequence_wrap_around(&self, request: SequenceWrapAroundRequest) {
-        self.sequencer
-            .update_sequence(request.sequence, |sequence| {
-                sequence.wrap_around = request.wrapAround;
-            });
+        self.runtime
+            .run_command(UpdateSequenceWrapAroundCommand {
+                sequence_id: request.sequence,
+                wrap_around: request.wrapAround,
+            })
+            .unwrap();
     }
 
     pub fn update_sequence_name(&self, request: SequenceNameRequest) {
-        self.sequencer
-            .update_sequence(request.sequence, |sequence| {
-                sequence.name = request.name;
-            });
+        self.runtime
+            .run_command(RenameSequenceCommand {
+                sequence_id: request.sequence,
+                name: request.name,
+            })
+            .unwrap();
     }
 
     pub fn sequencer_view(&self) -> SequencerView {

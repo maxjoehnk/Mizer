@@ -38,3 +38,9 @@ impl PartialEq<String> for NodePath {
         &self.0 == other
     }
 }
+
+impl PartialEq<&str> for NodePath {
+    fn eq(&self, other: &&str) -> bool {
+        &self.0 == other
+    }
+}

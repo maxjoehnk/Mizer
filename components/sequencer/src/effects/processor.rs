@@ -5,7 +5,7 @@ use mizer_module::*;
 pub(crate) struct EffectsProcessor;
 
 impl Processor for EffectsProcessor {
-    fn process(&self, injector: &Injector, frame: ClockFrame) {
+    fn process(&mut self, injector: &Injector, frame: ClockFrame) {
         profiling::scope!("EffectsProcessor::process");
         let engine = injector.get::<EffectEngine>().unwrap();
         let fixtures = injector.get::<FixtureManager>().unwrap();

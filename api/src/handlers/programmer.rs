@@ -2,23 +2,22 @@ use crate::models::fixtures::*;
 use crate::models::programmer::*;
 use crate::RuntimeApi;
 use futures::stream::{Stream, StreamExt};
+use mizer_command_executor::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::ProgrammerView;
-use mizer_sequencer::{CueControl, Sequencer, SequencerValue};
+use mizer_sequencer::Sequencer;
 use std::ops::Deref;
 
 #[derive(Clone)]
 pub struct ProgrammerHandler<R> {
     fixture_manager: FixtureManager,
-    sequencer: Sequencer,
     runtime: R,
 }
 
 impl<R: RuntimeApi> ProgrammerHandler<R> {
-    pub fn new(fixture_manager: FixtureManager, sequencer: Sequencer, runtime: R) -> Self {
+    pub fn new(fixture_manager: FixtureManager, _: Sequencer, runtime: R) -> Self {
         Self {
             fixture_manager,
-            sequencer,
             runtime,
         }
     }
@@ -59,34 +58,14 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     pub fn store(&self, sequence_id: u32, store_mode: StoreRequest_Mode) {
-        let programmer = self.fixture_manager.get_programmer();
-        let controls = programmer.get_controls();
-        self.sequencer.update_sequence(sequence_id, |sequence| {
-            let mut fixtures = controls.iter().flat_map(|c| c.fixtures.clone()).collect();
-            let cue = if store_mode == StoreRequest_Mode::AddCue || sequence.cues.is_empty() {
-                let cue_id = sequence.add_cue();
-                sequence.cues.iter_mut().find(|c| c.id == cue_id)
-            } else {
-                sequence.cues.last_mut()
-            }
+        let controls = self.fixture_manager.get_programmer().get_controls();
+        self.runtime
+            .run_command(StoreProgrammerInSequenceCommand {
+                sequence_id,
+                controls,
+                store_mode: store_mode.into(),
+            })
             .unwrap();
-            let cue_channels = controls
-                .into_iter()
-                .map(|control| CueControl {
-                    control: control.control,
-                    fixtures: control.fixtures.clone(),
-                    value: SequencerValue::Direct(control.value),
-                })
-                .collect();
-            if store_mode == StoreRequest_Mode::Merge {
-                cue.merge(cue_channels);
-            } else {
-                cue.controls = cue_channels;
-            }
-            sequence.fixtures.append(&mut fixtures);
-            sequence.fixtures.sort();
-            sequence.fixtures.dedup();
-        })
     }
 
     pub fn get_presets(&self) -> Presets {
@@ -142,33 +121,34 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     pub fn add_group(&self, name: String) -> Group {
-        let group_id = self.fixture_manager.add_group(name.clone());
-        self.runtime.add_node_for_group(group_id);
+        let group = self.runtime.run_command(AddGroupCommand { name }).unwrap();
 
-        Group {
-            name,
-            id: group_id,
-            ..Default::default()
-        }
+        group.into()
     }
 
     pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
-        if let Some(mut group) = self.fixture_manager.groups.get_mut(&group_id) {
-            let mut fixture_ids = fixture_ids
-                .into_iter()
-                .map(|id| id.into())
-                .collect::<Vec<_>>();
-            group.fixtures.append(&mut fixture_ids);
-        }
+        let fixture_ids = fixture_ids
+            .into_iter()
+            .map(|id| id.into())
+            .collect::<Vec<_>>();
+        self.runtime
+            .run_command(AssignFixturesToGroupCommand {
+                group_id,
+                fixture_ids,
+            })
+            .unwrap();
     }
 
     pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
-        if let Some(mut group) = self.fixture_manager.groups.get_mut(&group_id) {
-            let programmer = self.fixture_manager.get_programmer();
-            let state = programmer.view().read();
-            let mut fixture_ids = state.all_fixtures();
-            group.fixtures.append(&mut fixture_ids);
-        }
+        let programmer = self.fixture_manager.get_programmer();
+        let state = programmer.view().read();
+        let fixture_ids = state.all_fixtures();
+        self.runtime
+            .run_command(AssignFixturesToGroupCommand {
+                group_id,
+                fixture_ids,
+            })
+            .unwrap();
     }
 
     pub fn programmer_view(&self) -> ProgrammerView {

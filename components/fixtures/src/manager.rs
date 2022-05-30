@@ -67,6 +67,10 @@ impl FixtureManager {
         group_id
     }
 
+    pub fn delete_group(&self, group_id: u32) -> Option<Group> {
+        self.groups.remove(&group_id).map(|(_, group)| group)
+    }
+
     pub fn get_fixture(&self, fixture_id: u32) -> Option<impl Deref<Target = Fixture> + '_> {
         self.fixtures.get(&fixture_id)
     }
@@ -75,10 +79,11 @@ impl FixtureManager {
         self.fixtures.get_mut(&fixture_id)
     }
 
-    pub fn delete_fixture(&self, fixture_id: u32) {
-        if let Some((_, fixture)) = self.fixtures.remove(&fixture_id) {
-            self.states.remove_fixture(&fixture);
-        }
+    pub fn delete_fixture(&self, fixture_id: u32) -> Option<Fixture> {
+        let (_, fixture) = self.fixtures.remove(&fixture_id)?;
+        self.states.remove_fixture(&fixture);
+
+        Some(fixture)
     }
 
     pub fn write_fixture_control(

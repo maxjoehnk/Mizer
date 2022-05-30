@@ -2,7 +2,8 @@ use protobuf::SingularPtrField;
 
 use mizer_node::{NodeLink, NodeType, PortDirection, PortId, PortMetadata, PortType, PreviewType};
 use mizer_nodes::{MidiInputConfig, MidiOutputConfig, OscArgumentType};
-use mizer_runtime::NodeDescriptor;
+use mizer_runtime::commands::StaticNodeDescriptor;
+use mizer_runtime::{NodeDescriptor, NodeDowncast};
 
 use crate::models::nodes::*;
 
@@ -43,6 +44,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             ColorRgb(node) => Self::colorRgbConfig(node.into()),
             ColorHsv(node) => Self::colorHsvConfig(node.into()),
             Gamepad(node) => Self::gamepadNodeConfig(node.into()),
+            TestSink(_) => unimplemented!("Only for test"),
         }
     }
 }
@@ -920,6 +922,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::ColorHsv => Node_NodeType::ColorHsv,
             NodeType::ColorRgb => Node_NodeType::ColorRgb,
             NodeType::Gamepad => Node_NodeType::Gamepad,
+            NodeType::TestSink => unimplemented!("only for test"),
         }
     }
 }
@@ -993,6 +996,35 @@ impl From<NodeDescriptor<'_>> for Node {
         node
     }
 }
+
+impl From<StaticNodeDescriptor> for Node {
+    fn from(descriptor: StaticNodeDescriptor) -> Self {
+        let mut node = Node {
+            path: descriptor.path.to_string(),
+            field_type: descriptor.node_type.into(),
+            config: SingularPtrField::some(descriptor.config.into()),
+            designer: SingularPtrField::some(descriptor.designer.into()),
+            preview: descriptor.details.preview_type.into(),
+            ..Default::default()
+        };
+        let (inputs, outputs) = descriptor
+            .ports
+            .into_iter()
+            .partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
+
+        for input in inputs {
+            node.inputs.push(input.into());
+        }
+        for output in outputs {
+            node.outputs.push(output.into());
+        }
+
+        log::debug!("{:?}", node);
+
+        node
+    }
+}
+
 impl From<mizer_node::NodeDesigner> for NodeDesigner {
     fn from(designer: mizer_node::NodeDesigner) -> Self {
         Self {

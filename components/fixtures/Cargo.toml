@@ -10,6 +10,8 @@ log = "0.4"
 dashmap = { version = "4", features = ["serde"] }
 mizer-processing = { path = "../../runtime/processing" }
 mizer-module = { path = "../../runtime/module" }
+mizer-commander = { path = "../../runtime/commander" }
+mizer-node = { path = "../../runtime/pipeline/node" }
 mizer-protocol-dmx = { path = "../connections/protocols/dmx" }
 profiling = "1"
 serde = { version = "1", features = ["derive"] }
@@ -18,6 +20,7 @@ futures = "0.3"
 pinboard = "2.1"
 parking_lot = "0.12"
 indexmap = "1.8"
+tracing = "0.1"
 
 [dev-dependencies]
 test-case = "1.2"

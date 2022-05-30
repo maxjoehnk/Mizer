@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 
 use mizer_clock::Clock;
+use mizer_command_executor::CommandHistory;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, DmxView, MidiView};
 use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
@@ -33,13 +34,6 @@ impl ApiHandler {
 
     fn handle_command(&self, command: ApiCommand, mizer: &mut Mizer) {
         match command {
-            ApiCommand::AddNode(node_type, designer, node, sender) => {
-                let result = mizer.runtime.handle_add_node(node_type, designer, node);
-
-                sender
-                    .send(result)
-                    .expect("api command sender disconnected");
-            }
             ApiCommand::WritePort(path, port, value, sender) => {
                 mizer.runtime.pipeline.write_port(path, port, value);
 
@@ -57,26 +51,9 @@ impl ApiHandler {
 
                 sender.send(value).expect("api command sender disconnected");
             }
-            ApiCommand::AddLink(link, sender) => {
-                let result = mizer.runtime.add_link(link);
-
-                sender
-                    .send(result)
-                    .expect("api command sender disconnected");
-            }
             ApiCommand::GetNodePreviewRef(path, sender) => sender
                 .send(mizer.runtime.get_history_ref(&path))
                 .expect("api command sender disconnected"),
-            ApiCommand::UpdateNode(path, config, sender) => {
-                sender
-                    .send(mizer.runtime.handle_update_node(path, config))
-                    .expect("api command sender disconnected");
-            }
-            ApiCommand::DeleteNode(path, sender) => {
-                sender
-                    .send(mizer.runtime.delete_node(path))
-                    .expect("api command sender disconnected");
-            }
             ApiCommand::SetClockState(state) => {
                 mizer.runtime.clock.set_state(state);
             }
@@ -156,6 +133,16 @@ impl ApiHandler {
 
                 sender
                     .send(result)
+                    .expect("api command sender disconnected");
+            }
+            ApiCommand::GetHistory(sender) => {
+                let injector = mizer.runtime.injector();
+                let history = injector.get::<CommandHistory>().unwrap();
+                let result = history.items();
+                let cursor = history.index();
+
+                sender
+                    .send((result, cursor))
                     .expect("api command sender disconnected");
             }
         }

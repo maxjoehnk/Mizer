@@ -246,7 +246,7 @@ impl PartialOrd for Cue {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub enum CueTrigger {
     /// Requires manual go action to trigger
     Go,

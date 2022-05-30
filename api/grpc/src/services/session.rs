@@ -80,4 +80,12 @@ impl<R: RuntimeApi + 'static> SessionApi for SessionHandler<R> {
 
         resp.finish(Default::default())
     }
+
+    fn load_history(
+        &self,
+        req: ServerRequestSingle<LoadHistoryRequest>,
+        resp: ServerResponseSink<History>,
+    ) -> grpc::Result<()> {
+        todo!()
+    }
 }

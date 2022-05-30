@@ -1644,6 +1644,526 @@ impl ::protobuf::reflect::ProtobufValue for DeviceClock {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct LoadHistoryRequest {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a LoadHistoryRequest {
+    fn default() -> &'a LoadHistoryRequest {
+        <LoadHistoryRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl LoadHistoryRequest {
+    pub fn new() -> LoadHistoryRequest {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for LoadHistoryRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> LoadHistoryRequest {
+        LoadHistoryRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<LoadHistoryRequest>(
+                "LoadHistoryRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static LoadHistoryRequest {
+        static instance: ::protobuf::rt::LazyV2<LoadHistoryRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(LoadHistoryRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for LoadHistoryRequest {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for LoadHistoryRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for LoadHistoryRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct History {
+    // message fields
+    pub items: ::protobuf::RepeatedField<HistoryItem>,
+    pub pointer: u64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a History {
+    fn default() -> &'a History {
+        <History as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl History {
+    pub fn new() -> History {
+        ::std::default::Default::default()
+    }
+
+    // repeated .mizer.HistoryItem items = 1;
+
+
+    pub fn get_items(&self) -> &[HistoryItem] {
+        &self.items
+    }
+    pub fn clear_items(&mut self) {
+        self.items.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_items(&mut self, v: ::protobuf::RepeatedField<HistoryItem>) {
+        self.items = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_items(&mut self) -> &mut ::protobuf::RepeatedField<HistoryItem> {
+        &mut self.items
+    }
+
+    // Take field
+    pub fn take_items(&mut self) -> ::protobuf::RepeatedField<HistoryItem> {
+        ::std::mem::replace(&mut self.items, ::protobuf::RepeatedField::new())
+    }
+
+    // uint64 pointer = 2;
+
+
+    pub fn get_pointer(&self) -> u64 {
+        self.pointer
+    }
+    pub fn clear_pointer(&mut self) {
+        self.pointer = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pointer(&mut self, v: u64) {
+        self.pointer = v;
+    }
+}
+
+impl ::protobuf::Message for History {
+    fn is_initialized(&self) -> bool {
+        for v in &self.items {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.items)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.pointer = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.items {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if self.pointer != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.pointer, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.items {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if self.pointer != 0 {
+            os.write_uint64(2, self.pointer)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> History {
+        History::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<HistoryItem>>(
+                "items",
+                |m: &History| { &m.items },
+                |m: &mut History| { &mut m.items },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "pointer",
+                |m: &History| { &m.pointer },
+                |m: &mut History| { &mut m.pointer },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<History>(
+                "History",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static History {
+        static instance: ::protobuf::rt::LazyV2<History> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(History::new)
+    }
+}
+
+impl ::protobuf::Clear for History {
+    fn clear(&mut self) {
+        self.items.clear();
+        self.pointer = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for History {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for History {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct HistoryItem {
+    // message fields
+    pub label: ::std::string::String,
+    pub timestamp: u64,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a HistoryItem {
+    fn default() -> &'a HistoryItem {
+        <HistoryItem as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl HistoryItem {
+    pub fn new() -> HistoryItem {
+        ::std::default::Default::default()
+    }
+
+    // string label = 1;
+
+
+    pub fn get_label(&self) -> &str {
+        &self.label
+    }
+    pub fn clear_label(&mut self) {
+        self.label.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_label(&mut self, v: ::std::string::String) {
+        self.label = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_label(&mut self) -> &mut ::std::string::String {
+        &mut self.label
+    }
+
+    // Take field
+    pub fn take_label(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.label, ::std::string::String::new())
+    }
+
+    // uint64 timestamp = 2;
+
+
+    pub fn get_timestamp(&self) -> u64 {
+        self.timestamp
+    }
+    pub fn clear_timestamp(&mut self) {
+        self.timestamp = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_timestamp(&mut self, v: u64) {
+        self.timestamp = v;
+    }
+}
+
+impl ::protobuf::Message for HistoryItem {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.label)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.timestamp = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.label.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.label);
+        }
+        if self.timestamp != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.timestamp, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.label.is_empty() {
+            os.write_string(1, &self.label)?;
+        }
+        if self.timestamp != 0 {
+            os.write_uint64(2, self.timestamp)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> HistoryItem {
+        HistoryItem::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "label",
+                |m: &HistoryItem| { &m.label },
+                |m: &mut HistoryItem| { &mut m.label },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                "timestamp",
+                |m: &HistoryItem| { &m.timestamp },
+                |m: &mut HistoryItem| { &mut m.timestamp },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<HistoryItem>(
+                "HistoryItem",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static HistoryItem {
+        static instance: ::protobuf::rt::LazyV2<HistoryItem> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(HistoryItem::new)
+    }
+}
+
+impl ::protobuf::Clear for HistoryItem {
+    fn clear(&mut self) {
+        self.label.clear();
+        self.timestamp = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for HistoryItem {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for HistoryItem {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rsession.proto\x12\x05mizer\"\x10\n\x0eProjectRequest\"(\n\x12LoadPro\
     jectRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"*\n\x14SavePr\
@@ -1658,14 +2178,19 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x0b2\x12.mizer.DeviceClockR\x05clock\x12\x12\n\x04ping\x18\x04\
     \x20\x01(\x01R\x04ping\";\n\x0bDeviceClock\x12\x16\n\x06master\x18\x01\
     \x20\x01(\x08R\x06master\x12\x14\n\x05drift\x18\x02\x20\x01(\x01R\x05dri\
-    ft2\x8c\x03\n\nSessionApi\x127\n\nGetSession\x12\x15.mizer.SessionReques\
-    t\x1a\x0e.mizer.Session\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mizer.Cli\
-    entAnnouncement\x1a\x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\x15.miz\
-    er.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLoadProjec\
-    t\x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12\
-    >\n\x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectRes\
-    ponse\"\0\x12F\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsRequest\x1a\
-    \x16.mizer.ProjectResponse\"\0b\x06proto3\
+    ft\"\x14\n\x12LoadHistoryRequest\"M\n\x07History\x12(\n\x05items\x18\x01\
+    \x20\x03(\x0b2\x12.mizer.HistoryItemR\x05items\x12\x18\n\x07pointer\x18\
+    \x02\x20\x01(\x04R\x07pointer\"A\n\x0bHistoryItem\x12\x14\n\x05label\x18\
+    \x01\x20\x01(\tR\x05label\x12\x1c\n\ttimestamp\x18\x02\x20\x01(\x04R\tti\
+    mestamp2\xca\x03\n\nSessionApi\x127\n\nGetSession\x12\x15.mizer.SessionR\
+    equest\x1a\x0e.mizer.Session\"\00\x01\x12:\n\x0bJoinSession\x12\x19.mize\
+    r.ClientAnnouncement\x1a\x0e.mizer.Session\"\0\x12=\n\nNewProject\x12\
+    \x15.mizer.ProjectRequest\x1a\x16.mizer.ProjectResponse\"\0\x12B\n\x0bLo\
+    adProject\x12\x19.mizer.LoadProjectRequest\x1a\x16.mizer.ProjectResponse\
+    \"\0\x12>\n\x0bSaveProject\x12\x15.mizer.ProjectRequest\x1a\x16.mizer.Pr\
+    ojectResponse\"\0\x12F\n\rSaveProjectAs\x12\x1b.mizer.SaveProjectAsReque\
+    st\x1a\x16.mizer.ProjectResponse\"\0\x12<\n\x0bLoadHistory\x12\x19.mizer\
+    .LoadHistoryRequest\x1a\x0e.mizer.History\"\00\x01b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

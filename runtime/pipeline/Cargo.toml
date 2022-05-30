@@ -24,6 +24,8 @@ ringbuffer = "0.8"
 downcast = "0.11"
 profiling = "1"
 pinboard = "2.1"
+tracing = "0.1"
+tracing-unwrap = "0.9"
 
 [dev-dependencies]
 test-case = "1.2.0"

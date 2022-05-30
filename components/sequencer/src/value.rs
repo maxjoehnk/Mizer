@@ -1,6 +1,7 @@
 use mizer_util::LerpExt;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Display, Formatter};
+use std::hash::{Hash, Hasher};
 use std::ops::{
     Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
 };
@@ -10,6 +11,38 @@ use std::ops::{
 pub enum SequencerValue<T> {
     Direct(T),
     Range((T, T)),
+}
+
+impl Hash for SequencerValue<f64> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            Self::Direct(value) => {
+                state.write_u8(0);
+                (*value).to_bits().hash(state);
+            }
+            Self::Range((start, end)) => {
+                state.write_u8(1);
+                (*start).to_bits().hash(state);
+                (*end).to_bits().hash(state);
+            }
+        }
+    }
+}
+
+impl Hash for SequencerValue<SequencerTime> {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            Self::Direct(value) => {
+                state.write_u8(0);
+                value.hash(state);
+            }
+            Self::Range((start, end)) => {
+                state.write_u8(1);
+                start.hash(state);
+                end.hash(state);
+            }
+        }
+    }
 }
 
 impl SequencerValue<f64> {
@@ -262,6 +295,22 @@ impl Default for SequencerValue<SequencerTime> {
 impl Display for SequencerValue<f64> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}", self)
+    }
+}
+
+#[allow(clippy::derive_hash_xor_eq)]
+impl Hash for SequencerTime {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            Self::Seconds(seconds) => {
+                state.write_u8(0);
+                (*seconds).to_bits().hash(state);
+            }
+            Self::Beats(beats) => {
+                state.write_u8(1);
+                (*beats).to_bits().hash(state);
+            }
+        }
     }
 }
 

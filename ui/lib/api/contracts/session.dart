@@ -6,4 +6,7 @@ abstract class SessionApi {
   Future<void> loadProject(String path);
   Future<void> saveProject();
   Future<void> saveProjectAs(String path);
+  Future<void> undo();
+  Future<void> redo();
+  Stream<History> getHistory();
 }

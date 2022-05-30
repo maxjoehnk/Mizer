@@ -47,6 +47,11 @@ class SessionApiClient extends $grpc.Client {
           ($0.SaveProjectAsRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ProjectResponse.fromBuffer(value));
+  static final _$loadHistory =
+      $grpc.ClientMethod<$0.LoadHistoryRequest, $0.History>(
+          '/mizer.SessionApi/LoadHistory',
+          ($0.LoadHistoryRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.History.fromBuffer(value));
 
   SessionApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -86,6 +91,13 @@ class SessionApiClient extends $grpc.Client {
       $0.SaveProjectAsRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$saveProjectAs, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.History> loadHistory($0.LoadHistoryRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(
+        _$loadHistory, $async.Stream.fromIterable([request]),
+        options: options);
   }
 }
 
@@ -138,6 +150,14 @@ abstract class SessionApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.SaveProjectAsRequest.fromBuffer(value),
         ($0.ProjectResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.LoadHistoryRequest, $0.History>(
+        'LoadHistory',
+        loadHistory_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) =>
+            $0.LoadHistoryRequest.fromBuffer(value),
+        ($0.History value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.Session> getSession_Pre(
@@ -170,6 +190,11 @@ abstract class SessionApiServiceBase extends $grpc.Service {
     return saveProjectAs(call, await request);
   }
 
+  $async.Stream<$0.History> loadHistory_Pre($grpc.ServiceCall call,
+      $async.Future<$0.LoadHistoryRequest> request) async* {
+    yield* loadHistory(call, await request);
+  }
+
   $async.Stream<$0.Session> getSession(
       $grpc.ServiceCall call, $0.SessionRequest request);
   $async.Future<$0.Session> joinSession(
@@ -182,4 +207,6 @@ abstract class SessionApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.ProjectRequest request);
   $async.Future<$0.ProjectResponse> saveProjectAs(
       $grpc.ServiceCall call, $0.SaveProjectAsRequest request);
+  $async.Stream<$0.History> loadHistory(
+      $grpc.ServiceCall call, $0.LoadHistoryRequest request);
 }

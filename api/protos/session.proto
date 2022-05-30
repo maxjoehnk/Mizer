@@ -9,6 +9,7 @@ service SessionApi {
   rpc LoadProject (LoadProjectRequest) returns (ProjectResponse) {}
   rpc SaveProject (ProjectRequest) returns (ProjectResponse) {}
   rpc SaveProjectAs (SaveProjectAsRequest) returns (ProjectResponse) {}
+  rpc LoadHistory (LoadHistoryRequest) returns (stream History) {}
 }
 
 message ProjectRequest {}
@@ -42,4 +43,15 @@ message SessionDevice {
 message DeviceClock {
   bool master = 1;
   double drift = 2;
+}
+
+message LoadHistoryRequest {}
+message History {
+  repeated HistoryItem items = 1;
+  uint64 pointer = 2;
+}
+
+message HistoryItem {
+  string label = 1;
+  uint64 timestamp = 2;
 }

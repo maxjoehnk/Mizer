@@ -82,12 +82,13 @@ class MizerTableRow {
   final List<Widget> cells;
   final bool selected;
   final bool highlight;
+  final bool inactive;
   final void Function()? onTap;
   final void Function()? onDoubleTap;
   final void Function()? onSecondaryTap;
 
   MizerTableRow(
-      {required this.cells, this.selected = false, this.highlight = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
+      {required this.cells, this.selected = false, this.highlight = false, this.inactive = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
 }
 
 class PopupTableCell extends StatelessWidget {

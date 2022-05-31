@@ -17,6 +17,7 @@ import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/windows/preferences_window.dart';
+import 'package:mizer/windows/smart_window.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 
 import 'actions/actions.dart';
@@ -101,7 +102,11 @@ class ApplicationMenu extends StatelessWidget {
               SubMenu(title: 'Window'.i18n, children: [
                 MenuItem(
                     label: 'New Window'.i18n,
-                    action: () => Window.create({}).then((window) => window.show()))
+                    action: () => Window.create({}).then((window) => window.show())),
+                MenuItem(
+                  label: 'Smart Window'.i18n,
+                action: () => Window.create(SmartWindow.toInitData()).then((window) => window.show())
+                )
               ])
           ])),
     );

@@ -5,6 +5,7 @@ import 'package:mizer/windows/dmx_monitor_window.dart';
 import 'package:mizer/windows/main_window.dart';
 import 'package:mizer/windows/midi_monitor_window.dart';
 import 'package:mizer/windows/preferences_window.dart';
+import 'package:mizer/windows/smart_window.dart';
 import 'package:nativeshell/nativeshell.dart';
 
 import 'i18n.dart';
@@ -24,6 +25,7 @@ class MizerIntegratedUi extends StatelessWidget {
       state ??= DmxMonitorWindow.fromInitData(initData);
       state ??= MidiMonitorWindow.fromInitData(initData);
       state ??= PreferencesWindow.fromInitData(initData);
+      state ??= SmartWindow.fromInitData(initData);
       state ??= MainWindowState();
 
       return state;

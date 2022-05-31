@@ -313,7 +313,9 @@ impl Programmer {
         self.emit_state();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn select_fixtures(&mut self, fixtures: Vec<FixtureId>) {
+        tracing::trace!("select_fixtures");
         if self.has_written_to_selection {
             self.active_fixtures.clear();
             self.has_written_to_selection = false;

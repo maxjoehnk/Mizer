@@ -55,8 +55,6 @@ class FixturesTable extends StatelessWidget {
   }
 
   List<MizerTableRow> _getRows() {
-    var fixtures =
-        this.fixtures.sortedByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs);
     List<MizerTableRow> rows = [];
     for (var fixture in fixtures) {
       rows.add(_fixtureRow(fixture, expandedIds.contains(fixture.id)));

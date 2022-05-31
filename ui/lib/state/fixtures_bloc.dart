@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 
@@ -69,6 +70,8 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     log("fetching fixtures", name: "FixturesBloc");
     var fixtures = await api.getFixtures();
     log("got ${fixtures.fixtures.length} fixtures", name: "FixturesBloc");
+
+    fixtures.fixtures.sortByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs);
 
     return fixtures;
   }

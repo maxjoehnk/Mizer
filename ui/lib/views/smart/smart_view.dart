@@ -121,6 +121,14 @@ class _SmartViewState extends State<SmartView> with SingleTickerProviderStateMix
 
     return fixtures
         .where((fixture) => programmerState.activeFixtures.contains(fixture.id) || programmerState.fixtures.contains(fixture.id))
+        .sortedByCompare<int>((fixture) {
+          var fixtureIndex = programmerState.activeFixtures.indexOf(fixture.id);
+          if (fixtureIndex == -1) {
+            fixtureIndex = programmerState.fixtures.indexOf(fixture.id);
+          }
+
+          return fixtureIndex;
+        }, (lhs, rhs) => lhs - rhs)
         .toList();
   }
 

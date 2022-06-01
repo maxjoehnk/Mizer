@@ -2,7 +2,7 @@ use crate::buffer::DmxBuffer;
 use crate::DmxOutput;
 use std::collections::HashMap;
 use std::convert::TryFrom;
-use std::net::{ToSocketAddrs, UdpSocket};
+use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
 
 pub struct ArtnetOutput {
     socket: UdpSocket,
@@ -24,6 +24,15 @@ impl ArtnetOutput {
             buffer: DmxBuffer::default(),
         })
     }
+
+    fn parse_addr(&self) -> anyhow::Result<SocketAddr> {
+        let addr = (self.host.as_str(), self.port)
+            .to_socket_addrs()?
+            .next()
+            .ok_or_else(|| anyhow::anyhow!("Invalid artnet address"))?;
+
+        Ok(addr)
+    }
 }
 
 impl DmxOutput for ArtnetOutput {
@@ -40,11 +49,13 @@ impl DmxOutput for ArtnetOutput {
     }
 
     fn flush(&self) {
-        let broadcast_addr = (self.host.as_str(), self.port)
-            .to_socket_addrs()
-            .unwrap()
-            .next()
-            .unwrap();
+        let broadcast_addr = match self.parse_addr() {
+            Ok(addr) => addr,
+            Err(err) => {
+                log::error!("Unable to parse artnet address: {:?}", err);
+                return;
+            }
+        };
 
         let universe_buffer = self.buffer.buffers.lock().unwrap();
         for (universe, buffer) in universe_buffer.iter() {
@@ -58,7 +69,9 @@ impl DmxOutput for ArtnetOutput {
                 .write_to_buffer()
                 .unwrap();
 
-            self.socket.send_to(&msg, broadcast_addr).unwrap();
+            if let Err(err) = self.socket.send_to(&msg, broadcast_addr) {
+                log::error!("Unable to send to artnet server {:?}", err);
+            }
         }
     }
 

@@ -35,7 +35,9 @@ impl DmxOutput for SacnOutput {
     fn flush(&self) {
         let universe_buffer = self.buffer.buffers.lock().unwrap();
         for (universe, buffer) in universe_buffer.iter() {
-            self.source.send(*universe, buffer).unwrap();
+            if let Err(err) = self.source.send(*universe, buffer) {
+                log::error!("Unable to send dmx universe {:?}", err);
+            }
         }
     }
 

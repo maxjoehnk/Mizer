@@ -25,12 +25,12 @@ class ConnectionsPluginApi implements ConnectionsApi {
   }
 
   @override
-  Future<void> addArtnet(AddArtnetRequest request) async {
+  Future<void> addArtnet(ArtnetConfig request) async {
     await channel.invokeMethod("addArtnet", request.writeToBuffer());
   }
 
   @override
-  Future<void> addSacn(AddSacnRequest request) async {
+  Future<void> addSacn(SacnConfig request) async {
     await channel.invokeMethod("addSacn", request.writeToBuffer());
   }
 
@@ -45,5 +45,15 @@ class ConnectionsPluginApi implements ConnectionsApi {
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
     return midiMonitorChannel.receiveBroadcastStream(connectionId)
         .map((buffer) => MonitorMidiResponse.fromBuffer(_convertBuffer(buffer)));
+  }
+
+  @override
+  Future<void> deleteConnection(Connection connection) async {
+    await channel.invokeMethod("deleteConnection", connection.writeToBuffer());
+  }
+
+  @override
+  Future<void> configureConnection(ConfigureConnectionRequest request) async {
+    await channel.invokeMethod("configureConnection", request.writeToBuffer());
   }
 }

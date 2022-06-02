@@ -1,4 +1,5 @@
 use futures::{Stream, StreamExt};
+use mizer_command_executor::*;
 use std::collections::HashMap;
 
 use crate::models::*;
@@ -51,11 +52,16 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     pub fn add_sacn(&self, name: String) -> anyhow::Result<()> {
-        self.runtime.add_sacn_connection(name)
+        self.runtime.run_command(AddSacnOutputCommand { name })?;
+
+        Ok(())
     }
 
     pub fn add_artnet(&self, name: String, host: String, port: Option<u16>) -> anyhow::Result<()> {
-        self.runtime.add_artnet_connection(name, host, port)
+        self.runtime
+            .run_command(AddArtnetOutputCommand { name, host, port })?;
+
+        Ok(())
     }
 
     pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
@@ -69,6 +75,36 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
         MidiDeviceProfiles {
             profiles,
             ..Default::default()
+        }
+    }
+
+    pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
+        if let Some(Connection_oneof_connection::dmx(dmx)) = connection.connection {
+            self.runtime
+                .run_command(DeleteOutputCommand { name: dmx.outputId })?;
+
+            Ok(())
+        } else {
+            unimplemented!()
+        }
+    }
+
+    pub fn configure_connection(&self, update: ConfigureConnectionRequest) -> anyhow::Result<()> {
+        if let Some(ConfigureConnectionRequest_oneof_config::dmx(connection)) = update.config {
+            if let Some(DmxConnection_oneof_config::artnet(config)) = connection.config {
+                self.runtime.run_command(ConfigureArtnetOutputCommand {
+                    id: connection.outputId,
+                    name: config.name,
+                    host: config.host,
+                    port: Some(config.port as u16),
+                })?;
+
+                Ok(())
+            } else {
+                unimplemented!()
+            }
+        } else {
+            unimplemented!()
         }
     }
 }

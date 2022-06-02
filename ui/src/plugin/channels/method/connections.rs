@@ -3,7 +3,7 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
-use mizer_api::models::{AddArtnetRequest, AddSacnRequest};
+use mizer_api::models::{ArtnetConfig, SacnConfig};
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;
@@ -64,6 +64,26 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "deleteConnection" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|args| self.handler.delete_connection(args))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "configureConnection" => {
+                if let Err(err) = call
+                    .arguments()
+                    .and_then(|args| self.handler.configure_connection(args))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -78,12 +98,12 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
         MethodChannel::new(context, "mizer.live/connections", self)
     }
 
-    fn add_artnet(&self, request: AddArtnetRequest) -> anyhow::Result<()> {
+    fn add_artnet(&self, request: ArtnetConfig) -> anyhow::Result<()> {
         self.handler
             .add_artnet(request.name, request.host, Some(request.port as u16))
     }
 
-    fn add_sacn(&self, request: AddSacnRequest) -> anyhow::Result<()> {
+    fn add_sacn(&self, request: SacnConfig) -> anyhow::Result<()> {
         self.handler.add_sacn(request.name)
     }
 }

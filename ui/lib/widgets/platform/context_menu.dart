@@ -10,6 +10,7 @@ class ContextMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onSecondaryTapDown: (details) => context.platform
           .showContextMenu(context: context, menu: menu, position: details.globalPosition),
       child: child,

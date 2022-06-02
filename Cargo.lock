@@ -3338,6 +3338,7 @@ dependencies = [
  "mizer-node",
  "mizer-plan",
  "mizer-processing",
+ "mizer-protocol-dmx",
  "mizer-runtime",
  "mizer-sequencer-commands",
  "serde",
@@ -3874,10 +3875,12 @@ dependencies = [
  "artnet_protocol",
  "enum_dispatch",
  "log",
+ "mizer-commander",
  "mizer-module",
  "mizer-processing",
  "profiling",
  "sacn",
+ "serde",
  "tracing",
 ]
 

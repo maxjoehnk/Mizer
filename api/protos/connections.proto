@@ -8,10 +8,13 @@ service ConnectionsApi {
   rpc MonitorDmx (MonitorDmxRequest) returns (MonitorDmxResponse) {}
   rpc MonitorMidi (MonitorMidiRequest) returns (stream MonitorMidiResponse) {}
 
-  rpc AddArtnetConnection (AddArtnetRequest) returns (Connections) {}
-  rpc AddSacnConnection (AddSacnRequest) returns (Connections) {}
+  rpc AddArtnetConnection (ArtnetConfig) returns (Connections) {}
+  rpc AddSacnConnection (SacnConfig) returns (Connections) {}
 
   rpc GetMidiDeviceProfiles (GetDeviceProfilesRequest) returns (MidiDeviceProfiles) {}
+
+  rpc DeleteConnection (Connection) returns (Connections) {}
+  rpc ConfigureConnection (ConfigureConnectionRequest) returns (Connection) {}
 }
 
 message MonitorDmxRequest {
@@ -58,13 +61,13 @@ message MonitorMidiResponse {
 message GetConnectionsRequest {}
 message GetDeviceProfilesRequest {}
 
-message AddArtnetRequest {
+message ArtnetConfig {
   string name = 1;
   string host = 2;
   uint32 port = 3;
 }
 
-message AddSacnRequest {
+message SacnConfig {
   string name = 1;
 }
 
@@ -87,6 +90,10 @@ message Connection {
 
 message DmxConnection {
   string outputId = 1;
+  oneof config {
+    ArtnetConfig artnet = 3;
+    SacnConfig sacn = 4;
+  }
 }
 
 message HeliosConnection {
@@ -174,5 +181,11 @@ message CdjPlayback {
   message Track {
     string artist = 1;
     string title = 2;
+  }
+}
+
+message ConfigureConnectionRequest {
+  oneof config {
+    DmxConnection dmx = 1;
   }
 }

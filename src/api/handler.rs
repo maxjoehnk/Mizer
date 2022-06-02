@@ -3,12 +3,14 @@ use std::path::PathBuf;
 
 use mizer_clock::Clock;
 use mizer_command_executor::CommandHistory;
-use mizer_connections::{midi_device_profile::DeviceProfile, Connection, DmxView, MidiView};
+use mizer_connections::{
+    midi_device_profile::DeviceProfile, Connection, DmxConfig, DmxView, MidiView,
+};
 use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
-use mizer_protocol_dmx::{ArtnetOutput, DmxConnectionManager, DmxOutput, SacnOutput};
+use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
@@ -97,18 +99,6 @@ impl ApiHandler {
                     .send(device_profiles)
                     .expect("api command sender disconnected");
             }
-            ApiCommand::AddArtnetConnection(name, (host, port), sender) => {
-                let result = self.add_artnet_connection(mizer, name, host, port);
-                sender
-                    .send(result)
-                    .expect("api command sender disconnected")
-            }
-            ApiCommand::AddSacnConnection(name, sender) => {
-                let result = self.add_sacn_connection(mizer, name);
-                sender
-                    .send(result)
-                    .expect("api command sender disconnected")
-            }
             ApiCommand::GetDmxMonitor(output_id, sender) => {
                 let result = self.monitor_dmx(mizer, output_id);
                 sender
@@ -173,6 +163,13 @@ impl ApiHandler {
             .map(|(id, output)| DmxView {
                 output_id: id.clone(),
                 name: output.name(),
+                config: match output {
+                    mizer_protocol_dmx::DmxConnection::Artnet(config) => DmxConfig::Artnet {
+                        host: config.host.clone(),
+                        port: config.port,
+                    },
+                    mizer_protocol_dmx::DmxConnection::Sacn(_) => DmxConfig::Sacn,
+                },
             })
             .map(Connection::from);
         let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
@@ -197,36 +194,6 @@ impl ApiHandler {
             .unwrap();
 
         manager.list_available_device_profiles()
-    }
-
-    fn add_artnet_connection(
-        &self,
-        mizer: &mut Mizer,
-        name: String,
-        host: String,
-        port: Option<u16>,
-    ) -> anyhow::Result<()> {
-        let output = ArtnetOutput::new(host, port)?;
-        let dmx_manager = mizer
-            .runtime
-            .injector_mut()
-            .get_mut::<DmxConnectionManager>()
-            .unwrap();
-        dmx_manager.add_output(name, output);
-
-        Ok(())
-    }
-
-    fn add_sacn_connection(&self, mizer: &mut Mizer, name: String) -> anyhow::Result<()> {
-        let output = SacnOutput::new();
-        let dmx_manager = mizer
-            .runtime
-            .injector_mut()
-            .get_mut::<DmxConnectionManager>()
-            .unwrap();
-        dmx_manager.add_output(name, output);
-
-        Ok(())
     }
 
     fn monitor_dmx(

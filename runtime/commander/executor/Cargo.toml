@@ -19,5 +19,6 @@ mizer-plan = { path = "../../../components/plan" }
 mizer-layouts = { path = "../../layouts" }
 mizer-layout-commands = { path = "../../layouts/commands" }
 mizer-node = { path = "../../pipeline/node" }
+mizer-protocol-dmx = { path  = "../../../components/connections/protocols/dmx" }
 flume = "0.10"
 tracing = "0.1"

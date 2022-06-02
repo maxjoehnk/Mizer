@@ -28,11 +28,15 @@ pub trait ConnectionsApi {
 
     fn monitor_midi(&self, req: ::grpc::ServerRequestSingle<super::connections::MonitorMidiRequest>, resp: ::grpc::ServerResponseSink<super::connections::MonitorMidiResponse>) -> ::grpc::Result<()>;
 
-    fn add_artnet_connection(&self, req: ::grpc::ServerRequestSingle<super::connections::AddArtnetRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
+    fn add_artnet_connection(&self, req: ::grpc::ServerRequestSingle<super::connections::ArtnetConfig>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
 
-    fn add_sacn_connection(&self, req: ::grpc::ServerRequestSingle<super::connections::AddSacnRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
+    fn add_sacn_connection(&self, req: ::grpc::ServerRequestSingle<super::connections::SacnConfig>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
 
     fn get_midi_device_profiles(&self, req: ::grpc::ServerRequestSingle<super::connections::GetDeviceProfilesRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::MidiDeviceProfiles>) -> ::grpc::Result<()>;
+
+    fn delete_connection(&self, req: ::grpc::ServerRequestSingle<super::connections::Connection>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connections>) -> ::grpc::Result<()>;
+
+    fn configure_connection(&self, req: ::grpc::ServerRequestSingle<super::connections::ConfigureConnectionRequest>, resp: ::grpc::ServerResponseUnarySink<super::connections::Connection>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -80,7 +84,7 @@ impl ConnectionsApiClient {
         self.grpc_client.call_server_streaming(o, req, descriptor)
     }
 
-    pub fn add_artnet_connection(&self, o: ::grpc::RequestOptions, req: super::connections::AddArtnetRequest) -> ::grpc::SingleResponse<super::connections::Connections> {
+    pub fn add_artnet_connection(&self, o: ::grpc::RequestOptions, req: super::connections::ArtnetConfig) -> ::grpc::SingleResponse<super::connections::Connections> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/AddArtnetConnection"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
@@ -90,7 +94,7 @@ impl ConnectionsApiClient {
         self.grpc_client.call_unary(o, req, descriptor)
     }
 
-    pub fn add_sacn_connection(&self, o: ::grpc::RequestOptions, req: super::connections::AddSacnRequest) -> ::grpc::SingleResponse<super::connections::Connections> {
+    pub fn add_sacn_connection(&self, o: ::grpc::RequestOptions, req: super::connections::SacnConfig) -> ::grpc::SingleResponse<super::connections::Connections> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/AddSacnConnection"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
@@ -103,6 +107,26 @@ impl ConnectionsApiClient {
     pub fn get_midi_device_profiles(&self, o: ::grpc::RequestOptions, req: super::connections::GetDeviceProfilesRequest) -> ::grpc::SingleResponse<super::connections::MidiDeviceProfiles> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/GetMidiDeviceProfiles"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn delete_connection(&self, o: ::grpc::RequestOptions, req: super::connections::Connection) -> ::grpc::SingleResponse<super::connections::Connections> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/DeleteConnection"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn configure_connection(&self, o: ::grpc::RequestOptions, req: super::connections::ConfigureConnectionRequest) -> ::grpc::SingleResponse<super::connections::Connection> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/ConfigureConnection"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -191,6 +215,30 @@ impl ConnectionsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_midi_device_profiles(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/DeleteConnection"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).delete_connection(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.ConnectionsApi/ConfigureConnection"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).configure_connection(req, resp))
                     },
                 ),
             ],

@@ -20,12 +20,12 @@ class ConnectionsGrpcApi implements ConnectionsApi {
   }
 
   @override
-  Future<void> addArtnet(AddArtnetRequest request) async {
+  Future<void> addArtnet(ArtnetConfig request) async {
     await this.client.addArtnetConnection(request);
   }
 
   @override
-  Future<void> addSacn(AddSacnRequest request) async {
+  Future<void> addSacn(SacnConfig request) async {
     await this.client.addSacnConnection(request);
   }
 
@@ -37,5 +37,15 @@ class ConnectionsGrpcApi implements ConnectionsApi {
   @override
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
     return this.client.monitorMidi(MonitorMidiRequest(name: connectionId));
+  }
+
+  @override
+  Future<void> deleteConnection(Connection connection) async {
+    await this.client.deleteConnection(connection);
+  }
+
+  @override
+  Future<void> configureConnection(ConfigureConnectionRequest request) async {
+    await this.client.configureConnection(request);
   }
 }

@@ -2,23 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
-class AddArtnetConnectionDialog extends StatefulWidget {
-  const AddArtnetConnectionDialog({Key? key}) : super(key: key);
+class ConfigureArtnetConnectionDialog extends StatefulWidget {
+  final ArtnetConfig? config;
+
+  const ConfigureArtnetConnectionDialog({this.config, Key? key}) : super(key: key);
 
   @override
-  State<AddArtnetConnectionDialog> createState() => _AddArtnetConnectionDialogState();
+  State<ConfigureArtnetConnectionDialog> createState() => _ConfigureArtnetConnectionDialogState();
 }
 
-class _AddArtnetConnectionDialogState extends State<AddArtnetConnectionDialog> {
+class _ConfigureArtnetConnectionDialogState extends State<ConfigureArtnetConnectionDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController;
   final TextEditingController _hostController;
   final TextEditingController _portController;
 
-  _AddArtnetConnectionDialogState()
+  _ConfigureArtnetConnectionDialogState()
       : _nameController = TextEditingController(),
         _hostController = TextEditingController(text: "0.0.0.0"),
         _portController = TextEditingController(text: "6454");
+
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.config != null) {
+      this._nameController.text = widget.config!.name;
+      this._hostController.text = widget.config!.host;
+      this._portController.text = widget.config!.port.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +87,11 @@ class _AddArtnetConnectionDialogState extends State<AddArtnetConnectionDialog> {
             if (!_formKey.currentState!.validate()) {
               return;
             }
-            Navigator.of(context).pop(AddArtnetRequest(
+            Navigator.of(context).pop(ArtnetConfig(
                 name: _nameController.text,
                 host: _hostController.text,
-                port: int.parse(_portController.text)));
+                port: int.parse(_portController.text
+            )));
           },
         ),
       ],

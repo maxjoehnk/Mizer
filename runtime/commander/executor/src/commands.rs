@@ -8,6 +8,7 @@ pub use crate::aggregates::*;
 pub use mizer_fixture_commands::*;
 pub use mizer_layout_commands::*;
 pub use mizer_plan::commands::*;
+pub use mizer_protocol_dmx::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
 
@@ -53,6 +54,10 @@ pub enum CommandImpl {
     UpdateCueTriggerCommand(UpdateCueTriggerCommand),
     UpdateCueValueCommand(UpdateCueValueCommand),
     UpdateSequenceWrapAroundCommand(UpdateSequenceWrapAroundCommand),
+    AddArtnetOutputCommand(AddArtnetOutputCommand),
+    AddSacnOutputCommand(AddSacnOutputCommand),
+    ConfigureArtnetOutputCommand(ConfigureArtnetOutputCommand),
+    DeleteOutputCommand(DeleteOutputCommand),
 }
 
 impl CommandImpl {
@@ -100,6 +105,10 @@ impl CommandImpl {
             Self::UpdateCueTriggerCommand(cmd) => self._apply(injector, executor, cmd),
             Self::UpdateCueValueCommand(cmd) => self._apply(injector, executor, cmd),
             Self::UpdateSequenceWrapAroundCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::AddArtnetOutputCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::AddSacnOutputCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::ConfigureArtnetOutputCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::DeleteOutputCommand(cmd) => self._apply(injector, executor, cmd),
         }
     }
 
@@ -145,6 +154,10 @@ impl CommandImpl {
             Self::UpdateCueTriggerCommand(cmd) => executor.revert(injector, cmd),
             Self::UpdateCueValueCommand(cmd) => executor.revert(injector, cmd),
             Self::UpdateSequenceWrapAroundCommand(cmd) => executor.revert(injector, cmd),
+            Self::AddArtnetOutputCommand(cmd) => executor.revert(injector, cmd),
+            Self::AddSacnOutputCommand(cmd) => executor.revert(injector, cmd),
+            Self::ConfigureArtnetOutputCommand(cmd) => executor.revert(injector, cmd),
+            Self::DeleteOutputCommand(cmd) => executor.revert(injector, cmd),
         }
     }
 
@@ -186,6 +199,10 @@ impl CommandImpl {
             Self::UpdateCueTriggerCommand(cmd) => cmd.label(),
             Self::UpdateCueValueCommand(cmd) => cmd.label(),
             Self::UpdateSequenceWrapAroundCommand(cmd) => cmd.label(),
+            Self::AddArtnetOutputCommand(cmd) => cmd.label(),
+            Self::AddSacnOutputCommand(cmd) => cmd.label(),
+            Self::ConfigureArtnetOutputCommand(cmd) => cmd.label(),
+            Self::DeleteOutputCommand(cmd) => cmd.label(),
         }
     }
 

@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/panel.dart';
+import 'package:mizer/widgets/platform/context_menu.dart';
 
 import 'dialogs/add_artnet_connection.dart';
 import 'dialogs/add_sacn_connection.dart';
@@ -34,23 +36,33 @@ class _ConnectionsViewState extends State<ConnectionsView> {
             itemCount: connections.length,
             itemBuilder: (context, index) {
               var connection = connections[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ConnectionTag(connection),
-                      ),
-                      Expanded(child: DeviceTitle(connection)),
-                      ..._buildActions(context, connection),
-                    ],
-                  ),
-                  _buildConnection(connection),
-                  Divider(),
-                ],
+              return ContextMenu(
+                menu: Menu(items: [
+                  if (connection.canConfigure) MenuItem(
+                      label: "Configure".i18n,
+                      action: () => _onConfigure(connection)),
+                  if (connection.canDelete) MenuItem(
+                      label: "Delete".i18n,
+                      action: () => _onDelete(connection)),
+                ]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: ConnectionTag(connection),
+                        ),
+                        Expanded(child: DeviceTitle(connection)),
+                        ..._buildActions(context, connection),
+                      ],
+                    ),
+                    _buildConnection(connection),
+                    Divider(),
+                  ],
+                ),
               );
             }),
         actions: [
@@ -143,8 +155,8 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   }
 
   _addSacn() async {
-    var value = await showDialog<AddSacnRequest>(
-        context: context, builder: (context) => AddSacnConnectionDialog());
+    var value = await showDialog<SacnConfig>(
+        context: context, builder: (context) => ConfigureSacnConnectionDialog());
     if (value == null) {
       return null;
     }
@@ -153,13 +165,52 @@ class _ConnectionsViewState extends State<ConnectionsView> {
   }
 
   _addArtnet() async {
-    var value = await showDialog<AddArtnetRequest>(
-        context: context, builder: (context) => AddArtnetConnectionDialog());
+    var value = await showDialog<ArtnetConfig>(
+        context: context, builder: (context) => ConfigureArtnetConnectionDialog());
     if (value == null) {
       return null;
     }
     await api.addArtnet(value);
     await _fetch();
+  }
+
+  _onDelete(Connection connection) async {
+    bool result = await showDialog(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertDialog(
+              title: Text("Delete Connection".i18n),
+              content: SingleChildScrollView(
+                child: Text("Delete Connection ${connection.name}?".i18n),
+              ),
+              actions: [
+                TextButton(
+                  child: Text("Cancel".i18n),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+                TextButton(
+                  autofocus: true,
+                  child: Text("Delete".i18n),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ],
+            ));
+    if (result) {
+      await api.deleteConnection(connection);
+      await _fetch();
+    }
+  }
+
+  _onConfigure(Connection connection) async {
+    if (connection.hasDmx() && connection.dmx.hasArtnet()) {
+      var value = await showDialog<ArtnetConfig>(
+          context: context, builder: (context) => ConfigureArtnetConnectionDialog(config: connection.dmx.artnet));
+      if (value == null) {
+        return null;
+      }
+      await api.configureConnection(ConfigureConnectionRequest(dmx: DmxConnection(artnet: value, outputId: connection.dmx.outputId)));
+      await _fetch();
+    }
   }
 
   ConnectionsApi get api {
@@ -223,5 +274,15 @@ class DeviceTitle extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0),
       child: Text(connection.name),
     );
+  }
+}
+
+extension ConnectionExtensions on Connection {
+  bool get canConfigure {
+    return (this.hasDmx() && this.dmx.hasArtnet()) || this.hasOsc();
+  }
+
+  bool get canDelete {
+    return this.hasDmx() || this.hasOsc();
   }
 }

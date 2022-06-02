@@ -9,6 +9,7 @@ pub use crate::sacn::SacnOutput;
 
 mod artnet;
 mod buffer;
+pub mod commands;
 mod sacn;
 
 #[enum_dispatch(DmxConnection)]
@@ -44,6 +45,10 @@ impl DmxConnectionManager {
         self.outputs.get(name)
     }
 
+    pub fn get_output_mut(&mut self, name: &str) -> Option<&mut DmxConnection> {
+        self.outputs.get_mut(name)
+    }
+
     pub fn flush(&self) {
         for (_, output) in self.outputs.iter() {
             output.flush();
@@ -52,6 +57,10 @@ impl DmxConnectionManager {
 
     pub fn list_outputs(&self) -> Vec<(&String, &DmxConnection)> {
         self.outputs.iter().collect()
+    }
+
+    pub fn delete_output(&mut self, id: &str) -> Option<DmxConnection> {
+        self.outputs.remove(id)
     }
 
     pub fn clear(&mut self) {

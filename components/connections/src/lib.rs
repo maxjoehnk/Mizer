@@ -48,4 +48,11 @@ pub struct MidiView {
 pub struct DmxView {
     pub name: String,
     pub output_id: String,
+    pub config: DmxConfig,
+}
+
+#[derive(Debug, Clone)]
+pub enum DmxConfig {
+    Artnet { host: String, port: u16 },
+    Sacn,
 }

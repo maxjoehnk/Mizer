@@ -32,14 +32,14 @@ class ConnectionsApiClient extends $grpc.Client {
           ($core.List<$core.int> value) =>
               $0.MonitorMidiResponse.fromBuffer(value));
   static final _$addArtnetConnection =
-      $grpc.ClientMethod<$0.AddArtnetRequest, $0.Connections>(
+      $grpc.ClientMethod<$0.ArtnetConfig, $0.Connections>(
           '/mizer.ConnectionsApi/AddArtnetConnection',
-          ($0.AddArtnetRequest value) => value.writeToBuffer(),
+          ($0.ArtnetConfig value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
   static final _$addSacnConnection =
-      $grpc.ClientMethod<$0.AddSacnRequest, $0.Connections>(
+      $grpc.ClientMethod<$0.SacnConfig, $0.Connections>(
           '/mizer.ConnectionsApi/AddSacnConnection',
-          ($0.AddSacnRequest value) => value.writeToBuffer(),
+          ($0.SacnConfig value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
   static final _$getMidiDeviceProfiles =
       $grpc.ClientMethod<$0.GetDeviceProfilesRequest, $0.MidiDeviceProfiles>(
@@ -47,6 +47,16 @@ class ConnectionsApiClient extends $grpc.Client {
           ($0.GetDeviceProfilesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.MidiDeviceProfiles.fromBuffer(value));
+  static final _$deleteConnection =
+      $grpc.ClientMethod<$0.Connection, $0.Connections>(
+          '/mizer.ConnectionsApi/DeleteConnection',
+          ($0.Connection value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Connections.fromBuffer(value));
+  static final _$configureConnection =
+      $grpc.ClientMethod<$0.ConfigureConnectionRequest, $0.Connection>(
+          '/mizer.ConnectionsApi/ConfigureConnection',
+          ($0.ConfigureConnectionRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Connection.fromBuffer(value));
 
   ConnectionsApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -74,13 +84,12 @@ class ConnectionsApiClient extends $grpc.Client {
   }
 
   $grpc.ResponseFuture<$0.Connections> addArtnetConnection(
-      $0.AddArtnetRequest request,
+      $0.ArtnetConfig request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addArtnetConnection, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Connections> addSacnConnection(
-      $0.AddSacnRequest request,
+  $grpc.ResponseFuture<$0.Connections> addSacnConnection($0.SacnConfig request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$addSacnConnection, request, options: options);
   }
@@ -89,6 +98,17 @@ class ConnectionsApiClient extends $grpc.Client {
       $0.GetDeviceProfilesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getMidiDeviceProfiles, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Connections> deleteConnection($0.Connection request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$deleteConnection, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Connection> configureConnection(
+      $0.ConfigureConnectionRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$configureConnection, request, options: options);
   }
 }
 
@@ -120,19 +140,19 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.MonitorMidiRequest.fromBuffer(value),
             ($0.MonitorMidiResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.AddArtnetRequest, $0.Connections>(
+    $addMethod($grpc.ServiceMethod<$0.ArtnetConfig, $0.Connections>(
         'AddArtnetConnection',
         addArtnetConnection_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.AddArtnetRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.ArtnetConfig.fromBuffer(value),
         ($0.Connections value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.AddSacnRequest, $0.Connections>(
+    $addMethod($grpc.ServiceMethod<$0.SacnConfig, $0.Connections>(
         'AddSacnConnection',
         addSacnConnection_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.AddSacnRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.SacnConfig.fromBuffer(value),
         ($0.Connections value) => value.writeToBuffer()));
     $addMethod(
         $grpc.ServiceMethod<$0.GetDeviceProfilesRequest, $0.MidiDeviceProfiles>(
@@ -143,6 +163,22 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.GetDeviceProfilesRequest.fromBuffer(value),
             ($0.MidiDeviceProfiles value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Connection, $0.Connections>(
+        'DeleteConnection',
+        deleteConnection_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Connection.fromBuffer(value),
+        ($0.Connections value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.ConfigureConnectionRequest, $0.Connection>(
+            'ConfigureConnection',
+            configureConnection_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.ConfigureConnectionRequest.fromBuffer(value),
+            ($0.Connection value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Connections> getConnections_Pre($grpc.ServiceCall call,
@@ -160,13 +196,13 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
     yield* monitorMidi(call, await request);
   }
 
-  $async.Future<$0.Connections> addArtnetConnection_Pre($grpc.ServiceCall call,
-      $async.Future<$0.AddArtnetRequest> request) async {
+  $async.Future<$0.Connections> addArtnetConnection_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.ArtnetConfig> request) async {
     return addArtnetConnection(call, await request);
   }
 
   $async.Future<$0.Connections> addSacnConnection_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.AddSacnRequest> request) async {
+      $grpc.ServiceCall call, $async.Future<$0.SacnConfig> request) async {
     return addSacnConnection(call, await request);
   }
 
@@ -176,6 +212,16 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
     return getMidiDeviceProfiles(call, await request);
   }
 
+  $async.Future<$0.Connections> deleteConnection_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Connection> request) async {
+    return deleteConnection(call, await request);
+  }
+
+  $async.Future<$0.Connection> configureConnection_Pre($grpc.ServiceCall call,
+      $async.Future<$0.ConfigureConnectionRequest> request) async {
+    return configureConnection(call, await request);
+  }
+
   $async.Future<$0.Connections> getConnections(
       $grpc.ServiceCall call, $0.GetConnectionsRequest request);
   $async.Future<$0.MonitorDmxResponse> monitorDmx(
@@ -183,9 +229,13 @@ abstract class ConnectionsApiServiceBase extends $grpc.Service {
   $async.Stream<$0.MonitorMidiResponse> monitorMidi(
       $grpc.ServiceCall call, $0.MonitorMidiRequest request);
   $async.Future<$0.Connections> addArtnetConnection(
-      $grpc.ServiceCall call, $0.AddArtnetRequest request);
+      $grpc.ServiceCall call, $0.ArtnetConfig request);
   $async.Future<$0.Connections> addSacnConnection(
-      $grpc.ServiceCall call, $0.AddSacnRequest request);
+      $grpc.ServiceCall call, $0.SacnConfig request);
   $async.Future<$0.MidiDeviceProfiles> getMidiDeviceProfiles(
       $grpc.ServiceCall call, $0.GetDeviceProfilesRequest request);
+  $async.Future<$0.Connections> deleteConnection(
+      $grpc.ServiceCall call, $0.Connection request);
+  $async.Future<$0.Connection> configureConnection(
+      $grpc.ServiceCall call, $0.ConfigureConnectionRequest request);
 }

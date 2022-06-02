@@ -21,7 +21,23 @@ impl From<mizer_connections::Connection> for Connection_oneof_connection {
                 ..Default::default()
             }),
             Dmx(view) => Self::dmx(DmxConnection {
-                outputId: view.output_id,
+                outputId: view.output_id.clone(),
+                config: Some(match view.config {
+                    mizer_connections::DmxConfig::Artnet { host, port } => {
+                        DmxConnection_oneof_config::artnet(ArtnetConfig {
+                            name: view.output_id,
+                            host,
+                            port: port as u32,
+                            ..Default::default()
+                        })
+                    }
+                    mizer_connections::DmxConfig::Sacn => {
+                        DmxConnection_oneof_config::sacn(SacnConfig {
+                            name: view.output_id,
+                            ..Default::default()
+                        })
+                    }
+                }),
                 ..Default::default()
             }),
             Helios(laser) => Self::helios(HeliosConnection {
@@ -38,6 +54,19 @@ impl From<mizer_connections::Connection> for Connection_oneof_connection {
                 name: gamepad.name,
                 ..Default::default()
             }),
+        }
+    }
+}
+
+impl From<mizer_connections::DmxConfig> for DmxConnection_oneof_config {
+    fn from(config: mizer_connections::DmxConfig) -> Self {
+        match config {
+            mizer_connections::DmxConfig::Artnet { host, port } => Self::artnet(ArtnetConfig {
+                host,
+                port: port as u32,
+                ..Default::default()
+            }),
+            mizer_connections::DmxConfig::Sacn => Self::sacn(SacnConfig::default()),
         }
     }
 }

@@ -67,7 +67,7 @@ impl<R: RuntimeApi + 'static> ConnectionsApi for ConnectionsHandler<R> {
 
     fn add_artnet_connection(
         &self,
-        req: ServerRequestSingle<AddArtnetRequest>,
+        req: ServerRequestSingle<ArtnetConfig>,
         resp: ServerResponseUnarySink<Connections>,
     ) -> grpc::Result<()> {
         self.add_artnet(
@@ -82,7 +82,7 @@ impl<R: RuntimeApi + 'static> ConnectionsApi for ConnectionsHandler<R> {
 
     fn add_sacn_connection(
         &self,
-        req: ServerRequestSingle<AddSacnRequest>,
+        req: ServerRequestSingle<SacnConfig>,
         resp: ServerResponseUnarySink<Connections>,
     ) -> grpc::Result<()> {
         self.add_sacn(req.message.name);
@@ -99,5 +99,21 @@ impl<R: RuntimeApi + 'static> ConnectionsApi for ConnectionsHandler<R> {
         let profiles = self.get_midi_device_profiles();
 
         resp.finish(profiles)
+    }
+
+    fn delete_connection(
+        &self,
+        req: ServerRequestSingle<Connection>,
+        resp: ServerResponseUnarySink<Connections>,
+    ) -> grpc::Result<()> {
+        todo!()
+    }
+
+    fn configure_connection(
+        &self,
+        req: ServerRequestSingle<ConfigureConnectionRequest>,
+        resp: ServerResponseUnarySink<Connection>,
+    ) -> grpc::Result<()> {
+        todo!()
     }
 }

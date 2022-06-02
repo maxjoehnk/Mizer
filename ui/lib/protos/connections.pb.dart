@@ -592,16 +592,16 @@ class GetDeviceProfilesRequest extends $pb.GeneratedMessage {
   static GetDeviceProfilesRequest? _defaultInstance;
 }
 
-class AddArtnetRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddArtnetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class ArtnetConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ArtnetConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
-  AddArtnetRequest._() : super();
-  factory AddArtnetRequest({
+  ArtnetConfig._() : super();
+  factory ArtnetConfig({
     $core.String? name,
     $core.String? host,
     $core.int? port,
@@ -618,26 +618,26 @@ class AddArtnetRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory AddArtnetRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddArtnetRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory ArtnetConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ArtnetConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  AddArtnetRequest clone() => AddArtnetRequest()..mergeFromMessage(this);
+  ArtnetConfig clone() => ArtnetConfig()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddArtnetRequest copyWith(void Function(AddArtnetRequest) updates) => super.copyWith((message) => updates(message as AddArtnetRequest)) as AddArtnetRequest; // ignore: deprecated_member_use
+  ArtnetConfig copyWith(void Function(ArtnetConfig) updates) => super.copyWith((message) => updates(message as ArtnetConfig)) as ArtnetConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static AddArtnetRequest create() => AddArtnetRequest._();
-  AddArtnetRequest createEmptyInstance() => create();
-  static $pb.PbList<AddArtnetRequest> createRepeated() => $pb.PbList<AddArtnetRequest>();
+  static ArtnetConfig create() => ArtnetConfig._();
+  ArtnetConfig createEmptyInstance() => create();
+  static $pb.PbList<ArtnetConfig> createRepeated() => $pb.PbList<ArtnetConfig>();
   @$core.pragma('dart2js:noInline')
-  static AddArtnetRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddArtnetRequest>(create);
-  static AddArtnetRequest? _defaultInstance;
+  static ArtnetConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ArtnetConfig>(create);
+  static ArtnetConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -667,14 +667,14 @@ class AddArtnetRequest extends $pb.GeneratedMessage {
   void clearPort() => clearField(3);
 }
 
-class AddSacnRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddSacnRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class SacnConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SacnConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..hasRequiredFields = false
   ;
 
-  AddSacnRequest._() : super();
-  factory AddSacnRequest({
+  SacnConfig._() : super();
+  factory SacnConfig({
     $core.String? name,
   }) {
     final _result = create();
@@ -683,26 +683,26 @@ class AddSacnRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory AddSacnRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddSacnRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  factory SacnConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SacnConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  AddSacnRequest clone() => AddSacnRequest()..mergeFromMessage(this);
+  SacnConfig clone() => SacnConfig()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddSacnRequest copyWith(void Function(AddSacnRequest) updates) => super.copyWith((message) => updates(message as AddSacnRequest)) as AddSacnRequest; // ignore: deprecated_member_use
+  SacnConfig copyWith(void Function(SacnConfig) updates) => super.copyWith((message) => updates(message as SacnConfig)) as SacnConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static AddSacnRequest create() => AddSacnRequest._();
-  AddSacnRequest createEmptyInstance() => create();
-  static $pb.PbList<AddSacnRequest> createRepeated() => $pb.PbList<AddSacnRequest>();
+  static SacnConfig create() => SacnConfig._();
+  SacnConfig createEmptyInstance() => create();
+  static $pb.PbList<SacnConfig> createRepeated() => $pb.PbList<SacnConfig>();
   @$core.pragma('dart2js:noInline')
-  static AddSacnRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddSacnRequest>(create);
-  static AddSacnRequest? _defaultInstance;
+  static SacnConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SacnConfig>(create);
+  static SacnConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
@@ -939,19 +939,41 @@ class Connection extends $pb.GeneratedMessage {
   GamepadConnection ensureGamepad() => $_ensure(7);
 }
 
+enum DmxConnection_Config {
+  artnet, 
+  sacn, 
+  notSet
+}
+
 class DmxConnection extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, DmxConnection_Config> _DmxConnection_ConfigByTag = {
+    3 : DmxConnection_Config.artnet,
+    4 : DmxConnection_Config.sacn,
+    0 : DmxConnection_Config.notSet
+  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [3, 4])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId', protoName: 'outputId')
+    ..aOM<ArtnetConfig>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetConfig.create)
+    ..aOM<SacnConfig>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sacn', subBuilder: SacnConfig.create)
     ..hasRequiredFields = false
   ;
 
   DmxConnection._() : super();
   factory DmxConnection({
     $core.String? outputId,
+    ArtnetConfig? artnet,
+    SacnConfig? sacn,
   }) {
     final _result = create();
     if (outputId != null) {
       _result.outputId = outputId;
+    }
+    if (artnet != null) {
+      _result.artnet = artnet;
+    }
+    if (sacn != null) {
+      _result.sacn = sacn;
     }
     return _result;
   }
@@ -976,6 +998,9 @@ class DmxConnection extends $pb.GeneratedMessage {
   static DmxConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DmxConnection>(create);
   static DmxConnection? _defaultInstance;
 
+  DmxConnection_Config whichConfig() => _DmxConnection_ConfigByTag[$_whichOneof(0)]!;
+  void clearConfig() => clearField($_whichOneof(0));
+
   @$pb.TagNumber(1)
   $core.String get outputId => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -984,6 +1009,28 @@ class DmxConnection extends $pb.GeneratedMessage {
   $core.bool hasOutputId() => $_has(0);
   @$pb.TagNumber(1)
   void clearOutputId() => clearField(1);
+
+  @$pb.TagNumber(3)
+  ArtnetConfig get artnet => $_getN(1);
+  @$pb.TagNumber(3)
+  set artnet(ArtnetConfig v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasArtnet() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearArtnet() => clearField(3);
+  @$pb.TagNumber(3)
+  ArtnetConfig ensureArtnet() => $_ensure(1);
+
+  @$pb.TagNumber(4)
+  SacnConfig get sacn => $_getN(2);
+  @$pb.TagNumber(4)
+  set sacn(SacnConfig v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSacn() => $_has(2);
+  @$pb.TagNumber(4)
+  void clearSacn() => clearField(4);
+  @$pb.TagNumber(4)
+  SacnConfig ensureSacn() => $_ensure(2);
 }
 
 class HeliosConnection extends $pb.GeneratedMessage {
@@ -1905,5 +1952,67 @@ class CdjPlayback extends $pb.GeneratedMessage {
   void clearTrack() => clearField(5);
   @$pb.TagNumber(5)
   CdjPlayback_Track ensureTrack() => $_ensure(4);
+}
+
+enum ConfigureConnectionRequest_Config {
+  dmx, 
+  notSet
+}
+
+class ConfigureConnectionRequest extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, ConfigureConnectionRequest_Config> _ConfigureConnectionRequest_ConfigByTag = {
+    1 : ConfigureConnectionRequest_Config.dmx,
+    0 : ConfigureConnectionRequest_Config.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ConfigureConnectionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [1])
+    ..aOM<DmxConnection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
+    ..hasRequiredFields = false
+  ;
+
+  ConfigureConnectionRequest._() : super();
+  factory ConfigureConnectionRequest({
+    DmxConnection? dmx,
+  }) {
+    final _result = create();
+    if (dmx != null) {
+      _result.dmx = dmx;
+    }
+    return _result;
+  }
+  factory ConfigureConnectionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ConfigureConnectionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ConfigureConnectionRequest clone() => ConfigureConnectionRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ConfigureConnectionRequest copyWith(void Function(ConfigureConnectionRequest) updates) => super.copyWith((message) => updates(message as ConfigureConnectionRequest)) as ConfigureConnectionRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ConfigureConnectionRequest create() => ConfigureConnectionRequest._();
+  ConfigureConnectionRequest createEmptyInstance() => create();
+  static $pb.PbList<ConfigureConnectionRequest> createRepeated() => $pb.PbList<ConfigureConnectionRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ConfigureConnectionRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ConfigureConnectionRequest>(create);
+  static ConfigureConnectionRequest? _defaultInstance;
+
+  ConfigureConnectionRequest_Config whichConfig() => _ConfigureConnectionRequest_ConfigByTag[$_whichOneof(0)]!;
+  void clearConfig() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  DmxConnection get dmx => $_getN(0);
+  @$pb.TagNumber(1)
+  set dmx(DmxConnection v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDmx() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDmx() => clearField(1);
+  @$pb.TagNumber(1)
+  DmxConnection ensureDmx() => $_ensure(0);
 }
 

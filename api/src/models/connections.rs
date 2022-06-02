@@ -2022,7 +2022,7 @@ impl ::protobuf::reflect::ProtobufValue for GetDeviceProfilesRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct AddArtnetRequest {
+pub struct ArtnetConfig {
     // message fields
     pub name: ::std::string::String,
     pub host: ::std::string::String,
@@ -2034,14 +2034,14 @@ pub struct AddArtnetRequest {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a AddArtnetRequest {
-    fn default() -> &'a AddArtnetRequest {
-        <AddArtnetRequest as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a ArtnetConfig {
+    fn default() -> &'a ArtnetConfig {
+        <ArtnetConfig as ::protobuf::Message>::default_instance()
     }
 }
 
-impl AddArtnetRequest {
-    pub fn new() -> AddArtnetRequest {
+impl ArtnetConfig {
+    pub fn new() -> ArtnetConfig {
         ::std::default::Default::default()
     }
 
@@ -2113,7 +2113,7 @@ impl AddArtnetRequest {
     }
 }
 
-impl ::protobuf::Message for AddArtnetRequest {
+impl ::protobuf::Message for ArtnetConfig {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -2201,8 +2201,8 @@ impl ::protobuf::Message for AddArtnetRequest {
         Self::descriptor_static()
     }
 
-    fn new() -> AddArtnetRequest {
-        AddArtnetRequest::new()
+    fn new() -> ArtnetConfig {
+        ArtnetConfig::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -2211,34 +2211,34 @@ impl ::protobuf::Message for AddArtnetRequest {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "name",
-                |m: &AddArtnetRequest| { &m.name },
-                |m: &mut AddArtnetRequest| { &mut m.name },
+                |m: &ArtnetConfig| { &m.name },
+                |m: &mut ArtnetConfig| { &mut m.name },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "host",
-                |m: &AddArtnetRequest| { &m.host },
-                |m: &mut AddArtnetRequest| { &mut m.host },
+                |m: &ArtnetConfig| { &m.host },
+                |m: &mut ArtnetConfig| { &mut m.host },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
                 "port",
-                |m: &AddArtnetRequest| { &m.port },
-                |m: &mut AddArtnetRequest| { &mut m.port },
+                |m: &ArtnetConfig| { &m.port },
+                |m: &mut ArtnetConfig| { &mut m.port },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddArtnetRequest>(
-                "AddArtnetRequest",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ArtnetConfig>(
+                "ArtnetConfig",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static AddArtnetRequest {
-        static instance: ::protobuf::rt::LazyV2<AddArtnetRequest> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(AddArtnetRequest::new)
+    fn default_instance() -> &'static ArtnetConfig {
+        static instance: ::protobuf::rt::LazyV2<ArtnetConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ArtnetConfig::new)
     }
 }
 
-impl ::protobuf::Clear for AddArtnetRequest {
+impl ::protobuf::Clear for ArtnetConfig {
     fn clear(&mut self) {
         self.name.clear();
         self.host.clear();
@@ -2247,13 +2247,13 @@ impl ::protobuf::Clear for AddArtnetRequest {
     }
 }
 
-impl ::std::fmt::Debug for AddArtnetRequest {
+impl ::std::fmt::Debug for ArtnetConfig {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for AddArtnetRequest {
+impl ::protobuf::reflect::ProtobufValue for ArtnetConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -2261,7 +2261,7 @@ impl ::protobuf::reflect::ProtobufValue for AddArtnetRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
-pub struct AddSacnRequest {
+pub struct SacnConfig {
     // message fields
     pub name: ::std::string::String,
     // special fields
@@ -2271,14 +2271,14 @@ pub struct AddSacnRequest {
     pub cached_size: ::protobuf::CachedSize,
 }
 
-impl<'a> ::std::default::Default for &'a AddSacnRequest {
-    fn default() -> &'a AddSacnRequest {
-        <AddSacnRequest as ::protobuf::Message>::default_instance()
+impl<'a> ::std::default::Default for &'a SacnConfig {
+    fn default() -> &'a SacnConfig {
+        <SacnConfig as ::protobuf::Message>::default_instance()
     }
 }
 
-impl AddSacnRequest {
-    pub fn new() -> AddSacnRequest {
+impl SacnConfig {
+    pub fn new() -> SacnConfig {
         ::std::default::Default::default()
     }
 
@@ -2309,7 +2309,7 @@ impl AddSacnRequest {
     }
 }
 
-impl ::protobuf::Message for AddSacnRequest {
+impl ::protobuf::Message for SacnConfig {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -2375,8 +2375,8 @@ impl ::protobuf::Message for AddSacnRequest {
         Self::descriptor_static()
     }
 
-    fn new() -> AddSacnRequest {
-        AddSacnRequest::new()
+    fn new() -> SacnConfig {
+        SacnConfig::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -2385,37 +2385,37 @@ impl ::protobuf::Message for AddSacnRequest {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
                 "name",
-                |m: &AddSacnRequest| { &m.name },
-                |m: &mut AddSacnRequest| { &mut m.name },
+                |m: &SacnConfig| { &m.name },
+                |m: &mut SacnConfig| { &mut m.name },
             ));
-            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddSacnRequest>(
-                "AddSacnRequest",
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<SacnConfig>(
+                "SacnConfig",
                 fields,
                 file_descriptor_proto()
             )
         })
     }
 
-    fn default_instance() -> &'static AddSacnRequest {
-        static instance: ::protobuf::rt::LazyV2<AddSacnRequest> = ::protobuf::rt::LazyV2::INIT;
-        instance.get(AddSacnRequest::new)
+    fn default_instance() -> &'static SacnConfig {
+        static instance: ::protobuf::rt::LazyV2<SacnConfig> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(SacnConfig::new)
     }
 }
 
-impl ::protobuf::Clear for AddSacnRequest {
+impl ::protobuf::Clear for SacnConfig {
     fn clear(&mut self) {
         self.name.clear();
         self.unknown_fields.clear();
     }
 }
 
-impl ::std::fmt::Debug for AddSacnRequest {
+impl ::std::fmt::Debug for SacnConfig {
     fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for AddSacnRequest {
+impl ::protobuf::reflect::ProtobufValue for SacnConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
     }
@@ -3304,6 +3304,8 @@ impl ::protobuf::reflect::ProtobufValue for Connection {
 pub struct DmxConnection {
     // message fields
     pub outputId: ::std::string::String,
+    // message oneof groups
+    pub config: ::std::option::Option<DmxConnection_oneof_config>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -3315,6 +3317,13 @@ impl<'a> ::std::default::Default for &'a DmxConnection {
     fn default() -> &'a DmxConnection {
         <DmxConnection as ::protobuf::Message>::default_instance()
     }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum DmxConnection_oneof_config {
+    artnet(ArtnetConfig),
+    sacn(SacnConfig),
 }
 
 impl DmxConnection {
@@ -3347,10 +3356,118 @@ impl DmxConnection {
     pub fn take_outputId(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.outputId, ::std::string::String::new())
     }
+
+    // .mizer.ArtnetConfig artnet = 3;
+
+
+    pub fn get_artnet(&self) -> &ArtnetConfig {
+        match self.config {
+            ::std::option::Option::Some(DmxConnection_oneof_config::artnet(ref v)) => v,
+            _ => <ArtnetConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_artnet(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_artnet(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(DmxConnection_oneof_config::artnet(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_artnet(&mut self, v: ArtnetConfig) {
+        self.config = ::std::option::Option::Some(DmxConnection_oneof_config::artnet(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_artnet(&mut self) -> &mut ArtnetConfig {
+        if let ::std::option::Option::Some(DmxConnection_oneof_config::artnet(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(DmxConnection_oneof_config::artnet(ArtnetConfig::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(DmxConnection_oneof_config::artnet(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_artnet(&mut self) -> ArtnetConfig {
+        if self.has_artnet() {
+            match self.config.take() {
+                ::std::option::Option::Some(DmxConnection_oneof_config::artnet(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ArtnetConfig::new()
+        }
+    }
+
+    // .mizer.SacnConfig sacn = 4;
+
+
+    pub fn get_sacn(&self) -> &SacnConfig {
+        match self.config {
+            ::std::option::Option::Some(DmxConnection_oneof_config::sacn(ref v)) => v,
+            _ => <SacnConfig as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_sacn(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_sacn(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(DmxConnection_oneof_config::sacn(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_sacn(&mut self, v: SacnConfig) {
+        self.config = ::std::option::Option::Some(DmxConnection_oneof_config::sacn(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_sacn(&mut self) -> &mut SacnConfig {
+        if let ::std::option::Option::Some(DmxConnection_oneof_config::sacn(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(DmxConnection_oneof_config::sacn(SacnConfig::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(DmxConnection_oneof_config::sacn(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_sacn(&mut self) -> SacnConfig {
+        if self.has_sacn() {
+            match self.config.take() {
+                ::std::option::Option::Some(DmxConnection_oneof_config::sacn(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            SacnConfig::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for DmxConnection {
     fn is_initialized(&self) -> bool {
+        if let Some(DmxConnection_oneof_config::artnet(ref v)) = self.config {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(DmxConnection_oneof_config::sacn(ref v)) = self.config {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
         true
     }
 
@@ -3360,6 +3477,18 @@ impl ::protobuf::Message for DmxConnection {
             match field_number {
                 1 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.outputId)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.config = ::std::option::Option::Some(DmxConnection_oneof_config::artnet(is.read_message()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.config = ::std::option::Option::Some(DmxConnection_oneof_config::sacn(is.read_message()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -3376,6 +3505,18 @@ impl ::protobuf::Message for DmxConnection {
         if !self.outputId.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.outputId);
         }
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &DmxConnection_oneof_config::artnet(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &DmxConnection_oneof_config::sacn(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -3384,6 +3525,20 @@ impl ::protobuf::Message for DmxConnection {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
         if !self.outputId.is_empty() {
             os.write_string(1, &self.outputId)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &DmxConnection_oneof_config::artnet(ref v) => {
+                    os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &DmxConnection_oneof_config::sacn(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3428,6 +3583,16 @@ impl ::protobuf::Message for DmxConnection {
                 |m: &DmxConnection| { &m.outputId },
                 |m: &mut DmxConnection| { &mut m.outputId },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ArtnetConfig>(
+                "artnet",
+                DmxConnection::has_artnet,
+                DmxConnection::get_artnet,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, SacnConfig>(
+                "sacn",
+                DmxConnection::has_sacn,
+                DmxConnection::get_sacn,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<DmxConnection>(
                 "DmxConnection",
                 fields,
@@ -3445,6 +3610,8 @@ impl ::protobuf::Message for DmxConnection {
 impl ::protobuf::Clear for DmxConnection {
     fn clear(&mut self) {
         self.outputId.clear();
+        self.config = ::std::option::Option::None;
+        self.config = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -6737,6 +6904,216 @@ impl ::protobuf::reflect::ProtobufValue for CdjPlayback_State {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct ConfigureConnectionRequest {
+    // message oneof groups
+    pub config: ::std::option::Option<ConfigureConnectionRequest_oneof_config>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ConfigureConnectionRequest {
+    fn default() -> &'a ConfigureConnectionRequest {
+        <ConfigureConnectionRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum ConfigureConnectionRequest_oneof_config {
+    dmx(DmxConnection),
+}
+
+impl ConfigureConnectionRequest {
+    pub fn new() -> ConfigureConnectionRequest {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.DmxConnection dmx = 1;
+
+
+    pub fn get_dmx(&self) -> &DmxConnection {
+        match self.config {
+            ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(ref v)) => v,
+            _ => <DmxConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_dmx(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_dmx(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_dmx(&mut self, v: DmxConnection) {
+        self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_dmx(&mut self) -> &mut DmxConnection {
+        if let ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(DmxConnection::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_dmx(&mut self) -> DmxConnection {
+        if self.has_dmx() {
+            match self.config.take() {
+                ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            DmxConnection::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for ConfigureConnectionRequest {
+    fn is_initialized(&self) -> bool {
+        if let Some(ConfigureConnectionRequest_oneof_config::dmx(ref v)) = self.config {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(is.read_message()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &ConfigureConnectionRequest_oneof_config::dmx(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if let ::std::option::Option::Some(ref v) = self.config {
+            match v {
+                &ConfigureConnectionRequest_oneof_config::dmx(ref v) => {
+                    os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ConfigureConnectionRequest {
+        ConfigureConnectionRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, DmxConnection>(
+                "dmx",
+                ConfigureConnectionRequest::has_dmx,
+                ConfigureConnectionRequest::get_dmx,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ConfigureConnectionRequest>(
+                "ConfigureConnectionRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ConfigureConnectionRequest {
+        static instance: ::protobuf::rt::LazyV2<ConfigureConnectionRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ConfigureConnectionRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for ConfigureConnectionRequest {
+    fn clear(&mut self) {
+        self.config = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ConfigureConnectionRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ConfigureConnectionRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x11connections.proto\x12\x05mizer\"/\n\x11MonitorDmxRequest\x12\x1a\n\
     \x08outputId\x18\x01\x20\x01(\tR\x08outputId\"M\n\x12MonitorDmxResponse\
@@ -6758,69 +7135,75 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01(\rR\rmanufacturer2\x12$\n\rmanufacturer3\x18\x03\x20\x01(\rR\rmanuf\
     acturer3\x12\x14\n\x05model\x18\x04\x20\x01(\rR\x05model\x12\x12\n\x04da\
     ta\x18\x05\x20\x01(\x0cR\x04dataB\t\n\x07message\"\x17\n\x15GetConnectio\
-    nsRequest\"\x1a\n\x18GetDeviceProfilesRequest\"N\n\x10AddArtnetRequest\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x12\n\x04host\x18\x02\
-    \x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"$\n\
-    \x0eAddSacnRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\
-    \x0bConnections\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.Co\
-    nnectionR\x0bconnections\"\x93\x03\n\nConnection\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.Dmx\
-    ConnectionH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.Mid\
-    iConnectionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.Os\
-    cConnectionH\0R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.P\
-    roDjLinkConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\
-    \x17.mizer.HeliosConnectionH\0R\x06helios\x12=\n\netherDream\x18\x0f\x20\
-    \x01(\x0b2\x1b.mizer.EtherDreamConnectionH\0R\netherDream\x124\n\x07game\
-    pad\x18\x10\x20\x01(\x0b2\x18.mizer.GamepadConnectionH\0R\x07gamepadB\
-    \x0c\n\nconnection\"+\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\x20\
-    \x01(\tR\x08outputId\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08firmwa\
-    re\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"O\n\x0eMidiConnect\
-    ion\x12*\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\
-    \x01\x01B\x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08\
-    profiles\x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\
-    \"\x8f\x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\
-    \x02id\x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\
-    \x14\n\x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\
-    \x20\x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\
-    \x0b2\x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\
-    \x20\x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08co\
-    ntrols\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08con\
-    trols\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\
-    \n\x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.Control\
-    R\x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\
-    \tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07cha\
-    nnel\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\r\
-    R\x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDevice\
-    Profile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\
-    \x01(\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\
-    \x06\n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rOscConnection\x12\x1d\n\ninpu\
-    t_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x02\
-    \x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\x01(\tR\ro\
-    utputAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\
-    \x01\x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05mo\
-    del\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\
-    \x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\
-    \x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04liv\
-    e\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\
-    \x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.m\
-    izer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b\
-    2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06art\
-    ist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\
-    \x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\
-    \x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x032\xc4\x03\n\
-    \x0eConnectionsApi\x12D\n\x0eGetConnections\x12\x1c.mizer.GetConnections\
-    Request\x1a\x12.mizer.Connections\"\0\x12C\n\nMonitorDmx\x12\x18.mizer.M\
-    onitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\"\0\x12H\n\x0bMonitorM\
-    idi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\"\
-    \00\x01\x12D\n\x13AddArtnetConnection\x12\x17.mizer.AddArtnetRequest\x1a\
-    \x12.mizer.Connections\"\0\x12@\n\x11AddSacnConnection\x12\x15.mizer.Add\
-    SacnRequest\x1a\x12.mizer.Connections\"\0\x12U\n\x15GetMidiDeviceProfile\
-    s\x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfile\
-    s\"\0b\x06proto3\
+    nsRequest\"\x1a\n\x18GetDeviceProfilesRequest\"J\n\x0cArtnetConfig\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x12\n\x04host\x18\x02\x20\
+    \x01(\tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"\x20\n\n\
+    SacnConfig\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\x0bConnect\
+    ions\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\
+    \x0bconnections\"\x93\x03\n\nConnection\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnecti\
+    onH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnect\
+    ionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnect\
+    ionH\0R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLink\
+    ConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.miz\
+    er.HeliosConnectionH\0R\x06helios\x12=\n\netherDream\x18\x0f\x20\x01(\
+    \x0b2\x1b.mizer.EtherDreamConnectionH\0R\netherDream\x124\n\x07gamepad\
+    \x18\x10\x20\x01(\x0b2\x18.mizer.GamepadConnectionH\0R\x07gamepadB\x0c\n\
+    \nconnection\"\x8d\x01\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\
+    \x20\x01(\tR\x08outputId\x12-\n\x06artnet\x18\x03\x20\x01(\x0b2\x13.mize\
+    r.ArtnetConfigH\0R\x06artnet\x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mi\
+    zer.SacnConfigH\0R\x04sacnB\x08\n\x06config\"B\n\x10HeliosConnection\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\
+    \x20\x01(\rR\x08firmware\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\
+    \x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\
+    \"O\n\x0eMidiConnection\x12*\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\
+    \rdeviceProfile\x88\x01\x01B\x11\n\x0f_device_profile\"J\n\x12MidiDevice\
+    Profiles\x124\n\x08profiles\x18\x01\x20\x03(\x0b2\x18.mizer.MidiDevicePr\
+    ofileR\x08profiles\"\x8f\x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\
+    \x01\x20\x01(\tR\x02id\x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cma\
+    nufacturer\x12\x14\n\x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06\
+    layout\x18\x04\x20\x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\
+    \x05\x20\x03(\x0b2\x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\
+    \x01\n\x04Page\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06g\
+    roups\x18\x02\x20\x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\
+    \x12<\n\x08controls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.Co\
+    ntrolR\x08controls\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
+    \x04name\x12<\n\x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDevicePr\
+    ofile.ControlR\x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\
+    \x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\
+    \x18\n\x07channel\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\
+    \x04\x20\x01(\rR\x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.m\
+    izer.MidiDeviceProfile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\
+    \x18\x06\x20\x01(\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04No\
+    te\x10\0\x12\x06\n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rOscConnection\x12\
+    \x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_po\
+    rt\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\
+    \x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07\
+    address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\
+    \x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerN\
+    umber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\
+    \x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\
+    \x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\
+    \n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\
+    \x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\
+    \x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\
+    \x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\
+    \x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\
+    \x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cuein\
+    g\x10\x03\"P\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\x01\x20\
+    \x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmxB\x08\n\x06config2\xc8\x04\
+    \n\x0eConnectionsApi\x12D\n\x0eGetConnections\x12\x1c.mizer.GetConnectio\
+    nsRequest\x1a\x12.mizer.Connections\"\0\x12C\n\nMonitorDmx\x12\x18.mizer\
+    .MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\"\0\x12H\n\x0bMonito\
+    rMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\
+    \"\00\x01\x12@\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetConfig\x1a\
+    \x12.mizer.Connections\"\0\x12<\n\x11AddSacnConnection\x12\x11.mizer.Sac\
+    nConfig\x1a\x12.mizer.Connections\"\0\x12U\n\x15GetMidiDeviceProfiles\
+    \x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\
+    \"\0\x12;\n\x10DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.C\
+    onnections\"\0\x12M\n\x13ConfigureConnection\x12!.mizer.ConfigureConnect\
+    ionRequest\x1a\x11.mizer.Connection\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

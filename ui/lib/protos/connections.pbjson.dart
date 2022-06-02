@@ -104,9 +104,9 @@ const GetDeviceProfilesRequest$json = const {
 
 /// Descriptor for `GetDeviceProfilesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getDeviceProfilesRequestDescriptor = $convert.base64Decode('ChhHZXREZXZpY2VQcm9maWxlc1JlcXVlc3Q=');
-@$core.Deprecated('Use addArtnetRequestDescriptor instead')
-const AddArtnetRequest$json = const {
-  '1': 'AddArtnetRequest',
+@$core.Deprecated('Use artnetConfigDescriptor instead')
+const ArtnetConfig$json = const {
+  '1': 'ArtnetConfig',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'host', '3': 2, '4': 1, '5': 9, '10': 'host'},
@@ -114,18 +114,18 @@ const AddArtnetRequest$json = const {
   ],
 };
 
-/// Descriptor for `AddArtnetRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List addArtnetRequestDescriptor = $convert.base64Decode('ChBBZGRBcnRuZXRSZXF1ZXN0EhIKBG5hbWUYASABKAlSBG5hbWUSEgoEaG9zdBgCIAEoCVIEaG9zdBISCgRwb3J0GAMgASgNUgRwb3J0');
-@$core.Deprecated('Use addSacnRequestDescriptor instead')
-const AddSacnRequest$json = const {
-  '1': 'AddSacnRequest',
+/// Descriptor for `ArtnetConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List artnetConfigDescriptor = $convert.base64Decode('CgxBcnRuZXRDb25maWcSEgoEbmFtZRgBIAEoCVIEbmFtZRISCgRob3N0GAIgASgJUgRob3N0EhIKBHBvcnQYAyABKA1SBHBvcnQ=');
+@$core.Deprecated('Use sacnConfigDescriptor instead')
+const SacnConfig$json = const {
+  '1': 'SacnConfig',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
   ],
 };
 
-/// Descriptor for `AddSacnRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List addSacnRequestDescriptor = $convert.base64Decode('Cg5BZGRTYWNuUmVxdWVzdBISCgRuYW1lGAEgASgJUgRuYW1l');
+/// Descriptor for `SacnConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sacnConfigDescriptor = $convert.base64Decode('CgpTYWNuQ29uZmlnEhIKBG5hbWUYASABKAlSBG5hbWU=');
 @$core.Deprecated('Use connectionsDescriptor instead')
 const Connections$json = const {
   '1': 'Connections',
@@ -161,11 +161,16 @@ const DmxConnection$json = const {
   '1': 'DmxConnection',
   '2': const [
     const {'1': 'outputId', '3': 1, '4': 1, '5': 9, '10': 'outputId'},
+    const {'1': 'artnet', '3': 3, '4': 1, '5': 11, '6': '.mizer.ArtnetConfig', '9': 0, '10': 'artnet'},
+    const {'1': 'sacn', '3': 4, '4': 1, '5': 11, '6': '.mizer.SacnConfig', '9': 0, '10': 'sacn'},
+  ],
+  '8': const [
+    const {'1': 'config'},
   ],
 };
 
 /// Descriptor for `DmxConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List dmxConnectionDescriptor = $convert.base64Decode('Cg1EbXhDb25uZWN0aW9uEhoKCG91dHB1dElkGAEgASgJUghvdXRwdXRJZA==');
+final $typed_data.Uint8List dmxConnectionDescriptor = $convert.base64Decode('Cg1EbXhDb25uZWN0aW9uEhoKCG91dHB1dElkGAEgASgJUghvdXRwdXRJZBItCgZhcnRuZXQYAyABKAsyEy5taXplci5BcnRuZXRDb25maWdIAFIGYXJ0bmV0EicKBHNhY24YBCABKAsyES5taXplci5TYWNuQ29uZmlnSABSBHNhY25CCAoGY29uZmln');
 @$core.Deprecated('Use heliosConnectionDescriptor instead')
 const HeliosConnection$json = const {
   '1': 'HeliosConnection',
@@ -342,3 +347,16 @@ const CdjPlayback_State$json = const {
 
 /// Descriptor for `CdjPlayback`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cdjPlaybackDescriptor = $convert.base64Decode('CgtDZGpQbGF5YmFjaxISCgRsaXZlGAEgASgIUgRsaXZlEhAKA2JwbRgCIAEoAVIDYnBtEhQKBWZyYW1lGAMgASgNUgVmcmFtZRI0CghwbGF5YmFjaxgEIAEoDjIYLm1pemVyLkNkalBsYXliYWNrLlN0YXRlUghwbGF5YmFjaxIuCgV0cmFjaxgFIAEoCzIYLm1pemVyLkNkalBsYXliYWNrLlRyYWNrUgV0cmFjaxo1CgVUcmFjaxIWCgZhcnRpc3QYASABKAlSBmFydGlzdBIUCgV0aXRsZRgCIAEoCVIFdGl0bGUiNwoFU3RhdGUSCwoHTG9hZGluZxAAEgsKB1BsYXlpbmcQARIICgRDdWVkEAISCgoGQ3VlaW5nEAM=');
+@$core.Deprecated('Use configureConnectionRequestDescriptor instead')
+const ConfigureConnectionRequest$json = const {
+  '1': 'ConfigureConnectionRequest',
+  '2': const [
+    const {'1': 'dmx', '3': 1, '4': 1, '5': 11, '6': '.mizer.DmxConnection', '9': 0, '10': 'dmx'},
+  ],
+  '8': const [
+    const {'1': 'config'},
+  ],
+};
+
+/// Descriptor for `ConfigureConnectionRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List configureConnectionRequestDescriptor = $convert.base64Decode('ChpDb25maWd1cmVDb25uZWN0aW9uUmVxdWVzdBIoCgNkbXgYASABKAsyFC5taXplci5EbXhDb25uZWN0aW9uSABSA2RteEIICgZjb25maWc=');

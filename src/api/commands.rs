@@ -22,12 +22,6 @@ pub enum ApiCommand {
     SetBpm(f64),
     GetConnections(flume::Sender<Vec<Connection>>),
     GetMidiDeviceProfiles(flume::Sender<Vec<DeviceProfile>>),
-    AddSacnConnection(String, flume::Sender<anyhow::Result<()>>),
-    AddArtnetConnection(
-        String,
-        (String, Option<u16>),
-        flume::Sender<anyhow::Result<()>>,
-    ),
     GetDmxMonitor(
         String,
         flume::Sender<anyhow::Result<HashMap<u16, [u8; 512]>>>,

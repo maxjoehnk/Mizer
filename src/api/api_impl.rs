@@ -175,26 +175,6 @@ impl RuntimeApi for Api {
         rx.recv().unwrap()
     }
 
-    fn add_sacn_connection(&self, name: String) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender.send(ApiCommand::AddSacnConnection(name, tx))?;
-
-        rx.recv()?
-    }
-
-    fn add_artnet_connection(
-        &self,
-        name: String,
-        host: String,
-        port: Option<u16>,
-    ) -> anyhow::Result<()> {
-        let (tx, rx) = flume::bounded(1);
-        self.sender
-            .send(ApiCommand::AddArtnetConnection(name, (host, port), tx))?;
-
-        rx.recv()?
-    }
-
     fn get_midi_device_profiles(&self) -> Vec<DeviceProfile> {
         let (tx, rx) = flume::bounded(1);
         self.sender

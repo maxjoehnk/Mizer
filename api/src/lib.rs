@@ -58,13 +58,6 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_clock_snapshot_ref(&self) -> Arc<NonEmptyPinboard<ClockSnapshot>>;
 
     fn get_connections(&self) -> Vec<Connection>;
-    fn add_sacn_connection(&self, name: String) -> anyhow::Result<()>;
-    fn add_artnet_connection(
-        &self,
-        name: String,
-        host: String,
-        port: Option<u16>,
-    ) -> anyhow::Result<()>;
 
     fn get_midi_device_profiles(&self) -> Vec<DeviceProfile>;
 

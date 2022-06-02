@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
-class AddSacnConnectionDialog extends StatefulWidget {
-  const AddSacnConnectionDialog({Key? key}) : super(key: key);
+class ConfigureSacnConnectionDialog extends StatefulWidget {
+  const ConfigureSacnConnectionDialog({Key? key}) : super(key: key);
 
   @override
-  State<AddSacnConnectionDialog> createState() => _AddSacnConnectionDialogState();
+  State<ConfigureSacnConnectionDialog> createState() => _ConfigureSacnConnectionDialogState();
 }
 
-class _AddSacnConnectionDialogState extends State<AddSacnConnectionDialog> {
+class _ConfigureSacnConnectionDialogState extends State<ConfigureSacnConnectionDialog> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController;
 
-  _AddSacnConnectionDialogState() : _nameController = TextEditingController();
+  _ConfigureSacnConnectionDialogState() : _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _AddSacnConnectionDialogState extends State<AddSacnConnectionDialog> {
             if (!_formKey.currentState!.validate()) {
               return;
             }
-            Navigator.of(context).pop(AddSacnRequest(
+            Navigator.of(context).pop(SacnConfig(
               name: _nameController.text,
             ));
           },

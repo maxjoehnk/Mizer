@@ -4,6 +4,7 @@ import 'package:mizer/state/nodes_view.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 
+import 'effects_bloc.dart';
 import 'fixtures_bloc.dart';
 import 'layouts_bloc.dart';
 import 'media_bloc.dart';
@@ -31,6 +32,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => SequencerBloc(context.read())),
         BlocProvider(create: (context) => PresetsBloc(context.read())),
         BlocProvider(create: (context) => PlansBloc(context.read())),
+        BlocProvider(create: (context) => EffectsBloc(context.read())),
       ],
     );
   }

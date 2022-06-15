@@ -79,4 +79,10 @@ class ProgrammerGrpcApi implements ProgrammerApi {
   Future<void> assignFixtureSelectionToGroup(Group group) async {
     await this.client.assignFixtureSelectionToGroup(AssignFixtureSelectionToGroupRequest(id: group.id));
   }
+
+  @override
+  Future<void> callEffect(int id) {
+    // TODO: implement callEffect
+    throw UnimplementedError();
+  }
 }

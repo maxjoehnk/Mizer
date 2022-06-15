@@ -3,4 +3,5 @@ export 'package:mizer/protos/effects.pb.dart';
 
 abstract class EffectsApi {
   Future<List<Effect>> getEffects();
+  Future<void> deleteEffect(int id);
 }

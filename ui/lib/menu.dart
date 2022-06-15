@@ -8,6 +8,7 @@ import 'package:mizer/api/plugin/app.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/session.pb.dart';
+import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/media_bloc.dart';
@@ -150,5 +151,6 @@ class ApplicationMenu extends StatelessWidget {
     context.read<SequencerBloc>().add(FetchSequences());
     context.read<PresetsBloc>().add(FetchPresets());
     context.read<PlansBloc>().add(FetchPlans());
+    context.read<EffectsBloc>().add(FetchEffects());
   }
 }

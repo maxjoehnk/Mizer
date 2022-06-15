@@ -1,15 +1,19 @@
 use crate::models::{Effect, Effects};
+use crate::RuntimeApi;
+use mizer_command_executor::DeleteEffectCommand;
 use mizer_sequencer::effects::EffectEngine;
 
 #[derive(Clone)]
-pub struct EffectsHandler {
+pub struct EffectsHandler<R> {
     engine: EffectEngine,
+    runtime: R,
 }
 
-impl EffectsHandler {
-    pub fn new(effect_engine: EffectEngine) -> Self {
+impl<R: RuntimeApi> EffectsHandler<R> {
+    pub fn new(effect_engine: EffectEngine, runtime: R) -> Self {
         Self {
             engine: effect_engine,
+            runtime,
         }
     }
 
@@ -22,5 +26,11 @@ impl EffectsHandler {
             effects,
             ..Default::default()
         }
+    }
+
+    pub fn delete_effect(&self, effect_id: u32) {
+        self.runtime
+            .run_command(DeleteEffectCommand { effect_id })
+            .unwrap();
     }
 }

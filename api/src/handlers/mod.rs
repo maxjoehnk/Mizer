@@ -41,7 +41,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub sequencer: SequencerHandler<R>,
     pub programmer: ProgrammerHandler<R>,
     pub settings: SettingsHandler<R>,
-    pub effects: EffectsHandler,
+    pub effects: EffectsHandler<R>,
     pub plans: PlansHandler<R>,
 }
 
@@ -67,7 +67,7 @@ impl<R: RuntimeApi> Handlers<R> {
             session: SessionHandler::new(runtime.clone()),
             transport: TransportHandler::new(runtime.clone()),
             sequencer: SequencerHandler::new(sequencer.clone(), runtime.clone()),
-            effects: EffectsHandler::new(effect_engine),
+            effects: EffectsHandler::new(effect_engine, runtime.clone()),
             programmer: ProgrammerHandler::new(fixture_manager.clone(), sequencer, runtime.clone()),
             settings: SettingsHandler::new(runtime.clone()),
             plans: PlansHandler::new(fixture_manager, runtime),

@@ -6,7 +6,7 @@ use crate::{FixtureId, FixtureStates};
 use dashmap::DashMap;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, MutexGuard};
 
 #[derive(Clone)]
 pub struct FixtureManager {
@@ -137,12 +137,14 @@ impl FixtureManager {
     }
 
     pub fn get_programmer(&self) -> impl DerefMut<Target = Programmer> + '_ {
-        let programmer = self.programmer.lock().unwrap();
+        log::trace!("Locking programmer");
+        let programmer = self.programmer.lock().unwrap().log_wrap();
         programmer
     }
 
     pub(crate) fn execute_programmers(&self) {
-        let programmer = self.programmer.lock().unwrap();
+        log::trace!("Locking programmer");
+        let programmer = self.programmer.lock().unwrap().log_wrap();
         programmer.run();
     }
 
@@ -150,5 +152,37 @@ impl FixtureManager {
         for mut fixture in self.fixtures.iter_mut() {
             fixture.set_to_default();
         }
+    }
+}
+
+struct MutexLogWrapper<'a, T>(MutexGuard<'a, T>);
+
+trait MutexExt<'a, T> {
+    fn log_wrap(self) -> MutexLogWrapper<'a, T>;
+}
+
+impl<'a, T> MutexExt<'a, T> for MutexGuard<'a, T> {
+    fn log_wrap(self) -> MutexLogWrapper<'a, T> {
+        MutexLogWrapper(self)
+    }
+}
+
+impl<'a, T> Deref for MutexLogWrapper<'a, T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        self.0.deref()
+    }
+}
+
+impl<'a, T> DerefMut for MutexLogWrapper<'a, T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        self.0.deref_mut()
+    }
+}
+
+impl<'a, T> Drop for MutexLogWrapper<'a, T> {
+    fn drop(&mut self) {
+        log::trace!("Dropping lock");
     }
 }

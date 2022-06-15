@@ -191,24 +191,30 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 
     #[profiling::function]
     fn process(&mut self) {
+        log::trace!("tick");
         let frame = self.clock.tick();
         let snapshot = self.clock.snapshot();
         if let Err(err) = self.clock_sender.send(snapshot) {
             log::error!("Could not send clock snapshot {:?}", err);
         }
         self.clock_snapshot.set(snapshot);
+        log::trace!("pre_process");
         for processor in self.processors.iter_mut() {
             processor.pre_process(&mut self.injector, frame);
         }
+        log::trace!("plan");
         let planner = self.injector.get_mut::<ExecutionPlanner>().unwrap();
         if planner.should_rebuild() {
             let plan = planner.plan();
             self.rebuild_pipeline(plan);
         }
+        log::trace!("process_pipeline");
         self.process_pipeline(frame);
+        log::trace!("process");
         for processor in self.processors.iter_mut() {
             processor.process(&self.injector, frame);
         }
+        log::trace!("post_process");
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }

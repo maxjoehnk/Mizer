@@ -70,6 +70,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 Ok(()) => reply.send_ok(Value::Null),
                 Err(err) => reply.respond_error(err),
             },
+            "callEffect" => {
+                if let Value::I64(id) = call.args {
+                    self.handler.call_effect(id as u32);
+
+                    reply.send_ok(Value::Null)
+                }
+            }
             "getGroups" => {
                 let groups = self.handler.get_groups();
                 reply.respond_msg(groups);

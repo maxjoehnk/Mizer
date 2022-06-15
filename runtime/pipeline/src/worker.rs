@@ -72,6 +72,7 @@ impl PipelineWorker {
         path: NodePath,
         node: &T,
     ) {
+        log::debug!("register_node {:?} ({:?})", path, node);
         let state = node.create_state();
         match mizer_node::ProcessingNode::details(node).preview_type {
             PreviewType::History => {
@@ -106,6 +107,7 @@ impl PipelineWorker {
     }
 
     pub fn remove_node(&mut self, path: &NodePath, links: &[NodeLink]) {
+        log::debug!("remove_node {:?}", path);
         self.disconnect_ports(links);
         self.states.remove(path);
         self.receivers.remove(path);

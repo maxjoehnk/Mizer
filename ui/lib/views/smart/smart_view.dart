@@ -7,6 +7,7 @@ import 'package:mizer/api/plugin/programmer.dart';
 import 'package:mizer/extensions/fixture_id_extensions.dart';
 import 'package:mizer/extensions/programmer_channel_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -63,100 +64,83 @@ class _SmartViewState extends State<SmartView> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    var channels = programmerState.controls
-        .map((c) => c.control)
-        .toSet()
-        .sorted((a, b) => a.value - b.value);
+    var channels =
+        programmerState.controls.map((c) => c.control).toSet().sorted((a, b) => a.value - b.value);
     return BlocBuilder<FixturesBloc, Fixtures>(
-      builder: (context, fixturesState) => BlocBuilder<PresetsBloc, PresetsState>(builder: (context, presetsState) {
-        var controls = _controls(fixturesState);
-        return Column(children: [
-          ...controls
-            .where((control) => [FixtureControl.INTENSITY, FixtureControl.COLOR_MIXER].contains(control))
-            .toSet()
-            .map((control) => Flexible(
-              child: Panel(
-              label: NAMES[control],
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Wrap(spacing: 4, runSpacing: 4, children: _presets(presetsState.presets, control)),
-              ),
-          ),
-            )),
-          Expanded(
-            child: Panel(
-              label: "Fixtures",
-              actions: [
-                PanelAction(label: "Highlight"),
-                PanelAction(label: "Clear"),
-              ],
-              child: SingleChildScrollView(
-                child: MizerTable(
-                  columns: [Text("ID"), Text("Name"),
-                    ...channels.map((c) => Text(NAMES[c]!))
-                  ],
-                  rows: _fixtures(fixturesState).map((f) => MizerTableRow(cells: [
-                    Text(f.id.toDisplay()),
-                    Text(f.name),
-                    ...channels.map((control) => programmerState.controls.firstWhereOrNull((c) => control == c.control && c.fixtures.contains(f.id)))
-                    .map((control) => control == null ? Text("") : Text(control.toDisplayValue()))
-                  ])).toList(),
-                ),
-              ),
-            ),
-          )
-        ]);
-      }),
+      builder: (context, fixturesState) => BlocBuilder<PresetsBloc, PresetsState>(
+          builder: (context, presetsState) =>
+              BlocBuilder<EffectsBloc, EffectState>(builder: (context, effectsState) {
+                var controls = _controls(fixturesState);
+                return Column(children: [
+                  ...controls
+                      .where((control) =>
+                          [FixtureControl.INTENSITY, FixtureControl.COLOR_MIXER, FixtureControl.PAN, FixtureControl.TILT].contains(control))
+                      .map((control) => PRESET_TYPES[control]!)
+                      .toSet()
+                      .map((presetType) => Flexible(
+                            child: PresetGroup.build(presetType.toString(), presetsState.presets, effectsState, presetType)
+                          )),
+                  Expanded(
+                    child: Panel(
+                      label: "Fixtures",
+                      actions: [
+                        PanelAction(label: "Highlight"),
+                        PanelAction(label: "Clear"),
+                      ],
+                      child: SingleChildScrollView(
+                        child: MizerTable(
+                          columns: [
+                            Text("ID"),
+                            Text("Name"),
+                            ...channels.map((c) => Text(NAMES[c]!))
+                          ],
+                          rows: _fixtures(fixturesState)
+                              .map((f) => MizerTableRow(cells: [
+                                    Text(f.id.toDisplay()),
+                                    Text(f.name),
+                                    ...channels
+                                        .map((control) => programmerState.controls.firstWhereOrNull(
+                                            (c) =>
+                                                control == c.control && c.fixtures.contains(f.id)))
+                                        .map((control) => control == null
+                                            ? Text("")
+                                            : Text(control.toDisplayValue()))
+                                  ]))
+                              .toList(),
+                        ),
+                      ),
+                    ),
+                  )
+                ]);
+              })),
     );
   }
 
   List<FixtureEntry> _fixtures(Fixtures fixturesState) {
-    List<FixtureEntry> fixtures = fixturesState.fixtures
-        .map((fixture) => FixtureEntry(fixture: fixture))
-        .toList();
+    List<FixtureEntry> fixtures =
+        fixturesState.fixtures.map((fixture) => FixtureEntry(fixture: fixture)).toList();
     Iterable<FixtureEntry> subFixtures = fixturesState.fixtures
-        .map((fixture) => fixture.children.map((subFixture) => FixtureEntry(fixture: fixture, subFixture: subFixture)))
+        .map((fixture) => fixture.children
+            .map((subFixture) => FixtureEntry(fixture: fixture, subFixture: subFixture)))
         .flattened;
     fixtures.addAll(subFixtures);
 
     return fixtures
-        .where((fixture) => programmerState.activeFixtures.contains(fixture.id) || programmerState.fixtures.contains(fixture.id))
+        .where((fixture) =>
+            programmerState.activeFixtures.contains(fixture.id) ||
+            programmerState.fixtures.contains(fixture.id))
         .sortedByCompare<int>((fixture) {
-          var fixtureIndex = programmerState.activeFixtures.indexOf(fixture.id);
-          if (fixtureIndex == -1) {
-            fixtureIndex = programmerState.fixtures.indexOf(fixture.id);
-          }
+      var fixtureIndex = programmerState.activeFixtures.indexOf(fixture.id);
+      if (fixtureIndex == -1) {
+        fixtureIndex = programmerState.fixtures.indexOf(fixture.id);
+      }
 
-          return fixtureIndex;
-        }, (lhs, rhs) => lhs - rhs)
-        .toList();
+      return fixtureIndex;
+    }, (lhs, rhs) => lhs - rhs).toList();
   }
 
   List<FixtureControl> _controls(Fixtures fixturesState) {
-    return _fixtures(fixturesState)
-        .map((e) => e.controls)
-        .flattened
-        .map((c) => c.control)
-        .toList();
-  }
-
-  List<Widget> _presets(Presets presetsState, FixtureControl control) {
-    if (control == FixtureControl.INTENSITY) {
-      return presetsState.intensities
-          .map((preset) =>
-          ColorButton(color: Colors.white.withOpacity(preset.fader), preset: preset))
-      .toList();
-    }
-    if (control == FixtureControl.COLOR_MIXER) {
-      return presetsState.color
-          .map((preset) => ColorButton(
-          color: Color.fromARGB(255, (preset.color.red * 255).toInt(),
-              (preset.color.green * 255).toInt(), (preset.color.blue * 255).toInt()),
-          preset: preset))
-      .toList();
-    }
-
-    return <Widget>[];
+    return _fixtures(fixturesState).map((e) => e.controls).flattened.map((c) => c.control).toList();
   }
 }
 
@@ -164,7 +148,7 @@ class FixtureEntry {
   SubFixture? subFixture;
   Fixture fixture;
 
-  FixtureEntry({ this.subFixture, required this.fixture });
+  FixtureEntry({this.subFixture, required this.fixture});
 
   FixtureId get id {
     if (subFixture != null) {

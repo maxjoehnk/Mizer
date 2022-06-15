@@ -28,6 +28,7 @@ pub struct Programmer {
     highlight: bool,
     selected_fixtures: IndexMap<FixtureId, FixtureProgrammer>,
     active_fixtures: IndexSet<FixtureId>,
+    running_effects: IndexSet<ProgrammedEffect>,
     fixtures: Arc<DashMap<u32, Fixture>>,
     message_bus: watch::Sender<ProgrammerState>,
     message_subscriber: watch::Receiver<ProgrammerState>,
@@ -35,10 +36,17 @@ pub struct Programmer {
     has_written_to_selection: bool,
 }
 
+#[derive(Debug, Clone, Hash, PartialEq, Eq, Deserialize, Serialize)]
+pub struct ProgrammedEffect {
+    pub effect_id: u32,
+    pub fixtures: Vec<FixtureId>,
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct ProgrammerState {
     pub active_fixtures: Vec<FixtureId>,
     pub tracked_fixtures: Vec<FixtureId>,
+    pub fixture_effects: Vec<FixtureId>,
     pub highlight: bool,
     pub channels: Vec<ProgrammerChannel>,
 }
@@ -253,6 +261,7 @@ impl Programmer {
             highlight: false,
             selected_fixtures: Default::default(),
             active_fixtures: Default::default(),
+            running_effects: Default::default(),
             message_bus: tx,
             message_subscriber: rx,
             programmer_view: Arc::new(NonEmptyPinboard::new(Default::default())),
@@ -309,6 +318,7 @@ impl Programmer {
             self.active_fixtures.clear();
         } else {
             self.selected_fixtures.clear();
+            self.running_effects.clear();
         }
         self.emit_state();
     }
@@ -342,6 +352,14 @@ impl Programmer {
         for value in values {
             self.write_control(value);
         }
+    }
+
+    pub fn call_effect(&mut self, effect_id: u32) {
+        let fixtures = self.active_fixtures.iter().copied().collect();
+        self.running_effects.insert(ProgrammedEffect {
+            effect_id,
+            fixtures,
+        });
     }
 
     pub fn write_control(&mut self, value: FixtureControlValue) {
@@ -440,6 +458,11 @@ impl Programmer {
         let state = ProgrammerState {
             tracked_fixtures: self.selected_fixtures.keys().copied().collect(),
             active_fixtures: self.active_fixtures.iter().copied().collect(),
+            fixture_effects: self
+                .running_effects
+                .iter()
+                .flat_map(|e| e.fixtures.clone())
+                .collect(),
             highlight: self.highlight,
             channels: self.get_channels(),
         };
@@ -449,6 +472,14 @@ impl Programmer {
         if let Err(err) = self.message_bus.try_send(state) {
             log::error!("Error sending programmer msg {:?}", err);
         }
+    }
+
+    pub fn active_fixtures(&self) -> Vec<FixtureId> {
+        self.active_fixtures.iter().copied().collect()
+    }
+
+    pub fn active_effects(&self) -> impl Iterator<Item = &ProgrammedEffect> {
+        self.running_effects.iter()
     }
 }
 

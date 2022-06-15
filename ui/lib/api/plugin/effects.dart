@@ -12,6 +12,11 @@ class EffectsPluginApi implements EffectsApi {
   }
 
 
+  @override
+  Future<void> deleteEffect(int id) async {
+    await channel.invokeMethod("deleteEffect", id);
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

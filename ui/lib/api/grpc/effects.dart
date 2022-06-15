@@ -13,4 +13,10 @@ class EffectsGrpcApi implements EffectsApi {
 
     return response.effects;
   }
+
+  @override
+  Future<void> deleteEffect(int id) {
+    // TODO: implement deleteEffect
+    throw UnimplementedError();
+  }
 }

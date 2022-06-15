@@ -2,16 +2,19 @@ use super::Effect;
 use crate::effects::default_effects::CIRCLE;
 use crate::effects::instance::EffectInstance;
 use dashmap::DashMap;
+use itertools::Itertools;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::programmer::{ProgrammedEffect, Programmer};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::sync::{Arc, Mutex};
 
 #[derive(Default, Clone)]
 pub struct EffectEngine {
     pub effects: Arc<DashMap<u32, Effect>>,
     instances: Arc<Mutex<HashMap<EffectInstanceId, EffectInstance>>>,
+    programmer_effects: Arc<Mutex<HashMap<ProgrammedEffect, EffectInstanceId>>>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -30,6 +33,43 @@ impl EffectEngine {
 
     pub fn load_defaults(&mut self) {
         self.effects.insert(1, (1, &CIRCLE).into());
+    }
+
+    pub fn delete_effect(&self, id: u32) -> Option<Effect> {
+        self.effects.remove(&id).map(|(_, effect)| effect)
+    }
+
+    pub fn add_effect(&self, effect: Effect) {
+        self.effects.insert(effect.id, effect);
+    }
+
+    pub(crate) fn run_programmer_effects(&self, programmer: &Programmer) {
+        let mut effects = self.programmer_effects.lock().unwrap();
+
+        let (effects_to_be_stopped, effects_to_be_started) = {
+            let mut active_effects = programmer.active_effects();
+            let effects_to_be_stopped = effects
+                .iter()
+                .filter(|(e, _)| !active_effects.contains(e))
+                .map(|(effect, id)| (effect.clone(), *id))
+                .collect::<Vec<_>>();
+            let effects_to_be_started = active_effects
+                .filter(|e| !effects.contains_key(e))
+                .cloned()
+                .collect::<Vec<_>>();
+
+            (effects_to_be_stopped, effects_to_be_started)
+        };
+
+        for (effect, instance_id) in effects_to_be_stopped {
+            self.stop_effect(&instance_id);
+            effects.remove(&effect);
+        }
+        for effect in effects_to_be_started {
+            if let Some(instance_id) = self.run_effect(effect.effect_id, effect.fixtures.clone()) {
+                effects.insert(effect, instance_id);
+            }
+        }
     }
 
     #[profiling::function]

@@ -1,9 +1,14 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
-import 'package:provider/provider.dart';
+import 'package:mizer/widgets/table/table.dart';
+
+const double FRAME_EDITOR_CHANNEL_HEIGHT = 80;
 
 class EffectsView extends StatefulWidget {
   const EffectsView({Key? key}) : super(key: key);
@@ -17,32 +22,33 @@ class _EffectsViewState extends State<EffectsView> {
 
   @override
   Widget build(BuildContext context) {
-    EffectsApi api = context.read();
-    return FutureBuilder(
-        future: api.getEffects(),
-        builder: (context, AsyncSnapshot<List<Effect>> snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          List<Effect> effects = snapshot.data!;
+    EffectsBloc bloc = context.read();
+    return BlocBuilder<EffectsBloc, EffectState>(
+        builder: (context, effects) {
           return Column(
             children: [
               Expanded(
                 child: Panel(
                   label: "Effects".i18n,
-                  child: ListView.builder(
-                    itemCount: effects.length,
-                    itemBuilder: (context, index) {
-                      var effect = effects[index];
-
-                      return ListTile(
-                        title: Text(effect.name),
-                        onTap: () => setState(() => this.effect = effect),
-                        selected: effect == this.effect,
-                      );
+                  child: MizerTable(
+                    columns: [
+                      Text("ID"),
+                      Text("Name"),
+                    ],
+                    columnWidths: {
+                      0: FixedColumnWidth(64),
                     },
+                    rows: effects.map((e) => MizerTableRow(cells: [
+                      Text(e.id.toString()),
+                      Text(e.name),
+                    ], onTap: () => setState(() => this.effect = e),
+                      selected: this.effect == e
+                    )).toList(),
                   ),
-                  actions: [PanelAction(label: "Add Effect".i18n)],
+                  actions: [
+                    PanelAction(label: "Add Effect".i18n),
+                    PanelAction(label: "Delete".i18n, disabled: this.effect == null, onClick: () => bloc.add(DeleteEffect(effect!.id))),
+                  ],
                 ),
               ),
               if (effect != null) Expanded(child: EffectEditor(effect: effect!))
@@ -63,8 +69,9 @@ class EffectEditor extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox.square(
-            dimension: 300,
+          SizedBox(
+            width: 300,
+            height: 332,
             child: MovementEditor(effect: effect),
           ),
           Expanded(child: FrameEditor(effect: effect))
@@ -86,7 +93,7 @@ class FrameEditor extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
-                Text(channel.control.name),
+                SizedBox(child: Text(channel.control.name), width: 128),
                 Padding(padding: const EdgeInsets.all(8)),
                 Expanded(
                     child: CustomPaint(painter: FramePainter(channel), size: Size.fromHeight(64)))
@@ -104,7 +111,7 @@ class FrameChannelEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(painter: FramePainter(channel), size: Size.fromHeight(64));
+    return CustomPaint(painter: FramePainter(channel), size: Size.fromHeight(FRAME_EDITOR_CHANNEL_HEIGHT));
   }
 }
 
@@ -117,6 +124,9 @@ class FramePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.translate(0, size.height);
     canvas.scale(1 * size.height, -1 * size.height);
+    var axisWidth = size.height;
+    _drawAxis(canvas, axisWidth);
+    _drawSecondaryAxis(canvas, axisWidth);
     Paint linePaint = Paint()
       ..color = Color(0xffffffff)
       ..style = PaintingStyle.stroke;
@@ -190,6 +200,32 @@ class FramePainter extends CustomPainter {
     canvas.drawPath(handle, pathPaint);
     canvas.drawCircle(Offset(x1, y1), hit ? 0.03 : 0.02, handlePaint);
   }
+
+  void _drawAxis(Canvas canvas, double width) {
+    Paint axisPaint = Paint()
+      ..color = Color(0x55ffffff)
+      ..style = PaintingStyle.stroke;
+    var xAxis = Path()
+      ..moveTo(0, 0.0)
+      ..lineTo(width, 0.0);
+    var yAxis = Path()
+      ..moveTo(0.0, 0)
+      ..lineTo(0.0, 1);
+    canvas.drawPath(xAxis, axisPaint);
+    canvas.drawPath(yAxis, axisPaint);
+  }
+
+  void _drawSecondaryAxis(Canvas canvas, double width) {
+    Paint axisPaint = Paint()
+      ..color = Color(0x22ffffff)
+      ..style = PaintingStyle.stroke;
+    for (double i = 1; i < width; i++) {
+      var path = Path()
+        ..moveTo(i, 0)
+        ..lineTo(i, 1);
+      canvas.drawPath(path, axisPaint);
+    }
+  }
 }
 
 class MovementEditor extends StatelessWidget {
@@ -199,8 +235,8 @@ class MovementEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pan = effect.channels.firstWhere((element) => element.control == FixtureControl.PAN);
-    var tilt = effect.channels.firstWhere((element) => element.control == FixtureControl.TILT);
+    var pan = effect.channels.firstWhereOrNull((element) => element.control == FixtureControl.PAN);
+    var tilt = effect.channels.firstWhereOrNull((element) => element.control == FixtureControl.TILT);
 
     return Panel(
         label: "Movement".i18n,
@@ -209,8 +245,8 @@ class MovementEditor extends StatelessWidget {
 }
 
 class MovementPainter extends CustomPainter {
-  final EffectChannel pan;
-  final EffectChannel tilt;
+  final EffectChannel? pan;
+  final EffectChannel? tilt;
 
   MovementPainter(this.pan, this.tilt);
 
@@ -220,7 +256,9 @@ class MovementPainter extends CustomPainter {
     canvas.scale(1 * size.height, -1 * size.height);
     _drawAxis(canvas);
     _drawSecondaryAxis(canvas);
-    _drawMovement(canvas);
+    if (pan != null && tilt != null) {
+      _drawMovement(canvas);
+    }
   }
 
   void _drawAxis(Canvas canvas) {
@@ -259,6 +297,8 @@ class MovementPainter extends CustomPainter {
   }
 
   void _drawMovement(Canvas canvas) {
+    var pan = this.pan!;
+    var tilt = this.tilt!;
     Paint linePaint = Paint()
       ..color = Color(0xffffffff)
       ..style = PaintingStyle.stroke;

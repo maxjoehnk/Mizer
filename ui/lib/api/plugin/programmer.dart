@@ -104,6 +104,11 @@ class ProgrammerPluginApi implements ProgrammerApi {
     await channel.invokeMethod("assignFixtureSelectionToGroup", group.id);
   }
 
+  @override
+  Future<void> callEffect(int id) async {
+    await channel.invokeMethod("callEffect", id);
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

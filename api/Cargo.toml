@@ -33,6 +33,7 @@ profiling = "1.0"
 pinboard = "2.1"
 regex = "1.5"
 lazy_static = "1.4"
+tracing = "0.1"
 
 [build-dependencies]
 protoc-rust = "2.24"

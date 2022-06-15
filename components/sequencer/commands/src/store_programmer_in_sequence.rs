@@ -1,6 +1,6 @@
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::programmer::ProgrammerControl;
-use mizer_sequencer::{CueControl, Sequence, Sequencer, SequencerValue};
+use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammerControl};
+use mizer_sequencer::{CueControl, CueEffect, Sequence, Sequencer, SequencerValue};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
@@ -8,6 +8,7 @@ pub struct StoreProgrammerInSequenceCommand {
     pub sequence_id: u32,
     pub store_mode: StoreMode,
     pub controls: Vec<ProgrammerControl>,
+    pub effects: Vec<ProgrammedEffect>,
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Hash, PartialEq, Eq)]
@@ -52,10 +53,27 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                     value: SequencerValue::Direct(control.value),
                 })
                 .collect();
-            if self.store_mode == StoreMode::Merge {
-                cue.merge(cue_channels);
-            } else {
-                cue.controls = cue_channels;
+            match self.store_mode {
+                StoreMode::Merge => {
+                    cue.merge(cue_channels);
+                    for effect in &self.effects {
+                        cue.effects.push(CueEffect {
+                            effect: effect.effect_id,
+                            fixtures: effect.fixtures.clone(),
+                        });
+                    }
+                }
+                StoreMode::Overwrite | StoreMode::AddCue => {
+                    cue.controls = cue_channels;
+                    cue.effects = self
+                        .effects
+                        .iter()
+                        .map(|effect| CueEffect {
+                            effect: effect.effect_id,
+                            fixtures: effect.fixtures.clone(),
+                        })
+                        .collect();
+                }
             }
             sequence.fixtures.append(&mut fixtures);
             sequence.fixtures.sort();

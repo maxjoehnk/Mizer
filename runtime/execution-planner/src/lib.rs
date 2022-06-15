@@ -135,11 +135,13 @@ impl ExecutionPlanner {
     }
 
     pub fn add_node(&mut self, node: ExecutionNode) {
+        log::trace!("add_node {:?}", node);
         self.commands.push(ExecutorCommand::AddNode(node.clone()));
         self.nodes.insert(node.path.clone(), node);
     }
 
     pub fn add_link(&mut self, link: NodeLink) {
+        log::trace!("add_link {:?}", link);
         self.commands.push(ExecutorCommand::AddLink(link.clone()));
         self.links.push(link);
     }
@@ -151,12 +153,14 @@ impl ExecutionPlanner {
     }
 
     pub fn remove_node(&mut self, path: &NodePath) {
+        log::trace!("remove_node {:?}", path);
         self.commands
             .push(ExecutorCommand::RemoveNode(path.clone()));
         self.nodes.remove(path);
     }
 
     pub fn clear(&mut self) {
+        log::trace!("clear");
         self.nodes.clear();
         self.links.clear();
         self.commands.clear();
@@ -224,10 +228,23 @@ impl ExecutionPlanner {
         let mut plan = ExecutionPlan { executors };
 
         for executor in &mut plan.executors {
+            let previous_executor = last_plan
+                .executors
+                .iter()
+                .find(|e| e.id == executor.id)
+                .cloned()
+                .unwrap_or_else(|| PlannedExecutor {
+                    id: executor.id.clone(),
+                    associated_nodes: Default::default(),
+                    commands: Default::default(),
+                    links: Default::default(),
+                });
             for node in &executor.associated_nodes {
-                executor
-                    .commands
-                    .push(ExecutorCommand::AddNode(node.clone()));
+                if !previous_executor.associated_nodes.contains(node) {
+                    executor
+                        .commands
+                        .push(ExecutorCommand::AddNode(node.clone()));
+                }
             }
             for link in &executor.links {
                 executor.commands.push(ExecutorCommand::AddLink(NodeLink {
@@ -316,6 +333,24 @@ mod tests {
         planner.add_node(node);
 
         assert!(planner.nodes.contains_key(&path));
+    }
+
+    #[test]
+    fn planning_twice_should_not_add_node_twice() {
+        let mut planner = ExecutionPlanner::new();
+        planner.add_executor(Executor {
+            id: ExecutorId("executor".into()),
+        });
+        let node = ExecutionNode {
+            path: "/node".into(),
+            attached_executor: None,
+        };
+        planner.add_node(node);
+        planner.plan();
+
+        let plan = planner.plan();
+
+        assert_eq!(Vec::<ExecutorCommand>::new(), plan.executors[0].commands);
     }
 
     #[test_case("/test")]

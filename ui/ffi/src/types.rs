@@ -56,3 +56,39 @@ pub fn drop_pointer<T>(ptr: *const T) {
 
     drop(ffi);
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::Arc;
+
+    #[test]
+    fn creating_pointer_should_increase_reference_count() {
+        let data = Arc::new(0);
+
+        let _ = data.to_pointer();
+
+        assert_eq!(Arc::strong_count(&data), 2);
+    }
+
+    #[test]
+    fn dropping_pointer_should_decreate_reference_count() {
+        let data = Arc::new(0);
+        let ptr = data.to_pointer() as *const i32;
+
+        drop_pointer(ptr);
+
+        assert_eq!(Arc::strong_count(&data), 1);
+    }
+
+    #[test]
+    fn reading_pointer_should_not_increase_reference_count() {
+        let data = Arc::new(0);
+        let ptr = data.to_pointer() as *const i32;
+
+        let content = Arc::<i32>::from_pointer(ptr);
+        std::mem::forget(content);
+
+        assert_eq!(Arc::strong_count(&data), 2);
+    }
+}

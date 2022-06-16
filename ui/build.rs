@@ -3,10 +3,7 @@ use nativeshell_build::{
 };
 
 fn build_flutter() -> BuildResult<()> {
-    Flutter::build(FlutterOptions {
-        target_file: "lib/integrated.dart".as_path(),
-        ..Default::default()
-    })?;
+    Flutter::build(FlutterOptions::default())?;
 
     if cfg!(target_os = "macos") {
         let options = AppBundleOptions {

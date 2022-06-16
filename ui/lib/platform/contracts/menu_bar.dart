@@ -11,10 +11,6 @@ class MenuBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.platform.isStandalone) {
-      throw Exception("Not implemented");
-    }else {
-      return IntegratedMenuBar(menu: menu, child: child);
-    }
+    return IntegratedMenuBar(menu: menu, child: child);
   }
 }

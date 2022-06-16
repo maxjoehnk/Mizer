@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/session.pb.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:nativeshell/nativeshell.dart';
@@ -19,12 +18,10 @@ class WindowTitleUpdater extends StatelessWidget {
   }
 
   void _updateTitle(BuildContext context, String? filePath) {
-    if (context.platform.isIntegrated) {
-      if (filePath == null || filePath.isEmpty) {
-        Window.of(context).setTitle("Mizer");
-        return;
-      }
-      Window.of(context).setTitle("Mizer ($filePath)");
+    if (filePath == null || filePath.isEmpty) {
+      Window.of(context).setTitle("Mizer");
+      return;
     }
+    Window.of(context).setTitle("Mizer ($filePath)");
   }
 }

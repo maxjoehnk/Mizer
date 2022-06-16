@@ -1,36 +1,34 @@
 // @dart=2.11
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mizer/app.dart';
-import 'package:mizer/navigation.dart';
-import 'package:mizer/platform/platform.dart';
-import 'package:mizer/platform/standalone/platform.dart';
-import 'package:mizer/session/session_discovery.dart';
-import 'package:mizer/session/session_selector.dart';
-import 'package:mizer/state/provider.dart';
-import 'package:provider/provider.dart';
+import 'package:mizer/windows/dmx_monitor_window.dart';
+import 'package:mizer/windows/main_window.dart';
+import 'package:mizer/windows/midi_monitor_window.dart';
+import 'package:mizer/windows/preferences_window.dart';
+import 'package:mizer/windows/smart_window.dart';
+import 'package:nativeshell/nativeshell.dart';
 
-import 'api/grpc/provider.dart';
+import 'i18n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final discovery = SessionDiscovery();
-  await discovery.start();
-
-  runApp(MizerRemoteApp(discovery));
+  await MizerI18n.loadTranslations();
+  runApp(MizerIntegratedUi());
 }
 
-class MizerRemoteApp extends StatelessWidget {
-  final SessionDiscovery discovery;
-
-  MizerRemoteApp(this.discovery);
-
+class MizerIntegratedUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MizerApp(
-        child: Provider<Platform>(
-          create: (_) => StandalonePlatform(),
-          child: SessionProvider(discovery,
-              builder: (channel) => GrpcApiProvider(channel, child: StateProvider(child: Home()))),
-        ));
+    return MizerApp(child: WindowWidget(onCreateState: (initData) {
+      WindowState state;
+
+      state ??= DmxMonitorWindow.fromInitData(initData);
+      state ??= MidiMonitorWindow.fromInitData(initData);
+      state ??= PreferencesWindow.fromInitData(initData);
+      state ??= SmartWindow.fromInitData(initData);
+      state ??= MainWindowState();
+
+      return state;
+    }));
   }
 }

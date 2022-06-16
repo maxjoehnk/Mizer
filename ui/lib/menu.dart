@@ -99,16 +99,15 @@ class ApplicationMenu extends StatelessWidget {
                     .mapEnumerated((route, index) =>
                         MenuActionItem(label: route.label, action: OpenViewIntent(index)))
                     .toList()),
-            if (!context.platform.isStandalone)
-              SubMenu(title: 'Window'.i18n, children: [
-                MenuItem(
-                    label: 'New Window'.i18n,
-                    action: () => Window.create({}).then((window) => window.show())),
-                MenuItem(
-                  label: 'Smart Window'.i18n,
-                action: () => Window.create(SmartWindow.toInitData()).then((window) => window.show())
-                )
-              ])
+            SubMenu(title: 'Window'.i18n, children: [
+              MenuItem(
+                  label: 'New Window'.i18n,
+                  action: () => Window.create({}).then((window) => window.show())),
+              MenuItem(
+                label: 'Smart Window'.i18n,
+              action: () => Window.create(SmartWindow.toInitData()).then((window) => window.show())
+              )
+            ])
           ])),
     );
   }

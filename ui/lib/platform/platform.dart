@@ -2,7 +2,6 @@ export 'contracts/menu.dart';
 export 'contracts/menu_bar.dart';
 
 import 'package:flutter/widgets.dart';
-import 'package:mizer/platform/standalone/platform.dart';
 import 'package:provider/provider.dart';
 
 import 'contracts/menu.dart';
@@ -12,14 +11,6 @@ abstract class Platform {
 
   static Platform of(BuildContext context) {
     return context.read<Platform>();
-  }
-
-  bool get isIntegrated {
-    return !this.isStandalone;
-  }
-
-  bool get isStandalone {
-    return this is StandalonePlatform;
   }
 }
 

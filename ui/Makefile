@@ -36,7 +36,7 @@ generate_bindings: generate_header deps
 	flutter pub run ffigen
 
 attach:
-	flutter attach -d linux --debug-url $(FLUTTER_DEBUG_URL) -t lib/integrated.dart
+	flutter attach -d linux --debug-url $(FLUTTER_DEBUG_URL) -t lib/main.dart
 
 widgetbook:
 	flutter run -t widgetbook/main.dart

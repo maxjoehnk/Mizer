@@ -55,6 +55,12 @@ class HideNode extends NodesEvent {
   HideNode(this.node);
 }
 
+class DisconnectPorts extends NodesEvent {
+  final String node;
+
+  DisconnectPorts(this.node);
+}
+
 class ShowNode extends NodesEvent {
   final String node;
   final Offset position;
@@ -128,6 +134,11 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
     if (event is ShowNode) {
       var request = event.into();
       await api.showNode(request);
+      var nodes = await api.getNodes();
+      yield nodes;
+    }
+    if (event is DisconnectPorts) {
+      await api.disconnectPorts(event.node);
       var nodes = await api.getNodes();
       yield nodes;
     }

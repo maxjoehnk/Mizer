@@ -18,4 +18,6 @@ abstract class NodesApi {
   Future<void> hideNode(String path);
 
   Future<void> showNode(ShowNodeRequest request);
+
+  Future<void> disconnectPorts(String path);
 }

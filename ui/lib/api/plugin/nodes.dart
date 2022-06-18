@@ -73,4 +73,9 @@ class NodesPluginApi implements NodesApi {
   Future<void> hideNode(String path) async {
     await channel.invokeMethod("hideNode", path);
   }
+
+  @override
+  Future<void> disconnectPorts(String path) async {
+    await channel.invokeMethod("disconnectPorts", path);
+  }
 }

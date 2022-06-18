@@ -130,4 +130,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         Ok(())
     }
+
+    pub fn disconnect_ports(&self, path: NodePath) -> anyhow::Result<()> {
+        self.runtime.run_command(DisconnectPortsCommand { path })?;
+
+        Ok(())
+    }
 }

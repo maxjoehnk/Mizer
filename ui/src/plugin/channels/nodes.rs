@@ -95,6 +95,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                     }
                 }
             }
+            "disconnectPorts" => {
+                if let Value::String(path) = call.args {
+                    match self.handler.disconnect_ports(path.into()) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
+                }
+            }
             _ => resp.not_implemented(),
         }
     }

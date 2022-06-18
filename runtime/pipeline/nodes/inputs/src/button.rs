@@ -1,9 +1,13 @@
 use serde::{Deserialize, Serialize};
 
+use mizer_node::edge::Edge;
 use mizer_node::*;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
-pub struct ButtonNode {}
+pub struct ButtonNode {
+    #[serde(default)]
+    pub toggle: bool,
+}
 
 impl PipelineNode for ButtonNode {
     fn details(&self) -> NodeDetails {
@@ -40,14 +44,25 @@ impl PipelineNode for ButtonNode {
 }
 
 impl ProcessingNode for ButtonNode {
-    type State = f64;
+    type State = (bool, Edge);
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(
+        &self,
+        context: &impl NodeContext,
+        (state, edge): &mut Self::State,
+    ) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>("value") {
-            *state = value;
+            if self.toggle {
+                if let Some(true) = edge.update(value) {
+                    *state = !*state;
+                }
+            } else {
+                *state = value > 0f64;
+            }
         }
-        context.write_port("value", *state);
-        context.push_history_value(*state);
+        let output_value = if *state { 1f64 } else { 0f64 };
+        context.write_port("value", output_value);
+        context.push_history_value(output_value);
 
         Ok(())
     }

@@ -118,7 +118,10 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.port = config.port;
             node.argument_type = config.argument_type;
         }
-        (NodeType::Button, Node::Button(_)) => {}
+        (NodeType::Button, Node::Button(config)) => {
+            let node: &mut ButtonNode = node.downcast_mut()?;
+            node.toggle = config.toggle;
+        }
         (NodeType::Fader, Node::Fader(_)) => {}
         (NodeType::IldaFile, Node::IldaFile(config)) => {
             let node: &mut IldaFileNode = node.downcast_mut()?;

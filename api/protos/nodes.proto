@@ -137,8 +137,8 @@ message NodeConfig {
     SequenceNodeConfig sequenceConfig = 12;
     ClockNodeConfig clockConfig = 13;
     FixtureNodeConfig fixtureConfig = 14;
-    InputNodeConfig buttonConfig = 15;
-    InputNodeConfig faderConfig = 16;
+    ButtonNodeConfig buttonConfig = 15;
+    FaderNodeConfig faderConfig = 16;
     IldaFileNodeConfig ildaFileConfig = 17;
     LaserNodeConfig laserConfig = 18;
     PixelPatternNodeConfig pixelPatternConfig = 19;
@@ -220,7 +220,10 @@ message SequencerNodeConfig {
   uint32 sequence_id = 1;
 }
 
-message InputNodeConfig {}
+message ButtonNodeConfig {
+  bool toggle = 1;
+}
+message FaderNodeConfig {}
 
 message IldaFileNodeConfig {
   string file = 1;

@@ -998,8 +998,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
     ..aOM<ClockNodeConfig>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clockConfig', protoName: 'clockConfig', subBuilder: ClockNodeConfig.create)
     ..aOM<FixtureNodeConfig>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureConfig', protoName: 'fixtureConfig', subBuilder: FixtureNodeConfig.create)
-    ..aOM<InputNodeConfig>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buttonConfig', protoName: 'buttonConfig', subBuilder: InputNodeConfig.create)
-    ..aOM<InputNodeConfig>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faderConfig', protoName: 'faderConfig', subBuilder: InputNodeConfig.create)
+    ..aOM<ButtonNodeConfig>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buttonConfig', protoName: 'buttonConfig', subBuilder: ButtonNodeConfig.create)
+    ..aOM<FaderNodeConfig>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'faderConfig', protoName: 'faderConfig', subBuilder: FaderNodeConfig.create)
     ..aOM<IldaFileNodeConfig>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ildaFileConfig', protoName: 'ildaFileConfig', subBuilder: IldaFileNodeConfig.create)
     ..aOM<LaserNodeConfig>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'laserConfig', protoName: 'laserConfig', subBuilder: LaserNodeConfig.create)
     ..aOM<PixelPatternNodeConfig>(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pixelPatternConfig', protoName: 'pixelPatternConfig', subBuilder: PixelPatternNodeConfig.create)
@@ -1036,8 +1036,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     SequenceNodeConfig? sequenceConfig,
     ClockNodeConfig? clockConfig,
     FixtureNodeConfig? fixtureConfig,
-    InputNodeConfig? buttonConfig,
-    InputNodeConfig? faderConfig,
+    ButtonNodeConfig? buttonConfig,
+    FaderNodeConfig? faderConfig,
     IldaFileNodeConfig? ildaFileConfig,
     LaserNodeConfig? laserConfig,
     PixelPatternNodeConfig? pixelPatternConfig,
@@ -1247,26 +1247,26 @@ class NodeConfig extends $pb.GeneratedMessage {
   FixtureNodeConfig ensureFixtureConfig() => $_ensure(4);
 
   @$pb.TagNumber(15)
-  InputNodeConfig get buttonConfig => $_getN(5);
+  ButtonNodeConfig get buttonConfig => $_getN(5);
   @$pb.TagNumber(15)
-  set buttonConfig(InputNodeConfig v) { setField(15, v); }
+  set buttonConfig(ButtonNodeConfig v) { setField(15, v); }
   @$pb.TagNumber(15)
   $core.bool hasButtonConfig() => $_has(5);
   @$pb.TagNumber(15)
   void clearButtonConfig() => clearField(15);
   @$pb.TagNumber(15)
-  InputNodeConfig ensureButtonConfig() => $_ensure(5);
+  ButtonNodeConfig ensureButtonConfig() => $_ensure(5);
 
   @$pb.TagNumber(16)
-  InputNodeConfig get faderConfig => $_getN(6);
+  FaderNodeConfig get faderConfig => $_getN(6);
   @$pb.TagNumber(16)
-  set faderConfig(InputNodeConfig v) { setField(16, v); }
+  set faderConfig(FaderNodeConfig v) { setField(16, v); }
   @$pb.TagNumber(16)
   $core.bool hasFaderConfig() => $_has(6);
   @$pb.TagNumber(16)
   void clearFaderConfig() => clearField(16);
   @$pb.TagNumber(16)
-  InputNodeConfig ensureFaderConfig() => $_ensure(6);
+  FaderNodeConfig ensureFaderConfig() => $_ensure(6);
 
   @$pb.TagNumber(17)
   IldaFileNodeConfig get ildaFileConfig => $_getN(7);
@@ -2152,33 +2152,80 @@ class SequencerNodeConfig extends $pb.GeneratedMessage {
   void clearSequenceId() => clearField(1);
 }
 
-class InputNodeConfig extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'InputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+class ButtonNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ButtonNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'toggle')
     ..hasRequiredFields = false
   ;
 
-  InputNodeConfig._() : super();
-  factory InputNodeConfig() => create();
-  factory InputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory InputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  ButtonNodeConfig._() : super();
+  factory ButtonNodeConfig({
+    $core.bool? toggle,
+  }) {
+    final _result = create();
+    if (toggle != null) {
+      _result.toggle = toggle;
+    }
+    return _result;
+  }
+  factory ButtonNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ButtonNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  InputNodeConfig clone() => InputNodeConfig()..mergeFromMessage(this);
+  ButtonNodeConfig clone() => ButtonNodeConfig()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  InputNodeConfig copyWith(void Function(InputNodeConfig) updates) => super.copyWith((message) => updates(message as InputNodeConfig)) as InputNodeConfig; // ignore: deprecated_member_use
+  ButtonNodeConfig copyWith(void Function(ButtonNodeConfig) updates) => super.copyWith((message) => updates(message as ButtonNodeConfig)) as ButtonNodeConfig; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static InputNodeConfig create() => InputNodeConfig._();
-  InputNodeConfig createEmptyInstance() => create();
-  static $pb.PbList<InputNodeConfig> createRepeated() => $pb.PbList<InputNodeConfig>();
+  static ButtonNodeConfig create() => ButtonNodeConfig._();
+  ButtonNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ButtonNodeConfig> createRepeated() => $pb.PbList<ButtonNodeConfig>();
   @$core.pragma('dart2js:noInline')
-  static InputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InputNodeConfig>(create);
-  static InputNodeConfig? _defaultInstance;
+  static ButtonNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ButtonNodeConfig>(create);
+  static ButtonNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get toggle => $_getBF(0);
+  @$pb.TagNumber(1)
+  set toggle($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasToggle() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearToggle() => clearField(1);
+}
+
+class FaderNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FaderNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  FaderNodeConfig._() : super();
+  factory FaderNodeConfig() => create();
+  factory FaderNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FaderNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FaderNodeConfig clone() => FaderNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FaderNodeConfig copyWith(void Function(FaderNodeConfig) updates) => super.copyWith((message) => updates(message as FaderNodeConfig)) as FaderNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FaderNodeConfig create() => FaderNodeConfig._();
+  FaderNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<FaderNodeConfig> createRepeated() => $pb.PbList<FaderNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static FaderNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FaderNodeConfig>(create);
+  static FaderNodeConfig? _defaultInstance;
 }
 
 class IldaFileNodeConfig extends $pb.GeneratedMessage {

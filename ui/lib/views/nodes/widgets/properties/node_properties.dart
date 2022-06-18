@@ -8,6 +8,7 @@ import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_p
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
 
+import 'properties/groups/button_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/fixture_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
@@ -112,6 +113,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(EnvelopeProperties(node.config.envelopeConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(envelopeConfig: config)))));
+    }
+    if (node.config.hasButtonConfig()) {
+      widgets.add(ButtonProperties(node.config.buttonConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(buttonConfig: config)))));
     }
     return widgets;
   }

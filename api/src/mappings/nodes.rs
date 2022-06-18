@@ -419,27 +419,32 @@ impl From<GamepadNodeConfig> for mizer_nodes::GamepadNode {
     }
 }
 
-impl From<mizer_nodes::FaderNode> for InputNodeConfig {
+impl From<mizer_nodes::FaderNode> for FaderNodeConfig {
     fn from(_: mizer_nodes::FaderNode) -> Self {
         Default::default()
     }
 }
 
-impl From<InputNodeConfig> for mizer_nodes::FaderNode {
-    fn from(_: InputNodeConfig) -> Self {
+impl From<FaderNodeConfig> for mizer_nodes::FaderNode {
+    fn from(_: FaderNodeConfig) -> Self {
         Default::default()
     }
 }
 
-impl From<mizer_nodes::ButtonNode> for InputNodeConfig {
-    fn from(_: mizer_nodes::ButtonNode) -> Self {
-        Default::default()
+impl From<mizer_nodes::ButtonNode> for ButtonNodeConfig {
+    fn from(node: mizer_nodes::ButtonNode) -> Self {
+        Self {
+            toggle: node.toggle,
+            ..Default::default()
+        }
     }
 }
 
-impl From<InputNodeConfig> for mizer_nodes::ButtonNode {
-    fn from(_: InputNodeConfig) -> Self {
-        Default::default()
+impl From<ButtonNodeConfig> for mizer_nodes::ButtonNode {
+    fn from(node: ButtonNodeConfig) -> Self {
+        Self {
+            toggle: node.toggle,
+        }
     }
 }
 

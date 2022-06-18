@@ -181,6 +181,13 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.active_value = config.active_value;
             node.inactive_value = config.inactive_value;
         }
+        (NodeType::Envelope, Node::Envelope(config)) => {
+            let node: &mut EnvelopeNode = node.downcast_mut()?;
+            node.attack = config.attack;
+            node.decay = config.decay;
+            node.sustain = config.sustain;
+            node.release = config.release;
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,

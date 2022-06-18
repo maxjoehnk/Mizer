@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/groups/envelope_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
@@ -31,8 +32,7 @@ class NodePropertiesPane extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
             color: Colors.grey.shade800,
             boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
+              BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
             ]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -41,7 +41,10 @@ class NodePropertiesPane extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-            child: Text(NODE_LABELS[node.type] ?? "", style: textTheme.bodySmall,),
+            child: Text(
+              NODE_LABELS[node.type] ?? "",
+              style: textTheme.bodySmall,
+            ),
           ),
           ..._getPropertyPanes(node, nodesApi),
         ]));
@@ -98,12 +101,17 @@ class NodePropertiesPane extends StatelessWidget {
     if (node.config.hasGamepadNodeConfig()) {
       widgets.add(GamepadProperties(node.config.gamepadNodeConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-          path: node.path, config: NodeConfig(gamepadNodeConfig: config)))));
+              path: node.path, config: NodeConfig(gamepadNodeConfig: config)))));
     }
     if (node.config.hasThresholdConfig()) {
       widgets.add(ThresholdProperties(node.config.thresholdConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(thresholdConfig: config)))));
+    }
+    if (node.config.hasEnvelopeConfig()) {
+      widgets.add(EnvelopeProperties(node.config.envelopeConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(envelopeConfig: config)))));
     }
     return widgets;
   }

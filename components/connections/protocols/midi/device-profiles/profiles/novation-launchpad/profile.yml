@@ -1,0 +1,6 @@
+id: novation-launchpad
+manufacturer: Novation
+name: Launchpad
+keyword: Launchpad
+scripts:
+  pages: pages.rhai

@@ -105,8 +105,8 @@ impl Fixture {
                     }
                     ChannelResolution::Fine(coarse, fine) => {
                         let value = convert_value_16bit(*value);
-                        let coarse_value = (value >> 0) & 0xff;
-                        let fine_value = (value >> 8) & 0xff;
+                        let coarse_value = (value >> 8) & 0xff;
+                        let fine_value = (value >> 0) & 0xff;
                         let coarse_channel = base_channel + coarse as usize;
                         let fine_channel = base_channel + fine as usize;
                         buffer[coarse_channel] = coarse_value as u8;
@@ -114,9 +114,9 @@ impl Fixture {
                     }
                     ChannelResolution::Finest(coarse, fine, finest) => {
                         let value = convert_value_24bit(*value);
-                        let coarse_value = (value >> 0) & 0xff;
+                        let coarse_value = (value >> 16) & 0xff;
                         let fine_value = (value >> 8) & 0xff;
-                        let finest_value = (value >> 16) & 0xff;
+                        let finest_value = (value >> 0) & 0xff;
                         let coarse_channel = base_channel + coarse as usize;
                         let fine_channel = base_channel + fine as usize;
                         let finest_channel = base_channel + finest as usize;

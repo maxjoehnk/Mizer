@@ -344,7 +344,7 @@ impl Programmer {
         group
             .fixtures
             .iter()
-            .all(|id| self.selected_fixtures.contains_key(id))
+            .all(|id| self.active_fixtures.contains(id) || self.selected_fixtures.contains_key(id))
     }
 
     pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {

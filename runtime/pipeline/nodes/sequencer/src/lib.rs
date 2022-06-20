@@ -71,6 +71,14 @@ impl PipelineNode for SequencerNode {
                     ..Default::default()
                 },
             ),
+            (
+                CUE.into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
         ]
     }
 
@@ -93,6 +101,9 @@ impl ProcessingNode for SequencerNode {
                 if let Some(true) = state.stop.update(value) {
                     sequencer.sequence_stop(self.sequence_id);
                 }
+            }
+            if let Some(value) = context.read_port_changes::<_, f64>(CUE) {
+                sequencer.sequence_go_to(self.sequence_id, value.round() as u32);
             }
             if let Some(sequence_state) =
                 sequencer.get_sequencer_view().read().get(&self.sequence_id)

@@ -91,6 +91,13 @@ impl Sequencer {
                         }
                     }
                 }
+                SequencerCommands::GoTo(sequence_id, cue_id) => {
+                    if let Some(state) = states.get_mut(&sequence_id) {
+                        if let Some(sequence) = sequences.get(&sequence_id) {
+                            state.go_to(sequence, cue_id, &self.clock, effect_engine, frame);
+                        }
+                    }
+                }
                 SequencerCommands::Stop(sequence_id) => {
                     if let Some(state) = states.get_mut(&sequence_id) {
                         if let Some(sequence) = sequences.get(&sequence_id) {
@@ -160,6 +167,10 @@ impl Sequencer {
         self.commands.0.send(SequencerCommands::Go(sequence));
     }
 
+    pub fn sequence_go_to(&self, sequence: u32, cue: u32) {
+        self.commands.0.send(SequencerCommands::GoTo(sequence, cue));
+    }
+
     pub fn sequence_stop(&self, sequence: u32) {
         self.commands.0.send(SequencerCommands::Stop(sequence));
     }
@@ -220,6 +231,7 @@ impl Sequencer {
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum SequencerCommands {
     Go(u32),
+    GoTo(u32, u32),
     Stop(u32),
     DropState(u32),
 }

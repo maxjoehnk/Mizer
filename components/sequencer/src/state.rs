@@ -92,6 +92,27 @@ impl SequenceState {
         self.update_channel_states(sequence, clock, frame);
     }
 
+    pub fn go_to(
+        &mut self,
+        sequence: &Sequence,
+        cue_id: u32,
+        clock: &impl Clock,
+        effect_engine: &EffectEngine,
+        frame: ClockFrame,
+    ) {
+        if let Some(cue_index) = sequence.cues.iter().position(|cue| cue.id == cue_id) {
+            self.last_go = Some(SequenceTimestamp {
+                time: clock.now(),
+                beat: frame.frame,
+            });
+            self.cue_finished_at = None;
+            self.stop_effects(effect_engine);
+            self.active = true;
+            self.active_cue_index = cue_index;
+            self.update_channel_states(sequence, clock, frame);
+        }
+    }
+
     pub fn stop(
         &mut self,
         sequence: &Sequence,

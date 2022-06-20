@@ -14,7 +14,7 @@ pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
-pub use mizer_port_operation_nodes::{MergeNode, SelectNode, ThresholdNode};
+pub use mizer_port_operation_nodes::{MergeMode, MergeNode, SelectNode, ThresholdNode};
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_sequencer_nodes::SequencerNode;

@@ -89,6 +89,14 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .unwrap_or_default()
     }
 
+    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+        let port = port.into();
+        self.receivers
+            .and_then(|receivers| receivers.get(&port))
+            .map(|receiver| receiver.read_multiple_changes())
+            .unwrap_or_default()
+    }
+
     // TODO: return as ref again?
     fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata {
         let port = port.into();

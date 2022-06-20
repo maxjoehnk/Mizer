@@ -118,17 +118,33 @@ impl AnyPortReceiver {
             let mut values = Vec::new();
             for port in ports.iter() {
                 let recv: &NodeReceiver<V> = port.downcast_ref().unwrap();
+                let value = recv.read();
 
-                let mut value_store = recv.value.borrow_mut();
-                let value = value_store.take();
+                values.push(value);
+            }
+            values
+        } else {
+            Default::default()
+        }
+    }
 
-                let value = value.or_else(|| {
-                    recv.transport
-                        .borrow()
-                        .as_ref()
-                        // TODO: return reference to data
-                        .and_then(|port| port.recv().map(|value| value.clone()))
-                });
+    pub fn read_multiple_changes<V: PortValue + 'static>(&self) -> Vec<Option<V>> {
+        if let AnyPortReceiverPort::Multiple(ports) = &self.port {
+            let ports = ports.borrow();
+            let mut values = Vec::new();
+            for port in ports.iter() {
+                let recv: &NodeReceiver<V> = port.downcast_ref().unwrap();
+                let value = recv.read();
+
+                let mut last_value = recv.last_value.borrow_mut();
+                let value = if last_value.deref() == &value {
+                    None
+                }else if let Some(value) = value {
+                    *last_value = Some(value.clone());
+                    Some(value)
+                } else {
+                    None
+                };
                 values.push(value);
             }
             values

@@ -835,14 +835,43 @@ impl From<SelectNodeConfig> for mizer_nodes::SelectNode {
 }
 
 impl From<mizer_nodes::MergeNode> for MergeNodeConfig {
-    fn from(_: mizer_nodes::MergeNode) -> Self {
-        Default::default()
+    fn from(node: mizer_nodes::MergeNode) -> Self {
+        Self {
+            mode: node.mode.into(),
+            ..Default::default()
+        }
     }
 }
 
 impl From<MergeNodeConfig> for mizer_nodes::MergeNode {
-    fn from(_: MergeNodeConfig) -> Self {
-        Default::default()
+    fn from(config: MergeNodeConfig) -> Self {
+        Self {
+            mode: config.mode.into(),
+        }
+    }
+}
+
+impl From<mizer_nodes::MergeMode> for MergeNodeConfig_MergeMode {
+    fn from(mode: mizer_nodes::MergeMode) -> Self {
+        use mizer_nodes::MergeMode::*;
+
+        match mode {
+            Latest => Self::Latest,
+            Highest => Self::Highest,
+            Lowest => Self::Lowest,
+        }
+    }
+}
+
+impl From<MergeNodeConfig_MergeMode> for mizer_nodes::MergeMode {
+    fn from(mode: MergeNodeConfig_MergeMode) -> Self {
+        use MergeNodeConfig_MergeMode::*;
+
+        match mode {
+            Latest => Self::Latest,
+            Highest => Self::Highest,
+            Lowest => Self::Lowest,
+        }
     }
 }
 

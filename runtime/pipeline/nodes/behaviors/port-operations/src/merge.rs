@@ -59,12 +59,21 @@ impl ProcessingNode for MergeNode {
     type State = ();
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
-        let ports = context.read_ports::<_, f64>("input");
-        let ports_with_value = ports.into_iter().flatten();
         let value: Option<f64> = match self.mode {
-            MergeMode::Latest => ports_with_value.last(),
-            MergeMode::Highest => ports_with_value.max_by(|lhs, rhs| lhs.partial_cmp(rhs).unwrap()),
-            MergeMode::Lowest => ports_with_value.min_by(|lhs, rhs| lhs.partial_cmp(rhs).unwrap()),
+            MergeMode::Latest => {
+                let ports = context.read_changed_ports::<_, f64>("input");
+                ports.into_iter().flatten().last()
+            }
+            MergeMode::Lowest | MergeMode::Highest => {
+                let ports = context.read_ports::<_, f64>("input");
+                let ports_with_value = ports.into_iter().flatten();
+
+                if self.mode == MergeMode::Highest {
+                    ports_with_value.max_by(|lhs, rhs| lhs.partial_cmp(rhs).unwrap())
+                } else {
+                    ports_with_value.min_by(|lhs, rhs| lhs.partial_cmp(rhs).unwrap())
+                }
+            }
         };
         if let Some(value) = value {
             context.write_port("output", value);

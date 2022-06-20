@@ -11891,6 +11891,8 @@ impl ::protobuf::reflect::ProtobufValue for SelectNodeConfig {
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MergeNodeConfig {
+    // message fields
+    pub mode: MergeNodeConfig_MergeMode,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -11908,6 +11910,21 @@ impl MergeNodeConfig {
     pub fn new() -> MergeNodeConfig {
         ::std::default::Default::default()
     }
+
+    // .mizer.MergeNodeConfig.MergeMode mode = 1;
+
+
+    pub fn get_mode(&self) -> MergeNodeConfig_MergeMode {
+        self.mode
+    }
+    pub fn clear_mode(&mut self) {
+        self.mode = MergeNodeConfig_MergeMode::Latest;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_mode(&mut self, v: MergeNodeConfig_MergeMode) {
+        self.mode = v;
+    }
 }
 
 impl ::protobuf::Message for MergeNodeConfig {
@@ -11919,6 +11936,9 @@ impl ::protobuf::Message for MergeNodeConfig {
         while !is.eof()? {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
+                1 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.mode, 1, &mut self.unknown_fields)?
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -11931,12 +11951,18 @@ impl ::protobuf::Message for MergeNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
+        if self.mode != MergeNodeConfig_MergeMode::Latest {
+            my_size += ::protobuf::rt::enum_size(1, self.mode);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.mode != MergeNodeConfig_MergeMode::Latest {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.mode))?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -11974,7 +12000,12 @@ impl ::protobuf::Message for MergeNodeConfig {
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
         static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
         descriptor.get(|| {
-            let fields = ::std::vec::Vec::new();
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<MergeNodeConfig_MergeMode>>(
+                "mode",
+                |m: &MergeNodeConfig| { &m.mode },
+                |m: &mut MergeNodeConfig| { &mut m.mode },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<MergeNodeConfig>(
                 "MergeNodeConfig",
                 fields,
@@ -11991,6 +12022,7 @@ impl ::protobuf::Message for MergeNodeConfig {
 
 impl ::protobuf::Clear for MergeNodeConfig {
     fn clear(&mut self) {
+        self.mode = MergeNodeConfig_MergeMode::Latest;
         self.unknown_fields.clear();
     }
 }
@@ -12004,6 +12036,60 @@ impl ::std::fmt::Debug for MergeNodeConfig {
 impl ::protobuf::reflect::ProtobufValue for MergeNodeConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MergeNodeConfig_MergeMode {
+    Latest = 0,
+    Highest = 1,
+    Lowest = 2,
+}
+
+impl ::protobuf::ProtobufEnum for MergeNodeConfig_MergeMode {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<MergeNodeConfig_MergeMode> {
+        match value {
+            0 => ::std::option::Option::Some(MergeNodeConfig_MergeMode::Latest),
+            1 => ::std::option::Option::Some(MergeNodeConfig_MergeMode::Highest),
+            2 => ::std::option::Option::Some(MergeNodeConfig_MergeMode::Lowest),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [MergeNodeConfig_MergeMode] = &[
+            MergeNodeConfig_MergeMode::Latest,
+            MergeNodeConfig_MergeMode::Highest,
+            MergeNodeConfig_MergeMode::Lowest,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<MergeNodeConfig_MergeMode>("MergeNodeConfig.MergeMode", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for MergeNodeConfig_MergeMode {
+}
+
+impl ::std::default::Default for MergeNodeConfig_MergeMode {
+    fn default() -> Self {
+        MergeNodeConfig_MergeMode::Latest
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MergeNodeConfig_MergeMode {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
 }
 
@@ -13325,33 +13411,35 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05Color\x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15Vide\
     oEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\
     \x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTr\
-    ansformNodeConfig\"\x12\n\x10SelectNodeConfig\"\x11\n\x0fMergeNodeConfig\
-    \"}\n\x13ThresholdNodeConfig\x12\x1c\n\tthreshold\x18\x01\x20\x01(\x01R\
-    \tthreshold\x12!\n\x0cactive_value\x18\x02\x20\x01(\x01R\x0bactiveValue\
-    \x12%\n\x0einactive_value\x18\x03\x20\x01(\x01R\rinactiveValue\"\x14\n\
-    \x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeConfig\"*\n\x0cNodePositio\
-    n\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\
-    \x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\
-    \x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\
-    \x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\
-    \"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08pr\
-    otocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\
-    \x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\
-    \x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECT\
-    OR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\
-    \x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\
-    \xc4\x04\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\
-    \x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\
-    \x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\
-    \x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.\
-    WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodePropert\
-    y\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigRe\
-    sponse\"\0\x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeRequest\x1a\x17.mize\
-    r.MoveNodeResponse\"\0\x12C\n\nDeleteNode\x12\x18.mizer.DeleteNodeReques\
-    t\x1a\x19.mizer.DeleteNodeResponse\"\0\x12=\n\x08HideNode\x12\x16.mizer.\
-    HideNodeRequest\x1a\x17.mizer.HideNodeResponse\"\0\x12=\n\x08ShowNode\
-    \x12\x16.mizer.ShowNodeRequest\x1a\x17.mizer.ShowNodeResponse\"\0b\x06pr\
-    oto3\
+    ansformNodeConfig\"\x12\n\x10SelectNodeConfig\"y\n\x0fMergeNodeConfig\
+    \x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.MergeNodeConfig.MergeMod\
+    eR\x04mode\"0\n\tMergeMode\x12\n\n\x06Latest\x10\0\x12\x0b\n\x07Highest\
+    \x10\x01\x12\n\n\x06Lowest\x10\x02\"}\n\x13ThresholdNodeConfig\x12\x1c\n\
+    \tthreshold\x18\x01\x20\x01(\x01R\tthreshold\x12!\n\x0cactive_value\x18\
+    \x02\x20\x01(\x01R\x0bactiveValue\x12%\n\x0einactive_value\x18\x03\x20\
+    \x01(\x01R\rinactiveValue\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12Color\
+    HsvNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\
+    \x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12\
+    /\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08positio\
+    n\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\
+    \x18\x03\x20\x01(\x08R\x06hidden\"N\n\x04Port\x12\x12\n\x04name\x18\x01\
+    \x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.\
+    ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SI\
+    NGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07\
+    TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
+    \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
+    \x10\x07\x12\x07\n\x03GST\x10\x082\xc4\x04\n\x08NodesApi\x12/\n\x08GetNo\
+    des\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\
+    \x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\
+    \x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\
+    \x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResp\
+    onse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequ\
+    est\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\
+    \x16.mizer.MoveNodeRequest\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDe\
+    leteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeRespons\
+    e\"\0\x12=\n\x08HideNode\x12\x16.mizer.HideNodeRequest\x1a\x17.mizer.Hid\
+    eNodeResponse\"\0\x12=\n\x08ShowNode\x12\x16.mizer.ShowNodeRequest\x1a\
+    \x17.mizer.ShowNodeResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

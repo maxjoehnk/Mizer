@@ -3210,11 +3210,20 @@ class SelectNodeConfig extends $pb.GeneratedMessage {
 
 class MergeNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MergeNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..e<MergeNodeConfig_MergeMode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: MergeNodeConfig_MergeMode.Latest, valueOf: MergeNodeConfig_MergeMode.valueOf, enumValues: MergeNodeConfig_MergeMode.values)
     ..hasRequiredFields = false
   ;
 
   MergeNodeConfig._() : super();
-  factory MergeNodeConfig() => create();
+  factory MergeNodeConfig({
+    MergeNodeConfig_MergeMode? mode,
+  }) {
+    final _result = create();
+    if (mode != null) {
+      _result.mode = mode;
+    }
+    return _result;
+  }
   factory MergeNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MergeNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -3235,6 +3244,15 @@ class MergeNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static MergeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MergeNodeConfig>(create);
   static MergeNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  MergeNodeConfig_MergeMode get mode => $_getN(0);
+  @$pb.TagNumber(1)
+  set mode(MergeNodeConfig_MergeMode v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMode() => clearField(1);
 }
 
 class ThresholdNodeConfig extends $pb.GeneratedMessage {

@@ -318,7 +318,15 @@ message VideoOutputNodeConfig {}
 message VideoTransformNodeConfig {}
 
 message SelectNodeConfig {}
-message MergeNodeConfig {}
+message MergeNodeConfig {
+  MergeMode mode = 1;
+
+  enum MergeMode {
+    Latest = 0;
+    Highest = 1;
+    Lowest = 2;
+  }
+}
 message ThresholdNodeConfig {
   double threshold = 1;
   double active_value = 2;

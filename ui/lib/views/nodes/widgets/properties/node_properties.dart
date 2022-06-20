@@ -11,6 +11,7 @@ import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold
 import 'properties/groups/button_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/fixture_properties.dart';
+import 'properties/groups/merge_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/video_file_properties.dart';
@@ -118,6 +119,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(ButtonProperties(node.config.buttonConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(buttonConfig: config)))));
+    }
+    if (node.config.hasMergeConfig()) {
+      widgets.add(MergeProperties(node.config.mergeConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(mergeConfig: config)))));
     }
     return widgets;
   }

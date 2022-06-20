@@ -210,3 +210,20 @@ class OscNodeConfig_ArgumentType extends $pb.ProtobufEnum {
   const OscNodeConfig_ArgumentType._($core.int v, $core.String n) : super(v, n);
 }
 
+class MergeNodeConfig_MergeMode extends $pb.ProtobufEnum {
+  static const MergeNodeConfig_MergeMode Latest = MergeNodeConfig_MergeMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Latest');
+  static const MergeNodeConfig_MergeMode Highest = MergeNodeConfig_MergeMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Highest');
+  static const MergeNodeConfig_MergeMode Lowest = MergeNodeConfig_MergeMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Lowest');
+
+  static const $core.List<MergeNodeConfig_MergeMode> values = <MergeNodeConfig_MergeMode> [
+    Latest,
+    Highest,
+    Lowest,
+  ];
+
+  static final $core.Map<$core.int, MergeNodeConfig_MergeMode> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static MergeNodeConfig_MergeMode? valueOf($core.int value) => _byValue[value];
+
+  const MergeNodeConfig_MergeMode._($core.int v, $core.String n) : super(v, n);
+}
+

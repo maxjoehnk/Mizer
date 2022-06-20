@@ -643,10 +643,24 @@ final $typed_data.Uint8List selectNodeConfigDescriptor = $convert.base64Decode('
 @$core.Deprecated('Use mergeNodeConfigDescriptor instead')
 const MergeNodeConfig$json = const {
   '1': 'MergeNodeConfig',
+  '2': const [
+    const {'1': 'mode', '3': 1, '4': 1, '5': 14, '6': '.mizer.MergeNodeConfig.MergeMode', '10': 'mode'},
+  ],
+  '4': const [MergeNodeConfig_MergeMode$json],
+};
+
+@$core.Deprecated('Use mergeNodeConfigDescriptor instead')
+const MergeNodeConfig_MergeMode$json = const {
+  '1': 'MergeMode',
+  '2': const [
+    const {'1': 'Latest', '2': 0},
+    const {'1': 'Highest', '2': 1},
+    const {'1': 'Lowest', '2': 2},
+  ],
 };
 
 /// Descriptor for `MergeNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mergeNodeConfigDescriptor = $convert.base64Decode('Cg9NZXJnZU5vZGVDb25maWc=');
+final $typed_data.Uint8List mergeNodeConfigDescriptor = $convert.base64Decode('Cg9NZXJnZU5vZGVDb25maWcSNAoEbW9kZRgBIAEoDjIgLm1pemVyLk1lcmdlTm9kZUNvbmZpZy5NZXJnZU1vZGVSBG1vZGUiMAoJTWVyZ2VNb2RlEgoKBkxhdGVzdBAAEgsKB0hpZ2hlc3QQARIKCgZMb3dlc3QQAg==');
 @$core.Deprecated('Use thresholdNodeConfigDescriptor instead')
 const ThresholdNodeConfig$json = const {
   '1': 'ThresholdNodeConfig',

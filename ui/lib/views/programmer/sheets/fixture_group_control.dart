@@ -150,7 +150,7 @@ class FixtureControlPresets extends StatelessWidget {
                     decoration: ControlDecoration(
                             color: hovered ? Colors.grey.shade900 : Colors.grey.shade700),
                     padding: const EdgeInsets.all(8),
-                    child: _child(p),
+                    child: _child(context, p),
                   ),
                 ))
             .toList(),
@@ -158,11 +158,11 @@ class FixtureControlPresets extends StatelessWidget {
     );
   }
 
-  Widget _child(ControlPreset preset) {
+  Widget _child(BuildContext context, ControlPreset preset) {
     if (preset.image != null) {
       return _image(preset.image!);
     }
-    if (preset.colors != null) {
+    if (preset.colors != null && preset.colors!.isNotEmpty) {
       var colors = List.generate(preset.colors!.length, (index) {
         var color = preset.colors![index];
         return [color, color];
@@ -175,7 +175,7 @@ class FixtureControlPresets extends StatelessWidget {
       return Container(
           decoration: BoxDecoration(gradient: gradient, borderRadius: BorderRadius.circular(4)));
     }
-    return Center(child: Text(preset.name, textAlign: TextAlign.center));
+    return Center(child: Text(preset.name, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall));
   }
 
   Widget _image(ControlPresetImage image) {

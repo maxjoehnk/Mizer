@@ -46,6 +46,7 @@ class BaseNode extends StatelessWidget {
       menu: Menu(items: [
         MenuItem(label: "Hide", action: () => _onHideNode(context)),
         MenuItem(label: "Disconnect Ports", action: () => _onDisconnectPorts(context)),
+        MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
         MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
       ]),
       child: Container(
@@ -105,6 +106,10 @@ class BaseNode extends StatelessWidget {
 
   void _onDisconnectPorts(BuildContext context) async {
     context.read<NodesBloc>().add(DisconnectPorts(node.path));
+  }
+
+  void _onDuplicateNode(BuildContext context) async {
+    context.read<NodesBloc>().add(DuplicateNode(node.path));
   }
 
   void _onDeleteNode(BuildContext context) async {

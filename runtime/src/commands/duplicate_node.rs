@@ -9,55 +9,57 @@ use mizer_ports::PortId;
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct AddNodeCommand {
-    pub node_type: NodeType,
-    pub designer: NodeDesigner,
-    pub node: Option<Node>,
+#[derive(Debug, Clone, Hash, Serialize, Deserialize)]
+pub struct DuplicateNodeCommand {
+    pub path: NodePath,
 }
 
-impl Hash for AddNodeCommand {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.node_type.hash(state);
-        self.designer.hash(state);
-        state.write_u8(if self.node.is_some() { 1 } else { 0 });
-    }
-}
-
-impl<'a> Command<'a> for AddNodeCommand {
+impl<'a> Command<'a> for DuplicateNodeCommand {
     type Dependencies = (RefMut<PipelineAccess>, RefMut<ExecutionPlanner>);
     type State = NodePath;
     type Result = StaticNodeDescriptor;
 
     fn label(&self) -> String {
-        format!("Add Node {:?}", &self.node_type)
+        format!("Duplicate Node {:?}", &self.path)
     }
 
     fn apply(
         &self,
         (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
-        let path =
-            pipeline.handle_add_node(self.node_type, self.designer.clone(), self.node.clone())?;
+        let (config, designer) = {
+            let node_to_duplicate = pipeline.nodes_view.get(&self.path).unwrap();
+            let config = node_to_duplicate.downcast();
+            let designer = pipeline
+                .designer
+                .read()
+                .get(&self.path)
+                .cloned()
+                .unwrap_or_default();
+
+            (config, designer)
+        };
+        let new_path =
+            pipeline.handle_add_node(config.node_type(), designer.clone(), Some(config))?;
         planner.add_node(ExecutionNode {
-            path: path.clone(),
+            path: new_path.clone(),
             attached_executor: None,
         });
 
-        let node = pipeline.nodes_view.get(&path).unwrap();
+        let node = pipeline.nodes_view.get(&new_path).unwrap();
         let ports = node.list_ports();
         let details = node.value().details();
 
         let descriptor = StaticNodeDescriptor {
-            node_type: self.node_type,
-            path: path.clone(),
-            designer: self.designer.clone(),
+            node_type: node.node_type(),
+            path: new_path.clone(),
+            designer,
             details,
             ports,
             config: node.downcast(),
         };
 
-        Ok((descriptor, path))
+        Ok((descriptor, new_path))
     }
 
     fn revert(

@@ -103,6 +103,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                     }
                 }
             }
+            "duplicateNode" => {
+                if let Value::String(path) = call.args {
+                    match self.handler.duplicate_node(path.into()) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
+                }
+            }
             _ => resp.not_implemented(),
         }
     }

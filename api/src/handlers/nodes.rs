@@ -136,4 +136,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         Ok(())
     }
+
+    pub fn duplicate_node(&self, path: NodePath) -> anyhow::Result<()> {
+        self.runtime.run_command(DuplicateNodeCommand { path })?;
+
+        Ok(())
+    }
 }

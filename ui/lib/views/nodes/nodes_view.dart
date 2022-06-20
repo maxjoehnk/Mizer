@@ -59,6 +59,11 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       hotkeyMap: {
         // TODO: determine position for new node
         "add_node": () => {},
+        "duplicate_node": () {
+          if (widget.nodeEditorModel.selectedNode != null) {
+            context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path));
+          }
+        }
       },
       // TODO: nodes render above the panel header
       child: Panel(

@@ -61,6 +61,12 @@ class DisconnectPorts extends NodesEvent {
   DisconnectPorts(this.node);
 }
 
+class DuplicateNode extends NodesEvent {
+  final String node;
+
+  DuplicateNode(this.node);
+}
+
 class ShowNode extends NodesEvent {
   final String node;
   final Offset position;
@@ -139,6 +145,11 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
     }
     if (event is DisconnectPorts) {
       await api.disconnectPorts(event.node);
+      var nodes = await api.getNodes();
+      yield nodes;
+    }
+    if (event is DuplicateNode) {
+      await api.duplicateNode(event.node);
       var nodes = await api.getNodes();
       yield nodes;
     }

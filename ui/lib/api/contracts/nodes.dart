@@ -20,4 +20,6 @@ abstract class NodesApi {
   Future<void> showNode(ShowNodeRequest request);
 
   Future<void> disconnectPorts(String path);
+
+  Future<void> duplicateNode(String node);
 }

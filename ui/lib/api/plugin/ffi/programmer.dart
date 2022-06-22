@@ -1,5 +1,6 @@
 import 'dart:ffi' as ffi;
 
+import 'package:ffi/ffi.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/programmer.pb.dart';
 
@@ -68,6 +69,11 @@ class ProgrammerStatePointer {
           red: channel.value.color.red,
           green: channel.value.color.green,
           blue: channel.value.color.blue,
+        );
+      }else if (channel.control == FFIFixtureFaderControl.Generic){
+        result.generic = ProgrammerChannel_GenericValue(
+          name: channel.value.generic.channel.cast<Utf8>().toDartString(),
+          value: channel.value.generic.value,
         );
       }else {
         result.fader = channel.value.fader;

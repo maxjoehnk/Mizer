@@ -12,3 +12,5 @@ pinboard = "2.1"
 mizer-sequencer = { path = "../../components/sequencer" }
 mizer-clock = { path = "../../runtime/clock" }
 mizer-fixtures = { path = "../../components/fixtures" }
+lazy_static = "1.4"
+parking_lot = "0.12"

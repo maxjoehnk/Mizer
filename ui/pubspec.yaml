@@ -34,6 +34,7 @@ dependencies:
       ref: e33efe2
   auto_size_text: ^3.0.0
   from_css_color: ^2.0.0
+  ffi: ^1.0.0
 
 dev_dependencies:
   flutter_test:

@@ -96,8 +96,7 @@ class FixtureGroupControl extends StatelessWidget {
           child: FaderInput(
               // highlight: modifiedChannels.contains(group.name),
               label: control.label,
-              value: control.channel?.fader ?? 0,
-              // value: control.fader?.value ?? control.generic!.value,
+              value: control.fader?.value ?? control.generic!.value,
               onValue: (v) => api.writeControl(control.update(v))));
     }
     if (control.hasColor) {

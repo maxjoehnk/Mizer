@@ -151,7 +151,7 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn get_programmer_pointer(&self) -> anyhow::Result<i64> {
         let view = self.handler.programmer_view();
-        let programmer = Programmer { view };
+        let programmer = Programmer::new(view);
         let programmer = Arc::new(programmer);
 
         Ok(programmer.to_pointer() as i64)

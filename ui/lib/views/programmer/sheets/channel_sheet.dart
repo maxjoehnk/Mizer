@@ -18,8 +18,7 @@ class ChannelSheet extends StatelessWidget {
       child: controls.isNotEmpty
           ? ListView(
               scrollDirection: Axis.horizontal,
-              children:
-                  controls.map((control) => FixtureGroupControl(control)).toList())
+              children: controls.map((control) => FixtureGroupControl(control)).toList())
           : null,
     );
   }
@@ -28,14 +27,16 @@ class ChannelSheet extends StatelessWidget {
     if (fixtures.isEmpty) {
       return [];
     }
-    return fixtures.first.controls
-        .where((e) => e.control == FixtureControl.GENERIC)
-        .map((control) => Control(control.generic.name,
-            generic: control.generic,
-        channel: channels.firstWhereOrNull((channel) => channel.control == control.control),
-        update: (v) => WriteControlRequest(
-                  control: control.control,
-                  generic: WriteControlRequest_GenericValue(value: v, name: control.generic.name),
-                )));
+    return fixtures.first.controls.where((e) => e.control == FixtureControl.GENERIC).map((control) {
+      var value =
+          channels.firstWhereOrNull((channel) => channel.generic.name == control.generic.name);
+      return Control(control.generic.name,
+          generic: control.generic,
+          channel: value,
+          update: (v) => WriteControlRequest(
+                control: control.control,
+                generic: WriteControlRequest_GenericValue(value: v, name: control.generic.name),
+              ));
+    });
   }
 }

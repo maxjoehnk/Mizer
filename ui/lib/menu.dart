@@ -105,7 +105,12 @@ class ApplicationMenu extends StatelessWidget {
                   action: () => Window.create({}).then((window) => window.show())),
               MenuItem(
                 label: 'Smart Window'.i18n,
-              action: () => Window.create(SmartWindow.toInitData()).then((window) => window.show())
+                  action: () => Window.create(SmartWindow.toInitData()).then((window) => window.show())
+              ),
+              MenuDivider(),
+              MenuItem(
+                label: 'Close Window',
+                action: () => Window.of(context).close()
               )
             ])
           ])),

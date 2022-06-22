@@ -2,9 +2,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::convert::TryInto;
 
-use mizer_fixtures::definition::{
-    ColorChannel, FixtureControl, FixtureControlType, FixtureControls, FixtureFaderControl,
-};
+use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureControlType, FixtureControls, FixtureFaderControl, FixtureControlValue};
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
@@ -79,15 +77,15 @@ impl ProcessingNode for FixtureNode {
                         match port_metadata.port_type {
                             PortType::Color => {
                                 if let Some(value) = context.read_port::<_, Color>(port.clone()) {
-                                    fixture.write_control(
+                                    fixture.write_fader_control(
                                         FixtureFaderControl::ColorMixer(ColorChannel::Red),
                                         value.red,
                                     );
-                                    fixture.write_control(
+                                    fixture.write_fader_control(
                                         FixtureFaderControl::ColorMixer(ColorChannel::Green),
                                         value.green,
                                     );
-                                    fixture.write_control(
+                                    fixture.write_fader_control(
                                         FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                                         value.blue,
                                     );
@@ -96,7 +94,7 @@ impl ProcessingNode for FixtureNode {
                             PortType::Single => {
                                 if let Some(value) = context.read_port(port.clone()) {
                                     let control = FixtureControl::from(port.as_str());
-                                    fixture.write_control(control.try_into().unwrap(), value);
+                                    fixture.write_fader_control(control.try_into().unwrap(), value);
                                 }
                             }
                             _ => unimplemented!(),

@@ -95,13 +95,13 @@ impl FixtureManager {
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
-                    fixture.write_control(control, value);
+                    fixture.write_fader_control(control, value);
                 }
             }
             FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
                     if let Some(mut sub_fixture) = fixture.sub_fixture_mut(sub_fixture_id) {
-                        sub_fixture.write_control(control, value);
+                        sub_fixture.write_fader_control(control, value);
                     }
                 }
             }

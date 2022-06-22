@@ -126,9 +126,8 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
             id: "test-fixture".into(),
             name: "Test Fixture".into(),
             manufacturer: "Mizer".into(),
-            modes: vec![FixtureMode {
-                name: "Default".into(),
-                channels: vec![
+            modes: vec![FixtureMode::new("Default".into(),
+                vec![
                     FixtureChannelDefinition {
                         name: "intensity".into(),
                         resolution: ChannelResolution::Coarse(0),
@@ -142,7 +141,7 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
                         resolution: ChannelResolution::Coarse(0),
                     },
                 ],
-                controls: FixtureControls {
+                FixtureControls {
                     intensity: Some("intensity".to_string()),
                     pan: Some(AxisGroup {
                         channel: "pan".into(),
@@ -155,8 +154,8 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
                     ..Default::default()
                 }
                 .into(),
-                sub_fixtures: vec![],
-            }],
+                vec![],
+            )],
             physical: Default::default(),
             tags: Vec::new(),
             provider: "Test",

@@ -25,11 +25,10 @@ pub fn map_fixture_definition(
         modes: definition
             .modes
             .into_iter()
-            .map(|mode| FixtureMode {
-                controls: create_controls(&mode, &channels, resource_reader),
-                sub_fixtures: create_sub_fixtures(&mode, &channels, resource_reader),
-                name: mode.name,
-                channels: mode
+            .map(|mode| {
+                let controls = create_controls(&mode, &channels, resource_reader);
+                let sub_fixtures = create_sub_fixtures(&mode, &channels, resource_reader);
+                let channels = mode
                     .channels
                     .into_iter()
                     .map(|mode_channel| {
@@ -40,7 +39,9 @@ pub fn map_fixture_definition(
                             resolution: ChannelResolution::Coarse(mode_channel.number as u8),
                         }
                     })
-                    .collect(),
+                    .collect();
+
+                FixtureMode::new(mode.name, channels, controls, sub_fixtures)
             })
             .collect(),
         tags: vec![definition.fixture_type],
@@ -85,11 +86,8 @@ fn create_sub_fixtures(
                 .map(|channel| channels[channel.channel.deref()].clone())
                 .collect();
 
-            SubFixtureDefinition {
-                id,
-                name: format!("Head {id}"),
-                controls: create_sub_fixture_controls(head_channels, resource_reader),
-            }
+            let controls = create_sub_fixture_controls(head_channels, resource_reader);
+            SubFixtureDefinition::new(id, format!("Head {id}"), controls)
         })
         .collect()
 }
@@ -111,11 +109,7 @@ fn build_controls<TChannel>(
     resource_reader: &ResourceReader<'_>,
 ) -> FixtureControls<TChannel> {
     let mut controls = FixtureControls::default();
-    let mut color_builder = ColorGroup::<Option<TChannel>> {
-        green: None,
-        blue: None,
-        red: None,
-    };
+    let mut color_builder = ColorGroupBuilder::<TChannel>::new();
     let gobo_channel = get_channel(
         &channels,
         GroupEnumType::Gobo,
@@ -193,9 +187,11 @@ fn build_controls<TChannel>(
             }
         } else if let Some(preset) = channel.preset {
             match preset {
-                ChannelPresetType::IntensityRed => color_builder.red = Some(control_channel),
-                ChannelPresetType::IntensityGreen => color_builder.green = Some(control_channel),
-                ChannelPresetType::IntensityBlue => color_builder.blue = Some(control_channel),
+                ChannelPresetType::IntensityRed => color_builder.red(control_channel),
+                ChannelPresetType::IntensityGreen => color_builder.green(control_channel),
+                ChannelPresetType::IntensityBlue => color_builder.blue(control_channel),
+                ChannelPresetType::IntensityWhite => color_builder.white(control_channel),
+                ChannelPresetType::IntensityAmber => color_builder.amber(control_channel),
                 ChannelPresetType::IntensityDimmer => controls.intensity = Some(control_channel),
                 ChannelPresetType::IntensityMasterDimmer => {
                     controls.intensity = Some(control_channel)
@@ -220,11 +216,7 @@ fn build_controls<TChannel>(
         }
     }
 
-    if let (Some(red), Some(green), Some(blue)) =
-        (color_builder.red, color_builder.green, color_builder.blue)
-    {
-        controls.color_mixer = Some(ColorGroup { red, green, blue });
-    }
+    controls.color_mixer = color_builder.build();
 
     controls
 }

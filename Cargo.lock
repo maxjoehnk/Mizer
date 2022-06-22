@@ -3459,6 +3459,7 @@ dependencies = [
  "mizer-node",
  "mizer-processing",
  "mizer-protocol-dmx",
+ "palette",
  "parking_lot 0.12.0",
  "pinboard",
  "postage",

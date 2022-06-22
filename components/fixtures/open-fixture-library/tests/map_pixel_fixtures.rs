@@ -62,6 +62,8 @@ fn should_create_delegate_channels() {
             red: FixtureControlChannel::Delegate,
             green: FixtureControlChannel::Delegate,
             blue: FixtureControlChannel::Delegate,
+            amber: None,
+            white: None,
         }
     );
 }

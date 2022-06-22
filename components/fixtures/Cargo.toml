@@ -21,6 +21,7 @@ pinboard = "2.1"
 parking_lot = "0.12"
 indexmap = "1.8"
 tracing = "0.1"
+palette = "0.6"
 
 [dev-dependencies]
 test-case = "1.2"

@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::definition::*;
 use mizer_protocol_dmx::DmxOutput;
+use crate::color_mixer::Rgb;
 
 const U24_MAX: u32 = 16_777_215;
 
@@ -133,23 +134,56 @@ impl Fixture {
 }
 
 impl IFixtureMut for Fixture {
-    fn write_control(&mut self, control: FixtureFaderControl, value: f64) {
-        match self.current_mode.controls.get_channel(&control) {
-            Some(FixtureControlChannel::Channel(ref channel)) => {
-                let channel = channel.to_string();
-                self.write(channel, value)
-            }
-            Some(FixtureControlChannel::Delegate) => {
-                let sub_fixtures = self.current_mode.sub_fixtures.clone();
-                for definition in sub_fixtures.into_iter() {
-                    let mut fixture = SubFixtureMut {
-                        definition,
-                        fixture: self,
+    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+        if let FixtureFaderControl::ColorMixer(color_channel) = control {
+            if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
+                match color_channel {
+                    ColorChannel::Red => color_mixer.set_red(value),
+                    ColorChannel::Green => color_mixer.set_green(value),
+                    ColorChannel::Blue => color_mixer.set_blue(value),
+                }
+                if let Some(color_group) = self.current_mode.controls.color_mixer.clone() {
+                    let rgb = if let Some(white_channel) = color_group.white.and_then(|c| c.into_channel()) {
+                        let value = color_mixer.rgbw();
+                        self.write(white_channel, value.white);
+
+                        Rgb {
+                            red: value.red,
+                            green: value.green,
+                            blue: value.blue,
+                        }
+                    }else {
+                        color_mixer.rgb()
                     };
-                    fixture.write_control(control.clone(), value);
+                    if let Some(channel) = color_group.red.clone().into_channel() {
+                        self.write(channel, rgb.red);
+                    }
+                    if let Some(channel) = color_group.green.clone().into_channel() {
+                        self.write(channel, rgb.green);
+                    }
+                    if let Some(channel) = color_group.blue.clone().into_channel() {
+                        self.write(channel, rgb.blue);
+                    }
                 }
             }
-            None => {}
+        }else {
+            match self.current_mode.controls.get_channel(&control) {
+                Some(FixtureControlChannel::Channel(ref channel)) => {
+                    let channel = channel.to_string();
+                    self.write(channel, value)
+                }
+                Some(FixtureControlChannel::Delegate) => {
+                    let sub_fixtures = self.current_mode.sub_fixtures.clone();
+                    for definition in sub_fixtures.into_iter() {
+                        let mut fixture = SubFixtureMut {
+                            definition,
+                            fixture: self,
+                        };
+                        fixture.write_fader_control(control.clone(), value);
+                    }
+                }
+                None => {}
+            }
         }
     }
 }
@@ -178,7 +212,7 @@ pub struct SubFixture<'a> {
 }
 
 impl<'a> IFixtureMut for SubFixtureMut<'a> {
-    fn write_control(&mut self, control: FixtureFaderControl, value: f64) {
+    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
         if let Some(channel) = self.definition.controls.get_channel(&control) {
             self.fixture.write(channel, value)
         }
@@ -210,12 +244,12 @@ pub trait IFixture {
 }
 
 pub trait IFixtureMut: IFixture {
-    fn write_control(&mut self, control: FixtureFaderControl, value: f64);
+    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64);
     fn highlight(&mut self) {
-        self.write_control(FixtureFaderControl::Intensity, 1f64);
-        self.write_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), 1f64);
-        self.write_control(FixtureFaderControl::ColorMixer(ColorChannel::Green), 1f64);
-        self.write_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue), 1f64);
+        self.write_fader_control(FixtureFaderControl::Intensity, 1f64);
+        self.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Red), 1f64);
+        self.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Green), 1f64);
+        self.write_fader_control(FixtureFaderControl::ColorMixer(ColorChannel::Blue), 1f64);
     }
 }
 

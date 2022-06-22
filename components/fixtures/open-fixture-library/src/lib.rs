@@ -8,6 +8,12 @@ use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
 use mizer_util::LerpExt;
 
+const COLOR_RED: &str = "#ff0000";
+const COLOR_GREEN: &str = "#00ff00";
+const COLOR_BLUE: &str = "#0000ff";
+const COLOR_WHITE: &str = "#ffffff";
+const COLOR_AMBER: &str = "#ffbf00";
+
 #[derive(Default)]
 pub struct OpenFixtureLibraryProvider {
     file_path: String,
@@ -385,15 +391,12 @@ fn build_fixture_mode(
             red: FixtureControlChannel::Delegate,
             green: FixtureControlChannel::Delegate,
             blue: FixtureControlChannel::Delegate,
+            amber: None,
+            white: None,
         });
     }
 
-    FixtureMode {
-        name: mode.name,
-        controls,
-        channels: map_channels(available_channels, all_channels),
-        sub_fixtures,
-    }
+    FixtureMode::new(mode.name, map_channels(available_channels, all_channels), controls, sub_fixtures)
 }
 
 fn map_channels(
@@ -513,13 +516,10 @@ fn build_sub_fixture(
     channels: Vec<String>,
     wheels: &HashMap<String, WheelDefinition>,
 ) -> SubFixtureDefinition {
-    let definition = SubFixtureDefinition {
-        id: key
-            .parse::<u32>()
-            .expect(&format!("'{}' is not a number", key)),
-        name: format!("Pixel {}", key),
-        controls: group_controls(available_channels, &channels, wheels),
-    };
+    let id = key
+        .parse::<u32>()
+        .expect(&format!("'{}' is not a number", key));
+    let definition = SubFixtureDefinition::new(id, format!("Pixel {}", key), group_controls(available_channels, &channels, wheels));
 
     definition
 }
@@ -538,7 +538,7 @@ fn group_controls(
         })
         .collect::<Vec<_>>();
 
-    let mut color_group = ColorGroupBuilder::new();
+    let mut color_group = ColorGroupBuilder::<String>::new();
     let mut controls = FixtureControls::default();
 
     for (name, channel) in channels {
@@ -639,14 +639,20 @@ fn group_controls(
             Some(Capability::Intensity) => {
                 controls.intensity = Some(name);
             }
-            Some(Capability::ColorIntensity { color }) if color == "#ff0000" => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_RED => {
                 color_group.red(name.clone());
             }
-            Some(Capability::ColorIntensity { color }) if color == "#00ff00" => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_GREEN => {
                 color_group.green(name.clone());
             }
-            Some(Capability::ColorIntensity { color }) if color == "#0000ff" => {
+            Some(Capability::ColorIntensity { color }) if color == COLOR_BLUE => {
                 color_group.blue(name.clone());
+            }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_WHITE => {
+                color_group.white(name.clone());
+            }
+            Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER => {
+                color_group.amber(name.clone());
             }
             Some(Capability::Pan {
                 angle_start,
@@ -712,38 +718,6 @@ impl From<Resource> for GoboImage {
     }
 }
 
-#[derive(Default)]
-struct ColorGroupBuilder {
-    red: Option<String>,
-    green: Option<String>,
-    blue: Option<String>,
-}
-
-impl ColorGroupBuilder {
-    fn new() -> Self {
-        Default::default()
-    }
-
-    fn red(&mut self, channel: String) {
-        self.red = channel.into();
-    }
-
-    fn green(&mut self, channel: String) {
-        self.green = channel.into();
-    }
-
-    fn blue(&mut self, channel: String) {
-        self.blue = channel.into();
-    }
-
-    fn build(self) -> Option<ColorGroup<String>> {
-        match (self.red, self.green, self.blue) {
-            (Some(red), Some(green), Some(blue)) => ColorGroup { red, green, blue }.into(),
-            _ => None,
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
@@ -801,6 +775,136 @@ mod tests {
                 red: "Red".into(),
                 green: "Green".into(),
                 blue: "Blue".into(),
+                amber: None,
+                white: None,
+            }
+        );
+    }
+
+    #[test]
+    fn group_controls_should_group_white_color_channel() {
+        let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into(), "White".into()];
+        let mut available_channels = HashMap::new();
+        available_channels.insert(
+            "Red".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#ff0000".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+        available_channels.insert(
+            "Green".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#00ff00".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+        available_channels.insert(
+            "Blue".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#0000ff".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+        available_channels.insert(
+            "White".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#ffffff".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+
+        let controls = group_controls(&available_channels, &enabled_channels, &Default::default());
+
+        assert!(controls.color_mixer.is_some());
+        assert_eq!(
+            controls.color_mixer.unwrap(),
+            ColorGroup {
+                red: "Red".into(),
+                green: "Green".into(),
+                blue: "Blue".into(),
+                amber: None,
+                white: Some("White".into()),
+            }
+        );
+    }
+
+    #[test]
+    fn group_controls_should_group_amber_color_channel() {
+        let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into(), "Amber".into()];
+        let mut available_channels = HashMap::new();
+        available_channels.insert(
+            "Red".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#ff0000".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+        available_channels.insert(
+            "Green".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#00ff00".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+        available_channels.insert(
+            "Blue".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#0000ff".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+        available_channels.insert(
+            "Amber".into(),
+            Channel {
+                fine_channel_aliases: Vec::default(),
+                default_value: None,
+                capabilities: vec![Capability::ColorIntensity {
+                    color: "#ffbf00".into(),
+                }],
+                pixel_key: None,
+            },
+        );
+
+        let controls = group_controls(&available_channels, &enabled_channels, &Default::default());
+
+        assert!(controls.color_mixer.is_some());
+        assert_eq!(
+            controls.color_mixer.unwrap(),
+            ColorGroup {
+                red: "Red".into(),
+                green: "Green".into(),
+                blue: "Blue".into(),
+                white: None,
+                amber: Some("Amber".into()),
             }
         );
     }

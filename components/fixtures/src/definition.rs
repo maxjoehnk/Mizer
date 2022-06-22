@@ -1,6 +1,9 @@
-use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use std::str::FromStr;
+
+use serde::{Deserialize, Serialize};
+
+use crate::color_mixer::ColorMixer;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureDefinition {
@@ -24,6 +27,20 @@ pub struct SubFixtureDefinition {
     pub id: u32,
     pub name: String,
     pub controls: FixtureControls<String>,
+    pub(crate) color_mixer: Option<ColorMixer>,
+}
+
+impl SubFixtureDefinition {
+    pub fn new(id: u32, name: String, controls: FixtureControls<String>) -> Self {
+        let color_mixer = controls.color_mixer.as_ref().map(|_| ColorMixer::new());
+
+        Self {
+            id,
+            name,
+            controls,
+            color_mixer,
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -32,9 +49,22 @@ pub struct FixtureMode {
     pub channels: Vec<FixtureChannelDefinition>,
     pub controls: FixtureControls<FixtureControlChannel>,
     pub sub_fixtures: Vec<SubFixtureDefinition>,
+    pub(crate) color_mixer: Option<ColorMixer>,
 }
 
 impl FixtureMode {
+    pub fn new(name: String, channels: Vec<FixtureChannelDefinition>, controls: FixtureControls<FixtureControlChannel>, sub_fixtures: Vec<SubFixtureDefinition>) -> Self {
+        let color_mixer = controls.color_mixer.as_ref().map(|_| ColorMixer::new());
+
+        Self {
+            name,
+            channels,
+            controls,
+            sub_fixtures,
+            color_mixer,
+        }
+    }
+
     pub fn dmx_channels(&self) -> u16 {
         self.channels.iter().map(|c| c.channels() as u16).sum()
     }
@@ -104,6 +134,8 @@ impl From<FixtureControls<String>> for FixtureControls<FixtureControlChannel> {
                 red: FixtureControlChannel::Channel(color.red),
                 green: FixtureControlChannel::Channel(color.green),
                 blue: FixtureControlChannel::Channel(color.blue),
+                white: color.white.map(FixtureControlChannel::Channel),
+                amber: color.amber.map(FixtureControlChannel::Channel),
             }),
             color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
                 channel: FixtureControlChannel::Channel(wheel.channel),
@@ -154,7 +186,10 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
                     FixtureControlChannel::Channel(blue),
                 ) = (color.red, color.green, color.blue)
                 {
-                    Some(ColorGroup { red, green, blue })
+                    let amber = color.amber.and_then(|c| c.into_channel());
+                    let white = color.white.and_then(|c| c.into_channel());
+
+                    Some(ColorGroup { red, green, blue, amber, white, })
                 } else {
                     None
                 }
@@ -284,7 +319,7 @@ pub enum FixtureControlChannel {
 }
 
 impl FixtureControlChannel {
-    fn into_channel(self) -> Option<String> {
+    pub fn into_channel(self) -> Option<String> {
         if let FixtureControlChannel::Channel(channel) = self {
             Some(channel)
         } else {
@@ -298,6 +333,55 @@ pub struct ColorGroup<TChannel> {
     pub red: TChannel,
     pub green: TChannel,
     pub blue: TChannel,
+    pub amber: Option<TChannel>,
+    pub white: Option<TChannel>,
+}
+
+pub struct ColorGroupBuilder<TChannel> {
+    red: Option<TChannel>,
+    green: Option<TChannel>,
+    blue: Option<TChannel>,
+    amber: Option<TChannel>,
+    white: Option<TChannel>,
+}
+
+impl<TChannel> ColorGroupBuilder<TChannel> {
+    pub fn new() -> Self {
+        Self {
+            red: None,
+            green: None,
+            blue: None,
+            amber: None,
+            white: None,
+        }
+    }
+
+    pub fn red(&mut self, channel: TChannel) {
+        self.red = channel.into();
+    }
+
+    pub fn green(&mut self, channel: TChannel) {
+        self.green = channel.into();
+    }
+
+    pub fn blue(&mut self, channel: TChannel) {
+        self.blue = channel.into();
+    }
+
+    pub fn amber(&mut self, channel: TChannel) {
+        self.amber = channel.into();
+    }
+
+    pub fn white(&mut self, channel: TChannel) {
+        self.white = channel.into();
+    }
+
+    pub fn build(self) -> Option<ColorGroup<TChannel>> {
+        match (self.red, self.green, self.blue) {
+            (Some(red), Some(green), Some(blue)) => ColorGroup { red, green, blue, amber: self.amber, white: self.white }.into(),
+            _ => None,
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]

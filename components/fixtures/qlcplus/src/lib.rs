@@ -157,6 +157,8 @@ mod tests {
                     red: FixtureControlChannel::Channel("Red".into()),
                     green: FixtureControlChannel::Channel("Green".into()),
                     blue: FixtureControlChannel::Channel("Blue".into()),
+                    amber: None,
+                    white: None,
                 })
             );
         }
@@ -197,6 +199,8 @@ mod tests {
                     red: FixtureControlChannel::Channel("Red".into()),
                     green: FixtureControlChannel::Channel("Green".into()),
                     blue: FixtureControlChannel::Channel("Blue".into()),
+                    amber: None,
+                    white: Some(FixtureControlChannel::Channel("White".into())),
                 })
             );
         }

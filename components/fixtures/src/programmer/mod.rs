@@ -12,10 +12,10 @@ use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 
 use crate::definition::{
-    ColorChannel, ColorGroup, FixtureControl, FixtureControlValue, FixtureFaderControl,
+    ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl,
 };
 use crate::fixture::{Fixture, IFixtureMut};
-use crate::FixtureId;
+use crate::{FixtureId, RgbColor};
 
 pub use groups::*;
 pub use presets::*;
@@ -67,7 +67,7 @@ impl ProgrammerState {
 pub struct FixtureProgrammer {
     intensity: Option<f64>,
     shutter: Option<f64>,
-    color_mixer: Option<ColorGroup<f64>>,
+    color_mixer: Option<RgbColor>,
     color_wheel: Option<f64>,
     pan: Option<f64>,
     tilt: Option<f64>,
@@ -277,7 +277,7 @@ impl Programmer {
                 FixtureId::Fixture(fixture_id) => {
                     if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
                         for (control, value) in state.fader_controls() {
-                            fixture.write_control(control.clone(), value);
+                            fixture.write_fader_control(control.clone(), value);
                         }
                     }
                 }
@@ -285,7 +285,7 @@ impl Programmer {
                     if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
                         if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id) {
                             for (control, value) in state.fader_controls() {
-                                sub_fixture.write_control(control.clone(), value);
+                                sub_fixture.write_fader_control(control.clone(), value);
                             }
                         }
                     }
@@ -369,7 +369,7 @@ impl Programmer {
                 FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
                 FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
                 FixtureControlValue::ColorMixer(red, green, blue) => {
-                    programmer.color_mixer = Some(ColorGroup { red, green, blue })
+                    programmer.color_mixer = Some(RgbColor { red, green, blue })
                 }
                 FixtureControlValue::ColorWheel(value) => programmer.color_wheel = Some(value),
                 FixtureControlValue::Pan(value) => programmer.pan = Some(value),

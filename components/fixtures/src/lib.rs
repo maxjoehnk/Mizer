@@ -16,6 +16,7 @@ pub mod manager;
 mod processor;
 // TODO: should probably find a better name
 pub mod programmer;
+mod color_mixer;
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[serde(untagged)]
@@ -107,4 +108,11 @@ impl FixtureStates {
 pub struct FixtureState {
     pub brightness: Option<f64>,
     pub color: Option<Color>,
+}
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct RgbColor {
+    pub red: f64,
+    pub green: f64,
+    pub blue: f64,
 }

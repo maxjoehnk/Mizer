@@ -71,11 +71,7 @@ impl GdtfState {
     fn build_fixture_mode(&self, mode: DmxMode) -> FixtureMode {
         let mut controls = FixtureControls::default();
 
-        let mut color_builder = ColorGroup::<Option<FixtureControlChannel>> {
-            green: None,
-            blue: None,
-            red: None,
-        };
+        let mut color_builder = ColorGroupBuilder::<FixtureControlChannel>::new();
 
         for channel in mode.channels.channels.iter() {
             if let Some(attribute) = self.attributes.get(&channel.logical_channel.attribute) {
@@ -90,9 +86,11 @@ impl GdtfState {
                         "Dimmer" => controls.intensity = Some(channel),
                         "Focus" => controls.focus = Some(channel),
                         "RGB" => match attribute.name.as_str() {
-                            "ColorAdd_R" => color_builder.red = Some(channel),
-                            "ColorAdd_G" => color_builder.green = Some(channel),
-                            "ColorAdd_B" => color_builder.blue = Some(channel),
+                            "ColorAdd_R" => color_builder.red(channel),
+                            "ColorAdd_G" => color_builder.green(channel),
+                            "ColorAdd_B" => color_builder.blue(channel),
+                            "ColorAdd_RY" => color_builder.amber(channel),
+                            "ColorAdd_W" => color_builder.white(channel),
                             _ => {}
                         },
                         "PanTilt" => match attribute.name.as_str() {
@@ -138,26 +136,19 @@ impl GdtfState {
             }
         }
 
-        if let (Some(red), Some(green), Some(blue)) =
-            (color_builder.red, color_builder.green, color_builder.blue)
-        {
-            controls.color_mixer = Some(ColorGroup { red, green, blue });
-        }
+        controls.color_mixer = color_builder.build();
 
-        FixtureMode {
-            name: mode.name,
-            sub_fixtures: Vec::new(),
-            channels: mode
-                .channels
-                .channels
-                .into_iter()
-                .filter(|channel| !channel.offset.is_virtual())
-                .map(|channel| FixtureChannelDefinition {
-                    name: channel.logical_channel.attribute,
-                    resolution: channel.offset.into(),
-                })
-                .collect(),
-            controls,
-        }
+        let channels = mode
+            .channels
+            .channels
+            .into_iter()
+            .filter(|channel| !channel.offset.is_virtual())
+            .map(|channel| FixtureChannelDefinition {
+                name: channel.logical_channel.attribute,
+                resolution: channel.offset.into(),
+            })
+            .collect();
+
+        FixtureMode::new(mode.name, channels, controls, Default::default())
     }
 }

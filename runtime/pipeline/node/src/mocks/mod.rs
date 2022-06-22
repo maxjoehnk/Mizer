@@ -44,6 +44,10 @@ impl NodeContext for NodeContextMock {
         todo!()
     }
 
+    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+        todo!()
+    }
+
     fn input_port<P: Into<PortId>>(&self, _: P) -> PortMetadata {
         todo!()
     }

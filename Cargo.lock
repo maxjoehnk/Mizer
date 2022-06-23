@@ -3479,6 +3479,7 @@ dependencies = [
  "mizer-devices",
  "mizer-gamepads",
  "mizer-node",
+ "mizer-util",
  "serde",
 ]
 

@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_devices::DeviceManager;
 use mizer_gamepads::{Axis, Button};
 pub use mizer_node::*;
+use mizer_util::LerpExt;
 
 const LEFT_STICK_X: &str = "Left Stick X";
 const LEFT_STICK_Y: &str = "Left Stick Y";
@@ -217,16 +218,20 @@ impl ProcessingNode for GamepadNode {
             if let Some(gamepad) = device_manager.get_gamepad(&self.device_id) {
                 let state = gamepad.state();
                 if let Some(value) = state.axis_value(Axis::LeftStickX) {
-                    context.write_port(LEFT_STICK_X, value);
+                    let target: f64 = value.linear_extrapolate((-1., 1.), (0., 1.));
+                    context.write_port(LEFT_STICK_X, target);
                 }
                 if let Some(value) = state.axis_value(Axis::LeftStickY) {
-                    context.write_port(LEFT_STICK_Y, value);
+                    let target: f64 = value.linear_extrapolate((-1., 1.), (0., 1.));
+                    context.write_port(LEFT_STICK_Y, target);
                 }
                 if let Some(value) = state.axis_value(Axis::RightStickX) {
-                    context.write_port(RIGHT_STICK_X, value);
+                    let target: f64 = value.linear_extrapolate((-1., 1.), (0., 1.));
+                    context.write_port(RIGHT_STICK_X, target);
                 }
                 if let Some(value) = state.axis_value(Axis::RightStickY) {
-                    context.write_port(RIGHT_STICK_Y, value);
+                    let target: f64 = value.linear_extrapolate((-1., 1.), (0., 1.));
+                    context.write_port(RIGHT_STICK_Y, target);
                 }
                 if let Some(value) = state.axis_value(Axis::LeftTrigger) {
                     context.write_port(LEFT_TRIGGER, value);

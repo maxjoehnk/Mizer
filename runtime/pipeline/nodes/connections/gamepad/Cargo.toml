@@ -11,3 +11,4 @@ serde = { version = "1", features = ["derive"] }
 mizer-gamepads = { path = "../../../../../components/connections/devices/gamepads" }
 mizer-devices = { path = "../../../../../components/connections/devices" }
 mizer-node = { path = "../../../node" }
+mizer-util = { path = "../../../../../util" }

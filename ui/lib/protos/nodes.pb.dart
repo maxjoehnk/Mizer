@@ -3257,21 +3257,26 @@ class MergeNodeConfig extends $pb.GeneratedMessage {
 
 class ThresholdNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ThresholdNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'threshold', $pb.PbFieldType.OD)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeValue', $pb.PbFieldType.OD)
-    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inactiveValue', $pb.PbFieldType.OD)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lowerThreshold', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'upperThreshold', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeValue', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inactiveValue', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
   ThresholdNodeConfig._() : super();
   factory ThresholdNodeConfig({
-    $core.double? threshold,
+    $core.double? lowerThreshold,
+    $core.double? upperThreshold,
     $core.double? activeValue,
     $core.double? inactiveValue,
   }) {
     final _result = create();
-    if (threshold != null) {
-      _result.threshold = threshold;
+    if (lowerThreshold != null) {
+      _result.lowerThreshold = lowerThreshold;
+    }
+    if (upperThreshold != null) {
+      _result.upperThreshold = upperThreshold;
     }
     if (activeValue != null) {
       _result.activeValue = activeValue;
@@ -3303,31 +3308,40 @@ class ThresholdNodeConfig extends $pb.GeneratedMessage {
   static ThresholdNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.double get threshold => $_getN(0);
+  $core.double get lowerThreshold => $_getN(0);
   @$pb.TagNumber(1)
-  set threshold($core.double v) { $_setDouble(0, v); }
+  set lowerThreshold($core.double v) { $_setDouble(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasThreshold() => $_has(0);
+  $core.bool hasLowerThreshold() => $_has(0);
   @$pb.TagNumber(1)
-  void clearThreshold() => clearField(1);
+  void clearLowerThreshold() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.double get activeValue => $_getN(1);
+  $core.double get upperThreshold => $_getN(1);
   @$pb.TagNumber(2)
-  set activeValue($core.double v) { $_setDouble(1, v); }
+  set upperThreshold($core.double v) { $_setDouble(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasActiveValue() => $_has(1);
+  $core.bool hasUpperThreshold() => $_has(1);
   @$pb.TagNumber(2)
-  void clearActiveValue() => clearField(2);
+  void clearUpperThreshold() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.double get inactiveValue => $_getN(2);
+  $core.double get activeValue => $_getN(2);
   @$pb.TagNumber(3)
-  set inactiveValue($core.double v) { $_setDouble(2, v); }
+  set activeValue($core.double v) { $_setDouble(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasInactiveValue() => $_has(2);
+  $core.bool hasActiveValue() => $_has(2);
   @$pb.TagNumber(3)
-  void clearInactiveValue() => clearField(3);
+  void clearActiveValue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get inactiveValue => $_getN(3);
+  @$pb.TagNumber(4)
+  set inactiveValue($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasInactiveValue() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearInactiveValue() => clearField(4);
 }
 
 class ColorRgbNodeConfig extends $pb.GeneratedMessage {

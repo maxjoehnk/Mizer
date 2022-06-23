@@ -12097,7 +12097,8 @@ impl ::protobuf::reflect::ProtobufValue for MergeNodeConfig_MergeMode {
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ThresholdNodeConfig {
     // message fields
-    pub threshold: f64,
+    pub lower_threshold: f64,
+    pub upper_threshold: f64,
     pub active_value: f64,
     pub inactive_value: f64,
     // special fields
@@ -12118,22 +12119,37 @@ impl ThresholdNodeConfig {
         ::std::default::Default::default()
     }
 
-    // double threshold = 1;
+    // double lower_threshold = 1;
 
 
-    pub fn get_threshold(&self) -> f64 {
-        self.threshold
+    pub fn get_lower_threshold(&self) -> f64 {
+        self.lower_threshold
     }
-    pub fn clear_threshold(&mut self) {
-        self.threshold = 0.;
+    pub fn clear_lower_threshold(&mut self) {
+        self.lower_threshold = 0.;
     }
 
     // Param is passed by value, moved
-    pub fn set_threshold(&mut self, v: f64) {
-        self.threshold = v;
+    pub fn set_lower_threshold(&mut self, v: f64) {
+        self.lower_threshold = v;
     }
 
-    // double active_value = 2;
+    // double upper_threshold = 2;
+
+
+    pub fn get_upper_threshold(&self) -> f64 {
+        self.upper_threshold
+    }
+    pub fn clear_upper_threshold(&mut self) {
+        self.upper_threshold = 0.;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_upper_threshold(&mut self, v: f64) {
+        self.upper_threshold = v;
+    }
+
+    // double active_value = 3;
 
 
     pub fn get_active_value(&self) -> f64 {
@@ -12148,7 +12164,7 @@ impl ThresholdNodeConfig {
         self.active_value = v;
     }
 
-    // double inactive_value = 3;
+    // double inactive_value = 4;
 
 
     pub fn get_inactive_value(&self) -> f64 {
@@ -12178,16 +12194,23 @@ impl ::protobuf::Message for ThresholdNodeConfig {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_double()?;
-                    self.threshold = tmp;
+                    self.lower_threshold = tmp;
                 },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_double()?;
-                    self.active_value = tmp;
+                    self.upper_threshold = tmp;
                 },
                 3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_double()?;
+                    self.active_value = tmp;
+                },
+                4 => {
                     if wire_type != ::protobuf::wire_format::WireTypeFixed64 {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
@@ -12206,7 +12229,10 @@ impl ::protobuf::Message for ThresholdNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if self.threshold != 0. {
+        if self.lower_threshold != 0. {
+            my_size += 9;
+        }
+        if self.upper_threshold != 0. {
             my_size += 9;
         }
         if self.active_value != 0. {
@@ -12221,14 +12247,17 @@ impl ::protobuf::Message for ThresholdNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
-        if self.threshold != 0. {
-            os.write_double(1, self.threshold)?;
+        if self.lower_threshold != 0. {
+            os.write_double(1, self.lower_threshold)?;
+        }
+        if self.upper_threshold != 0. {
+            os.write_double(2, self.upper_threshold)?;
         }
         if self.active_value != 0. {
-            os.write_double(2, self.active_value)?;
+            os.write_double(3, self.active_value)?;
         }
         if self.inactive_value != 0. {
-            os.write_double(3, self.inactive_value)?;
+            os.write_double(4, self.inactive_value)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -12269,9 +12298,14 @@ impl ::protobuf::Message for ThresholdNodeConfig {
         descriptor.get(|| {
             let mut fields = ::std::vec::Vec::new();
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
-                "threshold",
-                |m: &ThresholdNodeConfig| { &m.threshold },
-                |m: &mut ThresholdNodeConfig| { &mut m.threshold },
+                "lower_threshold",
+                |m: &ThresholdNodeConfig| { &m.lower_threshold },
+                |m: &mut ThresholdNodeConfig| { &mut m.lower_threshold },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
+                "upper_threshold",
+                |m: &ThresholdNodeConfig| { &m.upper_threshold },
+                |m: &mut ThresholdNodeConfig| { &mut m.upper_threshold },
             ));
             fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeDouble>(
                 "active_value",
@@ -12299,7 +12333,8 @@ impl ::protobuf::Message for ThresholdNodeConfig {
 
 impl ::protobuf::Clear for ThresholdNodeConfig {
     fn clear(&mut self) {
-        self.threshold = 0.;
+        self.lower_threshold = 0.;
+        self.upper_threshold = 0.;
         self.active_value = 0.;
         self.inactive_value = 0.;
         self.unknown_fields.clear();
@@ -13414,32 +13449,33 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ansformNodeConfig\"\x12\n\x10SelectNodeConfig\"y\n\x0fMergeNodeConfig\
     \x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.MergeNodeConfig.MergeMod\
     eR\x04mode\"0\n\tMergeMode\x12\n\n\x06Latest\x10\0\x12\x0b\n\x07Highest\
-    \x10\x01\x12\n\n\x06Lowest\x10\x02\"}\n\x13ThresholdNodeConfig\x12\x1c\n\
-    \tthreshold\x18\x01\x20\x01(\x01R\tthreshold\x12!\n\x0cactive_value\x18\
-    \x02\x20\x01(\x01R\x0bactiveValue\x12%\n\x0einactive_value\x18\x03\x20\
-    \x01(\x01R\rinactiveValue\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12Color\
-    HsvNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\
-    \x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12\
-    /\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositionR\x08positio\
-    n\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\
-    \x18\x03\x20\x01(\x08R\x06hidden\"N\n\x04Port\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.\
-    ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SI\
-    NGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07\
-    TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
-    \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
-    \x10\x07\x12\x07\n\x03GST\x10\x082\xc4\x04\n\x08NodesApi\x12/\n\x08GetNo\
-    des\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\
-    \x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\
-    \x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\
-    \x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResp\
-    onse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequ\
-    est\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\
-    \x16.mizer.MoveNodeRequest\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDe\
-    leteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeRespons\
-    e\"\0\x12=\n\x08HideNode\x12\x16.mizer.HideNodeRequest\x1a\x17.mizer.Hid\
-    eNodeResponse\"\0\x12=\n\x08ShowNode\x12\x16.mizer.ShowNodeRequest\x1a\
-    \x17.mizer.ShowNodeResponse\"\0b\x06proto3\
+    \x10\x01\x12\n\n\x06Lowest\x10\x02\"\xb1\x01\n\x13ThresholdNodeConfig\
+    \x12'\n\x0flower_threshold\x18\x01\x20\x01(\x01R\x0elowerThreshold\x12'\
+    \n\x0fupper_threshold\x18\x02\x20\x01(\x01R\x0eupperThreshold\x12!\n\x0c\
+    active_value\x18\x03\x20\x01(\x01R\x0bactiveValue\x12%\n\x0einactive_val\
+    ue\x18\x04\x20\x01(\x01R\rinactiveValue\"\x14\n\x12ColorRgbNodeConfig\"\
+    \x14\n\x12ColorHsvNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\
+    \x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"m\n\x0cNo\
+    deDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.mizer.NodePositi\
+    onR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\
+    \x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"N\n\x04Port\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\x02\x20\x01(\
+    \x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtoc\
+    ol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\
+    \t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LAS\
+    ER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\
+    \x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\xc4\x04\n\x08NodesApi\x12\
+    /\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\
+    \n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\
+    \x07AddLink\x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\
+    \0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteControl\x1a\x14.mizer.\
+    WriteResponse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.mizer.UpdateNodeC\
+    onfigRequest\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\x12=\n\x08MoveNo\
+    de\x12\x16.mizer.MoveNodeRequest\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\
+    \n\nDeleteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeR\
+    esponse\"\0\x12=\n\x08HideNode\x12\x16.mizer.HideNodeRequest\x1a\x17.miz\
+    er.HideNodeResponse\"\0\x12=\n\x08ShowNode\x12\x16.mizer.ShowNodeRequest\
+    \x1a\x17.mizer.ShowNodeResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

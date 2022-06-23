@@ -665,14 +665,15 @@ final $typed_data.Uint8List mergeNodeConfigDescriptor = $convert.base64Decode('C
 const ThresholdNodeConfig$json = const {
   '1': 'ThresholdNodeConfig',
   '2': const [
-    const {'1': 'threshold', '3': 1, '4': 1, '5': 1, '10': 'threshold'},
-    const {'1': 'active_value', '3': 2, '4': 1, '5': 1, '10': 'activeValue'},
-    const {'1': 'inactive_value', '3': 3, '4': 1, '5': 1, '10': 'inactiveValue'},
+    const {'1': 'lower_threshold', '3': 1, '4': 1, '5': 1, '10': 'lowerThreshold'},
+    const {'1': 'upper_threshold', '3': 2, '4': 1, '5': 1, '10': 'upperThreshold'},
+    const {'1': 'active_value', '3': 3, '4': 1, '5': 1, '10': 'activeValue'},
+    const {'1': 'inactive_value', '3': 4, '4': 1, '5': 1, '10': 'inactiveValue'},
   ],
 };
 
 /// Descriptor for `ThresholdNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List thresholdNodeConfigDescriptor = $convert.base64Decode('ChNUaHJlc2hvbGROb2RlQ29uZmlnEhwKCXRocmVzaG9sZBgBIAEoAVIJdGhyZXNob2xkEiEKDGFjdGl2ZV92YWx1ZRgCIAEoAVILYWN0aXZlVmFsdWUSJQoOaW5hY3RpdmVfdmFsdWUYAyABKAFSDWluYWN0aXZlVmFsdWU=');
+final $typed_data.Uint8List thresholdNodeConfigDescriptor = $convert.base64Decode('ChNUaHJlc2hvbGROb2RlQ29uZmlnEicKD2xvd2VyX3RocmVzaG9sZBgBIAEoAVIObG93ZXJUaHJlc2hvbGQSJwoPdXBwZXJfdGhyZXNob2xkGAIgASgBUg51cHBlclRocmVzaG9sZBIhCgxhY3RpdmVfdmFsdWUYAyABKAFSC2FjdGl2ZVZhbHVlEiUKDmluYWN0aXZlX3ZhbHVlGAQgASgBUg1pbmFjdGl2ZVZhbHVl');
 @$core.Deprecated('Use colorRgbNodeConfigDescriptor instead')
 const ColorRgbNodeConfig$json = const {
   '1': 'ColorRgbNodeConfig',

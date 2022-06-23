@@ -328,9 +328,10 @@ message MergeNodeConfig {
   }
 }
 message ThresholdNodeConfig {
-  double threshold = 1;
-  double active_value = 2;
-  double inactive_value = 3;
+  double lower_threshold = 1;
+  double upper_threshold = 2;
+  double active_value = 3;
+  double inactive_value = 4;
 }
 
 message ColorRgbNodeConfig {}

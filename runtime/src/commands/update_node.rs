@@ -180,7 +180,8 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
         }
         (NodeType::Threshold, Node::Threshold(config)) => {
             let node: &mut ThresholdNode = node.downcast_mut()?;
-            node.threshold = config.threshold;
+            node.lower_threshold = config.lower_threshold;
+            node.upper_threshold = config.upper_threshold;
             node.active_value = config.active_value;
             node.inactive_value = config.inactive_value;
         }

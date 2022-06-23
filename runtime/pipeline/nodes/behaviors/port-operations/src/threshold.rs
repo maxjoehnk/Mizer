@@ -9,15 +9,24 @@ const VALUE_OUTPUT: &str = "value";
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct ThresholdNode {
-    pub threshold: f64,
+    #[serde(alias = "threshold")]
+    pub lower_threshold: f64,
+    #[serde(default = "default_upper_threshold")]
+    pub upper_threshold: f64,
     pub active_value: f64,
     pub inactive_value: f64,
+}
+
+fn default_upper_threshold() -> f64 {
+    // We choose a very large value here so we don't break existing project files
+    1_000_000f64
 }
 
 impl Default for ThresholdNode {
     fn default() -> Self {
         Self {
-            threshold: 0.5,
+            lower_threshold: 0.5,
+            upper_threshold: default_upper_threshold(),
             active_value: 1.,
             inactive_value: 0.,
         }
@@ -63,7 +72,7 @@ impl ProcessingNode for ThresholdNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(value) = context.read_port_changes::<_, f64>(VALUE_INPUT) {
-            let value = if value >= self.threshold {
+            let value = if value >= self.lower_threshold && value < self.upper_threshold {
                 self.active_value
             } else {
                 self.inactive_value

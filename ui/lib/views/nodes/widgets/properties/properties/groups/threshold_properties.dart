@@ -32,9 +32,15 @@ class _ThresholdPropertiesState extends State<ThresholdProperties> {
   Widget build(BuildContext context) {
     return PropertyGroup(title: "Threshold", children: [
       NumberField(
-        label: "Threshold",
-        value: this.widget.config.threshold,
-        onUpdate: _updateThreshold,
+        label: "Lower Threshold",
+        value: this.widget.config.lowerThreshold,
+        onUpdate: _updateLowerThreshold,
+        fractions: true,
+      ),
+      NumberField(
+        label: "Upper Threshold",
+        value: this.widget.config.upperThreshold,
+        onUpdate: _updateUpperThreshold,
         fractions: true,
       ),
       NumberField(
@@ -52,10 +58,18 @@ class _ThresholdPropertiesState extends State<ThresholdProperties> {
     ]);
   }
 
-  void _updateThreshold(num threshold) {
-    log("_updateThreshold $threshold", name: "ThresholdProperties");
+  void _updateLowerThreshold(num threshold) {
+    log("_updateLowerThreshold $threshold", name: "ThresholdProperties");
     setState(() {
-      state.threshold = threshold.toDouble();
+      state.lowerThreshold = threshold.toDouble();
+      widget.onUpdate(state);
+    });
+  }
+
+  void _updateUpperThreshold(num threshold) {
+    log("_updateUpperThreshold $threshold", name: "ThresholdProperties");
+    setState(() {
+      state.upperThreshold = threshold.toDouble();
       widget.onUpdate(state);
     });
   }

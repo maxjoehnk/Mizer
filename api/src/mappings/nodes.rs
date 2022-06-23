@@ -878,7 +878,8 @@ impl From<MergeNodeConfig_MergeMode> for mizer_nodes::MergeMode {
 impl From<mizer_nodes::ThresholdNode> for ThresholdNodeConfig {
     fn from(node: mizer_nodes::ThresholdNode) -> Self {
         Self {
-            threshold: node.threshold,
+            lower_threshold: node.lower_threshold,
+            upper_threshold: node.upper_threshold,
             active_value: node.active_value,
             inactive_value: node.inactive_value,
             ..Default::default()
@@ -889,7 +890,8 @@ impl From<mizer_nodes::ThresholdNode> for ThresholdNodeConfig {
 impl From<ThresholdNodeConfig> for mizer_nodes::ThresholdNode {
     fn from(config: ThresholdNodeConfig) -> Self {
         Self {
-            threshold: config.threshold,
+            lower_threshold: config.lower_threshold,
+            upper_threshold: config.upper_threshold,
             active_value: config.active_value,
             inactive_value: config.inactive_value,
         }

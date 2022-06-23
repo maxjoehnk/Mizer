@@ -5,11 +5,15 @@ pub struct ColorMixer {
     red: f64,
     green: f64,
     blue: f64,
+    virtual_dimmer: f64,
 }
 
 impl ColorMixer {
     pub fn new() -> Self {
-        Default::default()
+        Self {
+            virtual_dimmer: 1f64,
+            ..Default::default()
+        }
     }
 
     pub fn set_red(&mut self, red: f64) {
@@ -24,22 +28,37 @@ impl ColorMixer {
         self.blue = blue;
     }
 
+    pub fn set_virtual_dimmer(&mut self, value: f64) {
+        self.virtual_dimmer = value;
+    }
+
+    pub fn virtual_dimmer(&self) -> f64 {
+        self.virtual_dimmer
+    }
+
     pub fn rgb(&self) -> Rgb {
+        let rgb = Srgb::new(self.red, self.green, self.blue);
+        let mut hsv = Hsv::from_color(rgb);
+        hsv.value *= self.virtual_dimmer;
+        let rgb = Srgb::from_color(hsv);
+
         Rgb {
-            red: self.red,
-            green: self.green,
-            blue: self.blue,
+            red: rgb.red,
+            green: rgb.green,
+            blue: rgb.blue,
         }
     }
 
     pub fn rgbw(&self) -> Rgbw {
         let rgb = Srgb::new(self.red, self.green, self.blue);
-        let hsv = Hsv::from_color(rgb);
+        let mut hsv = Hsv::from_color(rgb);
+        hsv.value *= self.virtual_dimmer;
+        let rgb = Srgb::from_color(hsv);
 
         Rgbw {
-            red: self.red * hsv.saturation,
-            green: self.green * hsv.saturation,
-            blue: self.blue * hsv.saturation,
+            red: rgb.red * hsv.saturation,
+            green: rgb.green * hsv.saturation,
+            blue: rgb.blue * hsv.saturation,
             white: hsv.value - hsv.saturation,
         }
     }
@@ -62,8 +81,8 @@ pub struct Rgbw {
 
 #[cfg(test)]
 mod tests {
-    use test_case::test_case;
     use super::*;
+    use test_case::test_case;
 
     #[test_case(1f64, 1f64, 1f64)]
     #[test_case(0f64, 1f64, 1f64)]
@@ -90,11 +109,80 @@ mod tests {
     #[test_case(0f64, 1f64, 0f64, 0f64, 1f64, 0f64, 0f64)]
     #[test_case(0f64, 0f64, 1f64, 0f64, 0f64, 1f64, 0f64)]
     #[test_case(0.5f64, 0.5f64, 0.5f64, 0f64, 0f64, 0f64, 0.5f64)]
-    fn rgbw_should_return_rgbw_values(red: f64, green: f64, blue: f64, r: f64, g: f64, b: f64, w: f64) {
+    fn rgbw_should_return_rgbw_values(
+        red: f64,
+        green: f64,
+        blue: f64,
+        r: f64,
+        g: f64,
+        b: f64,
+        w: f64,
+    ) {
         let mut mixer = ColorMixer::new();
         mixer.set_red(red);
         mixer.set_green(green);
         mixer.set_blue(blue);
+
+        let result = mixer.rgbw();
+
+        assert_eq!(r, result.red);
+        assert_eq!(g, result.green);
+        assert_eq!(b, result.blue);
+        assert_eq!(w, result.white);
+    }
+
+    #[test_case(1f64, 1f64, 1f64, 0f64, 0f64, 0f64, 0f64)]
+    #[test_case(1f64, 1f64, 1f64, 1f64, 1f64, 1f64, 1f64)]
+    #[test_case(1f64, 1f64, 1f64, 0.5f64, 0.5f64, 0.5f64, 0.5f64)]
+    #[test_case(0f64, 1f64, 1f64, 1f64, 0f64, 1f64, 1f64)]
+    #[test_case(1f64, 0f64, 1f64, 1f64, 1f64, 0f64, 1f64)]
+    #[test_case(1f64, 1f64, 0f64, 1f64, 1f64, 1f64, 0f64)]
+    #[test_case(0.5f64, 0.5f64, 0.5f64, 1f64, 0.5f64, 0.5f64, 0.5f64)]
+    fn rgb_should_apply_virtual_dimmer(
+        red: f64,
+        green: f64,
+        blue: f64,
+        dimmer: f64,
+        r: f64,
+        g: f64,
+        b: f64,
+    ) {
+        let mut mixer = ColorMixer::new();
+        mixer.set_red(red);
+        mixer.set_green(green);
+        mixer.set_blue(blue);
+        mixer.set_virtual_dimmer(dimmer);
+
+        let result = mixer.rgb();
+
+        assert_eq!(r, result.red);
+        assert_eq!(g, result.green);
+        assert_eq!(b, result.blue);
+    }
+
+    #[test_case(1f64, 1f64, 1f64, 0f64, 0f64, 0f64, 0f64, 0f64)]
+    #[test_case(1f64, 1f64, 1f64, 1f64, 0f64, 0f64, 0f64, 1f64)]
+    #[test_case(1f64, 1f64, 1f64, 0.5f64, 0f64, 0f64, 0f64, 0.5f64)]
+    #[test_case(1f64, 1f64, 0f64, 1f64, 1f64, 1f64, 0f64, 0f64)]
+    #[test_case(1f64, 0f64, 0f64, 1f64, 1f64, 0f64, 0f64, 0f64)]
+    #[test_case(0f64, 1f64, 0f64, 1f64, 0f64, 1f64, 0f64, 0f64)]
+    #[test_case(0f64, 0f64, 1f64, 1f64, 0f64, 0f64, 1f64, 0f64)]
+    #[test_case(0.5f64, 0.5f64, 0.5f64, 1f64, 0f64, 0f64, 0f64, 0.5f64)]
+    fn rgbw_should_apply_virtual_dimmer(
+        red: f64,
+        green: f64,
+        blue: f64,
+        dimmer: f64,
+        r: f64,
+        g: f64,
+        b: f64,
+        w: f64,
+    ) {
+        let mut mixer = ColorMixer::new();
+        mixer.set_red(red);
+        mixer.set_green(green);
+        mixer.set_blue(blue);
+        mixer.set_virtual_dimmer(dimmer);
 
         let result = mixer.rgbw();
 

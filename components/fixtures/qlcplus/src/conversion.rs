@@ -57,6 +57,13 @@ fn create_controls(
     let channels = mode
         .channels
         .iter()
+        .filter(|mode_channel| {
+            !mode.heads.iter().any(|head| {
+                head.channels
+                    .iter()
+                    .any(|channel| channel == &mode_channel.number)
+            })
+        })
         .map(|mode_channel| channels[mode_channel.channel.deref()].clone())
         .collect::<Vec<_>>();
 
@@ -95,10 +102,10 @@ fn create_sub_fixtures(
 fn create_sub_fixture_controls(
     channels: Vec<ChannelType>,
     resource_reader: &ResourceReader<'_>,
-) -> FixtureControls<String> {
+) -> FixtureControls<SubFixtureControlChannel> {
     build_controls(
         channels,
-        |channel| channel.name.to_string(),
+        |channel| SubFixtureControlChannel::Channel(channel.name.to_string()),
         resource_reader,
     )
 }

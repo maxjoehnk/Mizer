@@ -380,23 +380,16 @@ fn build_fixture_mode(
         .clone()
         .into_iter()
         .partition(|name| is_pixel_channel(name, available_channels));
-    let mut controls: FixtureControls<FixtureControlChannel> =
+    let controls: FixtureControls<FixtureControlChannel> =
         group_controls(available_channels, &channels, wheels).into();
     let sub_fixtures = group_sub_fixtures(available_channels, pixels, wheels);
-    if sub_fixtures
-        .iter()
-        .any(|f| f.controls.color_mixer.is_some())
-    {
-        controls.color_mixer = Some(ColorGroup {
-            red: FixtureControlChannel::Delegate,
-            green: FixtureControlChannel::Delegate,
-            blue: FixtureControlChannel::Delegate,
-            amber: None,
-            white: None,
-        });
-    }
 
-    FixtureMode::new(mode.name, map_channels(available_channels, all_channels), controls, sub_fixtures)
+    FixtureMode::new(
+        mode.name,
+        map_channels(available_channels, all_channels),
+        controls,
+        sub_fixtures,
+    )
 }
 
 fn map_channels(
@@ -519,7 +512,11 @@ fn build_sub_fixture(
     let id = key
         .parse::<u32>()
         .expect(&format!("'{}' is not a number", key));
-    let definition = SubFixtureDefinition::new(id, format!("Pixel {}", key), group_controls(available_channels, &channels, wheels));
+    let definition = SubFixtureDefinition::new(
+        id,
+        format!("Pixel {}", key),
+        group_controls(available_channels, &channels, wheels).into(),
+    );
 
     definition
 }
@@ -640,19 +637,19 @@ fn group_controls(
                 controls.intensity = Some(name);
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_RED => {
-                color_group.red(name.clone());
+                color_group.red(name);
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_GREEN => {
-                color_group.green(name.clone());
+                color_group.green(name);
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_BLUE => {
-                color_group.blue(name.clone());
+                color_group.blue(name);
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_WHITE => {
-                color_group.white(name.clone());
+                color_group.white(name);
             }
             Some(Capability::ColorIntensity { color }) if color == COLOR_AMBER => {
-                color_group.amber(name.clone());
+                color_group.amber(name);
             }
             Some(Capability::Pan {
                 angle_start,
@@ -671,7 +668,7 @@ fn group_controls(
                 angle_end,
             }) => {
                 controls.tilt = Some(AxisGroup {
-                    channel: name.clone(),
+                    channel: name,
                     angle: Some(Angle {
                         from: *angle_start,
                         to: *angle_end,
@@ -783,7 +780,8 @@ mod tests {
 
     #[test]
     fn group_controls_should_group_white_color_channel() {
-        let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into(), "White".into()];
+        let enabled_channels: Vec<String> =
+            vec!["Red".into(), "Green".into(), "Blue".into(), "White".into()];
         let mut available_channels = HashMap::new();
         available_channels.insert(
             "Red".into(),
@@ -847,7 +845,8 @@ mod tests {
 
     #[test]
     fn group_controls_should_group_amber_color_channel() {
-        let enabled_channels: Vec<String> = vec!["Red".into(), "Green".into(), "Blue".into(), "Amber".into()];
+        let enabled_channels: Vec<String> =
+            vec!["Red".into(), "Green".into(), "Blue".into(), "Amber".into()];
         let mut available_channels = HashMap::new();
         available_channels.insert(
             "Red".into(),

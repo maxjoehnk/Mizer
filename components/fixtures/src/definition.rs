@@ -4,6 +4,7 @@ use std::str::FromStr;
 use serde::{Deserialize, Serialize};
 
 use crate::color_mixer::ColorMixer;
+use crate::fixture::IChannelType;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct FixtureDefinition {
@@ -26,13 +27,20 @@ impl FixtureDefinition {
 pub struct SubFixtureDefinition {
     pub id: u32,
     pub name: String,
-    pub controls: FixtureControls<String>,
+    pub controls: FixtureControls<SubFixtureControlChannel>,
     pub(crate) color_mixer: Option<ColorMixer>,
 }
 
 impl SubFixtureDefinition {
-    pub fn new(id: u32, name: String, controls: FixtureControls<String>) -> Self {
+    pub fn new(
+        id: u32,
+        name: String,
+        mut controls: FixtureControls<SubFixtureControlChannel>,
+    ) -> Self {
         let color_mixer = controls.color_mixer.as_ref().map(|_| ColorMixer::new());
+        if controls.intensity.is_none() && controls.color_mixer.is_some() {
+            controls.intensity = Some(SubFixtureControlChannel::VirtualDimmer);
+        }
 
         Self {
             id,
@@ -53,8 +61,35 @@ pub struct FixtureMode {
 }
 
 impl FixtureMode {
-    pub fn new(name: String, channels: Vec<FixtureChannelDefinition>, controls: FixtureControls<FixtureControlChannel>, sub_fixtures: Vec<SubFixtureDefinition>) -> Self {
+    pub fn new(
+        name: String,
+        channels: Vec<FixtureChannelDefinition>,
+        mut controls: FixtureControls<FixtureControlChannel>,
+        sub_fixtures: Vec<SubFixtureDefinition>,
+    ) -> Self {
         let color_mixer = controls.color_mixer.as_ref().map(|_| ColorMixer::new());
+        if controls.intensity.is_none() && controls.color_mixer.is_some() {
+            controls.intensity = Some(FixtureControlChannel::VirtualDimmer);
+        }
+
+        if sub_fixtures
+            .iter()
+            .any(|f| f.controls.color_mixer.is_some())
+            && controls.color_mixer.is_none()
+        {
+            controls.color_mixer = Some(ColorGroup {
+                red: FixtureControlChannel::Delegate,
+                green: FixtureControlChannel::Delegate,
+                blue: FixtureControlChannel::Delegate,
+                amber: None,
+                white: None,
+            });
+        }
+        if sub_fixtures.iter().any(|f| f.controls.intensity.is_some())
+            && controls.intensity.is_none()
+        {
+            controls.intensity = Some(FixtureControlChannel::Delegate);
+        }
 
         Self {
             name,
@@ -189,7 +224,13 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
                     let amber = color.amber.and_then(|c| c.into_channel());
                     let white = color.white.and_then(|c| c.into_channel());
 
-                    Some(ColorGroup { red, green, blue, amber, white, })
+                    Some(ColorGroup {
+                        red,
+                        green,
+                        blue,
+                        amber,
+                        white,
+                    })
                 } else {
                     None
                 }
@@ -257,6 +298,51 @@ impl From<FixtureControls<FixtureControlChannel>> for FixtureControls<String> {
     }
 }
 
+impl From<FixtureControls<String>> for FixtureControls<SubFixtureControlChannel> {
+    fn from(controls: FixtureControls<String>) -> Self {
+        Self {
+            intensity: controls.intensity.map(SubFixtureControlChannel::Channel),
+            shutter: controls.shutter.map(SubFixtureControlChannel::Channel),
+            color_mixer: controls.color_mixer.map(|color| ColorGroup {
+                red: SubFixtureControlChannel::Channel(color.red),
+                green: SubFixtureControlChannel::Channel(color.green),
+                blue: SubFixtureControlChannel::Channel(color.blue),
+                white: color.white.map(SubFixtureControlChannel::Channel),
+                amber: color.amber.map(SubFixtureControlChannel::Channel),
+            }),
+            color_wheel: controls.color_wheel.map(|wheel| ColorWheelGroup {
+                channel: SubFixtureControlChannel::Channel(wheel.channel),
+                colors: wheel.colors,
+            }),
+            pan: controls.pan.map(|axis| AxisGroup {
+                channel: SubFixtureControlChannel::Channel(axis.channel),
+                angle: axis.angle,
+            }),
+            tilt: controls.tilt.map(|axis| AxisGroup {
+                channel: SubFixtureControlChannel::Channel(axis.channel),
+                angle: axis.angle,
+            }),
+            focus: controls.focus.map(SubFixtureControlChannel::Channel),
+            zoom: controls.zoom.map(SubFixtureControlChannel::Channel),
+            prism: controls.prism.map(SubFixtureControlChannel::Channel),
+            iris: controls.iris.map(SubFixtureControlChannel::Channel),
+            frost: controls.frost.map(SubFixtureControlChannel::Channel),
+            gobo: controls.gobo.map(|gobo| GoboGroup {
+                channel: SubFixtureControlChannel::Channel(gobo.channel),
+                gobos: gobo.gobos,
+            }),
+            generic: controls
+                .generic
+                .into_iter()
+                .map(|generic| GenericControl {
+                    channel: SubFixtureControlChannel::Channel(generic.channel),
+                    label: generic.label,
+                })
+                .collect(),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum FixtureControlType {
     Fader,
@@ -316,11 +402,31 @@ pub enum FixtureControlChannel {
     Channel(String),
     /// Delegate this channel to sub fixtures
     Delegate,
+    /// Create virtual dimmer for fixtures with only a color channel
+    VirtualDimmer,
 }
 
-impl FixtureControlChannel {
-    pub fn into_channel(self) -> Option<String> {
+impl IChannelType for FixtureControlChannel {
+    fn into_channel(self) -> Option<String> {
         if let FixtureControlChannel::Channel(channel) = self {
+            Some(channel)
+        } else {
+            None
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum SubFixtureControlChannel {
+    /// Fixture control maps to one dmx channel
+    Channel(String),
+    /// Create virtual dimmer for fixtures with only a color channel
+    VirtualDimmer,
+}
+
+impl IChannelType for SubFixtureControlChannel {
+    fn into_channel(self) -> Option<String> {
+        if let SubFixtureControlChannel::Channel(channel) = self {
             Some(channel)
         } else {
             None
@@ -378,7 +484,14 @@ impl<TChannel> ColorGroupBuilder<TChannel> {
 
     pub fn build(self) -> Option<ColorGroup<TChannel>> {
         match (self.red, self.green, self.blue) {
-            (Some(red), Some(green), Some(blue)) => ColorGroup { red, green, blue, amber: self.amber, white: self.white }.into(),
+            (Some(red), Some(green), Some(blue)) => ColorGroup {
+                red,
+                green,
+                blue,
+                amber: self.amber,
+                white: self.white,
+            }
+            .into(),
             _ => None,
         }
     }

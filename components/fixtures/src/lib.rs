@@ -15,8 +15,8 @@ pub mod library;
 pub mod manager;
 mod processor;
 // TODO: should probably find a better name
-pub mod programmer;
 mod color_mixer;
+pub mod programmer;
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[serde(untagged)]

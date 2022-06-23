@@ -1,5 +1,6 @@
 use mizer_fixtures::definition::{
-    ColorGroup, FixtureControlChannel, FixtureDefinition, SubFixtureDefinition,
+    ColorGroup, FixtureControlChannel, FixtureDefinition, SubFixtureControlChannel,
+    SubFixtureDefinition,
 };
 use mizer_open_fixture_library_provider::{
     Capability, Channel, FixtureManufacturer, Matrix, MatrixPixels, Mode,
@@ -32,9 +33,18 @@ fn assert_sub_fixture(sub_fixture: &SubFixtureDefinition, index: u32) {
     assert_eq!(sub_fixture.name, format!("Pixel {}", index));
     assert!(sub_fixture.controls.color_mixer.is_some());
     if let Some(ref color) = sub_fixture.controls.color_mixer {
-        assert_eq!(color.red, format!("Red {}", index));
-        assert_eq!(color.green, format!("Green {}", index));
-        assert_eq!(color.blue, format!("Blue {}", index));
+        assert_eq!(
+            color.red,
+            SubFixtureControlChannel::Channel(format!("Red {}", index))
+        );
+        assert_eq!(
+            color.green,
+            SubFixtureControlChannel::Channel(format!("Green {}", index))
+        );
+        assert_eq!(
+            color.blue,
+            SubFixtureControlChannel::Channel(format!("Blue {}", index))
+        );
     }
 }
 

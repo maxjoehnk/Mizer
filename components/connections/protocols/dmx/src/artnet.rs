@@ -14,7 +14,8 @@ pub struct ArtnetOutput {
 impl ArtnetOutput {
     pub fn new(host: String, port: Option<u16>) -> anyhow::Result<Self> {
         let port = port.unwrap_or(6454);
-        let socket = UdpSocket::bind(("127.0.0.1", 0))?;
+        let socket = UdpSocket::bind(("0.0.0.0", 0))?;
+        socket.set_nonblocking(true)?;
         socket.set_broadcast(true)?;
 
         Ok(ArtnetOutput {

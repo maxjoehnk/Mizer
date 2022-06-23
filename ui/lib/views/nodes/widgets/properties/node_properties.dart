@@ -14,6 +14,7 @@ import 'properties/groups/fixture_properties.dart';
 import 'properties/groups/merge_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
+import 'properties/groups/sequencer_properties.dart';
 import 'properties/groups/video_file_properties.dart';
 
 class NodePropertiesPane extends StatelessWidget {
@@ -124,6 +125,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(MergeProperties(node.config.mergeConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(mergeConfig: config)))));
+    }
+    if (node.config.hasSequencerConfig()) {
+      widgets.add(SequencerProperties(node.config.sequencerConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(sequencerConfig: config)))));
     }
     return widgets;
   }

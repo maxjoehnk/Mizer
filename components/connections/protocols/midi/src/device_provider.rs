@@ -1,9 +1,14 @@
 use midir::{MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
 use mizer_midi_device_profiles::{load_profiles, DeviceProfile};
+use regex::Regex;
 use std::collections::HashMap;
 use std::path::Path;
 
 use crate::device::MidiDevice;
+
+lazy_static::lazy_static! {
+    static ref LINUX_MIDI_PORT_NAME: Regex = Regex::new("(.*) ([0-9]+:[0-9]+)").unwrap();
+}
 
 pub struct MidiDeviceIdentifier {
     pub name: String,
@@ -85,7 +90,7 @@ impl MidiDeviceProvider {
                     .iter()
                     .find(|profile| profile.matches(&name))
                     .cloned(),
-                name,
+                name: cleanup_name(name),
                 input,
                 output,
             })
@@ -93,4 +98,18 @@ impl MidiDeviceProvider {
 
         Ok(devices)
     }
+}
+
+#[cfg(target_os = "linux")]
+fn cleanup_name(name: String) -> String {
+    LINUX_MIDI_PORT_NAME
+        .captures_iter(&name)
+        .next()
+        .map(|s| s[1].to_string())
+        .unwrap_or(name)
+}
+
+#[cfg(not(target_os = "linux"))]
+fn cleanup_name(name: String) -> String {
+    name
 }

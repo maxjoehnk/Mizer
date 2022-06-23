@@ -3907,6 +3907,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap 4.0.2",
+ "lazy_static",
  "log",
  "midir",
  "mizer-message-bus",
@@ -3915,6 +3916,7 @@ dependencies = [
  "mizer-module",
  "mizer-processing",
  "mizer-util",
+ "regex",
 ]
 
 [[package]]

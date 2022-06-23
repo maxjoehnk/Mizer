@@ -163,9 +163,12 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
-        let programmer = self.fixture_manager.get_programmer();
-        let state = programmer.view().read();
-        let fixture_ids = state.all_fixtures();
+        let fixture_ids = {
+            let programmer = self.fixture_manager.get_programmer();
+            let state = programmer.view().read();
+            state.all_fixtures()
+        };
+
         self.runtime
             .run_command(AssignFixturesToGroupCommand {
                 group_id,

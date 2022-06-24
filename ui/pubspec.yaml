@@ -25,7 +25,11 @@ dependencies:
   multicast_dns: ^0.3.1
   select_form_field: ^2.2.0
   collection: ^1.15.0
-  nativeshell: ^0.1.13
+  nativeshell:
+    git:
+      url: https://github.com/nativeshell/nativeshell.git
+      ref: b9199bf
+      path: nativeshell_dart
   flutter_svg: ^1.0.0
   flex_color_picker: ^2.1.2
   keyboard_shortcuts:

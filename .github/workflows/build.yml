@@ -24,7 +24,7 @@ jobs:
           toolchain: stable
       - uses: subosito/flutter-action@v1
         with:
-          channel: beta
+          channel: stable
       - name: Build Headless
         run: make build-headless
       - uses: actions/upload-artifact@v2
@@ -52,7 +52,7 @@ jobs:
           toolchain: stable
       - uses: subosito/flutter-action@v1
         with:
-          channel: beta
+          channel: stable
       - name: Build
         run: make build-release
       - name: Package
@@ -92,7 +92,7 @@ jobs:
           toolchain: stable
       - uses: subosito/flutter-action@v1
         with:
-          channel: beta
+          channel: stable
       - name: Get flutter deps
         run: flutter pub get
         working-directory: ui

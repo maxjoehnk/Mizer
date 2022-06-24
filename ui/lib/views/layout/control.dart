@@ -47,7 +47,7 @@ class LayoutControlView extends StatelessWidget {
       ]),
       child: Padding(
         padding: const EdgeInsets.all(2.0),
-        child: _getControl(node, nodesApi),
+        child: RepaintBoundary(child: _getControl(node, nodesApi)),
       ),
     );
   }

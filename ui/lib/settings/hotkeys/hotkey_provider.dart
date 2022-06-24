@@ -49,6 +49,7 @@ class HotkeyProvider extends StatelessWidget {
 
       var nextChild = builder(context, hotkeys);
       for (var shortcut in _shortcuts(hotkeys)) {
+        // TODO: this causes repaints
         nextChild = shortcut(nextChild);
       }
 

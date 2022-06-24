@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
-import 'package:mizer/state/settings_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
@@ -22,7 +20,6 @@ import 'package:mizer/views/session/session_view.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 
 import 'actions/actions.dart';
-import 'api/contracts/settings.dart';
 
 const double SHEET_SIZE = 320;
 const double SHEET_PADDING = 16;
@@ -74,8 +71,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocBuilder<SettingsBloc, Settings>(
-          builder: (context, settings) => HotkeyProvider(
+        body: HotkeyProvider(
             hotkeySelector: (hotkeys) => hotkeys.global,
             global: true,
             onHotkey: (hotkey) {
@@ -105,13 +101,13 @@ class _HomeState extends State<Home> {
                                 Expanded(
                                   child: SafeArea(
                                     child: Container(
-                                        child: _currentWidget,
+                                        child: RepaintBoundary(child: _currentWidget),
                                         clipBehavior: Clip.antiAlias,
                                         decoration: BoxDecoration()),
                                   ),
                                 ),
                                 if (_showProgrammer) SizedBox(height: SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
-                                TransportControls(showProgrammer: _showProgrammer, toggleProgrammer: () => setState(() => _showProgrammer = !_showProgrammer))
+                                RepaintBoundary(child: TransportControls(showProgrammer: _showProgrammer, toggleProgrammer: () => setState(() => _showProgrammer = !_showProgrammer)))
                               ],
                             ))
                       ],
@@ -120,7 +116,6 @@ class _HomeState extends State<Home> {
                   ),
                 ),
             ),
-          ),
         ));
   }
 

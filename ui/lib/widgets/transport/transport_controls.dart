@@ -12,35 +12,45 @@ import 'time_control.dart';
 
 const double TRANSPORT_CONTROLS_HEIGHT = 64;
 
-class TransportControls extends StatelessWidget {
+class TransportControls extends StatefulWidget {
   final bool showProgrammer;
   final Function() toggleProgrammer;
-
 
   TransportControls({ required this.showProgrammer, required this.toggleProgrammer });
 
   @override
-  Widget build(BuildContext context) {
-    var api = context.read<TransportApi>();
-    var stream = api.watchTransport().asBroadcastStream();
+  State<TransportControls> createState() => _TransportControlsState();
+}
 
+class _TransportControlsState extends State<TransportControls> {
+  late Stream<Transport> transportStream;
+
+  @override
+  void initState() {
+    super.initState();
+    var api = context.read<TransportApi>();
+    this.transportStream = api.watchTransport().asBroadcastStream();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         height: TRANSPORT_CONTROLS_HEIGHT,
         color: Colors.grey.shade800,
         child: Row(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: RepaintBoundary(child: TimeControl(api, stream)),
+            child: RepaintBoundary(child: TimeControl(context.read(), transportStream)),
           ),
-          RepaintBoundary(child: SpeedControl(stream.map((event) => event.speed).distinct())),
-          RepaintBoundary(child: TransportControl(stream.map((event) => event.state).distinct())),
+          RepaintBoundary(child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
+          RepaintBoundary(child: TransportControl(transportStream.map((event) => event.state).distinct())),
           Spacer(),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: MizerButton(child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("Programmer"),
-            ), active: showProgrammer, onClick: toggleProgrammer),
+            ), active: widget.showProgrammer, onClick: widget.toggleProgrammer),
           )
         ]));
   }

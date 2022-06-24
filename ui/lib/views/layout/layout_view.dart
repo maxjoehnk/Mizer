@@ -45,25 +45,20 @@ class LayoutView extends StatelessWidget {
           onSelectTab: (index) => layoutsBloc.add(SelectLayoutTab(tabIndex: index)),
           padding: false,
           tabs: state.layouts
-              .map((layout) =>
-              tabs.Tab(
-                  header: (active, setActive) =>
-                      ContextMenu(
-                          menu: Menu(items: [
-                            MenuItem(
-                                label: "Rename".i18n,
-                                action: () => _onRename(context, layout, layoutsBloc)),
-                            MenuItem(
-                                label: "Delete".i18n,
-                                action: () => _onDelete(context, layout, layoutsBloc)),
-                          ]),
-                          child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
-                  child: SequencerStateFetcher(builder: (context, sequencerStates) {
-                    return ControlLayout(
-                      layout: layout,
-                      sequencerState: sequencerStates,
-                    );
-                  })))
+              .map((layout) => tabs.Tab(
+                  header: (active, setActive) => ContextMenu(
+                      menu: Menu(items: [
+                        MenuItem(
+                            label: "Rename".i18n,
+                            action: () => _onRename(context, layout, layoutsBloc)),
+                        MenuItem(
+                            label: "Delete".i18n,
+                            action: () => _onDelete(context, layout, layoutsBloc)),
+                      ]),
+                      child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
+                  child: ControlLayout(
+                    layout: layout,
+                  )))
               .toList(),
           onAdd: () => _addLayout(context, layoutsBloc),
         ),
@@ -82,8 +77,7 @@ class LayoutView extends StatelessWidget {
   void _onDelete(BuildContext context, Layout layout, LayoutsBloc bloc) async {
     bool result = await showDialog(
         context: context,
-        builder: (BuildContext context) =>
-            AlertDialog(
+        builder: (BuildContext context) => AlertDialog(
               title: Text("Delete Layout".i18n),
               content: SingleChildScrollView(
                 child: Text("Delete Layout ${layout.id}?".i18n),
@@ -107,7 +101,7 @@ class LayoutView extends StatelessWidget {
 
   void _onRename(BuildContext context, Layout layout, LayoutsBloc bloc) async {
     String? result =
-    await showDialog(context: context, builder: (context) => NameLayoutDialog(name: layout.id));
+        await showDialog(context: context, builder: (context) => NameLayoutDialog(name: layout.id));
     if (result != null) {
       bloc.add(RenameLayout(id: layout.id, name: result));
     }
@@ -142,9 +136,8 @@ class NameLayoutDialog extends StatelessWidget {
 
 class ControlLayout extends StatefulWidget {
   final Layout layout;
-  final Map<int, SequenceState> sequencerState;
 
-  ControlLayout({required this.layout, required this.sequencerState});
+  ControlLayout({required this.layout});
 
   @override
   State<ControlLayout> createState() => _ControlLayoutState();
@@ -156,89 +149,62 @@ class _ControlLayoutState extends State<ControlLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SequencerBloc, SequencerState>(
-      builder: (context, sequences) {
-        return BlocBuilder<NodesBloc, Nodes>(
-            builder: (context, nodes) {
-              return Container(
-                width: 20 * MULTIPLIER,
-                height: 10 * MULTIPLIER,
-                child: Listener(
-                  behavior: HitTestBehavior.translucent,
-                  onPointerHover: (event) {
-                    if (_movingNode == null) {
-                      return;
-                    }
-                    _movingNodePosition = _movingNodePosition! + event.localDelta;
-                  },
-                  onPointerDown: (e) {
-                    if (_movingNode == null) {
-                      return;
-                    }
-                    _placeNode();
-                  },
-                  child: Stack(
-                    children: [
-                      GestureDetector(
-                        onSecondaryTapDown: (details) {
-                          LayoutsBloc bloc = context.read();
-                          int x = (details.localPosition.dx / MULTIPLIER).floor();
-                          int y = (details.localPosition.dy / MULTIPLIER).floor();
-                          var position = ControlPosition(x: Int64(x), y: Int64(y));
-                          Navigator.of(context).push(MizerPopupRoute(
-                              position: details.globalPosition,
-                              child: AddControlPopup(
-                                  nodes: nodes.nodes.where((node) {
-                                    var control = widget.layout.controls.firstWhereOrNull((c) => c.node == node.path);
+    return BlocBuilder<SequencerBloc, SequencerState>(builder: (context, sequences) {
+      return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
+        return Container(
+          width: 20 * MULTIPLIER,
+          height: 10 * MULTIPLIER,
+          child: Listener(
+            behavior: HitTestBehavior.translucent,
+            onPointerHover: (event) {
+              if (_movingNode == null) {
+                return;
+              }
+              _movingNodePosition = _movingNodePosition! + event.localDelta;
+            },
+            onPointerDown: (e) {
+              if (_movingNode == null) {
+                return;
+              }
+              _placeNode();
+            },
+            child: Stack(
+              children: [
+                GestureDetector(
+                  onSecondaryTapDown: (details) {
+                    LayoutsBloc bloc = context.read();
+                    int x = (details.localPosition.dx / MULTIPLIER).floor();
+                    int y = (details.localPosition.dy / MULTIPLIER).floor();
+                    var position = ControlPosition(x: Int64(x), y: Int64(y));
+                    Navigator.of(context).push(MizerPopupRoute(
+                        position: details.globalPosition,
+                        child: AddControlPopup(
+                            nodes: nodes.nodes.where((node) {
+                              var control = widget.layout.controls
+                                  .firstWhereOrNull((c) => c.node == node.path);
 
-                                    return control == null;
-                                  }).toList(),
-                                  sequences: sequences.sequences,
-                                  onCreateControl: (nodeType) =>
-                                      bloc.add(AddControl(
-                                          layoutId: widget.layout.id,
-                                          nodeType: nodeType,
-                                          position: position)),
-                                  onAddControlForExisting: (node) =>
-                                      bloc.add(AddExistingControl(
-                                          layoutId: widget.layout.id,
-                                          node: node,
-                                          position: position)))));
-                        },
-                      ),
-                      CustomMultiChildLayout(
-                          delegate: ControlsLayoutDelegate(
-                              widget.layout, _movingNode?.node, _movingNodePosition),
-                          children: [
-                            if (_movingNode != null)
-                              LayoutId(
-                                  id: MovingNodeIndicatorLayoutId,
-                                  child: Container(
-                                      decoration:
-                                      ShapeDecoration(
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            color: Colors.deepOrange.withAlpha(128),
-                                            width: 4,
-                                            style: BorderStyle.solid,
-                                          ),
-                                          borderRadius: BorderRadius.all(Radius.circular(4)),
-                                        ),
-                                        color: Colors.deepOrange.shade100.withAlpha(10),
-                                      ))),
-                            ...widget.layout.controls.map((e) =>
-                                LayoutId(
-                                    id: e.node,
-                                    child: LayoutControlView(widget.layout.id, e, widget.sequencerState,
-                                            () => _startMove(e)))),
-                          ]),
-                    ],
-                  ),
+                              return control == null;
+                            }).toList(),
+                            sequences: sequences.sequences,
+                            onCreateControl: (nodeType) => bloc.add(AddControl(
+                                layoutId: widget.layout.id,
+                                nodeType: nodeType,
+                                position: position)),
+                            onAddControlForExisting: (node) => bloc.add(AddExistingControl(
+                                layoutId: widget.layout.id, node: node, position: position)))));
+                  },
                 ),
-              );
-            });
-      }
-    );
+                _ControlsContainer(
+                    layout: widget.layout,
+                    startMove: _startMove,
+                    movingNode: _movingNode,
+                    movingNodePosition: _movingNodePosition),
+              ],
+            ),
+          ),
+        );
+      });
+    });
   }
 
   _startMove(LayoutControl control) {
@@ -260,6 +226,49 @@ class _ControlLayoutState extends State<ControlLayout> {
     setState(() {
       _movingNode = null;
       _movingNodePosition = null;
+    });
+  }
+}
+
+class _ControlsContainer extends StatelessWidget {
+  final Layout layout;
+  final LayoutControl? movingNode;
+  final Offset? movingNodePosition;
+  final Function(LayoutControl) startMove;
+
+  const _ControlsContainer(
+      {required this.layout,
+      required this.startMove,
+      this.movingNode,
+      this.movingNodePosition,
+      Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SequencerStateFetcher(builder: (context, sequencerState) {
+      return CustomMultiChildLayout(
+          delegate: ControlsLayoutDelegate(layout, movingNode?.node, movingNodePosition),
+          children: [
+            if (movingNode != null)
+              LayoutId(
+                  id: MovingNodeIndicatorLayoutId,
+                  child: Container(
+                      decoration: ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(
+                        color: Colors.deepOrange.withAlpha(128),
+                        width: 4,
+                        style: BorderStyle.solid,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    color: Colors.deepOrange.shade100.withAlpha(10),
+                  ))),
+            ...layout.controls.map((e) => LayoutId(
+                id: e.node,
+                child: LayoutControlView(layout.id, e, sequencerState, () => startMove(e)))),
+          ]);
     });
   }
 }
@@ -318,8 +327,7 @@ class _SequencerStateFetcherState extends State<SequencerStateFetcher>
   void initState() {
     super.initState();
     var sequencerApi = context.read<SequencerApi>();
-    sequencerApi.getSequencerPointer().then((pointer) =>
-        setState(() {
+    sequencerApi.getSequencerPointer().then((pointer) => setState(() {
           _pointer = pointer;
           ticker = this.createTicker((elapsed) {
             setState(() {

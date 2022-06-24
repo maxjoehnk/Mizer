@@ -96,7 +96,7 @@ class BaseNode extends StatelessWidget {
   Widget _previewView() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: NodePreview(this.node),
+      child: RepaintBoundary(child: NodePreview(this.node)),
     );
   }
 

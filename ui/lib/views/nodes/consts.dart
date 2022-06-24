@@ -25,6 +25,13 @@ const _TYPE_COLORS = [
   Colors.purple, // Pixel
 ];
 
+const _GENERATED_TYPES = [
+  Node_NodeType.Programmer,
+  Node_NodeType.Sequencer,
+  Node_NodeType.Fixture,
+  Node_NodeType.Group,
+];
+
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {
     case ChannelProtocol.SINGLE:
@@ -42,8 +49,8 @@ MaterialColor getColorForProtocol(ChannelProtocol protocol) {
 }
 
 MaterialColor getColorForType(Node_NodeType type) {
-  // Special case as this one is not creatable
-  if (type == Node_NodeType.Programmer) {
+  // Special case as these are not creatable
+  if (_GENERATED_TYPES.contains(type)) {
     return Colors.blueGrey;
   }
   var category = NODES.firstWhereOrNull((category) =>

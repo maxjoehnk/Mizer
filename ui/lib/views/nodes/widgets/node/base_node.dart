@@ -60,7 +60,7 @@ class BaseNode extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    NodeHeader(this.node.path),
+                    NodeHeader(this.node.path, this.node.type),
                     Stack(children: [
                       _portsView(),
                       if (selectedTab == NodeTab.Preview) _previewView(),

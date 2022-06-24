@@ -3,11 +3,9 @@ use crate::pipeline_access::PipelineAccess;
 use crate::NodeDowncast;
 use mizer_commander::{Command, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
-use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeType, PortMetadata};
-use mizer_nodes::Node;
-use mizer_ports::PortId;
+use mizer_node::NodePath;
 use serde::{Deserialize, Serialize};
-use std::hash::{Hash, Hasher};
+use std::hash::Hash;
 
 #[derive(Debug, Clone, Hash, Serialize, Deserialize)]
 pub struct DuplicateNodeCommand {

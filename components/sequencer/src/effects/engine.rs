@@ -7,7 +7,7 @@ use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{ProgrammedEffect, Programmer};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
 #[derive(Default, Clone)]

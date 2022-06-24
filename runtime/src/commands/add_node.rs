@@ -3,9 +3,8 @@ use crate::pipeline_access::PipelineAccess;
 use crate::NodeDowncast;
 use mizer_commander::{Command, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
-use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeType, PortMetadata};
+use mizer_node::{NodeDesigner, NodePath, NodeType};
 use mizer_nodes::Node;
-use mizer_ports::PortId;
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 

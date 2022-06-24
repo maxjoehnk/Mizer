@@ -2,7 +2,9 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::convert::TryInto;
 
-use mizer_fixtures::definition::{ColorChannel, FixtureControl, FixtureControlType, FixtureControls, FixtureFaderControl, FixtureControlValue};
+use mizer_fixtures::definition::{
+    ColorChannel, FixtureControl, FixtureControlType, FixtureControls, FixtureFaderControl,
+};
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;

@@ -4012,6 +4012,7 @@ dependencies = [
  "bezier-nd",
  "dashmap 4.0.2",
  "geo-nd",
+ "indexmap",
  "itertools",
  "log",
  "mizer-fixtures",

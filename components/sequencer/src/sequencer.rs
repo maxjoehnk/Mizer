@@ -1,4 +1,5 @@
-use std::cell::RefCell;
+use indexmap::IndexSet;
+use std::cell::{RefCell, RefMut};
 use std::collections::HashMap;
 use std::ops::Deref;
 use std::sync::atomic::{AtomicU32, Ordering};
@@ -20,6 +21,7 @@ pub struct Sequencer {
     sequence_counter: Arc<AtomicU32>,
     sequences: Arc<NonEmptyPinboard<HashMap<u32, Sequence>>>,
     sequence_states: Arc<ThreadPinned<RefCell<HashMap<u32, SequenceState>>>>,
+    sequence_order: Arc<ThreadPinned<RefCell<IndexSet<u32>>>>,
     sequence_view: Arc<NonEmptyPinboard<HashMap<u32, SequenceView>>>,
     commands: (
         mpsc::SyncSender<SequencerCommands>,
@@ -41,6 +43,7 @@ impl Sequencer {
             sequence_counter: AtomicU32::new(1).into(),
             sequences: NonEmptyPinboard::new(Default::default()).into(),
             sequence_states: Default::default(),
+            sequence_order: Default::default(),
             sequence_view: NonEmptyPinboard::new(Default::default()).into(),
             commands: (tx, Arc::new(rx.into())),
             clock: StdClock,
@@ -55,7 +58,6 @@ impl Sequencer {
     ) {
         let sequences = self.sequences.read();
         let mut states = self.sequence_states.deref().deref().borrow_mut();
-        let mut view = self.sequence_view.read();
         self.handle_commands(&sequences, &mut states, effect_engine, frame);
         self.handle_sequences(
             &sequences,
@@ -64,14 +66,7 @@ impl Sequencer {
             effect_engine,
             frame,
         );
-        for (id, state) in states.iter() {
-            if let Some(sequence) = sequences.get(id) {
-                let view = view.entry(*id).or_default();
-                view.active = state.active;
-                view.cue_id = sequence.cues.get(state.active_cue_index).map(|cue| cue.id);
-            }
-        }
-        self.sequence_view.set(view);
+        self.update_views(sequences, &states);
         log::trace!("{:?}", states);
     }
 
@@ -82,36 +77,51 @@ impl Sequencer {
         effect_engine: &EffectEngine,
         frame: ClockFrame,
     ) {
+        let mut sequence_orders = self.sequence_order.borrow_mut();
         for command in self.commands.1.try_iter() {
-            match command {
+            match dbg!(command) {
                 SequencerCommands::Go(sequence_id) => {
-                    if let Some(state) = states.get_mut(&sequence_id) {
-                        if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.go(sequence, &self.clock, effect_engine, frame);
+                    let state = states.entry(sequence_id).or_default();
+                    if let Some(sequence) = sequences.get(&sequence_id) {
+                        let was_active = state.active;
+                        state.go(sequence, &self.clock, effect_engine, frame);
+                        let is_active = state.active;
+                        dbg!(was_active, is_active);
+                        if !is_active {
+                            sequence_orders.remove(&sequence_id);
+                        }
+                        if is_active && !was_active {
+                            sequence_orders.insert(sequence_id);
                         }
                     }
                 }
                 SequencerCommands::GoTo(sequence_id, cue_id) => {
-                    if let Some(state) = states.get_mut(&sequence_id) {
-                        if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.go_to(sequence, cue_id, &self.clock, effect_engine, frame);
+                    let state = states.entry(sequence_id).or_default();
+                    if let Some(sequence) = sequences.get(&sequence_id) {
+                        let was_active = state.active;
+                        state.go_to(sequence, cue_id, &self.clock, effect_engine, frame);
+                        let is_active = state.active;
+                        if !is_active {
+                            sequence_orders.remove(&sequence_id);
+                        } else if is_active && !was_active {
+                            sequence_orders.insert(sequence_id);
                         }
                     }
                 }
                 SequencerCommands::Stop(sequence_id) => {
-                    if let Some(state) = states.get_mut(&sequence_id) {
-                        if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.stop(sequence, effect_engine, &self.clock, frame);
-                        }
+                    let state = states.entry(sequence_id).or_default();
+                    if let Some(sequence) = sequences.get(&sequence_id) {
+                        state.stop(sequence, effect_engine, &self.clock, frame);
                     }
+                    sequence_orders.remove(&sequence_id);
                 }
                 SequencerCommands::DropState(sequence_id) => {
-                    if let Some(state) = states.get_mut(&sequence_id) {
-                        if let Some(sequence) = sequences.get(&sequence_id) {
-                            state.stop(sequence, effect_engine, &self.clock, frame);
-                        }
+                    let state = states.entry(sequence_id).or_default();
+                    if let Some(sequence) = sequences.get(&sequence_id) {
+                        state.stop(sequence, effect_engine, &self.clock, frame);
                     }
                     states.remove(&sequence_id);
+                    sequence_orders.remove(&sequence_id);
                 }
             }
         }
@@ -125,10 +135,28 @@ impl Sequencer {
         effect_engine: &EffectEngine,
         frame: ClockFrame,
     ) {
-        for (i, sequence) in sequences {
-            let state = states.entry(*i).or_default();
+        let orders = self.sequence_order.borrow();
+        for id in orders.iter() {
+            let state = states.entry(*id).or_default();
+            let sequence = &sequences[id];
             sequence.run(state, &self.clock, fixture_manager, effect_engine, frame);
         }
+    }
+
+    fn update_views(
+        &self,
+        sequences: HashMap<u32, Sequence>,
+        states: &RefMut<HashMap<u32, SequenceState>>,
+    ) {
+        let mut view = self.sequence_view.read();
+        for (id, state) in states.iter() {
+            if let Some(sequence) = sequences.get(id) {
+                let view = view.entry(*id).or_default();
+                view.active = state.active;
+                view.cue_id = sequence.cues.get(state.active_cue_index).map(|cue| cue.id);
+            }
+        }
+        self.sequence_view.set(view);
     }
 
     pub fn new_sequence(&self) -> Sequence {

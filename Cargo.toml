@@ -130,6 +130,7 @@ dashmap = "4"
 flume = "0.10"
 profiling = "1.0"
 rayon = "1.5"
+serde = { version = "1", features = ["rc"] }
 
 [dev-dependencies]
 test-case = "1.2"

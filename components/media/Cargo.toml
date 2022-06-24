@@ -15,7 +15,7 @@ image = "0.24"
 futures = "0.3"
 flume = "0.10"
 async-std = "1.9"
-tide = "0.16"
+tide = { version = "0.16", default-features = false, features = ["h1-server", "logger"] }
 multer = "2.0"
 async-walkdir = "0.2"
 resvg = "0.20"

@@ -222,6 +222,8 @@ impl Sequencer {
         states.borrow_mut().clear();
         self.sequence_view.set(Default::default());
         self.sequence_counter.store(1, Ordering::Relaxed);
+        let orders = self.sequence_order.deref().deref();
+        orders.borrow_mut().clear();
     }
 
     pub fn sequences(&self) -> Vec<Sequence> {

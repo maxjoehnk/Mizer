@@ -18,7 +18,7 @@ const double DOT_SIZE = 16;
 
 const _TYPE_COLORS = [
   Colors.green,  // Standard
-  Colors.yellow, // Connections
+  Colors.orange, // Connections
   Colors.blue,   // Controls
   Colors.red,    // Video
   Colors.brown,  // Laser

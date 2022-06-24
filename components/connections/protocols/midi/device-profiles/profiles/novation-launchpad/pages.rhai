@@ -45,7 +45,7 @@ fn generate_play_buttons() {
             .range(0, 127)
             .id(button_id)
             .output()
-            .output_range(0, 6);
+            .output_range(0, 60);
     }
 
     buttons

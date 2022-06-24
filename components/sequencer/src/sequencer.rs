@@ -79,14 +79,13 @@ impl Sequencer {
     ) {
         let mut sequence_orders = self.sequence_order.borrow_mut();
         for command in self.commands.1.try_iter() {
-            match dbg!(command) {
+            match command {
                 SequencerCommands::Go(sequence_id) => {
                     let state = states.entry(sequence_id).or_default();
                     if let Some(sequence) = sequences.get(&sequence_id) {
                         let was_active = state.active;
                         state.go(sequence, &self.clock, effect_engine, frame);
                         let is_active = state.active;
-                        dbg!(was_active, is_active);
                         if !is_active {
                             sequence_orders.remove(&sequence_id);
                         }

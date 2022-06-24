@@ -83,7 +83,7 @@ impl ProcessingNode for MidiOutputNode {
     fn process(&self, context: &impl NodeContext, _state: &mut Self::State) -> anyhow::Result<()> {
         let connection_manager = context.inject::<MidiConnectionManager>().unwrap();
         if let Some(mut device) = connection_manager.request_device(&self.device)? {
-            if let Some(value) = context.read_port::<_, f64>("value") {
+            if let Some(value) = context.read_port_changes::<_, f64>("value") {
                 context.push_history_value(value);
                 let device: &mut MidiDevice = device.deref_mut();
                 let msg = match &self.config {

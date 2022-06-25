@@ -51,3 +51,22 @@ impl LerpExt<u8> for f64 {
         result as u8
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::LerpExt;
+    use test_case::test_case;
+
+    #[test_case((0., 1.), (0., 1.), 0., 0.)]
+    #[test_case((0., 1.), (0., 1.), 1., 1.)]
+    fn linear_extrapolate_should_extrapolate(
+        from: (f64, f64),
+        to: (f64, f64),
+        value: f64,
+        expected: f64,
+    ) {
+        let result = value.linear_extrapolate(from, to);
+
+        assert_eq!(expected, result);
+    }
+}

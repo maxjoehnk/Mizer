@@ -17,6 +17,7 @@ abstract class SequencerApi {
   Future<Sequences> deleteSequence(int sequence);
 
   Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger_Type trigger);
+  Future<Sequences> updateCueTriggerTime(int sequence, int cue, CueTime? time);
   Future<Sequences> updateCueName(int sequence, int cue, String name);
   Future<Sequences> updateCueValue(int sequenceId, int cueId, int controlIndex, CueValue value);
   Future<Sequences> updateCueFadeTime(int sequenceId, int cueId, CueTimer? timer);

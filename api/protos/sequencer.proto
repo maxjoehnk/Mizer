@@ -12,6 +12,7 @@ service SequencerApi {
   rpc SequenceGo (SequenceGoRequest) returns (EmptyResponse) {}
   rpc SequenceStop (SequenceStopRequest) returns (EmptyResponse) {}
   rpc UpdateCueTrigger (CueTriggerRequest) returns (Sequences) {}
+  rpc UpdateCueTriggerTime (CueTriggerTimeRequest) returns (Sequences) {}
   rpc UpdateCueName (CueNameRequest) returns (Sequences) {}
   rpc UpdateCueValue (CueValueRequest) returns (Sequences) {}
   rpc UpdateCueFadeTime (CueTimingRequest) returns (Sequences) {}
@@ -45,6 +46,12 @@ message CueTriggerRequest {
   uint32 sequence = 1;
   uint32 cue = 2;
   CueTrigger.Type trigger = 3;
+}
+
+message CueTriggerTimeRequest {
+  uint32 sequence = 1;
+  uint32 cue = 2;
+  CueTime time = 3;
 }
 
 message CueNameRequest {

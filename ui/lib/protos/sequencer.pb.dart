@@ -336,6 +336,83 @@ class CueTriggerRequest extends $pb.GeneratedMessage {
   void clearTrigger() => clearField(3);
 }
 
+class CueTriggerTimeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueTriggerTimeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cue', $pb.PbFieldType.OU3)
+    ..aOM<CueTime>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time', subBuilder: CueTime.create)
+    ..hasRequiredFields = false
+  ;
+
+  CueTriggerTimeRequest._() : super();
+  factory CueTriggerTimeRequest({
+    $core.int? sequence,
+    $core.int? cue,
+    CueTime? time,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (cue != null) {
+      _result.cue = cue;
+    }
+    if (time != null) {
+      _result.time = time;
+    }
+    return _result;
+  }
+  factory CueTriggerTimeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CueTriggerTimeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CueTriggerTimeRequest clone() => CueTriggerTimeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CueTriggerTimeRequest copyWith(void Function(CueTriggerTimeRequest) updates) => super.copyWith((message) => updates(message as CueTriggerTimeRequest)) as CueTriggerTimeRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CueTriggerTimeRequest create() => CueTriggerTimeRequest._();
+  CueTriggerTimeRequest createEmptyInstance() => create();
+  static $pb.PbList<CueTriggerTimeRequest> createRepeated() => $pb.PbList<CueTriggerTimeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CueTriggerTimeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CueTriggerTimeRequest>(create);
+  static CueTriggerTimeRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get cue => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set cue($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCue() => clearField(2);
+
+  @$pb.TagNumber(3)
+  CueTime get time => $_getN(2);
+  @$pb.TagNumber(3)
+  set time(CueTime v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTime() => clearField(3);
+  @$pb.TagNumber(3)
+  CueTime ensureTime() => $_ensure(2);
+}
+
 class CueNameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CueNameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)

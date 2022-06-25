@@ -61,6 +61,16 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .unwrap();
     }
 
+    pub fn update_cue_trigger_time(&self, request: CueTriggerTimeRequest) {
+        self.runtime
+            .run_command(UpdateCueTriggerTimeCommand {
+                sequence_id: request.sequence,
+                cue_id: request.cue,
+                trigger_time: request.time.into_option().map(SequencerTime::from),
+            })
+            .unwrap();
+    }
+
     pub fn update_cue_name(&self, request: CueNameRequest) {
         self.runtime
             .run_command(RenameCueCommand {

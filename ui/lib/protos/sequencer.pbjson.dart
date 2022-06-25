@@ -74,6 +74,18 @@ const CueTriggerRequest$json = const {
 
 /// Descriptor for `CueTriggerRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cueTriggerRequestDescriptor = $convert.base64Decode('ChFDdWVUcmlnZ2VyUmVxdWVzdBIaCghzZXF1ZW5jZRgBIAEoDVIIc2VxdWVuY2USEAoDY3VlGAIgASgNUgNjdWUSOgoHdHJpZ2dlchgDIAEoDjIgLm1pemVyLnNlcXVlbmNlci5DdWVUcmlnZ2VyLlR5cGVSB3RyaWdnZXI=');
+@$core.Deprecated('Use cueTriggerTimeRequestDescriptor instead')
+const CueTriggerTimeRequest$json = const {
+  '1': 'CueTriggerTimeRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+    const {'1': 'cue', '3': 2, '4': 1, '5': 13, '10': 'cue'},
+    const {'1': 'time', '3': 3, '4': 1, '5': 11, '6': '.mizer.sequencer.CueTime', '10': 'time'},
+  ],
+};
+
+/// Descriptor for `CueTriggerTimeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cueTriggerTimeRequestDescriptor = $convert.base64Decode('ChVDdWVUcmlnZ2VyVGltZVJlcXVlc3QSGgoIc2VxdWVuY2UYASABKA1SCHNlcXVlbmNlEhAKA2N1ZRgCIAEoDVIDY3VlEiwKBHRpbWUYAyABKAsyGC5taXplci5zZXF1ZW5jZXIuQ3VlVGltZVIEdGltZQ==');
 @$core.Deprecated('Use cueNameRequestDescriptor instead')
 const CueNameRequest$json = const {
   '1': 'CueNameRequest',

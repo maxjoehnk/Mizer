@@ -26,6 +26,14 @@ class UpdateCueTrigger extends SequencerCommand {
   UpdateCueTrigger({ required this.sequence, required this.cue, required this.trigger });
 }
 
+class UpdateCueTriggerTime extends SequencerCommand {
+  final int sequence;
+  final int cue;
+  final CueTime? time;
+
+  UpdateCueTriggerTime({ required this.sequence, required this.cue, required this.time });
+}
+
 class UpdateCueName extends SequencerCommand {
   final int sequence;
   final int cue;
@@ -127,6 +135,9 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     if (event is UpdateCueTrigger) {
       yield await _updateCueTrigger(event);
     }
+    if (event is UpdateCueTriggerTime) {
+      yield await _updateCueTriggerTime(event);
+    }
     if (event is UpdateCueName) {
       yield await _updateCueName(event);
     }
@@ -177,6 +188,14 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   Future<SequencerState> _updateCueTrigger(UpdateCueTrigger event) async {
     log("update cue trigger ${event.sequence}.${event.cue} ${event.trigger}", name: "SequencerBloc");
     var sequences = await api.updateCueTrigger(event.sequence, event.cue, event.trigger);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateCueTriggerTime(UpdateCueTriggerTime event) async {
+    log("update cue trigger time ${event.sequence}.${event.cue} ${event.time}", name: "SequencerBloc");
+    var sequences = await api.updateCueTriggerTime(event.sequence, event.cue, event.time);
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);

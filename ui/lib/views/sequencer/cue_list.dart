@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/sequencer.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/views/sequencer/track_sheet.dart';
+import 'package:mizer/widgets/popup/popup_direct_time_input.dart';
 import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
 import 'package:mizer/widgets/popup/popup_time_input.dart';
@@ -58,13 +59,15 @@ class CueList extends StatelessWidget {
                         title: "Time",
                         onTap: () => _updateCueTrigger(context, cue, CueTrigger_Type.TIME)),
                   ])),
-              Text(cue.trigger.time.toDisplay()),
-                  PopupTableCell(
-                      popup: PopupTimeInput(timer: cue.cueTimings.fade, onEnter: (value) => _updateCueFade(context, cue, value)),
-                      child: Text(cue.cueTimings.hasFade() ? cue.cueTimings.fade.toDisplay() : "")),
-                  PopupTableCell(
-                      popup: PopupTimeInput(timer: cue.cueTimings.delay, onEnter: (value) => _updateCueDelay(context, cue, value)),
-                      child: Text(cue.cueTimings.hasDelay() ? cue.cueTimings.delay.toDisplay() : "")),
+              PopupTableCell(
+                  popup: PopupDirectTimeInput(time: cue.trigger.time, onEnter: (value) => _updateCueTriggerTime(context, cue, value)),
+                  child: Text(cue.trigger.time.toDisplay())),
+              PopupTableCell(
+                  popup: PopupTimeInput(timer: cue.cueTimings.fade, onEnter: (value) => _updateCueFade(context, cue, value)),
+                  child: Text(cue.cueTimings.hasFade() ? cue.cueTimings.fade.toDisplay() : "")),
+              PopupTableCell(
+                  popup: PopupTimeInput(timer: cue.cueTimings.delay, onEnter: (value) => _updateCueDelay(context, cue, value)),
+                  child: Text(cue.cueTimings.hasDelay() ? cue.cueTimings.delay.toDisplay() : "")),
               Text(cue.dimmerTimings.hasFade() ? cue.dimmerTimings.fade.toDisplay() : ""),
               Text(cue.dimmerTimings.hasDelay() ? cue.dimmerTimings.delay.toDisplay() : ""),
               Text(cue.positionTimings.hasFade() ? cue.positionTimings.fade.toDisplay() : ""),
@@ -87,6 +90,12 @@ class CueList extends StatelessWidget {
         .read<SequencerBloc>()
         .add(UpdateCueTrigger(sequence: sequence.id, cue: cue.id, trigger: trigger));
     Navigator.of(context).pop();
+  }
+
+  void _updateCueTriggerTime(BuildContext context, Cue cue, CueTime? value) {
+    context
+        .read<SequencerBloc>()
+        .add(UpdateCueTriggerTime(sequence: sequence.id, cue: cue.id, time: value));
   }
 
   void _updateCueFade(BuildContext context, Cue cue, CueTimer? value) {

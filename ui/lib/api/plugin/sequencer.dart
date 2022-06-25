@@ -58,6 +58,14 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
+  Future<Sequences> updateCueTriggerTime(int sequence, int cue, CueTime? time) async {
+    var request = CueTriggerTimeRequest(sequence: sequence, cue: cue, time: time);
+    var response = await channel.invokeMethod("updateCueTriggerTime", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
   Future<SequencerPointer?> getSequencerPointer() async {
     int pointer = await channel.invokeMethod("getSequencerPointer");
 

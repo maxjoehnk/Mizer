@@ -164,6 +164,7 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
         None,
         1,
         None,
+        Default::default()
     );
 }
 

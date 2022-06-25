@@ -7,6 +7,7 @@ use lazy_static::lazy_static;
 use mizer_fixtures::programmer::Group;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
+use mizer_fixtures::fixture::FixtureConfiguration;
 
 use crate::fixtures::PresetsStore;
 use mizer_layouts::ControlConfig;
@@ -281,6 +282,8 @@ pub struct FixtureConfig {
     #[serde(default)]
     pub mode: Option<String>,
     pub output: Option<String>,
+    #[serde(default)]
+    pub configuration: FixtureConfiguration,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]

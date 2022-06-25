@@ -82,6 +82,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
                 None,
                 (self.start_channel as u16) + offset,
                 Some(self.universe as u16),
+                Default::default(),
             );
             let node = FixtureNode {
                 fixture_id,

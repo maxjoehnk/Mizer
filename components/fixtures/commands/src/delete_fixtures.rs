@@ -91,6 +91,7 @@ impl<'a> Command<'a> for DeleteFixturesCommand {
                 fixture.output,
                 fixture.channel,
                 fixture.universe.into(),
+                fixture.configuration,
             );
             delete_node_cmd.revert((pipeline, planner, layout_storage), state)?;
         }

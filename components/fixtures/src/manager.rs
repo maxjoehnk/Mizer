@@ -1,5 +1,5 @@
 use crate::definition::{FixtureDefinition, FixtureFaderControl};
-use crate::fixture::{Fixture, IFixtureMut};
+use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{Group, Presets, Programmer};
 use crate::{FixtureId, FixtureStates};
@@ -45,10 +45,11 @@ impl FixtureManager {
         output: Option<String>,
         channel: u16,
         universe: Option<u16>,
+        configuration: FixtureConfiguration,
     ) {
         log::trace!("Adding fixture {}", fixture_id);
         let fixture = Fixture::new(
-            fixture_id, name, definition, mode, output, channel, universe,
+            fixture_id, name, definition, mode, output, channel, universe, configuration
         );
         self.states.add_fixture(&fixture);
         self.fixtures.insert(fixture_id, fixture);

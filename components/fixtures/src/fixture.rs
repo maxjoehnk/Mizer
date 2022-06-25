@@ -1,8 +1,10 @@
 use std::collections::HashMap;
+use serde::{Deserialize, Serialize};
+
+use mizer_protocol_dmx::DmxOutput;
 
 use crate::color_mixer::{ColorMixer, Rgb};
 use crate::definition::*;
-use mizer_protocol_dmx::DmxOutput;
 
 const U24_MAX: u32 = 16_777_215;
 
@@ -17,6 +19,36 @@ pub struct Fixture {
     pub output: Option<String>,
     /// Contains values for all dmx channels including sub-fixtures
     pub channel_values: HashMap<String, f64>,
+    pub configuration: FixtureConfiguration,
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
+pub struct FixtureConfiguration {
+    pub invert_pan: bool,
+    pub invert_tilt: bool,
+}
+
+impl Default for FixtureConfiguration {
+    fn default() -> Self {
+        Self {
+            invert_pan: false,
+            invert_tilt: false,
+        }
+    }
+}
+
+impl FixtureConfiguration {
+    pub(crate) fn adapt(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+        match control {
+            FixtureFaderControl::Pan if self.invert_pan => {
+                (1. - value).abs()
+            }
+            FixtureFaderControl::Tilt if self.invert_tilt => {
+                (1. - value).abs()
+            }
+            _ => value
+        }
+    }
 }
 
 impl Fixture {
@@ -28,6 +60,7 @@ impl Fixture {
         output: Option<String>,
         channel: u16,
         universe: Option<u16>,
+        configuration: FixtureConfiguration,
     ) -> Self {
         Fixture {
             id: fixture_id,
@@ -38,6 +71,7 @@ impl Fixture {
             output,
             universe: universe.unwrap_or(1),
             channel_values: Default::default(),
+            configuration,
         }
     }
 
@@ -154,6 +188,7 @@ impl Fixture {
 
 impl IFixtureMut for Fixture {
     fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+        let value = self.configuration.adapt(&control, value);
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 if let FixtureFaderControl::ColorMixer(color_channel) = control {
@@ -199,7 +234,9 @@ impl IFixture for Fixture {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
-                self.channel_values.get(channel).copied()
+                self.channel_values.get(channel)
+                    .copied()
+                    .map(|value| self.configuration.adapt(&control, value))
             }
             Some(FixtureControlChannel::VirtualDimmer) => self
                 .current_mode
@@ -445,6 +482,8 @@ impl<TChannel> FixtureControls<TChannel> {
 #[cfg(test)]
 mod tests {
     use test_case::test_case;
+    use crate::definition::FixtureFaderControl;
+    use crate::fixture::FixtureConfiguration;
 
     use super::{convert_value, convert_value_16bit, convert_value_24bit};
 
@@ -474,4 +513,44 @@ mod tests {
 
         assert_eq!(result, expected);
     }
+
+    #[test_case(0., 1.)]
+    #[test_case(1., 0.)]
+    #[test_case(0.5, 0.5)]
+    fn fixture_configuration_adapt_should_invert_pan(input: f64, expected: f64) {
+        let config = FixtureConfiguration {
+            invert_pan: true,
+            ..Default::default()
+        };
+
+        let result = config.adapt(&FixtureFaderControl::Pan, input);
+
+        assert_eq!(expected, result);
+    }
+
+    #[test_case(0., 1.)]
+    #[test_case(1., 0.)]
+    #[test_case(0.5, 0.5)]
+    fn fixture_configuration_adapt_should_invert_tilt(input: f64, expected: f64) {
+        let config = FixtureConfiguration {
+            invert_tilt: true,
+            ..Default::default()
+        };
+
+        let result = config.adapt(&FixtureFaderControl::Tilt, input);
+
+        assert_eq!(expected, result);
+    }
+
+    #[test_case(FixtureFaderControl::Pan)]
+    #[test_case(FixtureFaderControl::Tilt)]
+    #[test_case(FixtureFaderControl::Intensity)]
+    fn fixture_configuration_adapt_should_passthrough_unrelated_values(control: FixtureFaderControl) {
+        let config = FixtureConfiguration::default();
+
+        let result = config.adapt(&control, 1.0);
+
+        assert_eq!(1.0, result);
+    }
+
 }

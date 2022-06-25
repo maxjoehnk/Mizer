@@ -48,13 +48,13 @@ impl Sequence {
         if !state.active {
             return;
         }
-        // TODO: the sequence state should ensure active_cue_index is always in the proper range
-        let cue = self.current_cue(state, clock);
         if let Some(next_cue) = state.get_next_cue(self) {
             if next_cue.should_go(state, clock, frame) {
                 state.go(self, clock, effect_engine, frame);
             }
         }
+        // TODO: the sequence state should ensure active_cue_index is always in the proper range
+        let cue = self.current_cue(state, clock);
         cue.update_state(self, state, clock, frame);
         for control in &cue.controls {
             for (fixture_id, value) in control.values(self, cue, state, clock, frame) {

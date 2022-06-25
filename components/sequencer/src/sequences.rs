@@ -51,7 +51,7 @@ impl Sequence {
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
         let cue = self.current_cue(state, clock);
         if let Some(next_cue) = state.get_next_cue(self) {
-            if next_cue.should_go(state, clock) {
+            if next_cue.should_go(state, clock, frame) {
                 state.go(self, clock, effect_engine, frame);
             }
         }

@@ -85,30 +85,57 @@ impl Cue {
             .all(|(_, cue_channel)| cue_channel.state == CueChannelState::Active)
     }
 
-    pub(crate) fn should_go(&self, state: &SequenceState, clock: &impl Clock) -> bool {
-        let prev_cue_active = state.get_timer(clock);
-        let prev_cue_finished = state
-            .cue_finished_at
-            .map(|finished| Instant::now().duration_since(finished.time));
+    pub(crate) fn should_go(
+        &self,
+        state: &SequenceState,
+        clock: &impl Clock,
+        frame: ClockFrame,
+    ) -> bool {
         if self.trigger == CueTrigger::Time {
-            if let Some(SequencerTime::Seconds(seconds)) = self.trigger_time {
-                let delay = Duration::from_secs_f64(seconds);
-                return delay <= prev_cue_active;
-            }
-        }
-        if self.trigger == CueTrigger::Follow && state.is_cue_finished() {
-            return if let Some(SequencerTime::Seconds(seconds)) = self.trigger_time {
-                if let Some(prev_cue_finished) = prev_cue_finished {
+            match self.trigger_time {
+                Some(SequencerTime::Seconds(seconds)) => {
+                    let passed = state.get_timer(clock);
                     let delay = Duration::from_secs_f64(seconds);
-                    delay <= prev_cue_finished
-                } else {
-                    false
+
+                    passed >= delay
                 }
-            } else {
-                true
-            };
+                Some(SequencerTime::Beats(beats)) => {
+                    let passed = state.get_beats_passed(frame);
+
+                    passed >= beats
+                }
+                None => true,
+            }
+        } else if self.trigger == CueTrigger::Follow && state.is_cue_finished() {
+            match self.trigger_time {
+                Some(SequencerTime::Seconds(seconds)) => {
+                    let passed = state
+                        .cue_finished_at
+                        .map(|finished| Instant::now().duration_since(finished.time));
+                    if let Some(passed) = passed {
+                        let delay = Duration::from_secs_f64(seconds);
+
+                        passed >= delay
+                    } else {
+                        false
+                    }
+                }
+                Some(SequencerTime::Beats(beats)) => {
+                    let finished_at = state.cue_finished_at.map(|finished| finished.beat);
+                    if let Some(finished_at) = finished_at {
+                        let now = frame.frame;
+                        let passed = now - finished_at;
+
+                        passed >= beats
+                    } else {
+                        false
+                    }
+                }
+                None => true,
+            }
+        } else {
+            false
         }
-        false
     }
 
     pub(crate) fn update_state(

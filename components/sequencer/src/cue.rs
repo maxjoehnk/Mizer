@@ -93,14 +93,14 @@ impl Cue {
         if self.trigger == CueTrigger::Time {
             if let Some(SequencerTime::Seconds(seconds)) = self.trigger_time {
                 let delay = Duration::from_secs_f64(seconds);
-                return delay > prev_cue_active;
+                return delay <= prev_cue_active;
             }
         }
         if self.trigger == CueTrigger::Follow && state.is_cue_finished() {
             return if let Some(SequencerTime::Seconds(seconds)) = self.trigger_time {
                 if let Some(prev_cue_finished) = prev_cue_finished {
                     let delay = Duration::from_secs_f64(seconds);
-                    delay > prev_cue_finished
+                    delay <= prev_cue_finished
                 } else {
                     false
                 }

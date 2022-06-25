@@ -37,10 +37,17 @@ impl SubFixtureDefinition {
         name: String,
         mut controls: FixtureControls<SubFixtureControlChannel>,
     ) -> Self {
-        let color_mixer = controls.color_mixer.as_ref().map(|_| ColorMixer::new());
         if controls.intensity.is_none() && controls.color_mixer.is_some() {
             controls.intensity = Some(SubFixtureControlChannel::VirtualDimmer);
         }
+        let virtual_dimmer = matches!(
+            controls.intensity,
+            Some(SubFixtureControlChannel::VirtualDimmer)
+        );
+        let color_mixer = controls
+            .color_mixer
+            .as_ref()
+            .map(|_| ColorMixer::new(virtual_dimmer));
 
         Self {
             id,
@@ -67,10 +74,17 @@ impl FixtureMode {
         mut controls: FixtureControls<FixtureControlChannel>,
         sub_fixtures: Vec<SubFixtureDefinition>,
     ) -> Self {
-        let color_mixer = controls.color_mixer.as_ref().map(|_| ColorMixer::new());
         if controls.intensity.is_none() && controls.color_mixer.is_some() {
             controls.intensity = Some(FixtureControlChannel::VirtualDimmer);
         }
+        let virtual_dimmer = matches!(
+            controls.intensity,
+            Some(FixtureControlChannel::VirtualDimmer)
+        );
+        let color_mixer = controls
+            .color_mixer
+            .as_ref()
+            .map(|_| ColorMixer::new(virtual_dimmer));
 
         if sub_fixtures
             .iter()

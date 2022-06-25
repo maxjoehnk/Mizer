@@ -78,6 +78,18 @@ impl Fixture {
         for channel in self.current_mode.channels.iter() {
             self.channel_values.insert(channel.name.clone(), 0f64);
         }
+        if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
+            if mixer.virtual_dimmer().is_some() {
+                mixer.set_virtual_dimmer(0f64);
+            }
+        }
+        for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
+            if let Some(mixer) = sub_fixture.color_mixer.as_mut() {
+                if mixer.virtual_dimmer().is_some() {
+                    mixer.set_virtual_dimmer(0f64);
+                }
+            }
+        }
     }
 
     pub(crate) fn flush(&self, output: &dyn DmxOutput) {
@@ -192,7 +204,7 @@ impl IFixture for Fixture {
             Some(FixtureControlChannel::VirtualDimmer) => self
                 .current_mode
                 .color_mixer
-                .map(|mixer| mixer.virtual_dimmer()),
+                .and_then(|mixer| mixer.virtual_dimmer()),
             _ => None,
         }
     }
@@ -341,9 +353,9 @@ fn read_control(
         Some(SubFixtureControlChannel::Channel(ref channel)) => {
             channel_values.get(channel).copied()
         }
-        Some(SubFixtureControlChannel::VirtualDimmer) => {
-            definition.color_mixer.map(|mixer| mixer.virtual_dimmer())
-        }
+        Some(SubFixtureControlChannel::VirtualDimmer) => definition
+            .color_mixer
+            .and_then(|mixer| mixer.virtual_dimmer()),
         _ => None,
     }
 }

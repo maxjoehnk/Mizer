@@ -5,13 +5,13 @@ pub struct ColorMixer {
     red: f64,
     green: f64,
     blue: f64,
-    virtual_dimmer: f64,
+    virtual_dimmer: Option<f64>,
 }
 
 impl ColorMixer {
-    pub fn new() -> Self {
+    pub fn new(virtual_dimmer: bool) -> Self {
         Self {
-            virtual_dimmer: 1f64,
+            virtual_dimmer: virtual_dimmer.then(|| 0f64),
             ..Default::default()
         }
     }
@@ -29,17 +29,21 @@ impl ColorMixer {
     }
 
     pub fn set_virtual_dimmer(&mut self, value: f64) {
-        self.virtual_dimmer = value;
+        if let Some(mut virtual_dimmer) = self.virtual_dimmer.as_mut() {
+            *virtual_dimmer = value;
+        }
     }
 
-    pub fn virtual_dimmer(&self) -> f64 {
+    pub fn virtual_dimmer(&self) -> Option<f64> {
         self.virtual_dimmer
     }
 
     pub fn rgb(&self) -> Rgb {
         let rgb = Srgb::new(self.red, self.green, self.blue);
         let mut hsv = Hsv::from_color(rgb);
-        hsv.value *= self.virtual_dimmer;
+        if let Some(virtual_dimmer) = self.virtual_dimmer {
+            hsv.value *= virtual_dimmer;
+        }
         let rgb = Srgb::from_color(hsv);
 
         Rgb {
@@ -52,7 +56,9 @@ impl ColorMixer {
     pub fn rgbw(&self) -> Rgbw {
         let rgb = Srgb::new(self.red, self.green, self.blue);
         let mut hsv = Hsv::from_color(rgb);
-        hsv.value *= self.virtual_dimmer;
+        if let Some(virtual_dimmer) = self.virtual_dimmer {
+            hsv.value *= virtual_dimmer;
+        }
         let rgb = Srgb::from_color(hsv);
 
         Rgbw {
@@ -89,7 +95,7 @@ mod tests {
     #[test_case(1f64, 0f64, 1f64)]
     #[test_case(1f64, 1f64, 0f64)]
     fn rgb_should_return_rgb_values(red: f64, green: f64, blue: f64) {
-        let mut mixer = ColorMixer::new();
+        let mut mixer = ColorMixer::new(false);
         mixer.set_red(red);
         mixer.set_green(green);
         mixer.set_blue(blue);
@@ -118,7 +124,7 @@ mod tests {
         b: f64,
         w: f64,
     ) {
-        let mut mixer = ColorMixer::new();
+        let mut mixer = ColorMixer::new(false);
         mixer.set_red(red);
         mixer.set_green(green);
         mixer.set_blue(blue);
@@ -147,7 +153,7 @@ mod tests {
         g: f64,
         b: f64,
     ) {
-        let mut mixer = ColorMixer::new();
+        let mut mixer = ColorMixer::new(true);
         mixer.set_red(red);
         mixer.set_green(green);
         mixer.set_blue(blue);
@@ -178,7 +184,7 @@ mod tests {
         b: f64,
         w: f64,
     ) {
-        let mut mixer = ColorMixer::new();
+        let mut mixer = ColorMixer::new(true);
         mixer.set_red(red);
         mixer.set_green(green);
         mixer.set_blue(blue);

@@ -116,7 +116,7 @@ impl ImportFileHandler {
         let id = Uuid::new_v4();
         let mut temp_file = fs::File::open(file_path).await?;
         let mut buffer = [0u8; 256];
-        temp_file.read(&mut buffer).await?;
+        temp_file.read_exact(&mut buffer).await?;
         let content_type = infer::get(&buffer)
             .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?
             .mime_type();

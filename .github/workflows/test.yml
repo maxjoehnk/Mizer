@@ -19,12 +19,6 @@ jobs:
           cp bin/protoc "$HOME/.local/bin/"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - uses: actions/checkout@v2
-      - name: Generate FFI bindings
-        run: make generate_bindings
-        working-directory: ui
-      - name: Generate protobuf code
-        run: make proto
-        working-directory: ui
 # LFS Files are not checked out as we've reached the free tier quota for the lfs support of github
 #      - name: Create LFS file list
 #        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
@@ -43,6 +37,12 @@ jobs:
         with:
           channel: stable
       - uses: Swatinem/rust-cache@v1
+      - name: Generate FFI bindings
+        run: make generate_bindings
+        working-directory: ui
+      - name: Generate protobuf code
+        run: make proto
+        working-directory: ui
       - name: Clippy Checks
         uses: actions-rs/clippy-check@v1
         with:

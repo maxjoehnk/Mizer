@@ -4,10 +4,10 @@ use std::fs::File;
 use std::path::Path;
 
 use lazy_static::lazy_static;
+use mizer_fixtures::fixture::FixtureConfiguration;
 use mizer_fixtures::programmer::Group;
 use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
-use mizer_fixtures::fixture::FixtureConfiguration;
 
 use crate::fixtures::PresetsStore;
 use mizer_layouts::ControlConfig;
@@ -489,6 +489,7 @@ mod tests {
                 output: Some("output".into()),
                 universe: None,
                 mode: None,
+                configuration: Default::default(),
             }
         );
         Ok(())
@@ -518,6 +519,7 @@ mod tests {
                 output: None,
                 universe: None,
                 mode: Some("2-channel".into()),
+                configuration: Default::default(),
             }
         );
         Ok(())
@@ -547,6 +549,7 @@ mod tests {
                 output: None,
                 universe: Some(1),
                 mode: None,
+                configuration: Default::default(),
             }
         );
         Ok(())

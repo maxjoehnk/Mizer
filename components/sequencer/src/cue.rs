@@ -145,6 +145,7 @@ impl Cue {
         clock: &impl Clock,
         frame: ClockFrame,
     ) {
+        profiling::scope!("Cue::update_state");
         if sequence_state.cue_finished_at.is_some() {
             return;
         }
@@ -319,6 +320,7 @@ impl CueControl {
         clock: &impl Clock,
         frame: ClockFrame,
     ) -> Vec<(FixtureId, Option<f64>)> {
+        profiling::scope!("CueControl::values");
         let mut values = vec![None; self.fixtures.len()];
 
         self.fill_values(state, &mut values);

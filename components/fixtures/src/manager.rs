@@ -93,6 +93,7 @@ impl FixtureManager {
         control: FixtureFaderControl,
         value: f64,
     ) {
+        profiling::scope!("FixtureManager::write_fixture_control");
         match fixture_id {
             FixtureId::Fixture(fixture_id) => {
                 if let Some(mut fixture) = self.get_fixture_mut(fixture_id) {
@@ -122,6 +123,7 @@ impl FixtureManager {
     }
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {
+        profiling::scope!("FixtureManager::write_outputs");
         for fixture in self.fixtures.iter() {
             if let Some(output) = fixture
                 .output

@@ -29,6 +29,7 @@ impl MidiConnectionManager {
         &'a self,
         name: &str,
     ) -> anyhow::Result<Option<impl DerefMut<Target = MidiDevice> + 'a>> {
+        profiling::scope!("MidiConnectionManager::request_device");
         if !self.devices.contains_key(name) {
             if let Some(device) = self.provider.find_device(name)? {
                 self.devices.insert(name.to_string(), device.connect()?);

@@ -13,6 +13,7 @@ pub struct FixtureProcessor;
 impl Processor for FixtureProcessor {
     #[tracing::instrument]
     fn pre_process(&mut self, injector: &mut Injector, _: ClockFrame) {
+        profiling::scope!("FixtureProcessor::pre_process");
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
@@ -34,6 +35,7 @@ impl Processor for FixtureProcessor {
 
     #[tracing::instrument]
     fn post_process(&mut self, injector: &Injector, _frame: ClockFrame) {
+        profiling::scope!("FixtureProcessor::post_process");
         let fixture_manager = injector
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");

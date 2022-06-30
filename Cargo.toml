@@ -82,7 +82,7 @@ license = "GNU AGPLv3"
 [features]
 default = ["ui"]
 ui = ["mizer-ui"]
-tracing = ["profiling/profile-with-tracy"]
+tracing = ["profiling/profile-with-tracy", "mizer-util/tracing"]
 
 [dependencies]
 derive_more = "0.99"
@@ -128,7 +128,7 @@ futures = "0.3"
 pinboard = "2.1"
 dashmap = "4"
 flume = "0.10"
-profiling = "1.0"
+profiling = "1.0.6"
 rayon = "1.5"
 serde = { version = "1", features = ["rc"] }
 

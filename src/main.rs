@@ -11,6 +11,8 @@ mod logger;
 
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
+    mizer_util::tracing::init();
+
     let flags = init();
 
     run_headless(flags)
@@ -18,6 +20,8 @@ fn main() -> anyhow::Result<()> {
 
 #[cfg(feature = "ui")]
 fn main() -> anyhow::Result<()> {
+    mizer_util::tracing::init();
+
     let flags = init();
     let headless = flags.headless;
 

@@ -272,6 +272,7 @@ impl PipelineWorker {
         &mut self,
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
     ) {
+        profiling::scope!("PipelineWorker::order_nodes_by_dependencies");
         nodes.sort_by(|(left, _), (right, _)| {
             let left_deps = self.dependencies.get(left).cloned().unwrap_or_default();
             let right_deps = self.dependencies.get(right).cloned().unwrap_or_default();
@@ -292,6 +293,7 @@ impl PipelineWorker {
         frame: ClockFrame,
         injector: &Injector,
     ) {
+        profiling::scope!("PipelineWorker::process_nodes");
         for (path, node) in nodes {
             let context = PipelineContext {
                 frame,
@@ -303,6 +305,8 @@ impl PipelineWorker {
             log::trace!("process_node {} with context {:?}", &path, &context);
             let state = self.states.get_mut(path);
             let state = state.unwrap();
+            let scope = format!("{:?}Node::process", node.node_type());
+            profiling::scope!(&scope);
             if let Err(e) = node.process(&context, state) {
                 println!("processing of node failed: {:?}", e)
             }

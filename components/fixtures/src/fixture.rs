@@ -127,6 +127,7 @@ impl Fixture {
     }
 
     pub(crate) fn flush(&self, output: &dyn DmxOutput) {
+        profiling::scope!("Fixture::flush");
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;
         let end = start + self.current_mode.dmx_channels() as usize;
@@ -134,6 +135,7 @@ impl Fixture {
     }
 
     pub fn get_dmx_values(&self) -> [u8; 512] {
+        profiling::scope!("Fixture::get_dmx_values");
         let mut buffer = [0; 512];
 
         for (channel_name, value) in self.channel_values.iter() {
@@ -188,6 +190,7 @@ impl Fixture {
 
 impl IFixtureMut for Fixture {
     fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+        profiling::scope!("Fixture::write_fader_control");
         let value = self.configuration.adapt(&control, value);
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
@@ -232,6 +235,7 @@ impl IFixtureMut for Fixture {
 
 impl IFixture for Fixture {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
+        profiling::scope!("Fixture::read_control");
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 self.channel_values.get(channel)
@@ -336,6 +340,7 @@ pub struct SubFixture<'a> {
 
 impl<'a> IFixtureMut for SubFixtureMut<'a> {
     fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+        profiling::scope!("SubFixtureMut::write_fader_control");
         if let Some(channel) = self.definition.controls.get_channel(&control) {
             match channel {
                 SubFixtureControlChannel::Channel(channel) => {
@@ -371,12 +376,14 @@ impl<'a> IFixtureMut for SubFixtureMut<'a> {
 
 impl<'a> IFixture for SubFixtureMut<'a> {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
+        profiling::scope!("SubFixtureMut::read_control");
         read_control(&self.fixture.channel_values, &self.definition, control)
     }
 }
 
 impl<'a> IFixture for SubFixture<'a> {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
+        profiling::scope!("SubFixture::read_control");
         read_control(&self.fixture.channel_values, self.definition, control)
     }
 }

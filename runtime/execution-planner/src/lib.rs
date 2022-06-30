@@ -167,6 +167,7 @@ impl ExecutionPlanner {
     }
 
     pub fn plan(&mut self) -> ExecutionPlan {
+        profiling::scope!("ExecutionPlanner::plan");
         let last_plan = self.last_plan.clone().unwrap_or_default();
         let mut executors = self
             .executors

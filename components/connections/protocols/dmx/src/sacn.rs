@@ -33,6 +33,7 @@ impl DmxOutput for SacnOutput {
     }
 
     fn flush(&self) {
+        profiling::scope!("SacnOutput::flush");
         let universe_buffer = self.buffer.buffers.lock().unwrap();
         for (universe, buffer) in universe_buffer.iter() {
             if let Err(err) = self.source.send(*universe, buffer) {

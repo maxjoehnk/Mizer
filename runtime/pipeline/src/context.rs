@@ -53,6 +53,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {
+        profiling::scope!("PipelineContext::write_port");
         let port = port.into();
         let dbg_msg = format!("Trying to write to non existent port {}", &port);
         if let Some((port, _)) = self.senders.and_then(|senders| senders.get(port)) {
@@ -68,6 +69,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {
+        profiling::scope!("PipelineContext::read_port");
         let port = port.into();
         self.receivers
             .and_then(|receivers| receivers.get(&port))
@@ -75,6 +77,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn read_port_changes<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {
+        profiling::scope!("PipelineContext::read_port_changes");
         let port = port.into();
         self.receivers
             .and_then(|receivers| receivers.get(&port))
@@ -82,6 +85,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+        profiling::scope!("PipelineContext::read_ports");
         let port = port.into();
         self.receivers
             .and_then(|receivers| receivers.get(&port))
@@ -90,6 +94,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
     }
 
     fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+        profiling::scope!("PipelineContext::read_changed_ports");
         let port = port.into();
         self.receivers
             .and_then(|receivers| receivers.get(&port))
@@ -137,6 +142,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
 
 impl<'a> PreviewContext for PipelineContext<'a> {
     fn push_history_value(&self, value: f64) {
+        profiling::scope!("PipelineContext::push_history_value");
         self.preview.borrow_mut().push_history_value(value);
     }
 }

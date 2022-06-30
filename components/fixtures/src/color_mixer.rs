@@ -39,6 +39,7 @@ impl ColorMixer {
     }
 
     pub fn rgb(&self) -> Rgb {
+        profiling::scope!("ColorMixer::rgb");
         let rgb = Srgb::new(self.red, self.green, self.blue);
         let mut hsv = Hsv::from_color(rgb);
         if let Some(virtual_dimmer) = self.virtual_dimmer {
@@ -54,6 +55,7 @@ impl ColorMixer {
     }
 
     pub fn rgbw(&self) -> Rgbw {
+        profiling::scope!("ColorMixer::rgbw");
         let rgb = Srgb::new(self.red, self.green, self.blue);
         let mut hsv = Hsv::from_color(rgb);
         if let Some(virtual_dimmer) = self.virtual_dimmer {

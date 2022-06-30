@@ -270,6 +270,7 @@ impl Programmer {
     }
 
     pub fn run(&self) {
+        profiling::scope!("Programmer::run");
         log::trace!("Programmer::run");
         for (fixture_id, state) in self.selected_fixtures.iter() {
             log::trace!("{:?} => {:?}", fixture_id, state);

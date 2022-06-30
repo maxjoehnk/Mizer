@@ -17,3 +17,4 @@ mizer-message-bus = { path = "../../../../util/bus" }
 mizer-midi-messages = { path = "messages" }
 regex = "1.5"
 lazy_static = "1.4"
+profiling = "1"

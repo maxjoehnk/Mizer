@@ -50,6 +50,7 @@ impl DmxOutput for ArtnetOutput {
     }
 
     fn flush(&self) {
+        profiling::scope!("ArtnetOutput::flush");
         let broadcast_addr = match self.parse_addr() {
             Ok(addr) => addr,
             Err(err) => {

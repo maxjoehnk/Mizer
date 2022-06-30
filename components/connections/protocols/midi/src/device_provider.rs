@@ -55,6 +55,7 @@ impl MidiDeviceProvider {
     }
 
     pub fn find_device(&self, name: &str) -> anyhow::Result<Option<MidiDeviceIdentifier>> {
+        profiling::scope!("MidiDeviceProvider::find_device");
         let devices = self.list_devices()?;
 
         Ok(devices.into_iter().find(|device| device.name == name))

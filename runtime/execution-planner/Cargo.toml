@@ -10,3 +10,4 @@ test-case = "1"
 itertools = "0.10"
 mizer-node = { path = "../pipeline/node" }
 log = "0.4"
+profiling = "1"

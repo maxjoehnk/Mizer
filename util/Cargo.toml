@@ -6,6 +6,7 @@ edition = "2021"
 
 [features]
 test = ["mizer-clock"]
+tracing = ["profiling/profile-with-tracy", "tracy-client"]
 
 [dependencies]
 anyhow = "1"
@@ -13,6 +14,8 @@ log = "0.4"
 mizer-clock = { path = "../runtime/clock", optional = true }
 futures = "0.3"
 palette = "0.6"
+profiling = "1"
+tracy-client = { version = "0.13", optional = true, features = ["sampling", "code-transfer", "system-tracing", "context-switch-tracing"] }
 
 [dev-dependencies]
 test-case = "1.1"

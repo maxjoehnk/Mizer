@@ -132,6 +132,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     }
 
     fn rebuild_pipeline(&mut self, plan: ExecutionPlan) {
+        profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
 
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
@@ -189,8 +190,8 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         self.processors.push(processor);
     }
 
-    #[profiling::function]
     fn process(&mut self) {
+        profiling::scope!("CoordinatorRuntime::process");
         log::trace!("tick");
         let frame = self.clock.tick();
         let snapshot = self.clock.snapshot();

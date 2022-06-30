@@ -45,6 +45,7 @@ impl Sequence {
         effect_engine: &EffectEngine,
         frame: ClockFrame,
     ) {
+        profiling::scope!("Sequence::run");
         if !state.active {
             return;
         }

@@ -44,6 +44,7 @@ impl EffectEngine {
     }
 
     pub(crate) fn run_programmer_effects(&self, programmer: &Programmer) {
+        profiling::scope!("EffectEngine::run_programmer_effects");
         let mut effects = self.programmer_effects.lock().unwrap();
 
         let (effects_to_be_stopped, effects_to_be_started) = {
@@ -72,21 +73,23 @@ impl EffectEngine {
         }
     }
 
-    #[profiling::function]
     pub(crate) fn process_instances(&self, fixture_manager: &FixtureManager, frame: ClockFrame) {
+        profiling::scope!("EffectEngine::process_instances");
         let mut instances = self.instances.lock().unwrap();
         for (_, instance) in instances.iter_mut() {
             let effect = self.effects.get(&instance.effect).unwrap();
             instance.process(effect.value(), fixture_manager, frame);
         }
+        let active_effects = instances.len();
+        mizer_util::plot!("Running Effects", active_effects as f64);
     }
 
-    #[profiling::function]
     pub(crate) fn run_effect(
         &self,
         effect: u32,
         fixtures: Vec<FixtureId>,
     ) -> Option<EffectInstanceId> {
+        profiling::scope!("EffectEngine::run_effect");
         if let Some(effect) = self.effects.get(&effect) {
             let instance = EffectInstance::new(&effect, fixtures);
             let id = EffectInstanceId::new();
@@ -99,8 +102,8 @@ impl EffectEngine {
         }
     }
 
-    #[profiling::function]
     pub(crate) fn stop_effect(&self, effect_instance_id: &EffectInstanceId) {
+        profiling::scope!("EffectEngine::stop_effect");
         let mut instances = self.instances.lock().unwrap();
         instances.remove(effect_instance_id);
     }

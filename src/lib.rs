@@ -134,8 +134,7 @@ impl Mizer {
     }
 
     fn new_project(&mut self) {
-        #[cfg(feature = "tracing")]
-        profiling::tracy_client::message("New Project", 0);
+        mizer_util::message!("New Project", 0);
         self.close_project();
         let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();
@@ -159,8 +158,7 @@ impl Mizer {
     }
 
     fn load_project(&mut self) -> anyhow::Result<()> {
-        #[cfg(feature = "tracing")]
-        profiling::tracy_client::message("Loading Project", 0);
+        mizer_util::message!("Loading Project", 0);
         if let Some(ref path) = self.project_path {
             let mut media_paths = Vec::new();
             log::info!("Loading project {:?}...", path);
@@ -206,8 +204,7 @@ impl Mizer {
     }
 
     fn save_project(&self) -> anyhow::Result<()> {
-        #[cfg(feature = "tracing")]
-        profiling::tracy_client::message("Saving Project", 0);
+        mizer_util::message!("Saving Project", 0);
         if let Some(ref file) = self.project_path {
             log::info!("Saving project to {:?}...", file);
             let mut project = Project::new();
@@ -228,8 +225,7 @@ impl Mizer {
     }
 
     fn close_project(&mut self) {
-        #[cfg(feature = "tracing")]
-        profiling::tracy_client::message("Closing Project", 0);
+        mizer_util::message!("Closing Project", 0);
         self.runtime.clear();
         let injector = self.runtime.injector_mut();
         let fixture_manager = injector.get::<FixtureManager>().unwrap();

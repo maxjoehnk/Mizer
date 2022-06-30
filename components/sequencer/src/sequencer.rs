@@ -67,6 +67,8 @@ impl Sequencer {
             frame,
         );
         self.update_views(sequences, &states);
+        let active_sequences = states.values().filter(|state| state.active).count();
+        mizer_util::plot!("Running Sequences", active_sequences as f64);
         log::trace!("{:?}", states);
     }
 
@@ -77,6 +79,7 @@ impl Sequencer {
         effect_engine: &EffectEngine,
         frame: ClockFrame,
     ) {
+        profiling::scope!("Sequencer::handle_commands");
         let mut sequence_orders = self.sequence_order.borrow_mut();
         for command in self.commands.1.try_iter() {
             match command {
@@ -134,6 +137,7 @@ impl Sequencer {
         effect_engine: &EffectEngine,
         frame: ClockFrame,
     ) {
+        profiling::scope!("Sequencer::handle_sequences");
         let orders = self.sequence_order.borrow();
         for id in orders.iter() {
             let state = states.entry(*id).or_default();
@@ -147,6 +151,7 @@ impl Sequencer {
         sequences: HashMap<u32, Sequence>,
         states: &RefMut<HashMap<u32, SequenceState>>,
     ) {
+        profiling::scope!("Sequencer::update_views");
         let mut view = self.sequence_view.read();
         for (id, state) in states.iter() {
             if let Some(sequence) = sequences.get(id) {

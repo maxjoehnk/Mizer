@@ -43,6 +43,7 @@ To run just execute the binary or use `make run`.
 ### Sequencer View
 ![Sequencer Cue List](docs/screenshots/sequencer_cue_list.png)
 ![Sequencer Track Sheet](docs/screenshots/sequencer_track_sheet.png)
+![Sequencer Settings](docs/screenshots/sequencer_settings.png)
 
 ### Programmer View
 ![Programmer View](docs/screenshots/programmer.png)

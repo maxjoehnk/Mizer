@@ -87,6 +87,7 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     var request = event._into();
     var fixtures = await api.addFixtures(request);
 
+    _sortFixtures(fixtures);
     return fixtures;
   }
 
@@ -94,6 +95,7 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     log("deleting fixtures: $event", name: "FixturesBloc");
     var fixtures = await api.deleteFixtures(event.ids);
 
+    _sortFixtures(fixtures);
     return fixtures;
   }
 
@@ -107,7 +109,11 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
   Future<Fixtures> _getFixtures() async {
     var fixtures = await api.getFixtures();
 
-    fixtures.fixtures.sortByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs);
+    _sortFixtures(fixtures);
     return fixtures;
+  }
+
+  void _sortFixtures(Fixtures fixtures) {
+    fixtures.fixtures.sortByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs);
   }
 }

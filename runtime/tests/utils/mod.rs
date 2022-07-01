@@ -15,6 +15,7 @@ pub fn add_node(injector: &mut Injector, node_type: NodeType, node: Option<Node>
         node_type,
         designer: NodeDesigner::default(),
         node,
+        parent: None,
     };
     let (oscillator_node, _) = oscillator_add_node.apply(deps).unwrap();
     let output_path = NodePath("/output1".into());

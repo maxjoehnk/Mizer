@@ -189,6 +189,7 @@ pub enum NodeConfig {
     Gamepad(mizer_nodes::GamepadNode),
     ColorHsv(mizer_nodes::HsvColorNode),
     ColorRgb(mizer_nodes::RgbColorNode),
+    Container(mizer_nodes::ContainerNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -227,6 +228,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::Gamepad(node) => Self::Gamepad(node),
             NodeConfig::ColorHsv(node) => Self::ColorHsv(node),
             NodeConfig::ColorRgb(node) => Self::ColorRgb(node),
+            NodeConfig::Container(node) => Self::Container(node),
         }
     }
 }
@@ -267,6 +269,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::Gamepad(node) => Self::Gamepad(node),
             mizer_nodes::Node::ColorHsv(node) => Self::ColorHsv(node),
             mizer_nodes::Node::ColorRgb(node) => Self::ColorRgb(node),
+            mizer_nodes::Node::Container(node) => Self::Container(node),
             mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }

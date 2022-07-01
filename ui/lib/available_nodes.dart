@@ -35,10 +35,12 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Preset: "Preset",
   Node_NodeType.Sequencer: "Sequencer",
   Node_NodeType.Gamepad: "Gamepad",
+  Node_NodeType.Container: "Container",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
   buildCategory("Standard", [
+    Node_NodeType.Container,
     Node_NodeType.Clock,
     Node_NodeType.Script,
     Node_NodeType.Sequence,

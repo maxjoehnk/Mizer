@@ -34,6 +34,7 @@ impl<'a> Command<'a> for AddSequenceCommand {
                 ..Default::default()
             },
             node: Some(node.into()),
+            parent: None,
         };
         let (_, state) = runner.apply(sub_cmd)?;
 

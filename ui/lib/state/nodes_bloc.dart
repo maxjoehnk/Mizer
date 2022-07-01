@@ -12,8 +12,9 @@ class FetchNodes extends NodesEvent {}
 class AddNode extends NodesEvent {
   final Node_NodeType nodeType;
   final Offset position;
+  final String? parent;
 
-  AddNode({required this.nodeType, required this.position});
+  AddNode({required this.nodeType, required this.position, this.parent});
 }
 
 class LinkNodes extends NodesEvent {
@@ -70,8 +71,9 @@ class DuplicateNode extends NodesEvent {
 class ShowNode extends NodesEvent {
   final String node;
   final Offset position;
+  final String? parent;
 
-  ShowNode(this.node, this.position);
+  ShowNode(this.node, this.position, this.parent);
 
   ShowNodeRequest into() {
     return ShowNodeRequest(
@@ -80,6 +82,7 @@ class ShowNode extends NodesEvent {
         x: position.dx,
         y: position.dy,
       ),
+      parent: parent,
     );
   }
 }
@@ -99,12 +102,12 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       yield nodes;
     }
     if (event is AddNode) {
-      var node = await api.addNode(AddNodeRequest(
+      await api.addNode(AddNodeRequest(
           type: event.nodeType,
-          position: NodePosition(x: event.position.dx, y: event.position.dy)));
-      var nextNodes = state.nodes.sublist(0);
-      nextNodes.add(node);
-      yield Nodes(channels: state.channels, nodes: nextNodes);
+          position: NodePosition(x: event.position.dx, y: event.position.dy),
+          parent: event.parent));
+      var nodes = await api.getNodes();
+      yield nodes;
     }
     if (event is LinkNodes) {
       LinkNodes request = event;

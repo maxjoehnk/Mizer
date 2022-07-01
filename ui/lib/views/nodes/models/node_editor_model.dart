@@ -7,13 +7,17 @@ import 'node_model.dart';
 
 /// State Object for the Nodes view
 class NodeEditorModel extends ChangeNotifier {
-  List<NodeModel> nodes = [];
-  List<NodeConnection> channels = [];
+  List<NodeModel> rootNodes = [];
+  List<NodeConnection> _channels = [];
   final GlobalKey painterKey = GlobalKey(debugLabel: "GraphPaintLayer");
 
   late TransformationController transformationController;
   NodeModel? selectedNode;
   NewConnectionModel? connecting;
+
+  NodeModel? parent;
+  List<NodeModel>? currentNodes;
+  List<String> path = [];
 
   NodeEditorModel(Nodes nodes) {
     this.refresh(nodes);
@@ -21,21 +25,40 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   List<NodeModel> get hidden {
-    return this.nodes.where((nm) => nm.node.designer.hidden).toList();
+    return this.rootNodes.where((nm) => nm.node.designer.hidden).toList();
+  }
+
+  List<NodeModel> get nodes {
+    if (parent != null) {
+      return currentNodes!;
+    }
+    return rootNodes;
+  }
+
+  List<NodeConnection> get channels {
+    return this._channels
+        .where((channel) => nodes.any((node) => channel.sourceNode == node.node.path || channel.targetNode == node.node.path))
+        .toList();
   }
 
   /// Rebuild the node and port states
   void refresh(Nodes nodes) {
     this._disposeOldNodes();
-    this.nodes = nodes.nodes
+    this.rootNodes = nodes.nodes
         .map(this._createModel)
         .map((nodeModel) {
           nodeModel.addListener(this.update);
           return nodeModel;
         })
         .toList();
-    this.nodes.sortBy((element) => element.node.path);
-    this.channels = nodes.channels;
+    this.rootNodes.sortBy((element) => element.node.path);
+    this._channels = nodes.channels;
+    var parent = this.rootNodes.firstWhereOrNull((element) => element.node.path == this.parent?.node.path);
+    if (parent != null) {
+      this.parent = parent;
+      List<NodeModel> nodeModels = parent.node.config.containerConfig.nodes.map(_createModel).toList();
+      this.currentNodes = nodeModels;
+    }
     this.updateNodes();
     this.update();
   }
@@ -96,6 +119,21 @@ class NodeEditorModel extends ChangeNotifier {
   updateNewConnection() {
     connecting?.update(painterKey);
     this.update();
+  }
+
+  openContainer(NodeModel nodeModel) {
+    List<NodeModel> nodeModels = nodeModel.node.config.containerConfig.nodes.map(_createModel).toList();
+    this.currentNodes = nodeModels;
+    this.parent = nodeModel;
+    this.path = [nodeModel.node.path.substring(1)];
+    this.notifyListeners();
+  }
+
+  closeContainer() {
+    this.path = [];
+    this.currentNodes = null;
+    this.parent = null;
+    this.notifyListeners();
   }
 
   void _disposeOldNodes() {

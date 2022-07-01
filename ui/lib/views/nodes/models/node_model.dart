@@ -6,6 +6,7 @@ import 'package:mizer/views/nodes/models/port_model.dart';
 enum NodeTab {
   Ports,
   Preview,
+  ContainerEditor,
 }
 
 class NodeModel extends ChangeNotifier {
@@ -19,6 +20,9 @@ class NodeModel extends ChangeNotifier {
   NodeModel({required this.key, required this.node}) {
     _applyOffset(node);
     _buildPorts();
+    if (node.type == Node_NodeType.Container) {
+      this.tab = NodeTab.ContainerEditor;
+    }
   }
 
   NodeModel updateNode(Node node, GlobalKey key) {

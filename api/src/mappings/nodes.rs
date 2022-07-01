@@ -44,6 +44,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             ColorRgb(node) => Self::colorRgbConfig(node.into()),
             ColorHsv(node) => Self::colorHsvConfig(node.into()),
             Gamepad(node) => Self::gamepadNodeConfig(node.into()),
+            Container(node) => Self::containerConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -101,6 +102,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::colorRgbConfig(node) => Self::ColorRgb(node.into()),
             NodeConfig_oneof_type::colorHsvConfig(node) => Self::ColorHsv(node.into()),
             NodeConfig_oneof_type::gamepadNodeConfig(node) => Self::Gamepad(node.into()),
+            NodeConfig_oneof_type::containerConfig(node) => Self::Container(node.into()),
         }
     }
 }
@@ -922,6 +924,25 @@ impl From<ColorRgbNodeConfig> for mizer_nodes::RgbColorNode {
     }
 }
 
+impl From<mizer_nodes::ContainerNode> for ContainerNodeConfig {
+    fn from(_: mizer_nodes::ContainerNode) -> Self {
+        // This is just a fallback to avoid crashing when
+        Default::default()
+    }
+}
+
+impl From<ContainerNodeConfig> for mizer_nodes::ContainerNode {
+    fn from(config: ContainerNodeConfig) -> Self {
+        Self {
+            nodes: config
+                .nodes
+                .into_iter()
+                .map(|node| node.path.into())
+                .collect(),
+        }
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -958,6 +979,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::ColorHsv => Node_NodeType::ColorHsv,
             NodeType::ColorRgb => Node_NodeType::ColorRgb,
             NodeType::Gamepad => Node_NodeType::Gamepad,
+            NodeType::Container => Node_NodeType::Container,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -999,38 +1021,44 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::ColorHsv => NodeType::ColorHsv,
             Node_NodeType::ColorRgb => NodeType::ColorRgb,
             Node_NodeType::Gamepad => NodeType::Gamepad,
+            Node_NodeType::Container => NodeType::Container,
         }
     }
 }
 
 impl From<NodeDescriptor<'_>> for Node {
     fn from(descriptor: NodeDescriptor<'_>) -> Self {
-        let details = descriptor.node.value().details();
-        let node_type = descriptor.node_type();
-        let mut node = Node {
-            path: descriptor.path.to_string(),
-            field_type: node_type.into(),
-            config: SingularPtrField::some(descriptor.downcast().into()),
-            designer: SingularPtrField::some(descriptor.designer.into()),
-            preview: details.preview_type.into(),
-            ..Default::default()
-        };
-        let (inputs, outputs) = descriptor
-            .ports
-            .into_iter()
-            .partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
-
-        for input in inputs {
-            node.inputs.push(input.into());
-        }
-        for output in outputs {
-            node.outputs.push(output.into());
-        }
-
-        log::debug!("{:?}", node);
-
-        node
+        let config = descriptor.downcast().into();
+        map_node_descriptor_with_config(descriptor, config)
     }
+}
+
+pub fn map_node_descriptor_with_config(descriptor: NodeDescriptor<'_>, config: NodeConfig) -> Node {
+    let details = descriptor.node.value().details();
+    let node_type = descriptor.node_type();
+    let mut node = Node {
+        path: descriptor.path.to_string(),
+        field_type: node_type.into(),
+        config: SingularPtrField::some(config),
+        designer: SingularPtrField::some(descriptor.designer.into()),
+        preview: details.preview_type.into(),
+        ..Default::default()
+    };
+    let (inputs, outputs) = descriptor
+        .ports
+        .into_iter()
+        .partition::<Vec<_>, _>(|(_, port)| matches!(port.direction, PortDirection::Input));
+
+    for input in inputs {
+        node.inputs.push(input.into());
+    }
+    for output in outputs {
+        node.outputs.push(output.into());
+    }
+
+    log::debug!("{:?}", node);
+
+    node
 }
 
 impl From<StaticNodeDescriptor> for Node {

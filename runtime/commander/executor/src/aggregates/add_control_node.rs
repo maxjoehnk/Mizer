@@ -46,6 +46,7 @@ impl<'a> Command<'a> for AddLayoutControlWithNodeCommand {
             node_type: self.node_type,
             node: None,
             designer: Default::default(),
+            parent: None,
         };
         let (descriptor, state) = add_node_command.apply((pipeline_access, planner))?;
         let add_control_command = AddLayoutControlCommand {

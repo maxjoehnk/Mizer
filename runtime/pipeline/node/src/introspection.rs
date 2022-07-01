@@ -43,6 +43,7 @@ pub enum NodeType {
     Threshold,
     ColorRgb,
     ColorHsv,
+    Container,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -86,6 +87,7 @@ impl NodeType {
             Threshold => "threshold",
             ColorHsv => "color-hsv",
             ColorRgb => "color-rgb",
+            Container => "container",
             TestSink => "test-sink",
         }
         .to_string()

@@ -1,4 +1,5 @@
 use super::StaticNodeDescriptor;
+use crate::commands::{add_path_to_container, assert_valid_parent, remove_path_from_container};
 use crate::pipeline_access::PipelineAccess;
 use crate::NodeDowncast;
 use mizer_commander::{Command, RefMut};
@@ -13,6 +14,7 @@ pub struct AddNodeCommand {
     pub node_type: NodeType,
     pub designer: NodeDesigner,
     pub node: Option<Node>,
+    pub parent: Option<NodePath>,
 }
 
 impl Hash for AddNodeCommand {
@@ -36,12 +38,14 @@ impl<'a> Command<'a> for AddNodeCommand {
         &self,
         (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
     ) -> anyhow::Result<(Self::Result, Self::State)> {
+        assert_valid_parent(pipeline, self.parent.as_ref())?;
         let path =
             pipeline.handle_add_node(self.node_type, self.designer.clone(), self.node.clone())?;
         planner.add_node(ExecutionNode {
             path: path.clone(),
             attached_executor: None,
         });
+        add_path_to_container(pipeline, self.parent.as_ref(), &path)?;
 
         let node = pipeline.nodes_view.get(&path).unwrap();
         let ports = node.list_ports();
@@ -64,6 +68,7 @@ impl<'a> Command<'a> for AddNodeCommand {
         (pipeline, planner): (&mut PipelineAccess, &mut ExecutionPlanner),
         state: Self::State,
     ) -> anyhow::Result<()> {
+        remove_path_from_container(pipeline, self.parent.as_ref(), &state)?;
         planner.remove_node(&state);
         pipeline.delete_node(state)?;
 

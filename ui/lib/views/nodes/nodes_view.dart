@@ -6,6 +6,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
+import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
@@ -18,6 +19,8 @@ import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
 import 'widgets/properties/node_properties.dart';
+
+const double PathBreadcrumbHeight = 32;
 
 class FetchNodesView extends StatelessWidget {
   const FetchNodesView({Key? key}) : super(key: key);
@@ -108,16 +111,35 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
               Positioned(
                   top: 16,
                   right: 16,
-                  bottom: 16,
+                  bottom: 16 + PathBreadcrumbHeight,
                   width: 256,
                   child: NodePropertiesPane(node: model.selectedNode?.node)),
             if (showHiddenNodes)
               Positioned(
                   top: 0,
                   right: 0,
-                  bottom: 0,
+                  bottom: PathBreadcrumbHeight,
                   width: 256,
                   child: HiddenNodeList(nodes: model.hidden)),
+            Positioned(
+                bottom: 0,
+                right: 0,
+                left: 0,
+                height: PathBreadcrumbHeight,
+                child: Container(
+                  color: Colors.grey.shade800,
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          MizerButton(child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text("/"),
+                          ), onClick: () => model.closeContainer()),
+                          ...model.path.map((p) => Center(child: Text(p)))
+                        ]
+                    )
+                )
+            )
           ],
         ),
       ),
@@ -152,7 +174,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   void _addNode(NodeEditorModel model, Node_NodeType nodeType) {
     var transformedPosition = model.transformationController.toScene(addMenuPosition!);
     var position = transformedPosition / MULTIPLIER;
-    context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position));
+    context.read<NodesBloc>().add(AddNode(nodeType: nodeType, position: position, parent: model.parent?.node.path));
     setState(() {
       addMenuPosition = null;
     });

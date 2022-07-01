@@ -17,6 +17,7 @@ service NodesApi {
 message AddNodeRequest {
   Node.NodeType type = 1;
   NodePosition position = 2;
+  optional string parent = 3;
 }
 
 message NodesRequest {}
@@ -46,6 +47,7 @@ message MoveNodeResponse {}
 message ShowNodeRequest {
   string path = 1;
   NodePosition position = 2;
+  optional string parent = 3;
 }
 
 message ShowNodeResponse {}
@@ -111,6 +113,7 @@ message Node {
     Gamepad = 45;
     ColorRgb = 50;
     ColorHsv = 51;
+    Container = 100;
   }
 
   enum NodePreviewType {
@@ -165,6 +168,7 @@ message NodeConfig {
     ColorHsvNodeConfig colorHsvConfig = 41;
     GamepadNodeConfig gamepadNodeConfig = 42;
     ThresholdNodeConfig thresholdConfig = 43;
+    ContainerNodeConfig containerConfig = 45;
   }
 }
 
@@ -336,6 +340,10 @@ message ThresholdNodeConfig {
 
 message ColorRgbNodeConfig {}
 message ColorHsvNodeConfig {}
+
+message ContainerNodeConfig {
+  repeated Node nodes = 1;
+}
 
 message NodePosition {
   double x = 1;

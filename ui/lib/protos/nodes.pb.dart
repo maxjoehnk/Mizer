@@ -18,6 +18,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..e<Node_NodeType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Node_NodeType.Fader, valueOf: Node_NodeType.valueOf, enumValues: Node_NodeType.values)
     ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
     ..hasRequiredFields = false
   ;
 
@@ -25,6 +26,7 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   factory AddNodeRequest({
     Node_NodeType? type,
     NodePosition? position,
+    $core.String? parent,
   }) {
     final _result = create();
     if (type != null) {
@@ -32,6 +34,9 @@ class AddNodeRequest extends $pb.GeneratedMessage {
     }
     if (position != null) {
       _result.position = position;
+    }
+    if (parent != null) {
+      _result.parent = parent;
     }
     return _result;
   }
@@ -75,6 +80,15 @@ class AddNodeRequest extends $pb.GeneratedMessage {
   void clearPosition() => clearField(2);
   @$pb.TagNumber(2)
   NodePosition ensurePosition() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get parent => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set parent($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasParent() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearParent() => clearField(3);
 }
 
 class NodesRequest extends $pb.GeneratedMessage {
@@ -398,6 +412,7 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ShowNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..aOM<NodePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: NodePosition.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'parent')
     ..hasRequiredFields = false
   ;
 
@@ -405,6 +420,7 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
   factory ShowNodeRequest({
     $core.String? path,
     NodePosition? position,
+    $core.String? parent,
   }) {
     final _result = create();
     if (path != null) {
@@ -412,6 +428,9 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
     }
     if (position != null) {
       _result.position = position;
+    }
+    if (parent != null) {
+      _result.parent = parent;
     }
     return _result;
   }
@@ -455,6 +474,15 @@ class ShowNodeRequest extends $pb.GeneratedMessage {
   void clearPosition() => clearField(2);
   @$pb.TagNumber(2)
   NodePosition ensurePosition() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get parent => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set parent($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasParent() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearParent() => clearField(3);
 }
 
 class ShowNodeResponse extends $pb.GeneratedMessage {
@@ -951,6 +979,7 @@ enum NodeConfig_Type {
   colorHsvConfig, 
   gamepadNodeConfig, 
   thresholdConfig, 
+  containerConfig, 
   notSet
 }
 
@@ -989,10 +1018,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     41 : NodeConfig_Type.colorHsvConfig,
     42 : NodeConfig_Type.gamepadNodeConfig,
     43 : NodeConfig_Type.thresholdConfig,
+    45 : NodeConfig_Type.containerConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 45])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1026,6 +1056,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
     ..aOM<GamepadNodeConfig>(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepadNodeConfig', protoName: 'gamepadNodeConfig', subBuilder: GamepadNodeConfig.create)
     ..aOM<ThresholdNodeConfig>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thresholdConfig', protoName: 'thresholdConfig', subBuilder: ThresholdNodeConfig.create)
+    ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', protoName: 'containerConfig', subBuilder: ContainerNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1064,6 +1095,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ColorHsvNodeConfig? colorHsvConfig,
     GamepadNodeConfig? gamepadNodeConfig,
     ThresholdNodeConfig? thresholdConfig,
+    ContainerNodeConfig? containerConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1164,6 +1196,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (thresholdConfig != null) {
       _result.thresholdConfig = thresholdConfig;
+    }
+    if (containerConfig != null) {
+      _result.containerConfig = containerConfig;
     }
     return _result;
   }
@@ -1553,6 +1588,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearThresholdConfig() => clearField(43);
   @$pb.TagNumber(43)
   ThresholdNodeConfig ensureThresholdConfig() => $_ensure(32);
+
+  @$pb.TagNumber(45)
+  ContainerNodeConfig get containerConfig => $_getN(33);
+  @$pb.TagNumber(45)
+  set containerConfig(ContainerNodeConfig v) { setField(45, v); }
+  @$pb.TagNumber(45)
+  $core.bool hasContainerConfig() => $_has(33);
+  @$pb.TagNumber(45)
+  void clearContainerConfig() => clearField(45);
+  @$pb.TagNumber(45)
+  ContainerNodeConfig ensureContainerConfig() => $_ensure(33);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -3400,6 +3446,47 @@ class ColorHsvNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ColorHsvNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ColorHsvNodeConfig>(create);
   static ColorHsvNodeConfig? _defaultInstance;
+}
+
+class ContainerNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ContainerNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..pc<Node>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
+    ..hasRequiredFields = false
+  ;
+
+  ContainerNodeConfig._() : super();
+  factory ContainerNodeConfig({
+    $core.Iterable<Node>? nodes,
+  }) {
+    final _result = create();
+    if (nodes != null) {
+      _result.nodes.addAll(nodes);
+    }
+    return _result;
+  }
+  factory ContainerNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ContainerNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ContainerNodeConfig clone() => ContainerNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ContainerNodeConfig copyWith(void Function(ContainerNodeConfig) updates) => super.copyWith((message) => updates(message as ContainerNodeConfig)) as ContainerNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ContainerNodeConfig create() => ContainerNodeConfig._();
+  ContainerNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ContainerNodeConfig> createRepeated() => $pb.PbList<ContainerNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ContainerNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ContainerNodeConfig>(create);
+  static ContainerNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Node> get nodes => $_getList(0);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

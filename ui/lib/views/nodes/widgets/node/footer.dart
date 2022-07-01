@@ -6,14 +6,16 @@ import 'package:mizer/views/nodes/models/node_model.dart';
 import 'package:mizer/widgets/hoverable.dart';
 
 import '../../consts.dart';
+import 'tabs.dart';
 
 class NodeFooter extends StatelessWidget {
   final Function(NodeTab) onSelectTab;
   final NodeTab selectedTab;
   final Node node;
+  final List<CustomNodeTab> tabs;
 
   const NodeFooter(
-      {required this.selectedTab, required this.onSelectTab, required this.node, Key? key})
+      {required this.selectedTab, required this.onSelectTab, required this.node, required this.tabs, Key? key})
       : super(key: key);
 
   @override
@@ -26,9 +28,10 @@ class NodeFooter extends StatelessWidget {
       ),
       height: 24,
       child: Row(children: [
-        _icon(context, MdiIcons.tuneVariant, NodeTab.Ports),
+        _tab(context, MdiIcons.tuneVariant, NodeTab.Ports),
         if (node.preview != Node_NodePreviewType.None)
-          _icon(context, MdiIcons.eye, NodeTab.Preview),
+          _tab(context, MdiIcons.eye, NodeTab.Preview),
+        ...tabs.map((t) => _tab(context, t.icon, t.tab)),
         Spacer(),
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -37,7 +40,7 @@ class NodeFooter extends StatelessWidget {
     );
   }
 
-  Widget _icon(BuildContext context, IconData icon, NodeTab display) {
+  Widget _tab(BuildContext context, IconData icon, NodeTab display) {
     var selected = display == selectedTab;
 
     return Hoverable(

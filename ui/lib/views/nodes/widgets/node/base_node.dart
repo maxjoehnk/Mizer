@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' hide MenuItem;
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/views/nodes/models/node_editor_model.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
@@ -12,23 +14,33 @@ import 'footer.dart';
 import 'header.dart';
 import 'ports.dart';
 import 'preview.dart';
+import 'tabs.dart';
 
 class BaseNode extends StatelessWidget {
   final NodeModel nodeModel;
   final Widget child;
   final bool selected;
   final Function()? onSelect;
+  late List<CustomNodeTab> tabs;
 
-  BaseNode(this.nodeModel, {required this.child, this.selected = false, this.onSelect, Key? key})
-      : super(key: key);
+  BaseNode(this.nodeModel, {required this.child, this.selected = false, this.onSelect, List<CustomNodeTab>? tabs, Key? key})
+      : super(key: key) {
+    this.tabs = tabs ?? [];
+  }
 
   factory BaseNode.fromNode(NodeModel node, {Function()? onSelect, bool selected = false, Key? key}) {
+    List<CustomNodeTab> tabs = [];
+    if (node.node.type == Node_NodeType.Container) {
+      tabs.add(CustomNodeTab(tab: NodeTab.ContainerEditor, icon: MdiIcons.pencil, builder: (model) => Container()));
+    }
+
     return BaseNode(
       node,
       child: Container(),
       onSelect: onSelect,
       selected: selected,
       key: key,
+      tabs: tabs,
     );
   }
 
@@ -64,9 +76,11 @@ class BaseNode extends StatelessWidget {
                     Stack(children: [
                       _portsView(),
                       if (selectedTab == NodeTab.Preview) _previewView(),
+                      if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
                     ]),
                     NodeFooter(
                       node: node,
+                      tabs: tabs,
                       selectedTab: selectedTab,
                       onSelectTab: (tab) => nodeModel.selectTab(tab),
                     )
@@ -98,6 +112,17 @@ class BaseNode extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: RepaintBoundary(child: NodePreview(this.node)),
     );
+  }
+
+  Widget _containerEditor(BuildContext context) {
+    // TODO: show preview of child nodes
+    return Center(child: Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: ElevatedButton(onPressed: () {
+        context.read<NodeEditorModel>().openContainer(nodeModel);
+      },
+      child: Text("Open")),
+    ));
   }
 
   void _onHideNode(BuildContext context) async {

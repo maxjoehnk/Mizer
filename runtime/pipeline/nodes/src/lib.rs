@@ -1,3 +1,4 @@
+pub use self::container_node::ContainerNode;
 use crate::test_sink::TestSink;
 use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
@@ -23,6 +24,7 @@ pub use mizer_video_nodes::{
 };
 use serde::{Deserialize, Serialize};
 
+mod container_node;
 #[doc(hidden)]
 pub mod test_sink;
 
@@ -61,6 +63,7 @@ pub enum Node {
     Gamepad(GamepadNode),
     ColorRgb(RgbColorNode),
     ColorHsv(HsvColorNode),
+    Container(ContainerNode),
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink(TestSink),
@@ -102,6 +105,7 @@ impl From<NodeType> for Node {
             NodeType::Gamepad => GamepadNode::default().into(),
             NodeType::ColorRgb => RgbColorNode::default().into(),
             NodeType::ColorHsv => HsvColorNode::default().into(),
+            NodeType::Container => ContainerNode::default().into(),
             NodeType::TestSink => unimplemented!(),
         }
     }
@@ -144,6 +148,7 @@ impl Node {
             Gamepad(_) => NodeType::Gamepad,
             ColorHsv(_) => NodeType::ColorHsv,
             ColorRgb(_) => NodeType::ColorRgb,
+            Container(_) => NodeType::Container,
             TestSink(_) => NodeType::TestSink,
         }
     }

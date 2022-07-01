@@ -1,7 +1,10 @@
+use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::models::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
-use mizer_node::NodePath;
+use mizer_node::{NodePath, NodeType};
+use mizer_nodes::ContainerNode;
+use mizer_runtime::NodeDowncast;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -20,8 +23,51 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         let nodes = self.runtime.nodes();
 
-        for node in nodes {
+        let (container_nodes, non_container_nodes) = nodes
+            .into_iter()
+            .partition::<Vec<_>, _>(|node| node.node_type() == NodeType::Container);
+        let container_nodes = container_nodes
+            .into_iter()
+            .map(|node| {
+                node.downcast_node::<ContainerNode>(NodeType::Container)
+                    .map(|c| (c, node))
+                    .unwrap()
+            })
+            .collect::<Vec<_>>();
+
+        let (mut child_nodes, standalone_nodes) = non_container_nodes
+            .into_iter()
+            .partition::<Vec<_>, _>(|node| {
+                container_nodes
+                    .iter()
+                    .any(|(c, _)| c.nodes.contains(&node.path))
+            });
+
+        for node in standalone_nodes {
             let node: Node = node.into();
+            res.nodes.push(node);
+        }
+        for (container_node, node) in container_nodes {
+            let children = container_node
+                .nodes
+                .into_iter()
+                .filter_map(|path| {
+                    child_nodes
+                        .iter()
+                        .position(|node| node.path == path)
+                        .map(|index| child_nodes.remove(index))
+                })
+                .map(Node::from)
+                .collect();
+            let config = ContainerNodeConfig {
+                nodes: children,
+                ..Default::default()
+            };
+            let config = NodeConfig {
+                field_type: Some(NodeConfig_oneof_type::containerConfig(config)),
+                ..Default::default()
+            };
+            let node = map_node_descriptor_with_config(node, config);
             res.nodes.push(node);
         }
         for channel in self.runtime.links() {
@@ -64,6 +110,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
             designer: designer.clone(),
             node_type: request.field_type.into(),
             node: None,
+            parent: request._parent.and_then(|path| {
+                if let AddNodeRequest_oneof__parent::parent(path) = path {
+                    Some(path.into())
+                } else {
+                    None
+                }
+            }),
         };
         let descriptor = self.runtime.run_command(cmd).unwrap();
 
@@ -113,6 +166,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
         self.runtime.run_command(ShowNodeCommand {
             path: request.path.into(),
             position: request.position.unwrap().into(),
+            parent: request._parent.and_then(|path| {
+                if let ShowNodeRequest_oneof__parent::parent(path) = path {
+                    Some(path.into())
+                } else {
+                    None
+                }
+            }),
         })?;
 
         Ok(())

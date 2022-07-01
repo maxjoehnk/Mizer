@@ -95,6 +95,7 @@ impl<'a> Command<'a> for PatchFixturesCommand {
                     ..Default::default()
                 },
                 node: Some(node.into()),
+                parent: None,
             };
             let (_, path) = sub_cmd.apply((pipeline, planner))?;
             paths.push((sub_cmd, path));

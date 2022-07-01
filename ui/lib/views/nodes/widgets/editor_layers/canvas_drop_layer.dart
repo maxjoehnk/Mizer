@@ -26,7 +26,7 @@ class CanvasDropLayer extends StatelessWidget {
             data.offset = off;
             NodesBloc bloc = context.read();
             if (data.node.designer.hidden) {
-              bloc.add(ShowNode(data.node.path, data.getPosition()));
+              bloc.add(ShowNode(data.node.path, data.getPosition(), model.parent?.node.path));
             }else {
               model.updateNodes();
               model.update();

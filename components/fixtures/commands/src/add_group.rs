@@ -39,6 +39,7 @@ impl<'a> Command<'a> for AddGroupCommand {
                 ..Default::default()
             },
             node: Some(node.into()),
+            parent: None,
         };
         let (_, state) = add_node_runner.apply(sub_cmd)?;
 

@@ -3,7 +3,7 @@ mod effects;
 mod fixtures;
 mod layouts;
 mod media;
-mod nodes;
+pub(crate) mod nodes;
 mod plans;
 mod programmer;
 mod sequencer;

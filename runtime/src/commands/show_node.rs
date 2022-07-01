@@ -1,3 +1,4 @@
+use crate::commands::{add_path_to_container, assert_valid_parent, remove_path_from_container};
 use crate::pipeline_access::PipelineAccess;
 use mizer_commander::{Command, RefMut};
 use mizer_node::{NodePath, NodePosition};
@@ -7,6 +8,7 @@ use serde::{Deserialize, Serialize};
 pub struct ShowNodeCommand {
     pub path: NodePath,
     pub position: NodePosition,
+    pub parent: Option<NodePath>,
 }
 
 impl<'a> Command<'a> for ShowNodeCommand {
@@ -19,6 +21,7 @@ impl<'a> Command<'a> for ShowNodeCommand {
     }
 
     fn apply(&self, pipeline: &mut PipelineAccess) -> anyhow::Result<(Self::Result, Self::State)> {
+        assert_valid_parent(pipeline, self.parent.as_ref())?;
         let mut nodes = pipeline.designer.read();
         let node = nodes
             .get_mut(&self.path)
@@ -28,6 +31,7 @@ impl<'a> Command<'a> for ShowNodeCommand {
         std::mem::swap(&mut node.hidden, &mut hidden);
         std::mem::swap(&mut node.position, &mut position);
         pipeline.designer.set(nodes);
+        add_path_to_container(pipeline, self.parent.as_ref(), &self.path)?;
 
         Ok(((), (hidden, position)))
     }
@@ -44,6 +48,7 @@ impl<'a> Command<'a> for ShowNodeCommand {
         node.hidden = hidden;
         node.position = position;
         pipeline.designer.set(nodes);
+        remove_path_from_container(pipeline, self.parent.as_ref(), &self.path)?;
 
         Ok(())
     }

@@ -9,6 +9,7 @@ pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
 pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
+pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
 use mizer_node::{Injector, NodeType};
 pub use mizer_opc_nodes::OpcOutputNode;
@@ -67,6 +68,7 @@ pub enum Node {
     ColorRgb(RgbColorNode),
     ColorHsv(HsvColorNode),
     Container(ContainerNode),
+    Math(MathNode),
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink(TestSink),
@@ -110,6 +112,7 @@ impl From<NodeType> for Node {
             NodeType::ColorRgb => RgbColorNode::default().into(),
             NodeType::ColorHsv => HsvColorNode::default().into(),
             NodeType::Container => ContainerNode::default().into(),
+            NodeType::Math => MathNode::default().into(),
             NodeType::TestSink => unimplemented!(),
         }
     }
@@ -154,6 +157,7 @@ impl Node {
             ColorHsv(_) => NodeType::ColorHsv,
             ColorRgb(_) => NodeType::ColorRgb,
             Container(_) => NodeType::Container,
+            Math(_) => NodeType::Math,
             TestSink(_) => NodeType::TestSink,
         }
     }

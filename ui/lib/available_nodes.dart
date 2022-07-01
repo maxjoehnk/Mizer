@@ -37,6 +37,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Sequencer: "Sequencer",
   Node_NodeType.Gamepad: "Gamepad",
   Node_NodeType.Container: "Container",
+  Node_NodeType.Math: "Math",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -51,6 +52,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Threshold,
     Node_NodeType.Encoder,
     Node_NodeType.Envelope,
+    Node_NodeType.Math,
     Node_NodeType.ColorRgb,
     Node_NodeType.ColorHsv,
   ]),

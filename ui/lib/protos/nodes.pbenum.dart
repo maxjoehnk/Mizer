@@ -76,6 +76,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType ColorHsv = Node_NodeType._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorHsv');
   static const Node_NodeType Container = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Container');
   static const Node_NodeType Encoder = Node_NodeType._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Encoder');
+  static const Node_NodeType Math = Node_NodeType._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Math');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -113,6 +114,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     ColorHsv,
     Container,
     Encoder,
+    Math,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -280,5 +282,24 @@ class MergeNodeConfig_MergeMode extends $pb.ProtobufEnum {
   static MergeNodeConfig_MergeMode? valueOf($core.int value) => _byValue[value];
 
   const MergeNodeConfig_MergeMode._($core.int v, $core.String n) : super(v, n);
+}
+
+class MathNodeConfig_Mode extends $pb.ProtobufEnum {
+  static const MathNodeConfig_Mode Addition = MathNodeConfig_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Addition');
+  static const MathNodeConfig_Mode Subtraction = MathNodeConfig_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Subtraction');
+  static const MathNodeConfig_Mode Multiplication = MathNodeConfig_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiplication');
+  static const MathNodeConfig_Mode Division = MathNodeConfig_Mode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Division');
+
+  static const $core.List<MathNodeConfig_Mode> values = <MathNodeConfig_Mode> [
+    Addition,
+    Subtraction,
+    Multiplication,
+    Division,
+  ];
+
+  static final $core.Map<$core.int, MathNodeConfig_Mode> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static MathNodeConfig_Mode? valueOf($core.int value) => _byValue[value];
+
+  const MathNodeConfig_Mode._($core.int v, $core.String n) : super(v, n);
 }
 

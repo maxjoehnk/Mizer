@@ -372,6 +372,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::ColorHsv(node) => pipeline.register_node(path, &node),
         Node::Gamepad(node) => pipeline.register_node(path, &node),
         Node::Container(node) => pipeline.register_node(path, &node),
+        Node::Math(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

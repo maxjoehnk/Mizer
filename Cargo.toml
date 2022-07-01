@@ -35,6 +35,7 @@ members = [
     "runtime/pipeline/nodes",
     "runtime/pipeline/nodes/behaviors/color",
     "runtime/pipeline/nodes/behaviors/envelope",
+    "runtime/pipeline/nodes/behaviors/math",
     "runtime/pipeline/nodes/behaviors/oscillator",
     "runtime/pipeline/nodes/behaviors/port-operations",
     "runtime/pipeline/nodes/behaviors/scripting",

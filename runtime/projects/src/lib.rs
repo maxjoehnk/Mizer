@@ -191,6 +191,7 @@ pub enum NodeConfig {
     ColorHsv(mizer_nodes::HsvColorNode),
     ColorRgb(mizer_nodes::RgbColorNode),
     Container(mizer_nodes::ContainerNode),
+    Math(mizer_nodes::MathNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -231,6 +232,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::ColorHsv(node) => Self::ColorHsv(node),
             NodeConfig::ColorRgb(node) => Self::ColorRgb(node),
             NodeConfig::Container(node) => Self::Container(node),
+            NodeConfig::Math(node) => Self::Math(node),
         }
     }
 }
@@ -273,6 +275,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::ColorHsv(node) => Self::ColorHsv(node),
             mizer_nodes::Node::ColorRgb(node) => Self::ColorRgb(node),
             mizer_nodes::Node::Container(node) => Self::Container(node),
+            mizer_nodes::Node::Math(node) => Self::Math(node),
             mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }

@@ -12,6 +12,7 @@ import 'properties/groups/button_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
 import 'properties/groups/fixture_properties.dart';
+import 'properties/groups/math_properties.dart';
 import 'properties/groups/merge_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
@@ -136,6 +137,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(EncoderProperties(node.config.encoderConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(encoderConfig: config)))));
+    }
+    if (node.config.hasMathConfig()) {
+      widgets.add(MathProperties(node.config.mathConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(mathConfig: config)))));
     }
     return widgets;
   }

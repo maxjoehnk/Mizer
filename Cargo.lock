@@ -3601,6 +3601,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-math-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-node",
+ "serde",
+]
+
+[[package]]
 name = "mizer-media"
 version = "0.1.0"
 dependencies = [
@@ -3705,6 +3715,7 @@ dependencies = [
  "mizer-gamepad-nodes",
  "mizer-input-nodes",
  "mizer-laser-nodes",
+ "mizer-math-nodes",
  "mizer-midi-nodes",
  "mizer-node",
  "mizer-opc-nodes",

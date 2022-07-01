@@ -981,6 +981,7 @@ enum NodeConfig_Type {
   thresholdConfig, 
   encoderConfig, 
   containerConfig, 
+  mathConfig, 
   notSet
 }
 
@@ -1021,10 +1022,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     43 : NodeConfig_Type.thresholdConfig,
     44 : NodeConfig_Type.encoderConfig,
     45 : NodeConfig_Type.containerConfig,
+    46 : NodeConfig_Type.mathConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1060,6 +1062,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<ThresholdNodeConfig>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thresholdConfig', protoName: 'thresholdConfig', subBuilder: ThresholdNodeConfig.create)
     ..aOM<EncoderNodeConfig>(44, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encoderConfig', protoName: 'encoderConfig', subBuilder: EncoderNodeConfig.create)
     ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', protoName: 'containerConfig', subBuilder: ContainerNodeConfig.create)
+    ..aOM<MathNodeConfig>(46, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mathConfig', protoName: 'mathConfig', subBuilder: MathNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1100,6 +1103,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ThresholdNodeConfig? thresholdConfig,
     EncoderNodeConfig? encoderConfig,
     ContainerNodeConfig? containerConfig,
+    MathNodeConfig? mathConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1206,6 +1210,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (containerConfig != null) {
       _result.containerConfig = containerConfig;
+    }
+    if (mathConfig != null) {
+      _result.mathConfig = mathConfig;
     }
     return _result;
   }
@@ -1617,6 +1624,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearContainerConfig() => clearField(45);
   @$pb.TagNumber(45)
   ContainerNodeConfig ensureContainerConfig() => $_ensure(34);
+
+  @$pb.TagNumber(46)
+  MathNodeConfig get mathConfig => $_getN(35);
+  @$pb.TagNumber(46)
+  set mathConfig(MathNodeConfig v) { setField(46, v); }
+  @$pb.TagNumber(46)
+  $core.bool hasMathConfig() => $_has(35);
+  @$pb.TagNumber(46)
+  void clearMathConfig() => clearField(46);
+  @$pb.TagNumber(46)
+  MathNodeConfig ensureMathConfig() => $_ensure(35);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -3566,6 +3584,53 @@ class ContainerNodeConfig extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<Node> get nodes => $_getList(0);
+}
+
+class MathNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MathNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..e<MathNodeConfig_Mode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: MathNodeConfig_Mode.Addition, valueOf: MathNodeConfig_Mode.valueOf, enumValues: MathNodeConfig_Mode.values)
+    ..hasRequiredFields = false
+  ;
+
+  MathNodeConfig._() : super();
+  factory MathNodeConfig({
+    MathNodeConfig_Mode? mode,
+  }) {
+    final _result = create();
+    if (mode != null) {
+      _result.mode = mode;
+    }
+    return _result;
+  }
+  factory MathNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MathNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MathNodeConfig clone() => MathNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MathNodeConfig copyWith(void Function(MathNodeConfig) updates) => super.copyWith((message) => updates(message as MathNodeConfig)) as MathNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MathNodeConfig create() => MathNodeConfig._();
+  MathNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<MathNodeConfig> createRepeated() => $pb.PbList<MathNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static MathNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MathNodeConfig>(create);
+  static MathNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  MathNodeConfig_Mode get mode => $_getN(0);
+  @$pb.TagNumber(1)
+  set mode(MathNodeConfig_Mode v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMode() => clearField(1);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

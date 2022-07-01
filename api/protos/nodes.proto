@@ -115,6 +115,7 @@ message Node {
     ColorHsv = 51;
     Container = 100;
     Encoder = 55;
+    Math = 56;
   }
 
   enum NodePreviewType {
@@ -171,6 +172,7 @@ message NodeConfig {
     ThresholdNodeConfig thresholdConfig = 43;
     EncoderNodeConfig encoderConfig = 44;
     ContainerNodeConfig containerConfig = 45;
+    MathNodeConfig mathConfig = 46;
   }
 }
 
@@ -373,6 +375,17 @@ message ColorHsvNodeConfig {}
 
 message ContainerNodeConfig {
   repeated Node nodes = 1;
+}
+
+message MathNodeConfig {
+  Mode mode = 1;
+
+  enum Mode {
+    Addition = 0;
+    Subtraction = 1;
+    Multiplication = 2;
+    Division = 3;
+  }
 }
 
 message NodePosition {

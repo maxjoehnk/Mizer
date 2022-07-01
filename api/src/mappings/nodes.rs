@@ -46,6 +46,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             ColorHsv(node) => Self::colorHsvConfig(node.into()),
             Gamepad(node) => Self::gamepadNodeConfig(node.into()),
             Container(node) => Self::containerConfig(node.into()),
+            Math(node) => Self::mathConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -105,6 +106,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::colorHsvConfig(node) => Self::ColorHsv(node.into()),
             NodeConfig_oneof_type::gamepadNodeConfig(node) => Self::Gamepad(node.into()),
             NodeConfig_oneof_type::containerConfig(node) => Self::Container(node.into()),
+            NodeConfig_oneof_type::mathConfig(node) => Self::Math(node.into()),
         }
     }
 }
@@ -1022,6 +1024,49 @@ impl From<ContainerNodeConfig> for mizer_nodes::ContainerNode {
     }
 }
 
+impl From<mizer_nodes::MathNode> for MathNodeConfig {
+    fn from(node: mizer_nodes::MathNode) -> Self {
+        Self {
+            mode: node.mode.into(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<MathNodeConfig> for mizer_nodes::MathNode {
+    fn from(config: MathNodeConfig) -> Self {
+        Self {
+            mode: config.mode.into(),
+        }
+    }
+}
+
+impl From<mizer_nodes::MathMode> for MathNodeConfig_Mode {
+    fn from(mode: mizer_nodes::MathMode) -> Self {
+        use mizer_nodes::MathMode::*;
+
+        match mode {
+            Addition => Self::Addition,
+            Subtraction => Self::Subtraction,
+            Division => Self::Division,
+            Multiplication => Self::Multiplication,
+        }
+    }
+}
+
+impl From<MathNodeConfig_Mode> for mizer_nodes::MathMode {
+    fn from(mode: MathNodeConfig_Mode) -> Self {
+        use MathNodeConfig_Mode::*;
+
+        match mode {
+            Addition => Self::Addition,
+            Subtraction => Self::Subtraction,
+            Division => Self::Division,
+            Multiplication => Self::Multiplication,
+        }
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1060,6 +1105,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::ColorRgb => Node_NodeType::ColorRgb,
             NodeType::Gamepad => Node_NodeType::Gamepad,
             NodeType::Container => Node_NodeType::Container,
+            NodeType::Math => Node_NodeType::Math,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1103,6 +1149,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::ColorRgb => NodeType::ColorRgb,
             Node_NodeType::Gamepad => NodeType::Gamepad,
             Node_NodeType::Container => NodeType::Container,
+            Node_NodeType::Math => NodeType::Math,
         }
     }
 }

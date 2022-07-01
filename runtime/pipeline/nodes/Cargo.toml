@@ -17,6 +17,7 @@ mizer-dmx-nodes = { path = "connections/protocols/dmx" }
 mizer-gamepad-nodes = { path = "connections/gamepad" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-sequence-nodes = { path = "behaviors/sequence" }
+mizer-math-nodes = { path = "behaviors/math" }
 mizer-sequencer-nodes = { path = "sequencer" }
 mizer-fixture-nodes = { path = "fixture" }
 mizer-laser-nodes = { path = "connections/laser" }

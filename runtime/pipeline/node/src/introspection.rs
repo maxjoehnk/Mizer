@@ -45,6 +45,7 @@ pub enum NodeType {
     ColorRgb,
     ColorHsv,
     Container,
+    Math,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -90,6 +91,7 @@ impl NodeType {
             ColorHsv => "color-hsv",
             ColorRgb => "color-rgb",
             Container => "container",
+            Math => "math",
             TestSink => "test-sink",
         }
         .to_string()

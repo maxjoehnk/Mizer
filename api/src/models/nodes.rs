@@ -9002,6 +9002,7 @@ impl ::protobuf::reflect::ProtobufValue for LaserNodeConfig {
 pub struct GamepadNodeConfig {
     // message fields
     pub device_id: ::std::string::String,
+    pub control: GamepadNodeConfig_Control,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -9045,6 +9046,21 @@ impl GamepadNodeConfig {
     pub fn take_device_id(&mut self) -> ::std::string::String {
         ::std::mem::replace(&mut self.device_id, ::std::string::String::new())
     }
+
+    // .mizer.GamepadNodeConfig.Control control = 2;
+
+
+    pub fn get_control(&self) -> GamepadNodeConfig_Control {
+        self.control
+    }
+    pub fn clear_control(&mut self) {
+        self.control = GamepadNodeConfig_Control::LeftStickX;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_control(&mut self, v: GamepadNodeConfig_Control) {
+        self.control = v;
+    }
 }
 
 impl ::protobuf::Message for GamepadNodeConfig {
@@ -9058,6 +9074,9 @@ impl ::protobuf::Message for GamepadNodeConfig {
             match field_number {
                 1 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.device_id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 2, &mut self.unknown_fields)?
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -9074,6 +9093,9 @@ impl ::protobuf::Message for GamepadNodeConfig {
         if !self.device_id.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.device_id);
         }
+        if self.control != GamepadNodeConfig_Control::LeftStickX {
+            my_size += ::protobuf::rt::enum_size(2, self.control);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9082,6 +9104,9 @@ impl ::protobuf::Message for GamepadNodeConfig {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
         if !self.device_id.is_empty() {
             os.write_string(1, &self.device_id)?;
+        }
+        if self.control != GamepadNodeConfig_Control::LeftStickX {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.control))?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9126,6 +9151,11 @@ impl ::protobuf::Message for GamepadNodeConfig {
                 |m: &GamepadNodeConfig| { &m.device_id },
                 |m: &mut GamepadNodeConfig| { &mut m.device_id },
             ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<GamepadNodeConfig_Control>>(
+                "control",
+                |m: &GamepadNodeConfig| { &m.control },
+                |m: &mut GamepadNodeConfig| { &mut m.control },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<GamepadNodeConfig>(
                 "GamepadNodeConfig",
                 fields,
@@ -9143,6 +9173,7 @@ impl ::protobuf::Message for GamepadNodeConfig {
 impl ::protobuf::Clear for GamepadNodeConfig {
     fn clear(&mut self) {
         self.device_id.clear();
+        self.control = GamepadNodeConfig_Control::LeftStickX;
         self.unknown_fields.clear();
     }
 }
@@ -9156,6 +9187,111 @@ impl ::std::fmt::Debug for GamepadNodeConfig {
 impl ::protobuf::reflect::ProtobufValue for GamepadNodeConfig {
     fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
         ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum GamepadNodeConfig_Control {
+    LeftStickX = 0,
+    LeftStickY = 1,
+    RightStickX = 2,
+    RightStickY = 3,
+    LeftTrigger = 4,
+    RightTrigger = 5,
+    LeftShoulder = 6,
+    RightShoulder = 7,
+    South = 8,
+    East = 9,
+    North = 10,
+    West = 11,
+    Select = 12,
+    Start = 13,
+    DpadUp = 14,
+    DpadDown = 15,
+    DpadLeft = 16,
+    DpadRight = 17,
+    LeftStick = 18,
+    RightStick = 19,
+}
+
+impl ::protobuf::ProtobufEnum for GamepadNodeConfig_Control {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<GamepadNodeConfig_Control> {
+        match value {
+            0 => ::std::option::Option::Some(GamepadNodeConfig_Control::LeftStickX),
+            1 => ::std::option::Option::Some(GamepadNodeConfig_Control::LeftStickY),
+            2 => ::std::option::Option::Some(GamepadNodeConfig_Control::RightStickX),
+            3 => ::std::option::Option::Some(GamepadNodeConfig_Control::RightStickY),
+            4 => ::std::option::Option::Some(GamepadNodeConfig_Control::LeftTrigger),
+            5 => ::std::option::Option::Some(GamepadNodeConfig_Control::RightTrigger),
+            6 => ::std::option::Option::Some(GamepadNodeConfig_Control::LeftShoulder),
+            7 => ::std::option::Option::Some(GamepadNodeConfig_Control::RightShoulder),
+            8 => ::std::option::Option::Some(GamepadNodeConfig_Control::South),
+            9 => ::std::option::Option::Some(GamepadNodeConfig_Control::East),
+            10 => ::std::option::Option::Some(GamepadNodeConfig_Control::North),
+            11 => ::std::option::Option::Some(GamepadNodeConfig_Control::West),
+            12 => ::std::option::Option::Some(GamepadNodeConfig_Control::Select),
+            13 => ::std::option::Option::Some(GamepadNodeConfig_Control::Start),
+            14 => ::std::option::Option::Some(GamepadNodeConfig_Control::DpadUp),
+            15 => ::std::option::Option::Some(GamepadNodeConfig_Control::DpadDown),
+            16 => ::std::option::Option::Some(GamepadNodeConfig_Control::DpadLeft),
+            17 => ::std::option::Option::Some(GamepadNodeConfig_Control::DpadRight),
+            18 => ::std::option::Option::Some(GamepadNodeConfig_Control::LeftStick),
+            19 => ::std::option::Option::Some(GamepadNodeConfig_Control::RightStick),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [GamepadNodeConfig_Control] = &[
+            GamepadNodeConfig_Control::LeftStickX,
+            GamepadNodeConfig_Control::LeftStickY,
+            GamepadNodeConfig_Control::RightStickX,
+            GamepadNodeConfig_Control::RightStickY,
+            GamepadNodeConfig_Control::LeftTrigger,
+            GamepadNodeConfig_Control::RightTrigger,
+            GamepadNodeConfig_Control::LeftShoulder,
+            GamepadNodeConfig_Control::RightShoulder,
+            GamepadNodeConfig_Control::South,
+            GamepadNodeConfig_Control::East,
+            GamepadNodeConfig_Control::North,
+            GamepadNodeConfig_Control::West,
+            GamepadNodeConfig_Control::Select,
+            GamepadNodeConfig_Control::Start,
+            GamepadNodeConfig_Control::DpadUp,
+            GamepadNodeConfig_Control::DpadDown,
+            GamepadNodeConfig_Control::DpadLeft,
+            GamepadNodeConfig_Control::DpadRight,
+            GamepadNodeConfig_Control::LeftStick,
+            GamepadNodeConfig_Control::RightStick,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<GamepadNodeConfig_Control>("GamepadNodeConfig.Control", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for GamepadNodeConfig_Control {
+}
+
+impl ::std::default::Default for GamepadNodeConfig_Control {
+    fn default() -> Self {
+        GamepadNodeConfig_Control::LeftStickX
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for GamepadNodeConfig_Control {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
     }
 }
 
@@ -13830,72 +13966,81 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     uttonNodeConfig\x12\x16\n\x06toggle\x18\x01\x20\x01(\x08R\x06toggle\"\
     \x11\n\x0fFaderNodeConfig\"(\n\x12IldaFileNodeConfig\x12\x12\n\x04file\
     \x18\x01\x20\x01(\tR\x04file\".\n\x0fLaserNodeConfig\x12\x1b\n\tdevice_i\
-    d\x18\x01\x20\x01(\tR\x08deviceId\"0\n\x11GamepadNodeConfig\x12\x1b\n\td\
-    evice_id\x18\x01\x20\x01(\tR\x08deviceId\"\x82\x01\n\x16PixelPatternNode\
-    Config\x12?\n\x07pattern\x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeCo\
-    nfig.PatternR\x07pattern\"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\
-    \x0c\n\x08RgbSnake\x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\
-    \x05width\x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\
-    \x01(\x04R\x06height\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstart\
-    Universe\x12\x16\n\x06output\x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOu\
-    tputNodeConfig\x12\x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06output\x88\
-    \x01\x01\x12\x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\
-    \x07channel\x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\xde\x03\n\
-    \x0eMidiNodeConfig\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12\
-    E\n\x0bnoteBinding\x18\x02\x20\x01(\x0b2!.mizer.MidiNodeConfig.NoteBindi\
-    ngH\0R\x0bnoteBinding\x12N\n\x0econtrolBinding\x18\x03\x20\x01(\x0b2$.mi\
-    zer.MidiNodeConfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd1\x01\n\
-    \x0bNoteBinding\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12>\
-    \n\x04type\x18\x02\x20\x01(\x0e2*.mizer.MidiNodeConfig.NoteBinding.MidiT\
-    ypeR\x04type\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1c\n\tra\
-    ngeFrom\x18\x04\x20\x01(\rR\trangeFrom\x12\x18\n\x07rangeTo\x18\x05\x20\
-    \x01(\rR\x07rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\
-    \x04Note\x10\x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\
-    \x01(\tR\x04page\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\
-    \n\x07binding\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\
-    \x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\
-    \x05width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\
-    \x01(\x04R\x06height\"\xe1\x01\n\rOscNodeConfig\x12\x12\n\x04host\x18\
-    \x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\
-    \x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\x12E\n\x0cargumentType\
-    \x18\x04\x20\x01(\x0e2!.mizer.OscNodeConfig.ArgumentTypeR\x0cargumentTyp\
-    e\"M\n\x0cArgumentType\x12\x07\n\x03Int\x10\0\x12\t\n\x05Float\x10\x01\
-    \x12\x08\n\x04Long\x10\x02\x12\n\n\x06Double\x10\x03\x12\x08\n\x04Bool\
-    \x10\x04\x12\t\n\x05Color\x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\
-    \"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\
-    \x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\
-    \x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10SelectNodeConfig\"y\n\x0fM\
-    ergeNodeConfig\x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.MergeNodeC\
-    onfig.MergeModeR\x04mode\"0\n\tMergeMode\x12\n\n\x06Latest\x10\0\x12\x0b\
-    \n\x07Highest\x10\x01\x12\n\n\x06Lowest\x10\x02\"\xb1\x01\n\x13Threshold\
-    NodeConfig\x12'\n\x0flower_threshold\x18\x01\x20\x01(\x01R\x0elowerThres\
-    hold\x12'\n\x0fupper_threshold\x18\x02\x20\x01(\x01R\x0eupperThreshold\
-    \x12!\n\x0cactive_value\x18\x03\x20\x01(\x01R\x0bactiveValue\x12%\n\x0ei\
-    nactive_value\x18\x04\x20\x01(\x01R\rinactiveValue\"\x14\n\x12ColorRgbNo\
-    deConfig\"\x14\n\x12ColorHsvNodeConfig\"8\n\x13ContainerNodeConfig\x12!\
-    \n\x05nodes\x18\x01\x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\"*\n\x0cNodeP\
-    osition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\
-    \x20\x01(\x01R\x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\
-    \x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\
-    \x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\
-    \x06hidden\"N\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
-    \x122\n\x08protocol\x18\x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08\
-    protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\
-    \x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\
-    \x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\
-    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\
-    \n\x03GST\x10\x082\xc4\x04\n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mize\
-    r.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.A\
-    ddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.Nod\
-    eConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\x11WriteControlValue\
-    \x12\x13.mizer.WriteControl\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12Up\
-    dateNodeProperty\x12\x1e.mizer.UpdateNodeConfigRequest\x1a\x1f.mizer.Upd\
-    ateNodeConfigResponse\"\0\x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeReque\
-    st\x1a\x17.mizer.MoveNodeResponse\"\0\x12C\n\nDeleteNode\x12\x18.mizer.D\
-    eleteNodeRequest\x1a\x19.mizer.DeleteNodeResponse\"\0\x12=\n\x08HideNode\
-    \x12\x16.mizer.HideNodeRequest\x1a\x17.mizer.HideNodeResponse\"\0\x12=\n\
-    \x08ShowNode\x12\x16.mizer.ShowNodeRequest\x1a\x17.mizer.ShowNodeRespons\
-    e\"\0b\x06proto3\
+    d\x18\x01\x20\x01(\tR\x08deviceId\"\x99\x03\n\x11GamepadNodeConfig\x12\
+    \x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\x12:\n\x07control\x18\
+    \x02\x20\x01(\x0e2\x20.mizer.GamepadNodeConfig.ControlR\x07control\"\xaa\
+    \x02\n\x07Control\x12\x0e\n\nLeftStickX\x10\0\x12\x0e\n\nLeftStickY\x10\
+    \x01\x12\x0f\n\x0bRightStickX\x10\x02\x12\x0f\n\x0bRightStickY\x10\x03\
+    \x12\x0f\n\x0bLeftTrigger\x10\x04\x12\x10\n\x0cRightTrigger\x10\x05\x12\
+    \x10\n\x0cLeftShoulder\x10\x06\x12\x11\n\rRightShoulder\x10\x07\x12\t\n\
+    \x05South\x10\x08\x12\x08\n\x04East\x10\t\x12\t\n\x05North\x10\n\x12\x08\
+    \n\x04West\x10\x0b\x12\n\n\x06Select\x10\x0c\x12\t\n\x05Start\x10\r\x12\
+    \n\n\x06DpadUp\x10\x0e\x12\x0c\n\x08DpadDown\x10\x0f\x12\x0c\n\x08DpadLe\
+    ft\x10\x10\x12\r\n\tDpadRight\x10\x11\x12\r\n\tLeftStick\x10\x12\x12\x0e\
+    \n\nRightStick\x10\x13\"\x82\x01\n\x16PixelPatternNodeConfig\x12?\n\x07p\
+    attern\x18\x01\x20\x01(\x0e2%.mizer.PixelPatternNodeConfig.PatternR\x07p\
+    attern\"'\n\x07Pattern\x12\x0e\n\nRgbIterate\x10\0\x12\x0c\n\x08RgbSnake\
+    \x10\x01\"\x81\x01\n\x12PixelDmxNodeConfig\x12\x14\n\x05width\x18\x01\
+    \x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04R\x06hei\
+    ght\x12%\n\x0estart_universe\x18\x03\x20\x01(\rR\rstartUniverse\x12\x16\
+    \n\x06output\x18\x04\x20\x01(\tR\x06output\"s\n\x13DmxOutputNodeConfig\
+    \x12\x1b\n\x06output\x18\x01\x20\x01(\tH\0R\x06output\x88\x01\x01\x12\
+    \x1a\n\x08universe\x18\x02\x20\x01(\rR\x08universe\x12\x18\n\x07channel\
+    \x18\x03\x20\x01(\rR\x07channelB\t\n\x07_output\"\xde\x03\n\x0eMidiNodeC\
+    onfig\x12\x16\n\x06device\x18\x01\x20\x01(\tR\x06device\x12E\n\x0bnoteBi\
+    nding\x18\x02\x20\x01(\x0b2!.mizer.MidiNodeConfig.NoteBindingH\0R\x0bnot\
+    eBinding\x12N\n\x0econtrolBinding\x18\x03\x20\x01(\x0b2$.mizer.MidiNodeC\
+    onfig.ControlBindingH\0R\x0econtrolBinding\x1a\xd1\x01\n\x0bNoteBinding\
+    \x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\x12>\n\x04type\x18\
+    \x02\x20\x01(\x0e2*.mizer.MidiNodeConfig.NoteBinding.MidiTypeR\x04type\
+    \x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\x12\x1c\n\trangeFrom\x18\
+    \x04\x20\x01(\rR\trangeFrom\x12\x18\n\x07rangeTo\x18\x05\x20\x01(\rR\x07\
+    rangeTo\"\x1c\n\x08MidiType\x12\x06\n\x02CC\x10\0\x12\x08\n\x04Note\x10\
+    \x01\x1a>\n\x0eControlBinding\x12\x12\n\x04page\x18\x01\x20\x01(\tR\x04p\
+    age\x12\x18\n\x07control\x18\x02\x20\x01(\tR\x07controlB\t\n\x07binding\
+    \"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\tR\x04ho\
+    st\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x14\n\x05width\x18\
+    \x03\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x04\x20\x01(\x04R\
+    \x06height\"\xe1\x01\n\rOscNodeConfig\x12\x12\n\x04host\x18\x01\x20\x01(\
+    \tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04port\x12\x12\n\x04p\
+    ath\x18\x03\x20\x01(\tR\x04path\x12E\n\x0cargumentType\x18\x04\x20\x01(\
+    \x0e2!.mizer.OscNodeConfig.ArgumentTypeR\x0cargumentType\"M\n\x0cArgumen\
+    tType\x12\x07\n\x03Int\x10\0\x12\t\n\x05Float\x10\x01\x12\x08\n\x04Long\
+    \x10\x02\x12\n\n\x06Double\x10\x03\x12\x08\n\x04Bool\x10\x04\x12\t\n\x05\
+    Color\x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEff\
+    ectNodeConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\
+    \x01(\tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransf\
+    ormNodeConfig\"\x12\n\x10SelectNodeConfig\"y\n\x0fMergeNodeConfig\x124\n\
+    \x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.MergeNodeConfig.MergeModeR\x04m\
+    ode\"0\n\tMergeMode\x12\n\n\x06Latest\x10\0\x12\x0b\n\x07Highest\x10\x01\
+    \x12\n\n\x06Lowest\x10\x02\"\xb1\x01\n\x13ThresholdNodeConfig\x12'\n\x0f\
+    lower_threshold\x18\x01\x20\x01(\x01R\x0elowerThreshold\x12'\n\x0fupper_\
+    threshold\x18\x02\x20\x01(\x01R\x0eupperThreshold\x12!\n\x0cactive_value\
+    \x18\x03\x20\x01(\x01R\x0bactiveValue\x12%\n\x0einactive_value\x18\x04\
+    \x20\x01(\x01R\rinactiveValue\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12C\
+    olorHsvNodeConfig\"8\n\x13ContainerNodeConfig\x12!\n\x05nodes\x18\x01\
+    \x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\"*\n\x0cNodePosition\x12\x0c\n\
+    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
+    \x01y\"m\n\x0cNodeDesigner\x12/\n\x08position\x18\x01\x20\x01(\x0b2\x13.\
+    mizer.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\
+    \x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"N\n\x04Po\
+    rt\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x122\n\x08protocol\x18\
+    \x02\x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol*\x82\x01\n\x0f\
+    ChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\
+    \x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\
+    \x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\
+    \x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\xc4\x04\
+    \n\x08NodesApi\x12/\n\x08GetNodes\x12\x13.mizer.NodesRequest\x1a\x0c.miz\
+    er.Nodes\"\0\x12/\n\x07AddNode\x12\x15.mizer.AddNodeRequest\x1a\x0b.mize\
+    r.Node\"\0\x129\n\x07AddLink\x12\x15.mizer.NodeConnection\x1a\x15.mizer.\
+    NodeConnection\"\0\x12@\n\x11WriteControlValue\x12\x13.mizer.WriteContro\
+    l\x1a\x14.mizer.WriteResponse\"\0\x12W\n\x12UpdateNodeProperty\x12\x1e.m\
+    izer.UpdateNodeConfigRequest\x1a\x1f.mizer.UpdateNodeConfigResponse\"\0\
+    \x12=\n\x08MoveNode\x12\x16.mizer.MoveNodeRequest\x1a\x17.mizer.MoveNode\
+    Response\"\0\x12C\n\nDeleteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.\
+    mizer.DeleteNodeResponse\"\0\x12=\n\x08HideNode\x12\x16.mizer.HideNodeRe\
+    quest\x1a\x17.mizer.HideNodeResponse\"\0\x12=\n\x08ShowNode\x12\x16.mize\
+    r.ShowNodeRequest\x1a\x17.mizer.ShowNodeResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

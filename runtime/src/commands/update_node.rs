@@ -177,6 +177,7 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
         (NodeType::Gamepad, Node::Gamepad(config)) => {
             let node: &mut GamepadNode = node.downcast_mut()?;
             node.device_id = config.device_id.clone();
+            node.control = config.control.clone();
         }
         (NodeType::Threshold, Node::Threshold(config)) => {
             let node: &mut ThresholdNode = node.downcast_mut()?;

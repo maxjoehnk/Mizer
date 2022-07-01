@@ -2371,16 +2371,21 @@ class LaserNodeConfig extends $pb.GeneratedMessage {
 class GamepadNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GamepadNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId')
+    ..e<GamepadNodeConfig_Control>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: GamepadNodeConfig_Control.LeftStickX, valueOf: GamepadNodeConfig_Control.valueOf, enumValues: GamepadNodeConfig_Control.values)
     ..hasRequiredFields = false
   ;
 
   GamepadNodeConfig._() : super();
   factory GamepadNodeConfig({
     $core.String? deviceId,
+    GamepadNodeConfig_Control? control,
   }) {
     final _result = create();
     if (deviceId != null) {
       _result.deviceId = deviceId;
+    }
+    if (control != null) {
+      _result.control = control;
     }
     return _result;
   }
@@ -2413,6 +2418,15 @@ class GamepadNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasDeviceId() => $_has(0);
   @$pb.TagNumber(1)
   void clearDeviceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  GamepadNodeConfig_Control get control => $_getN(1);
+  @$pb.TagNumber(2)
+  set control(GamepadNodeConfig_Control v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControl() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearControl() => clearField(2);
 }
 
 class PixelPatternNodeConfig extends $pb.GeneratedMessage {

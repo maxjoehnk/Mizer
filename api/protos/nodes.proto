@@ -239,6 +239,30 @@ message LaserNodeConfig {
 
 message GamepadNodeConfig {
   string device_id = 1;
+  Control control = 2;
+
+  enum Control {
+      LeftStickX = 0;
+      LeftStickY = 1;
+      RightStickX = 2;
+      RightStickY = 3;
+      LeftTrigger = 4;
+      RightTrigger = 5;
+      LeftShoulder = 6;
+      RightShoulder = 7;
+      South = 8;
+      East = 9;
+      North = 10;
+      West = 11;
+      Select = 12;
+      Start = 13;
+      DpadUp = 14;
+      DpadDown = 15;
+      DpadLeft = 16;
+      DpadRight = 17;
+      LeftStick = 18;
+      RightStick = 19;
+  }
 }
 
 message PixelPatternNodeConfig {

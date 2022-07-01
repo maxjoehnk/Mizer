@@ -408,6 +408,7 @@ impl From<mizer_nodes::GamepadNode> for GamepadNodeConfig {
     fn from(gamepad: mizer_nodes::GamepadNode) -> Self {
         Self {
             device_id: gamepad.device_id,
+            control: gamepad.control.into(),
             ..Default::default()
         }
     }
@@ -417,6 +418,65 @@ impl From<GamepadNodeConfig> for mizer_nodes::GamepadNode {
     fn from(gamepad: GamepadNodeConfig) -> Self {
         Self {
             device_id: gamepad.device_id,
+            control: gamepad.control.into(),
+        }
+    }
+}
+
+impl From<mizer_nodes::GamepadControl> for GamepadNodeConfig_Control {
+    fn from(control: mizer_nodes::GamepadControl) -> Self {
+        use mizer_nodes::GamepadControl::*;
+
+        match control {
+            LeftStickX => Self::LeftStickX,
+            LeftStickY => Self::LeftStickY,
+            RightStickX => Self::RightStickX,
+            RightStickY => Self::RightStickY,
+            LeftTrigger => Self::LeftTrigger,
+            RightTrigger => Self::RightTrigger,
+            LeftShoulder => Self::LeftShoulder,
+            RightShoulder => Self::RightShoulder,
+            South => Self::South,
+            East => Self::East,
+            North => Self::North,
+            West => Self::West,
+            Select => Self::Select,
+            Start => Self::Start,
+            DpadUp => Self::DpadUp,
+            DpadDown => Self::DpadDown,
+            DpadLeft => Self::DpadLeft,
+            DpadRight => Self::DpadRight,
+            LeftStick => Self::LeftStick,
+            RightStick => Self::RightStick,
+        }
+    }
+}
+
+impl From<GamepadNodeConfig_Control> for mizer_nodes::GamepadControl {
+    fn from(control: GamepadNodeConfig_Control) -> Self {
+        use GamepadNodeConfig_Control::*;
+
+        match control {
+            LeftStickX => Self::LeftStickX,
+            LeftStickY => Self::LeftStickY,
+            RightStickX => Self::RightStickX,
+            RightStickY => Self::RightStickY,
+            LeftTrigger => Self::LeftTrigger,
+            RightTrigger => Self::RightTrigger,
+            LeftShoulder => Self::LeftShoulder,
+            RightShoulder => Self::RightShoulder,
+            South => Self::South,
+            East => Self::East,
+            North => Self::North,
+            West => Self::West,
+            Select => Self::Select,
+            Start => Self::Start,
+            DpadUp => Self::DpadUp,
+            DpadDown => Self::DpadDown,
+            DpadLeft => Self::DpadLeft,
+            DpadRight => Self::DpadRight,
+            LeftStick => Self::LeftStick,
+            RightStick => Self::RightStick,
         }
     }
 }

@@ -42,6 +42,12 @@ class _GamepadPropertiesState extends State<GamepadProperties> {
         items: gamepads.map((e) => SelectOption(value: e.gamepad.id, label: e.name)).toList(),
         onUpdate: _updateDevice,
       ),
+      EnumField(
+        label: "Control",
+        initialValue: widget.config.control,
+        items: GamepadNodeConfig_Control.values.map((e) => SelectOption(value: e, label: e.name)).toList(),
+        onUpdate: _updateControl,
+      ),
     ]);
   }
 
@@ -75,6 +81,14 @@ class _GamepadPropertiesState extends State<GamepadProperties> {
     log("_updateDevice $device", name: "GamepadProperties");
     setState(() {
       state.deviceId = device;
+      widget.onUpdate(state);
+    });
+  }
+
+  void _updateControl(GamepadNodeConfig_Control control) {
+    log("_updateControl $control", name: "GamepadProperties");
+    setState(() {
+      state.control = control;
       widget.onUpdate(state);
     });
   }

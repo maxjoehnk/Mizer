@@ -159,6 +159,57 @@ class OscillatorNodeConfig_OscillatorType extends $pb.ProtobufEnum {
   const OscillatorNodeConfig_OscillatorType._($core.int v, $core.String n) : super(v, n);
 }
 
+class GamepadNodeConfig_Control extends $pb.ProtobufEnum {
+  static const GamepadNodeConfig_Control LeftStickX = GamepadNodeConfig_Control._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftStickX');
+  static const GamepadNodeConfig_Control LeftStickY = GamepadNodeConfig_Control._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftStickY');
+  static const GamepadNodeConfig_Control RightStickX = GamepadNodeConfig_Control._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightStickX');
+  static const GamepadNodeConfig_Control RightStickY = GamepadNodeConfig_Control._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightStickY');
+  static const GamepadNodeConfig_Control LeftTrigger = GamepadNodeConfig_Control._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftTrigger');
+  static const GamepadNodeConfig_Control RightTrigger = GamepadNodeConfig_Control._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightTrigger');
+  static const GamepadNodeConfig_Control LeftShoulder = GamepadNodeConfig_Control._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftShoulder');
+  static const GamepadNodeConfig_Control RightShoulder = GamepadNodeConfig_Control._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightShoulder');
+  static const GamepadNodeConfig_Control South = GamepadNodeConfig_Control._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'South');
+  static const GamepadNodeConfig_Control East = GamepadNodeConfig_Control._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'East');
+  static const GamepadNodeConfig_Control North = GamepadNodeConfig_Control._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'North');
+  static const GamepadNodeConfig_Control West = GamepadNodeConfig_Control._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'West');
+  static const GamepadNodeConfig_Control Select = GamepadNodeConfig_Control._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Select');
+  static const GamepadNodeConfig_Control Start = GamepadNodeConfig_Control._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Start');
+  static const GamepadNodeConfig_Control DpadUp = GamepadNodeConfig_Control._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadUp');
+  static const GamepadNodeConfig_Control DpadDown = GamepadNodeConfig_Control._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadDown');
+  static const GamepadNodeConfig_Control DpadLeft = GamepadNodeConfig_Control._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadLeft');
+  static const GamepadNodeConfig_Control DpadRight = GamepadNodeConfig_Control._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DpadRight');
+  static const GamepadNodeConfig_Control LeftStick = GamepadNodeConfig_Control._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LeftStick');
+  static const GamepadNodeConfig_Control RightStick = GamepadNodeConfig_Control._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RightStick');
+
+  static const $core.List<GamepadNodeConfig_Control> values = <GamepadNodeConfig_Control> [
+    LeftStickX,
+    LeftStickY,
+    RightStickX,
+    RightStickY,
+    LeftTrigger,
+    RightTrigger,
+    LeftShoulder,
+    RightShoulder,
+    South,
+    East,
+    North,
+    West,
+    Select,
+    Start,
+    DpadUp,
+    DpadDown,
+    DpadLeft,
+    DpadRight,
+    LeftStick,
+    RightStick,
+  ];
+
+  static final $core.Map<$core.int, GamepadNodeConfig_Control> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static GamepadNodeConfig_Control? valueOf($core.int value) => _byValue[value];
+
+  const GamepadNodeConfig_Control._($core.int v, $core.String n) : super(v, n);
+}
+
 class PixelPatternNodeConfig_Pattern extends $pb.ProtobufEnum {
   static const PixelPatternNodeConfig_Pattern RgbIterate = PixelPatternNodeConfig_Pattern._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RgbIterate');
   static const PixelPatternNodeConfig_Pattern RgbSnake = PixelPatternNodeConfig_Pattern._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RgbSnake');

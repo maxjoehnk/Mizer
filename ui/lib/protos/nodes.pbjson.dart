@@ -465,11 +465,40 @@ const GamepadNodeConfig$json = const {
   '1': 'GamepadNodeConfig',
   '2': const [
     const {'1': 'device_id', '3': 1, '4': 1, '5': 9, '10': 'deviceId'},
+    const {'1': 'control', '3': 2, '4': 1, '5': 14, '6': '.mizer.GamepadNodeConfig.Control', '10': 'control'},
+  ],
+  '4': const [GamepadNodeConfig_Control$json],
+};
+
+@$core.Deprecated('Use gamepadNodeConfigDescriptor instead')
+const GamepadNodeConfig_Control$json = const {
+  '1': 'Control',
+  '2': const [
+    const {'1': 'LeftStickX', '2': 0},
+    const {'1': 'LeftStickY', '2': 1},
+    const {'1': 'RightStickX', '2': 2},
+    const {'1': 'RightStickY', '2': 3},
+    const {'1': 'LeftTrigger', '2': 4},
+    const {'1': 'RightTrigger', '2': 5},
+    const {'1': 'LeftShoulder', '2': 6},
+    const {'1': 'RightShoulder', '2': 7},
+    const {'1': 'South', '2': 8},
+    const {'1': 'East', '2': 9},
+    const {'1': 'North', '2': 10},
+    const {'1': 'West', '2': 11},
+    const {'1': 'Select', '2': 12},
+    const {'1': 'Start', '2': 13},
+    const {'1': 'DpadUp', '2': 14},
+    const {'1': 'DpadDown', '2': 15},
+    const {'1': 'DpadLeft', '2': 16},
+    const {'1': 'DpadRight', '2': 17},
+    const {'1': 'LeftStick', '2': 18},
+    const {'1': 'RightStick', '2': 19},
   ],
 };
 
 /// Descriptor for `GamepadNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List gamepadNodeConfigDescriptor = $convert.base64Decode('ChFHYW1lcGFkTm9kZUNvbmZpZxIbCglkZXZpY2VfaWQYASABKAlSCGRldmljZUlk');
+final $typed_data.Uint8List gamepadNodeConfigDescriptor = $convert.base64Decode('ChFHYW1lcGFkTm9kZUNvbmZpZxIbCglkZXZpY2VfaWQYASABKAlSCGRldmljZUlkEjoKB2NvbnRyb2wYAiABKA4yIC5taXplci5HYW1lcGFkTm9kZUNvbmZpZy5Db250cm9sUgdjb250cm9sIqoCCgdDb250cm9sEg4KCkxlZnRTdGlja1gQABIOCgpMZWZ0U3RpY2tZEAESDwoLUmlnaHRTdGlja1gQAhIPCgtSaWdodFN0aWNrWRADEg8KC0xlZnRUcmlnZ2VyEAQSEAoMUmlnaHRUcmlnZ2VyEAUSEAoMTGVmdFNob3VsZGVyEAYSEQoNUmlnaHRTaG91bGRlchAHEgkKBVNvdXRoEAgSCAoERWFzdBAJEgkKBU5vcnRoEAoSCAoEV2VzdBALEgoKBlNlbGVjdBAMEgkKBVN0YXJ0EA0SCgoGRHBhZFVwEA4SDAoIRHBhZERvd24QDxIMCghEcGFkTGVmdBAQEg0KCURwYWRSaWdodBAREg0KCUxlZnRTdGljaxASEg4KClJpZ2h0U3RpY2sQEw==');
 @$core.Deprecated('Use pixelPatternNodeConfigDescriptor instead')
 const PixelPatternNodeConfig$json = const {
   '1': 'PixelPatternNodeConfig',

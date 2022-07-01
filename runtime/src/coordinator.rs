@@ -346,6 +346,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Select(node) => pipeline.register_node(path, &node),
         Node::Merge(node) => pipeline.register_node(path, &node),
         Node::Threshold(node) => pipeline.register_node(path, &node),
+        Node::Encoder(node) => pipeline.register_node(path, &node),
         Node::Fixture(node) => pipeline.register_node(path, &node),
         Node::Programmer(node) => pipeline.register_node(path, &node),
         Node::Group(node) => pipeline.register_node(path, &node),

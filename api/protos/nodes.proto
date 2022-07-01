@@ -114,6 +114,7 @@ message Node {
     ColorRgb = 50;
     ColorHsv = 51;
     Container = 100;
+    Encoder = 55;
   }
 
   enum NodePreviewType {
@@ -168,6 +169,7 @@ message NodeConfig {
     ColorHsvNodeConfig colorHsvConfig = 41;
     GamepadNodeConfig gamepadNodeConfig = 42;
     ThresholdNodeConfig thresholdConfig = 43;
+    EncoderNodeConfig encoderConfig = 44;
     ContainerNodeConfig containerConfig = 45;
   }
 }
@@ -360,6 +362,10 @@ message ThresholdNodeConfig {
   double upper_threshold = 2;
   double active_value = 3;
   double inactive_value = 4;
+}
+
+message EncoderNodeConfig {
+  double hold_rate = 1;
 }
 
 message ColorRgbNodeConfig {}

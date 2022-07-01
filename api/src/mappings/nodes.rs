@@ -20,6 +20,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             Select(select) => Self::selectConfig(select.into()),
             Merge(merge) => Self::mergeConfig(merge.into()),
             Threshold(threshold) => Self::thresholdConfig(threshold.into()),
+            Encoder(node) => Self::encoderConfig(node.into()),
             Fixture(fixture) => Self::fixtureConfig(fixture.into()),
             Programmer(programmer) => Self::programmerConfig(programmer.into()),
             Group(group) => Self::groupConfig(group.into()),
@@ -66,6 +67,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::selectConfig(select) => Self::Select(select.into()),
             NodeConfig_oneof_type::mergeConfig(merge) => Self::Merge(merge.into()),
             NodeConfig_oneof_type::thresholdConfig(threshold) => Self::Threshold(threshold.into()),
+            NodeConfig_oneof_type::encoderConfig(config) => Self::Encoder(config.into()),
             NodeConfig_oneof_type::fixtureConfig(fixture) => Self::Fixture(fixture.into()),
             NodeConfig_oneof_type::programmerConfig(programmer) => {
                 Self::Programmer(programmer.into())
@@ -960,6 +962,23 @@ impl From<ThresholdNodeConfig> for mizer_nodes::ThresholdNode {
     }
 }
 
+impl From<mizer_nodes::EncoderNode> for EncoderNodeConfig {
+    fn from(node: mizer_nodes::EncoderNode) -> Self {
+        Self {
+            hold_rate: node.hold_rate,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<EncoderNodeConfig> for mizer_nodes::EncoderNode {
+    fn from(config: EncoderNodeConfig) -> Self {
+        Self {
+            hold_rate: config.hold_rate,
+        }
+    }
+}
+
 impl From<mizer_nodes::HsvColorNode> for ColorHsvNodeConfig {
     fn from(_: mizer_nodes::HsvColorNode) -> Self {
         Default::default()
@@ -1032,6 +1051,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::Select => Node_NodeType::Select,
             NodeType::Merge => Node_NodeType::Merge,
             NodeType::Threshold => Node_NodeType::Threshold,
+            NodeType::Encoder => Node_NodeType::Encoder,
             NodeType::MidiInput => Node_NodeType::MidiInput,
             NodeType::MidiOutput => Node_NodeType::MidiOutput,
             NodeType::Laser => Node_NodeType::Laser,
@@ -1074,6 +1094,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::Select => NodeType::Select,
             Node_NodeType::Merge => NodeType::Merge,
             Node_NodeType::Threshold => NodeType::Threshold,
+            Node_NodeType::Encoder => NodeType::Encoder,
             Node_NodeType::MidiInput => NodeType::MidiInput,
             Node_NodeType::MidiOutput => NodeType::MidiOutput,
             Node_NodeType::Laser => NodeType::Laser,

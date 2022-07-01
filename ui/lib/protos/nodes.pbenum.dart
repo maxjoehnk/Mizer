@@ -75,6 +75,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType ColorRgb = Node_NodeType._(50, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorRgb');
   static const Node_NodeType ColorHsv = Node_NodeType._(51, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ColorHsv');
   static const Node_NodeType Container = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Container');
+  static const Node_NodeType Encoder = Node_NodeType._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Encoder');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -111,6 +112,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     ColorRgb,
     ColorHsv,
     Container,
+    Encoder,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

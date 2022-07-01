@@ -979,6 +979,7 @@ enum NodeConfig_Type {
   colorHsvConfig, 
   gamepadNodeConfig, 
   thresholdConfig, 
+  encoderConfig, 
   containerConfig, 
   notSet
 }
@@ -1018,11 +1019,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     41 : NodeConfig_Type.colorHsvConfig,
     42 : NodeConfig_Type.gamepadNodeConfig,
     43 : NodeConfig_Type.thresholdConfig,
+    44 : NodeConfig_Type.encoderConfig,
     45 : NodeConfig_Type.containerConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 45])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1056,6 +1058,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<ColorHsvNodeConfig>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorHsvConfig', protoName: 'colorHsvConfig', subBuilder: ColorHsvNodeConfig.create)
     ..aOM<GamepadNodeConfig>(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepadNodeConfig', protoName: 'gamepadNodeConfig', subBuilder: GamepadNodeConfig.create)
     ..aOM<ThresholdNodeConfig>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thresholdConfig', protoName: 'thresholdConfig', subBuilder: ThresholdNodeConfig.create)
+    ..aOM<EncoderNodeConfig>(44, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'encoderConfig', protoName: 'encoderConfig', subBuilder: EncoderNodeConfig.create)
     ..aOM<ContainerNodeConfig>(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'containerConfig', protoName: 'containerConfig', subBuilder: ContainerNodeConfig.create)
     ..hasRequiredFields = false
   ;
@@ -1095,6 +1098,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ColorHsvNodeConfig? colorHsvConfig,
     GamepadNodeConfig? gamepadNodeConfig,
     ThresholdNodeConfig? thresholdConfig,
+    EncoderNodeConfig? encoderConfig,
     ContainerNodeConfig? containerConfig,
   }) {
     final _result = create();
@@ -1196,6 +1200,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (thresholdConfig != null) {
       _result.thresholdConfig = thresholdConfig;
+    }
+    if (encoderConfig != null) {
+      _result.encoderConfig = encoderConfig;
     }
     if (containerConfig != null) {
       _result.containerConfig = containerConfig;
@@ -1589,16 +1596,27 @@ class NodeConfig extends $pb.GeneratedMessage {
   @$pb.TagNumber(43)
   ThresholdNodeConfig ensureThresholdConfig() => $_ensure(32);
 
+  @$pb.TagNumber(44)
+  EncoderNodeConfig get encoderConfig => $_getN(33);
+  @$pb.TagNumber(44)
+  set encoderConfig(EncoderNodeConfig v) { setField(44, v); }
+  @$pb.TagNumber(44)
+  $core.bool hasEncoderConfig() => $_has(33);
+  @$pb.TagNumber(44)
+  void clearEncoderConfig() => clearField(44);
+  @$pb.TagNumber(44)
+  EncoderNodeConfig ensureEncoderConfig() => $_ensure(33);
+
   @$pb.TagNumber(45)
-  ContainerNodeConfig get containerConfig => $_getN(33);
+  ContainerNodeConfig get containerConfig => $_getN(34);
   @$pb.TagNumber(45)
   set containerConfig(ContainerNodeConfig v) { setField(45, v); }
   @$pb.TagNumber(45)
-  $core.bool hasContainerConfig() => $_has(33);
+  $core.bool hasContainerConfig() => $_has(34);
   @$pb.TagNumber(45)
   void clearContainerConfig() => clearField(45);
   @$pb.TagNumber(45)
-  ContainerNodeConfig ensureContainerConfig() => $_ensure(33);
+  ContainerNodeConfig ensureContainerConfig() => $_ensure(34);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -3402,6 +3420,53 @@ class ThresholdNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasInactiveValue() => $_has(3);
   @$pb.TagNumber(4)
   void clearInactiveValue() => clearField(4);
+}
+
+class EncoderNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EncoderNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'holdRate', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  EncoderNodeConfig._() : super();
+  factory EncoderNodeConfig({
+    $core.double? holdRate,
+  }) {
+    final _result = create();
+    if (holdRate != null) {
+      _result.holdRate = holdRate;
+    }
+    return _result;
+  }
+  factory EncoderNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EncoderNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EncoderNodeConfig clone() => EncoderNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EncoderNodeConfig copyWith(void Function(EncoderNodeConfig) updates) => super.copyWith((message) => updates(message as EncoderNodeConfig)) as EncoderNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EncoderNodeConfig create() => EncoderNodeConfig._();
+  EncoderNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<EncoderNodeConfig> createRepeated() => $pb.PbList<EncoderNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static EncoderNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EncoderNodeConfig>(create);
+  static EncoderNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get holdRate => $_getN(0);
+  @$pb.TagNumber(1)
+  set holdRate($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasHoldRate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearHoldRate() => clearField(1);
 }
 
 class ColorRgbNodeConfig extends $pb.GeneratedMessage {

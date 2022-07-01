@@ -32,6 +32,7 @@ pub trait NodeDowncast {
             NodeType::Select => Node::Select(self.downcast_node(node_type).unwrap()),
             NodeType::Merge => Node::Merge(self.downcast_node(node_type).unwrap()),
             NodeType::Threshold => Node::Threshold(self.downcast_node(node_type).unwrap()),
+            NodeType::Encoder => Node::Encoder(self.downcast_node(node_type).unwrap()),
             NodeType::Fixture => Node::Fixture(self.downcast_node(node_type).unwrap()),
             NodeType::Programmer => Node::Programmer(self.downcast_node(node_type).unwrap()),
             NodeType::Group => Node::Group(self.downcast_node(node_type).unwrap()),

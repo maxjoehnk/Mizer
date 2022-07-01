@@ -193,6 +193,10 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.sustain = config.sustain;
             node.release = config.release;
         }
+        (NodeType::Encoder, Node::Encoder(config)) => {
+            let node: &mut EncoderNode = node.downcast_mut()?;
+            node.hold_rate = config.hold_rate;
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,

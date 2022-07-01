@@ -73,6 +73,7 @@ impl PipelineAccess {
             Merge(node) => self.add_node(path, node),
             Select(node) => self.add_node(path, node),
             Threshold(node) => self.add_node(path, node),
+            Encoder(node) => self.add_node(path, node),
             Fixture(node) => self.add_node(path, node),
             Programmer(node) => self.add_node(path, node),
             Group(node) => self.add_node(path, node),

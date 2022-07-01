@@ -56,6 +56,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
                         f.manufacturer == fixture.manufacturer && f.model == fixture.model)
                             .map((f) => f.id)
                             .toList()),
+                  onUpdateFixture: (fixtureId, updateRequest) => fixturesBloc.add(UpdateFixture(fixtureId, updateRequest)),
                 ),
                 actions: [
                   PanelAction(

@@ -49,6 +49,15 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for FixturesChannel<R> {
                     resp.respond_msg(self.delete_fixtures(fixture_ids));
                 }
             }
+            "updateFixture" => {
+                match call
+                    .arguments()
+                    .and_then(|args| self.handler.update_fixture(args))
+                {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
             _ => resp.not_implemented(),
         }
     }

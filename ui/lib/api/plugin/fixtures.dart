@@ -40,4 +40,10 @@ class FixturesPluginApi implements FixturesApi {
   static Fixtures _parseResponse(List<Object> response) {
     return Fixtures.fromBuffer(_convertBuffer(response));
   }
+
+  @override
+  Future<void> updateFixture(int fixtureId, UpdateFixtureRequest request) async {
+    request.fixtureId = fixtureId;
+    await channel.invokeMethod("updateFixture", request.writeToBuffer());
+  }
 }

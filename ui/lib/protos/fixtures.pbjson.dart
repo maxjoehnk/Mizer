@@ -73,6 +73,22 @@ const DeleteFixturesRequest$json = const {
 
 /// Descriptor for `DeleteFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteFixturesRequestDescriptor = $convert.base64Decode('ChVEZWxldGVGaXh0dXJlc1JlcXVlc3QSHgoKZml4dHVyZUlkcxgBIAMoDVIKZml4dHVyZUlkcw==');
+@$core.Deprecated('Use updateFixtureRequestDescriptor instead')
+const UpdateFixtureRequest$json = const {
+  '1': 'UpdateFixtureRequest',
+  '2': const [
+    const {'1': 'fixtureId', '3': 1, '4': 1, '5': 13, '10': 'fixtureId'},
+    const {'1': 'invert_pan', '3': 2, '4': 1, '5': 8, '9': 0, '10': 'invertPan', '17': true},
+    const {'1': 'invert_tilt', '3': 3, '4': 1, '5': 8, '9': 1, '10': 'invertTilt', '17': true},
+  ],
+  '8': const [
+    const {'1': '_invert_pan'},
+    const {'1': '_invert_tilt'},
+  ],
+};
+
+/// Descriptor for `UpdateFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIcCglmaXh0dXJlSWQYASABKA1SCWZpeHR1cmVJZBIiCgppbnZlcnRfcGFuGAIgASgISABSCWludmVydFBhbogBARIkCgtpbnZlcnRfdGlsdBgDIAEoCEgBUgppbnZlcnRUaWx0iAEBQg0KC19pbnZlcnRfcGFuQg4KDF9pbnZlcnRfdGlsdA==');
 @$core.Deprecated('Use fixtureIdDescriptor instead')
 const FixtureId$json = const {
   '1': 'FixtureId',
@@ -122,11 +138,23 @@ const Fixture$json = const {
     const {'1': 'channel_count', '3': 8, '4': 1, '5': 13, '10': 'channelCount'},
     const {'1': 'controls', '3': 9, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureControls', '10': 'controls'},
     const {'1': 'children', '3': 10, '4': 3, '5': 11, '6': '.mizer.fixtures.SubFixture', '10': 'children'},
+    const {'1': 'config', '3': 11, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureConfig', '10': 'config'},
   ],
 };
 
 /// Descriptor for `Fixture`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureDescriptor = $convert.base64Decode('CgdGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEiIKDG1hbnVmYWN0dXJlchgDIAEoCVIMbWFudWZhY3R1cmVyEhQKBW1vZGVsGAQgASgJUgVtb2RlbBISCgRtb2RlGAUgASgJUgRtb2RlEhoKCHVuaXZlcnNlGAYgASgNUgh1bml2ZXJzZRIYCgdjaGFubmVsGAcgASgNUgdjaGFubmVsEiMKDWNoYW5uZWxfY291bnQYCCABKA1SDGNoYW5uZWxDb3VudBI7Cghjb250cm9scxgJIAMoCzIfLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sc1IIY29udHJvbHMSNgoIY2hpbGRyZW4YCiADKAsyGi5taXplci5maXh0dXJlcy5TdWJGaXh0dXJlUghjaGlsZHJlbg==');
+final $typed_data.Uint8List fixtureDescriptor = $convert.base64Decode('CgdGaXh0dXJlEg4KAmlkGAEgASgNUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEiIKDG1hbnVmYWN0dXJlchgDIAEoCVIMbWFudWZhY3R1cmVyEhQKBW1vZGVsGAQgASgJUgVtb2RlbBISCgRtb2RlGAUgASgJUgRtb2RlEhoKCHVuaXZlcnNlGAYgASgNUgh1bml2ZXJzZRIYCgdjaGFubmVsGAcgASgNUgdjaGFubmVsEiMKDWNoYW5uZWxfY291bnQYCCABKA1SDGNoYW5uZWxDb3VudBI7Cghjb250cm9scxgJIAMoCzIfLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVDb250cm9sc1IIY29udHJvbHMSNgoIY2hpbGRyZW4YCiADKAsyGi5taXplci5maXh0dXJlcy5TdWJGaXh0dXJlUghjaGlsZHJlbhI1CgZjb25maWcYCyABKAsyHS5taXplci5maXh0dXJlcy5GaXh0dXJlQ29uZmlnUgZjb25maWc=');
+@$core.Deprecated('Use fixtureConfigDescriptor instead')
+const FixtureConfig$json = const {
+  '1': 'FixtureConfig',
+  '2': const [
+    const {'1': 'invert_pan', '3': 1, '4': 1, '5': 8, '10': 'invertPan'},
+    const {'1': 'invert_tilt', '3': 2, '4': 1, '5': 8, '10': 'invertTilt'},
+  ],
+};
+
+/// Descriptor for `FixtureConfig`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureConfigDescriptor = $convert.base64Decode('Cg1GaXh0dXJlQ29uZmlnEh0KCmludmVydF9wYW4YASABKAhSCWludmVydFBhbhIfCgtpbnZlcnRfdGlsdBgCIAEoCFIKaW52ZXJ0VGlsdA==');
 @$core.Deprecated('Use subFixtureDescriptor instead')
 const SubFixture$json = const {
   '1': 'SubFixture',

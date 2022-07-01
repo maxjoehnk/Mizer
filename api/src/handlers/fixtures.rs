@@ -1,4 +1,5 @@
 use mizer_command_executor::*;
+use protobuf::SingularPtrField;
 use regex::Regex;
 use std::ops::Deref;
 
@@ -64,6 +65,11 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                         ..Default::default()
                     })
                     .collect(),
+                config: SingularPtrField::some(FixtureConfig {
+                    invert_pan: fixture.configuration.invert_pan,
+                    invert_tilt: fixture.configuration.invert_tilt,
+                    ..Default::default()
+                }),
                 ..Default::default()
             };
             fixtures.fixtures.push(fixture_model);
@@ -101,6 +107,29 @@ impl<R: RuntimeApi> FixturesHandler<R> {
 
     pub fn delete_fixtures(&self, fixture_ids: Vec<u32>) -> anyhow::Result<()> {
         let cmd = DeleteFixturesCommand { fixture_ids };
+        self.runtime.run_command(cmd)?;
+
+        Ok(())
+    }
+
+    pub fn update_fixture(&self, request: UpdateFixtureRequest) -> anyhow::Result<()> {
+        let cmd = UpdateFixtureCommand {
+            fixture_id: request.fixtureId,
+            invert_pan: request._invert_pan.and_then(|value| {
+                if let UpdateFixtureRequest_oneof__invert_pan::invert_pan(value) = value {
+                    Some(value)
+                } else {
+                    None
+                }
+            }),
+            invert_tilt: request._invert_tilt.and_then(|value| {
+                if let UpdateFixtureRequest_oneof__invert_tilt::invert_tilt(value) = value {
+                    Some(value)
+                } else {
+                    None
+                }
+            }),
+        };
         self.runtime.run_command(cmd)?;
 
         Ok(())

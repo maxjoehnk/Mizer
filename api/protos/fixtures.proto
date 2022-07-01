@@ -7,6 +7,7 @@ service FixturesApi {
   rpc GetFixtureDefinitions (GetFixtureDefinitionsRequest) returns (FixtureDefinitions) {}
   rpc AddFixtures (AddFixturesRequest) returns (Fixtures) {}
   rpc DeleteFixtures (DeleteFixturesRequest) returns (Fixtures) {}
+  rpc UpdateFixture (UpdateFixtureRequest) returns (Fixtures) {}
 }
 
 message AddFixturesRequest {
@@ -27,6 +28,12 @@ message GetFixturesRequest {}
 
 message DeleteFixturesRequest {
   repeated uint32 fixtureIds = 1;
+}
+
+message UpdateFixtureRequest {
+  uint32 fixtureId = 1;
+  optional bool invert_pan = 2;
+  optional bool invert_tilt = 3;
 }
 
 message FixtureId {
@@ -56,6 +63,12 @@ message Fixture {
   uint32 channel_count = 8;
   repeated FixtureControls controls = 9;
   repeated SubFixture children = 10;
+  FixtureConfig config = 11;
+}
+
+message FixtureConfig {
+  bool invert_pan = 1;
+  bool invert_tilt = 2;
 }
 
 message SubFixture {

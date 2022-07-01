@@ -8,4 +8,6 @@ abstract class FixturesApi {
   Future<FixtureDefinitions> getFixtureDefinitions();
 
   Future<Fixtures> deleteFixtures(List<int> fixtureIds);
+
+  Future<void> updateFixture(int fixtureId, UpdateFixtureRequest request);
 }

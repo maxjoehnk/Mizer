@@ -263,6 +263,81 @@ class DeleteFixturesRequest extends $pb.GeneratedMessage {
   $core.List<$core.int> get fixtureIds => $_getList(0);
 }
 
+class UpdateFixtureRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateFixtureRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3, protoName: 'fixtureId')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
+    ..hasRequiredFields = false
+  ;
+
+  UpdateFixtureRequest._() : super();
+  factory UpdateFixtureRequest({
+    $core.int? fixtureId,
+    $core.bool? invertPan,
+    $core.bool? invertTilt,
+  }) {
+    final _result = create();
+    if (fixtureId != null) {
+      _result.fixtureId = fixtureId;
+    }
+    if (invertPan != null) {
+      _result.invertPan = invertPan;
+    }
+    if (invertTilt != null) {
+      _result.invertTilt = invertTilt;
+    }
+    return _result;
+  }
+  factory UpdateFixtureRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateFixtureRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateFixtureRequest clone() => UpdateFixtureRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateFixtureRequest copyWith(void Function(UpdateFixtureRequest) updates) => super.copyWith((message) => updates(message as UpdateFixtureRequest)) as UpdateFixtureRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UpdateFixtureRequest create() => UpdateFixtureRequest._();
+  UpdateFixtureRequest createEmptyInstance() => create();
+  static $pb.PbList<UpdateFixtureRequest> createRepeated() => $pb.PbList<UpdateFixtureRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateFixtureRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateFixtureRequest>(create);
+  static UpdateFixtureRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get fixtureId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set fixtureId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFixtureId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFixtureId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get invertPan => $_getBF(1);
+  @$pb.TagNumber(2)
+  set invertPan($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasInvertPan() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearInvertPan() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get invertTilt => $_getBF(2);
+  @$pb.TagNumber(3)
+  set invertTilt($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasInvertTilt() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearInvertTilt() => clearField(3);
+}
+
 enum FixtureId_Id {
   fixture, 
   subFixture, 
@@ -455,6 +530,7 @@ class Fixture extends $pb.GeneratedMessage {
     ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelCount', $pb.PbFieldType.OU3)
     ..pc<FixtureControls>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: FixtureControls.create)
     ..pc<SubFixture>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'children', $pb.PbFieldType.PM, subBuilder: SubFixture.create)
+    ..aOM<FixtureConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: FixtureConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -470,6 +546,7 @@ class Fixture extends $pb.GeneratedMessage {
     $core.int? channelCount,
     $core.Iterable<FixtureControls>? controls,
     $core.Iterable<SubFixture>? children,
+    FixtureConfig? config,
   }) {
     final _result = create();
     if (id != null) {
@@ -501,6 +578,9 @@ class Fixture extends $pb.GeneratedMessage {
     }
     if (children != null) {
       _result.children.addAll(children);
+    }
+    if (config != null) {
+      _result.config = config;
     }
     return _result;
   }
@@ -602,6 +682,78 @@ class Fixture extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(10)
   $core.List<SubFixture> get children => $_getList(9);
+
+  @$pb.TagNumber(11)
+  FixtureConfig get config => $_getN(10);
+  @$pb.TagNumber(11)
+  set config(FixtureConfig v) { setField(11, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasConfig() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearConfig() => clearField(11);
+  @$pb.TagNumber(11)
+  FixtureConfig ensureConfig() => $_ensure(10);
+}
+
+class FixtureConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureConfig._() : super();
+  factory FixtureConfig({
+    $core.bool? invertPan,
+    $core.bool? invertTilt,
+  }) {
+    final _result = create();
+    if (invertPan != null) {
+      _result.invertPan = invertPan;
+    }
+    if (invertTilt != null) {
+      _result.invertTilt = invertTilt;
+    }
+    return _result;
+  }
+  factory FixtureConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureConfig clone() => FixtureConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureConfig copyWith(void Function(FixtureConfig) updates) => super.copyWith((message) => updates(message as FixtureConfig)) as FixtureConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureConfig create() => FixtureConfig._();
+  FixtureConfig createEmptyInstance() => create();
+  static $pb.PbList<FixtureConfig> createRepeated() => $pb.PbList<FixtureConfig>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureConfig>(create);
+  static FixtureConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get invertPan => $_getBF(0);
+  @$pb.TagNumber(1)
+  set invertPan($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasInvertPan() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInvertPan() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get invertTilt => $_getBF(1);
+  @$pb.TagNumber(2)
+  set invertTilt($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasInvertTilt() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearInvertTilt() => clearField(2);
 }
 
 class SubFixture extends $pb.GeneratedMessage {

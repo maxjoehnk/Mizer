@@ -9,8 +9,6 @@ abstract class FixturesEvent {}
 
 class FetchFixtures extends FixturesEvent {}
 
-
-
 class AddFixtures extends FixturesEvent {
   FixtureDefinition definition;
   FixtureMode mode;
@@ -46,6 +44,13 @@ class DeleteFixtures extends FixturesEvent {
   DeleteFixtures(this.ids);
 }
 
+class UpdateFixture extends FixturesEvent {
+  final int fixtureId;
+  final UpdateFixtureRequest updateRequest;
+
+  UpdateFixture(this.fixtureId, this.updateRequest);
+}
+
 class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
   final FixturesApi api;
 
@@ -64,14 +69,15 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     if (event is DeleteFixtures) {
       yield await _deleteFixtures(event);
     }
+    if (event is UpdateFixture) {
+      yield await _updateFixture(event);
+    }
   }
 
   Future<Fixtures> _fetchFixtures() async {
     log("fetching fixtures", name: "FixturesBloc");
-    var fixtures = await api.getFixtures();
+    Fixtures fixtures = await _getFixtures();
     log("got ${fixtures.fixtures.length} fixtures", name: "FixturesBloc");
-
-    fixtures.fixtures.sortByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs);
 
     return fixtures;
   }
@@ -88,6 +94,20 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
     log("deleting fixtures: $event", name: "FixturesBloc");
     var fixtures = await api.deleteFixtures(event.ids);
 
+    return fixtures;
+  }
+
+  Future<Fixtures> _updateFixture(UpdateFixture event) async {
+    log("update fixture: $event", name: "FixturesBloc");
+    await api.updateFixture(event.fixtureId, event.updateRequest);
+
+    return await _getFixtures();
+  }
+
+  Future<Fixtures> _getFixtures() async {
+    var fixtures = await api.getFixtures();
+
+    fixtures.fixtures.sortByCompare<int>((fixture) => fixture.id, (lhs, rhs) => lhs - rhs);
     return fixtures;
   }
 }

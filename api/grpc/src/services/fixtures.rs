@@ -49,4 +49,12 @@ impl<R: RuntimeApi> FixturesApi for FixturesHandler<R> {
 
         resp.finish(fixtures)
     }
+
+    fn update_fixture(
+        &self,
+        req: ServerRequestSingle<UpdateFixtureRequest>,
+        resp: ServerResponseUnarySink<Fixtures>,
+    ) -> grpc::Result<()> {
+        todo!()
+    }
 }

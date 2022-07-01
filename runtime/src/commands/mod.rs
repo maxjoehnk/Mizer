@@ -11,7 +11,6 @@ use crate::pipeline_access::PipelineAccess;
 use mizer_node::{NodeDesigner, NodeDetails, NodePath, NodeType, PortMetadata};
 use mizer_nodes::{ContainerNode, Node};
 use mizer_ports::PortId;
-use serde::forward_to_deserialize_any_helper;
 
 mod add_link;
 mod add_node;

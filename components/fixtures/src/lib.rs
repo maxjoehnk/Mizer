@@ -14,6 +14,7 @@ pub mod fixture;
 pub mod library;
 pub mod manager;
 mod processor;
+mod sub_fixture;
 // TODO: should probably find a better name
 mod color_mixer;
 pub mod programmer;

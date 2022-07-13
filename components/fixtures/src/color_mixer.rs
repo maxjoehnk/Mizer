@@ -1,3 +1,5 @@
+use crate::definition::ColorGroup;
+use crate::fixture::IChannelType;
 use palette::{FromColor, Hsv, Srgb};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
@@ -29,7 +31,7 @@ impl ColorMixer {
     }
 
     pub fn set_virtual_dimmer(&mut self, value: f64) {
-        if let Some(mut virtual_dimmer) = self.virtual_dimmer.as_mut() {
+        if let Some(virtual_dimmer) = self.virtual_dimmer.as_mut() {
             *virtual_dimmer = value;
         }
     }
@@ -85,6 +87,47 @@ pub struct Rgbw {
     pub green: f64,
     pub blue: f64,
     pub white: f64,
+}
+
+pub(crate) fn update_color_mixer<TChannel: IChannelType>(
+    color_mixer: Option<ColorMixer>,
+    color_group: Option<ColorGroup<TChannel>>,
+    mut write: impl FnMut(String, f64),
+) {
+    debug_assert!(
+        color_mixer.is_some(),
+        "Trying to update non existent color mixer"
+    );
+    debug_assert!(
+        color_group.is_some(),
+        "Trying to update color mixer without color group"
+    );
+    if let Some(color_mixer) = color_mixer {
+        if let Some(color_group) = color_group {
+            let rgb = if let Some(white_channel) = color_group.white.and_then(|c| c.into_channel())
+            {
+                let value = color_mixer.rgbw();
+                write(white_channel, value.white);
+
+                Rgb {
+                    red: value.red,
+                    green: value.green,
+                    blue: value.blue,
+                }
+            } else {
+                color_mixer.rgb()
+            };
+            if let Some(channel) = color_group.red.into_channel() {
+                write(channel, rgb.red);
+            }
+            if let Some(channel) = color_group.green.into_channel() {
+                write(channel, rgb.green);
+            }
+            if let Some(channel) = color_group.blue.into_channel() {
+                write(channel, rgb.blue);
+            }
+        }
+    }
 }
 
 #[cfg(test)]

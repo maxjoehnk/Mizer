@@ -58,8 +58,8 @@ class BaseNode extends StatelessWidget {
       menu: Menu(items: [
         MenuItem(label: "Hide", action: () => _onHideNode(context)),
         MenuItem(label: "Disconnect Ports", action: () => _onDisconnectPorts(context)),
-        MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
-        MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
+        if (nodeModel.node.canDuplicate) MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
+        if (nodeModel.node.canDelete) MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
       ]),
       child: Container(
         width: NODE_BASE_WIDTH,
@@ -160,5 +160,30 @@ class BaseNode extends StatelessWidget {
     if (result) {
       context.read<NodesBloc>().add(DeleteNode(node.path));
     }
+  }
+}
+
+const NON_DUPLICATABLE_NODE_TYPES = [
+  Node_NodeType.Programmer,
+  Node_NodeType.Fixture,
+  Node_NodeType.Sequencer,
+  Node_NodeType.Group,
+  Node_NodeType.Container,
+];
+
+const UNDELETABLE_NODE_TYPES = [
+  Node_NodeType.Programmer,
+  Node_NodeType.Fixture,
+  Node_NodeType.Sequencer,
+  Node_NodeType.Group,
+];
+
+extension NodeOptionExtensions on Node {
+  bool get canDuplicate {
+    return !NON_DUPLICATABLE_NODE_TYPES.contains(type);
+  }
+
+  bool get canDelete {
+    return !UNDELETABLE_NODE_TYPES.contains(type);
   }
 }

@@ -201,6 +201,10 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut MathNode = node.downcast_mut()?;
             node.mode = config.mode;
         }
+        (NodeType::Merge, Node::Merge(config)) => {
+            let node: &mut MergeNode = node.downcast_mut()?;
+            node.mode = config.mode;
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,

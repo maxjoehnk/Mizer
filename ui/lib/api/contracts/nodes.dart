@@ -21,5 +21,5 @@ abstract class NodesApi {
 
   Future<void> disconnectPorts(String path);
 
-  Future<void> duplicateNode(String node);
+  Future<void> duplicateNode(DuplicateNodeRequest request);
 }

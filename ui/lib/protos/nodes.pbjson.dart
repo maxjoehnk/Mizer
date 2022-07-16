@@ -42,6 +42,20 @@ const AddNodeRequest$json = const {
 
 /// Descriptor for `AddNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addNodeRequestDescriptor = $convert.base64Decode('Cg5BZGROb2RlUmVxdWVzdBIoCgR0eXBlGAEgASgOMhQubWl6ZXIuTm9kZS5Ob2RlVHlwZVIEdHlwZRIvCghwb3NpdGlvbhgCIAEoCzITLm1pemVyLk5vZGVQb3NpdGlvblIIcG9zaXRpb24SGwoGcGFyZW50GAMgASgJSABSBnBhcmVudIgBAUIJCgdfcGFyZW50');
+@$core.Deprecated('Use duplicateNodeRequestDescriptor instead')
+const DuplicateNodeRequest$json = const {
+  '1': 'DuplicateNodeRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'parent', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'parent', '17': true},
+  ],
+  '8': const [
+    const {'1': '_parent'},
+  ],
+};
+
+/// Descriptor for `DuplicateNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List duplicateNodeRequestDescriptor = $convert.base64Decode('ChREdXBsaWNhdGVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEhsKBnBhcmVudBgCIAEoCUgAUgZwYXJlbnSIAQFCCQoHX3BhcmVudA==');
 @$core.Deprecated('Use nodesRequestDescriptor instead')
 const NodesRequest$json = const {
   '1': 'NodesRequest',

@@ -64,8 +64,9 @@ class DisconnectPorts extends NodesEvent {
 
 class DuplicateNode extends NodesEvent {
   final String node;
+  final String? parent;
 
-  DuplicateNode(this.node);
+  DuplicateNode(this.node, {this.parent});
 }
 
 class ShowNode extends NodesEvent {
@@ -149,7 +150,7 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
       yield nodes;
     }
     if (event is DuplicateNode) {
-      await api.duplicateNode(event.node);
+      await api.duplicateNode(DuplicateNodeRequest(path: event.node, parent: event.parent));
       var nodes = await api.getNodes();
       yield nodes;
     }

@@ -316,6 +316,251 @@ impl ::protobuf::reflect::ProtobufValue for AddNodeRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct DuplicateNodeRequest {
+    // message fields
+    pub path: ::std::string::String,
+    // message oneof groups
+    pub _parent: ::std::option::Option<DuplicateNodeRequest_oneof__parent>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DuplicateNodeRequest {
+    fn default() -> &'a DuplicateNodeRequest {
+        <DuplicateNodeRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum DuplicateNodeRequest_oneof__parent {
+    parent(::std::string::String),
+}
+
+impl DuplicateNodeRequest {
+    pub fn new() -> DuplicateNodeRequest {
+        ::std::default::Default::default()
+    }
+
+    // string path = 1;
+
+
+    pub fn get_path(&self) -> &str {
+        &self.path
+    }
+    pub fn clear_path(&mut self) {
+        self.path.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_path(&mut self, v: ::std::string::String) {
+        self.path = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_path(&mut self) -> &mut ::std::string::String {
+        &mut self.path
+    }
+
+    // Take field
+    pub fn take_path(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.path, ::std::string::String::new())
+    }
+
+    // string parent = 2;
+
+
+    pub fn get_parent(&self) -> &str {
+        match self._parent {
+            ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_parent(&mut self) {
+        self._parent = ::std::option::Option::None;
+    }
+
+    pub fn has_parent(&self) -> bool {
+        match self._parent {
+            ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_parent(&mut self, v: ::std::string::String) {
+        self._parent = ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_parent(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(_)) = self._parent {
+        } else {
+            self._parent = ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(::std::string::String::new()));
+        }
+        match self._parent {
+            ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_parent(&mut self) -> ::std::string::String {
+        if self.has_parent() {
+            match self._parent.take() {
+                ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for DuplicateNodeRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.path)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._parent = ::std::option::Option::Some(DuplicateNodeRequest_oneof__parent::parent(is.read_string()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.path);
+        }
+        if let ::std::option::Option::Some(ref v) = self._parent {
+            match v {
+                &DuplicateNodeRequest_oneof__parent::parent(ref v) => {
+                    my_size += ::protobuf::rt::string_size(2, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.path.is_empty() {
+            os.write_string(1, &self.path)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._parent {
+            match v {
+                &DuplicateNodeRequest_oneof__parent::parent(ref v) => {
+                    os.write_string(2, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DuplicateNodeRequest {
+        DuplicateNodeRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "path",
+                |m: &DuplicateNodeRequest| { &m.path },
+                |m: &mut DuplicateNodeRequest| { &mut m.path },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "parent",
+                DuplicateNodeRequest::has_parent,
+                DuplicateNodeRequest::get_parent,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<DuplicateNodeRequest>(
+                "DuplicateNodeRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static DuplicateNodeRequest {
+        static instance: ::protobuf::rt::LazyV2<DuplicateNodeRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(DuplicateNodeRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for DuplicateNodeRequest {
+    fn clear(&mut self) {
+        self.path.clear();
+        self._parent = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for DuplicateNodeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DuplicateNodeRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct NodesRequest {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -14421,60 +14666,62 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ype\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12/\n\x08pos\
     ition\x18\x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\x12\x1b\
     \n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_paren\
-    t\"\x0e\n\x0cNodesRequest\"L\n\x0cWriteControl\x12\x12\n\x04path\x18\x01\
-    \x20\x01(\tR\x04path\x12\x12\n\x04port\x18\x02\x20\x01(\tR\x04port\x12\
-    \x14\n\x05value\x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"X\
-    \n\x17UpdateNodeConfigRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04p\
-    ath\x12)\n\x06config\x18\x02\x20\x01(\x0b2\x11.mizer.NodeConfigR\x06conf\
-    ig\"\x1a\n\x18UpdateNodeConfigResponse\"V\n\x0fMoveNodeRequest\x12\x12\n\
-    \x04path\x18\x01\x20\x01(\tR\x04path\x12/\n\x08position\x18\x02\x20\x01(\
-    \x0b2\x13.mizer.NodePositionR\x08position\"\x12\n\x10MoveNodeResponse\"~\
-    \n\x0fShowNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12/\
-    \n\x08position\x18\x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\
-    \x12\x1b\n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\
-    \x07_parent\"\x12\n\x10ShowNodeResponse\"'\n\x11DeleteNodeRequest\x12\
-    \x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x14\n\x12DeleteNodeResponse\
-    \"%\n\x0fHideNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\
-    \x12\n\x10HideNodeResponse\"\x87\x01\n\x05Nodes\x12!\n\x05nodes\x18\x01\
-    \x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\x121\n\x08channels\x18\x02\x20\
-    \x03(\x0b2\x15.mizer.NodeConnectionR\x08channels\x12(\n\tall_nodes\x18\
-    \x03\x20\x03(\x0b2\x0b.mizer.NodeR\x08allNodes\"\xde\x01\n\x0eNodeConnec\
-    tion\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\ntargetNode\x12+\n\ntarge\
-    tPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\nsourc\
-    eNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\nsourcePort\x18\x04\x20\x01\
-    (\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08protocol\x18\x05\x20\x01(\
-    \x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\x86\x07\n\x04Node\x12(\n\
-    \x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\x12\x12\
-    \n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\x06inputs\x18\x03\x20\x03(\
-    \x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07outputs\x18\x04\x20\x03(\x0b2\
-    \x0b.mizer.PortR\x07outputs\x12/\n\x08designer\x18\x05\x20\x01(\x0b2\x13\
-    .mizer.NodeDesignerR\x08designer\x125\n\x07preview\x18\x06\x20\x01(\x0e2\
-    \x1b.mizer.Node.NodePreviewTypeR\x07preview\x12)\n\x06config\x18\x07\x20\
-    \x01(\x0b2\x11.mizer.NodeConfigR\x06config\"\x8d\x04\n\x08NodeType\x12\t\
-    \n\x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\
-    \x02\x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0c\n\x08Env\
-    elope\x10\x05\x12\x0c\n\x08Sequence\x10\x06\x12\n\n\x06Select\x10\x07\
-    \x12\t\n\x05Merge\x10\x08\x12\r\n\tThreshold\x10\t\x12\r\n\tDmxOutput\
-    \x10\n\x12\x0c\n\x08OscInput\x10\x0b\x12\r\n\tOscOutput\x10\x0c\x12\r\n\
-    \tMidiInput\x10\r\x12\x0e\n\nMidiOutput\x10\x0e\x12\r\n\tSequencer\x10\
-    \x0f\x12\x0b\n\x07Fixture\x10\x10\x12\x0e\n\nProgrammer\x10\x11\x12\t\n\
-    \x05Group\x10\x12\x12\n\n\x06Preset\x10\x13\x12\r\n\tVideoFile\x10\x14\
-    \x12\x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\
-    \x15\n\x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\
-    \x12\x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\
-    \tOpcOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\x12\
-    \x0b\n\x07Gamepad\x10-\x12\x0c\n\x08ColorRgb\x102\x12\x0c\n\x08ColorHsv\
-    \x103\x12\r\n\tContainer\x10d\x12\x0b\n\x07Encoder\x107\x12\x08\n\x04Mat\
-    h\x108\"Q\n\x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\x0c\n\x08W\
-    aveform\x10\x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Texture\x10\
-    \x03\x12\x08\n\x04None\x10\x04\"\xde\x13\n\nNodeConfig\x12I\n\x10oscilla\
-    torConfig\x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNodeConfigH\0R\x10osci\
-    llatorConfig\x12F\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x1a.mizer.S\
-    criptingNodeConfigH\0R\x0fscriptingConfig\x12C\n\x0esequenceConfig\x18\
-    \x0c\x20\x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0esequenceConfig\
-    \x12:\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x16.mizer.ClockNodeConfigH\0R\
-    \x0bclockConfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x18.mizer.Fi\
-    xtureNodeConfigH\0R\rfixtureConfig\x12=\n\x0cbuttonConfig\x18\x0f\x20\
+    t\"R\n\x14DuplicateNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04\
+    path\x12\x1b\n\x06parent\x18\x02\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\
+    \n\x07_parent\"\x0e\n\x0cNodesRequest\"L\n\x0cWriteControl\x12\x12\n\x04\
+    path\x18\x01\x20\x01(\tR\x04path\x12\x12\n\x04port\x18\x02\x20\x01(\tR\
+    \x04port\x12\x14\n\x05value\x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWrit\
+    eResponse\"X\n\x17UpdateNodeConfigRequest\x12\x12\n\x04path\x18\x01\x20\
+    \x01(\tR\x04path\x12)\n\x06config\x18\x02\x20\x01(\x0b2\x11.mizer.NodeCo\
+    nfigR\x06config\"\x1a\n\x18UpdateNodeConfigResponse\"V\n\x0fMoveNodeRequ\
+    est\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12/\n\x08position\x18\
+    \x02\x20\x01(\x0b2\x13.mizer.NodePositionR\x08position\"\x12\n\x10MoveNo\
+    deResponse\"~\n\x0fShowNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\
+    \x04path\x12/\n\x08position\x18\x02\x20\x01(\x0b2\x13.mizer.NodePosition\
+    R\x08position\x12\x1b\n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\
+    \x01\x01B\t\n\x07_parent\"\x12\n\x10ShowNodeResponse\"'\n\x11DeleteNodeR\
+    equest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x14\n\x12DeleteNo\
+    deResponse\"%\n\x0fHideNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\
+    \x04path\"\x12\n\x10HideNodeResponse\"\x87\x01\n\x05Nodes\x12!\n\x05node\
+    s\x18\x01\x20\x03(\x0b2\x0b.mizer.NodeR\x05nodes\x121\n\x08channels\x18\
+    \x02\x20\x03(\x0b2\x15.mizer.NodeConnectionR\x08channels\x12(\n\tall_nod\
+    es\x18\x03\x20\x03(\x0b2\x0b.mizer.NodeR\x08allNodes\"\xde\x01\n\x0eNode\
+    Connection\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\ntargetNode\x12+\n\
+    \ntargetPort\x18\x02\x20\x01(\x0b2\x0b.mizer.PortR\ntargetPort\x12\x1e\n\
+    \nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x12+\n\nsourcePort\x18\x04\
+    \x20\x01(\x0b2\x0b.mizer.PortR\nsourcePort\x122\n\x08protocol\x18\x05\
+    \x20\x01(\x0e2\x16.mizer.ChannelProtocolR\x08protocol\"\x86\x07\n\x04Nod\
+    e\x12(\n\x04type\x18\x01\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\x04type\
+    \x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12#\n\x06inputs\x18\x03\
+    \x20\x03(\x0b2\x0b.mizer.PortR\x06inputs\x12%\n\x07outputs\x18\x04\x20\
+    \x03(\x0b2\x0b.mizer.PortR\x07outputs\x12/\n\x08designer\x18\x05\x20\x01\
+    (\x0b2\x13.mizer.NodeDesignerR\x08designer\x125\n\x07preview\x18\x06\x20\
+    \x01(\x0e2\x1b.mizer.Node.NodePreviewTypeR\x07preview\x12)\n\x06config\
+    \x18\x07\x20\x01(\x0b2\x11.mizer.NodeConfigR\x06config\"\x8d\x04\n\x08No\
+    deType\x12\t\n\x05Fader\x10\0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscil\
+    lator\x10\x02\x12\t\n\x05Clock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0c\
+    \n\x08Envelope\x10\x05\x12\x0c\n\x08Sequence\x10\x06\x12\n\n\x06Select\
+    \x10\x07\x12\t\n\x05Merge\x10\x08\x12\r\n\tThreshold\x10\t\x12\r\n\tDmxO\
+    utput\x10\n\x12\x0c\n\x08OscInput\x10\x0b\x12\r\n\tOscOutput\x10\x0c\x12\
+    \r\n\tMidiInput\x10\r\x12\x0e\n\nMidiOutput\x10\x0e\x12\r\n\tSequencer\
+    \x10\x0f\x12\x0b\n\x07Fixture\x10\x10\x12\x0e\n\nProgrammer\x10\x11\x12\
+    \t\n\x05Group\x10\x12\x12\n\n\x06Preset\x10\x13\x12\r\n\tVideoFile\x10\
+    \x14\x12\x0f\n\x0bVideoOutput\x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\
+    \x12\x15\n\x11VideoColorBalance\x10\x17\x12\x12\n\x0eVideoTransform\x10\
+    \x18\x12\x0e\n\nPixelToDmx\x10\x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\
+    \r\n\tOpcOutput\x10\x20\x12\t\n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\
+    \x12\x0b\n\x07Gamepad\x10-\x12\x0c\n\x08ColorRgb\x102\x12\x0c\n\x08Color\
+    Hsv\x103\x12\r\n\tContainer\x10d\x12\x0b\n\x07Encoder\x107\x12\x08\n\x04\
+    Math\x108\"Q\n\x0fNodePreviewType\x12\x0b\n\x07History\x10\0\x12\x0c\n\
+    \x08Waveform\x10\x01\x12\x0c\n\x08Multiple\x10\x02\x12\x0b\n\x07Texture\
+    \x10\x03\x12\x08\n\x04None\x10\x04\"\xde\x13\n\nNodeConfig\x12I\n\x10osc\
+    illatorConfig\x18\n\x20\x01(\x0b2\x1b.mizer.OscillatorNodeConfigH\0R\x10\
+    oscillatorConfig\x12F\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x1a.miz\
+    er.ScriptingNodeConfigH\0R\x0fscriptingConfig\x12C\n\x0esequenceConfig\
+    \x18\x0c\x20\x01(\x0b2\x19.mizer.SequenceNodeConfigH\0R\x0esequenceConfi\
+    g\x12:\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x16.mizer.ClockNodeConfigH\0\
+    R\x0bclockConfig\x12@\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x18.mizer.F\
+    ixtureNodeConfigH\0R\rfixtureConfig\x12=\n\x0cbuttonConfig\x18\x0f\x20\
     \x01(\x0b2\x17.mizer.ButtonNodeConfigH\0R\x0cbuttonConfig\x12:\n\x0bfade\
     rConfig\x18\x10\x20\x01(\x0b2\x16.mizer.FaderNodeConfigH\0R\x0bfaderConf\
     ig\x12C\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b2\x19.mizer.IldaFileNode\
@@ -14608,7 +14855,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     NGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07\
     TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\
     \x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\
-    \x10\x07\x12\x07\n\x03GST\x10\x082\xc4\x04\n\x08NodesApi\x12/\n\x08GetNo\
+    \x10\x07\x12\x07\n\x03GST\x10\x082\x81\x05\n\x08NodesApi\x12/\n\x08GetNo\
     des\x12\x13.mizer.NodesRequest\x1a\x0c.mizer.Nodes\"\0\x12/\n\x07AddNode\
     \x12\x15.mizer.AddNodeRequest\x1a\x0b.mizer.Node\"\0\x129\n\x07AddLink\
     \x12\x15.mizer.NodeConnection\x1a\x15.mizer.NodeConnection\"\0\x12@\n\
@@ -14619,7 +14866,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     leteNode\x12\x18.mizer.DeleteNodeRequest\x1a\x19.mizer.DeleteNodeRespons\
     e\"\0\x12=\n\x08HideNode\x12\x16.mizer.HideNodeRequest\x1a\x17.mizer.Hid\
     eNodeResponse\"\0\x12=\n\x08ShowNode\x12\x16.mizer.ShowNodeRequest\x1a\
-    \x17.mizer.ShowNodeResponse\"\0b\x06proto3\
+    \x17.mizer.ShowNodeResponse\"\0\x12;\n\rDuplicateNode\x12\x1b.mizer.Dupl\
+    icateNodeRequest\x1a\x0b.mizer.Node\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

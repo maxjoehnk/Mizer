@@ -1,4 +1,5 @@
 use super::StaticNodeDescriptor;
+use crate::commands::add_path_to_container;
 use crate::pipeline_access::PipelineAccess;
 use crate::NodeDowncast;
 use mizer_commander::{Command, RefMut};
@@ -10,6 +11,7 @@ use std::hash::Hash;
 #[derive(Debug, Clone, Hash, Serialize, Deserialize)]
 pub struct DuplicateNodeCommand {
     pub path: NodePath,
+    pub parent: Option<NodePath>,
 }
 
 impl<'a> Command<'a> for DuplicateNodeCommand {
@@ -43,6 +45,7 @@ impl<'a> Command<'a> for DuplicateNodeCommand {
             path: new_path.clone(),
             attached_executor: None,
         });
+        add_path_to_container(pipeline, self.parent.as_ref(), &new_path)?;
 
         let node = pipeline.nodes_view.get(&new_path).unwrap();
         let ports = node.list_ports();

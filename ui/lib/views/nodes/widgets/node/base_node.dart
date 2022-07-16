@@ -134,7 +134,8 @@ class BaseNode extends StatelessWidget {
   }
 
   void _onDuplicateNode(BuildContext context) async {
-    context.read<NodesBloc>().add(DuplicateNode(node.path));
+    var parent = context.read<NodeEditorModel>().parent?.node.path;
+    context.read<NodesBloc>().add(DuplicateNode(node.path, parent: parent));
   }
 
   void _onDeleteNode(BuildContext context) async {

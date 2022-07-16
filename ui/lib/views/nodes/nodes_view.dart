@@ -64,7 +64,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         "add_node": () => {},
         "duplicate_node": () {
           if (widget.nodeEditorModel.selectedNode != null) {
-            context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path));
+            context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path, parent: widget.nodeEditorModel.parent?.node.path));
           }
         }
       },

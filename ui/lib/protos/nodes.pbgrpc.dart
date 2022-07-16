@@ -62,6 +62,11 @@ class NodesApiClient extends $grpc.Client {
           ($0.ShowNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ShowNodeResponse.fromBuffer(value));
+  static final _$duplicateNode =
+      $grpc.ClientMethod<$0.DuplicateNodeRequest, $0.Node>(
+          '/mizer.NodesApi/DuplicateNode',
+          ($0.DuplicateNodeRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
 
   NodesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -114,6 +119,11 @@ class NodesApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.ShowNodeResponse> showNode($0.ShowNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$showNode, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.Node> duplicateNode($0.DuplicateNodeRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$duplicateNode, request, options: options);
   }
 }
 
@@ -186,6 +196,14 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ShowNodeRequest.fromBuffer(value),
         ($0.ShowNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.DuplicateNodeRequest, $0.Node>(
+        'DuplicateNode',
+        duplicateNode_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.DuplicateNodeRequest.fromBuffer(value),
+        ($0.Node value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Nodes> getNodes_Pre(
@@ -234,6 +252,11 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return showNode(call, await request);
   }
 
+  $async.Future<$0.Node> duplicateNode_Pre($grpc.ServiceCall call,
+      $async.Future<$0.DuplicateNodeRequest> request) async {
+    return duplicateNode(call, await request);
+  }
+
   $async.Future<$0.Nodes> getNodes(
       $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Node> addNode(
@@ -252,4 +275,6 @@ abstract class NodesApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.HideNodeRequest request);
   $async.Future<$0.ShowNodeResponse> showNode(
       $grpc.ServiceCall call, $0.ShowNodeRequest request);
+  $async.Future<$0.Node> duplicateNode(
+      $grpc.ServiceCall call, $0.DuplicateNodeRequest request);
 }

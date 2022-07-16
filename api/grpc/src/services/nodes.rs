@@ -96,4 +96,14 @@ impl<R: RuntimeApi> NodesApi for NodesHandler<R> {
 
         resp.finish(Default::default())
     }
+
+    fn duplicate_node(
+        &self,
+        req: ServerRequestSingle<DuplicateNodeRequest>,
+        resp: ServerResponseUnarySink<Node>,
+    ) -> grpc::Result<()> {
+        self.duplicate_node(req.message).unwrap();
+
+        resp.finish(Default::default())
+    }
 }

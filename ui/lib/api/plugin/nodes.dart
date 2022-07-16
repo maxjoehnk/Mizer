@@ -80,7 +80,7 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
-  Future<void> duplicateNode(String path) async {
-    await channel.invokeMethod("duplicateNode", path);
+  Future<void> duplicateNode(DuplicateNodeRequest request) async {
+    await channel.invokeMethod("duplicateNode", request.writeToBuffer());
   }
 }

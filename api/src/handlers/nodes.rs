@@ -202,8 +202,14 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
-    pub fn duplicate_node(&self, path: NodePath) -> anyhow::Result<()> {
-        self.runtime.run_command(DuplicateNodeCommand { path })?;
+    pub fn duplicate_node(&self, request: DuplicateNodeRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(DuplicateNodeCommand {
+            path: request.path.into(),
+            parent: request._parent.map(|parent| {
+                let DuplicateNodeRequest_oneof__parent::parent(parent) = parent;
+                parent.into()
+            }),
+        })?;
 
         Ok(())
     }

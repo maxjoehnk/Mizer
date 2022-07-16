@@ -21,6 +21,11 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn get_nodes(&self) -> Nodes {
         let mut res = Nodes::new();
 
+        for node in self.runtime.nodes() {
+            let node: Node = node.into();
+            res.all_nodes.push(node);
+        }
+
         let nodes = self.runtime.nodes();
 
         let (container_nodes, non_container_nodes) = nodes

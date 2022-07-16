@@ -670,6 +670,7 @@ class Nodes extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Nodes', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..pc<Node>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodes', $pb.PbFieldType.PM, subBuilder: Node.create)
     ..pc<NodeConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channels', $pb.PbFieldType.PM, subBuilder: NodeConnection.create)
+    ..pc<Node>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allNodes', $pb.PbFieldType.PM, subBuilder: Node.create)
     ..hasRequiredFields = false
   ;
 
@@ -677,6 +678,7 @@ class Nodes extends $pb.GeneratedMessage {
   factory Nodes({
     $core.Iterable<Node>? nodes,
     $core.Iterable<NodeConnection>? channels,
+    $core.Iterable<Node>? allNodes,
   }) {
     final _result = create();
     if (nodes != null) {
@@ -684,6 +686,9 @@ class Nodes extends $pb.GeneratedMessage {
     }
     if (channels != null) {
       _result.channels.addAll(channels);
+    }
+    if (allNodes != null) {
+      _result.allNodes.addAll(allNodes);
     }
     return _result;
   }
@@ -713,6 +718,9 @@ class Nodes extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<NodeConnection> get channels => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<Node> get allNodes => $_getList(2);
 }
 
 class NodeConnection extends $pb.GeneratedMessage {

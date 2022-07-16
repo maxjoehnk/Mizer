@@ -67,6 +67,8 @@ message HideNodeResponse {}
 message Nodes {
   repeated Node nodes = 1;
   repeated NodeConnection channels = 2;
+  // Flat list of all nodes
+  repeated Node all_nodes = 3;
 }
 
 message NodeConnection {

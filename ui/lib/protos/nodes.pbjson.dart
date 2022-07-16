@@ -166,11 +166,12 @@ const Nodes$json = const {
   '2': const [
     const {'1': 'nodes', '3': 1, '4': 3, '5': 11, '6': '.mizer.Node', '10': 'nodes'},
     const {'1': 'channels', '3': 2, '4': 3, '5': 11, '6': '.mizer.NodeConnection', '10': 'channels'},
+    const {'1': 'all_nodes', '3': 3, '4': 3, '5': 11, '6': '.mizer.Node', '10': 'allNodes'},
   ],
 };
 
 /// Descriptor for `Nodes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List nodesDescriptor = $convert.base64Decode('CgVOb2RlcxIhCgVub2RlcxgBIAMoCzILLm1pemVyLk5vZGVSBW5vZGVzEjEKCGNoYW5uZWxzGAIgAygLMhUubWl6ZXIuTm9kZUNvbm5lY3Rpb25SCGNoYW5uZWxz');
+final $typed_data.Uint8List nodesDescriptor = $convert.base64Decode('CgVOb2RlcxIhCgVub2RlcxgBIAMoCzILLm1pemVyLk5vZGVSBW5vZGVzEjEKCGNoYW5uZWxzGAIgAygLMhUubWl6ZXIuTm9kZUNvbm5lY3Rpb25SCGNoYW5uZWxzEigKCWFsbF9ub2RlcxgDIAMoCzILLm1pemVyLk5vZGVSCGFsbE5vZGVz');
 @$core.Deprecated('Use nodeConnectionDescriptor instead')
 const NodeConnection$json = const {
   '1': 'NodeConnection',

@@ -18,7 +18,6 @@ impl Processor for FixtureProcessor {
             .get::<FixtureManager>()
             .expect("fixture processor without fixture manager");
         fixture_manager.default_fixtures();
-        fixture_manager.execute_programmers();
     }
 
     #[tracing::instrument]
@@ -30,6 +29,7 @@ impl Processor for FixtureProcessor {
         let dmx_manager = injector
             .get::<DmxConnectionManager>()
             .expect("fixture processor without dmx module");
+        fixture_manager.execute_programmers();
         fixture_manager.write_outputs(dmx_manager);
     }
 

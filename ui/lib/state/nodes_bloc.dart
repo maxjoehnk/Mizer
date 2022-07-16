@@ -118,22 +118,19 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
           targetNode: request.target.node.path,
           targetPort: request.target.port);
       await api.linkNodes(connection);
-      var nextChannels = state.channels.sublist(0);
-      nextChannels.add(connection);
-      yield Nodes(channels: nextChannels, nodes: state.nodes);
+      var nodes = await api.getNodes();
+      yield nodes;
     }
     if (event is MoveNode) {
       var request = event.into();
       await api.moveNode(request);
-      var node = state.nodes.firstWhere((element) => element.path == event.node);
-      node.designer.position = request.position;
-      yield state;
+      var nodes = await api.getNodes();
+      yield nodes;
     }
     if (event is DeleteNode) {
       await api.deleteNode(event.node);
-      var nodes = state.nodes.where((element) => element.path != event.node).toList();
-      var channels = state.channels.where((channel) => channel.sourceNode != event.node && channel.targetNode != event.node).toList();
-      yield Nodes(channels: channels, nodes: nodes);
+      var nodes = await api.getNodes();
+      yield nodes;
     }
     if (event is HideNode) {
       await api.hideNode(event.node);

@@ -117,7 +117,8 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   updateNewConnection() {
-    connecting?.update(painterKey);
+    var ports = nodes.map((nm) => nm.ports.map((port) => PortTarget(nm.node, port))).flattened;
+    connecting?.update(painterKey, ports);
     this.update();
   }
 
@@ -148,16 +149,32 @@ class NewConnectionModel {
   Node node;
   Offset offset;
   GlobalKey key;
+  PortTarget? target;
 
   NewConnectionModel(
       {required this.port, required this.node, this.offset = Offset.zero, required this.key});
 
-  void update(GlobalKey key) {
+  void update(GlobalKey key, Iterable<PortTarget> allPorts) {
     if (key.currentContext == null || this.key.currentContext == null) {
       return;
     }
     RenderBox thisBox = this.key.currentContext!.findRenderObject() as RenderBox;
-    RenderBox thatBox = key.currentContext!.findRenderObject() as RenderBox;
-    this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
+    RenderBox targetBox = key.currentContext!.findRenderObject() as RenderBox;
+    this.offset = targetBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
+    double BUBBLE_DISTANCE = 32;
+    var connectionBubble = Rect.fromCenter(center: this.offset, width: BUBBLE_DISTANCE, height: BUBBLE_DISTANCE);
+    this.target = allPorts
+        .where((target) => target.port.port.protocol == port.protocol)
+        .firstWhereOrNull((target) => connectionBubble.contains(target.port.offset));
+    if (target != null) {
+      this.offset = target!.port.offset;
+    }
   }
+}
+
+class PortTarget {
+  final Node node;
+  final PortModel port;
+  
+  PortTarget(this.node, this.port);
 }

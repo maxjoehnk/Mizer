@@ -51,31 +51,15 @@ class NodePort extends StatelessWidget {
 
         return Transform(
           transform: Matrix4.translationValues(input ? -8 : 8, 0, 0),
-          child: DragTarget<ConnectionRequest>(
-              hitTestBehavior: HitTestBehavior.translucent,
-              onWillAccept: (d) => d is ConnectionRequest && d.input != input,
-              onAccept: (d) {
-                NodesBloc bloc = context.read();
-                bloc.add(LinkNodes(
-                    d.node,
-                    d.port,
-                    PortOption(
-                      node: node,
-                      port: port,
-                    )));
-              },
-              builder: (BuildContext context, List<ConnectionRequest?> candidateData,
-                  List<dynamic> rejectedData) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 2.0),
-                  height: DOT_SIZE,
-                  child: Row(
-                    mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: collapsed ? _collapsed(portKey) : _expanded(portKey),
-                  ),
-                );
-              }),
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 2.0),
+            height: DOT_SIZE,
+            child: Row(
+              mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: collapsed ? _collapsed(portKey) : _expanded(portKey),
+            ),
+          ),
         );
       },
     );
@@ -128,7 +112,18 @@ class PortDot extends StatelessWidget {
             model.dragNewConnection(NewConnectionModel(node: node, port: port, key: dragKey));
           },
           onDragUpdate: (_) => model.updateNewConnection(),
-          onDragEnd: (_) => model.dropNewConnection(),
+          onDragEnd: (_) {
+            if (model.connecting?.target != null) {
+              context.read<NodesBloc>().add(LinkNodes(
+                  model.connecting!.node,
+                  model.connecting!.port,
+                  PortOption(
+                    node: model.connecting!.target!.node,
+                    port: model.connecting!.target!.port.port,
+                  )));
+            }
+            model.dropNewConnection();
+          },
           child: Dot(input: input, color: color),
         );
       },

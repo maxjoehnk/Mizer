@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
-import 'package:mizer/views/nodes/models/port_model.dart';
 
 class GraphPaintLayer extends StatelessWidget {
   final NodeEditorModel model;
@@ -38,18 +36,16 @@ class GraphLinePainter extends CustomPainter {
       if (fromPort == null || toPort == null) {
         continue;
       }
-      Offset fromPosition = _getPosition(fromPort);
-      Offset toPosition = _getPosition(toPort);
-      draw(canvas, fromPosition, toPosition, channel.protocol);
+      draw(canvas, fromPort.offset, toPort.offset, channel.protocol);
     }
     if (model.connecting != null) {
       var fromPort = model.getPortModel(model.connecting!.node, model.connecting!.port, false);
       if (fromPort == null) {
         return;
       }
-      Offset fromPosition = _getPosition(fromPort);
+      Offset fromPosition = fromPort.offset;
       Offset toPosition = model.connecting!.offset;
-      draw(canvas, fromPosition, toPosition, model.connecting!.port.protocol);
+      draw(canvas, fromPosition, toPosition, model.connecting!.port.protocol, hit: model.connecting!.target != null);
     }
   }
 
@@ -58,13 +54,12 @@ class GraphLinePainter extends CustomPainter {
     return true;
   }
 
-  Offset _getPosition(PortModel port) {
-    return port.offset + Offset(port.size.width / 2, port.size.height / 2);
-  }
-
-  void draw(Canvas canvas, Offset from, Offset to, ChannelProtocol protocol) {
+  void draw(Canvas canvas, Offset from, Offset to, ChannelProtocol protocol, { bool? hit }) {
     var paint = painter
       ..color = getColorForProtocol(protocol).shade800;
+    if (hit == true) {
+      paint.color = Colors.white;
+    }
     Path path = new Path()
       ..moveTo(from.dx, from.dy)
       ..cubicTo(from.dx + 0.6 * (to.dx - from.dx), from.dy, to.dx + 0.6 * (from.dx - to.dx), to.dy, to.dx, to.dy);

@@ -16,7 +16,8 @@ class PortModel {
     }
     RenderBox thisBox = this.key.currentContext!.findRenderObject() as RenderBox;
     RenderBox thatBox = key.currentContext!.findRenderObject() as RenderBox;
-    this.offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
+    var offset = thatBox.globalToLocal(thisBox.localToGlobal(Offset.zero));
     size = thisBox.size;
+    this.offset = offset.translate(size.width / 2, size.height / 2);
   }
 }

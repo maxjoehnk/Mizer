@@ -40,11 +40,18 @@ impl NodeContext for NodeContextMock {
         self.read_port_fn.call(port)
     }
 
+    fn read_edge<P: Into<PortId>>(&self, port: P) -> Option<bool> {
+        todo!()
+    }
+
     fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, _: P) -> Vec<Option<V>> {
         todo!()
     }
 
-    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(
+        &self,
+        port: P,
+    ) -> Vec<Option<V>> {
         todo!()
     }
 

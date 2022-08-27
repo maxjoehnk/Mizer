@@ -1,5 +1,4 @@
 use mizer_fixtures::manager::FixtureManager;
-use mizer_node::edge::Edge;
 use mizer_node::{
     NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
     PortType, PreviewType, ProcessingNode,
@@ -29,6 +28,7 @@ impl PipelineNode for GroupNode {
                 PortMetadata {
                     port_type: PortType::Single,
                     direction: PortDirection::Input,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -49,16 +49,14 @@ impl PipelineNode for GroupNode {
 }
 
 impl ProcessingNode for GroupNode {
-    type State = Edge;
+    type State = ();
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(fixture_manager) = context.inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
             if let Some(group) = fixture_manager.groups.get(&self.id) {
-                if let Some(value) = context.read_port(CALL_PORT) {
-                    if let Some(true) = state.update(value) {
-                        programmer.select_group(group.value());
-                    }
+                if let Some(true) = context.read_edge(CALL_PORT) {
+                    programmer.select_group(group.value());
                 }
                 let active = programmer.is_group_active(group.value());
                 context.write_port(ACTIVE_PORT, if active { 1f64 } else { 0f64 });

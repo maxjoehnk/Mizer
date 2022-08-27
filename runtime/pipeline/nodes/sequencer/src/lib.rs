@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_node::edge::Edge;
 use mizer_node::*;
 use mizer_sequencer::Sequencer;
 
@@ -45,6 +44,7 @@ impl PipelineNode for SequencerNode {
                 PortMetadata {
                     direction: PortDirection::Input,
                     port_type: PortType::Single,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -53,6 +53,7 @@ impl PipelineNode for SequencerNode {
                 PortMetadata {
                     direction: PortDirection::Input,
                     port_type: PortType::Single,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -61,6 +62,7 @@ impl PipelineNode for SequencerNode {
                 PortMetadata {
                     direction: PortDirection::Input,
                     port_type: PortType::Single,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -97,28 +99,24 @@ impl PipelineNode for SequencerNode {
 }
 
 impl ProcessingNode for SequencerNode {
-    type State = SequencerState;
+    type State = ();
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(sequencer) = context.inject::<Sequencer>() {
-            if let Some(value) = context.read_port(GO_FORWARD) {
-                if let Some(true) = state.go_forward.update(value) {
-                    sequencer.sequence_go(self.sequence_id);
-                }
+            if let Some(true) = context.read_edge(GO_FORWARD) {
+                sequencer.sequence_go(self.sequence_id);
             }
-            if let Some(value) = context.read_port(STOP) {
-                if let Some(true) = state.stop.update(value) {
-                    sequencer.sequence_stop(self.sequence_id);
-                }
+            if let Some(true) = context.read_edge(STOP) {
+                sequencer.sequence_stop(self.sequence_id);
             }
-            if let Some(value) = context.read_port(TOGGLE_PLAYBACK) {
-                if let Some(true) = state.playback_toggle.update(value) {
-                    if let Some(sequence_state) = sequencer.get_sequencer_view().read().get(&self.sequence_id) {
-                        if sequence_state.active {
-                            sequencer.sequence_stop(self.sequence_id);
-                        } else {
-                            sequencer.sequence_go(self.sequence_id);
-                        }
+            if let Some(true) = context.read_edge(TOGGLE_PLAYBACK) {
+                if let Some(sequence_state) =
+                    sequencer.get_sequencer_view().read().get(&self.sequence_id)
+                {
+                    if sequence_state.active {
+                        sequencer.sequence_stop(self.sequence_id);
+                    } else {
+                        sequencer.sequence_go(self.sequence_id);
                     }
                 }
             }
@@ -143,11 +141,4 @@ impl ProcessingNode for SequencerNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
-}
-
-#[derive(Default)]
-pub struct SequencerState {
-    go_forward: Edge,
-    stop: Edge,
-    playback_toggle: Edge,
 }

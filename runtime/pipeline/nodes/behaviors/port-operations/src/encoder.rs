@@ -1,4 +1,3 @@
-use mizer_node::edge::Edge;
 use mizer_node::{
     NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
     PortType, PreviewType, ProcessingNode,
@@ -52,6 +51,7 @@ impl PipelineNode for EncoderNode {
                 PortMetadata {
                     port_type: PortType::Single,
                     direction: PortDirection::Input,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -75,10 +75,8 @@ impl ProcessingNode for EncoderNode {
     type State = EncoderState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        if let Some(reset) = context.read_port_changes::<_, f64>(RESET_INPUT) {
-            if let Some(true) = state.reset.update(reset) {
-                state.value = 0f64;
-            }
+        if let Some(true) = context.read_edge(RESET_INPUT) {
+            state.value = 0f64;
         }
         if let Some(value) = context.read_port::<_, f64>(INCREASE_INPUT) {
             if value > 0f64 {
@@ -104,5 +102,4 @@ impl ProcessingNode for EncoderNode {
 #[derive(Default)]
 pub struct EncoderState {
     value: f64,
-    reset: Edge,
 }

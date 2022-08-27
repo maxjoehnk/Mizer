@@ -40,6 +40,23 @@ class ChannelProtocol extends $pb.ProtobufEnum {
   const ChannelProtocol._($core.int v, $core.String n) : super(v, n);
 }
 
+class PortEdgeMode extends $pb.ProtobufEnum {
+  static const PortEdgeMode Rise = PortEdgeMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Rise');
+  static const PortEdgeMode Fall = PortEdgeMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fall');
+  static const PortEdgeMode Both = PortEdgeMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Both');
+
+  static const $core.List<PortEdgeMode> values = <PortEdgeMode> [
+    Rise,
+    Fall,
+    Both,
+  ];
+
+  static final $core.Map<$core.int, PortEdgeMode> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static PortEdgeMode? valueOf($core.int value) => _byValue[value];
+
+  const PortEdgeMode._($core.int v, $core.String n) : super(v, n);
+}
+
 class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Fader = Node_NodeType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Fader');
   static const Node_NodeType Button = Node_NodeType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Button');

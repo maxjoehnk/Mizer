@@ -1096,6 +1096,7 @@ class NodeConfig extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46])
+    ..pc<EdgeConfiguration>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'edges', $pb.PbFieldType.PM, subBuilder: EdgeConfiguration.create)
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1137,6 +1138,7 @@ class NodeConfig extends $pb.GeneratedMessage {
 
   NodeConfig._() : super();
   factory NodeConfig({
+    $core.Iterable<EdgeConfiguration>? edges,
     OscillatorNodeConfig? oscillatorConfig,
     ScriptingNodeConfig? scriptingConfig,
     SequenceNodeConfig? sequenceConfig,
@@ -1175,6 +1177,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     MathNodeConfig? mathConfig,
   }) {
     final _result = create();
+    if (edges != null) {
+      _result.edges.addAll(edges);
+    }
     if (oscillatorConfig != null) {
       _result.oscillatorConfig = oscillatorConfig;
     }
@@ -1309,401 +1314,404 @@ class NodeConfig extends $pb.GeneratedMessage {
   NodeConfig_Type whichType() => _NodeConfig_TypeByTag[$_whichOneof(0)]!;
   void clearType() => clearField($_whichOneof(0));
 
+  @$pb.TagNumber(1)
+  $core.List<EdgeConfiguration> get edges => $_getList(0);
+
   @$pb.TagNumber(10)
-  OscillatorNodeConfig get oscillatorConfig => $_getN(0);
+  OscillatorNodeConfig get oscillatorConfig => $_getN(1);
   @$pb.TagNumber(10)
   set oscillatorConfig(OscillatorNodeConfig v) { setField(10, v); }
   @$pb.TagNumber(10)
-  $core.bool hasOscillatorConfig() => $_has(0);
+  $core.bool hasOscillatorConfig() => $_has(1);
   @$pb.TagNumber(10)
   void clearOscillatorConfig() => clearField(10);
   @$pb.TagNumber(10)
-  OscillatorNodeConfig ensureOscillatorConfig() => $_ensure(0);
+  OscillatorNodeConfig ensureOscillatorConfig() => $_ensure(1);
 
   @$pb.TagNumber(11)
-  ScriptingNodeConfig get scriptingConfig => $_getN(1);
+  ScriptingNodeConfig get scriptingConfig => $_getN(2);
   @$pb.TagNumber(11)
   set scriptingConfig(ScriptingNodeConfig v) { setField(11, v); }
   @$pb.TagNumber(11)
-  $core.bool hasScriptingConfig() => $_has(1);
+  $core.bool hasScriptingConfig() => $_has(2);
   @$pb.TagNumber(11)
   void clearScriptingConfig() => clearField(11);
   @$pb.TagNumber(11)
-  ScriptingNodeConfig ensureScriptingConfig() => $_ensure(1);
+  ScriptingNodeConfig ensureScriptingConfig() => $_ensure(2);
 
   @$pb.TagNumber(12)
-  SequenceNodeConfig get sequenceConfig => $_getN(2);
+  SequenceNodeConfig get sequenceConfig => $_getN(3);
   @$pb.TagNumber(12)
   set sequenceConfig(SequenceNodeConfig v) { setField(12, v); }
   @$pb.TagNumber(12)
-  $core.bool hasSequenceConfig() => $_has(2);
+  $core.bool hasSequenceConfig() => $_has(3);
   @$pb.TagNumber(12)
   void clearSequenceConfig() => clearField(12);
   @$pb.TagNumber(12)
-  SequenceNodeConfig ensureSequenceConfig() => $_ensure(2);
+  SequenceNodeConfig ensureSequenceConfig() => $_ensure(3);
 
   @$pb.TagNumber(13)
-  ClockNodeConfig get clockConfig => $_getN(3);
+  ClockNodeConfig get clockConfig => $_getN(4);
   @$pb.TagNumber(13)
   set clockConfig(ClockNodeConfig v) { setField(13, v); }
   @$pb.TagNumber(13)
-  $core.bool hasClockConfig() => $_has(3);
+  $core.bool hasClockConfig() => $_has(4);
   @$pb.TagNumber(13)
   void clearClockConfig() => clearField(13);
   @$pb.TagNumber(13)
-  ClockNodeConfig ensureClockConfig() => $_ensure(3);
+  ClockNodeConfig ensureClockConfig() => $_ensure(4);
 
   @$pb.TagNumber(14)
-  FixtureNodeConfig get fixtureConfig => $_getN(4);
+  FixtureNodeConfig get fixtureConfig => $_getN(5);
   @$pb.TagNumber(14)
   set fixtureConfig(FixtureNodeConfig v) { setField(14, v); }
   @$pb.TagNumber(14)
-  $core.bool hasFixtureConfig() => $_has(4);
+  $core.bool hasFixtureConfig() => $_has(5);
   @$pb.TagNumber(14)
   void clearFixtureConfig() => clearField(14);
   @$pb.TagNumber(14)
-  FixtureNodeConfig ensureFixtureConfig() => $_ensure(4);
+  FixtureNodeConfig ensureFixtureConfig() => $_ensure(5);
 
   @$pb.TagNumber(15)
-  ButtonNodeConfig get buttonConfig => $_getN(5);
+  ButtonNodeConfig get buttonConfig => $_getN(6);
   @$pb.TagNumber(15)
   set buttonConfig(ButtonNodeConfig v) { setField(15, v); }
   @$pb.TagNumber(15)
-  $core.bool hasButtonConfig() => $_has(5);
+  $core.bool hasButtonConfig() => $_has(6);
   @$pb.TagNumber(15)
   void clearButtonConfig() => clearField(15);
   @$pb.TagNumber(15)
-  ButtonNodeConfig ensureButtonConfig() => $_ensure(5);
+  ButtonNodeConfig ensureButtonConfig() => $_ensure(6);
 
   @$pb.TagNumber(16)
-  FaderNodeConfig get faderConfig => $_getN(6);
+  FaderNodeConfig get faderConfig => $_getN(7);
   @$pb.TagNumber(16)
   set faderConfig(FaderNodeConfig v) { setField(16, v); }
   @$pb.TagNumber(16)
-  $core.bool hasFaderConfig() => $_has(6);
+  $core.bool hasFaderConfig() => $_has(7);
   @$pb.TagNumber(16)
   void clearFaderConfig() => clearField(16);
   @$pb.TagNumber(16)
-  FaderNodeConfig ensureFaderConfig() => $_ensure(6);
+  FaderNodeConfig ensureFaderConfig() => $_ensure(7);
 
   @$pb.TagNumber(17)
-  IldaFileNodeConfig get ildaFileConfig => $_getN(7);
+  IldaFileNodeConfig get ildaFileConfig => $_getN(8);
   @$pb.TagNumber(17)
   set ildaFileConfig(IldaFileNodeConfig v) { setField(17, v); }
   @$pb.TagNumber(17)
-  $core.bool hasIldaFileConfig() => $_has(7);
+  $core.bool hasIldaFileConfig() => $_has(8);
   @$pb.TagNumber(17)
   void clearIldaFileConfig() => clearField(17);
   @$pb.TagNumber(17)
-  IldaFileNodeConfig ensureIldaFileConfig() => $_ensure(7);
+  IldaFileNodeConfig ensureIldaFileConfig() => $_ensure(8);
 
   @$pb.TagNumber(18)
-  LaserNodeConfig get laserConfig => $_getN(8);
+  LaserNodeConfig get laserConfig => $_getN(9);
   @$pb.TagNumber(18)
   set laserConfig(LaserNodeConfig v) { setField(18, v); }
   @$pb.TagNumber(18)
-  $core.bool hasLaserConfig() => $_has(8);
+  $core.bool hasLaserConfig() => $_has(9);
   @$pb.TagNumber(18)
   void clearLaserConfig() => clearField(18);
   @$pb.TagNumber(18)
-  LaserNodeConfig ensureLaserConfig() => $_ensure(8);
+  LaserNodeConfig ensureLaserConfig() => $_ensure(9);
 
   @$pb.TagNumber(19)
-  PixelPatternNodeConfig get pixelPatternConfig => $_getN(9);
+  PixelPatternNodeConfig get pixelPatternConfig => $_getN(10);
   @$pb.TagNumber(19)
   set pixelPatternConfig(PixelPatternNodeConfig v) { setField(19, v); }
   @$pb.TagNumber(19)
-  $core.bool hasPixelPatternConfig() => $_has(9);
+  $core.bool hasPixelPatternConfig() => $_has(10);
   @$pb.TagNumber(19)
   void clearPixelPatternConfig() => clearField(19);
   @$pb.TagNumber(19)
-  PixelPatternNodeConfig ensurePixelPatternConfig() => $_ensure(9);
+  PixelPatternNodeConfig ensurePixelPatternConfig() => $_ensure(10);
 
   @$pb.TagNumber(20)
-  PixelDmxNodeConfig get pixelDmxConfig => $_getN(10);
+  PixelDmxNodeConfig get pixelDmxConfig => $_getN(11);
   @$pb.TagNumber(20)
   set pixelDmxConfig(PixelDmxNodeConfig v) { setField(20, v); }
   @$pb.TagNumber(20)
-  $core.bool hasPixelDmxConfig() => $_has(10);
+  $core.bool hasPixelDmxConfig() => $_has(11);
   @$pb.TagNumber(20)
   void clearPixelDmxConfig() => clearField(20);
   @$pb.TagNumber(20)
-  PixelDmxNodeConfig ensurePixelDmxConfig() => $_ensure(10);
+  PixelDmxNodeConfig ensurePixelDmxConfig() => $_ensure(11);
 
   @$pb.TagNumber(21)
-  DmxOutputNodeConfig get dmxOutputConfig => $_getN(11);
+  DmxOutputNodeConfig get dmxOutputConfig => $_getN(12);
   @$pb.TagNumber(21)
   set dmxOutputConfig(DmxOutputNodeConfig v) { setField(21, v); }
   @$pb.TagNumber(21)
-  $core.bool hasDmxOutputConfig() => $_has(11);
+  $core.bool hasDmxOutputConfig() => $_has(12);
   @$pb.TagNumber(21)
   void clearDmxOutputConfig() => clearField(21);
   @$pb.TagNumber(21)
-  DmxOutputNodeConfig ensureDmxOutputConfig() => $_ensure(11);
+  DmxOutputNodeConfig ensureDmxOutputConfig() => $_ensure(12);
 
   @$pb.TagNumber(22)
-  MidiNodeConfig get midiInputConfig => $_getN(12);
+  MidiNodeConfig get midiInputConfig => $_getN(13);
   @$pb.TagNumber(22)
   set midiInputConfig(MidiNodeConfig v) { setField(22, v); }
   @$pb.TagNumber(22)
-  $core.bool hasMidiInputConfig() => $_has(12);
+  $core.bool hasMidiInputConfig() => $_has(13);
   @$pb.TagNumber(22)
   void clearMidiInputConfig() => clearField(22);
   @$pb.TagNumber(22)
-  MidiNodeConfig ensureMidiInputConfig() => $_ensure(12);
+  MidiNodeConfig ensureMidiInputConfig() => $_ensure(13);
 
   @$pb.TagNumber(23)
-  MidiNodeConfig get midiOutputConfig => $_getN(13);
+  MidiNodeConfig get midiOutputConfig => $_getN(14);
   @$pb.TagNumber(23)
   set midiOutputConfig(MidiNodeConfig v) { setField(23, v); }
   @$pb.TagNumber(23)
-  $core.bool hasMidiOutputConfig() => $_has(13);
+  $core.bool hasMidiOutputConfig() => $_has(14);
   @$pb.TagNumber(23)
   void clearMidiOutputConfig() => clearField(23);
   @$pb.TagNumber(23)
-  MidiNodeConfig ensureMidiOutputConfig() => $_ensure(13);
+  MidiNodeConfig ensureMidiOutputConfig() => $_ensure(14);
 
   @$pb.TagNumber(24)
-  OpcOutputNodeConfig get opcOutputConfig => $_getN(14);
+  OpcOutputNodeConfig get opcOutputConfig => $_getN(15);
   @$pb.TagNumber(24)
   set opcOutputConfig(OpcOutputNodeConfig v) { setField(24, v); }
   @$pb.TagNumber(24)
-  $core.bool hasOpcOutputConfig() => $_has(14);
+  $core.bool hasOpcOutputConfig() => $_has(15);
   @$pb.TagNumber(24)
   void clearOpcOutputConfig() => clearField(24);
   @$pb.TagNumber(24)
-  OpcOutputNodeConfig ensureOpcOutputConfig() => $_ensure(14);
+  OpcOutputNodeConfig ensureOpcOutputConfig() => $_ensure(15);
 
   @$pb.TagNumber(25)
-  OscNodeConfig get oscInputConfig => $_getN(15);
+  OscNodeConfig get oscInputConfig => $_getN(16);
   @$pb.TagNumber(25)
   set oscInputConfig(OscNodeConfig v) { setField(25, v); }
   @$pb.TagNumber(25)
-  $core.bool hasOscInputConfig() => $_has(15);
+  $core.bool hasOscInputConfig() => $_has(16);
   @$pb.TagNumber(25)
   void clearOscInputConfig() => clearField(25);
   @$pb.TagNumber(25)
-  OscNodeConfig ensureOscInputConfig() => $_ensure(15);
+  OscNodeConfig ensureOscInputConfig() => $_ensure(16);
 
   @$pb.TagNumber(26)
-  OscNodeConfig get oscOutputConfig => $_getN(16);
+  OscNodeConfig get oscOutputConfig => $_getN(17);
   @$pb.TagNumber(26)
   set oscOutputConfig(OscNodeConfig v) { setField(26, v); }
   @$pb.TagNumber(26)
-  $core.bool hasOscOutputConfig() => $_has(16);
+  $core.bool hasOscOutputConfig() => $_has(17);
   @$pb.TagNumber(26)
   void clearOscOutputConfig() => clearField(26);
   @$pb.TagNumber(26)
-  OscNodeConfig ensureOscOutputConfig() => $_ensure(16);
+  OscNodeConfig ensureOscOutputConfig() => $_ensure(17);
 
   @$pb.TagNumber(27)
-  VideoColorBalanceNodeConfig get videoColorBalanceConfig => $_getN(17);
+  VideoColorBalanceNodeConfig get videoColorBalanceConfig => $_getN(18);
   @$pb.TagNumber(27)
   set videoColorBalanceConfig(VideoColorBalanceNodeConfig v) { setField(27, v); }
   @$pb.TagNumber(27)
-  $core.bool hasVideoColorBalanceConfig() => $_has(17);
+  $core.bool hasVideoColorBalanceConfig() => $_has(18);
   @$pb.TagNumber(27)
   void clearVideoColorBalanceConfig() => clearField(27);
   @$pb.TagNumber(27)
-  VideoColorBalanceNodeConfig ensureVideoColorBalanceConfig() => $_ensure(17);
+  VideoColorBalanceNodeConfig ensureVideoColorBalanceConfig() => $_ensure(18);
 
   @$pb.TagNumber(28)
-  VideoEffectNodeConfig get videoEffectConfig => $_getN(18);
+  VideoEffectNodeConfig get videoEffectConfig => $_getN(19);
   @$pb.TagNumber(28)
   set videoEffectConfig(VideoEffectNodeConfig v) { setField(28, v); }
   @$pb.TagNumber(28)
-  $core.bool hasVideoEffectConfig() => $_has(18);
+  $core.bool hasVideoEffectConfig() => $_has(19);
   @$pb.TagNumber(28)
   void clearVideoEffectConfig() => clearField(28);
   @$pb.TagNumber(28)
-  VideoEffectNodeConfig ensureVideoEffectConfig() => $_ensure(18);
+  VideoEffectNodeConfig ensureVideoEffectConfig() => $_ensure(19);
 
   @$pb.TagNumber(29)
-  VideoFileNodeConfig get videoFileConfig => $_getN(19);
+  VideoFileNodeConfig get videoFileConfig => $_getN(20);
   @$pb.TagNumber(29)
   set videoFileConfig(VideoFileNodeConfig v) { setField(29, v); }
   @$pb.TagNumber(29)
-  $core.bool hasVideoFileConfig() => $_has(19);
+  $core.bool hasVideoFileConfig() => $_has(20);
   @$pb.TagNumber(29)
   void clearVideoFileConfig() => clearField(29);
   @$pb.TagNumber(29)
-  VideoFileNodeConfig ensureVideoFileConfig() => $_ensure(19);
+  VideoFileNodeConfig ensureVideoFileConfig() => $_ensure(20);
 
   @$pb.TagNumber(30)
-  VideoOutputNodeConfig get videoOutputConfig => $_getN(20);
+  VideoOutputNodeConfig get videoOutputConfig => $_getN(21);
   @$pb.TagNumber(30)
   set videoOutputConfig(VideoOutputNodeConfig v) { setField(30, v); }
   @$pb.TagNumber(30)
-  $core.bool hasVideoOutputConfig() => $_has(20);
+  $core.bool hasVideoOutputConfig() => $_has(21);
   @$pb.TagNumber(30)
   void clearVideoOutputConfig() => clearField(30);
   @$pb.TagNumber(30)
-  VideoOutputNodeConfig ensureVideoOutputConfig() => $_ensure(20);
+  VideoOutputNodeConfig ensureVideoOutputConfig() => $_ensure(21);
 
   @$pb.TagNumber(31)
-  VideoTransformNodeConfig get videoTransformConfig => $_getN(21);
+  VideoTransformNodeConfig get videoTransformConfig => $_getN(22);
   @$pb.TagNumber(31)
   set videoTransformConfig(VideoTransformNodeConfig v) { setField(31, v); }
   @$pb.TagNumber(31)
-  $core.bool hasVideoTransformConfig() => $_has(21);
+  $core.bool hasVideoTransformConfig() => $_has(22);
   @$pb.TagNumber(31)
   void clearVideoTransformConfig() => clearField(31);
   @$pb.TagNumber(31)
-  VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(21);
+  VideoTransformNodeConfig ensureVideoTransformConfig() => $_ensure(22);
 
   @$pb.TagNumber(32)
-  SelectNodeConfig get selectConfig => $_getN(22);
+  SelectNodeConfig get selectConfig => $_getN(23);
   @$pb.TagNumber(32)
   set selectConfig(SelectNodeConfig v) { setField(32, v); }
   @$pb.TagNumber(32)
-  $core.bool hasSelectConfig() => $_has(22);
+  $core.bool hasSelectConfig() => $_has(23);
   @$pb.TagNumber(32)
   void clearSelectConfig() => clearField(32);
   @$pb.TagNumber(32)
-  SelectNodeConfig ensureSelectConfig() => $_ensure(22);
+  SelectNodeConfig ensureSelectConfig() => $_ensure(23);
 
   @$pb.TagNumber(33)
-  MergeNodeConfig get mergeConfig => $_getN(23);
+  MergeNodeConfig get mergeConfig => $_getN(24);
   @$pb.TagNumber(33)
   set mergeConfig(MergeNodeConfig v) { setField(33, v); }
   @$pb.TagNumber(33)
-  $core.bool hasMergeConfig() => $_has(23);
+  $core.bool hasMergeConfig() => $_has(24);
   @$pb.TagNumber(33)
   void clearMergeConfig() => clearField(33);
   @$pb.TagNumber(33)
-  MergeNodeConfig ensureMergeConfig() => $_ensure(23);
+  MergeNodeConfig ensureMergeConfig() => $_ensure(24);
 
   @$pb.TagNumber(34)
-  EnvelopeNodeConfig get envelopeConfig => $_getN(24);
+  EnvelopeNodeConfig get envelopeConfig => $_getN(25);
   @$pb.TagNumber(34)
   set envelopeConfig(EnvelopeNodeConfig v) { setField(34, v); }
   @$pb.TagNumber(34)
-  $core.bool hasEnvelopeConfig() => $_has(24);
+  $core.bool hasEnvelopeConfig() => $_has(25);
   @$pb.TagNumber(34)
   void clearEnvelopeConfig() => clearField(34);
   @$pb.TagNumber(34)
-  EnvelopeNodeConfig ensureEnvelopeConfig() => $_ensure(24);
+  EnvelopeNodeConfig ensureEnvelopeConfig() => $_ensure(25);
 
   @$pb.TagNumber(35)
-  SequencerNodeConfig get sequencerConfig => $_getN(25);
+  SequencerNodeConfig get sequencerConfig => $_getN(26);
   @$pb.TagNumber(35)
   set sequencerConfig(SequencerNodeConfig v) { setField(35, v); }
   @$pb.TagNumber(35)
-  $core.bool hasSequencerConfig() => $_has(25);
+  $core.bool hasSequencerConfig() => $_has(26);
   @$pb.TagNumber(35)
   void clearSequencerConfig() => clearField(35);
   @$pb.TagNumber(35)
-  SequencerNodeConfig ensureSequencerConfig() => $_ensure(25);
+  SequencerNodeConfig ensureSequencerConfig() => $_ensure(26);
 
   @$pb.TagNumber(36)
-  ProgrammerNodeConfig get programmerConfig => $_getN(26);
+  ProgrammerNodeConfig get programmerConfig => $_getN(27);
   @$pb.TagNumber(36)
   set programmerConfig(ProgrammerNodeConfig v) { setField(36, v); }
   @$pb.TagNumber(36)
-  $core.bool hasProgrammerConfig() => $_has(26);
+  $core.bool hasProgrammerConfig() => $_has(27);
   @$pb.TagNumber(36)
   void clearProgrammerConfig() => clearField(36);
   @$pb.TagNumber(36)
-  ProgrammerNodeConfig ensureProgrammerConfig() => $_ensure(26);
+  ProgrammerNodeConfig ensureProgrammerConfig() => $_ensure(27);
 
   @$pb.TagNumber(37)
-  GroupNodeConfig get groupConfig => $_getN(27);
+  GroupNodeConfig get groupConfig => $_getN(28);
   @$pb.TagNumber(37)
   set groupConfig(GroupNodeConfig v) { setField(37, v); }
   @$pb.TagNumber(37)
-  $core.bool hasGroupConfig() => $_has(27);
+  $core.bool hasGroupConfig() => $_has(28);
   @$pb.TagNumber(37)
   void clearGroupConfig() => clearField(37);
   @$pb.TagNumber(37)
-  GroupNodeConfig ensureGroupConfig() => $_ensure(27);
+  GroupNodeConfig ensureGroupConfig() => $_ensure(28);
 
   @$pb.TagNumber(38)
-  PresetNodeConfig get presetConfig => $_getN(28);
+  PresetNodeConfig get presetConfig => $_getN(29);
   @$pb.TagNumber(38)
   set presetConfig(PresetNodeConfig v) { setField(38, v); }
   @$pb.TagNumber(38)
-  $core.bool hasPresetConfig() => $_has(28);
+  $core.bool hasPresetConfig() => $_has(29);
   @$pb.TagNumber(38)
   void clearPresetConfig() => clearField(38);
   @$pb.TagNumber(38)
-  PresetNodeConfig ensurePresetConfig() => $_ensure(28);
+  PresetNodeConfig ensurePresetConfig() => $_ensure(29);
 
   @$pb.TagNumber(40)
-  ColorRgbNodeConfig get colorRgbConfig => $_getN(29);
+  ColorRgbNodeConfig get colorRgbConfig => $_getN(30);
   @$pb.TagNumber(40)
   set colorRgbConfig(ColorRgbNodeConfig v) { setField(40, v); }
   @$pb.TagNumber(40)
-  $core.bool hasColorRgbConfig() => $_has(29);
+  $core.bool hasColorRgbConfig() => $_has(30);
   @$pb.TagNumber(40)
   void clearColorRgbConfig() => clearField(40);
   @$pb.TagNumber(40)
-  ColorRgbNodeConfig ensureColorRgbConfig() => $_ensure(29);
+  ColorRgbNodeConfig ensureColorRgbConfig() => $_ensure(30);
 
   @$pb.TagNumber(41)
-  ColorHsvNodeConfig get colorHsvConfig => $_getN(30);
+  ColorHsvNodeConfig get colorHsvConfig => $_getN(31);
   @$pb.TagNumber(41)
   set colorHsvConfig(ColorHsvNodeConfig v) { setField(41, v); }
   @$pb.TagNumber(41)
-  $core.bool hasColorHsvConfig() => $_has(30);
+  $core.bool hasColorHsvConfig() => $_has(31);
   @$pb.TagNumber(41)
   void clearColorHsvConfig() => clearField(41);
   @$pb.TagNumber(41)
-  ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(30);
+  ColorHsvNodeConfig ensureColorHsvConfig() => $_ensure(31);
 
   @$pb.TagNumber(42)
-  GamepadNodeConfig get gamepadNodeConfig => $_getN(31);
+  GamepadNodeConfig get gamepadNodeConfig => $_getN(32);
   @$pb.TagNumber(42)
   set gamepadNodeConfig(GamepadNodeConfig v) { setField(42, v); }
   @$pb.TagNumber(42)
-  $core.bool hasGamepadNodeConfig() => $_has(31);
+  $core.bool hasGamepadNodeConfig() => $_has(32);
   @$pb.TagNumber(42)
   void clearGamepadNodeConfig() => clearField(42);
   @$pb.TagNumber(42)
-  GamepadNodeConfig ensureGamepadNodeConfig() => $_ensure(31);
+  GamepadNodeConfig ensureGamepadNodeConfig() => $_ensure(32);
 
   @$pb.TagNumber(43)
-  ThresholdNodeConfig get thresholdConfig => $_getN(32);
+  ThresholdNodeConfig get thresholdConfig => $_getN(33);
   @$pb.TagNumber(43)
   set thresholdConfig(ThresholdNodeConfig v) { setField(43, v); }
   @$pb.TagNumber(43)
-  $core.bool hasThresholdConfig() => $_has(32);
+  $core.bool hasThresholdConfig() => $_has(33);
   @$pb.TagNumber(43)
   void clearThresholdConfig() => clearField(43);
   @$pb.TagNumber(43)
-  ThresholdNodeConfig ensureThresholdConfig() => $_ensure(32);
+  ThresholdNodeConfig ensureThresholdConfig() => $_ensure(33);
 
   @$pb.TagNumber(44)
-  EncoderNodeConfig get encoderConfig => $_getN(33);
+  EncoderNodeConfig get encoderConfig => $_getN(34);
   @$pb.TagNumber(44)
   set encoderConfig(EncoderNodeConfig v) { setField(44, v); }
   @$pb.TagNumber(44)
-  $core.bool hasEncoderConfig() => $_has(33);
+  $core.bool hasEncoderConfig() => $_has(34);
   @$pb.TagNumber(44)
   void clearEncoderConfig() => clearField(44);
   @$pb.TagNumber(44)
-  EncoderNodeConfig ensureEncoderConfig() => $_ensure(33);
+  EncoderNodeConfig ensureEncoderConfig() => $_ensure(34);
 
   @$pb.TagNumber(45)
-  ContainerNodeConfig get containerConfig => $_getN(34);
+  ContainerNodeConfig get containerConfig => $_getN(35);
   @$pb.TagNumber(45)
   set containerConfig(ContainerNodeConfig v) { setField(45, v); }
   @$pb.TagNumber(45)
-  $core.bool hasContainerConfig() => $_has(34);
+  $core.bool hasContainerConfig() => $_has(35);
   @$pb.TagNumber(45)
   void clearContainerConfig() => clearField(45);
   @$pb.TagNumber(45)
-  ContainerNodeConfig ensureContainerConfig() => $_ensure(34);
+  ContainerNodeConfig ensureContainerConfig() => $_ensure(35);
 
   @$pb.TagNumber(46)
-  MathNodeConfig get mathConfig => $_getN(35);
+  MathNodeConfig get mathConfig => $_getN(36);
   @$pb.TagNumber(46)
   set mathConfig(MathNodeConfig v) { setField(46, v); }
   @$pb.TagNumber(46)
-  $core.bool hasMathConfig() => $_has(35);
+  $core.bool hasMathConfig() => $_has(36);
   @$pb.TagNumber(46)
   void clearMathConfig() => clearField(46);
   @$pb.TagNumber(46)
-  MathNodeConfig ensureMathConfig() => $_ensure(35);
+  MathNodeConfig ensureMathConfig() => $_ensure(36);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -3512,16 +3520,21 @@ class ThresholdNodeConfig extends $pb.GeneratedMessage {
 class EncoderNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EncoderNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'holdRate', $pb.PbFieldType.OD)
+    ..e<PortEdgeMode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'resetEdge', $pb.PbFieldType.OE, defaultOrMaker: PortEdgeMode.Rise, valueOf: PortEdgeMode.valueOf, enumValues: PortEdgeMode.values)
     ..hasRequiredFields = false
   ;
 
   EncoderNodeConfig._() : super();
   factory EncoderNodeConfig({
     $core.double? holdRate,
+    PortEdgeMode? resetEdge,
   }) {
     final _result = create();
     if (holdRate != null) {
       _result.holdRate = holdRate;
+    }
+    if (resetEdge != null) {
+      _result.resetEdge = resetEdge;
     }
     return _result;
   }
@@ -3554,6 +3567,15 @@ class EncoderNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasHoldRate() => $_has(0);
   @$pb.TagNumber(1)
   void clearHoldRate() => clearField(1);
+
+  @$pb.TagNumber(2)
+  PortEdgeMode get resetEdge => $_getN(1);
+  @$pb.TagNumber(2)
+  set resetEdge(PortEdgeMode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasResetEdge() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearResetEdge() => clearField(2);
 }
 
 class ColorRgbNodeConfig extends $pb.GeneratedMessage {
@@ -3899,5 +3921,66 @@ class Port extends $pb.GeneratedMessage {
   $core.bool hasProtocol() => $_has(1);
   @$pb.TagNumber(2)
   void clearProtocol() => clearField(2);
+}
+
+class EdgeConfiguration extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EdgeConfiguration', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..e<PortEdgeMode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mode', $pb.PbFieldType.OE, defaultOrMaker: PortEdgeMode.Rise, valueOf: PortEdgeMode.valueOf, enumValues: PortEdgeMode.values)
+    ..hasRequiredFields = false
+  ;
+
+  EdgeConfiguration._() : super();
+  factory EdgeConfiguration({
+    $core.String? name,
+    PortEdgeMode? mode,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (mode != null) {
+      _result.mode = mode;
+    }
+    return _result;
+  }
+  factory EdgeConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory EdgeConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  EdgeConfiguration clone() => EdgeConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  EdgeConfiguration copyWith(void Function(EdgeConfiguration) updates) => super.copyWith((message) => updates(message as EdgeConfiguration)) as EdgeConfiguration; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static EdgeConfiguration create() => EdgeConfiguration._();
+  EdgeConfiguration createEmptyInstance() => create();
+  static $pb.PbList<EdgeConfiguration> createRepeated() => $pb.PbList<EdgeConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static EdgeConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<EdgeConfiguration>(create);
+  static EdgeConfiguration? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  PortEdgeMode get mode => $_getN(1);
+  @$pb.TagNumber(2)
+  set mode(PortEdgeMode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMode() => clearField(2);
 }
 

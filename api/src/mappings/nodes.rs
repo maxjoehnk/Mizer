@@ -113,8 +113,20 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
 
 impl From<mizer_nodes::Node> for NodeConfig {
     fn from(node: mizer_nodes::Node) -> Self {
+        let edges = node
+            .as_pipeline_node()
+            .list_ports()
+            .into_iter()
+            .filter(|(_, port)| port.edge)
+            .map(|(id, port)| EdgeConfiguration {
+                name: id.to_string(),
+                mode: PortEdgeMode::Rise,
+                ..Default::default()
+            })
+            .collect();
         let config: NodeConfig_oneof_type = node.into();
         NodeConfig {
+            edges,
             field_type: Some(config),
             ..Default::default()
         }

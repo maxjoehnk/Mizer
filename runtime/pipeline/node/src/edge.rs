@@ -1,6 +1,15 @@
-#[derive(Default)]
+#[derive(Debug, Default)]
 pub struct Edge {
+    mode: EdgeMode,
     last_value: Option<f64>,
+}
+
+#[derive(Debug, Default)]
+pub enum EdgeMode {
+    #[default]
+    Rise,
+    Fall,
+    Both,
 }
 
 impl Edge {

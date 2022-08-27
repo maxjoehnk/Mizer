@@ -19,6 +19,7 @@ pub struct PortMetadata {
     pub direction: PortDirection,
     pub multiple: Option<bool>,
     pub dimensions: Option<(u64, u64)>,
+    pub edge: bool,
 }
 
 impl PortMetadata {

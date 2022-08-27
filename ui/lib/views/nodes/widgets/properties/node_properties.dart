@@ -7,7 +7,9 @@ import 'package:mizer/views/nodes/widgets/properties/properties/groups/envelope_
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
+import 'package:mizer/widgets/controls/select.dart';
 
+import 'properties/enum_field.dart';
 import 'properties/groups/button_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
@@ -18,6 +20,7 @@ import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
 import 'properties/groups/video_file_properties.dart';
+import 'properties/property_group.dart';
 
 class NodePropertiesPane extends StatelessWidget {
   final Node? node;
@@ -142,6 +145,22 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(MathProperties(node.config.mathConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(mathConfig: config)))));
+    }
+    if (node.config.edges.isNotEmpty) {
+      widgets.add(Container(height: 8));
+      widgets.add(PropertyGroup(
+          title: "Edges",
+          children: node.config.edges
+              .map(
+                (edge) => EnumField<PortEdgeMode>(
+                    initialValue: edge.mode,
+                    label: edge.name,
+                    items: PortEdgeMode.values
+                        .map((e) => SelectOption(value: e, label: e.name))
+                        .toList(),
+                    onUpdate: (_) {}),
+              )
+              .toList()));
     }
     return widgets;
   }

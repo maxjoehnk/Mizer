@@ -11,7 +11,7 @@ pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
-use mizer_node::{Injector, NodeType};
+use mizer_node::{Injector, NodeType, PipelineNode};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -120,51 +120,55 @@ impl From<NodeType> for Node {
 
 impl Node {
     pub fn node_type(&self) -> NodeType {
-        use Node::*;
-        match self {
-            Clock(_) => NodeType::Clock,
-            Oscillator(_) => NodeType::Oscillator,
-            DmxOutput(_) => NodeType::DmxOutput,
-            Scripting(_) => NodeType::Scripting,
-            Sequence(_) => NodeType::Sequence,
-            Envelope(_) => NodeType::Envelope,
-            Merge(_) => NodeType::Merge,
-            Select(_) => NodeType::Select,
-            Threshold(_) => NodeType::Threshold,
-            Encoder(_) => NodeType::Encoder,
-            Fixture(_) => NodeType::Fixture,
-            Programmer(_) => NodeType::Programmer,
-            Group(_) => NodeType::Group,
-            Preset(_) => NodeType::Preset,
-            Sequencer(_) => NodeType::Sequencer,
-            IldaFile(_) => NodeType::IldaFile,
-            Laser(_) => NodeType::Laser,
-            Fader(_) => NodeType::Fader,
-            Button(_) => NodeType::Button,
-            MidiInput(_) => NodeType::MidiInput,
-            MidiOutput(_) => NodeType::MidiOutput,
-            OpcOutput(_) => NodeType::OpcOutput,
-            PixelPattern(_) => NodeType::PixelPattern,
-            PixelDmx(_) => NodeType::PixelDmx,
-            OscInput(_) => NodeType::OscInput,
-            OscOutput(_) => NodeType::OscOutput,
-            VideoFile(_) => NodeType::VideoFile,
-            VideoColorBalance(_) => NodeType::VideoColorBalance,
-            VideoOutput(_) => NodeType::VideoOutput,
-            VideoEffect(_) => NodeType::VideoEffect,
-            VideoTransform(_) => NodeType::VideoTransform,
-            Gamepad(_) => NodeType::Gamepad,
-            ColorHsv(_) => NodeType::ColorHsv,
-            ColorRgb(_) => NodeType::ColorRgb,
-            Container(_) => NodeType::Container,
-            Math(_) => NodeType::Math,
-            TestSink(_) => NodeType::TestSink,
-        }
+        self.as_pipeline_node().node_type()
     }
 
     pub fn prepare(&mut self, injector: &Injector) {
         if let Node::Fixture(node) = self {
             node.fixture_manager = injector.get().cloned();
+        }
+    }
+
+    pub fn as_pipeline_node(&self) -> &dyn PipelineNode {
+        use Node::*;
+        match self {
+            Clock(node) => node,
+            Oscillator(node) => node,
+            DmxOutput(node) => node,
+            Scripting(node) => node,
+            Sequence(node) => node,
+            Envelope(node) => node,
+            Merge(node) => node,
+            Select(node) => node,
+            Threshold(node) => node,
+            Encoder(node) => node,
+            Fixture(node) => node,
+            Programmer(node) => node,
+            Group(node) => node,
+            Preset(node) => node,
+            Sequencer(node) => node,
+            IldaFile(node) => node,
+            Laser(node) => node,
+            Fader(node) => node,
+            Button(node) => node,
+            MidiInput(node) => node,
+            MidiOutput(node) => node,
+            OpcOutput(node) => node,
+            PixelPattern(node) => node,
+            PixelDmx(node) => node,
+            OscInput(node) => node,
+            OscOutput(node) => node,
+            VideoFile(node) => node,
+            VideoColorBalance(node) => node,
+            VideoOutput(node) => node,
+            VideoEffect(node) => node,
+            VideoTransform(node) => node,
+            Gamepad(node) => node,
+            ColorHsv(node) => node,
+            ColorRgb(node) => node,
+            Container(node) => node,
+            Math(node) => node,
+            TestSink(node) => node,
         }
     }
 }

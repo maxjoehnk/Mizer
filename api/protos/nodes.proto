@@ -144,6 +144,7 @@ message Node {
 }
 
 message NodeConfig {
+  repeated EdgeConfiguration edges = 1;
   oneof type {
     OscillatorNodeConfig oscillatorConfig = 10;
     ScriptingNodeConfig scriptingConfig = 11;
@@ -376,6 +377,7 @@ message ThresholdNodeConfig {
 
 message EncoderNodeConfig {
   double hold_rate = 1;
+  PortEdgeMode reset_edge = 2;
 }
 
 message ColorRgbNodeConfig {}
@@ -423,4 +425,15 @@ enum ChannelProtocol {
 message Port {
   string name = 1;
   ChannelProtocol protocol = 2;
+}
+
+message EdgeConfiguration {
+  string name = 1;
+  PortEdgeMode mode = 2;
+}
+
+enum PortEdgeMode {
+  Rise = 0;
+  Fall = 1;
+  Both = 2;
 }

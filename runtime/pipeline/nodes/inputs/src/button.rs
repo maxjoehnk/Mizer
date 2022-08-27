@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_node::edge::Edge;
 use mizer_node::*;
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
@@ -24,6 +23,7 @@ impl PipelineNode for ButtonNode {
                 PortMetadata {
                     port_type: PortType::Single,
                     direction: PortDirection::Input,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -44,19 +44,15 @@ impl PipelineNode for ButtonNode {
 }
 
 impl ProcessingNode for ButtonNode {
-    type State = (bool, Edge);
+    type State = bool;
 
-    fn process(
-        &self,
-        context: &impl NodeContext,
-        (state, edge): &mut Self::State,
-    ) -> anyhow::Result<()> {
-        if let Some(value) = context.read_port::<_, f64>("value") {
-            if self.toggle {
-                if let Some(true) = edge.update(value) {
-                    *state = !*state;
-                }
-            } else {
+    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        if self.toggle {
+            if let Some(true) = context.read_edge("value") {
+                *state = !*state;
+            }
+        } else {
+            if let Some(value) = context.read_port::<_, f64>("value") {
                 *state = value > 0f64;
             }
         }

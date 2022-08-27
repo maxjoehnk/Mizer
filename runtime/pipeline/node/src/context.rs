@@ -9,6 +9,7 @@ pub trait NodeContext: PreviewContext {
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
     fn read_port_changes<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V>;
+    fn read_edge<P: Into<PortId>>(&self, port: P) -> Option<bool>;
 
     fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>>;
     fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(

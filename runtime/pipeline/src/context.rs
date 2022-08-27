@@ -5,9 +5,11 @@ use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
+use mizer_node::edge::Edge;
 use pinboard::NonEmptyPinboard;
 use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 
@@ -17,6 +19,7 @@ pub struct PipelineContext<'a> {
     pub(crate) receivers: Option<&'a NodeReceivers>,
     pub(crate) injector: &'a Injector,
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
+    pub(crate) edges: RefCell<&'a mut HashMap<PortId, Edge>>,
 }
 
 impl<'a> Debug for PipelineContext<'a> {
@@ -84,6 +87,15 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .and_then(|receiver| receiver.read_changes())
     }
 
+    fn read_edge<P: Into<PortId>>(&self, port: P) -> Option<bool> {
+        let port = port.into();
+        let mut edges = self.edges.borrow_mut();
+        let edge = edges.get_mut(&port);
+        let value = self.read_port_changes::<_, f64>(port);
+
+        edge.zip(value).and_then(|(edge, value)| edge.update(value))
+    }
+
     fn read_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
         profiling::scope!("PipelineContext::read_ports");
         let port = port.into();
@@ -93,7 +105,10 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .unwrap_or_default()
     }
 
-    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(
+        &self,
+        port: P,
+    ) -> Vec<Option<V>> {
         profiling::scope!("PipelineContext::read_changed_ports");
         let port = port.into();
         self.receivers

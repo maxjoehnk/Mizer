@@ -14,6 +14,7 @@ use mizer_protocol_laser::LaserFrame;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodePreviewState, PipelineContext};
+use mizer_node::edge::Edge;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -49,6 +50,7 @@ pub struct PipelineWorker {
     receivers: HashMap<NodePath, NodeReceivers>,
     dependencies: HashMap<NodePath, Vec<NodePath>>,
     previews: HashMap<NodePath, NodePreviewState>,
+    edges: HashMap<NodePath, HashMap<PortId, Edge>>,
 }
 
 impl std::fmt::Debug for PipelineWorker {
@@ -58,6 +60,7 @@ impl std::fmt::Debug for PipelineWorker {
             .field("receivers", &self.receivers)
             .field("dependencies", &self.dependencies)
             .field("previews", &self.previews)
+            .field("edges", &self.edges)
             .finish()
     }
 }
@@ -91,7 +94,11 @@ impl PipelineWorker {
         let state: Box<S> = Box::new(state);
         self.states.insert(path.clone(), state);
         let mut receivers = NodeReceivers::default();
+        let mut edges = HashMap::default();
         for (port_id, metadata) in node.list_ports() {
+            if metadata.edge {
+                edges.insert(port_id.clone(), Edge::default());
+            }
             if metadata.is_input() {
                 log::debug!("Registering port receiver for {:?} {:?}", &path, &port_id);
                 match metadata.port_type {
@@ -103,7 +110,8 @@ impl PipelineWorker {
                 }
             }
         }
-        self.receivers.insert(path, receivers);
+        self.receivers.insert(path.clone(), receivers);
+        self.edges.insert(path, edges);
     }
 
     pub fn remove_node(&mut self, path: &NodePath, links: &[NodeLink]) {
@@ -301,6 +309,7 @@ impl PipelineWorker {
                 preview: RefCell::new(self.previews.get_mut(path).unwrap()),
                 receivers: self.receivers.get(path),
                 senders: self.senders.get(path),
+                edges: RefCell::new(self.edges.get_mut(path).unwrap()),
             };
             log::trace!("process_node {} with context {:?}", &path, &context);
             let state = self.states.get_mut(path);

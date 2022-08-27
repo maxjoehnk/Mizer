@@ -2,7 +2,6 @@ use mizer_fixtures::definition::FixtureControlValue;
 use mizer_fixtures::manager::FixtureManager;
 use serde::{Deserialize, Serialize};
 
-use mizer_node::edge::Edge;
 use mizer_node::*;
 
 #[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
@@ -111,6 +110,7 @@ impl PipelineNode for ProgrammerNode {
                 PortMetadata {
                     port_type: PortType::Single,
                     direction: PortDirection::Input,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -119,6 +119,7 @@ impl PipelineNode for ProgrammerNode {
                 PortMetadata {
                     port_type: PortType::Single,
                     direction: PortDirection::Input,
+                    edge: true,
                     ..Default::default()
                 },
             ),
@@ -131,13 +132,9 @@ impl PipelineNode for ProgrammerNode {
 }
 
 impl ProcessingNode for ProgrammerNode {
-    type State = (Edge, Edge);
+    type State = ();
 
-    fn process(
-        &self,
-        context: &impl NodeContext,
-        (highlight_edge, clear_edge): &mut Self::State,
-    ) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(fixture_manager) = context.inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
             if let Some(intensity) = context.read_port_changes::<_, f64>("Intensity") {
@@ -177,15 +174,11 @@ impl ProcessingNode for ProgrammerNode {
             if let Some(gobo) = context.read_port_changes::<_, f64>("Gobo") {
                 programmer.write_control(FixtureControlValue::Gobo(gobo));
             }
-            if let Some(highlight) = context.read_port_changes::<_, f64>("Highlight") {
-                if let Some(highlight) = highlight_edge.update(highlight) {
-                    programmer.set_highlight(highlight);
-                }
+            if let Some(highlight) = context.read_edge("Highlight") {
+                programmer.set_highlight(highlight);
             }
-            if let Some(clear) = context.read_port_changes::<_, f64>("Clear") {
-                if let Some(true) = clear_edge.update(clear) {
-                    programmer.clear();
-                }
+            if let Some(true) = context.read_edge("Clear") {
+                programmer.clear();
             }
         }
 

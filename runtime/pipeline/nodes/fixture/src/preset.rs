@@ -1,6 +1,5 @@
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::PresetId;
-use mizer_node::edge::Edge;
 use mizer_node::{
     NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
     PortType, PreviewType, ProcessingNode,
@@ -34,6 +33,7 @@ impl PipelineNode for PresetNode {
             PortMetadata {
                 port_type: PortType::Single,
                 direction: PortDirection::Input,
+                edge: true,
                 ..Default::default()
             },
         )]
@@ -45,15 +45,13 @@ impl PipelineNode for PresetNode {
 }
 
 impl ProcessingNode for PresetNode {
-    type State = Edge;
+    type State = ();
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(fixture_manager) = context.inject::<FixtureManager>() {
             let mut programmer = fixture_manager.get_programmer();
-            if let Some(value) = context.read_port("Call") {
-                if let Some(true) = state.update(value) {
-                    programmer.call_preset(&fixture_manager.presets, self.id);
-                }
+            if let Some(true) = context.read_edge("Call") {
+                programmer.call_preset(&fixture_manager.presets, self.id);
             }
         }
 

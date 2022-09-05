@@ -54,6 +54,13 @@ impl From<mizer_connections::Connection> for Connection_oneof_connection {
                 name: gamepad.name,
                 ..Default::default()
             }),
+            Mqtt(mqtt) => Self::mqtt(MqttConnection {
+                connectionId: mqtt.connection_id,
+                url: mqtt.url,
+                _username: mqtt.username.map(MqttConnection_oneof__username::username),
+                _password: mqtt.password.map(MqttConnection_oneof__password::password),
+                ..Default::default()
+            }),
         }
     }
 }

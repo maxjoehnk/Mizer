@@ -35,6 +35,11 @@ class ConnectionsPluginApi implements ConnectionsApi {
   }
 
   @override
+  Future<void> addMqtt(MqttConnection request) async {
+    await channel.invokeMethod("addMqtt", request.writeToBuffer());
+  }
+
+  @override
   Future<MidiDeviceProfiles> getMidiDeviceProfiles() async {
     var response = await channel.invokeMethod("getMidiDeviceProfiles");
 

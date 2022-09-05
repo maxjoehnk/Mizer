@@ -152,10 +152,10 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                         self.pipeline.remove_node(&path, &[]);
                     }
                     ExecutorCommand::AddLink(link) => {
-                        let source_port =
-                            pipeline_access.get_port_metadata(&link.source, &link.source_port);
-                        let target_port =
-                            pipeline_access.get_port_metadata(&link.target, &link.target_port);
+                        let source_port = pipeline_access
+                            .get_output_port_metadata(&link.source, &link.source_port);
+                        let target_port = pipeline_access
+                            .get_input_port_metadata(&link.target, &link.target_port);
                         self.pipeline
                             .connect_nodes(link, source_port, target_port)
                             .unwrap_or_log();
@@ -255,8 +255,9 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
         for link in &project.channels {
             let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
             let source_port =
-                pipeline_access.get_port_metadata(&link.from_path, &link.from_channel);
-            let target_port = pipeline_access.get_port_metadata(&link.to_path, &link.to_channel);
+                pipeline_access.get_output_port_metadata(&link.from_path, &link.from_channel);
+            let target_port =
+                pipeline_access.get_input_port_metadata(&link.to_path, &link.to_channel);
             anyhow::ensure!(
                 source_port.port_type == target_port.port_type,
                 "Missmatched port types\nsource: {:?}\ntarget: {:?}\nlink: {:?}",
@@ -373,6 +374,10 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Gamepad(node) => pipeline.register_node(path, &node),
         Node::Container(node) => pipeline.register_node(path, &node),
         Node::Math(node) => pipeline.register_node(path, &node),
+        Node::MqttInput(node) => pipeline.register_node(path, &node),
+        Node::MqttOutput(node) => pipeline.register_node(path, &node),
+        Node::NumberToData(node) => pipeline.register_node(path, &node),
+        Node::DataToNumber(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

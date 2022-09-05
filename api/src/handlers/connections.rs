@@ -64,6 +64,21 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
         Ok(())
     }
 
+    pub fn add_mqtt(
+        &self,
+        url: String,
+        username: Option<String>,
+        password: Option<String>,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddMqttConnectionCommand {
+            url,
+            username,
+            password,
+        })?;
+
+        Ok(())
+    }
+
     pub fn get_midi_device_profiles(&self) -> MidiDeviceProfiles {
         let profiles = self
             .runtime
@@ -84,27 +99,52 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                 .run_command(DeleteOutputCommand { name: dmx.outputId })?;
 
             Ok(())
+        } else if let Some(Connection_oneof_connection::mqtt(mqtt)) = connection.connection {
+            self.runtime.run_command(DeleteMqttConnectionCommand {
+                id: mqtt.connectionId,
+            })?;
+
+            Ok(())
         } else {
             unimplemented!()
         }
     }
 
     pub fn configure_connection(&self, update: ConfigureConnectionRequest) -> anyhow::Result<()> {
-        if let Some(ConfigureConnectionRequest_oneof_config::dmx(connection)) = update.config {
-            if let Some(DmxConnection_oneof_config::artnet(config)) = connection.config {
-                self.runtime.run_command(ConfigureArtnetOutputCommand {
-                    id: connection.outputId,
-                    name: config.name,
-                    host: config.host,
-                    port: Some(config.port as u16),
+        match update.config {
+            Some(ConfigureConnectionRequest_oneof_config::dmx(connection)) => {
+                if let Some(DmxConnection_oneof_config::artnet(config)) = connection.config {
+                    self.runtime.run_command(ConfigureArtnetOutputCommand {
+                        id: connection.outputId,
+                        name: config.name,
+                        host: config.host,
+                        port: Some(config.port as u16),
+                    })?;
+
+                    Ok(())
+                } else {
+                    unimplemented!()
+                }
+            }
+            Some(ConfigureConnectionRequest_oneof_config::mqtt(connection)) => {
+                self.runtime.run_command(ConfigureMqttConnectionCommand {
+                    connection_id: connection.connectionId,
+                    url: connection.url,
+                    username: connection._username.map(|username| {
+                        let MqttConnection_oneof__username::username(username) = username;
+
+                        username
+                    }),
+                    password: connection._password.map(|password| {
+                        let MqttConnection_oneof__password::password(password) = password;
+
+                        password
+                    }),
                 })?;
 
                 Ok(())
-            } else {
-                unimplemented!()
             }
-        } else {
-            unimplemented!()
+            _ => unimplemented!(),
         }
     }
 }

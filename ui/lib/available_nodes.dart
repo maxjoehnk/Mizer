@@ -38,6 +38,10 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Gamepad: "Gamepad",
   Node_NodeType.Container: "Container",
   Node_NodeType.Math: "Math",
+  Node_NodeType.MqttInput: "MQTT Input",
+  Node_NodeType.MqttOutput: "MQTT Output",
+  Node_NodeType.NumberToData: "Number to Data",
+  Node_NodeType.DataToNumber: "Data to Number",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -63,6 +67,12 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.OscInput,
     Node_NodeType.OscOutput,
     Node_NodeType.Gamepad,
+    Node_NodeType.MqttInput,
+    Node_NodeType.MqttOutput,
+  ]),
+  buildCategory("Conversions", [
+    Node_NodeType.NumberToData,
+    Node_NodeType.DataToNumber,
   ]),
   buildCategory("Controls", [
     Node_NodeType.Fader,

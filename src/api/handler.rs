@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use mizer_clock::Clock;
 use mizer_command_executor::CommandHistory;
 use mizer_connections::{
-    midi_device_profile::DeviceProfile, Connection, DmxConfig, DmxView, MidiView,
+    midi_device_profile::DeviceProfile, Connection, DmxConfig, DmxView, MidiView, MqttView,
 };
 use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
@@ -12,6 +12,7 @@ use mizer_message_bus::Subscriber;
 use mizer_module::Runtime;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
+use mizer_protocol_mqtt::MqttConnectionManager;
 
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
 use crate::{ApiCommand, Mizer};
@@ -172,6 +173,22 @@ impl ApiHandler {
                 },
             })
             .map(Connection::from);
+        let mqtt_manager = mizer
+            .runtime
+            .injector()
+            .get::<MqttConnectionManager>()
+            .unwrap();
+        let mqtt_connections = mqtt_manager
+            .list_connections()
+            .into_iter()
+            .map(|(id, connection)| MqttView {
+                connection_id: id.clone(),
+                name: connection.address.url.to_string(),
+                url: connection.address.url.to_string(),
+                username: connection.address.username.clone(),
+                password: connection.address.password.clone(),
+            })
+            .map(Connection::from);
         let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
         let devices = device_manager
             .current_devices()
@@ -181,6 +198,7 @@ impl ApiHandler {
         let mut connections = Vec::new();
         connections.extend(midi_connections);
         connections.extend(dmx_connections);
+        connections.extend(mqtt_connections);
         connections.extend(devices);
 
         connections

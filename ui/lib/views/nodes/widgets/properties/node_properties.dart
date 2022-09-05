@@ -14,6 +14,8 @@ import 'properties/groups/encoder_properties.dart';
 import 'properties/groups/fixture_properties.dart';
 import 'properties/groups/math_properties.dart';
 import 'properties/groups/merge_properties.dart';
+import 'properties/groups/mqtt_input_properties.dart';
+import 'properties/groups/mqtt_output_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
@@ -142,6 +144,16 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(MathProperties(node.config.mathConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(mathConfig: config)))));
+    }
+    if (node.config.hasMqttInputConfig()) {
+      widgets.add(MqttInputProperties(node.config.mqttInputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(mqttInputConfig: config)))));
+    }
+    if (node.config.hasMqttOutputConfig()) {
+      widgets.add(MqttOutputProperties(node.config.mqttOutputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(mqttOutputConfig: config)))));
     }
     return widgets;
   }

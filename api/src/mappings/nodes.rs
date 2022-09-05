@@ -47,6 +47,10 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             Gamepad(node) => Self::gamepadNodeConfig(node.into()),
             Container(node) => Self::containerConfig(node.into()),
             Math(node) => Self::mathConfig(node.into()),
+            MqttInput(node) => Self::mqttInputConfig(node.into()),
+            MqttOutput(node) => Self::mqttOutputConfig(node.into()),
+            NumberToData(node) => Self::numberToDataConfig(node.into()),
+            DataToNumber(node) => Self::dataToNumberConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -107,6 +111,10 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::gamepadNodeConfig(node) => Self::Gamepad(node.into()),
             NodeConfig_oneof_type::containerConfig(node) => Self::Container(node.into()),
             NodeConfig_oneof_type::mathConfig(node) => Self::Math(node.into()),
+            NodeConfig_oneof_type::mqttInputConfig(node) => Self::MqttInput(node.into()),
+            NodeConfig_oneof_type::mqttOutputConfig(node) => Self::MqttOutput(node.into()),
+            NodeConfig_oneof_type::numberToDataConfig(node) => Self::NumberToData(node.into()),
+            NodeConfig_oneof_type::dataToNumberConfig(node) => Self::DataToNumber(node.into()),
         }
     }
 }
@@ -1067,6 +1075,72 @@ impl From<MathNodeConfig_Mode> for mizer_nodes::MathMode {
     }
 }
 
+impl From<mizer_nodes::MqttInputNode> for MqttInputNodeConfig {
+    fn from(node: mizer_nodes::MqttInputNode) -> Self {
+        Self {
+            connection: node.connection,
+            path: node.path,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<MqttInputNodeConfig> for mizer_nodes::MqttInputNode {
+    fn from(config: MqttInputNodeConfig) -> Self {
+        Self {
+            connection: config.connection,
+            path: config.path,
+        }
+    }
+}
+
+impl From<mizer_nodes::MqttOutputNode> for MqttOutputNodeConfig {
+    fn from(node: mizer_nodes::MqttOutputNode) -> Self {
+        Self {
+            connection: node.connection,
+            path: node.path,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<MqttOutputNodeConfig> for mizer_nodes::MqttOutputNode {
+    fn from(config: MqttOutputNodeConfig) -> Self {
+        Self {
+            connection: config.connection,
+            path: config.path,
+        }
+    }
+}
+
+impl From<mizer_nodes::NumberToDataNode> for NumberToDataNodeConfig {
+    fn from(node: mizer_nodes::NumberToDataNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<NumberToDataNodeConfig> for mizer_nodes::NumberToDataNode {
+    fn from(config: NumberToDataNodeConfig) -> Self {
+        Self::default()
+    }
+}
+
+impl From<mizer_nodes::DataToNumberNode> for DataToNumberNodeConfig {
+    fn from(node: mizer_nodes::DataToNumberNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<DataToNumberNodeConfig> for mizer_nodes::DataToNumberNode {
+    fn from(config: DataToNumberNodeConfig) -> Self {
+        Self::default()
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1106,6 +1180,10 @@ impl From<NodeType> for Node_NodeType {
             NodeType::Gamepad => Node_NodeType::Gamepad,
             NodeType::Container => Node_NodeType::Container,
             NodeType::Math => Node_NodeType::Math,
+            NodeType::MqttInput => Node_NodeType::MqttInput,
+            NodeType::MqttOutput => Node_NodeType::MqttOutput,
+            NodeType::NumberToData => Node_NodeType::NumberToData,
+            NodeType::DataToNumber => Node_NodeType::DataToNumber,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1150,6 +1228,10 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::Gamepad => NodeType::Gamepad,
             Node_NodeType::Container => NodeType::Container,
             Node_NodeType::Math => NodeType::Math,
+            Node_NodeType::MqttInput => NodeType::MqttInput,
+            Node_NodeType::MqttOutput => NodeType::MqttOutput,
+            Node_NodeType::NumberToData => NodeType::NumberToData,
+            Node_NodeType::DataToNumber => NodeType::DataToNumber,
         }
     }
 }

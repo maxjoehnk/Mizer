@@ -124,6 +124,10 @@ message Node {
     Container = 100;
     Encoder = 55;
     Math = 56;
+    DataToNumber = 57;
+    NumberToData = 58;
+    MqttInput = 60;
+    MqttOutput = 61;
   }
 
   enum NodePreviewType {
@@ -181,6 +185,10 @@ message NodeConfig {
     EncoderNodeConfig encoderConfig = 44;
     ContainerNodeConfig containerConfig = 45;
     MathNodeConfig mathConfig = 46;
+    MqttInputNodeConfig mqttInputConfig = 47;
+    MqttOutputNodeConfig mqttOutputConfig = 48;
+    NumberToDataNodeConfig numberToDataConfig = 49;
+    DataToNumberNodeConfig dataToNumberConfig = 50;
   }
 }
 
@@ -395,6 +403,19 @@ message MathNodeConfig {
     Division = 3;
   }
 }
+
+message MqttInputNodeConfig {
+  string connection = 1;
+  string path = 2;
+}
+
+message MqttOutputNodeConfig {
+  string connection = 1;
+  string path = 2;
+}
+
+message NumberToDataNodeConfig {}
+message DataToNumberNodeConfig {}
 
 message NodePosition {
   double x = 1;

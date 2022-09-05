@@ -100,6 +100,10 @@ impl PipelineAccess {
             Gamepad(node) => self.add_node(path, node),
             Container(node) => self.add_node(path, node),
             Math(node) => self.add_node(path, node),
+            MqttInput(node) => self.add_node(path, node),
+            MqttOutput(node) => self.add_node(path, node),
+            NumberToData(node) => self.add_node(path, node),
+            DataToNumber(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }
@@ -176,7 +180,7 @@ impl PipelineAccess {
             anyhow::anyhow!("trying to add link for unknown node: {}", &link.target)
         })?;
         let source_port = source_node
-            .introspect_port(&link.source_port)
+            .introspect_output_port(&link.source_port)
             .ok_or_else(|| {
                 anyhow::anyhow!(
                     "Unknown port '{}' on node '{}'",
@@ -185,7 +189,7 @@ impl PipelineAccess {
                 )
             })?;
         let target_port = target_node
-            .introspect_port(&link.target_port)
+            .introspect_input_port(&link.target_port)
             .ok_or_else(|| {
                 anyhow::anyhow!(
                     "Unknown port '{}' on node '{}'",
@@ -200,5 +204,15 @@ impl PipelineAccess {
     pub(crate) fn get_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
         let node = self.nodes_view.get(path).unwrap();
         node.introspect_port(port).unwrap_or_default()
+    }
+
+    pub(crate) fn get_input_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
+        let node = self.nodes_view.get(path).unwrap();
+        node.introspect_input_port(port).unwrap_or_default()
+    }
+
+    pub(crate) fn get_output_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
+        let node = self.nodes_view.get(path).unwrap();
+        node.introspect_output_port(port).unwrap_or_default()
     }
 }

@@ -85,6 +85,7 @@ message Connection {
     HeliosConnection helios = 14;
     EtherDreamConnection etherDream = 15;
     GamepadConnection gamepad = 16;
+    MqttConnection mqtt = 17;
   }
 }
 
@@ -184,8 +185,16 @@ message CdjPlayback {
   }
 }
 
+message MqttConnection {
+  string connectionId = 1;
+  string url = 2;
+  optional string username = 3;
+  optional string password = 4;
+}
+
 message ConfigureConnectionRequest {
   oneof config {
     DmxConnection dmx = 1;
+    MqttConnection mqtt = 2;
   }
 }

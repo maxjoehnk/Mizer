@@ -10,6 +10,7 @@ serde = { version = "1", features = ["derive"] }
 mizer-node = { path = "../node" }
 mizer-clock-nodes = { path = "clock" }
 mizer-color-nodes = { path = "behaviors/color" }
+mizer-conversion-nodes = { path = "behaviors/conversions" }
 mizer-envelope-nodes = { path = "behaviors/envelope" }
 mizer-oscillator-nodes = { path = "behaviors/oscillator" }
 mizer-port-operation-nodes = { path = "behaviors/port-operations" }
@@ -23,6 +24,7 @@ mizer-fixture-nodes = { path = "fixture" }
 mizer-laser-nodes = { path = "connections/laser" }
 mizer-input-nodes = { path = "inputs" }
 mizer-midi-nodes = { path = "connections/protocols/midi" }
+mizer-mqtt-nodes = { path = "connections/protocols/mqtt" }
 mizer-pixel-nodes = { path = "pixels" }
 mizer-opc-nodes = { path = "connections/protocols/opc" }
 mizer-osc-nodes = { path = "connections/protocols/osc" }

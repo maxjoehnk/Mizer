@@ -205,6 +205,16 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             let node: &mut MergeNode = node.downcast_mut()?;
             node.mode = config.mode;
         }
+        (NodeType::MqttInput, Node::MqttInput(config)) => {
+            let node: &mut MqttInputNode = node.downcast_mut()?;
+            node.connection = config.connection.clone();
+            node.path = config.path.clone();
+        }
+        (NodeType::MqttOutput, Node::MqttOutput(config)) => {
+            let node: &mut MqttOutputNode = node.downcast_mut()?;
+            node.connection = config.connection.clone();
+            node.path = config.path.clone();
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,

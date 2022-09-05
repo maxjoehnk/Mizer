@@ -18,6 +18,7 @@ mizer-video-nodes = { path = "nodes/video" }
 mizer-clock = { path = "../clock" }
 mizer-ports = { path = "ports" }
 mizer-processing = { path = "../processing" }
+mizer-util = { path = "../../util" }
 dashmap = "4"
 flume = "0.10"
 ringbuffer = "0.8"

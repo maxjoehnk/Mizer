@@ -7,4 +7,13 @@ extension StringExtensions on String {
       return match.substring(0, 1).toUpperCase() + match.substring(1);
     });
   }
+
+  String? trimToMaybeNull() {
+    var trimmed = this.trim();
+    if (trimmed.isEmpty) {
+      return null;
+    }
+
+    return trimmed;
+  }
 }

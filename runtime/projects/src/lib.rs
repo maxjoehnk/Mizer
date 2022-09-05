@@ -13,6 +13,7 @@ use crate::fixtures::PresetsStore;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
+use mizer_protocol_mqtt::MqttAddress;
 use mizer_sequencer::{Effect, Sequence};
 
 mod connections;
@@ -192,6 +193,10 @@ pub enum NodeConfig {
     ColorRgb(mizer_nodes::RgbColorNode),
     Container(mizer_nodes::ContainerNode),
     Math(mizer_nodes::MathNode),
+    MqttInput(mizer_nodes::MqttInputNode),
+    MqttOutput(mizer_nodes::MqttOutputNode),
+    NumberToData(mizer_nodes::NumberToDataNode),
+    DataToNumber(mizer_nodes::DataToNumberNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -233,6 +238,10 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::ColorRgb(node) => Self::ColorRgb(node),
             NodeConfig::Container(node) => Self::Container(node),
             NodeConfig::Math(node) => Self::Math(node),
+            NodeConfig::MqttInput(node) => Self::MqttInput(node),
+            NodeConfig::MqttOutput(node) => Self::MqttOutput(node),
+            NodeConfig::NumberToData(node) => Self::NumberToData(node),
+            NodeConfig::DataToNumber(node) => Self::DataToNumber(node),
         }
     }
 }
@@ -276,6 +285,10 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::ColorRgb(node) => Self::ColorRgb(node),
             mizer_nodes::Node::Container(node) => Self::Container(node),
             mizer_nodes::Node::Math(node) => Self::Math(node),
+            mizer_nodes::Node::MqttInput(node) => Self::MqttInput(node),
+            mizer_nodes::Node::MqttOutput(node) => Self::MqttOutput(node),
+            mizer_nodes::Node::NumberToData(node) => Self::NumberToData(node),
+            mizer_nodes::Node::DataToNumber(node) => Self::DataToNumber(node),
             mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -308,6 +321,7 @@ pub struct ConnectionConfig {
 pub enum ConnectionTypes {
     Sacn,
     Artnet { host: String, port: Option<u16> },
+    Mqtt(MqttAddress),
 }
 
 #[cfg(test)]

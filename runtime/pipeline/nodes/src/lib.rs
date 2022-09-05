@@ -3,6 +3,7 @@ use crate::test_sink::TestSink;
 use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
+pub use mizer_conversion_nodes::{DataToNumberNode, NumberToDataNode};
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
@@ -11,6 +12,7 @@ pub use mizer_input_nodes::{ButtonNode, FaderNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
+pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
 use mizer_node::{Injector, NodeType};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
@@ -69,6 +71,10 @@ pub enum Node {
     ColorHsv(HsvColorNode),
     Container(ContainerNode),
     Math(MathNode),
+    MqttInput(MqttInputNode),
+    MqttOutput(MqttOutputNode),
+    NumberToData(NumberToDataNode),
+    DataToNumber(DataToNumberNode),
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink(TestSink),
@@ -113,6 +119,10 @@ impl From<NodeType> for Node {
             NodeType::ColorHsv => HsvColorNode::default().into(),
             NodeType::Container => ContainerNode::default().into(),
             NodeType::Math => MathNode::default().into(),
+            NodeType::MqttInput => MqttInputNode::default().into(),
+            NodeType::MqttOutput => MqttOutputNode::default().into(),
+            NodeType::NumberToData => NumberToDataNode::default().into(),
+            NodeType::DataToNumber => DataToNumberNode::default().into(),
             NodeType::TestSink => unimplemented!(),
         }
     }
@@ -158,6 +168,10 @@ impl Node {
             ColorRgb(_) => NodeType::ColorRgb,
             Container(_) => NodeType::Container,
             Math(_) => NodeType::Math,
+            MqttInput(_) => NodeType::MqttInput,
+            MqttOutput(_) => NodeType::MqttOutput,
+            NumberToData(_) => NodeType::NumberToData,
+            DataToNumber(_) => NodeType::DataToNumber,
             TestSink(_) => NodeType::TestSink,
         }
     }

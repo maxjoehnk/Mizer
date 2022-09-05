@@ -16,6 +16,7 @@ futures = "0.3"
 palette = "0.6"
 profiling = "1"
 tracy-client = { version = "0.13", optional = true, features = ["sampling", "code-transfer", "system-tracing", "context-switch-tracing"] }
+serde = { version = "1", features = ["derive"] }
 
 [dev-dependencies]
 test-case = "1.1"

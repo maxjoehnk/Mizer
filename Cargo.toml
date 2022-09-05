@@ -10,6 +10,7 @@ members = [
     "components/connections/protocols/midi",
     "components/connections/protocols/midi/device-profiles",
     "components/connections/protocols/midi/messages",
+    "components/connections/protocols/mqtt",
     "components/connections/protocols/osc",
     "components/fixtures",
     "components/fixtures/commands",
@@ -34,6 +35,7 @@ members = [
     "runtime/pipeline/node",
     "runtime/pipeline/nodes",
     "runtime/pipeline/nodes/behaviors/color",
+    "runtime/pipeline/nodes/behaviors/conversions",
     "runtime/pipeline/nodes/behaviors/envelope",
     "runtime/pipeline/nodes/behaviors/math",
     "runtime/pipeline/nodes/behaviors/oscillator",
@@ -48,6 +50,7 @@ members = [
     "runtime/pipeline/nodes/connections/laser",
     "runtime/pipeline/nodes/connections/protocols/dmx",
     "runtime/pipeline/nodes/connections/protocols/midi",
+    "runtime/pipeline/nodes/connections/protocols/mqtt",
     "runtime/pipeline/nodes/connections/protocols/opc",
     "runtime/pipeline/nodes/connections/protocols/osc",
     "runtime/pipeline/nodes/pixels",
@@ -117,6 +120,7 @@ mizer-layouts = { path = "runtime/layouts" }
 mizer-clock = { path = "runtime/clock" }
 mizer-protocol-dmx = { path = "components/connections/protocols/dmx" }
 mizer-protocol-midi = { path = "components/connections/protocols/midi" }
+mizer-protocol-mqtt = { path = "components/connections/protocols/mqtt" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }

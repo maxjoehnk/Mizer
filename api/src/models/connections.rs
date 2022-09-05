@@ -2620,6 +2620,7 @@ pub enum Connection_oneof_connection {
     helios(HeliosConnection),
     etherDream(EtherDreamConnection),
     gamepad(GamepadConnection),
+    mqtt(MqttConnection),
 }
 
 impl Connection {
@@ -2995,6 +2996,55 @@ impl Connection {
             GamepadConnection::new()
         }
     }
+
+    // .mizer.MqttConnection mqtt = 17;
+
+
+    pub fn get_mqtt(&self) -> &MqttConnection {
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::mqtt(ref v)) => v,
+            _ => <MqttConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_mqtt(&mut self) {
+        self.connection = ::std::option::Option::None;
+    }
+
+    pub fn has_mqtt(&self) -> bool {
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::mqtt(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_mqtt(&mut self, v: MqttConnection) {
+        self.connection = ::std::option::Option::Some(Connection_oneof_connection::mqtt(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_mqtt(&mut self) -> &mut MqttConnection {
+        if let ::std::option::Option::Some(Connection_oneof_connection::mqtt(_)) = self.connection {
+        } else {
+            self.connection = ::std::option::Option::Some(Connection_oneof_connection::mqtt(MqttConnection::new()));
+        }
+        match self.connection {
+            ::std::option::Option::Some(Connection_oneof_connection::mqtt(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_mqtt(&mut self) -> MqttConnection {
+        if self.has_mqtt() {
+            match self.connection.take() {
+                ::std::option::Option::Some(Connection_oneof_connection::mqtt(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MqttConnection::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for Connection {
@@ -3030,6 +3080,11 @@ impl ::protobuf::Message for Connection {
             }
         }
         if let Some(Connection_oneof_connection::gamepad(ref v)) = self.connection {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(Connection_oneof_connection::mqtt(ref v)) = self.connection {
             if !v.is_initialized() {
                 return false;
             }
@@ -3086,6 +3141,12 @@ impl ::protobuf::Message for Connection {
                     }
                     self.connection = ::std::option::Option::Some(Connection_oneof_connection::gamepad(is.read_message()?));
                 },
+                17 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.connection = ::std::option::Option::Some(Connection_oneof_connection::mqtt(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -3128,6 +3189,10 @@ impl ::protobuf::Message for Connection {
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
                 &Connection_oneof_connection::gamepad(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &Connection_oneof_connection::mqtt(ref v) => {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
@@ -3176,6 +3241,11 @@ impl ::protobuf::Message for Connection {
                 },
                 &Connection_oneof_connection::gamepad(ref v) => {
                     os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &Connection_oneof_connection::mqtt(ref v) => {
+                    os.write_tag(17, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -3259,6 +3329,11 @@ impl ::protobuf::Message for Connection {
                 Connection::has_gamepad,
                 Connection::get_gamepad,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MqttConnection>(
+                "mqtt",
+                Connection::has_mqtt,
+                Connection::get_mqtt,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Connection>(
                 "Connection",
                 fields,
@@ -3276,6 +3351,7 @@ impl ::protobuf::Message for Connection {
 impl ::protobuf::Clear for Connection {
     fn clear(&mut self) {
         self.name.clear();
+        self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
@@ -6906,6 +6982,375 @@ impl ::protobuf::reflect::ProtobufValue for CdjPlayback_State {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct MqttConnection {
+    // message fields
+    pub connectionId: ::std::string::String,
+    pub url: ::std::string::String,
+    // message oneof groups
+    pub _username: ::std::option::Option<MqttConnection_oneof__username>,
+    pub _password: ::std::option::Option<MqttConnection_oneof__password>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a MqttConnection {
+    fn default() -> &'a MqttConnection {
+        <MqttConnection as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MqttConnection_oneof__username {
+    username(::std::string::String),
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum MqttConnection_oneof__password {
+    password(::std::string::String),
+}
+
+impl MqttConnection {
+    pub fn new() -> MqttConnection {
+        ::std::default::Default::default()
+    }
+
+    // string connectionId = 1;
+
+
+    pub fn get_connectionId(&self) -> &str {
+        &self.connectionId
+    }
+    pub fn clear_connectionId(&mut self) {
+        self.connectionId.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_connectionId(&mut self, v: ::std::string::String) {
+        self.connectionId = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_connectionId(&mut self) -> &mut ::std::string::String {
+        &mut self.connectionId
+    }
+
+    // Take field
+    pub fn take_connectionId(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.connectionId, ::std::string::String::new())
+    }
+
+    // string url = 2;
+
+
+    pub fn get_url(&self) -> &str {
+        &self.url
+    }
+    pub fn clear_url(&mut self) {
+        self.url.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_url(&mut self, v: ::std::string::String) {
+        self.url = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_url(&mut self) -> &mut ::std::string::String {
+        &mut self.url
+    }
+
+    // Take field
+    pub fn take_url(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.url, ::std::string::String::new())
+    }
+
+    // string username = 3;
+
+
+    pub fn get_username(&self) -> &str {
+        match self._username {
+            ::std::option::Option::Some(MqttConnection_oneof__username::username(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_username(&mut self) {
+        self._username = ::std::option::Option::None;
+    }
+
+    pub fn has_username(&self) -> bool {
+        match self._username {
+            ::std::option::Option::Some(MqttConnection_oneof__username::username(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_username(&mut self, v: ::std::string::String) {
+        self._username = ::std::option::Option::Some(MqttConnection_oneof__username::username(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_username(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(MqttConnection_oneof__username::username(_)) = self._username {
+        } else {
+            self._username = ::std::option::Option::Some(MqttConnection_oneof__username::username(::std::string::String::new()));
+        }
+        match self._username {
+            ::std::option::Option::Some(MqttConnection_oneof__username::username(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_username(&mut self) -> ::std::string::String {
+        if self.has_username() {
+            match self._username.take() {
+                ::std::option::Option::Some(MqttConnection_oneof__username::username(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+
+    // string password = 4;
+
+
+    pub fn get_password(&self) -> &str {
+        match self._password {
+            ::std::option::Option::Some(MqttConnection_oneof__password::password(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_password(&mut self) {
+        self._password = ::std::option::Option::None;
+    }
+
+    pub fn has_password(&self) -> bool {
+        match self._password {
+            ::std::option::Option::Some(MqttConnection_oneof__password::password(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_password(&mut self, v: ::std::string::String) {
+        self._password = ::std::option::Option::Some(MqttConnection_oneof__password::password(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_password(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(MqttConnection_oneof__password::password(_)) = self._password {
+        } else {
+            self._password = ::std::option::Option::Some(MqttConnection_oneof__password::password(::std::string::String::new()));
+        }
+        match self._password {
+            ::std::option::Option::Some(MqttConnection_oneof__password::password(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_password(&mut self) -> ::std::string::String {
+        if self.has_password() {
+            match self._password.take() {
+                ::std::option::Option::Some(MqttConnection_oneof__password::password(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for MqttConnection {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.connectionId)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.url)?;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._username = ::std::option::Option::Some(MqttConnection_oneof__username::username(is.read_string()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._password = ::std::option::Option::Some(MqttConnection_oneof__password::password(is.read_string()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.connectionId.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.connectionId);
+        }
+        if !self.url.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.url);
+        }
+        if let ::std::option::Option::Some(ref v) = self._username {
+            match v {
+                &MqttConnection_oneof__username::username(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._password {
+            match v {
+                &MqttConnection_oneof__password::password(ref v) => {
+                    my_size += ::protobuf::rt::string_size(4, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.connectionId.is_empty() {
+            os.write_string(1, &self.connectionId)?;
+        }
+        if !self.url.is_empty() {
+            os.write_string(2, &self.url)?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._username {
+            match v {
+                &MqttConnection_oneof__username::username(ref v) => {
+                    os.write_string(3, v)?;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._password {
+            match v {
+                &MqttConnection_oneof__password::password(ref v) => {
+                    os.write_string(4, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> MqttConnection {
+        MqttConnection::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "connectionId",
+                |m: &MqttConnection| { &m.connectionId },
+                |m: &mut MqttConnection| { &mut m.connectionId },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "url",
+                |m: &MqttConnection| { &m.url },
+                |m: &mut MqttConnection| { &mut m.url },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "username",
+                MqttConnection::has_username,
+                MqttConnection::get_username,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "password",
+                MqttConnection::has_password,
+                MqttConnection::get_password,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<MqttConnection>(
+                "MqttConnection",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static MqttConnection {
+        static instance: ::protobuf::rt::LazyV2<MqttConnection> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(MqttConnection::new)
+    }
+}
+
+impl ::protobuf::Clear for MqttConnection {
+    fn clear(&mut self) {
+        self.connectionId.clear();
+        self.url.clear();
+        self._username = ::std::option::Option::None;
+        self._password = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for MqttConnection {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MqttConnection {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ConfigureConnectionRequest {
     // message oneof groups
     pub config: ::std::option::Option<ConfigureConnectionRequest_oneof_config>,
@@ -6926,6 +7371,7 @@ impl<'a> ::std::default::Default for &'a ConfigureConnectionRequest {
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum ConfigureConnectionRequest_oneof_config {
     dmx(DmxConnection),
+    mqtt(MqttConnection),
 }
 
 impl ConfigureConnectionRequest {
@@ -6981,11 +7427,65 @@ impl ConfigureConnectionRequest {
             DmxConnection::new()
         }
     }
+
+    // .mizer.MqttConnection mqtt = 2;
+
+
+    pub fn get_mqtt(&self) -> &MqttConnection {
+        match self.config {
+            ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(ref v)) => v,
+            _ => <MqttConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_mqtt(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_mqtt(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_mqtt(&mut self, v: MqttConnection) {
+        self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_mqtt(&mut self) -> &mut MqttConnection {
+        if let ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(MqttConnection::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_mqtt(&mut self) -> MqttConnection {
+        if self.has_mqtt() {
+            match self.config.take() {
+                ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            MqttConnection::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for ConfigureConnectionRequest {
     fn is_initialized(&self) -> bool {
         if let Some(ConfigureConnectionRequest_oneof_config::dmx(ref v)) = self.config {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(ConfigureConnectionRequest_oneof_config::mqtt(ref v)) = self.config {
             if !v.is_initialized() {
                 return false;
             }
@@ -7002,6 +7502,12 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::dmx(is.read_message()?));
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.config = ::std::option::Option::Some(ConfigureConnectionRequest_oneof_config::mqtt(is.read_message()?));
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -7021,6 +7527,10 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
+                &ConfigureConnectionRequest_oneof_config::mqtt(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -7033,6 +7543,11 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
             match v {
                 &ConfigureConnectionRequest_oneof_config::dmx(ref v) => {
                     os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &ConfigureConnectionRequest_oneof_config::mqtt(ref v) => {
+                    os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -7081,6 +7596,11 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
                 ConfigureConnectionRequest::has_dmx,
                 ConfigureConnectionRequest::get_dmx,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, MqttConnection>(
+                "mqtt",
+                ConfigureConnectionRequest::has_mqtt,
+                ConfigureConnectionRequest::get_mqtt,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<ConfigureConnectionRequest>(
                 "ConfigureConnectionRequest",
                 fields,
@@ -7097,6 +7617,7 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
 
 impl ::protobuf::Clear for ConfigureConnectionRequest {
     fn clear(&mut self) {
+        self.config = ::std::option::Option::None;
         self.config = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
@@ -7140,7 +7661,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01(\tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"\x20\n\n\
     SacnConfig\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\x0bConnect\
     ions\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\
-    \x0bconnections\"\x93\x03\n\nConnection\x12\x12\n\x04name\x18\x01\x20\
+    \x0bconnections\"\xc0\x03\n\nConnection\x12\x12\n\x04name\x18\x01\x20\
     \x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnecti\
     onH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnect\
     ionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnect\
@@ -7148,8 +7669,9 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.miz\
     er.HeliosConnectionH\0R\x06helios\x12=\n\netherDream\x18\x0f\x20\x01(\
     \x0b2\x1b.mizer.EtherDreamConnectionH\0R\netherDream\x124\n\x07gamepad\
-    \x18\x10\x20\x01(\x0b2\x18.mizer.GamepadConnectionH\0R\x07gamepadB\x0c\n\
-    \nconnection\"\x8d\x01\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\
+    \x18\x10\x20\x01(\x0b2\x18.mizer.GamepadConnectionH\0R\x07gamepad\x12+\n\
+    \x04mqtt\x18\x11\x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqttB\x0c\
+    \n\nconnection\"\x8d\x01\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\
     \x20\x01(\tR\x08outputId\x12-\n\x06artnet\x18\x03\x20\x01(\x0b2\x13.mize\
     r.ArtnetConfigH\0R\x06artnet\x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mi\
     zer.SacnConfigH\0R\x04sacnB\x08\n\x06config\"B\n\x10HeliosConnection\x12\
@@ -7191,19 +7713,25 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\
     \x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\
     \x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cuein\
-    g\x10\x03\"P\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\x01\x20\
-    \x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmxB\x08\n\x06config2\xc8\x04\
-    \n\x0eConnectionsApi\x12D\n\x0eGetConnections\x12\x1c.mizer.GetConnectio\
-    nsRequest\x1a\x12.mizer.Connections\"\0\x12C\n\nMonitorDmx\x12\x18.mizer\
-    .MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\"\0\x12H\n\x0bMonito\
-    rMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\
-    \"\00\x01\x12@\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetConfig\x1a\
-    \x12.mizer.Connections\"\0\x12<\n\x11AddSacnConnection\x12\x11.mizer.Sac\
-    nConfig\x1a\x12.mizer.Connections\"\0\x12U\n\x15GetMidiDeviceProfiles\
-    \x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\
-    \"\0\x12;\n\x10DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.C\
-    onnections\"\0\x12M\n\x13ConfigureConnection\x12!.mizer.ConfigureConnect\
-    ionRequest\x1a\x11.mizer.Connection\"\0b\x06proto3\
+    g\x10\x03\"\xa2\x01\n\x0eMqttConnection\x12\"\n\x0cconnectionId\x18\x01\
+    \x20\x01(\tR\x0cconnectionId\x12\x10\n\x03url\x18\x02\x20\x01(\tR\x03url\
+    \x12\x1f\n\x08username\x18\x03\x20\x01(\tH\0R\x08username\x88\x01\x01\
+    \x12\x1f\n\x08password\x18\x04\x20\x01(\tH\x01R\x08password\x88\x01\x01B\
+    \x0b\n\t_usernameB\x0b\n\t_password\"}\n\x1aConfigureConnectionRequest\
+    \x12(\n\x03dmx\x18\x01\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\
+    \x12+\n\x04mqtt\x18\x02\x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mq\
+    ttB\x08\n\x06config2\xc8\x04\n\x0eConnectionsApi\x12D\n\x0eGetConnection\
+    s\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\"\0\x12C\
+    \n\nMonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxR\
+    esponse\"\0\x12H\n\x0bMonitorMidi\x12\x19.mizer.MonitorMidiRequest\x1a\
+    \x1a.mizer.MonitorMidiResponse\"\00\x01\x12@\n\x13AddArtnetConnection\
+    \x12\x13.mizer.ArtnetConfig\x1a\x12.mizer.Connections\"\0\x12<\n\x11AddS\
+    acnConnection\x12\x11.mizer.SacnConfig\x1a\x12.mizer.Connections\"\0\x12\
+    U\n\x15GetMidiDeviceProfiles\x12\x1f.mizer.GetDeviceProfilesRequest\x1a\
+    \x19.mizer.MidiDeviceProfiles\"\0\x12;\n\x10DeleteConnection\x12\x11.miz\
+    er.Connection\x1a\x12.mizer.Connections\"\0\x12M\n\x13ConfigureConnectio\
+    n\x12!.mizer.ConfigureConnectionRequest\x1a\x11.mizer.Connection\"\0b\
+    \x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

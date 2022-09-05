@@ -1,0 +1,121 @@
+---
+nodes:
+  - path: /number-to-data-0
+    type: number-to-data
+    config: ~
+    designer:
+      position:
+        x: 3.3585097998301157
+        y: -2.169642639032755
+      scale: 1.0
+      hidden: false
+  - path: /mqtt-input-0
+    type: mqtt-input
+    config:
+      path: hue
+      connection: mqtt-0
+    designer:
+      position:
+        x: -0.20162010196396143
+        y: 4.227436951575305
+      scale: 1.0
+      hidden: false
+  - path: /oscillator-0
+    type: oscillator
+    config:
+      type: sine
+      ratio: 1.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: -2.4354797601499216
+        y: 12.193999299440925
+      scale: 1.0
+      hidden: false
+  - path: /data-to-number-0
+    type: data-to-number
+    config: ~
+    designer:
+      position:
+        x: 6.8873183481912745
+        y: 3.6345050732878197
+      scale: 1.0
+      hidden: false
+  - path: /mqtt-output-1
+    type: mqtt-output
+    config:
+      path: oscillator
+      connection: mqtt-0
+    designer:
+      position:
+        x: 10.652100288036882
+        y: 12.291241501822787
+      scale: 1.0
+      hidden: false
+  - path: /fader-0
+    type: fader
+    config: {}
+    designer:
+      position:
+        x: -2.7128948344383685
+        y: -2.301184568785555
+      scale: 0.0
+      hidden: false
+  - path: /number-to-data-1
+    type: number-to-data
+    config: ~
+    designer:
+      position:
+        x: 4.837261473921486
+        y: 12.027572279190222
+      scale: 1.0
+      hidden: false
+  - path: /mqtt-output-0
+    type: mqtt-output
+    config:
+      path: number
+      connection: mqtt-0
+    designer:
+      position:
+        x: 9.1478079025998
+        y: -1.9678032785002126
+      scale: 1.0
+      hidden: false
+  - path: /programmer
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -6.846395999744852
+        y: 1.0269120815356694
+      scale: 1.0
+      hidden: false
+channels:
+  - value@/fader-0 -> value@/number-to-data-0
+  - value@/number-to-data-0 -> value@/mqtt-output-0
+  - value@/mqtt-input-0 -> value@/data-to-number-0
+  - value@/oscillator-0 -> value@/number-to-data-1
+  - value@/number-to-data-1 -> value@/mqtt-output-1
+media: []
+layouts:
+  Default: []
+connections:
+  - id: mqtt-0
+    name: Local Broker
+    type: mqtt
+    url: "mqtt://localhost"
+    username: ~
+    password: ~
+fixtures: []
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
+sequences: []
+effects: []
+plans: []

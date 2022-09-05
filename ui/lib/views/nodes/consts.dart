@@ -16,13 +16,14 @@ const double INNER_RADIUS = 2;
 
 const double DOT_SIZE = 16;
 
-const _TYPE_COLORS = [
-  Colors.green,  // Standard
-  Colors.orange, // Connections
-  Colors.blue,   // Controls
-  Colors.red,    // Video
-  Colors.brown,  // Laser
-  Colors.purple, // Pixel
+List<Color> _TYPE_COLORS = [
+  Colors.green,          // Standard
+  Colors.orange,         // Connections
+  Colors.grey.shade700,  // Conversions
+  Colors.blue,           // Controls
+  Colors.red,            // Video
+  Colors.purple,         // Laser
+  Colors.red,            // Pixel
 ];
 
 const _GENERATED_TYPES = [
@@ -35,20 +36,24 @@ const _GENERATED_TYPES = [
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {
   switch (protocol) {
     case ChannelProtocol.SINGLE:
-      return Colors.yellow;
+      return Colors.amber;
     case ChannelProtocol.MULTI:
       return Colors.green;
     case ChannelProtocol.GST:
     case ChannelProtocol.TEXTURE:
     case ChannelProtocol.COLOR:
       return Colors.red;
+    case ChannelProtocol.LASER:
+      return Colors.purple;
+    case ChannelProtocol.DATA:
+      return Colors.blue;
     default:
       log("no color for protocol ${protocol.name}");
       return Colors.blueGrey;
   }
 }
 
-MaterialColor getColorForType(Node_NodeType type) {
+Color getColorForType(Node_NodeType type) {
   // Special case as these are not creatable
   if (_GENERATED_TYPES.contains(type)) {
     return Colors.blueGrey;

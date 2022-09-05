@@ -5,6 +5,7 @@ use std::rc::Rc;
 use crate::api::*;
 
 pub fn channel<T: Clone + Default>() -> (MemorySender<T>, MemoryReceiver<T>) {
+    // TODO: can we implement this without the default requirement?
     let swap = Rc::new(RefCell::new(T::default()));
     let sender = MemorySender { cell: swap.clone() };
     let receiver = MemoryReceiver { cell: swap };

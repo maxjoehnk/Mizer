@@ -3,7 +3,7 @@
 //  source: nodes.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
@@ -77,6 +77,10 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Container = Node_NodeType._(100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Container');
   static const Node_NodeType Encoder = Node_NodeType._(55, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Encoder');
   static const Node_NodeType Math = Node_NodeType._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Math');
+  static const Node_NodeType DataToNumber = Node_NodeType._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DataToNumber');
+  static const Node_NodeType NumberToData = Node_NodeType._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NumberToData');
+  static const Node_NodeType MqttInput = Node_NodeType._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttInput');
+  static const Node_NodeType MqttOutput = Node_NodeType._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttOutput');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -115,6 +119,10 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Container,
     Encoder,
     Math,
+    DataToNumber,
+    NumberToData,
+    MqttInput,
+    MqttOutput,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

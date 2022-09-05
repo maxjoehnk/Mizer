@@ -63,6 +63,10 @@ pub trait NodeDowncast {
             NodeType::ColorRgb => Node::ColorRgb(self.downcast_node(node_type).unwrap()),
             NodeType::Container => Node::Container(self.downcast_node(node_type).unwrap()),
             NodeType::Math => Node::Math(self.downcast_node(node_type).unwrap()),
+            NodeType::MqttInput => Node::MqttInput(self.downcast_node(node_type).unwrap()),
+            NodeType::MqttOutput => Node::MqttOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::NumberToData => Node::NumberToData(self.downcast_node(node_type).unwrap()),
+            NodeType::DataToNumber => Node::DataToNumber(self.downcast_node(node_type).unwrap()),
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

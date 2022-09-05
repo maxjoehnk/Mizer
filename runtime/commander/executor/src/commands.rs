@@ -9,6 +9,7 @@ pub use mizer_fixture_commands::*;
 pub use mizer_layout_commands::*;
 pub use mizer_plan::commands::*;
 pub use mizer_protocol_dmx::commands::*;
+pub use mizer_protocol_mqtt::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
 
@@ -63,6 +64,9 @@ pub enum CommandImpl {
     AddSacnOutputCommand(AddSacnOutputCommand),
     ConfigureArtnetOutputCommand(ConfigureArtnetOutputCommand),
     DeleteOutputCommand(DeleteOutputCommand),
+    AddMqttConnectionCommand(AddMqttConnectionCommand),
+    DeleteMqttConnectionCommand(DeleteMqttConnectionCommand),
+    ConfigureMqttConnectionCommand(ConfigureMqttConnectionCommand),
 }
 
 impl CommandImpl {
@@ -119,6 +123,9 @@ impl CommandImpl {
             Self::AddSacnOutputCommand(cmd) => self._apply(injector, executor, cmd),
             Self::ConfigureArtnetOutputCommand(cmd) => self._apply(injector, executor, cmd),
             Self::DeleteOutputCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::AddMqttConnectionCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::DeleteMqttConnectionCommand(cmd) => self._apply(injector, executor, cmd),
+            Self::ConfigureMqttConnectionCommand(cmd) => self._apply(injector, executor, cmd),
         }
     }
 
@@ -173,6 +180,9 @@ impl CommandImpl {
             Self::AddSacnOutputCommand(cmd) => executor.revert(injector, cmd),
             Self::ConfigureArtnetOutputCommand(cmd) => executor.revert(injector, cmd),
             Self::DeleteOutputCommand(cmd) => executor.revert(injector, cmd),
+            Self::AddMqttConnectionCommand(cmd) => executor.revert(injector, cmd),
+            Self::DeleteMqttConnectionCommand(cmd) => executor.revert(injector, cmd),
+            Self::ConfigureMqttConnectionCommand(cmd) => executor.revert(injector, cmd),
         }
     }
 
@@ -223,6 +233,9 @@ impl CommandImpl {
             Self::AddSacnOutputCommand(cmd) => cmd.label(),
             Self::ConfigureArtnetOutputCommand(cmd) => cmd.label(),
             Self::DeleteOutputCommand(cmd) => cmd.label(),
+            Self::AddMqttConnectionCommand(cmd) => cmd.label(),
+            Self::DeleteMqttConnectionCommand(cmd) => cmd.label(),
+            Self::ConfigureMqttConnectionCommand(cmd) => cmd.label(),
         }
     }
 

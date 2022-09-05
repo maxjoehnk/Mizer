@@ -1,0 +1,15 @@
+[package]
+name = "mizer-conversion-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+mizer-node = { path = "../../../node" }
+serde = { version = "1", features = ["derive"] }
+mizer-util = { path = "../../../../../util" }
+
+[dev-dependencies]
+test-case = "1.2.0"
+mizer-node = { path = "../../../node", features = ["test"] }

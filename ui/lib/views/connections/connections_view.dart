@@ -11,11 +11,13 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 
 import 'dialogs/add_artnet_connection.dart';
+import 'dialogs/add_mqtt_connection.dart';
 import 'dialogs/add_sacn_connection.dart';
 import 'dialogs/dmx_monitor.dart';
 import 'dialogs/midi_monitor.dart';
 import 'types/helios_connection.dart';
 import 'types/midi_connection.dart';
+import 'types/mqtt_connection.dart';
 import 'types/osc_connection.dart';
 import 'types/prodjlink_connection.dart';
 
@@ -68,6 +70,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
         actions: [
           PanelAction(label: "Add sACN".i18n, onClick: _addSacn),
           PanelAction(label: "Add Artnet".i18n, onClick: _addArtnet),
+          PanelAction(label: "Add MQTT".i18n, onClick: _addMqtt),
         ]);
   }
 
@@ -124,6 +127,9 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     if (connection.hasMidi()) {
       return MidiConnectionView(device: connection.midi, deviceProfiles: midiDeviceProfiles);
     }
+    if (connection.hasMqtt()) {
+      return MqttConnectionView(connection: connection.mqtt);
+    }
     return Container();
   }
 
@@ -174,6 +180,16 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     await _fetch();
   }
 
+  _addMqtt() async {
+    var value = await showDialog<MqttConnection>(
+        context: context, builder: (context) => ConfigureMqttConnectionDialog());
+    if (value == null) {
+      return null;
+    }
+    await api.addMqtt(value);
+    await _fetch();
+  }
+
   _onDelete(Connection connection) async {
     bool result = await showDialog(
         context: context,
@@ -211,6 +227,16 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       await api.configureConnection(ConfigureConnectionRequest(dmx: DmxConnection(artnet: value, outputId: connection.dmx.outputId)));
       await _fetch();
     }
+    if (connection.hasMqtt()) {
+      var value = await showDialog<MqttConnection>(
+          context: context, builder: (context) => ConfigureMqttConnectionDialog(config: connection.mqtt));
+      if (value == null) {
+        return null;
+      }
+      value.connectionId = connection.mqtt.connectionId;
+      await api.configureConnection(ConfigureConnectionRequest(mqtt: value));
+      await _fetch();
+    }
   }
 
   ConnectionsApi get api {
@@ -246,6 +272,9 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasMidi()) {
       return _tag("Midi");
     }
+    if (connection.hasMqtt()) {
+      return _tag("MQTT");
+    }
     return Container();
   }
 
@@ -279,10 +308,10 @@ class DeviceTitle extends StatelessWidget {
 
 extension ConnectionExtensions on Connection {
   bool get canConfigure {
-    return (this.hasDmx() && this.dmx.hasArtnet()) || this.hasOsc();
+    return (this.hasDmx() && this.dmx.hasArtnet()) || this.hasOsc() || this.hasMqtt();
   }
 
   bool get canDelete {
-    return this.hasDmx() || this.hasOsc();
+    return this.hasDmx() || this.hasOsc() || this.hasMqtt();
   }
 }

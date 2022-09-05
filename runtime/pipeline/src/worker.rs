@@ -14,6 +14,7 @@ use mizer_protocol_laser::LaserFrame;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodePreviewState, PipelineContext};
+use mizer_util::StructuredData;
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -99,7 +100,9 @@ impl PipelineWorker {
                     PortType::Color => receivers.register::<Color>(port_id, metadata),
                     PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
                     PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
-                    _ => {}
+                    PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
+                    PortType::Gstreamer => {}
+                    port_type => log::debug!("TODO: implement port type {:?}", port_type),
                 }
             }
         }
@@ -153,8 +156,11 @@ impl PipelineWorker {
             PortType::Laser => {
                 self.connect_memory_ports::<Vec<LaserFrame>>(link, source_meta, target_meta)
             }
+            PortType::Data => {
+                self.connect_memory_ports::<StructuredData>(link, source_meta, target_meta)
+            }
             PortType::Gstreamer => self.connect_gst_ports(link)?,
-            _ => unimplemented!(),
+            _ => todo!(),
         }
         Ok(())
     }
@@ -171,6 +177,7 @@ impl PipelineWorker {
             PortType::Color => self.disconnect_memory_ports::<Color>(link),
             PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(link),
             PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),
+            PortType::Data => self.disconnect_memory_ports::<StructuredData>(link),
             PortType::Gstreamer => self.disconnect_gst_ports(link),
             _ => unimplemented!(),
         }

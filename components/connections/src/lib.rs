@@ -14,6 +14,7 @@ pub enum Connection {
     Helios(HeliosView),
     EtherDream(EtherDreamView),
     Gamepad(GamepadView),
+    Mqtt(MqttView),
 }
 
 impl Connection {
@@ -24,6 +25,7 @@ impl Connection {
             Connection::Helios(device) => device.name.clone(),
             Connection::EtherDream(device) => device.name.clone(),
             Connection::Gamepad(device) => device.name.clone(),
+            Connection::Mqtt(connection) => connection.name.clone(),
         }
     }
 }
@@ -55,4 +57,13 @@ pub struct DmxView {
 pub enum DmxConfig {
     Artnet { host: String, port: u16 },
     Sacn,
+}
+
+#[derive(Debug, Clone)]
+pub struct MqttView {
+    pub name: String,
+    pub connection_id: String,
+    pub url: String,
+    pub username: Option<String>,
+    pub password: Option<String>,
 }

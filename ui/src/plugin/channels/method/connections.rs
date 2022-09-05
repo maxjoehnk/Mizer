@@ -3,7 +3,10 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
-use mizer_api::models::{ArtnetConfig, SacnConfig};
+use mizer_api::models::{
+    ArtnetConfig, MqttConnection, MqttConnection_oneof__password, MqttConnection_oneof__username,
+    SacnConfig,
+};
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;
@@ -64,6 +67,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "addMqtt" => {
+                if let Err(err) = call.arguments().and_then(|args| self.add_mqtt(args)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "deleteConnection" => {
                 if let Err(err) = call
                     .arguments()
@@ -105,5 +115,21 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
 
     fn add_sacn(&self, request: SacnConfig) -> anyhow::Result<()> {
         self.handler.add_sacn(request.name)
+    }
+
+    fn add_mqtt(&self, request: MqttConnection) -> anyhow::Result<()> {
+        self.handler.add_mqtt(
+            request.url,
+            request._username.map(|username| {
+                let MqttConnection_oneof__username::username(username) = username;
+
+                username
+            }),
+            request._password.map(|password| {
+                let MqttConnection_oneof__password::password(password) = password;
+
+                password
+            }),
+        )
     }
 }

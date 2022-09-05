@@ -3,7 +3,7 @@
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -763,6 +763,7 @@ enum Connection_Connection {
   helios, 
   etherDream, 
   gamepad, 
+  mqtt, 
   notSet
 }
 
@@ -775,10 +776,11 @@ class Connection extends $pb.GeneratedMessage {
     14 : Connection_Connection.helios,
     15 : Connection_Connection.etherDream,
     16 : Connection_Connection.gamepad,
+    17 : Connection_Connection.mqtt,
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<DmxConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
     ..aOM<MidiConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
@@ -787,6 +789,7 @@ class Connection extends $pb.GeneratedMessage {
     ..aOM<HeliosConnection>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'helios', subBuilder: HeliosConnection.create)
     ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', protoName: 'etherDream', subBuilder: EtherDreamConnection.create)
     ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
+    ..aOM<MqttConnection>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
     ..hasRequiredFields = false
   ;
 
@@ -800,6 +803,7 @@ class Connection extends $pb.GeneratedMessage {
     HeliosConnection? helios,
     EtherDreamConnection? etherDream,
     GamepadConnection? gamepad,
+    MqttConnection? mqtt,
   }) {
     final _result = create();
     if (name != null) {
@@ -825,6 +829,9 @@ class Connection extends $pb.GeneratedMessage {
     }
     if (gamepad != null) {
       _result.gamepad = gamepad;
+    }
+    if (mqtt != null) {
+      _result.mqtt = mqtt;
     }
     return _result;
   }
@@ -937,6 +944,17 @@ class Connection extends $pb.GeneratedMessage {
   void clearGamepad() => clearField(16);
   @$pb.TagNumber(16)
   GamepadConnection ensureGamepad() => $_ensure(7);
+
+  @$pb.TagNumber(17)
+  MqttConnection get mqtt => $_getN(8);
+  @$pb.TagNumber(17)
+  set mqtt(MqttConnection v) { setField(17, v); }
+  @$pb.TagNumber(17)
+  $core.bool hasMqtt() => $_has(8);
+  @$pb.TagNumber(17)
+  void clearMqtt() => clearField(17);
+  @$pb.TagNumber(17)
+  MqttConnection ensureMqtt() => $_ensure(8);
 }
 
 enum DmxConnection_Config {
@@ -1954,29 +1972,125 @@ class CdjPlayback extends $pb.GeneratedMessage {
   CdjPlayback_Track ensureTrack() => $_ensure(4);
 }
 
+class MqttConnection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MqttConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId', protoName: 'connectionId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'password')
+    ..hasRequiredFields = false
+  ;
+
+  MqttConnection._() : super();
+  factory MqttConnection({
+    $core.String? connectionId,
+    $core.String? url,
+    $core.String? username,
+    $core.String? password,
+  }) {
+    final _result = create();
+    if (connectionId != null) {
+      _result.connectionId = connectionId;
+    }
+    if (url != null) {
+      _result.url = url;
+    }
+    if (username != null) {
+      _result.username = username;
+    }
+    if (password != null) {
+      _result.password = password;
+    }
+    return _result;
+  }
+  factory MqttConnection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MqttConnection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MqttConnection clone() => MqttConnection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MqttConnection copyWith(void Function(MqttConnection) updates) => super.copyWith((message) => updates(message as MqttConnection)) as MqttConnection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MqttConnection create() => MqttConnection._();
+  MqttConnection createEmptyInstance() => create();
+  static $pb.PbList<MqttConnection> createRepeated() => $pb.PbList<MqttConnection>();
+  @$core.pragma('dart2js:noInline')
+  static MqttConnection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MqttConnection>(create);
+  static MqttConnection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get connectionId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set connectionId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasConnectionId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearConnectionId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get url => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set url($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUrl() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUrl() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get username => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set username($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUsername() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUsername() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get password => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set password($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPassword() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPassword() => clearField(4);
+}
+
 enum ConfigureConnectionRequest_Config {
   dmx, 
+  mqtt, 
   notSet
 }
 
 class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, ConfigureConnectionRequest_Config> _ConfigureConnectionRequest_ConfigByTag = {
     1 : ConfigureConnectionRequest_Config.dmx,
+    2 : ConfigureConnectionRequest_Config.mqtt,
     0 : ConfigureConnectionRequest_Config.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ConfigureConnectionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [1])
+    ..oo(0, [1, 2])
     ..aOM<DmxConnection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
+    ..aOM<MqttConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
     ..hasRequiredFields = false
   ;
 
   ConfigureConnectionRequest._() : super();
   factory ConfigureConnectionRequest({
     DmxConnection? dmx,
+    MqttConnection? mqtt,
   }) {
     final _result = create();
     if (dmx != null) {
       _result.dmx = dmx;
+    }
+    if (mqtt != null) {
+      _result.mqtt = mqtt;
     }
     return _result;
   }
@@ -2014,5 +2128,16 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   void clearDmx() => clearField(1);
   @$pb.TagNumber(1)
   DmxConnection ensureDmx() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  MqttConnection get mqtt => $_getN(1);
+  @$pb.TagNumber(2)
+  set mqtt(MqttConnection v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMqtt() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMqtt() => clearField(2);
+  @$pb.TagNumber(2)
+  MqttConnection ensureMqtt() => $_ensure(1);
 }
 

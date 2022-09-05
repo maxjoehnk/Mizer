@@ -3,7 +3,7 @@
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -148,6 +148,7 @@ const Connection$json = const {
     const {'1': 'helios', '3': 14, '4': 1, '5': 11, '6': '.mizer.HeliosConnection', '9': 0, '10': 'helios'},
     const {'1': 'etherDream', '3': 15, '4': 1, '5': 11, '6': '.mizer.EtherDreamConnection', '9': 0, '10': 'etherDream'},
     const {'1': 'gamepad', '3': 16, '4': 1, '5': 11, '6': '.mizer.GamepadConnection', '9': 0, '10': 'gamepad'},
+    const {'1': 'mqtt', '3': 17, '4': 1, '5': 11, '6': '.mizer.MqttConnection', '9': 0, '10': 'mqtt'},
   ],
   '8': const [
     const {'1': 'connection'},
@@ -155,7 +156,7 @@ const Connection$json = const {
 };
 
 /// Descriptor for `Connection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSPQoKZXRoZXJEcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWRCDAoKY29ubmVjdGlvbg==');
+final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSPQoKZXRoZXJEcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWQSKwoEbXF0dBgRIAEoCzIVLm1pemVyLk1xdHRDb25uZWN0aW9uSABSBG1xdHRCDAoKY29ubmVjdGlvbg==');
 @$core.Deprecated('Use dmxConnectionDescriptor instead')
 const DmxConnection$json = const {
   '1': 'DmxConnection',
@@ -347,11 +348,29 @@ const CdjPlayback_State$json = const {
 
 /// Descriptor for `CdjPlayback`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List cdjPlaybackDescriptor = $convert.base64Decode('CgtDZGpQbGF5YmFjaxISCgRsaXZlGAEgASgIUgRsaXZlEhAKA2JwbRgCIAEoAVIDYnBtEhQKBWZyYW1lGAMgASgNUgVmcmFtZRI0CghwbGF5YmFjaxgEIAEoDjIYLm1pemVyLkNkalBsYXliYWNrLlN0YXRlUghwbGF5YmFjaxIuCgV0cmFjaxgFIAEoCzIYLm1pemVyLkNkalBsYXliYWNrLlRyYWNrUgV0cmFjaxo1CgVUcmFjaxIWCgZhcnRpc3QYASABKAlSBmFydGlzdBIUCgV0aXRsZRgCIAEoCVIFdGl0bGUiNwoFU3RhdGUSCwoHTG9hZGluZxAAEgsKB1BsYXlpbmcQARIICgRDdWVkEAISCgoGQ3VlaW5nEAM=');
+@$core.Deprecated('Use mqttConnectionDescriptor instead')
+const MqttConnection$json = const {
+  '1': 'MqttConnection',
+  '2': const [
+    const {'1': 'connectionId', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
+    const {'1': 'url', '3': 2, '4': 1, '5': 9, '10': 'url'},
+    const {'1': 'username', '3': 3, '4': 1, '5': 9, '9': 0, '10': 'username', '17': true},
+    const {'1': 'password', '3': 4, '4': 1, '5': 9, '9': 1, '10': 'password', '17': true},
+  ],
+  '8': const [
+    const {'1': '_username'},
+    const {'1': '_password'},
+  ],
+};
+
+/// Descriptor for `MqttConnection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mqttConnectionDescriptor = $convert.base64Decode('Cg5NcXR0Q29ubmVjdGlvbhIiCgxjb25uZWN0aW9uSWQYASABKAlSDGNvbm5lY3Rpb25JZBIQCgN1cmwYAiABKAlSA3VybBIfCgh1c2VybmFtZRgDIAEoCUgAUgh1c2VybmFtZYgBARIfCghwYXNzd29yZBgEIAEoCUgBUghwYXNzd29yZIgBAUILCglfdXNlcm5hbWVCCwoJX3Bhc3N3b3Jk');
 @$core.Deprecated('Use configureConnectionRequestDescriptor instead')
 const ConfigureConnectionRequest$json = const {
   '1': 'ConfigureConnectionRequest',
   '2': const [
     const {'1': 'dmx', '3': 1, '4': 1, '5': 11, '6': '.mizer.DmxConnection', '9': 0, '10': 'dmx'},
+    const {'1': 'mqtt', '3': 2, '4': 1, '5': 11, '6': '.mizer.MqttConnection', '9': 0, '10': 'mqtt'},
   ],
   '8': const [
     const {'1': 'config'},
@@ -359,4 +378,4 @@ const ConfigureConnectionRequest$json = const {
 };
 
 /// Descriptor for `ConfigureConnectionRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List configureConnectionRequestDescriptor = $convert.base64Decode('ChpDb25maWd1cmVDb25uZWN0aW9uUmVxdWVzdBIoCgNkbXgYASABKAsyFC5taXplci5EbXhDb25uZWN0aW9uSABSA2RteEIICgZjb25maWc=');
+final $typed_data.Uint8List configureConnectionRequestDescriptor = $convert.base64Decode('ChpDb25maWd1cmVDb25uZWN0aW9uUmVxdWVzdBIoCgNkbXgYASABKAsyFC5taXplci5EbXhDb25uZWN0aW9uSABSA2RteBIrCgRtcXR0GAIgASgLMhUubWl6ZXIuTXF0dENvbm5lY3Rpb25IAFIEbXF0dEIICgZjb25maWc=');

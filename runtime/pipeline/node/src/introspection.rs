@@ -46,6 +46,10 @@ pub enum NodeType {
     ColorHsv,
     Container,
     Math,
+    MqttInput,
+    MqttOutput,
+    NumberToData,
+    DataToNumber,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -92,6 +96,10 @@ impl NodeType {
             ColorRgb => "color-rgb",
             Container => "container",
             Math => "math",
+            MqttInput => "mqtt-input",
+            MqttOutput => "mqtt-output",
+            NumberToData => "number-to-data",
+            DataToNumber => "data-to-number",
             TestSink => "test-sink",
         }
         .to_string()

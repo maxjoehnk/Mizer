@@ -5,6 +5,7 @@ abstract class ConnectionsApi {
 
   Future<void> addArtnet(ArtnetConfig request);
   Future<void> addSacn(SacnConfig request);
+  Future<void> addMqtt(MqttConnection request);
 
   Future<Map<int, List<int>>> monitorDmxConnection(String outputId);
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId);

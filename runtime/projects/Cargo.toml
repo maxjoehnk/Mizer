@@ -19,6 +19,7 @@ mizer-fixtures = { path = "../../components/fixtures" }
 mizer-sequencer = { path = "../../components/sequencer" }
 mizer-plan = { path = "../../components/plan" }
 mizer-protocol-dmx = { path = "../../components/connections/protocols/dmx" }
+mizer-protocol-mqtt = { path = "../../components/connections/protocols/mqtt" }
 directories-next = "2.0"
 fs2 = "0.4"
 

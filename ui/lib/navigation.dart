@@ -62,7 +62,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   Widget? _currentWidget;
-  bool _showProgrammer = true;
+  bool _showProgrammer = false;
 
   _HomeState() {
     _updateWidget();

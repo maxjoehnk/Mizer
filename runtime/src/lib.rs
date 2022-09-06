@@ -67,6 +67,7 @@ pub trait NodeDowncast {
             NodeType::MqttOutput => Node::MqttOutput(self.downcast_node(node_type).unwrap()),
             NodeType::NumberToData => Node::NumberToData(self.downcast_node(node_type).unwrap()),
             NodeType::DataToNumber => Node::DataToNumber(self.downcast_node(node_type).unwrap()),
+            NodeType::Value => Node::Value(self.downcast_node(node_type).unwrap()),
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

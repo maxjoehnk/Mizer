@@ -79,6 +79,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Math = Node_NodeType._(56, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Math');
   static const Node_NodeType DataToNumber = Node_NodeType._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DataToNumber');
   static const Node_NodeType NumberToData = Node_NodeType._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NumberToData');
+  static const Node_NodeType Value = Node_NodeType._(59, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Value');
   static const Node_NodeType MqttInput = Node_NodeType._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttInput');
   static const Node_NodeType MqttOutput = Node_NodeType._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttOutput');
 
@@ -121,6 +122,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Math,
     DataToNumber,
     NumberToData,
+    Value,
     MqttInput,
     MqttOutput,
   ];

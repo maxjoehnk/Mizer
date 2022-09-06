@@ -4,6 +4,7 @@ use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
 pub use mizer_conversion_nodes::{DataToNumberNode, NumberToDataNode};
+pub use mizer_data_nodes::ValueNode;
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
@@ -75,6 +76,7 @@ pub enum Node {
     MqttOutput(MqttOutputNode),
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
+    Value(ValueNode),
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink(TestSink),
@@ -123,6 +125,7 @@ impl From<NodeType> for Node {
             NodeType::MqttOutput => MqttOutputNode::default().into(),
             NodeType::NumberToData => NumberToDataNode::default().into(),
             NodeType::DataToNumber => DataToNumberNode::default().into(),
+            NodeType::Value => ValueNode::default().into(),
             NodeType::TestSink => unimplemented!(),
         }
     }
@@ -172,6 +175,7 @@ impl Node {
             MqttOutput(_) => NodeType::MqttOutput,
             NumberToData(_) => NodeType::NumberToData,
             DataToNumber(_) => NodeType::DataToNumber,
+            Value(_) => NodeType::Value,
             TestSink(_) => NodeType::TestSink,
         }
     }

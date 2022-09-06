@@ -50,6 +50,7 @@ pub enum NodeType {
     MqttOutput,
     NumberToData,
     DataToNumber,
+    Value,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -100,6 +101,7 @@ impl NodeType {
             MqttOutput => "mqtt-output",
             NumberToData => "number-to-data",
             DataToNumber => "data-to-number",
+            Value => "value",
             TestSink => "test-sink",
         }
         .to_string()

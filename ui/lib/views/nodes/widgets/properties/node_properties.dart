@@ -19,6 +19,7 @@ import 'properties/groups/mqtt_output_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
+import 'properties/groups/value_properties.dart';
 import 'properties/groups/video_file_properties.dart';
 
 class NodePropertiesPane extends StatelessWidget {
@@ -154,6 +155,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(MqttOutputProperties(node.config.mqttOutputConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(mqttOutputConfig: config)))));
+    }
+    if (node.config.hasValueConfig()) {
+      widgets.add(ValueProperties(node.config.valueConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(valueConfig: config)))));
     }
     return widgets;
   }

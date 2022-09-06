@@ -3427,6 +3427,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mizer-data-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-node",
+ "mizer-util",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "mizer-devices"
 version = "0.1.0"
 dependencies = [
@@ -3759,6 +3770,7 @@ dependencies = [
  "mizer-clock-nodes",
  "mizer-color-nodes",
  "mizer-conversion-nodes",
+ "mizer-data-nodes",
  "mizer-dmx-nodes",
  "mizer-envelope-nodes",
  "mizer-fixture-nodes",

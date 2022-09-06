@@ -51,6 +51,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             MqttOutput(node) => Self::mqttOutputConfig(node.into()),
             NumberToData(node) => Self::numberToDataConfig(node.into()),
             DataToNumber(node) => Self::dataToNumberConfig(node.into()),
+            Value(node) => Self::valueConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -115,6 +116,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::mqttOutputConfig(node) => Self::MqttOutput(node.into()),
             NodeConfig_oneof_type::numberToDataConfig(node) => Self::NumberToData(node.into()),
             NodeConfig_oneof_type::dataToNumberConfig(node) => Self::DataToNumber(node.into()),
+            NodeConfig_oneof_type::valueConfig(node) => Self::Value(node.into()),
         }
     }
 }
@@ -1141,6 +1143,23 @@ impl From<DataToNumberNodeConfig> for mizer_nodes::DataToNumberNode {
     }
 }
 
+impl From<mizer_nodes::ValueNode> for ValueNodeConfig {
+    fn from(node: mizer_nodes::ValueNode) -> Self {
+        Self {
+            value: node.value,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<ValueNodeConfig> for mizer_nodes::ValueNode {
+    fn from(config: ValueNodeConfig) -> Self {
+        Self {
+            value: config.value,
+        }
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1184,6 +1203,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::MqttOutput => Node_NodeType::MqttOutput,
             NodeType::NumberToData => Node_NodeType::NumberToData,
             NodeType::DataToNumber => Node_NodeType::DataToNumber,
+            NodeType::Value => Node_NodeType::Value,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1232,6 +1252,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::MqttOutput => NodeType::MqttOutput,
             Node_NodeType::NumberToData => NodeType::NumberToData,
             Node_NodeType::DataToNumber => NodeType::DataToNumber,
+            Node_NodeType::Value => NodeType::Value,
         }
     }
 }

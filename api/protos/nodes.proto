@@ -126,6 +126,7 @@ message Node {
     Math = 56;
     DataToNumber = 57;
     NumberToData = 58;
+    Value = 59;
     MqttInput = 60;
     MqttOutput = 61;
   }
@@ -189,6 +190,7 @@ message NodeConfig {
     MqttOutputNodeConfig mqttOutputConfig = 48;
     NumberToDataNodeConfig numberToDataConfig = 49;
     DataToNumberNodeConfig dataToNumberConfig = 50;
+    ValueNodeConfig valueConfig = 51;
   }
 }
 
@@ -416,6 +418,10 @@ message MqttOutputNodeConfig {
 
 message NumberToDataNodeConfig {}
 message DataToNumberNodeConfig {}
+
+message ValueNodeConfig {
+  string value = 1;
+}
 
 message NodePosition {
   double x = 1;

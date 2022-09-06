@@ -1055,6 +1055,7 @@ enum NodeConfig_Type {
   mqttOutputConfig, 
   numberToDataConfig, 
   dataToNumberConfig, 
+  valueConfig, 
   notSet
 }
 
@@ -1100,10 +1101,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     48 : NodeConfig_Type.mqttOutputConfig,
     49 : NodeConfig_Type.numberToDataConfig,
     50 : NodeConfig_Type.dataToNumberConfig,
+    51 : NodeConfig_Type.valueConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1144,6 +1146,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<MqttOutputNodeConfig>(48, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttOutputConfig', protoName: 'mqttOutputConfig', subBuilder: MqttOutputNodeConfig.create)
     ..aOM<NumberToDataNodeConfig>(49, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberToDataConfig', protoName: 'numberToDataConfig', subBuilder: NumberToDataNodeConfig.create)
     ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', protoName: 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
+    ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1189,6 +1192,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     MqttOutputNodeConfig? mqttOutputConfig,
     NumberToDataNodeConfig? numberToDataConfig,
     DataToNumberNodeConfig? dataToNumberConfig,
+    ValueNodeConfig? valueConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1310,6 +1314,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (dataToNumberConfig != null) {
       _result.dataToNumberConfig = dataToNumberConfig;
+    }
+    if (valueConfig != null) {
+      _result.valueConfig = valueConfig;
     }
     return _result;
   }
@@ -1776,6 +1783,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearDataToNumberConfig() => clearField(50);
   @$pb.TagNumber(50)
   DataToNumberNodeConfig ensureDataToNumberConfig() => $_ensure(39);
+
+  @$pb.TagNumber(51)
+  ValueNodeConfig get valueConfig => $_getN(40);
+  @$pb.TagNumber(51)
+  set valueConfig(ValueNodeConfig v) { setField(51, v); }
+  @$pb.TagNumber(51)
+  $core.bool hasValueConfig() => $_has(40);
+  @$pb.TagNumber(51)
+  void clearValueConfig() => clearField(51);
+  @$pb.TagNumber(51)
+  ValueNodeConfig ensureValueConfig() => $_ensure(40);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -3952,6 +3970,53 @@ class DataToNumberNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static DataToNumberNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DataToNumberNodeConfig>(create);
   static DataToNumberNodeConfig? _defaultInstance;
+}
+
+class ValueNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ValueNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
+    ..hasRequiredFields = false
+  ;
+
+  ValueNodeConfig._() : super();
+  factory ValueNodeConfig({
+    $core.String? value,
+  }) {
+    final _result = create();
+    if (value != null) {
+      _result.value = value;
+    }
+    return _result;
+  }
+  factory ValueNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ValueNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ValueNodeConfig clone() => ValueNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ValueNodeConfig copyWith(void Function(ValueNodeConfig) updates) => super.copyWith((message) => updates(message as ValueNodeConfig)) as ValueNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ValueNodeConfig create() => ValueNodeConfig._();
+  ValueNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ValueNodeConfig> createRepeated() => $pb.PbList<ValueNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ValueNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ValueNodeConfig>(create);
+  static ValueNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get value => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set value($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

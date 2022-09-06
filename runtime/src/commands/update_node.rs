@@ -215,6 +215,10 @@ fn update_pipeline_node(node: &mut dyn PipelineNode, config: &Node) -> anyhow::R
             node.connection = config.connection.clone();
             node.path = config.path.clone();
         }
+        (NodeType::Value, Node::Value(config)) => {
+            let node: &mut ValueNode = node.downcast_mut()?;
+            node.value = config.value.clone();
+        }
         (node_type, node) => log::warn!(
             "invalid node type {:?} for given update {:?}",
             node_type,

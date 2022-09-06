@@ -197,6 +197,7 @@ pub enum NodeConfig {
     MqttOutput(mizer_nodes::MqttOutputNode),
     NumberToData(mizer_nodes::NumberToDataNode),
     DataToNumber(mizer_nodes::DataToNumberNode),
+    DataValue(mizer_nodes::ValueNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -242,6 +243,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::MqttOutput(node) => Self::MqttOutput(node),
             NodeConfig::NumberToData(node) => Self::NumberToData(node),
             NodeConfig::DataToNumber(node) => Self::DataToNumber(node),
+            NodeConfig::DataValue(node) => Self::Value(node),
         }
     }
 }
@@ -289,6 +291,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::MqttOutput(node) => Self::MqttOutput(node),
             mizer_nodes::Node::NumberToData(node) => Self::NumberToData(node),
             mizer_nodes::Node::DataToNumber(node) => Self::DataToNumber(node),
+            mizer_nodes::Node::Value(node) => Self::DataValue(node),
             mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }

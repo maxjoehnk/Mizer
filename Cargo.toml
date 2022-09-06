@@ -53,6 +53,7 @@ members = [
     "runtime/pipeline/nodes/connections/protocols/mqtt",
     "runtime/pipeline/nodes/connections/protocols/opc",
     "runtime/pipeline/nodes/connections/protocols/osc",
+    "runtime/pipeline/nodes/data",
     "runtime/pipeline/nodes/pixels",
     "runtime/pipeline/nodes/video",
     "runtime/pipeline/ports",

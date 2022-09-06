@@ -42,6 +42,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.MqttOutput: "MQTT Output",
   Node_NodeType.NumberToData: "Number to Data",
   Node_NodeType.DataToNumber: "Data to Number",
+  Node_NodeType.Value: "Value",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -59,6 +60,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Math,
     Node_NodeType.ColorRgb,
     Node_NodeType.ColorHsv,
+    Node_NodeType.Value,
   ]),
   buildCategory("Connections", [
     Node_NodeType.DmxOutput,

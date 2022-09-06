@@ -378,6 +378,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::MqttOutput(node) => pipeline.register_node(path, &node),
         Node::NumberToData(node) => pipeline.register_node(path, &node),
         Node::DataToNumber(node) => pipeline.register_node(path, &node),
+        Node::Value(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

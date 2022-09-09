@@ -9,6 +9,8 @@ use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
 
+const SUBMASTER_PORT: &str = "Submaster";
+
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct FixtureNode {
     #[serde(rename = "fixture")]
@@ -39,15 +41,9 @@ impl PipelineNode for FixtureNode {
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        self.fixture_manager
-            .as_ref()
-            .and_then(|manager| manager.get_fixture(self.fixture_id))
-            .and_then(|fixture| fixture.current_mode.controls.get_ports().remove(port))
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        self.fixture_manager
+        let mut fixture_controls: Vec<_> = self
+            .fixture_manager
             .as_ref()
             .and_then(|manager| manager.get_fixture(self.fixture_id))
             .map(|fixture| {
@@ -58,7 +54,18 @@ impl PipelineNode for FixtureNode {
                     .into_iter()
                     .collect()
             })
-            .unwrap_or_default()
+            .unwrap_or_default();
+
+        fixture_controls.push((
+            SUBMASTER_PORT.into(),
+            PortMetadata {
+                port_type: PortType::Single,
+                direction: PortDirection::Input,
+                ..Default::default()
+            },
+        ));
+
+        fixture_controls
     }
 
     fn node_type(&self) -> NodeType {
@@ -75,6 +82,11 @@ impl ProcessingNode for FixtureNode {
                 let ports: HashMap<PortId, PortMetadata> =
                     fixture.current_mode.controls.get_ports();
                 for port in context.input_ports() {
+                    if &port == SUBMASTER_PORT {
+                        if let Some(value) = context.read_port::<_, f64>(SUBMASTER_PORT) {
+                            fixture.write_submaster(value);
+                        }
+                    }
                     if let Some(port_metadata) = ports.get(&port) {
                         match port_metadata.port_type {
                             PortType::Color => {

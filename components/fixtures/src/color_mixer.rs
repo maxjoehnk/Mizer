@@ -36,10 +36,6 @@ impl ColorMixer {
         }
     }
 
-    pub fn virtual_dimmer(&self) -> Option<f64> {
-        self.virtual_dimmer
-    }
-
     pub fn rgb(&self) -> Rgb {
         profiling::scope!("ColorMixer::rgb");
         let rgb = Srgb::new(self.red, self.green, self.blue);

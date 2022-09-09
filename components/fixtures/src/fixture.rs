@@ -1,9 +1,10 @@
+use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 use mizer_protocol_dmx::DmxOutput;
 
-use crate::color_mixer::update_color_mixer;
+use crate::color_mixer::{update_color_mixer, ColorMixer};
 use crate::definition::*;
 pub use crate::sub_fixture::*;
 
@@ -18,9 +19,10 @@ pub struct Fixture {
     pub universe: u16,
     pub channel: u16,
     pub output: Option<String>,
-    /// Contains values for all dmx channels including sub-fixtures
-    pub channel_values: HashMap<String, f64>,
+    pub submaster: Option<f64>,
     pub configuration: FixtureConfiguration,
+    fixture_values: HashMap<FixtureFaderControl, f64>,
+    pub(crate) sub_fixture_values: HashMap<(u32, FixtureFaderControl), f64>,
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -59,27 +61,24 @@ impl Fixture {
         universe: Option<u16>,
         configuration: FixtureConfiguration,
     ) -> Self {
+        let mode = get_current_mode(&definition, selected_mode);
         Fixture {
             id: fixture_id,
             name,
-            current_mode: get_current_mode(&definition, selected_mode),
+            submaster: mode.controls.intensity.is_some().then(|| 1f64),
+            current_mode: mode,
             definition,
             channel,
             output,
             universe: universe.unwrap_or(1),
-            channel_values: Default::default(),
             configuration,
+            fixture_values: Default::default(),
+            sub_fixture_values: Default::default(),
         }
     }
 
     pub fn get_channels(&self) -> Vec<FixtureChannelDefinition> {
         self.current_mode.channels.clone()
-    }
-
-    pub fn write<S: Into<String>>(&mut self, name: S, value: f64) {
-        let name = name.into();
-        log::trace!("write {} -> {}", name, value);
-        self.channel_values.insert(name, value);
     }
 
     pub fn sub_fixture(&self, id: u32) -> Option<SubFixture> {
@@ -106,21 +105,23 @@ impl Fixture {
     }
 
     pub(crate) fn set_to_default(&mut self) {
-        for channel in self.current_mode.channels.iter() {
-            self.channel_values.insert(channel.name.clone(), 0f64);
-        }
-        if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
-            if mixer.virtual_dimmer().is_some() {
-                mixer.set_virtual_dimmer(0f64);
-            }
-        }
-        for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
-            if let Some(mixer) = sub_fixture.color_mixer.as_mut() {
-                if mixer.virtual_dimmer().is_some() {
-                    mixer.set_virtual_dimmer(0f64);
-                }
-            }
-        }
+        self.fixture_values.clear();
+        self.sub_fixture_values.clear();
+        // for channel in self.current_mode.channels.iter() {
+        //     self.channel_values.insert(channel.name.clone(), 0f64);
+        // }
+        // if let Some(mixer) = self.current_mode.color_mixer.as_mut() {
+        //     if mixer.virtual_dimmer().is_some() {
+        //         mixer.set_virtual_dimmer(0f64);
+        //     }
+        // }
+        // for sub_fixture in self.current_mode.sub_fixtures.iter_mut() {
+        //     if let Some(mixer) = sub_fixture.color_mixer.as_mut() {
+        //         if mixer.virtual_dimmer().is_some() {
+        //             mixer.set_virtual_dimmer(0f64);
+        //         }
+        //     }
+        // }
     }
 
     pub(crate) fn flush(&self, output: &dyn DmxOutput) {
@@ -133,9 +134,11 @@ impl Fixture {
 
     pub fn get_dmx_values(&self) -> [u8; 512] {
         profiling::scope!("Fixture::get_dmx_values");
+        let channel_values = self.build_channel_values();
+
         let mut buffer = [0; 512];
 
-        for (channel_name, value) in self.channel_values.iter() {
+        for (channel_name, value) in channel_values.iter() {
             if let Some(channel) = self
                 .current_mode
                 .channels
@@ -176,56 +179,182 @@ impl Fixture {
         buffer
     }
 
-    fn update_color_mixer(&mut self) {
-        update_color_mixer(
-            self.current_mode.color_mixer,
-            self.current_mode.controls.color_mixer.clone(),
-            |channel, value| self.write(channel, value),
-        );
+    pub fn write_submaster(&mut self, value: f64) {
+        if let Some(submaster) = self.submaster.as_mut() {
+            *submaster = value;
+        }
     }
-}
 
-impl IFixtureMut for Fixture {
-    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
-        profiling::scope!("Fixture::write_fader_control");
+    pub(crate) fn adapt_to_submaster(&self, control: &FixtureFaderControl, value: f64) -> f64 {
+        if let Some(submaster) = self.submaster {
+            if control == &FixtureFaderControl::Intensity {
+                value.min(submaster)
+            } else {
+                value
+            }
+        } else {
+            value
+        }
+    }
+
+    fn build_channel_values(&self) -> HashMap<String, f64> {
+        let mut channel_values = HashMap::new();
+        let mut color_mixer = self.current_mode.color_mixer.clone();
+
+        for (control, value) in self.fixture_values.iter() {
+            self.build_fixture_fader_value(
+                control,
+                *value,
+                &mut channel_values,
+                color_mixer.as_mut(),
+            );
+        }
+
+        for (id, controls) in &self
+            .sub_fixture_values
+            .iter()
+            .sorted_by_key(|((id, _), _)| *id)
+            .group_by(|((id, _), _)| *id)
+        {
+            if let Some(definition) = self.current_mode.sub_fixtures.iter().find(|f| f.id == id) {
+                let mut color_mixer = definition.color_mixer.clone();
+                for ((_, control), value) in controls {
+                    self.build_sub_fixture_fader_value(
+                        definition,
+                        control,
+                        *value,
+                        &mut channel_values,
+                        color_mixer.as_mut(),
+                    );
+                }
+            }
+        }
+
+        channel_values
+    }
+
+    fn build_fixture_fader_value(
+        &self,
+        control: &FixtureFaderControl,
+        value: f64,
+        channel_values: &mut HashMap<String, f64>,
+        mut color_mixer: Option<&mut ColorMixer>,
+    ) {
+        profiling::scope!("Fixture::build_fixture_fader_value");
         let value = self.configuration.adapt(&control, value);
+        let value = self.adapt_to_submaster(&control, value);
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => {
                 if let FixtureFaderControl::ColorMixer(color_channel) = control {
-                    if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
+                    if let Some(color_mixer) = color_mixer.as_mut() {
                         match color_channel {
                             ColorChannel::Red => color_mixer.set_red(value),
                             ColorChannel::Green => color_mixer.set_green(value),
                             ColorChannel::Blue => color_mixer.set_blue(value),
                         }
                     }
-                    self.update_color_mixer();
+                    update_color_mixer(
+                        color_mixer.cloned(),
+                        self.current_mode.controls.color_mixer.clone(),
+                        |channel, value| {
+                            channel_values.insert(channel, value);
+                        },
+                    );
                 } else {
                     let channel = channel.to_string();
-                    self.write(channel, value)
+                    channel_values.insert(channel, value);
                 }
             }
             Some(FixtureControlChannel::Delegate) => {
-                let sub_fixtures = self.current_mode.sub_fixtures.clone();
-                for definition in sub_fixtures.into_iter() {
-                    let mut fixture = SubFixtureMut {
-                        fixture: self,
-                        definition,
-                    };
-                    fixture.write_fader_control(control.clone(), value);
-                }
+                // Noop because handled while writing the control value
             }
             Some(FixtureControlChannel::VirtualDimmer) => {
                 debug_assert!(
-                    control == FixtureFaderControl::Intensity,
+                    control == &FixtureFaderControl::Intensity,
                     "Trying to write non intensity channel to virtual dimmer"
                 );
-                if let Some(color_mixer) = self.current_mode.color_mixer.as_mut() {
+                if let Some(color_mixer) = color_mixer.as_mut() {
                     color_mixer.set_virtual_dimmer(value);
                 }
-                self.update_color_mixer();
+                update_color_mixer(
+                    color_mixer.cloned(),
+                    self.current_mode.controls.color_mixer.clone(),
+                    |channel, value| {
+                        channel_values.insert(channel, value);
+                    },
+                );
             }
             None => {}
+        }
+    }
+
+    fn build_sub_fixture_fader_value(
+        &self,
+        definition: &SubFixtureDefinition,
+        control: &FixtureFaderControl,
+        value: f64,
+        channel_values: &mut HashMap<String, f64>,
+        mut color_mixer: Option<&mut ColorMixer>,
+    ) {
+        if let Some(channel) = definition.controls.get_channel(&control) {
+            match channel {
+                SubFixtureControlChannel::Channel(channel) => {
+                    if let FixtureFaderControl::ColorMixer(color_channel) = control {
+                        if let Some(color_mixer) = color_mixer.as_mut() {
+                            match color_channel {
+                                ColorChannel::Red => color_mixer.set_red(value),
+                                ColorChannel::Green => color_mixer.set_green(value),
+                                ColorChannel::Blue => color_mixer.set_blue(value),
+                            }
+                        }
+                        update_color_mixer(
+                            color_mixer.cloned(),
+                            definition.controls.color_mixer.clone(),
+                            |channel, value| {
+                                channel_values.insert(channel, value);
+                            },
+                        );
+                    } else {
+                        channel_values.insert(channel.clone(), value);
+                    }
+                }
+                SubFixtureControlChannel::VirtualDimmer => {
+                    debug_assert!(
+                        control == &FixtureFaderControl::Intensity,
+                        "Trying to write non intensity channel to virtual dimmer"
+                    );
+                    if let Some(color_mixer) = color_mixer.as_mut() {
+                        color_mixer.set_virtual_dimmer(value);
+                    }
+                    update_color_mixer(
+                        color_mixer.cloned(),
+                        definition.controls.color_mixer.clone(),
+                        |channel, value| {
+                            channel_values.insert(channel, value);
+                        },
+                    );
+                }
+            }
+        }
+    }
+}
+
+impl IFixtureMut for Fixture {
+    fn write_fader_control(&mut self, control: FixtureFaderControl, value: f64) {
+        profiling::scope!("Fixture::write_fader_control");
+        if let Some(FixtureControlChannel::Delegate) =
+            self.current_mode.controls.get_channel(&control)
+        {
+            let sub_fixtures = self.current_mode.sub_fixtures.clone();
+            for definition in sub_fixtures.into_iter() {
+                let mut sub_fixture = SubFixtureMut {
+                    fixture: self,
+                    definition,
+                };
+                sub_fixture.write_fader_control(control.clone(), value);
+            }
+        } else {
+            self.fixture_values.insert(control, value);
         }
     }
 }
@@ -233,18 +362,7 @@ impl IFixtureMut for Fixture {
 impl IFixture for Fixture {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         profiling::scope!("Fixture::read_control");
-        match self.current_mode.controls.get_channel(&control) {
-            Some(FixtureControlChannel::Channel(ref channel)) => self
-                .channel_values
-                .get(channel)
-                .copied()
-                .map(|value| self.configuration.adapt(&control, value)),
-            Some(FixtureControlChannel::VirtualDimmer) => self
-                .current_mode
-                .color_mixer
-                .and_then(|mixer| mixer.virtual_dimmer()),
-            _ => None,
-        }
+        self.fixture_values.get(&control).copied()
     }
 }
 

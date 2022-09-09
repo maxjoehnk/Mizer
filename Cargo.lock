@@ -3522,6 +3522,7 @@ dependencies = [
  "dashmap 4.0.2",
  "futures",
  "indexmap",
+ "itertools",
  "log",
  "mizer-commander",
  "mizer-module",

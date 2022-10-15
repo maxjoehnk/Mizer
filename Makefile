@@ -25,6 +25,7 @@ run: build
 clean:
 	rm -r artifact || exit 0
 	rm mizer.zip || exit 0
+	rm mizer.flatpak || exit 0
 
 artifact:
 	cargo run -p mizer-package
@@ -43,3 +44,6 @@ flatpak: mizer.zip
 
 flatpak-install: mizer.zip
 	flatpak-builder --user --install --force-clean .flatpak me.maxjoehnk.Mizer.yml
+
+mizer.flatpak: flatpak-install
+	flatpak build-bundle ~/.local/share/flatpak/repo mizer.flatpak me.maxjoehnk.Mizer

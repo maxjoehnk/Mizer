@@ -5,3 +5,5 @@ pipeline.dot
 /artifact
 *.log
 *.log.*
+.flatpak-builder
+.flatpak

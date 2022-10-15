@@ -1,3 +1,5 @@
+.PHONY: mizer test benchmarks build-headless build build-release run clean flatpak
+
 mizer: test build-headless build
 
 test:
@@ -20,7 +22,11 @@ build-release:
 run: build
 	target/debug/mizer
 
-package:
+clean:
+	rm -r artifact || exit 0
+	rm mizer.zip || exit 0
+
+artifact:
 	cargo run -p mizer-package
 
 package-headless:
@@ -28,3 +34,12 @@ package-headless:
 
 build-docker:
 	docker build -t mizer:latest .
+
+mizer.zip: artifact
+	zip -r mizer.zip artifact/*
+
+flatpak: mizer.zip
+	flatpak-builder --force-clean .flatpak me.maxjoehnk.Mizer.yml
+
+flatpak-install: mizer.zip
+	flatpak-builder --user --install --force-clean .flatpak me.maxjoehnk.Mizer.yml

@@ -125,7 +125,7 @@ jobs:
       - name: Build
         run: make build-release
       - name: Package
-        run: make package
+        run: make artifact
       - uses: actions/upload-artifact@v3
         with:
           name: linux-full
@@ -147,7 +147,7 @@ jobs:
         run: make build-release
         continue-on-error: true
       - name: Package
-        run: make package
+        run: make artifact
         continue-on-error: true
       - uses: actions/upload-artifact@v3
         with:

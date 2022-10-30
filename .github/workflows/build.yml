@@ -145,9 +145,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: linux-full
+      - uses: actions/checkout@v2
       - name: Flatpak
         run: make flatpak
-      - uses: actions/checkout@v2
       - name: Bundle
         run: make mizer.flatpak
       - uses: actions/upload-artifact@v2

@@ -2,6 +2,7 @@ pub use self::async_runtime::*;
 pub use self::colors::*;
 pub use self::conversion::*;
 pub use self::hashmap_extension::*;
+pub use self::file_loading::*;
 pub use self::lerp_extension::*;
 pub use self::spline::*;
 pub use self::structured_data::*;
@@ -17,5 +18,6 @@ mod lerp_extension;
 mod spline;
 mod structured_data;
 
+mod file_loading;
 mod thread_pinned;
 pub mod tracing;

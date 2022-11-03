@@ -352,9 +352,7 @@ fn register_midi_module(runtime: &mut DefaultRuntime, settings: &Settings) -> an
         .injector_mut()
         .get_mut::<MidiConnectionManager>()
         .unwrap();
-    if settings.paths.midi_device_profiles.exists() {
-        connection_manager.load_device_profiles(&settings.paths.midi_device_profiles)?;
-    }
+    connection_manager.load_device_profiles(&settings.paths.midi_device_profiles)?;
 
     Ok(())
 }

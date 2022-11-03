@@ -79,18 +79,28 @@ impl SettingsManager {
 
     pub fn load(&mut self) -> anyhow::Result<()> {
         let mut paths = vec![PathBuf::from("settings.toml")];
+        if let Some(path) = std::env::current_exe()
+            .ok()
+            .and_then(|executable| executable.parent().map(|path| path.to_path_buf()))
+            .map(|path| path.join("settings.toml"))
+        {
+            paths.push(path);
+        }
         if let Some(dir) = ProjectDirs::from("me", "maxjoehnk", "Mizer")
             .map(|dirs| dirs.config_dir().join("settings.toml"))
         {
             paths.push(dir);
         }
         if let Some(path) = paths.iter().find(|path| path.exists()) {
+            log::trace!("Loading settings from {path:?}");
             let mut file = std::fs::File::open(path)?;
             let mut buffer = String::new();
             file.read_to_string(&mut buffer)?;
 
             self.settings = toml::from_str(&buffer)?;
             self.file_path = Some(path.to_path_buf());
+        } else {
+            log::trace!("Loading default settings");
         }
 
         Ok(())

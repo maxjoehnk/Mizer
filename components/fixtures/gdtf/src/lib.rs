@@ -7,6 +7,7 @@ use zip::ZipArchive;
 
 use mizer_fixtures::definition::*;
 use mizer_fixtures::library::FixtureLibraryProvider;
+use mizer_util::find_path;
 
 mod conversion;
 mod definition;
@@ -32,47 +33,46 @@ impl GdtfProvider {
 impl FixtureLibraryProvider for GdtfProvider {
     fn load(&mut self) -> anyhow::Result<()> {
         log::info!("Loading GDTF fixture library...");
-        if !Path::new(&self.file_path).exists() {
-            return Ok(());
-        }
-        let files = std::fs::read_dir(&self.file_path)?;
-        let definitions = files
-            .par_bridge()
-            .map(|file| {
-                let file = file?;
-                if file.metadata()?.is_file()
-                    && file
-                        .file_name()
-                        .to_string_lossy()
-                        .to_string()
-                        .ends_with(".gdtf")
-                {
-                    log::trace!("Loading GDTF Fixture from '{:?}'...", file);
-                    let gdtf_archive = GdtfArchive::read(&file.path())?;
-                    log::debug!("Loaded GDTF Fixture from '{:?}'.", file);
+        if let Some(path) = find_path(&self.file_path) {
+            let files = std::fs::read_dir(&path)?;
+            let definitions = files
+                .par_bridge()
+                .map(|file| {
+                    let file = file?;
+                    if file.metadata()?.is_file()
+                        && file
+                            .file_name()
+                            .to_string_lossy()
+                            .to_string()
+                            .ends_with(".gdtf")
+                    {
+                        log::trace!("Loading GDTF Fixture from '{:?}'...", file);
+                        let gdtf_archive = GdtfArchive::read(&file.path())?;
+                        log::debug!("Loaded GDTF Fixture from '{:?}'.", file);
 
-                    Ok(Some(gdtf_archive))
-                } else {
-                    Ok(None)
-                }
-            })
-            .filter_map(|archive: anyhow::Result<_>| match archive {
-                Ok(Some(archive)) => Some(Ok((
-                    archive.definition.fixture_type.fixture_type_id.clone(),
-                    archive.definition,
-                ))),
-                Ok(None) => None,
-                Err(err) => Some(Err(err)),
-            })
-            .filter_map(|archive| match archive {
-                Ok(archive) => Some(archive),
-                Err(err) => {
-                    log::error!("Error parsing gdtf definition {err:?}");
-                    None
-                }
-            })
-            .collect::<HashMap<String, GdtfFixtureDefinition>>();
-        self.definitions = definitions;
+                        Ok(Some(gdtf_archive))
+                    } else {
+                        Ok(None)
+                    }
+                })
+                .filter_map(|archive: anyhow::Result<_>| match archive {
+                    Ok(Some(archive)) => Some(Ok((
+                        archive.definition.fixture_type.fixture_type_id.clone(),
+                        archive.definition,
+                    ))),
+                    Ok(None) => None,
+                    Err(err) => Some(Err(err)),
+                })
+                .filter_map(|archive| match archive {
+                    Ok(archive) => Some(archive),
+                    Err(err) => {
+                        log::error!("Error parsing gdtf definition {err:?}");
+                        None
+                    }
+                })
+                .collect::<HashMap<String, GdtfFixtureDefinition>>();
+            self.definitions = definitions;
+        }
 
         Ok(())
     }

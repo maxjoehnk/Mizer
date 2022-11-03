@@ -7,3 +7,5 @@ pipeline.dot
 *.log.*
 .flatpak-builder
 .flatpak
+mizer.flatpak
+mizer.zip

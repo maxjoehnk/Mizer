@@ -23,9 +23,9 @@ run: build
 	target/debug/mizer
 
 clean:
-	rm -r artifact || exit 0
-	rm mizer.zip || exit 0
-	rm mizer.flatpak || exit 0
+	rm -rf artifact
+	rm -f mizer.zip
+	rm -f mizer.flatpak
 
 artifact:
 	cargo run -p mizer-package

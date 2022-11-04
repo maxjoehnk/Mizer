@@ -33,6 +33,8 @@ pub trait PlansApi {
     fn move_fixtures(&self, req: ::grpc::ServerRequestSingle<super::plans::MoveFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::plans::Plans>) -> ::grpc::Result<()>;
 
     fn move_fixture(&self, req: ::grpc::ServerRequestSingle<super::plans::MoveFixtureRequest>, resp: ::grpc::ServerResponseUnarySink<super::plans::Plans>) -> ::grpc::Result<()>;
+
+    fn align_fixtures(&self, req: ::grpc::ServerRequestSingle<super::plans::AlignFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::plans::Plans>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -103,6 +105,16 @@ impl PlansApiClient {
     pub fn move_fixture(&self, o: ::grpc::RequestOptions, req: super::plans::MoveFixtureRequest) -> ::grpc::SingleResponse<super::plans::Plans> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.plan.PlansApi/MoveFixture"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn align_fixtures(&self, o: ::grpc::RequestOptions, req: super::plans::AlignFixturesRequest) -> ::grpc::SingleResponse<super::plans::Plans> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.plan.PlansApi/AlignFixtures"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -191,6 +203,18 @@ impl PlansApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).move_fixture(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.plan.PlansApi/AlignFixtures"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).align_fixtures(req, resp))
                     },
                 ),
             ],

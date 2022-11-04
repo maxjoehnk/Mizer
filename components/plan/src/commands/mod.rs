@@ -1,6 +1,7 @@
 use crate::Plan;
 pub use add_fixtures_to_plan::*;
 pub use add_plan::*;
+pub use align_fixtures::*;
 pub use move_fixtures_in_plan::*;
 use pinboard::NonEmptyPinboard;
 pub use remove_plan::*;
@@ -9,6 +10,7 @@ use std::sync::Arc;
 
 mod add_fixtures_to_plan;
 mod add_plan;
+mod align_fixtures;
 mod move_fixtures_in_plan;
 mod remove_plan;
 mod rename_plan;

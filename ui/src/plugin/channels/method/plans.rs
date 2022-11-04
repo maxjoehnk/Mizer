@@ -76,6 +76,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for PlansChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "alignFixtures" => {
+                if let Err(err) = call.arguments().map(|req| self.align_fixtures(req)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             _ => resp.not_implemented(),
         }
     }
@@ -127,5 +134,16 @@ impl<R: RuntimeApi + 'static> PlansChannel<R> {
         log::debug!("move_fixture {req:?}");
         self.handler
             .move_fixture(req.plan_id, req.fixture_id.unwrap(), (req.x, req.y));
+    }
+
+    fn align_fixtures(&self, req: AlignFixturesRequest) {
+        log::debug!("align_fixtures {req:?}");
+        self.handler.align_fixtures(
+            req.plan_id,
+            req.direction,
+            req.groups,
+            req.row_gap,
+            req.column_gap,
+        );
     }
 }

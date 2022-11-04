@@ -58,6 +58,30 @@ const MoveFixturesRequest$json = const {
 
 /// Descriptor for `MoveFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List moveFixturesRequestDescriptor = $convert.base64Decode('ChNNb3ZlRml4dHVyZXNSZXF1ZXN0EhcKB3BsYW5faWQYASABKAlSBnBsYW5JZBIMCgF4GAIgASgFUgF4EgwKAXkYAyABKAVSAXk=');
+@$core.Deprecated('Use alignFixturesRequestDescriptor instead')
+const AlignFixturesRequest$json = const {
+  '1': 'AlignFixturesRequest',
+  '2': const [
+    const {'1': 'plan_id', '3': 1, '4': 1, '5': 9, '10': 'planId'},
+    const {'1': 'direction', '3': 2, '4': 1, '5': 14, '6': '.mizer.plan.AlignFixturesRequest.AlignDirection', '10': 'direction'},
+    const {'1': 'groups', '3': 3, '4': 1, '5': 13, '10': 'groups'},
+    const {'1': 'row_gap', '3': 4, '4': 1, '5': 13, '10': 'rowGap'},
+    const {'1': 'column_gap', '3': 5, '4': 1, '5': 13, '10': 'columnGap'},
+  ],
+  '4': const [AlignFixturesRequest_AlignDirection$json],
+};
+
+@$core.Deprecated('Use alignFixturesRequestDescriptor instead')
+const AlignFixturesRequest_AlignDirection$json = const {
+  '1': 'AlignDirection',
+  '2': const [
+    const {'1': 'LeftToRight', '2': 0},
+    const {'1': 'TopToBottom', '2': 1},
+  ],
+};
+
+/// Descriptor for `AlignFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List alignFixturesRequestDescriptor = $convert.base64Decode('ChRBbGlnbkZpeHR1cmVzUmVxdWVzdBIXCgdwbGFuX2lkGAEgASgJUgZwbGFuSWQSTQoJZGlyZWN0aW9uGAIgASgOMi8ubWl6ZXIucGxhbi5BbGlnbkZpeHR1cmVzUmVxdWVzdC5BbGlnbkRpcmVjdGlvblIJZGlyZWN0aW9uEhYKBmdyb3VwcxgDIAEoDVIGZ3JvdXBzEhcKB3Jvd19nYXAYBCABKA1SBnJvd0dhcBIdCgpjb2x1bW5fZ2FwGAUgASgNUgljb2x1bW5HYXAiMgoOQWxpZ25EaXJlY3Rpb24SDwoLTGVmdFRvUmlnaHQQABIPCgtUb3BUb0JvdHRvbRAB');
 @$core.Deprecated('Use moveFixtureRequestDescriptor instead')
 const MoveFixtureRequest$json = const {
   '1': 'MoveFixtureRequest',

@@ -11,6 +11,10 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'fixtures.pb.dart' as $0;
 
+import 'plans.pbenum.dart';
+
+export 'plans.pbenum.dart';
+
 class PlansRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlansRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plan'), createEmptyInstance: create)
     ..hasRequiredFields = false
@@ -268,6 +272,109 @@ class MoveFixturesRequest extends $pb.GeneratedMessage {
   $core.bool hasY() => $_has(2);
   @$pb.TagNumber(3)
   void clearY() => clearField(3);
+}
+
+class AlignFixturesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AlignFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plan'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
+    ..e<AlignFixturesRequest_AlignDirection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'direction', $pb.PbFieldType.OE, defaultOrMaker: AlignFixturesRequest_AlignDirection.LeftToRight, valueOf: AlignFixturesRequest_AlignDirection.valueOf, enumValues: AlignFixturesRequest_AlignDirection.values)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rowGap', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'columnGap', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  AlignFixturesRequest._() : super();
+  factory AlignFixturesRequest({
+    $core.String? planId,
+    AlignFixturesRequest_AlignDirection? direction,
+    $core.int? groups,
+    $core.int? rowGap,
+    $core.int? columnGap,
+  }) {
+    final _result = create();
+    if (planId != null) {
+      _result.planId = planId;
+    }
+    if (direction != null) {
+      _result.direction = direction;
+    }
+    if (groups != null) {
+      _result.groups = groups;
+    }
+    if (rowGap != null) {
+      _result.rowGap = rowGap;
+    }
+    if (columnGap != null) {
+      _result.columnGap = columnGap;
+    }
+    return _result;
+  }
+  factory AlignFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AlignFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AlignFixturesRequest clone() => AlignFixturesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AlignFixturesRequest copyWith(void Function(AlignFixturesRequest) updates) => super.copyWith((message) => updates(message as AlignFixturesRequest)) as AlignFixturesRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AlignFixturesRequest create() => AlignFixturesRequest._();
+  AlignFixturesRequest createEmptyInstance() => create();
+  static $pb.PbList<AlignFixturesRequest> createRepeated() => $pb.PbList<AlignFixturesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AlignFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AlignFixturesRequest>(create);
+  static AlignFixturesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get planId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set planId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPlanId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPlanId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  AlignFixturesRequest_AlignDirection get direction => $_getN(1);
+  @$pb.TagNumber(2)
+  set direction(AlignFixturesRequest_AlignDirection v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDirection() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDirection() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get groups => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set groups($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasGroups() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearGroups() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get rowGap => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set rowGap($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRowGap() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRowGap() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get columnGap => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set columnGap($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasColumnGap() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearColumnGap() => clearField(5);
 }
 
 class MoveFixtureRequest extends $pb.GeneratedMessage {

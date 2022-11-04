@@ -29,6 +29,7 @@ impl<'a> Command<'a> for MoveFixturesInPlanCommand {
                 .iter_mut()
                 .filter(|position| self.fixture_ids.contains(&position.fixture))
             {
+                // TODO: add test checking whether undo works
                 position.x += self.offset.0;
                 position.y += self.offset.1;
                 fixtures.insert(position.fixture, (position.x, position.y));

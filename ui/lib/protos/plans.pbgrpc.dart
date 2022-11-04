@@ -42,6 +42,11 @@ class PlansApiClient extends $grpc.Client {
           '/mizer.plan.PlansApi/MoveFixture',
           ($1.MoveFixtureRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Plans.fromBuffer(value));
+  static final _$alignFixtures =
+      $grpc.ClientMethod<$1.AlignFixturesRequest, $1.Plans>(
+          '/mizer.plan.PlansApi/AlignFixtures',
+          ($1.AlignFixturesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Plans.fromBuffer(value));
 
   PlansApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -76,6 +81,11 @@ class PlansApiClient extends $grpc.Client {
   $grpc.ResponseFuture<$1.Plans> moveFixture($1.MoveFixtureRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$moveFixture, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Plans> alignFixtures($1.AlignFixturesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$alignFixtures, request, options: options);
   }
 }
 
@@ -127,6 +137,14 @@ abstract class PlansApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.MoveFixtureRequest.fromBuffer(value),
         ($1.Plans value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.AlignFixturesRequest, $1.Plans>(
+        'AlignFixtures',
+        alignFixtures_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.AlignFixturesRequest.fromBuffer(value),
+        ($1.Plans value) => value.writeToBuffer()));
   }
 
   $async.Future<$1.Plans> getPlans_Pre(
@@ -159,6 +177,11 @@ abstract class PlansApiServiceBase extends $grpc.Service {
     return moveFixture(call, await request);
   }
 
+  $async.Future<$1.Plans> alignFixtures_Pre($grpc.ServiceCall call,
+      $async.Future<$1.AlignFixturesRequest> request) async {
+    return alignFixtures(call, await request);
+  }
+
   $async.Future<$1.Plans> getPlans(
       $grpc.ServiceCall call, $1.PlansRequest request);
   $async.Future<$1.Plans> addPlan(
@@ -171,4 +194,6 @@ abstract class PlansApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.MoveFixturesRequest request);
   $async.Future<$1.Plans> moveFixture(
       $grpc.ServiceCall call, $1.MoveFixtureRequest request);
+  $async.Future<$1.Plans> alignFixtures(
+      $grpc.ServiceCall call, $1.AlignFixturesRequest request);
 }

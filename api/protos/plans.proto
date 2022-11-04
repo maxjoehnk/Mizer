@@ -11,6 +11,7 @@ service PlansApi {
   rpc RenamePlan (RenamePlanRequest) returns (Plans) {}
   rpc MoveFixtures (MoveFixturesRequest) returns (Plans) {}
   rpc MoveFixture (MoveFixtureRequest) returns (Plans) {}
+  rpc AlignFixtures (AlignFixturesRequest) returns (Plans) {}
 }
 
 message PlansRequest {}
@@ -32,6 +33,19 @@ message MoveFixturesRequest {
   string plan_id = 1;
   int32 x = 2;
   int32 y = 3;
+}
+
+message AlignFixturesRequest {
+  string plan_id = 1;
+  AlignDirection direction = 2;
+  uint32 groups = 3;
+  uint32 row_gap = 4;
+  uint32 column_gap = 5;
+
+  enum AlignDirection {
+    LeftToRight = 0;
+    TopToBottom = 1;
+  }
 }
 
 message MoveFixtureRequest {

@@ -68,4 +68,9 @@ class PlansPluginApi implements PlansApi {
   Future<void> moveFixture(MoveFixtureRequest request) async {
     await channel.invokeMethod("moveFixture", request.writeToBuffer());
   }
+
+  @override
+  Future<void> alignFixtures(AlignFixturesRequest request) async {
+    await channel.invokeMethod("alignFixtures", request.writeToBuffer());
+  }
 }

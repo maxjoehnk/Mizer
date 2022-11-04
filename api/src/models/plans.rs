@@ -904,6 +904,355 @@ impl ::protobuf::reflect::ProtobufValue for MoveFixturesRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AlignFixturesRequest {
+    // message fields
+    pub plan_id: ::std::string::String,
+    pub direction: AlignFixturesRequest_AlignDirection,
+    pub groups: u32,
+    pub row_gap: u32,
+    pub column_gap: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AlignFixturesRequest {
+    fn default() -> &'a AlignFixturesRequest {
+        <AlignFixturesRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AlignFixturesRequest {
+    pub fn new() -> AlignFixturesRequest {
+        ::std::default::Default::default()
+    }
+
+    // string plan_id = 1;
+
+
+    pub fn get_plan_id(&self) -> &str {
+        &self.plan_id
+    }
+    pub fn clear_plan_id(&mut self) {
+        self.plan_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_plan_id(&mut self, v: ::std::string::String) {
+        self.plan_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_plan_id(&mut self) -> &mut ::std::string::String {
+        &mut self.plan_id
+    }
+
+    // Take field
+    pub fn take_plan_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.plan_id, ::std::string::String::new())
+    }
+
+    // .mizer.plan.AlignFixturesRequest.AlignDirection direction = 2;
+
+
+    pub fn get_direction(&self) -> AlignFixturesRequest_AlignDirection {
+        self.direction
+    }
+    pub fn clear_direction(&mut self) {
+        self.direction = AlignFixturesRequest_AlignDirection::LeftToRight;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_direction(&mut self, v: AlignFixturesRequest_AlignDirection) {
+        self.direction = v;
+    }
+
+    // uint32 groups = 3;
+
+
+    pub fn get_groups(&self) -> u32 {
+        self.groups
+    }
+    pub fn clear_groups(&mut self) {
+        self.groups = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_groups(&mut self, v: u32) {
+        self.groups = v;
+    }
+
+    // uint32 row_gap = 4;
+
+
+    pub fn get_row_gap(&self) -> u32 {
+        self.row_gap
+    }
+    pub fn clear_row_gap(&mut self) {
+        self.row_gap = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_row_gap(&mut self, v: u32) {
+        self.row_gap = v;
+    }
+
+    // uint32 column_gap = 5;
+
+
+    pub fn get_column_gap(&self) -> u32 {
+        self.column_gap
+    }
+    pub fn clear_column_gap(&mut self) {
+        self.column_gap = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_column_gap(&mut self, v: u32) {
+        self.column_gap = v;
+    }
+}
+
+impl ::protobuf::Message for AlignFixturesRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.plan_id)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.direction, 2, &mut self.unknown_fields)?
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.groups = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.row_gap = tmp;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.column_gap = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.plan_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.plan_id);
+        }
+        if self.direction != AlignFixturesRequest_AlignDirection::LeftToRight {
+            my_size += ::protobuf::rt::enum_size(2, self.direction);
+        }
+        if self.groups != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.groups, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.row_gap != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.row_gap, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.column_gap != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.column_gap, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.plan_id.is_empty() {
+            os.write_string(1, &self.plan_id)?;
+        }
+        if self.direction != AlignFixturesRequest_AlignDirection::LeftToRight {
+            os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.direction))?;
+        }
+        if self.groups != 0 {
+            os.write_uint32(3, self.groups)?;
+        }
+        if self.row_gap != 0 {
+            os.write_uint32(4, self.row_gap)?;
+        }
+        if self.column_gap != 0 {
+            os.write_uint32(5, self.column_gap)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AlignFixturesRequest {
+        AlignFixturesRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "plan_id",
+                |m: &AlignFixturesRequest| { &m.plan_id },
+                |m: &mut AlignFixturesRequest| { &mut m.plan_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<AlignFixturesRequest_AlignDirection>>(
+                "direction",
+                |m: &AlignFixturesRequest| { &m.direction },
+                |m: &mut AlignFixturesRequest| { &mut m.direction },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "groups",
+                |m: &AlignFixturesRequest| { &m.groups },
+                |m: &mut AlignFixturesRequest| { &mut m.groups },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "row_gap",
+                |m: &AlignFixturesRequest| { &m.row_gap },
+                |m: &mut AlignFixturesRequest| { &mut m.row_gap },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "column_gap",
+                |m: &AlignFixturesRequest| { &m.column_gap },
+                |m: &mut AlignFixturesRequest| { &mut m.column_gap },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AlignFixturesRequest>(
+                "AlignFixturesRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AlignFixturesRequest {
+        static instance: ::protobuf::rt::LazyV2<AlignFixturesRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AlignFixturesRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AlignFixturesRequest {
+    fn clear(&mut self) {
+        self.plan_id.clear();
+        self.direction = AlignFixturesRequest_AlignDirection::LeftToRight;
+        self.groups = 0;
+        self.row_gap = 0;
+        self.column_gap = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AlignFixturesRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AlignFixturesRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum AlignFixturesRequest_AlignDirection {
+    LeftToRight = 0,
+    TopToBottom = 1,
+}
+
+impl ::protobuf::ProtobufEnum for AlignFixturesRequest_AlignDirection {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<AlignFixturesRequest_AlignDirection> {
+        match value {
+            0 => ::std::option::Option::Some(AlignFixturesRequest_AlignDirection::LeftToRight),
+            1 => ::std::option::Option::Some(AlignFixturesRequest_AlignDirection::TopToBottom),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [AlignFixturesRequest_AlignDirection] = &[
+            AlignFixturesRequest_AlignDirection::LeftToRight,
+            AlignFixturesRequest_AlignDirection::TopToBottom,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<AlignFixturesRequest_AlignDirection>("AlignFixturesRequest.AlignDirection", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for AlignFixturesRequest_AlignDirection {
+}
+
+impl ::std::default::Default for AlignFixturesRequest_AlignDirection {
+    fn default() -> Self {
+        AlignFixturesRequest_AlignDirection::LeftToRight
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AlignFixturesRequest_AlignDirection {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct MoveFixtureRequest {
     // message fields
     pub plan_id: ::std::string::String,
@@ -1825,24 +2174,32 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \"7\n\x11RenamePlanRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\
     \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"J\n\x13MoveFixturesRequest\
     \x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\
-    \x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x83\
-    \x01\n\x12MoveFixtureRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
-    \x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.F\
-    ixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\n\
-    \x01y\x18\x04\x20\x01(\x05R\x01y\"/\n\x05Plans\x12&\n\x05plans\x18\x01\
+    \x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x82\
+    \x02\n\x14AlignFixturesRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
+    \x06planId\x12M\n\tdirection\x18\x02\x20\x01(\x0e2/.mizer.plan.AlignFixt\
+    uresRequest.AlignDirectionR\tdirection\x12\x16\n\x06groups\x18\x03\x20\
+    \x01(\rR\x06groups\x12\x17\n\x07row_gap\x18\x04\x20\x01(\rR\x06rowGap\
+    \x12\x1d\n\ncolumn_gap\x18\x05\x20\x01(\rR\tcolumnGap\"2\n\x0eAlignDirec\
+    tion\x12\x0f\n\x0bLeftToRight\x10\0\x12\x0f\n\x0bTopToBottom\x10\x01\"\
+    \x83\x01\n\x12MoveFixtureRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\t\
+    R\x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.\
+    FixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\
+    \n\x01y\x18\x04\x20\x01(\x05R\x01y\"/\n\x05Plans\x12&\n\x05plans\x18\x01\
     \x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"U\n\x04Plan\x12\x12\n\x04n\
     ame\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\x03(\x0b2\
     \x1b.mizer.plan.FixturePositionR\tpositions\"X\n\x0fFixturePosition\x12)\
     \n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.FixtureIdR\x02id\x12\
     \x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\
-    \x05R\x01y2\x8f\x03\n\x08PlansApi\x129\n\x08GetPlans\x12\x18.mizer.plan.\
+    \x05R\x01y2\xd7\x03\n\x08PlansApi\x129\n\x08GetPlans\x12\x18.mizer.plan.\
     PlansRequest\x1a\x11.mizer.plan.Plans\"\0\x12:\n\x07AddPlan\x12\x1a.mize\
     r.plan.AddPlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\n\nRemovePlan\
     \x12\x1d.mizer.plan.RemovePlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\
     \n\nRenamePlan\x12\x1d.mizer.plan.RenamePlanRequest\x1a\x11.mizer.plan.P\
     lans\"\0\x12D\n\x0cMoveFixtures\x12\x1f.mizer.plan.MoveFixturesRequest\
     \x1a\x11.mizer.plan.Plans\"\0\x12B\n\x0bMoveFixture\x12\x1e.mizer.plan.M\
-    oveFixtureRequest\x1a\x11.mizer.plan.Plans\"\0b\x06proto3\
+    oveFixtureRequest\x1a\x11.mizer.plan.Plans\"\0\x12F\n\rAlignFixtures\x12\
+    \x20.mizer.plan.AlignFixturesRequest\x1a\x11.mizer.plan.Plans\"\0b\x06pr\
+    oto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

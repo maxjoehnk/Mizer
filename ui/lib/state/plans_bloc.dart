@@ -48,6 +48,17 @@ class MoveFixture implements PlansEvent {
   MoveFixture({ required this.id, required this.x, required this.y });
 }
 
+class AlignFixtures implements PlansEvent {
+  final AlignFixturesRequest request;
+
+  AlignFixtures({ required AlignFixturesRequest_AlignDirection direction, required int groups, required int rowGap, required int columnGap }) : request = AlignFixturesRequest(
+    direction: direction,
+    groups: groups,
+    rowGap: rowGap,
+    columnGap: columnGap,
+  );
+}
+
 class PlansState {
   final int tabIndex;
   final List<Plan> plans;
@@ -109,6 +120,13 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
     if (event is MoveFixture) {
       var plan = state.plans[state.tabIndex];
       await api.moveFixture(MoveFixtureRequest(planId: plan.name, fixtureId: event.id, x: event.x.round(), y: event.y.round()));
+      var plans = await api.getPlans();
+      yield state.copyWith(plans: plans.plans);
+    }
+    if (event is AlignFixtures) {
+      var plan = state.plans[state.tabIndex];
+      event.request.planId = plan.name;
+      await api.alignFixtures(event.request);
       var plans = await api.getPlans();
       yield state.copyWith(plans: plans.plans);
     }

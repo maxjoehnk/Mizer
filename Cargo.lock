@@ -3900,6 +3900,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "dashmap 4.0.2",
+ "itertools",
  "log",
  "mizer-commander",
  "mizer-fixtures",

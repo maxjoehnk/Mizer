@@ -10,6 +10,7 @@ abstract class PlansApi {
   Future<void> addFixtureSelection(String planId);
   Future<void> moveSelection(String planId, double dx, double dy);
   Future<void> moveFixture(MoveFixtureRequest request);
+  Future<void> alignFixtures(AlignFixturesRequest request);
 
   Future<FixturesRefPointer?> getFixturesPointer();
 }

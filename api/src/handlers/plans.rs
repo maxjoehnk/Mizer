@@ -84,4 +84,26 @@ impl<R: RuntimeApi> PlansHandler<R> {
             })
             .unwrap();
     }
+
+    pub fn align_fixtures(
+        &self,
+        plan_id: String,
+        direction: AlignFixturesRequest_AlignDirection,
+        groups: u32,
+        row_gap: u32,
+        column_gap: u32,
+    ) {
+        let view = self.fixture_manager.get_programmer().view();
+        let state = view.read();
+        self.runtime
+            .run_command(AlignFixturesInPlanCommand {
+                id: plan_id,
+                fixture_ids: state.all_fixtures(),
+                direction: direction.into(),
+                groups,
+                row_gap,
+                column_gap,
+            })
+            .unwrap();
+    }
 }

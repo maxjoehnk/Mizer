@@ -19,4 +19,4 @@ tracy-client = { version = "0.13", optional = true, features = ["sampling", "cod
 serde = { version = "1", features = ["derive"] }
 
 [dev-dependencies]
-test-case = "1.1"
+test-case = "2.2"

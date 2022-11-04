@@ -13,6 +13,6 @@ mizer-gamepads = { path = "./gamepads" }
 mizer-module = { path = "../../../runtime/module" }
 mizer-processing = { path = "../../../runtime/processing" }
 tokio = { version = "1.16", features = ["sync", "rt"] }
-tokio-stream = "0.1.8"
+tokio-stream = "0.1"
 futures = "0.3"
 derive_more = "0.99"

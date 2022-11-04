@@ -134,12 +134,12 @@ futures = "0.3"
 pinboard = "2.1"
 dashmap = "4"
 flume = "0.10"
-profiling = "1.0.6"
+profiling = "1.0"
 rayon = "1.5"
 serde = { version = "1", features = ["rc"] }
 
 [dev-dependencies]
-test-case = "1.2"
+test-case = "2.2"
 criterion = { version = "0.3", features = ["html_reports"] }
 
 [[bench]]

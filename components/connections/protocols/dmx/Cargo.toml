@@ -13,6 +13,6 @@ mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }
 profiling = "1"
-enum_dispatch = "0.3.7"
+enum_dispatch = "0.3"
 tracing = "0.1"
 serde = { version = "1", features = ["derive"] }

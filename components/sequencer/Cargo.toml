@@ -23,7 +23,7 @@ tracing = "0.1"
 indexmap = "1.8"
 
 [dev-dependencies]
-test-case = "1"
+test-case = "2.2"
 mizer-util = { path = "../../util", features = ["test"] }
 mockall = { version = "0.11" }
 mockall_double = "0.2"

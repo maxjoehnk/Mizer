@@ -35,5 +35,5 @@ derive_more = "0.99"
 [dev-dependencies]
 mizer-node = { path = "../node", features = ["test"] }
 mizer-util = { path = "../../../util", features = ["test"] }
-test-case = "1.2"
+test-case = "2.2"
 insta = "1.7"

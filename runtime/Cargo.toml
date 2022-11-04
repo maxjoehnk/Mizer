@@ -30,7 +30,7 @@ tracing = "0.1"
 tracing-unwrap = "0.9"
 
 [dev-dependencies]
-env_logger = "0.7"
+env_logger = "0.9"
 insta = { version = "1.6", features = ["backtrace"] }
-test-case = "1.1"
+test-case = "2.2"
 mizer-util = { path = "../util", features = ["test"] }

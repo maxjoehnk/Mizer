@@ -17,4 +17,4 @@ mizer-injector = { path = "../../injector" }
 downcast = "0.11"
 
 [dev-dependencies]
-test-case = "1.2"
+test-case = "2.2"

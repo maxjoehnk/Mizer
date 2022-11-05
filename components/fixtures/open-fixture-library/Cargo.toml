@@ -15,4 +15,4 @@ mizer-util = { path = "../../../util" }
 base64 = "0.13"
 
 [build-dependencies]
-ureq = "2.4"
+ureq = "2.5"

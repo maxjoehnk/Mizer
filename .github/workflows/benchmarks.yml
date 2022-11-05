@@ -5,6 +5,7 @@ name: Benchmarks
 
 jobs:
   benchmarks:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Install native dependencies

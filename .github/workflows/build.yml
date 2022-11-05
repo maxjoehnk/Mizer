@@ -18,7 +18,7 @@ jobs:
           mkdir -p "$HOME/.local/bin"
           cp bin/protoc "$HOME/.local/bin/"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: Install build dependencies
         run: brew install protobuf gstreamer gst-plugins-base gst-plugins-bad
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -88,7 +88,7 @@ jobs:
           # shellcheck disable=SC2028
           echo "C:\gtk-build\gtk\x64\release\bin" >> "$GITHUB_PATH"
         shell: bash
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -144,7 +144,7 @@ jobs:
 
       - name: checkout gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: wingtk/gvsbuild
           ref: ${{ env.gvsbuildref }}

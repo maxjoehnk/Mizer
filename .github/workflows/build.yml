@@ -42,6 +42,8 @@ jobs:
           path: artifact
           if-no-files-found: error
   build-macos:
+    # Build again for macos when stable
+    if: false
     runs-on: macos-latest
     steps:
       - name: Install build dependencies

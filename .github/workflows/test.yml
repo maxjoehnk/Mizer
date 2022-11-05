@@ -36,7 +36,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: stable
-      - uses: Swatinem/rust-cache@v1
+#      - uses: Swatinem/rust-cache@v1
       - name: Generate FFI bindings
         run: make generate_bindings
         working-directory: ui

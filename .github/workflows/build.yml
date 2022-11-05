@@ -27,7 +27,7 @@ jobs:
           channel: stable
       - name: Build Headless
         run: make build-headless
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: linux-headless
           path: target/release/mizer
@@ -36,7 +36,7 @@ jobs:
         run: make build-release
       - name: Package
         run: make package
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: linux-full
           path: artifact
@@ -59,7 +59,7 @@ jobs:
         run: make build-release
       - name: Package
         run: make package
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: macos-full
           path: artifact
@@ -100,7 +100,7 @@ jobs:
         working-directory: ui
       - name: Build
         run: make build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: windows-full
           path: |

@@ -30,9 +30,9 @@ fn read_gobo_image(path: &Path, filename: &str) -> Option<GoboImage> {
         return None;
     }
     if filename.ends_with(".svg") {
-        read_svg(&path).ok()
+        read_svg(path).ok()
     } else {
-        read_raster(&path).ok()
+        read_raster(path).ok()
     }
 }
 

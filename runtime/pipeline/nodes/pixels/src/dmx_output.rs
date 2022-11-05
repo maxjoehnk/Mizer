@@ -7,7 +7,7 @@ use mizer_util::ConvertBytes;
 const DMX_CHANNELS: u16 = 512;
 const CHANNELS_PER_PIXEL: u64 = 3; // RGB, add configuration later
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PixelDmxNode {
     pub width: u64,
     pub height: u64,

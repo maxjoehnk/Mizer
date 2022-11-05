@@ -128,7 +128,7 @@ impl
         Self {
             id: SingularPtrField::some(id.into()),
             value: Some(Preset_oneof_value::fader(preset.value)),
-            _label: preset.label.map(|label| Preset_oneof__label::label(label)),
+            _label: preset.label.map(Preset_oneof__label::label),
             ..Default::default()
         }
     }
@@ -149,7 +149,7 @@ impl
         Self {
             id: SingularPtrField::some(id.into()),
             value: Some(Preset_oneof_value::color(preset.value.into())),
-            _label: preset.label.map(|label| Preset_oneof__label::label(label)),
+            _label: preset.label.map(Preset_oneof__label::label),
             ..Default::default()
         }
     }
@@ -181,7 +181,7 @@ impl
         Self {
             id: SingularPtrField::some(id.into()),
             value: Some(Preset_oneof_value::position(preset.value.into())),
-            _label: preset.label.map(|label| Preset_oneof__label::label(label)),
+            _label: preset.label.map(Preset_oneof__label::label),
             ..Default::default()
         }
     }

@@ -40,7 +40,7 @@ impl MqttConnectionManager {
     }
 
     pub fn add_connection(&mut self, id: String, address: MqttAddress) -> anyhow::Result<()> {
-        let (connection, background_client) = MqttConnection::new(address.clone())?;
+        let (connection, background_client) = MqttConnection::new(address)?;
         self.connections.insert(id, connection);
         tokio::spawn(background_client.run());
 

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct DataToNumberNode;
 
 impl PipelineNode for DataToNumberNode {
@@ -43,7 +43,7 @@ impl PipelineNode for DataToNumberNode {
 impl ProcessingNode for DataToNumberNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let data = context.read_port::<_, StructuredData>("value");
         let value = match data {
             Some(StructuredData::Float(value)) => Some(value),

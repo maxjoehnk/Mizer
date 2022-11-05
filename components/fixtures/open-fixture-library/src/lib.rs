@@ -101,7 +101,7 @@ trait SlugConverter {
 
 impl SlugConverter for String {
     fn to_slug(&self) -> String {
-        self.to_lowercase().replace(" ", "-").replace("*", "-")
+        self.to_lowercase().replace(' ', "-").replace('*', "-")
     }
 }
 

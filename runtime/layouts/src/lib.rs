@@ -22,13 +22,13 @@ pub struct ControlConfig {
     pub decoration: ControlDecorations,
 }
 
-#[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Hash)]
+#[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ControlPosition {
     pub x: u64,
     pub y: u64,
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Hash)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ControlSize {
     pub width: u64,
     pub height: u64,

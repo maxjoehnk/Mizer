@@ -126,7 +126,7 @@ pub trait Clock {
     fn set_state(&mut self, state: ClockState);
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ClockState {
     Stopped,
     Paused,
@@ -140,7 +140,7 @@ pub struct ClockSnapshot {
     pub state: ClockState,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Timecode {
     pub hours: u64,
     pub minutes: u64,

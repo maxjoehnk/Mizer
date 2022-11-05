@@ -68,7 +68,7 @@ pub struct CapabilityType {
     pub color2: Option<String>,
 }
 
-#[derive(Debug, Clone, PartialEq, XmlRead)]
+#[derive(Debug, Clone, PartialEq, Eq, XmlRead)]
 #[xml(tag = "Alias")]
 pub struct AliasType {
     #[xml(attr = "Mode")]
@@ -110,7 +110,7 @@ pub struct ModeChannelType {
     pub channel: HtmlEntityString,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, XmlRead)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, XmlRead)]
 #[xml(tag = "Group")]
 pub struct GroupType {
     #[xml(attr = "Byte")]

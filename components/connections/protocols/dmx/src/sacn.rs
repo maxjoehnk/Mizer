@@ -12,10 +12,16 @@ pub struct SacnOutput {
 
 impl SacnOutput {
     pub fn new() -> Self {
-        SacnOutput {
+        Self {
             source: DmxSource::new("mizer").unwrap(),
             buffer: Default::default(),
         }
+    }
+}
+
+impl Default for SacnOutput {
+    fn default() -> Self {
+        Self::new()
     }
 }
 

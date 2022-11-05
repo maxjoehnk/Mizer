@@ -2,7 +2,7 @@ use crate::PreviewType;
 use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct NodeDetails {
     pub name: String,
     pub preview_type: PreviewType,

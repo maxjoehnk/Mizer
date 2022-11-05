@@ -4,7 +4,7 @@ use mizer_node::*;
 use mizer_protocol_mqtt::MqttConnectionManager;
 use mizer_util::StructuredData;
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct MqttOutputNode {
     pub path: String,
     pub connection: String,

@@ -33,15 +33,14 @@ impl std::fmt::Debug for MidiDeviceIdentifier {
     }
 }
 
+#[derive(Default)]
 pub struct MidiDeviceProvider {
     profiles: Vec<DeviceProfile>,
 }
 
 impl MidiDeviceProvider {
     pub fn new() -> Self {
-        MidiDeviceProvider {
-            profiles: Vec::new(),
-        }
+        Self::default()
     }
 
     pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {

@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FaderNode {}
 
 impl PipelineNode for FaderNode {

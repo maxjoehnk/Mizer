@@ -430,7 +430,7 @@ impl IChannelType for FixtureControlChannel {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SubFixtureControlChannel {
     /// Fixture control maps to one dmx channel
     Channel(String),
@@ -448,7 +448,7 @@ impl IChannelType for SubFixtureControlChannel {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ColorGroup<TChannel> {
     pub red: TChannel,
     pub green: TChannel,
@@ -465,8 +465,8 @@ pub struct ColorGroupBuilder<TChannel> {
     white: Option<TChannel>,
 }
 
-impl<TChannel> ColorGroupBuilder<TChannel> {
-    pub fn new() -> Self {
+impl<TChannel> Default for ColorGroupBuilder<TChannel> {
+    fn default() -> Self {
         Self {
             red: None,
             green: None,
@@ -474,6 +474,12 @@ impl<TChannel> ColorGroupBuilder<TChannel> {
             amber: None,
             white: None,
         }
+    }
+}
+
+impl<TChannel> ColorGroupBuilder<TChannel> {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn red(&mut self, channel: TChannel) {
@@ -549,7 +555,7 @@ pub struct Gobo {
     pub image: Option<GoboImage>,
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Eq)]
 pub enum GoboImage {
     Svg(String),
     Raster(Box<Vec<u8>>),
@@ -564,7 +570,7 @@ impl std::fmt::Debug for GoboImage {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct GenericControl<TChannel> {
     pub label: String,
     pub channel: TChannel,
@@ -770,7 +776,7 @@ impl FixtureChannelDefinition {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ChannelResolution {
     /// 8 Bit
     ///

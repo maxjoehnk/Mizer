@@ -32,7 +32,7 @@ impl PortMetadata {
 }
 
 // TODO: add passthrough/bidirectional support
-#[derive(Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
 pub enum PortDirection {
     Input,
     Output,
@@ -59,10 +59,6 @@ impl TogglePort for bool {
     }
 
     fn from_value(value: f64) -> Self {
-        if value > 0f64 {
-            true
-        } else {
-            false
-        }
+        value > 0f64
     }
 }

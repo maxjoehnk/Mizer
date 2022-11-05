@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 const CALL_PORT: &str = "Call";
 const ACTIVE_PORT: &str = "Active";
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct GroupNode {
     pub id: u32,
 }

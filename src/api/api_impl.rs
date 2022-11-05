@@ -224,7 +224,7 @@ impl RuntimeApi for Api {
         if refresh_fixture_libraries {
             let (tx, rx) = flume::bounded(1);
             self.sender.send(ApiCommand::ReloadFixtureLibraries(
-                settings_manager.settings.paths.fixture_libraries.clone(),
+                settings_manager.settings.paths.fixture_libraries,
                 tx,
             ))?;
 

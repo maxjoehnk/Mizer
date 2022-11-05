@@ -13,7 +13,7 @@ pub struct ColorMixer {
 impl ColorMixer {
     pub fn new(virtual_dimmer: bool) -> Self {
         Self {
-            virtual_dimmer: virtual_dimmer.then(|| 0f64),
+            virtual_dimmer: virtual_dimmer.then_some(0f64),
             ..Default::default()
         }
     }

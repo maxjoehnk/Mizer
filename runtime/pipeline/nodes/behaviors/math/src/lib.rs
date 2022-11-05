@@ -1,4 +1,3 @@
-use mizer_node::edge::Edge;
 use mizer_node::{
     NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
     PortType, PreviewType, ProcessingNode,
@@ -9,7 +8,7 @@ const LHS_INPUT: &str = "LHS";
 const RHS_INPUT: &str = "RHS";
 const VALUE_OUTPUT: &str = "Value";
 
-#[derive(Default, Clone, Debug, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
 pub struct MathNode {
     pub mode: MathMode,
 }

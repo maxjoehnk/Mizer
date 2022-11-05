@@ -4,7 +4,7 @@ use mizer_node::*;
 use mizer_protocol_laser::ilda::IldaMediaReader;
 use mizer_protocol_laser::LaserFrame;
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct IldaFileNode {
     pub file: String,
 }

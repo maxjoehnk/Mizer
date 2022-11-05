@@ -1,7 +1,7 @@
 use mizer_node::{PortId, PortType};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub enum OscArgumentType {
     Int,
@@ -36,20 +36,13 @@ impl OscArgumentType {
     }
 
     pub(crate) fn is_numeric(&self) -> bool {
-        match self {
-            Self::Int => true,
-            Self::Float => true,
-            Self::Long => true,
-            Self::Double => true,
-            Self::Bool => true,
-            _ => false,
-        }
+        matches!(
+            self,
+            Self::Int | Self::Float | Self::Long | Self::Double | Self::Bool
+        )
     }
 
     pub(crate) fn is_color(&self) -> bool {
-        match self {
-            Self::Color => true,
-            _ => false,
-        }
+        matches!(self, Self::Color)
     }
 }

@@ -31,7 +31,7 @@ impl Default for PatternState {
     }
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PixelPatternGeneratorNode {
     pub pattern: Pattern,
 }

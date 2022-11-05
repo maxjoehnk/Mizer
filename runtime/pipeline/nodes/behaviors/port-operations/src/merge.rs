@@ -1,7 +1,7 @@
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq)]
+#[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 pub struct MergeNode {
     pub mode: MergeMode,
 }

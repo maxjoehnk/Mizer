@@ -32,7 +32,7 @@ pub enum GamepadControl {
     RightStick,
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct GamepadNode {
     #[serde(rename = "device")]
     pub device_id: String,

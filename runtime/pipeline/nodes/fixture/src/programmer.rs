@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ProgrammerNode;
 
 impl PipelineNode for ProgrammerNode {

@@ -115,35 +115,35 @@ impl FixtureControls {
         fixture_controls: mizer_fixtures::definition::FixtureControls<TChannel>,
     ) -> Vec<Self> {
         let mut controls = Vec::new();
-        if let Some(_) = fixture_controls.intensity {
+        if fixture_controls.intensity.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Intensity);
             controls.push(FixtureControls::fader(FixtureControl::INTENSITY, value));
         }
-        if let Some(_) = fixture_controls.shutter {
+        if fixture_controls.shutter.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Shutter);
             controls.push(FixtureControls::fader(FixtureControl::SHUTTER, value));
         }
-        if let Some(_) = fixture_controls.iris {
+        if fixture_controls.iris.is_some() {
             let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Iris);
             controls.push(FixtureControls::fader(FixtureControl::IRIS, value));
         }
-        if let Some(_) = fixture_controls.zoom {
+        if fixture_controls.zoom.is_some() {
             let value = fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Zoom);
             controls.push(FixtureControls::fader(FixtureControl::ZOOM, value));
         }
-        if let Some(_) = fixture_controls.frost {
+        if fixture_controls.frost.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Frost);
             controls.push(FixtureControls::fader(FixtureControl::FROST, value));
         }
-        if let Some(_) = fixture_controls.prism {
+        if fixture_controls.prism.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Prism);
             controls.push(FixtureControls::fader(FixtureControl::PRISM, value));
         }
-        if let Some(_) = fixture_controls.focus {
+        if fixture_controls.focus.is_some() {
             let value =
                 fixture.read_control(mizer_fixtures::definition::FixtureFaderControl::Focus);
             controls.push(FixtureControls::fader(FixtureControl::FOCUS, value));
@@ -168,7 +168,7 @@ impl FixtureControls {
                 ..Default::default()
             });
         }
-        if let Some(_) = fixture_controls.color_mixer {
+        if fixture_controls.color_mixer.is_some() {
             controls.push(FixtureControls {
                 control: FixtureControl::COLOR_MIXER,
                 value: Some(FixtureControls_oneof_value::color_mixer(

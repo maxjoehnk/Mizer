@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::edge::Edge;
 use mizer_node::*;
 
-#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ButtonNode {
     #[serde(default)]
     pub toggle: bool,

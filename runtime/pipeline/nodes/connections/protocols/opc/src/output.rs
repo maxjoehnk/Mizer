@@ -8,7 +8,7 @@ use mizer_node::*;
 
 use crate::protocol::SetColors;
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OpcOutputNode {
     pub host: String,
     #[serde(default = "default_port")]

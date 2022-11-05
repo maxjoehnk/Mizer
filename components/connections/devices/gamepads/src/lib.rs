@@ -42,6 +42,8 @@ pub struct GamepadDiscovery {
 }
 
 impl GamepadDiscovery {
+    // As this will spawn a background thread initializing a new instance of this struct should be explicit.
+    #[allow(clippy::new_without_default)]
     pub fn new() -> Self {
         let (sender, receiver) = unbounded();
         std::thread::spawn(move || {
@@ -151,19 +153,15 @@ impl GamepadState {
     }
 
     pub fn is_button_pressed(&self, button: Button) -> Option<bool> {
-        if let Some(code) = self.button_codes.get(&button) {
-            Some(self.state.is_pressed(*code))
-        } else {
-            None
-        }
+        self.button_codes
+            .get(&button)
+            .map(|code| self.state.is_pressed(*code))
     }
 
     pub fn axis_value(&self, axis: Axis) -> Option<f64> {
-        if let Some(code) = self.axis_codes.get(&axis) {
-            Some(self.state.value(*code) as f64)
-        } else {
-            None
-        }
+        self.axis_codes
+            .get(&axis)
+            .map(|code| self.state.value(*code) as f64)
     }
 }
 

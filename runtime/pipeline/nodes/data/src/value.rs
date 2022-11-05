@@ -5,7 +5,7 @@ use mizer_util::StructuredData;
 
 const VALUE_PORT: &str = "value";
 
-#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ValueNode {
     pub value: String,
 }

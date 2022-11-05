@@ -13,7 +13,7 @@ pub struct Plan {
     pub fixtures: Vec<FixturePosition>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FixturePosition {
     pub fixture: FixtureId,
     pub x: i32,

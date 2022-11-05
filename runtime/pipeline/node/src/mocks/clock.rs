@@ -26,7 +26,7 @@ struct ClockMock {
 
 impl ClockMock {
     fn call(&self) -> ClockFrame {
-        self.value.clone()
+        self.value
     }
 }
 

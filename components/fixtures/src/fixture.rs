@@ -23,19 +23,10 @@ pub struct Fixture {
     pub configuration: FixtureConfiguration,
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 pub struct FixtureConfiguration {
     pub invert_pan: bool,
     pub invert_tilt: bool,
-}
-
-impl Default for FixtureConfiguration {
-    fn default() -> Self {
-        Self {
-            invert_pan: false,
-            invert_tilt: false,
-        }
-    }
 }
 
 impl FixtureConfiguration {
@@ -151,6 +142,7 @@ impl Fixture {
                     ChannelResolution::Fine(coarse, fine) => {
                         let value = convert_value_16bit(*value);
                         let coarse_value = (value >> 8) & 0xff;
+                        #[allow(clippy::identity_op)]
                         let fine_value = (value >> 0) & 0xff;
                         let coarse_channel = base_channel + coarse as usize;
                         let fine_channel = base_channel + fine as usize;
@@ -161,6 +153,7 @@ impl Fixture {
                         let value = convert_value_24bit(*value);
                         let coarse_value = (value >> 16) & 0xff;
                         let fine_value = (value >> 8) & 0xff;
+                        #[allow(clippy::identity_op)]
                         let finest_value = (value >> 0) & 0xff;
                         let coarse_channel = base_channel + coarse as usize;
                         let fine_channel = base_channel + fine as usize;

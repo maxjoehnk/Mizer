@@ -28,9 +28,8 @@ impl DeviceProfile {
 
     pub fn get_control(&self, page: &str, control: &str) -> Option<Control> {
         let page = self.pages.iter().find(|p| p.name == page);
-        let control = page.and_then(|page| page.all_controls().find(|c| c.id == control).cloned());
 
-        control
+        page.and_then(|page| page.all_controls().find(|c| c.id == control).cloned())
     }
 }
 
@@ -178,5 +177,5 @@ impl Control {
 }
 
 fn to_id(name: &str) -> String {
-    name.replace(" ", "-").to_lowercase()
+    name.replace(' ', "-").to_lowercase()
 }

@@ -68,10 +68,6 @@ impl PipelineNode for OscillatorNode {
         }
     }
 
-    fn node_type(&self) -> NodeType {
-        NodeType::Oscillator
-    }
-
     fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
         (port == "value").then(|| PortMetadata {
             port_type: PortType::Single,
@@ -89,6 +85,10 @@ impl PipelineNode for OscillatorNode {
                 ..Default::default()
             },
         )]
+    }
+
+    fn node_type(&self) -> NodeType {
+        NodeType::Oscillator
     }
 }
 
@@ -155,9 +155,8 @@ impl OscillatorNode {
                 let frame = self.get_frame(beat);
                 let high = self.max;
                 let low = self.min;
-                let value = ((high - low) / self.ratio) * frame + low;
 
-                value
+                ((high - low) / self.ratio) * frame + low
             }
         }
     }

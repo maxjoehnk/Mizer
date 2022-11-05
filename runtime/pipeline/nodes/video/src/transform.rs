@@ -6,7 +6,7 @@ use mizer_node::*;
 
 use crate::{GstreamerNode, PIPELINE};
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 pub struct VideoTransformNode;
 
 pub struct VideoTransformState {

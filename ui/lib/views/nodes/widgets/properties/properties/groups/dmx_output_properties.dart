@@ -41,7 +41,7 @@ class _DmxOutputPropertiesState extends State<DmxOutputProperties> {
           onUpdate: _updateUniverse),
       NumberField(
           label: "Channel",
-          value: state.channel,
+          value: state.channel + 1,
           min: 1,
           max: 512,
           fractions: false,
@@ -60,7 +60,7 @@ class _DmxOutputPropertiesState extends State<DmxOutputProperties> {
   void _updateChannel(num channel) {
     log("_updateChannel $channel", name: "DmxOutputProperties");
     setState(() {
-      state.channel = channel.toInt();
+      state.channel = channel.toInt() - 1;
       widget.onUpdate(state);
     });
   }

@@ -29,6 +29,11 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
+  Future<void> unselectFixtures(List<FixtureId> fixtureIds) async {
+    await channel.invokeMethod("unselectFixtures", UnselectFixturesRequest(fixtures: fixtureIds).writeToBuffer());
+  }
+
+  @override
   Future<void> clear() async {
     await channel.invokeMethod("clear");
   }
@@ -112,4 +117,5 @@ class ProgrammerPluginApi implements ProgrammerApi {
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
+
 }

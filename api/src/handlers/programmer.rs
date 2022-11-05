@@ -43,6 +43,13 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    pub fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {
+        log::debug!("unselect_fixtures {:?}", fixture_ids);
+        let mut programmer = self.fixture_manager.get_programmer();
+        programmer.unselect_fixtures(fixture_ids.into_iter().map(|id| id.into()).collect());
+    }
+
+    #[tracing::instrument(skip(self))]
     pub fn select_group(&self, group_id: u32) {
         log::debug!("select_group {:?}", group_id);
         if let Some(group) = self.fixture_manager.get_group(group_id) {

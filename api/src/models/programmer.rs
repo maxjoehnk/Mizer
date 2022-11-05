@@ -2074,6 +2074,294 @@ impl ::protobuf::reflect::ProtobufValue for SelectFixturesResponse {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct UnselectFixturesRequest {
+    // message fields
+    pub fixtures: ::protobuf::RepeatedField<super::fixtures::FixtureId>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UnselectFixturesRequest {
+    fn default() -> &'a UnselectFixturesRequest {
+        <UnselectFixturesRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UnselectFixturesRequest {
+    pub fn new() -> UnselectFixturesRequest {
+        ::std::default::Default::default()
+    }
+
+    // repeated .mizer.fixtures.FixtureId fixtures = 1;
+
+
+    pub fn get_fixtures(&self) -> &[super::fixtures::FixtureId] {
+        &self.fixtures
+    }
+    pub fn clear_fixtures(&mut self) {
+        self.fixtures.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_fixtures(&mut self, v: ::protobuf::RepeatedField<super::fixtures::FixtureId>) {
+        self.fixtures = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_fixtures(&mut self) -> &mut ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        &mut self.fixtures
+    }
+
+    // Take field
+    pub fn take_fixtures(&mut self) -> ::protobuf::RepeatedField<super::fixtures::FixtureId> {
+        ::std::mem::replace(&mut self.fixtures, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for UnselectFixturesRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.fixtures {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.fixtures)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.fixtures {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.fixtures {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UnselectFixturesRequest {
+        UnselectFixturesRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<super::fixtures::FixtureId>>(
+                "fixtures",
+                |m: &UnselectFixturesRequest| { &m.fixtures },
+                |m: &mut UnselectFixturesRequest| { &mut m.fixtures },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UnselectFixturesRequest>(
+                "UnselectFixturesRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UnselectFixturesRequest {
+        static instance: ::protobuf::rt::LazyV2<UnselectFixturesRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UnselectFixturesRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for UnselectFixturesRequest {
+    fn clear(&mut self) {
+        self.fixtures.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UnselectFixturesRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UnselectFixturesRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct UnselectFixturesResponse {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UnselectFixturesResponse {
+    fn default() -> &'a UnselectFixturesResponse {
+        <UnselectFixturesResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UnselectFixturesResponse {
+    pub fn new() -> UnselectFixturesResponse {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for UnselectFixturesResponse {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UnselectFixturesResponse {
+        UnselectFixturesResponse::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UnselectFixturesResponse>(
+                "UnselectFixturesResponse",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UnselectFixturesResponse {
+        static instance: ::protobuf::rt::LazyV2<UnselectFixturesResponse> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UnselectFixturesResponse::new)
+    }
+}
+
+impl ::protobuf::Clear for UnselectFixturesResponse {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UnselectFixturesResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UnselectFixturesResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct ClearRequest {
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
@@ -6050,63 +6338,66 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05val\
     ue\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\
     \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
-    ures\"\x18\n\x16SelectFixturesResponse\"\x0e\n\x0cClearRequest\"\x0f\n\r\
-    ClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\x18\x01\x20\
-    \x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\n\x0cStoreR\
-    equest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\n\
-    store_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\ts\
-    toreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\
-    \x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse\"\x10\n\x0ePresetsRequ\
-    est\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
-    \x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.programmer.PresetId.PresetT\
-    ypeR\x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\x12\x0b\n\x07Shut\
-    ter\x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Position\x10\x03\"\xdf\
-    \x01\n\x07Presets\x12:\n\x0bintensities\x18\x01\x20\x03(\x0b2\x18.mizer.\
-    programmer.PresetR\x0bintensities\x122\n\x07shutter\x18\x02\x20\x03(\x0b\
-    2\x18.mizer.programmer.PresetR\x07shutter\x12.\n\x05color\x18\x03\x20\
-    \x03(\x0b2\x18.mizer.programmer.PresetR\x05color\x124\n\x08position\x18\
-    \x04\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x08position\"\xea\x02\n\
-    \x06Preset\x12*\n\x02id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.Prese\
-    tIdR\x02id\x12\x19\n\x05label\x18\x02\x20\x01(\tH\x01R\x05label\x88\x01\
-    \x01\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fader\x126\n\x05colo\
-    r\x18\x04\x20\x01(\x0b2\x1e.mizer.programmer.Preset.ColorH\0R\x05color\
-    \x12?\n\x08position\x18\x05\x20\x01(\x0b2!.mizer.programmer.Preset.Posit\
-    ionH\0R\x08position\x1aC\n\x05Color\x12\x10\n\x03red\x18\x01\x20\x01(\
-    \x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\
-    \x04blue\x18\x03\x20\x01(\x01R\x04blue\x1a0\n\x08Position\x12\x12\n\x04t\
-    ilt\x18\x01\x20\x01(\x01R\x04tilt\x12\x10\n\x03pan\x18\x02\x20\x01(\x01R\
-    \x03panB\x07\n\x05valueB\x08\n\x06_label\"\x14\n\x12CallPresetResponse\"\
-    \x0f\n\rGroupsRequest\"9\n\x06Groups\x12/\n\x06groups\x18\x01\x20\x03(\
-    \x0b2\x17.mizer.programmer.GroupR\x06groups\"+\n\x05Group\x12\x0e\n\x02i\
-    d\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04nam\
-    e\"$\n\x12SelectGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\
-    \x15\n\x13SelectGroupResponse\"%\n\x0fAddGroupRequest\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToGroupRequest\x12\
-    \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\x18\x02\x20\
-    \x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$AssignFixtureS\
-    electionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x1f\n\
-    \x1dAssignFixturesToGroupResponse2\xcf\t\n\rProgrammerApi\x12l\n\x15Subs\
-    cribeToProgrammer\x12,.mizer.programmer.SubscribeProgrammerRequest\x1a!.\
-    mizer.programmer.ProgrammerState\"\00\x01\x12_\n\x0cWriteControl\x12%.mi\
-    zer.programmer.WriteControlRequest\x1a&.mizer.programmer.WriteControlRes\
-    ponse\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesR\
-    equest\x1a(.mizer.programmer.SelectFixturesResponse\"\0\x12J\n\x05Clear\
-    \x12\x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.ClearRes\
-    ponse\"\0\x12V\n\tHighlight\x12\".mizer.programmer.HighlightRequest\x1a#\
-    .mizer.programmer.HighlightResponse\"\0\x12J\n\x05Store\x12\x1e.mizer.pr\
-    ogrammer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\"\0\x12K\n\
-    \nGetPresets\x12\x20.mizer.programmer.PresetsRequest\x1a\x19.mizer.progr\
-    ammer.Presets\"\0\x12P\n\nCallPreset\x12\x1a.mizer.programmer.PresetId\
-    \x1a$.mizer.programmer.CallPresetResponse\"\0\x12H\n\tGetGroups\x12\x1f.\
-    mizer.programmer.GroupsRequest\x1a\x18.mizer.programmer.Groups\"\0\x12\\\
-    \n\x0bSelectGroup\x12$.mizer.programmer.SelectGroupRequest\x1a%.mizer.pr\
-    ogrammer.SelectGroupResponse\"\0\x12H\n\x08AddGroup\x12!.mizer.programme\
-    r.AddGroupRequest\x1a\x17.mizer.programmer.Group\"\0\x12z\n\x15AssignFix\
-    turesToGroup\x12..mizer.programmer.AssignFixturesToGroupRequest\x1a/.miz\
-    er.programmer.AssignFixturesToGroupResponse\"\0\x12\x8a\x01\n\x1dAssignF\
-    ixtureSelectionToGroup\x126.mizer.programmer.AssignFixtureSelectionToGro\
-    upRequest\x1a/.mizer.programmer.AssignFixturesToGroupResponse\"\0b\x06pr\
-    oto3\
+    ures\"\x18\n\x16SelectFixturesResponse\"P\n\x17UnselectFixturesRequest\
+    \x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
+    \x08fixtures\"\x1a\n\x18UnselectFixturesResponse\"\x0e\n\x0cClearRequest\
+    \"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\
+    \x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\
+    \n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenc\
+    eId\x12B\n\nstore_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequ\
+    est.ModeR\tstoreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Me\
+    rge\x10\x01\x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse\"\x10\n\x0e\
+    PresetsRequest\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\x20\x01(\
+    \rR\x02id\x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.programmer.PresetI\
+    d.PresetTypeR\x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\x12\x0b\
+    \n\x07Shutter\x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Position\x10\
+    \x03\"\xdf\x01\n\x07Presets\x12:\n\x0bintensities\x18\x01\x20\x03(\x0b2\
+    \x18.mizer.programmer.PresetR\x0bintensities\x122\n\x07shutter\x18\x02\
+    \x20\x03(\x0b2\x18.mizer.programmer.PresetR\x07shutter\x12.\n\x05color\
+    \x18\x03\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x05color\x124\n\x08p\
+    osition\x18\x04\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x08position\"\
+    \xea\x02\n\x06Preset\x12*\n\x02id\x18\x01\x20\x01(\x0b2\x1a.mizer.progra\
+    mmer.PresetIdR\x02id\x12\x19\n\x05label\x18\x02\x20\x01(\tH\x01R\x05labe\
+    l\x88\x01\x01\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fader\x126\
+    \n\x05color\x18\x04\x20\x01(\x0b2\x1e.mizer.programmer.Preset.ColorH\0R\
+    \x05color\x12?\n\x08position\x18\x05\x20\x01(\x0b2!.mizer.programmer.Pre\
+    set.PositionH\0R\x08position\x1aC\n\x05Color\x12\x10\n\x03red\x18\x01\
+    \x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\
+    \x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\x1a0\n\x08Position\x12\
+    \x12\n\x04tilt\x18\x01\x20\x01(\x01R\x04tilt\x12\x10\n\x03pan\x18\x02\
+    \x20\x01(\x01R\x03panB\x07\n\x05valueB\x08\n\x06_label\"\x14\n\x12CallPr\
+    esetResponse\"\x0f\n\rGroupsRequest\"9\n\x06Groups\x12/\n\x06groups\x18\
+    \x01\x20\x03(\x0b2\x17.mizer.programmer.GroupR\x06groups\"+\n\x05Group\
+    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
+    \x01(\tR\x04name\"$\n\x12SelectGroupRequest\x12\x0e\n\x02id\x18\x01\x20\
+    \x01(\rR\x02id\"\x15\n\x13SelectGroupResponse\"%\n\x0fAddGroupRequest\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToG\
+    roupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\
+    \x18\x02\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$As\
+    signFixtureSelectionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
+    \x02id\"\x1f\n\x1dAssignFixturesToGroupResponse2\xbc\n\n\rProgrammerApi\
+    \x12l\n\x15SubscribeToProgrammer\x12,.mizer.programmer.SubscribeProgramm\
+    erRequest\x1a!.mizer.programmer.ProgrammerState\"\00\x01\x12_\n\x0cWrite\
+    Control\x12%.mizer.programmer.WriteControlRequest\x1a&.mizer.programmer.\
+    WriteControlResponse\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.programmer.\
+    SelectFixturesRequest\x1a(.mizer.programmer.SelectFixturesResponse\"\0\
+    \x12k\n\x10UnselectFixtures\x12).mizer.programmer.UnselectFixturesReques\
+    t\x1a*.mizer.programmer.UnselectFixturesResponse\"\0\x12J\n\x05Clear\x12\
+    \x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.ClearRespons\
+    e\"\0\x12V\n\tHighlight\x12\".mizer.programmer.HighlightRequest\x1a#.miz\
+    er.programmer.HighlightResponse\"\0\x12J\n\x05Store\x12\x1e.mizer.progra\
+    mmer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\"\0\x12K\n\nGet\
+    Presets\x12\x20.mizer.programmer.PresetsRequest\x1a\x19.mizer.programmer\
+    .Presets\"\0\x12P\n\nCallPreset\x12\x1a.mizer.programmer.PresetId\x1a$.m\
+    izer.programmer.CallPresetResponse\"\0\x12H\n\tGetGroups\x12\x1f.mizer.p\
+    rogrammer.GroupsRequest\x1a\x18.mizer.programmer.Groups\"\0\x12\\\n\x0bS\
+    electGroup\x12$.mizer.programmer.SelectGroupRequest\x1a%.mizer.programme\
+    r.SelectGroupResponse\"\0\x12H\n\x08AddGroup\x12!.mizer.programmer.AddGr\
+    oupRequest\x1a\x17.mizer.programmer.Group\"\0\x12z\n\x15AssignFixturesTo\
+    Group\x12..mizer.programmer.AssignFixturesToGroupRequest\x1a/.mizer.prog\
+    rammer.AssignFixturesToGroupResponse\"\0\x12\x8a\x01\n\x1dAssignFixtureS\
+    electionToGroup\x126.mizer.programmer.AssignFixtureSelectionToGroupReque\
+    st\x1a/.mizer.programmer.AssignFixturesToGroupResponse\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

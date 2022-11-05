@@ -28,6 +28,8 @@ pub trait ProgrammerApi {
 
     fn select_fixtures(&self, req: ::grpc::ServerRequestSingle<super::programmer::SelectFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::SelectFixturesResponse>) -> ::grpc::Result<()>;
 
+    fn unselect_fixtures(&self, req: ::grpc::ServerRequestSingle<super::programmer::UnselectFixturesRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::UnselectFixturesResponse>) -> ::grpc::Result<()>;
+
     fn clear(&self, req: ::grpc::ServerRequestSingle<super::programmer::ClearRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::ClearResponse>) -> ::grpc::Result<()>;
 
     fn highlight(&self, req: ::grpc::ServerRequestSingle<super::programmer::HighlightRequest>, resp: ::grpc::ServerResponseUnarySink<super::programmer::HighlightResponse>) -> ::grpc::Result<()>;
@@ -87,6 +89,16 @@ impl ProgrammerApiClient {
     pub fn select_fixtures(&self, o: ::grpc::RequestOptions, req: super::programmer::SelectFixturesRequest) -> ::grpc::SingleResponse<super::programmer::SelectFixturesResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/SelectFixtures"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn unselect_fixtures(&self, o: ::grpc::RequestOptions, req: super::programmer::UnselectFixturesRequest) -> ::grpc::SingleResponse<super::programmer::UnselectFixturesResponse> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/UnselectFixtures"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -239,6 +251,18 @@ impl ProgrammerApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).select_fixtures(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.programmer.ProgrammerApi/UnselectFixtures"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).unselect_fixtures(req, resp))
                     },
                 ),
                 ::grpc::rt::ServerMethod::new(

@@ -8,6 +8,7 @@ service ProgrammerApi {
   rpc SubscribeToProgrammer (SubscribeProgrammerRequest) returns (stream ProgrammerState) {}
   rpc WriteControl (WriteControlRequest) returns (WriteControlResponse) {}
   rpc SelectFixtures (SelectFixturesRequest) returns (SelectFixturesResponse) {}
+  rpc UnselectFixtures (UnselectFixturesRequest) returns (UnselectFixturesResponse) {}
   rpc Clear (ClearRequest) returns (ClearResponse) {}
   rpc Highlight (HighlightRequest) returns (HighlightResponse) {}
   rpc Store (StoreRequest) returns (StoreResponse) {}
@@ -71,6 +72,12 @@ message SelectFixturesRequest {
 }
 
 message SelectFixturesResponse {}
+
+message UnselectFixturesRequest {
+  repeated mizer.fixtures.FixtureId fixtures = 1;
+}
+
+message UnselectFixturesResponse {}
 
 message ClearRequest {}
 message ClearResponse {}

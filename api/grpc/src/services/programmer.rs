@@ -43,6 +43,16 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
         resp.finish(Default::default())
     }
 
+    fn unselect_fixtures(
+        &self,
+        req: ServerRequestSingle<UnselectFixturesRequest>,
+        resp: ServerResponseUnarySink<UnselectFixturesResponse>,
+    ) -> grpc::Result<()> {
+        self.unselect_fixtures(req.message.fixtures.into_vec());
+
+        resp.finish(Default::default())
+    }
+
     fn clear(
         &self,
         _: ServerRequestSingle<ClearRequest>,

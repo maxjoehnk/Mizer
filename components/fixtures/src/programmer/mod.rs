@@ -11,9 +11,7 @@ use futures::stream::Stream;
 use indexmap::{IndexMap, IndexSet};
 use serde::{Deserialize, Serialize};
 
-use crate::definition::{
-    ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl,
-};
+use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
 use crate::fixture::{Fixture, IFixtureMut};
 use crate::{FixtureId, RgbColor};
 
@@ -333,6 +331,16 @@ impl Programmer {
         }
         for fixture in fixtures {
             self.active_fixtures.insert(fixture);
+        }
+        self.emit_state();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn unselect_fixtures(&mut self, fixtures: Vec<FixtureId>) {
+        tracing::trace!("unselect_fixtures");
+        for fixture in fixtures {
+            self.active_fixtures.remove(&fixture);
+            self.selected_fixtures.remove(&fixture);
         }
         self.emit_state();
     }

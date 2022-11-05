@@ -9,6 +9,7 @@ abstract class ProgrammerApi {
   Future<void> writeControl(WriteControlRequest request);
 
   Future<void> selectFixtures(List<FixtureId> fixtureIds);
+  Future<void> unselectFixtures(List<FixtureId> fixtureIds);
 
   Future<void> clear();
 

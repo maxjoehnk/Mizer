@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/plans.dart';
 import 'package:mizer/api/contracts/programmer.dart';
@@ -18,7 +19,8 @@ class PlanLayout extends StatefulWidget {
   final ProgrammerState? programmerState;
   final bool setupMode;
 
-  const PlanLayout({required this.plan, this.programmerState, required this.setupMode, Key? key}) : super(key: key);
+  const PlanLayout({required this.plan, this.programmerState, required this.setupMode, Key? key})
+      : super(key: key);
 
   @override
   State<PlanLayout> createState() => _PlanLayoutState();
@@ -64,34 +66,46 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
           var scene = _transformationController.toScene(local);
           var newPosition = _convertFromScreenPosition(scene);
           var fixturePosition = details.data as FixturePosition;
-          var movement = Offset(newPosition.dx - fixturePosition.x, newPosition.dy - fixturePosition.y);
+          var movement =
+              Offset(newPosition.dx - fixturePosition.x, newPosition.dy - fixturePosition.y);
 
           PlansBloc bloc = context.read();
           if (widget.programmerState?.activeFixtures.isEmpty ?? true) {
             bloc.add(MoveFixture(id: fixturePosition.id, x: movement.dx, y: movement.dy));
-          }else {
+          } else {
             bloc.add(MoveFixtureSelection(x: movement.dx, y: movement.dy));
           }
-
         },
         builder: (context, candidates, rejects) => Stack(
           fit: StackFit.expand,
           children: [
-            SizedBox(width: 1000, height: 1000, child: DragDropSelection(onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
+            SizedBox(
+                width: 1000,
+                height: 1000,
+                child: DragDropSelection(
+                    onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
             CustomMultiChildLayout(
                 delegate: PlanLayoutDelegate(widget.plan),
                 children: widget.plan.positions.map((p) {
-                  var selected =
-                      widget.programmerState?.activeFixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
-                  var child = Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: selected);
+                  var selected = widget.programmerState?.activeFixtures
+                          .firstWhereOrNull((f) => f.overlaps(p.id)) !=
+                      null;
+                  var child = Fixture2DView(
+                      fixture: p,
+                      ref: _fixturesPointer!,
+                      selected: selected,
+                      onSelect: () => this._addFixtureToSelection(p.id),
+                      onUnselect: () => this._removeFixtureFromSelection(p.id));
                   return LayoutId(
                       id: p.id,
-                      child: widget.setupMode ? Draggable(
-                        hitTestBehavior: HitTestBehavior.translucent,
-                        data: p,
-                        feedback: _getDragFeedback(p),
-                        child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
-                      ) : child);
+                      child: widget.setupMode
+                          ? Draggable(
+                              hitTestBehavior: HitTestBehavior.translucent,
+                              data: p,
+                              feedback: _getDragFeedback(p),
+                              child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
+                            )
+                          : MouseRegion(child: child, cursor: SystemMouseCursors.click));
                 }).toList()),
             if (_selectionState != null) SelectionIndicator(_selectionState!),
           ],
@@ -106,12 +120,12 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
         .plan
         .positions
         .where((fixture) {
-      var fixturePosition = _convertToScreenPosition(fixture);
-      var fixtureEnd = fixturePosition.translate(fieldSize, fieldSize);
-      var fixtureRect = Rect.fromPoints(fixturePosition, fixtureEnd);
+          var fixturePosition = _convertToScreenPosition(fixture);
+          var fixtureEnd = fixturePosition.translate(fieldSize, fieldSize);
+          var fixtureRect = Rect.fromPoints(fixturePosition, fixtureEnd);
 
-      return fixtureRect.overlaps(rect);
-    })
+          return fixtureRect.overlaps(rect);
+        })
         .map((fixture) => fixture.id)
         .toList();
     selection.addAll(widget.programmerState!.fixtures);
@@ -124,6 +138,16 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
     });
   }
 
+  void _addFixtureToSelection(FixtureId fixtureId) {
+    ProgrammerApi programmerApi = context.read();
+    programmerApi.selectFixtures([fixtureId]);
+  }
+
+  void _removeFixtureFromSelection(FixtureId fixtureId) {
+    ProgrammerApi programmerApi = context.read();
+    programmerApi.unselectFixtures([fixtureId]);
+  }
+
   void _onUpdateSelection(SelectionState state) {
     setState(() {
       this._selectionState = state;
@@ -133,15 +157,18 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
   Widget _getDragFeedback(FixturePosition position) {
     var textStyle = Theme.of(context).textTheme.bodyMedium;
     if (widget.programmerState?.fixtures.isEmpty ?? true) {
-      return Fixture2DView(fixture: position, ref: _fixturesPointer!, selected: true, textStyle: textStyle);
+      return Fixture2DView(
+          fixture: position, ref: _fixturesPointer!, selected: true, textStyle: textStyle);
     }
 
-    var selectedFixtures = widget.plan.positions.where((p) => widget.programmerState?.fixtures.contains(p.id) ?? false);
+    var selectedFixtures = widget.plan.positions
+        .where((p) => widget.programmerState?.fixtures.contains(p.id) ?? false);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: selectedFixtures
-          .map((p) => Fixture2DView(fixture: p, ref: _fixturesPointer!, selected: true, textStyle: textStyle))
+          .map((p) => Fixture2DView(
+              fixture: p, ref: _fixturesPointer!, selected: true, textStyle: textStyle))
           .toList(),
     );
   }
@@ -152,8 +179,17 @@ class Fixture2DView extends StatefulWidget {
   final FixturesRefPointer ref;
   final bool selected;
   final TextStyle? textStyle;
+  final Function()? onSelect;
+  final Function()? onUnselect;
 
-  const Fixture2DView({required this.fixture, required this.ref, this.selected = true, this.textStyle, Key? key})
+  const Fixture2DView(
+      {required this.fixture,
+      required this.ref,
+      this.onSelect,
+      this.onUnselect,
+      this.selected = true,
+      this.textStyle,
+      Key? key})
       : super(key: key);
 
   @override
@@ -184,24 +220,44 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     double fontSize = 6;
-    return Container(
-        width: fieldSize,
-        height: fieldSize,
-        padding: const EdgeInsets.all(2),
-        child: Container(
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
-                side: BorderSide(
-                  color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
-                  width: 2,
-                  style: BorderStyle.solid,
+    return GestureDetector(
+      onTap: () {
+        if (RawKeyboard.instance.keysPressed.any((key) => [
+              LogicalKeyboardKey.shift,
+              LogicalKeyboardKey.shiftLeft,
+              LogicalKeyboardKey.shiftRight,
+            ].contains(key))) {
+          if (widget.onUnselect != null) {
+            widget.onUnselect!();
+          }
+        } else {
+          if (widget.onSelect != null) {
+            widget.onSelect!();
+          }
+        }
+      },
+      child: Container(
+          width: fieldSize,
+          height: fieldSize,
+          padding: const EdgeInsets.all(2),
+          child: Container(
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                  side: BorderSide(
+                    color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
+                    width: 2,
+                    style: BorderStyle.solid,
+                  ),
                 ),
+                color: state.getColor(),
               ),
-              color: state.getColor(),
-            ),
-            child:
-            Align(alignment: Alignment.topLeft, child: Text(widget.fixture.id.toDisplay(), style: widget.textStyle?.copyWith(fontSize: fontSize) ?? TextStyle(fontSize: fontSize)))));
+              child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(widget.fixture.id.toDisplay(),
+                      style: widget.textStyle?.copyWith(fontSize: fontSize) ??
+                          TextStyle(fontSize: fontSize))))),
+    );
   }
 }
 
@@ -263,7 +319,7 @@ class _DragDropSelectionState extends State<DragDropSelection> {
       behavior: HitTestBehavior.translucent,
       gestures: {
         PanGestureRecognizer: GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
-                () => PanGestureRecognizer(), (PanGestureRecognizer recognizer) {
+            () => PanGestureRecognizer(), (PanGestureRecognizer recognizer) {
           recognizer
             ..onStart = onStart
             ..onEnd = onEnd
@@ -296,7 +352,9 @@ class SelectionState {
   Offset start;
   Offset end;
 
-  SelectionState(Offset start) : this.start = start, this.end = start;
+  SelectionState(Offset start)
+      : this.start = start,
+        this.end = start;
 }
 
 class DragPainter extends CustomPainter {

@@ -43,6 +43,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 }
                 Err(err) => reply.respond_error(err),
             },
+            "unselectFixtures" => match call.arguments::<UnselectFixturesRequest>() {
+                Ok(req) => {
+                    let fixture_ids = req.fixtures.into_vec();
+                    self.unselect_fixtures(fixture_ids);
+                    reply.send_ok(Value::Null)
+                }
+                Err(err) => reply.respond_error(err),
+            },
             "clear" => {
                 self.clear();
 
@@ -132,6 +140,11 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     fn select_fixtures(&self, fixture_ids: Vec<FixtureId>) {
         log::trace!("ProgrammerChannel::select_fixtures({:?})", fixture_ids);
         self.handler.select_fixtures(fixture_ids);
+    }
+
+    fn unselect_fixtures(&self, fixture_ids: Vec<FixtureId>) {
+        log::trace!("ProgrammerChannel::unselect_fixtures({:?})", fixture_ids);
+        self.handler.unselect_fixtures(fixture_ids);
     }
 
     fn clear(&self) {

@@ -565,6 +565,76 @@ class SelectFixturesResponse extends $pb.GeneratedMessage {
   static SelectFixturesResponse? _defaultInstance;
 }
 
+class UnselectFixturesRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UnselectFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..hasRequiredFields = false
+  ;
+
+  UnselectFixturesRequest._() : super();
+  factory UnselectFixturesRequest({
+    $core.Iterable<$0.FixtureId>? fixtures,
+  }) {
+    final _result = create();
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    return _result;
+  }
+  factory UnselectFixturesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UnselectFixturesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UnselectFixturesRequest clone() => UnselectFixturesRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UnselectFixturesRequest copyWith(void Function(UnselectFixturesRequest) updates) => super.copyWith((message) => updates(message as UnselectFixturesRequest)) as UnselectFixturesRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UnselectFixturesRequest create() => UnselectFixturesRequest._();
+  UnselectFixturesRequest createEmptyInstance() => create();
+  static $pb.PbList<UnselectFixturesRequest> createRepeated() => $pb.PbList<UnselectFixturesRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UnselectFixturesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UnselectFixturesRequest>(create);
+  static UnselectFixturesRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$0.FixtureId> get fixtures => $_getList(0);
+}
+
+class UnselectFixturesResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UnselectFixturesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  UnselectFixturesResponse._() : super();
+  factory UnselectFixturesResponse() => create();
+  factory UnselectFixturesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UnselectFixturesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UnselectFixturesResponse clone() => UnselectFixturesResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UnselectFixturesResponse copyWith(void Function(UnselectFixturesResponse) updates) => super.copyWith((message) => updates(message as UnselectFixturesResponse)) as UnselectFixturesResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UnselectFixturesResponse create() => UnselectFixturesResponse._();
+  UnselectFixturesResponse createEmptyInstance() => create();
+  static $pb.PbList<UnselectFixturesResponse> createRepeated() => $pb.PbList<UnselectFixturesResponse>();
+  @$core.pragma('dart2js:noInline')
+  static UnselectFixturesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UnselectFixturesResponse>(create);
+  static UnselectFixturesResponse? _defaultInstance;
+}
+
 class ClearRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClearRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..hasRequiredFields = false

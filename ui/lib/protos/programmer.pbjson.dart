@@ -116,6 +116,23 @@ const SelectFixturesResponse$json = const {
 
 /// Descriptor for `SelectFixturesResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List selectFixturesResponseDescriptor = $convert.base64Decode('ChZTZWxlY3RGaXh0dXJlc1Jlc3BvbnNl');
+@$core.Deprecated('Use unselectFixturesRequestDescriptor instead')
+const UnselectFixturesRequest$json = const {
+  '1': 'UnselectFixturesRequest',
+  '2': const [
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
+  ],
+};
+
+/// Descriptor for `UnselectFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List unselectFixturesRequestDescriptor = $convert.base64Decode('ChdVbnNlbGVjdEZpeHR1cmVzUmVxdWVzdBI1CghmaXh0dXJlcxgBIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXM=');
+@$core.Deprecated('Use unselectFixturesResponseDescriptor instead')
+const UnselectFixturesResponse$json = const {
+  '1': 'UnselectFixturesResponse',
+};
+
+/// Descriptor for `UnselectFixturesResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List unselectFixturesResponseDescriptor = $convert.base64Decode('ChhVbnNlbGVjdEZpeHR1cmVzUmVzcG9uc2U=');
 @$core.Deprecated('Use clearRequestDescriptor instead')
 const ClearRequest$json = const {
   '1': 'ClearRequest',

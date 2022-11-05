@@ -32,6 +32,12 @@ class ProgrammerApiClient extends $grpc.Client {
           ($1.SelectFixturesRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $1.SelectFixturesResponse.fromBuffer(value));
+  static final _$unselectFixtures = $grpc.ClientMethod<
+          $1.UnselectFixturesRequest, $1.UnselectFixturesResponse>(
+      '/mizer.programmer.ProgrammerApi/UnselectFixtures',
+      ($1.UnselectFixturesRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $1.UnselectFixturesResponse.fromBuffer(value));
   static final _$clear = $grpc.ClientMethod<$1.ClearRequest, $1.ClearResponse>(
       '/mizer.programmer.ProgrammerApi/Clear',
       ($1.ClearRequest value) => value.writeToBuffer(),
@@ -107,6 +113,12 @@ class ProgrammerApiClient extends $grpc.Client {
       $1.SelectFixturesRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$selectFixtures, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$1.UnselectFixturesResponse> unselectFixtures(
+      $1.UnselectFixturesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$unselectFixtures, request, options: options);
   }
 
   $grpc.ResponseFuture<$1.ClearResponse> clear($1.ClearRequest request,
@@ -197,6 +209,15 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.SelectFixturesRequest.fromBuffer(value),
         ($1.SelectFixturesResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$1.UnselectFixturesRequest,
+            $1.UnselectFixturesResponse>(
+        'UnselectFixtures',
+        unselectFixtures_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $1.UnselectFixturesRequest.fromBuffer(value),
+        ($1.UnselectFixturesResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.ClearRequest, $1.ClearResponse>(
         'Clear',
         clear_Pre,
@@ -293,6 +314,12 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
     return selectFixtures(call, await request);
   }
 
+  $async.Future<$1.UnselectFixturesResponse> unselectFixtures_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$1.UnselectFixturesRequest> request) async {
+    return unselectFixtures(call, await request);
+  }
+
   $async.Future<$1.ClearResponse> clear_Pre(
       $grpc.ServiceCall call, $async.Future<$1.ClearRequest> request) async {
     return clear(call, await request);
@@ -353,6 +380,8 @@ abstract class ProgrammerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.WriteControlRequest request);
   $async.Future<$1.SelectFixturesResponse> selectFixtures(
       $grpc.ServiceCall call, $1.SelectFixturesRequest request);
+  $async.Future<$1.UnselectFixturesResponse> unselectFixtures(
+      $grpc.ServiceCall call, $1.UnselectFixturesRequest request);
   $async.Future<$1.ClearResponse> clear(
       $grpc.ServiceCall call, $1.ClearRequest request);
   $async.Future<$1.HighlightResponse> highlight(

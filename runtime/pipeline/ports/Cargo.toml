@@ -11,7 +11,7 @@ serde = { version = "1", features = ["derive"] }
 bincode = "1.3"
 
 [dev-dependencies]
-criterion = "0.3"
+criterion = "0.4"
 
 [[bench]]
 name = "single_float_port"

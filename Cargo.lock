@@ -666,9 +666,9 @@ dependencies = [
 
 [[package]]
 name = "bytes"
-version = "1.1.0"
+version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4872d67bab6358e59559027aa3b9157c53d9358c51423c17554809a8858e0f8"
+checksum = "ec8a7b6a70fde80372154c65702f00a0f56f3e1c36abbc6c440484be248856db"
 
 [[package]]
 name = "bzip2"
@@ -2363,7 +2363,7 @@ version = "0.9.0-pre"
 source = "git+https://github.com/stepancheg/grpc-rust?rev=a0d7d22#a0d7d22b073936767a6961ba4beb82a5a6092a49"
 dependencies = [
  "base64 0.9.3",
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "futures",
  "httpbis",
  "log",
@@ -2388,7 +2388,7 @@ name = "grpc-protobuf"
 version = "0.9.0-pre"
 source = "git+https://github.com/stepancheg/grpc-rust?rev=a0d7d22#a0d7d22b073936767a6961ba4beb82a5a6092a49"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "grpc",
  "protobuf",
 ]
@@ -2690,7 +2690,7 @@ version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31f4c6746584866f0feabcc69893c5b51beef3831656a968ed7ae254cdc4fd03"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "fnv",
  "itoa 1.0.1",
 ]
@@ -2741,7 +2741,7 @@ name = "httpbis"
 version = "0.10.0-pre"
 source = "git+https://github.com/stepancheg/rust-http2#87019df1f7cb264524be81bb5164d155d7196c31"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "futures",
  "log",
  "log-ndc 0.3.0",
@@ -3898,7 +3898,7 @@ name = "mizer-opc-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "log",
  "mizer-node",
  "mizer-util",
@@ -4443,7 +4443,7 @@ version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5f8f35e687561d5c1667590911e6698a8cb714a134a7505718a182e7bc9d3836"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "encoding_rs",
  "futures-util",
  "http",
@@ -5231,7 +5231,7 @@ version = "2.25.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "47c327e191621a2158159df97cdbc2e7074bb4e940275e35abf38eb3d2595754"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "serde",
  "serde_derive",
 ]
@@ -6711,7 +6711,7 @@ version = "1.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c27a64b625de6d309e8c57716ba93021dccf1b3b5c97edd6d3dd2d2135afc0a"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "libc",
  "memchr",
  "mio",
@@ -6760,7 +6760,7 @@ version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9e99e1983e5d376cd8eb4b66604d2e99e79f5bd988c3055891dcd8c9e2604cc0"
 dependencies = [
- "bytes 1.1.0",
+ "bytes 1.2.1",
  "futures-core",
  "futures-sink",
  "log",

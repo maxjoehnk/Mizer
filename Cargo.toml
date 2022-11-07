@@ -96,7 +96,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 log = "0.4"
 anyhow = "1"
-gstreamer = "0.17"
+gstreamer = "0.19"
 structopt = "0.3"
 metrics = "0.18"
 mizer-media = { path = "components/media" }

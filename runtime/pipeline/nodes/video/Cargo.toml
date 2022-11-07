@@ -11,6 +11,6 @@ mizer-node = { path = "../../node" }
 gstreamer = "0.17"
 gstreamer-video = "0.17"
 gstreamer-gl = "0.17"
-glib = "0.14"
+glib = "0.16"
 lazy_static = "1.4"
 serde = { version = "1", features = ["derive"] }

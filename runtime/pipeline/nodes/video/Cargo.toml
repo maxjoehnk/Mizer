@@ -9,7 +9,7 @@ anyhow = "1"
 log = "0.4"
 mizer-node = { path = "../../node" }
 gstreamer = "0.17"
-gstreamer-video = "0.17"
+gstreamer-video = "0.19"
 gstreamer-gl = "0.17"
 glib = "0.14"
 lazy_static = "1.4"

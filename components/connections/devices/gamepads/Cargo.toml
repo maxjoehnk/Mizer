@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 log = "0.4"
 anyhow = "1"
-gilrs = "0.8"
+gilrs = "0.10"
 futures = "0.3"
 flume = "0.10"
 pinboard = "2.1"

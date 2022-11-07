@@ -90,7 +90,7 @@ impl ProcessingNode for VideoTransformNode {
 impl VideoTransformState {
     fn new() -> Self {
         let pipeline = PIPELINE.lock().unwrap();
-        let node = ElementFactory::make("gltransformation", None).unwrap();
+        let node = ElementFactory::make("gltransformation").build().unwrap();
         pipeline.add(&node).unwrap();
 
         VideoTransformState { node }
@@ -103,7 +103,7 @@ impl VideoTransformState {
         property: &str,
     ) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>(port) {
-            self.node.set_property(property, &(value as f32))?;
+            self.node.set_property(property, &(value as f32));
         }
         Ok(())
     }

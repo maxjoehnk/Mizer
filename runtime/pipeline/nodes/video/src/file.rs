@@ -84,17 +84,15 @@ impl VideoFileState {
 
     fn build(file: &str) -> Self {
         let pipeline = PIPELINE.lock().unwrap();
-        let file_src = ElementFactory::make("filesrc", None).unwrap();
-        let decoder = ElementFactory::make("decodebin", None).unwrap();
-        let upload = ElementFactory::make("glupload", None).unwrap();
-        let convert = ElementFactory::make("glcolorconvert", None).unwrap();
+        let file_src = ElementFactory::make("filesrc").build().unwrap();
+        let decoder = ElementFactory::make("decodebin").build().unwrap();
+        let upload = ElementFactory::make("glupload").build().unwrap();
+        let convert = ElementFactory::make("glcolorconvert").build().unwrap();
         pipeline.add(&file_src).unwrap();
         pipeline.add(&decoder).unwrap();
         pipeline.add(&upload).unwrap();
         pipeline.add(&convert).unwrap();
-        file_src
-            .set_property("location", &glib::Value::from(file))
-            .unwrap();
+        file_src.set_property("location", &glib::Value::from(file));
         file_src.link(&decoder).unwrap();
         upload.link(&convert).unwrap();
 

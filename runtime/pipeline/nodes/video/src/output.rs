@@ -16,7 +16,7 @@ pub struct VideoOutputState {
 impl VideoOutputState {
     fn new() -> Self {
         let pipeline = PIPELINE.lock().unwrap();
-        let sink = ElementFactory::make("glimagesinkelement", None).unwrap();
+        let sink = ElementFactory::make("glimagesinkelement").build().unwrap();
         pipeline.add(&sink).unwrap();
 
         VideoOutputState { sink }

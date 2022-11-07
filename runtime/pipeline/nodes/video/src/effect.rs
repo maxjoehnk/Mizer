@@ -119,7 +119,9 @@ impl ProcessingNode for VideoEffectNode {
 impl VideoEffectState {
     fn new(effect_type: VideoEffectType) -> Self {
         let pipeline = PIPELINE.lock().unwrap();
-        let effect = ElementFactory::make(&format!("gleffects_{}", effect_type), None).unwrap();
+        let effect = ElementFactory::make(&format!("gleffects_{}", effect_type))
+            .build()
+            .unwrap();
         pipeline.add(&effect).unwrap();
 
         VideoEffectState { node: effect }

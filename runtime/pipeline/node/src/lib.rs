@@ -71,4 +71,6 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + std::fmt::Debug {
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()>;
 
     fn create_state(&self) -> Self::State;
+
+    fn update(&mut self, config: &Self);
 }

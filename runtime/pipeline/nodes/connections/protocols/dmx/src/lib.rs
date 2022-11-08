@@ -83,4 +83,9 @@ impl ProcessingNode for DmxOutputNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.channel = config.channel;
+        self.universe = config.universe;
+    }
 }

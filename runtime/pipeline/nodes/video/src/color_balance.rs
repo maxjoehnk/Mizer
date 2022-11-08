@@ -69,6 +69,8 @@ impl ProcessingNode for VideoColorBalanceNode {
     fn create_state(&self) -> Self::State {
         VideoColorBalanceState::new()
     }
+
+    fn update(&mut self, _config: &Self) {}
 }
 
 impl VideoColorBalanceState {

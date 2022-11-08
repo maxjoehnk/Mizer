@@ -103,6 +103,13 @@ impl ProcessingNode for EnvelopeNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.attack = config.attack;
+        self.decay = config.decay;
+        self.sustain = config.sustain;
+        self.release = config.release;
+    }
 }
 
 #[derive(Default, Debug)]

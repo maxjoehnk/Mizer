@@ -84,6 +84,8 @@ impl ProcessingNode for RgbColorNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, _config: &Self) {}
 }
 
 #[cfg(test)]

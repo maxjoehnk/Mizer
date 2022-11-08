@@ -76,6 +76,13 @@ impl ProcessingNode for OscInputNode {
     fn create_state(&self) -> Self::State {
         OscInput::new(&self.host, self.port).unwrap()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.path = config.path.clone();
+        self.host = config.host.clone();
+        self.port = config.port;
+        self.argument_type = config.argument_type;
+    }
 }
 
 impl OscInputNode {

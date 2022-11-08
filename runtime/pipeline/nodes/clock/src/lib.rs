@@ -52,4 +52,8 @@ impl ProcessingNode for ClockNode {
 
         clock
     }
+
+    fn update(&mut self, config: &Self) {
+        self.speed = config.speed;
+    }
 }

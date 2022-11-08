@@ -70,4 +70,8 @@ impl ProcessingNode for LaserNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.device_id = config.device_id.clone();
+    }
 }

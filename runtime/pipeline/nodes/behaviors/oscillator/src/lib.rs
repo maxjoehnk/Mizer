@@ -106,6 +106,15 @@ impl ProcessingNode for OscillatorNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.oscillator_type = config.oscillator_type;
+        self.min = config.min;
+        self.max = config.max;
+        self.offset = config.offset;
+        self.ratio = config.ratio;
+        self.reverse = config.reverse;
+    }
 }
 
 impl OscillatorNode {

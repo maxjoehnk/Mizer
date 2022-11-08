@@ -116,6 +116,10 @@ impl ProcessingNode for FixtureNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.fixture_id = config.fixture_id;
+    }
 }
 
 trait FixtureControlPorts {

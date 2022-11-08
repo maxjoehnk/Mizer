@@ -69,6 +69,10 @@ impl ProcessingNode for VideoFileNode {
     fn create_state(&self) -> Self::State {
         VideoFileState::new(&self.file)
     }
+
+    fn update(&mut self, config: &Self) {
+        self.file = config.file.clone();
+    }
 }
 
 impl VideoFileState {

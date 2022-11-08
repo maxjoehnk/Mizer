@@ -109,6 +109,10 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.pattern = config.pattern;
+    }
 }
 
 fn next_color(color: &mut (f64, f64, f64)) {

@@ -114,6 +114,10 @@ impl ProcessingNode for VideoEffectNode {
     fn create_state(&self) -> Self::State {
         VideoEffectState::new(self.effect_type)
     }
+
+    fn update(&mut self, config: &Self) {
+        self.effect_type = config.effect_type;
+    }
 }
 
 impl VideoEffectState {

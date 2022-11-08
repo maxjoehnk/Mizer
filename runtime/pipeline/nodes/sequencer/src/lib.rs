@@ -113,7 +113,9 @@ impl ProcessingNode for SequencerNode {
             }
             if let Some(value) = context.read_port(TOGGLE_PLAYBACK) {
                 if let Some(true) = state.playback_toggle.update(value) {
-                    if let Some(sequence_state) = sequencer.get_sequencer_view().read().get(&self.sequence_id) {
+                    if let Some(sequence_state) =
+                        sequencer.get_sequencer_view().read().get(&self.sequence_id)
+                    {
                         if sequence_state.active {
                             sequencer.sequence_stop(self.sequence_id);
                         } else {
@@ -143,6 +145,8 @@ impl ProcessingNode for SequencerNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, _config: &Self) {}
 }
 
 #[derive(Default)]

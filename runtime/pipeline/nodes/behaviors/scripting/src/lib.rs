@@ -90,4 +90,8 @@ impl ProcessingNode for ScriptingNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.script = config.script.clone();
+    }
 }

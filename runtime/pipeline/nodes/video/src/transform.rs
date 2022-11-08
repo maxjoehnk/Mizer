@@ -85,6 +85,8 @@ impl ProcessingNode for VideoTransformNode {
     fn create_state(&self) -> Self::State {
         VideoTransformState::new()
     }
+
+    fn update(&mut self, _config: &Self) {}
 }
 
 impl VideoTransformState {

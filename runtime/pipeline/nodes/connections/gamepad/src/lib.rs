@@ -129,6 +129,11 @@ impl ProcessingNode for GamepadNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.device_id = config.device_id.clone();
+        self.control = config.control.clone();
+    }
 }
 
 fn axis(value: f64) -> f64 {

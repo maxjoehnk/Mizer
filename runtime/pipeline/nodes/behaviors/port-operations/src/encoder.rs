@@ -99,6 +99,10 @@ impl ProcessingNode for EncoderNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.hold_rate = config.hold_rate;
+    }
 }
 
 #[derive(Default)]

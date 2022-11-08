@@ -63,4 +63,8 @@ impl ProcessingNode for ValueNode {
     fn create_state(&self) -> Self::State {
         None
     }
+
+    fn update(&mut self, config: &Self) {
+        self.value = config.value.clone();
+    }
 }

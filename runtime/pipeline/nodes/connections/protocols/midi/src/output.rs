@@ -130,4 +130,9 @@ impl ProcessingNode for MidiOutputNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.device = config.device.clone();
+        self.config = config.config.clone();
+    }
 }

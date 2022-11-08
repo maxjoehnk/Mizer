@@ -66,4 +66,9 @@ impl ProcessingNode for MqttOutputNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.connection = config.connection.clone();
+        self.path = config.path.clone();
+    }
 }

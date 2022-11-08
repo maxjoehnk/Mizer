@@ -70,4 +70,8 @@ impl ProcessingNode for ButtonNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.toggle = config.toggle;
+    }
 }

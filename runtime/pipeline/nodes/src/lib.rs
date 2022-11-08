@@ -14,7 +14,7 @@ pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
 pub use mizer_mqtt_nodes::{MqttInputNode, MqttOutputNode};
-use mizer_node::{Injector, NodeType};
+use mizer_node::{Injector, NodeType, PipelineNode, ProcessingNode};
 pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
@@ -34,8 +34,54 @@ mod container_node;
 #[doc(hidden)]
 pub mod test_sink;
 
-#[derive(Debug, Clone, From, Deserialize, Serialize)]
-pub enum Node {
+macro_rules! node_impl {
+    ($($node_type:ident($node:ty),)*) => {
+        #[derive(Debug, Clone, From, Deserialize, Serialize)]
+        pub enum Node {
+            $($node_type($node),)*
+            // TODO: should only be available in tests
+            #[doc(hidden)]
+            TestSink(TestSink),
+        }
+
+        impl From<NodeType> for Node {
+            fn from(node_type: NodeType) -> Self {
+                match node_type {
+                    $(NodeType::$node_type => <$node>::default().into(),)*
+                    NodeType::TestSink => unimplemented!(),
+                }
+            }
+        }
+
+        impl Node {
+            pub fn node_type(&self) -> NodeType {
+                match self {
+                    $(Node::$node_type(_) => NodeType::$node_type,)*
+                    Node::TestSink(_) => NodeType::TestSink,
+                }
+            }
+
+            pub fn update(&self, target: &mut dyn PipelineNode) -> anyhow::Result<()> {
+                let node_type = target.node_type();
+                match (node_type, self) {
+                    $((NodeType::$node_type, Node::$node_type(config)) => {
+                        let node: &mut $node = target.downcast_mut()?;
+                        node.update(config);
+                    },)*
+                    (node_type, node) => log::warn!(
+                        "invalid node type {:?} for given update {:?}",
+                        node_type,
+                        node
+                    ),
+                }
+
+                Ok(())
+            }
+        }
+    };
+}
+
+node_impl! {
     Clock(ClockNode),
     Oscillator(OscillatorNode),
     DmxOutput(DmxOutputNode),
@@ -77,109 +123,9 @@ pub enum Node {
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
     Value(ValueNode),
-    // TODO: should only be available in tests
-    #[doc(hidden)]
-    TestSink(TestSink),
-}
-
-impl From<NodeType> for Node {
-    fn from(node_type: NodeType) -> Self {
-        match node_type {
-            NodeType::DmxOutput => DmxOutputNode::default().into(),
-            NodeType::Oscillator => OscillatorNode::default().into(),
-            NodeType::Clock => ClockNode::default().into(),
-            NodeType::Scripting => ScriptingNode::default().into(),
-            NodeType::Envelope => EnvelopeNode::default().into(),
-            NodeType::Sequence => SequenceNode::default().into(),
-            NodeType::Merge => MergeNode::default().into(),
-            NodeType::Select => SelectNode::default().into(),
-            NodeType::Threshold => ThresholdNode::default().into(),
-            NodeType::Encoder => EncoderNode::default().into(),
-            NodeType::Fixture => FixtureNode::default().into(),
-            NodeType::Programmer => ProgrammerNode::default().into(),
-            NodeType::Group => GroupNode::default().into(),
-            NodeType::Preset => PresetNode::default().into(),
-            NodeType::Sequencer => SequencerNode::default().into(),
-            NodeType::IldaFile => IldaFileNode::default().into(),
-            NodeType::Laser => LaserNode::default().into(),
-            NodeType::Fader => FaderNode::default().into(),
-            NodeType::Button => ButtonNode::default().into(),
-            NodeType::OpcOutput => OpcOutputNode::default().into(),
-            NodeType::PixelPattern => PixelPatternGeneratorNode::default().into(),
-            NodeType::PixelDmx => PixelDmxNode::default().into(),
-            NodeType::OscInput => OscInputNode::default().into(),
-            NodeType::OscOutput => OscOutputNode::default().into(),
-            NodeType::VideoFile => VideoFileNode::default().into(),
-            NodeType::VideoTransform => VideoTransformNode::default().into(),
-            NodeType::VideoColorBalance => VideoColorBalanceNode::default().into(),
-            NodeType::VideoEffect => VideoEffectNode::default().into(),
-            NodeType::VideoOutput => VideoOutputNode::default().into(),
-            NodeType::MidiInput => MidiInputNode::default().into(),
-            NodeType::MidiOutput => MidiOutputNode::default().into(),
-            NodeType::Gamepad => GamepadNode::default().into(),
-            NodeType::ColorRgb => RgbColorNode::default().into(),
-            NodeType::ColorHsv => HsvColorNode::default().into(),
-            NodeType::Container => ContainerNode::default().into(),
-            NodeType::Math => MathNode::default().into(),
-            NodeType::MqttInput => MqttInputNode::default().into(),
-            NodeType::MqttOutput => MqttOutputNode::default().into(),
-            NodeType::NumberToData => NumberToDataNode::default().into(),
-            NodeType::DataToNumber => DataToNumberNode::default().into(),
-            NodeType::Value => ValueNode::default().into(),
-            NodeType::TestSink => unimplemented!(),
-        }
-    }
 }
 
 impl Node {
-    pub fn node_type(&self) -> NodeType {
-        use Node::*;
-        match self {
-            Clock(_) => NodeType::Clock,
-            Oscillator(_) => NodeType::Oscillator,
-            DmxOutput(_) => NodeType::DmxOutput,
-            Scripting(_) => NodeType::Scripting,
-            Sequence(_) => NodeType::Sequence,
-            Envelope(_) => NodeType::Envelope,
-            Merge(_) => NodeType::Merge,
-            Select(_) => NodeType::Select,
-            Threshold(_) => NodeType::Threshold,
-            Encoder(_) => NodeType::Encoder,
-            Fixture(_) => NodeType::Fixture,
-            Programmer(_) => NodeType::Programmer,
-            Group(_) => NodeType::Group,
-            Preset(_) => NodeType::Preset,
-            Sequencer(_) => NodeType::Sequencer,
-            IldaFile(_) => NodeType::IldaFile,
-            Laser(_) => NodeType::Laser,
-            Fader(_) => NodeType::Fader,
-            Button(_) => NodeType::Button,
-            MidiInput(_) => NodeType::MidiInput,
-            MidiOutput(_) => NodeType::MidiOutput,
-            OpcOutput(_) => NodeType::OpcOutput,
-            PixelPattern(_) => NodeType::PixelPattern,
-            PixelDmx(_) => NodeType::PixelDmx,
-            OscInput(_) => NodeType::OscInput,
-            OscOutput(_) => NodeType::OscOutput,
-            VideoFile(_) => NodeType::VideoFile,
-            VideoColorBalance(_) => NodeType::VideoColorBalance,
-            VideoOutput(_) => NodeType::VideoOutput,
-            VideoEffect(_) => NodeType::VideoEffect,
-            VideoTransform(_) => NodeType::VideoTransform,
-            Gamepad(_) => NodeType::Gamepad,
-            ColorHsv(_) => NodeType::ColorHsv,
-            ColorRgb(_) => NodeType::ColorRgb,
-            Container(_) => NodeType::Container,
-            Math(_) => NodeType::Math,
-            MqttInput(_) => NodeType::MqttInput,
-            MqttOutput(_) => NodeType::MqttOutput,
-            NumberToData(_) => NodeType::NumberToData,
-            DataToNumber(_) => NodeType::DataToNumber,
-            Value(_) => NodeType::Value,
-            TestSink(_) => NodeType::TestSink,
-        }
-    }
-
     pub fn prepare(&mut self, injector: &Injector) {
         if let Node::Fixture(node) = self {
             node.fixture_manager = injector.get().cloned();

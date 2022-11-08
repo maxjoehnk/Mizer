@@ -105,4 +105,11 @@ impl ProcessingNode for OscOutputNode {
     fn create_state(&self) -> Self::State {
         OscOutput::new(&self.host, self.port).unwrap()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.path = config.path.clone();
+        self.host = config.host.clone();
+        self.port = config.port;
+        self.argument_type = config.argument_type;
+    }
 }

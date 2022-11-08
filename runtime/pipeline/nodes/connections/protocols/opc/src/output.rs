@@ -95,6 +95,13 @@ impl ProcessingNode for OpcOutputNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.host = config.host.clone();
+        self.port = config.port;
+        self.width = config.width;
+        self.height = config.height;
+    }
 }
 
 fn default_port() -> u16 {

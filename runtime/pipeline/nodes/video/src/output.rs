@@ -60,6 +60,8 @@ impl ProcessingNode for VideoOutputNode {
     fn create_state(&self) -> Self::State {
         VideoOutputState::new()
     }
+
+    fn update(&mut self, _config: &Self) {}
 }
 
 impl GstreamerNode for VideoOutputState {

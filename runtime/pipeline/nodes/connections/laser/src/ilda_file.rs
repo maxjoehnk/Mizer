@@ -58,4 +58,8 @@ impl ProcessingNode for IldaFileNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.file = config.file.clone();
+    }
 }

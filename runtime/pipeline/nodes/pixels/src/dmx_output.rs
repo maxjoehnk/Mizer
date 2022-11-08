@@ -93,6 +93,13 @@ impl ProcessingNode for PixelDmxNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.height = config.height;
+        self.width = config.width;
+        self.output = config.output.clone();
+        self.start_universe = config.start_universe;
+    }
 }
 
 fn default_universe() -> u16 {

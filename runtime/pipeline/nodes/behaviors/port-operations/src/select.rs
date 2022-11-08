@@ -72,4 +72,6 @@ impl ProcessingNode for SelectNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, _config: &Self) {}
 }

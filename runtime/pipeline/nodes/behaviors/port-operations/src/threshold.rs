@@ -87,4 +87,11 @@ impl ProcessingNode for ThresholdNode {
     fn create_state(&self) -> Self::State {
         Default::default()
     }
+
+    fn update(&mut self, config: &Self) {
+        self.lower_threshold = config.lower_threshold;
+        self.upper_threshold = config.upper_threshold;
+        self.active_value = config.active_value;
+        self.inactive_value = config.inactive_value;
+    }
 }

@@ -3854,7 +3854,7 @@ dependencies = [
  "flume",
  "futures",
  "log",
- "parking_lot 0.11.2",
+ "parking_lot 0.12.0",
 ]
 
 [[package]]

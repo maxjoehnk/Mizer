@@ -248,14 +248,30 @@ impl ExecutionPlanner {
                 }
             }
             for link in &executor.links {
-                executor.commands.push(ExecutorCommand::AddLink(NodeLink {
-                    source: link.source.node.clone(),
-                    source_port: link.source.port.clone(),
-                    target: link.target.node.clone(),
-                    target_port: link.target.port.clone(),
-                    local: true,
-                    port_type: link.port_type,
-                }));
+                if !previous_executor.links.contains(link) {
+                    executor.commands.push(ExecutorCommand::AddLink(NodeLink {
+                        source: link.source.node.clone(),
+                        source_port: link.source.port.clone(),
+                        target: link.target.node.clone(),
+                        target_port: link.target.port.clone(),
+                        local: true,
+                        port_type: link.port_type,
+                    }));
+                }
+            }
+            for link in previous_executor.links {
+                if !executor.links.contains(&link) {
+                    executor
+                        .commands
+                        .push(ExecutorCommand::RemoveLink(NodeLink {
+                            source: link.source.node.clone(),
+                            source_port: link.source.port.clone(),
+                            target: link.target.node.clone(),
+                            target_port: link.target.port.clone(),
+                            local: true,
+                            port_type: link.port_type,
+                        }));
+                }
             }
         }
 
@@ -584,6 +600,75 @@ mod tests {
         order_plan(&mut plan);
 
         assert_eq!(plan, expected);
+    }
+
+    #[test]
+    fn planning_twice_should_not_add_link_twice() {
+        let mut planner = ExecutionPlanner::new();
+        planner.add_executor(Executor {
+            id: ExecutorId("executor".into()),
+        });
+        let node1 = ExecutionNode {
+            path: "/node1".into(),
+            attached_executor: None,
+        };
+        let node2 = ExecutionNode {
+            path: "/node2".into(),
+            attached_executor: None,
+        };
+        planner.add_node(node1);
+        planner.add_node(node2);
+        let link = NodeLink {
+            source: "/node1".into(),
+            source_port: "".into(),
+            target: "/node2".into(),
+            target_port: "".into(),
+            local: true,
+            port_type: PortType::Single,
+        };
+        planner.add_link(link);
+        planner.plan();
+
+        let plan = planner.plan();
+
+        assert_eq!(Vec::<ExecutorCommand>::new(), plan.executors[0].commands);
+    }
+
+    #[test]
+    fn removing_link_should_remove_link() {
+        let mut planner = ExecutionPlanner::new();
+        planner.add_executor(Executor {
+            id: ExecutorId("executor".into()),
+        });
+        let node1 = ExecutionNode {
+            path: "/node1".into(),
+            attached_executor: None,
+        };
+        let node2 = ExecutionNode {
+            path: "/node2".into(),
+            attached_executor: None,
+        };
+        planner.add_node(node1);
+        planner.add_node(node2);
+        let link = NodeLink {
+            source: "/node1".into(),
+            source_port: "".into(),
+            target: "/node2".into(),
+            target_port: "".into(),
+            local: true,
+            port_type: PortType::Single,
+        };
+        planner.add_link(link.clone());
+        planner.plan();
+        planner.remove_link(&link);
+
+        let plan = planner.plan();
+
+        assert!(!planner.links.contains(&link));
+        assert_eq!(
+            vec![ExecutorCommand::RemoveLink(link)],
+            plan.executors[0].commands
+        );
     }
 
     fn order_plan(plan: &mut ExecutionPlan) {

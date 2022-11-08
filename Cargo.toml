@@ -98,7 +98,7 @@ log = "0.4"
 anyhow = "1"
 gstreamer = "0.19"
 structopt = "0.3"
-metrics = "0.18"
+metrics = "0.20"
 mizer-media = { path = "components/media" }
 mizer-project-files = { path = "runtime/projects" }
 mizer-fixtures = { path = "components/fixtures" }

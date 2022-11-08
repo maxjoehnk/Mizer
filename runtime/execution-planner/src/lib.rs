@@ -164,6 +164,7 @@ impl ExecutionPlanner {
         self.nodes.clear();
         self.links.clear();
         self.commands.clear();
+        self.last_plan.take();
     }
 
     pub fn plan(&mut self) -> ExecutionPlan {
@@ -669,6 +670,58 @@ mod tests {
             vec![ExecutorCommand::RemoveLink(link)],
             plan.executors[0].commands
         );
+    }
+
+    #[test]
+    fn clear_should_not_add_remove_commands_for_nodes() {
+        let mut planner = ExecutionPlanner::new();
+        planner.add_executor(Executor {
+            id: ExecutorId("executor".into()),
+        });
+        let node = ExecutionNode {
+            path: "/node".into(),
+            attached_executor: None,
+        };
+        planner.add_node(node);
+        planner.plan();
+
+        planner.clear();
+        let plan = planner.plan();
+
+        assert!(plan.executors[0].commands.is_empty());
+    }
+
+    #[test]
+    fn clear_should_not_add_remove_commands_for_links() {
+        let mut planner = ExecutionPlanner::new();
+        planner.add_executor(Executor {
+            id: ExecutorId("executor".into()),
+        });
+        let node1 = ExecutionNode {
+            path: "/node1".into(),
+            attached_executor: None,
+        };
+        let node2 = ExecutionNode {
+            path: "/node2".into(),
+            attached_executor: None,
+        };
+        planner.add_node(node1);
+        planner.add_node(node2);
+        let link = NodeLink {
+            source: "/node1".into(),
+            source_port: "".into(),
+            target: "/node2".into(),
+            target_port: "".into(),
+            local: true,
+            port_type: PortType::Single,
+        };
+        planner.add_link(link);
+        planner.plan();
+
+        planner.clear();
+        let plan = planner.plan();
+
+        assert!(plan.executors[0].commands.is_empty());
     }
 
     fn order_plan(plan: &mut ExecutionPlan) {

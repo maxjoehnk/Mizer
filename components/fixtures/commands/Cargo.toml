@@ -12,5 +12,5 @@ mizer-nodes = { path = "../../../runtime/pipeline/nodes" }
 mizer-runtime = { path = "../../../runtime" }
 mizer-layouts = { path = "../../../runtime/layouts" }
 mizer-fixtures = { path = ".." }
-regex = "1.5"
+regex = "1.7"
 lazy_static = "1.4"

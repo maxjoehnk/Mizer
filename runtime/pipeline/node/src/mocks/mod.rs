@@ -52,7 +52,7 @@ impl NodeContext for NodeContextMock {
         todo!()
     }
 
-    fn output_port<P: Into<PortId>>(&self, _: P) -> &PortMetadata {
+    fn output_port<P: Into<PortId>>(&self, _: P) -> Option<&PortMetadata> {
         todo!()
     }
 

@@ -93,7 +93,10 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .unwrap_or_default()
     }
 
-    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Vec<Option<V>> {
+    fn read_changed_ports<P: Into<PortId>, V: PortValue + 'static>(
+        &self,
+        port: P,
+    ) -> Vec<Option<V>> {
         profiling::scope!("PipelineContext::read_changed_ports");
         let port = port.into();
         self.receivers
@@ -111,11 +114,11 @@ impl<'a> NodeContext for PipelineContext<'a> {
             .unwrap()
     }
 
-    fn output_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata {
+    fn output_port<P: Into<PortId>>(&self, port: P) -> Option<&PortMetadata> {
         let port = port.into();
-        let (_, metadata) = self.senders.and_then(|ports| ports.get(port)).unwrap();
-
-        metadata
+        self.senders
+            .and_then(|ports| ports.get(port))
+            .map(|(_, metadata)| metadata)
     }
 
     fn input_port_count<P: Into<PortId>>(&self, port: P) -> usize {

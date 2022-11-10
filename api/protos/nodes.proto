@@ -129,6 +129,7 @@ message Node {
     Value = 59;
     MqttInput = 60;
     MqttOutput = 61;
+    PlanScreen = 62;
   }
 
   enum NodePreviewType {
@@ -191,6 +192,7 @@ message NodeConfig {
     NumberToDataNodeConfig numberToDataConfig = 49;
     DataToNumberNodeConfig dataToNumberConfig = 50;
     ValueNodeConfig valueConfig = 51;
+    PlanScreenNodeConfig planScreenConfig = 52;
   }
 }
 
@@ -421,6 +423,11 @@ message DataToNumberNodeConfig {}
 
 message ValueNodeConfig {
   string value = 1;
+}
+
+message PlanScreenNodeConfig {
+  string plan_id = 1;
+  uint32 screen_id = 2;
 }
 
 message NodePosition {

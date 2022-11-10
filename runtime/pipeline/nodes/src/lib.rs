@@ -19,6 +19,7 @@ pub use mizer_opc_nodes::OpcOutputNode;
 pub use mizer_osc_nodes::{OscArgumentType, OscInputNode, OscOutputNode};
 pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
+pub use mizer_plan_nodes::PlanScreenNode;
 pub use mizer_port_operation_nodes::{
     EncoderNode, MergeMode, MergeNode, SelectNode, ThresholdNode,
 };
@@ -77,6 +78,13 @@ macro_rules! node_impl {
 
                 Ok(())
             }
+
+            pub fn prepare(&mut self, injector: &Injector) {
+                match self {
+                    $(Node::$node_type(node) => node.prepare(injector),)*
+                    Node::TestSink(_) => {},
+                }
+            }
         }
     };
 }
@@ -122,13 +130,6 @@ node_impl! {
     MqttOutput(MqttOutputNode),
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
+    PlanScreen(PlanScreenNode),
     Value(ValueNode),
-}
-
-impl Node {
-    pub fn prepare(&mut self, injector: &Injector) {
-        if let Node::Fixture(node) = self {
-            node.fixture_manager = injector.get().cloned();
-        }
-    }
 }

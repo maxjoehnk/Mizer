@@ -43,6 +43,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.NumberToData: "Number to Data",
   Node_NodeType.DataToNumber: "Data to Number",
   Node_NodeType.Value: "Value",
+  Node_NodeType.PlanScreen: "Plan Screen",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [

@@ -52,6 +52,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             NumberToData(node) => Self::numberToDataConfig(node.into()),
             DataToNumber(node) => Self::dataToNumberConfig(node.into()),
             Value(node) => Self::valueConfig(node.into()),
+            PlanScreen(node) => Self::planScreenConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -117,6 +118,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::numberToDataConfig(node) => Self::NumberToData(node.into()),
             NodeConfig_oneof_type::dataToNumberConfig(node) => Self::DataToNumber(node.into()),
             NodeConfig_oneof_type::valueConfig(node) => Self::Value(node.into()),
+            NodeConfig_oneof_type::planScreenConfig(node) => Self::PlanScreen(node.into()),
         }
     }
 }
@@ -1152,6 +1154,26 @@ impl From<mizer_nodes::ValueNode> for ValueNodeConfig {
     }
 }
 
+impl From<PlanScreenNodeConfig> for mizer_nodes::PlanScreenNode {
+    fn from(config: PlanScreenNodeConfig) -> Self {
+        Self {
+            plan: config.plan_id,
+            screen_id: config.screen_id.into(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_nodes::PlanScreenNode> for PlanScreenNodeConfig {
+    fn from(node: mizer_nodes::PlanScreenNode) -> Self {
+        Self {
+            plan_id: node.plan,
+            screen_id: node.screen_id.into(),
+            ..Default::default()
+        }
+    }
+}
+
 impl From<ValueNodeConfig> for mizer_nodes::ValueNode {
     fn from(config: ValueNodeConfig) -> Self {
         Self {
@@ -1204,6 +1226,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::NumberToData => Node_NodeType::NumberToData,
             NodeType::DataToNumber => Node_NodeType::DataToNumber,
             NodeType::Value => Node_NodeType::Value,
+            NodeType::PlanScreen => Node_NodeType::PlanScreen,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1253,6 +1276,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::NumberToData => NodeType::NumberToData,
             Node_NodeType::DataToNumber => NodeType::DataToNumber,
             Node_NodeType::Value => NodeType::Value,
+            Node_NodeType::PlanScreen => NodeType::PlanScreen,
         }
     }
 }

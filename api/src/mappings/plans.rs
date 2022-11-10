@@ -16,6 +16,18 @@ impl From<mizer_plan::Plan> for Plan {
                     ..Default::default()
                 })
                 .collect(),
+            screens: plan
+                .screens
+                .into_iter()
+                .map(|s| PlanScreen {
+                    id: s.screen_id.into(),
+                    x: s.x,
+                    y: s.y,
+                    width: s.width,
+                    height: s.height,
+                    ..Default::default()
+                })
+                .collect(),
             ..Default::default()
         }
     }

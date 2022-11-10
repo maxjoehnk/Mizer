@@ -111,11 +111,12 @@ const Plan$json = const {
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'positions', '3': 2, '4': 3, '5': 11, '6': '.mizer.plan.FixturePosition', '10': 'positions'},
+    const {'1': 'screens', '3': 3, '4': 3, '5': 11, '6': '.mizer.plan.PlanScreen', '10': 'screens'},
   ],
 };
 
 /// Descriptor for `Plan`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List planDescriptor = $convert.base64Decode('CgRQbGFuEhIKBG5hbWUYASABKAlSBG5hbWUSOQoJcG9zaXRpb25zGAIgAygLMhsubWl6ZXIucGxhbi5GaXh0dXJlUG9zaXRpb25SCXBvc2l0aW9ucw==');
+final $typed_data.Uint8List planDescriptor = $convert.base64Decode('CgRQbGFuEhIKBG5hbWUYASABKAlSBG5hbWUSOQoJcG9zaXRpb25zGAIgAygLMhsubWl6ZXIucGxhbi5GaXh0dXJlUG9zaXRpb25SCXBvc2l0aW9ucxIwCgdzY3JlZW5zGAMgAygLMhYubWl6ZXIucGxhbi5QbGFuU2NyZWVuUgdzY3JlZW5z');
 @$core.Deprecated('Use fixturePositionDescriptor instead')
 const FixturePosition$json = const {
   '1': 'FixturePosition',
@@ -128,3 +129,17 @@ const FixturePosition$json = const {
 
 /// Descriptor for `FixturePosition`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fixturePositionDescriptor = $convert.base64Decode('Cg9GaXh0dXJlUG9zaXRpb24SKQoCaWQYASABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSAmlkEgwKAXgYAiABKAVSAXgSDAoBeRgDIAEoBVIBeQ==');
+@$core.Deprecated('Use planScreenDescriptor instead')
+const PlanScreen$json = const {
+  '1': 'PlanScreen',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
+    const {'1': 'x', '3': 2, '4': 1, '5': 5, '10': 'x'},
+    const {'1': 'y', '3': 3, '4': 1, '5': 5, '10': 'y'},
+    const {'1': 'width', '3': 4, '4': 1, '5': 13, '10': 'width'},
+    const {'1': 'height', '3': 5, '4': 1, '5': 13, '10': 'height'},
+  ],
+};
+
+/// Descriptor for `PlanScreen`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List planScreenDescriptor = $convert.base64Decode('CgpQbGFuU2NyZWVuEg4KAmlkGAEgASgNUgJpZBIMCgF4GAIgASgFUgF4EgwKAXkYAyABKAVSAXkSFAoFd2lkdGgYBCABKA1SBXdpZHRoEhYKBmhlaWdodBgFIAEoDVIGaGVpZ2h0');

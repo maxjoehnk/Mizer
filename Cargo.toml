@@ -55,6 +55,7 @@ members = [
     "runtime/pipeline/nodes/connections/protocols/osc",
     "runtime/pipeline/nodes/data",
     "runtime/pipeline/nodes/pixels",
+    "runtime/pipeline/nodes/plan",
     "runtime/pipeline/nodes/video",
     "runtime/pipeline/ports",
     "runtime/processing",

@@ -1715,6 +1715,7 @@ pub struct Plan {
     // message fields
     pub name: ::std::string::String,
     pub positions: ::protobuf::RepeatedField<FixturePosition>,
+    pub screens: ::protobuf::RepeatedField<PlanScreen>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1783,11 +1784,41 @@ impl Plan {
     pub fn take_positions(&mut self) -> ::protobuf::RepeatedField<FixturePosition> {
         ::std::mem::replace(&mut self.positions, ::protobuf::RepeatedField::new())
     }
+
+    // repeated .mizer.plan.PlanScreen screens = 3;
+
+
+    pub fn get_screens(&self) -> &[PlanScreen] {
+        &self.screens
+    }
+    pub fn clear_screens(&mut self) {
+        self.screens.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_screens(&mut self, v: ::protobuf::RepeatedField<PlanScreen>) {
+        self.screens = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_screens(&mut self) -> &mut ::protobuf::RepeatedField<PlanScreen> {
+        &mut self.screens
+    }
+
+    // Take field
+    pub fn take_screens(&mut self) -> ::protobuf::RepeatedField<PlanScreen> {
+        ::std::mem::replace(&mut self.screens, ::protobuf::RepeatedField::new())
+    }
 }
 
 impl ::protobuf::Message for Plan {
     fn is_initialized(&self) -> bool {
         for v in &self.positions {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.screens {
             if !v.is_initialized() {
                 return false;
             }
@@ -1804,6 +1835,9 @@ impl ::protobuf::Message for Plan {
                 },
                 2 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.positions)?;
+                },
+                3 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.screens)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -1824,6 +1858,10 @@ impl ::protobuf::Message for Plan {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        for value in &self.screens {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1835,6 +1873,11 @@ impl ::protobuf::Message for Plan {
         }
         for v in &self.positions {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.screens {
+            os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
@@ -1886,6 +1929,11 @@ impl ::protobuf::Message for Plan {
                 |m: &Plan| { &m.positions },
                 |m: &mut Plan| { &mut m.positions },
             ));
+            fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<PlanScreen>>(
+                "screens",
+                |m: &Plan| { &m.screens },
+                |m: &mut Plan| { &mut m.screens },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Plan>(
                 "Plan",
                 fields,
@@ -1904,6 +1952,7 @@ impl ::protobuf::Clear for Plan {
     fn clear(&mut self) {
         self.name.clear();
         self.positions.clear();
+        self.screens.clear();
         self.unknown_fields.clear();
     }
 }
@@ -2167,6 +2216,301 @@ impl ::protobuf::reflect::ProtobufValue for FixturePosition {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct PlanScreen {
+    // message fields
+    pub id: u32,
+    pub x: i32,
+    pub y: i32,
+    pub width: u32,
+    pub height: u32,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a PlanScreen {
+    fn default() -> &'a PlanScreen {
+        <PlanScreen as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl PlanScreen {
+    pub fn new() -> PlanScreen {
+        ::std::default::Default::default()
+    }
+
+    // uint32 id = 1;
+
+
+    pub fn get_id(&self) -> u32 {
+        self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: u32) {
+        self.id = v;
+    }
+
+    // int32 x = 2;
+
+
+    pub fn get_x(&self) -> i32 {
+        self.x
+    }
+    pub fn clear_x(&mut self) {
+        self.x = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_x(&mut self, v: i32) {
+        self.x = v;
+    }
+
+    // int32 y = 3;
+
+
+    pub fn get_y(&self) -> i32 {
+        self.y
+    }
+    pub fn clear_y(&mut self) {
+        self.y = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_y(&mut self, v: i32) {
+        self.y = v;
+    }
+
+    // uint32 width = 4;
+
+
+    pub fn get_width(&self) -> u32 {
+        self.width
+    }
+    pub fn clear_width(&mut self) {
+        self.width = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_width(&mut self, v: u32) {
+        self.width = v;
+    }
+
+    // uint32 height = 5;
+
+
+    pub fn get_height(&self) -> u32 {
+        self.height
+    }
+    pub fn clear_height(&mut self) {
+        self.height = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_height(&mut self, v: u32) {
+        self.height = v;
+    }
+}
+
+impl ::protobuf::Message for PlanScreen {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.id = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.x = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int32()?;
+                    self.y = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.width = tmp;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.height = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.x != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.x, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.y != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.y, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.width != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.width, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.height != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.height, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.id != 0 {
+            os.write_uint32(1, self.id)?;
+        }
+        if self.x != 0 {
+            os.write_int32(2, self.x)?;
+        }
+        if self.y != 0 {
+            os.write_int32(3, self.y)?;
+        }
+        if self.width != 0 {
+            os.write_uint32(4, self.width)?;
+        }
+        if self.height != 0 {
+            os.write_uint32(5, self.height)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> PlanScreen {
+        PlanScreen::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "id",
+                |m: &PlanScreen| { &m.id },
+                |m: &mut PlanScreen| { &mut m.id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "x",
+                |m: &PlanScreen| { &m.x },
+                |m: &mut PlanScreen| { &mut m.x },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeInt32>(
+                "y",
+                |m: &PlanScreen| { &m.y },
+                |m: &mut PlanScreen| { &mut m.y },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "width",
+                |m: &PlanScreen| { &m.width },
+                |m: &mut PlanScreen| { &mut m.width },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "height",
+                |m: &PlanScreen| { &m.height },
+                |m: &mut PlanScreen| { &mut m.height },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<PlanScreen>(
+                "PlanScreen",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static PlanScreen {
+        static instance: ::protobuf::rt::LazyV2<PlanScreen> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(PlanScreen::new)
+    }
+}
+
+impl ::protobuf::Clear for PlanScreen {
+    fn clear(&mut self) {
+        self.id = 0;
+        self.x = 0;
+        self.y = 0;
+        self.width = 0;
+        self.height = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for PlanScreen {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for PlanScreen {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0bplans.proto\x12\nmizer.plan\x1a\x0efixtures.proto\"\x0e\n\x0cPlans\
     Request\"$\n\x0eAddPlanRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04\
@@ -2185,21 +2529,25 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     R\x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.\
     FixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\
     \n\x01y\x18\x04\x20\x01(\x05R\x01y\"/\n\x05Plans\x12&\n\x05plans\x18\x01\
-    \x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"U\n\x04Plan\x12\x12\n\x04n\
-    ame\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\x03(\x0b2\
-    \x1b.mizer.plan.FixturePositionR\tpositions\"X\n\x0fFixturePosition\x12)\
-    \n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.FixtureIdR\x02id\x12\
-    \x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\
-    \x05R\x01y2\xd7\x03\n\x08PlansApi\x129\n\x08GetPlans\x12\x18.mizer.plan.\
-    PlansRequest\x1a\x11.mizer.plan.Plans\"\0\x12:\n\x07AddPlan\x12\x1a.mize\
-    r.plan.AddPlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\n\nRemovePlan\
-    \x12\x1d.mizer.plan.RemovePlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12@\
-    \n\nRenamePlan\x12\x1d.mizer.plan.RenamePlanRequest\x1a\x11.mizer.plan.P\
-    lans\"\0\x12D\n\x0cMoveFixtures\x12\x1f.mizer.plan.MoveFixturesRequest\
-    \x1a\x11.mizer.plan.Plans\"\0\x12B\n\x0bMoveFixture\x12\x1e.mizer.plan.M\
-    oveFixtureRequest\x1a\x11.mizer.plan.Plans\"\0\x12F\n\rAlignFixtures\x12\
-    \x20.mizer.plan.AlignFixturesRequest\x1a\x11.mizer.plan.Plans\"\0b\x06pr\
-    oto3\
+    \x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"\x87\x01\n\x04Plan\x12\x12\
+    \n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\x03\
+    (\x0b2\x1b.mizer.plan.FixturePositionR\tpositions\x120\n\x07screens\x18\
+    \x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreenR\x07screens\"X\n\x0fFixture\
+    Position\x12)\n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.FixtureId\
+    R\x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\
+    \x20\x01(\x05R\x01y\"f\n\nPlanScreen\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
+    \x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\
+    \x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05width\x12\
+    \x16\n\x06height\x18\x05\x20\x01(\rR\x06height2\xd7\x03\n\x08PlansApi\
+    \x129\n\x08GetPlans\x12\x18.mizer.plan.PlansRequest\x1a\x11.mizer.plan.P\
+    lans\"\0\x12:\n\x07AddPlan\x12\x1a.mizer.plan.AddPlanRequest\x1a\x11.miz\
+    er.plan.Plans\"\0\x12@\n\nRemovePlan\x12\x1d.mizer.plan.RemovePlanReques\
+    t\x1a\x11.mizer.plan.Plans\"\0\x12@\n\nRenamePlan\x12\x1d.mizer.plan.Ren\
+    amePlanRequest\x1a\x11.mizer.plan.Plans\"\0\x12D\n\x0cMoveFixtures\x12\
+    \x1f.mizer.plan.MoveFixturesRequest\x1a\x11.mizer.plan.Plans\"\0\x12B\n\
+    \x0bMoveFixture\x12\x1e.mizer.plan.MoveFixtureRequest\x1a\x11.mizer.plan\
+    .Plans\"\0\x12F\n\rAlignFixtures\x12\x20.mizer.plan.AlignFixturesRequest\
+    \x1a\x11.mizer.plan.Plans\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

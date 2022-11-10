@@ -68,6 +68,7 @@ pub trait NodeDowncast {
             NodeType::NumberToData => Node::NumberToData(self.downcast_node(node_type).unwrap()),
             NodeType::DataToNumber => Node::DataToNumber(self.downcast_node(node_type).unwrap()),
             NodeType::Value => Node::Value(self.downcast_node(node_type).unwrap()),
+            NodeType::PlanScreen => Node::PlanScreen(self.downcast_node(node_type).unwrap()),
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

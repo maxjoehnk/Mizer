@@ -84,34 +84,57 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
                 height: 1000,
                 child: DragDropSelection(
                     onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
-            CustomMultiChildLayout(
-                delegate: PlanLayoutDelegate(widget.plan),
-                children: widget.plan.positions.map((p) {
-                  var selected = widget.programmerState?.activeFixtures
-                          .firstWhereOrNull((f) => f.overlaps(p.id)) !=
-                      null;
-                  var child = Fixture2DView(
-                      fixture: p,
-                      ref: _fixturesPointer!,
-                      selected: selected,
-                      onSelect: () => this._addFixtureToSelection(p.id),
-                      onUnselect: () => this._removeFixtureFromSelection(p.id));
-                  return LayoutId(
-                      id: p.id,
-                      child: widget.setupMode
-                          ? Draggable(
-                              hitTestBehavior: HitTestBehavior.translucent,
-                              data: p,
-                              feedback: _getDragFeedback(p),
-                              child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
-                            )
-                          : MouseRegion(child: child, cursor: SystemMouseCursors.click));
-                }).toList()),
+            CustomMultiChildLayout(delegate: PlanLayoutDelegate(widget.plan), children: [
+              ..._fixtures,
+              ..._screens,
+            ]),
             if (_selectionState != null) SelectionIndicator(_selectionState!),
           ],
         ),
       ),
     );
+  }
+
+  Iterable<Widget> get _fixtures {
+    return widget.plan.positions.map((p) {
+                var selected = widget.programmerState?.activeFixtures
+                        .firstWhereOrNull((f) => f.overlaps(p.id)) !=
+                    null;
+                var child = Fixture2DView(
+                    fixture: p,
+                    ref: _fixturesPointer!,
+                    selected: selected,
+                    onSelect: () => this._addFixtureToSelection(p.id),
+                    onUnselect: () => this._removeFixtureFromSelection(p.id));
+                return LayoutId(
+                    id: p.id,
+                    child: widget.setupMode
+                        ? Draggable(
+                            hitTestBehavior: HitTestBehavior.translucent,
+                            data: p,
+                            feedback: _getDragFeedback(p),
+                            child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
+                          )
+                        : MouseRegion(child: child, cursor: SystemMouseCursors.click));
+              });
+  }
+
+  Iterable<Widget> get _screens {
+    return widget.plan.screens.map((s) {
+      return LayoutId(id: "screen-${s.id}", child: Container(
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(2),
+            side: BorderSide(
+              color: Colors.white,
+              width: 1,
+              strokeAlign: StrokeAlign.center,
+              style: BorderStyle.solid,
+            )
+          )
+        ),
+      ));
+    });
   }
 
   void _onSelection(Rect rect) {
@@ -274,6 +297,16 @@ class PlanLayoutDelegate extends MultiChildLayoutDelegate {
       var offset = _convertToScreenPosition(fixture);
       positionChild(fixture.id, offset);
     }
+    for (var screen in plan.screens) {
+      var screenId = "screen-${screen.id}";
+      var size = Size(
+        screen.width * fieldSize,
+        screen.height * fieldSize
+      );
+      layoutChild(screenId, BoxConstraints.tight(size));
+      var offset = _convertScreenToScreenPosition(screen);
+      positionChild(screenId, offset);
+    }
   }
 
   @override
@@ -392,4 +425,8 @@ Offset _convertToScreenPosition(FixturePosition fixture) {
 
 Offset _convertFromScreenPosition(Offset offset) {
   return offset / fieldSize;
+}
+
+Offset _convertScreenToScreenPosition(PlanScreen screen) {
+  return Offset(screen.x.toDouble(), screen.y.toDouble()) * fieldSize;
 }

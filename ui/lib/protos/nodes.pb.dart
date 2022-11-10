@@ -3,7 +3,7 @@
 //  source: nodes.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -1056,6 +1056,7 @@ enum NodeConfig_Type {
   numberToDataConfig, 
   dataToNumberConfig, 
   valueConfig, 
+  planScreenConfig, 
   notSet
 }
 
@@ -1102,10 +1103,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     49 : NodeConfig_Type.numberToDataConfig,
     50 : NodeConfig_Type.dataToNumberConfig,
     51 : NodeConfig_Type.valueConfig,
+    52 : NodeConfig_Type.planScreenConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1147,6 +1149,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<NumberToDataNodeConfig>(49, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberToDataConfig', protoName: 'numberToDataConfig', subBuilder: NumberToDataNodeConfig.create)
     ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', protoName: 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
     ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
+    ..aOM<PlanScreenNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1193,6 +1196,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     NumberToDataNodeConfig? numberToDataConfig,
     DataToNumberNodeConfig? dataToNumberConfig,
     ValueNodeConfig? valueConfig,
+    PlanScreenNodeConfig? planScreenConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1317,6 +1321,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (valueConfig != null) {
       _result.valueConfig = valueConfig;
+    }
+    if (planScreenConfig != null) {
+      _result.planScreenConfig = planScreenConfig;
     }
     return _result;
   }
@@ -1794,6 +1801,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearValueConfig() => clearField(51);
   @$pb.TagNumber(51)
   ValueNodeConfig ensureValueConfig() => $_ensure(40);
+
+  @$pb.TagNumber(52)
+  PlanScreenNodeConfig get planScreenConfig => $_getN(41);
+  @$pb.TagNumber(52)
+  set planScreenConfig(PlanScreenNodeConfig v) { setField(52, v); }
+  @$pb.TagNumber(52)
+  $core.bool hasPlanScreenConfig() => $_has(41);
+  @$pb.TagNumber(52)
+  void clearPlanScreenConfig() => clearField(52);
+  @$pb.TagNumber(52)
+  PlanScreenNodeConfig ensurePlanScreenConfig() => $_ensure(41);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4017,6 +4035,67 @@ class ValueNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
   void clearValue() => clearField(1);
+}
+
+class PlanScreenNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlanScreenNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'screenId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  PlanScreenNodeConfig._() : super();
+  factory PlanScreenNodeConfig({
+    $core.String? planId,
+    $core.int? screenId,
+  }) {
+    final _result = create();
+    if (planId != null) {
+      _result.planId = planId;
+    }
+    if (screenId != null) {
+      _result.screenId = screenId;
+    }
+    return _result;
+  }
+  factory PlanScreenNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PlanScreenNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PlanScreenNodeConfig clone() => PlanScreenNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PlanScreenNodeConfig copyWith(void Function(PlanScreenNodeConfig) updates) => super.copyWith((message) => updates(message as PlanScreenNodeConfig)) as PlanScreenNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PlanScreenNodeConfig create() => PlanScreenNodeConfig._();
+  PlanScreenNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<PlanScreenNodeConfig> createRepeated() => $pb.PbList<PlanScreenNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static PlanScreenNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PlanScreenNodeConfig>(create);
+  static PlanScreenNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get planId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set planId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPlanId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPlanId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get screenId => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set screenId($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasScreenId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearScreenId() => clearField(2);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

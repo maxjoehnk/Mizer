@@ -105,6 +105,7 @@ impl PipelineAccess {
             NumberToData(node) => self.add_node(path, node),
             DataToNumber(node) => self.add_node(path, node),
             Value(node) => self.add_node(path, node),
+            PlanScreen(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

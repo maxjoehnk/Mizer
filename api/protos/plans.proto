@@ -62,10 +62,19 @@ message Plans {
 message Plan {
   string name = 1;
   repeated FixturePosition positions = 2;
+  repeated PlanScreen screens = 3;
 }
 
 message FixturePosition {
   mizer.fixtures.FixtureId id = 1;
   int32 x = 2;
   int32 y = 3;
+}
+
+message PlanScreen {
+  uint32 id = 1;
+  int32 x = 2;
+  int32 y = 3;
+  uint32 width = 4;
+  uint32 height = 5;
 }

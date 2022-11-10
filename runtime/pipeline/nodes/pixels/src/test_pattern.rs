@@ -78,7 +78,9 @@ impl ProcessingNode for PixelPatternGeneratorNode {
     type State = PixelPatternGeneratorState;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        let (width, height) = context.output_port("output").dimensions.unwrap();
+        let Some((width, height)) = context.output_port("output").and_then(|port| port.dimensions) else {
+            return Ok(());
+        };
 
         let pixel_count = width * height;
         if pixel_count != state.pixels.len() as u64 {

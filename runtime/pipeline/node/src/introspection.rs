@@ -51,6 +51,7 @@ pub enum NodeType {
     NumberToData,
     DataToNumber,
     Value,
+    PlanScreen,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -102,6 +103,7 @@ impl NodeType {
             NumberToData => "number-to-data",
             DataToNumber => "data-to-number",
             Value => "value",
+            PlanScreen => "plan-screen",
             TestSink => "test-sink",
         }
         .to_string()

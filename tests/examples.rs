@@ -16,6 +16,7 @@ use test_case::test_case;
 #[test_case("osc"; "osc")]
 #[test_case("pixels"; "pixels")]
 #[test_case("plan"; "plan")]
+#[test_case("plan_screen"; "plan_screen")]
 #[test_case("presets"; "presets")]
 #[test_case("sacn"; "sacn")]
 #[test_case("sequence"; "sequence")]

@@ -3949,6 +3949,7 @@ dependencies = [
  "mizer-osc-nodes",
  "mizer-oscillator-nodes",
  "mizer-pixel-nodes",
+ "mizer-plan-nodes",
  "mizer-port-operation-nodes",
  "mizer-scripting-nodes",
  "mizer-sequence-nodes",
@@ -4074,6 +4075,19 @@ dependencies = [
  "profiling",
  "serde",
  "test-case",
+]
+
+[[package]]
+name = "mizer-plan-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-fixtures",
+ "mizer-node",
+ "mizer-plan",
+ "mizer-util",
+ "serde",
 ]
 
 [[package]]

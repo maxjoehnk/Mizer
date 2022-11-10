@@ -64,6 +64,10 @@ impl PipelineNode for FixtureNode {
     fn node_type(&self) -> NodeType {
         NodeType::Fixture
     }
+
+    fn prepare(&mut self, injector: &Injector) {
+        self.fixture_manager = injector.get().cloned();
+    }
 }
 
 impl ProcessingNode for FixtureNode {

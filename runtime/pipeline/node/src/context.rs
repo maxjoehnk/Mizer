@@ -17,7 +17,7 @@ pub trait NodeContext: PreviewContext {
     ) -> Vec<Option<V>>;
 
     fn input_port<P: Into<PortId>>(&self, port: P) -> PortMetadata;
-    fn output_port<P: Into<PortId>>(&self, port: P) -> &PortMetadata;
+    fn output_port<P: Into<PortId>>(&self, port: P) -> Option<&PortMetadata>;
     fn input_port_count<P: Into<PortId>>(&self, port: P) -> usize;
 
     fn input_ports(&self) -> Vec<PortId>;

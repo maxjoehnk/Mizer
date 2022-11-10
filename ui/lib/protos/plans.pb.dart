@@ -513,6 +513,7 @@ class Plan extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Plan', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plan'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..pc<FixturePosition>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positions', $pb.PbFieldType.PM, subBuilder: FixturePosition.create)
+    ..pc<PlanScreen>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'screens', $pb.PbFieldType.PM, subBuilder: PlanScreen.create)
     ..hasRequiredFields = false
   ;
 
@@ -520,6 +521,7 @@ class Plan extends $pb.GeneratedMessage {
   factory Plan({
     $core.String? name,
     $core.Iterable<FixturePosition>? positions,
+    $core.Iterable<PlanScreen>? screens,
   }) {
     final _result = create();
     if (name != null) {
@@ -527,6 +529,9 @@ class Plan extends $pb.GeneratedMessage {
     }
     if (positions != null) {
       _result.positions.addAll(positions);
+    }
+    if (screens != null) {
+      _result.screens.addAll(screens);
     }
     return _result;
   }
@@ -562,6 +567,9 @@ class Plan extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<FixturePosition> get positions => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<PlanScreen> get screens => $_getList(2);
 }
 
 class FixturePosition extends $pb.GeneratedMessage {
@@ -639,5 +647,108 @@ class FixturePosition extends $pb.GeneratedMessage {
   $core.bool hasY() => $_has(2);
   @$pb.TagNumber(3)
   void clearY() => clearField(3);
+}
+
+class PlanScreen extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlanScreen', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.plan'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  PlanScreen._() : super();
+  factory PlanScreen({
+    $core.int? id,
+    $core.int? x,
+    $core.int? y,
+    $core.int? width,
+    $core.int? height,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (x != null) {
+      _result.x = x;
+    }
+    if (y != null) {
+      _result.y = y;
+    }
+    if (width != null) {
+      _result.width = width;
+    }
+    if (height != null) {
+      _result.height = height;
+    }
+    return _result;
+  }
+  factory PlanScreen.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PlanScreen.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PlanScreen clone() => PlanScreen()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PlanScreen copyWith(void Function(PlanScreen) updates) => super.copyWith((message) => updates(message as PlanScreen)) as PlanScreen; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PlanScreen create() => PlanScreen._();
+  PlanScreen createEmptyInstance() => create();
+  static $pb.PbList<PlanScreen> createRepeated() => $pb.PbList<PlanScreen>();
+  @$core.pragma('dart2js:noInline')
+  static PlanScreen getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PlanScreen>(create);
+  static PlanScreen? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get id => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set id($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get x => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set x($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasX() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearX() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get y => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set y($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasY() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearY() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get width => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set width($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWidth() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWidth() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get height => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set height($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasHeight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearHeight() => clearField(5);
 }
 

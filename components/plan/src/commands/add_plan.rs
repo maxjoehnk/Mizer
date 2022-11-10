@@ -21,6 +21,7 @@ impl<'a> Command<'a> for AddPlanCommand {
         plans.push(Plan {
             name: self.name.clone(),
             fixtures: Default::default(),
+            screens: Default::default(),
         });
         plans_access.set(plans);
 

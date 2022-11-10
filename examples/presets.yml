@@ -185,14 +185,14 @@ fixtures:
     fixture: "ofl:stairville:wild-wash-132-led-rgb"
     channel: 68
     universe: 1
-    mode: 6-channel
+    mode: 6Ch
     output: ~
   - id: 5
     name: Wild Wash 1
     fixture: "ofl:stairville:wild-wash-132-led-rgb"
     channel: 50
     universe: 1
-    mode: 6-channel
+    mode: 6Ch
     output: ~
   - id: 4
     name: LED Bar 3 HCL 4
@@ -213,14 +213,14 @@ fixtures:
     fixture: "ofl:stairville:wild-wash-132-led-rgb"
     channel: 56
     universe: 1
-    mode: 6-channel
+    mode: 6Ch
     output: ~
   - id: 7
     name: Wild Wash 3
     fixture: "ofl:stairville:wild-wash-132-led-rgb"
     channel: 62
     universe: 1
-    mode: 6-channel
+    mode: 6Ch
     output: ~
   - id: 1
     name: LED Bar 3 HCL 1

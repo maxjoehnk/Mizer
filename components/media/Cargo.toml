@@ -20,7 +20,7 @@ multer = "2.0"
 async-walkdir = "0.2"
 resvg = "0.20"
 usvg = "0.20"
-tiny-skia = "0.6"
+tiny-skia = "0.8"
 sled = "0.34"
 
 [dev-dependencies]

@@ -15,7 +15,7 @@ mizer-node = { path = "../../runtime/pipeline/node" }
 mizer-protocol-dmx = { path = "../connections/protocols/dmx" }
 profiling = "1"
 serde = { version = "1", features = ["derive"] }
-postage = { version = "0.4", features = ["futures-traits"] }
+postage = { version = "0.5", features = ["futures-traits"] }
 futures = "0.3"
 pinboard = "2.1"
 parking_lot = "0.12"

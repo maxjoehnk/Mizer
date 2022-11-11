@@ -18,7 +18,7 @@ async-std = "1.12"
 tide = { version = "0.16", default-features = false, features = ["h1-server", "logger"] }
 multer = "2.0"
 async-walkdir = "0.2"
-resvg = "0.20"
+resvg = "0.25"
 usvg = "0.20"
 tiny-skia = "0.6"
 sled = "0.34"

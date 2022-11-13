@@ -27,7 +27,7 @@ mizer-commander = { path = "commander" }
 profiling = "1.0"
 serde = { version = "1", features = ["derive"] }
 tracing = "0.1"
-tracing-unwrap = "0.9"
+tracing-unwrap = "0.10"
 
 [dev-dependencies]
 env_logger = "0.9"

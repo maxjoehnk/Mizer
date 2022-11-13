@@ -54,9 +54,10 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
       return Container();
     }
     return InteractiveViewer(
-      minScale: 0.5,
+      minScale: 0.1,
       maxScale: 5,
       scaleFactor: 500,
+      boundaryMargin: EdgeInsets.all(double.infinity),
       transformationController: _transformationController,
       child: DragTarget(
         onWillAccept: (details) => details is FixturePosition,

@@ -79,15 +79,13 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
         builder: (context, candidates, rejects) => Stack(
           fit: StackFit.expand,
           children: [
+            CustomMultiChildLayout(delegate: PlanScreensLayoutDelegate(widget.plan), children: _screens),
             SizedBox(
                 width: 1000,
                 height: 1000,
                 child: DragDropSelection(
                     onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
-            CustomMultiChildLayout(delegate: PlanLayoutDelegate(widget.plan), children: [
-              ..._fixtures,
-              ..._screens,
-            ]),
+            CustomMultiChildLayout(delegate: PlanFixturesLayoutDelegate(widget.plan), children: _fixtures),
             if (_selectionState != null) SelectionIndicator(_selectionState!),
           ],
         ),
@@ -95,7 +93,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
     );
   }
 
-  Iterable<Widget> get _fixtures {
+  List<Widget> get _fixtures {
     return widget.plan.positions.map((p) {
                 var selected = widget.programmerState?.activeFixtures
                         .firstWhereOrNull((f) => f.overlaps(p.id)) !=
@@ -116,10 +114,11 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
                             child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
                           )
                         : MouseRegion(child: child, cursor: SystemMouseCursors.click));
-              });
+              })
+    .toList();
   }
 
-  Iterable<Widget> get _screens {
+  List<Widget> get _screens {
     return widget.plan.screens.map((s) {
       return LayoutId(id: "screen-${s.id}", child: Container(
         decoration: ShapeDecoration(
@@ -134,7 +133,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
           )
         ),
       ));
-    });
+    }).toList();
   }
 
   void _onSelection(Rect rect) {
@@ -284,10 +283,10 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
   }
 }
 
-class PlanLayoutDelegate extends MultiChildLayoutDelegate {
+class PlanFixturesLayoutDelegate extends MultiChildLayoutDelegate {
   final Plan plan;
 
-  PlanLayoutDelegate(this.plan);
+  PlanFixturesLayoutDelegate(this.plan);
 
   @override
   void performLayout(Size size) {
@@ -297,11 +296,26 @@ class PlanLayoutDelegate extends MultiChildLayoutDelegate {
       var offset = _convertToScreenPosition(fixture);
       positionChild(fixture.id, offset);
     }
+  }
+
+  @override
+  bool shouldRelayout(covariant PlanFixturesLayoutDelegate oldDelegate) {
+    return plan.positions != oldDelegate.plan.positions;
+  }
+}
+
+class PlanScreensLayoutDelegate extends MultiChildLayoutDelegate {
+  final Plan plan;
+
+  PlanScreensLayoutDelegate(this.plan);
+
+  @override
+  void performLayout(Size size) {
     for (var screen in plan.screens) {
-      var screenId = "screen-${screen.id}";
+      var screenId = screen.id;
       var size = Size(
-        screen.width * fieldSize,
-        screen.height * fieldSize
+          screen.width * fieldSize,
+          screen.height * fieldSize
       );
       layoutChild(screenId, BoxConstraints.tight(size));
       var offset = _convertScreenToScreenPosition(screen);
@@ -310,8 +324,8 @@ class PlanLayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(covariant PlanLayoutDelegate oldDelegate) {
-    return plan.positions != oldDelegate.plan.positions;
+  bool shouldRelayout(covariant PlanScreensLayoutDelegate oldDelegate) {
+    return plan.screens != oldDelegate.plan.screens;
   }
 }
 

@@ -103,6 +103,16 @@ fn read_control(
     definition: &SubFixtureDefinition,
     control: FixtureFaderControl,
 ) -> Option<f64> {
+    if let FixtureFaderControl::ColorMixer(channel) = control {
+        let color_mixer = definition.color_mixer?;
+        let rgb = color_mixer.rgb();
+
+        return match channel {
+            ColorChannel::Red => Some(rgb.red),
+            ColorChannel::Green => Some(rgb.green),
+            ColorChannel::Blue => Some(rgb.blue),
+        };
+    }
     match definition.controls.get_channel(&control) {
         Some(SubFixtureControlChannel::Channel(ref channel)) => {
             channel_values.get(channel).copied()

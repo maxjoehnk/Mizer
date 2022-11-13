@@ -226,6 +226,16 @@ impl IFixtureMut for Fixture {
 impl IFixture for Fixture {
     fn read_control(&self, control: FixtureFaderControl) -> Option<f64> {
         profiling::scope!("Fixture::read_control");
+        if let FixtureFaderControl::ColorMixer(channel) = control {
+            let color_mixer = self.current_mode.color_mixer?;
+            let rgb = color_mixer.rgb();
+
+            return match channel {
+                ColorChannel::Red => Some(rgb.red),
+                ColorChannel::Green => Some(rgb.green),
+                ColorChannel::Blue => Some(rgb.blue),
+            };
+        }
         match self.current_mode.controls.get_channel(&control) {
             Some(FixtureControlChannel::Channel(ref channel)) => self
                 .channel_values

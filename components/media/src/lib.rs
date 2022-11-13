@@ -52,12 +52,15 @@ impl MediaServer {
                     self.db.clear();
                 }
                 MediaServerCommand::ImportFile(model, file_path, resp) => {
-                    let document = self
-                        .import_file
-                        .import_file(model, &file_path)
-                        .await
-                        .unwrap();
-                    resp.send(document).unwrap();
+                    match self.import_file.import_file(model, &file_path).await {
+                        Ok(document) => {
+                            resp.send(Some(document)).unwrap();
+                        }
+                        Err(err) => {
+                            log::error!("Error importing file {err:?}");
+                            resp.send(None).unwrap();
+                        }
+                    }
                 }
                 MediaServerCommand::CreateTag(model, resp) => match self.db.add_tag(model) {
                     Ok(document) => resp.send(document).unwrap(),

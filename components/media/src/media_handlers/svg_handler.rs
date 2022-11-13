@@ -24,7 +24,7 @@ impl MediaHandler for SvgHandler {
         let tree = usvg::Tree::from_data(&buffer, &Options::default().to_ref())?;
         let mut pixmap = Pixmap::new(THUMBNAIL_SIZE, THUMBNAIL_SIZE).unwrap();
         let pixel_buffer = pixmap.as_mut();
-        let bounding_box = tree.root().calculate_bbox().unwrap();
+        let bounding_box = tree.root.calculate_bbox().unwrap();
         let size = if bounding_box.width() > bounding_box.height() {
             usvg::FitTo::Width(THUMBNAIL_SIZE)
         } else {

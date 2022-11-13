@@ -47,9 +47,9 @@ impl From<FixtureState> for FFIFixtureState {
         let (red, green, blue) = state.color.unwrap_or_default();
 
         Self {
-            has_brightness: if state.brightness.is_some() { 1 } else { 0 },
+            has_brightness: state.brightness.is_some().into(),
             brightness: state.brightness.unwrap_or_default(),
-            has_color: if state.color.is_some() { 1 } else { 0 },
+            has_color: state.color.is_some().into(),
             color_red: red,
             color_green: green,
             color_blue: blue,

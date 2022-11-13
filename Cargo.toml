@@ -130,7 +130,7 @@ mizer-util = { path = "util" }
 mizer-message-bus = { path = "util/bus" }
 mizer-settings = { path = "runtime/settings" }
 mizer-command-executor = { path = "runtime/commander/executor" }
-tokio = { version = "1.16", features = ["rt-multi-thread", "macros", "time", "rt"] }
+tokio = { version = "1.21", features = ["rt-multi-thread", "macros", "time", "rt"] }
 futures = "0.3"
 pinboard = "2.1"
 dashmap = "4"

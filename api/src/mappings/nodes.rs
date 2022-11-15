@@ -53,6 +53,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             DataToNumber(node) => Self::dataToNumberConfig(node.into()),
             Value(node) => Self::valueConfig(node.into()),
             PlanScreen(node) => Self::planScreenConfig(node.into()),
+            VideoPixelFile(node) => Self::videoPixelFileConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -119,6 +120,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::dataToNumberConfig(node) => Self::DataToNumber(node.into()),
             NodeConfig_oneof_type::valueConfig(node) => Self::Value(node.into()),
             NodeConfig_oneof_type::planScreenConfig(node) => Self::PlanScreen(node.into()),
+            NodeConfig_oneof_type::videoPixelFileConfig(node) => Self::VideoPixelFile(node.into()),
         }
     }
 }
@@ -1154,6 +1156,14 @@ impl From<mizer_nodes::ValueNode> for ValueNodeConfig {
     }
 }
 
+impl From<ValueNodeConfig> for mizer_nodes::ValueNode {
+    fn from(config: ValueNodeConfig) -> Self {
+        Self {
+            value: config.value,
+        }
+    }
+}
+
 impl From<PlanScreenNodeConfig> for mizer_nodes::PlanScreenNode {
     fn from(config: PlanScreenNodeConfig) -> Self {
         Self {
@@ -1174,10 +1184,20 @@ impl From<mizer_nodes::PlanScreenNode> for PlanScreenNodeConfig {
     }
 }
 
-impl From<ValueNodeConfig> for mizer_nodes::ValueNode {
-    fn from(config: ValueNodeConfig) -> Self {
+impl From<VideoPixelFileNodeConfig> for mizer_nodes::VideoPixelFileNode {
+    fn from(config: VideoPixelFileNodeConfig) -> Self {
         Self {
-            value: config.value,
+            file_path: config.file_path,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_nodes::VideoPixelFileNode> for VideoPixelFileNodeConfig {
+    fn from(node: mizer_nodes::VideoPixelFileNode) -> Self {
+        Self {
+            file_path: node.file_path,
+            ..Default::default()
         }
     }
 }
@@ -1227,6 +1247,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::DataToNumber => Node_NodeType::DataToNumber,
             NodeType::Value => Node_NodeType::Value,
             NodeType::PlanScreen => Node_NodeType::PlanScreen,
+            NodeType::VideoPixelFile => Node_NodeType::VideoPixelFile,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1277,6 +1298,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::DataToNumber => NodeType::DataToNumber,
             Node_NodeType::Value => NodeType::Value,
             Node_NodeType::PlanScreen => NodeType::PlanScreen,
+            Node_NodeType::VideoPixelFile => NodeType::VideoPixelFile,
         }
     }
 }

@@ -29,6 +29,7 @@ pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
+pub use mizer_video_pixel_nodes::VideoPixelFileNode;
 use serde::{Deserialize, Serialize};
 
 mod container_node;
@@ -131,5 +132,6 @@ node_impl! {
     NumberToData(NumberToDataNode),
     DataToNumber(DataToNumberNode),
     PlanScreen(PlanScreenNode),
+    VideoPixelFile(VideoPixelFileNode),
     Value(ValueNode),
 }

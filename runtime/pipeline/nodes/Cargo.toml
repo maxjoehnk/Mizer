@@ -27,6 +27,7 @@ mizer-input-nodes = { path = "inputs" }
 mizer-midi-nodes = { path = "connections/protocols/midi" }
 mizer-mqtt-nodes = { path = "connections/protocols/mqtt" }
 mizer-pixel-nodes = { path = "pixels" }
+mizer-video-pixel-nodes = { path = "pixels/video" }
 mizer-opc-nodes = { path = "connections/protocols/opc" }
 mizer-osc-nodes = { path = "connections/protocols/osc" }
 mizer-video-nodes = { path = "video" }

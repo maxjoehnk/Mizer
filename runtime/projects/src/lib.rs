@@ -199,6 +199,7 @@ pub enum NodeConfig {
     DataToNumber(mizer_nodes::DataToNumberNode),
     DataValue(mizer_nodes::ValueNode),
     PlanScreen(mizer_nodes::PlanScreenNode),
+    VideoPixelFile(mizer_nodes::VideoPixelFileNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -246,6 +247,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::DataToNumber(node) => Self::DataToNumber(node),
             NodeConfig::DataValue(node) => Self::Value(node),
             NodeConfig::PlanScreen(node) => Self::PlanScreen(node),
+            NodeConfig::VideoPixelFile(node) => Self::VideoPixelFile(node),
         }
     }
 }
@@ -295,6 +297,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::DataToNumber(node) => Self::DataToNumber(node),
             mizer_nodes::Node::Value(node) => Self::DataValue(node),
             mizer_nodes::Node::PlanScreen(node) => Self::PlanScreen(node),
+            mizer_nodes::Node::VideoPixelFile(node) => Self::VideoPixelFile(node),
             mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }

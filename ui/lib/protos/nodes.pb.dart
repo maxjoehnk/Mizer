@@ -1057,6 +1057,7 @@ enum NodeConfig_Type {
   dataToNumberConfig, 
   valueConfig, 
   planScreenConfig, 
+  videoPixelFileConfig, 
   notSet
 }
 
@@ -1104,10 +1105,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     50 : NodeConfig_Type.dataToNumberConfig,
     51 : NodeConfig_Type.valueConfig,
     52 : NodeConfig_Type.planScreenConfig,
+    53 : NodeConfig_Type.videoPixelFileConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1150,6 +1152,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', protoName: 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
     ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
     ..aOM<PlanScreenNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
+    ..aOM<VideoPixelFileNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'videoPixelFileConfig', protoName: 'videoPixelFileConfig', subBuilder: VideoPixelFileNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1197,6 +1200,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     DataToNumberNodeConfig? dataToNumberConfig,
     ValueNodeConfig? valueConfig,
     PlanScreenNodeConfig? planScreenConfig,
+    VideoPixelFileNodeConfig? videoPixelFileConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1324,6 +1328,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (planScreenConfig != null) {
       _result.planScreenConfig = planScreenConfig;
+    }
+    if (videoPixelFileConfig != null) {
+      _result.videoPixelFileConfig = videoPixelFileConfig;
     }
     return _result;
   }
@@ -1812,6 +1819,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearPlanScreenConfig() => clearField(52);
   @$pb.TagNumber(52)
   PlanScreenNodeConfig ensurePlanScreenConfig() => $_ensure(41);
+
+  @$pb.TagNumber(53)
+  VideoPixelFileNodeConfig get videoPixelFileConfig => $_getN(42);
+  @$pb.TagNumber(53)
+  set videoPixelFileConfig(VideoPixelFileNodeConfig v) { setField(53, v); }
+  @$pb.TagNumber(53)
+  $core.bool hasVideoPixelFileConfig() => $_has(42);
+  @$pb.TagNumber(53)
+  void clearVideoPixelFileConfig() => clearField(53);
+  @$pb.TagNumber(53)
+  VideoPixelFileNodeConfig ensureVideoPixelFileConfig() => $_ensure(42);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4096,6 +4114,53 @@ class PlanScreenNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasScreenId() => $_has(1);
   @$pb.TagNumber(2)
   void clearScreenId() => clearField(2);
+}
+
+class VideoPixelFileNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'VideoPixelFileNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath')
+    ..hasRequiredFields = false
+  ;
+
+  VideoPixelFileNodeConfig._() : super();
+  factory VideoPixelFileNodeConfig({
+    $core.String? filePath,
+  }) {
+    final _result = create();
+    if (filePath != null) {
+      _result.filePath = filePath;
+    }
+    return _result;
+  }
+  factory VideoPixelFileNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory VideoPixelFileNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  VideoPixelFileNodeConfig clone() => VideoPixelFileNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  VideoPixelFileNodeConfig copyWith(void Function(VideoPixelFileNodeConfig) updates) => super.copyWith((message) => updates(message as VideoPixelFileNodeConfig)) as VideoPixelFileNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static VideoPixelFileNodeConfig create() => VideoPixelFileNodeConfig._();
+  VideoPixelFileNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<VideoPixelFileNodeConfig> createRepeated() => $pb.PbList<VideoPixelFileNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static VideoPixelFileNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<VideoPixelFileNodeConfig>(create);
+  static VideoPixelFileNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get filePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set filePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFilePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFilePath() => clearField(1);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

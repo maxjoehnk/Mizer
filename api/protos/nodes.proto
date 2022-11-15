@@ -130,6 +130,7 @@ message Node {
     MqttInput = 60;
     MqttOutput = 61;
     PlanScreen = 62;
+    VideoPixelFile = 63;
   }
 
   enum NodePreviewType {
@@ -193,6 +194,7 @@ message NodeConfig {
     DataToNumberNodeConfig dataToNumberConfig = 50;
     ValueNodeConfig valueConfig = 51;
     PlanScreenNodeConfig planScreenConfig = 52;
+    VideoPixelFileNodeConfig videoPixelFileConfig = 53;
   }
 }
 
@@ -428,6 +430,10 @@ message ValueNodeConfig {
 message PlanScreenNodeConfig {
   string plan_id = 1;
   uint32 screen_id = 2;
+}
+
+message VideoPixelFileNodeConfig {
+  string file_path = 1;
 }
 
 message NodePosition {

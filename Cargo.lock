@@ -486,7 +486,7 @@ version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f792866e533338be173a9dd8b3510591c69ed43998eb0829890486d4bbd39cf"
 dependencies = [
- "bindgen",
+ "bindgen 0.55.1",
  "libc",
 ]
 
@@ -559,7 +559,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "75b13ce559e6433d360c26305643803cb52cfbabbc2b9c47ce04a58493dfb443"
 dependencies = [
  "bitflags",
- "cexpr",
+ "cexpr 0.4.0",
  "cfg-if 0.1.10",
  "clang-sys",
  "clap 2.34.0",
@@ -572,8 +572,27 @@ dependencies = [
  "quote",
  "regex",
  "rustc-hash",
- "shlex",
+ "shlex 0.1.1",
  "which 3.1.1",
+]
+
+[[package]]
+name = "bindgen"
+version = "0.59.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2bd2a9a458e8f4304c52c43ebb0cfbd520289f8379a52e329a38afda99bf8eb8"
+dependencies = [
+ "bitflags",
+ "cexpr 0.6.0",
+ "clang-sys",
+ "lazy_static",
+ "lazycell",
+ "peeking_take_while",
+ "proc-macro2",
+ "quote",
+ "regex",
+ "rustc-hash",
+ "shlex 1.1.0",
 ]
 
 [[package]]
@@ -632,7 +651,7 @@ version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8fb769a9e04063943874cd92039ee81eee55adca48bb9615bc3dff73b57cd5aa"
 dependencies = [
- "bindgen",
+ "bindgen 0.55.1",
  "libc",
 ]
 
@@ -788,6 +807,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f4aedb84272dbe89af497cf81375129abda4fc0a9e7c5d317498c15cc30c0d27"
 dependencies = [
  "nom 5.1.2",
+]
+
+[[package]]
+name = "cexpr"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6fac387a98bb7c37292057cffc56d62ecb629900026402633ae9160df93a8766"
+dependencies = [
+ "nom 7.1.0",
 ]
 
 [[package]]
@@ -1852,6 +1880,31 @@ dependencies = [
  "serde_json",
  "wasm-bindgen",
  "web-sys",
+]
+
+[[package]]
+name = "ffmpeg-next"
+version = "5.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a80971eee67be0079a1c8890bde68226fe9bd0441740fd6ddd0cee131486b321"
+dependencies = [
+ "bitflags",
+ "ffmpeg-sys-next",
+ "libc",
+]
+
+[[package]]
+name = "ffmpeg-sys-next"
+version = "5.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d780b36e092254367e2f1f21191992735c8e23f31a5a5a8678db3a79f775021f"
+dependencies = [
+ "bindgen 0.59.2",
+ "cc",
+ "libc",
+ "num_cpus",
+ "pkg-config",
+ "vcpkg",
 ]
 
 [[package]]
@@ -3988,6 +4041,7 @@ dependencies = [
  "mizer-sequencer-nodes",
  "mizer-util",
  "mizer-video-nodes",
+ "mizer-video-pixel-nodes",
  "serde",
  "test-case",
 ]
@@ -4463,6 +4517,18 @@ dependencies = [
  "lazy_static",
  "log",
  "mizer-node",
+ "serde",
+]
+
+[[package]]
+name = "mizer-video-pixel-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "ffmpeg-next",
+ "log",
+ "mizer-node",
+ "mizer-util",
  "serde",
 ]
 
@@ -6104,6 +6170,12 @@ name = "shlex"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7fdf1b9db47230893d76faad238fd6097fd6d6a9245cd7a4d90dbd639536bbd2"
+
+[[package]]
+name = "shlex"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "43b2853a4d09f215c24cc5489c992ce46052d359b5109343cbafbf26bc62f8a3"
 
 [[package]]
 name = "signal-hook"

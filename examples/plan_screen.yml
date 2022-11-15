@@ -70,7 +70,7 @@ nodes:
         y: 0.0
       scale: 0.0
       hidden: true
-  - path: /plan-screen-1
+  - path: /plan-screen-0
     type: plan-screen
     config:
       plan: Plan
@@ -81,10 +81,10 @@ nodes:
         y: 1.96
       scale: 0.0
       hidden: false
-  - path: /pixel-pattern-0
-    type: pixel-pattern
+  - path: /video-pixel-file-0
+    type: video-pixel-file
     config:
-      pattern: rgb-iterate
+      file_path: examples/media/video/file_example_MP4_1920_18MG.mp4
     designer:
       position:
         x: 8.587454416655504
@@ -151,7 +151,7 @@ nodes:
       scale: 0.0
       hidden: true
 channels:
-  - output@/pixel-pattern-0 -> output@/plan-screen-1
+  - output@/video-pixel-file-0 -> input@/plan-screen-0
 media: []
 layouts:
   Default: []
@@ -1139,5 +1139,5 @@ plans:
       - id: 1
         x: 0
         y: 0
-        width: 12
-        height: 12
+        width: 480
+        height: 270

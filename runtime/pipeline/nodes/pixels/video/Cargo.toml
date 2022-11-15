@@ -1,0 +1,13 @@
+[package]
+name = "mizer-video-pixel-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+mizer-node = { path = "../../../node" }
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+mizer-util = { path = "../../../../../util" }
+ffmpeg-next = "5.1"

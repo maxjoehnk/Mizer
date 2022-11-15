@@ -18,6 +18,12 @@ class DeleteSequence extends SequencerCommand {
   DeleteSequence(this.id);
 }
 
+class DuplicateSequence extends SequencerCommand {
+  final int id;
+
+  DuplicateSequence(this.id);
+}
+
 class UpdateCueTrigger extends SequencerCommand {
   final int sequence;
   final int cue;
@@ -159,6 +165,9 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     if (event is SelectCue) {
       yield _selectCue(event);
     }
+    if (event is DuplicateSequence) {
+      yield await _duplicateSequence(event);
+    }
   }
 
   Future<SequencerState> _fetchSequences() async {
@@ -183,6 +192,13 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _duplicateSequence(DuplicateSequence event) async {
+    log("duplicating sequence", name: "SequencerBloc");
+    await api.duplicateSequence(event.id);
+
+    return await _fetchSequences();
   }
 
   Future<SequencerState> _updateCueTrigger(UpdateCueTrigger event) async {

@@ -68,6 +68,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                     PanelAction(label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!)),
                     PanelAction(label: "Stop", onClick: () => _sequenceStop(state.selectedSequenceId!)),
                     PanelAction(hotkeyId: "delete", label: "Delete", onClick: () => _deleteSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
+                    PanelAction(hotkeyId: "duplicate", label: "Duplicate", onClick: () => _duplicateSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
                   ],
                 ),
               ),
@@ -91,6 +92,10 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
 
   _deleteSequence(int sequenceId) {
     context.read<SequencerBloc>().add(DeleteSequence(sequenceId));
+  }
+
+  _duplicateSequence(int sequenceId) {
+    context.read<SequencerBloc>().add(DuplicateSequence(sequenceId));
   }
 
   _sequenceGo(int sequenceId) {

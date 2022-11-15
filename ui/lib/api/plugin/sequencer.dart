@@ -50,6 +50,13 @@ class SequencerPluginApi implements SequencerApi {
   }
 
   @override
+  Future<Sequence> duplicateSequence(int sequenceId) async {
+    var response = await channel.invokeMethod("duplicateSequence", sequenceId);
+
+    return Sequence.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
   Future<Sequences> updateCueTrigger(int sequence, int cue, CueTrigger_Type trigger) async {
     var request = CueTriggerRequest(sequence: sequence, cue: cue, trigger: trigger);
     var response = await channel.invokeMethod("updateCueTrigger", request.writeToBuffer());

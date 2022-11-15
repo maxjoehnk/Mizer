@@ -10,6 +10,7 @@ abstract class SequencerApi {
   Future<Sequence> getSequence(int sequenceId);
 
   Future<Sequence> addSequence();
+  Future<Sequence> duplicateSequence(int sequence);
 
   Future<void> sequenceGoForward(int sequence);
   Future<void> sequenceStop(int sequence);

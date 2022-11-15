@@ -88,6 +88,7 @@ command_impl! {
     DeleteSequenceCommand,
     StoreProgrammerInSequenceCommand,
     RenameSequenceCommand,
+    DuplicateSequenceCommand,
     RenameCueCommand,
     UpdateControlDelayTimeCommand,
     UpdateControlFadeTimeCommand,

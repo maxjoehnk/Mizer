@@ -1,6 +1,7 @@
 pub use add_sequence::*;
 pub use delete_effect::*;
 pub use delete_sequence::*;
+pub use duplicate_sequence::*;
 use mizer_sequencer::{Cue, CueControl, Sequence};
 pub use rename_cue::*;
 pub use rename_sequence::*;
@@ -15,6 +16,7 @@ pub use update_wrap_around::*;
 mod add_sequence;
 mod delete_effect;
 mod delete_sequence;
+mod duplicate_sequence;
 mod rename_cue;
 mod rename_sequence;
 mod store_programmer_in_sequence;

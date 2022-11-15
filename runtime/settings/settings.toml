@@ -53,3 +53,4 @@ duplicate_node = "ctrl+d"
 [hotkeys.sequencer]
 add_sequence = "alt+a"
 delete = "delete"
+duplicate = "ctrl+d"

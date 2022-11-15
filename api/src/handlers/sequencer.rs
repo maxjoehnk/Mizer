@@ -35,6 +35,17 @@ impl<R: RuntimeApi> SequencerHandler<R> {
         sequence.into()
     }
 
+    pub fn duplicate_sequence(&self, sequence: u32) -> Sequence {
+        let sequence = self
+            .runtime
+            .run_command(DuplicateSequenceCommand {
+                sequence_id: sequence,
+            })
+            .unwrap();
+
+        sequence.into()
+    }
+
     pub fn sequence_go(&self, sequence: u32) {
         self.sequencer.sequence_go(sequence);
     }

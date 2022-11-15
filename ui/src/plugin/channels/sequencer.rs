@@ -47,6 +47,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
 
                 resp.respond_msg(sequence);
             }
+            "duplicateSequence" => {
+                if let Value::I64(sequence) = call.args {
+                    let sequence = self.handler.duplicate_sequence(sequence as u32);
+                    resp.respond_msg(sequence);
+                }
+            }
             "sequenceGo" => {
                 if let Value::I64(sequence) = call.args {
                     self.sequence_go(sequence as u32);

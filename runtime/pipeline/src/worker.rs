@@ -315,7 +315,7 @@ impl PipelineWorker {
             let scope = format!("{:?}Node::process", node.node_type());
             profiling::scope!(&scope);
             if let Err(e) = node.process(&context, state) {
-                println!("processing of node failed: {:?}", e)
+                log::error!("processing of node {} failed: {:?}", &path, e)
             }
         }
     }

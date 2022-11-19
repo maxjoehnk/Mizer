@@ -80,13 +80,15 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
         builder: (context, candidates, rejects) => Stack(
           fit: StackFit.expand,
           children: [
-            CustomMultiChildLayout(delegate: PlanScreensLayoutDelegate(widget.plan), children: _screens),
+            CustomMultiChildLayout(
+                delegate: PlanScreensLayoutDelegate(widget.plan), children: _screens),
             SizedBox(
                 width: 1000,
                 height: 1000,
                 child: DragDropSelection(
                     onSelect: this._onSelection, onUpdate: this._onUpdateSelection)),
-            CustomMultiChildLayout(delegate: PlanFixturesLayoutDelegate(widget.plan), children: _fixtures),
+            CustomMultiChildLayout(
+                delegate: PlanFixturesLayoutDelegate(widget.plan), children: _fixtures),
             if (_selectionState != null) SelectionIndicator(_selectionState!),
           ],
         ),
@@ -96,44 +98,45 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
 
   List<Widget> get _fixtures {
     return widget.plan.positions.map((p) {
-                var selected = widget.programmerState?.activeFixtures
-                        .firstWhereOrNull((f) => f.overlaps(p.id)) !=
-                    null;
-                var child = Fixture2DView(
-                    fixture: p,
-                    ref: _fixturesPointer!,
-                    selected: selected,
-                    onSelect: () => this._addFixtureToSelection(p.id),
-                    onUnselect: () => this._removeFixtureFromSelection(p.id));
-                return LayoutId(
-                    id: p.id,
-                    child: widget.setupMode
-                        ? Draggable(
-                            hitTestBehavior: HitTestBehavior.translucent,
-                            data: p,
-                            feedback: _getDragFeedback(p),
-                            child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
-                          )
-                        : MouseRegion(child: child, cursor: SystemMouseCursors.click));
-              })
-    .toList();
+      var selected =
+          widget.programmerState?.activeFixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
+      var tracked =
+          widget.programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
+      var child = Fixture2DView(
+          fixture: p,
+          ref: _fixturesPointer!,
+          tracked: tracked,
+          selected: selected,
+          onSelect: () => this._addFixtureToSelection(p.id),
+          onUnselect: () => this._removeFixtureFromSelection(p.id));
+      return LayoutId(
+          id: p.id,
+          child: widget.setupMode
+              ? Draggable(
+                  hitTestBehavior: HitTestBehavior.translucent,
+                  data: p,
+                  feedback: _getDragFeedback(p),
+                  child: MouseRegion(child: child, cursor: SystemMouseCursors.move),
+                )
+              : MouseRegion(child: child, cursor: SystemMouseCursors.click));
+    }).toList();
   }
 
   List<Widget> get _screens {
     return widget.plan.screens.map((s) {
-      return LayoutId(id: "screen-${s.id}", child: Container(
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2),
-            side: BorderSide(
-              color: Colors.white,
-              width: 1,
-              strokeAlign: StrokeAlign.center,
-              style: BorderStyle.solid,
-            )
-          )
-        ),
-      ));
+      return LayoutId(
+          id: "screen-${s.id}",
+          child: Container(
+            decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    side: BorderSide(
+                      color: Colors.white,
+                      width: 1,
+                      strokeAlign: StrokeAlign.center,
+                      style: BorderStyle.solid,
+                    ))),
+          ));
     }).toList();
   }
 
@@ -199,6 +202,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
 class Fixture2DView extends StatefulWidget {
   final FixturePosition fixture;
   final FixturesRefPointer ref;
+  final bool tracked;
   final bool selected;
   final TextStyle? textStyle;
   final Function()? onSelect;
@@ -209,7 +213,8 @@ class Fixture2DView extends StatefulWidget {
       required this.ref,
       this.onSelect,
       this.onUnselect,
-      this.selected = true,
+      this.tracked = false,
+      this.selected = false,
       this.textStyle,
       Key? key})
       : super(key: key);
@@ -242,6 +247,8 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     double fontSize = 6;
+    var color = widget.tracked ? Colors.deepOrange : null;
+    var textStyle = (widget.textStyle ?? TextStyle()).copyWith(fontSize: fontSize, color: color);
     return GestureDetector(
       onTap: () {
         if (RawKeyboard.instance.keysPressed.any((key) => [
@@ -276,9 +283,7 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
               ),
               child: Align(
                   alignment: Alignment.topLeft,
-                  child: Text(widget.fixture.id.toDisplay(),
-                      style: widget.textStyle?.copyWith(fontSize: fontSize) ??
-                          TextStyle(fontSize: fontSize))))),
+                  child: Text(widget.fixture.id.toDisplay(), style: textStyle)))),
     );
   }
 }
@@ -313,10 +318,7 @@ class PlanScreensLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     for (var screen in plan.screens) {
       var screenId = screen.id;
-      var size = Size(
-          screen.width * fieldSize,
-          screen.height * fieldSize
-      );
+      var size = Size(screen.width * fieldSize, screen.height * fieldSize);
       layoutChild(screenId, BoxConstraints.tight(size));
       var offset = _convertScreenToScreenPosition(screen);
       positionChild(screenId, offset);

@@ -150,9 +150,8 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
           return fixtureRect.overlaps(rect);
         })
         .map((fixture) => fixture.id)
+        .toSet()
         .toList();
-    selection.addAll(widget.programmerState!.fixtures);
-    selection = selection.toSet().toList();
 
     ProgrammerApi programmerApi = context.read();
     programmerApi.selectFixtures(selection);

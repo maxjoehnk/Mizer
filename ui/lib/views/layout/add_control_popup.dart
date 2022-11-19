@@ -17,14 +17,24 @@ class AddControlPopup extends StatelessWidget {
   final Function(Node_NodeType) onCreateControl;
   final Function(Node) onAddControlForExisting;
 
-  const AddControlPopup({required this.nodes,  required this.sequences, Key? key, required this.onCreateControl, required this.onAddControlForExisting})
+  const AddControlPopup(
+      {required this.nodes,
+      required this.sequences,
+      Key? key,
+      required this.onCreateControl,
+      required this.onAddControlForExisting})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var controlNodes = nodes.where((node) => isControlNode(node));
-    var sequenceNodes = nodes.where((node) => node.type == Node_NodeType.Sequencer).map((node) {
-      var sequence = sequences.firstWhere((element) => element.id == node.config.sequencerConfig.sequenceId);
+    var sequenceNodes = nodes
+        .where((node) => node.type == Node_NodeType.Sequencer)
+        .where((node) =>
+            sequences.any((element) => element.id == node.config.sequencerConfig.sequenceId))
+        .map((node) {
+      var sequence =
+          sequences.firstWhere((element) => element.id == node.config.sequencerConfig.sequenceId);
 
       return SequenceNode(sequence, node);
     }).toList();
@@ -40,7 +50,9 @@ class AddControlPopup extends StatelessWidget {
                 label: "Control Nodes".i18n,
                 items: controlNodes.map((node) => PopupItem(node, node.path)).toList()),
           if (sequenceNodes.isNotEmpty)
-            PopupCategory(label: "Sequences".i18n, items: sequenceNodes.map((e) => PopupItem(e.node, e.sequence.name)).toList())
+            PopupCategory(
+                label: "Sequences".i18n,
+                items: sequenceNodes.map((e) => PopupItem(e.node, e.sequence.name)).toList())
         ],
         onSelect: (value) {
           if (value is Node_NodeType) {

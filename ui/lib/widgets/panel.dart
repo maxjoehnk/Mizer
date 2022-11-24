@@ -185,35 +185,37 @@ class PanelActions extends StatelessWidget {
     var textTheme = theme.textTheme;
     var hotkeys = context.read<HotkeyMapping?>();
 
-    return Column(
-      children: actions.map((a) {
-        var hotkey = _getHotkey(hotkeys, a);
-        return Hoverable(
-          disabled: a.disabled || a.onClick == null,
-          onTap: a.onClick,
-          builder: (hovered) => Container(
-            color: _getBackground(a, hovered),
-            height: 64,
-            width: 64,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(a.label,
-                    textAlign: TextAlign.center,
-                    style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
-                if (hotkey != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: Text(hotkey.toCapitalCase(),
-                        style:
-                            textTheme.bodySmall!.copyWith(color: _getHotkeyColor(a), fontSize: 10)),
-                  ),
-              ],
+    return SingleChildScrollView(
+      child: Column(
+        children: actions.map((a) {
+          var hotkey = _getHotkey(hotkeys, a);
+          return Hoverable(
+            disabled: a.disabled || a.onClick == null,
+            onTap: a.onClick,
+            builder: (hovered) => Container(
+              color: _getBackground(a, hovered),
+              height: 64,
+              width: 64,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(a.label,
+                      textAlign: TextAlign.center,
+                      style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
+                  if (hotkey != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Text(hotkey.toCapitalCase(),
+                          style:
+                              textTheme.bodySmall!.copyWith(color: _getHotkeyColor(a), fontSize: 10)),
+                    ),
+                ],
+              ),
             ),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 

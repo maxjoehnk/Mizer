@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
 
@@ -32,9 +34,7 @@ class DragSelectionLayer extends StatelessWidget {
 
   void _onSelection(BuildContext context, Rect rect) {
     rect = MatrixUtils.inverseTransformRect(transformation, rect);
-    List<FixtureId> selection = this
-        .plan
-        .positions
+    var positions = this.plan.positions
         .where((fixture) {
           var fixturePosition = _convertToScreenPosition(fixture);
           var fixtureEnd = fixturePosition.translate(fieldSize, fieldSize);
@@ -42,6 +42,9 @@ class DragSelectionLayer extends StatelessWidget {
 
           return fixtureRect.overlaps(rect);
         })
+        .toList();
+    selectionState!.reorderFixtures(positions);
+    List<FixtureId> selection = positions
         .map((fixture) => fixture.id)
         .toSet()
         .toList();
@@ -92,7 +95,7 @@ class _DragAreaSelectionState extends State<DragAreaSelection> {
     };
     var onUpdate = (DragUpdateDetails e) {
       setState(() {
-        state!.end = e.localPosition;
+        state!.update(e.localPosition);
         widget.onUpdate(state!);
       });
     };
@@ -133,10 +136,63 @@ Offset _convertToScreenPosition(FixturePosition fixture) {
 class SelectionState {
   Offset start;
   Offset end;
+  SelectionDirection? direction;
 
   SelectionState(Offset start)
       : this.start = start,
         this.end = start;
+
+  void update(Offset localPosition) {
+    this.end = localPosition;
+    var offset = this.start - this.end;
+    if (direction == null) {
+      Axis primaryAxis = offset.dx.abs() > offset.dy.abs() ? Axis.horizontal : Axis.vertical;
+      direction = SelectionDirection(primaryAxis);
+    }
+    direction!.update(offset);
+  }
+
+  void reorderFixtures(List<FixturePosition> positions) {
+    if (direction == null) {
+      return;
+    }
+    if (direction!.primaryAxis == Axis.horizontal) {
+      _reorderHorizontal(positions);
+      _reorderVertical(positions);
+    }else {
+      _reorderVertical(positions);
+      _reorderHorizontal(positions);
+    }
+  }
+
+  void _reorderHorizontal(List<FixturePosition> positions) {
+    positions.sortByCompare<int>((f) => f.x, (a, b) => direction!.horizontal == AxisDirection.right ? b - a : a - b);
+  }
+
+  void _reorderVertical(List<FixturePosition> positions) {
+    positions.sortByCompare<int>((f) => f.y, (a, b) => direction!.vertical == AxisDirection.up ? b - a : a - b);
+  }
+}
+
+class SelectionDirection {
+  Axis primaryAxis;
+  AxisDirection vertical;
+  AxisDirection horizontal;
+
+  SelectionDirection(this.primaryAxis) : vertical = AxisDirection.up, horizontal = AxisDirection.right;
+
+  update(Offset offset) {
+    vertical = offset.dy > 0 ? AxisDirection.up : AxisDirection.down;
+    horizontal = offset.dx > 0 ? AxisDirection.right : AxisDirection.left;
+  }
+
+  @override
+  String toString() {
+    String verticalName = vertical == AxisDirection.up ? "Bottom to Top".i18n : "Top to Bottom".i18n;
+    String horizontalName = horizontal == AxisDirection.right ? "Right to Left".i18n : "Left to Right".i18n;
+
+    return primaryAxis == Axis.vertical ? "$verticalName -> $horizontalName" : "$horizontalName -> $verticalName";
+  }
 }
 
 class SelectionIndicator extends StatelessWidget {
@@ -149,6 +205,21 @@ class SelectionIndicator extends StatelessWidget {
     return CustomPaint(
       size: Size(1000, 1000),
       foregroundPainter: DragPainter(state.start, state.end),
+    );
+  }
+}
+
+class SelectionDirectionIndicator extends StatelessWidget {
+  final SelectionDirection direction;
+
+  const SelectionDirectionIndicator(this.direction, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 8,
+      left: 8,
+      child: Text(direction.toString()),
     );
   }
 }

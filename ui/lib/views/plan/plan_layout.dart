@@ -90,6 +90,7 @@ class _PlanLayoutState extends State<PlanLayout> with SingleTickerProviderStateM
             ),
           ),
           if (_selectionState != null) SelectionIndicator(_selectionState!),
+          if (_selectionState?.direction != null) SelectionDirectionIndicator(_selectionState!.direction!),
         ],
       ),
     );

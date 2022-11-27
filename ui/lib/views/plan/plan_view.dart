@@ -7,7 +7,6 @@ import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
-import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/views/plan/dialogs/select_group_dialog.dart';
 import 'package:mizer/widgets/controls/button.dart';

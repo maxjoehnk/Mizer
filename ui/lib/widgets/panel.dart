@@ -95,7 +95,10 @@ class _PanelState extends State<Panel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                    child: widget.child ?? active ?? Container()),
+                    child: Container(
+                        decoration: BoxDecoration(),
+                        clipBehavior: Clip.antiAlias,
+                        child: widget.child ?? _activeTab)),
                 if (widget.actions != null) PanelActions(actions: widget.actions!)
               ],
             ),
@@ -138,7 +141,7 @@ class _PanelState extends State<Panel> {
             ]));
   }
 
-  Widget? get active {
+  Widget? get _activeTab {
     if (widget.tabs?.isEmpty ?? true) {
       return null;
     }

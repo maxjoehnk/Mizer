@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/widgets/popup/popup_dmx_address_input.dart';
+import 'package:mizer/widgets/popup/popup_input.dart';
 import 'package:mizer/widgets/popup/popup_select.dart';
 import 'package:mizer/widgets/table/table.dart';
 
@@ -52,8 +54,8 @@ class FixtureTable extends StatelessWidget {
     var row = MizerTableRow(
       cells: [
         Text(fixture.id.toString()),
-        Text(fixture.name),
-        Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, "0")}"),
+        nameField(context, fixture, (name) => onUpdateFixture(fixture.id, UpdateFixtureRequest(name: name))),
+        addressField(context, fixture, (address) => onUpdateFixture(fixture.id, UpdateFixtureRequest(address: address))),
         Text(fixture.manufacturer),
         Text(fixture.model),
         Text(fixture.mode),
@@ -66,6 +68,22 @@ class FixtureTable extends StatelessWidget {
     );
     return row;
   }
+}
+
+Widget nameField(BuildContext context, Fixture fixture, Function(String) onUpdate) {
+  return PopupTableCell(child: Text(fixture.name), popup: PopupInput(
+    title: "Name",
+    value: fixture.name,
+    onChange: onUpdate,
+  ));
+}
+
+Widget addressField(BuildContext context, Fixture fixture, Function(FixtureAddress) onUpdate) {
+  return PopupTableCell(child: Text("${fixture.universe}.${fixture.channel.toString().padLeft(3, "0")}"), popup: PopupDmxAddressInput(
+    title: "Name",
+    value: FixtureAddress(universe: fixture.universe, channel: fixture.channel),
+    onChange: onUpdate,
+  ));
 }
 
 Widget invertedAxisField(BuildContext context, String title, bool inverted, Function(bool) onUpdate) {

@@ -115,19 +115,24 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn update_fixture(&self, request: UpdateFixtureRequest) -> anyhow::Result<()> {
         let cmd = UpdateFixtureCommand {
             fixture_id: request.fixtureId,
-            invert_pan: request._invert_pan.and_then(|value| {
-                if let UpdateFixtureRequest_oneof__invert_pan::invert_pan(value) = value {
-                    Some(value)
-                } else {
-                    None
-                }
+            invert_pan: request._invert_pan.map(|value| {
+                let UpdateFixtureRequest_oneof__invert_pan::invert_pan(value) = value;
+
+                value
             }),
-            invert_tilt: request._invert_tilt.and_then(|value| {
-                if let UpdateFixtureRequest_oneof__invert_tilt::invert_tilt(value) = value {
-                    Some(value)
-                } else {
-                    None
-                }
+            invert_tilt: request._invert_tilt.map(|value| {
+                let UpdateFixtureRequest_oneof__invert_tilt::invert_tilt(value) = value;
+
+                value
+            }),
+            name: request._name.map(|value| {
+                let UpdateFixtureRequest_oneof__name::name(name) = value;
+                name
+            }),
+            address: request._address.map(|value| {
+                let UpdateFixtureRequest_oneof__address::address(address) = value;
+
+                (address.universe as u16, address.channel as u16)
             }),
         };
         self.runtime.run_command(cmd)?;

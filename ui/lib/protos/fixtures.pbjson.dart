@@ -80,15 +80,30 @@ const UpdateFixtureRequest$json = const {
     const {'1': 'fixtureId', '3': 1, '4': 1, '5': 13, '10': 'fixtureId'},
     const {'1': 'invert_pan', '3': 2, '4': 1, '5': 8, '9': 0, '10': 'invertPan', '17': true},
     const {'1': 'invert_tilt', '3': 3, '4': 1, '5': 8, '9': 1, '10': 'invertTilt', '17': true},
+    const {'1': 'name', '3': 4, '4': 1, '5': 9, '9': 2, '10': 'name', '17': true},
+    const {'1': 'address', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureAddress', '9': 3, '10': 'address', '17': true},
   ],
   '8': const [
     const {'1': '_invert_pan'},
     const {'1': '_invert_tilt'},
+    const {'1': '_name'},
+    const {'1': '_address'},
   ],
 };
 
 /// Descriptor for `UpdateFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIcCglmaXh0dXJlSWQYASABKA1SCWZpeHR1cmVJZBIiCgppbnZlcnRfcGFuGAIgASgISABSCWludmVydFBhbogBARIkCgtpbnZlcnRfdGlsdBgDIAEoCEgBUgppbnZlcnRUaWx0iAEBQg0KC19pbnZlcnRfcGFuQg4KDF9pbnZlcnRfdGlsdA==');
+final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIcCglmaXh0dXJlSWQYASABKA1SCWZpeHR1cmVJZBIiCgppbnZlcnRfcGFuGAIgASgISABSCWludmVydFBhbogBARIkCgtpbnZlcnRfdGlsdBgDIAEoCEgBUgppbnZlcnRUaWx0iAEBEhcKBG5hbWUYBCABKAlIAlIEbmFtZYgBARI9CgdhZGRyZXNzGAUgASgLMh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUFkZHJlc3NIA1IHYWRkcmVzc4gBAUINCgtfaW52ZXJ0X3BhbkIOCgxfaW52ZXJ0X3RpbHRCBwoFX25hbWVCCgoIX2FkZHJlc3M=');
+@$core.Deprecated('Use fixtureAddressDescriptor instead')
+const FixtureAddress$json = const {
+  '1': 'FixtureAddress',
+  '2': const [
+    const {'1': 'universe', '3': 1, '4': 1, '5': 13, '10': 'universe'},
+    const {'1': 'channel', '3': 2, '4': 1, '5': 13, '10': 'channel'},
+  ],
+};
+
+/// Descriptor for `FixtureAddress`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureAddressDescriptor = $convert.base64Decode('Cg5GaXh0dXJlQWRkcmVzcxIaCgh1bml2ZXJzZRgBIAEoDVIIdW5pdmVyc2USGAoHY2hhbm5lbBgCIAEoDVIHY2hhbm5lbA==');
 @$core.Deprecated('Use fixtureIdDescriptor instead')
 const FixtureId$json = const {
   '1': 'FixtureId',

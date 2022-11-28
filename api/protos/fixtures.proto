@@ -34,6 +34,13 @@ message UpdateFixtureRequest {
   uint32 fixtureId = 1;
   optional bool invert_pan = 2;
   optional bool invert_tilt = 3;
+  optional string name = 4;
+  optional FixtureAddress address = 5;
+}
+
+message FixtureAddress {
+  uint32 universe = 1;
+  uint32 channel = 2;
 }
 
 message FixtureId {

@@ -268,6 +268,8 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3, protoName: 'fixtureId')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<FixtureAddress>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', subBuilder: FixtureAddress.create)
     ..hasRequiredFields = false
   ;
 
@@ -276,6 +278,8 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     $core.int? fixtureId,
     $core.bool? invertPan,
     $core.bool? invertTilt,
+    $core.String? name,
+    FixtureAddress? address,
   }) {
     final _result = create();
     if (fixtureId != null) {
@@ -286,6 +290,12 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     }
     if (invertTilt != null) {
       _result.invertTilt = invertTilt;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (address != null) {
+      _result.address = address;
     }
     return _result;
   }
@@ -336,6 +346,87 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
   $core.bool hasInvertTilt() => $_has(2);
   @$pb.TagNumber(3)
   void clearInvertTilt() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get name => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set name($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasName() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearName() => clearField(4);
+
+  @$pb.TagNumber(5)
+  FixtureAddress get address => $_getN(4);
+  @$pb.TagNumber(5)
+  set address(FixtureAddress v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAddress() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearAddress() => clearField(5);
+  @$pb.TagNumber(5)
+  FixtureAddress ensureAddress() => $_ensure(4);
+}
+
+class FixtureAddress extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureAddress', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'universe', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureAddress._() : super();
+  factory FixtureAddress({
+    $core.int? universe,
+    $core.int? channel,
+  }) {
+    final _result = create();
+    if (universe != null) {
+      _result.universe = universe;
+    }
+    if (channel != null) {
+      _result.channel = channel;
+    }
+    return _result;
+  }
+  factory FixtureAddress.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureAddress.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureAddress clone() => FixtureAddress()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureAddress copyWith(void Function(FixtureAddress) updates) => super.copyWith((message) => updates(message as FixtureAddress)) as FixtureAddress; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureAddress create() => FixtureAddress._();
+  FixtureAddress createEmptyInstance() => create();
+  static $pb.PbList<FixtureAddress> createRepeated() => $pb.PbList<FixtureAddress>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureAddress getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureAddress>(create);
+  static FixtureAddress? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get universe => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set universe($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUniverse() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUniverse() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get channel => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set channel($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChannel() => clearField(2);
 }
 
 enum FixtureId_Id {

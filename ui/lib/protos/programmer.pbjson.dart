@@ -170,8 +170,12 @@ const StoreRequest$json = const {
   '2': const [
     const {'1': 'sequence_id', '3': 1, '4': 1, '5': 13, '10': 'sequenceId'},
     const {'1': 'store_mode', '3': 2, '4': 1, '5': 14, '6': '.mizer.programmer.StoreRequest.Mode', '10': 'storeMode'},
+    const {'1': 'cue_id', '3': 3, '4': 1, '5': 13, '9': 0, '10': 'cueId', '17': true},
   ],
   '4': const [StoreRequest_Mode$json],
+  '8': const [
+    const {'1': '_cue_id'},
+  ],
 };
 
 @$core.Deprecated('Use storeRequestDescriptor instead')
@@ -185,7 +189,7 @@ const StoreRequest_Mode$json = const {
 };
 
 /// Descriptor for `StoreRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List storeRequestDescriptor = $convert.base64Decode('CgxTdG9yZVJlcXVlc3QSHwoLc2VxdWVuY2VfaWQYASABKA1SCnNlcXVlbmNlSWQSQgoKc3RvcmVfbW9kZRgCIAEoDjIjLm1pemVyLnByb2dyYW1tZXIuU3RvcmVSZXF1ZXN0Lk1vZGVSCXN0b3JlTW9kZSIsCgRNb2RlEg0KCU92ZXJ3cml0ZRAAEgkKBU1lcmdlEAESCgoGQWRkQ3VlEAI=');
+final $typed_data.Uint8List storeRequestDescriptor = $convert.base64Decode('CgxTdG9yZVJlcXVlc3QSHwoLc2VxdWVuY2VfaWQYASABKA1SCnNlcXVlbmNlSWQSQgoKc3RvcmVfbW9kZRgCIAEoDjIjLm1pemVyLnByb2dyYW1tZXIuU3RvcmVSZXF1ZXN0Lk1vZGVSCXN0b3JlTW9kZRIaCgZjdWVfaWQYAyABKA1IAFIFY3VlSWSIAQEiLAoETW9kZRINCglPdmVyd3JpdGUQABIJCgVNZXJnZRABEgoKBkFkZEN1ZRACQgkKB19jdWVfaWQ=');
 @$core.Deprecated('Use storeResponseDescriptor instead')
 const StoreResponse$json = const {
   '1': 'StoreResponse',

@@ -78,7 +78,7 @@ impl<R: RuntimeApi + 'static> ProgrammerApi for ProgrammerHandler<R> {
         req: ServerRequestSingle<StoreRequest>,
         resp: ServerResponseUnarySink<super::programmer::StoreResponse>,
     ) -> grpc::Result<()> {
-        self.store(req.message.sequence_id, req.message.store_mode);
+        self.store(req.message.sequence_id, req.message.store_mode, None);
 
         resp.finish(Default::default())
     }

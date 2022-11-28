@@ -7,40 +7,31 @@ const double MAX_DIALOG_WIDTH = 512;
 const double MAX_DIALOG_HEIGHT = 512;
 const double TILE_SIZE = 96;
 
-class SelectSequenceDialog extends StatelessWidget {
-  final SequencerApi api;
+class SelectCueDialog extends StatelessWidget {
+  final Sequence sequence;
 
-  const SelectSequenceDialog({required this.api, Key? key}) : super(key: key);
+  const SelectCueDialog(this.sequence, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ActionDialog(
-      title: "Select Sequence",
+      title: "Select Cue",
       content: Container(
         width: MAX_DIALOG_WIDTH,
         height: MAX_DIALOG_HEIGHT,
-        child: FutureBuilder(
-            future: api.getSequences(),
-            builder: (context, AsyncSnapshot<Sequences> data) {
-              List<Sequence> sequences = data.hasData ? data.data!.sequences : [];
-              sequences.sort((lhs, rhs) => lhs.id - rhs.id);
-
-              return GridView.count(
-                  crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  children: sequences
-                      .map((s) => Tile(
-                            title: s.id.toString(),
-                            child: Center(child: Text(s.name)),
-                            onClick: () => Navigator.of(context).pop(s),
-                          ))
-                      .toList());
-            }),
+        child: GridView.count(
+            crossAxisCount: (MAX_DIALOG_WIDTH / TILE_SIZE).floor(),
+            mainAxisSpacing: 4,
+            crossAxisSpacing: 4,
+            children: sequence.cues
+                .map((cue) => Tile(
+                    title: cue.id.toString(),
+                    child: Center(child: Text(cue.name)),
+                    onClick: () => Navigator.of(context).pop(cue)))
+                .toList()),
       ),
       actions: [
         PopupAction("Cancel", () => Navigator.of(context).pop()),
-        PopupAction("New Sequence", () => api.addSequence().then((s) => Navigator.of(context).pop(s)))
       ],
     );
   }

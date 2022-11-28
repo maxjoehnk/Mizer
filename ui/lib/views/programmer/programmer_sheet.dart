@@ -10,6 +10,7 @@ import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
+import 'dialogs/select_cue_dialog.dart';
 import 'sheets/beam_sheet.dart';
 import 'sheets/channel_sheet.dart';
 import 'sheets/color_sheet.dart';
@@ -66,7 +67,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
 
   _store() async {
     var sequencerApi = context.read<SequencerApi>();
-    var sequence = await showDialog(
+    Sequence? sequence = await showDialog(
         context: context, builder: (context) => SelectSequenceDialog(api: sequencerApi));
     if (sequence == null) {
       return;
@@ -75,8 +76,16 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
     if (storeMode == null) {
       return;
     }
+    int? cueId;
+    if (storeMode != StoreRequest_Mode.AddCue && sequence.cues.isNotEmpty) {
+      cueId = await _getCue(sequence, storeMode);
 
-    widget.api.store(sequence.id, storeMode);
+      if (cueId == null) {
+        return;
+      }
+    }
+
+    widget.api.store(sequence.id, storeMode, cueId: cueId);
   }
 
   _getStoreMode(Sequence sequence) async {
@@ -85,5 +94,14 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
     }
 
     return await showDialog(context: context, builder: (context) => StoreModeDialog());
+  }
+
+  Future<int?> _getCue(Sequence sequence, StoreRequest_Mode storeMode) async {
+    if (sequence.cues.length == 1) {
+      return sequence.cues.first.id;
+    }
+    Cue? cue = await showDialog(context: context, builder: (context) => SelectCueDialog(sequence));
+
+    return cue?.id;
   }
 }

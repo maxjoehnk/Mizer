@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct StoreProgrammerInSequenceCommand {
     pub sequence_id: u32,
+    pub cue_id: Option<u32>,
     pub store_mode: StoreMode,
     pub controls: Vec<ProgrammerControl>,
     pub effects: Vec<ProgrammedEffect>,
@@ -38,6 +39,8 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                 .collect();
             let cue = if self.store_mode == StoreMode::AddCue || sequence.cues.is_empty() {
                 let cue_id = sequence.add_cue();
+                sequence.cues.iter_mut().find(|c| c.id == cue_id)
+            } else if let Some(cue_id) = self.cue_id {
                 sequence.cues.iter_mut().find(|c| c.id == cue_id)
             } else {
                 sequence.cues.last_mut()

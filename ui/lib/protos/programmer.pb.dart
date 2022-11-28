@@ -773,6 +773,7 @@ class StoreRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StoreRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceId', $pb.PbFieldType.OU3)
     ..e<StoreRequest_Mode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'storeMode', $pb.PbFieldType.OE, defaultOrMaker: StoreRequest_Mode.Overwrite, valueOf: StoreRequest_Mode.valueOf, enumValues: StoreRequest_Mode.values)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cueId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -780,6 +781,7 @@ class StoreRequest extends $pb.GeneratedMessage {
   factory StoreRequest({
     $core.int? sequenceId,
     StoreRequest_Mode? storeMode,
+    $core.int? cueId,
   }) {
     final _result = create();
     if (sequenceId != null) {
@@ -787,6 +789,9 @@ class StoreRequest extends $pb.GeneratedMessage {
     }
     if (storeMode != null) {
       _result.storeMode = storeMode;
+    }
+    if (cueId != null) {
+      _result.cueId = cueId;
     }
     return _result;
   }
@@ -828,6 +833,15 @@ class StoreRequest extends $pb.GeneratedMessage {
   $core.bool hasStoreMode() => $_has(1);
   @$pb.TagNumber(2)
   void clearStoreMode() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get cueId => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set cueId($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCueId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCueId() => clearField(3);
 }
 
 class StoreResponse extends $pb.GeneratedMessage {

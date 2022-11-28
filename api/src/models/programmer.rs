@@ -2878,6 +2878,8 @@ pub struct StoreRequest {
     // message fields
     pub sequence_id: u32,
     pub store_mode: StoreRequest_Mode,
+    // message oneof groups
+    pub _cue_id: ::std::option::Option<StoreRequest_oneof__cue_id>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -2889,6 +2891,12 @@ impl<'a> ::std::default::Default for &'a StoreRequest {
     fn default() -> &'a StoreRequest {
         <StoreRequest as ::protobuf::Message>::default_instance()
     }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum StoreRequest_oneof__cue_id {
+    cue_id(u32),
 }
 
 impl StoreRequest {
@@ -2925,6 +2933,31 @@ impl StoreRequest {
     pub fn set_store_mode(&mut self, v: StoreRequest_Mode) {
         self.store_mode = v;
     }
+
+    // uint32 cue_id = 3;
+
+
+    pub fn get_cue_id(&self) -> u32 {
+        match self._cue_id {
+            ::std::option::Option::Some(StoreRequest_oneof__cue_id::cue_id(v)) => v,
+            _ => 0,
+        }
+    }
+    pub fn clear_cue_id(&mut self) {
+        self._cue_id = ::std::option::Option::None;
+    }
+
+    pub fn has_cue_id(&self) -> bool {
+        match self._cue_id {
+            ::std::option::Option::Some(StoreRequest_oneof__cue_id::cue_id(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_cue_id(&mut self, v: u32) {
+        self._cue_id = ::std::option::Option::Some(StoreRequest_oneof__cue_id::cue_id(v))
+    }
 }
 
 impl ::protobuf::Message for StoreRequest {
@@ -2946,6 +2979,12 @@ impl ::protobuf::Message for StoreRequest {
                 2 => {
                     ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.store_mode, 2, &mut self.unknown_fields)?
                 },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._cue_id = ::std::option::Option::Some(StoreRequest_oneof__cue_id::cue_id(is.read_uint32()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2964,6 +3003,13 @@ impl ::protobuf::Message for StoreRequest {
         if self.store_mode != StoreRequest_Mode::Overwrite {
             my_size += ::protobuf::rt::enum_size(2, self.store_mode);
         }
+        if let ::std::option::Option::Some(ref v) = self._cue_id {
+            match v {
+                &StoreRequest_oneof__cue_id::cue_id(v) => {
+                    my_size += ::protobuf::rt::value_size(3, v, ::protobuf::wire_format::WireTypeVarint);
+                },
+            };
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2975,6 +3021,13 @@ impl ::protobuf::Message for StoreRequest {
         }
         if self.store_mode != StoreRequest_Mode::Overwrite {
             os.write_enum(2, ::protobuf::ProtobufEnum::value(&self.store_mode))?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._cue_id {
+            match v {
+                &StoreRequest_oneof__cue_id::cue_id(v) => {
+                    os.write_uint32(3, v)?;
+                },
+            };
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3024,6 +3077,11 @@ impl ::protobuf::Message for StoreRequest {
                 |m: &StoreRequest| { &m.store_mode },
                 |m: &mut StoreRequest| { &mut m.store_mode },
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_u32_accessor::<_>(
+                "cue_id",
+                StoreRequest::has_cue_id,
+                StoreRequest::get_cue_id,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<StoreRequest>(
                 "StoreRequest",
                 fields,
@@ -3042,6 +3100,7 @@ impl ::protobuf::Clear for StoreRequest {
     fn clear(&mut self) {
         self.sequence_id = 0;
         self.store_mode = StoreRequest_Mode::Overwrite;
+        self._cue_id = ::std::option::Option::None;
         self.unknown_fields.clear();
     }
 }
@@ -6342,62 +6401,64 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
     \x08fixtures\"\x1a\n\x18UnselectFixturesResponse\"\x0e\n\x0cClearRequest\
     \"\x0f\n\rClearResponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\
-    \x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xa1\x01\
+    \x18\x01\x20\x01(\x08R\thighlight\"\x13\n\x11HighlightResponse\"\xc8\x01\
     \n\x0cStoreRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenc\
     eId\x12B\n\nstore_mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequ\
-    est.ModeR\tstoreMode\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Me\
-    rge\x10\x01\x12\n\n\x06AddCue\x10\x02\"\x0f\n\rStoreResponse\"\x10\n\x0e\
-    PresetsRequest\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\x20\x01(\
-    \rR\x02id\x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.programmer.PresetI\
-    d.PresetTypeR\x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\x12\x0b\
-    \n\x07Shutter\x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Position\x10\
-    \x03\"\xdf\x01\n\x07Presets\x12:\n\x0bintensities\x18\x01\x20\x03(\x0b2\
-    \x18.mizer.programmer.PresetR\x0bintensities\x122\n\x07shutter\x18\x02\
-    \x20\x03(\x0b2\x18.mizer.programmer.PresetR\x07shutter\x12.\n\x05color\
-    \x18\x03\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x05color\x124\n\x08p\
-    osition\x18\x04\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x08position\"\
-    \xea\x02\n\x06Preset\x12*\n\x02id\x18\x01\x20\x01(\x0b2\x1a.mizer.progra\
-    mmer.PresetIdR\x02id\x12\x19\n\x05label\x18\x02\x20\x01(\tH\x01R\x05labe\
-    l\x88\x01\x01\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fader\x126\
-    \n\x05color\x18\x04\x20\x01(\x0b2\x1e.mizer.programmer.Preset.ColorH\0R\
-    \x05color\x12?\n\x08position\x18\x05\x20\x01(\x0b2!.mizer.programmer.Pre\
-    set.PositionH\0R\x08position\x1aC\n\x05Color\x12\x10\n\x03red\x18\x01\
-    \x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\
-    \x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\x1a0\n\x08Position\x12\
-    \x12\n\x04tilt\x18\x01\x20\x01(\x01R\x04tilt\x12\x10\n\x03pan\x18\x02\
-    \x20\x01(\x01R\x03panB\x07\n\x05valueB\x08\n\x06_label\"\x14\n\x12CallPr\
-    esetResponse\"\x0f\n\rGroupsRequest\"9\n\x06Groups\x12/\n\x06groups\x18\
-    \x01\x20\x03(\x0b2\x17.mizer.programmer.GroupR\x06groups\"+\n\x05Group\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
-    \x01(\tR\x04name\"$\n\x12SelectGroupRequest\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\rR\x02id\"\x15\n\x13SelectGroupResponse\"%\n\x0fAddGroupRequest\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToG\
-    roupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\
-    \x18\x02\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$As\
-    signFixtureSelectionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
-    \x02id\"\x1f\n\x1dAssignFixturesToGroupResponse2\xbc\n\n\rProgrammerApi\
-    \x12l\n\x15SubscribeToProgrammer\x12,.mizer.programmer.SubscribeProgramm\
-    erRequest\x1a!.mizer.programmer.ProgrammerState\"\00\x01\x12_\n\x0cWrite\
-    Control\x12%.mizer.programmer.WriteControlRequest\x1a&.mizer.programmer.\
-    WriteControlResponse\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.programmer.\
-    SelectFixturesRequest\x1a(.mizer.programmer.SelectFixturesResponse\"\0\
-    \x12k\n\x10UnselectFixtures\x12).mizer.programmer.UnselectFixturesReques\
-    t\x1a*.mizer.programmer.UnselectFixturesResponse\"\0\x12J\n\x05Clear\x12\
-    \x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.ClearRespons\
-    e\"\0\x12V\n\tHighlight\x12\".mizer.programmer.HighlightRequest\x1a#.miz\
-    er.programmer.HighlightResponse\"\0\x12J\n\x05Store\x12\x1e.mizer.progra\
-    mmer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\"\0\x12K\n\nGet\
-    Presets\x12\x20.mizer.programmer.PresetsRequest\x1a\x19.mizer.programmer\
-    .Presets\"\0\x12P\n\nCallPreset\x12\x1a.mizer.programmer.PresetId\x1a$.m\
-    izer.programmer.CallPresetResponse\"\0\x12H\n\tGetGroups\x12\x1f.mizer.p\
-    rogrammer.GroupsRequest\x1a\x18.mizer.programmer.Groups\"\0\x12\\\n\x0bS\
-    electGroup\x12$.mizer.programmer.SelectGroupRequest\x1a%.mizer.programme\
-    r.SelectGroupResponse\"\0\x12H\n\x08AddGroup\x12!.mizer.programmer.AddGr\
-    oupRequest\x1a\x17.mizer.programmer.Group\"\0\x12z\n\x15AssignFixturesTo\
-    Group\x12..mizer.programmer.AssignFixturesToGroupRequest\x1a/.mizer.prog\
-    rammer.AssignFixturesToGroupResponse\"\0\x12\x8a\x01\n\x1dAssignFixtureS\
-    electionToGroup\x126.mizer.programmer.AssignFixtureSelectionToGroupReque\
-    st\x1a/.mizer.programmer.AssignFixturesToGroupResponse\"\0b\x06proto3\
+    est.ModeR\tstoreMode\x12\x1a\n\x06cue_id\x18\x03\x20\x01(\rH\0R\x05cueId\
+    \x88\x01\x01\",\n\x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\
+    \x01\x12\n\n\x06AddCue\x10\x02B\t\n\x07_cue_id\"\x0f\n\rStoreResponse\"\
+    \x10\n\x0ePresetsRequest\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\
+    \x20\x01(\rR\x02id\x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.programme\
+    r.PresetId.PresetTypeR\x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\
+    \x12\x0b\n\x07Shutter\x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Posi\
+    tion\x10\x03\"\xdf\x01\n\x07Presets\x12:\n\x0bintensities\x18\x01\x20\
+    \x03(\x0b2\x18.mizer.programmer.PresetR\x0bintensities\x122\n\x07shutter\
+    \x18\x02\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x07shutter\x12.\n\
+    \x05color\x18\x03\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x05color\
+    \x124\n\x08position\x18\x04\x20\x03(\x0b2\x18.mizer.programmer.PresetR\
+    \x08position\"\xea\x02\n\x06Preset\x12*\n\x02id\x18\x01\x20\x01(\x0b2\
+    \x1a.mizer.programmer.PresetIdR\x02id\x12\x19\n\x05label\x18\x02\x20\x01\
+    (\tH\x01R\x05label\x88\x01\x01\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\
+    \0R\x05fader\x126\n\x05color\x18\x04\x20\x01(\x0b2\x1e.mizer.programmer.\
+    Preset.ColorH\0R\x05color\x12?\n\x08position\x18\x05\x20\x01(\x0b2!.mize\
+    r.programmer.Preset.PositionH\0R\x08position\x1aC\n\x05Color\x12\x10\n\
+    \x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\
+    \x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\x1a0\n\
+    \x08Position\x12\x12\n\x04tilt\x18\x01\x20\x01(\x01R\x04tilt\x12\x10\n\
+    \x03pan\x18\x02\x20\x01(\x01R\x03panB\x07\n\x05valueB\x08\n\x06_label\"\
+    \x14\n\x12CallPresetResponse\"\x0f\n\rGroupsRequest\"9\n\x06Groups\x12/\
+    \n\x06groups\x18\x01\x20\x03(\x0b2\x17.mizer.programmer.GroupR\x06groups\
+    \"+\n\x05Group\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04na\
+    me\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroupRequest\x12\x0e\n\x02i\
+    d\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroupResponse\"%\n\x0fAddGr\
+    oupRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"e\n\x1cAssignF\
+    ixturesToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\
+    \x08fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
+    ures\"6\n$AssignFixtureSelectionToGroupRequest\x12\x0e\n\x02id\x18\x01\
+    \x20\x01(\rR\x02id\"\x1f\n\x1dAssignFixturesToGroupResponse2\xbc\n\n\rPr\
+    ogrammerApi\x12l\n\x15SubscribeToProgrammer\x12,.mizer.programmer.Subscr\
+    ibeProgrammerRequest\x1a!.mizer.programmer.ProgrammerState\"\00\x01\x12_\
+    \n\x0cWriteControl\x12%.mizer.programmer.WriteControlRequest\x1a&.mizer.\
+    programmer.WriteControlResponse\"\0\x12e\n\x0eSelectFixtures\x12'.mizer.\
+    programmer.SelectFixturesRequest\x1a(.mizer.programmer.SelectFixturesRes\
+    ponse\"\0\x12k\n\x10UnselectFixtures\x12).mizer.programmer.UnselectFixtu\
+    resRequest\x1a*.mizer.programmer.UnselectFixturesResponse\"\0\x12J\n\x05\
+    Clear\x12\x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer.Cle\
+    arResponse\"\0\x12V\n\tHighlight\x12\".mizer.programmer.HighlightRequest\
+    \x1a#.mizer.programmer.HighlightResponse\"\0\x12J\n\x05Store\x12\x1e.miz\
+    er.programmer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\"\0\
+    \x12K\n\nGetPresets\x12\x20.mizer.programmer.PresetsRequest\x1a\x19.mize\
+    r.programmer.Presets\"\0\x12P\n\nCallPreset\x12\x1a.mizer.programmer.Pre\
+    setId\x1a$.mizer.programmer.CallPresetResponse\"\0\x12H\n\tGetGroups\x12\
+    \x1f.mizer.programmer.GroupsRequest\x1a\x18.mizer.programmer.Groups\"\0\
+    \x12\\\n\x0bSelectGroup\x12$.mizer.programmer.SelectGroupRequest\x1a%.mi\
+    zer.programmer.SelectGroupResponse\"\0\x12H\n\x08AddGroup\x12!.mizer.pro\
+    grammer.AddGroupRequest\x1a\x17.mizer.programmer.Group\"\0\x12z\n\x15Ass\
+    ignFixturesToGroup\x12..mizer.programmer.AssignFixturesToGroupRequest\
+    \x1a/.mizer.programmer.AssignFixturesToGroupResponse\"\0\x12\x8a\x01\n\
+    \x1dAssignFixtureSelectionToGroup\x126.mizer.programmer.AssignFixtureSel\
+    ectionToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroupResponse\
+    \"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

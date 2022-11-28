@@ -159,7 +159,15 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn store(&self, req: StoreRequest) {
         log::trace!("ProgrammerChannel::store({:?})", req);
-        self.handler.store(req.sequence_id, req.store_mode);
+        self.handler.store(
+            req.sequence_id,
+            req.store_mode,
+            req._cue_id.map(|cue_id| {
+                let StoreRequest_oneof__cue_id::cue_id(cue_id) = cue_id;
+
+                cue_id
+            }),
+        );
     }
 
     fn get_programmer_pointer(&self) -> anyhow::Result<i64> {

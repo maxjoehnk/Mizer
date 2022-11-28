@@ -44,8 +44,8 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
-  Future<void> store(int sequenceId, StoreRequest_Mode storeMode) async {
-    var request = StoreRequest(sequenceId: sequenceId, storeMode: storeMode);
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode, { int? cueId }) async {
+    var request = StoreRequest(sequenceId: sequenceId, storeMode: storeMode, cueId: cueId);
     await channel.invokeMethod("store", request.writeToBuffer());
   }
 

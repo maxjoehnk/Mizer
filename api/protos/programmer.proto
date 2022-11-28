@@ -91,6 +91,7 @@ message HighlightResponse {}
 message StoreRequest {
   uint32 sequence_id = 1;
   Mode store_mode = 2;
+  optional uint32 cue_id = 3;
 
   enum Mode {
     Overwrite = 0;

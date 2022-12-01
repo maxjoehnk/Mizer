@@ -1,9 +1,10 @@
 use std::any::{type_name, Any};
+use std::borrow::BorrowMut;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::ops::Deref;
 
-use mizer_node::PortMetadata;
+use mizer_node::{NodePath, PortMetadata};
 use mizer_ports::memory::{MemoryReceiver, MemorySender};
 use mizer_ports::{NodePortReceiver, PortId, PortValue};
 
@@ -34,6 +35,7 @@ impl NodeReceivers {
         &mut self,
         port_id: PortId,
         sender: MemoryReceiver<T>,
+        source: (NodePath, PortId),
         source_meta: PortMetadata,
     ) {
         if let Some(receiver) = self.0.get_mut(&port_id) {
@@ -41,7 +43,7 @@ impl NodeReceivers {
                 receiver.metadata.port_type, source_meta.port_type,
                 "port type missmatch"
             );
-            receiver.set_transport(sender);
+            receiver.add_transport(sender, source);
         } else {
             log::warn!("trying to add transport to unknown port '{}'", port_id);
         }
@@ -60,8 +62,10 @@ impl NodeReceivers {
         self.0.keys().cloned().collect()
     }
 
-    pub fn remove(&mut self, port_id: &PortId) {
-        self.0.remove(port_id);
+    pub fn remove<V: PortValue + 'static>(&mut self, port_id: &PortId, source: (NodePath, PortId)) {
+        if let Some(receiver) = self.0.get_mut(port_id) {
+            receiver.remove_transport::<V>(source);
+        }
     }
 }
 
@@ -70,6 +74,8 @@ pub struct AnyPortReceiver {
     pub metadata: PortMetadata,
     pub(crate) port: AnyPortReceiverPort,
 }
+
+type SourcePort = (NodePath, PortId);
 
 #[derive(Debug)]
 pub enum AnyPortReceiverPort {
@@ -139,7 +145,7 @@ impl AnyPortReceiver {
                 let mut last_value = recv.last_value.borrow_mut();
                 let value = if last_value.deref() == &value {
                     None
-                }else if let Some(value) = value {
+                } else if let Some(value) = value {
                     *last_value = Some(value.clone());
                     Some(value)
                 } else {
@@ -153,15 +159,21 @@ impl AnyPortReceiver {
         }
     }
 
-    pub fn set_transport<V: PortValue + 'static>(&self, transport: MemoryReceiver<V>) {
+    pub fn add_transport<V: PortValue + 'static>(
+        &self,
+        transport: MemoryReceiver<V>,
+        source: SourcePort,
+    ) {
         match self.metadata.multiple {
             Some(true) => {
-                self.push_receiver(transport);
+                self.push_receiver(transport, source);
             }
             _ => {
                 if let Some(receiver) = self.receiver::<V>() {
                     let mut transport_store = receiver.transport.borrow_mut();
                     transport_store.replace(transport);
+                    let mut source_store = receiver.source.borrow_mut();
+                    source_store.replace(source);
                 } else {
                     tracing::error!(
                         "Tried to add transport with invalid port value: {}",
@@ -176,10 +188,59 @@ impl AnyPortReceiver {
         }
     }
 
-    fn push_receiver<V: PortValue + 'static>(&self, transport: MemoryReceiver<V>) {
+    pub fn remove_transport<V: PortValue + 'static>(&self, source: SourcePort) {
+        match self.metadata.multiple {
+            Some(true) => {
+                if let AnyPortReceiverPort::Multiple(port) = &self.port {
+                    let mut ports = port.borrow_mut();
+                    let source = Some(source);
+                    if let Some(position) = ports.iter().position(|port| {
+                        let recv: &NodeReceiver<V> = port.downcast_ref().unwrap();
+                        let recv_source = recv.source.borrow();
+
+                        recv_source.deref() == &source
+                    }) {
+                        ports.remove(position);
+                    } else {
+                        tracing::error!(
+                            "Tried to remove transport which was not added before: {}",
+                            type_name::<V>()
+                        );
+                    }
+                }
+            }
+            _ => {
+                if let Some(receiver) = self.receiver::<V>() {
+                    let mut source_store = receiver.source.borrow_mut();
+                    if Some(source) == source_store.clone() {
+                        tracing::debug!("Removing single transport");
+                        let mut transport_store = receiver.transport.borrow_mut();
+                        transport_store.take();
+                    } else {
+                        tracing::error!(
+                            "Tried to remove transport which was not added before: {}",
+                            type_name::<V>()
+                        );
+                    }
+                } else {
+                    tracing::error!(
+                        "Tried to remove transport with invalid port value: {}",
+                        type_name::<V>()
+                    );
+                }
+            }
+        }
+    }
+
+    fn push_receiver<V: PortValue + 'static>(
+        &self,
+        transport: MemoryReceiver<V>,
+        source: SourcePort,
+    ) {
         if let AnyPortReceiverPort::Multiple(port) = &self.port {
-            let recv = NodeReceiver::<V>::default();
-            recv.transport.replace(transport.into());
+            let mut recv = NodeReceiver::<V>::default();
+            recv.source.replace(Some(source));
+            recv.transport.replace(Some(transport));
             let mut port = port.borrow_mut();
             port.push(Box::new(recv));
         }
@@ -207,6 +268,7 @@ pub struct NodeReceiver<V: PortValue + 'static> {
     /// Used to set values from outside the pipeline
     value: RefCell<Option<V>>,
     last_value: RefCell<Option<V>>,
+    source: RefCell<Option<SourcePort>>,
 }
 
 impl<V: PortValue + 'static> Default for NodeReceiver<V> {
@@ -215,6 +277,7 @@ impl<V: PortValue + 'static> Default for NodeReceiver<V> {
             transport: Default::default(),
             value: Default::default(),
             last_value: Default::default(),
+            source: Default::default(),
         }
     }
 }

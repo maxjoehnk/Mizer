@@ -193,7 +193,7 @@ impl PipelineWorker {
         tracing::trace!(value = value_name, "connect_memory_ports");
         let senders = self
             .senders
-            .entry(link.source)
+            .entry(link.source.clone())
             .or_insert_with(NodeSenders::default);
         let rx = if let Some((port, _)) = senders.get(link.source_port.clone()) {
             let port = port
@@ -204,7 +204,7 @@ impl PipelineWorker {
             port.add_destination()
         } else {
             let (tx, rx) = mizer_ports::memory::channel::<V>();
-            senders.add(link.source_port, tx, target_meta);
+            senders.add(link.source_port.clone(), tx, target_meta);
 
             rx
         };
@@ -212,12 +212,20 @@ impl PipelineWorker {
             .receivers
             .entry(link.target)
             .or_insert_with(NodeReceivers::default);
-        receivers.add(link.target_port, rx, source_meta);
+        receivers.add(
+            link.target_port,
+            rx,
+            (link.source, link.source_port),
+            source_meta,
+        );
     }
 
     fn disconnect_memory_ports<V: PortValue + Default + 'static>(&mut self, link: &NodeLink) {
         if let Some(receivers) = self.receivers.get_mut(&link.target) {
-            receivers.remove(&link.target_port);
+            receivers.remove::<V>(
+                &link.target_port,
+                (link.source.clone(), link.source_port.clone()),
+            );
         }
     }
 

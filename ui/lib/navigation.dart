@@ -27,7 +27,7 @@ const double TAB_STRIP_HEIGHT = 32;
 const double SHEET_CONTAINER_HEIGHT = SHEET_SIZE + TAB_STRIP_HEIGHT + SHEET_PADDING;
 
 List<Route> routes = [
-  Route(() => LayoutView(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
+  Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
   Route(() => PlanView(), Icons.view_comfortable, '2D Plan'.i18n, View.Plan),
   Route(() => Container(), MdiIcons.video3D, 'PreViz'.i18n, View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes'.i18n, View.Nodes),

@@ -18,5 +18,5 @@ mizer-module = { path = "../../../../runtime/module" }
 mizer-commander = { path = "../../../../runtime/commander" }
 mizer-message-bus = { path = "../../../../util/bus" }
 mizer-util = { path = "../../../../util" }
-url = "2.3"
+url = { version = "2.3", features = ["serde"] }
 tokio = "1"

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/i18n.dart';
@@ -9,9 +10,9 @@ import 'package:mizer/protos/layouts.pb.dart' hide Color;
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
-import 'package:mizer/widgets/inputs/button.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 
+import 'controls/button.dart';
 import 'controls/fader.dart';
 import 'controls/sequencer.dart';
 import 'dialogs/delete_control_dialog.dart';
@@ -19,12 +20,13 @@ import 'dialogs/edit_control_dialog.dart';
 import 'dialogs/rename_control_dialog.dart';
 
 class LayoutControlView extends StatelessWidget {
+  final LayoutsRefPointer pointer;
   final LayoutControl control;
   final String layoutId;
   final Map<int, SequenceState> sequencerState;
   final void Function() onMove;
 
-  LayoutControlView(this.layoutId, this.control, this.sequencerState, this.onMove);
+  LayoutControlView(this.pointer, this.layoutId, this.control, this.sequencerState, this.onMove);
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +56,9 @@ class LayoutControlView extends StatelessWidget {
 
   Widget? _getControl(Node? node, NodesApi apiClient) {
     if (node?.type == Node_NodeType.Fader) {
-      return FaderControl(control: control, color: _color);
+      return FaderControl(pointer: pointer, control: control, color: _color);
     } else if (node?.type == Node_NodeType.Button) {
-      return ButtonInput(
-          label: control.label,
-          color: _color,
-          onValue: (value) =>
-              apiClient.writeControlValue(path: control.node, port: "value", value: value));
+      return ButtonControl(pointer: pointer, control: control, color: _color);
     } else if (node?.type == Node_NodeType.Sequencer) {
       return SequencerControl(
         label: control.label,

@@ -4,6 +4,7 @@ use std::sync::Arc;
 
 use pinboard::NonEmptyPinboard;
 
+use itertools::Itertools;
 use mizer_clock::{Clock, ClockSnapshot, SystemClock};
 use mizer_execution_planner::*;
 use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
@@ -18,7 +19,7 @@ use tracing_unwrap::ResultExt;
 
 use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
-use crate::NodeDowncast;
+use crate::{LayoutsView, NodeDowncast};
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -32,6 +33,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_recv: flume::Receiver<ClockSnapshot>,
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
+    layout_fader_view: LayoutsView,
 }
 
 impl CoordinatorRuntime<SystemClock> {
@@ -57,6 +59,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_recv: clock_rx,
             clock_sender: clock_tx,
             clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
+            layout_fader_view: Default::default(),
         };
         runtime.bootstrap();
 
@@ -124,6 +127,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             plans: self.plans.clone(),
             clock_recv: self.clock_recv.clone(),
             clock_snapshot: self.clock_snapshot.clone(),
+            layouts_view: self.layout_fader_view.clone(),
         }
     }
 
@@ -175,6 +179,24 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let plan = planner.plan();
         self.rebuild_pipeline(plan);
     }
+
+    pub(crate) fn read_states_into_view(&self) {
+        let layouts = self.layouts.read();
+        let values = layouts
+            .into_iter()
+            .flat_map(|layout| layout.controls)
+            .map(|control| control.node)
+            .sorted()
+            .dedup()
+            .filter_map(|path| {
+                let value = self.pipeline.get_state::<f64>(&path).copied();
+
+                value.map(|value| (path, value))
+            })
+            .collect::<HashMap<_, _>>();
+
+        self.layout_fader_view.write_fader_values(values);
+    }
 }
 
 impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
@@ -219,6 +241,7 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
         }
+        self.read_states_into_view();
     }
 }
 

@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 log = "0.4"
-serde = { version = "1", features = ["derive"] }
+serde = { version = "1", features = ["derive", "rc"] }
 mizer-node = { path = "../node" }
 mizer-clock-nodes = { path = "clock" }
 mizer-color-nodes = { path = "behaviors/color" }

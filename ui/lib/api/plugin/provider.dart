@@ -43,7 +43,7 @@ class PluginApiProvider extends StatelessWidget {
       providers: [
         RepositoryProvider<ConnectionsApi>(create: (context) => ConnectionsPluginApi()),
         RepositoryProvider<FixturesApi>(create: (context) => FixturesPluginApi()),
-        RepositoryProvider<LayoutsApi>(create: (context) => LayoutsPluginApi()),
+        RepositoryProvider<LayoutsApi>(create: (context) => LayoutsPluginApi(bindings)),
         RepositoryProvider<MediaApi>(create: (context) => MediaPluginApi()),
         RepositoryProvider<NodesApi>(create: (context) => NodesPluginApi(bindings)),
         RepositoryProvider<SessionApi>(create: (context) => SessionPluginApi()),

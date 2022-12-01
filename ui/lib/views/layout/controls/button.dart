@@ -1,24 +1,23 @@
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
-import 'package:mizer/widgets/inputs/fader.dart';
+import 'package:mizer/widgets/inputs/button.dart';
 import 'package:provider/provider.dart';
 
-class FaderControl extends StatefulWidget {
+class ButtonControl extends StatefulWidget {
   final LayoutsRefPointer pointer;
   final LayoutControl control;
   final Color? color;
 
-  const FaderControl({required this.pointer, required this.control, required this.color, Key? key}) : super(key: key);
+  const ButtonControl({required this.pointer, required this.control, required this.color, Key? key}) : super(key: key);
 
   @override
-  _FaderControlState createState() => _FaderControlState();
+  _ButtonControlState createState() => _ButtonControlState();
 }
 
-class _FaderControlState extends State<FaderControl> with SingleTickerProviderStateMixin {
+class _ButtonControlState extends State<ButtonControl> with SingleTickerProviderStateMixin {
   double value = 0;
   late Ticker ticker;
 
@@ -45,10 +44,10 @@ class _FaderControlState extends State<FaderControl> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     NodesApi apiClient = context.read();
 
-    return FaderInput(
+    return ButtonInput(
       label: widget.control.label,
       color: widget.color,
-      value: value,
+      pressed: value > 0,
       onValue: (value) =>
           apiClient.writeControlValue(path: widget.control.node, port: "value", value: value),
     );

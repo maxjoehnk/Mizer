@@ -1,10 +1,18 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/layouts.dart';
+import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pbenum.dart';
 
+import 'ffi/api.dart';
+import 'ffi/bindings.dart';
+export 'ffi/layout.dart' show LayoutsRefPointer;
+
 class LayoutsPluginApi implements LayoutsApi {
+  final FFIBindings bindings;
   final MethodChannel channel = const MethodChannel("mizer.live/layouts");
+
+  LayoutsPluginApi(this.bindings);
 
   @override
   Future<Layouts> getLayouts() async {
@@ -80,5 +88,12 @@ class LayoutsPluginApi implements LayoutsApi {
     var value = await channel.invokeMethod("readFaderValue", nodePath);
 
     return value as double;
+  }
+
+  @override
+  Future<LayoutsRefPointer?> getLayoutsPointer() async {
+    int pointer = await channel.invokeMethod("getLayoutsPointer");
+
+    return this.bindings.openLayoutsRef(pointer);
   }
 }

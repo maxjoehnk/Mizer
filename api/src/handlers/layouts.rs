@@ -2,6 +2,7 @@ use crate::models::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_node::NodePath;
+use mizer_runtime::LayoutsView;
 
 #[derive(Clone)]
 pub struct LayoutsHandler<R: RuntimeApi> {
@@ -146,5 +147,10 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
 
     pub fn read_fader_value(&self, node_path: NodePath) -> Option<f64> {
         self.runtime.read_fader_value(node_path).ok()
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn layouts_view(&self) -> LayoutsView {
+        self.runtime.layouts_view()
     }
 }

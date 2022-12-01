@@ -3,6 +3,7 @@ use std::ops::Deref;
 
 pub use self::api::*;
 pub use self::coordinator::CoordinatorRuntime;
+pub use self::views::LayoutsView;
 pub use mizer_execution_planner::*;
 
 pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
@@ -12,6 +13,7 @@ pub mod commands;
 mod coordinator;
 pub mod pipeline_access;
 mod processor;
+mod views;
 
 use mizer_node::{NodePath, NodeType, PipelineNode};
 use mizer_nodes::Node;

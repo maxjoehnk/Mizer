@@ -2,8 +2,10 @@ use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::LayoutsHandler;
 use mizer_api::models::*;
 use mizer_api::RuntimeApi;
+use mizer_ui_ffi::{FFIToPointer, LayoutRef};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct LayoutsChannel<R: RuntimeApi> {
@@ -96,6 +98,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     }
                 }
             }
+            "getLayoutsPointer" => match self.get_layouts_pointer() {
+                Ok(ptr) => resp.send_ok(Value::I64(ptr)),
+                Err(err) => resp.respond_error(err),
+            },
             _ => resp.not_implemented(),
         }
     }
@@ -153,5 +159,13 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
     fn add_control_for_node(&self, req: AddExistingControlRequest) -> anyhow::Result<()> {
         self.handler
             .add_control_for_node(req.layout_id, req.node.into(), req.position.unwrap())
+    }
+
+    fn get_layouts_pointer(&self) -> anyhow::Result<i64> {
+        let view = self.handler.layouts_view();
+        let layouts = LayoutRef::new(view);
+        let layouts = Arc::new(layouts);
+
+        Ok(layouts.to_pointer() as i64)
     }
 }

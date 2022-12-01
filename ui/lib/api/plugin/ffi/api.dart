@@ -7,6 +7,7 @@ import 'bindings.dart';
 import 'transport.dart';
 import 'history.dart';
 import 'plans.dart';
+import 'layout.dart';
 
 extension DoubleArray on Array_f64 {
   List<double> toList() {
@@ -50,5 +51,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<FixturesRef>.fromAddress(pointerAddress);
 
     return FixturesRefPointer(this, pointer);
+  }
+
+  LayoutsRefPointer openLayoutsRef(int pointerAddress) {
+    var pointer = ffi.Pointer<LayoutRef>.fromAddress(pointerAddress);
+
+    return LayoutsRefPointer(this, pointer);
   }
 }

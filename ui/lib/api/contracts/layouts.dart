@@ -1,6 +1,8 @@
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
+import '../plugin/ffi/layout.dart';
+
 abstract class LayoutsApi {
   Future<Layouts> getLayouts();
   Future<Layouts> addLayout(String name);
@@ -15,4 +17,5 @@ abstract class LayoutsApi {
   Future<void> deleteControl(String layoutId, String id);
 
   Future<double> readFaderValue(String nodeId);
+  Future<LayoutsRefPointer?> getLayoutsPointer();
 }

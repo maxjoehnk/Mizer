@@ -5,7 +5,7 @@ use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::Layout;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, PortId};
-use mizer_runtime::{DefaultRuntime, NodeDescriptor, RuntimeAccess};
+use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, RuntimeAccess};
 use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
@@ -236,6 +236,10 @@ impl RuntimeApi for Api {
 
     fn observe_settings(&self) -> Subscriber<Settings> {
         self.settings_bus.subscribe()
+    }
+
+    fn layouts_view(&self) -> LayoutsView {
+        self.access.layouts_view.clone()
     }
 }
 

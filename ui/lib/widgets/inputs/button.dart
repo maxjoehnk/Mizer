@@ -6,8 +6,9 @@ class ButtonInput extends StatefulWidget {
   final Function(double) onValue;
   final String? label;
   final Color? color;
+  final bool? pressed;
 
-  ButtonInput({ this.label, required this.onValue, this.color });
+  ButtonInput({ this.label, required this.onValue, this.color, this.pressed });
 
   @override
   _ButtonInputState createState() => _ButtonInputState();
@@ -15,6 +16,16 @@ class ButtonInput extends StatefulWidget {
 
 class _ButtonInputState extends State<ButtonInput> {
   bool pressed = false;
+
+  @override
+  void didUpdateWidget(ButtonInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.pressed != widget.pressed && widget.pressed != null) {
+      setState(() {
+        this.pressed = widget.pressed!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
 use mizer_node::{NodeLink, NodePath, PortId};
 use mizer_plan::Plan;
-use mizer_runtime::NodeDescriptor;
+use mizer_runtime::{LayoutsView, NodeDescriptor};
 use mizer_session::SessionState;
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
@@ -70,4 +70,5 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn read_settings(&self) -> Settings;
     fn save_settings(&self, settings: Settings) -> anyhow::Result<()>;
     fn observe_settings(&self) -> Subscriber<Settings>;
+    fn layouts_view(&self) -> LayoutsView;
 }

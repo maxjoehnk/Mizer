@@ -1,6 +1,6 @@
 use dashmap::mapref::one::Ref;
 
-use crate::NodeDowncast;
+use crate::{LayoutsView, NodeDowncast};
 use dashmap::DashMap;
 use mizer_clock::ClockSnapshot;
 use mizer_layouts::Layout;
@@ -20,6 +20,7 @@ pub struct RuntimeAccess {
     // TODO: make broadcast
     pub clock_recv: flume::Receiver<ClockSnapshot>,
     pub clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
+    pub layouts_view: LayoutsView,
 }
 
 pub struct NodeDescriptor<'a> {

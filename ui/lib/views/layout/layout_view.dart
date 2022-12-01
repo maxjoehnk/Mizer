@@ -5,7 +5,9 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/api/contracts/layouts.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/api/plugin/ffi/layout.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
@@ -26,7 +28,45 @@ import 'control.dart';
 const double MULTIPLIER = 75;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
 
+class LayoutViewWrapper extends StatefulWidget {
+  @override
+  State<LayoutViewWrapper> createState() => _LayoutViewWrapperState();
+}
+
+class _LayoutViewWrapperState extends State<LayoutViewWrapper> {
+  LayoutsRefPointer? _pointer;
+
+  @override
+  void initState() {
+    super.initState();
+    var layoutsApi = context.read<LayoutsApi>();
+    layoutsApi.getLayoutsPointer().then((pointer) {
+      setState(() {
+        _pointer = pointer;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _pointer?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (this._pointer == null) {
+      return Container();
+    }
+    return LayoutView(this._pointer!);
+  }
+}
+
 class LayoutView extends StatelessWidget {
+  final LayoutsRefPointer _pointer;
+
+  LayoutView(this._pointer);
+
   @override
   Widget build(BuildContext context) {
     var layoutsBloc = context.read<LayoutsBloc>();
@@ -57,6 +97,7 @@ class LayoutView extends StatelessWidget {
                       ]),
                       child: tabs.TabHeader(layout.id, selected: active, onSelect: setActive)),
                   child: ControlLayout(
+                    pointer: _pointer,
                     layout: layout,
                   )))
               .toList(),
@@ -135,9 +176,10 @@ class NameLayoutDialog extends StatelessWidget {
 }
 
 class ControlLayout extends StatefulWidget {
+  final LayoutsRefPointer pointer;
   final Layout layout;
 
-  ControlLayout({required this.layout});
+  ControlLayout({required this.pointer, required this.layout});
 
   @override
   State<ControlLayout> createState() => _ControlLayoutState();
@@ -195,6 +237,7 @@ class _ControlLayoutState extends State<ControlLayout> {
                   },
                 ),
                 _ControlsContainer(
+                    pointer: widget.pointer,
                     layout: widget.layout,
                     startMove: _startMove,
                     movingNode: _movingNode,
@@ -231,13 +274,15 @@ class _ControlLayoutState extends State<ControlLayout> {
 }
 
 class _ControlsContainer extends StatelessWidget {
+  final LayoutsRefPointer pointer;
   final Layout layout;
   final LayoutControl? movingNode;
   final Offset? movingNodePosition;
   final Function(LayoutControl) startMove;
 
   const _ControlsContainer(
-      {required this.layout,
+      {required this.pointer,
+        required this.layout,
       required this.startMove,
       this.movingNode,
       this.movingNodePosition,
@@ -267,7 +312,7 @@ class _ControlsContainer extends StatelessWidget {
                   ))),
             ...layout.controls.map((e) => LayoutId(
                 id: e.node,
-                child: LayoutControlView(layout.id, e, sequencerState, () => startMove(e)))),
+                child: LayoutControlView(pointer, layout.id, e, sequencerState, () => startMove(e)))),
           ]);
     });
   }

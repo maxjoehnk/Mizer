@@ -155,7 +155,7 @@ impl From<mizer_nodes::OscillatorNode> for OscillatorNodeConfig {
             offset: oscillator.offset,
             min: oscillator.min,
             max: oscillator.max,
-            ratio: oscillator.ratio,
+            ratio: oscillator.interval,
             reverse: oscillator.reverse,
             ..Default::default()
         }
@@ -182,7 +182,7 @@ impl From<OscillatorNodeConfig> for mizer_nodes::OscillatorNode {
             offset: oscillator.offset,
             min: oscillator.min,
             max: oscillator.max,
-            ratio: oscillator.ratio,
+            interval: oscillator.ratio,
             reverse: oscillator.reverse,
         }
     }

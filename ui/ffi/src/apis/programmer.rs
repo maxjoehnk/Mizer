@@ -89,7 +89,7 @@ impl FFIProgrammerState {
                 .map(|chan| FFIProgrammerChannel::from(chan, ffi_state))
                 .collect::<Vec<_>>()
                 .into(),
-            highlight: if state.highlight { 1 } else { 0 },
+            highlight: u8::from(state.highlight),
         }
     }
 }

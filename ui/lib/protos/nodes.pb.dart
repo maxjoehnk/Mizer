@@ -1057,6 +1057,7 @@ enum NodeConfig_Type {
   dataToNumberConfig, 
   valueConfig, 
   planScreenConfig, 
+  delayConfig, 
   notSet
 }
 
@@ -1104,10 +1105,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     50 : NodeConfig_Type.dataToNumberConfig,
     51 : NodeConfig_Type.valueConfig,
     52 : NodeConfig_Type.planScreenConfig,
+    53 : NodeConfig_Type.delayConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1150,6 +1152,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', protoName: 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
     ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
     ..aOM<PlanScreenNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
+    ..aOM<DelayNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', protoName: 'delayConfig', subBuilder: DelayNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1197,6 +1200,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     DataToNumberNodeConfig? dataToNumberConfig,
     ValueNodeConfig? valueConfig,
     PlanScreenNodeConfig? planScreenConfig,
+    DelayNodeConfig? delayConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1324,6 +1328,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (planScreenConfig != null) {
       _result.planScreenConfig = planScreenConfig;
+    }
+    if (delayConfig != null) {
+      _result.delayConfig = delayConfig;
     }
     return _result;
   }
@@ -1812,6 +1819,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearPlanScreenConfig() => clearField(52);
   @$pb.TagNumber(52)
   PlanScreenNodeConfig ensurePlanScreenConfig() => $_ensure(41);
+
+  @$pb.TagNumber(53)
+  DelayNodeConfig get delayConfig => $_getN(42);
+  @$pb.TagNumber(53)
+  set delayConfig(DelayNodeConfig v) { setField(53, v); }
+  @$pb.TagNumber(53)
+  $core.bool hasDelayConfig() => $_has(42);
+  @$pb.TagNumber(53)
+  void clearDelayConfig() => clearField(53);
+  @$pb.TagNumber(53)
+  DelayNodeConfig ensureDelayConfig() => $_ensure(42);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4096,6 +4114,53 @@ class PlanScreenNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasScreenId() => $_has(1);
   @$pb.TagNumber(2)
   void clearScreenId() => clearField(2);
+}
+
+class DelayNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DelayNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bufferSize', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  DelayNodeConfig._() : super();
+  factory DelayNodeConfig({
+    $core.int? bufferSize,
+  }) {
+    final _result = create();
+    if (bufferSize != null) {
+      _result.bufferSize = bufferSize;
+    }
+    return _result;
+  }
+  factory DelayNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DelayNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DelayNodeConfig clone() => DelayNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DelayNodeConfig copyWith(void Function(DelayNodeConfig) updates) => super.copyWith((message) => updates(message as DelayNodeConfig)) as DelayNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DelayNodeConfig create() => DelayNodeConfig._();
+  DelayNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<DelayNodeConfig> createRepeated() => $pb.PbList<DelayNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static DelayNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DelayNodeConfig>(create);
+  static DelayNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get bufferSize => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set bufferSize($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasBufferSize() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBufferSize() => clearField(1);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

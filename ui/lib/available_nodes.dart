@@ -44,6 +44,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.DataToNumber: "Data to Number",
   Node_NodeType.Value: "Value",
   Node_NodeType.PlanScreen: "Plan Screen",
+  Node_NodeType.Delay: "Delay",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -62,6 +63,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.ColorRgb,
     Node_NodeType.ColorHsv,
     Node_NodeType.Value,
+    Node_NodeType.Delay,
   ]),
   buildCategory("Connections", [
     Node_NodeType.DmxOutput,

@@ -403,6 +403,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::DataToNumber(node) => pipeline.register_node(path, &node),
         Node::Value(node) => pipeline.register_node(path, &node),
         Node::PlanScreen(node) => pipeline.register_node(path, &node),
+        Node::Delay(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

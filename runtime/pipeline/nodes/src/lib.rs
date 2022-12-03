@@ -26,6 +26,7 @@ pub use mizer_port_operation_nodes::{
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_sequencer_nodes::SequencerNode;
+pub use mizer_timing_nodes::DelayNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
@@ -132,4 +133,5 @@ node_impl! {
     DataToNumber(DataToNumberNode),
     PlanScreen(PlanScreenNode),
     Value(ValueNode),
+    Delay(DelayNode),
 }

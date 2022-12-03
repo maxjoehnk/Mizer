@@ -9,6 +9,7 @@ import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_prop
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
 
 import 'properties/groups/button_properties.dart';
+import 'properties/groups/delay_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
 import 'properties/groups/fixture_properties.dart';
@@ -160,6 +161,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(ValueProperties(node.config.valueConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(valueConfig: config)))));
+    }
+    if (node.config.hasDelayConfig()) {
+      widgets.add(DelayProperties(node.config.delayConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(delayConfig: config)))));
     }
     return widgets;
   }

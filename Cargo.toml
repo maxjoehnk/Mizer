@@ -42,6 +42,7 @@ members = [
     "runtime/pipeline/nodes/behaviors/port-operations",
     "runtime/pipeline/nodes/behaviors/scripting",
     "runtime/pipeline/nodes/behaviors/sequence",
+    "runtime/pipeline/nodes/behaviors/timing",
     "runtime/pipeline/nodes/clock",
     "runtime/pipeline/nodes/fixture",
     "runtime/pipeline/nodes/sequencer",

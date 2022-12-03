@@ -32,6 +32,7 @@ mizer-osc-nodes = { path = "connections/protocols/osc" }
 mizer-video-nodes = { path = "video" }
 mizer-data-nodes = { path = "data" }
 mizer-plan-nodes = { path = "plan" }
+mizer-timing-nodes = { path = "behaviors/timing" }
 derive_more = "0.99"
 
 [dev-dependencies]

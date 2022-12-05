@@ -144,6 +144,450 @@ impl ::protobuf::reflect::ProtobufValue for GetEffectsRequest {
 
 #[derive(PartialEq,Clone,Default)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct AddEffectRequest {
+    // message fields
+    pub name: ::std::string::String,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a AddEffectRequest {
+    fn default() -> &'a AddEffectRequest {
+        <AddEffectRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl AddEffectRequest {
+    pub fn new() -> AddEffectRequest {
+        ::std::default::Default::default()
+    }
+
+    // string name = 1;
+
+
+    pub fn get_name(&self) -> &str {
+        &self.name
+    }
+    pub fn clear_name(&mut self) {
+        self.name.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_name(&mut self, v: ::std::string::String) {
+        self.name = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_name(&mut self) -> &mut ::std::string::String {
+        &mut self.name
+    }
+
+    // Take field
+    pub fn take_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.name, ::std::string::String::new())
+    }
+}
+
+impl ::protobuf::Message for AddEffectRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> AddEffectRequest {
+        AddEffectRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
+                "name",
+                |m: &AddEffectRequest| { &m.name },
+                |m: &mut AddEffectRequest| { &mut m.name },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<AddEffectRequest>(
+                "AddEffectRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static AddEffectRequest {
+        static instance: ::protobuf::rt::LazyV2<AddEffectRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(AddEffectRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for AddEffectRequest {
+    fn clear(&mut self) {
+        self.name.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for AddEffectRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for AddEffectRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct UpdateEffectStepRequest {
+    // message fields
+    pub effect_id: u32,
+    pub channel_index: u32,
+    pub step_index: u32,
+    pub step: ::protobuf::SingularPtrField<EffectStep>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateEffectStepRequest {
+    fn default() -> &'a UpdateEffectStepRequest {
+        <UpdateEffectStepRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateEffectStepRequest {
+    pub fn new() -> UpdateEffectStepRequest {
+        ::std::default::Default::default()
+    }
+
+    // uint32 effect_id = 1;
+
+
+    pub fn get_effect_id(&self) -> u32 {
+        self.effect_id
+    }
+    pub fn clear_effect_id(&mut self) {
+        self.effect_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_effect_id(&mut self, v: u32) {
+        self.effect_id = v;
+    }
+
+    // uint32 channel_index = 2;
+
+
+    pub fn get_channel_index(&self) -> u32 {
+        self.channel_index
+    }
+    pub fn clear_channel_index(&mut self) {
+        self.channel_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_channel_index(&mut self, v: u32) {
+        self.channel_index = v;
+    }
+
+    // uint32 step_index = 3;
+
+
+    pub fn get_step_index(&self) -> u32 {
+        self.step_index
+    }
+    pub fn clear_step_index(&mut self) {
+        self.step_index = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_step_index(&mut self, v: u32) {
+        self.step_index = v;
+    }
+
+    // .mizer.effects.EffectStep step = 4;
+
+
+    pub fn get_step(&self) -> &EffectStep {
+        self.step.as_ref().unwrap_or_else(|| <EffectStep as ::protobuf::Message>::default_instance())
+    }
+    pub fn clear_step(&mut self) {
+        self.step.clear();
+    }
+
+    pub fn has_step(&self) -> bool {
+        self.step.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_step(&mut self, v: EffectStep) {
+        self.step = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_step(&mut self) -> &mut EffectStep {
+        if self.step.is_none() {
+            self.step.set_default();
+        }
+        self.step.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_step(&mut self) -> EffectStep {
+        self.step.take().unwrap_or_else(|| EffectStep::new())
+    }
+}
+
+impl ::protobuf::Message for UpdateEffectStepRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.step {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.effect_id = tmp;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.channel_index = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.step_index = tmp;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.step)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.effect_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.effect_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.channel_index != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.channel_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.step_index != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.step_index, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let Some(ref v) = self.step.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.effect_id != 0 {
+            os.write_uint32(1, self.effect_id)?;
+        }
+        if self.channel_index != 0 {
+            os.write_uint32(2, self.channel_index)?;
+        }
+        if self.step_index != 0 {
+            os.write_uint32(3, self.step_index)?;
+        }
+        if let Some(ref v) = self.step.as_ref() {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateEffectStepRequest {
+        UpdateEffectStepRequest::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "effect_id",
+                |m: &UpdateEffectStepRequest| { &m.effect_id },
+                |m: &mut UpdateEffectStepRequest| { &mut m.effect_id },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "channel_index",
+                |m: &UpdateEffectStepRequest| { &m.channel_index },
+                |m: &mut UpdateEffectStepRequest| { &mut m.channel_index },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint32>(
+                "step_index",
+                |m: &UpdateEffectStepRequest| { &m.step_index },
+                |m: &mut UpdateEffectStepRequest| { &mut m.step_index },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<EffectStep>>(
+                "step",
+                |m: &UpdateEffectStepRequest| { &m.step },
+                |m: &mut UpdateEffectStepRequest| { &mut m.step },
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<UpdateEffectStepRequest>(
+                "UpdateEffectStepRequest",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static UpdateEffectStepRequest {
+        static instance: ::protobuf::rt::LazyV2<UpdateEffectStepRequest> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(UpdateEffectStepRequest::new)
+    }
+}
+
+impl ::protobuf::Clear for UpdateEffectStepRequest {
+    fn clear(&mut self) {
+        self.effect_id = 0;
+        self.channel_index = 0;
+        self.step_index = 0;
+        self.step.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for UpdateEffectStepRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateEffectStepRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Effects {
     // message fields
     pub effects: ::protobuf::RepeatedField<Effect>,
@@ -1748,26 +2192,33 @@ impl ::protobuf::reflect::ProtobufValue for CubicControlPoint {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\reffects.proto\x12\rmizer.effects\x1a\x0efixtures.proto\x1a\x0fsequen\
-    cer.proto\"\x13\n\x11GetEffectsRequest\":\n\x07Effects\x12/\n\x07effects\
-    \x18\x01\x20\x03(\x0b2\x15.mizer.effects.EffectR\x07effects\"f\n\x06Effe\
-    ct\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\
-    \x20\x01(\tR\x04name\x128\n\x08channels\x18\x03\x20\x03(\x0b2\x1c.mizer.\
-    effects.EffectChannelR\x08channels\"z\n\rEffectChannel\x128\n\x07control\
-    \x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\
-    /\n\x05steps\x18\x02\x20\x03(\x0b2\x19.mizer.effects.EffectStepR\x05step\
-    s\"\x8b\x02\n\nEffectStep\x12/\n\x05value\x18\x01\x20\x01(\x0b2\x19.mize\
-    r.sequencer.CueValueR\x05value\x12;\n\x06simple\x18\x02\x20\x01(\x0b2!.m\
-    izer.effects.SimpleControlPointH\0R\x06simple\x12D\n\tquadratic\x18\x03\
-    \x20\x01(\x0b2$.mizer.effects.QuadraticControlPointH\0R\tquadratic\x128\
-    \n\x05cubic\x18\x04\x20\x01(\x0b2\x20.mizer.effects.CubicControlPointH\0\
-    R\x05cubicB\x0f\n\rcontrol_point\"\x14\n\x12SimpleControlPoint\";\n\x15Q\
-    uadraticControlPoint\x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\
-    \x10\n\x03c0b\x18\x02\x20\x01(\x01R\x03c0b\"[\n\x11CubicControlPoint\x12\
-    \x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x02\x20\
-    \x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x03\x20\x01(\x01R\x03c1a\x12\x10\
-    \n\x03c1b\x18\x04\x20\x01(\x01R\x03c1b2V\n\nEffectsApi\x12H\n\nGetEffect\
-    s\x12\x20.mizer.effects.GetEffectsRequest\x1a\x16.mizer.effects.Effects\
-    \"\0b\x06proto3\
+    cer.proto\"\x13\n\x11GetEffectsRequest\"&\n\x10AddEffectRequest\x12\x12\
+    \n\x04name\x18\x01\x20\x01(\tR\x04name\"\xa9\x01\n\x17UpdateEffectStepRe\
+    quest\x12\x1b\n\teffect_id\x18\x01\x20\x01(\rR\x08effectId\x12#\n\rchann\
+    el_index\x18\x02\x20\x01(\rR\x0cchannelIndex\x12\x1d\n\nstep_index\x18\
+    \x03\x20\x01(\rR\tstepIndex\x12-\n\x04step\x18\x04\x20\x01(\x0b2\x19.miz\
+    er.effects.EffectStepR\x04step\":\n\x07Effects\x12/\n\x07effects\x18\x01\
+    \x20\x03(\x0b2\x15.mizer.effects.EffectR\x07effects\"f\n\x06Effect\x12\
+    \x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01\
+    (\tR\x04name\x128\n\x08channels\x18\x03\x20\x03(\x0b2\x1c.mizer.effects.\
+    EffectChannelR\x08channels\"z\n\rEffectChannel\x128\n\x07control\x18\x01\
+    \x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12/\n\x05s\
+    teps\x18\x02\x20\x03(\x0b2\x19.mizer.effects.EffectStepR\x05steps\"\x8b\
+    \x02\n\nEffectStep\x12/\n\x05value\x18\x01\x20\x01(\x0b2\x19.mizer.seque\
+    ncer.CueValueR\x05value\x12;\n\x06simple\x18\x02\x20\x01(\x0b2!.mizer.ef\
+    fects.SimpleControlPointH\0R\x06simple\x12D\n\tquadratic\x18\x03\x20\x01\
+    (\x0b2$.mizer.effects.QuadraticControlPointH\0R\tquadratic\x128\n\x05cub\
+    ic\x18\x04\x20\x01(\x0b2\x20.mizer.effects.CubicControlPointH\0R\x05cubi\
+    cB\x0f\n\rcontrol_point\"\x14\n\x12SimpleControlPoint\";\n\x15QuadraticC\
+    ontrolPoint\x12\x10\n\x03c0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c\
+    0b\x18\x02\x20\x01(\x01R\x03c0b\"[\n\x11CubicControlPoint\x12\x10\n\x03c\
+    0a\x18\x01\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x02\x20\x01(\x01R\
+    \x03c0b\x12\x10\n\x03c1a\x18\x03\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\
+    \x18\x04\x20\x01(\x01R\x03c1b2\xf2\x01\n\nEffectsApi\x12H\n\nGetEffects\
+    \x12\x20.mizer.effects.GetEffectsRequest\x1a\x16.mizer.effects.Effects\"\
+    \0\x12E\n\tAddEffect\x12\x1f.mizer.effects.AddEffectRequest\x1a\x15.mize\
+    r.effects.Effect\"\0\x12S\n\x10UpdateEffectStep\x12&.mizer.effects.Updat\
+    eEffectStepRequest\x1a\x15.mizer.effects.Effect\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

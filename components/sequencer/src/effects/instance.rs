@@ -23,6 +23,7 @@ impl EffectInstance {
         }
     }
 
+    // TODO: update spline when effect differs from previous version
     pub fn process(
         &mut self,
         effect: &Effect,

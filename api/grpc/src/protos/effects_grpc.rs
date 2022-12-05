@@ -23,6 +23,10 @@
 
 pub trait EffectsApi {
     fn get_effects(&self, req: ::grpc::ServerRequestSingle<super::effects::GetEffectsRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effects>) -> ::grpc::Result<()>;
+
+    fn add_effect(&self, req: ::grpc::ServerRequestSingle<super::effects::AddEffectRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
+
+    fn update_effect_step(&self, req: ::grpc::ServerRequestSingle<super::effects::UpdateEffectStepRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -43,6 +47,26 @@ impl EffectsApiClient {
     pub fn get_effects(&self, o: ::grpc::RequestOptions, req: super::effects::GetEffectsRequest) -> ::grpc::SingleResponse<super::effects::Effects> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/GetEffects"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn add_effect(&self, o: ::grpc::RequestOptions, req: super::effects::AddEffectRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/AddEffect"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn update_effect_step(&self, o: ::grpc::RequestOptions, req: super::effects::UpdateEffectStepRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/UpdateEffectStep"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -71,6 +95,30 @@ impl EffectsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).get_effects(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/AddEffect"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_effect(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/UpdateEffectStep"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_effect_step(req, resp))
                     },
                 ),
             ],

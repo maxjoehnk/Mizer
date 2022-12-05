@@ -1,84 +1,261 @@
 ---
-nodes: []
+nodes:
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: false
 channels: []
-fixtures:
-  - id: 1
-    name: Viper 1
-    fixture: "ofl:martin:mac-viper-performance"
-    channel: 1
-    universe: 1
-    mode: Extended 16-bit
-    output: ~
-  - id: 2
-    name: Viper 2
-    fixture: "ofl:martin:mac-viper-performance"
-    channel: 41
-    universe: 1
-    mode: Extended 16-bit
-    output: ~
-  - id: 3
-    name: Viper 3
-    fixture: "ofl:martin:mac-viper-performance"
-    channel: 81
-    universe: 1
-    mode: Extended 16-bit
-    output: ~
-  - id: 4
-    name: Viper 4
-    fixture: "ofl:martin:mac-viper-performance"
-    channel: 121
-    universe: 1
-    mode: Extended 16-bit
-    output: ~
 media: []
-layouts: {}
-sequences:
-  - id: 1
-    name: Sequence 1
-    fixtures: [1, 2, 3, 4]
-    cues:
-      - id: 1
-        name: Cue 1
-        trigger: Go
-        controls:
-          - control: Intensity
-            value: 1
-            fixtures: [1, 2, 3, 4]
-        effects:
-          - effect: 1
-            fixtures: [1, 2, 3, 4]
-effects:
-  - id: 1
-    name: Test
-    channels:
-      - control: Pan
-        steps:
-          - value: 0
-          - value: 1
-      - control: Tilt
-        steps:
-          - value:
-              - 0
-              - 1
-          - value: 0.5
-  - id: 2
-    name: Test 2
-    channels:
-      - control: Pan
-        steps:
-          - value: 0
-          - value: 1
-          - value: 0
-      - control: Tilt
-        steps:
-          - value: 0
-          - value: 0.5
-          - value:
-              - 0.75
-              - 1
-
+layouts:
+  Default: []
 connections:
-  - type: artnet
-    id: dmx-0
-    name: Artnet
-    host: 0.0.0.0
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+fixtures: []
+groups: []
+presets:
+  intensity:
+    - id: 5
+      label: 100%
+      value: 1.0
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 2
+      label: 25%
+      value: 0.25
+  shutter: []
+  color:
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+  position: []
+sequences: []
+effects:
+  - id: 6
+    name: Quartic
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.77, 0]
+                - [0.18, 1]
+  - id: 10
+    name: Backward
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.68, -0.55]
+                - [0.27, 1.55]
+  - id: 4
+    name: Quadratic
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.46, 0.03]
+                - [0.52, 0.96]
+  - id: 2
+    name: Line
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.5, 0.5]
+                - [0.5, 0.5]
+  - id: 8
+    name: Exponential
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [1, 0]
+                - [0, 1]
+  - id: 3
+    name: Sine
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.45, 0.05]
+                - [0.55, 0.95]
+  - id: 7
+    name: Quintic
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.86, 0]
+                - [0.07, 1]
+  - id: 5
+    name: Cubic
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.65, 0.05]
+                - [0.36, 1]
+  - id: 9
+    name: Circular
+    channels:
+      - control: Pan
+        steps:
+          - value: 0
+            control_point: Simple
+          - value: 1
+            control_point:
+              Cubic:
+                - [0.79, 0.14]
+                - [0.15, 1.86]
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.5
+            control_point:
+              Cubic:
+                - - 0.80191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.80191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.30191502449351
+                  - 0.0
+                - - 1.0
+                  - 0.30191502449351
+          - value: 0.5
+            control_point:
+              Cubic:
+                - - 0.0
+                  - 0.30191502449351
+                - - 0.30191502449351
+                  - 0.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.80191502449351
+                - - 0.80191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.5
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.80191502449351
+                - - 0.80191502449351
+                  - 1.0
+          - value: 0.5
+            control_point:
+              Cubic:
+                - - 0.80191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.80191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.30191502449351
+                  - 0.0
+                - - 0.0
+                  - 0.30191502449351
+          - value: 0.5
+            control_point:
+              Cubic:
+                - - 0.0
+                  - 0.30191502449351
+                - - 0.30191502449351
+                  - 0.0
+plans: []

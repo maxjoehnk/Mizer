@@ -853,6 +853,7 @@ pub struct Hotkeys {
     pub patch: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub sequencer: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     pub plan: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
+    pub effects: ::std::collections::HashMap<::std::string::String, ::std::string::String>,
     // special fields
     #[cfg_attr(feature = "with-serde", serde(skip))]
     pub unknown_fields: ::protobuf::UnknownFields,
@@ -1045,6 +1046,31 @@ impl Hotkeys {
     pub fn take_plan(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
         ::std::mem::replace(&mut self.plan, ::std::collections::HashMap::new())
     }
+
+    // repeated .mizer.settings.Hotkeys.EffectsEntry effects = 8;
+
+
+    pub fn get_effects(&self) -> &::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &self.effects
+    }
+    pub fn clear_effects(&mut self) {
+        self.effects.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_effects(&mut self, v: ::std::collections::HashMap<::std::string::String, ::std::string::String>) {
+        self.effects = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_effects(&mut self) -> &mut ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        &mut self.effects
+    }
+
+    // Take field
+    pub fn take_effects(&mut self) -> ::std::collections::HashMap<::std::string::String, ::std::string::String> {
+        ::std::mem::replace(&mut self.effects, ::std::collections::HashMap::new())
+    }
 }
 
 impl ::protobuf::Message for Hotkeys {
@@ -1077,6 +1103,9 @@ impl ::protobuf::Message for Hotkeys {
                 7 => {
                     ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.plan)?;
                 },
+                8 => {
+                    ::protobuf::rt::read_map_into::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(wire_type, is, &mut self.effects)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1096,6 +1125,7 @@ impl ::protobuf::Message for Hotkeys {
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.patch);
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(6, &self.sequencer);
         my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(7, &self.plan);
+        my_size += ::protobuf::rt::compute_map_size::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(8, &self.effects);
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1109,6 +1139,7 @@ impl ::protobuf::Message for Hotkeys {
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(5, &self.patch, os)?;
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(6, &self.sequencer, os)?;
         ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(7, &self.plan, os)?;
+        ::protobuf::rt::write_map_with_cached_sizes::<::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(8, &self.effects, os)?;
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -1182,6 +1213,11 @@ impl ::protobuf::Message for Hotkeys {
                 |m: &Hotkeys| { &m.plan },
                 |m: &mut Hotkeys| { &mut m.plan },
             ));
+            fields.push(::protobuf::reflect::accessor::make_map_accessor::<_, ::protobuf::types::ProtobufTypeString, ::protobuf::types::ProtobufTypeString>(
+                "effects",
+                |m: &Hotkeys| { &m.effects },
+                |m: &mut Hotkeys| { &mut m.effects },
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<Hotkeys>(
                 "Hotkeys",
                 fields,
@@ -1205,6 +1241,7 @@ impl ::protobuf::Clear for Hotkeys {
         self.patch.clear();
         self.sequencer.clear();
         self.plan.clear();
+        self.effects.clear();
         self.unknown_fields.clear();
     }
 }
@@ -1394,7 +1431,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     brary\x88\x01\x01\x12\x1d\n\x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcpl\
     us\x88\x01\x01\x12\x17\n\x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\
     \x01\x01B\x17\n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdt\
-    f\"\xe1\x06\n\x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.s\
+    f\"\xdd\x07\n\x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.s\
     ettings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07layouts\x18\x02\x20\x03\
     (\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07layouts\x12G\n\nprogramm\
     er\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.ProgrammerEntryR\nprogr\
@@ -1402,19 +1439,22 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     esEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\".mizer.settings\
     .Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\x20\x03(\x0b2&.m\
     izer.settings.Hotkeys.SequencerEntryR\tsequencer\x125\n\x04plan\x18\x07\
-    \x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x1a9\n\x0bGlob\
-    alEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\
-    \x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\
+    \x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x12>\n\x07effe\
+    cts\x18\x08\x20\x03(\x0b2$.mizer.settings.Hotkeys.EffectsEntryR\x07effec\
+    ts\x1a9\n\x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
+    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayouts\
+    Entry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\
     \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
-    R\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\x03key\x18\x01\
-    \x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x02\
-    8\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
-    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nPatchEntr\
-    y\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEntry\x12\x10\n\x03ke\
-    y\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05v\
-    alue:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\
-    \x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"%\n\
+    R\x05value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01\
+    (\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\
+    \x1a8\n\nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
+    \n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEn\
+    try\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03key\
+    \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
+    lue:\x028\x01\x1a:\n\x0cEffectsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\t\
+    R\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"%\n\
     \x07General\x12\x1a\n\x08language\x18\x01\x20\x01(\tR\x08language2\xa0\
     \x01\n\x0bSettingsApi\x12K\n\x0cLoadSettings\x12\x1f.mizer.settings.Requ\
     estSettings\x1a\x18.mizer.settings.Settings\"\0\x12D\n\x0cSaveSettings\

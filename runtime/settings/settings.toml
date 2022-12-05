@@ -54,3 +54,7 @@ duplicate_node = "ctrl+d"
 add_sequence = "alt+a"
 delete = "delete"
 duplicate = "ctrl+d"
+
+[hotkeys.effects]
+delete = "delete"
+add_effect = "alt+a"

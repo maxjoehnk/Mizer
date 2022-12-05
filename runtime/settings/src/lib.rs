@@ -53,7 +53,11 @@ impl Settings {
     }
 
     pub fn save_to<P: AsRef<Path>>(&self, path: P) -> anyhow::Result<()> {
-        std::fs::create_dir_all(path.as_ref().parent().ok_or_else(|| anyhow::anyhow!("Invalid config path"))?)?;
+        std::fs::create_dir_all(
+            path.as_ref()
+                .parent()
+                .ok_or_else(|| anyhow::anyhow!("Invalid config path"))?,
+        )?;
         let mut file = std::fs::File::create(path)?;
         let file_contents = toml::to_vec(self)?;
         file.write_all(&file_contents)?;
@@ -115,6 +119,7 @@ pub struct Hotkeys {
     pub nodes: HotkeyGroup,
     pub patch: HotkeyGroup,
     pub sequencer: HotkeyGroup,
+    pub effects: HotkeyGroup,
 }
 
 pub type HotkeyGroup = HashMap<String, String>;

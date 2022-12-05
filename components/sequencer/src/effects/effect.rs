@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::hash::{Hash, Hasher};
 
 use itertools::Itertools;
 use serde::{Deserialize, Serialize};
@@ -51,7 +52,7 @@ impl Effect {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Hash)]
 pub struct EffectStep {
     pub value: SequencerValue<f64>,
     #[serde(default)]
@@ -139,6 +140,28 @@ pub enum EffectControlPoint {
 impl Default for EffectControlPoint {
     fn default() -> Self {
         Self::Simple
+    }
+}
+
+impl Hash for EffectControlPoint {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        match self {
+            Self::Simple => {
+                state.write_u8(0);
+            }
+            Self::Quadratic([c0a, c0b]) => {
+                state.write_u8(1);
+                (*c0a).to_bits().hash(state);
+                (*c0b).to_bits().hash(state);
+            }
+            Self::Cubic([c0a, c0b], [c1a, c1b]) => {
+                state.write_u8(2);
+                (*c0a).to_bits().hash(state);
+                (*c0b).to_bits().hash(state);
+                (*c1a).to_bits().hash(state);
+                (*c1b).to_bits().hash(state);
+            }
+        }
     }
 }
 

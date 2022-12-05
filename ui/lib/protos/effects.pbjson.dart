@@ -15,6 +15,29 @@ const GetEffectsRequest$json = const {
 
 /// Descriptor for `GetEffectsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getEffectsRequestDescriptor = $convert.base64Decode('ChFHZXRFZmZlY3RzUmVxdWVzdA==');
+@$core.Deprecated('Use addEffectRequestDescriptor instead')
+const AddEffectRequest$json = const {
+  '1': 'AddEffectRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `AddEffectRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addEffectRequestDescriptor = $convert.base64Decode('ChBBZGRFZmZlY3RSZXF1ZXN0EhIKBG5hbWUYASABKAlSBG5hbWU=');
+@$core.Deprecated('Use updateEffectStepRequestDescriptor instead')
+const UpdateEffectStepRequest$json = const {
+  '1': 'UpdateEffectStepRequest',
+  '2': const [
+    const {'1': 'effect_id', '3': 1, '4': 1, '5': 13, '10': 'effectId'},
+    const {'1': 'channel_index', '3': 2, '4': 1, '5': 13, '10': 'channelIndex'},
+    const {'1': 'step_index', '3': 3, '4': 1, '5': 13, '10': 'stepIndex'},
+    const {'1': 'step', '3': 4, '4': 1, '5': 11, '6': '.mizer.effects.EffectStep', '10': 'step'},
+  ],
+};
+
+/// Descriptor for `UpdateEffectStepRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateEffectStepRequestDescriptor = $convert.base64Decode('ChdVcGRhdGVFZmZlY3RTdGVwUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEiMKDWNoYW5uZWxfaW5kZXgYAiABKA1SDGNoYW5uZWxJbmRleBIdCgpzdGVwX2luZGV4GAMgASgNUglzdGVwSW5kZXgSLQoEc3RlcBgEIAEoCzIZLm1pemVyLmVmZmVjdHMuRWZmZWN0U3RlcFIEc3RlcA==');
 @$core.Deprecated('Use effectsDescriptor instead')
 const Effects$json = const {
   '1': 'Effects',

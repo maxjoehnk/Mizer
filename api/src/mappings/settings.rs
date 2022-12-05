@@ -36,6 +36,7 @@ impl From<settings::Hotkeys> for model::Hotkeys {
             patch: hotkeys.patch,
             sequencer: hotkeys.sequencer,
             plan: hotkeys.plan,
+            effects: hotkeys.effects,
             ..Default::default()
         }
     }
@@ -93,6 +94,7 @@ impl From<model::Hotkeys> for settings::Hotkeys {
             patch: hotkeys.patch,
             sequencer: hotkeys.sequencer,
             plan: hotkeys.plan,
+            effects: hotkeys.effects,
         }
     }
 }

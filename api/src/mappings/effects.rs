@@ -27,6 +27,15 @@ impl From<effects::EffectStep> for models::EffectStep {
     }
 }
 
+impl From<models::EffectStep> for effects::EffectStep {
+    fn from(step: models::EffectStep) -> Self {
+        Self {
+            value: step.value.unwrap().into(),
+            control_point: step.control_point.unwrap().into(),
+        }
+    }
+}
+
 impl From<effects::EffectChannel> for models::EffectChannel {
     fn from(channel: effects::EffectChannel) -> Self {
         Self {
@@ -59,6 +68,20 @@ impl From<effects::EffectControlPoint> for models::EffectStep_oneof_control_poin
                 c1b: c1[1],
                 ..Default::default()
             }),
+        }
+    }
+}
+
+impl From<models::EffectStep_oneof_control_point> for effects::EffectControlPoint {
+    fn from(control_point: models::EffectStep_oneof_control_point) -> Self {
+        match control_point {
+            models::EffectStep_oneof_control_point::simple(_) => Self::Simple,
+            models::EffectStep_oneof_control_point::quadratic(point) => {
+                Self::Quadratic([point.c0a, point.c0b])
+            }
+            models::EffectStep_oneof_control_point::cubic(point) => {
+                Self::Cubic([point.c0a, point.c0b], [point.c1a, point.c1b])
+            }
         }
     }
 }

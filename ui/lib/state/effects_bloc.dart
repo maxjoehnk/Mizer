@@ -8,7 +8,20 @@ abstract class EffectsEvent {}
 
 class FetchEffects extends EffectsEvent {}
 
-class AddEffect extends EffectsEvent {}
+class AddEffect extends EffectsEvent {
+  final String name;
+
+  AddEffect(this.name);
+}
+
+class UpdateEffectStep extends EffectsEvent {
+  final int effectId;
+  final int channelIndex;
+  final int stepIndex;
+  final EffectStep step;
+
+  UpdateEffectStep({ required this.effectId, required this.channelIndex, required this.stepIndex, required this.step });
+}
 
 typedef EffectState = List<Effect>;
 
@@ -38,6 +51,10 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
       await _deleteEffect(event);
       yield await _fetchEffects();
     }
+    if (event is UpdateEffectStep) {
+      await _updateEffectStep(event);
+      yield await _fetchEffects();
+    }
   }
 
   Future<EffectState> _fetchEffects() async {
@@ -52,10 +69,16 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
 
   Future<void> _addEffect(AddEffect event) async {
     log("adding effect: $event", name: "EffectsBloc");
+    await api.addEffect(event.name);
   }
 
   Future<void> _deleteEffect(DeleteEffect event) async {
     log("deleting effect: $event", name: "EffectsBloc");
     await api.deleteEffect(event.id);
+  }
+
+  Future<void> _updateEffectStep(UpdateEffectStep event) async {
+    log("updating effect step: $event", name: "EffectsBloc");
+    await api.updateEffectStep(UpdateEffectStepRequest(effectId: event.effectId, channelIndex: event.channelIndex, stepIndex: event.stepIndex, step: event.step));
   }
 }

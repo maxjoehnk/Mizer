@@ -217,6 +217,7 @@ class Hotkeys extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'patch', entryClassName: 'Hotkeys.PatchEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencer', entryClassName: 'Hotkeys.SequencerEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..m<$core.String, $core.String>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'plan', entryClassName: 'Hotkeys.PlanEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
+    ..m<$core.String, $core.String>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effects', entryClassName: 'Hotkeys.EffectsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('mizer.settings'))
     ..hasRequiredFields = false
   ;
 
@@ -229,6 +230,7 @@ class Hotkeys extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? patch,
     $core.Map<$core.String, $core.String>? sequencer,
     $core.Map<$core.String, $core.String>? plan,
+    $core.Map<$core.String, $core.String>? effects,
   }) {
     final _result = create();
     if (global != null) {
@@ -251,6 +253,9 @@ class Hotkeys extends $pb.GeneratedMessage {
     }
     if (plan != null) {
       _result.plan.addAll(plan);
+    }
+    if (effects != null) {
+      _result.effects.addAll(effects);
     }
     return _result;
   }
@@ -295,6 +300,9 @@ class Hotkeys extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.Map<$core.String, $core.String> get plan => $_getMap(6);
+
+  @$pb.TagNumber(8)
+  $core.Map<$core.String, $core.String> get effects => $_getMap(7);
 }
 
 class General extends $pb.GeneratedMessage {

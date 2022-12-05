@@ -1,3 +1,4 @@
+pub use add_effect::*;
 pub use add_sequence::*;
 pub use delete_effect::*;
 pub use delete_sequence::*;
@@ -11,8 +12,10 @@ pub use update_control_fade_time::*;
 pub use update_cue_trigger::*;
 pub use update_cue_trigger_time::*;
 pub use update_cue_value::*;
+pub use update_effect_step::*;
 pub use update_wrap_around::*;
 
+mod add_effect;
 mod add_sequence;
 mod delete_effect;
 mod delete_sequence;
@@ -25,6 +28,7 @@ mod update_control_fade_time;
 mod update_cue_trigger;
 mod update_cue_trigger_time;
 mod update_cue_value;
+mod update_effect_step;
 mod update_wrap_around;
 
 fn get_cue(sequence: &mut Sequence, cue_id: u32) -> anyhow::Result<&mut Cue> {

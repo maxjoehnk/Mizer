@@ -11,6 +11,9 @@ class EffectsPluginApi implements EffectsApi {
     return _parseResponse(response).effects;
   }
 
+  Future<void> addEffect(String name) async {
+    await channel.invokeMethod("addEffect", name);
+  }
 
   @override
   Future<void> deleteEffect(int id) async {
@@ -23,5 +26,10 @@ class EffectsPluginApi implements EffectsApi {
 
   static Effects _parseResponse(List<Object> response) {
     return Effects.fromBuffer(_convertBuffer(response));
+  }
+
+  @override
+  Future<void> updateEffectStep(UpdateEffectStepRequest request) async {
+    await channel.invokeMethod("updateEffectStep", request.writeToBuffer());
   }
 }

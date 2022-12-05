@@ -8,6 +8,7 @@ use mizer_fixtures::programmer::{ProgrammedEffect, Programmer};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
 use std::collections::HashMap;
+use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex};
 
 #[derive(Default, Clone)]
@@ -41,6 +42,28 @@ impl EffectEngine {
 
     pub fn add_effect(&self, effect: Effect) {
         self.effects.insert(effect.id, effect);
+    }
+
+    pub fn create_effect(&self, name: String) -> Effect {
+        let next_id = self
+            .effects
+            .iter()
+            .map(|entry| entry.id)
+            .max()
+            .unwrap_or_default();
+        let next_id = next_id + 1;
+        let effect = Effect {
+            id: next_id,
+            name,
+            channels: Default::default(),
+        };
+        self.effects.insert(next_id, effect.clone());
+
+        effect
+    }
+
+    pub fn effect_mut(&self, id: u32) -> Option<impl Deref<Target = Effect> + DerefMut + '_> {
+        self.effects.get_mut(&id)
     }
 
     pub(crate) fn run_programmer_effects(&self, programmer: &Programmer) {

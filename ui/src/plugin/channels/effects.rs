@@ -5,7 +5,7 @@ use mizer_api::handlers::EffectsHandler;
 use mizer_api::models::Effects;
 use mizer_api::RuntimeApi;
 
-use crate::plugin::channels::MethodReplyExt;
+use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 
 #[derive(Clone)]
 pub struct EffectsChannel<R> {
@@ -30,7 +30,23 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for EffectsChannel<R> {
                 if let Value::I64(id) = call.args {
                     self.handler.delete_effect(id as u32);
 
-                    resp.send_ok(Value::Null)
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "addEffect" => {
+                if let Value::String(name) = call.args {
+                    self.handler.add_effect(name);
+
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "updateEffectStep" => {
+                match call
+                    .arguments()
+                    .map(|args| self.handler.update_effect_step(args))
+                {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
                 }
             }
             _ => resp.not_implemented(),

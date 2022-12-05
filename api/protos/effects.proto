@@ -7,9 +7,20 @@ import "sequencer.proto";
 
 service EffectsApi {
   rpc GetEffects (GetEffectsRequest) returns (Effects) {}
+  rpc AddEffect (AddEffectRequest) returns (Effect) {}
+  rpc UpdateEffectStep (UpdateEffectStepRequest) returns (Effect) {}
 }
 
 message GetEffectsRequest {}
+message AddEffectRequest {
+  string name = 1;
+}
+message UpdateEffectStepRequest {
+  uint32 effect_id = 1;
+  uint32 channel_index = 2;
+  uint32 step_index = 3;
+  EffectStep step = 4;
+}
 
 message Effects {
   repeated Effect effects = 1;

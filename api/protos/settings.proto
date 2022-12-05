@@ -30,6 +30,7 @@ message Hotkeys {
   map<string, string> patch = 5;
   map<string, string> sequencer = 6;
   map<string, string> plan = 7;
+  map<string, string> effects = 8;
 }
 
 message General {

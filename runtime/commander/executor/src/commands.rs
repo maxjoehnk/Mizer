@@ -96,6 +96,8 @@ command_impl! {
     UpdateCueTriggerTimeCommand,
     UpdateCueValueCommand,
     UpdateSequenceWrapAroundCommand,
+    AddEffectCommand,
+    UpdateEffectStepCommand,
     DeleteEffectCommand,
     AddArtnetOutputCommand,
     AddSacnOutputCommand,

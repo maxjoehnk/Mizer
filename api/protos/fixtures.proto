@@ -210,3 +210,15 @@ message FixturePhysicalData {
   float depth = 3;
   float weight = 4;
 }
+
+message FixtureFaderControl {
+  FixtureControl control = 1;
+  optional ColorMixerControlChannel color_mixer_channel = 2;
+  optional string generic_channel = 3;
+
+  enum ColorMixerControlChannel {
+    RED = 0;
+    GREEN = 1;
+    BLUE = 2;
+  }
+}

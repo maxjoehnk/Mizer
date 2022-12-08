@@ -9,13 +9,15 @@ class EffectEditor extends StatelessWidget {
   final Function(int, int, double) onUpdateStepValue;
   final Function(int, int, bool, double, double) onUpdateStepCubicPosition;
   final Function(int, int) onFinishInteraction;
+  final Function(int, int) onRemoveStep;
 
   const EffectEditor(
       {Key? key,
         required this.effect,
         required this.onUpdateStepValue,
         required this.onUpdateStepCubicPosition,
-        required this.onFinishInteraction })
+        required this.onFinishInteraction,
+        required this.onRemoveStep })
       : super(key: key);
 
   @override
@@ -34,7 +36,8 @@ class EffectEditor extends StatelessWidget {
                   effect: effect,
                   onUpdateStepValue: onUpdateStepValue,
                   onUpdateStepCubicPosition: onUpdateStepCubicPosition,
-                  onFinishInteraction: onFinishInteraction))
+                  onFinishInteraction: onFinishInteraction,
+                  onRemoveStep: onRemoveStep,))
         ]);
   }
 }

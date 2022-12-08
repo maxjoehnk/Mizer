@@ -14,12 +14,14 @@ class FrameEditor extends StatelessWidget {
   final Function(int, int, double) onUpdateStepValue;
   final Function(int, int, bool, double, double) onUpdateStepCubicPosition;
   final Function(int, int) onFinishInteraction;
+  final Function(int, int) onRemoveStep;
 
   const FrameEditor(
       {required this.effect,
         required this.onUpdateStepValue,
         required this.onUpdateStepCubicPosition,
         required this.onFinishInteraction,
+        required this.onRemoveStep,
         Key? key})
       : super(key: key);
 
@@ -40,7 +42,8 @@ class FrameEditor extends StatelessWidget {
                             onUpdateStepValue(channelIndex, stepIndex, y),
                         onUpdateStepCubicPosition: (stepIndex, first, x, y) =>
                             onUpdateStepCubicPosition(channelIndex, stepIndex, first, x, y),
-                        onFinishInteraction: (stepIndex) => onFinishInteraction(channelIndex, stepIndex)))
+                        onFinishInteraction: (stepIndex) => onFinishInteraction(channelIndex, stepIndex),
+                        onRemoveStep: (stepIndex) => onRemoveStep(channelIndex, stepIndex)))
               ]),
             );
           }).toList(growable: false),
@@ -53,9 +56,10 @@ class FrameChannelEditor extends StatefulWidget {
   final Function(int, double) onUpdateStep;
   final Function(int, bool, double, double) onUpdateStepCubicPosition;
   final Function(int) onFinishInteraction;
+  final Function(int) onRemoveStep;
 
   const FrameChannelEditor(this.channel,
-      {required this.onUpdateStep, required this.onUpdateStepCubicPosition, required this.onFinishInteraction, Key? key})
+      {required this.onUpdateStep, required this.onUpdateStepCubicPosition, required this.onFinishInteraction, required this.onRemoveStep, Key? key})
       : super(key: key);
 
   @override
@@ -150,6 +154,12 @@ class _FrameChannelEditorState extends State<FrameChannelEditor> {
           });
         },
         onPointerDown: (event) {
+          if (event.kind == PointerDeviceKind.mouse && event.buttons == kSecondaryMouseButton) {
+            var hitPoint = this.points.firstWhereOrNull((point) => point.isHit(event.localPosition));
+            if (hitPoint != null) {
+              widget.onRemoveStep(hitPoint.stepIndex);
+            }
+          }
           List<PointState> points = _findHitPoint(event);
           List<HandleState> handles = _findHitHandle(event);
           setState(() {

@@ -3,7 +3,7 @@
 //  source: effects.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -38,6 +38,52 @@ const UpdateEffectStepRequest$json = const {
 
 /// Descriptor for `UpdateEffectStepRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List updateEffectStepRequestDescriptor = $convert.base64Decode('ChdVcGRhdGVFZmZlY3RTdGVwUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEiMKDWNoYW5uZWxfaW5kZXgYAiABKA1SDGNoYW5uZWxJbmRleBIdCgpzdGVwX2luZGV4GAMgASgNUglzdGVwSW5kZXgSLQoEc3RlcBgEIAEoCzIZLm1pemVyLmVmZmVjdHMuRWZmZWN0U3RlcFIEc3RlcA==');
+@$core.Deprecated('Use addEffectChannelRequestDescriptor instead')
+const AddEffectChannelRequest$json = const {
+  '1': 'AddEffectChannelRequest',
+  '2': const [
+    const {'1': 'effect_id', '3': 1, '4': 1, '5': 13, '10': 'effectId'},
+    const {'1': 'control', '3': 2, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureFaderControl', '10': 'control'},
+  ],
+};
+
+/// Descriptor for `AddEffectChannelRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addEffectChannelRequestDescriptor = $convert.base64Decode('ChdBZGRFZmZlY3RDaGFubmVsUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEj0KB2NvbnRyb2wYAiABKAsyIy5taXplci5maXh0dXJlcy5GaXh0dXJlRmFkZXJDb250cm9sUgdjb250cm9s');
+@$core.Deprecated('Use deleteEffectChannelRequestDescriptor instead')
+const DeleteEffectChannelRequest$json = const {
+  '1': 'DeleteEffectChannelRequest',
+  '2': const [
+    const {'1': 'effect_id', '3': 1, '4': 1, '5': 13, '10': 'effectId'},
+    const {'1': 'channel_index', '3': 2, '4': 1, '5': 13, '10': 'channelIndex'},
+  ],
+};
+
+/// Descriptor for `DeleteEffectChannelRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List deleteEffectChannelRequestDescriptor = $convert.base64Decode('ChpEZWxldGVFZmZlY3RDaGFubmVsUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEiMKDWNoYW5uZWxfaW5kZXgYAiABKA1SDGNoYW5uZWxJbmRleA==');
+@$core.Deprecated('Use addEffectStepRequestDescriptor instead')
+const AddEffectStepRequest$json = const {
+  '1': 'AddEffectStepRequest',
+  '2': const [
+    const {'1': 'effect_id', '3': 1, '4': 1, '5': 13, '10': 'effectId'},
+    const {'1': 'channel_index', '3': 2, '4': 1, '5': 13, '10': 'channelIndex'},
+    const {'1': 'step', '3': 3, '4': 1, '5': 11, '6': '.mizer.effects.EffectStep', '10': 'step'},
+  ],
+};
+
+/// Descriptor for `AddEffectStepRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addEffectStepRequestDescriptor = $convert.base64Decode('ChRBZGRFZmZlY3RTdGVwUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEiMKDWNoYW5uZWxfaW5kZXgYAiABKA1SDGNoYW5uZWxJbmRleBItCgRzdGVwGAMgASgLMhkubWl6ZXIuZWZmZWN0cy5FZmZlY3RTdGVwUgRzdGVw');
+@$core.Deprecated('Use deleteEffectStepRequestDescriptor instead')
+const DeleteEffectStepRequest$json = const {
+  '1': 'DeleteEffectStepRequest',
+  '2': const [
+    const {'1': 'effect_id', '3': 1, '4': 1, '5': 13, '10': 'effectId'},
+    const {'1': 'channel_index', '3': 2, '4': 1, '5': 13, '10': 'channelIndex'},
+    const {'1': 'step_index', '3': 3, '4': 1, '5': 13, '10': 'stepIndex'},
+  ],
+};
+
+/// Descriptor for `DeleteEffectStepRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List deleteEffectStepRequestDescriptor = $convert.base64Decode('ChdEZWxldGVFZmZlY3RTdGVwUmVxdWVzdBIbCgllZmZlY3RfaWQYASABKA1SCGVmZmVjdElkEiMKDWNoYW5uZWxfaW5kZXgYAiABKA1SDGNoYW5uZWxJbmRleBIdCgpzdGVwX2luZGV4GAMgASgNUglzdGVwSW5kZXg=');
 @$core.Deprecated('Use effectsDescriptor instead')
 const Effects$json = const {
   '1': 'Effects',

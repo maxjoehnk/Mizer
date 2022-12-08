@@ -75,6 +75,7 @@ class _EffectsViewState extends State<EffectsView> {
                 onUpdateStepValue: _onUpdateStepValue,
                 onUpdateStepCubicPosition: _onUpdateStepCubicPosition,
                 onFinishInteraction: (channelIndex, stepIndex) => _onUpdateEffectStep(bloc, channelIndex, stepIndex),
+                onRemoveStep: (channelIndex, stepIndex) => _onRemoveEffectStep(bloc, channelIndex, stepIndex),
               ))
           ],
         );
@@ -124,6 +125,13 @@ class _EffectsViewState extends State<EffectsView> {
     }
     var step = effect!.channels[channelIndex].steps[stepIndex];
     bloc.add(UpdateEffectStep(effectId: effect!.id, channelIndex: channelIndex, stepIndex: stepIndex, step: step));
+  }
+
+  void _onRemoveEffectStep(EffectsBloc bloc, int channelIndex, int stepIndex) {
+    if (effect == null) {
+      return;
+    }
+    bloc.add(RemoveEffectStep(effectId: effect!.id, channelIndex: channelIndex, stepIndex: stepIndex));
   }
 
   void _addEffect(BuildContext context, EffectsBloc bloc) async {

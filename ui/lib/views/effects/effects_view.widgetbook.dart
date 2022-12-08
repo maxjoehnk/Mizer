@@ -10,12 +10,34 @@ import 'effect_editor.dart';
 import 'frame_editor.dart';
 import 'movement_editor.dart';
 
+EffectEditor _effectEditor({ required Effect effect }) {
+  return EffectEditor(
+    effect: effect,
+    onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
+    onUpdateStepCubicPosition:
+        (int channelIndex, int stepIndex, bool first, double x, double y) {},
+    onFinishInteraction: (int channelIndex, int stepIndex) {},
+    onRemoveStep: (int channelIndex, int stepIndex) {}
+  );
+}
+
+FrameEditor _frameEditor({ required Effect effect }) {
+  return FrameEditor(
+      effect: effect,
+      onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
+      onUpdateStepCubicPosition:
+          (int channelIndex, int stepIndex, bool first, double x, double y) {},
+      onFinishInteraction: (int channelIndex, int stepIndex) {},
+      onRemoveStep: (int channelIndex, int stepIndex) {}
+  );
+}
+
 WidgetbookFolder effectsViewWidgets() {
   return WidgetbookFolder(name: "Effects View", widgets: [
     WidgetbookComponent(name: '$EffectEditor', useCases: [
       WidgetbookUseCase(
           name: 'Square',
-          builder: (context) => EffectEditor(
+          builder: (context) => _effectEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.PAN, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -32,14 +54,10 @@ WidgetbookFolder effectsViewWidgets() {
                     EffectStep(value: CueValue(direct: 1), simple: SimpleControlPoint()),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Circle',
-          builder: (context) => EffectEditor(
+          builder: (context) => _effectEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.PAN, steps: [
                     EffectStep(value: CueValue(direct: 0.5), simple: SimpleControlPoint()),
@@ -80,30 +98,22 @@ WidgetbookFolder effectsViewWidgets() {
                             c0a: 0, c0b: 0.275957512247, c1a: 0.275957512247, c1b: 0)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
     ]),
     WidgetbookComponent(name: '$FrameEditor', useCases: [
       WidgetbookUseCase(
           name: 'Simple',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
                     EffectStep(value: CueValue(direct: 1), simple: SimpleControlPoint()),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Saw',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -115,14 +125,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: 0.5, c0b: 0.5, c1a: 0.5, c1b: 0.5)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Combination',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -156,14 +162,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .68, c0b: -0.55, c1a: .27, c1b: 1.55)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Line',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -172,14 +174,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: 0.5, c0b: 0.5, c1a: 0.5, c1b: 0.5)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Sine',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -188,14 +186,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: 0.45, c0b: 0.05, c1a: 0.55, c1b: 0.95)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Quadratic',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -204,14 +198,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .46, c0b: .03, c1a: .52, c1b: .96)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Cubic',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -220,14 +210,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .65, c0b: .05, c1a: .36, c1b: 1)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Quartic',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -236,14 +222,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .77, c0b: 0, c1a: .18, c1b: 1)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Quintic',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -252,14 +234,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .86, c0b: 0, c1a: .07, c1b: 1)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Exponential',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -268,14 +246,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: 1, c0b: 0, c1a: 0, c1b: 1)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Circular',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -284,14 +258,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .79, c0b: .14, c1a: .15, c1b: .86)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Backward',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.INTENSITY, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -300,14 +270,10 @@ WidgetbookFolder effectsViewWidgets() {
                         cubic: CubicControlPoint(c0a: .68, c0b: -0.55, c1a: .27, c1b: 1.55)),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
       WidgetbookUseCase(
           name: 'Square',
-          builder: (context) => FrameEditor(
+          builder: (context) => _frameEditor(
                 effect: Effect(channels: [
                   EffectChannel(control: FixtureControl.PAN, steps: [
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
@@ -322,10 +288,6 @@ WidgetbookFolder effectsViewWidgets() {
                     EffectStep(value: CueValue(direct: 0), simple: SimpleControlPoint()),
                   ])
                 ]),
-                onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
-                onUpdateStepCubicPosition:
-                    (int channelIndex, int stepIndex, bool first, double x, double y) {},
-                onFinishInteraction: (int channelIndex, int stepIndex) {},
               )),
     ]),
     WidgetbookComponent(name: '$MovementEditor', useCases: [

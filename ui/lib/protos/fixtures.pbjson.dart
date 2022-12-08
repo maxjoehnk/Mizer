@@ -3,7 +3,7 @@
 //  source: fixtures.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -397,3 +397,30 @@ const FixturePhysicalData$json = const {
 
 /// Descriptor for `FixturePhysicalData`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List fixturePhysicalDataDescriptor = $convert.base64Decode('ChNGaXh0dXJlUGh5c2ljYWxEYXRhEhQKBXdpZHRoGAEgASgCUgV3aWR0aBIWCgZoZWlnaHQYAiABKAJSBmhlaWdodBIUCgVkZXB0aBgDIAEoAlIFZGVwdGgSFgoGd2VpZ2h0GAQgASgCUgZ3ZWlnaHQ=');
+@$core.Deprecated('Use fixtureFaderControlDescriptor instead')
+const FixtureFaderControl$json = const {
+  '1': 'FixtureFaderControl',
+  '2': const [
+    const {'1': 'control', '3': 1, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureControl', '10': 'control'},
+    const {'1': 'color_mixer_channel', '3': 2, '4': 1, '5': 14, '6': '.mizer.fixtures.FixtureFaderControl.ColorMixerControlChannel', '9': 0, '10': 'colorMixerChannel', '17': true},
+    const {'1': 'generic_channel', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'genericChannel', '17': true},
+  ],
+  '4': const [FixtureFaderControl_ColorMixerControlChannel$json],
+  '8': const [
+    const {'1': '_color_mixer_channel'},
+    const {'1': '_generic_channel'},
+  ],
+};
+
+@$core.Deprecated('Use fixtureFaderControlDescriptor instead')
+const FixtureFaderControl_ColorMixerControlChannel$json = const {
+  '1': 'ColorMixerControlChannel',
+  '2': const [
+    const {'1': 'RED', '2': 0},
+    const {'1': 'GREEN', '2': 1},
+    const {'1': 'BLUE', '2': 2},
+  ],
+};
+
+/// Descriptor for `FixtureFaderControl`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureFaderControlDescriptor = $convert.base64Decode('ChNGaXh0dXJlRmFkZXJDb250cm9sEjgKB2NvbnRyb2wYASABKA4yHi5taXplci5maXh0dXJlcy5GaXh0dXJlQ29udHJvbFIHY29udHJvbBJxChNjb2xvcl9taXhlcl9jaGFubmVsGAIgASgOMjwubWl6ZXIuZml4dHVyZXMuRml4dHVyZUZhZGVyQ29udHJvbC5Db2xvck1peGVyQ29udHJvbENoYW5uZWxIAFIRY29sb3JNaXhlckNoYW5uZWyIAQESLAoPZ2VuZXJpY19jaGFubmVsGAMgASgJSAFSDmdlbmVyaWNDaGFubmVsiAEBIjgKGENvbG9yTWl4ZXJDb250cm9sQ2hhbm5lbBIHCgNSRUQQABIJCgVHUkVFThABEggKBEJMVUUQAkIWChRfY29sb3JfbWl4ZXJfY2hhbm5lbEISChBfZ2VuZXJpY19jaGFubmVs');

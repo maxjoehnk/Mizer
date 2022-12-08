@@ -367,3 +367,56 @@ impl From<definition::FixtureFaderControl> for models::FixtureControl {
         }
     }
 }
+
+impl From<models::FixtureFaderControl> for definition::FixtureFaderControl {
+    fn from(control: models::FixtureFaderControl) -> Self {
+        use models::FixtureControl::*;
+
+        let color_mixer_channel = control._color_mixer_channel.map(|channel| {
+            use models::FixtureFaderControl_ColorMixerControlChannel::*;
+
+            let FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(channel) =
+                channel;
+
+            match channel {
+                RED => definition::ColorChannel::Red,
+                GREEN => definition::ColorChannel::Green,
+                BLUE => definition::ColorChannel::Blue,
+            }
+        });
+
+        let generic_channel = control._generic_channel.map(|channel| {
+            let FixtureFaderControl_oneof__generic_channel::generic_channel(channel) = channel;
+
+            channel
+        });
+
+        match control.control {
+            INTENSITY => Self::Intensity,
+            SHUTTER => Self::Shutter,
+            FOCUS => Self::Focus,
+            ZOOM => Self::Zoom,
+            FROST => Self::Frost,
+            COLOR_MIXER => {
+                if let Some(color) = color_mixer_channel {
+                    Self::ColorMixer(color)
+                } else {
+                    unreachable!("ColorMixer control without color channel")
+                }
+            }
+            COLOR_WHEEL => Self::ColorWheel,
+            GOBO => Self::Gobo,
+            PAN => Self::Pan,
+            TILT => Self::Tilt,
+            PRISM => Self::Prism,
+            GENERIC => {
+                if let Some(generic) = generic_channel {
+                    Self::Generic(generic)
+                } else {
+                    unreachable!("Generic control without generic channel name")
+                }
+            }
+            IRIS => Self::Iris,
+        }
+    }
+}

@@ -7719,6 +7719,352 @@ impl ::protobuf::reflect::ProtobufValue for FixturePhysicalData {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct FixtureFaderControl {
+    // message fields
+    pub control: FixtureControl,
+    // message oneof groups
+    pub _color_mixer_channel: ::std::option::Option<FixtureFaderControl_oneof__color_mixer_channel>,
+    pub _generic_channel: ::std::option::Option<FixtureFaderControl_oneof__generic_channel>,
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a FixtureFaderControl {
+    fn default() -> &'a FixtureFaderControl {
+        <FixtureFaderControl as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum FixtureFaderControl_oneof__color_mixer_channel {
+    color_mixer_channel(FixtureFaderControl_ColorMixerControlChannel),
+}
+
+#[derive(Clone,PartialEq,Debug)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum FixtureFaderControl_oneof__generic_channel {
+    generic_channel(::std::string::String),
+}
+
+impl FixtureFaderControl {
+    pub fn new() -> FixtureFaderControl {
+        ::std::default::Default::default()
+    }
+
+    // .mizer.fixtures.FixtureControl control = 1;
+
+
+    pub fn get_control(&self) -> FixtureControl {
+        self.control
+    }
+    pub fn clear_control(&mut self) {
+        self.control = FixtureControl::INTENSITY;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_control(&mut self, v: FixtureControl) {
+        self.control = v;
+    }
+
+    // .mizer.fixtures.FixtureFaderControl.ColorMixerControlChannel color_mixer_channel = 2;
+
+
+    pub fn get_color_mixer_channel(&self) -> FixtureFaderControl_ColorMixerControlChannel {
+        match self._color_mixer_channel {
+            ::std::option::Option::Some(FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(v)) => v,
+            _ => FixtureFaderControl_ColorMixerControlChannel::RED,
+        }
+    }
+    pub fn clear_color_mixer_channel(&mut self) {
+        self._color_mixer_channel = ::std::option::Option::None;
+    }
+
+    pub fn has_color_mixer_channel(&self) -> bool {
+        match self._color_mixer_channel {
+            ::std::option::Option::Some(FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_color_mixer_channel(&mut self, v: FixtureFaderControl_ColorMixerControlChannel) {
+        self._color_mixer_channel = ::std::option::Option::Some(FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(v))
+    }
+
+    // string generic_channel = 3;
+
+
+    pub fn get_generic_channel(&self) -> &str {
+        match self._generic_channel {
+            ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(ref v)) => v,
+            _ => "",
+        }
+    }
+    pub fn clear_generic_channel(&mut self) {
+        self._generic_channel = ::std::option::Option::None;
+    }
+
+    pub fn has_generic_channel(&self) -> bool {
+        match self._generic_channel {
+            ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_generic_channel(&mut self, v: ::std::string::String) {
+        self._generic_channel = ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_generic_channel(&mut self) -> &mut ::std::string::String {
+        if let ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(_)) = self._generic_channel {
+        } else {
+            self._generic_channel = ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(::std::string::String::new()));
+        }
+        match self._generic_channel {
+            ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_generic_channel(&mut self) -> ::std::string::String {
+        if self.has_generic_channel() {
+            match self._generic_channel.take() {
+                ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ::std::string::String::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for FixtureFaderControl {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_proto3_enum_with_unknown_fields_into(wire_type, is, &mut self.control, 1, &mut self.unknown_fields)?
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._color_mixer_channel = ::std::option::Option::Some(FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(is.read_enum()?));
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self._generic_channel = ::std::option::Option::Some(FixtureFaderControl_oneof__generic_channel::generic_channel(is.read_string()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.control != FixtureControl::INTENSITY {
+            my_size += ::protobuf::rt::enum_size(1, self.control);
+        }
+        if let ::std::option::Option::Some(ref v) = self._color_mixer_channel {
+            match v {
+                &FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(v) => {
+                    my_size += ::protobuf::rt::enum_size(2, v);
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._generic_channel {
+            match v {
+                &FixtureFaderControl_oneof__generic_channel::generic_channel(ref v) => {
+                    my_size += ::protobuf::rt::string_size(3, &v);
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        if self.control != FixtureControl::INTENSITY {
+            os.write_enum(1, ::protobuf::ProtobufEnum::value(&self.control))?;
+        }
+        if let ::std::option::Option::Some(ref v) = self._color_mixer_channel {
+            match v {
+                &FixtureFaderControl_oneof__color_mixer_channel::color_mixer_channel(v) => {
+                    os.write_enum(2, ::protobuf::ProtobufEnum::value(&v))?;
+                },
+            };
+        }
+        if let ::std::option::Option::Some(ref v) = self._generic_channel {
+            match v {
+                &FixtureFaderControl_oneof__generic_channel::generic_channel(ref v) => {
+                    os.write_string(3, v)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> FixtureFaderControl {
+        FixtureFaderControl::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let mut fields = ::std::vec::Vec::new();
+            fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<FixtureControl>>(
+                "control",
+                |m: &FixtureFaderControl| { &m.control },
+                |m: &mut FixtureFaderControl| { &mut m.control },
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_enum_accessor::<_, FixtureFaderControl_ColorMixerControlChannel>(
+                "color_mixer_channel",
+                FixtureFaderControl::has_color_mixer_channel,
+                FixtureFaderControl::get_color_mixer_channel,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_string_accessor::<_>(
+                "generic_channel",
+                FixtureFaderControl::has_generic_channel,
+                FixtureFaderControl::get_generic_channel,
+            ));
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<FixtureFaderControl>(
+                "FixtureFaderControl",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static FixtureFaderControl {
+        static instance: ::protobuf::rt::LazyV2<FixtureFaderControl> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(FixtureFaderControl::new)
+    }
+}
+
+impl ::protobuf::Clear for FixtureFaderControl {
+    fn clear(&mut self) {
+        self.control = FixtureControl::INTENSITY;
+        self._color_mixer_channel = ::std::option::Option::None;
+        self._generic_channel = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for FixtureFaderControl {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for FixtureFaderControl {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub enum FixtureFaderControl_ColorMixerControlChannel {
+    RED = 0,
+    GREEN = 1,
+    BLUE = 2,
+}
+
+impl ::protobuf::ProtobufEnum for FixtureFaderControl_ColorMixerControlChannel {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<FixtureFaderControl_ColorMixerControlChannel> {
+        match value {
+            0 => ::std::option::Option::Some(FixtureFaderControl_ColorMixerControlChannel::RED),
+            1 => ::std::option::Option::Some(FixtureFaderControl_ColorMixerControlChannel::GREEN),
+            2 => ::std::option::Option::Some(FixtureFaderControl_ColorMixerControlChannel::BLUE),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [FixtureFaderControl_ColorMixerControlChannel] = &[
+            FixtureFaderControl_ColorMixerControlChannel::RED,
+            FixtureFaderControl_ColorMixerControlChannel::GREEN,
+            FixtureFaderControl_ColorMixerControlChannel::BLUE,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::EnumDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            ::protobuf::reflect::EnumDescriptor::new_pb_name::<FixtureFaderControl_ColorMixerControlChannel>("FixtureFaderControl.ColorMixerControlChannel", file_descriptor_proto())
+        })
+    }
+}
+
+impl ::std::marker::Copy for FixtureFaderControl_ColorMixerControlChannel {
+}
+
+impl ::std::default::Default for FixtureFaderControl_ColorMixerControlChannel {
+    fn default() -> Self {
+        FixtureFaderControl_ColorMixerControlChannel::RED
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for FixtureFaderControl_ColorMixerControlChannel {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Enum(::protobuf::ProtobufEnum::descriptor(self))
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 #[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub enum FixtureControl {
@@ -7893,20 +8239,27 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\
     \x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\
     \x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\
-    \x18\x04\x20\x01(\x02R\x06weight*\xad\x01\n\x0eFixtureControl\x12\r\n\tI\
-    NTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\x0f\n\x0bCOLOR_MIXER\x10\
-    \x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PAN\x10\x04\x12\x08\n\
-    \x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\x04ZOOM\x10\x07\x12\
-    \t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\n\x05FROST\x10\n\x12\
-    \x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c2\xc0\x03\n\x0bFixtur\
-    esApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.GetFixturesRequest\x1a\
-    \x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixtureDefinitions\x12,.mi\
-    zer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fixtures.FixtureDe\
-    finitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixtures.AddFixturesRequ\
-    est\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDeleteFixtures\x12%.mi\
-    zer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\
-    \x12Q\n\rUpdateFixture\x12$.mizer.fixtures.UpdateFixtureRequest\x1a\x18.\
-    mizer.fixtures.Fixtures\"\0b\x06proto3\
+    \x18\x04\x20\x01(\x02R\x06weight\"\xd6\x02\n\x13FixtureFaderControl\x128\
+    \n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\
+    \x07control\x12q\n\x13color_mixer_channel\x18\x02\x20\x01(\x0e2<.mizer.f\
+    ixtures.FixtureFaderControl.ColorMixerControlChannelH\0R\x11colorMixerCh\
+    annel\x88\x01\x01\x12,\n\x0fgeneric_channel\x18\x03\x20\x01(\tH\x01R\x0e\
+    genericChannel\x88\x01\x01\"8\n\x18ColorMixerControlChannel\x12\x07\n\
+    \x03RED\x10\0\x12\t\n\x05GREEN\x10\x01\x12\x08\n\x04BLUE\x10\x02B\x16\n\
+    \x14_color_mixer_channelB\x12\n\x10_generic_channel*\xad\x01\n\x0eFixtur\
+    eControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\x0f\n\
+    \x0bCOLOR_MIXER\x10\x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PA\
+    N\x10\x04\x12\x08\n\x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\
+    \x04ZOOM\x10\x07\x12\t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\
+    \n\x05FROST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c\
+    2\xc0\x03\n\x0bFixturesApi\x12M\n\x0bGetFixtures\x12\".mizer.fixtures.Ge\
+    tFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12k\n\x15GetFixtur\
+    eDefinitions\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mize\
+    r.fixtures.FixtureDefinitions\"\0\x12M\n\x0bAddFixtures\x12\".mizer.fixt\
+    ures.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\"\0\x12S\n\x0eDe\
+    leteFixtures\x12%.mizer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fix\
+    tures.Fixtures\"\0\x12Q\n\rUpdateFixture\x12$.mizer.fixtures.UpdateFixtu\
+    reRequest\x1a\x18.mizer.fixtures.Fixtures\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

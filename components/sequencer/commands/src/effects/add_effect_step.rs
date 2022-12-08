@@ -1,6 +1,6 @@
 use crate::{get_channel_mut, get_effect_mut};
 use mizer_commander::{Command, Ref};
-use mizer_sequencer::{Effect, EffectEngine, EffectStep};
+use mizer_sequencer::{EffectEngine, EffectStep};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]

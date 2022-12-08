@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 
 abstract class EffectsEvent {}
 
@@ -46,6 +47,13 @@ class RemoveEffectChannel extends EffectsEvent {
   RemoveEffectChannel({ required this.effectId, required this.channelIndex });
 }
 
+class AddEffectChannel extends EffectsEvent {
+  final int effectId;
+  final FixtureFaderControl control;
+
+  AddEffectChannel({ required this.effectId, required this.control });
+}
+
 class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   final EffectsApi api;
 
@@ -76,6 +84,10 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
     }
     if (event is RemoveEffectChannel) {
       await _removeEffectChannel(event);
+      yield await _fetchEffects();
+    }
+    if (event is AddEffectChannel) {
+      await _addEffectChannel(event);
       yield await _fetchEffects();
     }
   }
@@ -113,5 +125,10 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   Future<void> _removeEffectChannel(RemoveEffectChannel event) async {
     log("removing effect channel: $event", name: "EffectsBloc");
     await api.removeEffectChannel(event.effectId, event.channelIndex);
+  }
+
+  Future<void> _addEffectChannel(AddEffectChannel event) async {
+    log("adding effect channel: $event", name: "EffectsBloc");
+    await api.addEffectChannel(event.effectId, event.control);
   }
 }

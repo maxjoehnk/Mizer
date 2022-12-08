@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 
 import 'frame_editor.dart';
 import 'movement_editor.dart';
@@ -10,6 +11,8 @@ class EffectEditor extends StatelessWidget {
   final Function(int, int, bool, double, double) onUpdateStepCubicPosition;
   final Function(int, int) onFinishInteraction;
   final Function(int, int) onRemoveStep;
+  final Function(int) onRemoveChannel;
+  final Function(FixtureFaderControl) onAddChannel;
 
   const EffectEditor(
       {Key? key,
@@ -17,7 +20,10 @@ class EffectEditor extends StatelessWidget {
         required this.onUpdateStepValue,
         required this.onUpdateStepCubicPosition,
         required this.onFinishInteraction,
-        required this.onRemoveStep })
+        required this.onRemoveStep,
+        required this.onRemoveChannel,
+        required this.onAddChannel,
+      })
       : super(key: key);
 
   @override
@@ -37,7 +43,9 @@ class EffectEditor extends StatelessWidget {
                   onUpdateStepValue: onUpdateStepValue,
                   onUpdateStepCubicPosition: onUpdateStepCubicPosition,
                   onFinishInteraction: onFinishInteraction,
-                  onRemoveStep: onRemoveStep,))
+                  onRemoveStep: onRemoveStep,
+                  onRemoveChannel: onRemoveChannel,
+                  onAddChannel: onAddChannel))
         ]);
   }
 }

@@ -17,7 +17,9 @@ EffectEditor _effectEditor({ required Effect effect }) {
     onUpdateStepCubicPosition:
         (int channelIndex, int stepIndex, bool first, double x, double y) {},
     onFinishInteraction: (int channelIndex, int stepIndex) {},
-    onRemoveStep: (int channelIndex, int stepIndex) {}
+    onRemoveStep: (int channelIndex, int stepIndex) {},
+    onRemoveChannel: (int channelIndex) {},
+    onAddChannel: (FixtureFaderControl faderControl) {},
   );
 }
 
@@ -28,7 +30,9 @@ FrameEditor _frameEditor({ required Effect effect }) {
       onUpdateStepCubicPosition:
           (int channelIndex, int stepIndex, bool first, double x, double y) {},
       onFinishInteraction: (int channelIndex, int stepIndex) {},
-      onRemoveStep: (int channelIndex, int stepIndex) {}
+      onRemoveStep: (int channelIndex, int stepIndex) {},
+      onRemoveChannel: (int channelIndex) {},
+      onAddChannel: (FixtureFaderControl faderControl) {},
   );
 }
 

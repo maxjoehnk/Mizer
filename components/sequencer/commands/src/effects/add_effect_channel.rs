@@ -1,7 +1,7 @@
 use crate::get_effect_mut;
 use mizer_commander::{Command, Ref};
-use mizer_fixtures::definition::{FixtureControl, FixtureFaderControl};
-use mizer_sequencer::{Effect, EffectChannel, EffectEngine};
+use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_sequencer::{EffectChannel, EffectEngine};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]

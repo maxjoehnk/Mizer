@@ -13,26 +13,28 @@ import 'movement_editor.dart';
 EffectEditor _effectEditor({ required Effect effect }) {
   return EffectEditor(
     effect: effect,
-    onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
+    onUpdateStepValue: (channelIndex, stepIndex, y) {},
     onUpdateStepCubicPosition:
-        (int channelIndex, int stepIndex, bool first, double x, double y) {},
-    onFinishInteraction: (int channelIndex, int stepIndex) {},
-    onRemoveStep: (int channelIndex, int stepIndex) {},
-    onRemoveChannel: (int channelIndex) {},
-    onAddChannel: (FixtureFaderControl faderControl) {},
+        (channelIndex, stepIndex, first, x, y) {},
+    onFinishInteraction: (channelIndex, stepIndex) {},
+    onRemoveStep: (channelIndex, stepIndex) {},
+    onRemoveChannel: (channelIndex) {},
+    onAddChannel: (faderControl) {},
+    onAddStep: (channelIndex, step) {},
   );
 }
 
 FrameEditor _frameEditor({ required Effect effect }) {
   return FrameEditor(
       effect: effect,
-      onUpdateStepValue: (int channelIndex, int stepIndex, double y) {},
+      onUpdateStepValue: (channelIndex, stepIndex, y) {},
       onUpdateStepCubicPosition:
-          (int channelIndex, int stepIndex, bool first, double x, double y) {},
-      onFinishInteraction: (int channelIndex, int stepIndex) {},
-      onRemoveStep: (int channelIndex, int stepIndex) {},
-      onRemoveChannel: (int channelIndex) {},
-      onAddChannel: (FixtureFaderControl faderControl) {},
+          (channelIndex, stepIndex, first, x, y) {},
+      onFinishInteraction: (channelIndex, stepIndex) {},
+      onRemoveStep: (channelIndex, stepIndex) {},
+      onRemoveChannel: (channelIndex) {},
+      onAddChannel: (faderControl) {},
+      onAddStep: (channelIndex, step) {},
   );
 }
 

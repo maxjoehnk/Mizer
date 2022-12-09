@@ -54,6 +54,14 @@ class AddEffectChannel extends EffectsEvent {
   AddEffectChannel({ required this.effectId, required this.control });
 }
 
+class AddEffectStep extends EffectsEvent {
+  final int effectId;
+  final int channelIndex;
+  final EffectStep step;
+
+  AddEffectStep({ required this.effectId, required this.channelIndex, required this.step });
+}
+
 class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   final EffectsApi api;
 
@@ -88,6 +96,10 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
     }
     if (event is AddEffectChannel) {
       await _addEffectChannel(event);
+      yield await _fetchEffects();
+    }
+    if (event is AddEffectStep) {
+      await _addEffectStep(event);
       yield await _fetchEffects();
     }
   }
@@ -130,5 +142,10 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   Future<void> _addEffectChannel(AddEffectChannel event) async {
     log("adding effect channel: $event", name: "EffectsBloc");
     await api.addEffectChannel(event.effectId, event.control);
+  }
+
+  Future<void> _addEffectStep(AddEffectStep event) async {
+    log("adding effect step: $event", name: "EffectsBloc");
+    await api.addEffectStep(event.effectId, event.channelIndex, event.step);
   }
 }

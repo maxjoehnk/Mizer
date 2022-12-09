@@ -13,6 +13,7 @@ class EffectEditor extends StatelessWidget {
   final Function(int, int) onRemoveStep;
   final Function(int) onRemoveChannel;
   final Function(FixtureFaderControl) onAddChannel;
+  final Function(int, EffectStep) onAddStep;
 
   const EffectEditor(
       {Key? key,
@@ -23,6 +24,7 @@ class EffectEditor extends StatelessWidget {
         required this.onRemoveStep,
         required this.onRemoveChannel,
         required this.onAddChannel,
+        required this.onAddStep,
       })
       : super(key: key);
 
@@ -45,7 +47,9 @@ class EffectEditor extends StatelessWidget {
                   onFinishInteraction: onFinishInteraction,
                   onRemoveStep: onRemoveStep,
                   onRemoveChannel: onRemoveChannel,
-                  onAddChannel: onAddChannel))
+                  onAddChannel: onAddChannel,
+                  onAddStep: onAddStep,
+              ))
         ]);
   }
 }

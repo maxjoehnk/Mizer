@@ -105,6 +105,7 @@ class _EffectsViewState extends State<EffectsView> {
                     _onRemoveEffectStep(bloc, channelIndex, stepIndex),
                 onRemoveChannel: (channelIndex) => _onRemoveEffectChannel(bloc, channelIndex),
                 onAddChannel: (control) => _onAddEffectChannel(bloc, control),
+                onAddStep: (channelIndex, step) => _onAddEffectStep(bloc, channelIndex, step),
               ))
           ],
         );
@@ -177,6 +178,13 @@ class _EffectsViewState extends State<EffectsView> {
       return;
     }
     bloc.add(AddEffectChannel(effectId: effect!.id, control: control));
+  }
+
+  void _onAddEffectStep(EffectsBloc bloc, int channelIndex, EffectStep step) {
+    if (effect == null) {
+      return;
+    }
+    bloc.add(AddEffectStep(effectId: effect!.id, channelIndex: channelIndex, step: step));
   }
 
   void _addEffect(BuildContext context, EffectsBloc bloc) async {

@@ -3,6 +3,8 @@ import 'package:mizer/api/contracts/effects.dart';
 
 import 'frame_editor.dart';
 
+const HANDLE_SIZE = 0.04;
+
 class FramePainter extends CustomPainter {
   final EffectChannel channel;
   final List<PointState> points;
@@ -94,13 +96,13 @@ class FramePainter extends CustomPainter {
       ..color = Color(0xaaffffff)
       ..style = PaintingStyle.stroke;
     Paint handlePaint = Paint()
-      ..color = hit ? Colors.red : Colors.white
+      ..color = hit ? Colors.red : Colors.white54
       ..style = PaintingStyle.fill;
     var handle = Path()
       ..moveTo(x0, y0)
       ..lineTo(x1, y1);
     canvas.drawPath(handle, pathPaint);
-    canvas.drawCircle(Offset(x1, y1), hit ? 0.03 : 0.02, handlePaint);
+    canvas.drawCircle(Offset(x1, y1), HANDLE_SIZE, handlePaint);
   }
 
   void _drawAxis(Canvas canvas, double width) {
@@ -135,6 +137,6 @@ class FramePainter extends CustomPainter {
       ..style = PaintingStyle.fill;
     var x = point.x;
     var y = point.y;
-    canvas.drawCircle(Offset(x, y), point.hit ? 0.03 : 0.02, handlePaint);
+    canvas.drawCircle(Offset(x, y), HANDLE_SIZE, handlePaint);
   }
 }

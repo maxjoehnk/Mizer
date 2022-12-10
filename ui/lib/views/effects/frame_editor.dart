@@ -391,7 +391,7 @@ class HandleState {
   }
 }
 
-const delta = 0.1;
+const delta = 0.05;
 
 bool hitTest(double x0, double y0, double x1, double y1) {
   bool hitX = x0 - delta <= x1 && x0 + delta >= x1;

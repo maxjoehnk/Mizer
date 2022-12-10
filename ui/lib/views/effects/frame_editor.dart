@@ -234,7 +234,7 @@ class _FrameChannelEditorState extends State<FrameChannelEditor> {
                   FRAME_EDITOR_CHANNEL_HEIGHT;
 
               if (!this.points.any((point) => point.x > x)) {
-                var midPoint = (this.points.last.y - y).abs();
+                var midPoint = ((this.points.lastOrNull?.y ?? 0) - y).abs();
                 var value = CueValue(direct: y);
                 var step = EffectStep(
                   value: value,

@@ -100,7 +100,7 @@ impl EffectEngine {
         profiling::scope!("EffectEngine::process_instances");
         let mut instances = self.instances.lock().unwrap();
         for (_, instance) in instances.iter_mut() {
-            let effect = self.effects.get(&instance.effect).unwrap();
+            let effect = self.effects.get(&instance.effect_id).unwrap();
             instance.process(effect.value(), fixture_manager, frame);
         }
         let active_effects = instances.len();

@@ -3,12 +3,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/extensions/fixture_fader_control_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
-import 'package:mizer/extensions/fixture_fader_control_extensions.dart';
 
 import 'frame_painter.dart';
 
@@ -26,11 +26,14 @@ List<FixtureFaderControl> faderControls = [
   FixtureFaderControl(control: FixtureControl.FROST),
   FixtureFaderControl(control: FixtureControl.GOBO),
   FixtureFaderControl(control: FixtureControl.COLOR_WHEEL),
-  FixtureFaderControl(control: FixtureControl.COLOR_MIXER,
+  FixtureFaderControl(
+      control: FixtureControl.COLOR_MIXER,
       colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.RED),
-  FixtureFaderControl(control: FixtureControl.COLOR_MIXER,
+  FixtureFaderControl(
+      control: FixtureControl.COLOR_MIXER,
       colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.GREEN),
-  FixtureFaderControl(control: FixtureControl.COLOR_MIXER,
+  FixtureFaderControl(
+      control: FixtureControl.COLOR_MIXER,
       colorMixerChannel: FixtureFaderControl_ColorMixerControlChannel.BLUE),
 ];
 
@@ -44,45 +47,44 @@ class FrameEditor extends StatelessWidget {
   final Function(FixtureFaderControl) onAddChannel;
   final Function(int, EffectStep) onAddStep;
 
-  const FrameEditor({required this.effect,
-    required this.onUpdateStepValue,
-    required this.onUpdateStepCubicPosition,
-    required this.onFinishInteraction,
-    required this.onRemoveStep,
-    required this.onRemoveChannel,
-    required this.onAddChannel,
-    required this.onAddStep,
-    Key? key})
+  const FrameEditor(
+      {required this.effect,
+      required this.onUpdateStepValue,
+      required this.onUpdateStepCubicPosition,
+      required this.onFinishInteraction,
+      required this.onRemoveStep,
+      required this.onRemoveChannel,
+      required this.onAddChannel,
+      required this.onAddStep,
+      Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Panel(
         label: "Frames".i18n,
-        actions: [
-          PanelAction(label: "Add Channel", onClick: () => _addChannel(context))
-        ],
+        actions: [PanelAction(label: "Add Channel", onClick: () => _addChannel(context))],
         child: ListView(
           children: effect.channels.mapIndexed((channelIndex, channel) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
                 SizedBox(child: Text(channel.control.name), width: 128),
-                MizerIconButton(icon: Icons.close,
+                MizerIconButton(
+                    icon: Icons.close,
                     label: "Remove Channel",
                     onClick: () => onRemoveChannel(channelIndex)),
                 Padding(padding: const EdgeInsets.all(8)),
                 Expanded(
-                    child: FrameChannelEditor(channel,
-                        onUpdateStep: (stepIndex, y) =>
-                            onUpdateStepValue(channelIndex, stepIndex, y),
-                        onUpdateStepCubicPosition: (stepIndex, first, x, y) =>
-                            onUpdateStepCubicPosition(channelIndex, stepIndex, first, x, y),
-                        onFinishInteraction: (stepIndex) =>
-                            onFinishInteraction(channelIndex, stepIndex),
-                        onRemoveStep: (stepIndex) => onRemoveStep(channelIndex, stepIndex),
-                        onAddStep: (step) => onAddStep(channelIndex, step),
-                    )),
+                    child: FrameChannelEditor(
+                  channel,
+                  onUpdateStep: (stepIndex, y) => onUpdateStepValue(channelIndex, stepIndex, y),
+                  onUpdateStepCubicPosition: (stepIndex, first, x, y) =>
+                      onUpdateStepCubicPosition(channelIndex, stepIndex, first, x, y),
+                  onFinishInteraction: (stepIndex) => onFinishInteraction(channelIndex, stepIndex),
+                  onRemoveStep: (stepIndex) => onRemoveStep(channelIndex, stepIndex),
+                  onAddStep: (step) => onAddStep(channelIndex, step),
+                )),
               ]),
             );
           }).toList(growable: false),
@@ -92,17 +94,18 @@ class FrameEditor extends StatelessWidget {
   _addChannel(BuildContext context) async {
     FixtureFaderControl? control = await showDialog(
         context: context,
-        builder: (context) =>
-            ActionDialog(
-                title: "Add Channel",
-                content: Column(
-                    children: faderControls.map((faderControl) {
-                      return ListTile(
-                          title: Text(faderControl.toDisplay()),
-                          onTap: () => Navigator.of(context).pop(faderControl));
-                    }).toList()),
-                actions: [PopupAction("Cancel", () => Navigator.of(context).pop())
-                ]));
+        builder: (context) => ActionDialog(
+            title: "Add Channel",
+            content: Column(
+                children: faderControls
+                    .whereNot((faderControl) =>
+                        effect.channels.any((channel) => faderControl.control == channel.control))
+                    .sortedBy((faderControl) => faderControl.toDisplay())
+                    .map((faderControl) => ListTile(
+                        title: Text(faderControl.toDisplay()),
+                        onTap: () => Navigator.of(context).pop(faderControl)))
+                    .toList()),
+            actions: [PopupAction("Cancel", () => Navigator.of(context).pop())]));
     if (control == null) {
       return;
     }
@@ -119,7 +122,12 @@ class FrameChannelEditor extends StatefulWidget {
   final Function(EffectStep) onAddStep;
 
   const FrameChannelEditor(this.channel,
-      {required this.onUpdateStep, required this.onUpdateStepCubicPosition, required this.onFinishInteraction, required this.onRemoveStep, required this.onAddStep, Key? key})
+      {required this.onUpdateStep,
+      required this.onUpdateStepCubicPosition,
+      required this.onFinishInteraction,
+      required this.onRemoveStep,
+      required this.onAddStep,
+      Key? key})
       : super(key: key);
 
   @override
@@ -215,8 +223,8 @@ class _FrameChannelEditorState extends State<FrameChannelEditor> {
         },
         onPointerDown: (event) {
           if (event.kind == PointerDeviceKind.mouse && event.buttons == kSecondaryMouseButton) {
-            var hitPoint = this.points.firstWhereOrNull((point) =>
-                point.isHit(event.localPosition));
+            var hitPoint =
+                this.points.firstWhereOrNull((point) => point.isHit(event.localPosition));
             if (hitPoint != null) {
               widget.onRemoveStep(hitPoint.stepIndex);
               return;
@@ -233,7 +241,7 @@ class _FrameChannelEditorState extends State<FrameChannelEditor> {
                 );
                 if (this.points.isEmpty) {
                   step.simple = SimpleControlPoint();
-                }else {
+                } else {
                   step.cubic = CubicControlPoint(c0a: 0.5, c0b: midPoint, c1a: 0.5, c1b: midPoint);
                 }
 

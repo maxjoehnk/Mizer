@@ -3,12 +3,13 @@
 //  source: effects.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'fixtures.pb.dart' as $0;
 import 'sequencer.pb.dart' as $1;
 
 import 'fixtures.pbenum.dart' as $0;
@@ -178,6 +179,282 @@ class UpdateEffectStepRequest extends $pb.GeneratedMessage {
   void clearStep() => clearField(4);
   @$pb.TagNumber(4)
   EffectStep ensureStep() => $_ensure(3);
+}
+
+class AddEffectChannelRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddEffectChannelRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..aOM<$0.FixtureFaderControl>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', subBuilder: $0.FixtureFaderControl.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddEffectChannelRequest._() : super();
+  factory AddEffectChannelRequest({
+    $core.int? effectId,
+    $0.FixtureFaderControl? control,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (control != null) {
+      _result.control = control;
+    }
+    return _result;
+  }
+  factory AddEffectChannelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddEffectChannelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddEffectChannelRequest clone() => AddEffectChannelRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddEffectChannelRequest copyWith(void Function(AddEffectChannelRequest) updates) => super.copyWith((message) => updates(message as AddEffectChannelRequest)) as AddEffectChannelRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddEffectChannelRequest create() => AddEffectChannelRequest._();
+  AddEffectChannelRequest createEmptyInstance() => create();
+  static $pb.PbList<AddEffectChannelRequest> createRepeated() => $pb.PbList<AddEffectChannelRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddEffectChannelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddEffectChannelRequest>(create);
+  static AddEffectChannelRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $0.FixtureFaderControl get control => $_getN(1);
+  @$pb.TagNumber(2)
+  set control($0.FixtureFaderControl v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControl() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearControl() => clearField(2);
+  @$pb.TagNumber(2)
+  $0.FixtureFaderControl ensureControl() => $_ensure(1);
+}
+
+class DeleteEffectChannelRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteEffectChannelRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelIndex', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  DeleteEffectChannelRequest._() : super();
+  factory DeleteEffectChannelRequest({
+    $core.int? effectId,
+    $core.int? channelIndex,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (channelIndex != null) {
+      _result.channelIndex = channelIndex;
+    }
+    return _result;
+  }
+  factory DeleteEffectChannelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteEffectChannelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DeleteEffectChannelRequest clone() => DeleteEffectChannelRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DeleteEffectChannelRequest copyWith(void Function(DeleteEffectChannelRequest) updates) => super.copyWith((message) => updates(message as DeleteEffectChannelRequest)) as DeleteEffectChannelRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeleteEffectChannelRequest create() => DeleteEffectChannelRequest._();
+  DeleteEffectChannelRequest createEmptyInstance() => create();
+  static $pb.PbList<DeleteEffectChannelRequest> createRepeated() => $pb.PbList<DeleteEffectChannelRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DeleteEffectChannelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteEffectChannelRequest>(create);
+  static DeleteEffectChannelRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get channelIndex => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set channelIndex($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChannelIndex() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChannelIndex() => clearField(2);
+}
+
+class AddEffectStepRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddEffectStepRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelIndex', $pb.PbFieldType.OU3)
+    ..aOM<EffectStep>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'step', subBuilder: EffectStep.create)
+    ..hasRequiredFields = false
+  ;
+
+  AddEffectStepRequest._() : super();
+  factory AddEffectStepRequest({
+    $core.int? effectId,
+    $core.int? channelIndex,
+    EffectStep? step,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (channelIndex != null) {
+      _result.channelIndex = channelIndex;
+    }
+    if (step != null) {
+      _result.step = step;
+    }
+    return _result;
+  }
+  factory AddEffectStepRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddEffectStepRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AddEffectStepRequest clone() => AddEffectStepRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AddEffectStepRequest copyWith(void Function(AddEffectStepRequest) updates) => super.copyWith((message) => updates(message as AddEffectStepRequest)) as AddEffectStepRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AddEffectStepRequest create() => AddEffectStepRequest._();
+  AddEffectStepRequest createEmptyInstance() => create();
+  static $pb.PbList<AddEffectStepRequest> createRepeated() => $pb.PbList<AddEffectStepRequest>();
+  @$core.pragma('dart2js:noInline')
+  static AddEffectStepRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddEffectStepRequest>(create);
+  static AddEffectStepRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get channelIndex => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set channelIndex($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChannelIndex() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChannelIndex() => clearField(2);
+
+  @$pb.TagNumber(3)
+  EffectStep get step => $_getN(2);
+  @$pb.TagNumber(3)
+  set step(EffectStep v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStep() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStep() => clearField(3);
+  @$pb.TagNumber(3)
+  EffectStep ensureStep() => $_ensure(2);
+}
+
+class DeleteEffectStepRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteEffectStepRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.effects'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'effectId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channelIndex', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stepIndex', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  DeleteEffectStepRequest._() : super();
+  factory DeleteEffectStepRequest({
+    $core.int? effectId,
+    $core.int? channelIndex,
+    $core.int? stepIndex,
+  }) {
+    final _result = create();
+    if (effectId != null) {
+      _result.effectId = effectId;
+    }
+    if (channelIndex != null) {
+      _result.channelIndex = channelIndex;
+    }
+    if (stepIndex != null) {
+      _result.stepIndex = stepIndex;
+    }
+    return _result;
+  }
+  factory DeleteEffectStepRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DeleteEffectStepRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DeleteEffectStepRequest clone() => DeleteEffectStepRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DeleteEffectStepRequest copyWith(void Function(DeleteEffectStepRequest) updates) => super.copyWith((message) => updates(message as DeleteEffectStepRequest)) as DeleteEffectStepRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DeleteEffectStepRequest create() => DeleteEffectStepRequest._();
+  DeleteEffectStepRequest createEmptyInstance() => create();
+  static $pb.PbList<DeleteEffectStepRequest> createRepeated() => $pb.PbList<DeleteEffectStepRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DeleteEffectStepRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteEffectStepRequest>(create);
+  static DeleteEffectStepRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get effectId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set effectId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEffectId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEffectId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get channelIndex => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set channelIndex($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasChannelIndex() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChannelIndex() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get stepIndex => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set stepIndex($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStepIndex() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStepIndex() => clearField(3);
 }
 
 class Effects extends $pb.GeneratedMessage {

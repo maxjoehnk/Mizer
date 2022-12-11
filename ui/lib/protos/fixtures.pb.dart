@@ -3,7 +3,7 @@
 //  source: fixtures.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -224,7 +224,7 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
 
 class DeleteFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureIds', $pb.PbFieldType.PU3, protoName: 'fixtureIds')
+    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureIds', $pb.PbFieldType.KU3, protoName: 'fixtureIds')
     ..hasRequiredFields = false
   ;
 
@@ -2251,5 +2251,80 @@ class FixturePhysicalData extends $pb.GeneratedMessage {
   $core.bool hasWeight() => $_has(3);
   @$pb.TagNumber(4)
   void clearWeight() => clearField(4);
+}
+
+class FixtureFaderControl extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureFaderControl', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
+    ..e<FixtureControl>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'control', $pb.PbFieldType.OE, defaultOrMaker: FixtureControl.INTENSITY, valueOf: FixtureControl.valueOf, enumValues: FixtureControl.values)
+    ..e<FixtureFaderControl_ColorMixerControlChannel>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'colorMixerChannel', $pb.PbFieldType.OE, defaultOrMaker: FixtureFaderControl_ColorMixerControlChannel.RED, valueOf: FixtureFaderControl_ColorMixerControlChannel.valueOf, enumValues: FixtureFaderControl_ColorMixerControlChannel.values)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'genericChannel')
+    ..hasRequiredFields = false
+  ;
+
+  FixtureFaderControl._() : super();
+  factory FixtureFaderControl({
+    FixtureControl? control,
+    FixtureFaderControl_ColorMixerControlChannel? colorMixerChannel,
+    $core.String? genericChannel,
+  }) {
+    final _result = create();
+    if (control != null) {
+      _result.control = control;
+    }
+    if (colorMixerChannel != null) {
+      _result.colorMixerChannel = colorMixerChannel;
+    }
+    if (genericChannel != null) {
+      _result.genericChannel = genericChannel;
+    }
+    return _result;
+  }
+  factory FixtureFaderControl.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureFaderControl.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureFaderControl clone() => FixtureFaderControl()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureFaderControl copyWith(void Function(FixtureFaderControl) updates) => super.copyWith((message) => updates(message as FixtureFaderControl)) as FixtureFaderControl; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureFaderControl create() => FixtureFaderControl._();
+  FixtureFaderControl createEmptyInstance() => create();
+  static $pb.PbList<FixtureFaderControl> createRepeated() => $pb.PbList<FixtureFaderControl>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureFaderControl getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureFaderControl>(create);
+  static FixtureFaderControl? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  FixtureControl get control => $_getN(0);
+  @$pb.TagNumber(1)
+  set control(FixtureControl v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasControl() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearControl() => clearField(1);
+
+  @$pb.TagNumber(2)
+  FixtureFaderControl_ColorMixerControlChannel get colorMixerChannel => $_getN(1);
+  @$pb.TagNumber(2)
+  set colorMixerChannel(FixtureFaderControl_ColorMixerControlChannel v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasColorMixerChannel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearColorMixerChannel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get genericChannel => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set genericChannel($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasGenericChannel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearGenericChannel() => clearField(3);
 }
 

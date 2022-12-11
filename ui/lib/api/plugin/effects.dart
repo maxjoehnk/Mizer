@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 
 class EffectsPluginApi implements EffectsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/effects");
@@ -31,5 +32,29 @@ class EffectsPluginApi implements EffectsApi {
   @override
   Future<void> updateEffectStep(UpdateEffectStepRequest request) async {
     await channel.invokeMethod("updateEffectStep", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addEffectChannel(int id, FixtureFaderControl control) async {
+    var request = new AddEffectChannelRequest(effectId: id, control: control);
+    await channel.invokeMethod("addEffectChannel", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> addEffectStep(int id, int channelIndex, EffectStep step) async {
+    var request = new AddEffectStepRequest(effectId: id, channelIndex: channelIndex, step: step);
+    await channel.invokeMethod("addEffectStep", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> removeEffectChannel(int id, int channelIndex) async {
+    var request = new DeleteEffectChannelRequest(effectId: id, channelIndex: channelIndex);
+    await channel.invokeMethod("deleteEffectChannel", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> removeEffectStep(int id, int channelIndex, int stepIndex) async {
+    var request = new DeleteEffectStepRequest(effectId: id, channelIndex: channelIndex, stepIndex: stepIndex);
+    await channel.invokeMethod("deleteEffectStep", request.writeToBuffer());
   }
 }

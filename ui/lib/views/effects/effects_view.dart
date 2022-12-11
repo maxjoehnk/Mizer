@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/effects_bloc.dart';
@@ -20,7 +24,28 @@ class EffectsView extends StatefulWidget {
 }
 
 class _EffectsViewState extends State<EffectsView> {
+  StreamSubscription<EffectState>? _subscription;
   Effect? effect;
+
+  @override
+  void initState() {
+    super.initState();
+    EffectsBloc bloc = context.read();
+    _subscription = bloc.stream.listen((effects) {
+      if (effect == null) {
+        return;
+      }
+      setState(() {
+        this.effect = effects.firstWhereOrNull((e) => e.id == this.effect?.id);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    this._subscription?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +62,25 @@ class _EffectsViewState extends State<EffectsView> {
             Expanded(
               child: Panel(
                 label: "Effects".i18n,
-                child: MizerTable(
-                  columns: [
-                    Text("ID"),
-                    Text("Name"),
-                  ],
-                  columnWidths: {
-                    0: FixedColumnWidth(64),
-                  },
-                  rows: effects
-                      .map((e) => MizerTableRow(
-                              cells: [
-                                Text(e.id.toString()),
-                                Text(e.name),
-                              ],
-                              onTap: () => setState(() => this.effect = e),
-                              selected: this.effect?.id == e.id))
-                      .toList(),
+                child: SingleChildScrollView(
+                  child: MizerTable(
+                    columns: [
+                      Text("ID"),
+                      Text("Name"),
+                    ],
+                    columnWidths: {
+                      0: FixedColumnWidth(64),
+                    },
+                    rows: effects
+                        .map((e) => MizerTableRow(
+                                cells: [
+                                  Text(e.id.toString()),
+                                  Text(e.name),
+                                ],
+                                onTap: () => setState(() => this.effect = e),
+                                selected: this.effect?.id == e.id))
+                        .toList(),
+                  ),
                 ),
                 actions: [
                   PanelAction(
@@ -74,7 +101,13 @@ class _EffectsViewState extends State<EffectsView> {
                 effect: effect!,
                 onUpdateStepValue: _onUpdateStepValue,
                 onUpdateStepCubicPosition: _onUpdateStepCubicPosition,
-                onFinishInteraction: (channelIndex, stepIndex) => _onUpdateEffectStep(bloc, channelIndex, stepIndex),
+                onFinishInteraction: (channelIndex, stepIndex) =>
+                    _onUpdateEffectStep(bloc, channelIndex, stepIndex),
+                onRemoveStep: (channelIndex, stepIndex) =>
+                    _onRemoveEffectStep(bloc, channelIndex, stepIndex),
+                onRemoveChannel: (channelIndex) => _onRemoveEffectChannel(bloc, channelIndex),
+                onAddChannel: (control) => _onAddEffectChannel(bloc, control),
+                onAddStep: (channelIndex, step) => _onAddEffectStep(bloc, channelIndex, step),
               ))
           ],
         );
@@ -123,7 +156,37 @@ class _EffectsViewState extends State<EffectsView> {
       return;
     }
     var step = effect!.channels[channelIndex].steps[stepIndex];
-    bloc.add(UpdateEffectStep(effectId: effect!.id, channelIndex: channelIndex, stepIndex: stepIndex, step: step));
+    bloc.add(UpdateEffectStep(
+        effectId: effect!.id, channelIndex: channelIndex, stepIndex: stepIndex, step: step));
+  }
+
+  void _onRemoveEffectStep(EffectsBloc bloc, int channelIndex, int stepIndex) {
+    if (effect == null) {
+      return;
+    }
+    bloc.add(
+        RemoveEffectStep(effectId: effect!.id, channelIndex: channelIndex, stepIndex: stepIndex));
+  }
+
+  void _onRemoveEffectChannel(EffectsBloc bloc, int channelIndex) {
+    if (effect == null) {
+      return;
+    }
+    bloc.add(RemoveEffectChannel(effectId: effect!.id, channelIndex: channelIndex));
+  }
+
+  void _onAddEffectChannel(EffectsBloc bloc, FixtureFaderControl control) {
+    if (effect == null) {
+      return;
+    }
+    bloc.add(AddEffectChannel(effectId: effect!.id, control: control));
+  }
+
+  void _onAddEffectStep(EffectsBloc bloc, int channelIndex, EffectStep step) {
+    if (effect == null) {
+      return;
+    }
+    bloc.add(AddEffectStep(effectId: effect!.id, channelIndex: channelIndex, step: step));
   }
 
   void _addEffect(BuildContext context, EffectsBloc bloc) async {

@@ -7,8 +7,9 @@ use std::collections::HashMap;
 
 #[derive(Debug)]
 pub(crate) struct EffectInstance {
-    pub effect: u32,
+    pub effect_id: u32,
     pub fixtures: Vec<FixtureId>,
+    effect: Effect,
     frame: f64,
     splines: HashMap<FixtureFaderControl, Spline>,
 }
@@ -16,20 +17,24 @@ pub(crate) struct EffectInstance {
 impl EffectInstance {
     pub fn new(effect: &Effect, fixtures: Vec<FixtureId>) -> Self {
         Self {
-            effect: effect.id,
+            effect_id: effect.id,
             fixtures,
+            effect: effect.clone(),
             frame: 0.,
             splines: effect.build_splines(),
         }
     }
 
-    // TODO: update spline when effect differs from previous version
     pub fn process(
         &mut self,
         effect: &Effect,
         fixture_manager: &FixtureManager,
         frame: ClockFrame,
     ) {
+        if effect != &self.effect {
+            self.effect = effect.clone();
+            self.splines = effect.build_splines();
+        }
         profiling::scope!("EffectInstance::process");
         self.frame = frame.frame;
 

@@ -49,6 +49,42 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for EffectsChannel<R> {
                     Err(err) => resp.respond_error(err),
                 }
             }
+            "addEffectChannel" => {
+                match call
+                    .arguments()
+                    .map(|args| self.handler.add_effect_channel(args))
+                {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
+            "addEffectStep" => {
+                match call
+                    .arguments()
+                    .map(|args| self.handler.add_effect_step(args))
+                {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
+            "deleteEffectChannel" => {
+                match call
+                    .arguments()
+                    .map(|args| self.handler.delete_effect_channel(args))
+                {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
+            "deleteEffectStep" => {
+                match call
+                    .arguments()
+                    .map(|args| self.handler.delete_effect_step(args))
+                {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                }
+            }
             _ => resp.not_implemented(),
         }
     }

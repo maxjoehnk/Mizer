@@ -4,7 +4,7 @@ extension StringExtensions on String {
       if (match.isEmpty) {
         return "";
       }
-      return match.substring(0, 1).toUpperCase() + match.substring(1);
+      return match.substring(0, 1).toUpperCase() + match.substring(1).toLowerCase();
     });
   }
 

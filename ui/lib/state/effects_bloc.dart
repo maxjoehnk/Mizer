@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/protos/fixtures.pb.dart';
 
 abstract class EffectsEvent {}
 
@@ -31,6 +32,36 @@ class DeleteEffect extends EffectsEvent {
   DeleteEffect(this.id);
 }
 
+class RemoveEffectStep extends EffectsEvent {
+  final int effectId;
+  final int channelIndex;
+  final int stepIndex;
+
+  RemoveEffectStep({ required this.effectId, required this.channelIndex, required this.stepIndex });
+}
+
+class RemoveEffectChannel extends EffectsEvent {
+  final int effectId;
+  final int channelIndex;
+
+  RemoveEffectChannel({ required this.effectId, required this.channelIndex });
+}
+
+class AddEffectChannel extends EffectsEvent {
+  final int effectId;
+  final FixtureFaderControl control;
+
+  AddEffectChannel({ required this.effectId, required this.control });
+}
+
+class AddEffectStep extends EffectsEvent {
+  final int effectId;
+  final int channelIndex;
+  final EffectStep step;
+
+  AddEffectStep({ required this.effectId, required this.channelIndex, required this.step });
+}
+
 class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   final EffectsApi api;
 
@@ -53,6 +84,22 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
     }
     if (event is UpdateEffectStep) {
       await _updateEffectStep(event);
+      yield await _fetchEffects();
+    }
+    if (event is RemoveEffectStep) {
+      await _removeEffectStep(event);
+      yield await _fetchEffects();
+    }
+    if (event is RemoveEffectChannel) {
+      await _removeEffectChannel(event);
+      yield await _fetchEffects();
+    }
+    if (event is AddEffectChannel) {
+      await _addEffectChannel(event);
+      yield await _fetchEffects();
+    }
+    if (event is AddEffectStep) {
+      await _addEffectStep(event);
       yield await _fetchEffects();
     }
   }
@@ -80,5 +127,25 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   Future<void> _updateEffectStep(UpdateEffectStep event) async {
     log("updating effect step: $event", name: "EffectsBloc");
     await api.updateEffectStep(UpdateEffectStepRequest(effectId: event.effectId, channelIndex: event.channelIndex, stepIndex: event.stepIndex, step: event.step));
+  }
+
+  Future<void> _removeEffectStep(RemoveEffectStep event) async {
+    log("removing effect step: $event", name: "EffectsBloc");
+    await api.removeEffectStep(event.effectId, event.channelIndex, event.stepIndex);
+  }
+
+  Future<void> _removeEffectChannel(RemoveEffectChannel event) async {
+    log("removing effect channel: $event", name: "EffectsBloc");
+    await api.removeEffectChannel(event.effectId, event.channelIndex);
+  }
+
+  Future<void> _addEffectChannel(AddEffectChannel event) async {
+    log("adding effect channel: $event", name: "EffectsBloc");
+    await api.addEffectChannel(event.effectId, event.control);
+  }
+
+  Future<void> _addEffectStep(AddEffectStep event) async {
+    log("adding effect step: $event", name: "EffectsBloc");
+    await api.addEffectStep(event.effectId, event.channelIndex, event.step);
   }
 }

@@ -3,7 +3,7 @@
 //  source: fixtures.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
@@ -44,5 +44,22 @@ class FixtureControl extends $pb.ProtobufEnum {
   static FixtureControl? valueOf($core.int value) => _byValue[value];
 
   const FixtureControl._($core.int v, $core.String n) : super(v, n);
+}
+
+class FixtureFaderControl_ColorMixerControlChannel extends $pb.ProtobufEnum {
+  static const FixtureFaderControl_ColorMixerControlChannel RED = FixtureFaderControl_ColorMixerControlChannel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RED');
+  static const FixtureFaderControl_ColorMixerControlChannel GREEN = FixtureFaderControl_ColorMixerControlChannel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GREEN');
+  static const FixtureFaderControl_ColorMixerControlChannel BLUE = FixtureFaderControl_ColorMixerControlChannel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BLUE');
+
+  static const $core.List<FixtureFaderControl_ColorMixerControlChannel> values = <FixtureFaderControl_ColorMixerControlChannel> [
+    RED,
+    GREEN,
+    BLUE,
+  ];
+
+  static final $core.Map<$core.int, FixtureFaderControl_ColorMixerControlChannel> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static FixtureFaderControl_ColorMixerControlChannel? valueOf($core.int value) => _byValue[value];
+
+  const FixtureFaderControl_ColorMixerControlChannel._($core.int v, $core.String n) : super(v, n);
 }
 

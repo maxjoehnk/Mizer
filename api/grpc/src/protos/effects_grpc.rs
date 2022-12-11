@@ -26,7 +26,15 @@ pub trait EffectsApi {
 
     fn add_effect(&self, req: ::grpc::ServerRequestSingle<super::effects::AddEffectRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
 
+    fn add_effect_channel(&self, req: ::grpc::ServerRequestSingle<super::effects::AddEffectChannelRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
+
+    fn delete_effect_channel(&self, req: ::grpc::ServerRequestSingle<super::effects::DeleteEffectChannelRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
+
     fn update_effect_step(&self, req: ::grpc::ServerRequestSingle<super::effects::UpdateEffectStepRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
+
+    fn add_effect_step(&self, req: ::grpc::ServerRequestSingle<super::effects::AddEffectStepRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
+
+    fn delete_effect_step(&self, req: ::grpc::ServerRequestSingle<super::effects::DeleteEffectStepRequest>, resp: ::grpc::ServerResponseUnarySink<super::effects::Effect>) -> ::grpc::Result<()>;
 }
 
 // client
@@ -64,9 +72,49 @@ impl EffectsApiClient {
         self.grpc_client.call_unary(o, req, descriptor)
     }
 
+    pub fn add_effect_channel(&self, o: ::grpc::RequestOptions, req: super::effects::AddEffectChannelRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/AddEffectChannel"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn delete_effect_channel(&self, o: ::grpc::RequestOptions, req: super::effects::DeleteEffectChannelRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/DeleteEffectChannel"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
     pub fn update_effect_step(&self, o: ::grpc::RequestOptions, req: super::effects::UpdateEffectStepRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
             name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/UpdateEffectStep"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn add_effect_step(&self, o: ::grpc::RequestOptions, req: super::effects::AddEffectStepRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/AddEffectStep"),
+            streaming: ::grpc::rt::GrpcStreaming::Unary,
+            req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+            resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+        });
+        self.grpc_client.call_unary(o, req, descriptor)
+    }
+
+    pub fn delete_effect_step(&self, o: ::grpc::RequestOptions, req: super::effects::DeleteEffectStepRequest) -> ::grpc::SingleResponse<super::effects::Effect> {
+        let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/DeleteEffectStep"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -111,6 +159,30 @@ impl EffectsApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/AddEffectChannel"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_effect_channel(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/DeleteEffectChannel"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).delete_effect_channel(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
                         name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/UpdateEffectStep"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -119,6 +191,30 @@ impl EffectsApiServer {
                     {
                         let handler_copy = handler_arc.clone();
                         ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).update_effect_step(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/AddEffectStep"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).add_effect_step(req, resp))
+                    },
+                ),
+                ::grpc::rt::ServerMethod::new(
+                    ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.effects.EffectsApi/DeleteEffectStep"),
+                        streaming: ::grpc::rt::GrpcStreaming::Unary,
+                        req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                        resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
+                    }),
+                    {
+                        let handler_copy = handler_arc.clone();
+                        ::grpc::rt::MethodHandlerUnary::new(move |req, resp| (*handler_copy).delete_effect_step(req, resp))
                     },
                 ),
             ],

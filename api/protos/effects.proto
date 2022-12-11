@@ -8,7 +8,11 @@ import "sequencer.proto";
 service EffectsApi {
   rpc GetEffects (GetEffectsRequest) returns (Effects) {}
   rpc AddEffect (AddEffectRequest) returns (Effect) {}
+  rpc AddEffectChannel (AddEffectChannelRequest) returns (Effect) {}
+  rpc DeleteEffectChannel (DeleteEffectChannelRequest) returns (Effect) {}
   rpc UpdateEffectStep (UpdateEffectStepRequest) returns (Effect) {}
+  rpc AddEffectStep (AddEffectStepRequest) returns (Effect) {}
+  rpc DeleteEffectStep (DeleteEffectStepRequest) returns (Effect) {}
 }
 
 message GetEffectsRequest {}
@@ -20,6 +24,28 @@ message UpdateEffectStepRequest {
   uint32 channel_index = 2;
   uint32 step_index = 3;
   EffectStep step = 4;
+}
+
+message AddEffectChannelRequest {
+  uint32 effect_id = 1;
+  mizer.fixtures.FixtureFaderControl control = 2;
+}
+
+message DeleteEffectChannelRequest {
+  uint32 effect_id = 1;
+  uint32 channel_index = 2;
+}
+
+message AddEffectStepRequest {
+  uint32 effect_id = 1;
+  uint32 channel_index = 2;
+  EffectStep step = 3;
+}
+
+message DeleteEffectStepRequest {
+  uint32 effect_id = 1;
+  uint32 channel_index = 2;
+  uint32 step_index = 3;
 }
 
 message Effects {

@@ -20,7 +20,7 @@ fn oscillator(oscillator_type: OscillatorType, name: &str) -> anyhow::Result<()>
 fn long_oscillator() -> anyhow::Result<()> {
     let node = OscillatorNode {
         oscillator_type: OscillatorType::Sine,
-        ratio: 8.,
+        interval: 8.,
         ..Default::default()
     };
 

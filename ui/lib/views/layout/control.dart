@@ -7,10 +7,13 @@ import 'package:mizer/extensions/color_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart' hide Color;
+import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
+import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
+import 'package:provider/provider.dart';
 
 import 'controls/button.dart';
 import 'controls/fader.dart';
@@ -40,12 +43,18 @@ class LayoutControlView extends StatelessWidget {
       return Container();
     }
 
+    var supportsMappings = node?.type == Node_NodeType.Button || node?.type == Node_NodeType.Fader;
     return ContextMenu(
       menu: Menu(items: [
         MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
         MenuItem(label: "Edit".i18n, action: () => _editControl(context)),
         MenuItem(label: "Move".i18n, action: () => onMove()),
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
+        if (supportsMappings) MenuDivider(),
+        if (supportsMappings)
+          SubMenu(title: "Mappings".i18n, children: [
+            MenuItem(label: "Add MIDI Mapping", action: () => _addMappingForControl(context))
+          ]),
       ]),
       child: Padding(
         padding: const EdgeInsets.all(2.0),
@@ -100,5 +109,12 @@ class LayoutControlView extends StatelessWidget {
 
   Color? get _color {
     return control.decoration.hasColor ? control.decoration.color_2.asFlutterColor : null;
+  }
+
+  _addMappingForControl(BuildContext context) async {
+    var request = MappingRequest(
+      layoutControl: LayoutControlAction(controlNode: control.node),
+    );
+    await addMidiMapping(context, "Add MIDI Mapping for Control ${control.label.isNotEmpty ? control.label : control.node}", request);
   }
 }

@@ -21,5 +21,6 @@ mizer-layout-commands = { path = "../../layouts/commands" }
 mizer-node = { path = "../../pipeline/node" }
 mizer-protocol-dmx = { path  = "../../../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path  = "../../../components/connections/protocols/mqtt" }
+mizer-node-templates = { path = "../../pipeline/templates" }
 flume = "0.10"
 tracing = "0.1"

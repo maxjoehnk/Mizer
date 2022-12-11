@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package mizer.mappings;
+
+import "nodes.proto";
+
+service MappingsApi {
+  rpc AddMapping (MappingRequest) returns (MappingResult) {}
+}
+
+message MappingResult {}
+
+message MappingRequest {
+  oneof binding {
+    MidiMapping midi = 1;
+  }
+  oneof action {
+    SequencerGoAction sequencer_go = 10;
+    SequencerStopAction sequencer_stop = 11;
+    LayoutControlAction layout_control = 12;
+  }
+}
+
+message MidiMapping {
+  mizer.nodes.MidiNodeConfig config = 1;
+  bool input_mapping = 2;
+}
+
+message SequencerGoAction {
+  uint32 sequencer_id = 1;
+}
+
+message SequencerStopAction {
+  uint32 sequencer_id = 1;
+}
+
+message LayoutControlAction {
+  string control_node = 1;
+}

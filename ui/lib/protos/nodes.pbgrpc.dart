@@ -15,56 +15,56 @@ export 'nodes.pb.dart';
 
 class NodesApiClient extends $grpc.Client {
   static final _$getNodes = $grpc.ClientMethod<$0.NodesRequest, $0.Nodes>(
-      '/mizer.NodesApi/GetNodes',
+      '/mizer.nodes.NodesApi/GetNodes',
       ($0.NodesRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Nodes.fromBuffer(value));
   static final _$addNode = $grpc.ClientMethod<$0.AddNodeRequest, $0.Node>(
-      '/mizer.NodesApi/AddNode',
+      '/mizer.nodes.NodesApi/AddNode',
       ($0.AddNodeRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
   static final _$addLink =
       $grpc.ClientMethod<$0.NodeConnection, $0.NodeConnection>(
-          '/mizer.NodesApi/AddLink',
+          '/mizer.nodes.NodesApi/AddLink',
           ($0.NodeConnection value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.NodeConnection.fromBuffer(value));
   static final _$writeControlValue =
       $grpc.ClientMethod<$0.WriteControl, $0.WriteResponse>(
-          '/mizer.NodesApi/WriteControlValue',
+          '/mizer.nodes.NodesApi/WriteControlValue',
           ($0.WriteControl value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.WriteResponse.fromBuffer(value));
   static final _$updateNodeProperty = $grpc.ClientMethod<
           $0.UpdateNodeConfigRequest, $0.UpdateNodeConfigResponse>(
-      '/mizer.NodesApi/UpdateNodeProperty',
+      '/mizer.nodes.NodesApi/UpdateNodeProperty',
       ($0.UpdateNodeConfigRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) =>
           $0.UpdateNodeConfigResponse.fromBuffer(value));
   static final _$moveNode =
       $grpc.ClientMethod<$0.MoveNodeRequest, $0.MoveNodeResponse>(
-          '/mizer.NodesApi/MoveNode',
+          '/mizer.nodes.NodesApi/MoveNode',
           ($0.MoveNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.MoveNodeResponse.fromBuffer(value));
   static final _$deleteNode =
       $grpc.ClientMethod<$0.DeleteNodeRequest, $0.DeleteNodeResponse>(
-          '/mizer.NodesApi/DeleteNode',
+          '/mizer.nodes.NodesApi/DeleteNode',
           ($0.DeleteNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.DeleteNodeResponse.fromBuffer(value));
   static final _$hideNode =
       $grpc.ClientMethod<$0.HideNodeRequest, $0.HideNodeResponse>(
-          '/mizer.NodesApi/HideNode',
+          '/mizer.nodes.NodesApi/HideNode',
           ($0.HideNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.HideNodeResponse.fromBuffer(value));
   static final _$showNode =
       $grpc.ClientMethod<$0.ShowNodeRequest, $0.ShowNodeResponse>(
-          '/mizer.NodesApi/ShowNode',
+          '/mizer.nodes.NodesApi/ShowNode',
           ($0.ShowNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.ShowNodeResponse.fromBuffer(value));
   static final _$duplicateNode =
       $grpc.ClientMethod<$0.DuplicateNodeRequest, $0.Node>(
-          '/mizer.NodesApi/DuplicateNode',
+          '/mizer.nodes.NodesApi/DuplicateNode',
           ($0.DuplicateNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.Node.fromBuffer(value));
 
@@ -128,7 +128,7 @@ class NodesApiClient extends $grpc.Client {
 }
 
 abstract class NodesApiServiceBase extends $grpc.Service {
-  $core.String get $name => 'mizer.NodesApi';
+  $core.String get $name => 'mizer.nodes.NodesApi';
 
   NodesApiServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.NodesRequest, $0.Nodes>(

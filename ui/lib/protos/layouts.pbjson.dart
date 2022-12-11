@@ -105,13 +105,13 @@ const AddControlRequest$json = const {
   '1': 'AddControlRequest',
   '2': const [
     const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
-    const {'1': 'node_type', '3': 2, '4': 1, '5': 14, '6': '.mizer.Node.NodeType', '10': 'nodeType'},
+    const {'1': 'node_type', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.Node.NodeType', '10': 'nodeType'},
     const {'1': 'position', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlPosition', '10': 'position'},
   ],
 };
 
 /// Descriptor for `AddControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List addControlRequestDescriptor = $convert.base64Decode('ChFBZGRDb250cm9sUmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEjEKCW5vZGVfdHlwZRgCIAEoDjIULm1pemVyLk5vZGUuTm9kZVR5cGVSCG5vZGVUeXBlEjIKCHBvc2l0aW9uGAMgASgLMhYubWl6ZXIuQ29udHJvbFBvc2l0aW9uUghwb3NpdGlvbg==');
+final $typed_data.Uint8List addControlRequestDescriptor = $convert.base64Decode('ChFBZGRDb250cm9sUmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEjcKCW5vZGVfdHlwZRgCIAEoDjIaLm1pemVyLm5vZGVzLk5vZGUuTm9kZVR5cGVSCG5vZGVUeXBlEjIKCHBvc2l0aW9uGAMgASgLMhYubWl6ZXIuQ29udHJvbFBvc2l0aW9uUghwb3NpdGlvbg==');
 @$core.Deprecated('Use addExistingControlRequestDescriptor instead')
 const AddExistingControlRequest$json = const {
   '1': 'AddExistingControlRequest',

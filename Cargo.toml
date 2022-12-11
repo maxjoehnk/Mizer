@@ -59,6 +59,7 @@ members = [
     "runtime/pipeline/nodes/plan",
     "runtime/pipeline/nodes/video",
     "runtime/pipeline/ports",
+    "runtime/pipeline/templates",
     "runtime/processing",
     "runtime/projects",
     "runtime/settings",

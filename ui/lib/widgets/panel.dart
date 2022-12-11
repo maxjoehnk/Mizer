@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/string_extensions.dart';
+import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:provider/provider.dart';
@@ -168,13 +169,15 @@ class PanelAction {
   final bool disabled;
   final bool activated;
   final String? hotkeyId;
+  final Menu? menu;
 
   PanelAction(
       {required this.label,
       this.onClick,
       this.disabled = false,
       this.activated = false,
-      this.hotkeyId});
+      this.hotkeyId,
+      this.menu});
 }
 
 class PanelActions extends StatelessWidget {
@@ -192,28 +195,42 @@ class PanelActions extends StatelessWidget {
       child: Column(
         children: actions.map((a) {
           var hotkey = _getHotkey(hotkeys, a);
-          return Hoverable(
-            disabled: a.disabled || a.onClick == null,
-            onTap: a.onClick,
-            builder: (hovered) => Container(
-              color: _getBackground(a, hovered),
-              height: 64,
-              width: 64,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(a.label,
-                      textAlign: TextAlign.center,
-                      style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
-                  if (hotkey != null)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2.0),
-                      child: Text(hotkey.toCapitalCase(),
-                          style:
-                              textTheme.bodySmall!.copyWith(color: _getHotkeyColor(a), fontSize: 10)),
-                    ),
-                ],
+          return GestureDetector(
+            onSecondaryTapDown: (event) {
+              if (a.menu == null) {
+                return;
+              }
+              Platform.of(context).showContextMenu(context: context, menu: a.menu!, position: event.globalPosition);
+            },
+            onLongPressEnd: (event) {
+              if (a.menu == null) {
+                return;
+              }
+              Platform.of(context).showContextMenu(context: context, menu: a.menu!, position: event.globalPosition);
+            },
+            child: Hoverable(
+              disabled: a.disabled || a.onClick == null,
+              onTap: a.onClick,
+              builder: (hovered) => Container(
+                color: _getBackground(a, hovered),
+                height: 64,
+                width: 64,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(a.label,
+                        textAlign: TextAlign.center,
+                        style: textTheme.subtitle2!.copyWith(fontSize: 11, color: _getColor(a))),
+                    if (hotkey != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: Text(hotkey.toCapitalCase(),
+                            style:
+                                textTheme.bodySmall!.copyWith(color: _getHotkeyColor(a), fontSize: 10)),
+                      ),
+                  ],
+                ),
               ),
             ),
           );

@@ -3522,6 +3522,7 @@ dependencies = [
  "mizer-media",
  "mizer-message-bus",
  "mizer-node",
+ "mizer-node-templates",
  "mizer-nodes",
  "mizer-plan",
  "mizer-runtime",
@@ -3577,6 +3578,7 @@ dependencies = [
  "mizer-layouts",
  "mizer-module",
  "mizer-node",
+ "mizer-node-templates",
  "mizer-plan",
  "mizer-processing",
  "mizer-protocol-dmx",
@@ -3953,6 +3955,19 @@ dependencies = [
  "mizer-ports",
  "serde",
  "test-case",
+]
+
+[[package]]
+name = "mizer-node-templates"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "mizer-commander",
+ "mizer-node",
+ "mizer-nodes",
+ "mizer-ports",
+ "mizer-runtime",
+ "serde",
 ]
 
 [[package]]

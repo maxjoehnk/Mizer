@@ -1812,7 +1812,7 @@ impl AddControlRequest {
         ::std::mem::replace(&mut self.layout_id, ::std::string::String::new())
     }
 
-    // .mizer.Node.NodeType node_type = 2;
+    // .mizer.nodes.Node.NodeType node_type = 2;
 
 
     pub fn get_node_type(&self) -> super::nodes::Node_NodeType {
@@ -4177,12 +4177,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\x12;\n\x0bdecorati\
     ons\x18\x03\x20\x01(\x0b2\x19.mizer.ControlDecorationsR\x0bdecorations\"\
     R\n\x14RemoveControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08\
-    layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\"\x97\x01\
+    layoutId\x12\x1d\n\ncontrol_id\x18\x02\x20\x01(\tR\tcontrolId\"\x9d\x01\
     \n\x11AddControlRequest\x12\x1b\n\tlayout_id\x18\x01\x20\x01(\tR\x08layo\
-    utId\x121\n\tnode_type\x18\x02\x20\x01(\x0e2\x14.mizer.Node.NodeTypeR\
-    \x08nodeType\x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.mizer.ControlP\
-    ositionR\x08position\"\x80\x01\n\x19AddExistingControlRequest\x12\x1b\n\
-    \tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x12\n\x04node\x18\x02\
+    utId\x127\n\tnode_type\x18\x02\x20\x01(\x0e2\x1a.mizer.nodes.Node.NodeTy\
+    peR\x08nodeType\x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.mizer.Contr\
+    olPositionR\x08position\"\x80\x01\n\x19AddExistingControlRequest\x12\x1b\
+    \n\tlayout_id\x18\x01\x20\x01(\tR\x08layoutId\x12\x12\n\x04node\x18\x02\
     \x20\x01(\tR\x04node\x122\n\x08position\x18\x03\x20\x01(\x0b2\x16.mizer.\
     ControlPositionR\x08position\"2\n\x07Layouts\x12'\n\x07layouts\x18\x01\
     \x20\x03(\x0b2\r.mizer.LayoutR\x07layouts\"J\n\x06Layout\x12\x0e\n\x02id\

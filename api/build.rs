@@ -17,6 +17,7 @@ fn main() {
             "protos/programmer.proto",
             "protos/settings.proto",
             "protos/plans.proto",
+            "protos/mappings.proto",
         ])
         .include("protos")
         .customize(Customize {

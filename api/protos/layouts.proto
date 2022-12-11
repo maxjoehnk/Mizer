@@ -62,7 +62,7 @@ message RemoveControlRequest {
 
 message AddControlRequest {
   string layout_id = 1;
-  Node.NodeType node_type = 2;
+  mizer.nodes.Node.NodeType node_type = 2;
   ControlPosition position = 3;
 }
 

@@ -60,7 +60,7 @@ impl ::grpc::ClientStub for NodesApiClient {
 impl NodesApiClient {
     pub fn get_nodes(&self, o: ::grpc::RequestOptions, req: super::nodes::NodesRequest) -> ::grpc::SingleResponse<super::nodes::Nodes> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/GetNodes"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/GetNodes"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -70,7 +70,7 @@ impl NodesApiClient {
 
     pub fn add_node(&self, o: ::grpc::RequestOptions, req: super::nodes::AddNodeRequest) -> ::grpc::SingleResponse<super::nodes::Node> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/AddNode"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/AddNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -80,7 +80,7 @@ impl NodesApiClient {
 
     pub fn add_link(&self, o: ::grpc::RequestOptions, req: super::nodes::NodeConnection) -> ::grpc::SingleResponse<super::nodes::NodeConnection> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/AddLink"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/AddLink"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -90,7 +90,7 @@ impl NodesApiClient {
 
     pub fn write_control_value(&self, o: ::grpc::RequestOptions, req: super::nodes::WriteControl) -> ::grpc::SingleResponse<super::nodes::WriteResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/WriteControlValue"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/WriteControlValue"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -100,7 +100,7 @@ impl NodesApiClient {
 
     pub fn update_node_property(&self, o: ::grpc::RequestOptions, req: super::nodes::UpdateNodeConfigRequest) -> ::grpc::SingleResponse<super::nodes::UpdateNodeConfigResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/UpdateNodeProperty"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/UpdateNodeProperty"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -110,7 +110,7 @@ impl NodesApiClient {
 
     pub fn move_node(&self, o: ::grpc::RequestOptions, req: super::nodes::MoveNodeRequest) -> ::grpc::SingleResponse<super::nodes::MoveNodeResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/MoveNode"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/MoveNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -120,7 +120,7 @@ impl NodesApiClient {
 
     pub fn delete_node(&self, o: ::grpc::RequestOptions, req: super::nodes::DeleteNodeRequest) -> ::grpc::SingleResponse<super::nodes::DeleteNodeResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/DeleteNode"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/DeleteNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -130,7 +130,7 @@ impl NodesApiClient {
 
     pub fn hide_node(&self, o: ::grpc::RequestOptions, req: super::nodes::HideNodeRequest) -> ::grpc::SingleResponse<super::nodes::HideNodeResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/HideNode"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/HideNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -140,7 +140,7 @@ impl NodesApiClient {
 
     pub fn show_node(&self, o: ::grpc::RequestOptions, req: super::nodes::ShowNodeRequest) -> ::grpc::SingleResponse<super::nodes::ShowNodeResponse> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/ShowNode"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/ShowNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -150,7 +150,7 @@ impl NodesApiClient {
 
     pub fn duplicate_node(&self, o: ::grpc::RequestOptions, req: super::nodes::DuplicateNodeRequest) -> ::grpc::SingleResponse<super::nodes::Node> {
         let descriptor = ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-            name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/DuplicateNode"),
+            name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/DuplicateNode"),
             streaming: ::grpc::rt::GrpcStreaming::Unary,
             req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
             resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -167,11 +167,11 @@ pub struct NodesApiServer;
 impl NodesApiServer {
     pub fn new_service_def<H : NodesApi + 'static + Sync + Send + 'static>(handler: H) -> ::grpc::rt::ServerServiceDefinition {
         let handler_arc = ::std::sync::Arc::new(handler);
-        ::grpc::rt::ServerServiceDefinition::new("/mizer.NodesApi",
+        ::grpc::rt::ServerServiceDefinition::new("/mizer.nodes.NodesApi",
             vec![
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/GetNodes"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/GetNodes"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -183,7 +183,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/AddNode"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/AddNode"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -195,7 +195,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/AddLink"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/AddLink"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -207,7 +207,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/WriteControlValue"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/WriteControlValue"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -219,7 +219,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/UpdateNodeProperty"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/UpdateNodeProperty"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -231,7 +231,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/MoveNode"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/MoveNode"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -243,7 +243,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/DeleteNode"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/DeleteNode"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -255,7 +255,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/HideNode"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/HideNode"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -267,7 +267,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/ShowNode"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/ShowNode"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
@@ -279,7 +279,7 @@ impl NodesApiServer {
                 ),
                 ::grpc::rt::ServerMethod::new(
                     ::grpc::rt::ArcOrStatic::Static(&::grpc::rt::MethodDescriptor {
-                        name: ::grpc::rt::StringOrStatic::Static("/mizer.NodesApi/DuplicateNode"),
+                        name: ::grpc::rt::StringOrStatic::Static("/mizer.nodes.NodesApi/DuplicateNode"),
                         streaming: ::grpc::rt::GrpcStreaming::Unary,
                         req_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),
                         resp_marshaller: ::grpc::rt::ArcOrStatic::Static(&::grpc_protobuf::MarshallerProtobuf),

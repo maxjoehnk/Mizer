@@ -1,11 +1,14 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
+import 'package:mizer/platform/contracts/menu.dart';
+import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/sequencer/sequencer_settings.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart' as tabs;
@@ -65,8 +68,12 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                   label: "Sequences",
                   child: SequenceList(selectSequence: _selectSequence, selectedSequence: state.selectedSequence, sequenceStates: sequenceStates),
                   actions: [
-                    PanelAction(label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!)),
-                    PanelAction(label: "Stop", onClick: () => _sequenceStop(state.selectedSequenceId!)),
+                    PanelAction(label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [
+                      MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForGo(context, state))
+                    ])),
+                    PanelAction(label: "Stop", onClick: () => _sequenceStop(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [
+                      MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForStop(context, state))
+                    ])),
                     PanelAction(hotkeyId: "delete", label: "Delete", onClick: () => _deleteSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
                     PanelAction(hotkeyId: "duplicate", label: "Duplicate", onClick: () => _duplicateSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
                   ],
@@ -88,6 +95,20 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
         }
       ),
     );
+  }
+
+  Future<void> _addMidiMappingForGo(BuildContext context, SequencerState state) async {
+    var request = MappingRequest(
+        sequencerGo: SequencerGoAction(sequencerId: state.selectedSequenceId!)
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Sequence Go ${state.selectedSequence!.name}", request);
+  }
+
+  Future<void> _addMidiMappingForStop(BuildContext context, SequencerState state) async {
+    var request = MappingRequest(
+        sequencerStop: SequencerStopAction(sequencerId: state.selectedSequenceId!)
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Sequence Stop ${state.selectedSequence!.name}", request);
   }
 
   _deleteSequence(int sequenceId) {

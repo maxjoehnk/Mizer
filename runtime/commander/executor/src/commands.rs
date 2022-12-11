@@ -7,6 +7,7 @@ use std::any::Any;
 pub use crate::aggregates::*;
 pub use mizer_fixture_commands::*;
 pub use mizer_layout_commands::*;
+pub use mizer_node_templates::ExecuteNodeTemplateCommand;
 pub use mizer_plan::commands::*;
 pub use mizer_protocol_dmx::commands::*;
 pub use mizer_protocol_mqtt::commands::*;
@@ -110,6 +111,7 @@ command_impl! {
     AddMqttConnectionCommand,
     DeleteMqttConnectionCommand,
     ConfigureMqttConnectionCommand,
+    ExecuteNodeTemplateCommand,
 }
 
 impl CommandImpl {

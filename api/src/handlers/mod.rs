@@ -2,6 +2,7 @@ pub use self::connections::*;
 pub use self::effects::*;
 pub use self::fixtures::*;
 pub use self::layouts::*;
+pub use self::mappings::*;
 pub use self::media::*;
 pub use self::nodes::*;
 pub use self::plans::*;
@@ -20,6 +21,7 @@ mod connections;
 mod effects;
 mod fixtures;
 mod layouts;
+mod mappings;
 mod media;
 mod nodes;
 mod plans;
@@ -43,6 +45,7 @@ pub struct Handlers<R: RuntimeApi> {
     pub settings: SettingsHandler<R>,
     pub effects: EffectsHandler<R>,
     pub plans: PlansHandler<R>,
+    pub mappings: MappingsHandler<R>,
 }
 
 impl<R: RuntimeApi> Handlers<R> {
@@ -70,7 +73,8 @@ impl<R: RuntimeApi> Handlers<R> {
             effects: EffectsHandler::new(effect_engine, runtime.clone()),
             programmer: ProgrammerHandler::new(fixture_manager.clone(), sequencer, runtime.clone()),
             settings: SettingsHandler::new(runtime.clone()),
-            plans: PlansHandler::new(fixture_manager, runtime),
+            plans: PlansHandler::new(fixture_manager, runtime.clone()),
+            mappings: MappingsHandler::new(runtime),
         }
     }
 }

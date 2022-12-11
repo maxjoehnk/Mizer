@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/layouts.dart';
+import 'package:mizer/api/contracts/mappings.dart';
 import 'package:mizer/api/contracts/media.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/plans.dart';
@@ -17,6 +18,7 @@ import 'app.dart';
 import 'connections.dart';
 import 'fixtures.dart';
 import 'layouts.dart';
+import 'mappings.dart';
 import 'media.dart';
 import 'nodes.dart';
 import 'programmer.dart';
@@ -54,6 +56,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<ApplicationPluginApi>(create: (_) => ApplicationPluginApi()),
         RepositoryProvider<EffectsApi>(create: (_) => EffectsPluginApi()),
         RepositoryProvider<PlansApi>(create: (_) => PlansPluginApi(bindings)),
+        RepositoryProvider<MappingsApi>(create: (_) => MappingsPluginApi()),
       ],
     );
   }

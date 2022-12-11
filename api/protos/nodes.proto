@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package mizer;
+package mizer.nodes;
 
 service NodesApi {
   rpc GetNodes (NodesRequest) returns (Nodes) {}

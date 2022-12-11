@@ -13,6 +13,7 @@ pub use event::history::*;
 pub use event::session::*;
 pub use method::application::*;
 pub use method::connections::*;
+pub use method::mappings::*;
 pub use method::plans::*;
 pub use method::session::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};

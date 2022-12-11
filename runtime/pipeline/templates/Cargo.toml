@@ -1,0 +1,14 @@
+[package]
+name = "mizer-node-templates"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+mizer-node = { path = "../node" }
+mizer-nodes = { path = "../nodes" }
+mizer-ports = { path = "../ports" }
+mizer-commander = { path = "../../commander" }
+mizer-runtime = { path = "../../" }
+serde = { version = "1", features = ["derive"] }

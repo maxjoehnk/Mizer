@@ -78,8 +78,6 @@ pub fn build_runtime(
         effect_engine,
     );
 
-    let grpc = setup_grpc_api(&flags, handle.clone(), handlers.clone())
-        .context("Failed to setup grpc api")?;
     setup_media_api(handle, &flags, media_server_api.clone())
         .context("Failed to setup media api")?;
     let project_file = flags.file.clone();
@@ -87,7 +85,6 @@ pub fn build_runtime(
         project_path: flags.file.clone(),
         flags,
         runtime,
-        grpc,
         handlers,
         media_server_api,
         session_events: MessageBus::new(),
@@ -108,8 +105,6 @@ pub fn build_runtime(
 pub struct Mizer {
     flags: Flags,
     runtime: DefaultRuntime,
-    #[allow(dead_code)]
-    grpc: Option<mizer_grpc_api::Server>,
     pub handlers: Handlers<Api>,
     project_path: Option<PathBuf>,
     media_server_api: MediaServerApi,
@@ -350,19 +345,6 @@ fn import_media_files(
         handle.spawn(async move { media_discovery.discover().await });
     }
     Ok(())
-}
-
-fn setup_grpc_api(
-    flags: &Flags,
-    handle: tokio::runtime::Handle,
-    handlers: Handlers<Api>,
-) -> anyhow::Result<Option<mizer_grpc_api::Server>> {
-    let grpc = if !flags.disable_grpc_api {
-        Some(mizer_grpc_api::start(handle, handlers)?)
-    } else {
-        None
-    };
-    Ok(grpc)
 }
 
 fn setup_media_api(

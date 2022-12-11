@@ -55,7 +55,7 @@ impl ReadPortFunction {
         if let Some(mock) = mock {
             mock.call()
         } else {
-            unimplemented!()
+            None
         }
     }
 }

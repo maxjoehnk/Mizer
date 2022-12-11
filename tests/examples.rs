@@ -30,7 +30,6 @@ async fn test_build_project_pipeline(project: &str) {
         generate_graph: false,
         file: Some(PathBuf::from(format!("examples/{}.yml", project))),
         disable_media_api: true,
-        disable_grpc_api: true,
         headless: true,
         ..Default::default()
     };

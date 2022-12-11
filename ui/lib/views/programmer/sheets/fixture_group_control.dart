@@ -91,12 +91,13 @@ class FixtureGroupControl extends StatelessWidget {
     ProgrammerApi api = context.read();
     Widget widget = Container();
     if (control.hasFader || control.hasGeneric) {
+      double? generic = control.channel?.hasGeneric() == true ? control.channel?.generic.value : null;
       widget = Container(
           width: 64,
           child: FaderInput(
               // highlight: modifiedChannels.contains(group.name),
               label: control.label,
-              value: control.fader?.value ?? control.generic!.value,
+              value: control.channel?.fader ?? generic ?? 0,
               onValue: (v) => api.writeControl(control.update(v))));
     }
     if (control.hasColor) {
@@ -106,7 +107,6 @@ class FixtureGroupControl extends StatelessWidget {
             red: control.channel?.color.red ?? 0,
             green: control.channel?.color.green ?? 0,
             blue: control.channel?.color.blue ?? 0),
-        // value: ColorValue(red: control.color!.red, green: control.color!.green, blue: control.color!.blue),
         onChange: (v) => api.writeControl(control.update(v)),
       );
     }

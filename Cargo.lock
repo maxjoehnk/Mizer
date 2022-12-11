@@ -5599,13 +5599,12 @@ checksum = "310a2514cb46bb500a2f2ad70c79c51c5a475cc23faa245d2c675faabe889370"
 
 [[package]]
 name = "rosc"
-version = "0.6.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2f26c70ce40ebff952464df4aa64817459de5ddf8ed7bbc2913adff8b9b31a0"
+checksum = "10b751c26b740b6e8c37df88d2aa04dd4ea0f5a592ddd15ab21707ff925575dd"
 dependencies = [
  "byteorder",
  "nom 7.1.0",
- "regex",
 ]
 
 [[package]]

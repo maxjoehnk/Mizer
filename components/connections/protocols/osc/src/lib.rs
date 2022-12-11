@@ -66,10 +66,12 @@ fn spawn_osc_input_thread(addr: SocketAddrV4) -> OscInputStream {
         let mut buffer = [0u8; rosc::decoder::MTU];
         loop {
             match socket.recv_from(&mut buffer) {
-                Ok((size, _)) => match rosc::decoder::decode(&buffer[..size]) {
-                    Ok(msg) => {
+                Ok((size, _)) => match rosc::decoder::decode_udp(&buffer[..size]) {
+                    Ok((_, msg)) => {
                         log::trace!("Received osc packet {:?}", msg);
-                        tx.send(msg);
+                        if let Err(err) = tx.send(msg) {
+                            log::error!("Error publishing osc packet to feed: {:?}", err);
+                        }
                     }
                     Err(err) => {
                         log::error!("Error decoding osc packet: {:?}", err);

@@ -146,7 +146,13 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     }
 
     pub fn read_fader_value(&self, node_path: NodePath) -> Option<f64> {
-        self.runtime.read_fader_value(node_path).ok()
+        match self.runtime.read_fader_value(node_path) {
+            Ok(value) => Some(value),
+            Err(err) => {
+                tracing::error!("Error reading fader value: {:?}", err);
+                None
+            }
+        }
     }
 
     #[tracing::instrument(skip(self))]

@@ -5,12 +5,12 @@ name: Build
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Install native dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev xorg-dev libgtk-3-dev curl libclang-dev libudev-dev
+          sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev libasound2-dev libavahi-client-dev xorg-dev libgtk-3-dev libclang-dev libudev-dev curl
       - name: Install Protoc 3.17.3
         run: |
           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip

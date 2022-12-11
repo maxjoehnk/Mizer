@@ -62,23 +62,25 @@ class _EffectsViewState extends State<EffectsView> {
             Expanded(
               child: Panel(
                 label: "Effects".i18n,
-                child: MizerTable(
-                  columns: [
-                    Text("ID"),
-                    Text("Name"),
-                  ],
-                  columnWidths: {
-                    0: FixedColumnWidth(64),
-                  },
-                  rows: effects
-                      .map((e) => MizerTableRow(
-                              cells: [
-                                Text(e.id.toString()),
-                                Text(e.name),
-                              ],
-                              onTap: () => setState(() => this.effect = e),
-                              selected: this.effect?.id == e.id))
-                      .toList(),
+                child: SingleChildScrollView(
+                  child: MizerTable(
+                    columns: [
+                      Text("ID"),
+                      Text("Name"),
+                    ],
+                    columnWidths: {
+                      0: FixedColumnWidth(64),
+                    },
+                    rows: effects
+                        .map((e) => MizerTableRow(
+                                cells: [
+                                  Text(e.id.toString()),
+                                  Text(e.name),
+                                ],
+                                onTap: () => setState(() => this.effect = e),
+                                selected: this.effect?.id == e.id))
+                        .toList(),
+                  ),
                 ),
                 actions: [
                   PanelAction(

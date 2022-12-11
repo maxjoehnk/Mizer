@@ -112,15 +112,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
         };
 
         let cmd = AddNodeCommand {
-            designer: designer.clone(),
+            designer,
             node_type: request.field_type.into(),
             node: None,
-            parent: request._parent.and_then(|path| {
-                if let AddNodeRequest_oneof__parent::parent(path) = path {
-                    Some(path.into())
-                } else {
-                    None
-                }
+            parent: request._parent.map(|path| {
+                let AddNodeRequest_oneof__parent::parent(path) = path;
+
+                path.into()
             }),
         };
         let descriptor = self.runtime.run_command(cmd).unwrap();
@@ -171,12 +169,10 @@ impl<R: RuntimeApi> NodesHandler<R> {
         self.runtime.run_command(ShowNodeCommand {
             path: request.path.into(),
             position: request.position.unwrap().into(),
-            parent: request._parent.and_then(|path| {
-                if let ShowNodeRequest_oneof__parent::parent(path) = path {
-                    Some(path.into())
-                } else {
-                    None
-                }
+            parent: request._parent.map(|path| {
+                let ShowNodeRequest_oneof__parent::parent(path) = path;
+
+                path.into()
             }),
         })?;
 
@@ -184,8 +180,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     pub fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
-        self.runtime
-            .run_command(HideNodeCommand { path: path.into() })?;
+        self.runtime.run_command(HideNodeCommand { path })?;
 
         Ok(())
     }

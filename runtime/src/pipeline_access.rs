@@ -18,14 +18,20 @@ pub struct PipelineAccess {
     pub(crate) links: Arc<NonEmptyPinboard<Vec<NodeLink>>>,
 }
 
-impl PipelineAccess {
-    pub fn new() -> Self {
+impl Default for PipelineAccess {
+    fn default() -> Self {
         Self {
             nodes: Default::default(),
             nodes_view: Default::default(),
             designer: NonEmptyPinboard::new(Default::default()).into(),
             links: NonEmptyPinboard::new(Default::default()).into(),
         }
+    }
+}
+
+impl PipelineAccess {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn handle_add_node(
@@ -163,7 +169,7 @@ impl PipelineAccess {
         );
         link.port_type = source_port.port_type;
         let mut links = self.links.read();
-        links.push(link.clone());
+        links.push(link);
         self.links.set(links);
 
         Ok(())
@@ -202,11 +208,6 @@ impl PipelineAccess {
             })?;
 
         Ok((source_port, target_port))
-    }
-
-    pub(crate) fn get_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {
-        let node = self.nodes_view.get(path).unwrap();
-        node.introspect_port(port).unwrap_or_default()
     }
 
     pub(crate) fn get_input_port_metadata(&self, path: &NodePath, port: &PortId) -> PortMetadata {

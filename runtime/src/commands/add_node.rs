@@ -21,7 +21,7 @@ impl Hash for AddNodeCommand {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.node_type.hash(state);
         self.designer.hash(state);
-        state.write_u8(if self.node.is_some() { 1 } else { 0 });
+        state.write_u8(u8::from(self.node.is_some()));
     }
 }
 

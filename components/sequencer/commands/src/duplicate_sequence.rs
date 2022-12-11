@@ -16,7 +16,7 @@ impl<'a> Command<'a> for DuplicateSequenceCommand {
     type Result = Sequence;
 
     fn label(&self) -> String {
-        format!("Add Sequence")
+        "Add Sequence".to_string()
     }
 
     fn apply(
@@ -35,10 +35,7 @@ impl<'a> Command<'a> for DuplicateSequenceCommand {
             Ok(())
         })?;
         let sequence_id = sequence.id;
-        let node = SequencerNode {
-            sequence_id,
-            ..Default::default()
-        };
+        let node = SequencerNode { sequence_id };
         let sub_cmd = AddNodeCommand {
             node_type: NodeType::Sequencer,
             designer: NodeDesigner {

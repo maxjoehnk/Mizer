@@ -49,7 +49,9 @@ impl MediaServer {
         while let Some(command) = stream.next().await {
             match command {
                 MediaServerCommand::ClearFiles => {
-                    self.db.clear();
+                    if let Err(err) = self.db.clear() {
+                        log::error!("Error clearing files: {err:?}");
+                    }
                 }
                 MediaServerCommand::ImportFile(model, file_path, resp) => {
                     match self.import_file.import_file(model, &file_path).await {

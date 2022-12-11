@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct RgbColorNode;
 
 impl PipelineNode for RgbColorNode {

@@ -1,12 +1,15 @@
-use crate::pipeline_access::PipelineAccess;
-use crate::NodeDowncast;
-use mizer_commander::{Command, RefMut};
-use mizer_node::{NodePath, NodeType, PipelineNode, ProcessingNode};
-use mizer_nodes::*;
-use mizer_pipeline::ProcessingNodeExt;
-use serde::{Deserialize, Serialize};
 use std::hash::{Hash, Hasher};
 use std::ops::DerefMut;
+
+use serde::{Deserialize, Serialize};
+
+use mizer_commander::{Command, RefMut};
+use mizer_node::NodePath;
+use mizer_nodes::*;
+use mizer_pipeline::ProcessingNodeExt;
+
+use crate::pipeline_access::PipelineAccess;
+use crate::NodeDowncast;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UpdateNodeCommand {

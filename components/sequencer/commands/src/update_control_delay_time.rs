@@ -26,7 +26,7 @@ impl<'a> Command<'a> for UpdateControlDelayTimeCommand {
         let mut previous = None;
         sequencer.update_sequence(self.sequence_id, |sequence| {
             let cue = get_cue(sequence, self.cue_id)?;
-            previous = Some(cue.cue_delay.clone());
+            previous = Some(cue.cue_delay);
             cue.cue_delay = self.delay_time;
 
             Ok(())

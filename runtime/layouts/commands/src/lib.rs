@@ -32,7 +32,7 @@ pub(crate) fn update_layout<Cb: FnOnce(&mut Layout) -> anyhow::Result<()>>(
 }
 
 pub(crate) fn get_layout<'a>(
-    layouts: &'a mut Vec<Layout>,
+    layouts: &'a mut [Layout],
     layout_id: &str,
 ) -> anyhow::Result<&'a mut Layout> {
     layouts
@@ -42,7 +42,7 @@ pub(crate) fn get_layout<'a>(
 }
 
 pub(crate) fn get_control<'a>(
-    layouts: &'a mut Vec<Layout>,
+    layouts: &'a mut [Layout],
     layout_id: &str,
     control_id: &str,
 ) -> anyhow::Result<&'a mut ControlConfig> {

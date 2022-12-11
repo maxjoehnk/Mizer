@@ -52,7 +52,7 @@ impl<'a> Command<'a> for DeleteNodeCommand {
                 .controls
                 .clone()
                 .into_iter()
-                .partition(|control| &control.node == &self.path);
+                .partition(|control| control.node == self.path);
             layout.controls = non_matching;
             controls.insert(layout.id.clone(), matching);
         }
@@ -121,14 +121,16 @@ mod tests {
             FaderNode::default().into(),
             Default::default(),
         );
-        pipeline_access.add_link(NodeLink {
-            source: path1.clone(),
-            source_port: "value".into(),
-            target: path2,
-            target_port: "value".into(),
-            port_type: PortType::Single,
-            local: true,
-        });
+        pipeline_access
+            .add_link(NodeLink {
+                source: path1.clone(),
+                source_port: "value".into(),
+                target: path2,
+                target_port: "value".into(),
+                port_type: PortType::Single,
+                local: true,
+            })
+            .unwrap();
         let cmd = DeleteNodeCommand { path: path1 };
 
         cmd.apply((&mut pipeline_access, &mut planner, &layout_storage))

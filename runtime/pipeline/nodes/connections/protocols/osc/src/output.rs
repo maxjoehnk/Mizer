@@ -6,7 +6,7 @@ use mizer_util::ConvertBytes;
 
 use crate::argument_type::OscArgumentType;
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OscOutputNode {
     #[serde(default = "default_host")]
     pub host: String,

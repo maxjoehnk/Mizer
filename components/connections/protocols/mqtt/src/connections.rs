@@ -205,12 +205,8 @@ impl MqttBackgroundClient {
     }
 
     async fn connect(&mut self) {
-        loop {
-            if let Err(err) = self.client.connect().await {
-                log::error!("Error connecting to mqtt broker: {:?}", err);
-            } else {
-                break;
-            }
+        while let Err(err) = self.client.connect().await {
+            log::error!("Error connecting to mqtt broker: {:?}", err);
         }
     }
 

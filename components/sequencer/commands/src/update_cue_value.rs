@@ -27,8 +27,8 @@ impl<'a> Command<'a> for UpdateCueValueCommand {
         let mut previous = None;
         sequencer.update_sequence(self.sequence_id, |sequence| {
             let control = get_control(sequence, self.cue_id, self.control_index)?;
-            previous = Some(control.value.clone());
-            control.value = self.value.clone();
+            previous = Some(control.value);
+            control.value = self.value;
 
             Ok(())
         })?;

@@ -21,7 +21,7 @@ impl GamepadDiscoveryService {
             let state = Arc::new(NonEmptyPinboard::new(state));
             self.gamepad_states.insert(id, state.clone());
             let gamepad = GamepadRef::new(id, gamepad, state);
-            self.connection_sender.send(gamepad);
+            self.connection_sender.send(gamepad).unwrap();
         }
         loop {
             while let Some(event) = self.gilrs.next_event() {

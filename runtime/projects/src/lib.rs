@@ -98,7 +98,7 @@ pub trait ProjectManager {
     fn clear(&self);
 }
 
-#[derive(Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(try_from = "String", into = "String")]
 pub struct Channel {
     pub from_path: NodePath,
@@ -303,7 +303,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FixtureConfig {
     pub id: u32,
     pub name: String,
@@ -317,7 +317,7 @@ pub struct FixtureConfig {
     pub configuration: FixtureConfiguration,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ConnectionConfig {
     pub id: String,
     pub name: String,
@@ -325,7 +325,7 @@ pub struct ConnectionConfig {
     pub config: ConnectionTypes,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ConnectionTypes {
     Sacn,

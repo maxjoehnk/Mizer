@@ -410,7 +410,7 @@ impl<TChannel> FixtureControls<TChannel> {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum FixtureControlChannel {
     /// Fixture control maps to one dmx channel
     Channel(String),
@@ -760,7 +760,7 @@ impl From<FixtureControlValue> for FixtureControl {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct FixtureChannelDefinition {
     pub name: String,
     pub resolution: ChannelResolution,

@@ -86,16 +86,15 @@ impl ProcessingNode for PixelPatternGeneratorNode {
         if pixel_count != state.pixels.len() as u64 {
             state.pixels.resize(pixel_count as usize, (0., 0., 0.));
         }
-        match (&self.pattern, &mut state.pattern) {
-            (Pattern::RgbIterate, PatternState::Iterate { index, color }) => {
-                if (*index) as u64 == pixel_count {
-                    *index = 0;
-                    next_color(color);
-                }
-                state.pixels[*index] = *color;
-                *index += 1;
+        if let (Pattern::RgbIterate, PatternState::Iterate { index, color }) =
+            (&self.pattern, &mut state.pattern)
+        {
+            if (*index) as u64 == pixel_count {
+                *index = 0;
+                next_color(color);
             }
-            _ => {}
+            state.pixels[*index] = *color;
+            *index += 1;
         }
 
         let data = state

@@ -5,6 +5,7 @@ use std::collections::hash_map::DefaultHasher;
 use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 
+#[derive(Default)]
 pub struct CommandExecutor {
     states: HashMap<CommandKey, Box<dyn Any>>,
 }
@@ -17,9 +18,7 @@ struct CommandKey {
 
 impl CommandExecutor {
     pub fn new() -> Self {
-        Self {
-            states: Default::default(),
-        }
+        Self::default()
     }
 
     fn command_key<'a, T: Command<'a> + 'static>(command: &T) -> CommandKey {

@@ -67,7 +67,7 @@ pub fn build_runtime(
     let media_server_api = media_server.get_api_handle();
     handle.spawn(media_server.run_api());
 
-    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings.clone());
+    let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings);
 
     let handlers = Handlers::new(
         api,

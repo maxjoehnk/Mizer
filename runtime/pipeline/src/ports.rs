@@ -1,5 +1,4 @@
 use std::any::{type_name, Any};
-use std::borrow::BorrowMut;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::ops::Deref;
@@ -211,7 +210,7 @@ impl AnyPortReceiver {
             }
             _ => {
                 if let Some(receiver) = self.receiver::<V>() {
-                    let mut source_store = receiver.source.borrow_mut();
+                    let source_store = receiver.source.borrow_mut();
                     if Some(source) == source_store.clone() {
                         tracing::debug!("Removing single transport");
                         let mut transport_store = receiver.transport.borrow_mut();
@@ -238,7 +237,7 @@ impl AnyPortReceiver {
         source: SourcePort,
     ) {
         if let AnyPortReceiverPort::Multiple(port) = &self.port {
-            let mut recv = NodeReceiver::<V>::default();
+            let recv = NodeReceiver::<V>::default();
             recv.source.replace(Some(source));
             recv.transport.replace(Some(transport));
             let mut port = port.borrow_mut();

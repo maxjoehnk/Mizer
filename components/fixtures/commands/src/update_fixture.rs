@@ -42,7 +42,7 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
         if let Some(name) = self.name.clone() {
             fixture.name = name;
         }
-        if let Some((universe, channel)) = self.address.clone() {
+        if let Some((universe, channel)) = self.address {
             fixture.universe = universe;
             fixture.channel = channel;
         }

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
-#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct HsvColorNode;
 
 impl PipelineNode for HsvColorNode {

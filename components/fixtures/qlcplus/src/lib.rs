@@ -108,7 +108,7 @@ impl FixtureLibraryProvider for QlcPlusProvider {
 }
 
 fn read_definition(path: &Path) -> anyhow::Result<QlcPlusFixtureDefinition> {
-    let mut file = File::open(&path)?;
+    let mut file = File::open(path)?;
     let mut content = String::new();
     file.read_to_string(&mut content)?;
 

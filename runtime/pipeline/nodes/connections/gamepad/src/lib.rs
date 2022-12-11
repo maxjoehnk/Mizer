@@ -132,7 +132,7 @@ impl ProcessingNode for GamepadNode {
 
     fn update(&mut self, config: &Self) {
         self.device_id = config.device_id.clone();
-        self.control = config.control.clone();
+        self.control = config.control;
     }
 }
 

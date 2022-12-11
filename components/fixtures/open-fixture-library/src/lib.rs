@@ -101,7 +101,7 @@ trait SlugConverter {
 
 impl SlugConverter for String {
     fn to_slug(&self) -> String {
-        self.to_lowercase().replace(' ', "-").replace('*', "-")
+        self.to_lowercase().replace([' ', '*'], "-")
     }
 }
 
@@ -511,14 +511,13 @@ fn build_sub_fixture(
 ) -> SubFixtureDefinition {
     let id = key
         .parse::<u32>()
-        .expect(&format!("'{}' is not a number", key));
-    let definition = SubFixtureDefinition::new(
+        .unwrap_or_else(|_| panic!("'{}' is not a number", key));
+
+    SubFixtureDefinition::new(
         id,
         format!("Pixel {}", key),
         group_controls(available_channels, &channels, wheels).into(),
-    );
-
-    definition
+    )
 }
 
 fn group_controls(

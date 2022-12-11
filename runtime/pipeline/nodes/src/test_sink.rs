@@ -53,9 +53,7 @@ impl ProcessingNode for TestSink {
         Ok(())
     }
 
-    fn create_state(&self) -> Self::State {
-        ()
-    }
+    fn create_state(&self) -> Self::State {}
 
     fn update(&mut self, _config: &Self) {}
 }

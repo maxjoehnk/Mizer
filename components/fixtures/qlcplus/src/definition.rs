@@ -1,3 +1,5 @@
+// This happens in the XmlRead macro
+#![allow(clippy::needless_late_init)]
 use custom_derive::custom_derive;
 use enum_derive::*;
 use std::fmt::{Display, Formatter};
@@ -26,7 +28,7 @@ pub struct QlcPlusFixtureDefinition {
 #[xml(tag = "Physical")]
 pub struct PhysicalType {}
 
-#[derive(Debug, Clone, PartialEq, XmlRead)]
+#[derive(Debug, Clone, PartialEq, Eq, XmlRead)]
 #[xml(tag = "Channel")]
 pub struct ChannelType {
     #[xml(attr = "Name")]
@@ -43,7 +45,7 @@ pub struct ChannelType {
     pub color: Option<ColorType>,
 }
 
-#[derive(Debug, Clone, PartialEq, XmlRead)]
+#[derive(Debug, Clone, PartialEq, Eq, XmlRead)]
 #[xml(tag = "Capability")]
 pub struct CapabilityType {
     #[xml(text)]

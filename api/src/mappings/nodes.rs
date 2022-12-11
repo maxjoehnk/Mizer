@@ -383,7 +383,6 @@ impl From<SequencerNodeConfig> for mizer_nodes::SequencerNode {
     fn from(node: SequencerNodeConfig) -> Self {
         Self {
             sequence_id: node.sequence_id,
-            ..Default::default()
         }
     }
 }

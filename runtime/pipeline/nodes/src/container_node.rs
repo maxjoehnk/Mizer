@@ -3,7 +3,7 @@ use mizer_node::{
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct ContainerNode {
     pub nodes: Vec<NodePath>,
 }

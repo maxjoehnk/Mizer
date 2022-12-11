@@ -7,7 +7,7 @@ use mizer_node::{
 };
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct PresetNode {
     pub id: PresetId,
 }

@@ -35,7 +35,7 @@ impl PlanScreenNode {
     fn get_plan(&self) -> Option<Plan> {
         let storage = self.plan_storage.as_ref()?;
         let plans = storage.read();
-        let plan = plans.into_iter().find(|p| &p.name == &self.plan)?;
+        let plan = plans.into_iter().find(|p| p.name == self.plan)?;
 
         Some(plan)
     }
@@ -92,7 +92,7 @@ impl PipelineNode for PlanScreenNode {
 impl ProcessingNode for PlanScreenNode {
     type State = ();
 
-    fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+    fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         let Some(pixels) = context.read_port::<_, Vec<f64>>(OUTPUT_PORT) else {
             return Ok(())
         };

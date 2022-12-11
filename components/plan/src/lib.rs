@@ -7,7 +7,7 @@ pub mod commands;
 
 pub type PlanStorage = Arc<NonEmptyPinboard<Vec<Plan>>>;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Plan {
     pub name: String,
     pub fixtures: Vec<FixturePosition>,

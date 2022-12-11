@@ -5,7 +5,7 @@ use mizer_node::*;
 use mizer_protocol_osc::*;
 use mizer_util::ConvertPercentages;
 
-#[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OscInputNode {
     #[serde(default = "default_host")]
     pub host: String,

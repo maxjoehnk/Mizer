@@ -64,8 +64,7 @@ impl<R: RuntimeApi> SessionHandler<R> {
     }
 
     pub fn watch_history(&self) -> impl Stream<Item = History> {
-        let stream = self
-            .runtime
+        self.runtime
             .observe_history()
             .into_stream()
             .map(|(items, cursor)| {
@@ -83,8 +82,6 @@ impl<R: RuntimeApi> SessionHandler<R> {
                     pointer: cursor as u64,
                     ..Default::default()
                 }
-            });
-
-        stream
+            })
     }
 }

@@ -11,7 +11,7 @@ fn main() {
     if target_path.exists() {
         return;
     }
-    std::fs::create_dir_all(&target_path).unwrap();
+    std::fs::create_dir_all(target_path).unwrap();
 
     let download_dir = TempDir::new().unwrap();
 
@@ -36,7 +36,7 @@ fn download(download_dir: &Path) -> PathBuf {
 }
 
 fn extract_source(download_dir: &Path, archive_file_path: &Path) {
-    let mut archive_file = File::open(&archive_file_path).unwrap();
+    let mut archive_file = File::open(archive_file_path).unwrap();
 
     let mut archive = ZipArchive::new(&mut archive_file).unwrap();
 
@@ -49,7 +49,7 @@ fn copy_resources(target_path: &Path, resources_folder_path: &Path) {
             resources_folder_path.join("fixtures"),
             resources_folder_path.join("gobos"),
         ],
-        &target_path,
+        target_path,
         &CopyOptions {
             skip_exist: true,
             overwrite: false,

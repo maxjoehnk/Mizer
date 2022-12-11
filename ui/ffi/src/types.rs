@@ -45,7 +45,7 @@ impl<T> FFIFromPointer<T> for Arc<T> {
 
 impl<T> FFIToPointer<T> for Arc<T> {
     fn to_pointer(&self) -> u64 {
-        let ptr = Arc::into_raw(Arc::clone(&self));
+        let ptr = Arc::into_raw(Arc::clone(self));
 
         ptr as u64
     }

@@ -7,12 +7,12 @@ pub trait Laser: std::fmt::Debug {
     fn write_frame(&mut self, frame: LaserFrame) -> anyhow::Result<()>;
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct LaserFrame {
     pub points: Vec<LaserPoint>,
 }
 
-#[derive(Debug, Clone, PartialEq, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Copy, Serialize, Deserialize)]
 pub struct LaserPoint {
     pub color: LaserColor,
     pub coordinate: LaserCoordinate,

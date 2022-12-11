@@ -26,7 +26,7 @@ impl<'a> Command<'a> for UpdateCueTriggerCommand {
         let mut previous = None;
         sequencer.update_sequence(self.sequence_id, |sequence| {
             let cue = get_cue(sequence, self.cue_id)?;
-            previous = Some(cue.trigger.clone());
+            previous = Some(cue.trigger);
             cue.trigger = self.trigger;
 
             Ok(())

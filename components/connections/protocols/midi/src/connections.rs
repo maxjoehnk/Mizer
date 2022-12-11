@@ -9,8 +9,8 @@ pub struct MidiConnectionManager {
     devices: DashMap<String, MidiDevice>,
 }
 
-impl MidiConnectionManager {
-    pub fn new() -> Self {
+impl Default for MidiConnectionManager {
+    fn default() -> Self {
         let provider = MidiDeviceProvider::new();
         if let Ok(devices) = provider.list_devices() {
             log::debug!("Connected devices: {:?}", devices);
@@ -19,6 +19,12 @@ impl MidiConnectionManager {
             provider,
             devices: Default::default(),
         }
+    }
+}
+
+impl MidiConnectionManager {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn load_device_profiles<P: AsRef<Path>>(&mut self, path: P) -> anyhow::Result<()> {

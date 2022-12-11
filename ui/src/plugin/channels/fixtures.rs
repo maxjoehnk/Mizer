@@ -86,7 +86,7 @@ impl<R: RuntimeApi + 'static> FixturesChannel<R> {
     }
 
     fn delete_fixtures(&self, fixture_ids: Vec<u32>) -> Fixtures {
-        self.handler.delete_fixtures(fixture_ids);
+        self.handler.delete_fixtures(fixture_ids).unwrap();
         self.handler.get_fixtures()
     }
 }

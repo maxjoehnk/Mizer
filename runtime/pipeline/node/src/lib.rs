@@ -58,12 +58,13 @@ pub trait PipelineNode: Debug + Send + Sync + Any {
     // This can't be an associated function because it has to be object safe
     fn node_type(&self) -> NodeType;
 
+    #[allow(unused_variables)]
     fn prepare(&mut self, injector: &Injector) {}
 }
 
 downcast!(dyn PipelineNode);
 
-pub trait ProcessingNode: PipelineNode + Clone + Default + std::fmt::Debug {
+pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
     type State;
 
     fn details(&self) -> NodeDetails {

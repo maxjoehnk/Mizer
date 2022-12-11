@@ -13,7 +13,7 @@ pub struct NodeLink {
     pub local: bool,
 }
 
-#[derive(Default, Debug, Clone, Copy, PartialEq, Deserialize, Serialize)]
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
 pub struct PortMetadata {
     pub port_type: PortType,
     pub direction: PortDirection,

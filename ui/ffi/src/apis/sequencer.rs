@@ -22,7 +22,7 @@ pub extern "C" fn read_sequencer_state(ptr: *const Sequencer) -> Array<SequenceS
         .into_iter()
         .map(|(id, sequence)| SequenceState {
             sequence_id: id,
-            active: if sequence.active { 1 } else { 0 },
+            active: u8::from(sequence.active),
             current_cue_id: sequence.cue_id.unwrap_or_default(),
         })
         .collect::<Vec<_>>();

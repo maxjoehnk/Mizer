@@ -6,7 +6,7 @@ use std::ops::{
     Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Rem, RemAssign, Sub, SubAssign,
 };
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq, PartialOrd)]
 #[serde(untagged)]
 pub enum SequencerValue<T> {
     Direct(T),

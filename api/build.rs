@@ -4,7 +4,7 @@ fn main() {
     println!("cargo:rerun-if-changed=protos");
     protoc_rust::Codegen::new()
         .out_dir("src/models")
-        .inputs(&[
+        .inputs([
             "protos/connections.proto",
             "protos/fixtures.proto",
             "protos/layouts.proto",

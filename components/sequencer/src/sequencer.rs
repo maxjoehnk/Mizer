@@ -36,8 +36,8 @@ pub struct SequenceView {
     pub cue_id: Option<u32>,
 }
 
-impl Sequencer {
-    pub fn new() -> Self {
+impl Default for Sequencer {
+    fn default() -> Self {
         let (tx, rx) = mpsc::sync_channel(100);
         Sequencer {
             sequence_counter: AtomicU32::new(1).into(),
@@ -48,6 +48,12 @@ impl Sequencer {
             commands: (tx, Arc::new(rx.into())),
             clock: StdClock,
         }
+    }
+}
+
+impl Sequencer {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub(crate) fn run_sequences(
@@ -190,21 +196,33 @@ impl Sequencer {
         let mut sequences = self.sequences.read();
         let result = sequences.remove(&sequence);
         self.sequences.set(sequences);
-        self.commands.0.send(SequencerCommands::DropState(sequence));
+        self.commands
+            .0
+            .send(SequencerCommands::DropState(sequence))
+            .unwrap();
 
         result
     }
 
     pub fn sequence_go(&self, sequence: u32) {
-        self.commands.0.send(SequencerCommands::Go(sequence));
+        self.commands
+            .0
+            .send(SequencerCommands::Go(sequence))
+            .unwrap();
     }
 
     pub fn sequence_go_to(&self, sequence: u32, cue: u32) {
-        self.commands.0.send(SequencerCommands::GoTo(sequence, cue));
+        self.commands
+            .0
+            .send(SequencerCommands::GoTo(sequence, cue))
+            .unwrap();
     }
 
     pub fn sequence_stop(&self, sequence: u32) {
-        self.commands.0.send(SequencerCommands::Stop(sequence));
+        self.commands
+            .0
+            .send(SequencerCommands::Stop(sequence))
+            .unwrap();
     }
 
     pub fn update_sequence<SU>(&self, sequence: u32, update: SU) -> anyhow::Result<()>

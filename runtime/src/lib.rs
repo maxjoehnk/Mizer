@@ -72,6 +72,7 @@ pub trait NodeDowncast {
             NodeType::Value => Node::Value(self.downcast_node(node_type).unwrap()),
             NodeType::PlanScreen => Node::PlanScreen(self.downcast_node(node_type).unwrap()),
             NodeType::Delay => Node::Delay(self.downcast_node(node_type).unwrap()),
+            NodeType::Ramp => Node::Ramp(self.downcast_node(node_type).unwrap()),
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

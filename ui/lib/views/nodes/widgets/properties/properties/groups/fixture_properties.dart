@@ -8,7 +8,7 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
-import '../enum_field.dart';
+import '../fields/enum_field.dart';
 import '../property_group.dart';
 
 class FixtureProperties extends StatefulWidget {

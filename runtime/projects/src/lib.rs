@@ -200,6 +200,7 @@ pub enum NodeConfig {
     DataValue(mizer_nodes::ValueNode),
     PlanScreen(mizer_nodes::PlanScreenNode),
     Delay(mizer_nodes::DelayNode),
+    Ramp(mizer_nodes::RampNode),
 }
 
 impl From<NodeConfig> for mizer_nodes::Node {
@@ -248,6 +249,7 @@ impl From<NodeConfig> for mizer_nodes::Node {
             NodeConfig::DataValue(node) => Self::Value(node),
             NodeConfig::PlanScreen(node) => Self::PlanScreen(node),
             NodeConfig::Delay(node) => Self::Delay(node),
+            NodeConfig::Ramp(node) => Self::Ramp(node),
         }
     }
 }
@@ -298,6 +300,7 @@ impl From<mizer_nodes::Node> for NodeConfig {
             mizer_nodes::Node::Value(node) => Self::DataValue(node),
             mizer_nodes::Node::PlanScreen(node) => Self::PlanScreen(node),
             mizer_nodes::Node::Delay(node) => Self::Delay(node),
+            mizer_nodes::Node::Ramp(node) => Self::Ramp(node),
             mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
         }
     }

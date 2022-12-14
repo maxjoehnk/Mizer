@@ -54,6 +54,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             Value(node) => Self::valueConfig(node.into()),
             PlanScreen(node) => Self::planScreenConfig(node.into()),
             Delay(node) => Self::delayConfig(node.into()),
+            Ramp(node) => Self::rampConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -120,6 +121,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::dataToNumberConfig(node) => Self::DataToNumber(node.into()),
             NodeConfig_oneof_type::valueConfig(node) => Self::Value(node.into()),
             NodeConfig_oneof_type::delayConfig(node) => Self::Delay(node.into()),
+            NodeConfig_oneof_type::rampConfig(node) => Self::Ramp(node.into()),
             NodeConfig_oneof_type::planScreenConfig(node) => Self::PlanScreen(node.into()),
         }
     }
@@ -1200,6 +1202,58 @@ impl From<mizer_nodes::DelayNode> for DelayNodeConfig {
     }
 }
 
+impl From<RampNodeConfig> for mizer_nodes::RampNode {
+    fn from(config: RampNodeConfig) -> Self {
+        Self {
+            steps: config
+                .steps
+                .into_iter()
+                .map(mizer_nodes::RampStep::from)
+                .collect(),
+        }
+    }
+}
+
+impl From<RampNodeConfig_RampStep> for mizer_nodes::RampStep {
+    fn from(step: RampNodeConfig_RampStep) -> Self {
+        Self {
+            x: step.x,
+            y: step.y,
+            c0a: step.c0a,
+            c0b: step.c0b,
+            c1a: step.c1a,
+            c1b: step.c1b,
+        }
+    }
+}
+
+impl From<mizer_nodes::RampNode> for RampNodeConfig {
+    fn from(node: mizer_nodes::RampNode) -> Self {
+        Self {
+            steps: node
+                .steps
+                .into_iter()
+                .map(RampNodeConfig_RampStep::from)
+                .collect(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_nodes::RampStep> for RampNodeConfig_RampStep {
+    fn from(step: mizer_nodes::RampStep) -> Self {
+        Self {
+            x: step.x,
+            y: step.y,
+            c0a: step.c0a,
+            c0b: step.c0b,
+            c1a: step.c1a,
+            c1b: step.c1b,
+            ..Default::default()
+        }
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1246,6 +1300,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::Value => Node_NodeType::Value,
             NodeType::PlanScreen => Node_NodeType::PlanScreen,
             NodeType::Delay => Node_NodeType::Delay,
+            NodeType::Ramp => Node_NodeType::Ramp,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1297,6 +1352,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::Value => NodeType::Value,
             Node_NodeType::PlanScreen => NodeType::PlanScreen,
             Node_NodeType::Delay => NodeType::Delay,
+            Node_NodeType::Ramp => NodeType::Ramp,
         }
     }
 }

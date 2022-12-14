@@ -9,3 +9,9 @@ anyhow = "1"
 log = "0.4"
 mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
+bezier-nd = "0.1"
+geo-nd = "0.1"
+itertools = "0.10"
+
+[dev-dependencies]
+test-case = "2.2"

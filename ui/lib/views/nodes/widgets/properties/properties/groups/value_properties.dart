@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 import '../property_group.dart';
-import '../text_field.dart';
+import '../fields/text_field.dart';
 
 class ValueProperties extends StatefulWidget {
   final ValueNodeConfig config;

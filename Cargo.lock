@@ -4015,9 +4015,13 @@ name = "mizer-port-operation-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "bezier-nd",
+ "geo-nd",
+ "itertools",
  "log",
  "mizer-node",
  "serde",
+ "test-case",
 ]
 
 [[package]]

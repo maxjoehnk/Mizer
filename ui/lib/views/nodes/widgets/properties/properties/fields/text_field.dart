@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'field.dart';
+import '../field.dart';
 
 class TextPropertyField extends StatefulWidget {
   final String label;

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
-import '../number_field.dart';
+import '../fields/number_field.dart';
 import '../property_group.dart';
 
 class EncoderProperties extends StatefulWidget {

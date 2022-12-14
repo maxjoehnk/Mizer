@@ -1058,6 +1058,7 @@ enum NodeConfig_Type {
   valueConfig, 
   planScreenConfig, 
   delayConfig, 
+  rampConfig, 
   notSet
 }
 
@@ -1106,10 +1107,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     51 : NodeConfig_Type.valueConfig,
     52 : NodeConfig_Type.planScreenConfig,
     53 : NodeConfig_Type.delayConfig,
+    54 : NodeConfig_Type.rampConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1153,6 +1155,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
     ..aOM<PlanScreenNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
     ..aOM<DelayNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', protoName: 'delayConfig', subBuilder: DelayNodeConfig.create)
+    ..aOM<RampNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', protoName: 'rampConfig', subBuilder: RampNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1201,6 +1204,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ValueNodeConfig? valueConfig,
     PlanScreenNodeConfig? planScreenConfig,
     DelayNodeConfig? delayConfig,
+    RampNodeConfig? rampConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1331,6 +1335,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (delayConfig != null) {
       _result.delayConfig = delayConfig;
+    }
+    if (rampConfig != null) {
+      _result.rampConfig = rampConfig;
     }
     return _result;
   }
@@ -1830,6 +1837,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearDelayConfig() => clearField(53);
   @$pb.TagNumber(53)
   DelayNodeConfig ensureDelayConfig() => $_ensure(42);
+
+  @$pb.TagNumber(54)
+  RampNodeConfig get rampConfig => $_getN(43);
+  @$pb.TagNumber(54)
+  set rampConfig(RampNodeConfig v) { setField(54, v); }
+  @$pb.TagNumber(54)
+  $core.bool hasRampConfig() => $_has(43);
+  @$pb.TagNumber(54)
+  void clearRampConfig() => clearField(54);
+  @$pb.TagNumber(54)
+  RampNodeConfig ensureRampConfig() => $_ensure(43);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4161,6 +4179,164 @@ class DelayNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasBufferSize() => $_has(0);
   @$pb.TagNumber(1)
   void clearBufferSize() => clearField(1);
+}
+
+class RampNodeConfig_RampStep extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RampNodeConfig.RampStep', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.OD)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.OD)
+    ..a<$core.double>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c0a', $pb.PbFieldType.OD)
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c0b', $pb.PbFieldType.OD)
+    ..a<$core.double>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c1a', $pb.PbFieldType.OD)
+    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'c1b', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  RampNodeConfig_RampStep._() : super();
+  factory RampNodeConfig_RampStep({
+    $core.double? x,
+    $core.double? y,
+    $core.double? c0a,
+    $core.double? c0b,
+    $core.double? c1a,
+    $core.double? c1b,
+  }) {
+    final _result = create();
+    if (x != null) {
+      _result.x = x;
+    }
+    if (y != null) {
+      _result.y = y;
+    }
+    if (c0a != null) {
+      _result.c0a = c0a;
+    }
+    if (c0b != null) {
+      _result.c0b = c0b;
+    }
+    if (c1a != null) {
+      _result.c1a = c1a;
+    }
+    if (c1b != null) {
+      _result.c1b = c1b;
+    }
+    return _result;
+  }
+  factory RampNodeConfig_RampStep.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RampNodeConfig_RampStep.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RampNodeConfig_RampStep clone() => RampNodeConfig_RampStep()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RampNodeConfig_RampStep copyWith(void Function(RampNodeConfig_RampStep) updates) => super.copyWith((message) => updates(message as RampNodeConfig_RampStep)) as RampNodeConfig_RampStep; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RampNodeConfig_RampStep create() => RampNodeConfig_RampStep._();
+  RampNodeConfig_RampStep createEmptyInstance() => create();
+  static $pb.PbList<RampNodeConfig_RampStep> createRepeated() => $pb.PbList<RampNodeConfig_RampStep>();
+  @$core.pragma('dart2js:noInline')
+  static RampNodeConfig_RampStep getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RampNodeConfig_RampStep>(create);
+  static RampNodeConfig_RampStep? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get x => $_getN(0);
+  @$pb.TagNumber(1)
+  set x($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearX() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get y => $_getN(1);
+  @$pb.TagNumber(2)
+  set y($core.double v) { $_setDouble(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearY() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.double get c0a => $_getN(2);
+  @$pb.TagNumber(3)
+  set c0a($core.double v) { $_setDouble(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasC0a() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearC0a() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get c0b => $_getN(3);
+  @$pb.TagNumber(4)
+  set c0b($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasC0b() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearC0b() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.double get c1a => $_getN(4);
+  @$pb.TagNumber(5)
+  set c1a($core.double v) { $_setDouble(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasC1a() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearC1a() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.double get c1b => $_getN(5);
+  @$pb.TagNumber(6)
+  set c1b($core.double v) { $_setDouble(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasC1b() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearC1b() => clearField(6);
+}
+
+class RampNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RampNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..pc<RampNodeConfig_RampStep>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'steps', $pb.PbFieldType.PM, subBuilder: RampNodeConfig_RampStep.create)
+    ..hasRequiredFields = false
+  ;
+
+  RampNodeConfig._() : super();
+  factory RampNodeConfig({
+    $core.Iterable<RampNodeConfig_RampStep>? steps,
+  }) {
+    final _result = create();
+    if (steps != null) {
+      _result.steps.addAll(steps);
+    }
+    return _result;
+  }
+  factory RampNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RampNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RampNodeConfig clone() => RampNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RampNodeConfig copyWith(void Function(RampNodeConfig) updates) => super.copyWith((message) => updates(message as RampNodeConfig)) as RampNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RampNodeConfig create() => RampNodeConfig._();
+  RampNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<RampNodeConfig> createRepeated() => $pb.PbList<RampNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static RampNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RampNodeConfig>(create);
+  static RampNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<RampNodeConfig_RampStep> get steps => $_getList(0);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

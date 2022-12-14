@@ -21,7 +21,7 @@ pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
 pub use mizer_plan_nodes::PlanScreenNode;
 pub use mizer_port_operation_nodes::{
-    EncoderNode, MergeMode, MergeNode, SelectNode, ThresholdNode,
+    EncoderNode, MergeMode, MergeNode, RampNode, RampStep, SelectNode, ThresholdNode,
 };
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
@@ -134,4 +134,5 @@ node_impl! {
     PlanScreen(PlanScreenNode),
     Value(ValueNode),
     Delay(DelayNode),
+    Ramp(RampNode),
 }

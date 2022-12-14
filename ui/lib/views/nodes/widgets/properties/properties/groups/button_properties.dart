@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
-import '../checkbox_field.dart';
+import '../fields/checkbox_field.dart';
 import '../property_group.dart';
 
 class ButtonProperties extends StatefulWidget {

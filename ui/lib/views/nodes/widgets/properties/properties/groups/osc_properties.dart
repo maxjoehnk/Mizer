@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
-import '../number_field.dart';
+import '../fields/enum_field.dart';
+import '../fields/number_field.dart';
+import '../fields/text_field.dart';
 import '../property_group.dart';
-import '../text_field.dart';
 
 class OscProperties extends StatefulWidget {
   final OscNodeConfig config;

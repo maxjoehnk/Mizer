@@ -41,6 +41,7 @@ pub enum NodeType {
     Select,
     Merge,
     Threshold,
+    Ramp,
     Encoder,
     ColorRgb,
     ColorHsv,
@@ -106,6 +107,7 @@ impl NodeType {
             Value => "value",
             PlanScreen => "plan-screen",
             Delay => "delay",
+            Ramp => "ramp",
             TestSink => "test-sink",
         }
         .to_string()

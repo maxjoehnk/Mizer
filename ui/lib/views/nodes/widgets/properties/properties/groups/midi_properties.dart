@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/enum_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:provider/provider.dart';
 
-import '../number_field.dart';
+import '../fields/enum_field.dart';
+import '../fields/number_field.dart';
 import '../property_group.dart';
 
 class MidiProperties extends StatefulWidget {

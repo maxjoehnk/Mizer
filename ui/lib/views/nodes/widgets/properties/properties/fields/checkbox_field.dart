@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'field.dart';
+import '../field.dart';
 
 class CheckboxField extends StatelessWidget {
   final String label;

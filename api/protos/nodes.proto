@@ -131,6 +131,7 @@ message Node {
     MqttOutput = 61;
     PlanScreen = 62;
     Delay = 63;
+    Ramp = 64;
   }
 
   enum NodePreviewType {
@@ -195,6 +196,7 @@ message NodeConfig {
     ValueNodeConfig valueConfig = 51;
     PlanScreenNodeConfig planScreenConfig = 52;
     DelayNodeConfig delayConfig = 53;
+    RampNodeConfig rampConfig = 54;
   }
 }
 
@@ -434,6 +436,19 @@ message PlanScreenNodeConfig {
 
 message DelayNodeConfig {
   uint32 buffer_size = 1;
+}
+
+message RampNodeConfig {
+  repeated RampStep steps = 1;
+
+  message RampStep {
+    double x = 1;
+    double y = 2;
+    double c0a = 3;
+    double c0b = 4;
+    double c1a = 5;
+    double c1b = 6;
+  }
 }
 
 message NodePosition {

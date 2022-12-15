@@ -17,7 +17,7 @@ pub struct Session {
 impl Session {
     pub fn new() -> anyhow::Result<Self> {
         #[cfg(unix)]
-        self::discovery::announce_device();
+        discovery::announce_device();
         Ok(Session {
             clients: vec![SessionClient::get_self()?],
         })
@@ -25,6 +25,8 @@ impl Session {
 
     // TODO: discover and connect to remote session
     pub fn discover() -> anyhow::Result<Self> {
+        #[cfg(unix)]
+        discovery::discover_sessions()?;
         Ok(Session {
             clients: vec![SessionClient::get_self()?],
         })

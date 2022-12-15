@@ -4283,8 +4283,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "hostname",
+ "log",
  "serde",
- "tokio",
  "zeroconf",
 ]
 
@@ -7575,9 +7575,9 @@ dependencies = [
 
 [[package]]
 name = "zeroconf"
-version = "0.7.2"
+version = "0.10.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c4a4768f419891a026d0081cdae11f54189db02e6a09ca8dda3d89e25ec92b5"
+checksum = "bfb7e72cc6e3a2a6f7ee48ff1800c5d837be57d24c2f8318f756053c5525abde"
 dependencies = [
  "avahi-sys",
  "bonjour-sys",

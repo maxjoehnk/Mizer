@@ -6,9 +6,9 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-tokio = "1.21"
 hostname = "0.3"
 serde = { version = "1", features = ["derive"] }
+log = "0.4"
 
 [target.'cfg(unix)'.dependencies]
-zeroconf = "0.7"
+zeroconf = "0.10"

@@ -64,6 +64,7 @@ fn start_runtime(
 ) -> anyhow::Result<()> {
     // TODO: integrate discovery mode
     Session::new()?;
+    Session::discover()?;
 
     let _guard = runtime.enter();
 

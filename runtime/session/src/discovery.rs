@@ -4,20 +4,22 @@ use std::thread;
 use std::time::Duration;
 
 use zeroconf::prelude::*;
-use zeroconf::{MdnsBrowser, MdnsService, ServiceDiscovery, TxtRecord};
-
-const MIZER_SESSION_SERVICE: &str = "_mizer._tcp";
+use zeroconf::{
+    MdnsBrowser, MdnsService, ServiceDiscovery, ServiceRegistration, ServiceType, TxtRecord,
+};
 
 const POLL_TIMEOUT: u64 = 1;
 
 pub(crate) fn announce_device() {
+    let service_type = build_service_type().unwrap();
     thread::Builder::new()
         .name("Session MDNS Broadcast".into())
         .spawn(|| {
-            let mut service = MdnsService::new(MIZER_SESSION_SERVICE, 50051);
+            let mut service = MdnsService::new(service_type, 50051);
             let mut txt_record = TxtRecord::new();
             txt_record.insert("project", "video.yml").unwrap();
             service.set_txt_record(txt_record);
+            service.set_registered_callback(Box::new(on_service_registered));
             let event_loop = service.register().unwrap();
             loop {
                 event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
@@ -30,19 +32,39 @@ pub(crate) fn announce_device() {
 }
 
 pub fn discover_sessions() -> anyhow::Result<()> {
-    let mut browser = MdnsBrowser::new(MIZER_SESSION_SERVICE);
+    let service_type = build_service_type()?;
+    thread::Builder::new()
+        .name("Session MDNS Discovery".into())
+        .spawn(|| {
+            let mut browser = MdnsBrowser::new(service_type);
 
-    browser.set_service_discovered_callback(Box::new(on_service_discovered));
+            browser.set_service_discovered_callback(Box::new(on_service_discovered));
 
-    let event_loop = browser.browse_services().unwrap();
-    loop {
-        event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
-    }
+            let event_loop = browser.browse_services().unwrap();
+            loop {
+                event_loop.poll(Duration::from_secs(POLL_TIMEOUT)).unwrap();
+            }
+        })?;
+
+    Ok(())
+}
+
+fn build_service_type() -> anyhow::Result<ServiceType> {
+    let service_type = ServiceType::new("mizer", "tcp")?;
+
+    Ok(service_type)
 }
 
 fn on_service_discovered(
     result: zeroconf::Result<ServiceDiscovery>,
     _context: Option<Arc<dyn Any>>,
 ) {
-    println!("service: {:?}", result);
+    log::debug!("service discovered: {:?}", result);
+}
+
+pub fn on_service_registered(
+    result: zeroconf::Result<ServiceRegistration>,
+    _context: Option<Arc<dyn Any>>,
+) {
+    log::debug!("service registered: {:?}", result);
 }

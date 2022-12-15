@@ -37,4 +37,4 @@ lazy_static = "1.4"
 tracing = "0.1"
 
 [build-dependencies]
-protoc-rust = "2.24"
+protoc-rust = "2.28"

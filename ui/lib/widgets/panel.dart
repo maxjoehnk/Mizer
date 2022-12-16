@@ -196,18 +196,8 @@ class PanelActions extends StatelessWidget {
         children: actions.map((a) {
           var hotkey = _getHotkey(hotkeys, a);
           return GestureDetector(
-            onSecondaryTapDown: (event) {
-              if (a.menu == null || a.disabled) {
-                return;
-              }
-              Platform.of(context).showContextMenu(context: context, menu: a.menu!, position: event.globalPosition);
-            },
-            onLongPressEnd: (event) {
-              if (a.menu == null || a.disabled) {
-                return;
-              }
-              Platform.of(context).showContextMenu(context: context, menu: a.menu!, position: event.globalPosition);
-            },
+            onSecondaryTapDown: (event) => _openActionMenu(context, a, event.globalPosition),
+            onLongPressEnd: (event) => _openActionMenu(context, a, event.globalPosition),
             child: Hoverable(
               disabled: a.disabled || a.onClick == null,
               onTap: a.onClick,
@@ -237,6 +227,13 @@ class PanelActions extends StatelessWidget {
         }).toList(),
       ),
     );
+  }
+
+  void _openActionMenu(BuildContext context, PanelAction action, Offset position) {
+    if (action.menu == null || action.disabled) {
+      return;
+    }
+    Platform.of(context).showContextMenu(context: context, menu: action.menu!, position: position);
   }
 
   String? _getHotkey(HotkeyMapping? hotkeys, PanelAction action) {

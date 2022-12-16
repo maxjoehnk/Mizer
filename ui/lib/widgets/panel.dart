@@ -197,13 +197,13 @@ class PanelActions extends StatelessWidget {
           var hotkey = _getHotkey(hotkeys, a);
           return GestureDetector(
             onSecondaryTapDown: (event) {
-              if (a.menu == null) {
+              if (a.menu == null || a.disabled) {
                 return;
               }
               Platform.of(context).showContextMenu(context: context, menu: a.menu!, position: event.globalPosition);
             },
             onLongPressEnd: (event) {
-              if (a.menu == null) {
+              if (a.menu == null || a.disabled) {
                 return;
               }
               Platform.of(context).showContextMenu(context: context, menu: a.menu!, position: event.globalPosition);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mizer/widgets/popup/popup_container.dart';
 
 class PopupInput extends StatefulWidget {
@@ -19,12 +20,19 @@ class _PopupInputState extends State<PopupInput> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupContainer(title: widget.title, child: TextField(controller: _controller, autofocus: true), actions: [
-      PopupAction("Cancel", () => Navigator.of(context).pop()),
-      PopupAction("Save", () {
-        widget.onChange(_controller.text);
-        Navigator.of(context).pop();
-      }),
-    ]);
+    return CallbackShortcuts(
+      bindings: {
+        const SingleActivator(LogicalKeyboardKey.enter): () => _confirm(context),
+      },
+      child: PopupContainer(title: widget.title, child: TextField(controller: _controller, autofocus: true), actions: [
+        PopupAction("Cancel", () => Navigator.of(context).pop()),
+        PopupAction("Save", () => _confirm(context)),
+      ]),
+    );
+  }
+
+  void _confirm(BuildContext context) {
+    widget.onChange(_controller.text);
+    Navigator.of(context).pop();
   }
 }

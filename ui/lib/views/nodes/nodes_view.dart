@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/widgets/controls/button.dart';
@@ -57,7 +57,7 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       afterLayout(context);
     });
 
-    return HotkeyProvider(
+    return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.nodes,
       hotkeyMap: {
         // TODO: determine position for new node

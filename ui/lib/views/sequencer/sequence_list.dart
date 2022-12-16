@@ -80,10 +80,4 @@ class SequenceList extends StatelessWidget {
   void _updateSequenceName(BuildContext context, Sequence sequence, String name) {
     context.read<SequencerBloc>().add(UpdateSequenceName(sequence: sequence.id, name: name));
   }
-
-  void _updateWrapAround(BuildContext context, Sequence sequence, bool wrapAround) {
-    context
-        .read<SequencerBloc>()
-        .add(UpdateWrapAround(sequence: sequence.id, wrapAround: wrapAround));
-  }
 }

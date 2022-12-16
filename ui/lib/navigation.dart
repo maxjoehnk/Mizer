@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/menu.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/views/connections/connections_view.dart';
 import 'package:mizer/views/effects/effects_view.dart';
 import 'package:mizer/views/fixtures/fixtures_view.dart';
@@ -18,6 +18,7 @@ import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
 import 'package:mizer/extensions/string_extensions.dart';
+import 'package:provider/provider.dart';
 
 import 'actions/actions.dart';
 
@@ -44,16 +45,6 @@ List<Route> routes = [
   Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
 ];
 
-Map<String, OpenViewIntent> shortcuts = getShortcuts(routes);
-
-Map<String, OpenViewIntent> getShortcuts(List<Route> routes) {
-  Map<String, OpenViewIntent> shortcuts = {};
-  for (var entry in routes.asMap().entries) {
-    shortcuts[entry.value.viewKey.toHotkeyString()] = OpenViewIntent(entry.key);
-  }
-  return shortcuts;
-}
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -71,49 +62,34 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: HotkeyProvider(
+        body: HotkeyConfiguration(
             hotkeySelector: (hotkeys) => hotkeys.global,
-            global: true,
-            onHotkey: (hotkey) {
-              var intent = shortcuts[hotkey]!;
-              this._selectView(intent.viewIndex);
-            },
-            builder: (context, hotkeys) => ApplicationMenu(
-                child: Actions(
-                  actions: <Type, CallbackAction>{
-                    OpenViewIntent: CallbackAction<OpenViewIntent>(
-                      onInvoke: (intent) => this._selectView(intent.viewIndex),
+            hotkeyMap: _getShortcuts(routes),
+            child: ApplicationMenu(
+                child: Row(
+                  children: [
+                    NavigationBar(
+                      selectedIndex: _selectedIndex,
+                      onSelect: this._selectView,
+                      routes: routes,
                     ),
-                  },
-                  child: Focus(
-                    autofocus: true,
-                    child: Row(
-                      children: [
-                        NavigationBar(
-                          selectedIndex: _selectedIndex,
-                          onSelect: this._selectView,
-                          routes: routes,
-                          hotkeys: hotkeys,
-                        ),
-                        Expanded(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: SafeArea(
-                                    child: Container(
-                                        child: RepaintBoundary(child: _currentWidget),
-                                        clipBehavior: Clip.antiAlias,
-                                        decoration: BoxDecoration()),
-                                  ),
-                                ),
-                                if (_showProgrammer) SizedBox(height: SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
-                                RepaintBoundary(child: TransportControls(showProgrammer: _showProgrammer, toggleProgrammer: () => setState(() => _showProgrammer = !_showProgrammer)))
-                              ],
-                            ))
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    ),
-                  ),
+                    Expanded(
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: SafeArea(
+                                child: Container(
+                                    child: RepaintBoundary(child: _currentWidget),
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration()),
+                              ),
+                            ),
+                            if (_showProgrammer) SizedBox(height: SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
+                            RepaintBoundary(child: TransportControls(showProgrammer: _showProgrammer, toggleProgrammer: () => setState(() => _showProgrammer = !_showProgrammer)))
+                          ],
+                        ))
+                  ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
             ),
         ));
@@ -128,6 +104,14 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
       _updateWidget();
     });
+  }
+
+  Map<String, Function()> _getShortcuts(List<Route> routes) {
+    Map<String, Function()> shortcuts = {};
+    for (var entry in routes.asMap().entries) {
+      shortcuts[entry.value.viewKey.toHotkeyString()] = () => _selectView(entry.key);
+    }
+    return shortcuts;
   }
 }
 
@@ -144,14 +128,14 @@ typedef WidgetFunction = Widget Function();
 
 class NavigationBar extends StatelessWidget {
   final List<Route> routes;
-  final Map<String, String> hotkeys;
   final int selectedIndex;
   final Function(int) onSelect;
 
-  NavigationBar({required this.routes, required this.selectedIndex, required this.onSelect, required this.hotkeys});
+  NavigationBar({required this.routes, required this.selectedIndex, required this.onSelect});
 
   @override
   Widget build(BuildContext context) {
+    HotkeyMapping mapping = context.read();
     return Container(
         color: Colors.grey.shade800,
         width: 64,
@@ -159,7 +143,7 @@ class NavigationBar extends StatelessWidget {
             children: this
                 .routes
                 .mapEnumerated((route, i) =>
-                    NavigationItem(route, this.selectedIndex == i, () => this.onSelect(i), this.hotkeys))
+                    NavigationItem(route, this.selectedIndex == i, () => this.onSelect(i), mapping.mappings))
                 .toList()));
   }
 }

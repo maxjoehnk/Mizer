@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/views/programmer/dialogs/select_sequence_dialog.dart';
 import 'package:mizer/views/programmer/dialogs/store_mode_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -34,11 +34,12 @@ class ProgrammerSheet extends StatefulWidget {
 class _ProgrammerSheetState extends State<ProgrammerSheet> {
   @override
   Widget build(BuildContext context) {
-    return HotkeyProvider(
+    return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.programmer,
       hotkeyMap: {
         "store": () => _store(),
         "highlight": () => _highlight(),
+        "clear": () => _clear(),
       },
       child: Panel.tabs(
           label: "Programmer",
@@ -57,12 +58,17 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
                 activated: widget.highlight,
                 onClick: _highlight),
             PanelAction(hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
+            PanelAction(hotkeyId: "clear", label: "Clear", onClick: () => _clear(), disabled: widget.isEmpty),
           ]),
     );
   }
 
   void _highlight() {
     widget.api.highlight(!widget.highlight);
+  }
+
+  void _clear() {
+    widget.api.clear();
   }
 
   _store() async {

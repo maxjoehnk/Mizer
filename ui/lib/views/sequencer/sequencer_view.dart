@@ -5,7 +5,7 @@ import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/mappings.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
@@ -56,7 +56,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   Widget build(BuildContext context) {
     context.read<FixturesBloc>().add(FetchFixtures());
     context.read<SequencerBloc>().add(FetchSequences());
-    return HotkeyProvider(
+    return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.sequencer,
       hotkeyMap: {},
       child: BlocBuilder<SequencerBloc, SequencerState>(

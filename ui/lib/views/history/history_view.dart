@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/navigation.dart';
 import 'package:mizer/protos/session.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 
@@ -15,7 +15,7 @@ class HistoryView extends StatefulWidget {
 class _HistoryViewState extends State<HistoryView> {
   @override
   Widget build(BuildContext context) {
-    return HotkeyProvider(
+    return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.global,
       hotkeyMap: {
         "undo": () => _undo(),

@@ -5,26 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/plugin/app.dart';
+import 'package:mizer/extensions/context_state_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/session.pb.dart';
-import 'package:mizer/state/effects_bloc.dart';
-import 'package:mizer/state/fixtures_bloc.dart';
-import 'package:mizer/state/layouts_bloc.dart';
-import 'package:mizer/state/media_bloc.dart';
-import 'package:mizer/state/nodes_bloc.dart';
-import 'package:mizer/state/plans_bloc.dart';
-import 'package:mizer/state/presets_bloc.dart';
-import 'package:mizer/state/sequencer_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/windows/preferences_window.dart';
 import 'package:mizer/windows/smart_window.dart';
 import 'package:nativeshell/nativeshell.dart' show Window;
 
-import 'actions/actions.dart';
-import 'actions/menu.dart';
 import 'api/contracts/session.dart';
-import 'navigation.dart';
 
 class ApplicationMenu extends StatelessWidget {
   final Widget child;
@@ -83,22 +73,18 @@ class ApplicationMenu extends StatelessWidget {
                     await context.read<SessionApi>().undo();
                     _refreshViews(context);
                   },
-                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ)),
+                  // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ)
+              ),
               MenuItem(
                   label: 'Redo'.i18n,
                   action: () async {
                     await context.read<SessionApi>().redo();
                     _refreshViews(context);
                   },
-                  shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-                      LogicalKeyboardKey.keyZ))
+                  // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
+                  //     LogicalKeyboardKey.keyZ)
+              )
             ]),
-            SubMenu(
-                title: 'View'.i18n,
-                children: routes
-                    .mapEnumerated((route, index) =>
-                        MenuActionItem(label: route.label, action: OpenViewIntent(index)))
-                    .toList()),
             SubMenu(title: 'Window'.i18n, children: [
               MenuItem(
                   label: 'New Window'.i18n,
@@ -148,13 +134,6 @@ class ApplicationMenu extends StatelessWidget {
   }
 
   void _refreshViews(BuildContext context) {
-    context.read<FixturesBloc>().add(FetchFixtures());
-    context.read<LayoutsBloc>().add(FetchLayouts());
-    context.read<MediaBloc>().add(MediaEvent.Fetch);
-    context.read<NodesBloc>().add(FetchNodes());
-    context.read<SequencerBloc>().add(FetchSequences());
-    context.read<PresetsBloc>().add(FetchPresets());
-    context.read<PlansBloc>().add(FetchPlans());
-    context.read<EffectsBloc>().add(FetchEffects());
+    context.refreshAllStates();
   }
 }

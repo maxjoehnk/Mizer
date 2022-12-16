@@ -7,7 +7,7 @@ import 'package:mizer/api/contracts/effects.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/views/effects/dialogs/add_effect_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -50,7 +50,7 @@ class _EffectsViewState extends State<EffectsView> {
   @override
   Widget build(BuildContext context) {
     EffectsBloc bloc = context.read();
-    return HotkeyProvider(
+    return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.effects,
       hotkeyMap: {
         "add_effect": () => _addEffect(context, bloc),

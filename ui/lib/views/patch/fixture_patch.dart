@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -27,7 +27,7 @@ class _FixturePatchViewState extends State<FixturePatchView> {
     fixturesBloc.add(FetchFixtures());
     var fixturesApi = context.read<FixturesApi>();
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
-      return HotkeyProvider(
+      return HotkeyConfiguration(
         hotkeySelector: (hotkeys) => hotkeys.patch,
         hotkeyMap: {
           "add_fixture": () => _addFixture(context, fixturesApi, fixturesBloc),

@@ -1,79 +1,65 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:keyboard_shortcuts/keyboard_shortcuts.dart';
 import 'package:mizer/api/contracts/settings.dart';
+import 'package:mizer/settings/hotkeys/hotkey_manager.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'keymap.dart';
 
-class HotkeyProvider extends StatelessWidget {
-  final Map<String, String> Function(Hotkeys) hotkeySelector;
-  late final Widget Function(BuildContext, Map<String, String>) builder;
-  late final void Function(String) onHotkey;
-  late final Map<String, Function()> hotkeyMap;
-  final bool global;
+class HotkeyProvider extends StatefulWidget {
+  final Widget child;
 
-  HotkeyProvider(
-      {required this.hotkeySelector,
-      Widget? child,
-      Widget Function(BuildContext, Map<String, String>)? builder,
-      Function(String)? onHotkey,
-      Map<String, Function()>? hotkeyMap,
-      this.global = false}) {
-    assert(onHotkey != null || hotkeyMap != null);
-    if (child != null) {
-      this.builder = (context, hotkeys) => child;
-    }
-    if (builder != null) {
-      this.builder = builder;
-    }
-    assert(this.builder != null);
-    if (hotkeyMap != null) {
-      this.onHotkey = (key) {
-        var handler = hotkeyMap[key];
-        if (handler != null) {
-          handler();
-        }
-      };
-    }else {
-      this.onHotkey = onHotkey!;
-    }
-  }
+  const HotkeyProvider({required this.child, Key? key}) : super(key: key);
+
+  @override
+  State<HotkeyProvider> createState() => _HotkeyProviderState();
+}
+
+class _HotkeyProviderState extends State<HotkeyProvider> {
+  HotkeyManager _manager = HotkeyManager();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
-      var hotkeys = hotkeySelector(settings.hotkeys);
-
-      var nextChild = builder(context, hotkeys);
-      for (var shortcut in _shortcuts(hotkeys)) {
-        // TODO: this causes repaints
-        nextChild = shortcut(nextChild);
-      }
-
-      return Provider.value(value: HotkeyMapping(hotkeys), child: nextChild);
-    });
-  }
-
-  List<Widget Function(Widget)> _shortcuts(Map<String, String> hotkeys) {
-    return hotkeys
-        .map((key, value) => MapEntry(
-            key,
-            (Widget child) => KeyBoardShortcuts(
-                  child: child,
-                  keysToPress: convertKeyMap(value),
-                  onKeysPressed: () => onHotkey(key),
-                  globalShortcuts: global,
-                )))
-        .values
-        .toList();
+    return ListenableProvider.value(
+        value: _manager, child: HotkeyShortcutsMapping(child: widget.child));
   }
 }
 
-class HotkeyMapping {
-  final Map<String, String> mappings;
+class HotkeyShortcutsMapping extends StatefulWidget {
+  final Widget child;
 
-  HotkeyMapping(this.mappings);
+  const HotkeyShortcutsMapping({required this.child, Key? key}) : super(key: key);
+
+  @override
+  State<HotkeyShortcutsMapping> createState() => _HotkeyShortcutsMappingState();
+}
+
+class _HotkeyShortcutsMappingState extends State<HotkeyShortcutsMapping> {
+  @override
+  Widget build(BuildContext context) {
+    var manager = context.watch<HotkeyManager>();
+
+    return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
+      return CallbackShortcuts(
+          bindings: _bindings(manager, settings),
+          child: FocusScope(child: widget.child, autofocus: true, skipTraversal: true, debugLabel: "HotkeyMappings"));
+    });
+  }
+
+  Map<ShortcutActivator, VoidCallback> _bindings(HotkeyManager manager, Settings settings) {
+    return manager.value.map((hotkeys) {
+      var hotkeyKeybindings = hotkeys.selector(settings.hotkeys);
+
+      return hotkeys.actions.map((key, value) => MapEntry(hotkeyKeybindings[key], value));
+    }).fold(Map(), (result, hotkeys) {
+      hotkeys.removeWhere((key, value) => key == null);
+      var mappedHotkeys =
+          hotkeys.map((key, value) => MapEntry(LogicalKeySet.fromSet(convertKeyMap(key!)), value));
+
+      result.addAll(mappedHotkeys);
+
+      return result;
+    });
+  }
 }

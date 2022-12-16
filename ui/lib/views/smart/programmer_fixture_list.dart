@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/extensions/fixture_id_extensions.dart';
 import 'package:mizer/extensions/programmer_channel_extensions.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/table/table.dart';
 
@@ -22,7 +22,7 @@ class ProgrammerFixtureList extends StatelessWidget {
   Widget build(BuildContext context) {
     var channels =
     programmerState.controls.map((c) => c.control).toSet().sorted((a, b) => a.value - b.value);
-    return HotkeyProvider(
+    return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.programmer,
       hotkeyMap: {
         "clear": () => _clear(),

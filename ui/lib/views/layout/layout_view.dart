@@ -13,7 +13,7 @@ import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/layouts.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/layouts_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
@@ -74,7 +74,7 @@ class LayoutView extends StatelessWidget {
     return BlocBuilder<LayoutsBloc, LayoutState>(builder: (context, state) {
       log("${state.layouts}", name: "LayoutView");
       context.read<NodesBloc>().add(FetchNodes());
-      return HotkeyProvider(
+      return HotkeyConfiguration(
         hotkeySelector: (hotkeys) => hotkeys.layouts,
         hotkeyMap: {
           "add_layout": () => _addLayout(context, layoutsBloc),

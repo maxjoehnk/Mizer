@@ -6,7 +6,7 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/programmer.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 
@@ -57,7 +57,7 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
     fixturesBloc.add(FetchFixtures());
 
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
-      return HotkeyProvider(
+      return HotkeyConfiguration(
         hotkeySelector: (hotkeys) => hotkeys.programmer,
         hotkeyMap: {
           "select_all": () => _selectAll(fixtures.fixtures),

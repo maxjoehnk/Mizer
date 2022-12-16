@@ -448,15 +448,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
-  keyboard_shortcuts:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: e33efe2
-      resolved-ref: e33efe2779689a3a2ad5a0e0621528ebd6cc705a
-      url: "https://github.com/rlch/keyboard_shortcuts.git"
-    source: git
-    version: "0.1.5"
   logging:
     dependency: transitive
     description:
@@ -751,13 +742,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.16"
-  tuple:
-    dependency: transitive
-    description:
-      name: tuple
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   typed_data:
     dependency: transitive
     description:
@@ -772,13 +756,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  visibility_detector:
-    dependency: transitive
-    description:
-      name: visibility_detector
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2"
   vm_service:
     dependency: transitive
     description:

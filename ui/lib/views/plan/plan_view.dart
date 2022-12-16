@@ -6,9 +6,8 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/plans.pb.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/plans_bloc.dart';
-import 'package:mizer/views/plan/dialogs/select_group_dialog.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -60,10 +59,9 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     PlansBloc plansBloc = context.read();
     return BlocBuilder<PlansBloc, PlansState>(builder: (context, state) {
-      return HotkeyProvider(
+      return HotkeyConfiguration(
         hotkeySelector: (hotkeys) => hotkeys.plan,
         hotkeyMap: {
-          "store": _storeInGroup,
           "highlight": _highlight,
           "clear": _clear,
         },
@@ -88,7 +86,6 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
           onAdd: () => _addPlan(context, plansBloc),
           actions: [
             PanelAction(hotkeyId: "highlight", label: "Highlight", onClick: _highlight, activated: _programmerState?.highlight ?? false),
-            PanelAction(hotkeyId: "store", label: "Store", onClick: _storeInGroup),
             PanelAction(hotkeyId: "clear", label: "Clear", onClick: _clear),
             PanelAction(label: "Place Fixture Selection", onClick: () => _placeFixtureSelection(plansBloc)),
             PanelAction(label: "Setup", activated: _setupMode, onClick: _setup),
@@ -137,15 +134,6 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
     if (result != null) {
       bloc.add(RenamePlan(id: plan.name, name: result));
     }
-  }
-
-  void _storeInGroup() async {
-    ProgrammerApi programmerApi = context.read();
-    var group = await showDialog(context: context, builder: (context) => SelectGroupDialog(api: programmerApi));
-    if (group == null) {
-      return;
-    }
-    await programmerApi.assignFixtureSelectionToGroup(group);
   }
 
   void _highlight() {

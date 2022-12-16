@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/platform/platform.dart';
-import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
+import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:provider/provider.dart';
 

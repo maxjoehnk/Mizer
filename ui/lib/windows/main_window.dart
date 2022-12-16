@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mizer/session/window_title_updater.dart';
+import 'package:mizer/widgets/undo_hotkey.dart';
 import 'package:nativeshell/nativeshell.dart';
 
 import '../navigation.dart';
@@ -11,8 +12,10 @@ class MainWindowState extends WindowState {
     return BaseWindowState(
       child: WindowLayoutProbe(
         child: LanguageSwitcher(
-          child: WindowTitleUpdater(
-            child: Home(),
+          child: UndoHotkeyConfiguration(
+            child: WindowTitleUpdater(
+              child: Home(),
+            ),
           ),
         ),
       ),

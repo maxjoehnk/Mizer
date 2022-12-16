@@ -5,6 +5,7 @@ import 'package:mizer/api/contracts/settings.dart';
 import 'package:mizer/api/plugin/provider.dart';
 import 'package:mizer/platform/integrated/platform.dart';
 import 'package:mizer/platform/platform.dart';
+import 'package:mizer/settings/hotkeys/hotkey_provider.dart';
 import 'package:mizer/state/provider.dart';
 import 'package:mizer/state/settings_bloc.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class BaseWindowState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Provider<Platform>(
         create: (_) => IntegratedPlatform(),
-        child: PluginApiProvider(child: StateProvider(child: child)));
+        child: PluginApiProvider(child: StateProvider(child: HotkeyProvider(child: child))));
   }
 }
 

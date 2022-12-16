@@ -73,14 +73,6 @@ class _ProgrammerViewState extends State<ProgrammerView> with SingleTickerProvid
         .toList();
   }
 
-  _selectAll(List<Fixture> fixtures) {
-    _setSelectedIds(fixtures.map((f) => FixtureId(fixture: f.id)).toList());
-  }
-
-  _clear() {
-    context.read<ProgrammerApi>().clear();
-  }
-
   _setSelectedIds(List<FixtureId> ids) {
     context.read<ProgrammerApi>().selectFixtures(ids);
   }

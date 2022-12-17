@@ -23,6 +23,8 @@ const MappingRequest$json = const {
     const {'1': 'sequencer_go', '3': 10, '4': 1, '5': 11, '6': '.mizer.mappings.SequencerGoAction', '9': 1, '10': 'sequencerGo'},
     const {'1': 'sequencer_stop', '3': 11, '4': 1, '5': 11, '6': '.mizer.mappings.SequencerStopAction', '9': 1, '10': 'sequencerStop'},
     const {'1': 'layout_control', '3': 12, '4': 1, '5': 11, '6': '.mizer.mappings.LayoutControlAction', '9': 1, '10': 'layoutControl'},
+    const {'1': 'programmer_highlight', '3': 13, '4': 1, '5': 11, '6': '.mizer.mappings.ProgrammerHighlightAction', '9': 1, '10': 'programmerHighlight'},
+    const {'1': 'programmer_clear', '3': 14, '4': 1, '5': 11, '6': '.mizer.mappings.ProgrammerClearAction', '9': 1, '10': 'programmerClear'},
   ],
   '8': const [
     const {'1': 'binding'},
@@ -31,7 +33,7 @@ const MappingRequest$json = const {
 };
 
 /// Descriptor for `MappingRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mappingRequestDescriptor = $convert.base64Decode('Cg5NYXBwaW5nUmVxdWVzdBIxCgRtaWRpGAEgASgLMhsubWl6ZXIubWFwcGluZ3MuTWlkaU1hcHBpbmdIAFIEbWlkaRJGCgxzZXF1ZW5jZXJfZ28YCiABKAsyIS5taXplci5tYXBwaW5ncy5TZXF1ZW5jZXJHb0FjdGlvbkgBUgtzZXF1ZW5jZXJHbxJMCg5zZXF1ZW5jZXJfc3RvcBgLIAEoCzIjLm1pemVyLm1hcHBpbmdzLlNlcXVlbmNlclN0b3BBY3Rpb25IAVINc2VxdWVuY2VyU3RvcBJMCg5sYXlvdXRfY29udHJvbBgMIAEoCzIjLm1pemVyLm1hcHBpbmdzLkxheW91dENvbnRyb2xBY3Rpb25IAVINbGF5b3V0Q29udHJvbEIJCgdiaW5kaW5nQggKBmFjdGlvbg==');
+final $typed_data.Uint8List mappingRequestDescriptor = $convert.base64Decode('Cg5NYXBwaW5nUmVxdWVzdBIxCgRtaWRpGAEgASgLMhsubWl6ZXIubWFwcGluZ3MuTWlkaU1hcHBpbmdIAFIEbWlkaRJGCgxzZXF1ZW5jZXJfZ28YCiABKAsyIS5taXplci5tYXBwaW5ncy5TZXF1ZW5jZXJHb0FjdGlvbkgBUgtzZXF1ZW5jZXJHbxJMCg5zZXF1ZW5jZXJfc3RvcBgLIAEoCzIjLm1pemVyLm1hcHBpbmdzLlNlcXVlbmNlclN0b3BBY3Rpb25IAVINc2VxdWVuY2VyU3RvcBJMCg5sYXlvdXRfY29udHJvbBgMIAEoCzIjLm1pemVyLm1hcHBpbmdzLkxheW91dENvbnRyb2xBY3Rpb25IAVINbGF5b3V0Q29udHJvbBJeChRwcm9ncmFtbWVyX2hpZ2hsaWdodBgNIAEoCzIpLm1pemVyLm1hcHBpbmdzLlByb2dyYW1tZXJIaWdobGlnaHRBY3Rpb25IAVITcHJvZ3JhbW1lckhpZ2hsaWdodBJSChBwcm9ncmFtbWVyX2NsZWFyGA4gASgLMiUubWl6ZXIubWFwcGluZ3MuUHJvZ3JhbW1lckNsZWFyQWN0aW9uSAFSD3Byb2dyYW1tZXJDbGVhckIJCgdiaW5kaW5nQggKBmFjdGlvbg==');
 @$core.Deprecated('Use midiMappingDescriptor instead')
 const MidiMapping$json = const {
   '1': 'MidiMapping',
@@ -73,3 +75,17 @@ const LayoutControlAction$json = const {
 
 /// Descriptor for `LayoutControlAction`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List layoutControlActionDescriptor = $convert.base64Decode('ChNMYXlvdXRDb250cm9sQWN0aW9uEiEKDGNvbnRyb2xfbm9kZRgBIAEoCVILY29udHJvbE5vZGU=');
+@$core.Deprecated('Use programmerHighlightActionDescriptor instead')
+const ProgrammerHighlightAction$json = const {
+  '1': 'ProgrammerHighlightAction',
+};
+
+/// Descriptor for `ProgrammerHighlightAction`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List programmerHighlightActionDescriptor = $convert.base64Decode('ChlQcm9ncmFtbWVySGlnaGxpZ2h0QWN0aW9u');
+@$core.Deprecated('Use programmerClearActionDescriptor instead')
+const ProgrammerClearAction$json = const {
+  '1': 'ProgrammerClearAction',
+};
+
+/// Descriptor for `ProgrammerClearAction`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List programmerClearActionDescriptor = $convert.base64Decode('ChVQcm9ncmFtbWVyQ2xlYXJBY3Rpb24=');

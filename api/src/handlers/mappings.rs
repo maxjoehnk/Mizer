@@ -27,6 +27,12 @@ impl<R: RuntimeApi> MappingsHandler<R> {
             MappingRequest_oneof_action::sequencer_stop(action) => {
                 create_sequencer_stop_mapping(action.sequencer_id, midi_config)
             }
+            MappingRequest_oneof_action::programmer_highlight(_) => {
+                create_programmer_highlight_mapping(midi_config)
+            }
+            MappingRequest_oneof_action::programmer_clear(_) => {
+                create_programmer_clear_mapping(midi_config)
+            }
         };
         let cmd = ExecuteNodeTemplateCommand { template };
 

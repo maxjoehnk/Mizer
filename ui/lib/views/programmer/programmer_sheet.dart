@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart' show showDialog;
-import 'package:flutter/widgets.dart';
+import 'package:flutter/widgets.dart' hide MenuItem;
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
+import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
+import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/programmer/dialogs/select_sequence_dialog.dart';
 import 'package:mizer/views/programmer/dialogs/store_mode_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -25,7 +28,14 @@ class ProgrammerSheet extends StatefulWidget {
   final ProgrammerApi api;
   final bool highlight;
 
-  const ProgrammerSheet({required this.fixtures, required this.channels, required this.api, required this.isEmpty, required this.highlight, Key? key}) : super(key: key);
+  const ProgrammerSheet(
+      {required this.fixtures,
+      required this.channels,
+      required this.api,
+      required this.isEmpty,
+      required this.highlight,
+      Key? key})
+      : super(key: key);
 
   @override
   State<ProgrammerSheet> createState() => _ProgrammerSheetState();
@@ -41,25 +51,43 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
         "highlight": () => _highlight(),
         "clear": () => _clear(),
       },
-      child: Panel.tabs(
-          label: "Programmer",
-          tabs: [
-            Tab(label: "Dimmer", child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
-            Tab(label: "Position", child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
-            Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
-            Tab(label: "Color", child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
-            Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
-            Tab(label: "Channels", child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
-          ],
-          actions: [
-            PanelAction(
-                hotkeyId: "highlight",
-                label: "Highlight",
-                activated: widget.highlight,
-                onClick: _highlight),
-            PanelAction(hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
-            PanelAction(hotkeyId: "clear", label: "Clear", onClick: () => _clear(), disabled: widget.isEmpty),
-          ]),
+      child: Panel.tabs(label: "Programmer", tabs: [
+        Tab(
+            label: "Dimmer",
+            child: DimmerSheet(fixtures: widget.fixtures, channels: widget.channels)),
+        Tab(
+            label: "Position",
+            child: PositionSheet(fixtures: widget.fixtures, channels: widget.channels)),
+        Tab(label: "Gobo", child: GoboSheet(fixtures: widget.fixtures, channels: widget.channels)),
+        Tab(
+            label: "Color",
+            child: ColorSheet(fixtures: widget.fixtures, channels: widget.channels)),
+        Tab(label: "Beam", child: BeamSheet(fixtures: widget.fixtures, channels: widget.channels)),
+        Tab(
+            label: "Channels",
+            child: ChannelSheet(fixtures: widget.fixtures, channels: widget.channels)),
+      ], actions: [
+        PanelAction(
+            hotkeyId: "highlight",
+            label: "Highlight",
+            activated: widget.highlight,
+            onClick: _highlight,
+            menu: Menu(items: [
+              MenuItem(
+                  label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
+            ])),
+        PanelAction(
+            hotkeyId: "store", label: "Store", onClick: () => _store(), disabled: widget.isEmpty),
+        PanelAction(
+            hotkeyId: "clear",
+            label: "Clear",
+            onClick: () => _clear(),
+            disabled: widget.isEmpty,
+            menu: Menu(items: [
+              MenuItem(
+                  label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+            ])),
+      ]),
     );
   }
 
@@ -109,5 +137,19 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
     Cue? cue = await showDialog(context: context, builder: (context) => SelectCueDialog(sequence));
 
     return cue?.id;
+  }
+
+  Future<void> _addMidiMappingForHighlight(BuildContext context) async {
+    var request = MappingRequest(
+      programmerHighlight: ProgrammerHighlightAction(),
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Highlight", request);
+  }
+
+  Future<void> _addMidiMappingForClear(BuildContext context) async {
+    var request = MappingRequest(
+      programmerClear: ProgrammerClearAction(),
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Clear", request);
   }
 }

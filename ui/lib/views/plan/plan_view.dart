@@ -5,9 +5,11 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/programmer.dart';
 import 'package:mizer/platform/contracts/menu.dart';
+import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/plans_bloc.dart';
+import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/widgets/controls/button.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -74,20 +76,40 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
               .map((plan) => tabs.Tab(
                   header: (active, setActive) => ContextMenu(
                       menu: Menu(items: [
-                        MenuItem(label: "Rename", action: () => _onRename(context, plan, plansBloc)),
-                        MenuItem(label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
+                        MenuItem(
+                            label: "Rename", action: () => _onRename(context, plan, plansBloc)),
+                        MenuItem(
+                            label: "Delete", action: () => _onDelete(context, plan, plansBloc)),
                       ]),
                       child: tabs.TabHeader(plan.name, selected: active, onSelect: setActive)),
                   child: Column(children: [
-                    Expanded(child: PlanLayout(plan: plan, programmerState: _programmerState, setupMode: _setupMode)),
+                    Expanded(
+                        child: PlanLayout(
+                            plan: plan, programmerState: _programmerState, setupMode: _setupMode)),
                     if (_setupMode) AlignToolbar(),
                   ])))
               .toList(),
           onAdd: () => _addPlan(context, plansBloc),
           actions: [
-            PanelAction(hotkeyId: "highlight", label: "Highlight", onClick: _highlight, activated: _programmerState?.highlight ?? false),
-            PanelAction(hotkeyId: "clear", label: "Clear", onClick: _clear),
-            PanelAction(label: "Place Fixture Selection", onClick: () => _placeFixtureSelection(plansBloc)),
+            PanelAction(
+                hotkeyId: "highlight",
+                label: "Highlight",
+                onClick: _highlight,
+                activated: _programmerState?.highlight ?? false,
+                menu: Menu(items: [
+                  MenuItem(
+                      label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
+                ])),
+            PanelAction(
+                hotkeyId: "clear",
+                label: "Clear",
+                onClick: _clear,
+                menu: Menu(items: [
+                  MenuItem(
+                      label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+                ])),
+            PanelAction(
+                label: "Place Fixture Selection", onClick: () => _placeFixtureSelection(plansBloc)),
             PanelAction(label: "Setup", activated: _setupMode, onClick: _setup),
           ],
         ),
@@ -151,6 +173,20 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
 
   void _setup() {
     _setupMode = !_setupMode;
+  }
+
+  Future<void> _addMidiMappingForHighlight(BuildContext context) async {
+    var request = MappingRequest(
+      programmerHighlight: ProgrammerHighlightAction(),
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Highlight", request);
+  }
+
+  Future<void> _addMidiMappingForClear(BuildContext context) async {
+    var request = MappingRequest(
+      programmerClear: ProgrammerClearAction(),
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Clear", request);
   }
 }
 
@@ -222,6 +258,7 @@ class _AlignToolbarState extends State<AlignToolbar> {
     int rowGap = int.parse(rowGapController.text);
     int columnGap = int.parse(columnGapController.text);
 
-    bloc.add(AlignFixtures(direction: direction, groups: groups, rowGap: rowGap, columnGap: columnGap));
+    bloc.add(
+        AlignFixtures(direction: direction, groups: groups, rowGap: rowGap, columnGap: columnGap));
   }
 }

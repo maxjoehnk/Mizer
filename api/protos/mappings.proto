@@ -18,6 +18,8 @@ message MappingRequest {
     SequencerGoAction sequencer_go = 10;
     SequencerStopAction sequencer_stop = 11;
     LayoutControlAction layout_control = 12;
+    ProgrammerHighlightAction programmer_highlight = 13;
+    ProgrammerClearAction programmer_clear = 14;
   }
 }
 
@@ -37,3 +39,6 @@ message SequencerStopAction {
 message LayoutControlAction {
   string control_node = 1;
 }
+
+message ProgrammerHighlightAction {}
+message ProgrammerClearAction {}

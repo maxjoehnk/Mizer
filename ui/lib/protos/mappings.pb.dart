@@ -49,6 +49,8 @@ enum MappingRequest_Action {
   sequencerGo, 
   sequencerStop, 
   layoutControl, 
+  programmerHighlight, 
+  programmerClear, 
   notSet
 }
 
@@ -61,15 +63,19 @@ class MappingRequest extends $pb.GeneratedMessage {
     10 : MappingRequest_Action.sequencerGo,
     11 : MappingRequest_Action.sequencerStop,
     12 : MappingRequest_Action.layoutControl,
+    13 : MappingRequest_Action.programmerHighlight,
+    14 : MappingRequest_Action.programmerClear,
     0 : MappingRequest_Action.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MappingRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.mappings'), createEmptyInstance: create)
     ..oo(0, [1])
-    ..oo(1, [10, 11, 12])
+    ..oo(1, [10, 11, 12, 13, 14])
     ..aOM<MidiMapping>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiMapping.create)
     ..aOM<SequencerGoAction>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerGo', subBuilder: SequencerGoAction.create)
     ..aOM<SequencerStopAction>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencerStop', subBuilder: SequencerStopAction.create)
     ..aOM<LayoutControlAction>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutControl', subBuilder: LayoutControlAction.create)
+    ..aOM<ProgrammerHighlightAction>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmerHighlight', subBuilder: ProgrammerHighlightAction.create)
+    ..aOM<ProgrammerClearAction>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'programmerClear', subBuilder: ProgrammerClearAction.create)
     ..hasRequiredFields = false
   ;
 
@@ -79,6 +85,8 @@ class MappingRequest extends $pb.GeneratedMessage {
     SequencerGoAction? sequencerGo,
     SequencerStopAction? sequencerStop,
     LayoutControlAction? layoutControl,
+    ProgrammerHighlightAction? programmerHighlight,
+    ProgrammerClearAction? programmerClear,
   }) {
     final _result = create();
     if (midi != null) {
@@ -92,6 +100,12 @@ class MappingRequest extends $pb.GeneratedMessage {
     }
     if (layoutControl != null) {
       _result.layoutControl = layoutControl;
+    }
+    if (programmerHighlight != null) {
+      _result.programmerHighlight = programmerHighlight;
+    }
+    if (programmerClear != null) {
+      _result.programmerClear = programmerClear;
     }
     return _result;
   }
@@ -165,6 +179,28 @@ class MappingRequest extends $pb.GeneratedMessage {
   void clearLayoutControl() => clearField(12);
   @$pb.TagNumber(12)
   LayoutControlAction ensureLayoutControl() => $_ensure(3);
+
+  @$pb.TagNumber(13)
+  ProgrammerHighlightAction get programmerHighlight => $_getN(4);
+  @$pb.TagNumber(13)
+  set programmerHighlight(ProgrammerHighlightAction v) { setField(13, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasProgrammerHighlight() => $_has(4);
+  @$pb.TagNumber(13)
+  void clearProgrammerHighlight() => clearField(13);
+  @$pb.TagNumber(13)
+  ProgrammerHighlightAction ensureProgrammerHighlight() => $_ensure(4);
+
+  @$pb.TagNumber(14)
+  ProgrammerClearAction get programmerClear => $_getN(5);
+  @$pb.TagNumber(14)
+  set programmerClear(ProgrammerClearAction v) { setField(14, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasProgrammerClear() => $_has(5);
+  @$pb.TagNumber(14)
+  void clearProgrammerClear() => clearField(14);
+  @$pb.TagNumber(14)
+  ProgrammerClearAction ensureProgrammerClear() => $_ensure(5);
 }
 
 class MidiMapping extends $pb.GeneratedMessage {
@@ -369,5 +405,63 @@ class LayoutControlAction extends $pb.GeneratedMessage {
   $core.bool hasControlNode() => $_has(0);
   @$pb.TagNumber(1)
   void clearControlNode() => clearField(1);
+}
+
+class ProgrammerHighlightAction extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerHighlightAction', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.mappings'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ProgrammerHighlightAction._() : super();
+  factory ProgrammerHighlightAction() => create();
+  factory ProgrammerHighlightAction.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProgrammerHighlightAction.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProgrammerHighlightAction clone() => ProgrammerHighlightAction()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProgrammerHighlightAction copyWith(void Function(ProgrammerHighlightAction) updates) => super.copyWith((message) => updates(message as ProgrammerHighlightAction)) as ProgrammerHighlightAction; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerHighlightAction create() => ProgrammerHighlightAction._();
+  ProgrammerHighlightAction createEmptyInstance() => create();
+  static $pb.PbList<ProgrammerHighlightAction> createRepeated() => $pb.PbList<ProgrammerHighlightAction>();
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerHighlightAction getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerHighlightAction>(create);
+  static ProgrammerHighlightAction? _defaultInstance;
+}
+
+class ProgrammerClearAction extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerClearAction', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.mappings'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  ProgrammerClearAction._() : super();
+  factory ProgrammerClearAction() => create();
+  factory ProgrammerClearAction.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ProgrammerClearAction.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ProgrammerClearAction clone() => ProgrammerClearAction()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ProgrammerClearAction copyWith(void Function(ProgrammerClearAction) updates) => super.copyWith((message) => updates(message as ProgrammerClearAction)) as ProgrammerClearAction; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerClearAction create() => ProgrammerClearAction._();
+  ProgrammerClearAction createEmptyInstance() => create();
+  static $pb.PbList<ProgrammerClearAction> createRepeated() => $pb.PbList<ProgrammerClearAction>();
+  @$core.pragma('dart2js:noInline')
+  static ProgrammerClearAction getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProgrammerClearAction>(create);
+  static ProgrammerClearAction? _defaultInstance;
 }
 

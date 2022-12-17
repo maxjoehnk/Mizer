@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/i18n.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/programmer.dart';
+import 'package:mizer/i18n.dart';
+import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
+import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
+import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/widgets/panel.dart';
 
 import 'fixtures_table.dart';
@@ -32,15 +35,14 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
   void initState() {
     super.initState();
     var programmerApi = context.read<ProgrammerApi>();
-    programmerApi.getProgrammerPointer()
-      .then((pointer) {
+    programmerApi.getProgrammerPointer().then((pointer) {
       _pointer = pointer;
-        ticker = this.createTicker((elapsed) {
-          setState(() {
-            state = _pointer!.readState();
-          });
+      ticker = this.createTicker((elapsed) {
+        setState(() {
+          state = _pointer!.readState();
         });
-        ticker!.start();
+      });
+      ticker!.start();
     });
   }
 
@@ -74,25 +76,36 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
               onSelect: (id, selected) => _setSelectedIds([id]),
               onSelectSimilar: (fixture) {
                 _setSelectedIds(fixtures.fixtures
-                    .where((f) =>
-                        f.manufacturer == fixture.manufacturer && f.model == fixture.model)
+                    .where(
+                        (f) => f.manufacturer == fixture.manufacturer && f.model == fixture.model)
                     .map((f) => FixtureId(fixture: f.id))
                     .toList());
               },
               onSelectChildren: (fixture) {
                 _setSelectedIds(fixture.children
-                    .map((c) => FixtureId(
-                        subFixture: SubFixtureId(fixtureId: fixture.id, childId: c.id)))
+                    .map((c) =>
+                        FixtureId(subFixture: SubFixtureId(fixtureId: fixture.id, childId: c.id)))
                     .toList());
               },
               onExpand: (id) => setState(() => this.expandedIds.contains(id)
                   ? this.expandedIds.remove(id)
                   : this.expandedIds.add(id))),
           actions: [
-            PanelAction(hotkeyId: "select_all", label: "Select All".i18n, onClick: () => _selectAll(fixtures.fixtures)),
+            PanelAction(
+                hotkeyId: "select_all",
+                label: "Select All".i18n,
+                onClick: () => _selectAll(fixtures.fixtures)),
             PanelAction(label: "Select Even", onClick: () => _selectEven(fixtures.fixtures)),
             PanelAction(label: "Select Odd", onClick: () => _selectOdd(fixtures.fixtures)),
-            PanelAction(hotkeyId: "clear", label: "Clear".i18n, onClick: _clear, disabled: trackedIds.isEmpty && selectedIds.isEmpty),
+            PanelAction(
+                hotkeyId: "clear",
+                label: "Clear".i18n,
+                onClick: _clear,
+                disabled: trackedIds.isEmpty && selectedIds.isEmpty,
+                menu: Menu(items: [
+                  MenuItem(
+                      label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
+                ])),
           ],
         ),
       );
@@ -141,5 +154,12 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
 
   _setSelectedIds(List<FixtureId> ids) {
     context.read<ProgrammerApi>().selectFixtures(ids);
+  }
+
+  Future<void> _addMidiMappingForClear(BuildContext context) async {
+    var request = MappingRequest(
+      programmerClear: ProgrammerClearAction(),
+    );
+    addMidiMapping(context, "Add MIDI Mapping for Programmer Clear", request);
   }
 }

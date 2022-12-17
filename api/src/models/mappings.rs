@@ -173,6 +173,8 @@ pub enum MappingRequest_oneof_action {
     sequencer_go(SequencerGoAction),
     sequencer_stop(SequencerStopAction),
     layout_control(LayoutControlAction),
+    programmer_highlight(ProgrammerHighlightAction),
+    programmer_clear(ProgrammerClearAction),
 }
 
 impl MappingRequest {
@@ -375,6 +377,104 @@ impl MappingRequest {
             LayoutControlAction::new()
         }
     }
+
+    // .mizer.mappings.ProgrammerHighlightAction programmer_highlight = 13;
+
+
+    pub fn get_programmer_highlight(&self) -> &ProgrammerHighlightAction {
+        match self.action {
+            ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(ref v)) => v,
+            _ => <ProgrammerHighlightAction as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_programmer_highlight(&mut self) {
+        self.action = ::std::option::Option::None;
+    }
+
+    pub fn has_programmer_highlight(&self) -> bool {
+        match self.action {
+            ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_programmer_highlight(&mut self, v: ProgrammerHighlightAction) {
+        self.action = ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_programmer_highlight(&mut self) -> &mut ProgrammerHighlightAction {
+        if let ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(_)) = self.action {
+        } else {
+            self.action = ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(ProgrammerHighlightAction::new()));
+        }
+        match self.action {
+            ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_programmer_highlight(&mut self) -> ProgrammerHighlightAction {
+        if self.has_programmer_highlight() {
+            match self.action.take() {
+                ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ProgrammerHighlightAction::new()
+        }
+    }
+
+    // .mizer.mappings.ProgrammerClearAction programmer_clear = 14;
+
+
+    pub fn get_programmer_clear(&self) -> &ProgrammerClearAction {
+        match self.action {
+            ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(ref v)) => v,
+            _ => <ProgrammerClearAction as ::protobuf::Message>::default_instance(),
+        }
+    }
+    pub fn clear_programmer_clear(&mut self) {
+        self.action = ::std::option::Option::None;
+    }
+
+    pub fn has_programmer_clear(&self) -> bool {
+        match self.action {
+            ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_programmer_clear(&mut self, v: ProgrammerClearAction) {
+        self.action = ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_programmer_clear(&mut self) -> &mut ProgrammerClearAction {
+        if let ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(_)) = self.action {
+        } else {
+            self.action = ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(ProgrammerClearAction::new()));
+        }
+        match self.action {
+            ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_programmer_clear(&mut self) -> ProgrammerClearAction {
+        if self.has_programmer_clear() {
+            match self.action.take() {
+                ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            ProgrammerClearAction::new()
+        }
+    }
 }
 
 impl ::protobuf::Message for MappingRequest {
@@ -395,6 +495,16 @@ impl ::protobuf::Message for MappingRequest {
             }
         }
         if let Some(MappingRequest_oneof_action::layout_control(ref v)) = self.action {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(MappingRequest_oneof_action::programmer_highlight(ref v)) = self.action {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(MappingRequest_oneof_action::programmer_clear(ref v)) = self.action {
             if !v.is_initialized() {
                 return false;
             }
@@ -430,6 +540,18 @@ impl ::protobuf::Message for MappingRequest {
                     }
                     self.action = ::std::option::Option::Some(MappingRequest_oneof_action::layout_control(is.read_message()?));
                 },
+                13 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.action = ::std::option::Option::Some(MappingRequest_oneof_action::programmer_highlight(is.read_message()?));
+                },
+                14 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.action = ::std::option::Option::Some(MappingRequest_oneof_action::programmer_clear(is.read_message()?));
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -464,6 +586,14 @@ impl ::protobuf::Message for MappingRequest {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
                 },
+                &MappingRequest_oneof_action::programmer_highlight(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &MappingRequest_oneof_action::programmer_clear(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
@@ -495,6 +625,16 @@ impl ::protobuf::Message for MappingRequest {
                 },
                 &MappingRequest_oneof_action::layout_control(ref v) => {
                     os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MappingRequest_oneof_action::programmer_highlight(ref v) => {
+                    os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &MappingRequest_oneof_action::programmer_clear(ref v) => {
+                    os.write_tag(14, ::protobuf::wire_format::WireTypeLengthDelimited)?;
                     os.write_raw_varint32(v.get_cached_size())?;
                     v.write_to_with_cached_sizes(os)?;
                 },
@@ -558,6 +698,16 @@ impl ::protobuf::Message for MappingRequest {
                 MappingRequest::has_layout_control,
                 MappingRequest::get_layout_control,
             ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ProgrammerHighlightAction>(
+                "programmer_highlight",
+                MappingRequest::has_programmer_highlight,
+                MappingRequest::get_programmer_highlight,
+            ));
+            fields.push(::protobuf::reflect::accessor::make_singular_message_accessor::<_, ProgrammerClearAction>(
+                "programmer_clear",
+                MappingRequest::has_programmer_clear,
+                MappingRequest::get_programmer_clear,
+            ));
             ::protobuf::reflect::MessageDescriptor::new_pb_name::<MappingRequest>(
                 "MappingRequest",
                 fields,
@@ -575,6 +725,8 @@ impl ::protobuf::Message for MappingRequest {
 impl ::protobuf::Clear for MappingRequest {
     fn clear(&mut self) {
         self.binding = ::std::option::Option::None;
+        self.action = ::std::option::Option::None;
+        self.action = ::std::option::Option::None;
         self.action = ::std::option::Option::None;
         self.action = ::std::option::Option::None;
         self.action = ::std::option::Option::None;
@@ -1278,23 +1430,265 @@ impl ::protobuf::reflect::ProtobufValue for LayoutControlAction {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct ProgrammerHighlightAction {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ProgrammerHighlightAction {
+    fn default() -> &'a ProgrammerHighlightAction {
+        <ProgrammerHighlightAction as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProgrammerHighlightAction {
+    pub fn new() -> ProgrammerHighlightAction {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for ProgrammerHighlightAction {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ProgrammerHighlightAction {
+        ProgrammerHighlightAction::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ProgrammerHighlightAction>(
+                "ProgrammerHighlightAction",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ProgrammerHighlightAction {
+        static instance: ::protobuf::rt::LazyV2<ProgrammerHighlightAction> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ProgrammerHighlightAction::new)
+    }
+}
+
+impl ::protobuf::Clear for ProgrammerHighlightAction {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ProgrammerHighlightAction {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProgrammerHighlightAction {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+#[cfg_attr(feature = "with-serde", derive(::serde::Serialize, ::serde::Deserialize))]
+pub struct ProgrammerClearAction {
+    // special fields
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub unknown_fields: ::protobuf::UnknownFields,
+    #[cfg_attr(feature = "with-serde", serde(skip))]
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ProgrammerClearAction {
+    fn default() -> &'a ProgrammerClearAction {
+        <ProgrammerClearAction as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ProgrammerClearAction {
+    pub fn new() -> ProgrammerClearAction {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for ProgrammerClearAction {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: ::std::boxed::Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ProgrammerClearAction {
+        ProgrammerClearAction::new()
+    }
+
+    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::LazyV2<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::LazyV2::INIT;
+        descriptor.get(|| {
+            let fields = ::std::vec::Vec::new();
+            ::protobuf::reflect::MessageDescriptor::new_pb_name::<ProgrammerClearAction>(
+                "ProgrammerClearAction",
+                fields,
+                file_descriptor_proto()
+            )
+        })
+    }
+
+    fn default_instance() -> &'static ProgrammerClearAction {
+        static instance: ::protobuf::rt::LazyV2<ProgrammerClearAction> = ::protobuf::rt::LazyV2::INIT;
+        instance.get(ProgrammerClearAction::new)
+    }
+}
+
+impl ::protobuf::Clear for ProgrammerClearAction {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for ProgrammerClearAction {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ProgrammerClearAction {
+    fn as_ref(&self) -> ::protobuf::reflect::ReflectValueRef {
+        ::protobuf::reflect::ReflectValueRef::Message(self)
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0emappings.proto\x12\x0emizer.mappings\x1a\x0bnodes.proto\"\x0f\n\rM\
-    appingResult\"\xbc\x02\n\x0eMappingRequest\x121\n\x04midi\x18\x01\x20\
+    appingResult\"\xf0\x03\n\x0eMappingRequest\x121\n\x04midi\x18\x01\x20\
     \x01(\x0b2\x1b.mizer.mappings.MidiMappingH\0R\x04midi\x12F\n\x0csequence\
     r_go\x18\n\x20\x01(\x0b2!.mizer.mappings.SequencerGoActionH\x01R\x0bsequ\
     encerGo\x12L\n\x0esequencer_stop\x18\x0b\x20\x01(\x0b2#.mizer.mappings.S\
     equencerStopActionH\x01R\rsequencerStop\x12L\n\x0elayout_control\x18\x0c\
-    \x20\x01(\x0b2#.mizer.mappings.LayoutControlActionH\x01R\rlayoutControlB\
-    \t\n\x07bindingB\x08\n\x06action\"g\n\x0bMidiMapping\x123\n\x06config\
-    \x18\x01\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigR\x06config\x12#\n\
-    \rinput_mapping\x18\x02\x20\x01(\x08R\x0cinputMapping\"6\n\x11SequencerG\
-    oAction\x12!\n\x0csequencer_id\x18\x01\x20\x01(\rR\x0bsequencerId\"8\n\
-    \x13SequencerStopAction\x12!\n\x0csequencer_id\x18\x01\x20\x01(\rR\x0bse\
-    quencerId\"8\n\x13LayoutControlAction\x12!\n\x0ccontrol_node\x18\x01\x20\
-    \x01(\tR\x0bcontrolNode2\\\n\x0bMappingsApi\x12M\n\nAddMapping\x12\x1e.m\
-    izer.mappings.MappingRequest\x1a\x1d.mizer.mappings.MappingResult\"\0b\
-    \x06proto3\
+    \x20\x01(\x0b2#.mizer.mappings.LayoutControlActionH\x01R\rlayoutControl\
+    \x12^\n\x14programmer_highlight\x18\r\x20\x01(\x0b2).mizer.mappings.Prog\
+    rammerHighlightActionH\x01R\x13programmerHighlight\x12R\n\x10programmer_\
+    clear\x18\x0e\x20\x01(\x0b2%.mizer.mappings.ProgrammerClearActionH\x01R\
+    \x0fprogrammerClearB\t\n\x07bindingB\x08\n\x06action\"g\n\x0bMidiMapping\
+    \x123\n\x06config\x18\x01\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigR\
+    \x06config\x12#\n\rinput_mapping\x18\x02\x20\x01(\x08R\x0cinputMapping\"\
+    6\n\x11SequencerGoAction\x12!\n\x0csequencer_id\x18\x01\x20\x01(\rR\x0bs\
+    equencerId\"8\n\x13SequencerStopAction\x12!\n\x0csequencer_id\x18\x01\
+    \x20\x01(\rR\x0bsequencerId\"8\n\x13LayoutControlAction\x12!\n\x0ccontro\
+    l_node\x18\x01\x20\x01(\tR\x0bcontrolNode\"\x1b\n\x19ProgrammerHighlight\
+    Action\"\x17\n\x15ProgrammerClearAction2\\\n\x0bMappingsApi\x12M\n\nAddM\
+    apping\x12\x1e.mizer.mappings.MappingRequest\x1a\x1d.mizer.mappings.Mapp\
+    ingResult\"\0b\x06proto3\
 ";
 
 static file_descriptor_proto_lazy: ::protobuf::rt::LazyV2<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::rt::LazyV2::INIT;

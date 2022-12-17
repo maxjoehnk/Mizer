@@ -12,16 +12,16 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   i18n_extension: ^4.2.1
-  protobuf: ^2.0.0
-  grpc: ^3.0.0
+  protobuf: ^2.1.0
+  grpc: ^3.1.0
   fixnum: ^1.0.0
-  bloc: ^7.2.1
-  flutter_bloc: ^7.3.0
+  bloc: ^8.1.0
+  flutter_bloc: ^8.1.1
   provider: ^6.0.0
-  material_design_icons_flutter: ^5.0.5955-rc.1
+  material_design_icons_flutter: ^6.0.7096
   file_selector: ^0.9.0
   select_form_field: ^2.2.0
-  collection: ^1.15.0
+  collection: ^1.16.0
   nativeshell:
     git:
       url: https://github.com/nativeshell/nativeshell.git
@@ -38,10 +38,10 @@ dev_dependencies:
     sdk: flutter
   test: ^1.17.0
   mockito: ^5.0.0
-  bloc_test: ^8.2.0
+  bloc_test: ^9.1.0
   ffigen: ^4.1.2
   widgetbook: ^2.0.9
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
 
 flutter:
   uses-material-design: true

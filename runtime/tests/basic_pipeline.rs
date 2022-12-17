@@ -9,7 +9,6 @@ mod utils;
 
 #[test]
 fn main() {
-    env_logger::init();
     let clock = utils::TestClock::default();
     let sink = utils::TestSink::new();
     let mut runtime = CoordinatorRuntime::with_clock(clock);

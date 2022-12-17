@@ -12,7 +12,7 @@ class LayoutsRefPointer {
 
   double readFaderValue(String path) {
     var ffiPath = path.toNativeUtf8();
-    var result = this._bindings.read_fader_value(_ptr, ffiPath.cast<ffi.Int8>());
+    var result = this._bindings.read_fader_value(_ptr, ffiPath.cast<ffi.Char>());
 
     return result;
   }

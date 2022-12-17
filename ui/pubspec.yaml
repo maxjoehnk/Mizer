@@ -31,7 +31,7 @@ dependencies:
   flex_color_picker: ^2.1.2
   auto_size_text: ^3.0.0
   from_css_color: ^2.0.0
-  ffi: ^1.0.0
+  ffi: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -39,7 +39,7 @@ dev_dependencies:
   test: ^1.17.0
   mockito: ^5.0.0
   bloc_test: ^9.1.0
-  ffigen: ^4.1.2
+  ffigen: ^7.2.4
   widgetbook: ^2.0.9
   flutter_launcher_icons: ^0.11.0
 

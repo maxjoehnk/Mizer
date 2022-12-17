@@ -9,6 +9,7 @@ const TOGGLE_PLAYBACK: &str = "Playback Toggle";
 const STOP: &str = "Stop";
 const ACTIVE: &str = "Active";
 const CUE: &str = "Cue";
+const RATE: &str = "Rate";
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct SequencerNode {
@@ -88,6 +89,14 @@ impl PipelineNode for SequencerNode {
                     ..Default::default()
                 },
             ),
+            (
+                RATE.into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
         ]
     }
 
@@ -127,6 +136,8 @@ impl ProcessingNode for SequencerNode {
             if let Some(value) = context.read_port_changes::<_, f64>(CUE) {
                 sequencer.sequence_go_to(self.sequence_id, value.round() as u32);
             }
+            let playback_rate = context.read_port(RATE).unwrap_or(1.);
+            sequencer.sequence_playback_rate(self.sequence_id, playback_rate)?;
             if let Some(sequence_state) =
                 sequencer.get_sequencer_view().read().get(&self.sequence_id)
             {

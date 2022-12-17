@@ -1,6 +1,7 @@
 use crate::contracts::Clock;
 use crate::state::{
-    CueChannel, CueChannelState, SequenceDuration, SequenceState, SequenceTimestamp,
+    CueChannel, CueChannelState, SequenceDuration, SequenceRateMatchedDuration, SequenceState,
+    SequenceTimestamp,
 };
 use crate::value::*;
 use crate::Sequence;
@@ -11,7 +12,7 @@ use mizer_util::LerpExt;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct Cue {
@@ -85,22 +86,17 @@ impl Cue {
             .all(|(_, cue_channel)| cue_channel.state == CueChannelState::Active)
     }
 
-    pub(crate) fn should_go(
-        &self,
-        state: &SequenceState,
-        clock: &impl Clock,
-        frame: ClockFrame,
-    ) -> bool {
+    pub(crate) fn should_go(&self, state: &SequenceState) -> bool {
         if self.trigger == CueTrigger::Time {
             match self.trigger_time {
                 Some(SequencerTime::Seconds(seconds)) => {
-                    let passed = state.get_timer(clock);
+                    let passed = state.get_timer();
                     let delay = Duration::from_secs_f64(seconds);
 
                     passed >= delay
                 }
                 Some(SequencerTime::Beats(beats)) => {
-                    let passed = state.get_beats_passed(frame);
+                    let passed = state.get_beats_passed();
 
                     passed >= beats
                 }
@@ -109,27 +105,15 @@ impl Cue {
         } else if self.trigger == CueTrigger::Follow && state.is_cue_finished() {
             match self.trigger_time {
                 Some(SequencerTime::Seconds(seconds)) => {
-                    let passed = state
-                        .cue_finished_at
-                        .map(|finished| Instant::now().duration_since(finished.time));
-                    if let Some(passed) = passed {
-                        let delay = Duration::from_secs_f64(seconds);
+                    let passed = state.get_timer_since_finished();
+                    let delay = Duration::from_secs_f64(seconds);
 
-                        passed >= delay
-                    } else {
-                        false
-                    }
+                    passed >= delay
                 }
                 Some(SequencerTime::Beats(beats)) => {
-                    let finished_at = state.cue_finished_at.map(|finished| finished.beat);
-                    if let Some(finished_at) = finished_at {
-                        let now = frame.frame;
-                        let passed = now - finished_at;
+                    let passed = state.get_beats_passed_since_finished();
 
-                        passed >= beats
-                    } else {
-                        false
-                    }
+                    passed >= beats
                 }
                 None => true,
             }
@@ -161,38 +145,46 @@ impl Cue {
             for fixture in &sequence.fixtures {
                 match sequence_state
                     .channel_state
-                    .get(&(*fixture, channel.control.clone()))
+                    .get_mut(&(*fixture, channel.control.clone()))
                 {
                     Some(CueChannel {
                         state: cue_state,
-                        start_time,
+                        start_time: _,
+                        duration,
                     }) if *cue_state == CueChannelState::Delay => {
-                        if start_time.has_passed(clock, frame, delay_durations[fixture]) {
+                        duration.forward(clock, frame, sequence_state.rate);
+                        if duration.has_passed(delay_durations[fixture]) {
+                            let now = SequenceTimestamp {
+                                time: clock.now(),
+                                beat: frame.frame,
+                            };
                             sequence_state.channel_state.insert(
                                 (*fixture, channel.control.clone()),
                                 CueChannel {
                                     state: CueChannelState::Fading,
-                                    start_time: SequenceTimestamp {
-                                        time: clock.now(),
-                                        beat: frame.frame,
-                                    },
+                                    start_time: now,
+                                    duration: SequenceRateMatchedDuration::new(now),
                                 },
                             );
                         }
                     }
                     Some(CueChannel {
                         state: cue_state,
-                        start_time,
+                        start_time: _,
+                        duration,
                     }) if *cue_state == CueChannelState::Fading => {
-                        if start_time.has_passed(clock, frame, fade_durations[fixture]) {
+                        duration.forward(clock, frame, sequence_state.rate);
+                        if duration.has_passed(fade_durations[fixture]) {
+                            let now = SequenceTimestamp {
+                                time: clock.now(),
+                                beat: frame.frame,
+                            };
                             sequence_state.channel_state.insert(
                                 (*fixture, channel.control.clone()),
                                 CueChannel {
                                     state: CueChannelState::Active,
-                                    start_time: SequenceTimestamp {
-                                        time: clock.now(),
-                                        beat: frame.frame,
-                                    },
+                                    start_time: now,
+                                    duration: SequenceRateMatchedDuration::new(now),
                                 },
                             );
                         }
@@ -317,15 +309,13 @@ impl CueControl {
         sequence: &Sequence,
         cue: &Cue,
         state: &SequenceState,
-        clock: &impl Clock,
-        frame: ClockFrame,
     ) -> Vec<(FixtureId, Option<f64>)> {
         profiling::scope!("CueControl::values");
         let mut values = vec![None; self.fixtures.len()];
 
         self.fill_values(state, &mut values);
-        self.delay_values(cue, state, &mut values, clock, frame);
-        self.fade_values(sequence, cue, state, &mut values, clock, frame);
+        self.delay_values(cue, state, &mut values);
+        self.fade_values(sequence, cue, state, &mut values);
 
         self.fixtures.iter().copied().zip(values).collect()
     }
@@ -350,13 +340,11 @@ impl CueControl {
         cue: &Cue,
         state: &SequenceState,
         values: &mut Vec<Option<f64>>,
-        clock: &impl Clock,
-        frame: ClockFrame,
     ) {
         match cue.cue_delay {
             None => {}
             Some(SequencerValue::Direct(SequencerTime::Seconds(delay))) => {
-                if state.get_timer(clock) < Duration::from_secs_f64(delay) {
+                if state.get_timer() < Duration::from_secs_f64(delay) {
                     values.fill(None);
                 }
             }
@@ -367,13 +355,13 @@ impl CueControl {
                 for i in 0..self.fixtures.len() {
                     let delay: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    if state.get_timer(clock) < Duration::from_secs_f64(delay) {
+                    if state.get_timer() < Duration::from_secs_f64(delay) {
                         values[i] = None;
                     }
                 }
             }
             Some(SequencerValue::Direct(SequencerTime::Beats(delay))) => {
-                if state.get_beats_passed(frame) < delay {
+                if state.get_beats_passed() < delay {
                     values.fill(None);
                 }
             }
@@ -381,7 +369,7 @@ impl CueControl {
                 for i in 0..self.fixtures.len() {
                     let delay: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    if state.get_beats_passed(frame) < delay {
+                    if state.get_beats_passed() < delay {
                         values[i] = None;
                     }
                 }
@@ -396,8 +384,6 @@ impl CueControl {
         cue: &Cue,
         sequence_state: &SequenceState,
         values: &mut Vec<Option<f64>>,
-        clock: &impl Clock,
-        frame: ClockFrame,
     ) {
         for (i, fixture_id) in self.fixtures.iter().copied().enumerate() {
             let cue_state = sequence_state.channel_state[&(fixture_id, self.control.clone())];
@@ -415,9 +401,7 @@ impl CueControl {
             match cue.cue_fade {
                 None => {}
                 Some(SequencerValue::Direct(SequencerTime::Seconds(duration))) => {
-                    let now = clock.now();
-                    let time = now.duration_since(cue_state.start_time.time);
-                    let time = time.as_secs_f64();
+                    let time = cue_state.duration.time.as_secs_f64();
 
                     values[i] =
                         Some(time.linear_extrapolate((0., duration), (previous_value, value)));
@@ -428,16 +412,13 @@ impl CueControl {
                 ))) => {
                     let duration: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    let now = clock.now();
-                    let time = now.duration_since(cue_state.start_time.time);
-                    let time = time.as_secs_f64();
+                    let time = cue_state.duration.time.as_secs_f64();
 
                     values[i] =
                         Some(time.linear_extrapolate((0., duration), (previous_value, value)));
                 }
                 Some(SequencerValue::Direct(SequencerTime::Beats(beats))) => {
-                    let now = frame.frame;
-                    let time = now - cue_state.start_time.beat;
+                    let time = cue_state.duration.beat;
 
                     values[i] = Some(time.linear_extrapolate((0., beats), (previous_value, value)));
                 }
@@ -447,8 +428,7 @@ impl CueControl {
                 ))) => {
                     let beats: f64 = (i as f64)
                         .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    let now = frame.frame;
-                    let time = now - cue_state.start_time.beat;
+                    let time = cue_state.duration.beat;
 
                     values[i] = Some(time.linear_extrapolate((0., beats), (previous_value, value)));
                 }

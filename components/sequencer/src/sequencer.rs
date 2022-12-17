@@ -123,6 +123,11 @@ impl Sequencer {
                     }
                     sequence_orders.remove(&sequence_id);
                 }
+                SequencerCommands::SetRate(sequence_id, rate) => {
+                    if let Some(state) = states.get_mut(&sequence_id) {
+                        state.rate = rate;
+                    }
+                }
                 SequencerCommands::DropState(sequence_id) => {
                     let state = states.entry(sequence_id).or_default();
                     if let Some(sequence) = sequences.get(&sequence_id) {
@@ -225,6 +230,14 @@ impl Sequencer {
             .unwrap();
     }
 
+    pub fn sequence_playback_rate(&self, sequence: u32, rate: f64) -> anyhow::Result<()> {
+        self.commands
+            .0
+            .send(SequencerCommands::SetRate(sequence, rate))?;
+            
+        Ok(())
+    }
+
     pub fn update_sequence<SU>(&self, sequence: u32, update: SU) -> anyhow::Result<()>
     where
         SU: FnOnce(&mut Sequence) -> anyhow::Result<()>,
@@ -286,6 +299,7 @@ enum SequencerCommands {
     GoTo(u32, u32),
     Stop(u32),
     DropState(u32),
+    SetRate(u32, f64),
 }
 
 #[derive(Clone)]

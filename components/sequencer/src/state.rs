@@ -1,24 +1,114 @@
-use crate::contracts::Clock;
-use crate::{Cue, CueEffect, EffectEngine, EffectInstanceId, Sequence};
-use mizer_fixtures::definition::FixtureFaderControl;
-use mizer_fixtures::FixtureId;
-use mizer_module::ClockFrame;
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
 
-#[derive(Debug, Default)]
+use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::FixtureId;
+use mizer_module::ClockFrame;
+
+use crate::contracts::Clock;
+use crate::{Cue, CueEffect, EffectEngine, EffectInstanceId, Sequence};
+
+#[derive(Debug)]
 pub(crate) struct SequenceState {
     pub active_cue_index: usize,
     pub active: bool,
+    /// Playback rate
+    /// 0 is equal to pause
+    /// 1 is normal playback
+    /// 2 doubles the speed
+    pub rate: f64,
     last_go: Option<SequenceTimestamp>,
     /// Timestamp when the currently active cue has finished
     pub cue_finished_at: Option<SequenceTimestamp>,
     pub fixture_values: HashMap<(FixtureId, FixtureFaderControl), f64>,
     pub channel_state: HashMap<(FixtureId, FixtureFaderControl), CueChannel>,
     pub running_effects: HashMap<CueEffect, EffectInstanceId>,
+    duration_since_last_go: Option<SequenceRateMatchedDuration>,
+    duration_since_finished_at: Option<SequenceRateMatchedDuration>,
 }
 
 #[derive(Debug, Copy, Clone)]
+pub(crate) struct SequenceRateMatchedDuration {
+    start: SequenceTimestamp,
+    last_tick: Instant,
+    pub time: Duration,
+    pub beat: f64,
+}
+
+impl SequenceRateMatchedDuration {
+    pub fn new(start: SequenceTimestamp) -> Self {
+        Self {
+            start,
+            last_tick: start.time,
+            time: Default::default(),
+            beat: Default::default(),
+        }
+    }
+
+    pub fn forward(&mut self, clock: &impl Clock, frame: ClockFrame, rate: f64) {
+        self.beat += frame.delta * rate;
+        let tick = clock.now();
+        let duration = tick.duration_since(self.last_tick);
+        let rate_adjusted = duration.mul_f64(rate);
+        self.time += rate_adjusted;
+        self.last_tick = tick;
+    }
+
+    pub fn has_passed(&self, duration: SequenceDuration) -> bool {
+        match duration {
+            SequenceDuration::Beats(beats) => beats <= self.beat,
+            SequenceDuration::Seconds(duration) => duration <= self.time,
+        }
+    }
+}
+
+impl SequenceState {
+    pub(crate) fn update_timestamps_based_on_rate(
+        &mut self,
+        clock: &impl Clock,
+        frame: ClockFrame,
+    ) {
+        if let Some(last_go) = self.last_go {
+            let mut duration = self
+                .duration_since_last_go
+                .unwrap_or_else(|| SequenceRateMatchedDuration::new(last_go));
+            if duration.start != last_go {
+                duration = SequenceRateMatchedDuration::new(last_go);
+            }
+            duration.forward(clock, frame, self.rate);
+            self.duration_since_last_go = Some(duration);
+        }
+        if let Some(cue_finished_at) = self.cue_finished_at {
+            let mut duration = self
+                .duration_since_finished_at
+                .unwrap_or_else(|| SequenceRateMatchedDuration::new(cue_finished_at));
+            if duration.start != cue_finished_at {
+                duration = SequenceRateMatchedDuration::new(cue_finished_at);
+            }
+            duration.forward(clock, frame, self.rate);
+            self.duration_since_finished_at = Some(duration);
+        }
+    }
+}
+
+impl Default for SequenceState {
+    fn default() -> Self {
+        Self {
+            active_cue_index: Default::default(),
+            active: Default::default(),
+            rate: 1.,
+            last_go: Default::default(),
+            cue_finished_at: Default::default(),
+            fixture_values: Default::default(),
+            channel_state: Default::default(),
+            running_effects: Default::default(),
+            duration_since_finished_at: Default::default(),
+            duration_since_last_go: Default::default(),
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct SequenceTimestamp {
     pub time: Instant,
     pub beat: f64,
@@ -53,8 +143,9 @@ impl Default for SequenceDuration {
 }
 
 #[derive(Debug, Copy, Clone)]
-pub struct CueChannel {
+pub(crate) struct CueChannel {
     pub start_time: SequenceTimestamp,
+    pub duration: SequenceRateMatchedDuration,
     pub state: CueChannelState,
 }
 
@@ -156,12 +247,14 @@ impl SequenceState {
         let cue = &sequence.cues[self.active_cue_index];
         for control in &cue.controls {
             let state = cue.initial_channel_state();
+            let start_time = SequenceTimestamp {
+                time: clock.now(),
+                beat: frame.frame,
+            };
             let channel = CueChannel {
                 state,
-                start_time: SequenceTimestamp {
-                    time: clock.now(),
-                    beat: frame.frame,
-                },
+                start_time,
+                duration: SequenceRateMatchedDuration::new(start_time),
             };
             for fixture in &sequence.fixtures {
                 self.channel_state
@@ -170,22 +263,28 @@ impl SequenceState {
         }
     }
 
-    pub fn get_timer(&self, clock: &impl Clock) -> Duration {
-        clock.now().duration_since(
-            self.last_go
-                .map(|last_go| last_go.time)
-                .unwrap_or_else(|| clock.now()),
-        )
+    pub fn get_timer(&self) -> Duration {
+        self.duration_since_last_go
+            .map(|d| d.time)
+            .unwrap_or_default()
     }
 
-    pub fn get_beats_passed(&self, frame: ClockFrame) -> f64 {
-        let now = frame.frame;
-        let last_go = self
-            .last_go
-            .map(|last_go| last_go.beat)
-            .unwrap_or_else(|| frame.frame);
+    pub fn get_beats_passed(&self) -> f64 {
+        self.duration_since_last_go
+            .map(|d| d.beat)
+            .unwrap_or_default()
+    }
 
-        now - last_go
+    pub fn get_timer_since_finished(&self) -> Duration {
+        self.duration_since_finished_at
+            .map(|d| d.time)
+            .unwrap_or_default()
+    }
+
+    pub fn get_beats_passed_since_finished(&self) -> f64 {
+        self.duration_since_finished_at
+            .map(|d| d.beat)
+            .unwrap_or_default()
     }
 
     pub fn get_fixture_value(
@@ -242,11 +341,14 @@ impl Cue {
 
 #[cfg(test)]
 mod tests {
+    use std::time::Instant;
+
+    use test_case::test_case;
+
+    use mizer_module::ClockFrame;
+
     use crate::contracts::*;
     use crate::state::{SequenceDuration, SequenceTimestamp};
-    use mizer_module::ClockFrame;
-    use std::time::Instant;
-    use test_case::test_case;
 
     #[test_case(0., 0., 1.)]
     #[test_case(0.5, 1., 2.)]

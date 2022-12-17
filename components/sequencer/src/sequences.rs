@@ -49,16 +49,17 @@ impl Sequence {
         if !state.active {
             return;
         }
+        state.update_timestamps_based_on_rate(clock, frame);
         if let Some(next_cue) = state.get_next_cue(self) {
-            if next_cue.should_go(state, clock, frame) {
+            if next_cue.should_go(state) {
                 state.go(self, clock, effect_engine, frame);
             }
         }
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
-        let cue = self.current_cue(state, clock);
+        let cue = self.current_cue(state);
         cue.update_state(self, state, clock, frame);
         for control in &cue.controls {
-            for (fixture_id, value) in control.values(self, cue, state, clock, frame) {
+            for (fixture_id, value) in control.values(self, cue, state) {
                 if let Some(value) = value {
                     fixture_controller.write(fixture_id, control.control.clone(), value);
                     state.set_fixture_value(fixture_id, control.control.clone(), value);
@@ -75,7 +76,7 @@ impl Sequence {
         }
     }
 
-    fn current_cue(&self, state: &mut SequenceState, clock: &impl Clock) -> &Cue {
+    fn current_cue(&self, state: &mut SequenceState) -> &Cue {
         &self.cues[state.active_cue_index]
     }
 

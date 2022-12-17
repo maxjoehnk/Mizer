@@ -92,25 +92,17 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
   final NodesApi api;
 
   NodesBloc(this.api) : super(Nodes.create()) {
-    this.add(FetchNodes());
-  }
-
-  @override
-  Stream<Nodes> mapEventToState(NodesEvent event) async* {
-    if (event is FetchNodes) {
-      var nodes = await api.getNodes();
-      // log("$nodes", name: "NodesBloc");
-      yield nodes;
-    }
-    if (event is AddNode) {
+    on<FetchNodes>((event, emit) async {
+      emit(await api.getNodes());
+    });
+    on<AddNode>((event, emit) async {
       await api.addNode(AddNodeRequest(
           type: event.nodeType,
           position: NodePosition(x: event.position.dx, y: event.position.dy),
           parent: event.parent));
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is LinkNodes) {
+      emit(await api.getNodes());
+    });
+    on<LinkNodes>((event, emit) async {
       LinkNodes request = event;
       var connection = NodeConnection(
           protocol: request.protocol,
@@ -119,41 +111,35 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
           targetNode: request.target.node.path,
           targetPort: request.target.port);
       await api.linkNodes(connection);
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is MoveNode) {
+      emit(await api.getNodes());
+    });
+    on<MoveNode>((event, emit) async {
       var request = event.into();
       await api.moveNode(request);
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is DeleteNode) {
+      emit(await api.getNodes());
+    });
+    on<DeleteNode>((event, emit) async {
       await api.deleteNode(event.node);
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is HideNode) {
+      emit(await api.getNodes());
+    });
+    on<HideNode>((event, emit) async {
       await api.hideNode(event.node);
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is ShowNode) {
+      emit(await api.getNodes());
+    });
+    on<ShowNode>((event, emit) async {
       var request = event.into();
       await api.showNode(request);
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is DisconnectPorts) {
+      emit(await api.getNodes());
+    });
+    on<DisconnectPorts>((event, emit) async {
       await api.disconnectPorts(event.node);
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
-    if (event is DuplicateNode) {
+      emit(await api.getNodes());
+    });
+    on<DuplicateNode>((event, emit) async {
       await api.duplicateNode(DuplicateNodeRequest(path: event.node, parent: event.parent));
-      var nodes = await api.getNodes();
-      yield nodes;
-    }
+      emit(await api.getNodes());
+    });
+    this.add(FetchNodes());
   }
 
   Node? getNodeByPath(String path) {

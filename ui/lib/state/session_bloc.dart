@@ -9,6 +9,7 @@ class SessionBloc extends Bloc<Session, Session> {
   StreamSubscription? subscription;
 
   SessionBloc(this.api) : super(Session.create()) {
+    on<Session>((event, emit) => emit(event));
     this.subscription = api.watchSession().listen((value) => this.add(value));
   }
 
@@ -16,10 +17,5 @@ class SessionBloc extends Bloc<Session, Session> {
   Future<void> close() {
     this.subscription!.cancel();
     return super.close();
-  }
-
-  @override
-  Stream<Session> mapEventToState(Session event) async* {
-    yield event;
   }
 }

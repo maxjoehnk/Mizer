@@ -66,42 +66,38 @@ class EffectsBloc extends Bloc<EffectsEvent, EffectState> {
   final EffectsApi api;
 
   EffectsBloc(this.api) : super(<Effect>[]) {
-    this.add(FetchEffects());
-  }
-
-  @override
-  Stream<EffectState> mapEventToState(EffectsEvent event) async* {
-    if (event is FetchEffects) {
-      yield await _fetchEffects();
-    }
-    if (event is AddEffect) {
+    on<FetchEffects>((event, emit) async {
+      emit(await _fetchEffects());
+    });
+    on<AddEffect>((event, emit) async {
       await _addEffect(event);
-      yield await _fetchEffects();
-    }
-    if (event is DeleteEffect) {
+      emit(await _fetchEffects());
+    });
+    on<DeleteEffect>((event, emit) async {
       await _deleteEffect(event);
-      yield await _fetchEffects();
-    }
-    if (event is UpdateEffectStep) {
+      emit(await _fetchEffects());
+    });
+    on<UpdateEffectStep>((event, emit) async {
       await _updateEffectStep(event);
-      yield await _fetchEffects();
-    }
-    if (event is RemoveEffectStep) {
+      emit(await _fetchEffects());
+    });
+    on<RemoveEffectStep>((event, emit) async {
       await _removeEffectStep(event);
-      yield await _fetchEffects();
-    }
-    if (event is RemoveEffectChannel) {
+      emit(await _fetchEffects());
+    });
+    on<RemoveEffectChannel>((event, emit) async {
       await _removeEffectChannel(event);
-      yield await _fetchEffects();
-    }
-    if (event is AddEffectChannel) {
+      emit(await _fetchEffects());
+    });
+    on<AddEffectChannel>((event, emit) async {
       await _addEffectChannel(event);
-      yield await _fetchEffects();
-    }
-    if (event is AddEffectStep) {
+      emit(await _fetchEffects());
+    });
+    on<AddEffectStep>((event, emit) async {
       await _addEffectStep(event);
-      yield await _fetchEffects();
-    }
+      emit(await _fetchEffects());
+    });
+    this.add(FetchEffects());
   }
 
   Future<EffectState> _fetchEffects() async {

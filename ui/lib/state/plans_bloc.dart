@@ -78,57 +78,53 @@ class PlansBloc extends Bloc<PlansEvent, PlansState> {
   final PlansApi api;
 
   PlansBloc(this.api) : super(PlansState.empty()) {
-    this.add(FetchPlans());
-  }
-
-  @override
-  Stream<PlansState> mapEventToState(PlansEvent event) async* {
-    if (event is FetchPlans) {
+    on<FetchPlans>((event, emit) async {
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is AddPlan) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<AddPlan>((event, emit) async {
       await api.addPlan(event.name);
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is RemovePlan) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<RemovePlan>((event, emit) async {
       await api.removePlan(event.id);
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is RenamePlan) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<RenamePlan>((event, emit) async {
       await api.renamePlan(event.id, event.name);
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is SelectPlanTab) {
-      yield state.copyWith(tabIndex: event.tabIndex);
-    }
-    if (event is PlaceFixtureSelection) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<SelectPlanTab>((event, emit) async {
+      emit(state.copyWith(tabIndex: event.tabIndex));
+    });
+    on<PlaceFixtureSelection>((event, emit) async {
       var plan = state.plans[state.tabIndex];
       await api.addFixtureSelection(plan.name);
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is MoveFixtureSelection) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<MoveFixtureSelection>((event, emit) async {
       var plan = state.plans[state.tabIndex];
       await api.moveSelection(plan.name, event.x, event.y);
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is MoveFixture) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<MoveFixture>((event, emit) async {
       var plan = state.plans[state.tabIndex];
       await api.moveFixture(MoveFixtureRequest(planId: plan.name, fixtureId: event.id, x: event.x.round(), y: event.y.round()));
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
-    if (event is AlignFixtures) {
+      emit(state.copyWith(plans: plans.plans));
+    });
+    on<AlignFixtures>((event, emit) async {
       var plan = state.plans[state.tabIndex];
       event.request.planId = plan.name;
       await api.alignFixtures(event.request);
       var plans = await api.getPlans();
-      yield state.copyWith(plans: plans.plans);
-    }
+      emit(state.copyWith(plans: plans.plans));
+    });
+    this.add(FetchPlans());
   }
 }

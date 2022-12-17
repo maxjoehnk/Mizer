@@ -7,14 +7,11 @@ enum MediaEvent { Fetch }
 class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
   final MediaApi api;
 
-  MediaBloc(this.api) : super(MediaFiles());
-
-  @override
-  Stream<MediaFiles> mapEventToState(MediaEvent event) async* {
-    switch (event) {
-      case MediaEvent.Fetch:
-        yield await api.getMedia();
-        break;
-    }
+  MediaBloc(this.api) : super(MediaFiles()) {
+    on((event, emit) async {
+      if (event == MediaEvent.Fetch) {
+        emit(await api.getMedia());
+      }
+    });
   }
 }

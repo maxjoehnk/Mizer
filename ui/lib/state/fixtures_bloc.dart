@@ -55,23 +55,19 @@ class FixturesBloc extends Bloc<FixturesEvent, Fixtures> {
   final FixturesApi api;
 
   FixturesBloc(this.api) : super(Fixtures()) {
+    on<FetchFixtures>((event, emit) async {
+      emit(await _fetchFixtures());
+    });
+    on<AddFixtures>((event, emit) async {
+      emit(await _addFixture(event));
+    });
+    on<DeleteFixtures>((event, emit) async {
+      emit(await _deleteFixtures(event));
+    });
+    on<UpdateFixture>((event, emit) async {
+      emit(await _updateFixture(event));
+    });
     this.add(FetchFixtures());
-  }
-
-  @override
-  Stream<Fixtures> mapEventToState(FixturesEvent event) async* {
-    if (event is FetchFixtures) {
-      yield await _fetchFixtures();
-    }
-    if (event is AddFixtures) {
-      yield await _addFixture(event);
-    }
-    if (event is DeleteFixtures) {
-      yield await _deleteFixtures(event);
-    }
-    if (event is UpdateFixture) {
-      yield await _updateFixture(event);
-    }
   }
 
   Future<Fixtures> _fetchFixtures() async {

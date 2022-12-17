@@ -124,50 +124,20 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   final SequencerApi api;
 
   SequencerBloc(this.api) : super(SequencerState(sequences: [])) {
+    on<FetchSequences>((event, emit) async => emit(await _fetchSequences()));
+    on<AddSequence>((event, emit) async => emit(await _addSequence(event)));
+    on<DeleteSequence>((event, emit) async => emit(await _deleteSequence(event)));
+    on<UpdateCueTrigger>((event, emit) async => emit(await _updateCueTrigger(event)));
+    on<UpdateCueTriggerTime>((event, emit) async => emit(await _updateCueTriggerTime(event)));
+    on<UpdateCueName>((event, emit) async => emit(await _updateCueName(event)));
+    on<UpdateCueFade>((event, emit) async => emit(await _updateCueFadeTime(event)));
+    on<UpdateCueDelay>((event, emit) async => emit(await _updateCueDelayTime(event)));
+    on<UpdateWrapAround>((event, emit) async => emit(await _updateSequenceWrapAround(event)));
+    on<UpdateSequenceName>((event, emit) async => emit(await _updateSequenceName(event)));
+    on<SelectSequence>((event, emit) => emit(_selectSequence(event)));
+    on<SelectCue>((event, emit) => emit(_selectCue(event)));
+    on<DuplicateSequence>((event, emit) async => emit(await _duplicateSequence(event)));
     this.add(FetchSequences());
-  }
-
-  @override
-  Stream<SequencerState> mapEventToState(SequencerCommand event) async* {
-    if (event is FetchSequences) {
-      yield await _fetchSequences();
-    }
-    if (event is AddSequence) {
-      yield await _addSequence(event);
-    }
-    if (event is DeleteSequence) {
-      yield await _deleteSequence(event);
-    }
-    if (event is UpdateCueTrigger) {
-      yield await _updateCueTrigger(event);
-    }
-    if (event is UpdateCueTriggerTime) {
-      yield await _updateCueTriggerTime(event);
-    }
-    if (event is UpdateCueName) {
-      yield await _updateCueName(event);
-    }
-    if (event is UpdateCueFade) {
-      yield await _updateCueFadeTime(event);
-    }
-    if (event is UpdateCueDelay) {
-      yield await _updateCueDelayTime(event);
-    }
-    if (event is UpdateWrapAround) {
-      yield await _updateSequenceWrapAround(event);
-    }
-    if (event is UpdateSequenceName) {
-      yield await _updateSequenceName(event);
-    }
-    if (event is SelectSequence) {
-      yield _selectSequence(event);
-    }
-    if (event is SelectCue) {
-      yield _selectCue(event);
-    }
-    if (event is DuplicateSequence) {
-      yield await _duplicateSequence(event);
-    }
   }
 
   Future<SequencerState> _fetchSequences() async {

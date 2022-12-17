@@ -24,12 +24,7 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
   final ProgrammerApi api;
 
   PresetsBloc(this.api) : super(PresetsState()) {
-    this.add(FetchPresets());
-  }
-
-  @override
-  Stream<PresetsState> mapEventToState(PresetsEvent event) async* {
-    if (event is FetchPresets) {
+    on<FetchPresets>((event, emit) async {
       List<dynamic> res = await Future.wait([
         _getGroups(),
         _getPresets()
@@ -37,14 +32,15 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
       List<Group> groups = res[0];
       Presets presets = res[1];
 
-      yield PresetsState(presets: presets, groups: groups);
-    }
-    if (event is AddGroup) {
-      yield PresetsState(
+      emit(PresetsState(presets: presets, groups: groups));
+    });
+    on<AddGroup>((event, emit) {
+      emit(PresetsState(
         presets: state.presets,
         groups: [...state.groups, event.group],
-      );
-    }
+      ));
+    });
+    this.add(FetchPresets());
   }
 
   Future<Presets> _getPresets() async {

@@ -32,6 +32,13 @@ class SettingsBloc extends Bloc<SettingsEvent, Settings> {
   StreamSubscription? subscription;
 
   SettingsBloc(this.settingsApi) : super(Settings()) {
+    on<LoadSettings>((event, emit) async => emit(await settingsApi.loadSettings()));
+    on<SaveSettings>((event, emit) async {
+      await settingsApi.saveSettings(state);
+      await event.window.close();
+    });
+    on<UpdateSettings>((event, emit) => emit(event.update(state.deepCopy())));
+    on<_EmitSettings>((event, emit) => emit(event.settings));
     this.add(LoadSettings());
     this.subscription = settingsApi.watchSettings().listen((settings) => this.add(_EmitSettings(settings)));
   }
@@ -40,22 +47,5 @@ class SettingsBloc extends Bloc<SettingsEvent, Settings> {
   Future<void> close() {
     this.subscription!.cancel();
     return super.close();
-  }
-
-  @override
-  Stream<Settings> mapEventToState(SettingsEvent event) async* {
-    if (event is LoadSettings) {
-      yield await settingsApi.loadSettings();
-    }
-    if (event is SaveSettings) {
-      await settingsApi.saveSettings(state);
-      await event.window.close();
-    }
-    if (event is UpdateSettings) {
-      yield event.update(state.deepCopy());
-    }
-    if (event is _EmitSettings) {
-      yield event.settings;
-    }
   }
 }

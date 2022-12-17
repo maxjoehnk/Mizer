@@ -21,7 +21,7 @@ impl MediaHandler for SvgHandler {
         let mut file = std::fs::File::open(&path)?;
         let mut buffer = Vec::new();
         file.read_to_end(&mut buffer)?;
-        let tree = usvg::Tree::from_data(&buffer, &Options::default().to_ref())?;
+        let tree = usvg::Tree::from_data(&buffer, &Options::default())?;
         let mut pixmap = Pixmap::new(THUMBNAIL_SIZE, THUMBNAIL_SIZE).unwrap();
         let pixel_buffer = pixmap.as_mut();
         let bounding_box = tree.root.calculate_bbox().unwrap();

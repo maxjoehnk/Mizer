@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  i18n_extension: ^4.2.1
+  i18n_extension: ^5.0.1
   protobuf: ^2.1.0
   grpc: ^3.1.0
   fixnum: ^1.0.0
@@ -28,7 +28,7 @@ dependencies:
       ref: b9199bf
       path: nativeshell_dart
   flutter_svg: ^1.0.0
-  flex_color_picker: ^2.1.2
+  flex_color_picker: ^3.0.0
   auto_size_text: ^3.0.0
   from_css_color: ^2.0.0
   ffi: ^2.0.1
@@ -37,7 +37,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test: ^1.17.0
-  mockito: ^5.0.0
+  mockito: ^5.3.2
   bloc_test: ^9.1.0
   ffigen: ^7.2.4
   widgetbook: ^2.0.9

@@ -13,7 +13,7 @@ impl<R: RuntimeApi> MappingsHandler<R> {
         Self { runtime }
     }
 
-    pub fn add_template(&self, mapping: MappingRequest) {
+    pub fn add_template(&self, mapping: MappingRequest) -> anyhow::Result<()> {
         let midi_mapping = mapping.binding.unwrap();
         let MappingRequest_oneof_binding::midi(midi_mapping) = midi_mapping;
         let midi_config = midi_mapping.config.unwrap().into();
@@ -36,6 +36,6 @@ impl<R: RuntimeApi> MappingsHandler<R> {
         };
         let cmd = ExecuteNodeTemplateCommand { template };
 
-        self.runtime.run_command(cmd).unwrap();
+        self.runtime.run_command(cmd)
     }
 }

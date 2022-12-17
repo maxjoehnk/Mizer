@@ -21,7 +21,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for MappingsChannel<R> {
     ) {
         log::trace!("mizer.live/mappings -> {}", call.method);
         match call.method.as_str() {
-            "addMapping" => match call.arguments().map(|req| self.handler.add_template(req)) {
+            "addMapping" => match call
+                .arguments()
+                .and_then(|req| self.handler.add_template(req))
+            {
                 Ok(()) => resp.send_ok(Value::Null),
                 Err(e) => resp.respond_error(e),
             },

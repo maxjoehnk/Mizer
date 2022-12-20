@@ -39,4 +39,4 @@ derive_more = "0.99"
 mizer-node = { path = "../node", features = ["test"] }
 mizer-util = { path = "../../../util", features = ["test"] }
 test-case = "2.2"
-insta = "1.7"
+insta = "1.23"

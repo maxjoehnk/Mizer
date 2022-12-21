@@ -673,7 +673,7 @@ impl TryFrom<FixtureControl> for FixtureFaderControl {
 }
 
 /// Describes a single fader value
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Deserialize, Serialize)]
 pub enum FixtureFaderControl {
     Intensity,
     Shutter,
@@ -715,7 +715,7 @@ impl FixtureControl {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Ord, PartialOrd, Hash, Deserialize, Serialize)]
 pub enum ColorChannel {
     Red,
     Green,

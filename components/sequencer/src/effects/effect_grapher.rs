@@ -1,5 +1,5 @@
+use std::cmp::Ordering;
 use std::fs;
-use std::ops::Add;
 use std::path::Path;
 
 use super::instance::EffectInstance;
@@ -13,6 +13,8 @@ use mizer_fixtures::fixture::IFixture;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureId;
 use mizer_util::clock::{Clock, TestClock};
+use plotters::coord::Shift;
+use plotters::prelude::*;
 use std::collections::HashMap;
 
 const FRAMES_PER_STEP: usize = 60;
@@ -58,7 +60,7 @@ fn run_effect(
         let frame = clock.tick();
         history_ticks.push(frame.frame);
 
-        effect_instance.process(&effect, &fixture_manager, frame);
+        effect_instance.process(effect, &fixture_manager, frame);
 
         collect_fixture_frames(&fixture_manager, &mut fixture_frames);
     }
@@ -73,29 +75,54 @@ fn generate_graph(
 ) -> anyhow::Result<()> {
     let dir = Path::new(".snapshots");
     fs::create_dir_all(dir)?;
-    let name = format!("{}-time", effect.name);
-    generate_script_file(
-        dir,
-        &name,
-        fixture_frames
-            .keys()
-            .cloned()
-            .sorted_by_key(|(id, _)| *id)
-            .collect(),
-    )?;
-    for ((id, control), values) in fixture_frames.iter().sorted_by_key(|((id, _), _)| id) {
-        generate_data_file(
-            dir,
-            &format!("{}-{:?}", id, control),
-            values,
-            &history_ticks,
-        )?;
+    let name = format!("{}-time.svg", effect.name);
+    let file_path = dir.join(name);
+
+    let frames = history_ticks.iter().last().copied().unwrap_or_default();
+
+    let backend = setup_chart(&file_path)?;
+    let mut chart = ChartBuilder::on(&backend)
+        .x_label_area_size(40)
+        .y_label_area_size(40)
+        .build_cartesian_2d(0f64..frames, -1f64..1f64)?;
+    chart
+        .configure_mesh()
+        .disable_mesh()
+        .x_labels(4)
+        .x_desc("Frames")
+        .y_labels(4)
+        .y_desc("Value")
+        .draw()?;
+    for (i, ((id, control), values)) in fixture_frames
+        .iter()
+        .sorted_by(|a, b| {
+            let id_ordering = a.0 .0.cmp(&b.0 .0);
+            if id_ordering != Ordering::Equal {
+                id_ordering
+            } else {
+                a.0 .1.cmp(&b.0 .1)
+            }
+        })
+        .enumerate()
+    {
+        chart
+            .draw_series(LineSeries::new(
+                history_ticks.iter().zip(values).map(|(x, y)| (*x, *y)),
+                Palette99::pick(i),
+            ))?
+            .label(format!("{id}-{control:?}"))
+            .legend(move |(x, y)| {
+                Rectangle::new([(x - 5, y - 5), (x + 5, y + 5)], Palette99::pick(i))
+            });
     }
-    generate_plot(dir, &name)?;
-    cleanup_script(dir, &name)?;
-    for ((id, control), _) in fixture_frames.iter() {
-        cleanup_data(dir, &format!("{}-{:?}", id, control))?;
-    }
+    chart
+        .configure_series_labels()
+        .position(SeriesLabelPosition::UpperRight)
+        .margin(16)
+        .label_font(("Calibri", 20))
+        .draw()?;
+
+    backend.present()?;
 
     Ok(())
 }
@@ -106,16 +133,40 @@ fn generate_position_graph(
 ) -> anyhow::Result<()> {
     let dir = Path::new(".snapshots");
     fs::create_dir_all(dir)?;
-    let name = format!("{}-position", effect.name);
-    generate_position_script_file(dir, &name)?;
+    let name = format!("{}-position.svg", effect.name);
+    let file_path = dir.join(name);
     let pan = fixture_frames.get(&(1, FixtureFaderControl::Pan)).unwrap();
     let tilt = fixture_frames.get(&(1, FixtureFaderControl::Tilt)).unwrap();
-    generate_data_file(dir, &name, tilt, pan)?;
-    generate_plot(dir, &name)?;
-    cleanup_script(dir, &name)?;
-    cleanup_data(dir, &name)?;
+
+    let backend = setup_chart(&file_path)?;
+    let mut chart = ChartBuilder::on(&backend)
+        .x_label_area_size(40)
+        .y_label_area_size(40)
+        .build_cartesian_2d(-1f64..1f64, -1f64..1f64)?;
+    chart
+        .configure_mesh()
+        .disable_mesh()
+        .x_labels(5)
+        .x_desc("Pan")
+        .y_labels(5)
+        .y_desc("Tilt")
+        .draw()?;
+    chart.draw_series(LineSeries::new(
+        pan.iter().zip(tilt).map(|(x, y)| (*x, *y)),
+        BLUE,
+    ))?;
+
+    backend.present()?;
 
     Ok(())
+}
+
+fn setup_chart(path: &Path) -> anyhow::Result<DrawingArea<SVGBackend, Shift>> {
+    let backend = SVGBackend::new(path, (600, 480)).into_drawing_area();
+    backend.fill(&WHITE)?;
+    let backend = backend.margin(8, 8, 8, 8);
+
+    Ok(backend)
 }
 
 fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
@@ -126,7 +177,8 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
             id: "test-fixture".into(),
             name: "Test Fixture".into(),
             manufacturer: "Mizer".into(),
-            modes: vec![FixtureMode::new("Default".into(),
+            modes: vec![FixtureMode::new(
+                "Default".into(),
                 vec![
                     FixtureChannelDefinition {
                         name: "intensity".into(),
@@ -164,7 +216,7 @@ fn add_test_fixture(fixture_manager: &FixtureManager, id: u32) {
         None,
         1,
         None,
-        Default::default()
+        Default::default(),
     );
 }
 
@@ -185,79 +237,4 @@ fn collect_fixture_frames(
             }
         }
     }
-}
-
-fn generate_script_file(
-    dir: &Path,
-    name: &str,
-    files: Vec<(u32, FixtureFaderControl)>,
-) -> anyhow::Result<()> {
-    let channels = files
-        .iter()
-        .map(|(id, control)| {
-            format!(
-                "'{}-{:?}.dat' title '{} {:?}' with lines",
-                id, control, id, control
-            )
-        })
-        .collect::<Vec<_>>()
-        .join(", ");
-    let script = format!("set xlabel 'Frames'\nset ylabel 'Value'\nset yrange[-1:1]\nset term svg enhanced\nset output '{}.svg'\nplot {}\n", name, channels);
-    let file_path = dir.join(format!("{}.gnu", name));
-    fs::write(file_path, script)?;
-
-    Ok(())
-}
-
-fn generate_position_script_file(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let script = format!("set xlabel 'Pan'\nset ylabel 'Tilt'\nset yrange[-1:1]\nset xrange[-1:1]\nunset key\nset term svg enhanced\nset output '{}.svg'\nplot '{}.dat' with lines\n", name, name);
-    let file_path = dir.join(format!("{}.gnu", name));
-    fs::write(file_path, script)?;
-
-    Ok(())
-}
-
-fn generate_data_file(
-    dir: &Path,
-    name: &str,
-    y_axes: &[f64],
-    x_axes: &[f64],
-) -> anyhow::Result<()> {
-    assert_eq!(y_axes.len(), x_axes.len());
-
-    let data = y_axes
-        .iter()
-        .zip(x_axes)
-        .map(|(value, frame)| format!("{} {}", frame, value))
-        .reduce(|lhs, rhs| lhs.add("\n").add(&rhs))
-        .unwrap_or_default();
-    fs::write(dir.join(format!("{}.dat", name)), data)?;
-
-    Ok(())
-}
-
-fn generate_plot(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let result = std::process::Command::new("gnuplot")
-        .arg(format!("{}.gnu", name))
-        .current_dir(dir)
-        .spawn()?
-        .wait()?;
-
-    assert!(result.success(), "gnuplot failed to run");
-
-    Ok(())
-}
-
-fn cleanup_script(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let script = dir.join(format!("{}.gnu", name));
-    std::fs::remove_file(&script)?;
-
-    Ok(())
-}
-
-fn cleanup_data(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let data = dir.join(format!("{}.dat", name));
-    std::fs::remove_file(&data)?;
-
-    Ok(())
 }

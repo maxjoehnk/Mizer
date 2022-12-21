@@ -21,17 +21,13 @@ mod tests {
     use mizer_fixtures::definition::FixtureFaderControl;
 
     #[test]
-    fn circle_controls() -> anyhow::Result<()> {
-        let effect = (1, &CIRCLE).into();
-
-        graph_effect(effect, vec![1])
-    }
-
-    #[test]
     fn circle() -> anyhow::Result<()> {
-        let effect = (1, &CIRCLE).into();
+        let effect: Effect = (1, &CIRCLE).into();
 
-        graph_position_effect(effect)
+        graph_position_effect(effect.clone())?;
+        graph_effect(effect, vec![1])?;
+
+        Ok(())
     }
 
     #[test]

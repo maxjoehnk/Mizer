@@ -27,3 +27,4 @@ test-case = "2.2"
 mizer-util = { path = "../../util", features = ["test"] }
 mockall = { version = "0.11" }
 mockall_double = "0.3"
+plotters = "0.3"

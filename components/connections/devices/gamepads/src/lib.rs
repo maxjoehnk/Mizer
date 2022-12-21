@@ -1,4 +1,4 @@
-use enum_iterator::IntoEnumIterator;
+use enum_iterator::{all, Sequence};
 use flume::{unbounded, Receiver, Sender};
 use futures::Stream;
 use gilrs::{GamepadId, Gilrs};
@@ -113,12 +113,12 @@ impl GamepadState {
         let mut button_codes = HashMap::new();
         let mut axis_codes = HashMap::new();
         let state = gamepad.state().clone();
-        for button in Button::into_enum_iter() {
+        for button in all::<Button>() {
             if let Some(code) = gamepad.button_code(button.into()) {
                 button_codes.insert(button, code);
             }
         }
-        for axis in Axis::into_enum_iter() {
+        for axis in all::<Axis>() {
             match axis.into() {
                 gilrs::ev::AxisOrBtn::Axis(axis_gil) => {
                     if let Some(code) = gamepad.axis_code(axis_gil) {
@@ -182,7 +182,7 @@ impl std::fmt::Debug for GamepadState {
     }
 }
 
-#[derive(IntoEnumIterator, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Sequence, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Button {
     LeftShoulder,
     RightShoulder,
@@ -221,7 +221,7 @@ impl From<Button> for gilrs::Button {
     }
 }
 
-#[derive(IntoEnumIterator, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Sequence, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Axis {
     LeftStickX,
     LeftStickY,

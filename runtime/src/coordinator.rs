@@ -412,8 +412,6 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::commands::AddNodeCommand;
-    use mizer_layouts::{ControlDecorations, ControlPosition, ControlSize};
 
     #[test]
     fn node_runner_should_lend_state_ref() {

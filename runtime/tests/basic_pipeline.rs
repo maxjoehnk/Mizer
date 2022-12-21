@@ -1,8 +1,7 @@
 use crate::utils::add_node;
 use mizer_clock::Clock;
 use mizer_module::Runtime;
-use mizer_node::{NodePath, NodeType};
-use mizer_nodes::OscillatorNode;
+use mizer_node::NodeType;
 use mizer_runtime::*;
 
 mod utils;

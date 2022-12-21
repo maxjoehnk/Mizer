@@ -8,7 +8,8 @@ mod utils;
 
 #[test]
 fn oscillator() {
-    run_pipeline_with_node(OscillatorNode::default(), 60)
+    let frames = run_pipeline_with_node(OscillatorNode::default(), 60);
+    insta::assert_debug_snapshot!(frames);
 }
 
 #[test]
@@ -22,10 +23,14 @@ fn sequence() {
             (3.5, 1.).into(),
         ],
     };
-    run_pipeline_with_node(node, 240)
+    let frames = run_pipeline_with_node(node, 240);
+    insta::assert_debug_snapshot!(frames);
 }
 
-fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(node: N, frames: usize) {
+fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(
+    node: N,
+    frames: usize,
+) -> Vec<f64> {
     let clock = utils::TestClock::default();
     let sink = utils::TestSink::new();
     let mut runtime = CoordinatorRuntime::with_clock(clock);
@@ -41,6 +46,5 @@ fn run_pipeline_with_node<N: Into<Node> + ProcessingNode + 'static>(node: N, fra
         runtime.process();
     }
 
-    let frames = sink.frames();
-    insta::assert_debug_snapshot!(frames);
+    sink.frames()
 }

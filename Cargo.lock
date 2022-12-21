@@ -4029,6 +4029,7 @@ dependencies = [
  "mizer-timing-nodes",
  "mizer-util",
  "mizer-video-nodes",
+ "plotters",
  "serde",
  "test-case",
 ]

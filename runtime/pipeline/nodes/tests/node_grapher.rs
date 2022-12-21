@@ -1,5 +1,5 @@
-use std::fs;
-use std::ops::Add;
+use plotters::coord::Shift;
+use plotters::prelude::*;
 use std::path::Path;
 
 use mizer_node::mocks::NodeContextMock;
@@ -49,60 +49,42 @@ fn graph_node_internal<P: ProcessingNode, I: Fn(usize) -> f64>(
     }
 
     let dir = Path::new("tests/snapshots");
-    generate_script_file(&dir, name)?;
-    generate_data_file(&dir, name, &context.history.borrow(), &history_ticks)?;
-    generate_plot(&dir, name)?;
-    cleanup_sources(&dir, name)?;
+    let file_path = dir.join(format!("{name}.svg"));
+    let backend = setup_chart(&file_path)?;
+    let mut chart = ChartBuilder::on(&backend)
+        .x_label_area_size(40)
+        .y_label_area_size(40)
+        .build_cartesian_2d(-0f64..4f64, -0f64..1f64)?;
+    chart
+        .configure_mesh()
+        .disable_mesh()
+        .x_labels(5)
+        .x_desc("Pan")
+        .y_labels(5)
+        .y_desc("Tilt")
+        .draw()?;
+    chart.draw_series(AreaSeries::new(
+        history_ticks
+            .iter()
+            .zip(context.history.borrow().iter())
+            .map(|(x, y)| (*x, *y)),
+        0.0,
+        MAGENTA,
+    ))?;
+
+    backend.present()?;
+
     test_snapshot(name, &context.history.borrow());
 
     Ok(())
 }
 
-fn generate_script_file(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let script = format!("set xlabel 'Frames'\nset ylabel 'Value'\nset yrange[0:1]\nunset key\nset term svg enhanced\nset output '{}.svg'\nplot '{}.dat' with filledcurves x1\n", name, name);
-    fs::write(dir.join(format!("{}.gnu", name)), script)?;
+fn setup_chart(path: &Path) -> anyhow::Result<DrawingArea<SVGBackend, Shift>> {
+    let backend = SVGBackend::new(path, (600, 480)).into_drawing_area();
+    backend.fill(&WHITE)?;
+    let backend = backend.margin(8, 8, 8, 8);
 
-    Ok(())
-}
-
-fn generate_data_file(
-    dir: &Path,
-    name: &str,
-    values: &[f64],
-    frames: &[f64],
-) -> anyhow::Result<()> {
-    assert_eq!(values.len(), frames.len());
-
-    let data = values
-        .into_iter()
-        .zip(frames)
-        .map(|(value, frame)| format!("{} {}", frame, value))
-        .reduce(|lhs, rhs| lhs.add("\n").add(rhs.as_str()))
-        .unwrap_or_default();
-    fs::write(dir.join(format!("{}.dat", name)), data)?;
-
-    Ok(())
-}
-
-fn generate_plot(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let result = std::process::Command::new("gnuplot")
-        .arg(format!("{}.gnu", name))
-        .current_dir(dir)
-        .spawn()?
-        .wait()?;
-
-    assert!(result.success(), "gnuplot failed to run");
-
-    Ok(())
-}
-
-fn cleanup_sources(dir: &Path, name: &str) -> anyhow::Result<()> {
-    let script = dir.join(format!("{}.gnu", name));
-    std::fs::remove_file(&script)?;
-    let data = dir.join(format!("{}.dat", name));
-    std::fs::remove_file(&data)?;
-
-    Ok(())
+    Ok(backend)
 }
 
 fn test_snapshot(name: &str, values: &[f64]) {

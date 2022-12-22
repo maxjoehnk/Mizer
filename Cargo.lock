@@ -1456,7 +1456,6 @@ checksum = "e77a43b28d0668df09411cb0bc9a8c2adc40f9a048afe863e05fd43251e8e39c"
 dependencies = [
  "cfg-if 1.0.0",
  "num_cpus",
- "serde",
 ]
 
 [[package]]
@@ -1468,6 +1467,7 @@ dependencies = [
  "cfg-if 1.0.0",
  "num_cpus",
  "parking_lot 0.12.0",
+ "serde",
 ]
 
 [[package]]
@@ -3503,7 +3503,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "criterion",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "derive_more",
  "flume",
  "futures",
@@ -3650,7 +3650,7 @@ name = "mizer-connections"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "derive_more",
  "log",
  "mizer-devices",
@@ -3685,7 +3685,7 @@ name = "mizer-devices"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "derive_more",
  "futures",
  "log",
@@ -3762,7 +3762,7 @@ name = "mizer-fixtures"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "futures",
  "indexmap",
  "log",
@@ -4097,7 +4097,7 @@ name = "mizer-pipeline"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "downcast",
  "flume",
  "gstreamer",
@@ -4138,7 +4138,7 @@ name = "mizer-plan"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "itertools",
  "log",
  "mizer-commander",
@@ -4195,7 +4195,6 @@ dependencies = [
 name = "mizer-processing"
 version = "0.1.0"
 dependencies = [
- "dashmap 4.0.2",
  "mizer-clock",
  "mizer-injector",
  "test-case",
@@ -4262,7 +4261,7 @@ name = "mizer-protocol-midi"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "lazy_static",
  "log",
  "midir",
@@ -4334,7 +4333,7 @@ name = "mizer-runtime"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "downcast",
  "flume",
  "insta",
@@ -4387,7 +4386,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "bezier-nd",
- "dashmap 4.0.2",
+ "dashmap 5.2.0",
  "geo-nd",
  "indexmap",
  "itertools",

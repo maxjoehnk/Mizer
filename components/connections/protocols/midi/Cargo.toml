@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 midir = "0.8"
 log = "0.4"
-dashmap = "4"
+dashmap = "5"
 mizer-processing = { path = "../../../../runtime/processing" }
 mizer-module = { path = "../../../../runtime/module" }
 mizer-midi-device-profiles = { path = "device-profiles" }

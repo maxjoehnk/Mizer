@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-dashmap = "4"
+dashmap = "5"
 log = "0.4"
 mizer-protocol-laser = { path = "../protocols/laser" }
 mizer-gamepads = { path = "./gamepads" }

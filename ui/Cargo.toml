@@ -9,7 +9,7 @@ anyhow = "1"
 log = "0.4"
 mizer-api = { path = "../api" }
 protobuf = "2.28"
-smol = "1.2"
+smol = "1.3"
 nativeshell = { git = "https://github.com/nativeshell/nativeshell", rev = "b9199bf" }
 mizer-util = { path = "../util" }
 mizer-ui-ffi = { path = "ffi" }

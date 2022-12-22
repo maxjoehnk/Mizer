@@ -114,6 +114,7 @@ impl PipelineAccess {
             PlanScreen(node) => self.add_node(path, node),
             Delay(node) => self.add_node(path, node),
             Ramp(node) => self.add_node(path, node),
+            Noise(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

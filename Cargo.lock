@@ -4174,6 +4174,8 @@ dependencies = [
  "itertools",
  "log",
  "mizer-node",
+ "mizer-util",
+ "rand 0.8.4",
  "serde",
  "test-case",
 ]

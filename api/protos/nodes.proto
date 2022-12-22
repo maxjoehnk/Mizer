@@ -132,6 +132,7 @@ message Node {
     PlanScreen = 62;
     Delay = 63;
     Ramp = 64;
+    Noise = 65;
   }
 
   enum NodePreviewType {
@@ -197,6 +198,7 @@ message NodeConfig {
     PlanScreenNodeConfig planScreenConfig = 52;
     DelayNodeConfig delayConfig = 53;
     RampNodeConfig rampConfig = 54;
+    NoiseNodeConfig noiseConfig = 55;
   }
 }
 
@@ -449,6 +451,11 @@ message RampNodeConfig {
     double c1a = 5;
     double c1b = 6;
   }
+}
+
+message NoiseNodeConfig {
+  uint64 tick_rate = 1;
+  bool fade = 2;
 }
 
 message NodePosition {

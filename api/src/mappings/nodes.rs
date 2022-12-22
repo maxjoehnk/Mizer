@@ -55,6 +55,7 @@ impl From<mizer_nodes::Node> for NodeConfig_oneof_type {
             PlanScreen(node) => Self::planScreenConfig(node.into()),
             Delay(node) => Self::delayConfig(node.into()),
             Ramp(node) => Self::rampConfig(node.into()),
+            Noise(node) => Self::noiseConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -122,6 +123,7 @@ impl From<NodeConfig_oneof_type> for mizer_nodes::Node {
             NodeConfig_oneof_type::valueConfig(node) => Self::Value(node.into()),
             NodeConfig_oneof_type::delayConfig(node) => Self::Delay(node.into()),
             NodeConfig_oneof_type::rampConfig(node) => Self::Ramp(node.into()),
+            NodeConfig_oneof_type::noiseConfig(node) => Self::Noise(node.into()),
             NodeConfig_oneof_type::planScreenConfig(node) => Self::PlanScreen(node.into()),
         }
     }
@@ -1254,6 +1256,25 @@ impl From<mizer_nodes::RampStep> for RampNodeConfig_RampStep {
     }
 }
 
+impl From<NoiseNodeConfig> for mizer_nodes::NoiseNode {
+    fn from(config: NoiseNodeConfig) -> Self {
+        Self {
+            tick_rate: config.tick_rate,
+            fade: config.fade,
+        }
+    }
+}
+
+impl From<mizer_nodes::NoiseNode> for NoiseNodeConfig {
+    fn from(node: mizer_nodes::NoiseNode) -> Self {
+        Self {
+            tick_rate: node.tick_rate,
+            fade: node.fade,
+            ..Default::default()
+        }
+    }
+}
+
 impl From<NodeType> for Node_NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1301,6 +1322,7 @@ impl From<NodeType> for Node_NodeType {
             NodeType::PlanScreen => Node_NodeType::PlanScreen,
             NodeType::Delay => Node_NodeType::Delay,
             NodeType::Ramp => Node_NodeType::Ramp,
+            NodeType::Noise => Node_NodeType::Noise,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1353,6 +1375,7 @@ impl From<Node_NodeType> for NodeType {
             Node_NodeType::PlanScreen => NodeType::PlanScreen,
             Node_NodeType::Delay => NodeType::Delay,
             Node_NodeType::Ramp => NodeType::Ramp,
+            Node_NodeType::Noise => NodeType::Noise,
         }
     }
 }

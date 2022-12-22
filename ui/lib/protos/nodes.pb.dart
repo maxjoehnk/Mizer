@@ -1059,6 +1059,7 @@ enum NodeConfig_Type {
   planScreenConfig, 
   delayConfig, 
   rampConfig, 
+  noiseConfig, 
   notSet
 }
 
@@ -1108,10 +1109,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     52 : NodeConfig_Type.planScreenConfig,
     53 : NodeConfig_Type.delayConfig,
     54 : NodeConfig_Type.rampConfig,
+    55 : NodeConfig_Type.noiseConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1156,6 +1158,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<PlanScreenNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
     ..aOM<DelayNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', protoName: 'delayConfig', subBuilder: DelayNodeConfig.create)
     ..aOM<RampNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', protoName: 'rampConfig', subBuilder: RampNodeConfig.create)
+    ..aOM<NoiseNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', protoName: 'noiseConfig', subBuilder: NoiseNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1205,6 +1208,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     PlanScreenNodeConfig? planScreenConfig,
     DelayNodeConfig? delayConfig,
     RampNodeConfig? rampConfig,
+    NoiseNodeConfig? noiseConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1338,6 +1342,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (rampConfig != null) {
       _result.rampConfig = rampConfig;
+    }
+    if (noiseConfig != null) {
+      _result.noiseConfig = noiseConfig;
     }
     return _result;
   }
@@ -1848,6 +1855,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearRampConfig() => clearField(54);
   @$pb.TagNumber(54)
   RampNodeConfig ensureRampConfig() => $_ensure(43);
+
+  @$pb.TagNumber(55)
+  NoiseNodeConfig get noiseConfig => $_getN(44);
+  @$pb.TagNumber(55)
+  set noiseConfig(NoiseNodeConfig v) { setField(55, v); }
+  @$pb.TagNumber(55)
+  $core.bool hasNoiseConfig() => $_has(44);
+  @$pb.TagNumber(55)
+  void clearNoiseConfig() => clearField(55);
+  @$pb.TagNumber(55)
+  NoiseNodeConfig ensureNoiseConfig() => $_ensure(44);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4337,6 +4355,67 @@ class RampNodeConfig extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<RampNodeConfig_RampStep> get steps => $_getList(0);
+}
+
+class NoiseNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NoiseNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tickRate', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fade')
+    ..hasRequiredFields = false
+  ;
+
+  NoiseNodeConfig._() : super();
+  factory NoiseNodeConfig({
+    $fixnum.Int64? tickRate,
+    $core.bool? fade,
+  }) {
+    final _result = create();
+    if (tickRate != null) {
+      _result.tickRate = tickRate;
+    }
+    if (fade != null) {
+      _result.fade = fade;
+    }
+    return _result;
+  }
+  factory NoiseNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NoiseNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NoiseNodeConfig clone() => NoiseNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NoiseNodeConfig copyWith(void Function(NoiseNodeConfig) updates) => super.copyWith((message) => updates(message as NoiseNodeConfig)) as NoiseNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static NoiseNodeConfig create() => NoiseNodeConfig._();
+  NoiseNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<NoiseNodeConfig> createRepeated() => $pb.PbList<NoiseNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static NoiseNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NoiseNodeConfig>(create);
+  static NoiseNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get tickRate => $_getI64(0);
+  @$pb.TagNumber(1)
+  set tickRate($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTickRate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTickRate() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get fade => $_getBF(1);
+  @$pb.TagNumber(2)
+  set fade($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFade() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFade() => clearField(2);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

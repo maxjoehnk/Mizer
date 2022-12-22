@@ -17,6 +17,7 @@ import 'properties/groups/math_properties.dart';
 import 'properties/groups/merge_properties.dart';
 import 'properties/groups/mqtt_input_properties.dart';
 import 'properties/groups/mqtt_output_properties.dart';
+import 'properties/groups/noise_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/ramp_properties.dart';
@@ -172,6 +173,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(RampProperties(node.config.rampConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(rampConfig: config)))));
+    }
+    if (node.config.hasNoiseConfig()) {
+      widgets.add(NoiseProperties(node.config.noiseConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(noiseConfig: config)))));
     }
     return widgets;
   }

@@ -46,6 +46,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.PlanScreen: "Plan Screen",
   Node_NodeType.Delay: "Delay",
   Node_NodeType.Ramp: "Ramp",
+  Node_NodeType.Noise: "Noise",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -66,6 +67,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Value,
     Node_NodeType.Delay,
     Node_NodeType.Ramp,
+    Node_NodeType.Noise,
   ]),
   buildCategory("Connections", [
     Node_NodeType.DmxOutput,

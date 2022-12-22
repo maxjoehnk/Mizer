@@ -40,4 +40,4 @@ mizer-node = { path = "../node", features = ["test"] }
 mizer-util = { path = "../../../util", features = ["test"] }
 test-case = "2.2"
 insta = "1.23"
-plotters = "0.3"
+plotters = { version = "0.3", default-features = false, features = ["svg_backend", "area_series"] }

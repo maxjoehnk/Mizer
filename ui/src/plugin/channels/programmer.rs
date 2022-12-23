@@ -37,16 +37,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
             }
             "selectFixtures" => match call.arguments::<SelectFixturesRequest>() {
                 Ok(req) => {
-                    let fixture_ids = req.fixtures.into_vec();
-                    self.select_fixtures(fixture_ids);
+                    self.select_fixtures(req.fixtures);
                     reply.send_ok(Value::Null)
                 }
                 Err(err) => reply.respond_error(err),
             },
             "unselectFixtures" => match call.arguments::<UnselectFixturesRequest>() {
                 Ok(req) => {
-                    let fixture_ids = req.fixtures.into_vec();
-                    self.unselect_fixtures(fixture_ids);
+                    self.unselect_fixtures(req.fixtures);
                     reply.send_ok(Value::Null)
                 }
                 Err(err) => reply.respond_error(err),
@@ -159,15 +157,8 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
 
     fn store(&self, req: StoreRequest) {
         log::trace!("ProgrammerChannel::store({:?})", req);
-        self.handler.store(
-            req.sequence_id,
-            req.store_mode,
-            req._cue_id.map(|cue_id| {
-                let StoreRequest_oneof__cue_id::cue_id(cue_id) = cue_id;
-
-                cue_id
-            }),
-        );
+        self.handler
+            .store(req.sequence_id, req.store_mode.unwrap(), req.cue_id);
     }
 
     fn get_programmer_pointer(&self) -> anyhow::Result<i64> {
@@ -179,8 +170,7 @@ impl<R: RuntimeApi + 'static> ProgrammerChannel<R> {
     }
 
     fn assign_fixtures_to_group(&self, req: AssignFixturesToGroupRequest) {
-        self.handler
-            .assign_fixtures_to_group(req.id, req.fixtures.into_vec());
+        self.handler.assign_fixtures_to_group(req.id, req.fixtures);
     }
 
     fn assign_fixture_selection_to_group(&self, group_id: u32) {

@@ -94,12 +94,12 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     }
 
     pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
-        if let Some(Connection_oneof_connection::dmx(dmx)) = connection.connection {
+        if let Some(connection::Connection::Dmx(dmx)) = connection.connection {
             self.runtime
                 .run_command(DeleteOutputCommand { name: dmx.outputId })?;
 
             Ok(())
-        } else if let Some(Connection_oneof_connection::mqtt(mqtt)) = connection.connection {
+        } else if let Some(connection::Connection::Mqtt(mqtt)) = connection.connection {
             self.runtime.run_command(DeleteMqttConnectionCommand {
                 id: mqtt.connectionId,
             })?;
@@ -112,8 +112,8 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
 
     pub fn configure_connection(&self, update: ConfigureConnectionRequest) -> anyhow::Result<()> {
         match update.config {
-            Some(ConfigureConnectionRequest_oneof_config::dmx(connection)) => {
-                if let Some(DmxConnection_oneof_config::artnet(config)) = connection.config {
+            Some(configure_connection_request::Config::Dmx(connection)) => {
+                if let Some(dmx_connection::Config::Artnet(config)) = connection.config {
                     self.runtime.run_command(ConfigureArtnetOutputCommand {
                         id: connection.outputId,
                         name: config.name,
@@ -126,20 +126,12 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                     unimplemented!()
                 }
             }
-            Some(ConfigureConnectionRequest_oneof_config::mqtt(connection)) => {
+            Some(configure_connection_request::Config::Mqtt(connection)) => {
                 self.runtime.run_command(ConfigureMqttConnectionCommand {
                     connection_id: connection.connectionId,
                     url: connection.url,
-                    username: connection._username.map(|username| {
-                        let MqttConnection_oneof__username::username(username) = username;
-
-                        username
-                    }),
-                    password: connection._password.map(|password| {
-                        let MqttConnection_oneof__password::password(password) = password;
-
-                        password
-                    }),
+                    username: connection.username,
+                    password: connection.password,
                 })?;
 
                 Ok(())

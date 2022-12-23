@@ -1,7 +1,7 @@
 use crate::models::*;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
-use protobuf::SingularPtrField;
+use protobuf::MessageField;
 
 #[derive(Clone)]
 pub struct SessionHandler<R: RuntimeApi> {
@@ -19,20 +19,19 @@ impl<R: RuntimeApi> SessionHandler<R> {
             .observe_session()?
             .into_stream()
             .map(|state| Session {
-                _filePath: state.project_path.map(Session_oneof__filePath::from),
-                projectHistory: state.project_history.into(),
+                filePath: state.project_path,
+                projectHistory: state.project_history,
                 devices: vec![SessionDevice {
                     name: "max-arch".into(),
                     ping: 0f64,
-                    ips: vec!["192.168.1.13".to_string()].into(),
-                    clock: SingularPtrField::some(DeviceClock {
+                    ips: vec!["192.168.1.13".to_string()],
+                    clock: MessageField::some(DeviceClock {
                         drift: 0f64,
                         master: true,
                         ..Default::default()
                     }),
                     ..Default::default()
-                }]
-                .into(),
+                }],
                 ..Default::default()
             });
 

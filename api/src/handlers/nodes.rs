@@ -6,6 +6,7 @@ use mizer_node::{NodePath, NodeType};
 use mizer_nodes::ContainerNode;
 use mizer_runtime::NodeDowncast;
 use pinboard::NonEmptyPinboard;
+use protobuf::{EnumOrUnknown, MessageField};
 use std::sync::Arc;
 
 #[derive(Clone)]
@@ -69,32 +70,29 @@ impl<R: RuntimeApi> NodesHandler<R> {
                 ..Default::default()
             };
             let config = NodeConfig {
-                field_type: Some(NodeConfig_oneof_type::containerConfig(config)),
+                type_: Some(node_config::Type::ContainerConfig(config)),
                 ..Default::default()
             };
             let node = map_node_descriptor_with_config(node, config);
             res.nodes.push(node);
         }
         for channel in self.runtime.links() {
-            let mut conn = NodeConnection {
+            res.channels.push(NodeConnection {
                 sourceNode: channel.source.to_string(),
+                sourcePort: MessageField::some(Port {
+                    protocol: EnumOrUnknown::new(channel.port_type.into()),
+                    name: channel.source_port.to_string(),
+                    ..Default::default()
+                }),
                 targetNode: channel.target.to_string(),
-                protocol: channel.port_type.into(),
+                targetPort: MessageField::some(Port {
+                    protocol: EnumOrUnknown::new(channel.port_type.into()),
+                    name: channel.target_port.to_string(),
+                    ..Default::default()
+                }),
+                protocol: EnumOrUnknown::new(channel.port_type.into()),
                 ..Default::default()
-            };
-            let source_port = Port {
-                protocol: channel.port_type.into(),
-                name: channel.source_port.to_string(),
-                ..Default::default()
-            };
-            conn.set_sourcePort(source_port);
-            let target_port = Port {
-                protocol: channel.port_type.into(),
-                name: channel.target_port.to_string(),
-                ..Default::default()
-            };
-            conn.set_targetPort(target_port);
-            res.channels.push(conn);
+            });
         }
 
         res
@@ -113,13 +111,9 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         let cmd = AddNodeCommand {
             designer,
-            node_type: request.field_type.into(),
+            node_type: request.type_.unwrap().into(),
             node: None,
-            parent: request._parent.map(|path| {
-                let AddNodeRequest_oneof__parent::parent(path) = path;
-
-                path.into()
-            }),
+            parent: request.parent.map(NodePath::from),
         };
         let descriptor = self.runtime.run_command(cmd).unwrap();
 
@@ -150,7 +144,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {
         self.runtime.run_command(UpdateNodeCommand {
             path: request.path.into(),
-            config: request.config.unwrap().field_type.unwrap().into(),
+            config: request.config.unwrap().type_.unwrap().into(),
         })?;
 
         Ok(())
@@ -169,11 +163,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         self.runtime.run_command(ShowNodeCommand {
             path: request.path.into(),
             position: request.position.unwrap().into(),
-            parent: request._parent.map(|path| {
-                let ShowNodeRequest_oneof__parent::parent(path) = path;
-
-                path.into()
-            }),
+            parent: request.parent.map(NodePath::from),
         })?;
 
         Ok(())
@@ -200,10 +190,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
     pub fn duplicate_node(&self, request: DuplicateNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(DuplicateNodeCommand {
             path: request.path.into(),
-            parent: request._parent.map(|parent| {
-                let DuplicateNodeRequest_oneof__parent::parent(parent) = parent;
-                parent.into()
-            }),
+            parent: request.parent.map(NodePath::from),
         })?;
 
         Ok(())

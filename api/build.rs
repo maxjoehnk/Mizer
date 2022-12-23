@@ -1,8 +1,7 @@
-use protoc_rust::Customize;
-
 fn main() {
     println!("cargo:rerun-if-changed=protos");
-    protoc_rust::Codegen::new()
+    protobuf_codegen::Codegen::new()
+        .pure()
         .out_dir("src/models")
         .inputs([
             "protos/connections.proto",
@@ -20,10 +19,5 @@ fn main() {
             "protos/mappings.proto",
         ])
         .include("protos")
-        .customize(Customize {
-            serde_derive: Some(true),
-            ..Default::default()
-        })
-        .run()
-        .expect("protoc");
+        .run_from_script();
 }

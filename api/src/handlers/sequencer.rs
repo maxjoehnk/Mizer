@@ -67,7 +67,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .run_command(UpdateCueTriggerCommand {
                 sequence_id: request.sequence,
                 cue_id: request.cue,
-                trigger: request.trigger.into(),
+                trigger: request.trigger.unwrap().into(),
             })
             .unwrap();
     }

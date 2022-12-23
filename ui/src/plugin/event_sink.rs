@@ -2,6 +2,7 @@ use mizer_util::Subscriber;
 use nativeshell::codec::Value;
 use nativeshell::shell::{Context, EventSink, RunLoopSender};
 use nativeshell::util::Capsule;
+use std::fmt::Debug;
 use std::sync::{Arc, Mutex};
 
 pub struct EventSinkSubscriber {
@@ -13,7 +14,7 @@ struct InnerSubscriber {
     sink: EventSink,
 }
 
-impl<E: Send + Sync + protobuf::Message> Subscriber<E> for EventSinkSubscriber {
+impl<E: Send + Sync + protobuf::Message + Debug> Subscriber<E> for EventSinkSubscriber {
     fn next(&self, event: E) {
         log::trace!("send msg {:?}", event);
         if let Ok(msg) = event.write_to_bytes() {

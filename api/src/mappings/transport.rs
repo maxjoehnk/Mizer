@@ -1,13 +1,13 @@
 use crate::models::{Timecode, Transport, TransportState};
 use mizer_clock::{ClockSnapshot, ClockState};
-use protobuf::SingularPtrField;
+use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<ClockSnapshot> for Transport {
     fn from(snapshot: ClockSnapshot) -> Self {
         Transport {
             speed: snapshot.speed,
-            state: snapshot.state.into(),
-            timecode: SingularPtrField::some(snapshot.time.into()),
+            state: EnumOrUnknown::new(snapshot.state.into()),
+            timecode: MessageField::some(snapshot.time.into()),
             ..Default::default()
         }
     }

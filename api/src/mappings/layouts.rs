@@ -1,5 +1,5 @@
-use crate::models::layouts::*;
-use protobuf::SingularPtrField;
+use crate::models::*;
+use protobuf::MessageField;
 
 impl From<mizer_layouts::Layout> for Layout {
     fn from(layout: mizer_layouts::Layout) -> Self {
@@ -20,9 +20,9 @@ impl From<mizer_layouts::ControlConfig> for LayoutControl {
         Self {
             node: config.node.0,
             label: config.label.unwrap_or_default(),
-            position: SingularPtrField::some(config.position.into()),
-            size: SingularPtrField::some(config.size.into()),
-            decoration: SingularPtrField::some(config.decoration.into()),
+            position: MessageField::some(config.position.into()),
+            size: MessageField::some(config.size.into()),
+            decoration: MessageField::some(config.decoration.into()),
             ..Default::default()
         }
     }

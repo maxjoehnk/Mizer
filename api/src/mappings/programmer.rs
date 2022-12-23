@@ -1,51 +1,50 @@
-use crate::models::{FixtureControl, FixtureId};
 use mizer_fixtures::definition::FixtureControlValue;
-use protobuf::SingularPtrField;
+use protobuf::{EnumOrUnknown, MessageField};
 
-use crate::models::programmer::*;
+use crate::models::*;
 
 impl WriteControlRequest {
     pub fn as_controls(self) -> FixtureControlValue {
-        use crate::models::FixtureControl::*;
+        use crate::models::fixtures::FixtureControl::*;
 
-        match (self.control, self.value) {
-            (INTENSITY, Some(WriteControlRequest_oneof_value::fader(value))) => {
+        match (self.control.unwrap(), self.value) {
+            (INTENSITY, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Intensity(value)
             }
-            (SHUTTER, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (SHUTTER, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Shutter(value)
             }
-            (FOCUS, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (FOCUS, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Focus(value)
             }
-            (ZOOM, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (ZOOM, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Zoom(value)
             }
-            (PRISM, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (PRISM, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Iris(value)
             }
-            (IRIS, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (IRIS, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Iris(value)
             }
-            (FROST, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (FROST, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Frost(value)
             }
-            (PAN, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (PAN, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Pan(value)
             }
-            (TILT, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (TILT, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Tilt(value)
             }
-            (COLOR_MIXER, Some(WriteControlRequest_oneof_value::color(value))) => {
+            (COLOR_MIXER, Some(write_control_request::Value::Color(value))) => {
                 FixtureControlValue::ColorMixer(value.red, value.green, value.blue)
             }
-            (COLOR_WHEEL, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (COLOR_WHEEL, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::ColorWheel(value)
             }
-            (GENERIC, Some(WriteControlRequest_oneof_value::generic(value))) => {
+            (GENERIC, Some(write_control_request::Value::Generic(value))) => {
                 FixtureControlValue::Generic(value.name, value.value)
             }
-            (GOBO, Some(WriteControlRequest_oneof_value::fader(value))) => {
+            (GOBO, Some(write_control_request::Value::Fader(value))) => {
                 FixtureControlValue::Gobo(value)
             }
             _ => unreachable!(),
@@ -74,8 +73,8 @@ impl From<mizer_fixtures::programmer::ProgrammerState> for ProgrammerState {
 
 impl From<PresetId> for mizer_fixtures::programmer::PresetId {
     fn from(id: PresetId) -> Self {
-        use PresetId_PresetType::*;
-        match id.field_type {
+        use preset_id::PresetType::*;
+        match id.type_.unwrap() {
             Intensity => Self::Intensity(id.id),
             Shutter => Self::Shutter(id.id),
             Color => Self::Color(id.id),
@@ -91,22 +90,22 @@ impl From<mizer_fixtures::programmer::PresetId> for PresetId {
         match id {
             Intensity(id) => Self {
                 id,
-                field_type: PresetId_PresetType::Intensity,
+                type_: EnumOrUnknown::new(preset_id::PresetType::Intensity),
                 ..Default::default()
             },
             Shutter(id) => Self {
                 id,
-                field_type: PresetId_PresetType::Shutter,
+                type_: EnumOrUnknown::new(preset_id::PresetType::Shutter),
                 ..Default::default()
             },
             Color(id) => Self {
                 id,
-                field_type: PresetId_PresetType::Color,
+                type_: EnumOrUnknown::new(preset_id::PresetType::Color),
                 ..Default::default()
             },
             Position(id) => Self {
                 id,
-                field_type: PresetId_PresetType::Position,
+                type_: EnumOrUnknown::new(preset_id::PresetType::Position),
                 ..Default::default()
             },
         }
@@ -126,9 +125,9 @@ impl
         ),
     ) -> Self {
         Self {
-            id: SingularPtrField::some(id.into()),
-            value: Some(Preset_oneof_value::fader(preset.value)),
-            _label: preset.label.map(Preset_oneof__label::label),
+            id: MessageField::some(id.into()),
+            value: Some(preset::Value::Fader(preset.value)),
+            label: preset.label,
             ..Default::default()
         }
     }
@@ -147,15 +146,15 @@ impl
         ),
     ) -> Self {
         Self {
-            id: SingularPtrField::some(id.into()),
-            value: Some(Preset_oneof_value::color(preset.value.into())),
-            _label: preset.label.map(Preset_oneof__label::label),
+            id: MessageField::some(id.into()),
+            value: Some(preset::Value::Color(preset.value.into())),
+            label: preset.label,
             ..Default::default()
         }
     }
 }
 
-impl From<mizer_fixtures::programmer::Color> for Preset_Color {
+impl From<mizer_fixtures::programmer::Color> for preset::Color {
     fn from((red, green, blue): mizer_fixtures::programmer::Color) -> Self {
         Self {
             red,
@@ -179,15 +178,15 @@ impl
         ),
     ) -> Self {
         Self {
-            id: SingularPtrField::some(id.into()),
-            value: Some(Preset_oneof_value::position(preset.value.into())),
-            _label: preset.label.map(Preset_oneof__label::label),
+            id: MessageField::some(id.into()),
+            value: Some(preset::Value::Position(preset.value.into())),
+            label: preset.label,
             ..Default::default()
         }
     }
 }
 
-impl From<mizer_fixtures::programmer::Position> for Preset_Position {
+impl From<mizer_fixtures::programmer::Position> for preset::Position {
     fn from((pan, tilt): mizer_fixtures::programmer::Position) -> Self {
         Self {
             pan,
@@ -213,43 +212,40 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
         let (control, value) = match channel.value {
             Intensity(value) => (
                 FixtureControl::INTENSITY,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Shutter(value) => (
                 FixtureControl::SHUTTER,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
-            Pan(value) => (
-                FixtureControl::PAN,
-                ProgrammerChannel_oneof_value::fader(value),
-            ),
+            Pan(value) => (FixtureControl::PAN, programmer_channel::Value::Fader(value)),
             Tilt(value) => (
                 FixtureControl::TILT,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Focus(value) => (
                 FixtureControl::FOCUS,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Zoom(value) => (
                 FixtureControl::ZOOM,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Prism(value) => (
                 FixtureControl::PRISM,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Iris(value) => (
                 FixtureControl::IRIS,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Frost(value) => (
                 FixtureControl::FROST,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             ColorMixer(red, green, blue) => (
                 FixtureControl::COLOR_MIXER,
-                ProgrammerChannel_oneof_value::color(crate::models::ColorMixerChannel {
+                programmer_channel::Value::Color(crate::models::fixtures::ColorMixerChannel {
                     red,
                     green,
                     blue,
@@ -258,15 +254,15 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
             ),
             ColorWheel(value) => (
                 FixtureControl::COLOR_WHEEL,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Gobo(value) => (
                 FixtureControl::GOBO,
-                ProgrammerChannel_oneof_value::fader(value),
+                programmer_channel::Value::Fader(value),
             ),
             Generic(name, value) => (
                 FixtureControl::GENERIC,
-                ProgrammerChannel_oneof_value::generic(ProgrammerChannel_GenericValue {
+                programmer_channel::Value::Generic(programmer_channel::GenericValue {
                     value,
                     name,
                     ..Default::default()
@@ -276,19 +272,19 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
 
         Self {
             fixtures: channel.fixtures.into_iter().map(FixtureId::from).collect(),
-            control,
+            control: control.into(),
             value: Some(value),
             ..Default::default()
         }
     }
 }
 
-impl From<StoreRequest_Mode> for mizer_command_executor::StoreMode {
-    fn from(mode: StoreRequest_Mode) -> Self {
+impl From<store_request::Mode> for mizer_command_executor::StoreMode {
+    fn from(mode: store_request::Mode) -> Self {
         match mode {
-            StoreRequest_Mode::Merge => Self::Merge,
-            StoreRequest_Mode::AddCue => Self::AddCue,
-            StoreRequest_Mode::Overwrite => Self::Overwrite,
+            store_request::Mode::Merge => Self::Merge,
+            store_request::Mode::AddCue => Self::AddCue,
+            store_request::Mode::Overwrite => Self::Overwrite,
         }
     }
 }

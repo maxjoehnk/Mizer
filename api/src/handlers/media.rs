@@ -28,13 +28,10 @@ impl MediaHandler {
         self.api.send_command(cmd);
 
         let tags = receiver.recv_async().await?;
-        let tags = tags
-            .into_iter()
-            .map(MediaTagWithFiles::from)
-            .collect::<Vec<_>>();
+        let tags = tags.into_iter().map(MediaTagWithFiles::from).collect();
 
         Ok(GroupedMediaFiles {
-            tags: tags.into(),
+            tags,
             ..Default::default()
         })
     }
@@ -45,10 +42,10 @@ impl MediaHandler {
         self.api.send_command(cmd);
 
         let files = receiver.recv_async().await.unwrap();
-        let files = files.into_iter().map(MediaFile::from).collect::<Vec<_>>();
+        let files = files.into_iter().map(MediaFile::from).collect();
 
         Ok(MediaFiles {
-            files: files.into(),
+            files,
             ..Default::default()
         })
     }

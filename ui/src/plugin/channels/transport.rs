@@ -6,7 +6,7 @@ use nativeshell::shell::{
     Context, EngineHandle, EventChannelHandler, EventSink, MethodCallHandler, MethodChannel,
     RegisteredEventChannel,
 };
-use protobuf::ProtobufEnum;
+use protobuf::Enum;
 
 use mizer_api::handlers::TransportHandler;
 use mizer_api::models::TransportState;

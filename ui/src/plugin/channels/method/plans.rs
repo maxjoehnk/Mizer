@@ -140,7 +140,7 @@ impl<R: RuntimeApi + 'static> PlansChannel<R> {
         log::debug!("align_fixtures {req:?}");
         self.handler.align_fixtures(
             req.plan_id,
-            req.direction,
+            req.direction.unwrap(),
             req.groups,
             req.row_gap,
             req.column_gap,

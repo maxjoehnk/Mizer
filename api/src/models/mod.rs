@@ -1,3 +1,5 @@
+// @generated
+
 pub mod connections;
 pub mod effects;
 pub mod fixtures;

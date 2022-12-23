@@ -1,6 +1,6 @@
 use crate::models;
 use mizer_sequencer::effects;
-use protobuf::SingularPtrField;
+use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<effects::Effect> for models::Effect {
     fn from(effect: effects::Effect) -> Self {
@@ -20,7 +20,7 @@ impl From<effects::Effect> for models::Effect {
 impl From<effects::EffectStep> for models::EffectStep {
     fn from(step: effects::EffectStep) -> Self {
         Self {
-            value: SingularPtrField::some(step.value.into()),
+            value: MessageField::some(step.value.into()),
             control_point: Some(step.control_point.into()),
             ..Default::default()
         }
@@ -39,7 +39,7 @@ impl From<models::EffectStep> for effects::EffectStep {
 impl From<effects::EffectChannel> for models::EffectChannel {
     fn from(channel: effects::EffectChannel) -> Self {
         Self {
-            control: channel.control.into(),
+            control: EnumOrUnknown::new(channel.control.into()),
             steps: channel
                 .steps
                 .into_iter()
@@ -50,18 +50,18 @@ impl From<effects::EffectChannel> for models::EffectChannel {
     }
 }
 
-impl From<effects::EffectControlPoint> for models::EffectStep_oneof_control_point {
+impl From<effects::EffectControlPoint> for models::effect_step::Control_point {
     fn from(control_point: effects::EffectControlPoint) -> Self {
         match control_point {
-            effects::EffectControlPoint::Simple => Self::simple(Default::default()),
+            effects::EffectControlPoint::Simple => Self::Simple(Default::default()),
             effects::EffectControlPoint::Quadratic(c) => {
-                Self::quadratic(models::QuadraticControlPoint {
+                Self::Quadratic(models::QuadraticControlPoint {
                     c0a: c[0],
                     c0b: c[1],
                     ..Default::default()
                 })
             }
-            effects::EffectControlPoint::Cubic(c0, c1) => Self::cubic(models::CubicControlPoint {
+            effects::EffectControlPoint::Cubic(c0, c1) => Self::Cubic(models::CubicControlPoint {
                 c0a: c0[0],
                 c0b: c0[1],
                 c1a: c1[0],
@@ -72,14 +72,14 @@ impl From<effects::EffectControlPoint> for models::EffectStep_oneof_control_poin
     }
 }
 
-impl From<models::EffectStep_oneof_control_point> for effects::EffectControlPoint {
-    fn from(control_point: models::EffectStep_oneof_control_point) -> Self {
+impl From<models::effect_step::Control_point> for effects::EffectControlPoint {
+    fn from(control_point: models::effect_step::Control_point) -> Self {
         match control_point {
-            models::EffectStep_oneof_control_point::simple(_) => Self::Simple,
-            models::EffectStep_oneof_control_point::quadratic(point) => {
+            models::effect_step::Control_point::Simple(_) => Self::Simple,
+            models::effect_step::Control_point::Quadratic(point) => {
                 Self::Quadratic([point.c0a, point.c0b])
             }
-            models::EffectStep_oneof_control_point::cubic(point) => {
+            models::effect_step::Control_point::Cubic(point) => {
                 Self::Cubic([point.c0a, point.c0b], [point.c1a, point.c1b])
             }
         }

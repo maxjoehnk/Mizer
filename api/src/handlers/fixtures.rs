@@ -1,5 +1,5 @@
 use mizer_command_executor::*;
-use protobuf::SingularPtrField;
+use protobuf::MessageField;
 use regex::Regex;
 use std::ops::Deref;
 
@@ -48,8 +48,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 controls: FixtureControls::with_values(
                     fixture.deref() as &mizer_fixtures::fixture::Fixture,
                     fixture.current_mode.controls.clone(),
-                )
-                .into(),
+                ),
                 children: fixture
                     .current_mode
                     .sub_fixtures
@@ -60,12 +59,11 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                         controls: FixtureControls::with_values(
                             &fixture.sub_fixture(sub_fixture.id).unwrap(),
                             sub_fixture.controls.clone(),
-                        )
-                        .into(),
+                        ),
                         ..Default::default()
                     })
                     .collect(),
-                config: SingularPtrField::some(FixtureConfig {
+                config: MessageField::some(FixtureConfig {
                     invert_pan: fixture.configuration.invert_pan,
                     invert_tilt: fixture.configuration.invert_tilt,
                     ..Default::default()
@@ -83,10 +81,10 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             .list_definitions()
             .into_iter()
             .map(FixtureDefinition::from)
-            .collect::<Vec<_>>();
+            .collect();
 
         FixtureDefinitions {
-            definitions: definitions.into(),
+            definitions,
             ..Default::default()
         }
     }
@@ -115,25 +113,13 @@ impl<R: RuntimeApi> FixturesHandler<R> {
     pub fn update_fixture(&self, request: UpdateFixtureRequest) -> anyhow::Result<()> {
         let cmd = UpdateFixtureCommand {
             fixture_id: request.fixtureId,
-            invert_pan: request._invert_pan.map(|value| {
-                let UpdateFixtureRequest_oneof__invert_pan::invert_pan(value) = value;
-
-                value
-            }),
-            invert_tilt: request._invert_tilt.map(|value| {
-                let UpdateFixtureRequest_oneof__invert_tilt::invert_tilt(value) = value;
-
-                value
-            }),
-            name: request._name.map(|value| {
-                let UpdateFixtureRequest_oneof__name::name(name) = value;
-                name
-            }),
-            address: request._address.map(|value| {
-                let UpdateFixtureRequest_oneof__address::address(address) = value;
-
-                (address.universe as u16, address.channel as u16)
-            }),
+            invert_pan: request.invert_pan,
+            invert_tilt: request.invert_tilt,
+            name: request.name,
+            address: request
+                .address
+                .into_option()
+                .map(|address| (address.universe as u16, address.channel as u16)),
         };
         self.runtime.run_command(cmd)?;
 

@@ -1,7 +1,7 @@
-use crate::models::media::*;
+use crate::models::*;
 use mizer_media::api::TagCreateModel;
 use mizer_media::documents::*;
-use protobuf::SingularPtrField;
+use protobuf::MessageField;
 use std::path::Path;
 
 impl From<CreateMediaTag> for TagCreateModel {
@@ -28,12 +28,7 @@ impl From<MediaDocument> for MediaFile {
         MediaFile {
             id: media.id.to_string(),
             name: media.name,
-            tags: media
-                .tags
-                .into_iter()
-                .map(MediaTag::from)
-                .collect::<Vec<_>>()
-                .into(),
+            tags: media.tags.into_iter().map(MediaTag::from).collect(),
             contentUrl: content_url,
             thumbnailUrl: format!("http://localhost:50050/thumbnails/{}", thumbnail_path),
             ..Default::default()
@@ -63,17 +58,12 @@ impl From<MediaTag> for AttachedTag {
 impl From<TagDocument> for MediaTagWithFiles {
     fn from(tag: TagDocument) -> Self {
         MediaTagWithFiles {
-            tag: SingularPtrField::some(MediaTag {
+            tag: MessageField::some(MediaTag {
                 name: tag.name,
                 id: tag.id.to_string(),
                 ..Default::default()
             }),
-            files: tag
-                .media
-                .into_iter()
-                .map(MediaFile::from)
-                .collect::<Vec<_>>()
-                .into(),
+            files: tag.media.into_iter().map(MediaFile::from).collect(),
             ..Default::default()
         }
     }

@@ -88,7 +88,7 @@ impl<R: RuntimeApi> PlansHandler<R> {
     pub fn align_fixtures(
         &self,
         plan_id: String,
-        direction: AlignFixturesRequest_AlignDirection,
+        direction: align_fixtures_request::AlignDirection,
         groups: u32,
         row_gap: u32,
         column_gap: u32,

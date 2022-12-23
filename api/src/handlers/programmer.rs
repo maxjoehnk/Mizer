@@ -71,7 +71,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
-    pub fn store(&self, sequence_id: u32, store_mode: StoreRequest_Mode, cue_id: Option<u32>) {
+    pub fn store(&self, sequence_id: u32, store_mode: store_request::Mode, cue_id: Option<u32>) {
         let (controls, effects) = {
             let programmer = self.fixture_manager.get_programmer();
             let controls = programmer.get_controls();

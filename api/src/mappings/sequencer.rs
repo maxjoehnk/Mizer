@@ -1,7 +1,7 @@
 use mizer_sequencer::SequencerValue;
+use protobuf::{EnumOrUnknown, MessageField};
 
 use crate::models::*;
-use protobuf::SingularPtrField;
 
 impl From<mizer_sequencer::Sequence> for Sequence {
     fn from(sequence: mizer_sequencer::Sequence) -> Self {
@@ -21,19 +21,17 @@ impl From<mizer_sequencer::Cue> for Cue {
         Self {
             id: cue.id,
             name: cue.name,
-            trigger: SingularPtrField::some(CueTrigger {
-                field_type: cue.trigger.into(),
-                _time: cue
-                    .trigger_time
-                    .map(|time| CueTrigger_oneof__time::time(CueTime::from(time))),
+            trigger: MessageField::some(CueTrigger {
+                type_: EnumOrUnknown::new(cue.trigger.into()),
+                time: cue.trigger_time.map(|time| time.into()).into(),
                 ..Default::default()
             }),
             // field_loop: matches!(cue.loop_mode, mizer_sequencer::LoopMode::JumpTo(_)),
             controls: cue.controls.into_iter().map(CueControl::from).collect(),
             // effects: cue.effects.into_iter().map(CueEffect::from).collect(),
-            cue_timings: SingularPtrField::some(CueTimings {
-                fade: SingularPtrField::some(CueTimer::from(cue.cue_fade)),
-                delay: SingularPtrField::some(CueTimer::from(cue.cue_delay)),
+            cue_timings: MessageField::some(CueTimings {
+                fade: MessageField::some(CueTimer::from(cue.cue_fade)),
+                delay: MessageField::some(CueTimer::from(cue.cue_delay)),
                 ..Default::default()
             }),
             ..Default::default()
@@ -41,7 +39,7 @@ impl From<mizer_sequencer::Cue> for Cue {
     }
 }
 
-impl From<mizer_sequencer::CueTrigger> for CueTrigger_Type {
+impl From<mizer_sequencer::CueTrigger> for cue_trigger::Type {
     fn from(trigger: mizer_sequencer::CueTrigger) -> Self {
         use mizer_sequencer::CueTrigger::*;
 
@@ -55,9 +53,9 @@ impl From<mizer_sequencer::CueTrigger> for CueTrigger_Type {
     }
 }
 
-impl From<CueTrigger_Type> for mizer_sequencer::CueTrigger {
-    fn from(trigger: CueTrigger_Type) -> Self {
-        use CueTrigger_Type::*;
+impl From<cue_trigger::Type> for mizer_sequencer::CueTrigger {
+    fn from(trigger: cue_trigger::Type) -> Self {
+        use cue_trigger::Type::*;
 
         match trigger {
             GO => Self::Go,
@@ -72,8 +70,8 @@ impl From<CueTrigger_Type> for mizer_sequencer::CueTrigger {
 impl From<mizer_sequencer::CueControl> for CueControl {
     fn from(channel: mizer_sequencer::CueControl) -> Self {
         Self {
-            field_type: channel.control.into(),
-            value: SingularPtrField::some(channel.value.into()),
+            type_: EnumOrUnknown::new(channel.control.into()),
+            value: MessageField::some(channel.value.into()),
             fixtures: channel.fixtures.into_iter().map(FixtureId::from).collect(),
             ..Default::default()
         }
@@ -84,11 +82,11 @@ impl From<mizer_sequencer::SequencerValue<f64>> for CueValue {
     fn from(value: mizer_sequencer::SequencerValue<f64>) -> Self {
         match value {
             SequencerValue::Direct(value) => CueValue {
-                value: Some(CueValue_oneof_value::direct(value)),
+                value: Some(cue_value::Value::Direct(value)),
                 ..Default::default()
             },
             SequencerValue::Range((from, to)) => CueValue {
-                value: Some(CueValue_oneof_value::range(CueValueRange {
+                value: Some(cue_value::Value::Range(CueValueRange {
                     from,
                     to,
                     ..Default::default()
@@ -102,8 +100,8 @@ impl From<mizer_sequencer::SequencerValue<f64>> for CueValue {
 impl From<CueValue> for mizer_sequencer::SequencerValue<f64> {
     fn from(value: CueValue) -> Self {
         match value.value.unwrap() {
-            CueValue_oneof_value::direct(value) => SequencerValue::Direct(value),
-            CueValue_oneof_value::range(range) => SequencerValue::Range((range.from, range.to)),
+            cue_value::Value::Direct(value) => SequencerValue::Direct(value),
+            cue_value::Value::Range(range) => SequencerValue::Range((range.from, range.to)),
         }
     }
 }
@@ -119,16 +117,16 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
             },
             Some(SequencerValue::Direct(SequencerTime::Seconds(value))) => CueTimer {
                 hasTimer: true,
-                timer: Some(CueTimer_oneof_timer::direct(CueTime {
-                    time: Some(CueTime_oneof_time::seconds(value)),
+                timer: Some(cue_timer::Timer::Direct(CueTime {
+                    time: Some(cue_time::Time::Seconds(value)),
                     ..Default::default()
                 })),
                 ..Default::default()
             },
             Some(SequencerValue::Direct(SequencerTime::Beats(value))) => CueTimer {
                 hasTimer: true,
-                timer: Some(CueTimer_oneof_timer::direct(CueTime {
-                    time: Some(CueTime_oneof_time::beats(value)),
+                timer: Some(cue_timer::Timer::Direct(CueTime {
+                    time: Some(cue_time::Time::Beats(value)),
                     ..Default::default()
                 })),
                 ..Default::default()
@@ -138,13 +136,13 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
                 SequencerTime::Seconds(to),
             ))) => CueTimer {
                 hasTimer: true,
-                timer: Some(CueTimer_oneof_timer::range(CueTimerRange {
-                    from: SingularPtrField::some(CueTime {
-                        time: Some(CueTime_oneof_time::seconds(from)),
+                timer: Some(cue_timer::Timer::Range(CueTimerRange {
+                    from: MessageField::some(CueTime {
+                        time: Some(cue_time::Time::Seconds(from)),
                         ..Default::default()
                     }),
-                    to: SingularPtrField::some(CueTime {
-                        time: Some(CueTime_oneof_time::seconds(to)),
+                    to: MessageField::some(CueTime {
+                        time: Some(cue_time::Time::Seconds(to)),
                         ..Default::default()
                     }),
                     ..Default::default()
@@ -154,13 +152,13 @@ impl From<Option<SequencerValue<mizer_sequencer::SequencerTime>>> for CueTimer {
             Some(SequencerValue::Range((SequencerTime::Beats(from), SequencerTime::Beats(to)))) => {
                 CueTimer {
                     hasTimer: true,
-                    timer: Some(CueTimer_oneof_timer::range(CueTimerRange {
-                        from: SingularPtrField::some(CueTime {
-                            time: Some(CueTime_oneof_time::beats(from)),
+                    timer: Some(cue_timer::Timer::Range(CueTimerRange {
+                        from: MessageField::some(CueTime {
+                            time: Some(cue_time::Time::Beats(from)),
                             ..Default::default()
                         }),
-                        to: SingularPtrField::some(CueTime {
-                            time: Some(CueTime_oneof_time::beats(to)),
+                        to: MessageField::some(CueTime {
+                            time: Some(cue_time::Time::Beats(to)),
                             ..Default::default()
                         }),
                         ..Default::default()
@@ -177,8 +175,8 @@ impl From<CueTimer> for Option<SequencerValue<mizer_sequencer::SequencerTime>> {
     fn from(timer: CueTimer) -> Self {
         match timer.timer {
             None => None,
-            Some(CueTimer_oneof_timer::direct(time)) => Some(SequencerValue::Direct(time.into())),
-            Some(CueTimer_oneof_timer::range(range)) => Some(SequencerValue::Range((
+            Some(cue_timer::Timer::Direct(time)) => Some(SequencerValue::Direct(time.into())),
+            Some(cue_timer::Timer::Range(range)) => Some(SequencerValue::Range((
                 range.from.unwrap().into(),
                 range.to.unwrap().into(),
             ))),
@@ -189,8 +187,8 @@ impl From<CueTimer> for Option<SequencerValue<mizer_sequencer::SequencerTime>> {
 impl From<CueTime> for mizer_sequencer::SequencerTime {
     fn from(time: CueTime) -> Self {
         match time.time.unwrap() {
-            CueTime_oneof_time::seconds(seconds) => Self::Seconds(seconds),
-            CueTime_oneof_time::beats(beats) => Self::Beats(beats),
+            cue_time::Time::Seconds(seconds) => Self::Seconds(seconds),
+            cue_time::Time::Beats(beats) => Self::Beats(beats),
         }
     }
 }
@@ -199,18 +197,18 @@ impl From<mizer_sequencer::SequencerTime> for CueTime {
     fn from(time: mizer_sequencer::SequencerTime) -> Self {
         match time {
             mizer_sequencer::SequencerTime::Seconds(seconds) => Self {
-                time: Some(CueTime_oneof_time::seconds(seconds)),
+                time: Some(cue_time::Time::Seconds(seconds)),
                 ..Default::default()
             },
             mizer_sequencer::SequencerTime::Beats(beats) => Self {
-                time: Some(CueTime_oneof_time::beats(beats)),
+                time: Some(cue_time::Time::Beats(beats)),
                 ..Default::default()
             },
         }
     }
 }
 
-impl From<mizer_fixtures::definition::FixtureFaderControl> for CueControl_Type {
+impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type {
     fn from(fixture_control: mizer_fixtures::definition::FixtureFaderControl) -> Self {
         use mizer_fixtures::definition::ColorChannel;
         use mizer_fixtures::definition::FixtureFaderControl::*;
@@ -234,13 +232,3 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for CueControl_Type {
         }
     }
 }
-
-// impl From<mizer_sequencer::CueEffect> for CueEffect {
-//     fn from(effect: mizer_sequencer::CueEffect) -> Self {
-//         Self {
-//             fixtures: effect.fixtures.into_iter().map(FixtureId::from).collect(),
-//             effect_id: effect.effect,
-//             ..Default::default()
-//         }
-//     }
-// }

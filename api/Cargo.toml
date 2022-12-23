@@ -5,13 +5,12 @@ authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
 [features]
-default = ["with-serde"]
-with-serde = ["protobuf/with-serde"]
+default = []
 
 [dependencies]
 anyhow = "1"
 log = "0.4"
-protobuf = "2.28"
+protobuf = "3.2"
 serde = { version = "1", features = ["derive"] }
 mizer-fixtures = { path = "../components/fixtures" }
 mizer-plan = { path = "../components/plan" }
@@ -37,4 +36,4 @@ lazy_static = "1.4"
 tracing = "0.1"
 
 [build-dependencies]
-protoc-rust = "2.28"
+protobuf-codegen = "3.2"

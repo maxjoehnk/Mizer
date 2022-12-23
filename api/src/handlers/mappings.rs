@@ -1,4 +1,4 @@
-use crate::models::{MappingRequest, MappingRequest_oneof_action, MappingRequest_oneof_binding};
+use crate::models::mappings::{mapping_request, MappingRequest};
 use crate::RuntimeApi;
 use mizer_node_templates::mappings::*;
 use mizer_node_templates::ExecuteNodeTemplateCommand;
@@ -15,22 +15,22 @@ impl<R: RuntimeApi> MappingsHandler<R> {
 
     pub fn add_template(&self, mapping: MappingRequest) -> anyhow::Result<()> {
         let midi_mapping = mapping.binding.unwrap();
-        let MappingRequest_oneof_binding::midi(midi_mapping) = midi_mapping;
+        let mapping_request::Binding::Midi(midi_mapping) = midi_mapping;
         let midi_config = midi_mapping.config.unwrap().into();
         let template = match mapping.action.unwrap() {
-            MappingRequest_oneof_action::layout_control(action) => {
+            mapping_request::Action::LayoutControl(action) => {
                 create_control_mapping(action.control_node.into(), midi_config)
             }
-            MappingRequest_oneof_action::sequencer_go(action) => {
+            mapping_request::Action::SequencerGo(action) => {
                 create_sequencer_go_mapping(action.sequencer_id, midi_config)
             }
-            MappingRequest_oneof_action::sequencer_stop(action) => {
+            mapping_request::Action::SequencerStop(action) => {
                 create_sequencer_stop_mapping(action.sequencer_id, midi_config)
             }
-            MappingRequest_oneof_action::programmer_highlight(_) => {
+            mapping_request::Action::ProgrammerHighlight(_) => {
                 create_programmer_highlight_mapping(midi_config)
             }
-            MappingRequest_oneof_action::programmer_clear(_) => {
+            mapping_request::Action::ProgrammerClear(_) => {
                 create_programmer_clear_mapping(midi_config)
             }
         };

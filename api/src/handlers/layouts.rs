@@ -15,16 +15,15 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     }
 
     pub fn get_layouts(&self) -> Layouts {
-        let layouts = self
-            .runtime
-            .layouts()
-            .into_iter()
-            .map(Layout::from)
-            .collect::<Vec<_>>();
-        let mut result = Layouts::new();
-        result.set_layouts(layouts.into());
-
-        result
+        Layouts {
+            layouts: self
+                .runtime
+                .layouts()
+                .into_iter()
+                .map(Layout::from)
+                .collect::<Vec<_>>(),
+            ..Default::default()
+        }
     }
 
     pub fn add_layout(&self, name: String) -> Layouts {
@@ -118,7 +117,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
     pub fn add_control(
         &self,
         layout_id: String,
-        node_type: Node_NodeType,
+        node_type: node::NodeType,
         position: ControlPosition,
     ) -> anyhow::Result<()> {
         self.runtime.run_command(AddLayoutControlWithNodeCommand {

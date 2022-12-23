@@ -149,164 +149,9 @@ impl std::fmt::Debug for Channel {
 pub struct Node {
     pub path: NodePath,
     #[serde(flatten)]
-    pub config: NodeConfig,
+    pub config: mizer_nodes::Node,
     #[serde(default)]
     pub designer: NodeDesigner,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(tag = "type", content = "config", rename_all = "kebab-case")]
-pub enum NodeConfig {
-    DmxOutput(mizer_nodes::DmxOutputNode),
-    PixelPattern(mizer_nodes::PixelPatternGeneratorNode),
-    PixelDmx(mizer_nodes::PixelDmxNode),
-    OpcOutput(mizer_nodes::OpcOutputNode),
-    Oscillator(mizer_nodes::OscillatorNode),
-    Clock(mizer_nodes::ClockNode),
-    Script(mizer_nodes::ScriptingNode),
-    Select(mizer_nodes::SelectNode),
-    Merge(mizer_nodes::MergeNode),
-    Threshold(mizer_nodes::ThresholdNode),
-    Encoder(mizer_nodes::EncoderNode),
-    Fixture(mizer_nodes::FixtureNode),
-    Programmer(mizer_nodes::ProgrammerNode),
-    Group(mizer_nodes::GroupNode),
-    Preset(mizer_nodes::PresetNode),
-    Sequencer(mizer_nodes::SequencerNode),
-    OscInput(mizer_nodes::OscInputNode),
-    OscOutput(mizer_nodes::OscOutputNode),
-    MidiInput(mizer_nodes::MidiInputNode),
-    MidiOutput(mizer_nodes::MidiOutputNode),
-    Fader(mizer_nodes::FaderNode),
-    Button(mizer_nodes::ButtonNode),
-    VideoFile(mizer_nodes::VideoFileNode),
-    VideoEffect(mizer_nodes::VideoEffectNode),
-    VideoTransform(mizer_nodes::VideoTransformNode),
-    VideoColorBalance(mizer_nodes::VideoColorBalanceNode),
-    VideoOutput(mizer_nodes::VideoOutputNode),
-    Sequence(mizer_nodes::SequenceNode),
-    Envelope(mizer_nodes::EnvelopeNode),
-    IldaFile(mizer_nodes::IldaFileNode),
-    Laser(mizer_nodes::LaserNode),
-    Gamepad(mizer_nodes::GamepadNode),
-    ColorHsv(mizer_nodes::HsvColorNode),
-    ColorRgb(mizer_nodes::RgbColorNode),
-    Container(mizer_nodes::ContainerNode),
-    Math(mizer_nodes::MathNode),
-    MqttInput(mizer_nodes::MqttInputNode),
-    MqttOutput(mizer_nodes::MqttOutputNode),
-    NumberToData(mizer_nodes::NumberToDataNode),
-    DataToNumber(mizer_nodes::DataToNumberNode),
-    DataValue(mizer_nodes::ValueNode),
-    PlanScreen(mizer_nodes::PlanScreenNode),
-    Delay(mizer_nodes::DelayNode),
-    Ramp(mizer_nodes::RampNode),
-    Noise(mizer_nodes::NoiseNode),
-}
-
-impl From<NodeConfig> for mizer_nodes::Node {
-    fn from(node: NodeConfig) -> Self {
-        match node {
-            NodeConfig::Clock(node) => Self::Clock(node),
-            NodeConfig::Oscillator(node) => Self::Oscillator(node),
-            NodeConfig::DmxOutput(node) => Self::DmxOutput(node),
-            NodeConfig::Script(node) => Self::Scripting(node),
-            NodeConfig::Sequence(node) => Self::Sequence(node),
-            NodeConfig::Envelope(node) => Self::Envelope(node),
-            NodeConfig::Fixture(node) => Self::Fixture(node),
-            NodeConfig::Programmer(node) => Self::Programmer(node),
-            NodeConfig::Group(node) => Self::Group(node),
-            NodeConfig::Preset(node) => Self::Preset(node),
-            NodeConfig::Sequencer(node) => Self::Sequencer(node),
-            NodeConfig::Select(node) => Self::Select(node),
-            NodeConfig::Merge(node) => Self::Merge(node),
-            NodeConfig::Threshold(node) => Self::Threshold(node),
-            NodeConfig::Encoder(node) => Self::Encoder(node),
-            NodeConfig::IldaFile(node) => Self::IldaFile(node),
-            NodeConfig::Laser(node) => Self::Laser(node),
-            NodeConfig::Fader(node) => Self::Fader(node),
-            NodeConfig::Button(node) => Self::Button(node),
-            NodeConfig::MidiInput(node) => Self::MidiInput(node),
-            NodeConfig::MidiOutput(node) => Self::MidiOutput(node),
-            NodeConfig::OpcOutput(node) => Self::OpcOutput(node),
-            NodeConfig::PixelPattern(node) => Self::PixelPattern(node),
-            NodeConfig::PixelDmx(node) => Self::PixelDmx(node),
-            NodeConfig::OscInput(node) => Self::OscInput(node),
-            NodeConfig::OscOutput(node) => Self::OscOutput(node),
-            NodeConfig::VideoFile(node) => Self::VideoFile(node),
-            NodeConfig::VideoColorBalance(node) => Self::VideoColorBalance(node),
-            NodeConfig::VideoOutput(node) => Self::VideoOutput(node),
-            NodeConfig::VideoEffect(node) => Self::VideoEffect(node),
-            NodeConfig::VideoTransform(node) => Self::VideoTransform(node),
-            NodeConfig::Gamepad(node) => Self::Gamepad(node),
-            NodeConfig::ColorHsv(node) => Self::ColorHsv(node),
-            NodeConfig::ColorRgb(node) => Self::ColorRgb(node),
-            NodeConfig::Container(node) => Self::Container(node),
-            NodeConfig::Math(node) => Self::Math(node),
-            NodeConfig::MqttInput(node) => Self::MqttInput(node),
-            NodeConfig::MqttOutput(node) => Self::MqttOutput(node),
-            NodeConfig::NumberToData(node) => Self::NumberToData(node),
-            NodeConfig::DataToNumber(node) => Self::DataToNumber(node),
-            NodeConfig::DataValue(node) => Self::Value(node),
-            NodeConfig::PlanScreen(node) => Self::PlanScreen(node),
-            NodeConfig::Delay(node) => Self::Delay(node),
-            NodeConfig::Ramp(node) => Self::Ramp(node),
-            NodeConfig::Noise(node) => Self::Noise(node),
-        }
-    }
-}
-
-impl From<mizer_nodes::Node> for NodeConfig {
-    fn from(node: mizer_nodes::Node) -> Self {
-        match node {
-            mizer_nodes::Node::Clock(node) => Self::Clock(node),
-            mizer_nodes::Node::Oscillator(node) => Self::Oscillator(node),
-            mizer_nodes::Node::DmxOutput(node) => Self::DmxOutput(node),
-            mizer_nodes::Node::Scripting(node) => Self::Script(node),
-            mizer_nodes::Node::Sequence(node) => Self::Sequence(node),
-            mizer_nodes::Node::Envelope(node) => Self::Envelope(node),
-            mizer_nodes::Node::Fixture(node) => Self::Fixture(node),
-            mizer_nodes::Node::Programmer(node) => Self::Programmer(node),
-            mizer_nodes::Node::Group(node) => Self::Group(node),
-            mizer_nodes::Node::Preset(node) => Self::Preset(node),
-            mizer_nodes::Node::Sequencer(node) => Self::Sequencer(node),
-            mizer_nodes::Node::Select(node) => Self::Select(node),
-            mizer_nodes::Node::Merge(node) => Self::Merge(node),
-            mizer_nodes::Node::Threshold(node) => Self::Threshold(node),
-            mizer_nodes::Node::Encoder(node) => Self::Encoder(node),
-            mizer_nodes::Node::IldaFile(node) => Self::IldaFile(node),
-            mizer_nodes::Node::Laser(node) => Self::Laser(node),
-            mizer_nodes::Node::Fader(node) => Self::Fader(node),
-            mizer_nodes::Node::Button(node) => Self::Button(node),
-            mizer_nodes::Node::MidiInput(node) => Self::MidiInput(node),
-            mizer_nodes::Node::MidiOutput(node) => Self::MidiOutput(node),
-            mizer_nodes::Node::OpcOutput(node) => Self::OpcOutput(node),
-            mizer_nodes::Node::PixelPattern(node) => Self::PixelPattern(node),
-            mizer_nodes::Node::PixelDmx(node) => Self::PixelDmx(node),
-            mizer_nodes::Node::OscInput(node) => Self::OscInput(node),
-            mizer_nodes::Node::OscOutput(node) => Self::OscOutput(node),
-            mizer_nodes::Node::VideoFile(node) => Self::VideoFile(node),
-            mizer_nodes::Node::VideoColorBalance(node) => Self::VideoColorBalance(node),
-            mizer_nodes::Node::VideoOutput(node) => Self::VideoOutput(node),
-            mizer_nodes::Node::VideoEffect(node) => Self::VideoEffect(node),
-            mizer_nodes::Node::VideoTransform(node) => Self::VideoTransform(node),
-            mizer_nodes::Node::Gamepad(node) => Self::Gamepad(node),
-            mizer_nodes::Node::ColorHsv(node) => Self::ColorHsv(node),
-            mizer_nodes::Node::ColorRgb(node) => Self::ColorRgb(node),
-            mizer_nodes::Node::Container(node) => Self::Container(node),
-            mizer_nodes::Node::Math(node) => Self::Math(node),
-            mizer_nodes::Node::MqttInput(node) => Self::MqttInput(node),
-            mizer_nodes::Node::MqttOutput(node) => Self::MqttOutput(node),
-            mizer_nodes::Node::NumberToData(node) => Self::NumberToData(node),
-            mizer_nodes::Node::DataToNumber(node) => Self::DataToNumber(node),
-            mizer_nodes::Node::Value(node) => Self::DataValue(node),
-            mizer_nodes::Node::PlanScreen(node) => Self::PlanScreen(node),
-            mizer_nodes::Node::Delay(node) => Self::Delay(node),
-            mizer_nodes::Node::Ramp(node) => Self::Ramp(node),
-            mizer_nodes::Node::Noise(node) => Self::Noise(node),
-            mizer_nodes::Node::TestSink(_) => unimplemented!("Only for test"),
-        }
-    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -383,7 +228,7 @@ mod tests {
             result.nodes[0],
             Node {
                 path: "/opc-output-0".into(),
-                config: NodeConfig::OpcOutput(mizer_nodes::OpcOutputNode {
+                config: mizer_nodes::Node::OpcOutput(mizer_nodes::OpcOutputNode {
                     host: "0.0.0.0".into(),
                     port: 7890,
                     width: 10,
@@ -425,7 +270,7 @@ mod tests {
             result.nodes[0],
             Node {
                 path: "/pixel-pattern-0".into(),
-                config: NodeConfig::PixelPattern(mizer_nodes::PixelPatternGeneratorNode {
+                config: mizer_nodes::Node::PixelPattern(mizer_nodes::PixelPatternGeneratorNode {
                     pattern: mizer_pixel_nodes::Pattern::RgbIterate
                 }),
                 designer: Default::default(),
@@ -435,7 +280,7 @@ mod tests {
             result.nodes[1],
             Node {
                 path: "/opc-output-0".into(),
-                config: NodeConfig::OpcOutput(mizer_nodes::OpcOutputNode {
+                config: mizer_nodes::Node::OpcOutput(mizer_nodes::OpcOutputNode {
                     host: "127.0.0.1".into(),
                     port: 7890,
                     width: 25,
@@ -496,7 +341,7 @@ mod tests {
             result.nodes[0],
             Node {
                 path: "/fader-0".into(),
-                config: NodeConfig::Fader(mizer_nodes::FaderNode {}),
+                config: mizer_nodes::Node::Fader(mizer_nodes::FaderNode {}),
                 designer: Default::default(),
             }
         );

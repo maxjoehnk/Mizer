@@ -36,7 +36,7 @@ nodes:
         x: 5
         y: 5
       scale: 1
-  - type: script
+  - type: scripting
     path: /script-0
     config:
       script: |

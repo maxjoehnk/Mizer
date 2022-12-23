@@ -261,7 +261,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
 
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         for node in &project.nodes {
-            let mut node_config: Node = node.config.clone().into();
+            let mut node_config: Node = node.config.clone();
             node_config.prepare(&self.injector);
             let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
             pipeline_access.internal_add_node(
@@ -334,7 +334,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
                 mizer_project_files::Node {
                     designer: designer[name].clone(),
                     path: name.clone(),
-                    config: node.into(),
+                    config: node,
                 }
             })
             .collect();

@@ -7,6 +7,12 @@ pub struct TestSink {
     frames: Arc<Mutex<Vec<f64>>>,
 }
 
+impl PartialEq for TestSink {
+    fn eq(&self, other: &Self) -> bool {
+        Arc::ptr_eq(&self.frames, &other.frames)
+    }
+}
+
 impl PipelineNode for TestSink {
     fn details(&self) -> NodeDetails {
         NodeDetails {

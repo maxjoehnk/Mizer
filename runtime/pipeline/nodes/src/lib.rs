@@ -38,7 +38,8 @@ pub mod test_sink;
 
 macro_rules! node_impl {
     ($($node_type:ident($node:ty),)*) => {
-        #[derive(Debug, Clone, From, Deserialize, Serialize)]
+        #[derive(Debug, Clone, From, Deserialize, Serialize, PartialEq)]
+        #[serde(tag = "type", content = "config", rename_all = "kebab-case")]
         pub enum Node {
             $($node_type($node),)*
             // TODO: should only be available in tests

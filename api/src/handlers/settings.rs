@@ -1,4 +1,5 @@
-use crate::{models, RuntimeApi};
+use crate::models::settings as models;
+use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
 
 #[derive(Clone)]

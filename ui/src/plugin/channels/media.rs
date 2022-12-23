@@ -1,6 +1,6 @@
 use crate::plugin::channels::MethodReplyExt;
 use mizer_api::handlers::MediaHandler;
-use mizer_api::models::*;
+use mizer_api::models::media::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 

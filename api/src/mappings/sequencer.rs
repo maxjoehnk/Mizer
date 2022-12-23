@@ -1,7 +1,8 @@
+use crate::models::fixtures::FixtureId;
 use mizer_sequencer::SequencerValue;
 use protobuf::{EnumOrUnknown, MessageField};
 
-use crate::models::*;
+use crate::models::sequencer::*;
 
 impl From<mizer_sequencer::Sequence> for Sequence {
     fn from(sequence: mizer_sequencer::Sequence) -> Self {

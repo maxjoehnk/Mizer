@@ -1,6 +1,6 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::LayoutsHandler;
-use mizer_api::models::*;
+use mizer_api::models::layouts::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, LayoutRef};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};

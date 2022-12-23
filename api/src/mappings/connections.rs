@@ -1,4 +1,4 @@
-use crate::models::*;
+use crate::models::connections::*;
 use protobuf::EnumOrUnknown;
 
 impl From<mizer_connections::Connection> for Connection {

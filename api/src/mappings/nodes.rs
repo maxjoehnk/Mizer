@@ -4,7 +4,7 @@ use mizer_runtime::commands::StaticNodeDescriptor;
 use mizer_runtime::{NodeDescriptor, NodeDowncast};
 use protobuf::{EnumOrUnknown, MessageField};
 
-use crate::models::*;
+use crate::models::nodes::*;
 
 impl From<mizer_nodes::Node> for node_config::Type {
     fn from(node: mizer_nodes::Node) -> Self {

@@ -1,7 +1,8 @@
 use mizer_fixtures::definition::FixtureControlValue;
 use protobuf::{EnumOrUnknown, MessageField};
 
-use crate::models::*;
+use crate::models::fixtures::*;
+use crate::models::programmer::*;
 
 impl WriteControlRequest {
     pub fn as_controls(self) -> FixtureControlValue {

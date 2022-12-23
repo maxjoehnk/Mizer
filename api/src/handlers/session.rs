@@ -1,4 +1,4 @@
-use crate::models::*;
+use crate::models::session::*;
 use crate::RuntimeApi;
 use futures::{Stream, StreamExt};
 use protobuf::MessageField;

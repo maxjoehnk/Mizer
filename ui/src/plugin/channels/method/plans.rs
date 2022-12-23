@@ -4,7 +4,7 @@ use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::PlansHandler;
-use mizer_api::models::*;
+use mizer_api::models::plans::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, FixturesRef};
 

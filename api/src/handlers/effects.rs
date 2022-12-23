@@ -1,4 +1,4 @@
-use crate::models::*;
+use crate::models::effects::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_sequencer::effects::EffectEngine;

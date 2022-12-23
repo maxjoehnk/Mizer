@@ -1,5 +1,5 @@
 use crate::mappings::nodes::map_node_descriptor_with_config;
-use crate::models::*;
+use crate::models::nodes::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_node::{NodePath, NodeType};

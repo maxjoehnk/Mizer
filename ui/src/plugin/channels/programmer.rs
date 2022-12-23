@@ -5,7 +5,8 @@ use nativeshell::shell::{
 };
 
 use mizer_api::handlers::ProgrammerHandler;
-use mizer_api::models::*;
+use mizer_api::models::fixtures::FixtureId;
+use mizer_api::models::programmer::*;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};

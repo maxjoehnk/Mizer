@@ -1,7 +1,7 @@
 use mizer_command_executor::*;
 use mizer_sequencer::{Sequencer, SequencerTime, SequencerValue, SequencerView};
 
-use crate::models::*;
+use crate::models::sequencer::*;
 use crate::RuntimeApi;
 
 #[derive(Clone)]

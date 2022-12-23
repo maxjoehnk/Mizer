@@ -3,7 +3,7 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
-use mizer_api::models::{ArtnetConfig, MqttConnection, SacnConfig};
+use mizer_api::models::connections::{ArtnetConfig, MqttConnection, SacnConfig};
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;

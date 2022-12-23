@@ -1,4 +1,4 @@
-use crate::models::*;
+use crate::models::layouts::*;
 use protobuf::MessageField;
 
 impl From<mizer_layouts::Layout> for Layout {

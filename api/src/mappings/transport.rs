@@ -1,4 +1,4 @@
-use crate::models::{Timecode, Transport, TransportState};
+use crate::models::transport::{Timecode, Transport, TransportState};
 use mizer_clock::{ClockSnapshot, ClockState};
 use protobuf::{EnumOrUnknown, MessageField};
 

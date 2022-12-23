@@ -2,7 +2,7 @@ use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 
 use mizer_api::handlers::EffectsHandler;
-use mizer_api::models::Effects;
+use mizer_api::models::effects::Effects;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};

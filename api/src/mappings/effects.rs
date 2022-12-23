@@ -1,4 +1,4 @@
-use crate::models;
+use crate::models::effects as models;
 use mizer_sequencer::effects;
 use protobuf::{EnumOrUnknown, MessageField};
 

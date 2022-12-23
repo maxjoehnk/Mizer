@@ -1,6 +1,6 @@
 use mizer_media::api::{MediaServerApi, MediaServerCommand, TagCreateModel};
 
-use crate::models::*;
+use crate::models::media::*;
 
 #[derive(Clone)]
 pub struct MediaHandler {

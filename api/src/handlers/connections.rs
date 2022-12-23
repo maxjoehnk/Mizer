@@ -2,7 +2,7 @@ use futures::{Stream, StreamExt};
 use mizer_command_executor::*;
 use std::collections::HashMap;
 
-use crate::models::*;
+use crate::models::connections::*;
 use crate::RuntimeApi;
 
 #[derive(Clone, Default)]

@@ -9,7 +9,7 @@ use nativeshell::shell::{
 use protobuf::Enum;
 
 use mizer_api::handlers::TransportHandler;
-use mizer_api::models::TransportState;
+use mizer_api::models::transport::TransportState;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, Transport};
 use mizer_util::{AsyncRuntime, StreamSubscription};

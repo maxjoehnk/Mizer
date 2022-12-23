@@ -1,4 +1,4 @@
-use crate::models::*;
+use crate::models::media::*;
 use mizer_media::api::TagCreateModel;
 use mizer_media::documents::*;
 use protobuf::MessageField;

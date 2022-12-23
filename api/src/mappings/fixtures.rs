@@ -2,7 +2,7 @@ use mizer_fixtures::definition::{self, ChannelResolution, PhysicalFixtureData};
 use mizer_fixtures::fixture::IFixture;
 use protobuf::MessageField;
 
-use crate::models;
+use crate::models::fixtures as models;
 use crate::models::fixtures::*;
 
 impl From<mizer_fixtures::definition::FixtureDefinition> for FixtureDefinition {

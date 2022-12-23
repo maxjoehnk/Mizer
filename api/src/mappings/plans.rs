@@ -1,4 +1,4 @@
-use crate::models::*;
+use crate::models::plans::*;
 use mizer_plan::commands::AlignFixturesDirection;
 use protobuf::MessageField;
 

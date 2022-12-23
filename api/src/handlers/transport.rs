@@ -1,4 +1,4 @@
-use crate::models::{Transport, TransportState};
+use crate::models::transport::{Transport, TransportState};
 use crate::RuntimeApi;
 use futures::stream::Stream;
 use futures::StreamExt;

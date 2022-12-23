@@ -1,6 +1,6 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::NodesHandler;
-use mizer_api::models::*;
+use mizer_api::models::nodes::*;
 use mizer_api::RuntimeApi;
 use mizer_ui_ffi::{FFIToPointer, NodeHistory};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};

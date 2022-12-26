@@ -307,12 +307,20 @@ class MathNodeConfig_Mode extends $pb.ProtobufEnum {
   static const MathNodeConfig_Mode Subtraction = MathNodeConfig_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Subtraction');
   static const MathNodeConfig_Mode Multiplication = MathNodeConfig_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiplication');
   static const MathNodeConfig_Mode Division = MathNodeConfig_Mode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Division');
+  static const MathNodeConfig_Mode Invert = MathNodeConfig_Mode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Invert');
+  static const MathNodeConfig_Mode Sine = MathNodeConfig_Mode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sine');
+  static const MathNodeConfig_Mode Cosine = MathNodeConfig_Mode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Cosine');
+  static const MathNodeConfig_Mode Tangent = MathNodeConfig_Mode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Tangent');
 
   static const $core.List<MathNodeConfig_Mode> values = <MathNodeConfig_Mode> [
     Addition,
     Subtraction,
     Multiplication,
     Division,
+    Invert,
+    Sine,
+    Cosine,
+    Tangent,
   ];
 
   static final $core.Map<$core.int, MathNodeConfig_Mode> _byValue = $pb.ProtobufEnum.initByValue(values);

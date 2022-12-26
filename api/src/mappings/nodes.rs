@@ -1050,6 +1050,10 @@ impl From<mizer_nodes::MathMode> for math_node_config::Mode {
             Subtraction => Self::Subtraction,
             Division => Self::Division,
             Multiplication => Self::Multiplication,
+            Invert => Self::Invert,
+            Sine => Self::Sine,
+            Cosine => Self::Cosine,
+            Tangent => Self::Tangent,
         }
     }
 }
@@ -1063,6 +1067,10 @@ impl From<math_node_config::Mode> for mizer_nodes::MathMode {
             Subtraction => Self::Subtraction,
             Division => Self::Division,
             Multiplication => Self::Multiplication,
+            Invert => Self::Invert,
+            Sine => Self::Sine,
+            Cosine => Self::Cosine,
+            Tangent => Self::Tangent,
         }
     }
 }

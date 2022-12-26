@@ -11546,6 +11546,14 @@ pub mod math_node_config {
         Multiplication = 2,
         // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Division)
         Division = 3,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Invert)
+        Invert = 4,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Sine)
+        Sine = 5,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Cosine)
+        Cosine = 6,
+        // @@protoc_insertion_point(enum_value:mizer.nodes.MathNodeConfig.Mode.Tangent)
+        Tangent = 7,
     }
 
     impl ::protobuf::Enum for Mode {
@@ -11561,6 +11569,10 @@ pub mod math_node_config {
                 1 => ::std::option::Option::Some(Mode::Subtraction),
                 2 => ::std::option::Option::Some(Mode::Multiplication),
                 3 => ::std::option::Option::Some(Mode::Division),
+                4 => ::std::option::Option::Some(Mode::Invert),
+                5 => ::std::option::Option::Some(Mode::Sine),
+                6 => ::std::option::Option::Some(Mode::Cosine),
+                7 => ::std::option::Option::Some(Mode::Tangent),
                 _ => ::std::option::Option::None
             }
         }
@@ -11570,6 +11582,10 @@ pub mod math_node_config {
             Mode::Subtraction,
             Mode::Multiplication,
             Mode::Division,
+            Mode::Invert,
+            Mode::Sine,
+            Mode::Cosine,
+            Mode::Tangent,
         ];
     }
 
@@ -13683,50 +13699,52 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01R\rinactiveValue\"0\n\x11EncoderNodeConfig\x12\x1b\n\thold_rate\x18\
     \x01\x20\x01(\x01R\x08holdRate\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12\
     ColorHsvNodeConfig\">\n\x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\
-    \x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"\x8f\x01\n\x0eMathNodeCon\
+    \x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"\xbe\x01\n\x0eMathNodeCon\
     fig\x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.nodes.MathNodeConfig.\
-    ModeR\x04mode\"G\n\x04Mode\x12\x0c\n\x08Addition\x10\0\x12\x0f\n\x0bSubt\
+    ModeR\x04mode\"v\n\x04Mode\x12\x0c\n\x08Addition\x10\0\x12\x0f\n\x0bSubt\
     raction\x10\x01\x12\x12\n\x0eMultiplication\x10\x02\x12\x0c\n\x08Divisio\
-    n\x10\x03\"I\n\x13MqttInputNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\
-    \x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\"J\n\
-    \x14MqttOutputNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconn\
-    ection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\"\x18\n\x16NumberTo\
-    DataNodeConfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\x0fValueNodeConfig\
-    \x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"L\n\x14PlanScreenNodeC\
-    onfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x1b\n\tscre\
-    en_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\x0fDelayNodeConfig\x12\x1f\n\
-    \x0bbuffer_size\x18\x01\x20\x01(\rR\nbufferSize\"\xbc\x01\n\x0eRampNodeC\
-    onfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2$.mizer.nodes.RampNodeConfig.\
-    RampStepR\x05steps\x1an\n\x08RampStep\x12\x0c\n\x01x\x18\x01\x20\x01(\
-    \x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\
-    \x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03\
-    c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\
-    \x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeConfig\x12\x1b\n\ttick_rate\
-    \x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\x04fade\x18\x02\x20\x01(\
-    \x08R\x04fade\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\
-    \x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x12\
-    5\n\x08position\x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08p\
-    osition\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06h\
-    idden\x18\x03\x20\x01(\x08R\x06hidden\"T\n\x04Port\x12\x12\n\x04name\x18\
-    \x01\x20\x01(\tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mi\
-    zer.nodes.ChannelProtocolR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\
-    \n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\
-    \x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\
-    \x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MA\
-    TERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\xe5\x05\n\x08NodesApi\x129\n\
-    \x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\
-    \x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.node\
-    s.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mize\
-    r.nodes.NodeConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.W\
-    riteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\n\x12UpdateNodeProper\
-    ty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeC\
-    onfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\
-    \x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes\
-    .DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08Hide\
-    Node\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeRes\
-    ponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.miz\
-    er.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.Duplica\
-    teNodeRequest\x1a\x11.mizer.nodes.Nodeb\x06proto3\
+    n\x10\x03\x12\n\n\x06Invert\x10\x04\x12\x08\n\x04Sine\x10\x05\x12\n\n\
+    \x06Cosine\x10\x06\x12\x0b\n\x07Tangent\x10\x07\"I\n\x13MqttInputNodeCon\
+    fig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04p\
+    ath\x18\x02\x20\x01(\tR\x04path\"J\n\x14MqttOutputNodeConfig\x12\x1e\n\n\
+    connection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\
+    \x01(\tR\x04path\"\x18\n\x16NumberToDataNodeConfig\"\x18\n\x16DataToNumb\
+    erNodeConfig\"'\n\x0fValueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\
+    \tR\x05value\"L\n\x14PlanScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\
+    \x20\x01(\tR\x06planId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08scree\
+    nId\"2\n\x0fDelayNodeConfig\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\
+    \nbufferSize\"\xbc\x01\n\x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\
+    \x03(\x0b2$.mizer.nodes.RampNodeConfig.RampStepR\x05steps\x1an\n\x08Ramp\
+    Step\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\
+    \x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\
+    \x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\
+    \x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0f\
+    NoiseNodeConfig\x12\x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\
+    \x12\x12\n\x04fade\x18\x02\x20\x01(\x08R\x04fade\"*\n\x0cNodePosition\
+    \x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\
+    \x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\x20\x01(\
+    \x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\n\x05scale\x18\
+    \x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\
+    \x06hidden\"T\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    \x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoco\
+    lR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\
+    \t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\
+    \x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POL\
+    Y\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\
+    \x07\n\x03GST\x10\x082\xe5\x05\n\x08NodesApi\x129\n\x08GetNodes\x12\x19.\
+    mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\
+    \x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLi\
+    nk\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\
+    \x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mi\
+    zer.nodes.WriteResponse\x12a\n\x12UpdateNodeProperty\x12$.mizer.nodes.Up\
+    dateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeConfigResponse\x12G\n\
+    \x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.Mov\
+    eNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\
+    \x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer\
+    .nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08Sh\
+    owNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeR\
+    esponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\
+    \x11.mizer.nodes.Nodeb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

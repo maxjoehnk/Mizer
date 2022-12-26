@@ -801,11 +801,15 @@ const MathNodeConfig_Mode$json = const {
     const {'1': 'Subtraction', '2': 1},
     const {'1': 'Multiplication', '2': 2},
     const {'1': 'Division', '2': 3},
+    const {'1': 'Invert', '2': 4},
+    const {'1': 'Sine', '2': 5},
+    const {'1': 'Cosine', '2': 6},
+    const {'1': 'Tangent', '2': 7},
   ],
 };
 
 /// Descriptor for `MathNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mathNodeConfigDescriptor = $convert.base64Decode('Cg5NYXRoTm9kZUNvbmZpZxI0CgRtb2RlGAEgASgOMiAubWl6ZXIubm9kZXMuTWF0aE5vZGVDb25maWcuTW9kZVIEbW9kZSJHCgRNb2RlEgwKCEFkZGl0aW9uEAASDwoLU3VidHJhY3Rpb24QARISCg5NdWx0aXBsaWNhdGlvbhACEgwKCERpdmlzaW9uEAM=');
+final $typed_data.Uint8List mathNodeConfigDescriptor = $convert.base64Decode('Cg5NYXRoTm9kZUNvbmZpZxI0CgRtb2RlGAEgASgOMiAubWl6ZXIubm9kZXMuTWF0aE5vZGVDb25maWcuTW9kZVIEbW9kZSJ2CgRNb2RlEgwKCEFkZGl0aW9uEAASDwoLU3VidHJhY3Rpb24QARISCg5NdWx0aXBsaWNhdGlvbhACEgwKCERpdmlzaW9uEAMSCgoGSW52ZXJ0EAQSCAoEU2luZRAFEgoKBkNvc2luZRAGEgsKB1RhbmdlbnQQBw==');
 @$core.Deprecated('Use mqttInputNodeConfigDescriptor instead')
 const MqttInputNodeConfig$json = const {
   '1': 'MqttInputNodeConfig',

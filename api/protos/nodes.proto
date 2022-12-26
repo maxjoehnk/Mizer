@@ -411,6 +411,10 @@ message MathNodeConfig {
     Subtraction = 1;
     Multiplication = 2;
     Division = 3;
+    Invert = 4;
+    Sine = 5;
+    Cosine = 6;
+    Tangent = 7;
   }
 }
 

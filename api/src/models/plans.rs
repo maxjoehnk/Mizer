@@ -1391,6 +1391,10 @@ pub struct FixturePosition {
     pub x: i32,
     // @@protoc_insertion_point(field:mizer.plan.FixturePosition.y)
     pub y: i32,
+    // @@protoc_insertion_point(field:mizer.plan.FixturePosition.width)
+    pub width: u32,
+    // @@protoc_insertion_point(field:mizer.plan.FixturePosition.height)
+    pub height: u32,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.plan.FixturePosition.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1408,7 +1412,7 @@ impl FixturePosition {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::fixtures::FixtureId>(
             "id",
@@ -1424,6 +1428,16 @@ impl FixturePosition {
             "y",
             |m: &FixturePosition| { &m.y },
             |m: &mut FixturePosition| { &mut m.y },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "width",
+            |m: &FixturePosition| { &m.width },
+            |m: &mut FixturePosition| { &mut m.width },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "height",
+            |m: &FixturePosition| { &m.height },
+            |m: &mut FixturePosition| { &mut m.height },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FixturePosition>(
             "FixturePosition",
@@ -1452,6 +1466,12 @@ impl ::protobuf::Message for FixturePosition {
                 24 => {
                     self.y = is.read_int32()?;
                 },
+                32 => {
+                    self.width = is.read_uint32()?;
+                },
+                40 => {
+                    self.height = is.read_uint32()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1474,6 +1494,12 @@ impl ::protobuf::Message for FixturePosition {
         if self.y != 0 {
             my_size += ::protobuf::rt::int32_size(3, self.y);
         }
+        if self.width != 0 {
+            my_size += ::protobuf::rt::uint32_size(4, self.width);
+        }
+        if self.height != 0 {
+            my_size += ::protobuf::rt::uint32_size(5, self.height);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1488,6 +1514,12 @@ impl ::protobuf::Message for FixturePosition {
         }
         if self.y != 0 {
             os.write_int32(3, self.y)?;
+        }
+        if self.width != 0 {
+            os.write_uint32(4, self.width)?;
+        }
+        if self.height != 0 {
+            os.write_uint32(5, self.height)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1509,6 +1541,8 @@ impl ::protobuf::Message for FixturePosition {
         self.id.clear();
         self.x = 0;
         self.y = 0;
+        self.width = 0;
+        self.height = 0;
         self.special_fields.clear();
     }
 
@@ -1517,6 +1551,8 @@ impl ::protobuf::Message for FixturePosition {
             id: ::protobuf::MessageField::none(),
             x: 0,
             y: 0,
+            width: 0,
+            height: 0,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1755,22 +1791,23 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x03(\x0b2\x10.mizer.plan.PlanR\x05plans\"\x87\x01\n\x04Plan\x12\x12\
     \n\x04name\x18\x01\x20\x01(\tR\x04name\x129\n\tpositions\x18\x02\x20\x03\
     (\x0b2\x1b.mizer.plan.FixturePositionR\tpositions\x120\n\x07screens\x18\
-    \x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreenR\x07screens\"X\n\x0fFixture\
-    Position\x12)\n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.FixtureId\
-    R\x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\
-    \x20\x01(\x05R\x01y\"f\n\nPlanScreen\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
-    \x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\
-    \x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05width\x12\
-    \x16\n\x06height\x18\x05\x20\x01(\rR\x06height2\xc9\x03\n\x08PlansApi\
-    \x127\n\x08GetPlans\x12\x18.mizer.plan.PlansRequest\x1a\x11.mizer.plan.P\
-    lans\x128\n\x07AddPlan\x12\x1a.mizer.plan.AddPlanRequest\x1a\x11.mizer.p\
-    lan.Plans\x12>\n\nRemovePlan\x12\x1d.mizer.plan.RemovePlanRequest\x1a\
-    \x11.mizer.plan.Plans\x12>\n\nRenamePlan\x12\x1d.mizer.plan.RenamePlanRe\
-    quest\x1a\x11.mizer.plan.Plans\x12B\n\x0cMoveFixtures\x12\x1f.mizer.plan\
-    .MoveFixturesRequest\x1a\x11.mizer.plan.Plans\x12@\n\x0bMoveFixture\x12\
-    \x1e.mizer.plan.MoveFixtureRequest\x1a\x11.mizer.plan.Plans\x12D\n\rAlig\
-    nFixtures\x12\x20.mizer.plan.AlignFixturesRequest\x1a\x11.mizer.plan.Pla\
-    nsb\x06proto3\
+    \x03\x20\x03(\x0b2\x16.mizer.plan.PlanScreenR\x07screens\"\x86\x01\n\x0f\
+    FixturePosition\x12)\n\x02id\x18\x01\x20\x01(\x0b2\x19.mizer.fixtures.Fi\
+    xtureIdR\x02id\x12\x0c\n\x01x\x18\x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\
+    \x18\x03\x20\x01(\x05R\x01y\x12\x14\n\x05width\x18\x04\x20\x01(\rR\x05wi\
+    dth\x12\x16\n\x06height\x18\x05\x20\x01(\rR\x06height\"f\n\nPlanScreen\
+    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x0c\n\x01x\x18\x02\x20\
+    \x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\x12\x14\n\x05w\
+    idth\x18\x04\x20\x01(\rR\x05width\x12\x16\n\x06height\x18\x05\x20\x01(\r\
+    R\x06height2\xc9\x03\n\x08PlansApi\x127\n\x08GetPlans\x12\x18.mizer.plan\
+    .PlansRequest\x1a\x11.mizer.plan.Plans\x128\n\x07AddPlan\x12\x1a.mizer.p\
+    lan.AddPlanRequest\x1a\x11.mizer.plan.Plans\x12>\n\nRemovePlan\x12\x1d.m\
+    izer.plan.RemovePlanRequest\x1a\x11.mizer.plan.Plans\x12>\n\nRenamePlan\
+    \x12\x1d.mizer.plan.RenamePlanRequest\x1a\x11.mizer.plan.Plans\x12B\n\
+    \x0cMoveFixtures\x12\x1f.mizer.plan.MoveFixturesRequest\x1a\x11.mizer.pl\
+    an.Plans\x12@\n\x0bMoveFixture\x12\x1e.mizer.plan.MoveFixtureRequest\x1a\
+    \x11.mizer.plan.Plans\x12D\n\rAlignFixtures\x12\x20.mizer.plan.AlignFixt\
+    uresRequest\x1a\x11.mizer.plan.Plansb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

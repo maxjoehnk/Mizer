@@ -124,11 +124,13 @@ const FixturePosition$json = const {
     const {'1': 'id', '3': 1, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'id'},
     const {'1': 'x', '3': 2, '4': 1, '5': 5, '10': 'x'},
     const {'1': 'y', '3': 3, '4': 1, '5': 5, '10': 'y'},
+    const {'1': 'width', '3': 4, '4': 1, '5': 13, '10': 'width'},
+    const {'1': 'height', '3': 5, '4': 1, '5': 13, '10': 'height'},
   ],
 };
 
 /// Descriptor for `FixturePosition`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixturePositionDescriptor = $convert.base64Decode('Cg9GaXh0dXJlUG9zaXRpb24SKQoCaWQYASABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSAmlkEgwKAXgYAiABKAVSAXgSDAoBeRgDIAEoBVIBeQ==');
+final $typed_data.Uint8List fixturePositionDescriptor = $convert.base64Decode('Cg9GaXh0dXJlUG9zaXRpb24SKQoCaWQYASABKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSAmlkEgwKAXgYAiABKAVSAXgSDAoBeRgDIAEoBVIBeRIUCgV3aWR0aBgEIAEoDVIFd2lkdGgSFgoGaGVpZ2h0GAUgASgNUgZoZWlnaHQ=');
 @$core.Deprecated('Use planScreenDescriptor instead')
 const PlanScreen$json = const {
   '1': 'PlanScreen',

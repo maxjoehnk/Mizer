@@ -13,6 +13,8 @@ impl From<mizer_plan::Plan> for Plan {
                     id: MessageField::some(f.fixture.into()),
                     x: f.x,
                     y: f.y,
+                    width: f.width,
+                    height: f.height,
                     ..Default::default()
                 })
                 .collect(),

@@ -577,6 +577,8 @@ class FixturePosition extends $pb.GeneratedMessage {
     ..aOM<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', subBuilder: $0.FixtureId.create)
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -585,6 +587,8 @@ class FixturePosition extends $pb.GeneratedMessage {
     $0.FixtureId? id,
     $core.int? x,
     $core.int? y,
+    $core.int? width,
+    $core.int? height,
   }) {
     final _result = create();
     if (id != null) {
@@ -595,6 +599,12 @@ class FixturePosition extends $pb.GeneratedMessage {
     }
     if (y != null) {
       _result.y = y;
+    }
+    if (width != null) {
+      _result.width = width;
+    }
+    if (height != null) {
+      _result.height = height;
     }
     return _result;
   }
@@ -647,6 +657,24 @@ class FixturePosition extends $pb.GeneratedMessage {
   $core.bool hasY() => $_has(2);
   @$pb.TagNumber(3)
   void clearY() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get width => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set width($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWidth() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWidth() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get height => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set height($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasHeight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearHeight() => clearField(5);
 }
 
 class PlanScreen extends $pb.GeneratedMessage {

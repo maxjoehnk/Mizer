@@ -6,8 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/plugin/ffi/plans.dart';
 import 'package:mizer/extensions/fixture_id_extensions.dart';
+import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
+import 'package:mizer/state/fixtures_bloc.dart';
 
 const double fieldSize = 24;
 
@@ -32,12 +34,14 @@ class PlansFixturesLayer extends StatelessWidget {
   }
 
   List<Widget> _getFixtures(BuildContext context) {
+    var fixturesBloc = context.read<FixturesBloc>();
     return plan.positions.map((p) {
       var selected =
           programmerState?.activeFixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
       var tracked = programmerState?.fixtures.firstWhereOrNull((f) => f.overlaps(p.id)) != null;
       var child = Fixture2DView(
-          fixture: p,
+          position: p,
+          fixture: fixturesBloc.state.fixtures.firstWhereOrNull((f) => f.id == p.id.fixtureId),
           ref: fixturesPointer,
           tracked: tracked,
           selected: selected,
@@ -61,7 +65,7 @@ class PlansFixturesLayer extends StatelessWidget {
     var textStyle = Theme.of(context).textTheme.bodyMedium;
     if (programmerState?.fixtures.isEmpty ?? true) {
       return Fixture2DView(
-          fixture: position, ref: fixturesPointer!, selected: true, textStyle: textStyle);
+          position: position, ref: fixturesPointer!, selected: true, textStyle: textStyle);
     }
 
     var selectedFixtures =
@@ -71,7 +75,7 @@ class PlansFixturesLayer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: selectedFixtures
           .map((p) => Fixture2DView(
-              fixture: p, ref: fixturesPointer!, selected: true, textStyle: textStyle))
+              position: p, ref: fixturesPointer!, selected: true, textStyle: textStyle))
           .toList(),
     );
   }
@@ -88,23 +92,24 @@ class PlansFixturesLayer extends StatelessWidget {
 }
 
 class Fixture2DView extends StatefulWidget {
-  final FixturePosition fixture;
+  final FixturePosition position;
   final FixturesRefPointer ref;
   final bool tracked;
   final bool selected;
   final TextStyle? textStyle;
   final Function()? onSelect;
   final Function()? onUnselect;
+  final Fixture? fixture;
 
   const Fixture2DView(
-      {required this.fixture,
+      {required this.position,
       required this.ref,
       this.onSelect,
       this.onUnselect,
       this.tracked = false,
       this.selected = false,
       this.textStyle,
-      Key? key})
+      Key? key, this.fixture})
       : super(key: key);
 
   @override
@@ -120,7 +125,7 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
     super.initState();
     ticker = this.createTicker((elapsed) {
       setState(() {
-        state = widget.ref.readState(widget.fixture.id);
+        state = widget.ref.readState(widget.position.id);
       });
     });
     ticker!.start();
@@ -153,25 +158,28 @@ class _Fixture2DViewState extends State<Fixture2DView> with SingleTickerProvider
           }
         }
       },
-      child: Container(
-          width: fieldSize,
-          height: fieldSize,
-          padding: const EdgeInsets.all(2),
-          child: Container(
-              decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(2),
-                  side: BorderSide(
-                    color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
-                    width: 2,
-                    style: BorderStyle.solid,
+      child: Tooltip(
+        message: widget.fixture?.name ?? "",
+        child: Container(
+            width: fieldSize * widget.position.width,
+            height: fieldSize * widget.position.height,
+            padding: const EdgeInsets.all(2),
+            child: Container(
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    side: BorderSide(
+                      color: widget.selected ? Colors.grey.shade500 : Colors.grey.shade800,
+                      width: 2,
+                      style: BorderStyle.solid,
+                    ),
                   ),
+                  color: state.getColor(),
                 ),
-                color: state.getColor(),
-              ),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(widget.fixture.id.toDisplay(), style: textStyle)))),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(widget.position.id.toDisplay(), style: textStyle)))),
+      ),
     );
   }
 }
@@ -184,7 +192,7 @@ class PlanFixturesLayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     for (var fixture in plan.positions) {
-      var size = Size.square(fieldSize);
+      var size = Size(fieldSize * fixture.width, fieldSize * fixture.height);
       layoutChild(fixture.id, BoxConstraints.tight(size));
       var offset = _convertToScreenPosition(fixture);
       positionChild(fixture.id, offset);

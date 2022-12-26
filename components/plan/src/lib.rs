@@ -20,6 +20,14 @@ pub struct FixturePosition {
     pub fixture: FixtureId,
     pub x: i32,
     pub y: i32,
+    #[serde(default = "default_size")]
+    pub width: u32,
+    #[serde(default = "default_size")]
+    pub height: u32,
+}
+
+fn default_size() -> u32 {
+    1
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -94,6 +102,8 @@ mod tests {
             fixture: FixtureId::Fixture(0),
             x: fixture_x,
             y: fixture_y,
+            width: 1,
+            height: 1,
         };
 
         let result = screen.contains_fixture(&fixture);
@@ -126,6 +136,8 @@ mod tests {
             fixture: FixtureId::Fixture(0),
             x: fixture_x,
             y: fixture_y,
+            width: 1,
+            height: 1,
         };
 
         let result = screen.contains_fixture(&fixture);
@@ -155,6 +167,8 @@ mod tests {
             fixture: FixtureId::Fixture(0),
             x: fixture_x,
             y: fixture_y,
+            width: 1,
+            height: 1,
         };
 
         let (x, y) = screen.translate_position(&fixture);

@@ -26,6 +26,8 @@ impl<'a> Command<'a> for AddFixturesToPlanCommand {
                     fixture: *fixture_id,
                     x: i as i32,
                     y: 0,
+                    width: 1,
+                    height: 1,
                 });
             }
         });

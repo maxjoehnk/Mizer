@@ -1,0 +1,6 @@
+id: novation-launchkey-61
+manufacturer: Novation
+name: Launchkey 61
+keyword: Launchkey 61 Launchkey MIDI
+scripts:
+  pages: pages.rhai

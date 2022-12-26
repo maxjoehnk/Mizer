@@ -5,6 +5,7 @@ use mizer_node::*;
 use mizer_sequencer::Sequencer;
 
 const GO_FORWARD: &str = "Go+";
+const PLAYBACK: &str = "Playback";
 const TOGGLE_PLAYBACK: &str = "Playback Toggle";
 const STOP: &str = "Stop";
 const ACTIVE: &str = "Active";
@@ -43,6 +44,14 @@ impl PipelineNode for SequencerNode {
         vec![
             (
                 GO_FORWARD.into(),
+                PortMetadata {
+                    direction: PortDirection::Input,
+                    port_type: PortType::Single,
+                    ..Default::default()
+                },
+            ),
+            (
+                PLAYBACK.into(),
                 PortMetadata {
                     direction: PortDirection::Input,
                     port_type: PortType::Single,
@@ -110,6 +119,16 @@ impl ProcessingNode for SequencerNode {
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
         if let Some(sequencer) = context.inject::<Sequencer>() {
+            if let Some(value) = context.read_port(PLAYBACK) {
+                if (state.playback > 0f64) != (value > 0f64) {
+                    if value > 0f64 {
+                        sequencer.sequence_go(self.sequence_id);
+                    } else {
+                        sequencer.sequence_stop(self.sequence_id);
+                    }
+                }
+                state.playback = value;
+            }
             if let Some(value) = context.read_port(GO_FORWARD) {
                 if let Some(true) = state.go_forward.update(value) {
                     sequencer.sequence_go(self.sequence_id);
@@ -162,6 +181,7 @@ impl ProcessingNode for SequencerNode {
 
 #[derive(Default)]
 pub struct SequencerState {
+    playback: f64,
     go_forward: Edge,
     stop: Edge,
     playback_toggle: Edge,

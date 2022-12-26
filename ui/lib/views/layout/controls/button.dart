@@ -18,14 +18,14 @@ class ButtonControl extends StatefulWidget {
 }
 
 class _ButtonControlState extends State<ButtonControl> with SingleTickerProviderStateMixin {
-  double value = 0;
+  bool value = false;
   late Ticker ticker;
 
   @override
   void initState() {
     super.initState();
     this.ticker = this.createTicker((elapsed) async {
-      var v = widget.pointer.readFaderValue(widget.control.node);
+      var v = widget.pointer.readButtonValue(widget.control.node);
       if (!this.mounted) {
         return;
       }
@@ -47,7 +47,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
     return ButtonInput(
       label: widget.control.label,
       color: widget.color,
-      pressed: value > 0,
+      pressed: value,
       onValue: (value) =>
           apiClient.writeControlValue(path: widget.control.node, port: "value", value: value),
     );

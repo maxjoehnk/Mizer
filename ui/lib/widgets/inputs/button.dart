@@ -18,16 +18,6 @@ class _ButtonInputState extends State<ButtonInput> {
   bool pressed = false;
 
   @override
-  void didUpdateWidget(ButtonInput oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.pressed != widget.pressed && widget.pressed != null) {
-      setState(() {
-        this.pressed = widget.pressed!;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
         decoration: ControlDecoration(color: widget.color),
@@ -46,7 +36,7 @@ class _ButtonInputState extends State<ButtonInput> {
               child: Container(
                 child: widget.label == null ? null : Center(child: Text(widget.label!, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall)),
                 decoration: ShapeDecoration(
-                  color: this.pressed ? Colors.black45 : Colors.transparent,
+                  color: (this.pressed || (widget.pressed ?? false)) ? Colors.black45 : Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                   ),

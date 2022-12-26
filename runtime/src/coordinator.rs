@@ -182,20 +182,36 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
 
     pub(crate) fn read_states_into_view(&self) {
         let layouts = self.layouts.read();
-        let values = layouts
+        let nodes = layouts
             .into_iter()
             .flat_map(|layout| layout.controls)
             .map(|control| control.node)
             .sorted()
             .dedup()
+            .collect::<Vec<_>>();
+
+        let fader_values = nodes
+            .iter()
             .filter_map(|path| {
                 let value = self.pipeline.get_state::<f64>(&path).copied();
 
-                value.map(|value| (path, value))
+                value.map(|value| (path.clone(), value))
             })
             .collect::<HashMap<_, _>>();
 
-        self.layout_fader_view.write_fader_values(values);
+        self.layout_fader_view.write_fader_values(fader_values);
+        let button_values = nodes
+            .iter()
+            .filter_map(|path| {
+                let value = self
+                    .pipeline
+                    .get_state::<<ButtonNode as ProcessingNode>::State>(path);
+
+                value.map(|(value, _)| (path.clone(), *value))
+            })
+            .collect::<HashMap<_, _>>();
+
+        self.layout_fader_view.write_button_values(button_values);
     }
 }
 

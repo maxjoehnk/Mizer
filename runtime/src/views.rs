@@ -7,23 +7,38 @@ use pinboard::NonEmptyPinboard;
 use mizer_node::NodePath;
 
 #[derive(Clone)]
-#[repr(transparent)]
-pub struct LayoutsView(Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>);
+pub struct LayoutsView {
+    faders: Arc<NonEmptyPinboard<HashMap<NodePath, f64>>>,
+    buttons: Arc<NonEmptyPinboard<HashMap<NodePath, bool>>>,
+}
 
 impl Default for LayoutsView {
     fn default() -> Self {
-        Self(Arc::new(NonEmptyPinboard::new(Default::default())))
+        Self {
+            faders: Arc::new(NonEmptyPinboard::new(Default::default())),
+            buttons: Arc::new(NonEmptyPinboard::new(Default::default())),
+        }
     }
 }
 
 impl LayoutsView {
     pub fn get_fader_value(&self, path: &NodePath) -> Option<f64> {
-        let values = self.0.read();
+        let values = self.faders.read();
 
         values.get(path).copied()
     }
 
     pub(crate) fn write_fader_values(&self, values: HashMap<NodePath, f64>) {
-        self.0.set(values);
+        self.faders.set(values);
+    }
+
+    pub fn get_button_value(&self, path: &NodePath) -> Option<bool> {
+        let values = self.buttons.read();
+
+        values.get(path).copied()
+    }
+
+    pub(crate) fn write_button_values(&self, values: HashMap<NodePath, bool>) {
+        self.buttons.set(values);
     }
 }

@@ -17,6 +17,13 @@ class LayoutsRefPointer {
     return result;
   }
 
+  bool readButtonValue(String path) {
+    var ffiPath = path.toNativeUtf8();
+    var result = this._bindings.read_button_value(_ptr, ffiPath.cast<ffi.Char>());
+
+    return result == 1;
+  }
+
   void dispose() {
     this._bindings.drop_layout_pointer(_ptr);
   }

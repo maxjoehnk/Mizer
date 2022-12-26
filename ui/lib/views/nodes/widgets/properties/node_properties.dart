@@ -13,6 +13,7 @@ import 'properties/groups/delay_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
 import 'properties/groups/fixture_properties.dart';
+import 'properties/groups/label_properties.dart';
 import 'properties/groups/math_properties.dart';
 import 'properties/groups/merge_properties.dart';
 import 'properties/groups/mqtt_input_properties.dart';
@@ -178,6 +179,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(NoiseProperties(node.config.noiseConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(noiseConfig: config)))));
+    }
+    if (node.config.hasLabelConfig()) {
+      widgets.add(LabelProperties(node.config.labelConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(labelConfig: config)))));
     }
     return widgets;
   }

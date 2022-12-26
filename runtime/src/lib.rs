@@ -44,6 +44,7 @@ pub trait NodeDowncast {
             NodeType::Laser => Node::Laser(self.downcast_node(node_type).unwrap()),
             NodeType::Fader => Node::Fader(self.downcast_node(node_type).unwrap()),
             NodeType::Button => Node::Button(self.downcast_node(node_type).unwrap()),
+            NodeType::Label => Node::Label(self.downcast_node(node_type).unwrap()),
             NodeType::MidiInput => Node::MidiInput(self.downcast_node(node_type).unwrap()),
             NodeType::MidiOutput => Node::MidiOutput(self.downcast_node(node_type).unwrap()),
             NodeType::OpcOutput => Node::OpcOutput(self.downcast_node(node_type).unwrap()),

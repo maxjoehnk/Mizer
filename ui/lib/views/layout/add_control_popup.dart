@@ -44,6 +44,7 @@ class AddControlPopup extends StatelessWidget {
           PopupCategory(label: "New".i18n, items: [
             PopupItem(Node_NodeType.Button, "Button".i18n),
             PopupItem(Node_NodeType.Fader, "Fader".i18n),
+            PopupItem(Node_NodeType.Label, "Label".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
@@ -67,6 +68,7 @@ class AddControlPopup extends StatelessWidget {
 List<Node_NodeType> CONTROL_NODES = [
   Node_NodeType.Fader,
   Node_NodeType.Button,
+  Node_NodeType.Label,
 ];
 
 bool isControlNode(Node node) {

@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 
 import 'controls/button.dart';
 import 'controls/fader.dart';
+import 'controls/label.dart';
 import 'controls/sequencer.dart';
 import 'dialogs/delete_control_dialog.dart';
 import 'dialogs/edit_control_dialog.dart';
@@ -76,6 +77,8 @@ class LayoutControlView extends StatelessWidget {
         state: sequencerState,
         size: control.size,
       );
+    } else if (node?.type == Node_NodeType.Label) {
+      return LabelControl(pointer: pointer, control: control, color: _color);
     }
     return null;
   }

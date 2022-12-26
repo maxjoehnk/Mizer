@@ -12,6 +12,7 @@ pub struct NodeDetails {
 pub enum NodeType {
     Fader,
     Button,
+    Label,
     DmxOutput,
     Oscillator,
     Clock,
@@ -67,6 +68,7 @@ impl NodeType {
         match self {
             Fader => "fader",
             Button => "button",
+            Label => "label",
             DmxOutput => "dmx-output",
             Oscillator => "oscillator",
             Clock => "clock",

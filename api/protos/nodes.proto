@@ -133,6 +133,7 @@ message Node {
     Delay = 63;
     Ramp = 64;
     Noise = 65;
+    Label = 66;
   }
 
   enum NodePreviewType {
@@ -199,6 +200,7 @@ message NodeConfig {
     DelayNodeConfig delayConfig = 53;
     RampNodeConfig rampConfig = 54;
     NoiseNodeConfig noiseConfig = 55;
+    LabelNodeConfig labelConfig = 56;
   }
 }
 
@@ -460,6 +462,10 @@ message RampNodeConfig {
 message NoiseNodeConfig {
   uint64 tick_rate = 1;
   bool fade = 2;
+}
+
+message LabelNodeConfig {
+  string text = 1;
 }
 
 message NodePosition {

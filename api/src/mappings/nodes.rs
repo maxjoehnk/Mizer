@@ -29,6 +29,7 @@ impl From<mizer_nodes::Node> for node_config::Type {
             Laser(laser) => Self::LaserConfig(laser.into()),
             Fader(fader) => Self::FaderConfig(fader.into()),
             Button(button) => Self::ButtonConfig(button.into()),
+            Label(label) => Self::LabelConfig(label.into()),
             MidiInput(midi_input) => Self::MidiInputConfig(midi_input.into()),
             MidiOutput(midi_output) => Self::MidiOutputConfig(midi_output.into()),
             OpcOutput(opc) => Self::OpcOutputConfig(opc.into()),
@@ -82,6 +83,7 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::LaserConfig(laser) => Self::Laser(laser.into()),
             node_config::Type::FaderConfig(fader) => Self::Fader(fader.into()),
             node_config::Type::ButtonConfig(button) => Self::Button(button.into()),
+            node_config::Type::LabelConfig(label) => Self::Label(label.into()),
             node_config::Type::MidiInputConfig(midi_input) => Self::MidiInput(midi_input.into()),
             node_config::Type::MidiOutputConfig(midi_output) => {
                 Self::MidiOutput(midi_output.into())
@@ -1266,11 +1268,27 @@ impl From<mizer_nodes::NoiseNode> for NoiseNodeConfig {
     }
 }
 
+impl From<LabelNodeConfig> for mizer_nodes::LabelNode {
+    fn from(config: LabelNodeConfig) -> Self {
+        Self { text: config.text }
+    }
+}
+
+impl From<mizer_nodes::LabelNode> for LabelNodeConfig {
+    fn from(node: mizer_nodes::LabelNode) -> Self {
+        Self {
+            text: node.text,
+            ..Default::default()
+        }
+    }
+}
+
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
             NodeType::Fader => node::NodeType::Fader,
             NodeType::Button => node::NodeType::Button,
+            NodeType::Label => node::NodeType::Label,
             NodeType::DmxOutput => node::NodeType::DmxOutput,
             NodeType::Oscillator => node::NodeType::Oscillator,
             NodeType::Clock => node::NodeType::Clock,
@@ -1324,6 +1342,7 @@ impl From<node::NodeType> for NodeType {
         match node {
             node::NodeType::Fader => NodeType::Fader,
             node::NodeType::Button => NodeType::Button,
+            node::NodeType::Label => NodeType::Label,
             node::NodeType::DmxOutput => NodeType::DmxOutput,
             node::NodeType::Oscillator => NodeType::Oscillator,
             node::NodeType::Clock => NodeType::Clock,

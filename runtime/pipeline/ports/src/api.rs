@@ -78,9 +78,9 @@ pub enum PortType {
     ///
     /// e.g. 3D Objects
     Poly,
-    /// Text Data
+    /// Structured Data
     ///
-    /// e.g. Scripts
+    /// e.g. Text, Lists, Objects, Numbers
     Data,
     // TODO: figure out what kind's of data should be transmitted here
     /// Materials and Shaders for 3D Objects

@@ -24,6 +24,13 @@ class LayoutsRefPointer {
     return result == 1;
   }
 
+  String readLabelValue(String path) {
+    var ffiPath = path.toNativeUtf8();
+    var result = this._bindings.read_label_value(_ptr, ffiPath.cast<ffi.Char>());
+
+    return result.cast<Utf8>().toDartString();
+  }
+
   void dispose() {
     this._bindings.drop_layout_pointer(_ptr);
   }

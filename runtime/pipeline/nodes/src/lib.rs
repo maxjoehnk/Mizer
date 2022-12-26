@@ -9,7 +9,7 @@ pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
-pub use mizer_input_nodes::{ButtonNode, FaderNode};
+pub use mizer_input_nodes::{ButtonNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
 pub use mizer_math_nodes::{MathMode, MathNode};
 pub use mizer_midi_nodes::{MidiInputConfig, MidiInputNode, MidiOutputConfig, MidiOutputNode};
@@ -111,6 +111,7 @@ node_impl! {
     Laser(LaserNode),
     Fader(FaderNode),
     Button(ButtonNode),
+    Label(LabelNode),
     MidiInput(MidiInputNode),
     MidiOutput(MidiOutputNode),
     OpcOutput(OpcOutputNode),

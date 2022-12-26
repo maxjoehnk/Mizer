@@ -212,6 +212,29 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             .collect::<HashMap<_, _>>();
 
         self.layout_fader_view.write_button_values(button_values);
+
+        let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+        let node_views = pipeline_access.nodes.iter().collect::<Vec<_>>();
+
+        let label_values = nodes
+            .iter()
+            .filter_map(|path| {
+                let state = self
+                    .pipeline
+                    .get_state::<<LabelNode as ProcessingNode>::State>(path);
+                let value = node_views
+                    .iter()
+                    .find(|(p, _)| &path == p)
+                    .map(|(_, node)| node)
+                    .and_then(|node| node.downcast_node::<LabelNode>(node.node_type()))
+                    .zip(state)
+                    .map(|(node, state)| node.label(state));
+
+                value.map(|value| (path.clone(), value))
+            })
+            .collect::<HashMap<_, _>>();
+
+        self.layout_fader_view.write_label_values(label_values);
     }
 }
 
@@ -396,6 +419,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Laser(node) => pipeline.register_node(path, &node),
         Node::Fader(node) => pipeline.register_node(path, &node),
         Node::Button(node) => pipeline.register_node(path, &node),
+        Node::Label(node) => pipeline.register_node(path, &node),
         Node::MidiInput(node) => pipeline.register_node(path, &node),
         Node::MidiOutput(node) => pipeline.register_node(path, &node),
         Node::OpcOutput(node) => pipeline.register_node(path, &node),

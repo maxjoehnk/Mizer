@@ -20,6 +20,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.ColorHsv: "HSV Mixer",
   Node_NodeType.Fader: "Fader",
   Node_NodeType.Button: "Button",
+  Node_NodeType.Label: "Label",
   Node_NodeType.VideoFile: "File",
   Node_NodeType.VideoEffect: "Effect",
   Node_NodeType.VideoOutput: "Output",
@@ -86,6 +87,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
   buildCategory("Controls", [
     Node_NodeType.Fader,
     Node_NodeType.Button,
+    Node_NodeType.Label,
     // Node_NodeType.ColorPicker,
   ]),
   buildCategory("Video", [

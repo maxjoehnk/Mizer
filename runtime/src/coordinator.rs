@@ -78,7 +78,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.injector.provide(self.layouts.clone());
     }
 
-    fn add_layouts(&self, layouts: HashMap<String, Vec<ControlConfig>>) {
+    fn add_layouts(&self, layouts: impl IntoIterator<Item = (String, Vec<ControlConfig>)>) {
         let layouts = layouts
             .into_iter()
             .map(|(id, controls)| Layout { id, controls })

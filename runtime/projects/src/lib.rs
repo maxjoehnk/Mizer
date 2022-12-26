@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use indexmap::IndexMap;
 use std::convert::TryFrom;
 use std::fs::File;
 use std::path::Path;
@@ -40,7 +40,7 @@ pub struct Project {
     #[serde(default, rename = "media")]
     pub media_paths: Vec<String>,
     #[serde(default)]
-    pub layouts: HashMap<String, Vec<ControlConfig>>,
+    pub layouts: IndexMap<String, Vec<ControlConfig>>,
     #[serde(default)]
     pub connections: Vec<ConnectionConfig>,
     #[serde(default)]

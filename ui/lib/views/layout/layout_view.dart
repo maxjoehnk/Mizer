@@ -202,7 +202,9 @@ class _ControlLayoutState extends State<ControlLayout> {
               if (_movingNode == null) {
                 return;
               }
-              _movingNodePosition = _movingNodePosition! + event.localDelta;
+              setState(() {
+                _movingNodePosition = _movingNodePosition! + event.localDelta;
+              });
             },
             onPointerDown: (e) {
               if (_movingNode == null) {

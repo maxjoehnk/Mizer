@@ -184,6 +184,9 @@ impl OscillatorContext {
     }
 
     fn tick(&self, beat: f64) -> f64 {
+        if self.interval == 0. {
+            return self.min;
+        }
         match &self.oscillator_type {
             OscillatorType::Square => {
                 let base = self.interval * 0.5;
@@ -204,7 +207,7 @@ impl OscillatorContext {
                 ) * offset
                     + offset
                     + min;
-                let value = value.max(min).min(max);
+                let value = value.clamp(min, max);
                 log::trace!(
                     "min: {}, max: {}, offset: {}, result: {}",
                     min,
@@ -238,6 +241,9 @@ impl OscillatorContext {
 
     fn get_frame(&self, beat: f64) -> f64 {
         let mut frame = beat + self.offset;
+        if self.interval == 0. {
+            return frame;
+        }
         while frame > self.interval {
             frame -= self.interval;
         }
@@ -319,5 +325,21 @@ mod tests {
         let value = node.tick(1.);
 
         assert_eq!(value, max);
+    }
+
+    #[test_case(OscillatorType::Sine)]
+    #[test_case(OscillatorType::Saw)]
+    #[test_case(OscillatorType::Triangle)]
+    #[test_case(OscillatorType::Square)]
+    fn oscillator_should_return_0_for_interval_of_0(oscillator: OscillatorType) {
+        let node = OscillatorContext {
+            oscillator_type: oscillator,
+            interval: 0.,
+            ..Default::default()
+        };
+
+        let value = node.tick(1.);
+
+        assert_eq!(0., value);
     }
 }

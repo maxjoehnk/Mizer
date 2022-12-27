@@ -1,0 +1,832 @@
+---
+nodes:
+  - path: /fixture-8
+    type: fixture
+    config:
+      fixture: 9
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-5
+    type: fixture
+    config:
+      fixture: 6
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /midi-input-0
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: play
+    designer:
+      position:
+        x: -1.277753741182778
+        y: 13.393153839839073
+      scale: 1.0
+      hidden: false
+  - path: /threshold-0
+    type: threshold
+    config:
+      lower_threshold: 0.5
+      upper_threshold: 1000000.0
+      active_value: 0.9
+      inactive_value: 0.0
+    designer:
+      position:
+        x: 4.895586433312631
+        y: -4.892233687194319
+      scale: 1.0
+      hidden: false
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 15.643144825038092
+        y: -6.557687831597414
+      scale: 0.0
+      hidden: false
+  - path: /fixture-9
+    type: fixture
+    config:
+      fixture: 10
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-3
+    type: fixture
+    config:
+      fixture: 4
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-1
+    type: fixture
+    config:
+      fixture: 2
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /oscillator-0
+    type: oscillator
+    config:
+      type: sine
+      interval: 1.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: -3.9425176875296497
+        y: -2.850842307725649
+      scale: 1.0
+      hidden: false
+  - path: /oscillator-1
+    type: oscillator
+    config:
+      type: square
+      interval: 1.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: -3.6783596512865326
+        y: 2.0335168408251123
+      scale: 1.0
+      hidden: false
+  - path: /oscillator-2
+    type: oscillator
+    config:
+      type: triangle
+      interval: 1.0
+      max: 1.0
+      min: 0.0
+      offset: 0.0
+      reverse: false
+    designer:
+      position:
+        x: -3.6658874403790302
+        y: 6.560102478353209
+      scale: 1.0
+      hidden: false
+  - path: /sequencer-0
+    type: sequencer
+    config:
+      sequence: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /midi-input-3
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: master
+    designer:
+      position:
+        x: -12.933137380479662
+        y: -9.168799167757504
+      scale: 1.0
+      hidden: false
+  - path: /fixture-4
+    type: fixture
+    config:
+      fixture: 5
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-7
+    type: fixture
+    config:
+      fixture: 8
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-2
+    type: fixture
+    config:
+      fixture: 3
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fader-0
+    type: fader
+    config: {}
+    designer:
+      position:
+        x: -4.025430387800583
+        y: -8.96622855134828
+      scale: 0.0
+      hidden: false
+  - path: /midi-input-6
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: knob-3
+    designer:
+      position:
+        x: -12.42577944296716
+        y: 7.058173947985706
+      scale: 1.0
+      hidden: false
+  - path: /color-rgb-0
+    type: color-rgb
+    config: ~
+    designer:
+      position:
+        x: 5.648515601434628
+        y: -0.13988099657567243
+      scale: 1.0
+      hidden: false
+  - path: /sequencer-1
+    type: sequencer
+    config:
+      sequence: 1
+    designer:
+      position:
+        x: 14.249886125113965
+        y: 17.22240086240728
+      scale: 0.0
+      hidden: false
+  - path: /transport-0
+    type: transport
+    config: ~
+    designer:
+      position:
+        x: 8.721964754883675
+        y: 12.165511825314484
+      scale: 0.0
+      hidden: false
+  - path: /fixture-6
+    type: fixture
+    config:
+      fixture: 7
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /fixture-0
+    type: fixture
+    config:
+      fixture: 1
+    designer:
+      position:
+        x: 0.0
+        y: 0.0
+      scale: 0.0
+      hidden: true
+  - path: /midi-input-4
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: knob-1
+    designer:
+      position:
+        x: -13.139688871635766
+        y: -3.1394534138455414
+      scale: 1.0
+      hidden: false
+  - path: /midi-input-2
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: record
+    designer:
+      position:
+        x: -1.5855743231582589
+        y: 11.56658092198804
+      scale: 1.0
+      hidden: false
+  - path: /midi-input-7
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: button-0
+    designer:
+      position:
+        x: 6.171283239627331
+        y: 18.614826988706106
+      scale: 0.0
+      hidden: false
+  - path: /midi-input-5
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: knob-2
+    designer:
+      position:
+        x: -12.810565815451891
+        y: 2.2315843451915227
+      scale: 1.0
+      hidden: false
+  - path: /midi-input-1
+    type: midi-input
+    config:
+      device: "Launchkey 61:Launchkey 61 Launchkey MIDI"
+      type: control
+      page: Default
+      control: stop
+    designer:
+      position:
+        x: -1.4522116167945176
+        y: 14.856536272047855
+      scale: 1.0
+      hidden: false
+  - path: /button-0
+    type: button
+    config:
+      toggle: false
+    designer:
+      position:
+        x: -4.397840800053226
+        y: -6.533386424074782
+      scale: 0.0
+      hidden: false
+channels:
+  - value@/fader-0 -> Intensity@/programmer-0
+  - value@/oscillator-0 -> Red@/color-rgb-0
+  - value@/oscillator-2 -> Blue@/color-rgb-0
+  - value@/oscillator-1 -> Green@/color-rgb-0
+  - Color@/color-rgb-0 -> Color@/programmer-0
+  - value@/button-0 -> value@/threshold-0
+  - value@/threshold-0 -> Shutter@/programmer-0
+  - value@/midi-input-0 -> Play@/transport-0
+  - value@/midi-input-1 -> Stop@/transport-0
+  - value@/midi-input-2 -> Tap@/transport-0
+  - value@/midi-input-3 -> value@/fader-0
+  - value@/midi-input-4 -> interval@/oscillator-0
+  - value@/midi-input-5 -> interval@/oscillator-1
+  - value@/midi-input-6 -> interval@/oscillator-2
+  - value@/midi-input-7 -> Go+@/sequencer-1
+media: []
+layouts:
+  Default:
+    - label: Strobe
+      node: /button-0
+      position:
+        x: 1
+        y: 0
+      size:
+        width: 1
+        height: 1
+      decoration:
+        color: ~
+    - label: Master
+      node: /fader-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+  Busking: []
+connections:
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+fixtures:
+  - id: 8
+    name: Wild Wash 8
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 43
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 7
+    name: Wild Wash 7
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 37
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 2
+    name: Wild Wash 2
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 7
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 1
+    name: Wild Wash 1
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 1
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 9
+    name: Wild Wash 9
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 49
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 4
+    name: Wild Wash 4
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 19
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 3
+    name: Wild Wash 3
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 13
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 6
+    name: Wild Wash 6
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 31
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 5
+    name: Wild Wash 5
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 25
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+  - id: 10
+    name: Wild Wash 10
+    fixture: "qlc:Stairville:Wild Wash 132 RGB LED"
+    channel: 55
+    universe: 1
+    mode: 6 Channel
+    output: ~
+    configuration:
+      invert_pan: false
+      invert_tilt: false
+groups: []
+presets:
+  intensity:
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 2
+      label: 25%
+      value: 0.25
+    - id: 5
+      label: 100%
+      value: 1.0
+    - id: 4
+      label: 75%
+      value: 0.75
+    - id: 1
+      label: 0%
+      value: 0.0
+  shutter: []
+  color:
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+  position: []
+sequences:
+  - id: 1
+    name: Strobe Colors
+    fixtures:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+    cues:
+      - id: 1
+        name: Red
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control:
+              ColorMixer: Red
+            value: 1.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+          - control:
+              ColorMixer: Blue
+            value: 0.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+          - control:
+              ColorMixer: Green
+            value: 0.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+        effects: []
+        cue_fade:
+          unit: beats
+          value: 0.5
+        cue_delay: ~
+      - id: 2
+        name: Green
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control:
+              ColorMixer: Blue
+            value: 0.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+          - control:
+              ColorMixer: Green
+            value: 1.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+          - control:
+              ColorMixer: Red
+            value: 0.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+        effects: []
+        cue_fade:
+          unit: beats
+          value: 0.5
+        cue_delay: ~
+      - id: 3
+        name: Blue
+        trigger: Go
+        trigger_time: ~
+        controls:
+          - control:
+              ColorMixer: Blue
+            value: 1.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+          - control:
+              ColorMixer: Red
+            value: 0.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+          - control:
+              ColorMixer: Green
+            value: 0.0
+            fixtures:
+              - 8
+              - 7
+              - 9
+              - 3
+              - 1
+              - 6
+              - 5
+              - 2
+              - 4
+              - 10
+        effects: []
+        cue_fade:
+          unit: beats
+          value: 0.5
+        cue_delay: ~
+    wrap_around: true
+effects:
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - 1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.0
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - -1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+plans:
+  - name: Stage
+    fixtures:
+      - fixture: 9
+        x: 26
+        y: 3
+        width: 1
+        height: 1
+      - fixture: 5
+        x: 17
+        y: 4
+        width: 1
+        height: 1
+      - fixture: 3
+        x: 17
+        y: 2
+        width: 1
+        height: 1
+      - fixture: 10
+        x: 26
+        y: 4
+        width: 1
+        height: 1
+      - fixture: 4
+        x: 17
+        y: 3
+        width: 1
+        height: 1
+      - fixture: 7
+        x: 26
+        y: 1
+        width: 1
+        height: 1
+      - fixture: 8
+        x: 26
+        y: 2
+        width: 1
+        height: 1
+      - fixture: 2
+        x: 17
+        y: 1
+        width: 1
+        height: 1
+      - fixture: 1
+        x: 17
+        y: 0
+        width: 1
+        height: 1
+      - fixture: 6
+        x: 26
+        y: 0
+        width: 1
+        height: 1
+    screens: []

@@ -48,6 +48,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Delay: "Delay",
   Node_NodeType.Ramp: "Ramp",
   Node_NodeType.Noise: "Noise",
+  Node_NodeType.Transport: "Transport",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [

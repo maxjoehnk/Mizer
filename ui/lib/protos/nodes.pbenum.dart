@@ -87,6 +87,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Ramp = Node_NodeType._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ramp');
   static const Node_NodeType Noise = Node_NodeType._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Noise');
   static const Node_NodeType Label = Node_NodeType._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Label');
+  static const Node_NodeType Transport = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Transport');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -135,6 +136,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Ramp,
     Noise,
     Label,
+    Transport,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

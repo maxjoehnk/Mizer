@@ -3797,6 +3797,7 @@ dependencies = [
  "mizer-sequence-nodes",
  "mizer-sequencer-nodes",
  "mizer-timing-nodes",
+ "mizer-transport-nodes",
  "mizer-util",
  "mizer-video-nodes",
  "plotters",
@@ -4230,6 +4231,16 @@ name = "mizer-timing-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "mizer-node",
+ "serde",
+]
+
+[[package]]
+name = "mizer-transport-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
  "mizer-node",
  "serde",
 ]

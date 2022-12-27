@@ -1061,6 +1061,7 @@ enum NodeConfig_Type {
   rampConfig, 
   noiseConfig, 
   labelConfig, 
+  transportConfig, 
   notSet
 }
 
@@ -1112,10 +1113,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     54 : NodeConfig_Type.rampConfig,
     55 : NodeConfig_Type.noiseConfig,
     56 : NodeConfig_Type.labelConfig,
+    57 : NodeConfig_Type.transportConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1162,6 +1164,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<RampNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', protoName: 'rampConfig', subBuilder: RampNodeConfig.create)
     ..aOM<NoiseNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', protoName: 'noiseConfig', subBuilder: NoiseNodeConfig.create)
     ..aOM<LabelNodeConfig>(56, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelConfig', protoName: 'labelConfig', subBuilder: LabelNodeConfig.create)
+    ..aOM<TransportNodeConfig>(57, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transportConfig', protoName: 'transportConfig', subBuilder: TransportNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1213,6 +1216,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     RampNodeConfig? rampConfig,
     NoiseNodeConfig? noiseConfig,
     LabelNodeConfig? labelConfig,
+    TransportNodeConfig? transportConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1352,6 +1356,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (labelConfig != null) {
       _result.labelConfig = labelConfig;
+    }
+    if (transportConfig != null) {
+      _result.transportConfig = transportConfig;
     }
     return _result;
   }
@@ -1884,6 +1891,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearLabelConfig() => clearField(56);
   @$pb.TagNumber(56)
   LabelNodeConfig ensureLabelConfig() => $_ensure(45);
+
+  @$pb.TagNumber(57)
+  TransportNodeConfig get transportConfig => $_getN(46);
+  @$pb.TagNumber(57)
+  set transportConfig(TransportNodeConfig v) { setField(57, v); }
+  @$pb.TagNumber(57)
+  $core.bool hasTransportConfig() => $_has(46);
+  @$pb.TagNumber(57)
+  void clearTransportConfig() => clearField(57);
+  @$pb.TagNumber(57)
+  TransportNodeConfig ensureTransportConfig() => $_ensure(46);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4481,6 +4499,35 @@ class LabelNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasText() => $_has(0);
   @$pb.TagNumber(1)
   void clearText() => clearField(1);
+}
+
+class TransportNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TransportNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  TransportNodeConfig._() : super();
+  factory TransportNodeConfig() => create();
+  factory TransportNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TransportNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TransportNodeConfig clone() => TransportNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TransportNodeConfig copyWith(void Function(TransportNodeConfig) updates) => super.copyWith((message) => updates(message as TransportNodeConfig)) as TransportNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TransportNodeConfig create() => TransportNodeConfig._();
+  TransportNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<TransportNodeConfig> createRepeated() => $pb.PbList<TransportNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static TransportNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransportNodeConfig>(create);
+  static TransportNodeConfig? _defaultInstance;
 }
 
 class NodePosition extends $pb.GeneratedMessage {

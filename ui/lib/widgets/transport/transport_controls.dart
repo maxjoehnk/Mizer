@@ -4,9 +4,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/protos/transport.pb.dart';
 import 'package:mizer/widgets/controls/button.dart';
+import 'package:mizer/widgets/hoverable.dart';
 
 import 'time_control.dart';
 
@@ -34,6 +36,8 @@ class _TransportControlsState extends State<TransportControls> {
 
   @override
   Widget build(BuildContext context) {
+    NodesApi apiClient = context.read();
+
     return Container(
         height: TRANSPORT_CONTROLS_HEIGHT,
         color: Colors.grey.shade800,
@@ -43,6 +47,17 @@ class _TransportControlsState extends State<TransportControls> {
             child: RepaintBoundary(child: TimeControl(context.read(), transportStream)),
           ),
           RepaintBoundary(child: SpeedControl(transportStream.map((event) => event.speed).distinct())),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Hoverable(
+              onTap: () => apiClient.writeControlValue(path: "/transport-0", port: "Tap", value: 1),
+              builder: (hover) => Container(
+                  width: 64,
+                  margin: const EdgeInsets.only(left: 4),
+                  color: hover ? Colors.black45 : Colors.black26,
+                  child: Center(child: Text("Tap"))),
+            ),
+          ),
           RepaintBoundary(child: TransportControl(transportStream.map((event) => event.state).distinct())),
           Spacer(),
           Padding(
@@ -210,28 +225,25 @@ class TransportControl extends StatelessWidget {
     return StreamBuilder(
         stream: state,
         initialData: TransportState.Playing,
-        builder: (context, snapshot) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(children: [
-                Container(
-                    margin: const EdgeInsets.only(left: 4),
-                    color: snapshot.data == TransportState.Stopped ? Colors.deepOrange : null,
-                    child: IconButton(
-                        onPressed: () => api.setState(TransportState.Stopped),
-                        icon: Icon(Icons.stop))),
-                Container(
-                    margin: const EdgeInsets.only(left: 4),
-                    color: snapshot.data == TransportState.Paused ? Colors.deepOrange : null,
-                    child: IconButton(
-                        onPressed: () => api.setState(TransportState.Paused),
-                        icon: Icon(Icons.pause))),
-                Container(
-                    margin: const EdgeInsets.only(left: 4),
-                    color: snapshot.data == TransportState.Playing ? Colors.deepOrange : null,
-                    child: IconButton(
-                        onPressed: () => api.setState(TransportState.Playing),
-                        icon: Icon(Icons.play_arrow))),
-              ]),
-            ));
+        builder: (context, snapshot) => Row(children: [
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              color: snapshot.data == TransportState.Stopped ? Colors.deepOrange : null,
+              child: IconButton(
+                  onPressed: () => api.setState(TransportState.Stopped),
+                  icon: Icon(Icons.stop))),
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              color: snapshot.data == TransportState.Paused ? Colors.deepOrange : null,
+              child: IconButton(
+                  onPressed: () => api.setState(TransportState.Paused),
+                  icon: Icon(Icons.pause))),
+          Container(
+              margin: const EdgeInsets.only(left: 4),
+              color: snapshot.data == TransportState.Playing ? Colors.deepOrange : null,
+              child: IconButton(
+                  onPressed: () => api.setState(TransportState.Playing),
+                  icon: Icon(Icons.play_arrow))),
+        ]));
   }
 }

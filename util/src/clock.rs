@@ -54,4 +54,8 @@ impl Clock for TestClock {
     fn set_state(&mut self, _: ClockState) {
         unimplemented!()
     }
+
+    fn state(&self) -> ClockState {
+        unimplemented!()
+    }
 }

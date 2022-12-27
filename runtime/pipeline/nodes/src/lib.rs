@@ -27,6 +27,7 @@ pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
 pub use mizer_sequencer_nodes::SequencerNode;
 pub use mizer_timing_nodes::DelayNode;
+pub use mizer_transport_nodes::TransportNode;
 pub use mizer_video_nodes::{
     VideoColorBalanceNode, VideoEffectNode, VideoFileNode, VideoOutputNode, VideoTransformNode,
 };
@@ -137,5 +138,6 @@ node_impl! {
     Value(ValueNode),
     Delay(DelayNode),
     Ramp(RampNode),
+    Transport(TransportNode),
     Noise(NoiseNode),
 }

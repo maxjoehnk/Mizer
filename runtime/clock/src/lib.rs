@@ -87,6 +87,10 @@ impl Clock for SystemClock {
             self.frames = 0;
         }
     }
+
+    fn state(&self) -> ClockState {
+        self.state
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -124,6 +128,7 @@ pub trait Clock {
     fn snapshot(&self) -> ClockSnapshot;
 
     fn set_state(&mut self, state: ClockState);
+    fn state(&self) -> ClockState;
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

@@ -134,6 +134,7 @@ message Node {
     Ramp = 64;
     Noise = 65;
     Label = 66;
+    Transport = 67;
   }
 
   enum NodePreviewType {
@@ -201,6 +202,7 @@ message NodeConfig {
     RampNodeConfig rampConfig = 54;
     NoiseNodeConfig noiseConfig = 55;
     LabelNodeConfig labelConfig = 56;
+    TransportNodeConfig transportConfig = 57;
   }
 }
 
@@ -466,6 +468,9 @@ message NoiseNodeConfig {
 
 message LabelNodeConfig {
   string text = 1;
+}
+
+message TransportNodeConfig {
 }
 
 message NodePosition {

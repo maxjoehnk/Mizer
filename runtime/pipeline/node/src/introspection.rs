@@ -56,6 +56,7 @@ pub enum NodeType {
     PlanScreen,
     Delay,
     Noise,
+    Transport,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -112,6 +113,7 @@ impl NodeType {
             Delay => "delay",
             Ramp => "ramp",
             Noise => "noise",
+            Transport => "transport",
             TestSink => "test-sink",
         }
         .to_string()

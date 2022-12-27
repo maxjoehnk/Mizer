@@ -2,6 +2,7 @@ use self::clock::ClockFunction;
 use self::read_port::ReadPortFunction;
 use self::write_port::WritePortFunction;
 use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
+use mizer_clock::ClockState;
 use mizer_ports::PortValue;
 use std::cell::RefCell;
 
@@ -26,6 +27,18 @@ impl NodeContextMock {
 impl NodeContext for NodeContextMock {
     fn clock(&self) -> ClockFrame {
         self.clock_fn.call()
+    }
+
+    fn write_clock_tempo(&self, speed: f64) {
+        todo!()
+    }
+
+    fn write_clock_state(&self, state: ClockState) {
+        todo!()
+    }
+
+    fn clock_state(&self) -> ClockState {
+        todo!()
     }
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {

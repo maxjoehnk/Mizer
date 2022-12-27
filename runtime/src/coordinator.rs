@@ -91,7 +91,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
 
-        self.pipeline.process(nodes, frame, &self.injector);
+        self.pipeline
+            .process(nodes, frame, &self.injector, &mut self.clock);
     }
 
     pub fn generate_pipeline_graph(&self) -> anyhow::Result<()> {
@@ -287,12 +288,19 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
 impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
     fn new(&mut self) {
         let pipeline_access = self.injector.get_mut::<PipelineAccess>().unwrap();
-        let path = pipeline_access
+        let programmer_path = pipeline_access
             .handle_add_node(NodeType::Programmer, NodeDesigner::default(), None)
+            .unwrap();
+        let transport_path = pipeline_access
+            .handle_add_node(NodeType::Transport, NodeDesigner::default(), None)
             .unwrap();
         let executor = self.injector.get_mut::<ExecutionPlanner>().unwrap();
         executor.add_node(ExecutionNode {
-            path,
+            path: programmer_path,
+            attached_executor: None,
+        });
+        executor.add_node(ExecutionNode {
+            path: transport_path,
             attached_executor: None,
         });
         self.force_plan();
@@ -446,6 +454,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Delay(node) => pipeline.register_node(path, &node),
         Node::Ramp(node) => pipeline.register_node(path, &node),
         Node::Noise(node) => pipeline.register_node(path, &node),
+        Node::Transport(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

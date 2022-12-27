@@ -1,4 +1,4 @@
-use mizer_clock::ClockFrame;
+use mizer_clock::{Clock, ClockFrame, ClockState};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::{NodePortSender, PortId, PortValue};
@@ -17,6 +17,7 @@ pub struct PipelineContext<'a> {
     pub(crate) receivers: Option<&'a NodeReceivers>,
     pub(crate) injector: &'a Injector,
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
+    pub(crate) clock: RefCell<&'a mut dyn Clock>,
 }
 
 impl<'a> Debug for PipelineContext<'a> {
@@ -50,6 +51,21 @@ impl NodePreviewState {
 impl<'a> NodeContext for PipelineContext<'a> {
     fn clock(&self) -> ClockFrame {
         self.frame
+    }
+
+    fn write_clock_tempo(&self, new_speed: f64) {
+        let mut clock = self.clock.borrow_mut();
+        let speed = clock.speed_mut();
+        *speed = new_speed;
+    }
+
+    fn write_clock_state(&self, state: ClockState) {
+        let mut clock = self.clock.borrow_mut();
+        clock.set_state(state);
+    }
+
+    fn clock_state(&self) -> ClockState {
+        self.clock.borrow().state()
     }
 
     fn write_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P, value: V) {

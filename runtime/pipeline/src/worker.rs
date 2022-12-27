@@ -5,7 +5,7 @@ use std::collections::HashMap;
 
 use downcast::*;
 
-use mizer_clock::ClockFrame;
+use mizer_clock::{Clock, ClockFrame};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
@@ -277,10 +277,11 @@ impl PipelineWorker {
         mut nodes: Vec<(&'a NodePath, &'a Box<dyn ProcessingNodeExt>)>,
         frame: ClockFrame,
         injector: &Injector,
+        clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process");
         self.order_nodes_by_dependencies(&mut nodes);
-        self.process_nodes(&mut nodes, frame, injector)
+        self.process_nodes(&mut nodes, frame, injector, clock)
     }
 
     fn order_nodes_by_dependencies(
@@ -307,6 +308,7 @@ impl PipelineWorker {
         nodes: &mut Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
         frame: ClockFrame,
         injector: &Injector,
+        clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process_nodes");
         for (path, node) in nodes {
@@ -316,6 +318,7 @@ impl PipelineWorker {
                 preview: RefCell::new(self.previews.get_mut(path).unwrap()),
                 receivers: self.receivers.get(path),
                 senders: self.senders.get(path),
+                clock: RefCell::new(clock),
             };
             log::trace!("process_node {} with context {:?}", &path, &context);
             let state = self.states.get_mut(path);

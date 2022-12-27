@@ -56,6 +56,7 @@ impl From<mizer_nodes::Node> for node_config::Type {
             Delay(node) => Self::DelayConfig(node.into()),
             Ramp(node) => Self::RampConfig(node.into()),
             Noise(node) => Self::NoiseConfig(node.into()),
+            Transport(node) => Self::TransportConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -115,6 +116,7 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::DelayConfig(node) => Self::Delay(node.into()),
             node_config::Type::RampConfig(node) => Self::Ramp(node.into()),
             node_config::Type::NoiseConfig(node) => Self::Noise(node.into()),
+            node_config::Type::TransportConfig(node) => Self::Transport(node.into()),
             node_config::Type::PlanScreenConfig(node) => Self::PlanScreen(node.into()),
         }
     }
@@ -1283,6 +1285,20 @@ impl From<mizer_nodes::LabelNode> for LabelNodeConfig {
     }
 }
 
+impl From<TransportNodeConfig> for mizer_nodes::TransportNode {
+    fn from(_: TransportNodeConfig) -> Self {
+        Self
+    }
+}
+
+impl From<mizer_nodes::TransportNode> for TransportNodeConfig {
+    fn from(_: mizer_nodes::TransportNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1332,6 +1348,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::Delay => node::NodeType::Delay,
             NodeType::Ramp => node::NodeType::Ramp,
             NodeType::Noise => node::NodeType::Noise,
+            NodeType::Transport => node::NodeType::Transport,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1386,6 +1403,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::Delay => NodeType::Delay,
             node::NodeType::Ramp => NodeType::Ramp,
             node::NodeType::Noise => NodeType::Noise,
+            node::NodeType::Transport => NodeType::Transport,
         }
     }
 }

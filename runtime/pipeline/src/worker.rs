@@ -14,7 +14,7 @@ use mizer_protocol_laser::LaserFrame;
 
 use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodePreviewState, PipelineContext};
-use mizer_util::StructuredData;
+use mizer_util::{HashMapExtension, StructuredData};
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
 
@@ -117,6 +117,27 @@ impl PipelineWorker {
         self.senders.remove(path);
         self.previews.remove(path);
         self.dependencies.remove(path);
+    }
+
+    pub fn rename_node(&mut self, from: NodePath, to: NodePath) -> anyhow::Result<()> {
+        self.states
+            .rename_key(&from, to.clone())
+            .then_some(())
+            .ok_or_else(|| anyhow::anyhow!("Unknown node {}", from))?;
+        self.receivers.rename_key(&from, to.clone());
+        self.senders.rename_key(&from, to.clone());
+        self.previews.rename_key(&from, to.clone());
+        self.dependencies.rename_key(&from, to.clone());
+
+        for (_, dependencies) in self.dependencies.iter_mut() {
+            for path in dependencies.iter_mut() {
+                if path == &from {
+                    *path = to.clone();
+                }
+            }
+        }
+
+        Ok(())
     }
 
     #[tracing::instrument(err, skip(self))]
@@ -315,7 +336,11 @@ impl PipelineWorker {
             let context = PipelineContext {
                 frame,
                 injector,
-                preview: RefCell::new(self.previews.get_mut(path).unwrap()),
+                preview: RefCell::new(
+                    self.previews
+                        .get_mut(path)
+                        .unwrap_or_else(|| panic!("Missing preview for {path}")),
+                ),
                 receivers: self.receivers.get(path),
                 senders: self.senders.get(path),
                 clock: RefCell::new(clock),

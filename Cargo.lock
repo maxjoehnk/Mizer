@@ -3495,6 +3495,7 @@ dependencies = [
  "itertools",
  "log",
  "mizer-node",
+ "mizer-util",
  "profiling",
  "serde",
  "test-case",

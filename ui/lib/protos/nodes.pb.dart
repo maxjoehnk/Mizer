@@ -575,6 +575,96 @@ class ShowNodeResponse extends $pb.GeneratedMessage {
   static ShowNodeResponse? _defaultInstance;
 }
 
+class RenameNodeRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newName')
+    ..hasRequiredFields = false
+  ;
+
+  RenameNodeRequest._() : super();
+  factory RenameNodeRequest({
+    $core.String? path,
+    $core.String? newName,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    if (newName != null) {
+      _result.newName = newName;
+    }
+    return _result;
+  }
+  factory RenameNodeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RenameNodeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RenameNodeRequest clone() => RenameNodeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RenameNodeRequest copyWith(void Function(RenameNodeRequest) updates) => super.copyWith((message) => updates(message as RenameNodeRequest)) as RenameNodeRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RenameNodeRequest create() => RenameNodeRequest._();
+  RenameNodeRequest createEmptyInstance() => create();
+  static $pb.PbList<RenameNodeRequest> createRepeated() => $pb.PbList<RenameNodeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static RenameNodeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenameNodeRequest>(create);
+  static RenameNodeRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get newName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set newName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNewName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNewName() => clearField(2);
+}
+
+class RenameNodeResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RenameNodeResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  RenameNodeResponse._() : super();
+  factory RenameNodeResponse() => create();
+  factory RenameNodeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RenameNodeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RenameNodeResponse clone() => RenameNodeResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RenameNodeResponse copyWith(void Function(RenameNodeResponse) updates) => super.copyWith((message) => updates(message as RenameNodeResponse)) as RenameNodeResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RenameNodeResponse create() => RenameNodeResponse._();
+  RenameNodeResponse createEmptyInstance() => create();
+  static $pb.PbList<RenameNodeResponse> createRepeated() => $pb.PbList<RenameNodeResponse>();
+  @$core.pragma('dart2js:noInline')
+  static RenameNodeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RenameNodeResponse>(create);
+  static RenameNodeResponse? _defaultInstance;
+}
+
 class DeleteNodeRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteNodeRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')

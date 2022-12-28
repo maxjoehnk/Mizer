@@ -143,7 +143,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
         if let Some(executor) = plan.get_executor(&self.executor_id) {
             for command in executor.commands {
-                log::trace!("Updating pipeline worker: {:?}", command);
+                log::debug!("Updating pipeline worker: {:?}", command);
                 match command {
                     ExecutorCommand::AddNode(execution_node) => {
                         let node = pipeline_access
@@ -167,6 +167,11 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                     }
                     ExecutorCommand::RemoveLink(link) => {
                         self.pipeline.disconnect_port(&link);
+                    }
+                    ExecutorCommand::RenameNode(from, to) => {
+                        if let Err(err) = self.pipeline.rename_node(from, to) {
+                            log::error!("Renaming node failed: {err:?}");
+                        }
                     }
                 }
             }

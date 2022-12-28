@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:mizer/widgets/dialog/action_dialog.dart';
 import 'package:mizer/widgets/platform/context_menu.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +60,7 @@ class BaseNode extends StatelessWidget {
       menu: Menu(items: [
         MenuItem(label: "Hide", action: () => _onHideNode(context)),
         MenuItem(label: "Disconnect Ports", action: () => _onDisconnectPorts(context)),
+        if (nodeModel.node.canRename) MenuItem(label: "Rename", action: () => _onRenameNode(context)),
         if (nodeModel.node.canDuplicate) MenuItem(label: "Duplicate", action: () => _onDuplicateNode(context)),
         if (nodeModel.node.canDelete) MenuItem(label: "Delete", action: () => _onDeleteNode(context)),
       ]),
@@ -133,6 +136,15 @@ class BaseNode extends StatelessWidget {
     context.read<NodesBloc>().add(DisconnectPorts(node.path));
   }
 
+  void _onRenameNode(BuildContext context) async {
+    String? result = await showDialog(
+        context: context,
+        builder: (BuildContext context) => RenameNodeDialog(path: node.path));
+    if (result != null) {
+      context.read<NodesBloc>().add(RenameNode(node.path, result));
+    }
+  }
+
   void _onDuplicateNode(BuildContext context) async {
     var parent = context.read<NodeEditorModel>().parent?.node.path;
     context.read<NodesBloc>().add(DuplicateNode(node.path, parent: parent));
@@ -141,20 +153,17 @@ class BaseNode extends StatelessWidget {
   void _onDeleteNode(BuildContext context) async {
     bool result = await showDialog(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text("Node"),
+        builder: (BuildContext context) => ActionDialog(
+          title: "Node",
           content: SingleChildScrollView(
             child: Text("Delete Node '${node.path}'?"),
           ),
           actions: [
-            TextButton(
-              child: Text("Cancel"),
-              onPressed: () => Navigator.of(context).pop(false),
+            PopupAction(
+              "Cancel", () => Navigator.of(context).pop(false),
             ),
-            TextButton(
-              autofocus: true,
-              child: Text("Delete"),
-              onPressed: () => Navigator.of(context).pop(true),
+            PopupAction(
+              "Delete", () => Navigator.of(context).pop(true),
             ),
           ],
         ));
@@ -166,25 +175,77 @@ class BaseNode extends StatelessWidget {
 
 const NON_DUPLICATABLE_NODE_TYPES = [
   Node_NodeType.Programmer,
+  Node_NodeType.Transport,
   Node_NodeType.Fixture,
   Node_NodeType.Sequencer,
   Node_NodeType.Group,
   Node_NodeType.Container,
 ];
 
+const NON_RENAMEABLE_NODE_TYPES = [
+  Node_NodeType.Programmer,
+  Node_NodeType.Transport,
+];
+
 const UNDELETABLE_NODE_TYPES = [
   Node_NodeType.Programmer,
+  Node_NodeType.Transport,
   Node_NodeType.Fixture,
   Node_NodeType.Sequencer,
   Node_NodeType.Group,
 ];
 
 extension NodeOptionExtensions on Node {
+  bool get canRename {
+    return !NON_RENAMEABLE_NODE_TYPES.contains(type);
+  }
+
   bool get canDuplicate {
     return !NON_DUPLICATABLE_NODE_TYPES.contains(type);
   }
 
   bool get canDelete {
     return !UNDELETABLE_NODE_TYPES.contains(type);
+  }
+}
+
+class RenameNodeDialog extends StatefulWidget {
+  final String path;
+
+  const RenameNodeDialog({required this.path, Key? key}) : super(key: key);
+
+  @override
+  State<RenameNodeDialog> createState() => _RenameNodeDialogState();
+}
+
+class _RenameNodeDialogState extends State<RenameNodeDialog> {
+  late TextEditingController _nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.path);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionDialog(
+          title: "Node",
+          content: Column(children: [
+            TextField(
+              controller: _nameController,
+              autofocus: true,
+              decoration: InputDecoration(labelText: "Path".i18n),
+            )
+          ]),
+          actions: [
+            PopupAction(
+              "Cancel", () => Navigator.of(context).pop(),
+            ),
+            PopupAction(
+              "Rename", () => Navigator.of(context).pop(_nameController.text),
+            ),
+          ],
+        );
   }
 }

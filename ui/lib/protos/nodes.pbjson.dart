@@ -140,6 +140,24 @@ const ShowNodeResponse$json = const {
 
 /// Descriptor for `ShowNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List showNodeResponseDescriptor = $convert.base64Decode('ChBTaG93Tm9kZVJlc3BvbnNl');
+@$core.Deprecated('Use renameNodeRequestDescriptor instead')
+const RenameNodeRequest$json = const {
+  '1': 'RenameNodeRequest',
+  '2': const [
+    const {'1': 'path', '3': 1, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'new_name', '3': 2, '4': 1, '5': 9, '10': 'newName'},
+  ],
+};
+
+/// Descriptor for `RenameNodeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List renameNodeRequestDescriptor = $convert.base64Decode('ChFSZW5hbWVOb2RlUmVxdWVzdBISCgRwYXRoGAEgASgJUgRwYXRoEhkKCG5ld19uYW1lGAIgASgJUgduZXdOYW1l');
+@$core.Deprecated('Use renameNodeResponseDescriptor instead')
+const RenameNodeResponse$json = const {
+  '1': 'RenameNodeResponse',
+};
+
+/// Descriptor for `RenameNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List renameNodeResponseDescriptor = $convert.base64Decode('ChJSZW5hbWVOb2RlUmVzcG9uc2U=');
 @$core.Deprecated('Use deleteNodeRequestDescriptor instead')
 const DeleteNodeRequest$json = const {
   '1': 'DeleteNodeRequest',

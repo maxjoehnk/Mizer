@@ -79,6 +79,16 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 }
                 Err(err) => resp.respond_error(err),
             },
+            "renameNode" => match call.arguments() {
+                Ok(args) => {
+                    log::debug!("renameNode {:?}", args);
+                    match self.handler.rename_node(args) {
+                        Ok(()) => resp.send_ok(Value::Null),
+                        Err(err) => resp.respond_error(err),
+                    }
+                }
+                Err(err) => resp.respond_error(err),
+            },
             "deleteNode" => {
                 if let Value::String(path) = call.args {
                     match self.handler.delete_node(path.into()) {

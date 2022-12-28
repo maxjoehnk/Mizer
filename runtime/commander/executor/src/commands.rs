@@ -67,6 +67,7 @@ command_impl! {
     ShowNodeCommand,
     HideNodeCommand,
     MoveNodeCommand,
+    RenameNodeCommand,
     UpdateNodeCommand,
     AddLinkCommand,
     DisconnectPortsCommand,

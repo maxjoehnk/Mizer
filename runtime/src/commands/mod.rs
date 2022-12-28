@@ -5,6 +5,7 @@ pub use self::disconnect_ports::*;
 pub use self::duplicate_node::*;
 pub use self::hide_node::*;
 pub use self::move_node::*;
+pub use self::rename_node::*;
 pub use self::show_node::*;
 pub use self::update_node::*;
 use crate::pipeline_access::PipelineAccess;
@@ -19,6 +20,7 @@ mod disconnect_ports;
 mod duplicate_node;
 mod hide_node;
 mod move_node;
+mod rename_node;
 mod show_node;
 mod update_node;
 

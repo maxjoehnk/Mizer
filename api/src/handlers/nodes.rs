@@ -169,6 +169,15 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    pub fn rename_node(&self, request: RenameNodeRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(RenameNodeCommand {
+            path: request.path.into(),
+            new_name: request.new_name.into(),
+        })?;
+
+        Ok(())
+    }
+
     pub fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(HideNodeCommand { path })?;
 

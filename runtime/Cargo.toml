@@ -24,6 +24,7 @@ mizer-module = { path = "module" }
 mizer-layouts = { path = "layouts" }
 mizer-plan = { path = "../components/plan" }
 mizer-commander = { path = "commander" }
+mizer-util = { path = "../util" }
 profiling = "1.0"
 serde = { version = "1", features = ["derive"] }
 tracing = "0.1"

@@ -83,4 +83,9 @@ class NodesPluginApi implements NodesApi {
   Future<void> duplicateNode(DuplicateNodeRequest request) async {
     await channel.invokeMethod("duplicateNode", request.writeToBuffer());
   }
+
+  @override
+  Future<void> renameNode(RenameNodeRequest request) async {
+    await channel.invokeMethod("renameNode", request.writeToBuffer());
+  }
 }

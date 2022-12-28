@@ -69,6 +69,20 @@ class DuplicateNode extends NodesEvent {
   DuplicateNode(this.node, {this.parent});
 }
 
+class RenameNode extends NodesEvent {
+  final String node;
+  final String newName;
+
+  RenameNode(this.node, this.newName);
+
+  RenameNodeRequest into() {
+    return RenameNodeRequest(
+      path: node,
+      newName: newName
+    );
+  }
+}
+
 class ShowNode extends NodesEvent {
   final String node;
   final Offset position;
@@ -129,6 +143,11 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
     on<ShowNode>((event, emit) async {
       var request = event.into();
       await api.showNode(request);
+      emit(await api.getNodes());
+    });
+    on<RenameNode>((event, emit) async {
+      var request = event.into();
+      await api.renameNode(request);
       emit(await api.getNodes());
     });
     on<DisconnectPorts>((event, emit) async {

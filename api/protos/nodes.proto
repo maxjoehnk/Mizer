@@ -13,6 +13,7 @@ service NodesApi {
   rpc HideNode (HideNodeRequest) returns (HideNodeResponse) {}
   rpc ShowNode (ShowNodeRequest) returns (ShowNodeResponse) {}
   rpc DuplicateNode (DuplicateNodeRequest) returns (Node) {}
+  rpc RenameNode (RenameNodeRequest) returns (RenameNodeResponse) {}
 }
 
 message AddNodeRequest {
@@ -57,6 +58,13 @@ message ShowNodeRequest {
 }
 
 message ShowNodeResponse {}
+
+message RenameNodeRequest {
+  string path = 1;
+  string new_name = 2;
+}
+
+message RenameNodeResponse {}
 
 message DeleteNodeRequest {
   string path = 1;

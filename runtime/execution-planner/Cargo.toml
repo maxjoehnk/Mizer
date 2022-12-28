@@ -9,5 +9,6 @@ serde = { version = "1", features = ["derive"] }
 test-case = "2.2"
 itertools = "0.10"
 mizer-node = { path = "../pipeline/node" }
+mizer-util = { path = "../../util" }
 log = "0.4"
 profiling = "1"

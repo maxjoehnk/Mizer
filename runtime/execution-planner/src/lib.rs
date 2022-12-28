@@ -6,6 +6,7 @@ use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 
 use mizer_node::{NodeLink, NodePath, PortId, PortType, ProcessingNode};
+use mizer_util::HashMapExtension;
 
 #[derive(Default, Debug, Clone, PartialOrd, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ExecutionPlan {
@@ -18,6 +19,7 @@ pub enum ExecutorCommand {
     AddNode(ExecutionNode),
     RemoveLink(NodeLink),
     RemoveNode(NodePath),
+    RenameNode(NodePath, NodePath),
 }
 
 impl ExecutionPlan {
@@ -140,6 +142,26 @@ impl ExecutionPlanner {
         self.nodes.insert(node.path.clone(), node);
     }
 
+    pub fn rename_node(&mut self, from: &NodePath, to: NodePath) {
+        log::trace!("rename_node {from} to {to}");
+        let node = self.nodes.get_mut(from).unwrap();
+        node.path = to.clone();
+        self.nodes
+            .rename_key(from, to.clone())
+            .then_some(())
+            .unwrap_or_else(|| panic!("Unknown node {to}"));
+        for link in self.links.iter_mut() {
+            if &link.source == from {
+                link.source = to.clone();
+            }
+            if &link.target == from {
+                link.target = to.clone();
+            }
+        }
+        self.commands
+            .push(ExecutorCommand::RenameNode(from.clone(), to));
+    }
+
     pub fn add_link(&mut self, link: NodeLink) {
         log::trace!("add_link {:?}", link);
         self.commands.push(ExecutorCommand::AddLink(link.clone()));
@@ -225,8 +247,6 @@ impl ExecutionPlanner {
             }
         }
 
-        self.commands.clear();
-
         let mut plan = ExecutionPlan { executors };
 
         for executor in &mut plan.executors {
@@ -246,6 +266,18 @@ impl ExecutionPlanner {
                     executor
                         .commands
                         .push(ExecutorCommand::AddNode(node.clone()));
+                } else if let Some(ExecutorCommand::RenameNode(from, to)) =
+                    self.commands.iter().find(|command| {
+                        if let ExecutorCommand::RenameNode(from, _) = command {
+                            from == &node.path
+                        } else {
+                            false
+                        }
+                    })
+                {
+                    executor
+                        .commands
+                        .push(ExecutorCommand::RenameNode(from.clone(), to.clone()));
                 }
             }
             for link in &executor.links {
@@ -275,6 +307,8 @@ impl ExecutionPlanner {
                 }
             }
         }
+
+        self.commands.clear();
 
         self.last_plan = Some(plan.clone());
 

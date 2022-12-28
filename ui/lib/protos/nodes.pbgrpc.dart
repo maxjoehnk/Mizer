@@ -73,6 +73,12 @@ class NodesApiClient extends $grpc.Client {
           ($0.RenameNodeRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.RenameNodeResponse.fromBuffer(value));
+  static final _$groupNodes =
+      $grpc.ClientMethod<$0.GroupNodesRequest, $0.GroupNodesResponse>(
+          '/mizer.nodes.NodesApi/GroupNodes',
+          ($0.GroupNodesRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.GroupNodesResponse.fromBuffer(value));
 
   NodesApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -136,6 +142,12 @@ class NodesApiClient extends $grpc.Client {
       $0.RenameNodeRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$renameNode, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GroupNodesResponse> groupNodes(
+      $0.GroupNodesRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$groupNodes, request, options: options);
   }
 }
 
@@ -223,6 +235,13 @@ abstract class NodesApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.RenameNodeRequest.fromBuffer(value),
         ($0.RenameNodeResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GroupNodesRequest, $0.GroupNodesResponse>(
+        'GroupNodes',
+        groupNodes_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.GroupNodesRequest.fromBuffer(value),
+        ($0.GroupNodesResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Nodes> getNodes_Pre(
@@ -281,6 +300,11 @@ abstract class NodesApiServiceBase extends $grpc.Service {
     return renameNode(call, await request);
   }
 
+  $async.Future<$0.GroupNodesResponse> groupNodes_Pre($grpc.ServiceCall call,
+      $async.Future<$0.GroupNodesRequest> request) async {
+    return groupNodes(call, await request);
+  }
+
   $async.Future<$0.Nodes> getNodes(
       $grpc.ServiceCall call, $0.NodesRequest request);
   $async.Future<$0.Node> addNode(
@@ -303,4 +327,6 @@ abstract class NodesApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.DuplicateNodeRequest request);
   $async.Future<$0.RenameNodeResponse> renameNode(
       $grpc.ServiceCall call, $0.RenameNodeRequest request);
+  $async.Future<$0.GroupNodesResponse> groupNodes(
+      $grpc.ServiceCall call, $0.GroupNodesRequest request);
 }

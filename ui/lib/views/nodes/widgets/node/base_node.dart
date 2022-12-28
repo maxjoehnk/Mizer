@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide MenuItem;
+import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/contracts/menu.dart';
@@ -22,15 +23,32 @@ class BaseNode extends StatelessWidget {
   final NodeModel nodeModel;
   final Widget child;
   final bool selected;
-  final Function()? onSelect;
+  final bool selectedAdditionally;
+  final bool collapsed;
+  final Function() onSelect;
+  final Function() onSelectAdditional;
   late List<CustomNodeTab> tabs;
 
-  BaseNode(this.nodeModel, {required this.child, this.selected = false, this.onSelect, List<CustomNodeTab>? tabs, Key? key})
+  BaseNode(this.nodeModel,
+      {required this.child,
+      this.selected = false,
+      required this.onSelect,
+      required this.onSelectAdditional,
+      this.collapsed = false,
+      List<CustomNodeTab>? tabs,
+      Key? key,
+      required this.selectedAdditionally})
       : super(key: key) {
     this.tabs = tabs ?? [];
   }
 
-  factory BaseNode.fromNode(NodeModel node, {Function()? onSelect, bool selected = false, Key? key}) {
+  factory BaseNode.fromNode(NodeModel node,
+      {required Function() onSelect,
+      required Function() onSelectAdditional,
+      bool selected = false,
+      bool collapsed = false,
+      Key? key,
+      required bool selectedAdditionally}) {
     List<CustomNodeTab> tabs = [];
     if (node.node.type == Node_NodeType.Container) {
       tabs.add(CustomNodeTab(tab: NodeTab.ContainerEditor, icon: MdiIcons.pencil, builder: (model) => Container()));
@@ -40,7 +58,10 @@ class BaseNode extends StatelessWidget {
       node,
       child: Container(),
       onSelect: onSelect,
+      onSelectAdditional: onSelectAdditional,
       selected: selected,
+      selectedAdditionally: selectedAdditionally,
+      collapsed: collapsed,
       key: key,
       tabs: tabs,
     );
@@ -67,7 +88,17 @@ class BaseNode extends StatelessWidget {
       child: Container(
         width: NODE_BASE_WIDTH,
         child: GestureDetector(
-          onTap: this.onSelect,
+          onTap: () {
+            if (RawKeyboard.instance.keysPressed.any((key) => [
+              LogicalKeyboardKey.shift,
+              LogicalKeyboardKey.shiftLeft,
+              LogicalKeyboardKey.shiftRight,
+            ].contains(key))) {
+              this.onSelectAdditional();
+            }else {
+              this.onSelect();
+            }
+          },
           child: NodeContainer(
             child: DefaultTextStyle(
               style: Theme.of(context).textTheme.bodyText2!,
@@ -75,13 +106,13 @@ class BaseNode extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    NodeHeader(this.node.path, this.node.type),
-                    Stack(children: [
+                    NodeHeader(this.node.path, this.node.type, collapsed: collapsed),
+                    if (!collapsed) Stack(children: [
                       _portsView(),
                       if (selectedTab == NodeTab.Preview) _previewView(),
                       if (selectedTab == NodeTab.ContainerEditor) _containerEditor(context),
                     ]),
-                    NodeFooter(
+                    if (!collapsed) NodeFooter(
                       node: node,
                       tabs: tabs,
                       selectedTab: selectedTab,
@@ -90,6 +121,7 @@ class BaseNode extends StatelessWidget {
                   ]),
             ),
             selected: selected,
+            selectedAdditionally: selectedAdditionally,
           ),
         ),
       ),

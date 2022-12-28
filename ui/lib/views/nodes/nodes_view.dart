@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/available_nodes.dart';
+import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
@@ -14,7 +13,9 @@ import 'package:mizer/widgets/popup/popup_route.dart';
 import 'package:provider/provider.dart';
 
 import 'models/node_editor_model.dart';
+import 'models/node_model.dart';
 import 'widgets/editor_layers/canvas_drop_layer.dart';
+import 'widgets/editor_layers/drag_selection_layer.dart';
 import 'widgets/editor_layers/graph_paint_layer.dart';
 import 'widgets/editor_layers/nodes_layer.dart';
 import 'widgets/hidden_node_list.dart';
@@ -46,6 +47,7 @@ class NodesView extends StatefulWidget {
 class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
   Offset? addMenuPosition;
   bool showHiddenNodes = false;
+  SelectionState? _selectionState;
 
   NodeEditorModel get model {
     return widget.nodeEditorModel;
@@ -66,84 +68,103 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
           if (widget.nodeEditorModel.selectedNode != null) {
             context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path, parent: widget.nodeEditorModel.parent?.node.path));
           }
-        }
+        },
+        "group_nodes": () => _groupNodes(context)
       },
-      // TODO: nodes render above the panel header
-      child: Panel(
-        label: "Nodes",
-        trailingHeader: [
-          MizerIconButton(
-              onClick: () => setState(() => showHiddenNodes = !showHiddenNodes),
-              icon: showHiddenNodes ? MdiIcons.eyeOffOutline : MdiIcons.eyeOutline,
-              label: "Show hidden nodes")
-        ],
-        child: Stack(
-          children: [
-            GestureDetector(
-                onSecondaryTapUp: (event) {
-                  Navigator.of(context).push(MizerPopupRoute(
-                      position: event.globalPosition,
-                      child: PopupMenu<Node_NodeType>(
-                          categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
-                  setState(() {
-                    addMenuPosition = event.localPosition;
-                  });
-                },
-                child: Overlay(initialEntries: [
-                  OverlayEntry(
-                    builder: (context) => Stack(children: [
-                      SizedBox.expand(
-                          child: InteractiveViewer(
-                              transformationController: model.transformationController,
-                              boundaryMargin: EdgeInsets.all(double.infinity),
-                              minScale: 0.1,
-                              maxScale: 10.0,
-                              child: SizedBox.expand())),
-                      Transform(
-                          transform: model.transformationController.value,
-                          child: IgnorePointer(child: GraphPaintLayer(model: model))),
-                      CanvasDropLayer(),
-                      NodesTarget(),
-                    ]),
+      child: Row(
+        children: [
+          Expanded(
+            child: Panel(
+              label: "Nodes",
+              child: Stack(
+                children: [
+                  GestureDetector(
+                      onSecondaryTapUp: (event) {
+                        Navigator.of(context).push(MizerPopupRoute(
+                            position: event.globalPosition,
+                            child: PopupMenu<Node_NodeType>(
+                                categories: NODES, onSelect: (nodeType) => _addNode(model, nodeType))));
+                        setState(() {
+                          addMenuPosition = event.localPosition;
+                        });
+                      },
+                      child: Overlay(initialEntries: [
+                        OverlayEntry(
+                          builder: (context) => Stack(children: [
+                            SizedBox.expand(
+                                child: InteractiveViewer(
+                                    transformationController: model.transformationController,
+                                    boundaryMargin: EdgeInsets.all(double.infinity),
+                                    minScale: 0.1,
+                                    maxScale: 10.0,
+                                    child: SizedBox.expand())),
+                            Transform(
+                                transform: model.transformationController.value,
+                                child: IgnorePointer(child: GraphPaintLayer(model: model))),
+                            DragSelectionLayer(nodes: model.nodes,
+                                transformation: model.transformationController.value,
+                                selectionState: _selectionState,
+                                onUpdateSelection: (selection) => setState(() => _selectionState = selection)),
+                            CanvasDropLayer(),
+                            NodesTarget(),
+                            if (_selectionState != null) SelectionIndicator(_selectionState!),
+                          ]),
+                        )
+                      ])),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      height: PathBreadcrumbHeight,
+                      child: Container(
+                        color: Colors.grey.shade800,
+                          child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                MizerButton(child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Text("/"),
+                                ), onClick: () => model.closeContainer()),
+                                ...model.path.map((p) => Center(child: Text(p)))
+                              ]
+                          )
+                      )
                   )
-                ])),
-            if (!showHiddenNodes)
-              Positioned(
-                  top: 16,
-                  right: 16,
-                  bottom: 16 + PathBreadcrumbHeight,
-                  width: 256,
-                  child: NodePropertiesPane(node: model.selectedNode?.node)),
-            if (showHiddenNodes)
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  bottom: PathBreadcrumbHeight,
-                  width: 256,
-                  child: HiddenNodeList(nodes: model.hidden)),
-            Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                height: PathBreadcrumbHeight,
-                child: Container(
-                  color: Colors.grey.shade800,
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          MizerButton(child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text("/"),
-                          ), onClick: () => model.closeContainer()),
-                          ...model.path.map((p) => Center(child: Text(p)))
-                        ]
-                    )
-                )
-            )
-          ],
-        ),
+                ],
+              ),
+              actions: [
+                PanelAction(label: "Group Nodes".i18n, onClick: () => _groupNodes(context), hotkeyId: "group_nodes")
+              ],
+            ),
+          ),
+          Container(
+            width: 256,
+            child: Column(children: [
+              Flexible(flex: 1, child: HiddenNodeList(nodes: model.hidden)),
+              if (model.selectedNode != null)
+                Flexible(
+                    flex: 2,
+                    child: Panel(
+                        label: NODE_LABELS[model.selectedNode!.node.type] ?? "",
+                        child: NodePropertiesPane(node: model.selectedNode!.node))),
+            ]),
+          )
+        ],
       ),
     );
+  }
+
+  void _groupNodes(BuildContext context) {
+    List<NodeModel> nodes = [];
+    if (widget.nodeEditorModel.selectedNode != null) {
+      nodes.add(widget.nodeEditorModel.selectedNode!);
+    }
+    nodes.addAll(widget.nodeEditorModel.otherSelectedNodes);
+    if (nodes.isEmpty) {
+      return;
+    }
+    context.read<NodesBloc>().add(GroupNodes(nodes.map((n) => n.node.path).toList(),
+        parent: widget.nodeEditorModel.parent?.node.path));
   }
 
   @override

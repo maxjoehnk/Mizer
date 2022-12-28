@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../consts.dart';
 
 class NodeContainer extends StatelessWidget {
   final Widget? child;
   final bool selected;
+  final bool selectedAdditionally;
 
-  NodeContainer({this.child, this.selected = false});
+  NodeContainer({this.child, this.selected = false, this.selectedAdditionally = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +17,7 @@ class NodeContainer extends StatelessWidget {
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(OUTER_RADIUS)),
-            side: selected == true
-                ? BorderSide(
-                    color: Colors.white,
-                    style: BorderStyle.solid,
-                    width: 2,
-                  )
-                : BorderSide(style: BorderStyle.none, width: 2),
+            side: _border,
           ),
           shadows: [
             BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
@@ -39,5 +33,24 @@ class NodeContainer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  BorderSide get _border {
+    if (selected) {
+      return BorderSide(
+        color: Colors.white,
+        style: BorderStyle.solid,
+        width: 2,
+      );
+    }
+    if (selectedAdditionally) {
+      return BorderSide(
+        color: Colors.deepOrange,
+        style: BorderStyle.solid,
+        width: 2,
+      );
+    }
+
+    return BorderSide(style: BorderStyle.none, width: 2);
   }
 }

@@ -69,6 +69,13 @@ class DuplicateNode extends NodesEvent {
   DuplicateNode(this.node, {this.parent});
 }
 
+class GroupNodes extends NodesEvent {
+  final List<String> nodes;
+  final String? parent;
+
+  GroupNodes(this.nodes, {this.parent});
+}
+
 class RenameNode extends NodesEvent {
   final String node;
   final String newName;
@@ -156,6 +163,10 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
     });
     on<DuplicateNode>((event, emit) async {
       await api.duplicateNode(DuplicateNodeRequest(path: event.node, parent: event.parent));
+      emit(await api.getNodes());
+    });
+    on<GroupNodes>((event, emit) async {
+      await api.groupNodes(event.nodes, parent: event.parent);
       emit(await api.getNodes());
     });
     this.add(FetchNodes());

@@ -8,12 +8,21 @@ class PropertyGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Container(
-          padding: EdgeInsets.all(4),
-          color: Colors.black.withOpacity(0.2),
-          child: Text(this.title)),
-      ...children.map((w) => Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: w)).toList(),
-    ]);
+    return Container(
+      margin: const EdgeInsets.all(4),
+      decoration:
+          BoxDecoration(color: Colors.grey.shade800, borderRadius: BorderRadius.circular(4)),
+      clipBehavior: Clip.antiAlias,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Container(
+            padding: EdgeInsets.all(4),
+            color: Colors.grey.shade700,
+            child: Text(this.title)),
+        ...children
+            .map((w) =>
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), child: w))
+            .toList(),
+      ]),
+    );
   }
 }

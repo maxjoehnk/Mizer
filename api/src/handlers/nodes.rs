@@ -204,4 +204,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
 
         Ok(())
     }
+
+    pub fn group_nodes(&self, request: GroupNodesRequest) -> anyhow::Result<()> {
+        self.runtime.run_command(GroupNodesCommand {
+            nodes: request.nodes.into_iter().map(NodePath::from).collect(),
+            parent: request.parent.map(NodePath::from),
+        })?;
+
+        Ok(())
+    }
 }

@@ -6,8 +6,9 @@ import '../../consts.dart';
 class NodeHeader extends StatelessWidget {
   final String name;
   final Node_NodeType type;
+  final bool collapsed;
 
-  NodeHeader(this.name, this.type);
+  NodeHeader(this.name, this.type, { this.collapsed = false });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class NodeHeader extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
+            borderRadius: collapsed ? BorderRadius.circular(INNER_RADIUS) : BorderRadius.vertical(top: Radius.circular(INNER_RADIUS))),
         color: getColorForType(type),
       ),
       clipBehavior: Clip.none,

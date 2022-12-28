@@ -13,6 +13,7 @@ class NodeEditorModel extends ChangeNotifier {
 
   late TransformationController transformationController;
   NodeModel? selectedNode;
+  List<NodeModel> otherSelectedNodes = [];
   NewConnectionModel? connecting;
 
   NodeModel? parent;
@@ -103,6 +104,14 @@ class NodeEditorModel extends ChangeNotifier {
 
   selectNode(NodeModel nodeModel) {
     this.selectedNode = nodeModel;
+    this.otherSelectedNodes.clear();
+    this.update();
+  }
+
+  selectAdditionalNodes(List<NodeModel> nodes) {
+    for (var node in nodes) {
+      this.otherSelectedNodes.add(node);
+    }
     this.update();
   }
 

@@ -24,4 +24,6 @@ abstract class NodesApi {
   Future<void> disconnectPorts(String path);
 
   Future<void> duplicateNode(DuplicateNodeRequest request);
+
+  Future<void> groupNodes(List<String> nodes, {String? parent});
 }

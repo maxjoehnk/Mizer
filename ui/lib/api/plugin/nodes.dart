@@ -88,4 +88,10 @@ class NodesPluginApi implements NodesApi {
   Future<void> renameNode(RenameNodeRequest request) async {
     await channel.invokeMethod("renameNode", request.writeToBuffer());
   }
+
+  @override
+  Future<void> groupNodes(List<String> nodes, {String? parent}) async {
+    var request = GroupNodesRequest(nodes: nodes, parent: parent);
+    await channel.invokeMethod("groupNodes", request.writeToBuffer());
+  }
 }

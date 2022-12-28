@@ -34,6 +34,10 @@ class NodeModel extends ChangeNotifier {
     return next;
   }
 
+  Rect get rect {
+    return Rect.fromPoints(offset, offset.translate(size.width, size.height));
+  }
+
   void update(GlobalKey key) {
     if (key.currentContext == null || this.key.currentContext == null) {
       return;

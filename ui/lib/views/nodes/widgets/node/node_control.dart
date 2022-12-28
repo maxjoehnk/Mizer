@@ -10,8 +10,9 @@ import 'base_node.dart';
 
 class NodeControl extends StatefulWidget {
   final NodeModel nodeModel;
+  final bool collapsed;
 
-  NodeControl(this.nodeModel);
+  NodeControl(this.nodeModel, { this.collapsed = false });
 
   @override
   _NodeControlState createState() => _NodeControlState();
@@ -31,7 +32,7 @@ class _NodeControlState extends State<NodeControl> {
     var nodesApi = context.read<NodesApi>();
     var node = _buildNode();
     return Consumer<NodeEditorModel>(
-      builder: (context, model, _) => Draggable(
+      builder: (context, model, _) => Draggable<NodeModel>(
         data: widget.nodeModel,
         child: node,
         childWhenDragging: Container(),
@@ -53,8 +54,12 @@ class _NodeControlState extends State<NodeControl> {
   Widget _buildNode() {
     return Consumer<NodeEditorModel>(builder: (context, model, _) {
       return BaseNode.fromNode(widget.nodeModel,
-          key: widget.nodeModel.key, selected: model.selectedNode == widget.nodeModel, onSelect: () => model.selectNode(widget.nodeModel));
+          key: widget.nodeModel.key,
+          selected: model.selectedNode == widget.nodeModel,
+          selectedAdditionally: model.otherSelectedNodes.contains(widget.nodeModel),
+          collapsed: widget.collapsed,
+          onSelect: () => model.selectNode(widget.nodeModel),
+          onSelectAdditional: () => model.selectAdditionalNodes([widget.nodeModel]));
     });
   }
 }
-

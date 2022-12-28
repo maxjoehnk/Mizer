@@ -7,6 +7,7 @@ import 'package:mizer/views/nodes/widgets/properties/properties/groups/envelope_
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/node_properties.dart';
 
 import 'properties/groups/button_properties.dart';
 import 'properties/groups/delay_properties.dart';
@@ -38,32 +39,18 @@ class NodePropertiesPane extends StatelessWidget {
     }
     Node node = this.node!;
     var nodesApi = context.read<NodesApi>();
-    var textTheme = Theme.of(context).textTheme;
+
     return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
-            color: Colors.grey.shade800,
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(4, 4))
-            ]),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-            child: Text(node.path),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-            child: Text(
-              NODE_LABELS[node.type] ?? "",
-              style: textTheme.bodySmall,
-            ),
-          ),
-          ..._getPropertyPanes(node, nodesApi),
-        ]));
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: _getPropertyPanes(node, nodesApi),
+    ));
   }
 
   List<Widget> _getPropertyPanes(Node node, NodesApi nodesApi) {
-    List<Widget> widgets = [];
+    List<Widget> widgets = [
+      NodeProperties(node: node),
+    ];
     if (node.config.hasOscillatorConfig()) {
       widgets.add(OscillatorProperties(node.config.oscillatorConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(

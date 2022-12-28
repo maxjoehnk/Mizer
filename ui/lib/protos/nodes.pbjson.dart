@@ -158,6 +158,27 @@ const RenameNodeResponse$json = const {
 
 /// Descriptor for `RenameNodeResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List renameNodeResponseDescriptor = $convert.base64Decode('ChJSZW5hbWVOb2RlUmVzcG9uc2U=');
+@$core.Deprecated('Use groupNodesRequestDescriptor instead')
+const GroupNodesRequest$json = const {
+  '1': 'GroupNodesRequest',
+  '2': const [
+    const {'1': 'nodes', '3': 1, '4': 3, '5': 9, '10': 'nodes'},
+    const {'1': 'parent', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'parent', '17': true},
+  ],
+  '8': const [
+    const {'1': '_parent'},
+  ],
+};
+
+/// Descriptor for `GroupNodesRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List groupNodesRequestDescriptor = $convert.base64Decode('ChFHcm91cE5vZGVzUmVxdWVzdBIUCgVub2RlcxgBIAMoCVIFbm9kZXMSGwoGcGFyZW50GAIgASgJSABSBnBhcmVudIgBAUIJCgdfcGFyZW50');
+@$core.Deprecated('Use groupNodesResponseDescriptor instead')
+const GroupNodesResponse$json = const {
+  '1': 'GroupNodesResponse',
+};
+
+/// Descriptor for `GroupNodesResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List groupNodesResponseDescriptor = $convert.base64Decode('ChJHcm91cE5vZGVzUmVzcG9uc2U=');
 @$core.Deprecated('Use deleteNodeRequestDescriptor instead')
 const DeleteNodeRequest$json = const {
   '1': 'DeleteNodeRequest',

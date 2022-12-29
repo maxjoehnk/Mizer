@@ -7,12 +7,12 @@ import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
-import 'package:mizer/views/programmer/dialogs/select_sequence_dialog.dart';
-import 'package:mizer/views/programmer/dialogs/store_mode_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/tabs.dart';
 import 'package:provider/provider.dart';
 
+import 'dialogs/select_sequence_dialog.dart';
+import 'dialogs/store_mode_dialog.dart';
 import 'dialogs/select_cue_dialog.dart';
 import 'sheets/beam_sheet.dart';
 import 'sheets/channel_sheet.dart';

@@ -32,14 +32,15 @@ extension FixtureIdExtensions on FixtureId {
 class FixtureInstance {
   final Fixture? fixture;
   final SubFixture? subFixture;
+  final FixtureId id;
 
-  FixtureInstance({ this.fixture, this.subFixture });
+  FixtureInstance(this.id, { this.fixture, this.subFixture });
 
-  factory FixtureInstance.fixture(Fixture fixture) {
-    return new FixtureInstance(fixture: fixture);
+  factory FixtureInstance.fixture(FixtureId id, Fixture fixture) {
+    return new FixtureInstance(id, fixture: fixture);
   }
-  factory FixtureInstance.subFixture(SubFixture subFixture) {
-    return new FixtureInstance(subFixture: subFixture);
+  factory FixtureInstance.subFixture(FixtureId id, SubFixture subFixture) {
+    return new FixtureInstance(id, subFixture: subFixture);
   }
 
   String get name {
@@ -52,14 +53,14 @@ class FixtureInstance {
 }
 
 extension FixtureExtension on Fixture {
-  FixtureInstance toInstance() {
-    return FixtureInstance.fixture(this);
+  FixtureInstance toInstance(FixtureId id) {
+    return FixtureInstance.fixture(id, this);
   }
 }
 
 extension SubFixtureExtension on SubFixture {
-  FixtureInstance toInstance() {
-    return FixtureInstance.subFixture(this);
+  FixtureInstance toInstance(FixtureId id) {
+    return FixtureInstance.subFixture(id, this);
   }
 }
 
@@ -72,9 +73,9 @@ extension FixtureListExtensions on List<Fixture> {
     if (id.hasSubFixture()) {
       var subFixture = fixture.children.firstWhere((c) => c.id == id.subFixture.childId);
 
-      return subFixture.toInstance();
+      return subFixture.toInstance(id);
     }
 
-    return fixture.toInstance();
+    return fixture.toInstance(id);
   }
 }

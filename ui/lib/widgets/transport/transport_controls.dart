@@ -16,9 +16,11 @@ const double TRANSPORT_CONTROLS_HEIGHT = 64;
 
 class TransportControls extends StatefulWidget {
   final bool showProgrammer;
+  final bool showSelection;
   final Function() toggleProgrammer;
+  final Function() toggleSelection;
 
-  TransportControls({ required this.showProgrammer, required this.toggleProgrammer });
+  TransportControls({ required this.showProgrammer, required this.toggleProgrammer, required this.showSelection, required this.toggleSelection });
 
   @override
   State<TransportControls> createState() => _TransportControlsState();
@@ -60,6 +62,13 @@ class _TransportControlsState extends State<TransportControls> {
           ),
           RepaintBoundary(child: TransportControl(transportStream.map((event) => event.state).distinct())),
           Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: MizerButton(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Selection"),
+            ), active: widget.showSelection, onClick: widget.toggleSelection),
+          ),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: MizerButton(child: Padding(

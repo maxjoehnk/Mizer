@@ -9,7 +9,6 @@ import 'package:mizer/views/fixtures/fixtures_view.dart';
 import 'package:mizer/views/history/history_view.dart';
 import 'package:mizer/views/plan/plan_view.dart';
 import 'package:mizer/views/presets/presets_view.dart';
-import 'package:mizer/views/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
@@ -20,7 +19,9 @@ import 'package:mizer/views/session/session_view.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:provider/provider.dart';
 
+import 'panes/programmer/programmer_view.dart';
 import 'actions/actions.dart';
+import 'panes/selection/selection_pane.dart';
 
 const double SHEET_SIZE = 320;
 const double SHEET_PADDING = 16;
@@ -54,6 +55,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   Widget? _currentWidget;
   bool _showProgrammer = false;
+  bool _showSelection = false;
 
   _HomeState() {
     _updateWidget();
@@ -84,9 +86,21 @@ class _HomeState extends State<Home> {
                                     decoration: BoxDecoration()),
                               ),
                             ),
+                            if (_showSelection) SizedBox(height: SHEET_CONTAINER_HEIGHT, child: SelectionPane()),
                             if (_showProgrammer) SizedBox(height: SHEET_CONTAINER_HEIGHT, child: ProgrammerView()),
-                            RepaintBoundary(child: TransportControls(showProgrammer: _showProgrammer, toggleProgrammer: () => setState(() => _showProgrammer = !_showProgrammer)))
-                          ],
+                RepaintBoundary(
+                    child: TransportControls(
+                        showProgrammer: _showProgrammer,
+                        toggleProgrammer: () => setState(() {
+                              _showProgrammer = !_showProgrammer;
+                              _showSelection = false;
+                            }),
+                        showSelection: _showSelection,
+                        toggleSelection: () => setState(() {
+                              _showSelection = !_showSelection;
+                              _showProgrammer = false;
+                            })))
+              ],
                         ))
                   ],
                   crossAxisAlignment: CrossAxisAlignment.start,

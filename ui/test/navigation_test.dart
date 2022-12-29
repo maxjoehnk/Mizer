@@ -14,7 +14,7 @@ import 'package:mizer/state/media_bloc.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/session_bloc.dart';
 import 'package:mizer/views/connections/connections_view.dart';
-import 'package:mizer/views/programmer/programmer_view.dart';
+import 'package:mizer/panes/programmer/programmer_view.dart';
 import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';

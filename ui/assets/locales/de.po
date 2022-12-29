@@ -12,73 +12,67 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: lib/menu.dart:40
+#: lib/menu.dart:30
 msgid "File"
 msgstr "Datei"
 
-#: lib/menu.dart:42
+#: lib/menu.dart:32
 msgid "New Project"
 msgstr "Neues Projekt"
 
-#: lib/menu.dart:46
+#: lib/menu.dart:36
 msgid "Open Project"
 msgstr "Projekt öffnen"
 
-#: lib/menu.dart:50
+#: lib/menu.dart:40
 msgid "Open Recent"
 msgstr "Vergangenes Projekt öffnen"
 
-#: lib/menu.dart:59
+#: lib/menu.dart:49
 msgid "Save Project"
 msgstr "Projekt speichern"
 
-#: lib/menu.dart:63
+#: lib/menu.dart:53
 msgid "Save Project as"
 msgstr "Projekt speichern unter"
 
-#: lib/menu.dart:69
+#: lib/menu.dart:59
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: lib/menu.dart:75
+#: lib/menu.dart:65
 msgid "Exit"
 msgstr "Beenden"
 
-#: lib/views/layout/control.dart:49
+#: lib/views/layout/control.dart:51
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: lib/menu.dart:81
+#: lib/menu.dart:71
 msgid "Undo"
 msgstr "Rückgängig"
 
-#: lib/menu.dart:88
+#: lib/menu.dart:79
 msgid "Redo"
 msgstr "Wiederherstellen"
 
-#: lib/menu.dart:97
-msgid "View"
-msgstr "Ansicht"
-
-#: lib/menu.dart:102
+#: lib/menu.dart:88
 msgid "Window"
 msgstr "Fenster"
 
-#: lib/menu.dart:104
+#: lib/menu.dart:90
 msgid "New Window"
 msgstr "Neues Fenster"
 
-#: lib/menu.dart:107
-#, fuzzy
-#| msgid "Window"
+#: lib/menu.dart:93
 msgid "Smart Window"
-msgstr "Fenster"
+msgstr "Smart Fenster"
 
-#: lib/menu.dart:142
+#: lib/menu.dart:128
 msgid "Projects"
 msgstr "Projekte"
 
-#: lib/navigation.dart:37
+#: lib/navigation.dart:38
 msgid "Effects"
 msgstr "Effekte"
 
@@ -86,7 +80,7 @@ msgstr "Effekte"
 msgid "Add Effect"
 msgstr "Neuer Effekt"
 
-#: lib/views/layout/control.dart:51
+#: lib/views/layout/control.dart:53
 msgid "Delete"
 msgstr "Löschen"
 
@@ -102,7 +96,7 @@ msgstr "Frames"
 msgid "Movement"
 msgstr "Bewegung"
 
-#: lib/navigation.dart:41
+#: lib/navigation.dart:42
 msgid "Connections"
 msgstr "Verbindungen"
 
@@ -122,17 +116,15 @@ msgstr "Artnet hinzufügen"
 
 #: lib/views/connections/connections_view.dart:73
 msgid "Add MQTT"
-msgstr ""
+msgstr "MQTT hinzufügen"
 
 #: lib/views/connections/connections_view.dart:110
 msgid "Monitor"
 msgstr "Monitor"
 
 #: lib/views/connections/connections_view.dart:198
-#, fuzzy
-#| msgid "Delete Control"
 msgid "Delete Connection"
-msgstr "Steuerfläche löschen"
+msgstr "Verbindung löschen"
 
 #: lib/views/layout/dialogs/delete_control_dialog.dart:19
 msgid "Cancel"
@@ -199,26 +191,20 @@ msgid "Unknown"
 msgstr "Unbekannt"
 
 #: lib/views/connections/dialogs/add_mqtt_connection.dart:39
-#, fuzzy
-#| msgid "Add Sacn Connection"
 msgid "Add MQTT Connection"
-msgstr "sACN Verbindung hinzufügen"
+msgstr "MQTT Verbindung hinzufügen"
 
 #: lib/views/connections/dialogs/add_mqtt_connection.dart:46
-#, fuzzy
-#| msgid "Port is required"
 msgid "Url is required"
-msgstr "Port ist ein Pflichtfeld"
+msgstr "URL ist ein Pflichtfeld"
 
 #: lib/views/connections/dialogs/add_mqtt_connection.dart:50
 msgid "URL"
 msgstr "URL"
 
 #: lib/views/connections/dialogs/add_mqtt_connection.dart:55
-#, fuzzy
-#| msgid "Rename"
 msgid "Username"
-msgstr "Umbenennen"
+msgstr "Benutzername"
 
 #: lib/views/connections/dialogs/add_mqtt_connection.dart:60
 msgid "Password"
@@ -236,7 +222,7 @@ msgstr "Universen"
 msgid "DMX"
 msgstr "DMX"
 
-#: lib/navigation.dart:44
+#: lib/navigation.dart:45
 msgid "History"
 msgstr "Historie"
 
@@ -336,17 +322,41 @@ msgstr "Plan"
 msgid "Programmer"
 msgstr "Programmer"
 
-#: lib/navigation.dart:33
+#: lib/navigation.dart:34
 msgid "Nodes"
 msgstr "Nodes"
 
-#: lib/navigation.dart:42
+#: lib/navigation.dart:43
 msgid "Patch"
 msgstr "Patch"
 
-#: lib/navigation.dart:34
+#: lib/navigation.dart:35
 msgid "Sequencer"
 msgstr "Sequenzen"
+
+#: lib/views/plan/layers/drag_selection_layer.dart:190
+msgid "Bottom to Top"
+msgstr "Unten nach Oben"
+
+#: lib/views/plan/layers/drag_selection_layer.dart:190
+msgid "Top to Bottom"
+msgstr "Oben nach Unten"
+
+#: lib/views/plan/layers/drag_selection_layer.dart:191
+msgid "Right to Left"
+msgstr "Rechts nach Links"
+
+#: lib/views/plan/layers/drag_selection_layer.dart:191
+msgid "Left to Right"
+msgstr "Links nach Rechts"
+
+#: lib/views/nodes/nodes_view.dart:136
+msgid "Group Nodes"
+msgstr "Nodes gruppieren"
+
+#: lib/views/nodes/widgets/node/base_node.dart:270
+msgid "Path"
+msgstr "Pfad"
 
 #: lib/views/fixtures/fixtures_table.dart:44
 msgid "Id"
@@ -384,23 +394,23 @@ msgstr "Gobo"
 msgid "Expand"
 msgstr "Ausklappen"
 
-#: lib/navigation.dart:35
+#: lib/navigation.dart:36
 msgid "Fixtures"
 msgstr "Fixture"
 
-#: lib/views/fixtures/fixtures_view.dart:92
+#: lib/views/fixtures/fixtures_view.dart:96
 msgid "Select All"
 msgstr "Alle auswählen"
 
-#: lib/views/fixtures/fixtures_view.dart:95
+#: lib/views/fixtures/fixtures_view.dart:102
 msgid "Clear"
 msgstr "Leeren"
 
-#: lib/navigation.dart:30
+#: lib/navigation.dart:31
 msgid "Layout"
 msgstr "Layout"
 
-#: lib/views/layout/control.dart:48
+#: lib/views/layout/control.dart:50
 msgid "Rename"
 msgstr "Umbenennen"
 
@@ -432,12 +442,16 @@ msgstr "Button"
 msgid "Fader"
 msgstr "Fader"
 
-#: lib/views/layout/add_control_popup.dart:50
-#, fuzzy
-msgid "Control Nodes"
-msgstr "Steueuerflächen Nodes"
+#: lib/views/layout/add_control_popup.dart:47
+msgid "Label"
+msgstr ""
 
-#: lib/views/layout/add_control_popup.dart:54
+# Bessere Alternative zum Namen Steuerfläche finden
+#: lib/views/layout/add_control_popup.dart:51
+msgid "Control Nodes"
+msgstr "Steuerflächen Nodes"
+
+#: lib/views/layout/add_control_popup.dart:55
 msgid "Sequences"
 msgstr "Sequenzen"
 
@@ -447,6 +461,7 @@ msgid "Rename Control"
 msgstr "Steuerfläche umbenennen"
 
 #: lib/views/layout/dialogs/delete_control_dialog.dart:13
+#, fuzzy
 msgid "Delete Control"
 msgstr "Steuerfläche löschen"
 
@@ -463,34 +478,37 @@ msgstr "Bestätigen"
 msgid "Color"
 msgstr "Farbe"
 
-#: lib/views/layout/control.dart:50
+#: lib/views/layout/control.dart:52
 msgid "Move"
 msgstr "Bewegen"
 
-#: lib/views/layout/control.dart:53
+#: lib/views/layout/control.dart:56
 msgid "Mappings"
 msgstr "Mappings"
 
-#: lib/navigation.dart:31
+#: lib/navigation.dart:32
 msgid "2D Plan"
 msgstr "2D Plan"
 
-#: lib/navigation.dart:32
+#: lib/navigation.dart:33
 msgid "PreViz"
 msgstr "PreViz"
 
-#: lib/navigation.dart:36
+#: lib/navigation.dart:37
 msgid "Presets"
 msgstr "Presets"
 
-#: lib/navigation.dart:39
+#: lib/navigation.dart:40
 msgid "Media"
 msgstr "Medien"
 
-#: lib/navigation.dart:40
+#: lib/navigation.dart:41
 msgid "Surfaces"
 msgstr "Projektionsflächen"
 
-#: lib/navigation.dart:43
+#: lib/navigation.dart:44
 msgid "Session"
 msgstr "Session"
+
+#~ msgid "View"
+#~ msgstr "Ansicht"

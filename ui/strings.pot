@@ -1,68 +1,64 @@
-#: ./lib/menu.dart:40
+#: ./lib/menu.dart:30
 msgid "File"
 msgstr ""
 
-#: ./lib/menu.dart:42
+#: ./lib/menu.dart:32
 msgid "New Project"
 msgstr ""
 
-#: ./lib/menu.dart:46
+#: ./lib/menu.dart:36
 msgid "Open Project"
 msgstr ""
 
-#: ./lib/menu.dart:50
+#: ./lib/menu.dart:40
 msgid "Open Recent"
 msgstr ""
 
-#: ./lib/menu.dart:59
+#: ./lib/menu.dart:49
 msgid "Save Project"
 msgstr ""
 
-#: ./lib/menu.dart:63
+#: ./lib/menu.dart:53
 msgid "Save Project as"
 msgstr ""
 
-#: ./lib/menu.dart:69
+#: ./lib/menu.dart:59
 msgid "Preferences"
 msgstr ""
 
-#: ./lib/menu.dart:75
+#: ./lib/menu.dart:65
 msgid "Exit"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:49
+#: ./lib/views/layout/control.dart:51
 msgid "Edit"
 msgstr ""
 
-#: ./lib/menu.dart:81
+#: ./lib/menu.dart:71
 msgid "Undo"
 msgstr ""
 
-#: ./lib/menu.dart:88
+#: ./lib/menu.dart:79
 msgid "Redo"
 msgstr ""
 
-#: ./lib/menu.dart:97
-msgid "View"
-msgstr ""
-
-#: ./lib/menu.dart:102
+#: ./lib/menu.dart:88
 msgid "Window"
 msgstr ""
 
-#: ./lib/menu.dart:104
+#: ./lib/menu.dart:90
 msgid "New Window"
 msgstr ""
 
-#: ./lib/menu.dart:107
+#: ./lib/menu.dart:93
 msgid "Smart Window"
 msgstr ""
 
-#: ./lib/menu.dart:142
+#: ./lib/menu.dart:128
 msgid "Projects"
 msgstr ""
 
-#: ./lib/navigation.dart:37
+#: ./lib/navigation.dart:38
 msgid "Effects"
 msgstr ""
 
@@ -70,7 +66,7 @@ msgstr ""
 msgid "Add Effect"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:51
+#: ./lib/views/layout/control.dart:53
 msgid "Delete"
 msgstr ""
 
@@ -86,7 +82,7 @@ msgstr ""
 msgid "Movement"
 msgstr ""
 
-#: ./lib/navigation.dart:41
+#: ./lib/navigation.dart:42
 msgid "Connections"
 msgstr ""
 
@@ -210,7 +206,7 @@ msgstr ""
 msgid "DMX"
 msgstr ""
 
-#: ./lib/navigation.dart:44
+#: ./lib/navigation.dart:45
 msgid "History"
 msgstr ""
 
@@ -310,16 +306,40 @@ msgstr ""
 msgid "Programmer"
 msgstr ""
 
-#: ./lib/navigation.dart:33
+#: ./lib/navigation.dart:34
 msgid "Nodes"
 msgstr ""
 
-#: ./lib/navigation.dart:42
+#: ./lib/navigation.dart:43
 msgid "Patch"
 msgstr ""
 
-#: ./lib/navigation.dart:34
+#: ./lib/navigation.dart:35
 msgid "Sequencer"
+msgstr ""
+
+#: ./lib/views/plan/layers/drag_selection_layer.dart:190
+msgid "Bottom to Top"
+msgstr ""
+
+#: ./lib/views/plan/layers/drag_selection_layer.dart:190
+msgid "Top to Bottom"
+msgstr ""
+
+#: ./lib/views/plan/layers/drag_selection_layer.dart:191
+msgid "Right to Left"
+msgstr ""
+
+#: ./lib/views/plan/layers/drag_selection_layer.dart:191
+msgid "Left to Right"
+msgstr ""
+
+#: ./lib/views/nodes/nodes_view.dart:136
+msgid "Group Nodes"
+msgstr ""
+
+#: ./lib/views/nodes/widgets/node/base_node.dart:270
+msgid "Path"
 msgstr ""
 
 #: ./lib/views/fixtures/fixtures_table.dart:44
@@ -358,23 +378,23 @@ msgstr ""
 msgid "Expand"
 msgstr ""
 
-#: ./lib/navigation.dart:35
+#: ./lib/navigation.dart:36
 msgid "Fixtures"
 msgstr ""
 
-#: ./lib/views/fixtures/fixtures_view.dart:92
+#: ./lib/views/fixtures/fixtures_view.dart:96
 msgid "Select All"
 msgstr ""
 
-#: ./lib/views/fixtures/fixtures_view.dart:95
+#: ./lib/views/fixtures/fixtures_view.dart:102
 msgid "Clear"
 msgstr ""
 
-#: ./lib/navigation.dart:30
+#: ./lib/navigation.dart:31
 msgid "Layout"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:48
+#: ./lib/views/layout/control.dart:50
 msgid "Rename"
 msgstr ""
 
@@ -406,11 +426,15 @@ msgstr ""
 msgid "Fader"
 msgstr ""
 
-#: ./lib/views/layout/add_control_popup.dart:50
+#: ./lib/views/layout/add_control_popup.dart:47
+msgid "Label"
+msgstr ""
+
+#: ./lib/views/layout/add_control_popup.dart:51
 msgid "Control Nodes"
 msgstr ""
 
-#: ./lib/views/layout/add_control_popup.dart:54
+#: ./lib/views/layout/add_control_popup.dart:55
 msgid "Sequences"
 msgstr ""
 
@@ -434,34 +458,34 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:50
+#: ./lib/views/layout/control.dart:52
 msgid "Move"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:53
+#: ./lib/views/layout/control.dart:56
 msgid "Mappings"
 msgstr ""
 
-#: ./lib/navigation.dart:31
+#: ./lib/navigation.dart:32
 msgid "2D Plan"
 msgstr ""
 
-#: ./lib/navigation.dart:32
+#: ./lib/navigation.dart:33
 msgid "PreViz"
 msgstr ""
 
-#: ./lib/navigation.dart:36
+#: ./lib/navigation.dart:37
 msgid "Presets"
 msgstr ""
 
-#: ./lib/navigation.dart:39
+#: ./lib/navigation.dart:40
 msgid "Media"
 msgstr ""
 
-#: ./lib/navigation.dart:40
+#: ./lib/navigation.dart:41
 msgid "Surfaces"
 msgstr ""
 
-#: ./lib/navigation.dart:43
+#: ./lib/navigation.dart:44
 msgid "Session"
 msgstr ""

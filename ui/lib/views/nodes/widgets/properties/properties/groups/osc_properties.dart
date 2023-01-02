@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
+import 'package:provider/provider.dart';
 
 import '../fields/enum_field.dart';
-import '../fields/number_field.dart';
 import '../fields/text_field.dart';
 import '../property_group.dart';
 
@@ -22,6 +24,7 @@ class OscProperties extends StatefulWidget {
 
 class _OscPropertiesState extends State<OscProperties> {
   OscNodeConfig state;
+  List<Connection> connections = [];
 
   _OscPropertiesState(this.state);
 
@@ -34,18 +37,11 @@ class _OscPropertiesState extends State<OscProperties> {
   @override
   Widget build(BuildContext context) {
     return PropertyGroup(title: "OSC", children: [
-      TextPropertyField(
-        label: "Host",
-        value: this.widget.config.host,
-        onUpdate: _updateHost,
-      ),
-      NumberField(
-        label: "Port",
-        value: this.widget.config.port,
-        onUpdate: _updatePort,
-        min: 1024,
-        max: 49151,
-        fractions: false,
+      EnumField<String>(
+        label: "Connection",
+        initialValue: widget.config.connection,
+        items: connections.map((e) => SelectOption(value: e.osc.connectionId, label: e.name)).toList(),
+        onUpdate: _updateConnection,
       ),
       TextPropertyField(
         label: "Path",
@@ -61,19 +57,36 @@ class _OscPropertiesState extends State<OscProperties> {
     ]);
   }
 
-  void _updateHost(String host) {
-    log("_updateHost $host", name: "OscProperties");
-    setState(() {
-      state.host = host;
-      widget.onUpdate(state);
+  @override
+  void initState() {
+    super.initState();
+    _fetchConnections();
+  }
+
+  @override
+  void activate() {
+    super.activate();
+    _fetchConnections();
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    _fetchConnections();
+  }
+
+  Future _fetchConnections() async {
+    var connectionsApi = context.read<ConnectionsApi>();
+    var connections = await connectionsApi.getConnections();
+    this.setState(() {
+      this.connections = connections.connections.where((connection) => connection.hasOsc()).toList();
     });
   }
 
-  void _updatePort(num port) {
-    log("_updatePort $port", name: "OscProperties");
-    int value = port.toInt();
+  void _updateConnection(String connectionId) {
+    log("_updateConnection $connectionId", name: "OscProperties");
     setState(() {
-      state.port = value;
+      state.connection = connectionId;
       widget.onUpdate(state);
     });
   }

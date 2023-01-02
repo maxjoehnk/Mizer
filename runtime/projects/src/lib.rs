@@ -14,6 +14,7 @@ use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
+use mizer_protocol_osc::OscAddress;
 use mizer_sequencer::{Effect, Sequence};
 
 mod connections;
@@ -182,6 +183,7 @@ pub enum ConnectionTypes {
     Sacn,
     Artnet { host: String, port: Option<u16> },
     Mqtt(MqttAddress),
+    Osc(OscAddress),
 }
 
 #[cfg(test)]

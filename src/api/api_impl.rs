@@ -12,6 +12,7 @@ use crate::{ApiCommand, ApiHandler};
 use mizer_command_executor::{CommandExecutorApi, SendableCommand};
 use mizer_message_bus::{MessageBus, Subscriber};
 use mizer_protocol_midi::MidiEvent;
+use mizer_protocol_osc::OscMessage;
 use mizer_settings::{Settings, SettingsManager};
 use pinboard::NonEmptyPinboard;
 use std::sync::Arc;
@@ -197,6 +198,15 @@ impl RuntimeApi for Api {
         let (tx, rx) = flume::bounded(1);
         self.sender
             .send(ApiCommand::GetMidiMonitor(name, tx))
+            .unwrap();
+
+        rx.recv().map_err(anyhow::Error::from).and_then(|r| r)
+    }
+
+    fn get_osc_monitor(&self, connection_id: String) -> anyhow::Result<Subscriber<OscMessage>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender
+            .send(ApiCommand::GetOscMonitor(connection_id, tx))
             .unwrap();
 
         rx.recv().map_err(anyhow::Error::from).and_then(|r| r)

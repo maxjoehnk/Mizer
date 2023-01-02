@@ -33,8 +33,14 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
 
     let _connections =
         ConnectionsChannel::new(handlers.connections.clone()).channel(context.weak());
-    let _midi_monitor_events =
-        MonitorMidiEventChannel::new(handlers.connections, async_runtime.clone(), context.weak())
+    let _midi_monitor_events = MonitorMidiEventChannel::new(
+        handlers.connections.clone(),
+        async_runtime.clone(),
+        context.weak(),
+    )
+    .event_channel(context.weak());
+    let _osc_monitor_events =
+        MonitorOscEventChannel::new(handlers.connections, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
     let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.weak());
     let _nodes = NodesChannel::new(handlers.nodes).channel(context.weak());

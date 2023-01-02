@@ -3,7 +3,7 @@ use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel
 
 use crate::MethodCallExt;
 use mizer_api::handlers::ConnectionsHandler;
-use mizer_api::models::connections::{ArtnetConfig, MqttConnection, SacnConfig};
+use mizer_api::models::connections::*;
 use mizer_api::RuntimeApi;
 
 use crate::plugin::channels::MethodReplyExt;
@@ -71,6 +71,13 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ConnectionsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
+            "addOsc" => {
+                if let Err(err) = call.arguments().and_then(|args| self.add_osc(args)) {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
             "deleteConnection" => {
                 if let Err(err) = call
                     .arguments()
@@ -117,5 +124,13 @@ impl<R: RuntimeApi + 'static> ConnectionsChannel<R> {
     fn add_mqtt(&self, request: MqttConnection) -> anyhow::Result<()> {
         self.handler
             .add_mqtt(request.url, request.username, request.password)
+    }
+
+    fn add_osc(&self, request: OscConnection) -> anyhow::Result<()> {
+        self.handler.add_osc(
+            request.output_address,
+            request.output_port.try_into()?,
+            request.input_port.try_into()?,
+        )
     }
 }

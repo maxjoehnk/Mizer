@@ -2,6 +2,7 @@ use mizer_protocol_dmx::{
     ArtnetOutput, DmxConnection, DmxConnectionManager, DmxOutput, SacnOutput,
 };
 use mizer_protocol_mqtt::MqttConnectionManager;
+use mizer_protocol_osc::OscConnectionManager;
 
 use crate::{ConnectionConfig, ConnectionTypes, Project, ProjectManagerMut};
 
@@ -40,6 +41,16 @@ impl ProjectManagerMut for DmxConnectionManager {
     }
 }
 
+fn get_config(connection: &DmxConnection) -> ConnectionTypes {
+    match connection {
+        DmxConnection::Artnet(artnet) => ConnectionTypes::Artnet {
+            host: artnet.host.clone(),
+            port: artnet.port.into(),
+        },
+        DmxConnection::Sacn(_) => ConnectionTypes::Sacn,
+    }
+}
+
 impl ProjectManagerMut for MqttConnectionManager {
     fn load(&mut self, project: &Project) -> anyhow::Result<()> {
         for connection in &project.connections {
@@ -66,12 +77,28 @@ impl ProjectManagerMut for MqttConnectionManager {
     }
 }
 
-fn get_config(connection: &DmxConnection) -> ConnectionTypes {
-    match connection {
-        DmxConnection::Artnet(artnet) => ConnectionTypes::Artnet {
-            host: artnet.host.clone(),
-            port: artnet.port.into(),
-        },
-        DmxConnection::Sacn(_) => ConnectionTypes::Sacn,
+impl ProjectManagerMut for OscConnectionManager {
+    fn load(&mut self, project: &Project) -> anyhow::Result<()> {
+        for connection in &project.connections {
+            if let ConnectionTypes::Osc(ref address) = connection.config {
+                self.add_connection(connection.id.clone(), *address)?;
+            }
+        }
+
+        Ok(())
+    }
+
+    fn save(&self, project: &mut Project) {
+        for (id, connection) in self.list_connections() {
+            project.connections.push(ConnectionConfig {
+                id: id.clone(),
+                name: Default::default(),
+                config: ConnectionTypes::Osc(connection.address.clone()),
+            });
+        }
+    }
+
+    fn clear(&mut self) {
+        self.clear();
     }
 }

@@ -12,9 +12,11 @@ import 'package:mizer/widgets/platform/context_menu.dart';
 
 import 'dialogs/add_artnet_connection.dart';
 import 'dialogs/add_mqtt_connection.dart';
+import 'dialogs/add_osc_connection.dart';
 import 'dialogs/add_sacn_connection.dart';
 import 'dialogs/dmx_monitor.dart';
 import 'dialogs/midi_monitor.dart';
+import 'dialogs/osc_monitor.dart';
 import 'types/helios_connection.dart';
 import 'types/midi_connection.dart';
 import 'types/mqtt_connection.dart';
@@ -71,6 +73,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
           PanelAction(label: "Add sACN".i18n, onClick: _addSacn),
           PanelAction(label: "Add Artnet".i18n, onClick: _addArtnet),
           PanelAction(label: "Add MQTT".i18n, onClick: _addMqtt),
+          PanelAction(label: "Add OSC".i18n, onClick: _addOsc),
         ]);
   }
 
@@ -102,7 +105,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       ];
     }
     if (connection.hasOsc()) {
-      return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor".i18n)];
+      return [MizerIconButton(icon: MdiIcons.formatListBulleted, label: "Monitor".i18n, onClick: () => _showOscMonitor(context, connection))];
     }
     if (connection.hasMidi()) {
       return [MizerIconButton(
@@ -122,7 +125,7 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       return HeliosConnectionView(device: connection.helios);
     }
     if (connection.hasOsc()) {
-      return OscConnectionView(device: connection.osc);
+      return OscConnectionView(connection: connection.osc);
     }
     if (connection.hasMidi()) {
       return MidiConnectionView(device: connection.midi, deviceProfiles: midiDeviceProfiles);
@@ -139,6 +142,10 @@ class _ConnectionsViewState extends State<ConnectionsView> {
 
   _showMidiMonitor(BuildContext context, Connection connection) {
     openDialog(context, MidiMonitorDialog(connection));
+  }
+
+  _showOscMonitor(BuildContext context, Connection connection) {
+    openDialog(context, OscMonitorDialog(connection));
   }
 
   _fetch() async {
@@ -190,6 +197,16 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     await _fetch();
   }
 
+  _addOsc() async {
+    var value = await showDialog<OscConnection>(
+        context: context, builder: (context) => ConfigureOscConnectionDialog());
+    if (value == null) {
+      return null;
+    }
+    await api.addOsc(value);
+    await _fetch();
+  }
+
   _onDelete(Connection connection) async {
     bool result = await showDialog(
         context: context,
@@ -235,6 +252,16 @@ class _ConnectionsViewState extends State<ConnectionsView> {
       }
       value.connectionId = connection.mqtt.connectionId;
       await api.configureConnection(ConfigureConnectionRequest(mqtt: value));
+      await _fetch();
+    }
+    if (connection.hasOsc()) {
+      var value = await showDialog<OscConnection>(
+          context: context, builder: (context) => ConfigureOscConnectionDialog(config: connection.osc));
+      if (value == null) {
+        return null;
+      }
+      value.connectionId = connection.osc.connectionId;
+      await api.configureConnection(ConfigureConnectionRequest(osc: value));
       await _fetch();
     }
   }

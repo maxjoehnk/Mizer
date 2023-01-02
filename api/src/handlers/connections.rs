@@ -51,6 +51,24 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
         Ok(stream)
     }
 
+    pub fn monitor_osc(
+        &self,
+        connection_id: String,
+    ) -> anyhow::Result<impl Stream<Item = MonitorOscResponse>> {
+        let stream = self
+            .runtime
+            .get_osc_monitor(connection_id)?
+            .into_stream()
+            .map(|event| {
+                log::debug!("osc event: {:?}", event);
+
+                event
+            })
+            .map(MonitorOscResponse::from);
+
+        Ok(stream)
+    }
+
     pub fn add_sacn(&self, name: String) -> anyhow::Result<()> {
         self.runtime.run_command(AddSacnOutputCommand { name })?;
 
@@ -74,6 +92,21 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             url,
             username,
             password,
+        })?;
+
+        Ok(())
+    }
+
+    pub fn add_osc(
+        &self,
+        output_host: String,
+        output_port: u16,
+        input_port: u16,
+    ) -> anyhow::Result<()> {
+        self.runtime.run_command(AddOscConnectionCommand {
+            output_host,
+            output_port,
+            input_port,
         })?;
 
         Ok(())
@@ -132,6 +165,16 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
                     url: connection.url,
                     username: connection.username,
                     password: connection.password,
+                })?;
+
+                Ok(())
+            }
+            Some(configure_connection_request::Config::Osc(connection)) => {
+                self.runtime.run_command(ConfigureOscConnectionCommand {
+                    connection_id: connection.connectionId,
+                    output_host: connection.output_address,
+                    output_port: connection.output_port as u16,
+                    input_port: connection.input_port as u16,
                 })?;
 
                 Ok(())

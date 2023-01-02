@@ -60,6 +60,13 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 password: mqtt.password,
                 ..Default::default()
             }),
+            Osc(osc) => Self::Osc(OscConnection {
+                connectionId: osc.connection_id,
+                output_address: osc.output_host,
+                output_port: osc.output_port as u32,
+                input_port: osc.input_port as u32,
+                ..Default::default()
+            }),
         }
     }
 }
@@ -159,6 +166,48 @@ impl From<mizer_connections::MidiEvent> for MonitorMidiResponse {
         MonitorMidiResponse {
             timestamp: event.timestamp,
             message: Some(event.msg.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_connections::OscMessage> for MonitorOscResponse {
+    fn from(event: mizer_connections::OscMessage) -> Self {
+        Self {
+            path: event.addr,
+            args: event
+                .args
+                .into_iter()
+                .map(monitor_osc_response::OscArgument::from)
+                .collect(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_connections::OscType> for monitor_osc_response::OscArgument {
+    fn from(osc_type: mizer_connections::OscType) -> Self {
+        use mizer_connections::OscType::*;
+        use monitor_osc_response::osc_argument::*;
+
+        let argument = match osc_type {
+            Int(int) => Some(Argument::Int(int)),
+            Long(int) => Some(Argument::Long(int)),
+            Bool(value) => Some(Argument::Bool(value)),
+            Float(value) => Some(Argument::Float(value)),
+            Double(value) => Some(Argument::Double(value)),
+            Color(value) => Some(Argument::Color(OscColor {
+                red: value.red as u32,
+                green: value.green as u32,
+                blue: value.blue as u32,
+                alpha: value.alpha as u32,
+                ..Default::default()
+            })),
+            _ => None,
+        };
+
+        Self {
+            argument,
             ..Default::default()
         }
     }

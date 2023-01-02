@@ -3,7 +3,7 @@
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -90,6 +90,57 @@ const MonitorMidiResponse_SysEx$json = const {
 
 /// Descriptor for `MonitorMidiResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List monitorMidiResponseDescriptor = $convert.base64Decode('ChNNb25pdG9yTWlkaVJlc3BvbnNlEhwKCXRpbWVzdGFtcBgCIAEoBFIJdGltZXN0YW1wEjQKAmNjGAMgASgLMiIubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5Ob3RlTXNnSABSAmNjEj4KB25vdGVPZmYYBCABKAsyIi5taXplci5Nb25pdG9yTWlkaVJlc3BvbnNlLk5vdGVNc2dIAFIHbm90ZU9mZhI8CgZub3RlT24YBSABKAsyIi5taXplci5Nb25pdG9yTWlkaVJlc3BvbnNlLk5vdGVNc2dIAFIGbm90ZU9uEjgKBXN5c0V4GAYgASgLMiAubWl6ZXIuTW9uaXRvck1pZGlSZXNwb25zZS5TeXNFeEgAUgVzeXNFeBIaCgd1bmtub3duGAcgASgMSABSB3Vua25vd24aTQoHTm90ZU1zZxIYCgdjaGFubmVsGAEgASgNUgdjaGFubmVsEhIKBG5vdGUYAiABKA1SBG5vdGUSFAoFdmFsdWUYAyABKA1SBXZhbHVlGqMBCgVTeXNFeBIkCg1tYW51ZmFjdHVyZXIxGAEgASgNUg1tYW51ZmFjdHVyZXIxEiQKDW1hbnVmYWN0dXJlcjIYAiABKA1SDW1hbnVmYWN0dXJlcjISJAoNbWFudWZhY3R1cmVyMxgDIAEoDVINbWFudWZhY3R1cmVyMxIUCgVtb2RlbBgEIAEoDVIFbW9kZWwSEgoEZGF0YRgFIAEoDFIEZGF0YUIJCgdtZXNzYWdl');
+@$core.Deprecated('Use monitorOscRequestDescriptor instead')
+const MonitorOscRequest$json = const {
+  '1': 'MonitorOscRequest',
+  '2': const [
+    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
+  ],
+};
+
+/// Descriptor for `MonitorOscRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List monitorOscRequestDescriptor = $convert.base64Decode('ChFNb25pdG9yT3NjUmVxdWVzdBISCgRuYW1lGAEgASgJUgRuYW1l');
+@$core.Deprecated('Use monitorOscResponseDescriptor instead')
+const MonitorOscResponse$json = const {
+  '1': 'MonitorOscResponse',
+  '2': const [
+    const {'1': 'timestamp', '3': 1, '4': 1, '5': 4, '10': 'timestamp'},
+    const {'1': 'path', '3': 2, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'args', '3': 3, '4': 3, '5': 11, '6': '.mizer.MonitorOscResponse.OscArgument', '10': 'args'},
+  ],
+  '3': const [MonitorOscResponse_OscArgument$json],
+};
+
+@$core.Deprecated('Use monitorOscResponseDescriptor instead')
+const MonitorOscResponse_OscArgument$json = const {
+  '1': 'OscArgument',
+  '2': const [
+    const {'1': 'int', '3': 1, '4': 1, '5': 5, '9': 0, '10': 'int'},
+    const {'1': 'float', '3': 2, '4': 1, '5': 2, '9': 0, '10': 'float'},
+    const {'1': 'long', '3': 3, '4': 1, '5': 3, '9': 0, '10': 'long'},
+    const {'1': 'double', '3': 4, '4': 1, '5': 1, '9': 0, '10': 'double'},
+    const {'1': 'bool', '3': 5, '4': 1, '5': 8, '9': 0, '10': 'bool'},
+    const {'1': 'color', '3': 6, '4': 1, '5': 11, '6': '.mizer.MonitorOscResponse.OscArgument.OscColor', '9': 0, '10': 'color'},
+  ],
+  '3': const [MonitorOscResponse_OscArgument_OscColor$json],
+  '8': const [
+    const {'1': 'argument'},
+  ],
+};
+
+@$core.Deprecated('Use monitorOscResponseDescriptor instead')
+const MonitorOscResponse_OscArgument_OscColor$json = const {
+  '1': 'OscColor',
+  '2': const [
+    const {'1': 'red', '3': 1, '4': 1, '5': 13, '10': 'red'},
+    const {'1': 'green', '3': 2, '4': 1, '5': 13, '10': 'green'},
+    const {'1': 'blue', '3': 3, '4': 1, '5': 13, '10': 'blue'},
+    const {'1': 'alpha', '3': 4, '4': 1, '5': 13, '10': 'alpha'},
+  ],
+};
+
+/// Descriptor for `MonitorOscResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List monitorOscResponseDescriptor = $convert.base64Decode('ChJNb25pdG9yT3NjUmVzcG9uc2USHAoJdGltZXN0YW1wGAEgASgEUgl0aW1lc3RhbXASEgoEcGF0aBgCIAEoCVIEcGF0aBI5CgRhcmdzGAMgAygLMiUubWl6ZXIuTW9uaXRvck9zY1Jlc3BvbnNlLk9zY0FyZ3VtZW50UgRhcmdzGrECCgtPc2NBcmd1bWVudBISCgNpbnQYASABKAVIAFIDaW50EhYKBWZsb2F0GAIgASgCSABSBWZsb2F0EhQKBGxvbmcYAyABKANIAFIEbG9uZxIYCgZkb3VibGUYBCABKAFIAFIGZG91YmxlEhQKBGJvb2wYBSABKAhIAFIEYm9vbBJGCgVjb2xvchgGIAEoCzIuLm1pemVyLk1vbml0b3JPc2NSZXNwb25zZS5Pc2NBcmd1bWVudC5Pc2NDb2xvckgAUgVjb2xvchpcCghPc2NDb2xvchIQCgNyZWQYASABKA1SA3JlZBIUCgVncmVlbhgCIAEoDVIFZ3JlZW4SEgoEYmx1ZRgDIAEoDVIEYmx1ZRIUCgVhbHBoYRgEIAEoDVIFYWxwaGFCCgoIYXJndW1lbnQ=');
 @$core.Deprecated('Use getConnectionsRequestDescriptor instead')
 const GetConnectionsRequest$json = const {
   '1': 'GetConnectionsRequest',
@@ -291,14 +342,15 @@ final $typed_data.Uint8List midiDeviceProfileDescriptor = $convert.base64Decode(
 const OscConnection$json = const {
   '1': 'OscConnection',
   '2': const [
-    const {'1': 'input_port', '3': 1, '4': 1, '5': 13, '10': 'inputPort'},
-    const {'1': 'output_port', '3': 2, '4': 1, '5': 13, '10': 'outputPort'},
-    const {'1': 'output_address', '3': 3, '4': 1, '5': 9, '10': 'outputAddress'},
+    const {'1': 'connectionId', '3': 1, '4': 1, '5': 9, '10': 'connectionId'},
+    const {'1': 'input_port', '3': 2, '4': 1, '5': 13, '10': 'inputPort'},
+    const {'1': 'output_port', '3': 3, '4': 1, '5': 13, '10': 'outputPort'},
+    const {'1': 'output_address', '3': 4, '4': 1, '5': 9, '10': 'outputAddress'},
   ],
 };
 
 /// Descriptor for `OscConnection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List oscConnectionDescriptor = $convert.base64Decode('Cg1Pc2NDb25uZWN0aW9uEh0KCmlucHV0X3BvcnQYASABKA1SCWlucHV0UG9ydBIfCgtvdXRwdXRfcG9ydBgCIAEoDVIKb3V0cHV0UG9ydBIlCg5vdXRwdXRfYWRkcmVzcxgDIAEoCVINb3V0cHV0QWRkcmVzcw==');
+final $typed_data.Uint8List oscConnectionDescriptor = $convert.base64Decode('Cg1Pc2NDb25uZWN0aW9uEiIKDGNvbm5lY3Rpb25JZBgBIAEoCVIMY29ubmVjdGlvbklkEh0KCmlucHV0X3BvcnQYAiABKA1SCWlucHV0UG9ydBIfCgtvdXRwdXRfcG9ydBgDIAEoDVIKb3V0cHV0UG9ydBIlCg5vdXRwdXRfYWRkcmVzcxgEIAEoCVINb3V0cHV0QWRkcmVzcw==');
 @$core.Deprecated('Use proDjLinkConnectionDescriptor instead')
 const ProDjLinkConnection$json = const {
   '1': 'ProDjLinkConnection',
@@ -371,6 +423,7 @@ const ConfigureConnectionRequest$json = const {
   '2': const [
     const {'1': 'dmx', '3': 1, '4': 1, '5': 11, '6': '.mizer.DmxConnection', '9': 0, '10': 'dmx'},
     const {'1': 'mqtt', '3': 2, '4': 1, '5': 11, '6': '.mizer.MqttConnection', '9': 0, '10': 'mqtt'},
+    const {'1': 'osc', '3': 3, '4': 1, '5': 11, '6': '.mizer.OscConnection', '9': 0, '10': 'osc'},
   ],
   '8': const [
     const {'1': 'config'},
@@ -378,4 +431,4 @@ const ConfigureConnectionRequest$json = const {
 };
 
 /// Descriptor for `ConfigureConnectionRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List configureConnectionRequestDescriptor = $convert.base64Decode('ChpDb25maWd1cmVDb25uZWN0aW9uUmVxdWVzdBIoCgNkbXgYASABKAsyFC5taXplci5EbXhDb25uZWN0aW9uSABSA2RteBIrCgRtcXR0GAIgASgLMhUubWl6ZXIuTXF0dENvbm5lY3Rpb25IAFIEbXF0dEIICgZjb25maWc=');
+final $typed_data.Uint8List configureConnectionRequestDescriptor = $convert.base64Decode('ChpDb25maWd1cmVDb25uZWN0aW9uUmVxdWVzdBIoCgNkbXgYASABKAsyFC5taXplci5EbXhDb25uZWN0aW9uSABSA2RteBIrCgRtcXR0GAIgASgLMhUubWl6ZXIuTXF0dENvbm5lY3Rpb25IAFIEbXF0dBIoCgNvc2MYAyABKAsyFC5taXplci5Pc2NDb25uZWN0aW9uSABSA29zY0IICgZjb25maWc=');

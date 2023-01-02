@@ -7,7 +7,11 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 rosc = "0.9"
-crossbeam-channel = "0.5"
-lazy_static = "1.4"
 log = "0.4"
-event_feed = "0.1.0"
+flume = "0.10"
+mizer-message-bus = { path = "../../../../util/bus" }
+futures = "0.3"
+mizer-module = { path = "../../../../runtime/module" }
+mizer-commander = { path = "../../../../runtime/commander" }
+tokio = { version = "1.23", features = ["net", "rt"] }
+serde = { version = "1", features = ["derive"] }

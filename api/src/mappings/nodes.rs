@@ -756,8 +756,7 @@ impl From<PixelDmxNodeConfig> for mizer_nodes::PixelDmxNode {
 impl From<mizer_nodes::OscInputNode> for OscNodeConfig {
     fn from(node: mizer_nodes::OscInputNode) -> Self {
         Self {
-            host: node.host,
-            port: node.port as u32,
+            connection: node.connection,
             path: node.path,
             argumentType: EnumOrUnknown::new(node.argument_type.into()),
             ..Default::default()
@@ -768,8 +767,7 @@ impl From<mizer_nodes::OscInputNode> for OscNodeConfig {
 impl From<OscNodeConfig> for mizer_nodes::OscInputNode {
     fn from(node: OscNodeConfig) -> Self {
         Self {
-            host: node.host,
-            port: node.port as u16,
+            connection: node.connection,
             path: node.path,
             argument_type: node.argumentType.unwrap().into(),
         }
@@ -779,8 +777,7 @@ impl From<OscNodeConfig> for mizer_nodes::OscInputNode {
 impl From<mizer_nodes::OscOutputNode> for OscNodeConfig {
     fn from(node: mizer_nodes::OscOutputNode) -> Self {
         Self {
-            host: node.host,
-            port: node.port as u32,
+            connection: node.connection,
             path: node.path,
             argumentType: EnumOrUnknown::new(node.argument_type.into()),
             ..Default::default()
@@ -791,8 +788,7 @@ impl From<mizer_nodes::OscOutputNode> for OscNodeConfig {
 impl From<OscNodeConfig> for mizer_nodes::OscOutputNode {
     fn from(node: OscNodeConfig) -> Self {
         Self {
-            host: node.host,
-            port: node.port as u16,
+            connection: node.connection,
             path: node.path,
             argument_type: node.argumentType.unwrap().into(),
         }

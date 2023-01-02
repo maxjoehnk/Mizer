@@ -371,10 +371,9 @@ message OpcOutputNodeConfig {
 }
 
 message OscNodeConfig {
-  string host = 1;
-  uint32 port = 2;
-  string path = 3;
-  ArgumentType argumentType = 4;
+  string connection = 1;
+  string path = 2;
+  ArgumentType argumentType = 3;
 
   enum ArgumentType {
     Int = 0;

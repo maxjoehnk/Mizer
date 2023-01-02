@@ -10353,10 +10353,8 @@ impl ::protobuf::reflect::ProtobufValue for OpcOutputNodeConfig {
 // @@protoc_insertion_point(message:mizer.nodes.OscNodeConfig)
 pub struct OscNodeConfig {
     // message fields
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.host)
-    pub host: ::std::string::String,
-    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.port)
-    pub port: u32,
+    // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.connection)
+    pub connection: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.path)
     pub path: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.nodes.OscNodeConfig.argumentType)
@@ -10378,17 +10376,12 @@ impl OscNodeConfig {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "host",
-            |m: &OscNodeConfig| { &m.host },
-            |m: &mut OscNodeConfig| { &mut m.host },
-        ));
-        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
-            "port",
-            |m: &OscNodeConfig| { &m.port },
-            |m: &mut OscNodeConfig| { &mut m.port },
+            "connection",
+            |m: &OscNodeConfig| { &m.connection },
+            |m: &mut OscNodeConfig| { &mut m.connection },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "path",
@@ -10419,15 +10412,12 @@ impl ::protobuf::Message for OscNodeConfig {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
                 10 => {
-                    self.host = is.read_string()?;
+                    self.connection = is.read_string()?;
                 },
-                16 => {
-                    self.port = is.read_uint32()?;
-                },
-                26 => {
+                18 => {
                     self.path = is.read_string()?;
                 },
-                32 => {
+                24 => {
                     self.argumentType = is.read_enum_or_unknown()?;
                 },
                 tag => {
@@ -10442,17 +10432,14 @@ impl ::protobuf::Message for OscNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
-        if !self.host.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.host);
-        }
-        if self.port != 0 {
-            my_size += ::protobuf::rt::uint32_size(2, self.port);
+        if !self.connection.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.connection);
         }
         if !self.path.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.path);
+            my_size += ::protobuf::rt::string_size(2, &self.path);
         }
         if self.argumentType != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::Int) {
-            my_size += ::protobuf::rt::int32_size(4, self.argumentType.value());
+            my_size += ::protobuf::rt::int32_size(3, self.argumentType.value());
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -10460,17 +10447,14 @@ impl ::protobuf::Message for OscNodeConfig {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
-        if !self.host.is_empty() {
-            os.write_string(1, &self.host)?;
-        }
-        if self.port != 0 {
-            os.write_uint32(2, self.port)?;
+        if !self.connection.is_empty() {
+            os.write_string(1, &self.connection)?;
         }
         if !self.path.is_empty() {
-            os.write_string(3, &self.path)?;
+            os.write_string(2, &self.path)?;
         }
         if self.argumentType != ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::Int) {
-            os.write_enum(4, ::protobuf::EnumOrUnknown::value(&self.argumentType))?;
+            os.write_enum(3, ::protobuf::EnumOrUnknown::value(&self.argumentType))?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -10489,8 +10473,7 @@ impl ::protobuf::Message for OscNodeConfig {
     }
 
     fn clear(&mut self) {
-        self.host.clear();
-        self.port = 0;
+        self.connection.clear();
         self.path.clear();
         self.argumentType = ::protobuf::EnumOrUnknown::new(osc_node_config::ArgumentType::Int);
         self.special_fields.clear();
@@ -10498,8 +10481,7 @@ impl ::protobuf::Message for OscNodeConfig {
 
     fn default_instance() -> &'static OscNodeConfig {
         static instance: OscNodeConfig = OscNodeConfig {
-            host: ::std::string::String::new(),
-            port: 0,
+            connection: ::std::string::String::new(),
             path: ::std::string::String::new(),
             argumentType: ::protobuf::EnumOrUnknown::from_i32(0),
             special_fields: ::protobuf::SpecialFields::new(),
@@ -14547,76 +14529,75 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x07controlB\t\n\x07binding\"k\n\x13OpcOutputNodeConfig\x12\x12\n\x04hos\
     t\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\rR\x04p\
     ort\x12\x14\n\x05width\x18\x03\x20\x01(\x04R\x05width\x12\x16\n\x06heigh\
-    t\x18\x04\x20\x01(\x04R\x06height\"\xe7\x01\n\rOscNodeConfig\x12\x12\n\
-    \x04host\x18\x01\x20\x01(\tR\x04host\x12\x12\n\x04port\x18\x02\x20\x01(\
-    \rR\x04port\x12\x12\n\x04path\x18\x03\x20\x01(\tR\x04path\x12K\n\x0cargu\
-    mentType\x18\x04\x20\x01(\x0e2'.mizer.nodes.OscNodeConfig.ArgumentTypeR\
-    \x0cargumentType\"M\n\x0cArgumentType\x12\x07\n\x03Int\x10\0\x12\t\n\x05\
-    Float\x10\x01\x12\x08\n\x04Long\x10\x02\x12\n\n\x06Double\x10\x03\x12\
-    \x08\n\x04Bool\x10\x04\x12\t\n\x05Color\x10\x05\"\x1d\n\x1bVideoColorBal\
-    anceNodeConfig\"\x17\n\x15VideoEffectNodeConfig\")\n\x13VideoFileNodeCon\
-    fig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\"\x17\n\x15VideoOutput\
-    NodeConfig\"\x1a\n\x18VideoTransformNodeConfig\"\x12\n\x10SelectNodeConf\
-    ig\"\x7f\n\x0fMergeNodeConfig\x12:\n\x04mode\x18\x01\x20\x01(\x0e2&.mize\
-    r.nodes.MergeNodeConfig.MergeModeR\x04mode\"0\n\tMergeMode\x12\n\n\x06La\
-    test\x10\0\x12\x0b\n\x07Highest\x10\x01\x12\n\n\x06Lowest\x10\x02\"\xb1\
-    \x01\n\x13ThresholdNodeConfig\x12'\n\x0flower_threshold\x18\x01\x20\x01(\
-    \x01R\x0elowerThreshold\x12'\n\x0fupper_threshold\x18\x02\x20\x01(\x01R\
-    \x0eupperThreshold\x12!\n\x0cactive_value\x18\x03\x20\x01(\x01R\x0bactiv\
-    eValue\x12%\n\x0einactive_value\x18\x04\x20\x01(\x01R\rinactiveValue\"0\
-    \n\x11EncoderNodeConfig\x12\x1b\n\thold_rate\x18\x01\x20\x01(\x01R\x08ho\
-    ldRate\"\x14\n\x12ColorRgbNodeConfig\"\x14\n\x12ColorHsvNodeConfig\">\n\
-    \x13ContainerNodeConfig\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.\
-    nodes.NodeR\x05nodes\"\xbe\x01\n\x0eMathNodeConfig\x124\n\x04mode\x18\
-    \x01\x20\x01(\x0e2\x20.mizer.nodes.MathNodeConfig.ModeR\x04mode\"v\n\x04\
-    Mode\x12\x0c\n\x08Addition\x10\0\x12\x0f\n\x0bSubtraction\x10\x01\x12\
-    \x12\n\x0eMultiplication\x10\x02\x12\x0c\n\x08Division\x10\x03\x12\n\n\
-    \x06Invert\x10\x04\x12\x08\n\x04Sine\x10\x05\x12\n\n\x06Cosine\x10\x06\
-    \x12\x0b\n\x07Tangent\x10\x07\"I\n\x13MqttInputNodeConfig\x12\x1e\n\ncon\
-    nection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\
-    \x01(\tR\x04path\"J\n\x14MqttOutputNodeConfig\x12\x1e\n\nconnection\x18\
-    \x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04pa\
-    th\"\x18\n\x16NumberToDataNodeConfig\"\x18\n\x16DataToNumberNodeConfig\"\
-    '\n\x0fValueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"\
-    L\n\x14PlanScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06\
-    planId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\x0fDela\
-    yNodeConfig\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\nbufferSize\"\
-    \xbc\x01\n\x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2$.mize\
-    r.nodes.RampNodeConfig.RampStepR\x05steps\x1an\n\x08RampStep\x12\x0c\n\
-    \x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\
-    \x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\
-    \x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\
-    \x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeConfig\
-    \x12\x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\x04fad\
-    e\x18\x02\x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\x12\x12\n\x04tex\
-    t\x18\x01\x20\x01(\tR\x04text\"\x15\n\x13TransportNodeConfig\"*\n\x0cNod\
-    ePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\
-    \x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\
-    \x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\n\x05sc\
-    ale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\
-    \x08R\x06hidden\"T\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04na\
-    me\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProto\
-    colR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\
-    \x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\
-    \x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\
-    \x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\
-    \x12\x07\n\x03GST\x10\x082\x83\x07\n\x08NodesApi\x129\n\x08GetNodes\x12\
-    \x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNod\
-    e\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07\
-    AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConne\
-    ction\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\
-    \x1a.mizer.nodes.WriteResponse\x12a\n\x12UpdateNodeProperty\x12$.mizer.n\
-    odes.UpdateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeConfigResponse\
-    \x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.no\
-    des.MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRe\
-    quest\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.\
-    mizer.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\
-    \x08ShowNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.Sho\
-    wNodeResponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeReques\
-    t\x1a\x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.Rename\
-    NodeRequest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\
-    \x12\x1e.mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesRes\
-    ponseb\x06proto3\
+    t\x18\x04\x20\x01(\x04R\x06height\"\xdf\x01\n\rOscNodeConfig\x12\x1e\n\n\
+    connection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\
+    \x01(\tR\x04path\x12K\n\x0cargumentType\x18\x03\x20\x01(\x0e2'.mizer.nod\
+    es.OscNodeConfig.ArgumentTypeR\x0cargumentType\"M\n\x0cArgumentType\x12\
+    \x07\n\x03Int\x10\0\x12\t\n\x05Float\x10\x01\x12\x08\n\x04Long\x10\x02\
+    \x12\n\n\x06Double\x10\x03\x12\x08\n\x04Bool\x10\x04\x12\t\n\x05Color\
+    \x10\x05\"\x1d\n\x1bVideoColorBalanceNodeConfig\"\x17\n\x15VideoEffectNo\
+    deConfig\")\n\x13VideoFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\
+    \tR\x04file\"\x17\n\x15VideoOutputNodeConfig\"\x1a\n\x18VideoTransformNo\
+    deConfig\"\x12\n\x10SelectNodeConfig\"\x7f\n\x0fMergeNodeConfig\x12:\n\
+    \x04mode\x18\x01\x20\x01(\x0e2&.mizer.nodes.MergeNodeConfig.MergeModeR\
+    \x04mode\"0\n\tMergeMode\x12\n\n\x06Latest\x10\0\x12\x0b\n\x07Highest\
+    \x10\x01\x12\n\n\x06Lowest\x10\x02\"\xb1\x01\n\x13ThresholdNodeConfig\
+    \x12'\n\x0flower_threshold\x18\x01\x20\x01(\x01R\x0elowerThreshold\x12'\
+    \n\x0fupper_threshold\x18\x02\x20\x01(\x01R\x0eupperThreshold\x12!\n\x0c\
+    active_value\x18\x03\x20\x01(\x01R\x0bactiveValue\x12%\n\x0einactive_val\
+    ue\x18\x04\x20\x01(\x01R\rinactiveValue\"0\n\x11EncoderNodeConfig\x12\
+    \x1b\n\thold_rate\x18\x01\x20\x01(\x01R\x08holdRate\"\x14\n\x12ColorRgbN\
+    odeConfig\"\x14\n\x12ColorHsvNodeConfig\">\n\x13ContainerNodeConfig\x12'\
+    \n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\"\xbe\
+    \x01\n\x0eMathNodeConfig\x124\n\x04mode\x18\x01\x20\x01(\x0e2\x20.mizer.\
+    nodes.MathNodeConfig.ModeR\x04mode\"v\n\x04Mode\x12\x0c\n\x08Addition\
+    \x10\0\x12\x0f\n\x0bSubtraction\x10\x01\x12\x12\n\x0eMultiplication\x10\
+    \x02\x12\x0c\n\x08Division\x10\x03\x12\n\n\x06Invert\x10\x04\x12\x08\n\
+    \x04Sine\x10\x05\x12\n\n\x06Cosine\x10\x06\x12\x0b\n\x07Tangent\x10\x07\
+    \"I\n\x13MqttInputNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\n\
+    connection\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\"J\n\x14MqttOut\
+    putNodeConfig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\
+    \x12\n\x04path\x18\x02\x20\x01(\tR\x04path\"\x18\n\x16NumberToDataNodeCo\
+    nfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\x0fValueNodeConfig\x12\x14\n\
+    \x05value\x18\x01\x20\x01(\tR\x05value\"L\n\x14PlanScreenNodeConfig\x12\
+    \x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x1b\n\tscreen_id\x18\
+    \x02\x20\x01(\rR\x08screenId\"2\n\x0fDelayNodeConfig\x12\x1f\n\x0bbuffer\
+    _size\x18\x01\x20\x01(\rR\nbufferSize\"\xbc\x01\n\x0eRampNodeConfig\x12:\
+    \n\x05steps\x18\x01\x20\x03(\x0b2$.mizer.nodes.RampNodeConfig.RampStepR\
+    \x05steps\x1an\n\x08RampStep\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\
+    \x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\
+    \x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\
+    \n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\
+    \x01R\x03c1b\"B\n\x0fNoiseNodeConfig\x12\x1b\n\ttick_rate\x18\x01\x20\
+    \x01(\x04R\x08tickRate\x12\x12\n\x04fade\x18\x02\x20\x01(\x08R\x04fade\"\
+    %\n\x0fLabelNodeConfig\x12\x12\n\x04text\x18\x01\x20\x01(\tR\x04text\"\
+    \x15\n\x13TransportNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\
+    \x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\
+    \x0cNodeDesigner\x125\n\x08position\x18\x01\x20\x01(\x0b2\x19.mizer.node\
+    s.NodePositionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05\
+    scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"T\n\x04Port\
+    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x128\n\x08protocol\x18\
+    \x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol*\x82\x01\
+    \n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\
+    \x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\
+    \x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\x08\n\
+    \x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\x10\x082\
+    \x83\x07\n\x08NodesApi\x129\n\x08GetNodes\x12\x19.mizer.nodes.NodesReque\
+    st\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNo\
+    deRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes\
+    .NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11WriteContro\
+    lValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.WriteRespons\
+    e\x12a\n\x12UpdateNodeProperty\x12$.mizer.nodes.UpdateNodeConfigRequest\
+    \x1a%.mizer.nodes.UpdateNodeConfigResponse\x12G\n\x08MoveNode\x12\x1c.mi\
+    zer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nD\
+    eleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.Dele\
+    teNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\
+    \x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.n\
+    odes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplic\
+    ateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\
+    \x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.\
+    nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNod\
+    esRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

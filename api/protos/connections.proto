@@ -7,6 +7,7 @@ service ConnectionsApi {
 
   rpc MonitorDmx (MonitorDmxRequest) returns (MonitorDmxResponse) {}
   rpc MonitorMidi (MonitorMidiRequest) returns (stream MonitorMidiResponse) {}
+  rpc MonitorOsc (MonitorOscRequest) returns (stream MonitorOscResponse) {}
 
   rpc AddArtnetConnection (ArtnetConfig) returns (Connections) {}
   rpc AddSacnConnection (SacnConfig) returns (Connections) {}
@@ -55,6 +56,34 @@ message MonitorMidiResponse {
     uint32 manufacturer3 = 3;
     uint32 model = 4;
     bytes data = 5;
+  }
+}
+
+
+message MonitorOscRequest {
+  string name = 1;
+}
+message MonitorOscResponse {
+  uint64 timestamp = 1;
+  string path = 2;
+  repeated OscArgument args = 3;
+
+  message OscArgument {
+    oneof argument {
+      int32 int = 1;
+      float float = 2;
+      int64 long = 3;
+      double double = 4;
+      bool bool = 5;
+      OscColor color = 6;
+    }
+
+    message OscColor {
+      uint32 red = 1;
+      uint32 green = 2;
+      uint32 blue = 3;
+      uint32 alpha = 4;
+    }
   }
 }
 
@@ -153,9 +182,10 @@ message MidiDeviceProfile {
 }
 
 message OscConnection {
-  uint32 input_port = 1;
-  uint32 output_port = 2;
-  string output_address = 3;
+  string connectionId = 1;
+  uint32 input_port = 2;
+  uint32 output_port = 3;
+  string output_address = 4;
 }
 
 message ProDjLinkConnection {
@@ -196,5 +226,6 @@ message ConfigureConnectionRequest {
   oneof config {
     DmxConnection dmx = 1;
     MqttConnection mqtt = 2;
+    OscConnection osc = 3;
   }
 }

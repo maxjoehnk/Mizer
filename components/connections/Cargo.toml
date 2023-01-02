@@ -11,4 +11,5 @@ dashmap = "5"
 derive_more = "0.99"
 mizer-protocol-dmx = { path = "./protocols/dmx" }
 mizer-protocol-midi = { path = "./protocols/midi" }
+mizer-protocol-osc = { path = "./protocols/osc" }
 mizer-devices = { path = "./devices" }

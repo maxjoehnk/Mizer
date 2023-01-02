@@ -691,10 +691,9 @@ final $typed_data.Uint8List opcOutputNodeConfigDescriptor = $convert.base64Decod
 const OscNodeConfig$json = const {
   '1': 'OscNodeConfig',
   '2': const [
-    const {'1': 'host', '3': 1, '4': 1, '5': 9, '10': 'host'},
-    const {'1': 'port', '3': 2, '4': 1, '5': 13, '10': 'port'},
-    const {'1': 'path', '3': 3, '4': 1, '5': 9, '10': 'path'},
-    const {'1': 'argumentType', '3': 4, '4': 1, '5': 14, '6': '.mizer.nodes.OscNodeConfig.ArgumentType', '10': 'argumentType'},
+    const {'1': 'connection', '3': 1, '4': 1, '5': 9, '10': 'connection'},
+    const {'1': 'path', '3': 2, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'argumentType', '3': 3, '4': 1, '5': 14, '6': '.mizer.nodes.OscNodeConfig.ArgumentType', '10': 'argumentType'},
   ],
   '4': const [OscNodeConfig_ArgumentType$json],
 };
@@ -713,7 +712,7 @@ const OscNodeConfig_ArgumentType$json = const {
 };
 
 /// Descriptor for `OscNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List oscNodeConfigDescriptor = $convert.base64Decode('Cg1Pc2NOb2RlQ29uZmlnEhIKBGhvc3QYASABKAlSBGhvc3QSEgoEcG9ydBgCIAEoDVIEcG9ydBISCgRwYXRoGAMgASgJUgRwYXRoEksKDGFyZ3VtZW50VHlwZRgEIAEoDjInLm1pemVyLm5vZGVzLk9zY05vZGVDb25maWcuQXJndW1lbnRUeXBlUgxhcmd1bWVudFR5cGUiTQoMQXJndW1lbnRUeXBlEgcKA0ludBAAEgkKBUZsb2F0EAESCAoETG9uZxACEgoKBkRvdWJsZRADEggKBEJvb2wQBBIJCgVDb2xvchAF');
+final $typed_data.Uint8List oscNodeConfigDescriptor = $convert.base64Decode('Cg1Pc2NOb2RlQ29uZmlnEh4KCmNvbm5lY3Rpb24YASABKAlSCmNvbm5lY3Rpb24SEgoEcGF0aBgCIAEoCVIEcGF0aBJLCgxhcmd1bWVudFR5cGUYAyABKA4yJy5taXplci5ub2Rlcy5Pc2NOb2RlQ29uZmlnLkFyZ3VtZW50VHlwZVIMYXJndW1lbnRUeXBlIk0KDEFyZ3VtZW50VHlwZRIHCgNJbnQQABIJCgVGbG9hdBABEggKBExvbmcQAhIKCgZEb3VibGUQAxIICgRCb29sEAQSCQoFQ29sb3IQBQ==');
 @$core.Deprecated('Use videoColorBalanceNodeConfigDescriptor instead')
 const VideoColorBalanceNodeConfig$json = const {
   '1': 'VideoColorBalanceNodeConfig',

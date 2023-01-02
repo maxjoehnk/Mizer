@@ -5,6 +5,7 @@ use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_message_bus::Subscriber;
 use mizer_node::{NodePath, PortId};
 use mizer_protocol_midi::MidiEvent;
+use mizer_protocol_osc::OscMessage;
 use mizer_session::SessionState;
 use mizer_settings::FixtureLibraryPaths;
 use pinboard::NonEmptyPinboard;
@@ -27,6 +28,10 @@ pub enum ApiCommand {
         flume::Sender<anyhow::Result<HashMap<u16, [u8; 512]>>>,
     ),
     GetMidiMonitor(String, flume::Sender<anyhow::Result<Subscriber<MidiEvent>>>),
+    GetOscMonitor(
+        String,
+        flume::Sender<anyhow::Result<Subscriber<OscMessage>>>,
+    ),
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),

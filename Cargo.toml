@@ -124,6 +124,7 @@ mizer-clock = { path = "runtime/clock" }
 mizer-protocol-dmx = { path = "components/connections/protocols/dmx" }
 mizer-protocol-midi = { path = "components/connections/protocols/midi" }
 mizer-protocol-mqtt = { path = "components/connections/protocols/mqtt" }
+mizer-protocol-osc = { path = "components/connections/protocols/osc" }
 mizer-processing = { path = "runtime/processing" }
 mizer-module = { path = "runtime/module" }
 mizer-ui = { path = "ui", optional = true }

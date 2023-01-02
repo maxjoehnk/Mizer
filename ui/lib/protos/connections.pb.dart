@@ -3,7 +3,7 @@
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -532,6 +532,353 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
   $core.bool hasUnknown() => $_has(5);
   @$pb.TagNumber(7)
   void clearUnknown() => clearField(7);
+}
+
+class MonitorOscRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..hasRequiredFields = false
+  ;
+
+  MonitorOscRequest._() : super();
+  factory MonitorOscRequest({
+    $core.String? name,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    return _result;
+  }
+  factory MonitorOscRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorOscRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorOscRequest clone() => MonitorOscRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorOscRequest copyWith(void Function(MonitorOscRequest) updates) => super.copyWith((message) => updates(message as MonitorOscRequest)) as MonitorOscRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscRequest create() => MonitorOscRequest._();
+  MonitorOscRequest createEmptyInstance() => create();
+  static $pb.PbList<MonitorOscRequest> createRepeated() => $pb.PbList<MonitorOscRequest>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorOscRequest>(create);
+  static MonitorOscRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+}
+
+class MonitorOscResponse_OscArgument_OscColor extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscResponse.OscArgument.OscColor', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'red', $pb.PbFieldType.OU3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'green', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blue', $pb.PbFieldType.OU3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'alpha', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorOscResponse_OscArgument_OscColor._() : super();
+  factory MonitorOscResponse_OscArgument_OscColor({
+    $core.int? red,
+    $core.int? green,
+    $core.int? blue,
+    $core.int? alpha,
+  }) {
+    final _result = create();
+    if (red != null) {
+      _result.red = red;
+    }
+    if (green != null) {
+      _result.green = green;
+    }
+    if (blue != null) {
+      _result.blue = blue;
+    }
+    if (alpha != null) {
+      _result.alpha = alpha;
+    }
+    return _result;
+  }
+  factory MonitorOscResponse_OscArgument_OscColor.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorOscResponse_OscArgument_OscColor.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorOscResponse_OscArgument_OscColor clone() => MonitorOscResponse_OscArgument_OscColor()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorOscResponse_OscArgument_OscColor copyWith(void Function(MonitorOscResponse_OscArgument_OscColor) updates) => super.copyWith((message) => updates(message as MonitorOscResponse_OscArgument_OscColor)) as MonitorOscResponse_OscArgument_OscColor; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscResponse_OscArgument_OscColor create() => MonitorOscResponse_OscArgument_OscColor._();
+  MonitorOscResponse_OscArgument_OscColor createEmptyInstance() => create();
+  static $pb.PbList<MonitorOscResponse_OscArgument_OscColor> createRepeated() => $pb.PbList<MonitorOscResponse_OscArgument_OscColor>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscResponse_OscArgument_OscColor getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorOscResponse_OscArgument_OscColor>(create);
+  static MonitorOscResponse_OscArgument_OscColor? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get red => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set red($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRed() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRed() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get green => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set green($core.int v) { $_setUnsignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGreen() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGreen() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get blue => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set blue($core.int v) { $_setUnsignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBlue() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBlue() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get alpha => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set alpha($core.int v) { $_setUnsignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAlpha() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAlpha() => clearField(4);
+}
+
+enum MonitorOscResponse_OscArgument_Argument {
+  int_1, 
+  float, 
+  long, 
+  double_4, 
+  bool_5, 
+  color, 
+  notSet
+}
+
+class MonitorOscResponse_OscArgument extends $pb.GeneratedMessage {
+  static const $core.Map<$core.int, MonitorOscResponse_OscArgument_Argument> _MonitorOscResponse_OscArgument_ArgumentByTag = {
+    1 : MonitorOscResponse_OscArgument_Argument.int_1,
+    2 : MonitorOscResponse_OscArgument_Argument.float,
+    3 : MonitorOscResponse_OscArgument_Argument.long,
+    4 : MonitorOscResponse_OscArgument_Argument.double_4,
+    5 : MonitorOscResponse_OscArgument_Argument.bool_5,
+    6 : MonitorOscResponse_OscArgument_Argument.color,
+    0 : MonitorOscResponse_OscArgument_Argument.notSet
+  };
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscResponse.OscArgument', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..oo(0, [1, 2, 3, 4, 5, 6])
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'int', $pb.PbFieldType.O3)
+    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'float', $pb.PbFieldType.OF)
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'long')
+    ..a<$core.double>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'double', $pb.PbFieldType.OD)
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bool')
+    ..aOM<MonitorOscResponse_OscArgument_OscColor>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: MonitorOscResponse_OscArgument_OscColor.create)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorOscResponse_OscArgument._() : super();
+  factory MonitorOscResponse_OscArgument({
+    $core.int? int_1,
+    $core.double? float,
+    $fixnum.Int64? long,
+    $core.double? double_4,
+    $core.bool? bool_5,
+    MonitorOscResponse_OscArgument_OscColor? color,
+  }) {
+    final _result = create();
+    if (int_1 != null) {
+      _result.int_1 = int_1;
+    }
+    if (float != null) {
+      _result.float = float;
+    }
+    if (long != null) {
+      _result.long = long;
+    }
+    if (double_4 != null) {
+      _result.double_4 = double_4;
+    }
+    if (bool_5 != null) {
+      _result.bool_5 = bool_5;
+    }
+    if (color != null) {
+      _result.color = color;
+    }
+    return _result;
+  }
+  factory MonitorOscResponse_OscArgument.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorOscResponse_OscArgument.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorOscResponse_OscArgument clone() => MonitorOscResponse_OscArgument()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorOscResponse_OscArgument copyWith(void Function(MonitorOscResponse_OscArgument) updates) => super.copyWith((message) => updates(message as MonitorOscResponse_OscArgument)) as MonitorOscResponse_OscArgument; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscResponse_OscArgument create() => MonitorOscResponse_OscArgument._();
+  MonitorOscResponse_OscArgument createEmptyInstance() => create();
+  static $pb.PbList<MonitorOscResponse_OscArgument> createRepeated() => $pb.PbList<MonitorOscResponse_OscArgument>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscResponse_OscArgument getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorOscResponse_OscArgument>(create);
+  static MonitorOscResponse_OscArgument? _defaultInstance;
+
+  MonitorOscResponse_OscArgument_Argument whichArgument() => _MonitorOscResponse_OscArgument_ArgumentByTag[$_whichOneof(0)]!;
+  void clearArgument() => clearField($_whichOneof(0));
+
+  @$pb.TagNumber(1)
+  $core.int get int_1 => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set int_1($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasInt_1() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInt_1() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get float => $_getN(1);
+  @$pb.TagNumber(2)
+  set float($core.double v) { $_setFloat(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFloat() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFloat() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get long => $_getI64(2);
+  @$pb.TagNumber(3)
+  set long($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLong() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLong() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.double get double_4 => $_getN(3);
+  @$pb.TagNumber(4)
+  set double_4($core.double v) { $_setDouble(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDouble_4() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDouble_4() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get bool_5 => $_getBF(4);
+  @$pb.TagNumber(5)
+  set bool_5($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasBool_5() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearBool_5() => clearField(5);
+
+  @$pb.TagNumber(6)
+  MonitorOscResponse_OscArgument_OscColor get color => $_getN(5);
+  @$pb.TagNumber(6)
+  set color(MonitorOscResponse_OscArgument_OscColor v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasColor() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearColor() => clearField(6);
+  @$pb.TagNumber(6)
+  MonitorOscResponse_OscArgument_OscColor ensureColor() => $_ensure(5);
+}
+
+class MonitorOscResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorOscResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..pc<MonitorOscResponse_OscArgument>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'args', $pb.PbFieldType.PM, subBuilder: MonitorOscResponse_OscArgument.create)
+    ..hasRequiredFields = false
+  ;
+
+  MonitorOscResponse._() : super();
+  factory MonitorOscResponse({
+    $fixnum.Int64? timestamp,
+    $core.String? path,
+    $core.Iterable<MonitorOscResponse_OscArgument>? args,
+  }) {
+    final _result = create();
+    if (timestamp != null) {
+      _result.timestamp = timestamp;
+    }
+    if (path != null) {
+      _result.path = path;
+    }
+    if (args != null) {
+      _result.args.addAll(args);
+    }
+    return _result;
+  }
+  factory MonitorOscResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MonitorOscResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MonitorOscResponse clone() => MonitorOscResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MonitorOscResponse copyWith(void Function(MonitorOscResponse) updates) => super.copyWith((message) => updates(message as MonitorOscResponse)) as MonitorOscResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscResponse create() => MonitorOscResponse._();
+  MonitorOscResponse createEmptyInstance() => create();
+  static $pb.PbList<MonitorOscResponse> createRepeated() => $pb.PbList<MonitorOscResponse>();
+  @$core.pragma('dart2js:noInline')
+  static MonitorOscResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MonitorOscResponse>(create);
+  static MonitorOscResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get timestamp => $_getI64(0);
+  @$pb.TagNumber(1)
+  set timestamp($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTimestamp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTimestamp() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get path => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set path($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPath() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPath() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<MonitorOscResponse_OscArgument> get args => $_getList(2);
 }
 
 class GetConnectionsRequest extends $pb.GeneratedMessage {
@@ -1642,19 +1989,24 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
 
 class OscConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputPort', $pb.PbFieldType.OU3)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputPort', $pb.PbFieldType.OU3)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputAddress')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId', protoName: 'connectionId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputPort', $pb.PbFieldType.OU3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputPort', $pb.PbFieldType.OU3)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputAddress')
     ..hasRequiredFields = false
   ;
 
   OscConnection._() : super();
   factory OscConnection({
+    $core.String? connectionId,
     $core.int? inputPort,
     $core.int? outputPort,
     $core.String? outputAddress,
   }) {
     final _result = create();
+    if (connectionId != null) {
+      _result.connectionId = connectionId;
+    }
     if (inputPort != null) {
       _result.inputPort = inputPort;
     }
@@ -1688,31 +2040,40 @@ class OscConnection extends $pb.GeneratedMessage {
   static OscConnection? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get inputPort => $_getIZ(0);
+  $core.String get connectionId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set inputPort($core.int v) { $_setUnsignedInt32(0, v); }
+  set connectionId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasInputPort() => $_has(0);
+  $core.bool hasConnectionId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearInputPort() => clearField(1);
+  void clearConnectionId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get outputPort => $_getIZ(1);
+  $core.int get inputPort => $_getIZ(1);
   @$pb.TagNumber(2)
-  set outputPort($core.int v) { $_setUnsignedInt32(1, v); }
+  set inputPort($core.int v) { $_setUnsignedInt32(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasOutputPort() => $_has(1);
+  $core.bool hasInputPort() => $_has(1);
   @$pb.TagNumber(2)
-  void clearOutputPort() => clearField(2);
+  void clearInputPort() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get outputAddress => $_getSZ(2);
+  $core.int get outputPort => $_getIZ(2);
   @$pb.TagNumber(3)
-  set outputAddress($core.String v) { $_setString(2, v); }
+  set outputPort($core.int v) { $_setUnsignedInt32(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasOutputAddress() => $_has(2);
+  $core.bool hasOutputPort() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOutputAddress() => clearField(3);
+  void clearOutputPort() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get outputAddress => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set outputAddress($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasOutputAddress() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearOutputAddress() => clearField(4);
 }
 
 class ProDjLinkConnection extends $pb.GeneratedMessage {
@@ -2064,6 +2425,7 @@ class MqttConnection extends $pb.GeneratedMessage {
 enum ConfigureConnectionRequest_Config {
   dmx, 
   mqtt, 
+  osc, 
   notSet
 }
 
@@ -2071,12 +2433,14 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   static const $core.Map<$core.int, ConfigureConnectionRequest_Config> _ConfigureConnectionRequest_ConfigByTag = {
     1 : ConfigureConnectionRequest_Config.dmx,
     2 : ConfigureConnectionRequest_Config.mqtt,
+    3 : ConfigureConnectionRequest_Config.osc,
     0 : ConfigureConnectionRequest_Config.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ConfigureConnectionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [1, 2])
+    ..oo(0, [1, 2, 3])
     ..aOM<DmxConnection>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
     ..aOM<MqttConnection>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
+    ..aOM<OscConnection>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
     ..hasRequiredFields = false
   ;
 
@@ -2084,6 +2448,7 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   factory ConfigureConnectionRequest({
     DmxConnection? dmx,
     MqttConnection? mqtt,
+    OscConnection? osc,
   }) {
     final _result = create();
     if (dmx != null) {
@@ -2091,6 +2456,9 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
     }
     if (mqtt != null) {
       _result.mqtt = mqtt;
+    }
+    if (osc != null) {
+      _result.osc = osc;
     }
     return _result;
   }
@@ -2139,5 +2507,16 @@ class ConfigureConnectionRequest extends $pb.GeneratedMessage {
   void clearMqtt() => clearField(2);
   @$pb.TagNumber(2)
   MqttConnection ensureMqtt() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  OscConnection get osc => $_getN(2);
+  @$pb.TagNumber(3)
+  set osc(OscConnection v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasOsc() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearOsc() => clearField(3);
+  @$pb.TagNumber(3)
+  OscConnection ensureOsc() => $_ensure(2);
 }
 

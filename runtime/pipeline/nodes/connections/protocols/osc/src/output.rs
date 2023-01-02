@@ -8,21 +8,10 @@ use crate::argument_type::OscArgumentType;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OscOutputNode {
-    #[serde(default = "default_host")]
-    pub host: String,
-    #[serde(default = "default_port")]
-    pub port: u16,
+    pub connection: String,
     pub path: String,
     #[serde(default = "default_argument_type")]
     pub argument_type: OscArgumentType,
-}
-
-fn default_host() -> String {
-    "255.255.255.255".into()
-}
-
-fn default_port() -> u16 {
-    6000
 }
 
 fn default_argument_type() -> OscArgumentType {
@@ -32,8 +21,7 @@ fn default_argument_type() -> OscArgumentType {
 impl Default for OscOutputNode {
     fn default() -> Self {
         Self {
-            host: default_host(),
-            port: default_port(),
+            connection: Default::default(),
             argument_type: default_argument_type(),
             path: "".into(),
         }
@@ -43,7 +31,7 @@ impl Default for OscOutputNode {
 impl PipelineNode for OscOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OscOutputNode".into(),
+            name: stringify!(OscOutputNode).into(),
             preview_type: PreviewType::History,
         }
     }
@@ -65,9 +53,20 @@ impl PipelineNode for OscOutputNode {
 }
 
 impl ProcessingNode for OscOutputNode {
-    type State = OscOutput;
+    type State = ();
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
+        let connection_manager = context.inject::<OscConnectionManager>();
+        if connection_manager.is_none() {
+            anyhow::bail!("Missing osc module");
+        }
+        let connection_manager = connection_manager.unwrap();
+        let output = connection_manager.get_output(&self.connection);
+        if output.is_none() {
+            return Ok(());
+        }
+        let output = output.unwrap();
+
         if self.argument_type.is_numeric() {
             if let Some(value) = context.read_port::<_, f64>(self.argument_type.get_port_id()) {
                 context.push_history_value(value);
@@ -79,10 +78,10 @@ impl ProcessingNode for OscOutputNode {
                     OscArgumentType::Bool => OscType::Bool((value - 1.).abs() < f64::EPSILON),
                     _ => unreachable!(),
                 };
-                state.send(OscPacket::Message(OscMessage {
+                output.write(OscMessage {
                     addr: self.path.clone(),
                     args: vec![arg],
-                }))?;
+                })?;
             }
         }
         if self.argument_type.is_color() {
@@ -93,23 +92,22 @@ impl ProcessingNode for OscOutputNode {
                     blue: color.blue.to_8bit(),
                     alpha: color.alpha as u8,
                 };
-                state.send(OscPacket::Message(OscMessage {
+                output.write(OscMessage {
                     addr: self.path.clone(),
                     args: vec![OscType::Color(color)],
-                }))?;
+                })?;
             }
         }
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
-        OscOutput::new(&self.host, self.port).unwrap()
+        Default::default()
     }
 
     fn update(&mut self, config: &Self) {
         self.path = config.path.clone();
-        self.host = config.host.clone();
-        self.port = config.port;
+        self.connection = config.connection.clone();
         self.argument_type = config.argument_type;
     }
 }

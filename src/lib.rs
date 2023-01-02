@@ -19,6 +19,8 @@ use mizer_project_files::{history::ProjectHistory, Project, ProjectManager, Proj
 use mizer_protocol_dmx::*;
 use mizer_protocol_midi::{MidiConnectionManager, MidiModule};
 use mizer_protocol_mqtt::{MqttConnectionManager, MqttModule};
+use mizer_protocol_osc::module::OscModule;
+use mizer_protocol_osc::OscConnectionManager;
 use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
@@ -53,6 +55,7 @@ pub fn build_runtime(
     register_device_module(&mut runtime, &handle).context("Failed to register devices module")?;
     register_dmx_module(&mut runtime).context("failed to register dmx module")?;
     register_mqtt_module(&mut runtime).context("failed to register mqtt module")?;
+    register_osc_module(&mut runtime).context("failed to register osc module")?;
     register_midi_module(&mut runtime, &settings.read().settings)
         .context("Failed to register midi module")?;
     let (fixture_manager, fixture_library) =
@@ -144,6 +147,8 @@ impl Mizer {
         dmx_manager.new();
         let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
         mqtt_manager.new();
+        let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
+        osc_manager.new();
         self.runtime.new();
         self.send_session_update();
     }
@@ -179,6 +184,10 @@ impl Mizer {
                 mqtt_manager
                     .load(&project)
                     .context("loading mqtt connections")?;
+                let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
+                osc_manager
+                    .load(&project)
+                    .context("loading osc connections")?;
             }
             import_media_files(&media_paths, &self.media_server_api)
                 .context("loading media files")?;
@@ -219,6 +228,8 @@ impl Mizer {
             dmx_manager.save(&mut project);
             let mqtt_manager = injector.get::<MqttConnectionManager>().unwrap();
             mqtt_manager.save(&mut project);
+            let osc_manager = injector.get::<OscConnectionManager>().unwrap();
+            osc_manager.save(&mut project);
             let sequencer = injector.get::<Sequencer>().unwrap();
             sequencer.save(&mut project);
             let effects_engine = injector.get::<EffectEngine>().unwrap();
@@ -239,6 +250,8 @@ impl Mizer {
         dmx_manager.clear();
         let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
         mqtt_manager.clear();
+        let osc_manager = injector.get_mut::<OscConnectionManager>().unwrap();
+        osc_manager.clear();
         let sequencer = injector.get::<Sequencer>().unwrap();
         sequencer.clear();
         self.project_path = None;
@@ -307,6 +320,10 @@ fn register_dmx_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
 
 fn register_mqtt_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     MqttModule.register(runtime)
+}
+
+fn register_osc_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
+    OscModule.register(runtime)
 }
 
 fn register_midi_module(runtime: &mut DefaultRuntime, settings: &Settings) -> anyhow::Result<()> {

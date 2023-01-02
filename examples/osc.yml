@@ -10,7 +10,7 @@ nodes:
   - type: osc-input
     path: /osc-input-0
     config:
-      port: 9000
+      connection: osc-0
       path: /hue
       argument_type: float
     designer:
@@ -21,7 +21,7 @@ nodes:
   - type: osc-input
     path: /osc-input-1
     config:
-      port: 9000
+      connection: osc-0
       path: /saturation
       argument_type: float
     designer:
@@ -32,7 +32,7 @@ nodes:
   - type: osc-input
     path: /osc-input-2
     config:
-      port: 9000
+      connection: osc-0
       path: /value
       argument_type: float
     designer:
@@ -43,8 +43,7 @@ nodes:
   - type: osc-output
     path: /osc-output-0
     config:
-      host: 127.0.0.1
-      port: 9001
+      connection: osc-0
       path: /number
       argument_type: float
     designer:
@@ -55,8 +54,7 @@ nodes:
   - type: osc-output
     path: /osc-output-1
     config:
-      host: 127.0.0.1
-      port: 9001
+      connection: osc-0
       path: /color
       argument_type: color
     designer:
@@ -79,3 +77,11 @@ channels:
   - number@/osc-input-1 -> Saturation@/color-hsv-0
   - number@/osc-input-2 -> Value@/color-hsv-0
   - Color@/color-hsv-0 -> color@/osc-output-1
+connections:
+  - id: osc-0
+    name: ""
+    type: osc
+    protocol: udp
+    output_host: 127.0.0.1
+    output_port: 9001
+    input_port: 9000

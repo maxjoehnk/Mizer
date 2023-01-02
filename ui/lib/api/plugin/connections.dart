@@ -5,6 +5,7 @@ import 'package:mizer/protos/connections.pb.dart';
 class ConnectionsPluginApi implements ConnectionsApi {
   final MethodChannel channel = const MethodChannel("mizer.live/connections");
   final EventChannel midiMonitorChannel = const EventChannel("mizer.live/connections/midi");
+  final EventChannel oscMonitorChannel = const EventChannel("mizer.live/connections/osc");
 
   @override
   Future<Connections> getConnections() async {
@@ -40,6 +41,11 @@ class ConnectionsPluginApi implements ConnectionsApi {
   }
 
   @override
+  Future<void> addOsc(OscConnection request) async {
+    await channel.invokeMethod("addOsc", request.writeToBuffer());
+  }
+
+  @override
   Future<MidiDeviceProfiles> getMidiDeviceProfiles() async {
     var response = await channel.invokeMethod("getMidiDeviceProfiles");
 
@@ -50,6 +56,12 @@ class ConnectionsPluginApi implements ConnectionsApi {
   Stream<MonitorMidiResponse> monitorMidiConnection(String connectionId) {
     return midiMonitorChannel.receiveBroadcastStream(connectionId)
         .map((buffer) => MonitorMidiResponse.fromBuffer(_convertBuffer(buffer)));
+  }
+
+  @override
+  Stream<MonitorOscResponse> monitorOscConnection(String connectionId) {
+    return oscMonitorChannel.receiveBroadcastStream(connectionId)
+        .map((buffer) => MonitorOscResponse.fromBuffer(_convertBuffer(buffer)));
   }
 
   @override

@@ -7,21 +7,10 @@ use mizer_util::ConvertPercentages;
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 pub struct OscInputNode {
-    #[serde(default = "default_host")]
-    pub host: String,
-    #[serde(default = "default_port")]
-    pub port: u16,
+    pub connection: String,
     pub path: String,
     #[serde(default = "default_argument_type")]
     pub argument_type: OscArgumentType,
-}
-
-fn default_host() -> String {
-    "0.0.0.0".into()
-}
-
-fn default_port() -> u16 {
-    6000
 }
 
 fn default_argument_type() -> OscArgumentType {
@@ -31,8 +20,7 @@ fn default_argument_type() -> OscArgumentType {
 impl Default for OscInputNode {
     fn default() -> Self {
         Self {
-            host: default_host(),
-            port: default_port(),
+            connection: Default::default(),
             argument_type: default_argument_type(),
             path: "".into(),
         }
@@ -42,7 +30,7 @@ impl Default for OscInputNode {
 impl PipelineNode for OscInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OscInputNode".into(),
+            name: stringify!(OscInputNode).into(),
             preview_type: PreviewType::History,
         }
     }
@@ -64,60 +52,58 @@ impl PipelineNode for OscInputNode {
 }
 
 impl ProcessingNode for OscInputNode {
-    type State = OscInput;
+    type State = Option<OscSubscription>;
 
     fn process(&self, context: &impl NodeContext, state: &mut Self::State) -> anyhow::Result<()> {
-        while let Some(packet) = state.try_recv() {
-            self.handle_packet(packet, context);
+        let connection_manager = self.get_connection_manager(context);
+        if state.is_none() {
+            *state = connection_manager.subscribe(&self.connection)?;
+        }
+        if let Some(msg) = state
+            .as_ref()
+            .and_then(|subscription| subscription.next_event(&self.path))
+        {
+            self.handle_msg(msg, context);
         }
         Ok(())
     }
 
     fn create_state(&self) -> Self::State {
-        OscInput::new(&self.host, self.port).unwrap()
+        Default::default()
     }
 
     fn update(&mut self, config: &Self) {
         self.path = config.path.clone();
-        self.host = config.host.clone();
-        self.port = config.port;
+        self.connection = config.connection.clone();
         self.argument_type = config.argument_type;
     }
 }
 
 impl OscInputNode {
-    fn handle_packet(&self, packet: OscPacket, context: &impl NodeContext) {
-        match packet {
-            OscPacket::Message(msg) => {
-                self.handle_msg(msg, context);
-            }
-            OscPacket::Bundle(bundle) => {
-                for packet in bundle.content {
-                    self.handle_packet(packet, context);
-                }
-            }
-        }
+    fn get_connection_manager<'a>(
+        &self,
+        context: &'a impl NodeContext,
+    ) -> &'a OscConnectionManager {
+        let connection_manager = context.inject::<OscConnectionManager>();
+
+        connection_manager.expect("Missing osc module")
     }
 
     fn handle_msg(&self, msg: OscMessage, context: &impl NodeContext) {
         log::trace!("{:?}", msg);
-        if msg.addr == self.path {
-            if self.argument_type.is_numeric() {
-                match &msg.args[0] {
-                    OscType::Float(float) => self.write_number(context, *float as f64),
-                    OscType::Double(double) => self.write_number(context, *double),
-                    OscType::Int(int) => self.write_number(context, *int as f64),
-                    OscType::Long(value) => self.write_number(context, *value as f64),
-                    OscType::Bool(value) => {
-                        self.write_number(context, if *value { 1. } else { 0. })
-                    }
-                    _ => {}
-                }
+        if self.argument_type.is_numeric() {
+            match &msg.args[0] {
+                OscType::Float(float) => self.write_number(context, *float as f64),
+                OscType::Double(double) => self.write_number(context, *double),
+                OscType::Int(int) => self.write_number(context, *int as f64),
+                OscType::Long(value) => self.write_number(context, *value as f64),
+                OscType::Bool(value) => self.write_number(context, if *value { 1. } else { 0. }),
+                _ => {}
             }
-            if self.argument_type.is_color() {
-                if let OscType::Color(color) = &msg.args[0] {
-                    self.write_color(context, color);
-                }
+        }
+        if self.argument_type.is_color() {
+            if let OscType::Color(color) = &msg.args[0] {
+                self.write_color(context, color);
             }
         }
     }

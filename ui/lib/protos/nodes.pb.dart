@@ -3466,26 +3466,21 @@ class OpcOutputNodeConfig extends $pb.GeneratedMessage {
 
 class OscNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'host')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'port', $pb.PbFieldType.OU3)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
-    ..e<OscNodeConfig_ArgumentType>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'argumentType', $pb.PbFieldType.OE, protoName: 'argumentType', defaultOrMaker: OscNodeConfig_ArgumentType.Int, valueOf: OscNodeConfig_ArgumentType.valueOf, enumValues: OscNodeConfig_ArgumentType.values)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connection')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..e<OscNodeConfig_ArgumentType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'argumentType', $pb.PbFieldType.OE, protoName: 'argumentType', defaultOrMaker: OscNodeConfig_ArgumentType.Int, valueOf: OscNodeConfig_ArgumentType.valueOf, enumValues: OscNodeConfig_ArgumentType.values)
     ..hasRequiredFields = false
   ;
 
   OscNodeConfig._() : super();
   factory OscNodeConfig({
-    $core.String? host,
-    $core.int? port,
+    $core.String? connection,
     $core.String? path,
     OscNodeConfig_ArgumentType? argumentType,
   }) {
     final _result = create();
-    if (host != null) {
-      _result.host = host;
-    }
-    if (port != null) {
-      _result.port = port;
+    if (connection != null) {
+      _result.connection = connection;
     }
     if (path != null) {
       _result.path = path;
@@ -3517,40 +3512,31 @@ class OscNodeConfig extends $pb.GeneratedMessage {
   static OscNodeConfig? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get host => $_getSZ(0);
+  $core.String get connection => $_getSZ(0);
   @$pb.TagNumber(1)
-  set host($core.String v) { $_setString(0, v); }
+  set connection($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasHost() => $_has(0);
+  $core.bool hasConnection() => $_has(0);
   @$pb.TagNumber(1)
-  void clearHost() => clearField(1);
+  void clearConnection() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get port => $_getIZ(1);
+  $core.String get path => $_getSZ(1);
   @$pb.TagNumber(2)
-  set port($core.int v) { $_setUnsignedInt32(1, v); }
+  set path($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPort() => $_has(1);
+  $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPort() => clearField(2);
+  void clearPath() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get path => $_getSZ(2);
+  OscNodeConfig_ArgumentType get argumentType => $_getN(2);
   @$pb.TagNumber(3)
-  set path($core.String v) { $_setString(2, v); }
+  set argumentType(OscNodeConfig_ArgumentType v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasPath() => $_has(2);
+  $core.bool hasArgumentType() => $_has(2);
   @$pb.TagNumber(3)
-  void clearPath() => clearField(3);
-
-  @$pb.TagNumber(4)
-  OscNodeConfig_ArgumentType get argumentType => $_getN(3);
-  @$pb.TagNumber(4)
-  set argumentType(OscNodeConfig_ArgumentType v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasArgumentType() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearArgumentType() => clearField(4);
+  void clearArgumentType() => clearField(3);
 }
 
 class VideoColorBalanceNodeConfig extends $pb.GeneratedMessage {

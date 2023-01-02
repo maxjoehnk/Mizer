@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use mizer_clock::Clock;
 use mizer_command_executor::CommandHistory;
 use mizer_connections::{
-    midi_device_profile::DeviceProfile, Connection, DmxConfig, DmxView, MidiView, MqttView,
+    midi_device_profile::DeviceProfile, Connection, DmxConfig, DmxView, MidiView, MqttView, OscView,
 };
 use mizer_devices::DeviceManager;
 use mizer_fixtures::library::FixtureLibrary;
@@ -13,6 +13,7 @@ use mizer_module::Runtime;
 use mizer_protocol_dmx::{DmxConnectionManager, DmxOutput};
 use mizer_protocol_midi::{MidiConnectionManager, MidiEvent};
 use mizer_protocol_mqtt::MqttConnectionManager;
+use mizer_protocol_osc::{OscConnectionManager, OscMessage};
 
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
 use crate::{ApiCommand, Mizer};
@@ -112,6 +113,12 @@ impl ApiHandler {
                     .send(result)
                     .expect("api command sender disconnected");
             }
+            ApiCommand::GetOscMonitor(id, sender) => {
+                let result = self.monitor_osc(mizer, id);
+                sender
+                    .send(result)
+                    .expect("api command sender disconnected");
+            }
             ApiCommand::ObserveSession(sender) => {
                 sender
                     .send(mizer.session_events.subscribe())
@@ -189,6 +196,27 @@ impl ApiHandler {
                 password: connection.address.password.clone(),
             })
             .map(Connection::from);
+        let osc_manager = mizer
+            .runtime
+            .injector()
+            .get::<OscConnectionManager>()
+            .unwrap();
+        let osc_connections = osc_manager
+            .list_connections()
+            .into_iter()
+            .map(|(id, connection)| OscView {
+                connection_id: id.clone(),
+                name: format!(
+                    "{}://{}:{}",
+                    connection.address.protocol,
+                    connection.address.output_host,
+                    connection.address.output_port
+                ),
+                output_host: connection.address.output_host.to_string(),
+                output_port: connection.address.output_port,
+                input_port: connection.address.input_port,
+            })
+            .map(Connection::from);
         let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
         let devices = device_manager
             .current_devices()
@@ -199,6 +227,7 @@ impl ApiHandler {
         connections.extend(midi_connections);
         connections.extend(dmx_connections);
         connections.extend(mqtt_connections);
+        connections.extend(osc_connections);
         connections.extend(devices);
 
         connections
@@ -244,6 +273,20 @@ impl ApiHandler {
             .request_device(&name)?
             .ok_or_else(|| anyhow::anyhow!("Unknown Midi Device"))?;
         let subscriber = device.events();
+
+        Ok(subscriber)
+    }
+
+    fn monitor_osc(&self, mizer: &mut Mizer, id: String) -> anyhow::Result<Subscriber<OscMessage>> {
+        let osc_manager = mizer
+            .runtime
+            .injector()
+            .get::<OscConnectionManager>()
+            .unwrap();
+        let subscription = osc_manager
+            .subscribe(&id)?
+            .ok_or_else(|| anyhow::anyhow!("Unknown Osc Connection"))?;
+        let subscriber = subscription.events();
 
         Ok(subscriber)
     }

@@ -1387,6 +1387,890 @@ pub mod monitor_midi_response {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.MonitorOscRequest)
+pub struct MonitorOscRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.MonitorOscRequest.name)
+    pub name: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.MonitorOscRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorOscRequest {
+    fn default() -> &'a MonitorOscRequest {
+        <MonitorOscRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorOscRequest {
+    pub fn new() -> MonitorOscRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "name",
+            |m: &MonitorOscRequest| { &m.name },
+            |m: &mut MonitorOscRequest| { &mut m.name },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MonitorOscRequest>(
+            "MonitorOscRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for MonitorOscRequest {
+    const NAME: &'static str = "MonitorOscRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.name = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.name.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.name);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.name.is_empty() {
+            os.write_string(1, &self.name)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> MonitorOscRequest {
+        MonitorOscRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.name.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static MonitorOscRequest {
+        static instance: MonitorOscRequest = MonitorOscRequest {
+            name: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for MonitorOscRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("MonitorOscRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for MonitorOscRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorOscRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.MonitorOscResponse)
+pub struct MonitorOscResponse {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.MonitorOscResponse.timestamp)
+    pub timestamp: u64,
+    // @@protoc_insertion_point(field:mizer.MonitorOscResponse.path)
+    pub path: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.MonitorOscResponse.args)
+    pub args: ::std::vec::Vec<monitor_osc_response::OscArgument>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.MonitorOscResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a MonitorOscResponse {
+    fn default() -> &'a MonitorOscResponse {
+        <MonitorOscResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl MonitorOscResponse {
+    pub fn new() -> MonitorOscResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "timestamp",
+            |m: &MonitorOscResponse| { &m.timestamp },
+            |m: &mut MonitorOscResponse| { &mut m.timestamp },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "path",
+            |m: &MonitorOscResponse| { &m.path },
+            |m: &mut MonitorOscResponse| { &mut m.path },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "args",
+            |m: &MonitorOscResponse| { &m.args },
+            |m: &mut MonitorOscResponse| { &mut m.args },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MonitorOscResponse>(
+            "MonitorOscResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for MonitorOscResponse {
+    const NAME: &'static str = "MonitorOscResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.timestamp = is.read_uint64()?;
+                },
+                18 => {
+                    self.path = is.read_string()?;
+                },
+                26 => {
+                    self.args.push(is.read_message()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.timestamp != 0 {
+            my_size += ::protobuf::rt::uint64_size(1, self.timestamp);
+        }
+        if !self.path.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.path);
+        }
+        for value in &self.args {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.timestamp != 0 {
+            os.write_uint64(1, self.timestamp)?;
+        }
+        if !self.path.is_empty() {
+            os.write_string(2, &self.path)?;
+        }
+        for v in &self.args {
+            ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
+        };
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> MonitorOscResponse {
+        MonitorOscResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.timestamp = 0;
+        self.path.clear();
+        self.args.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static MonitorOscResponse {
+        static instance: MonitorOscResponse = MonitorOscResponse {
+            timestamp: 0,
+            path: ::std::string::String::new(),
+            args: ::std::vec::Vec::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for MonitorOscResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("MonitorOscResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for MonitorOscResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for MonitorOscResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+/// Nested message and enums of message `MonitorOscResponse`
+pub mod monitor_osc_response {
+    #[derive(PartialEq,Clone,Default,Debug)]
+    // @@protoc_insertion_point(message:mizer.MonitorOscResponse.OscArgument)
+    pub struct OscArgument {
+        // message oneof groups
+        pub argument: ::std::option::Option<osc_argument::Argument>,
+        // special fields
+        // @@protoc_insertion_point(special_field:mizer.MonitorOscResponse.OscArgument.special_fields)
+        pub special_fields: ::protobuf::SpecialFields,
+    }
+
+    impl<'a> ::std::default::Default for &'a OscArgument {
+        fn default() -> &'a OscArgument {
+            <OscArgument as ::protobuf::Message>::default_instance()
+        }
+    }
+
+    impl OscArgument {
+        pub fn new() -> OscArgument {
+            ::std::default::Default::default()
+        }
+
+        // int32 int = 1;
+
+        pub fn int(&self) -> i32 {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Int(v)) => v,
+                _ => 0,
+            }
+        }
+
+        pub fn clear_int(&mut self) {
+            self.argument = ::std::option::Option::None;
+        }
+
+        pub fn has_int(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Int(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_int(&mut self, v: i32) {
+            self.argument = ::std::option::Option::Some(osc_argument::Argument::Int(v))
+        }
+
+        // float float = 2;
+
+        pub fn float(&self) -> f32 {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Float(v)) => v,
+                _ => 0.,
+            }
+        }
+
+        pub fn clear_float(&mut self) {
+            self.argument = ::std::option::Option::None;
+        }
+
+        pub fn has_float(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Float(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_float(&mut self, v: f32) {
+            self.argument = ::std::option::Option::Some(osc_argument::Argument::Float(v))
+        }
+
+        // int64 long = 3;
+
+        pub fn long(&self) -> i64 {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Long(v)) => v,
+                _ => 0,
+            }
+        }
+
+        pub fn clear_long(&mut self) {
+            self.argument = ::std::option::Option::None;
+        }
+
+        pub fn has_long(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Long(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_long(&mut self, v: i64) {
+            self.argument = ::std::option::Option::Some(osc_argument::Argument::Long(v))
+        }
+
+        // double double = 4;
+
+        pub fn double(&self) -> f64 {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Double(v)) => v,
+                _ => 0.,
+            }
+        }
+
+        pub fn clear_double(&mut self) {
+            self.argument = ::std::option::Option::None;
+        }
+
+        pub fn has_double(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Double(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_double(&mut self, v: f64) {
+            self.argument = ::std::option::Option::Some(osc_argument::Argument::Double(v))
+        }
+
+        // bool bool = 5;
+
+        pub fn bool(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Bool(v)) => v,
+                _ => false,
+            }
+        }
+
+        pub fn clear_bool(&mut self) {
+            self.argument = ::std::option::Option::None;
+        }
+
+        pub fn has_bool(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Bool(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_bool(&mut self, v: bool) {
+            self.argument = ::std::option::Option::Some(osc_argument::Argument::Bool(v))
+        }
+
+        // .mizer.MonitorOscResponse.OscArgument.OscColor color = 6;
+
+        pub fn color(&self) -> &osc_argument::OscColor {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Color(ref v)) => v,
+                _ => <osc_argument::OscColor as ::protobuf::Message>::default_instance(),
+            }
+        }
+
+        pub fn clear_color(&mut self) {
+            self.argument = ::std::option::Option::None;
+        }
+
+        pub fn has_color(&self) -> bool {
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Color(..)) => true,
+                _ => false,
+            }
+        }
+
+        // Param is passed by value, moved
+        pub fn set_color(&mut self, v: osc_argument::OscColor) {
+            self.argument = ::std::option::Option::Some(osc_argument::Argument::Color(v))
+        }
+
+        // Mutable pointer to the field.
+        pub fn mut_color(&mut self) -> &mut osc_argument::OscColor {
+            if let ::std::option::Option::Some(osc_argument::Argument::Color(_)) = self.argument {
+            } else {
+                self.argument = ::std::option::Option::Some(osc_argument::Argument::Color(osc_argument::OscColor::new()));
+            }
+            match self.argument {
+                ::std::option::Option::Some(osc_argument::Argument::Color(ref mut v)) => v,
+                _ => panic!(),
+            }
+        }
+
+        // Take field
+        pub fn take_color(&mut self) -> osc_argument::OscColor {
+            if self.has_color() {
+                match self.argument.take() {
+                    ::std::option::Option::Some(osc_argument::Argument::Color(v)) => v,
+                    _ => panic!(),
+                }
+            } else {
+                osc_argument::OscColor::new()
+            }
+        }
+
+        pub(in super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+            let mut fields = ::std::vec::Vec::with_capacity(6);
+            let mut oneofs = ::std::vec::Vec::with_capacity(1);
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+                "int",
+                OscArgument::has_int,
+                OscArgument::int,
+                OscArgument::set_int,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+                "float",
+                OscArgument::has_float,
+                OscArgument::float,
+                OscArgument::set_float,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+                "long",
+                OscArgument::has_long,
+                OscArgument::long,
+                OscArgument::set_long,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+                "double",
+                OscArgument::has_double,
+                OscArgument::double,
+                OscArgument::set_double,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_copy_has_get_set_simpler_accessors::<_, _>(
+                "bool",
+                OscArgument::has_bool,
+                OscArgument::bool,
+                OscArgument::set_bool,
+            ));
+            fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, osc_argument::OscColor>(
+                "color",
+                OscArgument::has_color,
+                OscArgument::color,
+                OscArgument::mut_color,
+                OscArgument::set_color,
+            ));
+            oneofs.push(osc_argument::Argument::generated_oneof_descriptor_data());
+            ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OscArgument>(
+                "MonitorOscResponse.OscArgument",
+                fields,
+                oneofs,
+            )
+        }
+    }
+
+    impl ::protobuf::Message for OscArgument {
+        const NAME: &'static str = "OscArgument";
+
+        fn is_initialized(&self) -> bool {
+            true
+        }
+
+        fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+            while let Some(tag) = is.read_raw_tag_or_eof()? {
+                match tag {
+                    8 => {
+                        self.argument = ::std::option::Option::Some(osc_argument::Argument::Int(is.read_int32()?));
+                    },
+                    21 => {
+                        self.argument = ::std::option::Option::Some(osc_argument::Argument::Float(is.read_float()?));
+                    },
+                    24 => {
+                        self.argument = ::std::option::Option::Some(osc_argument::Argument::Long(is.read_int64()?));
+                    },
+                    33 => {
+                        self.argument = ::std::option::Option::Some(osc_argument::Argument::Double(is.read_double()?));
+                    },
+                    40 => {
+                        self.argument = ::std::option::Option::Some(osc_argument::Argument::Bool(is.read_bool()?));
+                    },
+                    50 => {
+                        self.argument = ::std::option::Option::Some(osc_argument::Argument::Color(is.read_message()?));
+                    },
+                    tag => {
+                        ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                    },
+                };
+            }
+            ::std::result::Result::Ok(())
+        }
+
+        // Compute sizes of nested messages
+        #[allow(unused_variables)]
+        fn compute_size(&self) -> u64 {
+            let mut my_size = 0;
+            if let ::std::option::Option::Some(ref v) = self.argument {
+                match v {
+                    &osc_argument::Argument::Int(v) => {
+                        my_size += ::protobuf::rt::int32_size(1, v);
+                    },
+                    &osc_argument::Argument::Float(v) => {
+                        my_size += 1 + 4;
+                    },
+                    &osc_argument::Argument::Long(v) => {
+                        my_size += ::protobuf::rt::int64_size(3, v);
+                    },
+                    &osc_argument::Argument::Double(v) => {
+                        my_size += 1 + 8;
+                    },
+                    &osc_argument::Argument::Bool(v) => {
+                        my_size += 1 + 1;
+                    },
+                    &osc_argument::Argument::Color(ref v) => {
+                        let len = v.compute_size();
+                        my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                    },
+                };
+            }
+            my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+            self.special_fields.cached_size().set(my_size as u32);
+            my_size
+        }
+
+        fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+            if let ::std::option::Option::Some(ref v) = self.argument {
+                match v {
+                    &osc_argument::Argument::Int(v) => {
+                        os.write_int32(1, v)?;
+                    },
+                    &osc_argument::Argument::Float(v) => {
+                        os.write_float(2, v)?;
+                    },
+                    &osc_argument::Argument::Long(v) => {
+                        os.write_int64(3, v)?;
+                    },
+                    &osc_argument::Argument::Double(v) => {
+                        os.write_double(4, v)?;
+                    },
+                    &osc_argument::Argument::Bool(v) => {
+                        os.write_bool(5, v)?;
+                    },
+                    &osc_argument::Argument::Color(ref v) => {
+                        ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
+                    },
+                };
+            }
+            os.write_unknown_fields(self.special_fields.unknown_fields())?;
+            ::std::result::Result::Ok(())
+        }
+
+        fn special_fields(&self) -> &::protobuf::SpecialFields {
+            &self.special_fields
+        }
+
+        fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+            &mut self.special_fields
+        }
+
+        fn new() -> OscArgument {
+            OscArgument::new()
+        }
+
+        fn clear(&mut self) {
+            self.argument = ::std::option::Option::None;
+            self.argument = ::std::option::Option::None;
+            self.argument = ::std::option::Option::None;
+            self.argument = ::std::option::Option::None;
+            self.argument = ::std::option::Option::None;
+            self.argument = ::std::option::Option::None;
+            self.special_fields.clear();
+        }
+
+        fn default_instance() -> &'static OscArgument {
+            static instance: OscArgument = OscArgument {
+                argument: ::std::option::Option::None,
+                special_fields: ::protobuf::SpecialFields::new(),
+            };
+            &instance
+        }
+    }
+
+    impl ::protobuf::MessageFull for OscArgument {
+        fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+            static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+            descriptor.get(|| super::file_descriptor().message_by_package_relative_name("MonitorOscResponse.OscArgument").unwrap()).clone()
+        }
+    }
+
+    impl ::std::fmt::Display for OscArgument {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+            ::protobuf::text_format::fmt(self, f)
+        }
+    }
+
+    impl ::protobuf::reflect::ProtobufValue for OscArgument {
+        type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+    }
+
+    /// Nested message and enums of message `OscArgument`
+    pub mod osc_argument {
+
+        #[derive(Clone,PartialEq,Debug)]
+        #[non_exhaustive]
+        // @@protoc_insertion_point(oneof:mizer.MonitorOscResponse.OscArgument.argument)
+        pub enum Argument {
+            // @@protoc_insertion_point(oneof_field:mizer.MonitorOscResponse.OscArgument.int)
+            Int(i32),
+            // @@protoc_insertion_point(oneof_field:mizer.MonitorOscResponse.OscArgument.float)
+            Float(f32),
+            // @@protoc_insertion_point(oneof_field:mizer.MonitorOscResponse.OscArgument.long)
+            Long(i64),
+            // @@protoc_insertion_point(oneof_field:mizer.MonitorOscResponse.OscArgument.double)
+            Double(f64),
+            // @@protoc_insertion_point(oneof_field:mizer.MonitorOscResponse.OscArgument.bool)
+            Bool(bool),
+            // @@protoc_insertion_point(oneof_field:mizer.MonitorOscResponse.OscArgument.color)
+            Color(OscColor),
+        }
+
+        impl ::protobuf::Oneof for Argument {
+        }
+
+        impl ::protobuf::OneofFull for Argument {
+            fn descriptor() -> ::protobuf::reflect::OneofDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::OneofDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| <super::OscArgument as ::protobuf::MessageFull>::descriptor().oneof_by_name("argument").unwrap()).clone()
+            }
+        }
+
+        impl Argument {
+            pub(in super::super) fn generated_oneof_descriptor_data() -> ::protobuf::reflect::GeneratedOneofDescriptorData {
+                ::protobuf::reflect::GeneratedOneofDescriptorData::new::<Argument>("argument")
+            }
+        }
+        #[derive(PartialEq,Clone,Default,Debug)]
+        // @@protoc_insertion_point(message:mizer.MonitorOscResponse.OscArgument.OscColor)
+        pub struct OscColor {
+            // message fields
+            // @@protoc_insertion_point(field:mizer.MonitorOscResponse.OscArgument.OscColor.red)
+            pub red: u32,
+            // @@protoc_insertion_point(field:mizer.MonitorOscResponse.OscArgument.OscColor.green)
+            pub green: u32,
+            // @@protoc_insertion_point(field:mizer.MonitorOscResponse.OscArgument.OscColor.blue)
+            pub blue: u32,
+            // @@protoc_insertion_point(field:mizer.MonitorOscResponse.OscArgument.OscColor.alpha)
+            pub alpha: u32,
+            // special fields
+            // @@protoc_insertion_point(special_field:mizer.MonitorOscResponse.OscArgument.OscColor.special_fields)
+            pub special_fields: ::protobuf::SpecialFields,
+        }
+
+        impl<'a> ::std::default::Default for &'a OscColor {
+            fn default() -> &'a OscColor {
+                <OscColor as ::protobuf::Message>::default_instance()
+            }
+        }
+
+        impl OscColor {
+            pub fn new() -> OscColor {
+                ::std::default::Default::default()
+            }
+
+            pub(in super::super) fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+                let mut fields = ::std::vec::Vec::with_capacity(4);
+                let mut oneofs = ::std::vec::Vec::with_capacity(0);
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "red",
+                    |m: &OscColor| { &m.red },
+                    |m: &mut OscColor| { &mut m.red },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "green",
+                    |m: &OscColor| { &m.green },
+                    |m: &mut OscColor| { &mut m.green },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "blue",
+                    |m: &OscColor| { &m.blue },
+                    |m: &mut OscColor| { &mut m.blue },
+                ));
+                fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+                    "alpha",
+                    |m: &OscColor| { &m.alpha },
+                    |m: &mut OscColor| { &mut m.alpha },
+                ));
+                ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<OscColor>(
+                    "MonitorOscResponse.OscArgument.OscColor",
+                    fields,
+                    oneofs,
+                )
+            }
+        }
+
+        impl ::protobuf::Message for OscColor {
+            const NAME: &'static str = "OscColor";
+
+            fn is_initialized(&self) -> bool {
+                true
+            }
+
+            fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+                while let Some(tag) = is.read_raw_tag_or_eof()? {
+                    match tag {
+                        8 => {
+                            self.red = is.read_uint32()?;
+                        },
+                        16 => {
+                            self.green = is.read_uint32()?;
+                        },
+                        24 => {
+                            self.blue = is.read_uint32()?;
+                        },
+                        32 => {
+                            self.alpha = is.read_uint32()?;
+                        },
+                        tag => {
+                            ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                        },
+                    };
+                }
+                ::std::result::Result::Ok(())
+            }
+
+            // Compute sizes of nested messages
+            #[allow(unused_variables)]
+            fn compute_size(&self) -> u64 {
+                let mut my_size = 0;
+                if self.red != 0 {
+                    my_size += ::protobuf::rt::uint32_size(1, self.red);
+                }
+                if self.green != 0 {
+                    my_size += ::protobuf::rt::uint32_size(2, self.green);
+                }
+                if self.blue != 0 {
+                    my_size += ::protobuf::rt::uint32_size(3, self.blue);
+                }
+                if self.alpha != 0 {
+                    my_size += ::protobuf::rt::uint32_size(4, self.alpha);
+                }
+                my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+                self.special_fields.cached_size().set(my_size as u32);
+                my_size
+            }
+
+            fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+                if self.red != 0 {
+                    os.write_uint32(1, self.red)?;
+                }
+                if self.green != 0 {
+                    os.write_uint32(2, self.green)?;
+                }
+                if self.blue != 0 {
+                    os.write_uint32(3, self.blue)?;
+                }
+                if self.alpha != 0 {
+                    os.write_uint32(4, self.alpha)?;
+                }
+                os.write_unknown_fields(self.special_fields.unknown_fields())?;
+                ::std::result::Result::Ok(())
+            }
+
+            fn special_fields(&self) -> &::protobuf::SpecialFields {
+                &self.special_fields
+            }
+
+            fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+                &mut self.special_fields
+            }
+
+            fn new() -> OscColor {
+                OscColor::new()
+            }
+
+            fn clear(&mut self) {
+                self.red = 0;
+                self.green = 0;
+                self.blue = 0;
+                self.alpha = 0;
+                self.special_fields.clear();
+            }
+
+            fn default_instance() -> &'static OscColor {
+                static instance: OscColor = OscColor {
+                    red: 0,
+                    green: 0,
+                    blue: 0,
+                    alpha: 0,
+                    special_fields: ::protobuf::SpecialFields::new(),
+                };
+                &instance
+            }
+        }
+
+        impl ::protobuf::MessageFull for OscColor {
+            fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+                static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+                descriptor.get(|| super::super::file_descriptor().message_by_package_relative_name("MonitorOscResponse.OscArgument.OscColor").unwrap()).clone()
+            }
+        }
+
+        impl ::std::fmt::Display for OscColor {
+            fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+                ::protobuf::text_format::fmt(self, f)
+            }
+        }
+
+        impl ::protobuf::reflect::ProtobufValue for OscColor {
+            type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+        }
+    }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.GetConnectionsRequest)
 pub struct GetConnectionsRequest {
     // special fields
@@ -4421,6 +5305,8 @@ pub mod midi_device_profile {
 // @@protoc_insertion_point(message:mizer.OscConnection)
 pub struct OscConnection {
     // message fields
+    // @@protoc_insertion_point(field:mizer.OscConnection.connectionId)
+    pub connectionId: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.OscConnection.input_port)
     pub input_port: u32,
     // @@protoc_insertion_point(field:mizer.OscConnection.output_port)
@@ -4444,8 +5330,13 @@ impl OscConnection {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "connectionId",
+            |m: &OscConnection| { &m.connectionId },
+            |m: &mut OscConnection| { &mut m.connectionId },
+        ));
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "input_port",
             |m: &OscConnection| { &m.input_port },
@@ -4479,13 +5370,16 @@ impl ::protobuf::Message for OscConnection {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
-                8 => {
-                    self.input_port = is.read_uint32()?;
+                10 => {
+                    self.connectionId = is.read_string()?;
                 },
                 16 => {
+                    self.input_port = is.read_uint32()?;
+                },
+                24 => {
                     self.output_port = is.read_uint32()?;
                 },
-                26 => {
+                34 => {
                     self.output_address = is.read_string()?;
                 },
                 tag => {
@@ -4500,14 +5394,17 @@ impl ::protobuf::Message for OscConnection {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
+        if !self.connectionId.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.connectionId);
+        }
         if self.input_port != 0 {
-            my_size += ::protobuf::rt::uint32_size(1, self.input_port);
+            my_size += ::protobuf::rt::uint32_size(2, self.input_port);
         }
         if self.output_port != 0 {
-            my_size += ::protobuf::rt::uint32_size(2, self.output_port);
+            my_size += ::protobuf::rt::uint32_size(3, self.output_port);
         }
         if !self.output_address.is_empty() {
-            my_size += ::protobuf::rt::string_size(3, &self.output_address);
+            my_size += ::protobuf::rt::string_size(4, &self.output_address);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
@@ -4515,14 +5412,17 @@ impl ::protobuf::Message for OscConnection {
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.connectionId.is_empty() {
+            os.write_string(1, &self.connectionId)?;
+        }
         if self.input_port != 0 {
-            os.write_uint32(1, self.input_port)?;
+            os.write_uint32(2, self.input_port)?;
         }
         if self.output_port != 0 {
-            os.write_uint32(2, self.output_port)?;
+            os.write_uint32(3, self.output_port)?;
         }
         if !self.output_address.is_empty() {
-            os.write_string(3, &self.output_address)?;
+            os.write_string(4, &self.output_address)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4541,6 +5441,7 @@ impl ::protobuf::Message for OscConnection {
     }
 
     fn clear(&mut self) {
+        self.connectionId.clear();
         self.input_port = 0;
         self.output_port = 0;
         self.output_address.clear();
@@ -4549,6 +5450,7 @@ impl ::protobuf::Message for OscConnection {
 
     fn default_instance() -> &'static OscConnection {
         static instance: OscConnection = OscConnection {
+            connectionId: ::std::string::String::new(),
             input_port: 0,
             output_port: 0,
             output_address: ::std::string::String::new(),
@@ -5447,8 +6349,57 @@ impl ConfigureConnectionRequest {
         }
     }
 
+    // .mizer.OscConnection osc = 3;
+
+    pub fn osc(&self) -> &OscConnection {
+        match self.config {
+            ::std::option::Option::Some(configure_connection_request::Config::Osc(ref v)) => v,
+            _ => <OscConnection as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_osc(&mut self) {
+        self.config = ::std::option::Option::None;
+    }
+
+    pub fn has_osc(&self) -> bool {
+        match self.config {
+            ::std::option::Option::Some(configure_connection_request::Config::Osc(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_osc(&mut self, v: OscConnection) {
+        self.config = ::std::option::Option::Some(configure_connection_request::Config::Osc(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_osc(&mut self) -> &mut OscConnection {
+        if let ::std::option::Option::Some(configure_connection_request::Config::Osc(_)) = self.config {
+        } else {
+            self.config = ::std::option::Option::Some(configure_connection_request::Config::Osc(OscConnection::new()));
+        }
+        match self.config {
+            ::std::option::Option::Some(configure_connection_request::Config::Osc(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_osc(&mut self) -> OscConnection {
+        if self.has_osc() {
+            match self.config.take() {
+                ::std::option::Option::Some(configure_connection_request::Config::Osc(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            OscConnection::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, DmxConnection>(
             "dmx",
@@ -5463,6 +6414,13 @@ impl ConfigureConnectionRequest {
             ConfigureConnectionRequest::mqtt,
             ConfigureConnectionRequest::mut_mqtt,
             ConfigureConnectionRequest::set_mqtt,
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, OscConnection>(
+            "osc",
+            ConfigureConnectionRequest::has_osc,
+            ConfigureConnectionRequest::osc,
+            ConfigureConnectionRequest::mut_osc,
+            ConfigureConnectionRequest::set_osc,
         ));
         oneofs.push(configure_connection_request::Config::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ConfigureConnectionRequest>(
@@ -5489,6 +6447,9 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
                 18 => {
                     self.config = ::std::option::Option::Some(configure_connection_request::Config::Mqtt(is.read_message()?));
                 },
+                26 => {
+                    self.config = ::std::option::Option::Some(configure_connection_request::Config::Osc(is.read_message()?));
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -5511,6 +6472,10 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
                     let len = v.compute_size();
                     my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &configure_connection_request::Config::Osc(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -5526,6 +6491,9 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
                 },
                 &configure_connection_request::Config::Mqtt(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+                },
+                &configure_connection_request::Config::Osc(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(3, v, os)?;
                 },
             };
         }
@@ -5546,6 +6514,7 @@ impl ::protobuf::Message for ConfigureConnectionRequest {
     }
 
     fn clear(&mut self) {
+        self.config = ::std::option::Option::None;
         self.config = ::std::option::Option::None;
         self.config = ::std::option::Option::None;
         self.special_fields.clear();
@@ -5588,6 +6557,8 @@ pub mod configure_connection_request {
         Dmx(super::DmxConnection),
         // @@protoc_insertion_point(oneof_field:mizer.ConfigureConnectionRequest.mqtt)
         Mqtt(super::MqttConnection),
+        // @@protoc_insertion_point(oneof_field:mizer.ConfigureConnectionRequest.osc)
+        Osc(super::OscConnection),
     }
 
     impl ::protobuf::Oneof for Config {
@@ -5627,82 +6598,98 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x18\x01\x20\x01(\rR\rmanufacturer1\x12$\n\rmanufacturer2\x18\x02\x20\
     \x01(\rR\rmanufacturer2\x12$\n\rmanufacturer3\x18\x03\x20\x01(\rR\rmanuf\
     acturer3\x12\x14\n\x05model\x18\x04\x20\x01(\rR\x05model\x12\x12\n\x04da\
-    ta\x18\x05\x20\x01(\x0cR\x04dataB\t\n\x07message\"\x17\n\x15GetConnectio\
-    nsRequest\"\x1a\n\x18GetDeviceProfilesRequest\"J\n\x0cArtnetConfig\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x12\n\x04host\x18\x02\x20\
-    \x01(\tR\x04host\x12\x12\n\x04port\x18\x03\x20\x01(\rR\x04port\"\x20\n\n\
-    SacnConfig\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"B\n\x0bConnect\
-    ions\x123\n\x0bconnections\x18\x01\x20\x03(\x0b2\x11.mizer.ConnectionR\
-    \x0bconnections\"\xc0\x03\n\nConnection\x12\x12\n\x04name\x18\x01\x20\
-    \x01(\tR\x04name\x12(\n\x03dmx\x18\n\x20\x01(\x0b2\x14.mizer.DmxConnecti\
-    onH\0R\x03dmx\x12+\n\x04midi\x18\x0b\x20\x01(\x0b2\x15.mizer.MidiConnect\
-    ionH\0R\x04midi\x12(\n\x03osc\x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnect\
-    ionH\0R\x03osc\x12:\n\tproDJLink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLink\
-    ConnectionH\0R\tproDJLink\x121\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.miz\
-    er.HeliosConnectionH\0R\x06helios\x12=\n\netherDream\x18\x0f\x20\x01(\
-    \x0b2\x1b.mizer.EtherDreamConnectionH\0R\netherDream\x124\n\x07gamepad\
-    \x18\x10\x20\x01(\x0b2\x18.mizer.GamepadConnectionH\0R\x07gamepad\x12+\n\
-    \x04mqtt\x18\x11\x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqttB\x0c\
-    \n\nconnection\"\x8d\x01\n\rDmxConnection\x12\x1a\n\x08outputId\x18\x01\
-    \x20\x01(\tR\x08outputId\x12-\n\x06artnet\x18\x03\x20\x01(\x0b2\x13.mize\
-    r.ArtnetConfigH\0R\x06artnet\x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mi\
-    zer.SacnConfigH\0R\x04sacnB\x08\n\x06config\"B\n\x10HeliosConnection\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\
-    \x20\x01(\rR\x08firmware\"*\n\x14EtherDreamConnection\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\"7\n\x11GamepadConnection\x12\x0e\n\x02id\
-    \x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\
-    \"O\n\x0eMidiConnection\x12*\n\x0edevice_profile\x18\x01\x20\x01(\tH\0R\
-    \rdeviceProfile\x88\x01\x01B\x11\n\x0f_device_profile\"J\n\x12MidiDevice\
-    Profiles\x124\n\x08profiles\x18\x01\x20\x03(\x0b2\x18.mizer.MidiDevicePr\
-    ofileR\x08profiles\"\x8f\x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\
-    \x01\x20\x01(\tR\x02id\x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cma\
-    nufacturer\x12\x14\n\x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06\
-    layout\x18\x04\x20\x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\
-    \x05\x20\x03(\x0b2\x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\
-    \x01\n\x04Page\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06g\
-    roups\x18\x02\x20\x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\
-    \x12<\n\x08controls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.Co\
-    ntrolR\x08controls\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12<\n\x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDevicePr\
-    ofile.ControlR\x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\
-    \x01\x20\x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\
-    \x18\n\x07channel\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\
-    \x04\x20\x01(\rR\x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.m\
-    izer.MidiDeviceProfile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\
-    \x18\x06\x20\x01(\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04No\
-    te\x10\0\x12\x06\n\x02CC\x10\x01B\t\n\x07_layout\"v\n\rOscConnection\x12\
-    \x1d\n\ninput_port\x18\x01\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_po\
-    rt\x18\x02\x20\x01(\rR\noutputPort\x12%\n\x0eoutput_address\x18\x03\x20\
-    \x01(\tR\routputAddress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07\
-    address\x18\x01\x20\x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\
-    \x01(\tR\x05model\x12\"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerN\
-    umber\x12.\n\x08playback\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\
-    \x08playback\"\x9f\x02\n\x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\
-    \x01(\x08R\x04live\x12\x10\n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\
-    \n\x05frame\x18\x03\x20\x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\
-    \x01(\x0e2\x18.mizer.CdjPlayback.StateR\x08playback\x12.\n\x05track\x18\
-    \x05\x20\x01(\x0b2\x18.mizer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\
-    \x12\x16\n\x06artist\x18\x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\
-    \x18\x02\x20\x01(\tR\x05title\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\
-    \x12\x0b\n\x07Playing\x10\x01\x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cuein\
-    g\x10\x03\"\xa2\x01\n\x0eMqttConnection\x12\"\n\x0cconnectionId\x18\x01\
-    \x20\x01(\tR\x0cconnectionId\x12\x10\n\x03url\x18\x02\x20\x01(\tR\x03url\
-    \x12\x1f\n\x08username\x18\x03\x20\x01(\tH\0R\x08username\x88\x01\x01\
-    \x12\x1f\n\x08password\x18\x04\x20\x01(\tH\x01R\x08password\x88\x01\x01B\
-    \x0b\n\t_usernameB\x0b\n\t_password\"}\n\x1aConfigureConnectionRequest\
-    \x12(\n\x03dmx\x18\x01\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\
-    \x12+\n\x04mqtt\x18\x02\x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mq\
-    ttB\x08\n\x06config2\xb6\x04\n\x0eConnectionsApi\x12B\n\x0eGetConnection\
-    s\x12\x1c.mizer.GetConnectionsRequest\x1a\x12.mizer.Connections\x12A\n\n\
-    MonitorDmx\x12\x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxRespo\
-    nse\x12D\n\x0bMonitorMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer\
-    .MonitorMidiResponse\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetC\
-    onfig\x1a\x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mize\
-    r.SacnConfig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\
-    \x12\x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\
-    \x129\n\x10DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.Conne\
-    ctions\x12K\n\x13ConfigureConnection\x12!.mizer.ConfigureConnectionReque\
-    st\x1a\x11.mizer.Connectionb\x06proto3\
+    ta\x18\x05\x20\x01(\x0cR\x04dataB\t\n\x07message\"'\n\x11MonitorOscReque\
+    st\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"\xb5\x03\n\x12MonitorO\
+    scResponse\x12\x1c\n\ttimestamp\x18\x01\x20\x01(\x04R\ttimestamp\x12\x12\
+    \n\x04path\x18\x02\x20\x01(\tR\x04path\x129\n\x04args\x18\x03\x20\x03(\
+    \x0b2%.mizer.MonitorOscResponse.OscArgumentR\x04args\x1a\xb1\x02\n\x0bOs\
+    cArgument\x12\x12\n\x03int\x18\x01\x20\x01(\x05H\0R\x03int\x12\x16\n\x05\
+    float\x18\x02\x20\x01(\x02H\0R\x05float\x12\x14\n\x04long\x18\x03\x20\
+    \x01(\x03H\0R\x04long\x12\x18\n\x06double\x18\x04\x20\x01(\x01H\0R\x06do\
+    uble\x12\x14\n\x04bool\x18\x05\x20\x01(\x08H\0R\x04bool\x12F\n\x05color\
+    \x18\x06\x20\x01(\x0b2..mizer.MonitorOscResponse.OscArgument.OscColorH\0\
+    R\x05color\x1a\\\n\x08OscColor\x12\x10\n\x03red\x18\x01\x20\x01(\rR\x03r\
+    ed\x12\x14\n\x05green\x18\x02\x20\x01(\rR\x05green\x12\x12\n\x04blue\x18\
+    \x03\x20\x01(\rR\x04blue\x12\x14\n\x05alpha\x18\x04\x20\x01(\rR\x05alpha\
+    B\n\n\x08argument\"\x17\n\x15GetConnectionsRequest\"\x1a\n\x18GetDeviceP\
+    rofilesRequest\"J\n\x0cArtnetConfig\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12\x12\n\x04host\x18\x02\x20\x01(\tR\x04host\x12\x12\n\x04por\
+    t\x18\x03\x20\x01(\rR\x04port\"\x20\n\nSacnConfig\x12\x12\n\x04name\x18\
+    \x01\x20\x01(\tR\x04name\"B\n\x0bConnections\x123\n\x0bconnections\x18\
+    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xc0\x03\n\nCon\
+    nection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\
+    \n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04midi\x18\
+    \x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\n\x03osc\
+    \x18\x0c\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03osc\x12:\n\tproDJL\
+    ink\x18\r\x20\x01(\x0b2\x1a.mizer.ProDjLinkConnectionH\0R\tproDJLink\x12\
+    1\n\x06helios\x18\x0e\x20\x01(\x0b2\x17.mizer.HeliosConnectionH\0R\x06he\
+    lios\x12=\n\netherDream\x18\x0f\x20\x01(\x0b2\x1b.mizer.EtherDreamConnec\
+    tionH\0R\netherDream\x124\n\x07gamepad\x18\x10\x20\x01(\x0b2\x18.mizer.G\
+    amepadConnectionH\0R\x07gamepad\x12+\n\x04mqtt\x18\x11\x20\x01(\x0b2\x15\
+    .mizer.MqttConnectionH\0R\x04mqttB\x0c\n\nconnection\"\x8d\x01\n\rDmxCon\
+    nection\x12\x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\x12-\n\x06\
+    artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetConfigH\0R\x06artnet\x12'\n\
+    \x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnConfigH\0R\x04sacnB\x08\n\
+    \x06config\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08firmware\"*\n\x14\
+    EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"7\n\
+    \x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
+    \n\x04name\x18\x02\x20\x01(\tR\x04name\"O\n\x0eMidiConnection\x12*\n\x0e\
+    device_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\x11\n\
+    \x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\x18\
+    \x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\x05\n\
+    \x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\"\n\
+    \x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\x05model\
+    \x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\x01(\tH\0R\
+    \x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\x1d.mizer.M\
+    idiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\x12\n\x04name\
+    \x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\x03(\x0b2\x1e.\
+    mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08controls\x18\x03\x20\
+    \x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08controls\x1aY\n\x05Gr\
+    oup\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\x08controls\x18\
+    \x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08controls\x1a\
+    \xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
+    \n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07channel\x18\x03\x20\
+    \x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\x04note\x12G\n\
+    \x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceProfile.ControlT\
+    ypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01(\x08R\thasOutp\
+    ut\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\x06\n\x02CC\x10\
+    \x01B\t\n\x07_layout\"\x9a\x01\n\rOscConnection\x12\"\n\x0cconnectionId\
+    \x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\x18\x02\x20\
+    \x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01(\rR\noutput\
+    Port\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAddress\"\x99\
+    \x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\x01(\tR\
+    \x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12\"\n\x0cp\
+    layerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playback\x18\
+    \x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdj\
+    Playback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bp\
+    m\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\
+    \x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback\
+    .StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjP\
+    layback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\
+    \x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\
+    \x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\x12\
+    \x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x03\"\xa2\x01\n\x0eMqttConn\
+    ection\x12\"\n\x0cconnectionId\x18\x01\x20\x01(\tR\x0cconnectionId\x12\
+    \x10\n\x03url\x18\x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\x03\
+    \x20\x01(\tH\0R\x08username\x88\x01\x01\x12\x1f\n\x08password\x18\x04\
+    \x20\x01(\tH\x01R\x08password\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t_pas\
+    sword\"\xa7\x01\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\x01\
+    \x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\x02\
+    \x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\x18\
+    \x03\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03oscB\x08\n\x06config2\
+    \xf9\x04\n\x0eConnectionsApi\x12B\n\x0eGetConnections\x12\x1c.mizer.GetC\
+    onnectionsRequest\x1a\x12.mizer.Connections\x12A\n\nMonitorDmx\x12\x18.m\
+    izer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\x12D\n\x0bMonito\
+    rMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\
+    \x12A\n\nMonitorOsc\x12\x18.mizer.MonitorOscRequest\x1a\x19.mizer.Monito\
+    rOscResponse\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetConfig\
+    \x1a\x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mizer.Sac\
+    nConfig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\x12\
+    \x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\x12\
+    9\n\x10DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.Connectio\
+    ns\x12K\n\x13ConfigureConnection\x12!.mizer.ConfigureConnectionRequest\
+    \x1a\x11.mizer.Connectionb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -5720,12 +6707,14 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(29);
+            let mut messages = ::std::vec::Vec::with_capacity(33);
             messages.push(MonitorDmxRequest::generated_message_descriptor_data());
             messages.push(MonitorDmxResponse::generated_message_descriptor_data());
             messages.push(MonitorDmxUniverse::generated_message_descriptor_data());
             messages.push(MonitorMidiRequest::generated_message_descriptor_data());
             messages.push(MonitorMidiResponse::generated_message_descriptor_data());
+            messages.push(MonitorOscRequest::generated_message_descriptor_data());
+            messages.push(MonitorOscResponse::generated_message_descriptor_data());
             messages.push(GetConnectionsRequest::generated_message_descriptor_data());
             messages.push(GetDeviceProfilesRequest::generated_message_descriptor_data());
             messages.push(ArtnetConfig::generated_message_descriptor_data());
@@ -5746,6 +6735,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(ConfigureConnectionRequest::generated_message_descriptor_data());
             messages.push(monitor_midi_response::NoteMsg::generated_message_descriptor_data());
             messages.push(monitor_midi_response::SysEx::generated_message_descriptor_data());
+            messages.push(monitor_osc_response::OscArgument::generated_message_descriptor_data());
+            messages.push(monitor_osc_response::osc_argument::OscColor::generated_message_descriptor_data());
             messages.push(midi_device_profile::Page::generated_message_descriptor_data());
             messages.push(midi_device_profile::Group::generated_message_descriptor_data());
             messages.push(midi_device_profile::Control::generated_message_descriptor_data());

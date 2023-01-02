@@ -11,6 +11,7 @@ pub use mizer_node_templates::ExecuteNodeTemplateCommand;
 pub use mizer_plan::commands::*;
 pub use mizer_protocol_dmx::commands::*;
 pub use mizer_protocol_mqtt::commands::*;
+pub use mizer_protocol_osc::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
 
@@ -114,6 +115,9 @@ command_impl! {
     DeleteMqttConnectionCommand,
     ConfigureMqttConnectionCommand,
     ExecuteNodeTemplateCommand,
+    AddOscConnectionCommand,
+    ConfigureOscConnectionCommand,
+    DeleteOscConnectionCommand,
 }
 
 impl CommandImpl {

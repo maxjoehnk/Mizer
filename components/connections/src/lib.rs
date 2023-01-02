@@ -6,6 +6,7 @@ pub mod midi_device_profile {
 }
 
 pub use mizer_protocol_midi::{MidiEvent, MidiMessage};
+pub use mizer_protocol_osc::{OscMessage, OscType};
 
 #[derive(From, Debug, Clone)]
 pub enum Connection {
@@ -15,6 +16,7 @@ pub enum Connection {
     EtherDream(EtherDreamView),
     Gamepad(GamepadView),
     Mqtt(MqttView),
+    Osc(OscView),
 }
 
 impl Connection {
@@ -26,6 +28,7 @@ impl Connection {
             Connection::EtherDream(device) => device.name.clone(),
             Connection::Gamepad(device) => device.name.clone(),
             Connection::Mqtt(connection) => connection.name.clone(),
+            Connection::Osc(connection) => connection.name.clone(),
         }
     }
 }
@@ -66,4 +69,13 @@ pub struct MqttView {
     pub url: String,
     pub username: Option<String>,
     pub password: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+pub struct OscView {
+    pub name: String,
+    pub connection_id: String,
+    pub output_host: String,
+    pub output_port: u16,
+    pub input_port: u16,
 }

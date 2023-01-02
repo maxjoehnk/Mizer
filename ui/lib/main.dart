@@ -1,14 +1,15 @@
 // @dart=2.11
 import 'package:flutter/widgets.dart';
 import 'package:mizer/app.dart';
-import 'package:mizer/windows/dmx_monitor_window.dart';
-import 'package:mizer/windows/main_window.dart';
-import 'package:mizer/windows/midi_monitor_window.dart';
-import 'package:mizer/windows/preferences_window.dart';
-import 'package:mizer/windows/smart_window.dart';
 import 'package:nativeshell/nativeshell.dart';
 
 import 'i18n.dart';
+import 'windows/osc_monitor_window.dart';
+import 'windows/dmx_monitor_window.dart';
+import 'windows/main_window.dart';
+import 'windows/midi_monitor_window.dart';
+import 'windows/preferences_window.dart';
+import 'windows/smart_window.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class MizerIntegratedUi extends StatelessWidget {
 
       state ??= DmxMonitorWindow.fromInitData(initData);
       state ??= MidiMonitorWindow.fromInitData(initData);
+      state ??= OscMonitorWindow.fromInitData(initData);
       state ??= PreferencesWindow.fromInitData(initData);
       state ??= SmartWindow.fromInitData(initData);
       state ??= MainWindowState();

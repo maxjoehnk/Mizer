@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive"] }
-helios-dac = { version = "0.1", features = ["native"], default-features = false }
+helios-dac = { version = "0.2", features = ["native"], default-features = false }
 ether-dream = "0.2"
 lasy = "0.4"
 ilda-idtf = "0.1"

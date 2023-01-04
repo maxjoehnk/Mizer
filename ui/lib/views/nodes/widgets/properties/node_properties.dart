@@ -9,6 +9,7 @@ import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold
 import 'package:mizer/views/nodes/widgets/properties/properties/node_properties.dart';
 
 import 'properties/groups/button_properties.dart';
+import 'properties/groups/constant_number_properties.dart';
 import 'properties/groups/delay_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
@@ -182,6 +183,14 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(G13OutputProperties(node.config.g13OutputConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(g13OutputConfig: config)))));
+    }
+    if (node.config.hasConstantNumberConfig()) {
+      widgets.add(ConstantNumberProperties(node.config.constantNumberConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path,
+              config: NodeConfig(
+                constantNumberConfig: config,
+              )))));
     }
     return widgets;
   }

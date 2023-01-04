@@ -3,6 +3,7 @@ use crate::test_sink::TestSink;
 use derive_more::From;
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
+pub use mizer_constant_nodes::ConstantNumberNode;
 pub use mizer_conversion_nodes::{DataToNumberNode, NumberToDataNode};
 pub use mizer_data_nodes::ValueNode;
 pub use mizer_dmx_nodes::DmxOutputNode;
@@ -143,4 +144,5 @@ node_impl! {
     Noise(NoiseNode),
     G13Input(G13InputNode),
     G13Output(G13OutputNode),
+    ConstantNumber(ConstantNumberNode),
 }

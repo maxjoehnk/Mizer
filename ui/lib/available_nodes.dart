@@ -51,6 +51,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Transport: "Transport",
   Node_NodeType.G13Input: "G13 Input",
   Node_NodeType.G13Output: "G13 Output",
+  Node_NodeType.ConstantNumber: "Constant Number",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -72,6 +73,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Delay,
     Node_NodeType.Ramp,
     Node_NodeType.Noise,
+    Node_NodeType.ConstantNumber,
   ]),
   buildCategory("Connections", [
     Node_NodeType.DmxOutput,

@@ -59,6 +59,7 @@ pub enum NodeType {
     Transport,
     G13Input,
     G13Output,
+    ConstantNumber,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -118,6 +119,7 @@ impl NodeType {
             Transport => "transport",
             G13Input => "g13-input",
             G13Output => "g13-output",
+            ConstantNumber => "constant-number",
             TestSink => "test-sink",
         }
         .to_string()

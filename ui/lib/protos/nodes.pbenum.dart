@@ -90,6 +90,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Transport = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Transport');
   static const Node_NodeType G13Input = Node_NodeType._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Input');
   static const Node_NodeType G13Output = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Output');
+  static const Node_NodeType ConstantNumber = Node_NodeType._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ConstantNumber');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -141,6 +142,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Transport,
     G13Input,
     G13Output,
+    ConstantNumber,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);

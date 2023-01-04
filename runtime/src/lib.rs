@@ -78,6 +78,9 @@ pub trait NodeDowncast {
             NodeType::Transport => Node::Transport(self.downcast_node(node_type).unwrap()),
             NodeType::G13Input => Node::G13Input(self.downcast_node(node_type).unwrap()),
             NodeType::G13Output => Node::G13Output(self.downcast_node(node_type).unwrap()),
+            NodeType::ConstantNumber => {
+                Node::ConstantNumber(self.downcast_node(node_type).unwrap())
+            }
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

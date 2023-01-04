@@ -59,6 +59,7 @@ impl From<mizer_nodes::Node> for node_config::Type {
             Transport(node) => Self::TransportConfig(node.into()),
             G13Input(node) => Self::G13InputConfig(node.into()),
             G13Output(node) => Self::G13OutputConfig(node.into()),
+            ConstantNumber(node) => Self::ConstantNumberConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -122,6 +123,7 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::G13InputConfig(node) => Self::G13Input(node.into()),
             node_config::Type::G13OutputConfig(node) => Self::G13Output(node.into()),
             node_config::Type::PlanScreenConfig(node) => Self::PlanScreen(node.into()),
+            node_config::Type::ConstantNumberConfig(node) => Self::ConstantNumber(node.into()),
         }
     }
 }
@@ -1425,6 +1427,21 @@ impl From<G13OutputNodeConfig> for mizer_nodes::G13OutputNode {
     }
 }
 
+impl From<mizer_nodes::ConstantNumberNode> for ConstantNumberNodeConfig {
+    fn from(node: mizer_nodes::ConstantNumberNode) -> Self {
+        Self {
+            value: node.value,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<ConstantNumberNodeConfig> for mizer_nodes::ConstantNumberNode {
+    fn from(node: ConstantNumberNodeConfig) -> Self {
+        Self { value: node.value }
+    }
+}
+
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1477,6 +1494,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::Transport => node::NodeType::Transport,
             NodeType::G13Input => node::NodeType::G13Input,
             NodeType::G13Output => node::NodeType::G13Output,
+            NodeType::ConstantNumber => node::NodeType::ConstantNumber,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1534,6 +1552,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::Transport => NodeType::Transport,
             node::NodeType::G13Input => NodeType::G13Input,
             node::NodeType::G13Output => NodeType::G13Output,
+            node::NodeType::ConstantNumber => NodeType::ConstantNumber,
         }
     }
 }

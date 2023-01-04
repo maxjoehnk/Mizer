@@ -462,6 +462,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Transport(node) => pipeline.register_node(path, &node),
         Node::G13Input(node) => pipeline.register_node(path, &node),
         Node::G13Output(node) => pipeline.register_node(path, &node),
+        Node::ConstantNumber(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

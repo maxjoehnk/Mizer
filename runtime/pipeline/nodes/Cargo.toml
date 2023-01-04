@@ -11,6 +11,7 @@ serde = { version = "1", features = ["derive", "rc"] }
 mizer-node = { path = "../node" }
 mizer-clock-nodes = { path = "clock" }
 mizer-color-nodes = { path = "behaviors/color" }
+mizer-constant-nodes = { path = "behaviors/constants" }
 mizer-conversion-nodes = { path = "behaviors/conversions" }
 mizer-envelope-nodes = { path = "behaviors/envelope" }
 mizer-oscillator-nodes = { path = "behaviors/oscillator" }

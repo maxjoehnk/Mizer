@@ -153,6 +153,7 @@ message Node {
     Transport = 67;
     G13Input = 68;
     G13Output = 69;
+    ConstantNumber = 70;
   }
 
   enum NodePreviewType {
@@ -223,6 +224,7 @@ message NodeConfig {
     TransportNodeConfig transportConfig = 57;
     G13InputNodeConfig g13InputConfig = 58;
     G13OutputNodeConfig g13OutputConfig = 59;
+    ConstantNumberNodeConfig constantNumberConfig = 60;
   }
 }
 
@@ -538,6 +540,10 @@ message G13InputNodeConfig {
 
 message G13OutputNodeConfig {
   string device_id = 1;
+}
+
+message ConstantNumberNodeConfig {
+  double value = 1;
 }
 
 message NodePosition {

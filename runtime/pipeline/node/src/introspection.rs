@@ -60,6 +60,7 @@ pub enum NodeType {
     G13Input,
     G13Output,
     ConstantNumber,
+    Conditional,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -120,6 +121,7 @@ impl NodeType {
             G13Input => "g13-input",
             G13Output => "g13-output",
             ConstantNumber => "constant-number",
+            Conditional => "conditional",
             TestSink => "test-sink",
         }
         .to_string()

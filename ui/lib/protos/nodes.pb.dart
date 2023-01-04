@@ -1239,6 +1239,7 @@ enum NodeConfig_Type {
   g13InputConfig, 
   g13OutputConfig, 
   constantNumberConfig, 
+  conditionalConfig, 
   notSet
 }
 
@@ -1294,10 +1295,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     58 : NodeConfig_Type.g13InputConfig,
     59 : NodeConfig_Type.g13OutputConfig,
     60 : NodeConfig_Type.constantNumberConfig,
+    61 : NodeConfig_Type.conditionalConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1348,6 +1350,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<G13InputNodeConfig>(58, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13InputConfig', protoName: 'g13InputConfig', subBuilder: G13InputNodeConfig.create)
     ..aOM<G13OutputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', protoName: 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
     ..aOM<ConstantNumberNodeConfig>(60, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'constantNumberConfig', protoName: 'constantNumberConfig', subBuilder: ConstantNumberNodeConfig.create)
+    ..aOM<ConditionalNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', protoName: 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1403,6 +1406,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     G13InputNodeConfig? g13InputConfig,
     G13OutputNodeConfig? g13OutputConfig,
     ConstantNumberNodeConfig? constantNumberConfig,
+    ConditionalNodeConfig? conditionalConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1554,6 +1558,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (constantNumberConfig != null) {
       _result.constantNumberConfig = constantNumberConfig;
+    }
+    if (conditionalConfig != null) {
+      _result.conditionalConfig = conditionalConfig;
     }
     return _result;
   }
@@ -2130,6 +2137,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearConstantNumberConfig() => clearField(60);
   @$pb.TagNumber(60)
   ConstantNumberNodeConfig ensureConstantNumberConfig() => $_ensure(49);
+
+  @$pb.TagNumber(61)
+  ConditionalNodeConfig get conditionalConfig => $_getN(50);
+  @$pb.TagNumber(61)
+  set conditionalConfig(ConditionalNodeConfig v) { setField(61, v); }
+  @$pb.TagNumber(61)
+  $core.bool hasConditionalConfig() => $_has(50);
+  @$pb.TagNumber(61)
+  void clearConditionalConfig() => clearField(61);
+  @$pb.TagNumber(61)
+  ConditionalNodeConfig ensureConditionalConfig() => $_ensure(50);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4897,6 +4915,53 @@ class ConstantNumberNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
   void clearValue() => clearField(1);
+}
+
+class ConditionalNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ConditionalNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.double>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'threshold', $pb.PbFieldType.OD)
+    ..hasRequiredFields = false
+  ;
+
+  ConditionalNodeConfig._() : super();
+  factory ConditionalNodeConfig({
+    $core.double? threshold,
+  }) {
+    final _result = create();
+    if (threshold != null) {
+      _result.threshold = threshold;
+    }
+    return _result;
+  }
+  factory ConditionalNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ConditionalNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ConditionalNodeConfig clone() => ConditionalNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ConditionalNodeConfig copyWith(void Function(ConditionalNodeConfig) updates) => super.copyWith((message) => updates(message as ConditionalNodeConfig)) as ConditionalNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ConditionalNodeConfig create() => ConditionalNodeConfig._();
+  ConditionalNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ConditionalNodeConfig> createRepeated() => $pb.PbList<ConditionalNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ConditionalNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ConditionalNodeConfig>(create);
+  static ConditionalNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.double get threshold => $_getN(0);
+  @$pb.TagNumber(1)
+  set threshold($core.double v) { $_setDouble(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasThreshold() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearThreshold() => clearField(1);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

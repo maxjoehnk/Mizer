@@ -1,3 +1,4 @@
+mod conditional;
 mod encoder;
 mod merge;
 mod noise;
@@ -5,6 +6,7 @@ mod ramp;
 mod select;
 mod threshold;
 
+pub use conditional::*;
 pub use encoder::*;
 pub use merge::*;
 pub use noise::*;

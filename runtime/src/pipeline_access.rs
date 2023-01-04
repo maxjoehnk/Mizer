@@ -120,6 +120,7 @@ impl PipelineAccess {
             G13Input(node) => self.add_node(path, node),
             G13Output(node) => self.add_node(path, node),
             ConstantNumber(node) => self.add_node(path, node),
+            Conditional(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

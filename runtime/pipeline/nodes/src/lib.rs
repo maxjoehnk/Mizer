@@ -23,7 +23,8 @@ pub use mizer_oscillator_nodes::{OscillatorNode, OscillatorType};
 pub use mizer_pixel_nodes::{Pattern, PixelDmxNode, PixelPatternGeneratorNode};
 pub use mizer_plan_nodes::PlanScreenNode;
 pub use mizer_port_operation_nodes::{
-    EncoderNode, MergeMode, MergeNode, NoiseNode, RampNode, RampStep, SelectNode, ThresholdNode,
+    ConditionalNode, EncoderNode, MergeMode, MergeNode, NoiseNode, RampNode, RampStep, SelectNode,
+    ThresholdNode,
 };
 pub use mizer_scripting_nodes::ScriptingNode;
 pub use mizer_sequence_nodes::{SequenceNode, SequenceStep};
@@ -145,4 +146,5 @@ node_impl! {
     G13Input(G13InputNode),
     G13Output(G13OutputNode),
     ConstantNumber(ConstantNumberNode),
+    Conditional(ConditionalNode),
 }

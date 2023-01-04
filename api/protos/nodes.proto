@@ -154,6 +154,7 @@ message Node {
     G13Input = 68;
     G13Output = 69;
     ConstantNumber = 70;
+    Conditional = 71;
   }
 
   enum NodePreviewType {
@@ -225,6 +226,7 @@ message NodeConfig {
     G13InputNodeConfig g13InputConfig = 58;
     G13OutputNodeConfig g13OutputConfig = 59;
     ConstantNumberNodeConfig constantNumberConfig = 60;
+    ConditionalNodeConfig conditionalConfig = 61;
   }
 }
 
@@ -544,6 +546,10 @@ message G13OutputNodeConfig {
 
 message ConstantNumberNodeConfig {
   double value = 1;
+}
+
+message ConditionalNodeConfig {
+  double threshold = 1;
 }
 
 message NodePosition {

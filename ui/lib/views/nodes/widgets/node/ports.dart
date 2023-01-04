@@ -53,10 +53,10 @@ class NodePort extends StatelessWidget {
           transform: Matrix4.translationValues(input ? -8 : 8, 0, 0),
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 2.0),
-            height: DOT_SIZE,
+            height: port.multiple ? DOT_SIZE * 2 : DOT_SIZE,
             child: Row(
               mainAxisAlignment: input ? MainAxisAlignment.start : MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: collapsed ? _collapsed(portKey) : _expanded(portKey),
             ),
           ),
@@ -99,7 +99,7 @@ class PortDot extends StatelessWidget {
     var color = getColorForProtocol(port.protocol);
 
     if (input) {
-      return Dot(input: input, color: color);
+      return Dot(input: input, color: color, multiple: port.multiple);
     }
 
     return Consumer<NodeEditorModel>(
@@ -124,7 +124,7 @@ class PortDot extends StatelessWidget {
             }
             model.dropNewConnection();
           },
-          child: Dot(input: input, color: color),
+          child: Dot(input: input, color: color, multiple: port.multiple),
         );
       },
     );
@@ -134,22 +134,21 @@ class PortDot extends StatelessWidget {
 class Dot extends StatelessWidget {
   final MaterialColor color;
   final bool input;
+  final bool multiple;
 
-  const Dot({required this.color, this.input = false, Key? key}) : super(key: key);
+  const Dot({required this.color, this.input = false, this.multiple = false, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var dot = DecoratedBox(
+    var dot = Container(
       decoration: ShapeDecoration(
           gradient: RadialGradient(colors: [color.shade400, color.shade700]),
           shadows: [
             BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 2, offset: Offset(2, 2))
           ],
-          shape: CircleBorder(side: BorderSide.none)),
-      child: Container(
-        width: DOT_SIZE,
-        height: DOT_SIZE,
-      ),
+          shape: RoundedRectangleBorder(side: BorderSide.none, borderRadius: BorderRadius.circular(DOT_SIZE))),
+      width: DOT_SIZE,
+      height: multiple ? DOT_SIZE * 2 : DOT_SIZE,
     );
 
     if (input) {

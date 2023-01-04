@@ -573,4 +573,5 @@ enum ChannelProtocol {
 message Port {
   string name = 1;
   ChannelProtocol protocol = 2;
+  bool multiple = 3;
 }

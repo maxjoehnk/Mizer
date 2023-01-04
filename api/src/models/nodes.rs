@@ -14909,6 +14909,8 @@ pub struct Port {
     pub name: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.nodes.Port.protocol)
     pub protocol: ::protobuf::EnumOrUnknown<ChannelProtocol>,
+    // @@protoc_insertion_point(field:mizer.nodes.Port.multiple)
+    pub multiple: bool,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.Port.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -14926,7 +14928,7 @@ impl Port {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -14937,6 +14939,11 @@ impl Port {
             "protocol",
             |m: &Port| { &m.protocol },
             |m: &mut Port| { &mut m.protocol },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "multiple",
+            |m: &Port| { &m.multiple },
+            |m: &mut Port| { &mut m.multiple },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Port>(
             "Port",
@@ -14962,6 +14969,9 @@ impl ::protobuf::Message for Port {
                 16 => {
                     self.protocol = is.read_enum_or_unknown()?;
                 },
+                24 => {
+                    self.multiple = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -14980,6 +14990,9 @@ impl ::protobuf::Message for Port {
         if self.protocol != ::protobuf::EnumOrUnknown::new(ChannelProtocol::SINGLE) {
             my_size += ::protobuf::rt::int32_size(2, self.protocol.value());
         }
+        if self.multiple != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -14991,6 +15004,9 @@ impl ::protobuf::Message for Port {
         }
         if self.protocol != ::protobuf::EnumOrUnknown::new(ChannelProtocol::SINGLE) {
             os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.protocol))?;
+        }
+        if self.multiple != false {
+            os.write_bool(3, self.multiple)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -15011,6 +15027,7 @@ impl ::protobuf::Message for Port {
     fn clear(&mut self) {
         self.name.clear();
         self.protocol = ::protobuf::EnumOrUnknown::new(ChannelProtocol::SINGLE);
+        self.multiple = false;
         self.special_fields.clear();
     }
 
@@ -15018,6 +15035,7 @@ impl ::protobuf::Message for Port {
         static instance: Port = Port {
             name: ::std::string::String::new(),
             protocol: ::protobuf::EnumOrUnknown::from_i32(0),
+            multiple: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -15397,29 +15415,29 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\x18\x01\x20\
     \x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\n\x05scale\
     \x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\x20\x01(\x08\
-    R\x06hidden\"T\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
+    R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\
     \x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtoco\
-    lR\x08protocol*\x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\
-    \t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\
-    \x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POL\
-    Y\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\
-    \x07\n\x03GST\x10\x082\x83\x07\n\x08NodesApi\x129\n\x08GetNodes\x12\x19.\
-    mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\
-    \x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLi\
-    nk\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\
-    \x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mi\
-    zer.nodes.WriteResponse\x12a\n\x12UpdateNodeProperty\x12$.mizer.nodes.Up\
-    dateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeConfigResponse\x12G\n\
-    \x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.Mov\
-    eNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\
-    \x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer\
-    .nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08Sh\
-    owNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeR\
-    esponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\
-    \x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeR\
-    equest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e\
-    .mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\
-    \x06proto3\
+    lR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\x08multiple*\
+    \x82\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\n\x05MULTI\
+    \x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\x12\n\n\x06\
+    VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\x10\x05\x12\
+    \x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\n\x03GST\
+    \x10\x082\x83\x07\n\x08NodesApi\x129\n\x08GetNodes\x12\x19.mizer.nodes.N\
+    odesRequest\x1a\x12.mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.no\
+    des.AddNodeRequest\x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mi\
+    zer.nodes.NodeConnection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11Wr\
+    iteControlValue\x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.Wri\
+    teResponse\x12a\n\x12UpdateNodeProperty\x12$.mizer.nodes.UpdateNodeConfi\
+    gRequest\x1a%.mizer.nodes.UpdateNodeConfigResponse\x12G\n\x08MoveNode\
+    \x12\x1c.mizer.nodes.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeRespons\
+    e\x12M\n\nDeleteNode\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer\
+    .nodes.DeleteNodeResponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNod\
+    eRequest\x1a\x1d.mizer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c\
+    .mizer.nodes.ShowNodeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\
+    \rDuplicateNode\x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.node\
+    s.Node\x12M\n\nRenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.\
+    mizer.nodes.RenameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.Gr\
+    oupNodesRequest\x1a\x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

@@ -1692,6 +1692,7 @@ impl From<(PortId, PortMetadata)> for Port {
         Port {
             name: id.to_string(),
             protocol: EnumOrUnknown::new(metadata.port_type.into()),
+            multiple: metadata.multiple.unwrap_or_default(),
             ..Default::default()
         }
     }

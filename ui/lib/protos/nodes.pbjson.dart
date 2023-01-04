@@ -1081,8 +1081,9 @@ const Port$json = const {
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'protocol', '3': 2, '4': 1, '5': 14, '6': '.mizer.nodes.ChannelProtocol', '10': 'protocol'},
+    const {'1': 'multiple', '3': 3, '4': 1, '5': 8, '10': 'multiple'},
   ],
 };
 
 /// Descriptor for `Port`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List portDescriptor = $convert.base64Decode('CgRQb3J0EhIKBG5hbWUYASABKAlSBG5hbWUSOAoIcHJvdG9jb2wYAiABKA4yHC5taXplci5ub2Rlcy5DaGFubmVsUHJvdG9jb2xSCHByb3RvY29s');
+final $typed_data.Uint8List portDescriptor = $convert.base64Decode('CgRQb3J0EhIKBG5hbWUYASABKAlSBG5hbWUSOAoIcHJvdG9jb2wYAiABKA4yHC5taXplci5ub2Rlcy5DaGFubmVsUHJvdG9jb2xSCHByb3RvY29sEhoKCG11bHRpcGxlGAMgASgIUghtdWx0aXBsZQ==');

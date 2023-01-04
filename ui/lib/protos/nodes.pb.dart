@@ -5041,6 +5041,7 @@ class Port extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Port', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..e<ChannelProtocol>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protocol', $pb.PbFieldType.OE, defaultOrMaker: ChannelProtocol.SINGLE, valueOf: ChannelProtocol.valueOf, enumValues: ChannelProtocol.values)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'multiple')
     ..hasRequiredFields = false
   ;
 
@@ -5048,6 +5049,7 @@ class Port extends $pb.GeneratedMessage {
   factory Port({
     $core.String? name,
     ChannelProtocol? protocol,
+    $core.bool? multiple,
   }) {
     final _result = create();
     if (name != null) {
@@ -5055,6 +5057,9 @@ class Port extends $pb.GeneratedMessage {
     }
     if (protocol != null) {
       _result.protocol = protocol;
+    }
+    if (multiple != null) {
+      _result.multiple = multiple;
     }
     return _result;
   }
@@ -5096,5 +5101,14 @@ class Port extends $pb.GeneratedMessage {
   $core.bool hasProtocol() => $_has(1);
   @$pb.TagNumber(2)
   void clearProtocol() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get multiple => $_getBF(2);
+  @$pb.TagNumber(3)
+  set multiple($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMultiple() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMultiple() => clearField(3);
 }
 

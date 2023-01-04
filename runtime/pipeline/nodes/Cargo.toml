@@ -16,6 +16,7 @@ mizer-envelope-nodes = { path = "behaviors/envelope" }
 mizer-oscillator-nodes = { path = "behaviors/oscillator" }
 mizer-port-operation-nodes = { path = "behaviors/port-operations" }
 mizer-dmx-nodes = { path = "connections/protocols/dmx" }
+mizer-g13-nodes = { path = "connections/g13" }
 mizer-gamepad-nodes = { path = "connections/gamepad" }
 mizer-scripting-nodes = { path = "behaviors/scripting" }
 mizer-sequence-nodes = { path = "behaviors/sequence" }

@@ -67,6 +67,10 @@ impl From<mizer_connections::Connection> for connection::Connection {
                 input_port: osc.input_port as u32,
                 ..Default::default()
             }),
+            G13(g13) => Self::G13(G13Connection {
+                id: g13.id,
+                ..Default::default()
+            }),
         }
     }
 }

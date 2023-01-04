@@ -76,6 +76,8 @@ pub trait NodeDowncast {
             NodeType::Ramp => Node::Ramp(self.downcast_node(node_type).unwrap()),
             NodeType::Noise => Node::Noise(self.downcast_node(node_type).unwrap()),
             NodeType::Transport => Node::Transport(self.downcast_node(node_type).unwrap()),
+            NodeType::G13Input => Node::G13Input(self.downcast_node(node_type).unwrap()),
+            NodeType::G13Output => Node::G13Output(self.downcast_node(node_type).unwrap()),
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

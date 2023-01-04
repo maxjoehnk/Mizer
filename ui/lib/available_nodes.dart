@@ -49,6 +49,8 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Ramp: "Ramp",
   Node_NodeType.Noise: "Noise",
   Node_NodeType.Transport: "Transport",
+  Node_NodeType.G13Input: "G13 Input",
+  Node_NodeType.G13Output: "G13 Output",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -80,6 +82,8 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Gamepad,
     Node_NodeType.MqttInput,
     Node_NodeType.MqttOutput,
+    Node_NodeType.G13Input,
+    Node_NodeType.G13Output,
   ]),
   buildCategory("Conversions", [
     Node_NodeType.NumberToData,

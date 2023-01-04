@@ -302,6 +302,9 @@ class ConnectionTag extends StatelessWidget {
     if (connection.hasMqtt()) {
       return _tag("MQTT");
     }
+    if (connection.hasG13()) {
+      return _tag("G13");
+    }
     return Container();
   }
 

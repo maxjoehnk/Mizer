@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
-import 'package:mizer/available_nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/envelope_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_properties.dart';
@@ -14,6 +13,8 @@ import 'properties/groups/delay_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
 import 'properties/groups/fixture_properties.dart';
+import 'properties/groups/g13_input_properties.dart';
+import 'properties/groups/g13_output_properties.dart';
 import 'properties/groups/label_properties.dart';
 import 'properties/groups/math_properties.dart';
 import 'properties/groups/merge_properties.dart';
@@ -171,6 +172,16 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(LabelProperties(node.config.labelConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(labelConfig: config)))));
+    }
+    if (node.config.hasG13InputConfig()) {
+      widgets.add(G13InputProperties(node.config.g13InputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(g13InputConfig: config)))));
+    }
+    if (node.config.hasG13OutputConfig()) {
+      widgets.add(G13OutputProperties(node.config.g13OutputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(g13OutputConfig: config)))));
     }
     return widgets;
   }

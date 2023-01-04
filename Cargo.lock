@@ -1976,6 +1976,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "g13"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5bc03da49d1313563bed001809f192a841c2d5ff41dedf313591f7bce5c5c586"
+dependencies = [
+ "bitflags",
+ "log",
+ "rusb",
+ "thiserror",
+]
+
+[[package]]
 name = "gdk"
 version = "0.14.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3429,6 +3441,7 @@ dependencies = [
  "derive_more",
  "futures",
  "log",
+ "mizer-g13",
  "mizer-gamepads",
  "mizer-module",
  "mizer-processing",
@@ -3521,6 +3534,32 @@ dependencies = [
  "spectral",
  "test-case",
  "tracing",
+]
+
+[[package]]
+name = "mizer-g13"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "flume",
+ "futures",
+ "g13",
+ "log",
+ "pinboard",
+ "rusb",
+ "uuid 1.2.1",
+]
+
+[[package]]
+name = "mizer-g13-nodes"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "log",
+ "mizer-devices",
+ "mizer-g13",
+ "mizer-node",
+ "serde",
 ]
 
 [[package]]
@@ -3751,6 +3790,7 @@ dependencies = [
  "mizer-dmx-nodes",
  "mizer-envelope-nodes",
  "mizer-fixture-nodes",
+ "mizer-g13-nodes",
  "mizer-gamepad-nodes",
  "mizer-input-nodes",
  "mizer-laser-nodes",

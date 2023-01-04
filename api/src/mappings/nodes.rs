@@ -57,6 +57,8 @@ impl From<mizer_nodes::Node> for node_config::Type {
             Ramp(node) => Self::RampConfig(node.into()),
             Noise(node) => Self::NoiseConfig(node.into()),
             Transport(node) => Self::TransportConfig(node.into()),
+            G13Input(node) => Self::G13InputConfig(node.into()),
+            G13Output(node) => Self::G13OutputConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -117,6 +119,8 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::RampConfig(node) => Self::Ramp(node.into()),
             node_config::Type::NoiseConfig(node) => Self::Noise(node.into()),
             node_config::Type::TransportConfig(node) => Self::Transport(node.into()),
+            node_config::Type::G13InputConfig(node) => Self::G13Input(node.into()),
+            node_config::Type::G13OutputConfig(node) => Self::G13Output(node.into()),
             node_config::Type::PlanScreenConfig(node) => Self::PlanScreen(node.into()),
         }
     }
@@ -1295,6 +1299,132 @@ impl From<mizer_nodes::TransportNode> for TransportNodeConfig {
     }
 }
 
+impl From<mizer_nodes::G13InputNode> for G13InputNodeConfig {
+    fn from(g13: mizer_nodes::G13InputNode) -> Self {
+        Self {
+            device_id: g13.device_id,
+            key: EnumOrUnknown::new(g13.key.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<G13InputNodeConfig> for mizer_nodes::G13InputNode {
+    fn from(g13: G13InputNodeConfig) -> Self {
+        Self {
+            device_id: g13.device_id,
+            key: g13.key.unwrap().into(),
+        }
+    }
+}
+
+impl From<mizer_nodes::G13Key> for g13input_node_config::Key {
+    fn from(key: mizer_nodes::G13Key) -> Self {
+        use mizer_nodes::G13Key::*;
+
+        match key {
+            G1 => Self::G1,
+            G2 => Self::G2,
+            G3 => Self::G3,
+            G4 => Self::G4,
+            G5 => Self::G5,
+            G6 => Self::G6,
+            G7 => Self::G7,
+            G8 => Self::G8,
+            G9 => Self::G9,
+            G10 => Self::G10,
+            G11 => Self::G11,
+            G12 => Self::G12,
+            G13 => Self::G13,
+            G14 => Self::G14,
+            G15 => Self::G15,
+            G16 => Self::G16,
+            G17 => Self::G17,
+            G18 => Self::G18,
+            G19 => Self::G19,
+            G20 => Self::G20,
+            G21 => Self::G21,
+            G22 => Self::G22,
+            M1 => Self::M1,
+            M2 => Self::M2,
+            M3 => Self::M3,
+            MR => Self::MR,
+            L1 => Self::L1,
+            L2 => Self::L2,
+            L3 => Self::L3,
+            L4 => Self::L4,
+            Joystick => Self::Joystick,
+            JoystickX => Self::JoystickX,
+            JoystickY => Self::JoystickY,
+            Down => Self::Down,
+            Left => Self::Left,
+            BD => Self::BD,
+        }
+    }
+}
+
+impl From<g13input_node_config::Key> for mizer_nodes::G13Key {
+    fn from(key: g13input_node_config::Key) -> Self {
+        use g13input_node_config::Key::*;
+
+        match key {
+            G1 => Self::G1,
+            G2 => Self::G2,
+            G3 => Self::G3,
+            G4 => Self::G4,
+            G5 => Self::G5,
+            G6 => Self::G6,
+            G7 => Self::G7,
+            G8 => Self::G8,
+            G9 => Self::G9,
+            G10 => Self::G10,
+            G11 => Self::G11,
+            G12 => Self::G12,
+            G13 => Self::G13,
+            G14 => Self::G14,
+            G15 => Self::G15,
+            G16 => Self::G16,
+            G17 => Self::G17,
+            G18 => Self::G18,
+            G19 => Self::G19,
+            G20 => Self::G20,
+            G21 => Self::G21,
+            G22 => Self::G22,
+            M1 => Self::M1,
+            M2 => Self::M2,
+            M3 => Self::M3,
+            MR => Self::MR,
+            L1 => Self::L1,
+            L2 => Self::L2,
+            L3 => Self::L3,
+            L4 => Self::L4,
+            Joystick => Self::Joystick,
+            JoystickX => Self::JoystickX,
+            JoystickY => Self::JoystickY,
+            Down => Self::Down,
+            Left => Self::Left,
+            BD => Self::BD,
+        }
+    }
+}
+
+impl From<mizer_nodes::G13OutputNode> for G13OutputNodeConfig {
+    fn from(g13: mizer_nodes::G13OutputNode) -> Self {
+        Self {
+            device_id: g13.device_id,
+            ..Default::default()
+        }
+    }
+}
+
+impl From<G13OutputNodeConfig> for mizer_nodes::G13OutputNode {
+    fn from(g13: G13OutputNodeConfig) -> Self {
+        Self {
+            device_id: g13.device_id,
+        }
+    }
+}
+
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1345,6 +1475,8 @@ impl From<NodeType> for node::NodeType {
             NodeType::Ramp => node::NodeType::Ramp,
             NodeType::Noise => node::NodeType::Noise,
             NodeType::Transport => node::NodeType::Transport,
+            NodeType::G13Input => node::NodeType::G13Input,
+            NodeType::G13Output => node::NodeType::G13Output,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1400,6 +1532,8 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::Ramp => NodeType::Ramp,
             node::NodeType::Noise => NodeType::Noise,
             node::NodeType::Transport => NodeType::Transport,
+            node::NodeType::G13Input => NodeType::G13Input,
+            node::NodeType::G13Output => NodeType::G13Output,
         }
     }
 }

@@ -151,6 +151,8 @@ message Node {
     Noise = 65;
     Label = 66;
     Transport = 67;
+    G13Input = 68;
+    G13Output = 69;
   }
 
   enum NodePreviewType {
@@ -219,6 +221,8 @@ message NodeConfig {
     NoiseNodeConfig noiseConfig = 55;
     LabelNodeConfig labelConfig = 56;
     TransportNodeConfig transportConfig = 57;
+    G13InputNodeConfig g13InputConfig = 58;
+    G13OutputNodeConfig g13OutputConfig = 59;
   }
 }
 
@@ -486,6 +490,54 @@ message LabelNodeConfig {
 }
 
 message TransportNodeConfig {
+}
+
+message G13InputNodeConfig {
+  string device_id = 1;
+  Key key = 2;
+
+  enum Key {
+      G1 = 0;
+      G2 = 1;
+      G3 = 2;
+      G4 = 3;
+      G5 = 4;
+      G6 = 5;
+      G7 = 6;
+      G8 = 7;
+      G9 = 8;
+      G10 = 9;
+      G11 = 10;
+      G12 = 11;
+      G13 = 12;
+      G14 = 13;
+      G15 = 14;
+      G16 = 15;
+      G17 = 16;
+      G18 = 17;
+      G19 = 18;
+      G20 = 19;
+      G21 = 20;
+      G22 = 21;
+      M1 = 22;
+      M2 = 23;
+      M3 = 24;
+      MR = 25;
+      L1 = 26;
+      L2 = 27;
+      L3 = 28;
+      L4 = 29;
+      JoystickX = 30;
+      JoystickY = 31;
+      Joystick = 32;
+      Left = 33;
+      Down = 34;
+      BD = 35;
+  }
+}
+
+message G13OutputNodeConfig {
+  string device_id = 1;
 }
 
 message NodePosition {

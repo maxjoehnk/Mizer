@@ -57,6 +57,8 @@ pub enum NodeType {
     Delay,
     Noise,
     Transport,
+    G13Input,
+    G13Output,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -114,6 +116,8 @@ impl NodeType {
             Ramp => "ramp",
             Noise => "noise",
             Transport => "transport",
+            G13Input => "g13-input",
+            G13Output => "g13-output",
             TestSink => "test-sink",
         }
         .to_string()

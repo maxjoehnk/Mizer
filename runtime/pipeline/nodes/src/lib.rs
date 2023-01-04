@@ -8,6 +8,7 @@ pub use mizer_data_nodes::ValueNode;
 pub use mizer_dmx_nodes::DmxOutputNode;
 pub use mizer_envelope_nodes::EnvelopeNode;
 pub use mizer_fixture_nodes::{FixtureNode, GroupNode, PresetNode, ProgrammerNode};
+pub use mizer_g13_nodes::{G13InputNode, G13Key, G13OutputNode};
 pub use mizer_gamepad_nodes::{GamepadControl, GamepadNode};
 pub use mizer_input_nodes::{ButtonNode, FaderNode, LabelNode};
 pub use mizer_laser_nodes::{IldaFileNode, LaserNode};
@@ -140,4 +141,6 @@ node_impl! {
     Ramp(RampNode),
     Transport(TransportNode),
     Noise(NoiseNode),
+    G13Input(G13InputNode),
+    G13Output(G13OutputNode),
 }

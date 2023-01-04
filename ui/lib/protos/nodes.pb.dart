@@ -1236,6 +1236,8 @@ enum NodeConfig_Type {
   noiseConfig, 
   labelConfig, 
   transportConfig, 
+  g13InputConfig, 
+  g13OutputConfig, 
   notSet
 }
 
@@ -1288,10 +1290,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     55 : NodeConfig_Type.noiseConfig,
     56 : NodeConfig_Type.labelConfig,
     57 : NodeConfig_Type.transportConfig,
+    58 : NodeConfig_Type.g13InputConfig,
+    59 : NodeConfig_Type.g13OutputConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1339,6 +1343,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<NoiseNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', protoName: 'noiseConfig', subBuilder: NoiseNodeConfig.create)
     ..aOM<LabelNodeConfig>(56, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelConfig', protoName: 'labelConfig', subBuilder: LabelNodeConfig.create)
     ..aOM<TransportNodeConfig>(57, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transportConfig', protoName: 'transportConfig', subBuilder: TransportNodeConfig.create)
+    ..aOM<G13InputNodeConfig>(58, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13InputConfig', protoName: 'g13InputConfig', subBuilder: G13InputNodeConfig.create)
+    ..aOM<G13OutputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', protoName: 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1391,6 +1397,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     NoiseNodeConfig? noiseConfig,
     LabelNodeConfig? labelConfig,
     TransportNodeConfig? transportConfig,
+    G13InputNodeConfig? g13InputConfig,
+    G13OutputNodeConfig? g13OutputConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1533,6 +1541,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (transportConfig != null) {
       _result.transportConfig = transportConfig;
+    }
+    if (g13InputConfig != null) {
+      _result.g13InputConfig = g13InputConfig;
+    }
+    if (g13OutputConfig != null) {
+      _result.g13OutputConfig = g13OutputConfig;
     }
     return _result;
   }
@@ -2076,6 +2090,28 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearTransportConfig() => clearField(57);
   @$pb.TagNumber(57)
   TransportNodeConfig ensureTransportConfig() => $_ensure(46);
+
+  @$pb.TagNumber(58)
+  G13InputNodeConfig get g13InputConfig => $_getN(47);
+  @$pb.TagNumber(58)
+  set g13InputConfig(G13InputNodeConfig v) { setField(58, v); }
+  @$pb.TagNumber(58)
+  $core.bool hasG13InputConfig() => $_has(47);
+  @$pb.TagNumber(58)
+  void clearG13InputConfig() => clearField(58);
+  @$pb.TagNumber(58)
+  G13InputNodeConfig ensureG13InputConfig() => $_ensure(47);
+
+  @$pb.TagNumber(59)
+  G13OutputNodeConfig get g13OutputConfig => $_getN(48);
+  @$pb.TagNumber(59)
+  set g13OutputConfig(G13OutputNodeConfig v) { setField(59, v); }
+  @$pb.TagNumber(59)
+  $core.bool hasG13OutputConfig() => $_has(48);
+  @$pb.TagNumber(59)
+  void clearG13OutputConfig() => clearField(59);
+  @$pb.TagNumber(59)
+  G13OutputNodeConfig ensureG13OutputConfig() => $_ensure(48);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4688,6 +4724,114 @@ class TransportNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static TransportNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TransportNodeConfig>(create);
   static TransportNodeConfig? _defaultInstance;
+}
+
+class G13InputNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'G13InputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId')
+    ..e<G13InputNodeConfig_Key>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.OE, defaultOrMaker: G13InputNodeConfig_Key.G1, valueOf: G13InputNodeConfig_Key.valueOf, enumValues: G13InputNodeConfig_Key.values)
+    ..hasRequiredFields = false
+  ;
+
+  G13InputNodeConfig._() : super();
+  factory G13InputNodeConfig({
+    $core.String? deviceId,
+    G13InputNodeConfig_Key? key,
+  }) {
+    final _result = create();
+    if (deviceId != null) {
+      _result.deviceId = deviceId;
+    }
+    if (key != null) {
+      _result.key = key;
+    }
+    return _result;
+  }
+  factory G13InputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory G13InputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  G13InputNodeConfig clone() => G13InputNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  G13InputNodeConfig copyWith(void Function(G13InputNodeConfig) updates) => super.copyWith((message) => updates(message as G13InputNodeConfig)) as G13InputNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static G13InputNodeConfig create() => G13InputNodeConfig._();
+  G13InputNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<G13InputNodeConfig> createRepeated() => $pb.PbList<G13InputNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static G13InputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<G13InputNodeConfig>(create);
+  static G13InputNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  G13InputNodeConfig_Key get key => $_getN(1);
+  @$pb.TagNumber(2)
+  set key(G13InputNodeConfig_Key v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasKey() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearKey() => clearField(2);
+}
+
+class G13OutputNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'G13OutputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId')
+    ..hasRequiredFields = false
+  ;
+
+  G13OutputNodeConfig._() : super();
+  factory G13OutputNodeConfig({
+    $core.String? deviceId,
+  }) {
+    final _result = create();
+    if (deviceId != null) {
+      _result.deviceId = deviceId;
+    }
+    return _result;
+  }
+  factory G13OutputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory G13OutputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  G13OutputNodeConfig clone() => G13OutputNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  G13OutputNodeConfig copyWith(void Function(G13OutputNodeConfig) updates) => super.copyWith((message) => updates(message as G13OutputNodeConfig)) as G13OutputNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static G13OutputNodeConfig create() => G13OutputNodeConfig._();
+  G13OutputNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<G13OutputNodeConfig> createRepeated() => $pb.PbList<G13OutputNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static G13OutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<G13OutputNodeConfig>(create);
+  static G13OutputNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get deviceId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set deviceId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDeviceId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDeviceId() => clearField(1);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

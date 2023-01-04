@@ -3295,8 +3295,57 @@ impl Connection {
         }
     }
 
+    // .mizer.G13Connection g13 = 18;
+
+    pub fn g13(&self) -> &G13Connection {
+        match self.connection {
+            ::std::option::Option::Some(connection::Connection::G13(ref v)) => v,
+            _ => <G13Connection as ::protobuf::Message>::default_instance(),
+        }
+    }
+
+    pub fn clear_g13(&mut self) {
+        self.connection = ::std::option::Option::None;
+    }
+
+    pub fn has_g13(&self) -> bool {
+        match self.connection {
+            ::std::option::Option::Some(connection::Connection::G13(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_g13(&mut self, v: G13Connection) {
+        self.connection = ::std::option::Option::Some(connection::Connection::G13(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_g13(&mut self) -> &mut G13Connection {
+        if let ::std::option::Option::Some(connection::Connection::G13(_)) = self.connection {
+        } else {
+            self.connection = ::std::option::Option::Some(connection::Connection::G13(G13Connection::new()));
+        }
+        match self.connection {
+            ::std::option::Option::Some(connection::Connection::G13(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_g13(&mut self) -> G13Connection {
+        if self.has_g13() {
+            match self.connection.take() {
+                ::std::option::Option::Some(connection::Connection::G13(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            G13Connection::new()
+        }
+    }
+
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(9);
+        let mut fields = ::std::vec::Vec::with_capacity(10);
         let mut oneofs = ::std::vec::Vec::with_capacity(1);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "name",
@@ -3359,6 +3408,13 @@ impl Connection {
             Connection::mut_mqtt,
             Connection::set_mqtt,
         ));
+        fields.push(::protobuf::reflect::rt::v2::make_oneof_message_has_get_mut_set_accessor::<_, G13Connection>(
+            "g13",
+            Connection::has_g13,
+            Connection::g13,
+            Connection::mut_g13,
+            Connection::set_g13,
+        ));
         oneofs.push(connection::Connection::generated_oneof_descriptor_data());
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Connection>(
             "Connection",
@@ -3404,6 +3460,9 @@ impl ::protobuf::Message for Connection {
                 },
                 138 => {
                     self.connection = ::std::option::Option::Some(connection::Connection::Mqtt(is.read_message()?));
+                },
+                146 => {
+                    self.connection = ::std::option::Option::Some(connection::Connection::G13(is.read_message()?));
                 },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
@@ -3454,6 +3513,10 @@ impl ::protobuf::Message for Connection {
                     let len = v.compute_size();
                     my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
                 },
+                &connection::Connection::G13(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 2 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+                },
             };
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
@@ -3491,6 +3554,9 @@ impl ::protobuf::Message for Connection {
                 &connection::Connection::Mqtt(ref v) => {
                     ::protobuf::rt::write_message_field_with_cached_size(17, v, os)?;
                 },
+                &connection::Connection::G13(ref v) => {
+                    ::protobuf::rt::write_message_field_with_cached_size(18, v, os)?;
+                },
             };
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
@@ -3511,6 +3577,7 @@ impl ::protobuf::Message for Connection {
 
     fn clear(&mut self) {
         self.name.clear();
+        self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
         self.connection = ::std::option::Option::None;
@@ -3572,6 +3639,8 @@ pub mod connection {
         Gamepad(super::GamepadConnection),
         // @@protoc_insertion_point(oneof_field:mizer.Connection.mqtt)
         Mqtt(super::MqttConnection),
+        // @@protoc_insertion_point(oneof_field:mizer.Connection.g13)
+        G13(super::G13Connection),
     }
 
     impl ::protobuf::Oneof for Connection {
@@ -4288,6 +4357,128 @@ impl ::std::fmt::Display for GamepadConnection {
 }
 
 impl ::protobuf::reflect::ProtobufValue for GamepadConnection {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.G13Connection)
+pub struct G13Connection {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.G13Connection.id)
+    pub id: ::std::string::String,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.G13Connection.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a G13Connection {
+    fn default() -> &'a G13Connection {
+        <G13Connection as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl G13Connection {
+    pub fn new() -> G13Connection {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(1);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "id",
+            |m: &G13Connection| { &m.id },
+            |m: &mut G13Connection| { &mut m.id },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<G13Connection>(
+            "G13Connection",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for G13Connection {
+    const NAME: &'static str = "G13Connection";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                10 => {
+                    self.id = is.read_string()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if !self.id.is_empty() {
+            my_size += ::protobuf::rt::string_size(1, &self.id);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if !self.id.is_empty() {
+            os.write_string(1, &self.id)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> G13Connection {
+        G13Connection::new()
+    }
+
+    fn clear(&mut self) {
+        self.id.clear();
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static G13Connection {
+        static instance: G13Connection = G13Connection {
+            id: ::std::string::String::new(),
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for G13Connection {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("G13Connection").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for G13Connection {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for G13Connection {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -6616,7 +6807,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     R\x04name\x12\x12\n\x04host\x18\x02\x20\x01(\tR\x04host\x12\x12\n\x04por\
     t\x18\x03\x20\x01(\rR\x04port\"\x20\n\nSacnConfig\x12\x12\n\x04name\x18\
     \x01\x20\x01(\tR\x04name\"B\n\x0bConnections\x123\n\x0bconnections\x18\
-    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xc0\x03\n\nCon\
+    \x01\x20\x03(\x0b2\x11.mizer.ConnectionR\x0bconnections\"\xea\x03\n\nCon\
     nection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12(\n\x03dmx\x18\
     \n\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04midi\x18\
     \x0b\x20\x01(\x0b2\x15.mizer.MidiConnectionH\0R\x04midi\x12(\n\x03osc\
@@ -6626,66 +6817,68 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     lios\x12=\n\netherDream\x18\x0f\x20\x01(\x0b2\x1b.mizer.EtherDreamConnec\
     tionH\0R\netherDream\x124\n\x07gamepad\x18\x10\x20\x01(\x0b2\x18.mizer.G\
     amepadConnectionH\0R\x07gamepad\x12+\n\x04mqtt\x18\x11\x20\x01(\x0b2\x15\
-    .mizer.MqttConnectionH\0R\x04mqttB\x0c\n\nconnection\"\x8d\x01\n\rDmxCon\
-    nection\x12\x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\x12-\n\x06\
-    artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetConfigH\0R\x06artnet\x12'\n\
-    \x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnConfigH\0R\x04sacnB\x08\n\
-    \x06config\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\x20\x01(\t\
-    R\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08firmware\"*\n\x14\
-    EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\"7\n\
-    \x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
-    \n\x04name\x18\x02\x20\x01(\tR\x04name\"O\n\x0eMidiConnection\x12*\n\x0e\
-    device_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\x11\n\
-    \x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\x18\
-    \x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\x05\n\
-    \x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\"\n\
-    \x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\x05model\
-    \x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\x01(\tH\0R\
-    \x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\x1d.mizer.M\
-    idiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\x03(\x0b2\x1e.\
-    mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08controls\x18\x03\x20\
-    \x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08controls\x1aY\n\x05Gr\
-    oup\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\x08controls\x18\
-    \x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08controls\x1a\
-    \xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\
-    \n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07channel\x18\x03\x20\
-    \x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\x04note\x12G\n\
-    \x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceProfile.ControlT\
-    ypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01(\x08R\thasOutp\
-    ut\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\x06\n\x02CC\x10\
-    \x01B\t\n\x07_layout\"\x9a\x01\n\rOscConnection\x12\"\n\x0cconnectionId\
-    \x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\x18\x02\x20\
-    \x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01(\rR\noutput\
-    Port\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAddress\"\x99\
-    \x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\x01(\tR\
-    \x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12\"\n\x0cp\
-    layerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playback\x18\
-    \x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\x0bCdj\
-    Playback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\n\x03bp\
-    m\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\x01(\rR\
-    \x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.CdjPlayback\
-    .StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mizer.CdjP\
-    layback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\x01\x20\
-    \x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05title\"7\n\
-    \x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\x12\
-    \x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x03\"\xa2\x01\n\x0eMqttConn\
-    ection\x12\"\n\x0cconnectionId\x18\x01\x20\x01(\tR\x0cconnectionId\x12\
-    \x10\n\x03url\x18\x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\x03\
-    \x20\x01(\tH\0R\x08username\x88\x01\x01\x12\x1f\n\x08password\x18\x04\
-    \x20\x01(\tH\x01R\x08password\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t_pas\
-    sword\"\xa7\x01\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\x01\
-    \x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\x02\
-    \x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\x18\
-    \x03\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03oscB\x08\n\x06config2\
-    \xf9\x04\n\x0eConnectionsApi\x12B\n\x0eGetConnections\x12\x1c.mizer.GetC\
-    onnectionsRequest\x1a\x12.mizer.Connections\x12A\n\nMonitorDmx\x12\x18.m\
-    izer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\x12D\n\x0bMonito\
-    rMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiResponse\
-    \x12A\n\nMonitorOsc\x12\x18.mizer.MonitorOscRequest\x1a\x19.mizer.Monito\
-    rOscResponse\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetConfig\
-    \x1a\x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mizer.Sac\
-    nConfig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\x12\
+    .mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03g13\x18\x12\x20\x01(\x0b2\
+    \x14.mizer.G13ConnectionH\0R\x03g13B\x0c\n\nconnection\"\x8d\x01\n\rDmxC\
+    onnection\x12\x1a\n\x08outputId\x18\x01\x20\x01(\tR\x08outputId\x12-\n\
+    \x06artnet\x18\x03\x20\x01(\x0b2\x13.mizer.ArtnetConfigH\0R\x06artnet\
+    \x12'\n\x04sacn\x18\x04\x20\x01(\x0b2\x11.mizer.SacnConfigH\0R\x04sacnB\
+    \x08\n\x06config\"B\n\x10HeliosConnection\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\x12\x1a\n\x08firmware\x18\x02\x20\x01(\rR\x08firmware\"\
+    *\n\x14EtherDreamConnection\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04nam\
+    e\"7\n\x11GamepadConnection\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
+    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1f\n\rG13Connection\
+    \x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\"O\n\x0eMidiConnection\x12*\n\
+    \x0edevice_profile\x18\x01\x20\x01(\tH\0R\rdeviceProfile\x88\x01\x01B\
+    \x11\n\x0f_device_profile\"J\n\x12MidiDeviceProfiles\x124\n\x08profiles\
+    \x18\x01\x20\x03(\x0b2\x18.mizer.MidiDeviceProfileR\x08profiles\"\x8f\
+    \x05\n\x11MidiDeviceProfile\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\
+    \x12\"\n\x0cmanufacturer\x18\x02\x20\x01(\tR\x0cmanufacturer\x12\x14\n\
+    \x05model\x18\x03\x20\x01(\tR\x05model\x12\x1b\n\x06layout\x18\x04\x20\
+    \x01(\tH\0R\x06layout\x88\x01\x01\x123\n\x05pages\x18\x05\x20\x03(\x0b2\
+    \x1d.mizer.MidiDeviceProfile.PageR\x05pages\x1a\x90\x01\n\x04Page\x12\
+    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x126\n\x06groups\x18\x02\x20\
+    \x03(\x0b2\x1e.mizer.MidiDeviceProfile.GroupR\x06groups\x12<\n\x08contro\
+    ls\x18\x03\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\x08control\
+    s\x1aY\n\x05Group\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12<\n\
+    \x08controls\x18\x02\x20\x03(\x0b2\x20.mizer.MidiDeviceProfile.ControlR\
+    \x08controls\x1a\xc3\x01\n\x07Control\x12\x0e\n\x02id\x18\x01\x20\x01(\t\
+    R\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\x18\n\x07chann\
+    el\x18\x03\x20\x01(\rR\x07channel\x12\x12\n\x04note\x18\x04\x20\x01(\rR\
+    \x04note\x12G\n\x0ccontrol_type\x18\x05\x20\x01(\x0e2$.mizer.MidiDeviceP\
+    rofile.ControlTypeR\x0bcontrolType\x12\x1d\n\nhas_output\x18\x06\x20\x01\
+    (\x08R\thasOutput\"\x1f\n\x0bControlType\x12\x08\n\x04Note\x10\0\x12\x06\
+    \n\x02CC\x10\x01B\t\n\x07_layout\"\x9a\x01\n\rOscConnection\x12\"\n\x0cc\
+    onnectionId\x18\x01\x20\x01(\tR\x0cconnectionId\x12\x1d\n\ninput_port\
+    \x18\x02\x20\x01(\rR\tinputPort\x12\x1f\n\x0boutput_port\x18\x03\x20\x01\
+    (\rR\noutputPort\x12%\n\x0eoutput_address\x18\x04\x20\x01(\tR\routputAdd\
+    ress\"\x99\x01\n\x13ProDjLinkConnection\x12\x18\n\x07address\x18\x01\x20\
+    \x01(\tR\x07address\x12\x14\n\x05model\x18\x02\x20\x01(\tR\x05model\x12\
+    \"\n\x0cplayerNumber\x18\x03\x20\x01(\rR\x0cplayerNumber\x12.\n\x08playb\
+    ack\x18\x05\x20\x01(\x0b2\x12.mizer.CdjPlaybackR\x08playback\"\x9f\x02\n\
+    \x0bCdjPlayback\x12\x12\n\x04live\x18\x01\x20\x01(\x08R\x04live\x12\x10\
+    \n\x03bpm\x18\x02\x20\x01(\x01R\x03bpm\x12\x14\n\x05frame\x18\x03\x20\
+    \x01(\rR\x05frame\x124\n\x08playback\x18\x04\x20\x01(\x0e2\x18.mizer.Cdj\
+    Playback.StateR\x08playback\x12.\n\x05track\x18\x05\x20\x01(\x0b2\x18.mi\
+    zer.CdjPlayback.TrackR\x05track\x1a5\n\x05Track\x12\x16\n\x06artist\x18\
+    \x01\x20\x01(\tR\x06artist\x12\x14\n\x05title\x18\x02\x20\x01(\tR\x05tit\
+    le\"7\n\x05State\x12\x0b\n\x07Loading\x10\0\x12\x0b\n\x07Playing\x10\x01\
+    \x12\x08\n\x04Cued\x10\x02\x12\n\n\x06Cueing\x10\x03\"\xa2\x01\n\x0eMqtt\
+    Connection\x12\"\n\x0cconnectionId\x18\x01\x20\x01(\tR\x0cconnectionId\
+    \x12\x10\n\x03url\x18\x02\x20\x01(\tR\x03url\x12\x1f\n\x08username\x18\
+    \x03\x20\x01(\tH\0R\x08username\x88\x01\x01\x12\x1f\n\x08password\x18\
+    \x04\x20\x01(\tH\x01R\x08password\x88\x01\x01B\x0b\n\t_usernameB\x0b\n\t\
+    _password\"\xa7\x01\n\x1aConfigureConnectionRequest\x12(\n\x03dmx\x18\
+    \x01\x20\x01(\x0b2\x14.mizer.DmxConnectionH\0R\x03dmx\x12+\n\x04mqtt\x18\
+    \x02\x20\x01(\x0b2\x15.mizer.MqttConnectionH\0R\x04mqtt\x12(\n\x03osc\
+    \x18\x03\x20\x01(\x0b2\x14.mizer.OscConnectionH\0R\x03oscB\x08\n\x06conf\
+    ig2\xf9\x04\n\x0eConnectionsApi\x12B\n\x0eGetConnections\x12\x1c.mizer.G\
+    etConnectionsRequest\x1a\x12.mizer.Connections\x12A\n\nMonitorDmx\x12\
+    \x18.mizer.MonitorDmxRequest\x1a\x19.mizer.MonitorDmxResponse\x12D\n\x0b\
+    MonitorMidi\x12\x19.mizer.MonitorMidiRequest\x1a\x1a.mizer.MonitorMidiRe\
+    sponse\x12A\n\nMonitorOsc\x12\x18.mizer.MonitorOscRequest\x1a\x19.mizer.\
+    MonitorOscResponse\x12>\n\x13AddArtnetConnection\x12\x13.mizer.ArtnetCon\
+    fig\x1a\x12.mizer.Connections\x12:\n\x11AddSacnConnection\x12\x11.mizer.\
+    SacnConfig\x1a\x12.mizer.Connections\x12S\n\x15GetMidiDeviceProfiles\x12\
     \x1f.mizer.GetDeviceProfilesRequest\x1a\x19.mizer.MidiDeviceProfiles\x12\
     9\n\x10DeleteConnection\x12\x11.mizer.Connection\x1a\x12.mizer.Connectio\
     ns\x12K\n\x13ConfigureConnection\x12!.mizer.ConfigureConnectionRequest\
@@ -6707,7 +6900,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(0);
-            let mut messages = ::std::vec::Vec::with_capacity(33);
+            let mut messages = ::std::vec::Vec::with_capacity(34);
             messages.push(MonitorDmxRequest::generated_message_descriptor_data());
             messages.push(MonitorDmxResponse::generated_message_descriptor_data());
             messages.push(MonitorDmxUniverse::generated_message_descriptor_data());
@@ -6725,6 +6918,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(HeliosConnection::generated_message_descriptor_data());
             messages.push(EtherDreamConnection::generated_message_descriptor_data());
             messages.push(GamepadConnection::generated_message_descriptor_data());
+            messages.push(G13Connection::generated_message_descriptor_data());
             messages.push(MidiConnection::generated_message_descriptor_data());
             messages.push(MidiDeviceProfiles::generated_message_descriptor_data());
             messages.push(MidiDeviceProfile::generated_message_descriptor_data());

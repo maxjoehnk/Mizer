@@ -117,6 +117,8 @@ impl PipelineAccess {
             Ramp(node) => self.add_node(path, node),
             Noise(node) => self.add_node(path, node),
             Transport(node) => self.add_node(path, node),
+            G13Input(node) => self.add_node(path, node),
+            G13Output(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

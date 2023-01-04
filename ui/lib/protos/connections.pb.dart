@@ -1111,6 +1111,7 @@ enum Connection_Connection {
   etherDream, 
   gamepad, 
   mqtt, 
+  g13, 
   notSet
 }
 
@@ -1124,10 +1125,11 @@ class Connection extends $pb.GeneratedMessage {
     15 : Connection_Connection.etherDream,
     16 : Connection_Connection.gamepad,
     17 : Connection_Connection.mqtt,
+    18 : Connection_Connection.g13,
     0 : Connection_Connection.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18])
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..aOM<DmxConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
     ..aOM<MidiConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
@@ -1137,6 +1139,7 @@ class Connection extends $pb.GeneratedMessage {
     ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', protoName: 'etherDream', subBuilder: EtherDreamConnection.create)
     ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
     ..aOM<MqttConnection>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
+    ..aOM<G13Connection>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13', subBuilder: G13Connection.create)
     ..hasRequiredFields = false
   ;
 
@@ -1151,6 +1154,7 @@ class Connection extends $pb.GeneratedMessage {
     EtherDreamConnection? etherDream,
     GamepadConnection? gamepad,
     MqttConnection? mqtt,
+    G13Connection? g13,
   }) {
     final _result = create();
     if (name != null) {
@@ -1179,6 +1183,9 @@ class Connection extends $pb.GeneratedMessage {
     }
     if (mqtt != null) {
       _result.mqtt = mqtt;
+    }
+    if (g13 != null) {
+      _result.g13 = g13;
     }
     return _result;
   }
@@ -1302,6 +1309,17 @@ class Connection extends $pb.GeneratedMessage {
   void clearMqtt() => clearField(17);
   @$pb.TagNumber(17)
   MqttConnection ensureMqtt() => $_ensure(8);
+
+  @$pb.TagNumber(18)
+  G13Connection get g13 => $_getN(9);
+  @$pb.TagNumber(18)
+  set g13(G13Connection v) { setField(18, v); }
+  @$pb.TagNumber(18)
+  $core.bool hasG13() => $_has(9);
+  @$pb.TagNumber(18)
+  void clearG13() => clearField(18);
+  @$pb.TagNumber(18)
+  G13Connection ensureG13() => $_ensure(9);
 }
 
 enum DmxConnection_Config {
@@ -1565,6 +1583,53 @@ class GamepadConnection extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
+}
+
+class G13Connection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'G13Connection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  G13Connection._() : super();
+  factory G13Connection({
+    $core.String? id,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory G13Connection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory G13Connection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  G13Connection clone() => G13Connection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  G13Connection copyWith(void Function(G13Connection) updates) => super.copyWith((message) => updates(message as G13Connection)) as G13Connection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static G13Connection create() => G13Connection._();
+  G13Connection createEmptyInstance() => create();
+  static $pb.PbList<G13Connection> createRepeated() => $pb.PbList<G13Connection>();
+  @$core.pragma('dart2js:noInline')
+  static G13Connection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<G13Connection>(create);
+  static G13Connection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
 }
 
 class MidiConnection extends $pb.GeneratedMessage {

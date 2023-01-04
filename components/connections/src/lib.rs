@@ -17,6 +17,7 @@ pub enum Connection {
     Gamepad(GamepadView),
     Mqtt(MqttView),
     Osc(OscView),
+    G13(G13View),
 }
 
 impl Connection {
@@ -29,6 +30,7 @@ impl Connection {
             Connection::Gamepad(device) => device.name.clone(),
             Connection::Mqtt(connection) => connection.name.clone(),
             Connection::Osc(connection) => connection.name.clone(),
+            Connection::G13(_) => "Logitech G13".to_string(),
         }
     }
 }
@@ -39,6 +41,7 @@ impl From<DeviceRef> for Connection {
             DeviceRef::Helios(view) => view.into(),
             DeviceRef::EtherDream(view) => view.into(),
             DeviceRef::Gamepad(view) => view.into(),
+            DeviceRef::G13(view) => view.into(),
         }
     }
 }

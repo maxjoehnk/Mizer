@@ -5,12 +5,14 @@ use derive_more::From;
 use futures::prelude::stream::BoxStream;
 use futures::stream::select_all;
 use futures::StreamExt;
+use mizer_g13::{G13Discovery, G13Ref};
 use mizer_gamepads::{GamepadDiscovery, GamepadRef, GamepadState};
 use mizer_module::{Module, Runtime};
 use mizer_protocol_laser::{EtherDreamLaser, HeliosLaser};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
+pub mod g13;
 pub mod gamepads;
 pub mod laser;
 
@@ -33,6 +35,7 @@ pub trait DeviceDiscovery {
 enum DiscoveredDevice {
     Laser(LaserDevice),
     Gamepad(GamepadRef),
+    G13(G13Ref),
 }
 
 #[derive(Default, Clone)]
@@ -40,6 +43,8 @@ pub struct DeviceManager {
     laser_id_counter: Arc<AtomicUsize>,
     lasers: Arc<DashMap<String, LaserDevice>>,
     gamepads: Arc<DashMap<String, GamepadRef>>,
+    g13_id_counter: Arc<AtomicUsize>,
+    g13s: Arc<DashMap<String, G13Ref>>,
 }
 
 impl DeviceManager {
@@ -55,7 +60,10 @@ impl DeviceManager {
         let gamepads = GamepadDiscovery::discover()
             .map(DiscoveredDevice::from)
             .boxed_local();
-        let mut devices = select_all([lasers, gamepads]);
+        let g13s = G13Discovery::discover()
+            .map(DiscoveredDevice::from)
+            .boxed_local();
+        let mut devices = select_all([lasers, gamepads, g13s]);
         while let Some(device) = devices.next().await {
             match device {
                 DiscoveredDevice::Laser(laser) => {
@@ -70,6 +78,12 @@ impl DeviceManager {
                     log::debug!("Discovered device {:?} => {}", &gamepad, &id);
                     self.gamepads.insert(id, gamepad);
                 }
+                DiscoveredDevice::G13(g13) => {
+                    let id = self.g13_id_counter.fetch_add(1, Ordering::Relaxed);
+                    let id = format!("g13-{}", id);
+                    log::debug!("Discovered device {g13:?} => {id}");
+                    self.g13s.insert(id, g13);
+                }
             }
         }
     }
@@ -80,6 +94,10 @@ impl DeviceManager {
 
     pub fn get_gamepad(&self, id: &str) -> Option<Ref<'_, String, GamepadRef>> {
         self.gamepads.get(id)
+    }
+
+    pub fn get_g13_mut(&self, id: &str) -> Option<RefMut<'_, String, G13Ref>> {
+        self.g13s.get_mut(id)
     }
 
     pub fn current_devices(&self) -> Vec<DeviceRef> {
@@ -95,8 +113,14 @@ impl DeviceManager {
             }
             .into()
         });
+        let g13s = self.g13s.iter().map(|g13| {
+            G13View {
+                id: g13.key().clone(),
+            }
+            .into()
+        });
 
-        lasers.chain(gamepads).collect()
+        lasers.chain(gamepads).chain(g13s).collect()
     }
 }
 
@@ -141,6 +165,12 @@ pub enum DeviceRef {
     Helios(HeliosView),
     EtherDream(EtherDreamView),
     Gamepad(GamepadView),
+    G13(G13View),
+}
+
+#[derive(Debug, Clone)]
+pub struct G13View {
+    pub id: String,
 }
 
 pub struct DeviceModule(DeviceManager);

@@ -10,6 +10,7 @@ dashmap = "5"
 log = "0.4"
 mizer-protocol-laser = { path = "../protocols/laser" }
 mizer-gamepads = { path = "./gamepads" }
+mizer-g13 = { path = "./g13" }
 mizer-module = { path = "../../../runtime/module" }
 mizer-processing = { path = "../../../runtime/processing" }
 tokio = { version = "1.23", features = ["sync", "rt"] }

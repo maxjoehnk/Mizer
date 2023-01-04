@@ -200,6 +200,7 @@ const Connection$json = const {
     const {'1': 'etherDream', '3': 15, '4': 1, '5': 11, '6': '.mizer.EtherDreamConnection', '9': 0, '10': 'etherDream'},
     const {'1': 'gamepad', '3': 16, '4': 1, '5': 11, '6': '.mizer.GamepadConnection', '9': 0, '10': 'gamepad'},
     const {'1': 'mqtt', '3': 17, '4': 1, '5': 11, '6': '.mizer.MqttConnection', '9': 0, '10': 'mqtt'},
+    const {'1': 'g13', '3': 18, '4': 1, '5': 11, '6': '.mizer.G13Connection', '9': 0, '10': 'g13'},
   ],
   '8': const [
     const {'1': 'connection'},
@@ -207,7 +208,7 @@ const Connection$json = const {
 };
 
 /// Descriptor for `Connection`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSPQoKZXRoZXJEcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWQSKwoEbXF0dBgRIAEoCzIVLm1pemVyLk1xdHRDb25uZWN0aW9uSABSBG1xdHRCDAoKY29ubmVjdGlvbg==');
+final $typed_data.Uint8List connectionDescriptor = $convert.base64Decode('CgpDb25uZWN0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSKAoDZG14GAogASgLMhQubWl6ZXIuRG14Q29ubmVjdGlvbkgAUgNkbXgSKwoEbWlkaRgLIAEoCzIVLm1pemVyLk1pZGlDb25uZWN0aW9uSABSBG1pZGkSKAoDb3NjGAwgASgLMhQubWl6ZXIuT3NjQ29ubmVjdGlvbkgAUgNvc2MSOgoJcHJvREpMaW5rGA0gASgLMhoubWl6ZXIuUHJvRGpMaW5rQ29ubmVjdGlvbkgAUglwcm9ESkxpbmsSMQoGaGVsaW9zGA4gASgLMhcubWl6ZXIuSGVsaW9zQ29ubmVjdGlvbkgAUgZoZWxpb3MSPQoKZXRoZXJEcmVhbRgPIAEoCzIbLm1pemVyLkV0aGVyRHJlYW1Db25uZWN0aW9uSABSCmV0aGVyRHJlYW0SNAoHZ2FtZXBhZBgQIAEoCzIYLm1pemVyLkdhbWVwYWRDb25uZWN0aW9uSABSB2dhbWVwYWQSKwoEbXF0dBgRIAEoCzIVLm1pemVyLk1xdHRDb25uZWN0aW9uSABSBG1xdHQSKAoDZzEzGBIgASgLMhQubWl6ZXIuRzEzQ29ubmVjdGlvbkgAUgNnMTNCDAoKY29ubmVjdGlvbg==');
 @$core.Deprecated('Use dmxConnectionDescriptor instead')
 const DmxConnection$json = const {
   '1': 'DmxConnection',
@@ -255,6 +256,16 @@ const GamepadConnection$json = const {
 
 /// Descriptor for `GamepadConnection`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List gamepadConnectionDescriptor = $convert.base64Decode('ChFHYW1lcGFkQ29ubmVjdGlvbhIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
+@$core.Deprecated('Use g13ConnectionDescriptor instead')
+const G13Connection$json = const {
+  '1': 'G13Connection',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `G13Connection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List g13ConnectionDescriptor = $convert.base64Decode('Cg1HMTNDb25uZWN0aW9uEg4KAmlkGAEgASgJUgJpZA==');
 @$core.Deprecated('Use midiConnectionDescriptor instead')
 const MidiConnection$json = const {
   '1': 'MidiConnection',

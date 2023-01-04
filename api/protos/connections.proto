@@ -115,6 +115,7 @@ message Connection {
     EtherDreamConnection etherDream = 15;
     GamepadConnection gamepad = 16;
     MqttConnection mqtt = 17;
+    G13Connection g13 = 18;
   }
 }
 
@@ -138,6 +139,10 @@ message EtherDreamConnection {
 message GamepadConnection {
   string id = 1;
   string name = 2;
+}
+
+message G13Connection {
+  string id = 1;
 }
 
 message MidiConnection {

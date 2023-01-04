@@ -88,6 +88,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Noise = Node_NodeType._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Noise');
   static const Node_NodeType Label = Node_NodeType._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Label');
   static const Node_NodeType Transport = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Transport');
+  static const Node_NodeType G13Input = Node_NodeType._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Input');
+  static const Node_NodeType G13Output = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Output');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -137,6 +139,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Noise,
     Label,
     Transport,
+    G13Input,
+    G13Output,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -331,5 +335,88 @@ class MathNodeConfig_Mode extends $pb.ProtobufEnum {
   static MathNodeConfig_Mode? valueOf($core.int value) => _byValue[value];
 
   const MathNodeConfig_Mode._($core.int v, $core.String n) : super(v, n);
+}
+
+class G13InputNodeConfig_Key extends $pb.ProtobufEnum {
+  static const G13InputNodeConfig_Key G1 = G13InputNodeConfig_Key._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G1');
+  static const G13InputNodeConfig_Key G2 = G13InputNodeConfig_Key._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G2');
+  static const G13InputNodeConfig_Key G3 = G13InputNodeConfig_Key._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G3');
+  static const G13InputNodeConfig_Key G4 = G13InputNodeConfig_Key._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G4');
+  static const G13InputNodeConfig_Key G5 = G13InputNodeConfig_Key._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G5');
+  static const G13InputNodeConfig_Key G6 = G13InputNodeConfig_Key._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G6');
+  static const G13InputNodeConfig_Key G7 = G13InputNodeConfig_Key._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G7');
+  static const G13InputNodeConfig_Key G8 = G13InputNodeConfig_Key._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G8');
+  static const G13InputNodeConfig_Key G9 = G13InputNodeConfig_Key._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G9');
+  static const G13InputNodeConfig_Key G10 = G13InputNodeConfig_Key._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G10');
+  static const G13InputNodeConfig_Key G11 = G13InputNodeConfig_Key._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G11');
+  static const G13InputNodeConfig_Key G12 = G13InputNodeConfig_Key._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G12');
+  static const G13InputNodeConfig_Key G13 = G13InputNodeConfig_Key._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13');
+  static const G13InputNodeConfig_Key G14 = G13InputNodeConfig_Key._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G14');
+  static const G13InputNodeConfig_Key G15 = G13InputNodeConfig_Key._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G15');
+  static const G13InputNodeConfig_Key G16 = G13InputNodeConfig_Key._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G16');
+  static const G13InputNodeConfig_Key G17 = G13InputNodeConfig_Key._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G17');
+  static const G13InputNodeConfig_Key G18 = G13InputNodeConfig_Key._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G18');
+  static const G13InputNodeConfig_Key G19 = G13InputNodeConfig_Key._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G19');
+  static const G13InputNodeConfig_Key G20 = G13InputNodeConfig_Key._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G20');
+  static const G13InputNodeConfig_Key G21 = G13InputNodeConfig_Key._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G21');
+  static const G13InputNodeConfig_Key G22 = G13InputNodeConfig_Key._(21, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G22');
+  static const G13InputNodeConfig_Key M1 = G13InputNodeConfig_Key._(22, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'M1');
+  static const G13InputNodeConfig_Key M2 = G13InputNodeConfig_Key._(23, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'M2');
+  static const G13InputNodeConfig_Key M3 = G13InputNodeConfig_Key._(24, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'M3');
+  static const G13InputNodeConfig_Key MR = G13InputNodeConfig_Key._(25, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MR');
+  static const G13InputNodeConfig_Key L1 = G13InputNodeConfig_Key._(26, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L1');
+  static const G13InputNodeConfig_Key L2 = G13InputNodeConfig_Key._(27, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L2');
+  static const G13InputNodeConfig_Key L3 = G13InputNodeConfig_Key._(28, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L3');
+  static const G13InputNodeConfig_Key L4 = G13InputNodeConfig_Key._(29, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'L4');
+  static const G13InputNodeConfig_Key JoystickX = G13InputNodeConfig_Key._(30, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JoystickX');
+  static const G13InputNodeConfig_Key JoystickY = G13InputNodeConfig_Key._(31, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'JoystickY');
+  static const G13InputNodeConfig_Key Joystick = G13InputNodeConfig_Key._(32, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Joystick');
+  static const G13InputNodeConfig_Key Left = G13InputNodeConfig_Key._(33, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Left');
+  static const G13InputNodeConfig_Key Down = G13InputNodeConfig_Key._(34, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Down');
+  static const G13InputNodeConfig_Key BD = G13InputNodeConfig_Key._(35, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BD');
+
+  static const $core.List<G13InputNodeConfig_Key> values = <G13InputNodeConfig_Key> [
+    G1,
+    G2,
+    G3,
+    G4,
+    G5,
+    G6,
+    G7,
+    G8,
+    G9,
+    G10,
+    G11,
+    G12,
+    G13,
+    G14,
+    G15,
+    G16,
+    G17,
+    G18,
+    G19,
+    G20,
+    G21,
+    G22,
+    M1,
+    M2,
+    M3,
+    MR,
+    L1,
+    L2,
+    L3,
+    L4,
+    JoystickX,
+    JoystickY,
+    Joystick,
+    Left,
+    Down,
+    BD,
+  ];
+
+  static final $core.Map<$core.int, G13InputNodeConfig_Key> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static G13InputNodeConfig_Key? valueOf($core.int value) => _byValue[value];
+
+  const G13InputNodeConfig_Key._($core.int v, $core.String n) : super(v, n);
 }
 

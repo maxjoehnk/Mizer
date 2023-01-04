@@ -223,7 +223,7 @@ class _ControlLayoutState extends State<ControlLayout> {
                     Navigator.of(context).push(MizerPopupRoute(
                         position: details.globalPosition,
                         child: AddControlPopup(
-                            nodes: nodes.nodes.where((node) {
+                            nodes: nodes.allNodes.where((node) {
                               var control = widget.layout.controls
                                   .firstWhereOrNull((c) => c.node == node.path);
 

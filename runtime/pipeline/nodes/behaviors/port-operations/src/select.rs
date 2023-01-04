@@ -54,7 +54,7 @@ impl ProcessingNode for SelectNode {
         let channel = context.read_port::<_, f64>("channel");
         if let Some(channel) = channel {
             let port_count = context.input_port_count("input");
-            *state = Some(((port_count - 1) as f64 * channel).round() as usize);
+            *state = Some((port_count.saturating_sub(1) as f64 * channel).round() as usize);
         }
         if let Some(channel) = state {
             let ports = context.read_ports::<_, f64>("input");

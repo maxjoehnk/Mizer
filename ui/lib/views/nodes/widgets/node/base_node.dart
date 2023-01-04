@@ -183,25 +183,7 @@ class BaseNode extends StatelessWidget {
   }
 
   void _onDeleteNode(BuildContext context) async {
-    bool result = await showDialog(
-        context: context,
-        builder: (BuildContext context) => ActionDialog(
-          title: "Node",
-          content: SingleChildScrollView(
-            child: Text("Delete Node '${node.path}'?"),
-          ),
-          actions: [
-            PopupAction(
-              "Cancel", () => Navigator.of(context).pop(false),
-            ),
-            PopupAction(
-              "Delete", () => Navigator.of(context).pop(true),
-            ),
-          ],
-        ));
-    if (result) {
-      context.read<NodesBloc>().add(DeleteNode(node.path));
-    }
+    context.read<NodesBloc>().add(DeleteNode(node.path));
   }
 }
 

@@ -50,6 +50,7 @@ assign_group = "ctrl+g"
 add_node = "alt+a"
 duplicate_node = "ctrl+d"
 group_nodes = "ctrl+g"
+delete_node = "delete"
 
 [hotkeys.sequencer]
 add_sequence = "alt+a"

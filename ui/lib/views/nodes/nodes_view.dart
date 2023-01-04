@@ -5,8 +5,8 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/views/layout/layout_view.dart';
+import 'package:mizer/views/nodes/widgets/node/base_node.dart';
 import 'package:mizer/widgets/controls/button.dart';
-import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:mizer/widgets/popup/popup_menu.dart';
 import 'package:mizer/widgets/popup/popup_route.dart';
@@ -64,11 +64,8 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
       hotkeyMap: {
         // TODO: determine position for new node
         "add_node": () => {},
-        "duplicate_node": () {
-          if (widget.nodeEditorModel.selectedNode != null) {
-            context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path, parent: widget.nodeEditorModel.parent?.node.path));
-          }
-        },
+        "duplicate_node": () => _duplicateNode(context),
+        "delete_node": () => _deleteNode(context),
         "group_nodes": () => _groupNodes(context)
       },
       child: Row(
@@ -133,7 +130,9 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
                 ],
               ),
               actions: [
-                PanelAction(label: "Group Nodes".i18n, onClick: () => _groupNodes(context), hotkeyId: "group_nodes")
+                PanelAction(label: "Group Nodes".i18n, onClick: () => _groupNodes(context), hotkeyId: "group_nodes"),
+                PanelAction(label: "Delete Node".i18n, disabled: model.selectedNode == null || !model.selectedNode!.node.canDelete, onClick: () => _deleteNode(context), hotkeyId: "delete_node"),
+                PanelAction(label: "Duplicate Node".i18n, disabled: model.selectedNode == null || !model.selectedNode!.node.canDuplicate, onClick: () => _duplicateNode(context), hotkeyId: "duplicate_node"),
               ],
             ),
           ),
@@ -152,6 +151,18 @@ class _NodesViewState extends State<NodesView> with WidgetsBindingObserver {
         ],
       ),
     );
+  }
+
+  void _deleteNode(BuildContext context) {
+    if (widget.nodeEditorModel.selectedNode != null && widget.nodeEditorModel.selectedNode!.node.canDelete) {
+      context.read<NodesBloc>().add(DeleteNode(widget.nodeEditorModel.selectedNode!.node.path));
+    }
+  }
+
+  void _duplicateNode(BuildContext context) {
+    if (widget.nodeEditorModel.selectedNode != null && widget.nodeEditorModel.selectedNode!.node.canDuplicate) {
+      context.read<NodesBloc>().add(DuplicateNode(widget.nodeEditorModel.selectedNode!.node.path, parent: widget.nodeEditorModel.parent?.node.path));
+    }
   }
 
   void _groupNodes(BuildContext context) {

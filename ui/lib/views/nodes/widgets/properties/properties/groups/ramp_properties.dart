@@ -11,7 +11,7 @@ import 'package:mizer/widgets/splines/spline_editor.dart';
 
 import '../property_group.dart';
 
-const double SPLINE_SIZE = 232;
+const double SPLINE_SIZE = 208;
 
 class RampProperties extends StatefulWidget {
   final RampNodeConfig config;

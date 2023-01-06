@@ -6,6 +6,7 @@ use crate::state::{
 use crate::value::*;
 use crate::Sequence;
 use mizer_fixtures::definition::FixtureFaderControl;
+use mizer_fixtures::selection::{BackwardsCompatibleFixtureSelection, FixtureSelection};
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
 use mizer_util::LerpExt;
@@ -35,7 +36,7 @@ pub struct Cue {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub struct CueEffect {
-    pub fixtures: Vec<FixtureId>,
+    pub fixtures: FixtureSelection,
     pub effect: u32,
 }
 
@@ -69,8 +70,8 @@ impl Cue {
                 .iter_mut()
                 .find(|c| c.control == control.control && c.value == control.value)
             {
-                for fixture in control.fixtures.iter() {
-                    target.fixtures.push(*fixture);
+                for fixture in control.fixtures.get_fixtures().iter().flatten() {
+                    target.fixtures.add_fixture(*fixture);
                 }
             } else {
                 self.controls.push(control);
@@ -142,7 +143,7 @@ impl Cue {
         for channel in &self.controls {
             let delay_durations = self.delay_durations(sequence);
             let fade_durations = self.fade_durations(sequence);
-            for fixture in &sequence.fixtures {
+            for fixture in sequence.fixtures.iter() {
                 match sequence_state
                     .channel_state
                     .get_mut(&(*fixture, channel.control.clone()))
@@ -288,19 +289,19 @@ impl Default for CueTrigger {
 pub struct CueControl {
     pub control: FixtureFaderControl,
     pub value: SequencerValue<f64>,
-    pub fixtures: Vec<FixtureId>,
+    pub fixtures: BackwardsCompatibleFixtureSelection,
 }
 
 impl CueControl {
     pub(crate) fn new(
         control: FixtureFaderControl,
         value: impl Into<SequencerValue<f64>>,
-        fixtures: Vec<FixtureId>,
+        fixtures: FixtureSelection,
     ) -> Self {
         Self {
             control,
             value: value.into(),
-            fixtures,
+            fixtures: fixtures.into(),
         }
     }
 
@@ -311,26 +312,46 @@ impl CueControl {
         state: &SequenceState,
     ) -> Vec<(FixtureId, Option<f64>)> {
         profiling::scope!("CueControl::values");
-        let mut values = vec![None; self.fixtures.len()];
+        let mut values = HashMap::new();
+        for fixture in self.fixtures.get_fixtures().iter().flatten() {
+            values.insert(*fixture, None);
+        }
 
-        self.fill_values(state, &mut values);
+        self.fill_values(cue, state, &mut values);
         self.delay_values(cue, state, &mut values);
         self.fade_values(sequence, cue, state, &mut values);
 
-        self.fixtures.iter().copied().zip(values).collect()
+        values.into_iter().collect()
     }
 
-    pub(crate) fn fill_values(&self, _: &SequenceState, values: &mut Vec<Option<f64>>) {
+    fn interpolate<F: FnMut(FixtureId, f64)>(&self, range: (f64, f64), mut callback: F) {
+        let fixtures = self.fixtures.get_fixtures();
+        let fixture_count = fixtures.len();
+        for (i, fixtures) in fixtures.into_iter().enumerate() {
+            let value: f64 =
+                (i as f64).linear_extrapolate((0., (fixture_count as f64) - 1.), range);
+            for fixture in fixtures {
+                callback(fixture, value);
+            }
+        }
+    }
+
+    pub(crate) fn fill_values(
+        &self,
+        cue: &Cue,
+        _: &SequenceState,
+        values: &mut HashMap<FixtureId, Option<f64>>,
+    ) {
         match self.value {
             SequencerValue::Direct(value) => {
-                values.fill(Some(value));
-            }
-            SequencerValue::Range((from, to)) => {
-                for i in 0..self.fixtures.len() {
-                    let value: f64 = (i as f64)
-                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.0), (from, to));
-                    values[i] = Some(value);
+                for (_, v) in values.iter_mut() {
+                    *v = Some(value);
                 }
+            }
+            SequencerValue::Range(range) => {
+                self.interpolate(range, |id, value| {
+                    values.insert(id, Some(value));
+                });
             }
         }
     }
@@ -339,40 +360,40 @@ impl CueControl {
         &self,
         cue: &Cue,
         state: &SequenceState,
-        values: &mut Vec<Option<f64>>,
+        values: &mut HashMap<FixtureId, Option<f64>>,
     ) {
         match cue.cue_delay {
             None => {}
             Some(SequencerValue::Direct(SequencerTime::Seconds(delay))) => {
                 if state.get_timer() < Duration::from_secs_f64(delay) {
-                    values.fill(None);
+                    for (_, v) in values.iter_mut() {
+                        *v = None;
+                    }
                 }
             }
             Some(SequencerValue::Range((
                 SequencerTime::Seconds(from),
                 SequencerTime::Seconds(to),
             ))) => {
-                for i in 0..self.fixtures.len() {
-                    let delay: f64 = (i as f64)
-                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
+                self.interpolate((from, to), |id, delay| {
                     if state.get_timer() < Duration::from_secs_f64(delay) {
-                        values[i] = None;
+                        values.insert(id, None);
                     }
-                }
+                });
             }
             Some(SequencerValue::Direct(SequencerTime::Beats(delay))) => {
                 if state.get_beats_passed() < delay {
-                    values.fill(None);
+                    for (_, v) in values.iter_mut() {
+                        *v = None;
+                    }
                 }
             }
             Some(SequencerValue::Range((SequencerTime::Beats(from), SequencerTime::Beats(to)))) => {
-                for i in 0..self.fixtures.len() {
-                    let delay: f64 = (i as f64)
-                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
+                self.interpolate((from, to), |id, delay| {
                     if state.get_beats_passed() < delay {
-                        values[i] = None;
+                        values.insert(id, None);
                     }
-                }
+                });
             }
             _ => unreachable!("Invalid combo of beats and seconds"),
         }
@@ -383,17 +404,17 @@ impl CueControl {
         sequence: &Sequence,
         cue: &Cue,
         sequence_state: &SequenceState,
-        values: &mut Vec<Option<f64>>,
+        values: &mut HashMap<FixtureId, Option<f64>>,
     ) {
-        for (i, fixture_id) in self.fixtures.iter().copied().enumerate() {
+        for fixture_id in self.fixtures.get_fixtures().iter().flatten().copied() {
             let cue_state = sequence_state.channel_state[&(fixture_id, self.control.clone())];
             if cue_state.state != CueChannelState::Fading {
                 continue;
             }
-            if values[i].is_none() {
+            if values[&fixture_id].is_none() {
                 continue;
             }
-            let value = values[i].unwrap();
+            let value = values[&fixture_id].unwrap();
             let previous_value = sequence_state
                 .get_fixture_value(fixture_id, &self.control)
                 .unwrap_or_default();
@@ -403,53 +424,48 @@ impl CueControl {
                 Some(SequencerValue::Direct(SequencerTime::Seconds(duration))) => {
                     let time = cue_state.duration.time.as_secs_f64();
 
-                    values[i] =
-                        Some(time.linear_extrapolate((0., duration), (previous_value, value)));
+                    values.insert(
+                        fixture_id,
+                        Some(time.linear_extrapolate((0., duration), (previous_value, value))),
+                    );
                 }
                 Some(SequencerValue::Range((
                     SequencerTime::Seconds(from),
                     SequencerTime::Seconds(to),
                 ))) => {
-                    let duration: f64 = (i as f64)
-                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    let time = cue_state.duration.time.as_secs_f64();
+                    self.interpolate((from, to), |id, duration| {
+                        let time = cue_state.duration.time.as_secs_f64();
 
-                    values[i] =
-                        Some(time.linear_extrapolate((0., duration), (previous_value, value)));
+                        values.insert(
+                            id,
+                            Some(time.linear_extrapolate((0., duration), (previous_value, value))),
+                        );
+                    });
                 }
                 Some(SequencerValue::Direct(SequencerTime::Beats(beats))) => {
                     let time = cue_state.duration.beat;
 
-                    values[i] = Some(time.linear_extrapolate((0., beats), (previous_value, value)));
+                    values.insert(
+                        fixture_id,
+                        Some(time.linear_extrapolate((0., beats), (previous_value, value))),
+                    );
                 }
                 Some(SequencerValue::Range((
                     SequencerTime::Beats(from),
                     SequencerTime::Beats(to),
                 ))) => {
-                    let beats: f64 = (i as f64)
-                        .linear_extrapolate((0., (self.fixtures.len() as f64) - 1.), (from, to));
-                    let time = cue_state.duration.beat;
+                    self.interpolate((from, to), |id, beats| {
+                        let time = cue_state.duration.beat;
 
-                    values[i] = Some(time.linear_extrapolate((0., beats), (previous_value, value)));
+                        values.insert(
+                            id,
+                            Some(time.linear_extrapolate((0., beats), (previous_value, value))),
+                        );
+                    });
                 }
                 _ => unreachable!("Invalid combo of beats and seconds"),
             }
         }
-    }
-}
-
-trait VecExtension {
-    fn overlaps(&self, other: &Self) -> bool;
-}
-
-impl<T: PartialEq> VecExtension for Vec<T> {
-    fn overlaps(&self, other: &Self) -> bool {
-        for item in other.iter() {
-            if self.contains(item) {
-                return true;
-            }
-        }
-        false
     }
 }
 
@@ -462,12 +478,12 @@ mod tests {
     #[test]
     fn merge_should_combine_different_controls() {
         let old_control = CueControl {
-            fixtures: vec![FixtureId::Fixture(1)],
+            fixtures: vec![FixtureId::Fixture(1)].into(),
             value: SequencerValue::Direct(1.),
             control: FixtureFaderControl::Intensity,
         };
         let new_control = CueControl {
-            fixtures: vec![FixtureId::Fixture(1)],
+            fixtures: vec![FixtureId::Fixture(1)].into(),
             value: SequencerValue::Direct(1.),
             control: FixtureFaderControl::Shutter,
         };
@@ -482,7 +498,7 @@ mod tests {
     #[test]
     fn merge_should_combine_different_fixtures() {
         let expected = CueControl {
-            fixtures: vec![FixtureId::Fixture(1), FixtureId::Fixture(2)],
+            fixtures: vec![FixtureId::Fixture(1), FixtureId::Fixture(2)].into(),
             value: SequencerValue::Direct(1.),
             control: FixtureFaderControl::Intensity,
         };
@@ -490,13 +506,13 @@ mod tests {
             1,
             "",
             vec![CueControl {
-                fixtures: vec![FixtureId::Fixture(1)],
+                fixtures: vec![FixtureId::Fixture(1)].into(),
                 value: SequencerValue::Direct(1.),
                 control: FixtureFaderControl::Intensity,
             }],
         );
         let controls = vec![CueControl {
-            fixtures: vec![FixtureId::Fixture(2)],
+            fixtures: vec![FixtureId::Fixture(2)].into(),
             value: SequencerValue::Direct(1.),
             control: FixtureFaderControl::Intensity,
         }];
@@ -510,12 +526,12 @@ mod tests {
     fn merge_should_merge_overlapping_controls() {
         let expected = vec![
             CueControl {
-                fixtures: vec![FixtureId::Fixture(1)],
+                fixtures: vec![FixtureId::Fixture(1)].into(),
                 value: SequencerValue::Direct(1.),
                 control: FixtureFaderControl::Intensity,
             },
             CueControl {
-                fixtures: vec![FixtureId::Fixture(1)],
+                fixtures: vec![FixtureId::Fixture(1)].into(),
                 value: SequencerValue::Direct(1.),
                 control: FixtureFaderControl::Shutter,
             },
@@ -524,7 +540,7 @@ mod tests {
             1,
             "",
             vec![CueControl {
-                fixtures: vec![FixtureId::Fixture(1)],
+                fixtures: vec![FixtureId::Fixture(1)].into(),
                 value: SequencerValue::Direct(1.),
                 control: FixtureFaderControl::Intensity,
             }],

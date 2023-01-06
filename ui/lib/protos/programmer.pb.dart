@@ -51,6 +51,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
     ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeFixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..pc<ProgrammerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
     ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockSize', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wings', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -60,6 +63,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
     $core.Iterable<$0.FixtureId>? activeFixtures,
     $core.Iterable<ProgrammerChannel>? controls,
     $core.bool? highlight,
+    $core.int? blockSize,
+    $core.int? groups,
+    $core.int? wings,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -73,6 +79,15 @@ class ProgrammerState extends $pb.GeneratedMessage {
     }
     if (highlight != null) {
       _result.highlight = highlight;
+    }
+    if (blockSize != null) {
+      _result.blockSize = blockSize;
+    }
+    if (groups != null) {
+      _result.groups = groups;
+    }
+    if (wings != null) {
+      _result.wings = wings;
     }
     return _result;
   }
@@ -114,6 +129,33 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.bool hasHighlight() => $_has(3);
   @$pb.TagNumber(4)
   void clearHighlight() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get blockSize => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set blockSize($core.int v) { $_setUnsignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasBlockSize() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearBlockSize() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get groups => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set groups($core.int v) { $_setUnsignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasGroups() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearGroups() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get wings => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set wings($core.int v) { $_setUnsignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasWings() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearWings() => clearField(7);
 }
 
 class ProgrammerChannel_GenericValue extends $pb.GeneratedMessage {

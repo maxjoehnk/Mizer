@@ -38,6 +38,9 @@ class ProgrammerStatePointer {
       fixtures: fixtures,
       controls: channels,
       highlight: state.highlight == 1,
+      blockSize: state.block_size,
+      groups: state.groups,
+      wings: state.wings,
     );
   }
 

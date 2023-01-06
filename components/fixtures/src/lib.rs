@@ -18,6 +18,7 @@ mod sub_fixture;
 // TODO: should probably find a better name
 mod color_mixer;
 pub mod programmer;
+pub mod selection;
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[serde(untagged)]

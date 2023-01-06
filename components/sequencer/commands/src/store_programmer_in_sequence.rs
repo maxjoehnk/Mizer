@@ -32,10 +32,17 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
         let mut previous = None;
         sequencer.update_sequence(self.sequence_id, |sequence| {
             previous = Some(sequence.clone());
-            let mut fixtures = self
+            let mut all_fixtures = self
                 .controls
                 .iter()
-                .flat_map(|c| c.fixtures.clone())
+                .flat_map(|c| {
+                    c.fixtures
+                        .get_fixtures()
+                        .iter()
+                        .flatten()
+                        .copied()
+                        .collect::<Vec<_>>()
+                })
                 .collect();
             let cue = if self.store_mode == StoreMode::AddCue || sequence.cues.is_empty() {
                 let cue_id = sequence.add_cue();
@@ -52,7 +59,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                 .into_iter()
                 .map(|control| CueControl {
                     control: control.control,
-                    fixtures: control.fixtures.clone(),
+                    fixtures: control.fixtures.clone().into(),
                     value: SequencerValue::Direct(control.value),
                 })
                 .collect();
@@ -78,7 +85,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                         .collect();
                 }
             }
-            sequence.fixtures.append(&mut fixtures);
+            sequence.fixtures.append(&mut all_fixtures);
             sequence.fixtures.sort();
             sequence.fixtures.dedup();
 

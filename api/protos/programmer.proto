@@ -28,6 +28,9 @@ message ProgrammerState {
   repeated mizer.fixtures.FixtureId active_fixtures = 2;
   repeated ProgrammerChannel controls = 3;
   bool highlight = 4;
+  uint32 block_size = 5;
+  uint32 groups = 6;
+  uint32 wings = 7;
 }
 
 message ProgrammerChannel {

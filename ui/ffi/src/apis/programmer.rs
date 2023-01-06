@@ -66,6 +66,9 @@ pub struct FFIProgrammerState {
     pub fixtures: Array<FFIFixtureId>,
     pub channels: Array<FFIProgrammerChannel>,
     pub highlight: u8,
+    pub block_size: u32,
+    pub groups: u32,
+    pub wings: u32,
 }
 
 impl FFIProgrammerState {
@@ -90,6 +93,9 @@ impl FFIProgrammerState {
                 .collect::<Vec<_>>()
                 .into(),
             highlight: u8::from(state.highlight),
+            block_size: state.block_size.unwrap_or_default() as u32,
+            groups: state.groups.unwrap_or_default() as u32,
+            wings: state.wings.unwrap_or_default() as u32,
         }
     }
 }

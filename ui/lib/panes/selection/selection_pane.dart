@@ -53,7 +53,9 @@ class _SelectionPaneState extends State<SelectionPane> with SingleTickerProvider
       return SelectionSheet(
           fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
           isEmpty: selectedIds.isEmpty && trackedIds.isEmpty,
-          api: context.read());
+          api: context.read(),
+          state: state,
+      );
     });
   }
 

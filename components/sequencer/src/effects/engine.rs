@@ -5,7 +5,7 @@ use dashmap::DashMap;
 use itertools::Itertools;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::{ProgrammedEffect, Programmer};
-use mizer_fixtures::FixtureId;
+use mizer_fixtures::selection::FixtureSelection;
 use mizer_module::ClockFrame;
 use std::collections::HashMap;
 use std::ops::{Deref, DerefMut};
@@ -110,7 +110,7 @@ impl EffectEngine {
     pub(crate) fn run_effect(
         &self,
         effect: u32,
-        fixtures: Vec<FixtureId>,
+        fixtures: FixtureSelection,
     ) -> Option<EffectInstanceId> {
         profiling::scope!("EffectEngine::run_effect");
         if let Some(effect) = self.effects.get(&effect) {

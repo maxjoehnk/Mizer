@@ -32,7 +32,7 @@ impl Sequence {
             id,
             name: format!("Sequence {}", id),
             cues: Vec::new(),
-            fixtures: Vec::new(),
+            fixtures: Default::default(),
             wrap_around: false,
         }
     }

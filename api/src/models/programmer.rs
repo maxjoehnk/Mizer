@@ -140,6 +140,12 @@ pub struct ProgrammerState {
     pub controls: ::std::vec::Vec<ProgrammerChannel>,
     // @@protoc_insertion_point(field:mizer.programmer.ProgrammerState.highlight)
     pub highlight: bool,
+    // @@protoc_insertion_point(field:mizer.programmer.ProgrammerState.block_size)
+    pub block_size: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.ProgrammerState.groups)
+    pub groups: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.ProgrammerState.wings)
+    pub wings: u32,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.programmer.ProgrammerState.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -157,7 +163,7 @@ impl ProgrammerState {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut fields = ::std::vec::Vec::with_capacity(7);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "fixtures",
@@ -178,6 +184,21 @@ impl ProgrammerState {
             "highlight",
             |m: &ProgrammerState| { &m.highlight },
             |m: &mut ProgrammerState| { &mut m.highlight },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "block_size",
+            |m: &ProgrammerState| { &m.block_size },
+            |m: &mut ProgrammerState| { &mut m.block_size },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "groups",
+            |m: &ProgrammerState| { &m.groups },
+            |m: &mut ProgrammerState| { &mut m.groups },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "wings",
+            |m: &ProgrammerState| { &m.wings },
+            |m: &mut ProgrammerState| { &mut m.wings },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProgrammerState>(
             "ProgrammerState",
@@ -209,6 +230,15 @@ impl ::protobuf::Message for ProgrammerState {
                 32 => {
                     self.highlight = is.read_bool()?;
                 },
+                40 => {
+                    self.block_size = is.read_uint32()?;
+                },
+                48 => {
+                    self.groups = is.read_uint32()?;
+                },
+                56 => {
+                    self.wings = is.read_uint32()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -236,6 +266,15 @@ impl ::protobuf::Message for ProgrammerState {
         if self.highlight != false {
             my_size += 1 + 1;
         }
+        if self.block_size != 0 {
+            my_size += ::protobuf::rt::uint32_size(5, self.block_size);
+        }
+        if self.groups != 0 {
+            my_size += ::protobuf::rt::uint32_size(6, self.groups);
+        }
+        if self.wings != 0 {
+            my_size += ::protobuf::rt::uint32_size(7, self.wings);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -253,6 +292,15 @@ impl ::protobuf::Message for ProgrammerState {
         };
         if self.highlight != false {
             os.write_bool(4, self.highlight)?;
+        }
+        if self.block_size != 0 {
+            os.write_uint32(5, self.block_size)?;
+        }
+        if self.groups != 0 {
+            os.write_uint32(6, self.groups)?;
+        }
+        if self.wings != 0 {
+            os.write_uint32(7, self.wings)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -275,6 +323,9 @@ impl ::protobuf::Message for ProgrammerState {
         self.active_fixtures.clear();
         self.controls.clear();
         self.highlight = false;
+        self.block_size = 0;
+        self.groups = 0;
+        self.wings = 0;
         self.special_fields.clear();
     }
 
@@ -284,6 +335,9 @@ impl ::protobuf::Message for ProgrammerState {
             active_fixtures: ::std::vec::Vec::new(),
             controls: ::std::vec::Vec::new(),
             highlight: false,
+            block_size: 0,
+            groups: 0,
+            wings: 0,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -4981,29 +5035,31 @@ impl ::protobuf::reflect::ProtobufValue for AssignFixturesToGroupResponse {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10programmer.proto\x12\x10mizer.programmer\x1a\x0efixtures.proto\"\
-    \x1c\n\x1aSubscribeProgrammerRequest\"\xeb\x01\n\x0fProgrammerState\x125\
+    \x1c\n\x1aSubscribeProgrammerRequest\"\xb8\x02\n\x0fProgrammerState\x125\
     \n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fi\
     xtures\x12B\n\x0factive_fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixture\
     s.FixtureIdR\x0eactiveFixtures\x12?\n\x08controls\x18\x03\x20\x03(\x0b2#\
     .mizer.programmer.ProgrammerChannelR\x08controls\x12\x1c\n\thighlight\
-    \x18\x04\x20\x01(\x08R\thighlight\"\x96\x03\n\x11ProgrammerChannel\x125\
-    \n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fi\
-    xtures\x128\n\x07control\x18\x02\x20\x01(\x0e2\x1e.mizer.fixtures.Fixtur\
-    eControlR\x07control\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fade\
-    r\x129\n\x05color\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChanne\
-    lH\0R\x05color\x12L\n\x07generic\x18\x05\x20\x01(\x0b20.mizer.programmer\
-    .ProgrammerChannel.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\
-    \x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03Red\x10\0\
-    \x12\t\n\x05Green\x10\x01\x12\x08\n\x04Blue\x10\x02B\x07\n\x05value\"\
-    \xb5\x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\x0e\
-    2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\x18\
-    \x02\x20\x01(\x01H\0R\x05fader\x129\n\x05color\x18\x03\x20\x01(\x0b2!.mi\
-    zer.fixtures.ColorMixerChannelH\0R\x05color\x12N\n\x07generic\x18\x04\
-    \x20\x01(\x0b22.mizer.programmer.WriteControlRequest.GenericValueH\0R\
-    \x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05val\
-    ue\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\
+    \x18\x04\x20\x01(\x08R\thighlight\x12\x1d\n\nblock_size\x18\x05\x20\x01(\
+    \rR\tblockSize\x12\x16\n\x06groups\x18\x06\x20\x01(\rR\x06groups\x12\x14\
+    \n\x05wings\x18\x07\x20\x01(\rR\x05wings\"\x96\x03\n\x11ProgrammerChanne\
+    l\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
+    \x08fixtures\x128\n\x07control\x18\x02\x20\x01(\x0e2\x1e.mizer.fixtures.\
+    FixtureControlR\x07control\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\
+    \x05fader\x129\n\x05color\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorMix\
+    erChannelH\0R\x05color\x12L\n\x07generic\x18\x05\x20\x01(\x0b20.mizer.pr\
+    ogrammer.ProgrammerChannel.GenericValueH\0R\x07generic\x1a8\n\x0cGeneric\
+    Value\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\
+    \x18\x02\x20\x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03Red\
+    \x10\0\x12\t\n\x05Green\x10\x01\x12\x08\n\x04Blue\x10\x02B\x07\n\x05valu\
+    e\"\xb5\x02\n\x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\
+    \x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\
+    \x18\x02\x20\x01(\x01H\0R\x05fader\x129\n\x05color\x18\x03\x20\x01(\x0b2\
+    !.mizer.fixtures.ColorMixerChannelH\0R\x05color\x12N\n\x07generic\x18\
+    \x04\x20\x01(\x0b22.mizer.programmer.WriteControlRequest.GenericValueH\0\
+    R\x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\t\
+    R\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05va\
+    lue\"\x16\n\x14WriteControlResponse\"N\n\x15SelectFixturesRequest\x125\n\
     \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
     ures\"\x18\n\x16SelectFixturesResponse\"P\n\x17UnselectFixturesRequest\
     \x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\

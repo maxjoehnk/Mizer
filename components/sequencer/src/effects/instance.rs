@@ -1,21 +1,21 @@
 use crate::{Effect, Spline};
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_fixtures::FixtureId;
+use mizer_fixtures::selection::FixtureSelection;
 use mizer_module::ClockFrame;
 use std::collections::HashMap;
 
 #[derive(Debug)]
 pub(crate) struct EffectInstance {
     pub effect_id: u32,
-    pub fixtures: Vec<FixtureId>,
+    pub fixtures: FixtureSelection,
     effect: Effect,
     frame: f64,
     splines: HashMap<FixtureFaderControl, Spline>,
 }
 
 impl EffectInstance {
-    pub fn new(effect: &Effect, fixtures: Vec<FixtureId>) -> Self {
+    pub fn new(effect: &Effect, fixtures: FixtureSelection) -> Self {
         Self {
             effect_id: effect.id,
             fixtures,
@@ -40,8 +40,8 @@ impl EffectInstance {
 
         for (control, spline) in self.splines.iter() {
             if let Some(value) = spline.sample(self.frame) {
-                let values = value.fixture_values(self.fixtures.len());
-                for (i, id) in self.fixtures.iter().enumerate() {
+                let values = value.fixture_values(self.fixtures.total_fixtures());
+                for (i, id) in self.fixtures.get_fixtures().iter().flatten().enumerate() {
                     fixture_manager.write_fixture_control(*id, control.clone(), values[i]);
                 }
             } else {

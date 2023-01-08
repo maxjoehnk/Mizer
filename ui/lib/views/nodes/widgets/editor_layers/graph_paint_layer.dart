@@ -31,8 +31,14 @@ class GraphLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (var channel in model.channels) {
-      var fromPort = model.getPortModel(model.getNode(channel.sourceNode), channel.sourcePort, false);
-      var toPort = model.getPortModel(model.getNode(channel.targetNode), channel.targetPort, true);
+      var fromNode = model.getNode(channel.sourceNode);
+      var toNode = model.getNode(channel.targetNode);
+      if (fromNode == null || toNode == null) {
+        print("missing node $channel $fromNode $toNode");
+        continue;
+      }
+      var fromPort = model.getPortModel(fromNode, channel.sourcePort, false);
+      var toPort = model.getPortModel(toNode, channel.targetPort, true);
       if (fromPort == null || toPort == null) {
         continue;
       }

@@ -98,8 +98,8 @@ class NodeEditorModel extends ChangeNotifier {
   }
 
   /// Returns the [Node] with the given path
-  Node getNode(String path) {
-    return nodes.firstWhere((nodeModel) => nodeModel.node.path == path).node;
+  Node? getNode(String path) {
+    return nodes.firstWhereOrNull((nodeModel) => nodeModel.node.path == path)?.node;
   }
 
   selectNode(NodeModel nodeModel) {

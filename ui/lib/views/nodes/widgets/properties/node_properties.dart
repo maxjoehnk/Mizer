@@ -88,7 +88,8 @@ class NodePropertiesPane extends StatelessWidget {
     if (node.config.hasOscOutputConfig()) {
       widgets.add(OscProperties(node.config.oscOutputConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(oscOutputConfig: config)))));
+              path: node.path, config: NodeConfig(oscOutputConfig: config))),
+          isOutput: true));
     }
     if (node.config.hasMidiInputConfig()) {
       widgets.add(MidiProperties(node.config.midiInputConfig,

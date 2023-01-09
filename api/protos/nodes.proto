@@ -382,6 +382,7 @@ message OscNodeConfig {
   string connection = 1;
   string path = 2;
   ArgumentType argumentType = 3;
+  bool onlyEmitChanges = 4;
 
   enum ArgumentType {
     Int = 0;

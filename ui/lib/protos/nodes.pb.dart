@@ -3541,6 +3541,7 @@ class OscNodeConfig extends $pb.GeneratedMessage {
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connection')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
     ..e<OscNodeConfig_ArgumentType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'argumentType', $pb.PbFieldType.OE, protoName: 'argumentType', defaultOrMaker: OscNodeConfig_ArgumentType.Int, valueOf: OscNodeConfig_ArgumentType.valueOf, enumValues: OscNodeConfig_ArgumentType.values)
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'onlyEmitChanges', protoName: 'onlyEmitChanges')
     ..hasRequiredFields = false
   ;
 
@@ -3549,6 +3550,7 @@ class OscNodeConfig extends $pb.GeneratedMessage {
     $core.String? connection,
     $core.String? path,
     OscNodeConfig_ArgumentType? argumentType,
+    $core.bool? onlyEmitChanges,
   }) {
     final _result = create();
     if (connection != null) {
@@ -3559,6 +3561,9 @@ class OscNodeConfig extends $pb.GeneratedMessage {
     }
     if (argumentType != null) {
       _result.argumentType = argumentType;
+    }
+    if (onlyEmitChanges != null) {
+      _result.onlyEmitChanges = onlyEmitChanges;
     }
     return _result;
   }
@@ -3609,6 +3614,15 @@ class OscNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasArgumentType() => $_has(2);
   @$pb.TagNumber(3)
   void clearArgumentType() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.bool get onlyEmitChanges => $_getBF(3);
+  @$pb.TagNumber(4)
+  set onlyEmitChanges($core.bool v) { $_setBool(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasOnlyEmitChanges() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearOnlyEmitChanges() => clearField(4);
 }
 
 class VideoColorBalanceNodeConfig extends $pb.GeneratedMessage {

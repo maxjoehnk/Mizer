@@ -12,6 +12,8 @@ pub struct OscOutputNode {
     pub path: String,
     #[serde(default = "default_argument_type")]
     pub argument_type: OscArgumentType,
+    #[serde(default)]
+    pub only_emit_changes: bool,
 }
 
 fn default_argument_type() -> OscArgumentType {
@@ -24,6 +26,7 @@ impl Default for OscOutputNode {
             connection: Default::default(),
             argument_type: default_argument_type(),
             path: "".into(),
+            only_emit_changes: false,
         }
     }
 }
@@ -68,7 +71,12 @@ impl ProcessingNode for OscOutputNode {
         let output = output.unwrap();
 
         if self.argument_type.is_numeric() {
-            if let Some(value) = context.read_port::<_, f64>(self.argument_type.get_port_id()) {
+            let value = if self.only_emit_changes {
+                context.read_port::<_, f64>(self.argument_type.get_port_id())
+            } else {
+                context.read_port_changes::<_, f64>(self.argument_type.get_port_id())
+            };
+            if let Some(value) = value {
                 context.push_history_value(value);
                 let arg = match self.argument_type {
                     OscArgumentType::Float => OscType::Float(value as f32),
@@ -85,7 +93,12 @@ impl ProcessingNode for OscOutputNode {
             }
         }
         if self.argument_type.is_color() {
-            if let Some(color) = context.read_port::<_, Color>(self.argument_type.get_port_id()) {
+            let value = if self.only_emit_changes {
+                context.read_port::<_, Color>(self.argument_type.get_port_id())
+            } else {
+                context.read_port_changes::<_, Color>(self.argument_type.get_port_id())
+            };
+            if let Some(color) = value {
                 let color = OscColor {
                     red: color.red.to_8bit(),
                     green: color.green.to_8bit(),

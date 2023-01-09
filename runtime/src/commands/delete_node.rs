@@ -1,9 +1,11 @@
+use crate::commands::UpdateNodeCommand;
 use crate::pipeline_access::PipelineAccess;
+use crate::NodeDowncast;
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_execution_planner::{ExecutionNode, ExecutionPlanner};
 use mizer_layouts::{ControlConfig, LayoutStorage};
-use mizer_node::{NodeDesigner, NodeLink, NodePath};
-use mizer_nodes::Node;
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodeType};
+use mizer_nodes::{ContainerNode, Node};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::hash::Hash;
@@ -24,6 +26,7 @@ impl<'a> Command<'a> for DeleteNodeCommand {
         NodeDesigner,
         Vec<NodeLink>,
         HashMap<String, Vec<ControlConfig>>,
+        Vec<(UpdateNodeCommand, <UpdateNodeCommand as Command<'a>>::State)>,
     );
     type Result = ();
 
@@ -57,8 +60,9 @@ impl<'a> Command<'a> for DeleteNodeCommand {
             controls.insert(layout.id.clone(), matching);
         }
         layout_storage.set(layouts);
+        let update_node_commands = self.remove_node_from_containers(pipeline)?;
 
-        Ok(((), (node, designer, links, controls)))
+        Ok(((), (node, designer, links, controls, update_node_commands)))
     }
 
     fn revert(
@@ -68,7 +72,7 @@ impl<'a> Command<'a> for DeleteNodeCommand {
             &mut ExecutionPlanner,
             &LayoutStorage,
         ),
-        (node, designer, links, mut controls): Self::State,
+        (node, designer, links, mut controls, container_commands): Self::State,
     ) -> anyhow::Result<()> {
         pipeline.internal_add_node(self.path.clone(), node, designer);
         planner.add_node(ExecutionNode {
@@ -85,8 +89,46 @@ impl<'a> Command<'a> for DeleteNodeCommand {
             layout.controls.append(&mut controls);
         }
         layout_storage.set(layouts);
+        for (cmd, state) in container_commands {
+            cmd.revert(pipeline, state)?;
+        }
 
         Ok(())
+    }
+}
+
+impl DeleteNodeCommand {
+    fn remove_node_from_containers<'a>(
+        &self,
+        pipeline: &mut PipelineAccess,
+    ) -> anyhow::Result<Vec<(UpdateNodeCommand, <UpdateNodeCommand as Command<'a>>::State)>> {
+        let mut update_node_commands = Vec::new();
+        for (path, node) in pipeline
+            .nodes
+            .iter()
+            .filter(|(_, node)| node.node_type() == NodeType::Container)
+        {
+            if let Some(mut container) = node.downcast_node::<ContainerNode>(NodeType::Container) {
+                let removed_node = container.nodes.iter().position(|p| p == &self.path);
+                if let Some(removed_node_index) = removed_node {
+                    container.nodes.remove(removed_node_index);
+                    let cmd = UpdateNodeCommand {
+                        path: path.clone(),
+                        config: Node::Container(container),
+                    };
+                    update_node_commands.push(cmd);
+                }
+            }
+        }
+
+        update_node_commands
+            .into_iter()
+            .map(|cmd| {
+                let (_, state) = cmd.apply(pipeline)?;
+
+                Ok((cmd, state))
+            })
+            .collect()
     }
 }
 

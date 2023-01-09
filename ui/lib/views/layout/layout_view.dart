@@ -195,7 +195,7 @@ class _ControlLayoutState extends State<ControlLayout> {
       return BlocBuilder<NodesBloc, Nodes>(builder: (context, nodes) {
         return Container(
           width: 20 * MULTIPLIER,
-          height: 10 * MULTIPLIER,
+          height: 15 * MULTIPLIER,
           child: Listener(
             behavior: HitTestBehavior.translucent,
             onPointerHover: (event) {

@@ -30,10 +30,21 @@ pub struct Sequencer {
     clock: StdClock,
 }
 
-#[derive(Default, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct SequenceView {
     pub active: bool,
     pub cue_id: Option<u32>,
+    pub rate: f64,
+}
+
+impl Default for SequenceView {
+    fn default() -> Self {
+        Self {
+            active: false,
+            cue_id: None,
+            rate: 1f64,
+        }
+    }
 }
 
 impl Default for Sequencer {
@@ -169,6 +180,7 @@ impl Sequencer {
                 let view = view.entry(*id).or_default();
                 view.active = state.active;
                 view.cue_id = sequence.cues.get(state.active_cue_index).map(|cue| cue.id);
+                view.rate = state.rate;
             }
         }
         self.sequence_view.set(view);
@@ -234,7 +246,7 @@ impl Sequencer {
         self.commands
             .0
             .send(SequencerCommands::SetRate(sequence, rate))?;
-            
+
         Ok(())
     }
 

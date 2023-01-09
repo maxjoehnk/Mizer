@@ -66,6 +66,13 @@ impl EffectEngine {
         self.effects.get_mut(&id)
     }
 
+    pub fn set_instance_rate(&self, id: &EffectInstanceId, rate: f64) {
+        let mut instances = self.instances.lock().unwrap();
+        if let Some(instance) = instances.get_mut(id) {
+            instance.rate = rate;
+        }
+    }
+
     pub(crate) fn run_programmer_effects(&self, programmer: &Programmer) {
         profiling::scope!("EffectEngine::run_programmer_effects");
         let mut effects = self.programmer_effects.lock().unwrap();
@@ -90,7 +97,9 @@ impl EffectEngine {
             effects.remove(&effect);
         }
         for effect in effects_to_be_started {
-            if let Some(instance_id) = self.run_effect(effect.effect_id, effect.fixtures.clone()) {
+            if let Some(instance_id) =
+                self.run_effect(effect.effect_id, effect.fixtures.clone(), 1f64)
+            {
                 effects.insert(effect, instance_id);
             }
         }
@@ -111,10 +120,11 @@ impl EffectEngine {
         &self,
         effect: u32,
         fixtures: Vec<FixtureId>,
+        rate: f64,
     ) -> Option<EffectInstanceId> {
         profiling::scope!("EffectEngine::run_effect");
         if let Some(effect) = self.effects.get(&effect) {
-            let instance = EffectInstance::new(&effect, fixtures);
+            let instance = EffectInstance::new(&effect, fixtures, rate);
             let id = EffectInstanceId::new();
             let mut instances = self.instances.lock().unwrap();
             instances.insert(id, instance);

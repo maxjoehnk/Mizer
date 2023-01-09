@@ -12,6 +12,7 @@ pub struct SequenceState {
     pub sequence_id: u32,
     pub active: u8,
     pub current_cue_id: u32,
+    pub rate: f64,
 }
 
 #[no_mangle]
@@ -24,6 +25,7 @@ pub extern "C" fn read_sequencer_state(ptr: *const Sequencer) -> Array<SequenceS
             sequence_id: id,
             active: u8::from(sequence.active),
             current_cue_id: sequence.cue_id.unwrap_or_default(),
+            rate: sequence.rate,
         })
         .collect::<Vec<_>>();
 

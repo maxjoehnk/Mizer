@@ -67,10 +67,13 @@ impl Sequence {
             }
         }
         for effect in &cue.effects {
-            if state.running_effects.contains_key(effect) {
+            if let Some(id) = state.running_effects.get(effect) {
+                effect_engine.set_instance_rate(id, state.rate);
                 continue;
             }
-            if let Some(id) = effect_engine.run_effect(effect.effect, effect.fixtures.clone()) {
+            if let Some(id) =
+                effect_engine.run_effect(effect.effect, effect.fixtures.clone(), state.rate)
+            {
                 state.running_effects.insert(effect.clone(), id);
             }
         }

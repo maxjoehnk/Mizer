@@ -47,6 +47,7 @@ fn run_effect(
     let mut effect_instance = EffectInstance::new(
         effect,
         fixtures.into_iter().map(FixtureId::Fixture).collect(),
+        1f64,
     );
     let frames = effect
         .channels

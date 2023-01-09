@@ -42,6 +42,7 @@ class SequenceList extends StatelessWidget {
   Widget _sequenceRow(BuildContext context, Sequence sequence) {
     bool selected = sequence == selectedSequence;
     bool active = this.sequenceStates[sequence.id]?.active ?? false;
+    double rate = this.sequenceStates[sequence.id]?.rate ?? 1;
     var onTap = () {
       if (!selected) {
         selectSequence(sequence);
@@ -67,7 +68,10 @@ class SequenceList extends StatelessWidget {
             border: Border.all(color: selected ? Colors.deepOrange : Colors.white10, width: 4),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Text(sequence.id.toString(), textAlign: TextAlign.start),
+            Row(children: [
+              Expanded(child: Text(sequence.id.toString(), textAlign: TextAlign.start)),
+              Text((rate * 100).toStringAsFixed(0) + "%"),
+            ]),
             Spacer(),
             AutoSizeText(sequence.name, textAlign: TextAlign.center, maxLines: 2),
             Container(height: 24, child: active ? Icon(Icons.play_arrow) : null),

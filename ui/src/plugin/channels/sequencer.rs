@@ -103,6 +103,12 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for SequencerChannel<R> {
                     .map(|req| self.update_sequence_wrap_around(req));
                 resp.respond_result(result);
             }
+            "updateSequenceStopOnLastCue" => {
+                let result = call
+                    .arguments()
+                    .map(|req| self.update_sequence_stop_on_last_cue(req));
+                resp.respond_result(result);
+            }
             "updateSequenceName" => {
                 let result = call.arguments().map(|req| self.update_sequence_name(req));
                 resp.respond_result(result);
@@ -189,6 +195,15 @@ impl<R: RuntimeApi + 'static> SequencerChannel<R> {
 
     pub fn update_sequence_wrap_around(&self, request: SequenceWrapAroundRequest) -> Sequences {
         self.handler.update_sequence_wrap_around(request);
+
+        self.get_sequences()
+    }
+
+    pub fn update_sequence_stop_on_last_cue(
+        &self,
+        request: SequenceStopOnLastCueRequest,
+    ) -> Sequences {
+        self.handler.update_sequence_stop_on_last_cue(request);
 
         self.get_sequences()
     }

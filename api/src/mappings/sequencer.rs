@@ -12,6 +12,7 @@ impl From<mizer_sequencer::Sequence> for Sequence {
             cues: sequence.cues.into_iter().map(Cue::from).collect(),
             fixtures: sequence.fixtures.into_iter().map(FixtureId::from).collect(),
             wrapAround: sequence.wrap_around,
+            stopOnLastCue: sequence.stop_on_last_cue,
             ..Default::default()
         }
     }

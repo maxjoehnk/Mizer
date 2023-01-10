@@ -138,6 +138,15 @@ impl<R: RuntimeApi> SequencerHandler<R> {
             .unwrap();
     }
 
+    pub fn update_sequence_stop_on_last_cue(&self, request: SequenceStopOnLastCueRequest) {
+        self.runtime
+            .run_command(UpdateSequenceStopOnLastCueCommand {
+                sequence_id: request.sequence,
+                stop_on_last_cue: request.stopOnLastCue,
+            })
+            .unwrap();
+    }
+
     pub fn update_sequence_name(&self, request: SequenceNameRequest) {
         self.runtime
             .run_command(RenameSequenceCommand {

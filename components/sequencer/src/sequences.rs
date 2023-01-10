@@ -15,8 +15,12 @@ pub struct Sequence {
     pub name: String,
     pub fixtures: Vec<FixtureId>,
     pub cues: Vec<Cue>,
+    /// Go to first cue after last cue
     #[serde(default)]
     pub wrap_around: bool,
+    /// Auto stop after last cue
+    #[serde(default)]
+    pub stop_on_last_cue: bool,
 }
 
 #[cfg(test)]
@@ -34,6 +38,7 @@ impl Sequence {
             cues: Vec::new(),
             fixtures: Vec::new(),
             wrap_around: false,
+            stop_on_last_cue: false,
         }
     }
 
@@ -54,6 +59,9 @@ impl Sequence {
             if next_cue.should_go(state) {
                 state.go(self, clock, effect_engine, frame);
             }
+        }
+        if state.get_next_cue(self).is_none() && state.is_cue_finished() && self.stop_on_last_cue {
+            state.go(self, clock, effect_engine, frame);
         }
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
         let cue = self.current_cue(state);

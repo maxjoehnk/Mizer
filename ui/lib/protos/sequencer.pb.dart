@@ -717,6 +717,67 @@ class SequenceWrapAroundRequest extends $pb.GeneratedMessage {
   void clearWrapAround() => clearField(2);
 }
 
+class SequenceStopOnLastCueRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceStopOnLastCueRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue', protoName: 'stopOnLastCue')
+    ..hasRequiredFields = false
+  ;
+
+  SequenceStopOnLastCueRequest._() : super();
+  factory SequenceStopOnLastCueRequest({
+    $core.int? sequence,
+    $core.bool? stopOnLastCue,
+  }) {
+    final _result = create();
+    if (sequence != null) {
+      _result.sequence = sequence;
+    }
+    if (stopOnLastCue != null) {
+      _result.stopOnLastCue = stopOnLastCue;
+    }
+    return _result;
+  }
+  factory SequenceStopOnLastCueRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SequenceStopOnLastCueRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SequenceStopOnLastCueRequest clone() => SequenceStopOnLastCueRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SequenceStopOnLastCueRequest copyWith(void Function(SequenceStopOnLastCueRequest) updates) => super.copyWith((message) => updates(message as SequenceStopOnLastCueRequest)) as SequenceStopOnLastCueRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SequenceStopOnLastCueRequest create() => SequenceStopOnLastCueRequest._();
+  SequenceStopOnLastCueRequest createEmptyInstance() => create();
+  static $pb.PbList<SequenceStopOnLastCueRequest> createRepeated() => $pb.PbList<SequenceStopOnLastCueRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SequenceStopOnLastCueRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SequenceStopOnLastCueRequest>(create);
+  static SequenceStopOnLastCueRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get sequence => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set sequence($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSequence() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSequence() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get stopOnLastCue => $_getBF(1);
+  @$pb.TagNumber(2)
+  set stopOnLastCue($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStopOnLastCue() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStopOnLastCue() => clearField(2);
+}
+
 class SequenceNameRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceNameRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.sequencer'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequence', $pb.PbFieldType.OU3)
@@ -855,6 +916,7 @@ class Sequence extends $pb.GeneratedMessage {
     ..pc<Cue>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cues', $pb.PbFieldType.PM, subBuilder: Cue.create)
     ..pc<$0.FixtureId>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wrapAround', protoName: 'wrapAround')
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stopOnLastCue', protoName: 'stopOnLastCue')
     ..hasRequiredFields = false
   ;
 
@@ -865,6 +927,7 @@ class Sequence extends $pb.GeneratedMessage {
     $core.Iterable<Cue>? cues,
     $core.Iterable<$0.FixtureId>? fixtures,
     $core.bool? wrapAround,
+    $core.bool? stopOnLastCue,
   }) {
     final _result = create();
     if (id != null) {
@@ -881,6 +944,9 @@ class Sequence extends $pb.GeneratedMessage {
     }
     if (wrapAround != null) {
       _result.wrapAround = wrapAround;
+    }
+    if (stopOnLastCue != null) {
+      _result.stopOnLastCue = stopOnLastCue;
     }
     return _result;
   }
@@ -937,6 +1003,15 @@ class Sequence extends $pb.GeneratedMessage {
   $core.bool hasWrapAround() => $_has(4);
   @$pb.TagNumber(5)
   void clearWrapAround() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get stopOnLastCue => $_getBF(5);
+  @$pb.TagNumber(6)
+  set stopOnLastCue($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasStopOnLastCue() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStopOnLastCue() => clearField(6);
 }
 
 class Cue extends $pb.GeneratedMessage {

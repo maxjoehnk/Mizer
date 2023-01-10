@@ -79,6 +79,11 @@ class SequencerApiClient extends $grpc.Client {
           '/mizer.sequencer.SequencerApi/UpdateSequenceWrapAround',
           ($1.SequenceWrapAroundRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
+  static final _$updateSequenceStopOnLastCue =
+      $grpc.ClientMethod<$1.SequenceStopOnLastCueRequest, $1.Sequences>(
+          '/mizer.sequencer.SequencerApi/UpdateSequenceStopOnLastCue',
+          ($1.SequenceStopOnLastCueRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $1.Sequences.fromBuffer(value));
   static final _$updateSequenceName =
       $grpc.ClientMethod<$1.CueNameRequest, $1.Sequences>(
           '/mizer.sequencer.SequencerApi/UpdateSequenceName',
@@ -162,6 +167,13 @@ class SequencerApiClient extends $grpc.Client {
       $1.SequenceWrapAroundRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$updateSequenceWrapAround, request,
+        options: options);
+  }
+
+  $grpc.ResponseFuture<$1.Sequences> updateSequenceStopOnLastCue(
+      $1.SequenceStopOnLastCueRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$updateSequenceStopOnLastCue, request,
         options: options);
   }
 
@@ -274,6 +286,15 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $1.SequenceWrapAroundRequest.fromBuffer(value),
         ($1.Sequences value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$1.SequenceStopOnLastCueRequest, $1.Sequences>(
+            'UpdateSequenceStopOnLastCue',
+            updateSequenceStopOnLastCue_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $1.SequenceStopOnLastCueRequest.fromBuffer(value),
+            ($1.Sequences value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.CueNameRequest, $1.Sequences>(
         'UpdateSequenceName',
         updateSequenceName_Pre,
@@ -349,6 +370,12 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
     return updateSequenceWrapAround(call, await request);
   }
 
+  $async.Future<$1.Sequences> updateSequenceStopOnLastCue_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$1.SequenceStopOnLastCueRequest> request) async {
+    return updateSequenceStopOnLastCue(call, await request);
+  }
+
   $async.Future<$1.Sequences> updateSequenceName_Pre(
       $grpc.ServiceCall call, $async.Future<$1.CueNameRequest> request) async {
     return updateSequenceName(call, await request);
@@ -380,6 +407,8 @@ abstract class SequencerApiServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $1.CueTimingRequest request);
   $async.Future<$1.Sequences> updateSequenceWrapAround(
       $grpc.ServiceCall call, $1.SequenceWrapAroundRequest request);
+  $async.Future<$1.Sequences> updateSequenceStopOnLastCue(
+      $grpc.ServiceCall call, $1.SequenceStopOnLastCueRequest request);
   $async.Future<$1.Sequences> updateSequenceName(
       $grpc.ServiceCall call, $1.CueNameRequest request);
 }

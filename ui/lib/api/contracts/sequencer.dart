@@ -25,6 +25,7 @@ abstract class SequencerApi {
   Future<Sequences> updateCueDelayTime(int sequenceId, int cueId, CueTimer? timer);
 
   Future<Sequences> updateWrapAround(int sequence, bool wrapAround);
+  Future<Sequences> updateStopOnLastCue(int sequence, bool stopOnLastCue);
   Future<Sequences> updateSequenceName(int sequence, String name);
 
   Future<SequencerPointer?> getSequencerPointer();

@@ -76,6 +76,13 @@ class UpdateWrapAround extends SequencerCommand {
   UpdateWrapAround({ required this.sequence, required this.wrapAround });
 }
 
+class UpdateStopOnLastCue extends SequencerCommand {
+  final int sequence;
+  final bool stopOnLastCue;
+
+  UpdateStopOnLastCue({ required this.sequence, required this.stopOnLastCue });
+}
+
 class SelectSequence extends SequencerCommand {
   final int sequence;
 
@@ -133,6 +140,7 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     on<UpdateCueFade>((event, emit) async => emit(await _updateCueFadeTime(event)));
     on<UpdateCueDelay>((event, emit) async => emit(await _updateCueDelayTime(event)));
     on<UpdateWrapAround>((event, emit) async => emit(await _updateSequenceWrapAround(event)));
+    on<UpdateStopOnLastCue>((event, emit) async => emit(await _updateSequenceStopOnLastCue(event)));
     on<UpdateSequenceName>((event, emit) async => emit(await _updateSequenceName(event)));
     on<SelectSequence>((event, emit) => emit(_selectSequence(event)));
     on<SelectCue>((event, emit) => emit(_selectCue(event)));
@@ -198,6 +206,14 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   Future<SequencerState> _updateSequenceWrapAround(UpdateWrapAround event) async {
     log("update sequence wrap around ${event.sequence} ${event.wrapAround}", name: "SequencerBloc");
     var sequences = await api.updateWrapAround(event.sequence, event.wrapAround);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateSequenceStopOnLastCue(UpdateStopOnLastCue event) async {
+    log("update sequence stop on last cue ${event.sequence} ${event.stopOnLastCue}", name: "SequencerBloc");
+    var sequences = await api.updateStopOnLastCue(event.sequence, event.stopOnLastCue);
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);

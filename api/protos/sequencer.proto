@@ -18,6 +18,7 @@ service SequencerApi {
   rpc UpdateCueFadeTime (CueTimingRequest) returns (Sequences) {}
   rpc UpdateCueDelayTime (CueTimingRequest) returns (Sequences) {}
   rpc UpdateSequenceWrapAround (SequenceWrapAroundRequest) returns (Sequences) {}
+  rpc UpdateSequenceStopOnLastCue (SequenceStopOnLastCueRequest) returns (Sequences) {}
   rpc UpdateSequenceName (CueNameRequest) returns (Sequences) {}
 }
 
@@ -78,6 +79,11 @@ message SequenceWrapAroundRequest {
   bool wrapAround = 2;
 }
 
+message SequenceStopOnLastCueRequest {
+  uint32 sequence = 1;
+  bool stopOnLastCue = 2;
+}
+
 message SequenceNameRequest {
   uint32 sequence = 1;
   string name = 2;
@@ -95,6 +101,7 @@ message Sequence {
   repeated Cue cues = 3;
   repeated mizer.fixtures.FixtureId fixtures = 4;
   bool wrapAround = 5;
+  bool stopOnLastCue = 6;
 }
 
 message Cue {

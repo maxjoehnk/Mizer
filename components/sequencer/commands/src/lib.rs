@@ -11,6 +11,7 @@ pub use update_control_fade_time::*;
 pub use update_cue_trigger::*;
 pub use update_cue_trigger_time::*;
 pub use update_cue_value::*;
+pub use update_stop_on_last_cue::*;
 pub use update_wrap_around::*;
 
 mod add_sequence;
@@ -25,6 +26,7 @@ mod update_control_fade_time;
 mod update_cue_trigger;
 mod update_cue_trigger_time;
 mod update_cue_value;
+mod update_stop_on_last_cue;
 mod update_wrap_around;
 
 fn get_cue(sequence: &mut Sequence, cue_id: u32) -> anyhow::Result<&mut Cue> {

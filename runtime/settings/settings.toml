@@ -38,6 +38,7 @@ select_all = "ctrl+a"
 clear = "backspace"
 store = "insert"
 highlight = "home"
+assign_group = "ctrl+g"
 
 [hotkeys.patch]
 add_fixture = "alt+a"

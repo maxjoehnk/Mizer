@@ -7,7 +7,9 @@ import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
+import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +54,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       hotkeySelector: (hotkeys) => hotkeys.programmer,
       hotkeyMap: {
         "clear": () => _clear(),
+        "assign_group": () => _assignGroup(context),
       },
       child: Panel(
           label: "Selection",
@@ -75,6 +78,7 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
+            PanelAction(label: "Assign Group", hotkeyId: "assign_group", disabled: widget.isEmpty, onClick: () => _assignGroup(context)),
           ]),
     );
   }
@@ -88,6 +92,16 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       programmerClear: ProgrammerClearAction(),
     );
     addMidiMapping(context, "Add MIDI Mapping for Programmer Clear", request);
+  }
+
+  _assignGroup(BuildContext context) async {
+    var programmerApi = context.read<ProgrammerApi>();
+    var presetsBloc = context.read<PresetsBloc>();
+    Group? group = await showDialog(context: context, builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
+    if (group == null) {
+      return;
+    }
+    await programmerApi.assignFixturesToGroup(widget.fixtures.map((e) => e.id).toList(), group);
   }
 }
 

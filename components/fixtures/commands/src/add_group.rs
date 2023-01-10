@@ -31,7 +31,10 @@ impl<'a> Command<'a> for AddGroupCommand {
             fixtures: Vec::new(),
         };
 
-        let node = GroupNode { id: group_id };
+        let node = GroupNode {
+            id: group_id,
+            fixture_manager: Some(fixture_manager.clone()),
+        };
         let sub_cmd = AddNodeCommand {
             node_type: NodeType::Group,
             designer: NodeDesigner {

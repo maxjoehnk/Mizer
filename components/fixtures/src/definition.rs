@@ -357,7 +357,7 @@ impl From<FixtureControls<String>> for FixtureControls<SubFixtureControlChannel>
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum FixtureControlType {
     Fader,
     Color,
@@ -579,7 +579,7 @@ pub struct GenericControl<TChannel> {
 /// Describes a single fixture control
 ///
 /// This may have multiple fader values
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Deserialize, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Deserialize, Serialize)]
 pub enum FixtureControl {
     Intensity,
     Shutter,

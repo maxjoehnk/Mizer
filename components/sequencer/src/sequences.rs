@@ -15,8 +15,12 @@ pub struct Sequence {
     pub name: String,
     pub fixtures: Vec<FixtureId>,
     pub cues: Vec<Cue>,
+    /// Go to first cue after last cue
     #[serde(default)]
     pub wrap_around: bool,
+    /// Auto stop after last cue
+    #[serde(default)]
+    pub stop_on_last_cue: bool,
 }
 
 #[cfg(test)]
@@ -34,6 +38,7 @@ impl Sequence {
             cues: Vec::new(),
             fixtures: Default::default(),
             wrap_around: false,
+            stop_on_last_cue: false,
         }
     }
 
@@ -55,6 +60,9 @@ impl Sequence {
                 state.go(self, clock, effect_engine, frame);
             }
         }
+        if state.get_next_cue(self).is_none() && state.is_cue_finished() && self.stop_on_last_cue {
+            state.go(self, clock, effect_engine, frame);
+        }
         // TODO: the sequence state should ensure active_cue_index is always in the proper range
         let cue = self.current_cue(state);
         cue.update_state(self, state, clock, frame);
@@ -67,10 +75,13 @@ impl Sequence {
             }
         }
         for effect in &cue.effects {
-            if state.running_effects.contains_key(effect) {
+            if let Some(id) = state.running_effects.get(effect) {
+                effect_engine.set_instance_rate(id, state.rate);
                 continue;
             }
-            if let Some(id) = effect_engine.run_effect(effect.effect, effect.fixtures.clone()) {
+            if let Some(id) =
+                effect_engine.run_effect(effect.effect, effect.fixtures.clone(), state.rate)
+            {
                 state.running_effects.insert(effect.clone(), id);
             }
         }

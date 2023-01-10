@@ -109,6 +109,6 @@ class _FixturePatchViewState extends State<FixturePatchView> {
     if (group == null) {
       return;
     }
-    await programmerApi.assignFixturesToGroup(selectedIds, group);
+    await programmerApi.assignFixturesToGroup(selectedIds.map((id) => FixtureId(fixture: id)).toList(), group);
   }
 }

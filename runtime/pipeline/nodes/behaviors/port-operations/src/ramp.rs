@@ -1,6 +1,4 @@
-use bezier_nd::Bezier;
-use geo_nd::{FArray, Vector};
-use itertools::Itertools;
+use bezier_rs::{ComputeType, ManipulatorGroup, Subpath};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::{
@@ -110,28 +108,21 @@ impl ProcessingNode for RampNode {
 impl RampNode {
     fn translate(&self, input: f64) -> f64 {
         let input = input.clamp(0., 1.);
-        let bezier = self
-            .steps
-            .iter()
-            .tuple_windows()
-            .find_or_last(|(a, b)| a.x <= input && b.x > input)
-            .map(Self::tuple_to_bezier);
+        let path = Subpath::new(
+            self.steps
+                .iter()
+                .map(|step| ManipulatorGroup {
+                    anchor: (step.x, step.y).into(),
+                    in_handle: Some((step.c0a, step.c0b).into()),
+                    out_handle: Some((step.c1a, step.c1b).into()),
+                })
+                .collect(),
+            false,
+        );
 
-        if let Some(bezier) = bezier {
-            bezier.point_at(input)[1]
-        } else {
-            log::warn!("BVxroken ramp configuration, unable to find bezier step for input {input}");
-            0.
-        }
-    }
+        let point = path.evaluate(ComputeType::Parametric(input));
 
-    fn tuple_to_bezier((a, b): (&RampStep, &RampStep)) -> Bezier<f64, FArray<f64, 2>, 2> {
-        Bezier::cubic(
-            &FArray::from_array([a.x, a.y]),
-            &FArray::from_array([b.c0a, b.c0b]),
-            &FArray::from_array([b.c1a, b.c1b]),
-            &FArray::from_array([b.x, b.y]),
-        )
+        point.y
     }
 }
 
@@ -155,6 +146,10 @@ mod tests {
     #[test_case(0f64, 1f64, 0f64, 1f64, 1f64, 1f64)]
     #[test_case(0f64, 1f64, 0f64, 1f64, 0f64, 0f64)]
     #[test_case(0f64, 1f64, 0f64, 1f64, 0.5f64, 0f64)]
+    #[test_case(0f64, 0.5f64, 0f64, 1f64, 0f64, 0f64)]
+    #[test_case(0f64, 0.5f64, 0f64, 1f64, 1f64, 1f64)]
+    #[test_case(0f64, 0.5f64, 0f64, 1f64, 0.5f64, 0f64)]
+    // #[test_case(0f64, 0.5f64, 0f64, 1f64, 0.75f64, 0.5f64)]
     fn process_should_translate_values_of_two_step_ramp(
         y1: f64,
         x2: f64,

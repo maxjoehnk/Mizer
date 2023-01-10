@@ -100,6 +100,7 @@ command_impl! {
     UpdateCueTriggerTimeCommand,
     UpdateCueValueCommand,
     UpdateSequenceWrapAroundCommand,
+    UpdateSequenceStopOnLastCueCommand,
     AddEffectCommand,
     AddEffectChannelCommand,
     AddEffectStepCommand,

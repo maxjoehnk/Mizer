@@ -127,6 +127,14 @@ class SequencerPluginApi implements SequencerApi {
     return Sequences.fromBuffer(_convertBuffer(response));
   }
 
+  @override
+  Future<Sequences> updateStopOnLastCue(int sequence, bool stopOnLastCue) async {
+    var request = SequenceStopOnLastCueRequest(sequence: sequence, stopOnLastCue: stopOnLastCue);
+    var response = await channel.invokeMethod("updateSequenceStopOnLastCue", request.writeToBuffer());
+
+    return Sequences.fromBuffer(_convertBuffer(response));
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }

@@ -788,6 +788,7 @@ impl From<mizer_nodes::OscOutputNode> for OscNodeConfig {
             connection: node.connection,
             path: node.path,
             argumentType: EnumOrUnknown::new(node.argument_type.into()),
+            onlyEmitChanges: node.only_emit_changes,
             ..Default::default()
         }
     }
@@ -799,6 +800,7 @@ impl From<OscNodeConfig> for mizer_nodes::OscOutputNode {
             connection: node.connection,
             path: node.path,
             argument_type: node.argumentType.unwrap().into(),
+            only_emit_changes: node.onlyEmitChanges,
         }
     }
 }

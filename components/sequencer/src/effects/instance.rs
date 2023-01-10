@@ -12,16 +12,18 @@ pub(crate) struct EffectInstance {
     effect: Effect,
     frame: f64,
     splines: HashMap<FixtureFaderControl, Spline>,
+    pub rate: f64,
 }
 
 impl EffectInstance {
-    pub fn new(effect: &Effect, fixtures: FixtureSelection) -> Self {
+    pub fn new(effect: &Effect, fixtures: FixtureSelection, rate: f64) -> Self {
         Self {
             effect_id: effect.id,
             fixtures,
             effect: effect.clone(),
             frame: 0.,
             splines: effect.build_splines(),
+            rate,
         }
     }
 
@@ -36,7 +38,7 @@ impl EffectInstance {
             self.splines = effect.build_splines();
         }
         profiling::scope!("EffectInstance::process");
-        self.frame = frame.frame;
+        self.frame += frame.delta * self.rate;
 
         for (control, spline) in self.splines.iter() {
             if let Some(value) = spline.sample(self.frame) {

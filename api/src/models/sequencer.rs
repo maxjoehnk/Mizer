@@ -1671,6 +1671,146 @@ impl ::protobuf::reflect::ProtobufValue for SequenceWrapAroundRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.sequencer.SequenceStopOnLastCueRequest)
+pub struct SequenceStopOnLastCueRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.sequencer.SequenceStopOnLastCueRequest.sequence)
+    pub sequence: u32,
+    // @@protoc_insertion_point(field:mizer.sequencer.SequenceStopOnLastCueRequest.stopOnLastCue)
+    pub stopOnLastCue: bool,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.sequencer.SequenceStopOnLastCueRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a SequenceStopOnLastCueRequest {
+    fn default() -> &'a SequenceStopOnLastCueRequest {
+        <SequenceStopOnLastCueRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl SequenceStopOnLastCueRequest {
+    pub fn new() -> SequenceStopOnLastCueRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "sequence",
+            |m: &SequenceStopOnLastCueRequest| { &m.sequence },
+            |m: &mut SequenceStopOnLastCueRequest| { &mut m.sequence },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "stopOnLastCue",
+            |m: &SequenceStopOnLastCueRequest| { &m.stopOnLastCue },
+            |m: &mut SequenceStopOnLastCueRequest| { &mut m.stopOnLastCue },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<SequenceStopOnLastCueRequest>(
+            "SequenceStopOnLastCueRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for SequenceStopOnLastCueRequest {
+    const NAME: &'static str = "SequenceStopOnLastCueRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.sequence = is.read_uint32()?;
+                },
+                16 => {
+                    self.stopOnLastCue = is.read_bool()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.sequence != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.sequence);
+        }
+        if self.stopOnLastCue != false {
+            my_size += 1 + 1;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.sequence != 0 {
+            os.write_uint32(1, self.sequence)?;
+        }
+        if self.stopOnLastCue != false {
+            os.write_bool(2, self.stopOnLastCue)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> SequenceStopOnLastCueRequest {
+        SequenceStopOnLastCueRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.sequence = 0;
+        self.stopOnLastCue = false;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static SequenceStopOnLastCueRequest {
+        static instance: SequenceStopOnLastCueRequest = SequenceStopOnLastCueRequest {
+            sequence: 0,
+            stopOnLastCue: false,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for SequenceStopOnLastCueRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("SequenceStopOnLastCueRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for SequenceStopOnLastCueRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for SequenceStopOnLastCueRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.sequencer.SequenceNameRequest)
 pub struct SequenceNameRequest {
     // message fields
@@ -2050,6 +2190,8 @@ pub struct Sequence {
     pub fixtures: ::std::vec::Vec<super::fixtures::FixtureId>,
     // @@protoc_insertion_point(field:mizer.sequencer.Sequence.wrapAround)
     pub wrapAround: bool,
+    // @@protoc_insertion_point(field:mizer.sequencer.Sequence.stopOnLastCue)
+    pub stopOnLastCue: bool,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.sequencer.Sequence.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -2067,7 +2209,7 @@ impl Sequence {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "id",
@@ -2093,6 +2235,11 @@ impl Sequence {
             "wrapAround",
             |m: &Sequence| { &m.wrapAround },
             |m: &mut Sequence| { &mut m.wrapAround },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "stopOnLastCue",
+            |m: &Sequence| { &m.stopOnLastCue },
+            |m: &mut Sequence| { &mut m.stopOnLastCue },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Sequence>(
             "Sequence",
@@ -2127,6 +2274,9 @@ impl ::protobuf::Message for Sequence {
                 40 => {
                     self.wrapAround = is.read_bool()?;
                 },
+                48 => {
+                    self.stopOnLastCue = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -2156,6 +2306,9 @@ impl ::protobuf::Message for Sequence {
         if self.wrapAround != false {
             my_size += 1 + 1;
         }
+        if self.stopOnLastCue != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -2176,6 +2329,9 @@ impl ::protobuf::Message for Sequence {
         };
         if self.wrapAround != false {
             os.write_bool(5, self.wrapAround)?;
+        }
+        if self.stopOnLastCue != false {
+            os.write_bool(6, self.stopOnLastCue)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2199,6 +2355,7 @@ impl ::protobuf::Message for Sequence {
         self.cues.clear();
         self.fixtures.clear();
         self.wrapAround = false;
+        self.stopOnLastCue = false;
         self.special_fields.clear();
     }
 
@@ -2209,6 +2366,7 @@ impl ::protobuf::Message for Sequence {
             cues: ::std::vec::Vec::new(),
             fixtures: ::std::vec::Vec::new(),
             wrapAround: false,
+            stopOnLastCue: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -4191,15 +4349,18 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05cueId\x12-\n\x04time\x18\x03\x20\x01(\x0b2\x19.mizer.sequencer.CueTi\
     merR\x04time\"W\n\x19SequenceWrapAroundRequest\x12\x1a\n\x08sequence\x18\
     \x01\x20\x01(\rR\x08sequence\x12\x1e\n\nwrapAround\x18\x02\x20\x01(\x08R\
-    \nwrapAround\"E\n\x13SequenceNameRequest\x12\x1a\n\x08sequence\x18\x01\
-    \x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\
-    \x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequences\x18\x01\x20\x03(\
-    \x0b2\x19.mizer.sequencer.SequenceR\tsequences\"\xaf\x01\n\x08Sequence\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\
-    \x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mizer.sequence\
-    r.CueR\x04cues\x125\n\x08fixtures\x18\x04\x20\x03(\x0b2\x19.mizer.fixtur\
-    es.FixtureIdR\x08fixtures\x12\x1e\n\nwrapAround\x18\x05\x20\x01(\x08R\nw\
-    rapAround\"\xa5\x03\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
+    \nwrapAround\"`\n\x1cSequenceStopOnLastCueRequest\x12\x1a\n\x08sequence\
+    \x18\x01\x20\x01(\rR\x08sequence\x12$\n\rstopOnLastCue\x18\x02\x20\x01(\
+    \x08R\rstopOnLastCue\"E\n\x13SequenceNameRequest\x12\x1a\n\x08sequence\
+    \x18\x01\x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\"\x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequences\x18\
+    \x01\x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\"\xd5\x01\n\
+    \x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mi\
+    zer.sequencer.CueR\x04cues\x125\n\x08fixtures\x18\x04\x20\x03(\x0b2\x19.\
+    mizer.fixtures.FixtureIdR\x08fixtures\x12\x1e\n\nwrapAround\x18\x05\x20\
+    \x01(\x08R\nwrapAround\x12$\n\rstopOnLastCue\x18\x06\x20\x01(\x08R\rstop\
+    OnLastCue\"\xa5\x03\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
     \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\
     \x20\x01(\x0b2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x127\n\x08cont\
     rols\x18\x04\x20\x03(\x0b2\x1b.mizer.sequencer.CueControlR\x08controls\
@@ -4237,7 +4398,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     nds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\n\x04time\
     \"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.mizer.sequ\
     encer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.mizer.sequ\
-    encer.CueTimeR\x02to2\xaa\t\n\x0cSequencerApi\x12P\n\x0cGetSequences\x12\
+    encer.CueTimeR\x02to2\x94\n\n\x0cSequencerApi\x12P\n\x0cGetSequences\x12\
     $.mizer.sequencer.GetSequencesRequest\x1a\x1a.mizer.sequencer.Sequences\
     \x12M\n\x0bGetSequence\x12#.mizer.sequencer.GetSequenceRequest\x1a\x19.m\
     izer.sequencer.Sequence\x12M\n\x0bAddSequence\x12#.mizer.sequencer.AddSe\
@@ -4255,9 +4416,11 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     r.sequencer.CueTimingRequest\x1a\x1a.mizer.sequencer.Sequences\x12S\n\
     \x12UpdateCueDelayTime\x12!.mizer.sequencer.CueTimingRequest\x1a\x1a.miz\
     er.sequencer.Sequences\x12b\n\x18UpdateSequenceWrapAround\x12*.mizer.seq\
-    uencer.SequenceWrapAroundRequest\x1a\x1a.mizer.sequencer.Sequences\x12Q\
-    \n\x12UpdateSequenceName\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.\
-    mizer.sequencer.Sequencesb\x06proto3\
+    uencer.SequenceWrapAroundRequest\x1a\x1a.mizer.sequencer.Sequences\x12h\
+    \n\x1bUpdateSequenceStopOnLastCue\x12-.mizer.sequencer.SequenceStopOnLas\
+    tCueRequest\x1a\x1a.mizer.sequencer.Sequences\x12Q\n\x12UpdateSequenceNa\
+    me\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequen\
+    cesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -4276,7 +4439,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(25);
+            let mut messages = ::std::vec::Vec::with_capacity(26);
             messages.push(GetSequencesRequest::generated_message_descriptor_data());
             messages.push(GetSequenceRequest::generated_message_descriptor_data());
             messages.push(AddSequenceRequest::generated_message_descriptor_data());
@@ -4289,6 +4452,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(CueValueRequest::generated_message_descriptor_data());
             messages.push(CueTimingRequest::generated_message_descriptor_data());
             messages.push(SequenceWrapAroundRequest::generated_message_descriptor_data());
+            messages.push(SequenceStopOnLastCueRequest::generated_message_descriptor_data());
             messages.push(SequenceNameRequest::generated_message_descriptor_data());
             messages.push(EmptyResponse::generated_message_descriptor_data());
             messages.push(Sequences::generated_message_descriptor_data());

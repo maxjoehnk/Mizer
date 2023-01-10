@@ -51,6 +51,7 @@ fn run_effect(
             .map(FixtureId::Fixture)
             .collect::<Vec<_>>()
             .into(),
+        1f64,
     );
     let frames = effect
         .channels

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/fields/checkbox_field.dart';
 import 'package:mizer/widgets/controls/select.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +16,9 @@ import '../property_group.dart';
 class OscProperties extends StatefulWidget {
   final OscNodeConfig config;
   final Function(OscNodeConfig) onUpdate;
+  final bool isOutput;
 
-  OscProperties(this.config, {required this.onUpdate});
+  OscProperties(this.config, {required this.onUpdate, this.isOutput = false});
 
   @override
   _OscPropertiesState createState() => _OscPropertiesState(config);
@@ -53,7 +55,8 @@ class _OscPropertiesState extends State<OscProperties> {
           initialValue: this.widget.config.argumentType.value,
           items: OscNodeConfig_ArgumentType.values.map((v) => SelectOption(value: v.value, label: v.name)).toList(),
           onUpdate: _updateArgumentType,
-      )
+      ),
+      if (widget.isOutput) CheckboxField(label: "Only emit changes", value: this.widget.config.onlyEmitChanges, onUpdate: _updateOnlyEmitChanges),
     ]);
   }
 
@@ -103,6 +106,14 @@ class _OscPropertiesState extends State<OscProperties> {
     log("_updateArgumentType $argumentTypeValue", name: "OscProperties");
     setState(() {
       state.argumentType = OscNodeConfig_ArgumentType.valueOf(argumentTypeValue)!;
+      widget.onUpdate(state);
+    });
+  }
+
+  void _updateOnlyEmitChanges(bool onlyEmitChanges) {
+    log("_updateOnlyEmitChanges $onlyEmitChanges", name: "OscProperties");
+    setState(() {
+      state.onlyEmitChanges = onlyEmitChanges;
       widget.onUpdate(state);
     });
   }

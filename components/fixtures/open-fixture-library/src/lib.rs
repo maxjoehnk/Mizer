@@ -1,3 +1,4 @@
+use base64::prelude::*;
 use std::collections::HashMap;
 use std::path::Path;
 use std::str::FromStr;
@@ -709,7 +710,9 @@ impl From<Resource> for GoboImage {
     fn from(resource: Resource) -> Self {
         match resource.image.encoding.as_str() {
             "utf8" => GoboImage::Svg(resource.image.data),
-            _ => GoboImage::Raster(Box::new(base64::decode(resource.image.data).unwrap())),
+            _ => GoboImage::Raster(Box::new(
+                BASE64_STANDARD.decode(resource.image.data).unwrap(),
+            )),
         }
     }
 }

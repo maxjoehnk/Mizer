@@ -1,10 +1,6 @@
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::convert::TryInto;
 
-use mizer_fixtures::definition::{
-    ColorChannel, FixtureControl, FixtureControlType, FixtureControls, FixtureFaderControl,
-};
+use crate::fixture_ports::{write_ports, FixtureControlPorts};
 use mizer_fixtures::fixture::IFixtureMut;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_node::*;
@@ -19,7 +15,7 @@ pub struct FixtureNode {
 
 impl std::fmt::Debug for FixtureNode {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        f.debug_struct("FixtureNode")
+        f.debug_struct(stringify!(FixtureNode))
             .field("fixture_id", &self.fixture_id)
             .finish()
     }
@@ -34,7 +30,7 @@ impl PartialEq<Self> for FixtureNode {
 impl PipelineNode for FixtureNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "FixtureNode".into(),
+            name: stringify!(FixtureNode).into(),
             preview_type: PreviewType::None,
         }
     }
@@ -43,7 +39,14 @@ impl PipelineNode for FixtureNode {
         self.fixture_manager
             .as_ref()
             .and_then(|manager| manager.get_fixture(self.fixture_id))
-            .and_then(|fixture| fixture.current_mode.controls.get_ports().remove(port))
+            .and_then(|fixture| {
+                fixture
+                    .current_mode
+                    .controls
+                    .controls()
+                    .get_ports()
+                    .remove(port)
+            })
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
@@ -54,6 +57,7 @@ impl PipelineNode for FixtureNode {
                 fixture
                     .current_mode
                     .controls
+                    .controls()
                     .get_ports()
                     .into_iter()
                     .collect()
@@ -76,37 +80,10 @@ impl ProcessingNode for FixtureNode {
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(manager) = context.inject::<FixtureManager>() {
             if let Some(mut fixture) = manager.get_fixture_mut(self.fixture_id) {
-                let ports: HashMap<PortId, PortMetadata> =
-                    fixture.current_mode.controls.get_ports();
-                for port in context.input_ports() {
-                    if let Some(port_metadata) = ports.get(&port) {
-                        match port_metadata.port_type {
-                            PortType::Color => {
-                                if let Some(value) = context.read_port::<_, Color>(port.clone()) {
-                                    fixture.write_fader_control(
-                                        FixtureFaderControl::ColorMixer(ColorChannel::Red),
-                                        value.red,
-                                    );
-                                    fixture.write_fader_control(
-                                        FixtureFaderControl::ColorMixer(ColorChannel::Green),
-                                        value.green,
-                                    );
-                                    fixture.write_fader_control(
-                                        FixtureFaderControl::ColorMixer(ColorChannel::Blue),
-                                        value.blue,
-                                    );
-                                }
-                            }
-                            PortType::Single => {
-                                if let Some(value) = context.read_port(port.clone()) {
-                                    let control = FixtureControl::from(port.as_str());
-                                    fixture.write_fader_control(control.try_into().unwrap(), value);
-                                }
-                            }
-                            _ => unimplemented!(),
-                        }
-                    }
-                }
+                let ports = fixture.current_mode.controls.controls().get_ports();
+                write_ports(ports, context, |control, value| {
+                    fixture.write_fader_control(control, value)
+                });
             } else {
                 log::error!("could not find fixture for id {}", self.fixture_id);
             }
@@ -123,31 +100,5 @@ impl ProcessingNode for FixtureNode {
 
     fn update(&mut self, config: &Self) {
         self.fixture_id = config.fixture_id;
-    }
-}
-
-trait FixtureControlPorts {
-    fn get_ports(&self) -> HashMap<PortId, PortMetadata>;
-}
-
-impl<TChannel> FixtureControlPorts for FixtureControls<TChannel> {
-    fn get_ports(&self) -> HashMap<PortId, PortMetadata> {
-        self.controls()
-            .into_iter()
-            .map(|(name, control_type)| {
-                (
-                    name.to_string().into(),
-                    PortMetadata {
-                        port_type: if control_type == FixtureControlType::Color {
-                            PortType::Color
-                        } else {
-                            PortType::Single
-                        },
-                        direction: PortDirection::Input,
-                        ..Default::default()
-                    },
-                )
-            })
-            .collect()
     }
 }

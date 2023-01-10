@@ -134,6 +134,17 @@ const SequenceWrapAroundRequest$json = const {
 
 /// Descriptor for `SequenceWrapAroundRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List sequenceWrapAroundRequestDescriptor = $convert.base64Decode('ChlTZXF1ZW5jZVdyYXBBcm91bmRSZXF1ZXN0EhoKCHNlcXVlbmNlGAEgASgNUghzZXF1ZW5jZRIeCgp3cmFwQXJvdW5kGAIgASgIUgp3cmFwQXJvdW5k');
+@$core.Deprecated('Use sequenceStopOnLastCueRequestDescriptor instead')
+const SequenceStopOnLastCueRequest$json = const {
+  '1': 'SequenceStopOnLastCueRequest',
+  '2': const [
+    const {'1': 'sequence', '3': 1, '4': 1, '5': 13, '10': 'sequence'},
+    const {'1': 'stopOnLastCue', '3': 2, '4': 1, '5': 8, '10': 'stopOnLastCue'},
+  ],
+};
+
+/// Descriptor for `SequenceStopOnLastCueRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequenceStopOnLastCueRequestDescriptor = $convert.base64Decode('ChxTZXF1ZW5jZVN0b3BPbkxhc3RDdWVSZXF1ZXN0EhoKCHNlcXVlbmNlGAEgASgNUghzZXF1ZW5jZRIkCg1zdG9wT25MYXN0Q3VlGAIgASgIUg1zdG9wT25MYXN0Q3Vl');
 @$core.Deprecated('Use sequenceNameRequestDescriptor instead')
 const SequenceNameRequest$json = const {
   '1': 'SequenceNameRequest',
@@ -171,11 +182,12 @@ const Sequence$json = const {
     const {'1': 'cues', '3': 3, '4': 3, '5': 11, '6': '.mizer.sequencer.Cue', '10': 'cues'},
     const {'1': 'fixtures', '3': 4, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
     const {'1': 'wrapAround', '3': 5, '4': 1, '5': 8, '10': 'wrapAround'},
+    const {'1': 'stopOnLastCue', '3': 6, '4': 1, '5': 8, '10': 'stopOnLastCue'},
   ],
 };
 
 /// Descriptor for `Sequence`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sequenceDescriptor = $convert.base64Decode('CghTZXF1ZW5jZRIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIoCgRjdWVzGAMgAygLMhQubWl6ZXIuc2VxdWVuY2VyLkN1ZVIEY3VlcxI1CghmaXh0dXJlcxgEIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSHgoKd3JhcEFyb3VuZBgFIAEoCFIKd3JhcEFyb3VuZA==');
+final $typed_data.Uint8List sequenceDescriptor = $convert.base64Decode('CghTZXF1ZW5jZRIOCgJpZBgBIAEoDVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIoCgRjdWVzGAMgAygLMhQubWl6ZXIuc2VxdWVuY2VyLkN1ZVIEY3VlcxI1CghmaXh0dXJlcxgEIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIIZml4dHVyZXMSHgoKd3JhcEFyb3VuZBgFIAEoCFIKd3JhcEFyb3VuZBIkCg1zdG9wT25MYXN0Q3VlGAYgASgIUg1zdG9wT25MYXN0Q3Vl');
 @$core.Deprecated('Use cueDescriptor instead')
 const Cue$json = const {
   '1': 'Cue',

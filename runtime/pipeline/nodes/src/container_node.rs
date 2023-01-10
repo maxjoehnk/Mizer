@@ -32,5 +32,7 @@ impl ProcessingNode for ContainerNode {
         Default::default()
     }
 
-    fn update(&mut self, _config: &Self) {}
+    fn update(&mut self, config: &Self) {
+        self.nodes = config.nodes.clone();
+    }
 }

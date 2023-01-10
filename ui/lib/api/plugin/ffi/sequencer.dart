@@ -28,10 +28,11 @@ class SequencerPointer {
 class SequenceState with Diagnosticable {
     bool active;
     int? cueId;
+    double rate;
 
-    SequenceState({ required this.active, required this.cueId });
+    SequenceState({ required this.active, required this.cueId, required this.rate });
     factory SequenceState.fromBinding(bindings.SequenceState binding) {
-      return SequenceState(active: binding.active == 1, cueId: binding.current_cue_id == 0 ? null : binding.current_cue_id);
+      return SequenceState(active: binding.active == 1, cueId: binding.current_cue_id == 0 ? null : binding.current_cue_id, rate: binding.rate);
     }
 
     @override
@@ -39,6 +40,7 @@ class SequenceState with Diagnosticable {
       super.debugFillProperties(properties);
       properties.add(DiagnosticsProperty("active", active));
       properties.add(DiagnosticsProperty("cueId", cueId));
+      properties.add(DiagnosticsProperty("rate", rate));
     }
 }
 

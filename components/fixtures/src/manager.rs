@@ -1,9 +1,12 @@
-use crate::definition::{FixtureDefinition, FixtureFaderControl};
+use crate::definition::{
+    FixtureControl, FixtureControlType, FixtureDefinition, FixtureFaderControl,
+};
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{Group, Presets, Programmer};
 use crate::{FixtureId, FixtureStates};
 use dashmap::DashMap;
+use itertools::Itertools;
 use mizer_protocol_dmx::DmxConnectionManager;
 use std::ops::{Deref, DerefMut};
 use std::sync::{Arc, Mutex, MutexGuard};
@@ -49,7 +52,14 @@ impl FixtureManager {
     ) {
         log::trace!("Adding fixture {}", fixture_id);
         let fixture = Fixture::new(
-            fixture_id, name, definition, mode, output, channel, universe, configuration
+            fixture_id,
+            name,
+            definition,
+            mode,
+            output,
+            channel,
+            universe,
+            configuration,
         );
         self.states.add_fixture(&fixture);
         self.fixtures.insert(fixture_id, fixture);
@@ -120,6 +130,44 @@ impl FixtureManager {
 
     pub fn get_groups(&self) -> Vec<impl Deref<Target = Group> + '_> {
         self.groups.iter().collect()
+    }
+
+    pub fn get_group_fixture_controls(
+        &self,
+        group_id: u32,
+    ) -> Vec<(FixtureControl, FixtureControlType)> {
+        if let Some(group) = self.groups.get(&group_id) {
+            group
+                .fixtures
+                .iter()
+                .filter_map(|fixture_id| match fixture_id {
+                    FixtureId::Fixture(fixture_id) => {
+                        let fixture = self.fixtures.get(fixture_id)?;
+
+                        Some(fixture.current_mode.controls.controls())
+                    }
+                    FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
+                        let fixture = self.fixtures.get(fixture_id)?;
+                        let sub_fixture = fixture.sub_fixture(*sub_fixture_id)?;
+
+                        Some(sub_fixture.definition.controls.controls())
+                    }
+                })
+                .flatten()
+                .sorted()
+                .dedup()
+                .collect()
+        } else {
+            Default::default()
+        }
+    }
+
+    pub fn write_group_control(&self, group_id: u32, control: FixtureFaderControl, value: f64) {
+        if let Some(group) = self.groups.get(&group_id) {
+            for fixture_id in &group.fixtures {
+                self.write_fixture_control(*fixture_id, control.clone(), value);
+            }
+        }
     }
 
     pub fn write_outputs(&self, dmx_manager: &DmxConnectionManager) {

@@ -325,6 +325,10 @@ impl Programmer {
             self.running_effects.clear();
             self.active_selection.clear();
             self.active_channels.clear();
+            self.active_selection.groups = None;
+            self.active_selection.block_size = None;
+            self.active_selection.wings = None;
+            self.set();
         }
         self.emit_state();
     }

@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;
 
+mod contracts;
 pub mod definition;
 pub mod fixture;
 pub mod library;

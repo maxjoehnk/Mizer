@@ -2,9 +2,8 @@ use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 use std::sync::Arc;
 
-use dashmap::DashMap;
 use futures::stream::Stream;
-use indexmap::IndexSet;
+use indexmap::{IndexMap, IndexSet};
 use pinboard::NonEmptyPinboard;
 use postage::prelude::Sink;
 use postage::watch;
@@ -13,8 +12,8 @@ use serde::{Deserialize, Serialize};
 pub use groups::*;
 pub use presets::*;
 
+use crate::contracts::FixtureController;
 use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
-use crate::fixture::{Fixture, IFixtureMut};
 use crate::selection::FixtureSelection;
 use crate::{FixtureId, RgbColor};
 
@@ -28,7 +27,6 @@ pub struct Programmer {
     active_channels: FixtureProgrammer,
     running_effects: Vec<ProgrammedEffect>,
     tracked_selections: Vec<(FixtureSelection, FixtureProgrammer)>,
-    fixtures: Arc<DashMap<u32, Fixture>>,
     message_bus: watch::Sender<ProgrammerState>,
     message_subscriber: watch::Receiver<ProgrammerState>,
     programmer_view: Arc<NonEmptyPinboard<ProgrammerState>>,
@@ -261,11 +259,10 @@ impl Hash for ProgrammerControl {
     }
 }
 
-impl Programmer {
-    pub fn new(fixtures: Arc<DashMap<u32, Fixture>>) -> Self {
+impl Default for Programmer {
+    fn default() -> Self {
         let (tx, rx) = watch::channel();
         Self {
-            fixtures,
             active_selection: Default::default(),
             active_channels: Default::default(),
             highlight: false,
@@ -278,31 +275,21 @@ impl Programmer {
             x: None,
         }
     }
+}
 
-    pub fn run(&self) {
+impl Programmer {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub(crate) fn run(&self, fixture_controller: &impl FixtureController) {
         profiling::scope!("Programmer::run");
         log::trace!("Programmer::run");
         for (selection, state) in self.get_selections().into_iter() {
             log::trace!("{:?} => {:?}", selection, state);
             for fixture_id in selection.get_fixtures().iter().flatten() {
-                match fixture_id {
-                    FixtureId::Fixture(fixture_id) => {
-                        if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                            for (control, value) in state.fader_controls() {
-                                fixture.write_fader_control(control.clone(), value);
-                            }
-                        }
-                    }
-                    FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
-                        if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                            if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id)
-                            {
-                                for (control, value) in state.fader_controls() {
-                                    sub_fixture.write_fader_control(control.clone(), value);
-                                }
-                            }
-                        }
-                    }
+                for (control, value) in state.fader_controls() {
+                    fixture_controller.write(*fixture_id, control.clone(), value);
                 }
             }
         }
@@ -310,29 +297,12 @@ impl Programmer {
             if let Some(x) = self.x {
                 if let Some(fixtures) = self.active_selection.get_fixtures().get(x) {
                     for fixture_id in fixtures {
-                        self.highlight_fixture(fixture_id);
+                        fixture_controller.highlight(*fixture_id);
                     }
                 }
             } else {
                 for fixture_id in self.active_selection.get_fixtures().iter().flatten() {
-                    self.highlight_fixture(fixture_id);
-                }
-            }
-        }
-    }
-
-    fn highlight_fixture(&self, fixture_id: &FixtureId) {
-        match fixture_id {
-            FixtureId::Fixture(fixture_id) => {
-                if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                    fixture.highlight();
-                }
-            }
-            FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
-                if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                    if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id) {
-                        sub_fixture.highlight();
-                    }
+                    fixture_controller.highlight(*fixture_id);
                 }
             }
         }
@@ -634,11 +604,11 @@ impl<T> OptionExt<T> for Option<T> {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::Arc;
-
-    use dashmap::DashMap;
+    use mockall::predicate;
     use spectral::prelude::*;
+    use test_case::test_case;
 
+    use crate::contracts::*;
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
     use crate::programmer::Programmer;
     use crate::selection::FixtureSelection;
@@ -646,8 +616,7 @@ mod tests {
 
     #[test]
     fn selecting_fixtures_should_select_fixtures() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let fixtures = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
 
         programmer.select_fixtures(fixtures.clone());
@@ -658,8 +627,7 @@ mod tests {
 
     #[test]
     fn selecting_fixtures_in_multiple_steps_should_combine_selections() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let expected = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
 
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
@@ -671,8 +639,7 @@ mod tests {
 
     #[test]
     fn writing_controls_should_set_values_for_selection() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
         programmer.select_fixtures(selection.clone());
         let value = FixtureControlValue::Intensity(1.);
@@ -687,8 +654,7 @@ mod tests {
 
     #[test]
     fn writing_controls_should_track_selection() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
         programmer.select_fixtures(selection.clone());
         let value = FixtureControlValue::Intensity(1.);
@@ -701,8 +667,7 @@ mod tests {
 
     #[test]
     fn selecting_fixtures_after_writing_controls_should_track_previous_selection() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let first_selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
         let second_selection = vec![FixtureId::Fixture(3), FixtureId::Fixture(4)];
         programmer.select_fixtures(first_selection.clone());
@@ -721,8 +686,7 @@ mod tests {
 
     #[test]
     fn clearing_fresh_selection_should_clear_active_fixtures() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let fixtures = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
         programmer.select_fixtures(fixtures);
 
@@ -734,8 +698,7 @@ mod tests {
 
     #[test]
     fn clearing_after_writing_should_clear_only_active_selection() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
         programmer.select_fixtures(selection.clone());
         let value = FixtureControlValue::Intensity(1.);
@@ -753,8 +716,7 @@ mod tests {
 
     #[test]
     fn clearing_twice_after_writing_should_clear_active_and_tracked_selection() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         programmer.select_fixtures(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
         programmer.write_control(FixtureControlValue::Intensity(1.));
 
@@ -769,8 +731,7 @@ mod tests {
 
     #[test]
     fn writing_two_active_selection_should_keep_tracked_values() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let first_fixtures = vec![FixtureId::Fixture(1)];
         let first_value = FixtureControlValue::Intensity(1.);
         let second_fixtures = vec![FixtureId::Fixture(2)];
@@ -795,8 +756,7 @@ mod tests {
 
     #[test]
     fn selecting_same_fixture_twice_should_only_keep_one_id() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let fixtures = vec![FixtureId::Fixture(1)];
 
         programmer.select_fixtures(fixtures.clone());
@@ -808,8 +768,7 @@ mod tests {
 
     #[test]
     fn get_controls_should_return_written_values() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let selection = vec![FixtureId::Fixture(1), FixtureId::Fixture(2)];
         programmer.select_fixtures(selection.clone());
         let value = FixtureControlValue::Intensity(1.);
@@ -826,8 +785,7 @@ mod tests {
 
     #[test]
     fn get_controls_should_return_writing_two_active_selection() {
-        let fixtures = Arc::new(DashMap::new());
-        let mut programmer = Programmer::new(fixtures);
+        let mut programmer = Programmer::new();
         let first_fixtures = vec![FixtureId::Fixture(1)];
         let first_value = FixtureControlValue::Intensity(1.);
         let second_fixtures = vec![FixtureId::Fixture(2)];
@@ -848,5 +806,192 @@ mod tests {
         assert_that!(second_control.fixtures).is_equal_to(&FixtureSelection::new(second_fixtures));
         assert_that!(second_control.value).is_equal_to(0.5);
         assert_that!(second_control.control).is_equal_to(FixtureFaderControl::Intensity);
+    }
+
+    #[test_case(vec![FixtureId::Fixture(1)])]
+    #[test_case(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)])]
+    #[test_case(vec![FixtureId::SubFixture(1, 2)])]
+    fn run_should_highlight_selected_fixtures(fixtures: Vec<FixtureId>) {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        for fixture_id in &fixtures {
+            fixture_controller
+                .expect_highlight()
+                .with(predicate::eq(*fixture_id))
+                .once()
+                .return_const(());
+        }
+        programmer.select_fixtures(fixtures);
+        programmer.set_highlight(true);
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test]
+    fn run_should_not_highlight_selected_fixtures() {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
+        programmer.set_highlight(false);
+        fixture_controller
+            .expect_highlight()
+            .never()
+            .with(predicate::eq(FixtureId::Fixture(1)))
+            .return_const(());
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test]
+    fn run_should_not_highlight_fixtures_after_clear() {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
+        programmer.set_highlight(true);
+        programmer.clear();
+        fixture_controller
+            .expect_highlight()
+            .never()
+            .with(predicate::eq(FixtureId::Fixture(1)))
+            .return_const(());
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test]
+    fn run_should_not_highlight_fixtures_after_store() {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
+        programmer.set_highlight(true);
+        programmer.write_control(FixtureControlValue::Intensity(1.));
+        programmer.select_fixtures(vec![]);
+        fixture_controller
+            .expect_highlight()
+            .never()
+            .return_const(());
+        fixture_controller.expect_write().return_const(());
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test_case(FixtureControlValue::Intensity(1.), FixtureFaderControl::Intensity, 1.)]
+    #[test_case(FixtureControlValue::Shutter(0.5), FixtureFaderControl::Shutter, 0.5)]
+    fn run_should_write_to_fixture(
+        control: FixtureControlValue,
+        fader: FixtureFaderControl,
+        value: f64,
+    ) {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
+        programmer.write_control(control);
+        expect_write(&mut fixture_controller, FixtureId::Fixture(1), fader, value);
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test_case(vec![FixtureId::Fixture(1)])]
+    #[test_case(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)])]
+    #[test_case(vec![FixtureId::SubFixture(1, 2)])]
+    fn run_should_write_to_multiple_fixtures(fixtures: Vec<FixtureId>) {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        for fixture_id in &fixtures {
+            expect_write(
+                &mut fixture_controller,
+                *fixture_id,
+                FixtureFaderControl::Intensity,
+                1.,
+            );
+        }
+        programmer.select_fixtures(fixtures);
+        programmer.write_control(FixtureControlValue::Intensity(1.));
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test_case(vec![
+        (FixtureControlValue::Intensity(1.), FixtureFaderControl::Intensity, 1.),
+        (FixtureControlValue::Shutter(0.5), FixtureFaderControl::Shutter, 0.5)
+    ])]
+    #[test_case(vec![
+        (FixtureControlValue::Pan(0.), FixtureFaderControl::Pan, 0.),
+        (FixtureControlValue::Tilt(0.25), FixtureFaderControl::Tilt, 0.25),
+    ])]
+    fn run_should_write_multiple_controls_to_fixture(
+        controls: Vec<(FixtureControlValue, FixtureFaderControl, f64)>,
+    ) {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
+        for (control, fader, value) in controls {
+            programmer.write_control(control);
+            expect_write(&mut fixture_controller, FixtureId::Fixture(1), fader, value);
+        }
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    #[test]
+    fn run_should_combine_multiple_fixture_and_control_values() {
+        let mut fixture_controller = MockFixtureController::default();
+        let mut programmer = Programmer::new();
+        programmer.select_fixtures(vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
+        programmer.write_control(FixtureControlValue::Intensity(1.));
+        programmer.select_fixtures(vec![FixtureId::Fixture(2), FixtureId::Fixture(3)]);
+        programmer.write_control(FixtureControlValue::Intensity(0.5));
+        expect_write(
+            &mut fixture_controller,
+            FixtureId::Fixture(1),
+            FixtureFaderControl::Intensity,
+            1.,
+        );
+        expect_write(
+            &mut fixture_controller,
+            FixtureId::Fixture(2),
+            FixtureFaderControl::Intensity,
+            0.5,
+        );
+        expect_write(
+            &mut fixture_controller,
+            FixtureId::Fixture(3),
+            FixtureFaderControl::Intensity,
+            0.5,
+        );
+
+        programmer.run(&fixture_controller);
+
+        fixture_controller.checkpoint();
+    }
+
+    fn expect_write(
+        fixture_controller: &mut MockFixtureController,
+        fixture_id: FixtureId,
+        control: FixtureFaderControl,
+        value: f64,
+    ) {
+        fixture_controller
+            .expect_write()
+            .with(
+                predicate::eq(fixture_id),
+                predicate::eq(control),
+                predicate::eq(value),
+            )
+            .return_const(());
     }
 }

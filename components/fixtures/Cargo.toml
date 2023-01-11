@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
+[features]
+nightly = ["mockall/nightly"]
+
 [dependencies]
 anyhow = "1"
 log = "0.4"
@@ -28,3 +31,4 @@ itertools = "0.10"
 [dev-dependencies]
 test-case = "2.2"
 spectral = { version = "0.6.0", default-features = false }
+mockall = "0.11"

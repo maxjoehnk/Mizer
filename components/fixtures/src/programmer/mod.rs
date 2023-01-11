@@ -344,7 +344,6 @@ impl Programmer {
             self.active_channels.clear();
         }
         self.active_selection.add_fixtures(fixtures);
-        println!("{:?}", self.active_selection);
         self.emit_state();
     }
 
@@ -363,22 +362,16 @@ impl Programmer {
         } else {
             Some(block_size)
         };
-        println!("set_block_size {block_size}");
-        println!("{:?}", self.active_selection);
         self.clamp_x();
     }
 
     pub fn set_groups(&mut self, groups: usize) {
         self.active_selection.groups = if groups == 0 { None } else { Some(groups) };
-        println!("set_groups {groups}");
-        println!("{:?}", self.active_selection);
         self.clamp_x();
     }
 
     pub fn set_wings(&mut self, wings: usize) {
         self.active_selection.wings = if wings == 0 { None } else { Some(wings) };
-        println!("set_wings {wings}");
-        println!("{:?}", self.active_selection);
         self.clamp_x();
     }
 
@@ -580,7 +573,6 @@ impl Programmer {
             groups: self.active_selection.groups,
             wings: self.active_selection.wings,
         };
-        println!("{:?}", state);
         self.programmer_view.set(state.clone());
         log::trace!("sending programmer msg");
         if let Err(err) = self.message_bus.try_send(state) {

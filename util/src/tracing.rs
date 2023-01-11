@@ -16,7 +16,9 @@ mod tracing_impl {
     #[macro_export]
     macro_rules! message {
         ($message: expr, $callstack_depth: expr) => {
-            profiling::tracy_client::Client::running().unwrap().message($message, $callstack_depth);
+            profiling::tracy_client::Client::running()
+                .unwrap()
+                .message($message, $callstack_depth);
         };
     }
 }
@@ -27,7 +29,9 @@ mod tracing_impl {
 
     #[macro_export]
     macro_rules! plot {
-        ($name: expr, $value: expr) => {};
+        ($name: expr, $value: expr) => {
+            let _value = $value;
+        };
     }
 
     #[macro_export]

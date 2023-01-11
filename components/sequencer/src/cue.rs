@@ -317,7 +317,7 @@ impl CueControl {
             values.insert(*fixture, None);
         }
 
-        self.fill_values(cue, state, &mut values);
+        self.fill_values(state, &mut values);
         self.delay_values(cue, state, &mut values);
         self.fade_values(sequence, cue, state, &mut values);
 
@@ -338,7 +338,6 @@ impl CueControl {
 
     pub(crate) fn fill_values(
         &self,
-        cue: &Cue,
         _: &SequenceState,
         values: &mut HashMap<FixtureId, Option<f64>>,
     ) {
@@ -434,6 +433,9 @@ impl CueControl {
                     SequencerTime::Seconds(to),
                 ))) => {
                     self.interpolate((from, to), |id, duration| {
+                        if id != fixture_id {
+                            return;
+                        }
                         let time = cue_state.duration.time.as_secs_f64();
 
                         values.insert(
@@ -455,6 +457,9 @@ impl CueControl {
                     SequencerTime::Beats(to),
                 ))) => {
                     self.interpolate((from, to), |id, beats| {
+                        if id != fixture_id {
+                            return;
+                        }
                         let time = cue_state.duration.beat;
 
                         values.insert(

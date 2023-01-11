@@ -3,7 +3,7 @@ use std::hash::{Hash, Hasher};
 use std::sync::Arc;
 
 use futures::stream::Stream;
-use indexmap::{IndexMap, IndexSet};
+use indexmap::IndexSet;
 use pinboard::NonEmptyPinboard;
 use postage::prelude::Sink;
 use postage::watch;
@@ -285,13 +285,17 @@ impl Programmer {
     pub(crate) fn run(&self, fixture_controller: &impl FixtureController) {
         profiling::scope!("Programmer::run");
         log::trace!("Programmer::run");
+        let mut values = HashMap::new();
         for (selection, state) in self.get_selections().into_iter() {
             log::trace!("{:?} => {:?}", selection, state);
             for fixture_id in selection.get_fixtures().iter().flatten() {
                 for (control, value) in state.fader_controls() {
-                    fixture_controller.write(*fixture_id, control.clone(), value);
+                    values.insert((*fixture_id, control), value);
                 }
             }
+        }
+        for ((fixture_id, control), value) in values {
+            fixture_controller.write(fixture_id, control, value);
         }
         if self.highlight {
             if let Some(x) = self.x {

@@ -614,18 +614,21 @@ mod tests {
     #[test_case((0f64, 1f64), vec![1f64, 0.9f64], 0.9f64)]
     #[test_case((0f64, 1f64), vec![1f64, 1f64], 1f64)]
     #[test_case((0f64, 2f64), vec![1f64, 1f64, 0.5f64], 1f64)]
+    #[test_case((1f64, 2f64), vec![1f64, 1f64], 2f64)]
+    #[test_case((1f64, 2f64), vec![1f64, 0.75f64], 1.5f64)]
+    #[test_case((1f64, 2f64), vec![1f64, 0.5f64], 1f64)]
     #[test_case((1f64, 2f64), vec![0.5f64, 0.25f64], 0.5f64)]
     #[test_case((1f64, 2f64), vec![0.0f64, 0f64], 0f64)]
     fn sequence_with_fade_range_should_calculate_fade_for_each_fixture(
         fade: (f64, f64),
-        fixtures: Vec<f64>,
+        fixture_values: Vec<f64>,
         time: f64,
     ) {
         let mut context = TestContext::default();
         let frame = ClockFrame::default();
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
-        let fixture_ids = fixtures
+        let fixture_ids = fixture_values
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
@@ -665,7 +668,7 @@ mod tests {
         );
         context.forward_clock(time);
         context.fixture_controller.checkpoint();
-        for (i, expected) in fixtures.into_iter().enumerate() {
+        for (i, expected) in fixture_values.into_iter().enumerate() {
             context
                 .fixture_controller
                 .expect_write()

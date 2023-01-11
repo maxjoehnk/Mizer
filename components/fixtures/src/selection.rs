@@ -299,7 +299,7 @@ mod tests {
         state.wings = Some(wings);
         state.block_size = Some(block_size);
 
-        let mut result = state.get_fixtures();
+        let result = state.get_fixtures();
 
         assert_eq!(expected, result);
     }

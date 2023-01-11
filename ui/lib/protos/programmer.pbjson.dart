@@ -21,16 +21,36 @@ const ProgrammerState$json = const {
   '2': const [
     const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
     const {'1': 'active_fixtures', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'activeFixtures'},
-    const {'1': 'controls', '3': 3, '4': 3, '5': 11, '6': '.mizer.programmer.ProgrammerChannel', '10': 'controls'},
-    const {'1': 'highlight', '3': 4, '4': 1, '5': 8, '10': 'highlight'},
-    const {'1': 'block_size', '3': 5, '4': 1, '5': 13, '10': 'blockSize'},
-    const {'1': 'groups', '3': 6, '4': 1, '5': 13, '10': 'groups'},
-    const {'1': 'wings', '3': 7, '4': 1, '5': 13, '10': 'wings'},
+    const {'1': 'selection', '3': 3, '4': 1, '5': 11, '6': '.mizer.programmer.FixtureSelection', '10': 'selection'},
+    const {'1': 'controls', '3': 4, '4': 3, '5': 11, '6': '.mizer.programmer.ProgrammerChannel', '10': 'controls'},
+    const {'1': 'highlight', '3': 5, '4': 1, '5': 8, '10': 'highlight'},
+    const {'1': 'block_size', '3': 6, '4': 1, '5': 13, '10': 'blockSize'},
+    const {'1': 'groups', '3': 7, '4': 1, '5': 13, '10': 'groups'},
+    const {'1': 'wings', '3': 8, '4': 1, '5': 13, '10': 'wings'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSPwoIY29udHJvbHMYAyADKAsyIy5taXplci5wcm9ncmFtbWVyLlByb2dyYW1tZXJDaGFubmVsUghjb250cm9scxIcCgloaWdobGlnaHQYBCABKAhSCWhpZ2hsaWdodBIdCgpibG9ja19zaXplGAUgASgNUglibG9ja1NpemUSFgoGZ3JvdXBzGAYgASgNUgZncm91cHMSFAoFd2luZ3MYByABKA1SBXdpbmdz');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSQAoJc2VsZWN0aW9uGAMgASgLMiIubWl6ZXIucHJvZ3JhbW1lci5GaXh0dXJlU2VsZWN0aW9uUglzZWxlY3Rpb24SPwoIY29udHJvbHMYBCADKAsyIy5taXplci5wcm9ncmFtbWVyLlByb2dyYW1tZXJDaGFubmVsUghjb250cm9scxIcCgloaWdobGlnaHQYBSABKAhSCWhpZ2hsaWdodBIdCgpibG9ja19zaXplGAYgASgNUglibG9ja1NpemUSFgoGZ3JvdXBzGAcgASgNUgZncm91cHMSFAoFd2luZ3MYCCABKA1SBXdpbmdz');
+@$core.Deprecated('Use fixtureSelectionDescriptor instead')
+const FixtureSelection$json = const {
+  '1': 'FixtureSelection',
+  '2': const [
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.programmer.FixtureSelection.GroupedFixtureList', '10': 'fixtures'},
+  ],
+  '3': const [FixtureSelection_GroupedFixtureList$json],
+};
+
+@$core.Deprecated('Use fixtureSelectionDescriptor instead')
+const FixtureSelection_GroupedFixtureList$json = const {
+  '1': 'GroupedFixtureList',
+  '2': const [
+    const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
+  ],
+};
+
+/// Descriptor for `FixtureSelection`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List fixtureSelectionDescriptor = $convert.base64Decode('ChBGaXh0dXJlU2VsZWN0aW9uElEKCGZpeHR1cmVzGAEgAygLMjUubWl6ZXIucHJvZ3JhbW1lci5GaXh0dXJlU2VsZWN0aW9uLkdyb3VwZWRGaXh0dXJlTGlzdFIIZml4dHVyZXMaSwoSR3JvdXBlZEZpeHR1cmVMaXN0EjUKCGZpeHR1cmVzGAEgAygLMhkubWl6ZXIuZml4dHVyZXMuRml4dHVyZUlkUghmaXh0dXJlcw==');
 @$core.Deprecated('Use programmerChannelDescriptor instead')
 const ProgrammerChannel$json = const {
   '1': 'ProgrammerChannel',

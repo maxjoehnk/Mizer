@@ -26,11 +26,20 @@ message SubscribeProgrammerRequest {}
 message ProgrammerState {
   repeated mizer.fixtures.FixtureId fixtures = 1;
   repeated mizer.fixtures.FixtureId active_fixtures = 2;
-  repeated ProgrammerChannel controls = 3;
-  bool highlight = 4;
-  uint32 block_size = 5;
-  uint32 groups = 6;
-  uint32 wings = 7;
+  FixtureSelection selection = 3;
+  repeated ProgrammerChannel controls = 4;
+  bool highlight = 5;
+  uint32 block_size = 6;
+  uint32 groups = 7;
+  uint32 wings = 8;
+}
+
+message FixtureSelection {
+  repeated GroupedFixtureList fixtures = 1;
+
+  message GroupedFixtureList {
+    repeated mizer.fixtures.FixtureId fixtures = 1;
+  }
 }
 
 message ProgrammerChannel {

@@ -36,7 +36,7 @@ pub struct Cue {
 
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq, Hash)]
 pub struct CueEffect {
-    pub fixtures: FixtureSelection,
+    pub fixtures: BackwardsCompatibleFixtureSelection,
     pub effect: u32,
 }
 

@@ -69,7 +69,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                     for effect in &self.effects {
                         cue.effects.push(CueEffect {
                             effect: effect.effect_id,
-                            fixtures: effect.fixtures.clone(),
+                            fixtures: effect.fixtures.clone().into(),
                         });
                     }
                 }
@@ -80,7 +80,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                         .iter()
                         .map(|effect| CueEffect {
                             effect: effect.effect_id,
-                            fixtures: effect.fixtures.clone(),
+                            fixtures: effect.fixtures.clone().into(),
                         })
                         .collect();
                 }

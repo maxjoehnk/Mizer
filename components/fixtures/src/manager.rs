@@ -24,11 +24,10 @@ pub struct FixtureManager {
 
 impl FixtureManager {
     pub fn new(library: FixtureLibrary) -> Self {
-        let fixtures = Default::default();
         Self {
             library,
-            programmer: Arc::new(Mutex::new(Programmer::new(Arc::clone(&fixtures)))),
-            fixtures,
+            programmer: Arc::new(Mutex::new(Programmer::new())),
+            fixtures: Default::default(),
             groups: Default::default(),
             states: Default::default(),
             presets: Default::default(),
@@ -196,7 +195,7 @@ impl FixtureManager {
     pub(crate) fn execute_programmers(&self) {
         log::trace!("Locking programmer");
         let programmer = self.programmer.lock().unwrap().log_wrap();
-        programmer.run();
+        programmer.run(&self.fixtures);
     }
 
     pub(crate) fn default_fixtures(&self) {

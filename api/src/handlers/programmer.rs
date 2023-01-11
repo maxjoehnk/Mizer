@@ -221,4 +221,9 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn set(&self) {
         self.fixture_manager.get_programmer().set();
     }
+
+    #[tracing::instrument(skip(self))]
+    pub fn shuffle(&self) {
+        self.fixture_manager.get_programmer().shuffle();
+    }
 }

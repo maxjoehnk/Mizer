@@ -44,4 +44,5 @@ abstract class ProgrammerApi {
   Future<void> next();
   Future<void> prev();
   Future<void> set();
+  Future<void> shuffle();
 }

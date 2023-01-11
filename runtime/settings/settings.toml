@@ -41,6 +41,7 @@ highlight = "home"
 assign_group = "ctrl+g"
 next = "right"
 prev = "left"
+shuffle = "ctrl+r"
 
 [hotkeys.patch]
 add_fixture = "alt+a"

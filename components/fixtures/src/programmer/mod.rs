@@ -417,6 +417,10 @@ impl Programmer {
         self.x = None;
     }
 
+    pub fn shuffle(&mut self) {
+        self.active_selection.shuffle();
+    }
+
     pub fn select_group(&mut self, group: &Group) {
         self.select_fixtures(group.fixtures.clone());
     }

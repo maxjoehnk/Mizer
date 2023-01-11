@@ -153,6 +153,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
 
                 reply.send_ok(Value::Null)
             }
+            "shuffle" => {
+                self.handler.shuffle();
+
+                reply.send_ok(Value::Null)
+            }
             _ => reply.not_implemented(),
         }
     }

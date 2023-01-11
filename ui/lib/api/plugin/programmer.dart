@@ -146,4 +146,9 @@ class ProgrammerPluginApi implements ProgrammerApi {
   Future<void> set() async {
     await channel.invokeMethod("set");
   }
+
+  @override
+  Future<void> shuffle() async {
+    await channel.invokeMethod("shuffle");
+  }
 }

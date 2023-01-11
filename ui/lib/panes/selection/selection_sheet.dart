@@ -57,6 +57,9 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       hotkeyMap: {
         "clear": () => _clear(),
         "assign_group": () => _assignGroup(context),
+        "next": () => _next(),
+        "prev": () => _prev(),
+        "set": () => _set(),
       },
       child: Panel(
           label: "Selection",
@@ -101,12 +104,27 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
             PanelAction(label: "Assign Group", hotkeyId: "assign_group", disabled: widget.isEmpty, onClick: () => _assignGroup(context)),
+            PanelAction(label: "Prev", hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
+            PanelAction(label: "Next", hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
+            PanelAction(label: "Set", hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
           ]),
     );
   }
 
   void _clear() {
     widget.api.clear();
+  }
+
+  void _next() {
+    widget.api.next();
+  }
+
+  void _prev() {
+    widget.api.prev();
+  }
+
+  void _set() {
+    widget.api.set();
   }
 
   Future<void> _addMidiMappingForClear(BuildContext context) async {

@@ -131,4 +131,19 @@ class ProgrammerPluginApi implements ProgrammerApi {
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
+
+  @override
+  Future<void> next() async {
+    await channel.invokeMethod("next");
+  }
+
+  @override
+  Future<void> prev() async {
+    await channel.invokeMethod("prev");
+  }
+
+  @override
+  Future<void> set() async {
+    await channel.invokeMethod("set");
+  }
 }

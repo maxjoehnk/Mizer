@@ -138,6 +138,21 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                     reply.send_ok(Value::Null)
                 }
             }
+            "next" => {
+                self.handler.next();
+
+                reply.send_ok(Value::Null)
+            }
+            "prev" => {
+                self.handler.prev();
+
+                reply.send_ok(Value::Null)
+            }
+            "set" => {
+                self.handler.set();
+
+                reply.send_ok(Value::Null)
+            }
             _ => reply.not_implemented(),
         }
     }

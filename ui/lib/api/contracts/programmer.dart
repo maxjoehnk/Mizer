@@ -40,4 +40,8 @@ abstract class ProgrammerApi {
   Future<void> updateBlockSize(int blockSize);
   Future<void> updateGroups(int groups);
   Future<void> updateWings(int wings);
+
+  Future<void> next();
+  Future<void> prev();
+  Future<void> set();
 }

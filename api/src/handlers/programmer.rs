@@ -206,4 +206,19 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn update_wings(&self, wings: usize) {
         self.fixture_manager.get_programmer().set_wings(wings);
     }
+
+    #[tracing::instrument(skip(self))]
+    pub fn next(&self) {
+        self.fixture_manager.get_programmer().next();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn prev(&self) {
+        self.fixture_manager.get_programmer().prev();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn set(&self) {
+        self.fixture_manager.get_programmer().set();
+    }
 }

@@ -3,21 +3,20 @@ use std::hash::{Hash, Hasher};
 use std::sync::Arc;
 
 use dashmap::DashMap;
+use futures::stream::Stream;
+use indexmap::IndexSet;
 use pinboard::NonEmptyPinboard;
 use postage::prelude::Sink;
 use postage::watch;
-
-use futures::stream::Stream;
-use indexmap::IndexSet;
 use serde::{Deserialize, Serialize};
+
+pub use groups::*;
+pub use presets::*;
 
 use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
 use crate::fixture::{Fixture, IFixtureMut};
-use crate::{FixtureId, RgbColor};
-
 use crate::selection::FixtureSelection;
-pub use groups::*;
-pub use presets::*;
+use crate::{FixtureId, RgbColor};
 
 mod default_presets;
 mod groups;
@@ -34,6 +33,7 @@ pub struct Programmer {
     message_subscriber: watch::Receiver<ProgrammerState>,
     programmer_view: Arc<NonEmptyPinboard<ProgrammerState>>,
     has_written_to_selection: bool,
+    x: Option<usize>,
 }
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Deserialize, Serialize)]
@@ -275,6 +275,7 @@ impl Programmer {
             message_subscriber: rx,
             programmer_view: Arc::new(NonEmptyPinboard::new(Default::default())),
             has_written_to_selection: false,
+            x: None,
         }
     }
 
@@ -306,20 +307,31 @@ impl Programmer {
             }
         }
         if self.highlight {
-            for fixture_id in self.active_selection.get_fixtures().iter().flatten() {
-                match fixture_id {
-                    FixtureId::Fixture(fixture_id) => {
-                        if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                            fixture.highlight();
-                        }
+            if let Some(x) = self.x {
+                if let Some(fixtures) = self.active_selection.get_fixtures().get(x) {
+                    for fixture_id in fixtures {
+                        self.highlight_fixture(fixture_id);
                     }
-                    FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
-                        if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
-                            if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id)
-                            {
-                                sub_fixture.highlight();
-                            }
-                        }
+                }
+            } else {
+                for fixture_id in self.active_selection.get_fixtures().iter().flatten() {
+                    self.highlight_fixture(fixture_id);
+                }
+            }
+        }
+    }
+
+    fn highlight_fixture(&self, fixture_id: &FixtureId) {
+        match fixture_id {
+            FixtureId::Fixture(fixture_id) => {
+                if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
+                    fixture.highlight();
+                }
+            }
+            FixtureId::SubFixture(fixture_id, sub_fixture_id) => {
+                if let Some(mut fixture) = self.fixtures.get_mut(fixture_id) {
+                    if let Some(mut sub_fixture) = fixture.sub_fixture_mut(*sub_fixture_id) {
+                        sub_fixture.highlight();
                     }
                 }
             }
@@ -375,18 +387,60 @@ impl Programmer {
         };
         println!("set_block_size {block_size}");
         println!("{:?}", self.active_selection);
+        self.clamp_x();
     }
 
     pub fn set_groups(&mut self, groups: usize) {
         self.active_selection.groups = if groups == 0 { None } else { Some(groups) };
         println!("set_groups {groups}");
         println!("{:?}", self.active_selection);
+        self.clamp_x();
     }
 
     pub fn set_wings(&mut self, wings: usize) {
         self.active_selection.wings = if wings == 0 { None } else { Some(wings) };
         println!("set_wings {wings}");
         println!("{:?}", self.active_selection);
+        self.clamp_x();
+    }
+
+    pub fn next(&mut self) {
+        if self.x.is_none() {
+            self.x = Some(0);
+            return;
+        }
+        let x = self.x.unwrap_or_default();
+        let mut x = x.saturating_add(1);
+        if x >= self.active_selection.get_fixtures().len() {
+            x = 0;
+        }
+        self.x = Some(x);
+    }
+
+    pub fn prev(&mut self) {
+        if self.x.is_none() {
+            self.x = Some(self.active_selection.get_fixtures().len().saturating_sub(1));
+            return;
+        }
+        let x = self.x.unwrap_or_default();
+        let (mut x, overflow) = x.overflowing_sub(1);
+        if overflow {
+            x = self.active_selection.get_fixtures().len().saturating_sub(1);
+        }
+        self.x = Some(x);
+    }
+
+    fn clamp_x(&mut self) {
+        if let Some(x) = self.x {
+            self.x = Some(x.clamp(
+                0,
+                self.active_selection.get_fixtures().len().saturating_sub(1),
+            ));
+        }
+    }
+
+    pub fn set(&mut self) {
+        self.x = None;
     }
 
     pub fn select_group(&mut self, group: &Group) {
@@ -580,13 +634,15 @@ impl<T> OptionExt<T> for Option<T> {
 
 #[cfg(test)]
 mod tests {
+    use std::sync::Arc;
+
+    use dashmap::DashMap;
+    use spectral::prelude::*;
+
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
     use crate::programmer::Programmer;
     use crate::selection::FixtureSelection;
     use crate::FixtureId;
-    use dashmap::DashMap;
-    use spectral::prelude::*;
-    use std::sync::Arc;
 
     #[test]
     fn selecting_fixtures_should_select_fixtures() {

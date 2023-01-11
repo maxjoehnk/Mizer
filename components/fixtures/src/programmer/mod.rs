@@ -423,10 +423,11 @@ impl Programmer {
     }
 
     pub fn is_group_active(&self, group: &Group) -> bool {
-        group
-            .fixtures
-            .iter()
-            .all(|id| self.active_selection.contains(id)) // || self.selected_fixtures.contains_key(id))
+        group.fixtures.iter().all(|id| {
+            self.get_selections()
+                .iter()
+                .any(|(selection, _)| selection.contains(id))
+        })
     }
 
     pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {

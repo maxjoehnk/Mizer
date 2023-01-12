@@ -36,4 +36,13 @@ abstract class ProgrammerApi {
   Future<void> assignFixtureSelectionToGroup(Group group);
 
   Future<ProgrammerStatePointer?> getProgrammerPointer();
+
+  Future<void> updateBlockSize(int blockSize);
+  Future<void> updateGroups(int groups);
+  Future<void> updateWings(int wings);
+
+  Future<void> next();
+  Future<void> prev();
+  Future<void> set();
+  Future<void> shuffle();
 }

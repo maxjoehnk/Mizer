@@ -74,7 +74,13 @@ impl From<mizer_sequencer::CueControl> for CueControl {
         Self {
             type_: EnumOrUnknown::new(channel.control.into()),
             value: MessageField::some(channel.value.into()),
-            fixtures: channel.fixtures.into_iter().map(FixtureId::from).collect(),
+            fixtures: channel
+                .fixtures
+                .get_fixtures()
+                .into_iter()
+                .flatten()
+                .map(FixtureId::from)
+                .collect(),
             ..Default::default()
         }
     }

@@ -256,7 +256,7 @@ impl SequenceState {
                 start_time,
                 duration: SequenceRateMatchedDuration::new(start_time),
             };
-            for fixture in &sequence.fixtures {
+            for fixture in sequence.fixtures.iter() {
                 self.channel_state
                     .insert((*fixture, control.control.clone()), channel);
             }

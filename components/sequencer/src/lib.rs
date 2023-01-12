@@ -54,7 +54,7 @@ mod tests {
             cues: vec![Cue::new(
                 1,
                 "",
-                vec![CueControl::new(control, value, vec![fixture_id])],
+                vec![CueControl::new(control, value, vec![fixture_id].into())],
             )],
             ..Default::default()
         };
@@ -105,12 +105,16 @@ mod tests {
                 Cue::new(
                     1,
                     "",
-                    vec![CueControl::new(control.clone(), 1f64, vec![fixture_id])],
+                    vec![CueControl::new(
+                        control.clone(),
+                        1f64,
+                        vec![fixture_id].into(),
+                    )],
                 ),
                 Cue::new(
                     2,
                     "",
-                    vec![CueControl::new(control, 0.5f64, vec![fixture_id])],
+                    vec![CueControl::new(control, 0.5f64, vec![fixture_id].into())],
                 ),
             ],
             ..Default::default()
@@ -168,7 +172,7 @@ mod tests {
             cues: vec![Cue::new(
                 1,
                 "",
-                vec![CueControl::new(control, value, fixture_ids)],
+                vec![CueControl::new(control, value, fixture_ids.into())],
             )],
             ..Default::default()
         };
@@ -213,7 +217,7 @@ mod tests {
                     vec![CueControl {
                         control,
                         value: 1f64.into(),
-                        fixtures: vec![fixture_id],
+                        fixtures: vec![fixture_id].into(),
                     }],
                 )
             }],
@@ -260,7 +264,7 @@ mod tests {
                     vec![CueControl {
                         control,
                         value: 1f64.into(),
-                        fixtures: vec![fixture_id],
+                        fixtures: vec![fixture_id].into(),
                     }],
                 )
             }],
@@ -308,7 +312,7 @@ mod tests {
                     vec![CueControl {
                         control,
                         value: 1f64.into(),
-                        fixtures: vec![fixture_id],
+                        fixtures: vec![fixture_id].into(),
                     }],
                 )
             }],
@@ -364,7 +368,7 @@ mod tests {
                     vec![CueControl {
                         control,
                         value: 1f64.into(),
-                        fixtures: vec![fixture_id],
+                        fixtures: vec![fixture_id].into(),
                     }],
                 )
             }],
@@ -457,7 +461,7 @@ mod tests {
                     vec![CueControl {
                         control: control.clone(),
                         value: value.into(),
-                        fixtures: fixture_ids,
+                        fixtures: fixture_ids.into(),
                     }],
                 )
             }],
@@ -512,7 +516,7 @@ mod tests {
                     vec![CueControl {
                         control,
                         value: 1f64.into(),
-                        fixtures: vec![fixture_id],
+                        fixtures: vec![fixture_id].into(),
                     }],
                 )
             }],
@@ -576,7 +580,7 @@ mod tests {
                     vec![CueControl {
                         control: control.clone(),
                         value: value.into(),
-                        fixtures: vec![fixture_id],
+                        fixtures: vec![fixture_id].into(),
                     }],
                 )
             }],
@@ -610,18 +614,21 @@ mod tests {
     #[test_case((0f64, 1f64), vec![1f64, 0.9f64], 0.9f64)]
     #[test_case((0f64, 1f64), vec![1f64, 1f64], 1f64)]
     #[test_case((0f64, 2f64), vec![1f64, 1f64, 0.5f64], 1f64)]
+    #[test_case((1f64, 2f64), vec![1f64, 1f64], 2f64)]
+    #[test_case((1f64, 2f64), vec![1f64, 0.75f64], 1.5f64)]
+    #[test_case((1f64, 2f64), vec![1f64, 0.5f64], 1f64)]
     #[test_case((1f64, 2f64), vec![0.5f64, 0.25f64], 0.5f64)]
     #[test_case((1f64, 2f64), vec![0.0f64, 0f64], 0f64)]
     fn sequence_with_fade_range_should_calculate_fade_for_each_fixture(
         fade: (f64, f64),
-        fixtures: Vec<f64>,
+        fixture_values: Vec<f64>,
         time: f64,
     ) {
         let mut context = TestContext::default();
         let frame = ClockFrame::default();
         let control = FixtureFaderControl::Intensity;
         let value = 1f64;
-        let fixture_ids = fixtures
+        let fixture_ids = fixture_values
             .iter()
             .enumerate()
             .map(|(i, _)| FixtureId::Fixture(i as u32))
@@ -643,7 +650,7 @@ mod tests {
                     vec![CueControl {
                         control: control.clone(),
                         value: value.into(),
-                        fixtures: fixture_ids,
+                        fixtures: fixture_ids.into(),
                     }],
                 )
             }],
@@ -661,7 +668,7 @@ mod tests {
         );
         context.forward_clock(time);
         context.fixture_controller.checkpoint();
-        for (i, expected) in fixtures.into_iter().enumerate() {
+        for (i, expected) in fixture_values.into_iter().enumerate() {
             context
                 .fixture_controller
                 .expect_write()
@@ -701,7 +708,7 @@ mod tests {
                     vec![CueControl {
                         control: control.clone(),
                         value: value.into(),
-                        fixtures: vec![FixtureId::Fixture(1)],
+                        fixtures: vec![FixtureId::Fixture(1)].into(),
                     }],
                 )
             }],
@@ -789,7 +796,7 @@ mod tests {
                     vec![CueControl {
                         control: control.clone(),
                         value: 1f64.into(),
-                        fixtures: fixture_ids,
+                        fixtures: fixture_ids.into(),
                     }],
                 )
             }],
@@ -942,21 +949,25 @@ mod tests {
                     1,
                     "",
                     vec![
-                        CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
+                        CueControl::new(
+                            FixtureFaderControl::Intensity,
+                            1f64,
+                            vec![fixture_id].into(),
+                        ),
                         CueControl::new(
                             FixtureFaderControl::ColorMixer(ColorChannel::Red),
                             1f64,
-                            vec![fixture_id],
+                            vec![fixture_id].into(),
                         ),
                         CueControl::new(
                             FixtureFaderControl::ColorMixer(ColorChannel::Green),
                             0f64,
-                            vec![fixture_id],
+                            vec![fixture_id].into(),
                         ),
                         CueControl::new(
                             FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                             0f64,
-                            vec![fixture_id],
+                            vec![fixture_id].into(),
                         ),
                     ],
                 ),
@@ -966,21 +977,25 @@ mod tests {
                         2,
                         "",
                         vec![
-                            CueControl::new(FixtureFaderControl::Intensity, 1f64, vec![fixture_id]),
+                            CueControl::new(
+                                FixtureFaderControl::Intensity,
+                                1f64,
+                                vec![fixture_id].into(),
+                            ),
                             CueControl::new(
                                 FixtureFaderControl::ColorMixer(ColorChannel::Red),
                                 0f64,
-                                vec![fixture_id],
+                                vec![fixture_id].into(),
                             ),
                             CueControl::new(
                                 FixtureFaderControl::ColorMixer(ColorChannel::Green),
                                 1f64,
-                                vec![fixture_id],
+                                vec![fixture_id].into(),
                             ),
                             CueControl::new(
                                 FixtureFaderControl::ColorMixer(ColorChannel::Blue),
                                 0f64,
-                                vec![fixture_id],
+                                vec![fixture_id].into(),
                             ),
                         ],
                     )

@@ -3559,6 +3559,7 @@ dependencies = [
  "pinboard",
  "postage",
  "profiling",
+ "rand 0.8.4",
  "serde",
  "spectral",
  "test-case",

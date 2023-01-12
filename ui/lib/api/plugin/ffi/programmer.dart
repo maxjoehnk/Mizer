@@ -31,13 +31,18 @@ class ProgrammerStatePointer {
     var state = this._bindings.read_programmer_state(_ptr);
     var activeFixtures = _readFixtureSelection(state.active_fixtures);
     var fixtures = _readFixtureSelection(state.fixtures);
+    var selection = _readGroupedFixtureSelection(state.selection);
     var channels = _readProgrammerChannel(state.channels);
 
     return ProgrammerState(
       activeFixtures: activeFixtures,
       fixtures: fixtures,
+      selection: selection,
       controls: channels,
       highlight: state.highlight == 1,
+      blockSize: state.block_size,
+      groups: state.groups,
+      wings: state.wings,
     );
   }
 
@@ -52,6 +57,15 @@ class ProgrammerStatePointer {
       }
       return FixtureId(fixture: id.fixture_id);
     }).toList();
+  }
+
+  FixtureSelection _readGroupedFixtureSelection(Array_Array_FFIFixtureId result) {
+    var groups = new List.generate(result.len, (index) => result.array.elementAt(index).ref);
+
+    var fixtures = groups.map((fixtures) => _readFixtureSelection(fixtures)).toList();
+
+    return FixtureSelection(
+        fixtures: fixtures.map((f) => FixtureSelection_GroupedFixtureList(fixtures: f)).toList());
   }
 
   List<ProgrammerChannel> _readProgrammerChannel(Array_FFIProgrammerChannel result) {

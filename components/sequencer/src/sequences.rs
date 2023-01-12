@@ -1,4 +1,5 @@
 use std::cmp::Ordering;
+use std::ops::Deref;
 
 use mizer_fixtures::FixtureId;
 use mizer_module::ClockFrame;
@@ -36,7 +37,7 @@ impl Sequence {
             id,
             name: format!("Sequence {}", id),
             cues: Vec::new(),
-            fixtures: Vec::new(),
+            fixtures: Default::default(),
             wrap_around: false,
             stop_on_last_cue: false,
         }
@@ -80,7 +81,7 @@ impl Sequence {
                 continue;
             }
             if let Some(id) =
-                effect_engine.run_effect(effect.effect, effect.fixtures.clone(), state.rate)
+                effect_engine.run_effect(effect.effect, effect.fixtures.deref().clone(), state.rate)
             {
                 state.running_effects.insert(effect.clone(), id);
             }

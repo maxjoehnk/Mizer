@@ -46,7 +46,11 @@ fn run_effect(
     }
     let mut effect_instance = EffectInstance::new(
         effect,
-        fixtures.into_iter().map(FixtureId::Fixture).collect(),
+        fixtures
+            .into_iter()
+            .map(FixtureId::Fixture)
+            .collect::<Vec<_>>()
+            .into(),
         1f64,
     );
     let frames = effect

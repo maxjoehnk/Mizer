@@ -7,7 +7,6 @@ import 'package:mizer/protos/fixtures.pb.dart';
 
 import 'ffi/api.dart';
 import 'ffi/bindings.dart';
-import 'ffi/programmer.dart';
 
 export 'ffi/programmer.dart' show ProgrammerStatePointer;
 
@@ -114,8 +113,42 @@ class ProgrammerPluginApi implements ProgrammerApi {
     await channel.invokeMethod("callEffect", id);
   }
 
+  @override
+  Future<void> updateBlockSize(int blockSize) async {
+    await channel.invokeMethod("updateBlockSize", blockSize);
+  }
+
+  @override
+  Future<void> updateGroups(int groups) async {
+    await channel.invokeMethod("updateGroups", groups);
+  }
+
+  @override
+  Future<void> updateWings(int wings) async {
+    await channel.invokeMethod("updateWings", wings);
+  }
+
   static List<int> _convertBuffer(List<Object> response) {
     return response.map((dynamic e) => e as int).toList();
   }
 
+  @override
+  Future<void> next() async {
+    await channel.invokeMethod("next");
+  }
+
+  @override
+  Future<void> prev() async {
+    await channel.invokeMethod("prev");
+  }
+
+  @override
+  Future<void> set() async {
+    await channel.invokeMethod("set");
+  }
+
+  @override
+  Future<void> shuffle() async {
+    await channel.invokeMethod("shuffle");
+  }
 }

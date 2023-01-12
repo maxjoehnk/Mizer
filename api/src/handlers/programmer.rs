@@ -189,4 +189,41 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn programmer_view(&self) -> ProgrammerView {
         self.fixture_manager.get_programmer().view()
     }
+
+    #[tracing::instrument(skip(self))]
+    pub fn update_block_size(&self, block_size: usize) {
+        self.fixture_manager
+            .get_programmer()
+            .set_block_size(block_size);
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn update_groups(&self, groups: usize) {
+        self.fixture_manager.get_programmer().set_groups(groups);
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn update_wings(&self, wings: usize) {
+        self.fixture_manager.get_programmer().set_wings(wings);
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn next(&self) {
+        self.fixture_manager.get_programmer().next();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn prev(&self) {
+        self.fixture_manager.get_programmer().prev();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn set(&self) {
+        self.fixture_manager.get_programmer().set();
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn shuffle(&self) {
+        self.fixture_manager.get_programmer().shuffle();
+    }
 }

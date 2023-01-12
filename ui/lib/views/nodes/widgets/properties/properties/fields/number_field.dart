@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math' hide log;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -189,8 +190,11 @@ class _NumberFieldState extends State<NumberField> {
   }
 
   num _validateValue(num value) {
-    if (widget.min != null && widget.max != null) {
-      value = value.clamp(widget.min!, widget.max!);
+    if (widget.min != null) {
+      value = max(value, widget.min!);
+    }
+    if (widget.max != null) {
+      value = min(value, widget.max!);
     }
     if (!this.widget.fractions) {
       value = value.truncate();

@@ -51,9 +51,11 @@ class _SelectionPaneState extends State<SelectionPane> with SingleTickerProvider
 
     return BlocBuilder<FixturesBloc, Fixtures>(builder: (context, fixtures) {
       return SelectionSheet(
-          fixtures: getSelectedInstances(selectedIds, fixtures.fixtures),
+          fixtures: getSelectedInstances(selection, fixtures.fixtures),
           isEmpty: selectedIds.isEmpty && trackedIds.isEmpty,
-          api: context.read());
+          api: context.read(),
+          state: state,
+      );
     });
   }
 
@@ -64,6 +66,10 @@ class _SelectionPaneState extends State<SelectionPane> with SingleTickerProvider
 
   List<FixtureId> get selectedIds {
     return state.activeFixtures;
+  }
+
+  List<FixtureId> get selection {
+    return state.selection.fixtures.map((e) => e.fixtures.first).toList();
   }
 
   List<FixtureInstance> getSelectedInstances(List<FixtureId> selectedIds, List<Fixture> fixtures) {

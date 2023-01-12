@@ -3,7 +3,7 @@ use std::hash::{Hash, Hasher};
 use std::sync::Arc;
 
 use futures::stream::Stream;
-use indexmap::{IndexMap, IndexSet};
+use indexmap::IndexSet;
 use pinboard::NonEmptyPinboard;
 use postage::prelude::Sink;
 use postage::watch;
@@ -14,6 +14,7 @@ pub use presets::*;
 
 use crate::contracts::FixtureController;
 use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
+use crate::selection::FixtureSelection;
 use crate::{FixtureId, RgbColor};
 
 mod default_presets;
@@ -22,28 +23,34 @@ mod presets;
 
 pub struct Programmer {
     highlight: bool,
-    selected_fixtures: IndexMap<FixtureId, FixtureProgrammer>,
-    active_fixtures: IndexSet<FixtureId>,
-    running_effects: IndexSet<ProgrammedEffect>,
+    active_selection: FixtureSelection,
+    active_channels: FixtureProgrammer,
+    running_effects: Vec<ProgrammedEffect>,
+    tracked_selections: Vec<(FixtureSelection, FixtureProgrammer)>,
     message_bus: watch::Sender<ProgrammerState>,
     message_subscriber: watch::Receiver<ProgrammerState>,
     programmer_view: Arc<NonEmptyPinboard<ProgrammerState>>,
     has_written_to_selection: bool,
+    x: Option<usize>,
 }
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Deserialize, Serialize)]
 pub struct ProgrammedEffect {
     pub effect_id: u32,
-    pub fixtures: Vec<FixtureId>,
+    pub fixtures: FixtureSelection,
 }
 
 #[derive(Debug, Clone, Default)]
 pub struct ProgrammerState {
+    pub selection: Vec<Vec<FixtureId>>,
     pub active_fixtures: Vec<FixtureId>,
     pub tracked_fixtures: Vec<FixtureId>,
     pub fixture_effects: Vec<FixtureId>,
     pub highlight: bool,
     pub channels: Vec<ProgrammerChannel>,
+    pub block_size: Option<usize>,
+    pub wings: Option<usize>,
+    pub groups: Option<usize>,
 }
 
 impl ProgrammerState {
@@ -58,7 +65,7 @@ impl ProgrammerState {
     }
 }
 
-#[derive(Debug, Default)]
+#[derive(Clone, Debug, Default)]
 pub struct FixtureProgrammer {
     intensity: Option<f64>,
     shutter: Option<f64>,
@@ -225,6 +232,10 @@ impl FixtureProgrammer {
             .chain(gobo)
             .chain(generic)
     }
+
+    fn clear(&mut self) {
+        *self = Default::default();
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -235,7 +246,7 @@ pub struct ProgrammerChannel {
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct ProgrammerControl {
-    pub fixtures: Vec<FixtureId>,
+    pub fixtures: FixtureSelection,
     pub control: FixtureFaderControl,
     pub value: f64,
 }
@@ -252,14 +263,16 @@ impl Default for Programmer {
     fn default() -> Self {
         let (tx, rx) = watch::channel();
         Self {
+            active_selection: Default::default(),
+            active_channels: Default::default(),
             highlight: false,
-            selected_fixtures: Default::default(),
-            active_fixtures: Default::default(),
             running_effects: Default::default(),
+            tracked_selections: Default::default(),
             message_bus: tx,
             message_subscriber: rx,
             programmer_view: Arc::new(NonEmptyPinboard::new(Default::default())),
             has_written_to_selection: false,
+            x: None,
         }
     }
 }
@@ -272,25 +285,50 @@ impl Programmer {
     pub(crate) fn run(&self, fixture_controller: &impl FixtureController) {
         profiling::scope!("Programmer::run");
         log::trace!("Programmer::run");
-        for (fixture_id, state) in self.selected_fixtures.iter() {
-            log::trace!("{:?} => {:?}", fixture_id, state);
-            for (control, value) in state.fader_controls() {
-                fixture_controller.write(*fixture_id, control.clone(), value);
+        let mut values = HashMap::new();
+        for (selection, state) in self.get_selections().into_iter() {
+            log::trace!("{:?} => {:?}", selection, state);
+            for fixture_id in selection.get_fixtures().iter().flatten() {
+                for (control, value) in state.fader_controls() {
+                    values.insert((*fixture_id, control), value);
+                }
             }
         }
+        for ((fixture_id, control), value) in values {
+            fixture_controller.write(fixture_id, control, value);
+        }
         if self.highlight {
-            for fixture_id in self.active_fixtures.iter() {
-                fixture_controller.highlight(*fixture_id);
+            if let Some(x) = self.x {
+                if let Some(fixtures) = self.active_selection.get_fixtures().get(x) {
+                    for fixture_id in fixtures {
+                        fixture_controller.highlight(*fixture_id);
+                    }
+                }
+            } else {
+                for fixture_id in self.active_selection.get_fixtures().iter().flatten() {
+                    fixture_controller.highlight(*fixture_id);
+                }
             }
         }
     }
 
     pub fn clear(&mut self) {
-        if !self.active_fixtures.is_empty() {
-            self.active_fixtures.clear();
+        if !self.active_selection.is_empty() {
+            if self.has_written_to_selection {
+                self.tracked_selections
+                    .push((self.active_selection.clone(), self.active_channels.clone()));
+            }
+            self.active_selection.clear();
+            self.active_channels.clear();
         } else {
-            self.selected_fixtures.clear();
+            self.tracked_selections.clear();
             self.running_effects.clear();
+            self.active_selection.clear();
+            self.active_channels.clear();
+            self.active_selection.groups = None;
+            self.active_selection.block_size = None;
+            self.active_selection.wings = None;
+            self.set();
         }
         self.emit_state();
     }
@@ -299,12 +337,13 @@ impl Programmer {
     pub fn select_fixtures(&mut self, fixtures: Vec<FixtureId>) {
         tracing::trace!("select_fixtures");
         if self.has_written_to_selection {
-            self.active_fixtures.clear();
             self.has_written_to_selection = false;
+            self.tracked_selections
+                .push((self.active_selection.clone(), self.active_channels.clone()));
+            self.active_selection.clear();
+            self.active_channels.clear();
         }
-        for fixture in fixtures {
-            self.active_fixtures.insert(fixture);
-        }
+        self.active_selection.add_fixtures(fixtures);
         self.emit_state();
     }
 
@@ -312,10 +351,71 @@ impl Programmer {
     pub fn unselect_fixtures(&mut self, fixtures: Vec<FixtureId>) {
         tracing::trace!("unselect_fixtures");
         for fixture in fixtures {
-            self.active_fixtures.remove(&fixture);
-            self.selected_fixtures.remove(&fixture);
+            self.active_selection.remove(&fixture);
         }
         self.emit_state();
+    }
+
+    pub fn set_block_size(&mut self, block_size: usize) {
+        self.active_selection.block_size = if block_size == 0 {
+            None
+        } else {
+            Some(block_size)
+        };
+        self.clamp_x();
+    }
+
+    pub fn set_groups(&mut self, groups: usize) {
+        self.active_selection.groups = if groups == 0 { None } else { Some(groups) };
+        self.clamp_x();
+    }
+
+    pub fn set_wings(&mut self, wings: usize) {
+        self.active_selection.wings = if wings == 0 { None } else { Some(wings) };
+        self.clamp_x();
+    }
+
+    pub fn next(&mut self) {
+        if self.x.is_none() {
+            self.x = Some(0);
+            return;
+        }
+        let x = self.x.unwrap_or_default();
+        let mut x = x.saturating_add(1);
+        if x >= self.active_selection.get_fixtures().len() {
+            x = 0;
+        }
+        self.x = Some(x);
+    }
+
+    pub fn prev(&mut self) {
+        if self.x.is_none() {
+            self.x = Some(self.active_selection.get_fixtures().len().saturating_sub(1));
+            return;
+        }
+        let x = self.x.unwrap_or_default();
+        let (mut x, overflow) = x.overflowing_sub(1);
+        if overflow {
+            x = self.active_selection.get_fixtures().len().saturating_sub(1);
+        }
+        self.x = Some(x);
+    }
+
+    fn clamp_x(&mut self) {
+        if let Some(x) = self.x {
+            self.x = Some(x.clamp(
+                0,
+                self.active_selection.get_fixtures().len().saturating_sub(1),
+            ));
+        }
+    }
+
+    pub fn set(&mut self) {
+        self.x = None;
+    }
+
+    pub fn shuffle(&mut self) {
+        self.active_selection.shuffle();
     }
 
     pub fn select_group(&mut self, group: &Group) {
@@ -323,10 +423,11 @@ impl Programmer {
     }
 
     pub fn is_group_active(&self, group: &Group) -> bool {
-        group
-            .fixtures
-            .iter()
-            .all(|id| self.active_fixtures.contains(id) || self.selected_fixtures.contains_key(id))
+        group.fixtures.iter().all(|id| {
+            self.get_selections()
+                .iter()
+                .any(|(selection, _)| selection.contains(id))
+        })
     }
 
     pub fn call_preset(&mut self, presets: &Presets, preset_id: PresetId) {
@@ -337,34 +438,31 @@ impl Programmer {
     }
 
     pub fn call_effect(&mut self, effect_id: u32) {
-        let fixtures = self.active_fixtures.iter().copied().collect();
-        self.running_effects.insert(ProgrammedEffect {
+        self.running_effects.push(ProgrammedEffect {
             effect_id,
-            fixtures,
+            fixtures: self.active_selection.clone(),
         });
     }
 
     pub fn write_control(&mut self, value: FixtureControlValue) {
-        for fixture_id in self.active_fixtures.iter() {
-            let programmer = self.selected_fixtures.entry(*fixture_id).or_default();
-            match value {
-                FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
-                FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
-                FixtureControlValue::ColorMixer(red, green, blue) => {
-                    programmer.color_mixer = Some(RgbColor { red, green, blue })
-                }
-                FixtureControlValue::ColorWheel(value) => programmer.color_wheel = Some(value),
-                FixtureControlValue::Pan(value) => programmer.pan = Some(value),
-                FixtureControlValue::Tilt(value) => programmer.tilt = Some(value),
-                FixtureControlValue::Focus(value) => programmer.focus = Some(value),
-                FixtureControlValue::Zoom(value) => programmer.zoom = Some(value),
-                FixtureControlValue::Prism(value) => programmer.prism = Some(value),
-                FixtureControlValue::Iris(value) => programmer.iris = Some(value),
-                FixtureControlValue::Frost(value) => programmer.frost = Some(value),
-                FixtureControlValue::Gobo(value) => programmer.gobo = Some(value),
-                FixtureControlValue::Generic(ref name, value) => {
-                    programmer.generic.insert(name.clone(), value);
-                }
+        let programmer = &mut self.active_channels;
+        match value {
+            FixtureControlValue::Intensity(value) => programmer.intensity = Some(value),
+            FixtureControlValue::Shutter(value) => programmer.shutter = Some(value),
+            FixtureControlValue::ColorMixer(red, green, blue) => {
+                programmer.color_mixer = Some(RgbColor { red, green, blue })
+            }
+            FixtureControlValue::ColorWheel(value) => programmer.color_wheel = Some(value),
+            FixtureControlValue::Pan(value) => programmer.pan = Some(value),
+            FixtureControlValue::Tilt(value) => programmer.tilt = Some(value),
+            FixtureControlValue::Focus(value) => programmer.focus = Some(value),
+            FixtureControlValue::Zoom(value) => programmer.zoom = Some(value),
+            FixtureControlValue::Prism(value) => programmer.prism = Some(value),
+            FixtureControlValue::Iris(value) => programmer.iris = Some(value),
+            FixtureControlValue::Frost(value) => programmer.frost = Some(value),
+            FixtureControlValue::Gobo(value) => programmer.gobo = Some(value),
+            FixtureControlValue::Generic(ref name, value) => {
+                programmer.generic.insert(name.clone(), value);
             }
         }
         self.has_written_to_selection = true;
@@ -377,30 +475,18 @@ impl Programmer {
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerControl> {
-        let mut controls: HashMap<FixtureFaderControl, Vec<(Vec<FixtureId>, f64)>> = HashMap::new();
-        for (fixture_id, state) in self.selected_fixtures.iter() {
-            for (control, value) in state.fader_controls() {
-                let values = controls.entry(control.clone()).or_default();
-                if let Some((fixtures, _)) = values
-                    .iter_mut()
-                    .find(|(_, v)| (value - v).abs() < f64::EPSILON)
-                {
-                    fixtures.push(*fixture_id)
-                } else {
-                    values.push((vec![*fixture_id], value));
-                }
-            }
-        }
-        controls
-            .into_iter()
-            .flat_map(|(control, fixtures)| {
-                fixtures
+        self.get_selections()
+            .iter()
+            .flat_map(|(fixtures, channels)| {
+                channels
+                    .fader_controls()
                     .into_iter()
-                    .map(move |(fixtures, value)| ProgrammerControl {
-                        control: control.clone(),
-                        fixtures,
+                    .map(|(control, value)| ProgrammerControl {
+                        fixtures: fixtures.clone(),
+                        control,
                         value,
                     })
+                    .collect::<Vec<_>>()
             })
             .collect()
     }
@@ -408,13 +494,17 @@ impl Programmer {
     fn get_channels(&self) -> Vec<ProgrammerChannel> {
         let mut controls: HashMap<FixtureControl, Vec<(Vec<FixtureId>, FixtureControlValue)>> =
             HashMap::new();
-        for (fixture_id, state) in self.selected_fixtures.iter() {
+        let selections = self.get_selections();
+        for (selection, state) in selections.iter() {
             for value in state.controls() {
                 let values = controls.entry(value.clone().into()).or_default();
                 if let Some((fixtures, _)) = values.iter_mut().find(|(_, v)| &value == v) {
-                    fixtures.push(*fixture_id)
+                    for fixture_id in selection.get_fixtures().iter().flatten() {
+                        fixtures.push(*fixture_id)
+                    }
                 } else {
-                    values.push((vec![*fixture_id], value));
+                    let selection = selection.get_fixtures().iter().flatten().copied().collect();
+                    values.push((selection, value));
                 }
             }
         }
@@ -428,6 +518,21 @@ impl Programmer {
             .collect()
     }
 
+    fn get_selections(&self) -> Vec<(FixtureSelection, FixtureProgrammer)> {
+        let mut selections = self.tracked_selections.clone();
+        selections.push((self.active_selection.clone(), self.active_channels.clone()));
+
+        selections
+    }
+
+    fn get_tracked_selections(&self) -> Vec<(FixtureSelection, FixtureProgrammer)> {
+        if self.has_written_to_selection {
+            self.get_selections()
+        } else {
+            self.tracked_selections.clone()
+        }
+    }
+
     pub fn bus(&self) -> impl Stream<Item = ProgrammerState> {
         self.message_subscriber.clone()
     }
@@ -438,26 +543,42 @@ impl Programmer {
 
     fn emit_state(&mut self) {
         let state = ProgrammerState {
-            tracked_fixtures: self.selected_fixtures.keys().copied().collect(),
-            active_fixtures: self.active_fixtures.iter().copied().collect(),
+            tracked_fixtures: self
+                .get_tracked_selections()
+                .iter()
+                .flat_map(|(selection, _)| selection.get_fixtures())
+                .flatten()
+                .collect(),
+            selection: self.active_selection.get_fixtures(),
+            active_fixtures: self
+                .active_selection
+                .get_fixtures()
+                .into_iter()
+                .flatten()
+                .collect(),
             fixture_effects: self
                 .running_effects
                 .iter()
-                .flat_map(|e| e.fixtures.clone())
+                .flat_map(|e| {
+                    e.fixtures
+                        .get_fixtures()
+                        .iter()
+                        .flatten()
+                        .copied()
+                        .collect::<Vec<_>>()
+                })
                 .collect(),
             highlight: self.highlight,
             channels: self.get_channels(),
+            block_size: self.active_selection.block_size,
+            groups: self.active_selection.groups,
+            wings: self.active_selection.wings,
         };
-        println!("{:?}", state);
         self.programmer_view.set(state.clone());
         log::trace!("sending programmer msg");
         if let Err(err) = self.message_bus.try_send(state) {
             log::error!("Error sending programmer msg {:?}", err);
         }
-    }
-
-    pub fn active_fixtures(&self) -> Vec<FixtureId> {
-        self.active_fixtures.iter().copied().collect()
     }
 
     pub fn active_effects(&self) -> impl Iterator<Item = &ProgrammedEffect> {
@@ -495,6 +616,7 @@ mod tests {
     use crate::contracts::*;
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
     use crate::programmer::Programmer;
+    use crate::selection::FixtureSelection;
     use crate::FixtureId;
 
     #[test]
@@ -661,7 +783,7 @@ mod tests {
 
         assert_that!(result).has_length(1);
         let control = &result[0];
-        assert_that!(control.fixtures).is_equal_to(&selection);
+        assert_that!(control.fixtures).is_equal_to(&FixtureSelection::new(selection));
         assert_that!(control.value).is_equal_to(1.);
         assert_that!(control.control).is_equal_to(FixtureFaderControl::Intensity);
     }
@@ -682,11 +804,11 @@ mod tests {
 
         assert_that!(result).has_length(2);
         let first_control = &result[0];
-        assert_that!(first_control.fixtures).is_equal_to(&first_fixtures);
+        assert_that!(first_control.fixtures).is_equal_to(&FixtureSelection::new(first_fixtures));
         assert_that!(first_control.value).is_equal_to(1.);
         assert_that!(first_control.control).is_equal_to(FixtureFaderControl::Intensity);
         let second_control = &result[1];
-        assert_that!(second_control.fixtures).is_equal_to(&second_fixtures);
+        assert_that!(second_control.fixtures).is_equal_to(&FixtureSelection::new(second_fixtures));
         assert_that!(second_control.value).is_equal_to(0.5);
         assert_that!(second_control.control).is_equal_to(FixtureFaderControl::Intensity);
     }

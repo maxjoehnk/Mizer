@@ -117,6 +117,47 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for ProgrammerChannel<R> {
                 Ok(ptr) => reply.send_ok(Value::I64(ptr)),
                 Err(err) => reply.respond_error(err),
             },
+            "updateBlockSize" => {
+                if let Value::I64(block_size) = call.args {
+                    self.handler.update_block_size(block_size as usize);
+
+                    reply.send_ok(Value::Null)
+                }
+            }
+            "updateGroups" => {
+                if let Value::I64(groups) = call.args {
+                    self.handler.update_groups(groups as usize);
+
+                    reply.send_ok(Value::Null)
+                }
+            }
+            "updateWings" => {
+                if let Value::I64(wings) = call.args {
+                    self.handler.update_wings(wings as usize);
+
+                    reply.send_ok(Value::Null)
+                }
+            }
+            "next" => {
+                self.handler.next();
+
+                reply.send_ok(Value::Null)
+            }
+            "prev" => {
+                self.handler.prev();
+
+                reply.send_ok(Value::Null)
+            }
+            "set" => {
+                self.handler.set();
+
+                reply.send_ok(Value::Null)
+            }
+            "shuffle" => {
+                self.handler.shuffle();
+
+                reply.send_ok(Value::Null)
+            }
             _ => reply.not_implemented(),
         }
     }

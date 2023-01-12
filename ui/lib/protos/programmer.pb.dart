@@ -49,8 +49,12 @@ class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeFixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..pc<ProgrammerChannel>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
-    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
+    ..aOM<FixtureSelection>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selection', subBuilder: FixtureSelection.create)
+    ..pc<ProgrammerChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockSize', $pb.PbFieldType.OU3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wings', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -58,8 +62,12 @@ class ProgrammerState extends $pb.GeneratedMessage {
   factory ProgrammerState({
     $core.Iterable<$0.FixtureId>? fixtures,
     $core.Iterable<$0.FixtureId>? activeFixtures,
+    FixtureSelection? selection,
     $core.Iterable<ProgrammerChannel>? controls,
     $core.bool? highlight,
+    $core.int? blockSize,
+    $core.int? groups,
+    $core.int? wings,
   }) {
     final _result = create();
     if (fixtures != null) {
@@ -68,11 +76,23 @@ class ProgrammerState extends $pb.GeneratedMessage {
     if (activeFixtures != null) {
       _result.activeFixtures.addAll(activeFixtures);
     }
+    if (selection != null) {
+      _result.selection = selection;
+    }
     if (controls != null) {
       _result.controls.addAll(controls);
     }
     if (highlight != null) {
       _result.highlight = highlight;
+    }
+    if (blockSize != null) {
+      _result.blockSize = blockSize;
+    }
+    if (groups != null) {
+      _result.groups = groups;
+    }
+    if (wings != null) {
+      _result.wings = wings;
     }
     return _result;
   }
@@ -104,16 +124,136 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.List<$0.FixtureId> get activeFixtures => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.List<ProgrammerChannel> get controls => $_getList(2);
+  FixtureSelection get selection => $_getN(2);
+  @$pb.TagNumber(3)
+  set selection(FixtureSelection v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSelection() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSelection() => clearField(3);
+  @$pb.TagNumber(3)
+  FixtureSelection ensureSelection() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  $core.bool get highlight => $_getBF(3);
-  @$pb.TagNumber(4)
-  set highlight($core.bool v) { $_setBool(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasHighlight() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearHighlight() => clearField(4);
+  $core.List<ProgrammerChannel> get controls => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.bool get highlight => $_getBF(4);
+  @$pb.TagNumber(5)
+  set highlight($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasHighlight() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearHighlight() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get blockSize => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set blockSize($core.int v) { $_setUnsignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBlockSize() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBlockSize() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get groups => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set groups($core.int v) { $_setUnsignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasGroups() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearGroups() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get wings => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set wings($core.int v) { $_setUnsignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasWings() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearWings() => clearField(8);
+}
+
+class FixtureSelection_GroupedFixtureList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureSelection.GroupedFixtureList', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureSelection_GroupedFixtureList._() : super();
+  factory FixtureSelection_GroupedFixtureList({
+    $core.Iterable<$0.FixtureId>? fixtures,
+  }) {
+    final _result = create();
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    return _result;
+  }
+  factory FixtureSelection_GroupedFixtureList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureSelection_GroupedFixtureList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureSelection_GroupedFixtureList clone() => FixtureSelection_GroupedFixtureList()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureSelection_GroupedFixtureList copyWith(void Function(FixtureSelection_GroupedFixtureList) updates) => super.copyWith((message) => updates(message as FixtureSelection_GroupedFixtureList)) as FixtureSelection_GroupedFixtureList; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureSelection_GroupedFixtureList create() => FixtureSelection_GroupedFixtureList._();
+  FixtureSelection_GroupedFixtureList createEmptyInstance() => create();
+  static $pb.PbList<FixtureSelection_GroupedFixtureList> createRepeated() => $pb.PbList<FixtureSelection_GroupedFixtureList>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureSelection_GroupedFixtureList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureSelection_GroupedFixtureList>(create);
+  static FixtureSelection_GroupedFixtureList? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$0.FixtureId> get fixtures => $_getList(0);
+}
+
+class FixtureSelection extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureSelection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
+    ..pc<FixtureSelection_GroupedFixtureList>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: FixtureSelection_GroupedFixtureList.create)
+    ..hasRequiredFields = false
+  ;
+
+  FixtureSelection._() : super();
+  factory FixtureSelection({
+    $core.Iterable<FixtureSelection_GroupedFixtureList>? fixtures,
+  }) {
+    final _result = create();
+    if (fixtures != null) {
+      _result.fixtures.addAll(fixtures);
+    }
+    return _result;
+  }
+  factory FixtureSelection.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FixtureSelection.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FixtureSelection clone() => FixtureSelection()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FixtureSelection copyWith(void Function(FixtureSelection) updates) => super.copyWith((message) => updates(message as FixtureSelection)) as FixtureSelection; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static FixtureSelection create() => FixtureSelection._();
+  FixtureSelection createEmptyInstance() => create();
+  static $pb.PbList<FixtureSelection> createRepeated() => $pb.PbList<FixtureSelection>();
+  @$core.pragma('dart2js:noInline')
+  static FixtureSelection getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FixtureSelection>(create);
+  static FixtureSelection? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<FixtureSelection_GroupedFixtureList> get fixtures => $_getList(0);
 }
 
 class ProgrammerChannel_GenericValue extends $pb.GeneratedMessage {

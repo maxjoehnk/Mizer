@@ -10,6 +10,7 @@ import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/views/mappings/midi_mapping.dart';
 import 'package:mizer/views/patch/dialogs/assign_fixtures_to_group_dialog.dart';
+import 'package:mizer/views/nodes/widgets/properties/properties/fields/number_field.dart';
 import 'package:mizer/widgets/panel.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +18,9 @@ class SelectionSheet extends StatefulWidget {
   final ProgrammerApi api;
   final List<FixtureInstance> fixtures;
   final bool isEmpty;
+  final ProgrammerState state;
 
-  const SelectionSheet({required this.fixtures, required this.api, required this.isEmpty, Key? key})
+  const SelectionSheet({required this.fixtures, required this.api, required this.isEmpty, required this.state, Key? key})
       : super(key: key);
 
   @override
@@ -55,18 +57,42 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
       hotkeyMap: {
         "clear": () => _clear(),
         "assign_group": () => _assignGroup(context),
+        "next": () => _next(),
+        "prev": () => _prev(),
+        "set": () => _set(),
+        "shuffle": () => _shuffle(),
       },
       child: Panel(
           label: "Selection",
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-                children: widget.fixtures
-                    .map((f) => FixtureSelectionItem(
-                          fixture: f,
-                          ref: _fixturesPointer!,
-                        ))
-                    .toList()),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                      children: widget.fixtures
+                          .map((f) => FixtureSelectionItem(
+                                fixture: f,
+                                ref: _fixturesPointer!,
+                              ))
+                          .toList()),
+                ),
+                NumberField(label: "Block Size", value: widget.state.blockSize, min: 0, maxHint: 10, onUpdate: (v) {
+                  var api = context.read<ProgrammerApi>();
+                  api.updateBlockSize(v.toInt());
+                }),
+                NumberField(label: "Groups", value: widget.state.groups, min: 0, maxHint: 10, onUpdate: (v) {
+                  var api = context.read<ProgrammerApi>();
+                  api.updateGroups(v.toInt());
+                }),
+                NumberField(label: "Wings", value: widget.state.wings, min: 0, maxHint: 10, onUpdate: (v) {
+                  var api = context.read<ProgrammerApi>();
+                  api.updateWings(v.toInt());
+                }),
+              ],
+            ),
           ),
           actions: [
             PanelAction(
@@ -79,12 +105,32 @@ class _SelectionSheetState extends State<SelectionSheet> with SingleTickerProvid
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
             PanelAction(label: "Assign Group", hotkeyId: "assign_group", disabled: widget.isEmpty, onClick: () => _assignGroup(context)),
+            PanelAction(label: "Shuffle", hotkeyId: "shuffle", disabled: widget.isEmpty, onClick: () => _shuffle()),
+            PanelAction(label: "Set", hotkeyId: "set", disabled: widget.isEmpty, onClick: () => _set()),
+            PanelAction(label: "Prev", hotkeyId: "prev", disabled: widget.isEmpty, onClick: () => _prev()),
+            PanelAction(label: "Next", hotkeyId: "next", disabled: widget.isEmpty, onClick: () => _next()),
           ]),
     );
   }
 
   void _clear() {
     widget.api.clear();
+  }
+
+  void _next() {
+    widget.api.next();
+  }
+
+  void _prev() {
+    widget.api.prev();
+  }
+
+  void _set() {
+    widget.api.set();
+  }
+
+  void _shuffle() {
+    widget.api.shuffle();
   }
 
   Future<void> _addMidiMappingForClear(BuildContext context) async {

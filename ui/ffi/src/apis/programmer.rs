@@ -64,8 +64,12 @@ pub extern "C" fn drop_generic_channel(ptr: *const Programmer, channel: FFIGener
 pub struct FFIProgrammerState {
     pub active_fixtures: Array<FFIFixtureId>,
     pub fixtures: Array<FFIFixtureId>,
+    pub selection: Array<Array<FFIFixtureId>>,
     pub channels: Array<FFIProgrammerChannel>,
     pub highlight: u8,
+    pub block_size: u32,
+    pub groups: u32,
+    pub wings: u32,
 }
 
 impl FFIProgrammerState {
@@ -83,6 +87,18 @@ impl FFIProgrammerState {
                 .map(FFIFixtureId::from)
                 .collect::<Vec<_>>()
                 .into(),
+            selection: state
+                .selection
+                .into_iter()
+                .map(|group| {
+                    group
+                        .into_iter()
+                        .map(FFIFixtureId::from)
+                        .collect::<Vec<_>>()
+                        .into()
+                })
+                .collect::<Vec<_>>()
+                .into(),
             channels: state
                 .channels
                 .into_iter()
@@ -90,6 +106,9 @@ impl FFIProgrammerState {
                 .collect::<Vec<_>>()
                 .into(),
             highlight: u8::from(state.highlight),
+            block_size: state.block_size.unwrap_or_default() as u32,
+            groups: state.groups.unwrap_or_default() as u32,
+            wings: state.wings.unwrap_or_default() as u32,
         }
     }
 }

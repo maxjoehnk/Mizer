@@ -3,7 +3,7 @@
 //  source: fixtures.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -80,19 +80,21 @@ const UpdateFixtureRequest$json = const {
     const {'1': 'fixtureId', '3': 1, '4': 1, '5': 13, '10': 'fixtureId'},
     const {'1': 'invert_pan', '3': 2, '4': 1, '5': 8, '9': 0, '10': 'invertPan', '17': true},
     const {'1': 'invert_tilt', '3': 3, '4': 1, '5': 8, '9': 1, '10': 'invertTilt', '17': true},
-    const {'1': 'name', '3': 4, '4': 1, '5': 9, '9': 2, '10': 'name', '17': true},
-    const {'1': 'address', '3': 5, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureAddress', '9': 3, '10': 'address', '17': true},
+    const {'1': 'reverse_pixel_order', '3': 4, '4': 1, '5': 8, '9': 2, '10': 'reversePixelOrder', '17': true},
+    const {'1': 'name', '3': 5, '4': 1, '5': 9, '9': 3, '10': 'name', '17': true},
+    const {'1': 'address', '3': 6, '4': 1, '5': 11, '6': '.mizer.fixtures.FixtureAddress', '9': 4, '10': 'address', '17': true},
   ],
   '8': const [
     const {'1': '_invert_pan'},
     const {'1': '_invert_tilt'},
+    const {'1': '_reverse_pixel_order'},
     const {'1': '_name'},
     const {'1': '_address'},
   ],
 };
 
 /// Descriptor for `UpdateFixtureRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIcCglmaXh0dXJlSWQYASABKA1SCWZpeHR1cmVJZBIiCgppbnZlcnRfcGFuGAIgASgISABSCWludmVydFBhbogBARIkCgtpbnZlcnRfdGlsdBgDIAEoCEgBUgppbnZlcnRUaWx0iAEBEhcKBG5hbWUYBCABKAlIAlIEbmFtZYgBARI9CgdhZGRyZXNzGAUgASgLMh4ubWl6ZXIuZml4dHVyZXMuRml4dHVyZUFkZHJlc3NIA1IHYWRkcmVzc4gBAUINCgtfaW52ZXJ0X3BhbkIOCgxfaW52ZXJ0X3RpbHRCBwoFX25hbWVCCgoIX2FkZHJlc3M=');
+final $typed_data.Uint8List updateFixtureRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVGaXh0dXJlUmVxdWVzdBIcCglmaXh0dXJlSWQYASABKA1SCWZpeHR1cmVJZBIiCgppbnZlcnRfcGFuGAIgASgISABSCWludmVydFBhbogBARIkCgtpbnZlcnRfdGlsdBgDIAEoCEgBUgppbnZlcnRUaWx0iAEBEjMKE3JldmVyc2VfcGl4ZWxfb3JkZXIYBCABKAhIAlIRcmV2ZXJzZVBpeGVsT3JkZXKIAQESFwoEbmFtZRgFIAEoCUgDUgRuYW1liAEBEj0KB2FkZHJlc3MYBiABKAsyHi5taXplci5maXh0dXJlcy5GaXh0dXJlQWRkcmVzc0gEUgdhZGRyZXNziAEBQg0KC19pbnZlcnRfcGFuQg4KDF9pbnZlcnRfdGlsdEIWChRfcmV2ZXJzZV9waXhlbF9vcmRlckIHCgVfbmFtZUIKCghfYWRkcmVzcw==');
 @$core.Deprecated('Use fixtureAddressDescriptor instead')
 const FixtureAddress$json = const {
   '1': 'FixtureAddress',
@@ -165,11 +167,12 @@ const FixtureConfig$json = const {
   '2': const [
     const {'1': 'invert_pan', '3': 1, '4': 1, '5': 8, '10': 'invertPan'},
     const {'1': 'invert_tilt', '3': 2, '4': 1, '5': 8, '10': 'invertTilt'},
+    const {'1': 'reverse_pixel_order', '3': 3, '4': 1, '5': 8, '10': 'reversePixelOrder'},
   ],
 };
 
 /// Descriptor for `FixtureConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List fixtureConfigDescriptor = $convert.base64Decode('Cg1GaXh0dXJlQ29uZmlnEh0KCmludmVydF9wYW4YASABKAhSCWludmVydFBhbhIfCgtpbnZlcnRfdGlsdBgCIAEoCFIKaW52ZXJ0VGlsdA==');
+final $typed_data.Uint8List fixtureConfigDescriptor = $convert.base64Decode('Cg1GaXh0dXJlQ29uZmlnEh0KCmludmVydF9wYW4YASABKAhSCWludmVydFBhbhIfCgtpbnZlcnRfdGlsdBgCIAEoCFIKaW52ZXJ0VGlsdBIuChNyZXZlcnNlX3BpeGVsX29yZGVyGAMgASgIUhFyZXZlcnNlUGl4ZWxPcmRlcg==');
 @$core.Deprecated('Use subFixtureDescriptor instead')
 const SubFixture$json = const {
   '1': 'SubFixture',

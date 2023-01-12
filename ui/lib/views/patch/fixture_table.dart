@@ -37,6 +37,7 @@ class FixtureTable extends StatelessWidget {
         Text("Mode"),
         Text("Invert Pan"),
         Text("Invert Tilt"),
+        Text("Reverse Pixel Order"),
       ], rows: rows),
     );
   }
@@ -61,6 +62,7 @@ class FixtureTable extends StatelessWidget {
         Text(fixture.mode),
         invertedAxisField(context, "Invert Pan", fixture.config.invertPan, (invertPan) => onUpdateFixture(fixture.id, UpdateFixtureRequest(invertPan: invertPan))),
         invertedAxisField(context, "Invert Tilt", fixture.config.invertTilt, (invertTilt) => onUpdateFixture(fixture.id, UpdateFixtureRequest(invertTilt: invertTilt))),
+        reversePixelField(context, "Reverse Pixel Order", fixture.config.reversePixelOrder, (reversePixelOrder) => onUpdateFixture(fixture.id, UpdateFixtureRequest(reversePixelOrder: reversePixelOrder))),
       ],
       onTap: () => onSelect(fixture.id, !selected),
       onDoubleTap: () => onSelectSimilar(fixture),
@@ -96,6 +98,22 @@ Widget invertedAxisField(BuildContext context, String title, bool inverted, Func
           Navigator.of(context).pop();
         }),
         SelectItem(title: "Inverted", onTap: () {
+          onUpdate(true);
+          Navigator.of(context).pop();
+        })
+      ]));
+}
+
+Widget reversePixelField(BuildContext context, String title, bool reversed, Function(bool) onUpdate) {
+  return PopupTableCell(
+      child: Text(reversed ? "Reversed" : "Normal",
+          style: reversed ? null : TextStyle(color: Colors.white54)),
+      popup: PopupSelect(title: title, items: [
+        SelectItem(title: "Normal", onTap: () {
+          onUpdate(false);
+          Navigator.of(context).pop();
+        }),
+        SelectItem(title: "Reversed", onTap: () {
           onUpdate(true);
           Navigator.of(context).pop();
         })

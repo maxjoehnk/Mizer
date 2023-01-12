@@ -616,6 +616,8 @@ pub struct UpdateFixtureRequest {
     pub invert_pan: ::std::option::Option<bool>,
     // @@protoc_insertion_point(field:mizer.fixtures.UpdateFixtureRequest.invert_tilt)
     pub invert_tilt: ::std::option::Option<bool>,
+    // @@protoc_insertion_point(field:mizer.fixtures.UpdateFixtureRequest.reverse_pixel_order)
+    pub reverse_pixel_order: ::std::option::Option<bool>,
     // @@protoc_insertion_point(field:mizer.fixtures.UpdateFixtureRequest.name)
     pub name: ::std::option::Option<::std::string::String>,
     // @@protoc_insertion_point(field:mizer.fixtures.UpdateFixtureRequest.address)
@@ -637,7 +639,7 @@ impl UpdateFixtureRequest {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(5);
+        let mut fields = ::std::vec::Vec::with_capacity(6);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "fixtureId",
@@ -653,6 +655,11 @@ impl UpdateFixtureRequest {
             "invert_tilt",
             |m: &UpdateFixtureRequest| { &m.invert_tilt },
             |m: &mut UpdateFixtureRequest| { &mut m.invert_tilt },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "reverse_pixel_order",
+            |m: &UpdateFixtureRequest| { &m.reverse_pixel_order },
+            |m: &mut UpdateFixtureRequest| { &mut m.reverse_pixel_order },
         ));
         fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
             "name",
@@ -691,10 +698,13 @@ impl ::protobuf::Message for UpdateFixtureRequest {
                 24 => {
                     self.invert_tilt = ::std::option::Option::Some(is.read_bool()?);
                 },
-                34 => {
-                    self.name = ::std::option::Option::Some(is.read_string()?);
+                32 => {
+                    self.reverse_pixel_order = ::std::option::Option::Some(is.read_bool()?);
                 },
                 42 => {
+                    self.name = ::std::option::Option::Some(is.read_string()?);
+                },
+                50 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.address)?;
                 },
                 tag => {
@@ -718,8 +728,11 @@ impl ::protobuf::Message for UpdateFixtureRequest {
         if let Some(v) = self.invert_tilt {
             my_size += 1 + 1;
         }
+        if let Some(v) = self.reverse_pixel_order {
+            my_size += 1 + 1;
+        }
         if let Some(v) = self.name.as_ref() {
-            my_size += ::protobuf::rt::string_size(4, &v);
+            my_size += ::protobuf::rt::string_size(5, &v);
         }
         if let Some(v) = self.address.as_ref() {
             let len = v.compute_size();
@@ -740,11 +753,14 @@ impl ::protobuf::Message for UpdateFixtureRequest {
         if let Some(v) = self.invert_tilt {
             os.write_bool(3, v)?;
         }
+        if let Some(v) = self.reverse_pixel_order {
+            os.write_bool(4, v)?;
+        }
         if let Some(v) = self.name.as_ref() {
-            os.write_string(4, v)?;
+            os.write_string(5, v)?;
         }
         if let Some(v) = self.address.as_ref() {
-            ::protobuf::rt::write_message_field_with_cached_size(5, v, os)?;
+            ::protobuf::rt::write_message_field_with_cached_size(6, v, os)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -766,6 +782,7 @@ impl ::protobuf::Message for UpdateFixtureRequest {
         self.fixtureId = 0;
         self.invert_pan = ::std::option::Option::None;
         self.invert_tilt = ::std::option::Option::None;
+        self.reverse_pixel_order = ::std::option::Option::None;
         self.name = ::std::option::Option::None;
         self.address.clear();
         self.special_fields.clear();
@@ -776,6 +793,7 @@ impl ::protobuf::Message for UpdateFixtureRequest {
             fixtureId: 0,
             invert_pan: ::std::option::Option::None,
             invert_tilt: ::std::option::Option::None,
+            reverse_pixel_order: ::std::option::Option::None,
             name: ::std::option::Option::None,
             address: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
@@ -1770,6 +1788,8 @@ pub struct FixtureConfig {
     pub invert_pan: bool,
     // @@protoc_insertion_point(field:mizer.fixtures.FixtureConfig.invert_tilt)
     pub invert_tilt: bool,
+    // @@protoc_insertion_point(field:mizer.fixtures.FixtureConfig.reverse_pixel_order)
+    pub reverse_pixel_order: bool,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.fixtures.FixtureConfig.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -1787,7 +1807,7 @@ impl FixtureConfig {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "invert_pan",
@@ -1798,6 +1818,11 @@ impl FixtureConfig {
             "invert_tilt",
             |m: &FixtureConfig| { &m.invert_tilt },
             |m: &mut FixtureConfig| { &mut m.invert_tilt },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "reverse_pixel_order",
+            |m: &FixtureConfig| { &m.reverse_pixel_order },
+            |m: &mut FixtureConfig| { &mut m.reverse_pixel_order },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<FixtureConfig>(
             "FixtureConfig",
@@ -1823,6 +1848,9 @@ impl ::protobuf::Message for FixtureConfig {
                 16 => {
                     self.invert_tilt = is.read_bool()?;
                 },
+                24 => {
+                    self.reverse_pixel_order = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -1841,6 +1869,9 @@ impl ::protobuf::Message for FixtureConfig {
         if self.invert_tilt != false {
             my_size += 1 + 1;
         }
+        if self.reverse_pixel_order != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -1852,6 +1883,9 @@ impl ::protobuf::Message for FixtureConfig {
         }
         if self.invert_tilt != false {
             os.write_bool(2, self.invert_tilt)?;
+        }
+        if self.reverse_pixel_order != false {
+            os.write_bool(3, self.reverse_pixel_order)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -1872,6 +1906,7 @@ impl ::protobuf::Message for FixtureConfig {
     fn clear(&mut self) {
         self.invert_pan = false;
         self.invert_tilt = false;
+        self.reverse_pixel_order = false;
         self.special_fields.clear();
     }
 
@@ -1879,6 +1914,7 @@ impl ::protobuf::Message for FixtureConfig {
         static instance: FixtureConfig = FixtureConfig {
             invert_pan: false,
             invert_tilt: false,
+            reverse_pixel_order: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -5853,107 +5889,109 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     channel\x12\x1a\n\x08universe\x18\x05\x20\x01(\rR\x08universe\x12\x12\n\
     \x04name\x18\x06\x20\x01(\tR\x04name\"\x14\n\x12GetFixturesRequest\"7\n\
     \x15DeleteFixturesRequest\x12\x1e\n\nfixtureIds\x18\x01\x20\x03(\rR\nfix\
-    tureIds\"\x8a\x02\n\x14UpdateFixtureRequest\x12\x1c\n\tfixtureId\x18\x01\
+    tureIds\"\xd7\x02\n\x14UpdateFixtureRequest\x12\x1c\n\tfixtureId\x18\x01\
     \x20\x01(\rR\tfixtureId\x12\"\n\ninvert_pan\x18\x02\x20\x01(\x08H\0R\tin\
     vertPan\x88\x01\x01\x12$\n\x0binvert_tilt\x18\x03\x20\x01(\x08H\x01R\nin\
-    vertTilt\x88\x01\x01\x12\x17\n\x04name\x18\x04\x20\x01(\tH\x02R\x04name\
-    \x88\x01\x01\x12=\n\x07address\x18\x05\x20\x01(\x0b2\x1e.mizer.fixtures.\
-    FixtureAddressH\x03R\x07address\x88\x01\x01B\r\n\x0b_invert_panB\x0e\n\
-    \x0c_invert_tiltB\x07\n\x05_nameB\n\n\x08_address\"F\n\x0eFixtureAddress\
-    \x12\x1a\n\x08universe\x18\x01\x20\x01(\rR\x08universe\x12\x18\n\x07chan\
-    nel\x18\x02\x20\x01(\rR\x07channel\"n\n\tFixtureId\x12\x1a\n\x07fixture\
-    \x18\x01\x20\x01(\rH\0R\x07fixture\x12?\n\x0bsub_fixture\x18\x02\x20\x01\
-    (\x0b2\x1c.mizer.fixtures.SubFixtureIdH\0R\nsubFixtureB\x04\n\x02id\"H\n\
-    \x0cSubFixtureId\x12\x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\
-    \x12\x19\n\x08child_id\x18\x02\x20\x01(\rR\x07childId\"?\n\x08Fixtures\
-    \x123\n\x08fixtures\x18\x01\x20\x03(\x0b2\x17.mizer.fixtures.FixtureR\
-    \x08fixtures\"\x82\x03\n\x07Fixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufact\
-    urer\x18\x03\x20\x01(\tR\x0cmanufacturer\x12\x14\n\x05model\x18\x04\x20\
-    \x01(\tR\x05model\x12\x12\n\x04mode\x18\x05\x20\x01(\tR\x04mode\x12\x1a\
-    \n\x08universe\x18\x06\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\
-    \x07\x20\x01(\rR\x07channel\x12#\n\rchannel_count\x18\x08\x20\x01(\rR\
-    \x0cchannelCount\x12;\n\x08controls\x18\t\x20\x03(\x0b2\x1f.mizer.fixtur\
-    es.FixtureControlsR\x08controls\x126\n\x08children\x18\n\x20\x03(\x0b2\
-    \x1a.mizer.fixtures.SubFixtureR\x08children\x125\n\x06config\x18\x0b\x20\
-    \x01(\x0b2\x1d.mizer.fixtures.FixtureConfigR\x06config\"O\n\rFixtureConf\
-    ig\x12\x1d\n\ninvert_pan\x18\x01\x20\x01(\x08R\tinvertPan\x12\x1f\n\x0bi\
-    nvert_tilt\x18\x02\x20\x01(\x08R\ninvertTilt\"m\n\nSubFixture\x12\x0e\n\
-    \x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\x12;\n\x08controls\x18\x03\x20\x03(\x0b2\x1f.mizer.fixtures.Fix\
-    tureControlsR\x08controls\"\xb8\x03\n\x0fFixtureControls\x128\n\x07contr\
-    ol\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\
-    \x124\n\x05fader\x18\x02\x20\x01(\x0b2\x1c.mizer.fixtures.FaderChannelH\
-    \0R\x05fader\x12D\n\x0bcolor_mixer\x18\x03\x20\x01(\x0b2!.mizer.fixtures\
-    .ColorMixerChannelH\0R\ncolorMixer\x12D\n\x0bcolor_wheel\x18\x04\x20\x01\
-    (\x0b2!.mizer.fixtures.ColorWheelChannelH\0R\ncolorWheel\x121\n\x04axis\
-    \x18\x05\x20\x01(\x0b2\x1b.mizer.fixtures.AxisChannelH\0R\x04axis\x121\n\
-    \x04gobo\x18\x06\x20\x01(\x0b2\x1b.mizer.fixtures.GoboChannelH\0R\x04gob\
-    o\x12:\n\x07generic\x18\x07\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChan\
-    nelH\0R\x07genericB\x07\n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05val\
-    ue\x18\x01\x20\x01(\x01R\x05value\"O\n\x11ColorMixerChannel\x12\x10\n\
-    \x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\
-    \x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\x04blue\"a\n\x11C\
-    olorWheelChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x126\
-    \n\x06colors\x18\x02\x20\x03(\x0b2\x1e.mizer.fixtures.ColorWheelSlotR\
-    \x06colors\"R\n\x0eColorWheelSlot\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\x12\x16\n\x06\
-    colors\x18\x03\x20\x03(\tR\x06colors\"]\n\x0bAxisChannel\x12\x14\n\x05va\
-    lue\x18\x01\x20\x01(\x01R\x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01\
-    (\x01R\tangleFrom\x12\x19\n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\
-    \"O\n\x0bGoboChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\
-    \x12*\n\x05gobos\x18\x02\x20\x03(\x0b2\x14.mizer.fixtures.GoboR\x05gobos\
-    \"g\n\x04Gobo\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\
-    \x05value\x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x03svg\x18\x03\x20\
-    \x01(\tH\0R\x03svg\x12\x18\n\x06raster\x18\x04\x20\x01(\x0cH\0R\x06raste\
-    rB\x07\n\x05image\":\n\x0eGenericChannel\x12\x14\n\x05value\x18\x01\x20\
-    \x01(\x01R\x05value\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\
-    \n\x1cGetFixtureDefinitionsRequest\"Y\n\x12FixtureDefinitions\x12C\n\x0b\
-    definitions\x18\x01\x20\x03(\x0b2!.mizer.fixtures.FixtureDefinitionR\x0b\
-    definitions\"\xff\x01\n\x11FixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\
-    \x01(\tR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0c\
-    manufacturer\x18\x03\x20\x01(\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\
-    \x20\x03(\x0b2\x1b.mizer.fixtures.FixtureModeR\x05modes\x12?\n\x08physic\
-    al\x18\x05\x20\x01(\x0b2#.mizer.fixtures.FixturePhysicalDataR\x08physica\
-    l\x12\x12\n\x04tags\x18\x06\x20\x03(\tR\x04tags\x12\x1a\n\x08provider\
-    \x18\x07\x20\x01(\tR\x08provider\"]\n\x0bFixtureMode\x12\x12\n\x04name\
-    \x18\x01\x20\x01(\tR\x04name\x12:\n\x08channels\x18\x02\x20\x03(\x0b2\
-    \x1e.mizer.fixtures.FixtureChannelR\x08channels\"\x98\x04\n\x0eFixtureCh\
-    annel\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12I\n\x06coarse\x18\
-    \x02\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.CoarseResolutionH\0R\
-    \x06coarse\x12C\n\x04fine\x18\x03\x20\x01(\x0b2-.mizer.fixtures.FixtureC\
-    hannel.FineResolutionH\0R\x04fine\x12I\n\x06finest\x18\x04\x20\x01(\x0b2\
-    /.mizer.fixtures.FixtureChannel.FinestResolutionH\0R\x06finest\x1a,\n\
-    \x10CoarseResolution\x12\x18\n\x07channel\x18\x01\x20\x01(\rR\x07channel\
-    \x1aX\n\x0eFineResolution\x12\x20\n\x0bfineChannel\x18\x01\x20\x01(\rR\
-    \x0bfineChannel\x12$\n\rcoarseChannel\x18\x02\x20\x01(\rR\rcoarseChannel\
-    \x1a\x80\x01\n\x10FinestResolution\x12$\n\rfinestChannel\x18\x01\x20\x01\
-    (\rR\rfinestChannel\x12\x20\n\x0bfineChannel\x18\x02\x20\x01(\rR\x0bfine\
-    Channel\x12$\n\rcoarseChannel\x18\x03\x20\x01(\rR\rcoarseChannelB\x0c\n\
-    \nresolution\"q\n\x13FixturePhysicalData\x12\x14\n\x05width\x18\x01\x20\
-    \x01(\x02R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x02R\x06height\
-    \x12\x14\n\x05depth\x18\x03\x20\x01(\x02R\x05depth\x12\x16\n\x06weight\
-    \x18\x04\x20\x01(\x02R\x06weight\"\xd6\x02\n\x13FixtureFaderControl\x128\
-    \n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\
-    \x07control\x12q\n\x13color_mixer_channel\x18\x02\x20\x01(\x0e2<.mizer.f\
-    ixtures.FixtureFaderControl.ColorMixerControlChannelH\0R\x11colorMixerCh\
-    annel\x88\x01\x01\x12,\n\x0fgeneric_channel\x18\x03\x20\x01(\tH\x01R\x0e\
-    genericChannel\x88\x01\x01\"8\n\x18ColorMixerControlChannel\x12\x07\n\
-    \x03RED\x10\0\x12\t\n\x05GREEN\x10\x01\x12\x08\n\x04BLUE\x10\x02B\x16\n\
-    \x14_color_mixer_channelB\x12\n\x10_generic_channel*\xad\x01\n\x0eFixtur\
-    eControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07SHUTTER\x10\x01\x12\x0f\n\
-    \x0bCOLOR_MIXER\x10\x02\x12\x0f\n\x0bCOLOR_WHEEL\x10\x03\x12\x07\n\x03PA\
-    N\x10\x04\x12\x08\n\x04TILT\x10\x05\x12\t\n\x05FOCUS\x10\x06\x12\x08\n\
-    \x04ZOOM\x10\x07\x12\t\n\x05PRISM\x10\x08\x12\x08\n\x04IRIS\x10\t\x12\t\
-    \n\x05FROST\x10\n\x12\x08\n\x04GOBO\x10\x0b\x12\x0b\n\x07GENERIC\x10\x0c\
-    2\xb6\x03\n\x0bFixturesApi\x12K\n\x0bGetFixtures\x12\".mizer.fixtures.Ge\
-    tFixturesRequest\x1a\x18.mizer.fixtures.Fixtures\x12i\n\x15GetFixtureDef\
-    initions\x12,.mizer.fixtures.GetFixtureDefinitionsRequest\x1a\".mizer.fi\
-    xtures.FixtureDefinitions\x12K\n\x0bAddFixtures\x12\".mizer.fixtures.Add\
-    FixturesRequest\x1a\x18.mizer.fixtures.Fixtures\x12Q\n\x0eDeleteFixtures\
-    \x12%.mizer.fixtures.DeleteFixturesRequest\x1a\x18.mizer.fixtures.Fixtur\
-    es\x12O\n\rUpdateFixture\x12$.mizer.fixtures.UpdateFixtureRequest\x1a\
-    \x18.mizer.fixtures.Fixturesb\x06proto3\
+    vertTilt\x88\x01\x01\x123\n\x13reverse_pixel_order\x18\x04\x20\x01(\x08H\
+    \x02R\x11reversePixelOrder\x88\x01\x01\x12\x17\n\x04name\x18\x05\x20\x01\
+    (\tH\x03R\x04name\x88\x01\x01\x12=\n\x07address\x18\x06\x20\x01(\x0b2\
+    \x1e.mizer.fixtures.FixtureAddressH\x04R\x07address\x88\x01\x01B\r\n\x0b\
+    _invert_panB\x0e\n\x0c_invert_tiltB\x16\n\x14_reverse_pixel_orderB\x07\n\
+    \x05_nameB\n\n\x08_address\"F\n\x0eFixtureAddress\x12\x1a\n\x08universe\
+    \x18\x01\x20\x01(\rR\x08universe\x12\x18\n\x07channel\x18\x02\x20\x01(\r\
+    R\x07channel\"n\n\tFixtureId\x12\x1a\n\x07fixture\x18\x01\x20\x01(\rH\0R\
+    \x07fixture\x12?\n\x0bsub_fixture\x18\x02\x20\x01(\x0b2\x1c.mizer.fixtur\
+    es.SubFixtureIdH\0R\nsubFixtureB\x04\n\x02id\"H\n\x0cSubFixtureId\x12\
+    \x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\x12\x19\n\x08child_id\
+    \x18\x02\x20\x01(\rR\x07childId\"?\n\x08Fixtures\x123\n\x08fixtures\x18\
+    \x01\x20\x03(\x0b2\x17.mizer.fixtures.FixtureR\x08fixtures\"\x82\x03\n\
+    \x07Fixture\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01(\tR\
+    \x0cmanufacturer\x12\x14\n\x05model\x18\x04\x20\x01(\tR\x05model\x12\x12\
+    \n\x04mode\x18\x05\x20\x01(\tR\x04mode\x12\x1a\n\x08universe\x18\x06\x20\
+    \x01(\rR\x08universe\x12\x18\n\x07channel\x18\x07\x20\x01(\rR\x07channel\
+    \x12#\n\rchannel_count\x18\x08\x20\x01(\rR\x0cchannelCount\x12;\n\x08con\
+    trols\x18\t\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08control\
+    s\x126\n\x08children\x18\n\x20\x03(\x0b2\x1a.mizer.fixtures.SubFixtureR\
+    \x08children\x125\n\x06config\x18\x0b\x20\x01(\x0b2\x1d.mizer.fixtures.F\
+    ixtureConfigR\x06config\"\x7f\n\rFixtureConfig\x12\x1d\n\ninvert_pan\x18\
+    \x01\x20\x01(\x08R\tinvertPan\x12\x1f\n\x0binvert_tilt\x18\x02\x20\x01(\
+    \x08R\ninvertTilt\x12.\n\x13reverse_pixel_order\x18\x03\x20\x01(\x08R\
+    \x11reversePixelOrder\"m\n\nSubFixture\x12\x0e\n\x02id\x18\x01\x20\x01(\
+    \rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x12;\n\x08contro\
+    ls\x18\x03\x20\x03(\x0b2\x1f.mizer.fixtures.FixtureControlsR\x08controls\
+    \"\xb8\x03\n\x0fFixtureControls\x128\n\x07control\x18\x01\x20\x01(\x0e2\
+    \x1e.mizer.fixtures.FixtureControlR\x07control\x124\n\x05fader\x18\x02\
+    \x20\x01(\x0b2\x1c.mizer.fixtures.FaderChannelH\0R\x05fader\x12D\n\x0bco\
+    lor_mixer\x18\x03\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\nc\
+    olorMixer\x12D\n\x0bcolor_wheel\x18\x04\x20\x01(\x0b2!.mizer.fixtures.Co\
+    lorWheelChannelH\0R\ncolorWheel\x121\n\x04axis\x18\x05\x20\x01(\x0b2\x1b\
+    .mizer.fixtures.AxisChannelH\0R\x04axis\x121\n\x04gobo\x18\x06\x20\x01(\
+    \x0b2\x1b.mizer.fixtures.GoboChannelH\0R\x04gobo\x12:\n\x07generic\x18\
+    \x07\x20\x01(\x0b2\x1e.mizer.fixtures.GenericChannelH\0R\x07genericB\x07\
+    \n\x05value\"$\n\x0cFaderChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01\
+    R\x05value\"O\n\x11ColorMixerChannel\x12\x10\n\x03red\x18\x01\x20\x01(\
+    \x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\
+    \x04blue\x18\x03\x20\x01(\x01R\x04blue\"a\n\x11ColorWheelChannel\x12\x14\
+    \n\x05value\x18\x01\x20\x01(\x01R\x05value\x126\n\x06colors\x18\x02\x20\
+    \x03(\x0b2\x1e.mizer.fixtures.ColorWheelSlotR\x06colors\"R\n\x0eColorWhe\
+    elSlot\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\
+    \x18\x02\x20\x01(\x01R\x05value\x12\x16\n\x06colors\x18\x03\x20\x03(\tR\
+    \x06colors\"]\n\x0bAxisChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\
+    \x05value\x12\x1d\n\nangle_from\x18\x02\x20\x01(\x01R\tangleFrom\x12\x19\
+    \n\x08angle_to\x18\x03\x20\x01(\x01R\x07angleTo\"O\n\x0bGoboChannel\x12\
+    \x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12*\n\x05gobos\x18\x02\
+    \x20\x03(\x0b2\x14.mizer.fixtures.GoboR\x05gobos\"g\n\x04Gobo\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\
+    \x01R\x05value\x12\x12\n\x03svg\x18\x03\x20\x01(\tH\0R\x03svg\x12\x18\n\
+    \x06raster\x18\x04\x20\x01(\x0cH\0R\x06rasterB\x07\n\x05image\":\n\x0eGe\
+    nericChannel\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value\x12\x12\n\
+    \x04name\x18\x02\x20\x01(\tR\x04name\"\x1e\n\x1cGetFixtureDefinitionsReq\
+    uest\"Y\n\x12FixtureDefinitions\x12C\n\x0bdefinitions\x18\x01\x20\x03(\
+    \x0b2!.mizer.fixtures.FixtureDefinitionR\x0bdefinitions\"\xff\x01\n\x11F\
+    ixtureDefinition\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\x12\n\x04\
+    name\x18\x02\x20\x01(\tR\x04name\x12\"\n\x0cmanufacturer\x18\x03\x20\x01\
+    (\tR\x0cmanufacturer\x121\n\x05modes\x18\x04\x20\x03(\x0b2\x1b.mizer.fix\
+    tures.FixtureModeR\x05modes\x12?\n\x08physical\x18\x05\x20\x01(\x0b2#.mi\
+    zer.fixtures.FixturePhysicalDataR\x08physical\x12\x12\n\x04tags\x18\x06\
+    \x20\x03(\tR\x04tags\x12\x1a\n\x08provider\x18\x07\x20\x01(\tR\x08provid\
+    er\"]\n\x0bFixtureMode\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\
+    :\n\x08channels\x18\x02\x20\x03(\x0b2\x1e.mizer.fixtures.FixtureChannelR\
+    \x08channels\"\x98\x04\n\x0eFixtureChannel\x12\x12\n\x04name\x18\x01\x20\
+    \x01(\tR\x04name\x12I\n\x06coarse\x18\x02\x20\x01(\x0b2/.mizer.fixtures.\
+    FixtureChannel.CoarseResolutionH\0R\x06coarse\x12C\n\x04fine\x18\x03\x20\
+    \x01(\x0b2-.mizer.fixtures.FixtureChannel.FineResolutionH\0R\x04fine\x12\
+    I\n\x06finest\x18\x04\x20\x01(\x0b2/.mizer.fixtures.FixtureChannel.Fines\
+    tResolutionH\0R\x06finest\x1a,\n\x10CoarseResolution\x12\x18\n\x07channe\
+    l\x18\x01\x20\x01(\rR\x07channel\x1aX\n\x0eFineResolution\x12\x20\n\x0bf\
+    ineChannel\x18\x01\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\
+    \x02\x20\x01(\rR\rcoarseChannel\x1a\x80\x01\n\x10FinestResolution\x12$\n\
+    \rfinestChannel\x18\x01\x20\x01(\rR\rfinestChannel\x12\x20\n\x0bfineChan\
+    nel\x18\x02\x20\x01(\rR\x0bfineChannel\x12$\n\rcoarseChannel\x18\x03\x20\
+    \x01(\rR\rcoarseChannelB\x0c\n\nresolution\"q\n\x13FixturePhysicalData\
+    \x12\x14\n\x05width\x18\x01\x20\x01(\x02R\x05width\x12\x16\n\x06height\
+    \x18\x02\x20\x01(\x02R\x06height\x12\x14\n\x05depth\x18\x03\x20\x01(\x02\
+    R\x05depth\x12\x16\n\x06weight\x18\x04\x20\x01(\x02R\x06weight\"\xd6\x02\
+    \n\x13FixtureFaderControl\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mi\
+    zer.fixtures.FixtureControlR\x07control\x12q\n\x13color_mixer_channel\
+    \x18\x02\x20\x01(\x0e2<.mizer.fixtures.FixtureFaderControl.ColorMixerCon\
+    trolChannelH\0R\x11colorMixerChannel\x88\x01\x01\x12,\n\x0fgeneric_chann\
+    el\x18\x03\x20\x01(\tH\x01R\x0egenericChannel\x88\x01\x01\"8\n\x18ColorM\
+    ixerControlChannel\x12\x07\n\x03RED\x10\0\x12\t\n\x05GREEN\x10\x01\x12\
+    \x08\n\x04BLUE\x10\x02B\x16\n\x14_color_mixer_channelB\x12\n\x10_generic\
+    _channel*\xad\x01\n\x0eFixtureControl\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\
+    \x07SHUTTER\x10\x01\x12\x0f\n\x0bCOLOR_MIXER\x10\x02\x12\x0f\n\x0bCOLOR_\
+    WHEEL\x10\x03\x12\x07\n\x03PAN\x10\x04\x12\x08\n\x04TILT\x10\x05\x12\t\n\
+    \x05FOCUS\x10\x06\x12\x08\n\x04ZOOM\x10\x07\x12\t\n\x05PRISM\x10\x08\x12\
+    \x08\n\x04IRIS\x10\t\x12\t\n\x05FROST\x10\n\x12\x08\n\x04GOBO\x10\x0b\
+    \x12\x0b\n\x07GENERIC\x10\x0c2\xb6\x03\n\x0bFixturesApi\x12K\n\x0bGetFix\
+    tures\x12\".mizer.fixtures.GetFixturesRequest\x1a\x18.mizer.fixtures.Fix\
+    tures\x12i\n\x15GetFixtureDefinitions\x12,.mizer.fixtures.GetFixtureDefi\
+    nitionsRequest\x1a\".mizer.fixtures.FixtureDefinitions\x12K\n\x0bAddFixt\
+    ures\x12\".mizer.fixtures.AddFixturesRequest\x1a\x18.mizer.fixtures.Fixt\
+    ures\x12Q\n\x0eDeleteFixtures\x12%.mizer.fixtures.DeleteFixturesRequest\
+    \x1a\x18.mizer.fixtures.Fixtures\x12O\n\rUpdateFixture\x12$.mizer.fixtur\
+    es.UpdateFixtureRequest\x1a\x18.mizer.fixtures.Fixturesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

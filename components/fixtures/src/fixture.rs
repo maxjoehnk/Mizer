@@ -25,8 +25,12 @@ pub struct Fixture {
 
 #[derive(Default, Debug, Clone, Copy, Deserialize, Serialize, PartialEq, Eq)]
 pub struct FixtureConfiguration {
+    #[serde(default)]
     pub invert_pan: bool,
+    #[serde(default)]
     pub invert_tilt: bool,
+    #[serde(default)]
+    pub reverse_pixel_order: bool,
 }
 
 impl FixtureConfiguration {
@@ -74,10 +78,7 @@ impl Fixture {
     }
 
     pub fn sub_fixture(&self, id: u32) -> Option<SubFixture> {
-        self.current_mode
-            .sub_fixtures
-            .iter()
-            .find(|f| f.id == id)
+        self.sub_fixture_definition(id)
             .map(move |definition| SubFixture {
                 fixture: self,
                 definition,
@@ -85,15 +86,29 @@ impl Fixture {
     }
 
     pub fn sub_fixture_mut(&mut self, id: u32) -> Option<SubFixtureMut> {
-        self.current_mode
-            .sub_fixtures
-            .iter()
-            .find(|f| f.id == id)
+        self.sub_fixture_definition(id)
             .cloned()
             .map(move |definition| SubFixtureMut {
                 fixture: self,
                 definition,
             })
+    }
+
+    fn sub_fixture_definition(&self, id: u32) -> Option<&SubFixtureDefinition> {
+        let position = self
+            .current_mode
+            .sub_fixtures
+            .iter()
+            .position(|f| f.id == id);
+
+        position.and_then(|p| {
+            let mut fixtures = self.current_mode.sub_fixtures.iter();
+            if self.configuration.reverse_pixel_order {
+                fixtures.rev().nth(p)
+            } else {
+                fixtures.nth(p)
+            }
+        })
     }
 
     pub(crate) fn set_to_default(&mut self) {

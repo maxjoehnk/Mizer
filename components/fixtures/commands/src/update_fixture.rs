@@ -8,6 +8,7 @@ pub struct UpdateFixtureCommand {
     pub fixture_id: u32,
     pub invert_pan: Option<bool>,
     pub invert_tilt: Option<bool>,
+    pub reverse_pixel_order: Option<bool>,
     pub name: Option<String>,
     pub address: Option<(u16, u16)>,
 }
@@ -38,6 +39,9 @@ impl<'a> Command<'a> for UpdateFixtureCommand {
         }
         if let Some(invert_tilt) = self.invert_tilt {
             fixture.configuration.invert_tilt = invert_tilt;
+        }
+        if let Some(reverse_pixel_order) = self.reverse_pixel_order {
+            fixture.configuration.reverse_pixel_order = reverse_pixel_order;
         }
         if let Some(name) = self.name.clone() {
             fixture.name = name;

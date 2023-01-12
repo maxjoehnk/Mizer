@@ -66,6 +66,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
                 config: MessageField::some(FixtureConfig {
                     invert_pan: fixture.configuration.invert_pan,
                     invert_tilt: fixture.configuration.invert_tilt,
+                    reverse_pixel_order: fixture.configuration.reverse_pixel_order,
                     ..Default::default()
                 }),
                 ..Default::default()
@@ -115,6 +116,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
             fixture_id: request.fixtureId,
             invert_pan: request.invert_pan,
             invert_tilt: request.invert_tilt,
+            reverse_pixel_order: request.reverse_pixel_order,
             name: request.name,
             address: request
                 .address

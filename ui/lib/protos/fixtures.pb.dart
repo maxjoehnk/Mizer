@@ -3,7 +3,7 @@
 //  source: fixtures.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
 import 'dart:core' as $core;
 
@@ -224,7 +224,7 @@ class GetFixturesRequest extends $pb.GeneratedMessage {
 
 class DeleteFixturesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteFixturesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
-    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureIds', $pb.PbFieldType.KU3, protoName: 'fixtureIds')
+    ..p<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureIds', $pb.PbFieldType.PU3, protoName: 'fixtureIds')
     ..hasRequiredFields = false
   ;
 
@@ -268,8 +268,9 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtureId', $pb.PbFieldType.OU3, protoName: 'fixtureId')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
     ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOM<FixtureAddress>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', subBuilder: FixtureAddress.create)
+    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reversePixelOrder')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<FixtureAddress>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address', subBuilder: FixtureAddress.create)
     ..hasRequiredFields = false
   ;
 
@@ -278,6 +279,7 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     $core.int? fixtureId,
     $core.bool? invertPan,
     $core.bool? invertTilt,
+    $core.bool? reversePixelOrder,
     $core.String? name,
     FixtureAddress? address,
   }) {
@@ -290,6 +292,9 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
     }
     if (invertTilt != null) {
       _result.invertTilt = invertTilt;
+    }
+    if (reversePixelOrder != null) {
+      _result.reversePixelOrder = reversePixelOrder;
     }
     if (name != null) {
       _result.name = name;
@@ -348,24 +353,33 @@ class UpdateFixtureRequest extends $pb.GeneratedMessage {
   void clearInvertTilt() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get name => $_getSZ(3);
+  $core.bool get reversePixelOrder => $_getBF(3);
   @$pb.TagNumber(4)
-  set name($core.String v) { $_setString(3, v); }
+  set reversePixelOrder($core.bool v) { $_setBool(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasName() => $_has(3);
+  $core.bool hasReversePixelOrder() => $_has(3);
   @$pb.TagNumber(4)
-  void clearName() => clearField(4);
+  void clearReversePixelOrder() => clearField(4);
 
   @$pb.TagNumber(5)
-  FixtureAddress get address => $_getN(4);
+  $core.String get name => $_getSZ(4);
   @$pb.TagNumber(5)
-  set address(FixtureAddress v) { setField(5, v); }
+  set name($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasAddress() => $_has(4);
+  $core.bool hasName() => $_has(4);
   @$pb.TagNumber(5)
-  void clearAddress() => clearField(5);
-  @$pb.TagNumber(5)
-  FixtureAddress ensureAddress() => $_ensure(4);
+  void clearName() => clearField(5);
+
+  @$pb.TagNumber(6)
+  FixtureAddress get address => $_getN(5);
+  @$pb.TagNumber(6)
+  set address(FixtureAddress v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasAddress() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearAddress() => clearField(6);
+  @$pb.TagNumber(6)
+  FixtureAddress ensureAddress() => $_ensure(5);
 }
 
 class FixtureAddress extends $pb.GeneratedMessage {
@@ -790,6 +804,7 @@ class FixtureConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FixtureConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.fixtures'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertPan')
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'invertTilt')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'reversePixelOrder')
     ..hasRequiredFields = false
   ;
 
@@ -797,6 +812,7 @@ class FixtureConfig extends $pb.GeneratedMessage {
   factory FixtureConfig({
     $core.bool? invertPan,
     $core.bool? invertTilt,
+    $core.bool? reversePixelOrder,
   }) {
     final _result = create();
     if (invertPan != null) {
@@ -804,6 +820,9 @@ class FixtureConfig extends $pb.GeneratedMessage {
     }
     if (invertTilt != null) {
       _result.invertTilt = invertTilt;
+    }
+    if (reversePixelOrder != null) {
+      _result.reversePixelOrder = reversePixelOrder;
     }
     return _result;
   }
@@ -845,6 +864,15 @@ class FixtureConfig extends $pb.GeneratedMessage {
   $core.bool hasInvertTilt() => $_has(1);
   @$pb.TagNumber(2)
   void clearInvertTilt() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get reversePixelOrder => $_getBF(2);
+  @$pb.TagNumber(3)
+  set reversePixelOrder($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasReversePixelOrder() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearReversePixelOrder() => clearField(3);
 }
 
 class SubFixture extends $pb.GeneratedMessage {

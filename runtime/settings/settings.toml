@@ -60,6 +60,7 @@ delete_node = "delete"
 add_sequence = "alt+a"
 delete = "delete"
 duplicate = "ctrl+d"
+go_forward = "ctrl+g"
 
 [hotkeys.effects]
 delete = "delete"

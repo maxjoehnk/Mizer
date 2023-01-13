@@ -58,7 +58,26 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
     context.read<SequencerBloc>().add(FetchSequences());
     return HotkeyConfiguration(
       hotkeySelector: (hotkeys) => hotkeys.sequencer,
-      hotkeyMap: {},
+      hotkeyMap: {
+        "go_forward": () {
+          SequencerBloc bloc = context.read();
+          if (bloc.state.selectedSequenceId != null) {
+            _sequenceGo(bloc.state.selectedSequenceId!);
+          }
+        },
+        "delete": () {
+          SequencerBloc bloc = context.read();
+          if (bloc.state.selectedSequenceId != null) {
+            _deleteSequence(bloc.state.selectedSequenceId!);
+          }
+        },
+        "duplicate": () {
+          SequencerBloc bloc = context.read();
+          if (bloc.state.selectedSequenceId != null) {
+            _duplicateSequence(bloc.state.selectedSequenceId!);
+          }
+        }
+      },
       child: BlocBuilder<SequencerBloc, SequencerState>(
         builder: (context, state) {
           return Column(
@@ -68,7 +87,7 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
                   label: "Sequences",
                   child: SequenceList(selectSequence: _selectSequence, selectedSequence: state.selectedSequence, sequenceStates: sequenceStates),
                   actions: [
-                    PanelAction(label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [
+                    PanelAction(hotkeyId: "go_forward", label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [
                       MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForGo(context, state))
                     ])),
                     PanelAction(label: "Stop", onClick: () => _sequenceStop(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [

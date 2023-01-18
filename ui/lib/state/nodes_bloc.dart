@@ -131,7 +131,14 @@ class NodesBloc extends Bloc<NodesEvent, Nodes> {
           sourcePort: request.sourcePort,
           targetNode: request.target.node.path,
           targetPort: request.target.port);
-      await api.linkNodes(connection);
+      if (state.channels.any((c) => c.sourcePort.name == connection.sourcePort.name &&
+          c.sourceNode == connection.sourceNode &&
+          c.targetPort.name == connection.targetPort.name &&
+          c.targetNode == connection.targetNode)) {
+        await api.unlinkNodes(connection);
+      }else {
+        await api.linkNodes(connection);
+      }
       emit(await api.getNodes());
     });
     on<MoveNode>((event, emit) async {

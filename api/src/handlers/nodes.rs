@@ -127,6 +127,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    pub fn remove_link(&self, link: NodeConnection) -> anyhow::Result<()> {
+        self.runtime
+            .run_command(RemoveLinkCommand { link: link.into() })?;
+
+        Ok(())
+    }
+
     pub fn write_control_value(&self, control: WriteControl) -> anyhow::Result<()> {
         self.runtime
             .write_node_port(control.path.into(), control.port.into(), control.value)?;

@@ -31,7 +31,14 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                 resp.respond_msg(response);
             }
             "linkNodes" => match call.arguments() {
-                Ok(args) => match self.link_nodes(args) {
+                Ok(args) => match self.handler.add_link(args) {
+                    Ok(()) => resp.send_ok(Value::Null),
+                    Err(err) => resp.respond_error(err),
+                },
+                Err(err) => resp.respond_error(err),
+            },
+            "unlinkNodes" => match call.arguments() {
+                Ok(args) => match self.handler.remove_link(args) {
                     Ok(()) => resp.send_ok(Value::Null),
                     Err(err) => resp.respond_error(err),
                 },
@@ -150,10 +157,6 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
 
     fn get_nodes(&self) -> Nodes {
         self.handler.get_nodes()
-    }
-
-    fn link_nodes(&self, link: NodeConnection) -> anyhow::Result<()> {
-        self.handler.add_link(link)
     }
 
     fn write_control_value(&self, control: WriteControl) -> anyhow::Result<()> {

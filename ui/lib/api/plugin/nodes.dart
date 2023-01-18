@@ -34,6 +34,11 @@ class NodesPluginApi implements NodesApi {
   }
 
   @override
+  Future<void> unlinkNodes(NodeConnection connection) {
+    return channel.invokeMethod("unlinkNodes", connection.writeToBuffer());
+  }
+
+  @override
   Future<void> writeControlValue({required String path, required String port, required double value}) {
     return channel.invokeMethod(
         "writeControlValue", WriteControl(path: path, port: port, value: value).writeToBuffer());

@@ -72,6 +72,7 @@ command_impl! {
     UpdateNodeCommand,
     GroupNodesCommand,
     AddLinkCommand,
+    RemoveLinkCommand,
     DisconnectPortsCommand,
     AddPlanCommand,
     RemovePlanCommand,

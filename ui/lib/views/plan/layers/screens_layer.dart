@@ -25,7 +25,7 @@ class PlansScreenLayer extends StatelessWidget {
                     side: BorderSide(
                       color: Colors.white,
                       width: 1,
-                      strokeAlign: StrokeAlign.center,
+                      strokeAlign: BorderSide.strokeAlignCenter,
                       style: BorderStyle.solid,
                     ))),
           ));

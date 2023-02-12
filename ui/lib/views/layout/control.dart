@@ -21,6 +21,7 @@ import 'controls/label.dart';
 import 'controls/sequencer.dart';
 import 'dialogs/delete_control_dialog.dart';
 import 'dialogs/edit_control_dialog.dart';
+import 'dialogs/edit_sequencer_control_behavior_dialog.dart';
 import 'dialogs/rename_control_dialog.dart';
 
 class LayoutControlView extends StatelessWidget {
@@ -51,6 +52,8 @@ class LayoutControlView extends StatelessWidget {
         MenuItem(label: "Edit".i18n, action: () => _editControl(context)),
         MenuItem(label: "Move".i18n, action: () => onMove()),
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
+        if (node?.type == Node_NodeType.Sequencer)
+          MenuItem(label: "Behavior".i18n, action: () => _editSequencerBehavior(context)),
         if (supportsMappings) MenuDivider(),
         if (supportsMappings)
           SubMenu(title: "Mappings".i18n, children: [
@@ -76,6 +79,7 @@ class LayoutControlView extends StatelessWidget {
         node: node!,
         state: sequencerState,
         size: control.size,
+        behavior: control.behavior.sequencer,
       );
     } else if (node?.type == Node_NodeType.Label) {
       return LabelControl(pointer: pointer, control: control, color: _color);
@@ -88,7 +92,7 @@ class LayoutControlView extends StatelessWidget {
     ControlDecorations? result = await showDialog(
         context: context, builder: (context) => EditControlDialog(control: control));
     if (result != null) {
-      bloc.add(UpdateControl(layoutId: layoutId, controlId: control.node, decorations: result));
+      bloc.add(UpdateControlDecoration(layoutId: layoutId, controlId: control.node, decorations: result));
     }
   }
 
@@ -119,5 +123,14 @@ class LayoutControlView extends StatelessWidget {
       layoutControl: LayoutControlAction(controlNode: control.node),
     );
     await addMidiMapping(context, "Add MIDI Mapping for Control ${control.label.isNotEmpty ? control.label : control.node}", request);
+  }
+
+  _editSequencerBehavior(BuildContext context) async {
+    LayoutsBloc bloc = context.read();
+    SequencerControlBehavior? result = await showDialog(
+        context: context, builder: (context) => EditSequencerControlBehaviorDialog(control: control));
+    if (result != null) {
+      bloc.add(UpdateControlBehavior(layoutId: layoutId, controlId: control.node, behavior: ControlBehavior(sequencer: result)));
+    }
   }
 }

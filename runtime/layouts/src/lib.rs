@@ -20,6 +20,8 @@ pub struct ControlConfig {
     pub size: ControlSize,
     #[serde(default)]
     pub decoration: ControlDecorations,
+    #[serde(default)]
+    pub behavior: ControlBehavior,
 }
 
 #[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
@@ -46,4 +48,23 @@ impl Default for ControlSize {
 #[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Hash)]
 pub struct ControlDecorations {
     pub color: Option<Color>,
+}
+
+#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Hash)]
+pub struct ControlBehavior {
+    #[serde(default)]
+    pub sequencer: SequencerControlBehavior,
+}
+
+#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Hash)]
+pub struct SequencerControlBehavior {
+    #[serde(default)]
+    pub click_behavior: SequencerControlClickBehavior,
+}
+
+#[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Hash)]
+pub enum SequencerControlClickBehavior {
+    #[default]
+    GoForward,
+    Toggle,
 }

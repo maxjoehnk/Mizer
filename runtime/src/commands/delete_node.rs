@@ -205,6 +205,7 @@ mod tests {
                     width: 1,
                     height: 1,
                 },
+                behavior: Default::default(),
             }],
         });
         layout_storage.set(layouts);

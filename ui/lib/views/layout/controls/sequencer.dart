@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/plugin/ffi/sequencer.dart';
-import 'package:mizer/protos/layouts.pb.dart' show ControlSize;
+import 'package:mizer/protos/layouts.pb.dart' show ControlSize, SequencerControlBehavior, SequencerControlBehavior_ClickBehavior;
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/inputs/decoration.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +13,7 @@ class SequencerControl extends StatelessWidget {
   final Node node;
   final Map<int, SequenceState> state;
   final ControlSize size;
+  final SequencerControlBehavior behavior;
 
   const SequencerControl(
       {required this.label,
@@ -20,6 +21,7 @@ class SequencerControl extends StatelessWidget {
       required this.node,
       required this.state,
       required this.size,
+      required this.behavior,
       Key? key})
       : super(key: key);
 
@@ -39,12 +41,27 @@ class SequencerControl extends StatelessWidget {
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => _sequenceGo(sequencerApi),
+                onTap: () {
+                  if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.TOGGLE) {
+                    _sequenceToggle(sequencerApi);
+                  }
+                  if (behavior.clickBehavior == SequencerControlBehavior_ClickBehavior.GO_FORWARD) {
+                    _sequenceGo(sequencerApi);
+                  }
+                },
                 child: state.hasData ? _cueView(state.data!, textTheme) : null,
               ),
             ),
           );
         });
+  }
+
+  void _sequenceToggle(SequencerApi sequencerApi) {
+    if (this.state[node.config.sequencerConfig.sequenceId]?.active ?? false) {
+      sequencerApi.sequenceStop(node.config.sequencerConfig.sequenceId);
+    }else {
+      sequencerApi.sequenceGoForward(node.config.sequencerConfig.sequenceId);
+    }
   }
 
   void _sequenceGo(SequencerApi sequencerApi) {

@@ -30,12 +30,20 @@ class RenameControl implements LayoutsEvent {
   RenameControl({ required this.layoutId, required this.controlId, required this.name });
 }
 
-class UpdateControl implements LayoutsEvent {
+class UpdateControlDecoration implements LayoutsEvent {
   final String layoutId;
   final String controlId;
   final ControlDecorations decorations;
 
-  UpdateControl({ required this.layoutId, required this.controlId, required this.decorations });
+  UpdateControlDecoration({ required this.layoutId, required this.controlId, required this.decorations });
+}
+
+class UpdateControlBehavior implements LayoutsEvent {
+  final String layoutId;
+  final String controlId;
+  final ControlBehavior behavior;
+
+  UpdateControlBehavior({ required this.layoutId, required this.controlId, required this.behavior });
 }
 
 class MoveControl implements LayoutsEvent {
@@ -136,8 +144,13 @@ class LayoutsBloc extends Bloc<LayoutsEvent, LayoutState> {
       var layouts = await api.getLayouts();
       emit(state.copyWith(layouts: layouts.layouts));
     });
-    on<UpdateControl>((event, emit) async {
-      await api.updateControl(event.layoutId, event.controlId, event.decorations);
+    on<UpdateControlDecoration>((event, emit) async {
+      await api.updateControlDecoration(event.layoutId, event.controlId, event.decorations);
+      var layouts = await api.getLayouts();
+      emit(state.copyWith(layouts: layouts.layouts));
+    });
+    on<UpdateControlBehavior>((event, emit) async {
+      await api.updateControlBehavior(event.layoutId, event.controlId, event.behavior);
       var layouts = await api.getLayouts();
       emit(state.copyWith(layouts: layouts.layouts));
     });

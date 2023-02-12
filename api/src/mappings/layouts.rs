@@ -1,5 +1,5 @@
 use crate::models::layouts::*;
-use protobuf::MessageField;
+use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<mizer_layouts::Layout> for Layout {
     fn from(layout: mizer_layouts::Layout) -> Self {
@@ -23,6 +23,7 @@ impl From<mizer_layouts::ControlConfig> for LayoutControl {
             position: MessageField::some(config.position.into()),
             size: MessageField::some(config.size.into()),
             decoration: MessageField::some(config.decoration.into()),
+            behavior: MessageField::some(config.behavior.into()),
             ..Default::default()
         }
     }
@@ -100,5 +101,66 @@ impl From<mizer_node::Color> for Color {
 impl From<Color> for mizer_node::Color {
     fn from(color: Color) -> Self {
         Self::rgb(color.red, color.green, color.blue)
+    }
+}
+
+impl From<mizer_layouts::ControlBehavior> for ControlBehavior {
+    fn from(value: mizer_layouts::ControlBehavior) -> Self {
+        Self {
+            sequencer: MessageField::some(value.sequencer.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<ControlBehavior> for mizer_layouts::ControlBehavior {
+    fn from(value: ControlBehavior) -> Self {
+        Self {
+            sequencer: value.sequencer.into_option().unwrap().into(),
+        }
+    }
+}
+
+impl From<mizer_layouts::SequencerControlBehavior> for SequencerControlBehavior {
+    fn from(value: mizer_layouts::SequencerControlBehavior) -> Self {
+        Self {
+            click_behavior: EnumOrUnknown::new(value.click_behavior.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<SequencerControlBehavior> for mizer_layouts::SequencerControlBehavior {
+    fn from(value: SequencerControlBehavior) -> Self {
+        Self {
+            click_behavior: value.click_behavior.unwrap().into(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_layouts::SequencerControlClickBehavior>
+    for sequencer_control_behavior::ClickBehavior
+{
+    fn from(value: mizer_layouts::SequencerControlClickBehavior) -> Self {
+        use mizer_layouts::SequencerControlClickBehavior::*;
+
+        match value {
+            GoForward => Self::GO_FORWARD,
+            Toggle => Self::TOGGLE,
+        }
+    }
+}
+
+impl From<sequencer_control_behavior::ClickBehavior>
+    for mizer_layouts::SequencerControlClickBehavior
+{
+    fn from(value: sequencer_control_behavior::ClickBehavior) -> Self {
+        use sequencer_control_behavior::ClickBehavior::*;
+
+        match value {
+            GO_FORWARD => Self::GoForward,
+            TOGGLE => Self::Toggle,
+        }
     }
 }

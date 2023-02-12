@@ -37,6 +37,7 @@ impl<'a> Command<'a> for AddLayoutControlCommand {
                 position: self.position,
                 size,
                 decoration: Default::default(),
+                behavior: Default::default(),
             });
 
             Ok(())

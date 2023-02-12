@@ -76,7 +76,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .unwrap();
     }
 
-    pub fn update_control(
+    pub fn update_control_decorations(
         &self,
         layout_id: String,
         control_id: String,
@@ -94,6 +94,28 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
                 layout_id,
                 control_id,
                 decorations,
+            })
+            .unwrap();
+    }
+
+    pub fn update_control_behavior(
+        &self,
+        layout_id: String,
+        control_id: String,
+        behavior: ControlBehavior,
+    ) {
+        let behavior = behavior.into();
+        log::debug!(
+            "Updating control {} in layout {} with {:?}",
+            control_id,
+            layout_id,
+            behavior
+        );
+        self.runtime
+            .run_command(UpdateLayoutControlBehaviorCommand {
+                layout_id,
+                control_id,
+                behavior,
             })
             .unwrap();
     }

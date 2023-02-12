@@ -3,7 +3,7 @@
 //  source: layouts.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -77,9 +77,9 @@ const MoveControlRequest$json = const {
 
 /// Descriptor for `MoveControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List moveControlRequestDescriptor = $convert.base64Decode('ChJNb3ZlQ29udHJvbFJlcXVlc3QSGwoJbGF5b3V0X2lkGAEgASgJUghsYXlvdXRJZBIdCgpjb250cm9sX2lkGAIgASgJUgljb250cm9sSWQSMgoIcG9zaXRpb24YAyABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9u');
-@$core.Deprecated('Use updateControlRequestDescriptor instead')
-const UpdateControlRequest$json = const {
-  '1': 'UpdateControlRequest',
+@$core.Deprecated('Use updateControlDecorationRequestDescriptor instead')
+const UpdateControlDecorationRequest$json = const {
+  '1': 'UpdateControlDecorationRequest',
   '2': const [
     const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
     const {'1': 'control_id', '3': 2, '4': 1, '5': 9, '10': 'controlId'},
@@ -87,8 +87,20 @@ const UpdateControlRequest$json = const {
   ],
 };
 
-/// Descriptor for `UpdateControlRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateControlRequestDescriptor = $convert.base64Decode('ChRVcGRhdGVDb250cm9sUmVxdWVzdBIbCglsYXlvdXRfaWQYASABKAlSCGxheW91dElkEh0KCmNvbnRyb2xfaWQYAiABKAlSCWNvbnRyb2xJZBI7CgtkZWNvcmF0aW9ucxgDIAEoCzIZLm1pemVyLkNvbnRyb2xEZWNvcmF0aW9uc1ILZGVjb3JhdGlvbnM=');
+/// Descriptor for `UpdateControlDecorationRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateControlDecorationRequestDescriptor = $convert.base64Decode('Ch5VcGRhdGVDb250cm9sRGVjb3JhdGlvblJlcXVlc3QSGwoJbGF5b3V0X2lkGAEgASgJUghsYXlvdXRJZBIdCgpjb250cm9sX2lkGAIgASgJUgljb250cm9sSWQSOwoLZGVjb3JhdGlvbnMYAyABKAsyGS5taXplci5Db250cm9sRGVjb3JhdGlvbnNSC2RlY29yYXRpb25z');
+@$core.Deprecated('Use updateControlBehaviorRequestDescriptor instead')
+const UpdateControlBehaviorRequest$json = const {
+  '1': 'UpdateControlBehaviorRequest',
+  '2': const [
+    const {'1': 'layout_id', '3': 1, '4': 1, '5': 9, '10': 'layoutId'},
+    const {'1': 'control_id', '3': 2, '4': 1, '5': 9, '10': 'controlId'},
+    const {'1': 'behavior', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlBehavior', '10': 'behavior'},
+  ],
+};
+
+/// Descriptor for `UpdateControlBehaviorRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List updateControlBehaviorRequestDescriptor = $convert.base64Decode('ChxVcGRhdGVDb250cm9sQmVoYXZpb3JSZXF1ZXN0EhsKCWxheW91dF9pZBgBIAEoCVIIbGF5b3V0SWQSHQoKY29udHJvbF9pZBgCIAEoCVIJY29udHJvbElkEjIKCGJlaGF2aW9yGAMgASgLMhYubWl6ZXIuQ29udHJvbEJlaGF2aW9yUghiZWhhdmlvcg==');
 @$core.Deprecated('Use removeControlRequestDescriptor instead')
 const RemoveControlRequest$json = const {
   '1': 'RemoveControlRequest',
@@ -154,11 +166,12 @@ const LayoutControl$json = const {
     const {'1': 'size', '3': 3, '4': 1, '5': 11, '6': '.mizer.ControlSize', '10': 'size'},
     const {'1': 'label', '3': 4, '4': 1, '5': 9, '10': 'label'},
     const {'1': 'decoration', '3': 5, '4': 1, '5': 11, '6': '.mizer.ControlDecorations', '10': 'decoration'},
+    const {'1': 'behavior', '3': 6, '4': 1, '5': 11, '6': '.mizer.ControlBehavior', '10': 'behavior'},
   ],
 };
 
 /// Descriptor for `LayoutControl`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List layoutControlDescriptor = $convert.base64Decode('Cg1MYXlvdXRDb250cm9sEhIKBG5vZGUYASABKAlSBG5vZGUSMgoIcG9zaXRpb24YAiABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9uEiYKBHNpemUYAyABKAsyEi5taXplci5Db250cm9sU2l6ZVIEc2l6ZRIUCgVsYWJlbBgEIAEoCVIFbGFiZWwSOQoKZGVjb3JhdGlvbhgFIAEoCzIZLm1pemVyLkNvbnRyb2xEZWNvcmF0aW9uc1IKZGVjb3JhdGlvbg==');
+final $typed_data.Uint8List layoutControlDescriptor = $convert.base64Decode('Cg1MYXlvdXRDb250cm9sEhIKBG5vZGUYASABKAlSBG5vZGUSMgoIcG9zaXRpb24YAiABKAsyFi5taXplci5Db250cm9sUG9zaXRpb25SCHBvc2l0aW9uEiYKBHNpemUYAyABKAsyEi5taXplci5Db250cm9sU2l6ZVIEc2l6ZRIUCgVsYWJlbBgEIAEoCVIFbGFiZWwSOQoKZGVjb3JhdGlvbhgFIAEoCzIZLm1pemVyLkNvbnRyb2xEZWNvcmF0aW9uc1IKZGVjb3JhdGlvbhIyCghiZWhhdmlvchgGIAEoCzIWLm1pemVyLkNvbnRyb2xCZWhhdmlvclIIYmVoYXZpb3I=');
 @$core.Deprecated('Use controlPositionDescriptor instead')
 const ControlPosition$json = const {
   '1': 'ControlPosition',
@@ -204,6 +217,36 @@ const Color$json = const {
 
 /// Descriptor for `Color`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List colorDescriptor = $convert.base64Decode('CgVDb2xvchIQCgNyZWQYASABKAFSA3JlZBIUCgVncmVlbhgCIAEoAVIFZ3JlZW4SEgoEYmx1ZRgDIAEoAVIEYmx1ZQ==');
+@$core.Deprecated('Use controlBehaviorDescriptor instead')
+const ControlBehavior$json = const {
+  '1': 'ControlBehavior',
+  '2': const [
+    const {'1': 'sequencer', '3': 1, '4': 1, '5': 11, '6': '.mizer.SequencerControlBehavior', '10': 'sequencer'},
+  ],
+};
+
+/// Descriptor for `ControlBehavior`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List controlBehaviorDescriptor = $convert.base64Decode('Cg9Db250cm9sQmVoYXZpb3ISPQoJc2VxdWVuY2VyGAEgASgLMh8ubWl6ZXIuU2VxdWVuY2VyQ29udHJvbEJlaGF2aW9yUglzZXF1ZW5jZXI=');
+@$core.Deprecated('Use sequencerControlBehaviorDescriptor instead')
+const SequencerControlBehavior$json = const {
+  '1': 'SequencerControlBehavior',
+  '2': const [
+    const {'1': 'click_behavior', '3': 1, '4': 1, '5': 14, '6': '.mizer.SequencerControlBehavior.ClickBehavior', '10': 'clickBehavior'},
+  ],
+  '4': const [SequencerControlBehavior_ClickBehavior$json],
+};
+
+@$core.Deprecated('Use sequencerControlBehaviorDescriptor instead')
+const SequencerControlBehavior_ClickBehavior$json = const {
+  '1': 'ClickBehavior',
+  '2': const [
+    const {'1': 'GO_FORWARD', '2': 0},
+    const {'1': 'TOGGLE', '2': 1},
+  ],
+};
+
+/// Descriptor for `SequencerControlBehavior`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sequencerControlBehaviorDescriptor = $convert.base64Decode('ChhTZXF1ZW5jZXJDb250cm9sQmVoYXZpb3ISVAoOY2xpY2tfYmVoYXZpb3IYASABKA4yLS5taXplci5TZXF1ZW5jZXJDb250cm9sQmVoYXZpb3IuQ2xpY2tCZWhhdmlvclINY2xpY2tCZWhhdmlvciIrCg1DbGlja0JlaGF2aW9yEg4KCkdPX0ZPUldBUkQQABIKCgZUT0dHTEUQAQ==');
 @$core.Deprecated('Use readFaderValueRequestDescriptor instead')
 const ReadFaderValueRequest$json = const {
   '1': 'ReadFaderValueRequest',

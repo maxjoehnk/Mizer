@@ -78,9 +78,15 @@ class LayoutsPluginApi implements LayoutsApi {
   }
 
   @override
-  Future<void> updateControl(String layoutId, String id, ControlDecorations decoration) async {
-    var request = UpdateControlRequest(layoutId: layoutId, controlId: id, decorations: decoration);
-    await channel.invokeMethod("updateControl", request.writeToBuffer());
+  Future<void> updateControlDecoration(String layoutId, String id, ControlDecorations decoration) async {
+    var request = UpdateControlDecorationRequest(layoutId: layoutId, controlId: id, decorations: decoration);
+    await channel.invokeMethod("updateControlDecoration", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> updateControlBehavior(String layoutId, String id, ControlBehavior behavior) async {
+    var request = UpdateControlBehaviorRequest(layoutId: layoutId, controlId: id, behavior: behavior);
+    await channel.invokeMethod("updateControlBehavior", request.writeToBuffer());
   }
 
   @override

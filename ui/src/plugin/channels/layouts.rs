@@ -68,8 +68,21 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for LayoutsChannel<R> {
                     resp.send_ok(Value::Null);
                 }
             }
-            "updateControl" => {
-                if let Err(err) = call.arguments().map(|req| self.update_control(req)) {
+            "updateControlDecoration" => {
+                if let Err(err) = call
+                    .arguments()
+                    .map(|req| self.update_control_decoration(req))
+                {
+                    resp.respond_error(err);
+                } else {
+                    resp.send_ok(Value::Null);
+                }
+            }
+            "updateControlBehavior" => {
+                if let Err(err) = call
+                    .arguments()
+                    .map(|req| self.update_control_behavior(req))
+                {
                     resp.respond_error(err);
                 } else {
                     resp.send_ok(Value::Null);
@@ -146,9 +159,17 @@ impl<R: RuntimeApi + 'static> LayoutsChannel<R> {
             .rename_control(req.layout_id, req.control_id, req.name);
     }
 
-    fn update_control(&self, req: UpdateControlRequest) {
+    fn update_control_decoration(&self, req: UpdateControlDecorationRequest) {
+        self.handler.update_control_decorations(
+            req.layout_id,
+            req.control_id,
+            req.decorations.unwrap(),
+        );
+    }
+
+    fn update_control_behavior(&self, req: UpdateControlBehaviorRequest) {
         self.handler
-            .update_control(req.layout_id, req.control_id, req.decorations.unwrap());
+            .update_control_behavior(req.layout_id, req.control_id, req.behavior.unwrap());
     }
 
     fn add_control(&self, req: AddControlRequest) -> anyhow::Result<()> {

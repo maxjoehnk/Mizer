@@ -5,6 +5,7 @@ pub use move_layout_control::*;
 pub use remove_layout::*;
 pub use rename_layout::*;
 pub use rename_layout_control::*;
+pub use update_layout_control_behavior::*;
 pub use update_layout_control_decorations::*;
 
 use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
@@ -16,6 +17,7 @@ mod move_layout_control;
 mod remove_layout;
 mod rename_layout;
 mod rename_layout_control;
+mod update_layout_control_behavior;
 mod update_layout_control_decorations;
 
 pub(crate) fn update_layout<Cb: FnOnce(&mut Layout) -> anyhow::Result<()>>(

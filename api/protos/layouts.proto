@@ -12,7 +12,8 @@ service LayoutsApi {
 
   rpc RenameControl(RenameControlRequest) returns (LayoutResponse) {}
   rpc MoveControl(MoveControlRequest) returns (LayoutResponse) {}
-  rpc UpdateControl(UpdateControlRequest) returns (LayoutResponse) {}
+  rpc UpdateControlDecoration(UpdateControlDecorationRequest) returns (LayoutResponse) {}
+  rpc UpdateControlBehavior(UpdateControlBehaviorRequest) returns (LayoutResponse) {}
   rpc RemoveControl(RemoveControlRequest) returns (LayoutResponse) {}
   rpc AddControl (AddControlRequest) returns (LayoutResponse) {}
   rpc AddExistingControl (AddExistingControlRequest) returns (LayoutResponse) {}
@@ -49,10 +50,16 @@ message MoveControlRequest {
   ControlPosition position = 3;
 }
 
-message UpdateControlRequest {
+message UpdateControlDecorationRequest {
   string layout_id = 1;
   string control_id = 2;
   ControlDecorations decorations = 3;
+}
+
+message UpdateControlBehaviorRequest {
+  string layout_id = 1;
+  string control_id = 2;
+  ControlBehavior behavior = 3;
 }
 
 message RemoveControlRequest {
@@ -87,6 +94,7 @@ message LayoutControl {
   ControlSize size = 3;
   string label = 4;
   ControlDecorations decoration = 5;
+  ControlBehavior behavior = 6;
 }
 
 message ControlPosition {
@@ -108,6 +116,19 @@ message Color {
   double red = 1;
   double green = 2;
   double blue = 3;
+}
+
+message ControlBehavior {
+  SequencerControlBehavior sequencer = 1;
+}
+
+message SequencerControlBehavior {
+  ClickBehavior click_behavior = 1;
+
+  enum ClickBehavior {
+    GO_FORWARD = 0;
+    TOGGLE = 1;
+  }
 }
 
 message ReadFaderValueRequest {

@@ -89,6 +89,7 @@ command_impl! {
     RenameLayoutControlCommand,
     MoveLayoutControlCommand,
     UpdateLayoutControlDecorationsCommand,
+    UpdateLayoutControlBehaviorCommand,
     AddSequenceCommand,
     DeleteSequenceCommand,
     StoreProgrammerInSequenceCommand,

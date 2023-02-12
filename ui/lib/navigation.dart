@@ -31,7 +31,7 @@ const double SELECTION_SHEET_CONTAINER_HEIGHT = 196;
 
 List<Route> routes = [
   Route(() => LayoutViewWrapper(), Icons.view_quilt_outlined, 'Layout'.i18n, View.Layout),
-  Route(() => PlanView(), Icons.view_comfortable, '2D Plan'.i18n, View.Plan),
+  Route(() => PlanView(), MdiIcons.viewComfy, '2D Plan'.i18n, View.Plan),
   Route(() => Container(), MdiIcons.video3D, 'PreViz'.i18n, View.PreViz),
   Route(() => FetchNodesView(), Icons.account_tree_outlined, 'Nodes'.i18n, View.Nodes),
   Route(() => SequencerView(), MdiIcons.animationPlayOutline, 'Sequencer'.i18n, View.Sequencer),

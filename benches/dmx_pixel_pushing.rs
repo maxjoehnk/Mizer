@@ -1,7 +1,7 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
 
 use mizer_module::{Module, Runtime};
-use mizer_project_files::Project;
+use mizer_project_files::{Project, ProjectManagerMut};
 use mizer_protocol_dmx::DmxModule;
 use mizer_runtime::DefaultRuntime;
 
@@ -34,7 +34,7 @@ fn build_runtime(dimensions: &(i64, i64)) -> DefaultRuntime {
     let mut runtime = DefaultRuntime::new();
     let project = Project::load(&project_config(dimensions)).unwrap();
     DmxModule.register(&mut runtime).unwrap();
-    runtime.load_project(project).unwrap();
+    runtime.load(&project).unwrap();
 
     runtime
 }

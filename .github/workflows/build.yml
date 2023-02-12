@@ -42,8 +42,6 @@ jobs:
           path: artifact
           if-no-files-found: error
   build-macos:
-    # Build again for macos when stable
-    if: false
     runs-on: macos-latest
     steps:
       - name: Install build dependencies
@@ -57,13 +55,14 @@ jobs:
           channel: stable
       - name: Build
         run: make build-release
+        continue-on-error: true
       - name: Package
         run: make package
+        continue-on-error: true
       - uses: actions/upload-artifact@v3
         with:
           name: macos-full
           path: artifact
-          if-no-files-found: error
 
   build-windows:
     if: false

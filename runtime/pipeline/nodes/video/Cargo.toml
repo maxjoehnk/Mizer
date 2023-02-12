@@ -8,7 +8,7 @@ edition = "2021"
 anyhow = "1"
 log = "0.4"
 mizer-node = { path = "../../node" }
-gstreamer = "0.19"
+gstreamer = "0.20"
 gstreamer-video = "0.19"
 gstreamer-gl = "0.19"
 glib = "0.16"

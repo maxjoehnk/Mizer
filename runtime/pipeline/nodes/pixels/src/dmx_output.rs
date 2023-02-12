@@ -27,7 +27,7 @@ impl Default for PixelDmxNode {
     }
 }
 
-const OUTPUT_PORT: &str = "output";
+const INPUT_PORT: &str = "input";
 
 impl PipelineNode for PixelDmxNode {
     fn details(&self) -> NodeDetails {
@@ -37,21 +37,13 @@ impl PipelineNode for PixelDmxNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId) -> Option<PortMetadata> {
-        Some(PortMetadata {
-            port_type: PortType::Multi,
-            direction: PortDirection::Input,
-            dimensions: Some((self.width, self.height)),
-            ..Default::default()
-        })
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
-            OUTPUT_PORT.into(),
+            INPUT_PORT.into(),
             PortMetadata {
                 port_type: PortType::Multi,
                 direction: PortDirection::Input,
+                dimensions: Some((self.width, self.height)),
                 ..Default::default()
             },
         )]
@@ -76,7 +68,7 @@ impl ProcessingNode for PixelDmxNode {
             .get_output(&self.output)
             .ok_or_else(|| anyhow::anyhow!("unknown dmx output"))?;
 
-        if let Some(pixels) = context.read_port::<_, Vec<f64>>(OUTPUT_PORT) {
+        if let Some(pixels) = context.read_port::<_, Vec<f64>>(INPUT_PORT) {
             let data = pixels
                 .into_iter()
                 .map(ConvertBytes::to_8bit)

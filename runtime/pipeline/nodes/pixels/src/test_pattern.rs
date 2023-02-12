@@ -50,14 +50,6 @@ impl PipelineNode for PixelPatternGeneratorNode {
         }
     }
 
-    fn introspect_port(&self, _: &PortId) -> Option<PortMetadata> {
-        Some(PortMetadata {
-            port_type: PortType::Multi,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![(
             "output".into(),

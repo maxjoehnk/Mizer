@@ -59,8 +59,8 @@ impl Settings {
                 .ok_or_else(|| anyhow::anyhow!("Invalid config path"))?,
         )?;
         let mut file = std::fs::File::create(path)?;
-        let file_contents = toml::to_vec(self)?;
-        file.write_all(&file_contents)?;
+        let file_contents = toml::to_string(self)?;
+        file.write_all(file_contents.as_bytes())?;
 
         Ok(())
     }

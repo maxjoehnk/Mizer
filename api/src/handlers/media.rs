@@ -12,6 +12,7 @@ impl MediaHandler {
         Self { api }
     }
 
+    #[tracing::instrument(skip(self))]
     pub async fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {
         let (sender, receiver) = MediaServerApi::open_channel();
         let cmd = MediaServerCommand::CreateTag(TagCreateModel { name }, sender);
@@ -22,6 +23,7 @@ impl MediaHandler {
         Ok(document.into())
     }
 
+    #[tracing::instrument(skip(self))]
     pub async fn get_tags_with_media(&self) -> anyhow::Result<GroupedMediaFiles> {
         let (sender, receiver) = MediaServerApi::open_channel();
         let cmd = MediaServerCommand::GetTags(sender);
@@ -36,6 +38,7 @@ impl MediaHandler {
         })
     }
 
+    #[tracing::instrument(skip(self))]
     pub async fn get_media(&self) -> anyhow::Result<MediaFiles> {
         let (sender, receiver) = MediaServerApi::open_channel();
         let cmd = MediaServerCommand::GetMedia(sender);

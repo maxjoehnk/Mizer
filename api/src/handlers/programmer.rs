@@ -90,6 +90,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
             .unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_presets(&self) -> Presets {
         Presets {
             intensities: self
@@ -138,6 +139,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         programmer.call_effect(effect_id);
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_groups(&self) -> Groups {
         Groups {
             groups: self
@@ -150,12 +152,14 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
         }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_group(&self, name: String) -> Group {
         let group = self.runtime.run_command(AddGroupCommand { name }).unwrap();
 
         group.into()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
         let fixture_ids = fixture_ids
             .into_iter()

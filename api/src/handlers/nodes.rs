@@ -19,6 +19,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Self { runtime }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_nodes(&self) -> Nodes {
         let mut res = Nodes::new();
 
@@ -98,6 +99,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         res
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_node(&self, request: AddNodeRequest) -> Node {
         let position = request.position.unwrap();
         let designer = mizer_node::NodeDesigner {
@@ -120,6 +122,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         descriptor.into()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_link(&self, link: NodeConnection) -> anyhow::Result<()> {
         self.runtime
             .run_command(AddLinkCommand { link: link.into() })?;
@@ -127,6 +130,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn remove_link(&self, link: NodeConnection) -> anyhow::Result<()> {
         self.runtime
             .run_command(RemoveLinkCommand { link: link.into() })?;
@@ -134,6 +138,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn write_control_value(&self, control: WriteControl) -> anyhow::Result<()> {
         self.runtime
             .write_node_port(control.path.into(), control.port.into(), control.value)?;
@@ -141,6 +146,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_node_history_ref(
         &self,
         path: String,
@@ -148,6 +154,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         self.runtime.get_node_history_ref(path.into())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn update_node_property(&self, request: UpdateNodeConfigRequest) -> anyhow::Result<()> {
         self.runtime.run_command(UpdateNodeCommand {
             path: request.path.into(),
@@ -157,6 +164,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn move_node(&self, request: MoveNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(MoveNodeCommand {
             path: request.path.into(),
@@ -166,6 +174,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn show_node(&self, request: ShowNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(ShowNodeCommand {
             path: request.path.into(),
@@ -176,6 +185,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn rename_node(&self, request: RenameNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(RenameNodeCommand {
             path: request.path.into(),
@@ -185,24 +195,28 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn hide_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(HideNodeCommand { path })?;
 
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn delete_node(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(DeleteNodeCommand { path })?;
 
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn disconnect_ports(&self, path: NodePath) -> anyhow::Result<()> {
         self.runtime.run_command(DisconnectPortsCommand { path })?;
 
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn duplicate_node(&self, request: DuplicateNodeRequest) -> anyhow::Result<()> {
         self.runtime.run_command(DuplicateNodeCommand {
             path: request.path.into(),
@@ -212,6 +226,7 @@ impl<R: RuntimeApi> NodesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn group_nodes(&self, request: GroupNodesRequest) -> anyhow::Result<()> {
         self.runtime.run_command(GroupNodesCommand {
             nodes: request.nodes.into_iter().map(NodePath::from).collect(),

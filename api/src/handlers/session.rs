@@ -13,6 +13,7 @@ impl<R: RuntimeApi> SessionHandler<R> {
         Self { runtime }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn watch_session(&self) -> anyhow::Result<impl Stream<Item = Session>> {
         let stream = self
             .runtime
@@ -38,30 +39,37 @@ impl<R: RuntimeApi> SessionHandler<R> {
         Ok(stream)
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn new_project(&self) -> anyhow::Result<()> {
         self.runtime.new_project()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn load_project(&self, path: String) -> anyhow::Result<()> {
         self.runtime.load_project(path)
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn save_project(&self) -> anyhow::Result<()> {
         self.runtime.save_project()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn save_project_as(&self, path: String) -> anyhow::Result<()> {
         self.runtime.save_project_as(path)
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn undo(&self) -> anyhow::Result<()> {
         self.runtime.undo()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn redo(&self) -> anyhow::Result<()> {
         self.runtime.redo()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn watch_history(&self) -> impl Stream<Item = History> {
         self.runtime
             .observe_history()

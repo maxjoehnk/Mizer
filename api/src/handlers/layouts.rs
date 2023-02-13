@@ -15,6 +15,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         Self { runtime }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_layouts(&self) -> Layouts {
         Layouts {
             layouts: self
@@ -27,12 +28,14 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_layout(&self, name: String) -> Layouts {
         self.runtime.run_command(AddLayoutCommand { name }).unwrap();
 
         self.get_layouts()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn remove_layout(&self, id: String) -> Layouts {
         self.runtime
             .run_command(RemoveLayoutCommand { id })
@@ -41,6 +44,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.get_layouts()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn rename_layout(&self, id: String, name: String) -> Layouts {
         self.runtime
             .run_command(RenameLayoutCommand { id, name })
@@ -49,6 +53,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         self.get_layouts()
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn remove_control(&self, layout_id: String, control_id: String) {
         log::debug!("Removing control {} in layout {}", control_id, layout_id);
         self.runtime
@@ -59,6 +64,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn move_control(&self, layout_id: String, control_id: String, position: ControlPosition) {
         let position = position.into();
         log::debug!(
@@ -76,6 +82,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn update_control_decorations(
         &self,
         layout_id: String,
@@ -98,6 +105,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn update_control_behavior(
         &self,
         layout_id: String,
@@ -120,6 +128,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn rename_control(&self, layout_id: String, control_id: String, name: String) {
         log::debug!(
             "Renaming control {} in layout {} to {}",
@@ -137,6 +146,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
             .unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_control(
         &self,
         layout_id: String,
@@ -152,6 +162,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_control_for_node(
         &self,
         layout_id: String,
@@ -167,6 +178,7 @@ impl<R: RuntimeApi> LayoutsHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn read_fader_value(&self, node_path: NodePath) -> Option<f64> {
         match self.runtime.read_fader_value(node_path) {
             Ok(value) => Some(value),

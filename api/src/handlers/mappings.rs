@@ -13,6 +13,7 @@ impl<R: RuntimeApi> MappingsHandler<R> {
         Self { runtime }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_template(&self, mapping: MappingRequest) -> anyhow::Result<()> {
         let midi_mapping = mapping.binding.unwrap();
         let mapping_request::Binding::Midi(midi_mapping) = midi_mapping;

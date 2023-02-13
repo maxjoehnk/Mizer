@@ -33,6 +33,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_fixtures(&self) -> Fixtures {
         let mut fixtures = Fixtures::new();
         for fixture in self.fixture_manager.get_fixtures() {
@@ -76,6 +77,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         fixtures
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn get_fixture_definitions(&self) -> FixtureDefinitions {
         let definitions = self
             .fixture_library
@@ -90,6 +92,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         }
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn add_fixtures(&self, add_fixtures: AddFixturesRequest) {
         let request = add_fixtures.request.unwrap();
         let cmd = PatchFixturesCommand {
@@ -104,6 +107,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         self.runtime.run_command(cmd).unwrap();
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn delete_fixtures(&self, fixture_ids: Vec<u32>) -> anyhow::Result<()> {
         let cmd = DeleteFixturesCommand { fixture_ids };
         self.runtime.run_command(cmd)?;
@@ -111,6 +115,7 @@ impl<R: RuntimeApi> FixturesHandler<R> {
         Ok(())
     }
 
+    #[tracing::instrument(skip(self))]
     pub fn update_fixture(&self, request: UpdateFixtureRequest) -> anyhow::Result<()> {
         let cmd = UpdateFixtureCommand {
             fixture_id: request.fixtureId,

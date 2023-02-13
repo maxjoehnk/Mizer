@@ -11,18 +11,16 @@ mod logger;
 
 #[cfg(not(feature = "ui"))]
 fn main() -> anyhow::Result<()> {
-    mizer_util::tracing::init();
-
-    let flags = init();
+    let _guard = setup_sentry();
+    let flags = init()?;
 
     run_headless(flags)
 }
 
 #[cfg(feature = "ui")]
 fn main() -> anyhow::Result<()> {
-    mizer_util::tracing::init();
-
-    let flags = init();
+    let _guard = setup_sentry();
+    let flags = init()?;
     let headless = flags.headless;
 
     if headless {
@@ -30,6 +28,22 @@ fn main() -> anyhow::Result<()> {
     } else {
         ui::run(flags)
     }
+}
+
+fn setup_sentry() -> Option<sentry::ClientInitGuard> {
+    let sentry_key = option_env!("SENTRY_KEY")?;
+    let guard = sentry::init((
+        sentry_key,
+        sentry::ClientOptions {
+            release: sentry::release_name!(),
+            traces_sample_rate: 1.0,
+            default_integrations: true,
+            attach_stacktrace: true,
+            ..Default::default()
+        },
+    ));
+
+    Some(guard)
 }
 
 fn run_headless(flags: Flags) -> anyhow::Result<()> {
@@ -40,12 +54,13 @@ fn run_headless(flags: Flags) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn init() -> Flags {
-    logger::init();
+fn init() -> anyhow::Result<Flags> {
+    mizer_util::tracing::init();
+    logger::init()?;
     let flags = Flags::from_args();
     log::debug!("flags: {:?}", flags);
 
-    flags
+    Ok(flags)
 }
 
 fn build_tokio_runtime() -> tokio::runtime::Runtime {

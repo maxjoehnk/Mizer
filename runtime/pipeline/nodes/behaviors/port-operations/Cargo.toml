@@ -15,4 +15,4 @@ rand = "0.8"
 mizer-util = { path = "../../../../../util" }
 
 [dev-dependencies]
-test-case = "2.2"
+test-case = "3.0"

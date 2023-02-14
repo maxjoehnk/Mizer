@@ -26,5 +26,5 @@ fs2 = "0.4"
 indexmap = { version = "1.9", features = ["serde"] }
 
 [dev-dependencies]
-test-case = "2.2"
+test-case = "3.0"
 mizer-pixel-nodes = { path = "../pipeline/nodes/pixels" }

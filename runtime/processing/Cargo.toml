@@ -9,4 +9,4 @@ mizer-clock = { path = "../clock" }
 mizer-injector = { path = "../injector" }
 
 [dev-dependencies]
-test-case = "2.2"
+test-case = "3.0"

@@ -29,4 +29,4 @@ tracing = "0.1"
 tracing-unwrap = "0.10"
 
 [dev-dependencies]
-test-case = "2.2"
+test-case = "3.0"

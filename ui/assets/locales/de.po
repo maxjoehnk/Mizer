@@ -44,7 +44,7 @@ msgstr "Einstellungen"
 msgid "Exit"
 msgstr "Beenden"
 
-#: lib/views/layout/control.dart:51
+#: lib/views/layout/control.dart:52
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -72,7 +72,7 @@ msgstr "Smart Fenster"
 msgid "Projects"
 msgstr "Projekte"
 
-#: lib/navigation.dart:38
+#: lib/navigation.dart:41
 msgid "Effects"
 msgstr "Effekte"
 
@@ -80,11 +80,11 @@ msgstr "Effekte"
 msgid "Add Effect"
 msgstr "Neuer Effekt"
 
-#: lib/views/layout/control.dart:53
+#: lib/views/layout/control.dart:54
 msgid "Delete"
 msgstr "Löschen"
 
-#: lib/views/layout/dialogs/rename_control_dialog.dart:24
+#: lib/views/timecode/dialogs/add_timecode_dialog.dart:24
 msgid "Name"
 msgstr "Name"
 
@@ -96,37 +96,41 @@ msgstr "Frames"
 msgid "Movement"
 msgstr "Bewegung"
 
-#: lib/navigation.dart:42
+#: lib/navigation.dart:45
 msgid "Connections"
 msgstr "Verbindungen"
 
-#: lib/views/connections/connections_view.dart:44
-#, fuzzy
-#| msgid "Confirm"
+#: lib/views/connections/connections_view.dart:46
 msgid "Configure"
-msgstr "Bestätigen"
+msgstr "Konfigurieren"
 
-#: lib/views/connections/connections_view.dart:71
+#: lib/views/connections/connections_view.dart:73
 msgid "Add sACN"
 msgstr "sACN hinzufügen"
 
-#: lib/views/connections/connections_view.dart:72
+#: lib/views/connections/connections_view.dart:74
 msgid "Add Artnet"
 msgstr "Artnet hinzufügen"
 
-#: lib/views/connections/connections_view.dart:73
+#: lib/views/connections/connections_view.dart:75
 msgid "Add MQTT"
 msgstr "MQTT hinzufügen"
 
-#: lib/views/connections/connections_view.dart:110
+#: lib/views/connections/connections_view.dart:76
+#, fuzzy
+#| msgid "Add sACN"
+msgid "Add OSC"
+msgstr "sACN hinzufügen"
+
+#: lib/views/connections/connections_view.dart:113
 msgid "Monitor"
 msgstr "Monitor"
 
-#: lib/views/connections/connections_view.dart:198
+#: lib/views/connections/connections_view.dart:215
 msgid "Delete Connection"
 msgstr "Verbindung löschen"
 
-#: lib/views/layout/dialogs/delete_control_dialog.dart:19
+#: lib/views/layout/dialogs/edit_sequencer_control_behavior_dialog.dart:28
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -214,6 +218,18 @@ msgstr "Passwort"
 msgid "Save"
 msgstr "Speichern"
 
+#: lib/views/connections/dialogs/osc_monitor.dart:61
+msgid "Osc Messages"
+msgstr "OSC Nachrichten"
+
+#: lib/views/nodes/widgets/node/base_node.dart:252
+msgid "Path"
+msgstr "Pfad"
+
+#: lib/views/connections/dialogs/osc_monitor.dart:69
+msgid "Arguments"
+msgstr "Argumente"
+
 #: lib/views/connections/dialogs/dmx_monitor.dart:83
 msgid "Universes"
 msgstr "Universen"
@@ -222,17 +238,35 @@ msgstr "Universen"
 msgid "DMX"
 msgstr "DMX"
 
-#: lib/navigation.dart:45
+#: lib/navigation.dart:49
 msgid "History"
 msgstr "Historie"
 
-#: lib/views/connections/dialogs/add_artnet_connection.dart:39
-msgid "Add Artnet Connection"
-msgstr "Artnet Verbindung hinzufügen"
+#: lib/views/connections/dialogs/add_osc_connection.dart:39
+#, fuzzy
+#| msgid "Add Sacn Connection"
+msgid "Add OSC Connection"
+msgstr "sACN Verbindung hinzufügen"
 
 #: lib/views/connections/dialogs/add_artnet_connection.dart:57
 msgid "Host is required"
 msgstr "Host ist ein Pflichtfeld"
+
+#: lib/views/connections/dialogs/add_osc_connection.dart:50
+msgid "Output Host"
+msgstr ""
+
+#: lib/views/connections/dialogs/add_osc_connection.dart:55
+msgid "Output Port"
+msgstr ""
+
+#: lib/views/connections/dialogs/add_osc_connection.dart:60
+msgid "Input Port"
+msgstr ""
+
+#: lib/views/connections/dialogs/add_artnet_connection.dart:39
+msgid "Add Artnet Connection"
+msgstr "Artnet Verbindung hinzufügen"
 
 #: lib/views/connections/dialogs/add_artnet_connection.dart:61
 msgid "Host"
@@ -322,41 +356,47 @@ msgstr "Plan"
 msgid "Programmer"
 msgstr "Programmer"
 
-#: lib/navigation.dart:34
+#: lib/navigation.dart:37
 msgid "Nodes"
 msgstr "Nodes"
 
-#: lib/navigation.dart:43
+#: lib/navigation.dart:46
 msgid "Patch"
 msgstr "Patch"
 
-#: lib/navigation.dart:35
+#: lib/navigation.dart:38
 msgid "Sequencer"
 msgstr "Sequenzen"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:190
+#: lib/views/plan/layers/drag_selection_layer.dart:191
 msgid "Bottom to Top"
 msgstr "Unten nach Oben"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:190
+#: lib/views/plan/layers/drag_selection_layer.dart:191
 msgid "Top to Bottom"
 msgstr "Oben nach Unten"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:191
+#: lib/views/plan/layers/drag_selection_layer.dart:192
 msgid "Right to Left"
 msgstr "Rechts nach Links"
 
-#: lib/views/plan/layers/drag_selection_layer.dart:191
+#: lib/views/plan/layers/drag_selection_layer.dart:192
 msgid "Left to Right"
 msgstr "Links nach Rechts"
 
-#: lib/views/nodes/nodes_view.dart:136
+#: lib/views/nodes/nodes_view.dart:133
 msgid "Group Nodes"
 msgstr "Nodes gruppieren"
 
-#: lib/views/nodes/widgets/node/base_node.dart:270
-msgid "Path"
-msgstr "Pfad"
+#: lib/views/nodes/nodes_view.dart:134
+#, fuzzy
+#| msgid "Delete"
+msgid "Delete Node"
+msgstr "Löschen"
+
+#: lib/views/nodes/nodes_view.dart:135
+msgid "Duplicate Node"
+msgstr "Duplizieren"
 
 #: lib/views/fixtures/fixtures_table.dart:44
 msgid "Id"
@@ -394,7 +434,7 @@ msgstr "Gobo"
 msgid "Expand"
 msgstr "Ausklappen"
 
-#: lib/navigation.dart:36
+#: lib/navigation.dart:39
 msgid "Fixtures"
 msgstr "Fixture"
 
@@ -406,11 +446,11 @@ msgstr "Alle auswählen"
 msgid "Clear"
 msgstr "Leeren"
 
-#: lib/navigation.dart:31
+#: lib/navigation.dart:34
 msgid "Layout"
 msgstr "Layout"
 
-#: lib/views/layout/control.dart:50
+#: lib/views/layout/control.dart:51
 msgid "Rename"
 msgstr "Umbenennen"
 
@@ -465,12 +505,12 @@ msgstr "Steuerfläche umbenennen"
 msgid "Delete Control"
 msgstr "Steuerfläche löschen"
 
-#: lib/views/layout/dialogs/edit_control_dialog.dart:24
+#: lib/views/layout/dialogs/edit_sequencer_control_behavior_dialog.dart:26
 #, fuzzy
 msgid "Configure Control"
 msgstr "Steuerfläche konfigurieren"
 
-#: lib/views/layout/dialogs/edit_control_dialog.dart:28
+#: lib/views/layout/dialogs/edit_sequencer_control_behavior_dialog.dart:29
 msgid "Confirm"
 msgstr "Bestätigen"
 
@@ -478,35 +518,51 @@ msgstr "Bestätigen"
 msgid "Color"
 msgstr "Farbe"
 
-#: lib/views/layout/control.dart:52
+#: lib/views/layout/control.dart:53
 msgid "Move"
 msgstr "Bewegen"
 
 #: lib/views/layout/control.dart:56
+msgid "Behavior"
+msgstr "Verhalten"
+
+#: lib/views/layout/control.dart:59
 msgid "Mappings"
 msgstr "Mappings"
 
-#: lib/navigation.dart:32
+#: lib/views/timecode/dialogs/add_timecode_control_dialog.dart:20
+msgid "Add Timecode Control"
+msgstr "Timecode Kanal hinzufügen"
+
+#: lib/views/timecode/dialogs/add_timecode_dialog.dart:20
+msgid "Add Timecode"
+msgstr "Timecode hinzufügen"
+
+#: lib/navigation.dart:35
 msgid "2D Plan"
 msgstr "2D Plan"
 
-#: lib/navigation.dart:33
+#: lib/navigation.dart:36
 msgid "PreViz"
 msgstr "PreViz"
 
-#: lib/navigation.dart:37
+#: lib/navigation.dart:40
 msgid "Presets"
 msgstr "Presets"
 
-#: lib/navigation.dart:40
+#: lib/navigation.dart:43
 msgid "Media"
 msgstr "Medien"
 
-#: lib/navigation.dart:41
+#: lib/navigation.dart:44
 msgid "Surfaces"
 msgstr "Projektionsflächen"
 
-#: lib/navigation.dart:44
+#: lib/navigation.dart:47
+msgid "Timecode"
+msgstr "Timecode"
+
+#: lib/navigation.dart:48
 msgid "Session"
 msgstr "Session"
 

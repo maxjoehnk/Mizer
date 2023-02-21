@@ -30,7 +30,7 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:51
+#: ./lib/views/layout/control.dart:52
 msgid "Edit"
 msgstr ""
 
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Projects"
 msgstr ""
 
-#: ./lib/navigation.dart:38
+#: ./lib/navigation.dart:41
 msgid "Effects"
 msgstr ""
 
@@ -66,11 +66,11 @@ msgstr ""
 msgid "Add Effect"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:53
+#: ./lib/views/layout/control.dart:54
 msgid "Delete"
 msgstr ""
 
-#: ./lib/views/layout/dialogs/rename_control_dialog.dart:24
+#: ./lib/views/timecode/dialogs/add_timecode_dialog.dart:24
 msgid "Name"
 msgstr ""
 
@@ -82,35 +82,39 @@ msgstr ""
 msgid "Movement"
 msgstr ""
 
-#: ./lib/navigation.dart:42
+#: ./lib/navigation.dart:45
 msgid "Connections"
 msgstr ""
 
-#: ./lib/views/connections/connections_view.dart:44
+#: ./lib/views/connections/connections_view.dart:46
 msgid "Configure"
 msgstr ""
 
-#: ./lib/views/connections/connections_view.dart:71
+#: ./lib/views/connections/connections_view.dart:73
 msgid "Add sACN"
 msgstr ""
 
-#: ./lib/views/connections/connections_view.dart:72
+#: ./lib/views/connections/connections_view.dart:74
 msgid "Add Artnet"
 msgstr ""
 
-#: ./lib/views/connections/connections_view.dart:73
+#: ./lib/views/connections/connections_view.dart:75
 msgid "Add MQTT"
 msgstr ""
 
-#: ./lib/views/connections/connections_view.dart:110
+#: ./lib/views/connections/connections_view.dart:76
+msgid "Add OSC"
+msgstr ""
+
+#: ./lib/views/connections/connections_view.dart:113
 msgid "Monitor"
 msgstr ""
 
-#: ./lib/views/connections/connections_view.dart:198
+#: ./lib/views/connections/connections_view.dart:215
 msgid "Delete Connection"
 msgstr ""
 
-#: ./lib/views/layout/dialogs/delete_control_dialog.dart:19
+#: ./lib/views/layout/dialogs/edit_sequencer_control_behavior_dialog.dart:28
 msgid "Cancel"
 msgstr ""
 
@@ -198,6 +202,18 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: ./lib/views/connections/dialogs/osc_monitor.dart:61
+msgid "Osc Messages"
+msgstr ""
+
+#: ./lib/views/nodes/widgets/node/base_node.dart:252
+msgid "Path"
+msgstr ""
+
+#: ./lib/views/connections/dialogs/osc_monitor.dart:69
+msgid "Arguments"
+msgstr ""
+
 #: ./lib/views/connections/dialogs/dmx_monitor.dart:83
 msgid "Universes"
 msgstr ""
@@ -206,16 +222,32 @@ msgstr ""
 msgid "DMX"
 msgstr ""
 
-#: ./lib/navigation.dart:45
+#: ./lib/navigation.dart:49
 msgid "History"
 msgstr ""
 
-#: ./lib/views/connections/dialogs/add_artnet_connection.dart:39
-msgid "Add Artnet Connection"
+#: ./lib/views/connections/dialogs/add_osc_connection.dart:39
+msgid "Add OSC Connection"
 msgstr ""
 
 #: ./lib/views/connections/dialogs/add_artnet_connection.dart:57
 msgid "Host is required"
+msgstr ""
+
+#: ./lib/views/connections/dialogs/add_osc_connection.dart:50
+msgid "Output Host"
+msgstr ""
+
+#: ./lib/views/connections/dialogs/add_osc_connection.dart:55
+msgid "Output Port"
+msgstr ""
+
+#: ./lib/views/connections/dialogs/add_osc_connection.dart:60
+msgid "Input Port"
+msgstr ""
+
+#: ./lib/views/connections/dialogs/add_artnet_connection.dart:39
+msgid "Add Artnet Connection"
 msgstr ""
 
 #: ./lib/views/connections/dialogs/add_artnet_connection.dart:61
@@ -306,40 +338,44 @@ msgstr ""
 msgid "Programmer"
 msgstr ""
 
-#: ./lib/navigation.dart:34
+#: ./lib/navigation.dart:37
 msgid "Nodes"
 msgstr ""
 
-#: ./lib/navigation.dart:43
+#: ./lib/navigation.dart:46
 msgid "Patch"
 msgstr ""
 
-#: ./lib/navigation.dart:35
+#: ./lib/navigation.dart:38
 msgid "Sequencer"
 msgstr ""
 
-#: ./lib/views/plan/layers/drag_selection_layer.dart:190
+#: ./lib/views/plan/layers/drag_selection_layer.dart:191
 msgid "Bottom to Top"
 msgstr ""
 
-#: ./lib/views/plan/layers/drag_selection_layer.dart:190
+#: ./lib/views/plan/layers/drag_selection_layer.dart:191
 msgid "Top to Bottom"
 msgstr ""
 
-#: ./lib/views/plan/layers/drag_selection_layer.dart:191
+#: ./lib/views/plan/layers/drag_selection_layer.dart:192
 msgid "Right to Left"
 msgstr ""
 
-#: ./lib/views/plan/layers/drag_selection_layer.dart:191
+#: ./lib/views/plan/layers/drag_selection_layer.dart:192
 msgid "Left to Right"
 msgstr ""
 
-#: ./lib/views/nodes/nodes_view.dart:136
+#: ./lib/views/nodes/nodes_view.dart:133
 msgid "Group Nodes"
 msgstr ""
 
-#: ./lib/views/nodes/widgets/node/base_node.dart:270
-msgid "Path"
+#: ./lib/views/nodes/nodes_view.dart:134
+msgid "Delete Node"
+msgstr ""
+
+#: ./lib/views/nodes/nodes_view.dart:135
+msgid "Duplicate Node"
 msgstr ""
 
 #: ./lib/views/fixtures/fixtures_table.dart:44
@@ -378,7 +414,7 @@ msgstr ""
 msgid "Expand"
 msgstr ""
 
-#: ./lib/navigation.dart:36
+#: ./lib/navigation.dart:39
 msgid "Fixtures"
 msgstr ""
 
@@ -390,11 +426,11 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: ./lib/navigation.dart:31
+#: ./lib/navigation.dart:34
 msgid "Layout"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:50
+#: ./lib/views/layout/control.dart:51
 msgid "Rename"
 msgstr ""
 
@@ -446,11 +482,11 @@ msgstr ""
 msgid "Delete Control"
 msgstr ""
 
-#: ./lib/views/layout/dialogs/edit_control_dialog.dart:24
+#: ./lib/views/layout/dialogs/edit_sequencer_control_behavior_dialog.dart:26
 msgid "Configure Control"
 msgstr ""
 
-#: ./lib/views/layout/dialogs/edit_control_dialog.dart:28
+#: ./lib/views/layout/dialogs/edit_sequencer_control_behavior_dialog.dart:29
 msgid "Confirm"
 msgstr ""
 
@@ -458,34 +494,50 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: ./lib/views/layout/control.dart:52
+#: ./lib/views/layout/control.dart:53
 msgid "Move"
 msgstr ""
 
 #: ./lib/views/layout/control.dart:56
+msgid "Behavior"
+msgstr ""
+
+#: ./lib/views/layout/control.dart:59
 msgid "Mappings"
 msgstr ""
 
-#: ./lib/navigation.dart:32
+#: ./lib/views/timecode/dialogs/add_timecode_control_dialog.dart:20
+msgid "Add Timecode Control"
+msgstr ""
+
+#: ./lib/views/timecode/dialogs/add_timecode_dialog.dart:20
+msgid "Add Timecode"
+msgstr ""
+
+#: ./lib/navigation.dart:35
 msgid "2D Plan"
 msgstr ""
 
-#: ./lib/navigation.dart:33
+#: ./lib/navigation.dart:36
 msgid "PreViz"
 msgstr ""
 
-#: ./lib/navigation.dart:37
+#: ./lib/navigation.dart:40
 msgid "Presets"
 msgstr ""
 
-#: ./lib/navigation.dart:40
+#: ./lib/navigation.dart:43
 msgid "Media"
 msgstr ""
 
-#: ./lib/navigation.dart:41
+#: ./lib/navigation.dart:44
 msgid "Surfaces"
 msgstr ""
 
-#: ./lib/navigation.dart:44
+#: ./lib/navigation.dart:47
+msgid "Timecode"
+msgstr ""
+
+#: ./lib/navigation.dart:48
 msgid "Session"
 msgstr ""

@@ -17,8 +17,8 @@ mizer-util = { path = "../../util" }
 pinboard = "2.1"
 profiling = "1"
 dashmap = "5"
-bezier-nd = "0.1"
-geo-nd = "0.1"
+bezier-nd = "0.5"
+geo-nd = "0.5"
 itertools = "0.10"
 num-traits = "0.2"
 uuid = { version = "1.3", features = ["v4"] }

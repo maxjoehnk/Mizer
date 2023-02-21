@@ -526,9 +526,9 @@ checksum = "8a32fd6af2b5827bce66c29053ba0e7c42b9dcab01835835058558c10851a46b"
 
 [[package]]
 name = "bezier-nd"
-version = "0.1.4"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f99e54d5b180b6511fc9027ec195f7964a2731becc72cf518b6e5e0a9fe201b9"
+checksum = "85352a02b197f78689ea253808ada1b5821a39390c402bd700d18d140cfe176b"
 dependencies = [
  "geo-nd",
  "num-traits",
@@ -2122,11 +2122,12 @@ dependencies = [
 
 [[package]]
 name = "geo-nd"
-version = "0.1.3"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e37756b1425708dbfdfd5a6aa12a7232a1f3bb8f63a3de05be76b8930b2691c7"
+checksum = "83c0f756c4f2fdb69767aa5c1db90f13e49b4c03b7a6f3d8f80753753f8b8559"
 dependencies = [
  "num-traits",
+ "serde",
 ]
 
 [[package]]
@@ -3474,7 +3475,7 @@ dependencies = [
  "sentry-tracing",
  "serde",
  "structopt",
- "test-case",
+ "test-case 3.0.0",
  "tokio",
  "tracing",
  "tracing-appender",
@@ -3539,7 +3540,7 @@ dependencies = [
  "mizer-util",
  "profiling",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -3610,7 +3611,7 @@ dependencies = [
  "mizer-node",
  "mizer-util",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -3660,7 +3661,7 @@ dependencies = [
  "mizer-node",
  "mizer-util",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -3673,7 +3674,7 @@ dependencies = [
  "mizer-util",
  "profiling",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -3727,7 +3728,7 @@ dependencies = [
  "rand 0.8.4",
  "serde",
  "spectral",
- "test-case",
+ "test-case 3.0.0",
  "tracing",
 ]
 
@@ -3799,7 +3800,7 @@ dependencies = [
 name = "mizer-injector"
 version = "0.1.0"
 dependencies = [
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -3873,7 +3874,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sled",
- "test-case",
+ "test-case 3.0.0",
  "tide",
  "tiny-skia",
  "usvg",
@@ -3954,7 +3955,7 @@ dependencies = [
  "mizer-injector",
  "mizer-ports",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4010,7 +4011,7 @@ dependencies = [
  "mizer-video-nodes",
  "plotters",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4060,7 +4061,7 @@ dependencies = [
  "log",
  "mizer-node",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4095,7 +4096,7 @@ dependencies = [
  "pinboard",
  "profiling",
  "ringbuffer",
- "test-case",
+ "test-case 3.0.0",
  "tracing",
  "tracing-unwrap",
 ]
@@ -4127,7 +4128,7 @@ dependencies = [
  "pinboard",
  "profiling",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4154,7 +4155,7 @@ dependencies = [
  "mizer-util",
  "rand 0.8.4",
  "serde",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4174,7 +4175,7 @@ version = "0.1.0"
 dependencies = [
  "mizer-clock",
  "mizer-injector",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4202,7 +4203,7 @@ dependencies = [
  "serde",
  "serde_json",
  "serde_yaml",
- "test-case",
+ "test-case 3.0.0",
 ]
 
 [[package]]
@@ -4340,7 +4341,7 @@ dependencies = [
  "pinboard",
  "profiling",
  "serde",
- "test-case",
+ "test-case 3.0.0",
  "tracing",
  "tracing-unwrap",
 ]
@@ -4385,7 +4386,7 @@ dependencies = [
  "plotters",
  "profiling",
  "serde",
- "test-case",
+ "test-case 3.0.0",
  "tracing",
  "uuid 1.3.0",
 ]
@@ -4453,7 +4454,7 @@ dependencies = [
  "plotters",
  "profiling",
  "serde",
- "test-case",
+ "test-case 2.2.2",
  "tracing",
 ]
 
@@ -4532,7 +4533,7 @@ dependencies = [
  "palette",
  "profiling",
  "serde",
- "test-case",
+ "test-case 3.0.0",
  "tracy-client 0.13.2",
 ]
 
@@ -6898,11 +6899,20 @@ checksum = "13a4ec180a2de59b57434704ccfad967f789b12737738798fa08798cd5824c16"
 
 [[package]]
 name = "test-case"
+version = "2.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "21d6cf5a7dffb3f9dceec8e6b8ca528d9bd71d36c9f074defb548ce161f598c0"
+dependencies = [
+ "test-case-macros 2.2.2",
+]
+
+[[package]]
+name = "test-case"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "679b019fb241da62cc449b33b224d19ebe1c6767b495569765115dd7f7f9fba4"
 dependencies = [
- "test-case-macros",
+ "test-case-macros 3.0.0",
 ]
 
 [[package]]
@@ -6910,6 +6920,19 @@ name = "test-case-core"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "72dc21b5887f4032c4656502d085dc28f2afbb686f25f216472bb0526f4b1b88"
+dependencies = [
+ "cfg-if 1.0.0",
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "test-case-macros"
+version = "2.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e45b7bf6e19353ddd832745c8fcf77a17a93171df7151187f26623f2b75b5b26"
 dependencies = [
  "cfg-if 1.0.0",
  "proc-macro-error",

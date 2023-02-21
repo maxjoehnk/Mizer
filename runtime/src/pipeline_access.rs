@@ -121,6 +121,8 @@ impl PipelineAccess {
             G13Output(node) => self.add_node(path, node),
             ConstantNumber(node) => self.add_node(path, node),
             Conditional(node) => self.add_node(path, node),
+            TimecodeControl(node) => self.add_node(path, node),
+            TimecodeOutput(node) => self.add_node(path, node),
             TestSink(node) => self.add_node(path, node),
         }
     }

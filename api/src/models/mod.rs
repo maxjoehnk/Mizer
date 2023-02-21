@@ -12,4 +12,5 @@ pub mod programmer;
 pub mod sequencer;
 pub mod session;
 pub mod settings;
+pub mod timecode;
 pub mod transport;

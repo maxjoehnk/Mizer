@@ -8,6 +8,7 @@ pub enum PreviewType {
     Waveform,
     History,
     Multiple,
+    Timecode,
     None,
 }
 

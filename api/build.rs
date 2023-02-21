@@ -17,6 +17,7 @@ fn main() {
             "protos/settings.proto",
             "protos/plans.proto",
             "protos/mappings.proto",
+            "protos/timecode.proto",
         ])
         .include("protos")
         .run_from_script();

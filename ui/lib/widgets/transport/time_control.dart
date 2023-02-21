@@ -21,7 +21,7 @@ class TimeControl extends StatelessWidget {
           future: api.getTransportPointer(),
           builder: (context, AsyncSnapshot<TransportPointer?> snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              return _FFITimeControl(pointer: snapshot.data!);
+              return FFITimeControl(pointer: snapshot.data!);
             }
             return _StreamTimeControl(transport: transport);
           },
@@ -53,17 +53,17 @@ class _StreamTimeControl extends StatelessWidget {
   }
 }
 
-class _FFITimeControl extends StatefulWidget {
-  final TransportPointer pointer;
+class FFITimeControl extends StatefulWidget {
+  final TimecodeReader pointer;
 
-  const _FFITimeControl({required this.pointer, Key? key}) : super(key: key);
+  const FFITimeControl({required this.pointer, Key? key}) : super(key: key);
 
   @override
   _FFITimeControlState createState() => _FFITimeControlState(pointer);
 }
 
-class _FFITimeControlState extends State<_FFITimeControl> with SingleTickerProviderStateMixin {
-  final TransportPointer pointer;
+class _FFITimeControlState extends State<FFITimeControl> with SingleTickerProviderStateMixin {
+  final TimecodeReader pointer;
   late final Ticker ticker;
   ffi.Timecode? timecode;
 
@@ -81,7 +81,7 @@ class _FFITimeControlState extends State<_FFITimeControl> with SingleTickerProvi
     if (timecode == null) {
       return Container();
     }
-    return _TimeFormat(hours: timecode!.hours, minutes: timecode!.minutes, seconds: timecode!.seconds, frames: timecode!.frames);
+    return _TimeFormat(hours: timecode!.hours, minutes: timecode!.minutes, seconds: timecode!.seconds, frames: timecode!.frames, negative: timecode!.is_negative > 0);
   }
 
   @override
@@ -97,8 +97,9 @@ class _TimeFormat extends StatelessWidget {
   final int minutes;
   final int seconds;
   final int frames;
+  final bool negative;
 
-  const _TimeFormat({Key? key, required this.hours, required this.minutes, required this.seconds, required this.frames}) : super(key: key);
+  const _TimeFormat({Key? key, required this.hours, required this.minutes, required this.seconds, required this.frames, this.negative = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +109,7 @@ class _TimeFormat extends StatelessWidget {
   }
 
   String _formatTime() {
-    return "${_pad(hours)}:${_pad(minutes)}:${_pad(seconds)}.${_pad(frames)}";
+    return "${negative ? "-" : ""}${_pad(hours)}:${_pad(minutes)}:${_pad(seconds)}.${_pad(frames)}";
   }
 
   String _pad(int number) {

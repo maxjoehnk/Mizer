@@ -18,6 +18,7 @@ mizer-layouts = { path = "../layouts" }
 mizer-fixtures = { path = "../../components/fixtures" }
 mizer-sequencer = { path = "../../components/sequencer" }
 mizer-plan = { path = "../../components/plan" }
+mizer-timecode = { path = "../../components/timecode" }
 mizer-protocol-dmx = { path = "../../components/connections/protocols/dmx" }
 mizer-protocol-mqtt = { path = "../../components/connections/protocols/mqtt" }
 mizer-protocol-osc = { path = "../../components/connections/protocols/osc" }

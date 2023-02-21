@@ -1,58 +1,51 @@
-use bezier_rs::{ComputeType, ManipulatorGroup, Subpath};
 use serde::{Deserialize, Serialize};
 
 use mizer_node::{
     NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
     PortType, PreviewType, ProcessingNode,
 };
+use mizer_util::{Spline, SplineStep};
 
 const VALUE_INPUT: &str = "value";
 const VALUE_OUTPUT: &str = "value";
 
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
 pub struct RampNode {
-    pub steps: Vec<RampStep>,
+    #[serde(flatten)]
+    pub spline: Spline,
 }
 
 impl Default for RampNode {
     fn default() -> Self {
         Self {
-            steps: vec![
-                RampStep {
-                    x: 0.,
-                    y: 0.,
-                    c0a: 0.5,
-                    c0b: 0.5,
-                    c1a: 0.5,
-                    c1b: 0.5,
-                },
-                RampStep {
-                    x: 1.,
-                    y: 1.,
-                    c0a: 0.5,
-                    c0b: 0.5,
-                    c1a: 0.5,
-                    c1b: 0.5,
-                },
-            ],
+            spline: Spline {
+                steps: vec![
+                    SplineStep {
+                        x: 0.,
+                        y: 0.,
+                        c0a: 0.5,
+                        c0b: 0.5,
+                        c1a: 0.5,
+                        c1b: 0.5,
+                    },
+                    SplineStep {
+                        x: 1.,
+                        y: 1.,
+                        c0a: 0.5,
+                        c0b: 0.5,
+                        c1a: 0.5,
+                        c1b: 0.5,
+                    },
+                ],
+            },
         }
     }
-}
-
-#[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq)]
-pub struct RampStep {
-    pub x: f64,
-    pub y: f64,
-    pub c0a: f64,
-    pub c0b: f64,
-    pub c1a: f64,
-    pub c1b: f64,
 }
 
 impl PipelineNode for RampNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "RampNode".into(),
+            name: stringify!(RampNode).into(),
             preview_type: PreviewType::History,
         }
     }
@@ -88,7 +81,7 @@ impl ProcessingNode for RampNode {
 
     fn process(&self, context: &impl NodeContext, _: &mut Self::State) -> anyhow::Result<()> {
         if let Some(value) = context.read_port::<_, f64>(VALUE_INPUT) {
-            let value = self.translate(value);
+            let value = self.spline.sample(value, 1.);
             context.write_port(VALUE_OUTPUT, value);
             context.push_history_value(value);
         }
@@ -101,94 +94,6 @@ impl ProcessingNode for RampNode {
     }
 
     fn update(&mut self, config: &Self) {
-        self.steps = config.steps.clone();
-    }
-}
-
-impl RampNode {
-    fn translate(&self, input: f64) -> f64 {
-        let input = input.clamp(0., 1.);
-        let path = Subpath::new(
-            self.steps
-                .iter()
-                .map(|step| ManipulatorGroup {
-                    anchor: (step.x, step.y).into(),
-                    in_handle: Some((step.c0a, step.c0b).into()),
-                    out_handle: Some((step.c1a, step.c1b).into()),
-                })
-                .collect(),
-            false,
-        );
-
-        let point = path.evaluate(ComputeType::Parametric(input));
-
-        point.y
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use test_case::test_case;
-
-    use crate::{RampNode, RampStep};
-
-    #[test_case(0f64)]
-    #[test_case(0.5f64)]
-    #[test_case(1f64)]
-    fn process_should_translate_values_of_basic_ramp(value: f64) {
-        let node = RampNode::default();
-
-        let result = node.translate(value);
-
-        assert_eq!(result, value);
-    }
-
-    #[test_case(0f64, 1f64, 0f64, 1f64, 1f64, 1f64)]
-    #[test_case(0f64, 1f64, 0f64, 1f64, 0f64, 0f64)]
-    #[test_case(0f64, 1f64, 0f64, 1f64, 0.5f64, 0f64)]
-    #[test_case(0f64, 0.5f64, 0f64, 1f64, 0f64, 0f64)]
-    #[test_case(0f64, 0.5f64, 0f64, 1f64, 1f64, 1f64)]
-    #[test_case(0f64, 0.5f64, 0f64, 1f64, 0.5f64, 0f64)]
-    // #[test_case(0f64, 0.5f64, 0f64, 1f64, 0.75f64, 0.5f64)]
-    fn process_should_translate_values_of_two_step_ramp(
-        y1: f64,
-        x2: f64,
-        y2: f64,
-        y3: f64,
-        value: f64,
-        expected: f64,
-    ) {
-        let node = RampNode {
-            steps: vec![
-                RampStep {
-                    x: 0.,
-                    y: y1,
-                    c0a: 0.,
-                    c0b: 0.,
-                    c1a: 0.,
-                    c1b: 0.,
-                },
-                RampStep {
-                    x: x2,
-                    y: y2,
-                    c0a: 0.,
-                    c0b: y1,
-                    c1a: 0.,
-                    c1b: y1,
-                },
-                RampStep {
-                    x: 1.,
-                    y: y3,
-                    c0a: x2,
-                    c0b: y2,
-                    c1a: 1.,
-                    c1b: y3,
-                },
-            ],
-        };
-
-        let result = node.translate(value);
-
-        assert_eq!(result, expected);
+        self.spline = config.spline.clone();
     }
 }

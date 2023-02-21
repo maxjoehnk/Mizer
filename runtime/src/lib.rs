@@ -82,6 +82,12 @@ pub trait NodeDowncast {
                 Node::ConstantNumber(self.downcast_node(node_type).unwrap())
             }
             NodeType::Conditional => Node::Conditional(self.downcast_node(node_type).unwrap()),
+            NodeType::TimecodeControl => {
+                Node::TimecodeControl(self.downcast_node(node_type).unwrap())
+            }
+            NodeType::TimecodeOutput => {
+                Node::TimecodeOutput(self.downcast_node(node_type).unwrap())
+            }
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

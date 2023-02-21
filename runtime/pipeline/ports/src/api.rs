@@ -87,6 +87,8 @@ pub enum PortType {
     Material,
     /// Legacy, should be converted to texture
     Gstreamer,
+    /// Time signal measured in frames
+    Clock,
 }
 
 impl Default for PortType {

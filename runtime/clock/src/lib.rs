@@ -60,6 +60,7 @@ impl Clock for SystemClock {
             beat: self.beat,
             delta,
             downbeat,
+            frames: self.frames,
         }
     }
 
@@ -105,6 +106,7 @@ pub struct ClockFrame {
     pub delta: f64,
     /// Indicates whether this frame was the first beat of a new bar
     pub downbeat: bool,
+    pub frames: u64,
 }
 
 impl Default for ClockFrame {
@@ -115,6 +117,7 @@ impl Default for ClockFrame {
             beat: 0.,
             delta: 0.,
             downbeat: false,
+            frames: 0,
         }
     }
 }
@@ -145,16 +148,30 @@ pub struct ClockSnapshot {
     pub state: ClockState,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Default, Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Timecode {
     pub hours: u64,
     pub minutes: u64,
     pub seconds: u64,
     pub frames: u64,
+    pub negative: bool,
 }
 
 impl Timecode {
     pub fn new(frames: u64) -> Self {
+        Self::build(frames, false)
+    }
+
+    pub fn from_i128(frames: i128) -> Self {
+        if frames >= 0 {
+            Self::build(frames.min(u64::MAX as i128) as u64, false)
+        } else {
+            let frames = frames.abs();
+            Self::build(frames.min(u64::MAX as i128) as u64, true)
+        }
+    }
+
+    fn build(frames: u64, negative: bool) -> Self {
         let seconds = frames / 60;
         let minutes = seconds / 60;
         let hours = minutes / 60;
@@ -168,6 +185,7 @@ impl Timecode {
             minutes,
             seconds,
             frames,
+            negative,
         }
     }
 }

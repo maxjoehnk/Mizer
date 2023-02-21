@@ -35,6 +35,7 @@ mizer-video-nodes = { path = "video" }
 mizer-data-nodes = { path = "data" }
 mizer-plan-nodes = { path = "plan" }
 mizer-timing-nodes = { path = "behaviors/timing" }
+mizer-timecode-nodes = { path = "timecode" }
 mizer-transport-nodes = { path = "transport" }
 derive_more = "0.99"
 

@@ -1,9 +1,8 @@
-import 'dart:developer';
 import 'dart:ffi' as ffi;
 
 import 'bindings.dart';
 
-class TransportPointer {
+class TransportPointer implements TimecodeReader {
   final FFIBindings _bindings;
   final ffi.Pointer<Transport> _ptr;
 
@@ -18,4 +17,9 @@ class TransportPointer {
   void dispose() {
     this._bindings.drop_transport_pointer(_ptr);
   }
+}
+
+abstract class TimecodeReader {
+  Timecode readTimecode();
+  void dispose();
 }

@@ -25,6 +25,7 @@ use mizer_runtime::DefaultRuntime;
 use mizer_sequencer::{EffectEngine, EffectsModule, Sequencer, SequencerModule};
 use mizer_session::SessionState;
 use mizer_settings::{Settings, SettingsManager};
+use mizer_timecode::{TimecodeManager, TimecodeModule};
 
 pub use crate::api::*;
 use crate::fixture_libraries_loader::FixtureLibrariesLoader;
@@ -52,6 +53,8 @@ pub fn build_runtime(
         register_sequencer_module(&mut runtime).context("Failed to register sequencer module")?;
     let effect_engine =
         register_effects_module(&mut runtime).context("Failed to register effects module")?;
+    let timecode_manager =
+        register_timecode_module(&mut runtime).context("Failed to register timecode module")?;
     register_device_module(&mut runtime, &handle).context("Failed to register devices module")?;
     register_dmx_module(&mut runtime).context("failed to register dmx module")?;
     register_mqtt_module(&mut runtime).context("failed to register mqtt module")?;
@@ -79,6 +82,7 @@ pub fn build_runtime(
         media_server_api.clone(),
         sequencer,
         effect_engine,
+        timecode_manager,
     );
 
     setup_media_api(handle, &flags, media_server_api.clone())
@@ -143,6 +147,8 @@ impl Mizer {
         effects_engine.new();
         let sequencer = injector.get::<Sequencer>().unwrap();
         sequencer.new();
+        let timecode_manager = injector.get::<TimecodeManager>().unwrap();
+        timecode_manager.new();
         let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
         dmx_manager.new();
         let mqtt_manager = injector.get_mut::<MqttConnectionManager>().unwrap();
@@ -176,6 +182,10 @@ impl Mizer {
                 effects_engine.load(&project)?;
                 let sequencer = injector.get::<Sequencer>().unwrap();
                 sequencer.load(&project).context("loading sequences")?;
+                let timecode_manager = injector.get::<TimecodeManager>().unwrap();
+                timecode_manager
+                    .load(&project)
+                    .context("loading timecodes")?;
                 let dmx_manager = injector.get_mut::<DmxConnectionManager>().unwrap();
                 dmx_manager
                     .load(&project)
@@ -232,6 +242,8 @@ impl Mizer {
             osc_manager.save(&mut project);
             let sequencer = injector.get::<Sequencer>().unwrap();
             sequencer.save(&mut project);
+            let timecode_manager = injector.get::<TimecodeManager>().unwrap();
+            timecode_manager.save(&mut project);
             let effects_engine = injector.get::<EffectEngine>().unwrap();
             effects_engine.save(&mut project);
             project.save_file(file)?;
@@ -254,6 +266,8 @@ impl Mizer {
         osc_manager.clear();
         let sequencer = injector.get::<Sequencer>().unwrap();
         sequencer.clear();
+        let timecode_manager = injector.get::<TimecodeManager>().unwrap();
+        timecode_manager.clear();
         self.project_path = None;
         self.media_server_api.clear();
         let effects_engine = injector.get_mut::<EffectEngine>().unwrap();
@@ -324,6 +338,13 @@ fn register_mqtt_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
 
 fn register_osc_module(runtime: &mut DefaultRuntime) -> anyhow::Result<()> {
     OscModule.register(runtime)
+}
+
+fn register_timecode_module(runtime: &mut DefaultRuntime) -> anyhow::Result<TimecodeManager> {
+    let (module, manager) = TimecodeModule::new();
+    module.register(runtime)?;
+
+    Ok(manager)
 }
 
 fn register_midi_module(runtime: &mut DefaultRuntime, settings: &Settings) -> anyhow::Result<()> {

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/groups/envelope_properties.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/groups/gamepad_properties.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/groups/midi_properties.dart';
-import 'package:mizer/views/nodes/widgets/properties/properties/groups/threshold_properties.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/node_properties.dart';
 
 import 'properties/groups/button_properties.dart';
@@ -14,12 +10,15 @@ import 'properties/groups/constant_number_properties.dart';
 import 'properties/groups/delay_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
+import 'properties/groups/envelope_properties.dart';
 import 'properties/groups/fixture_properties.dart';
 import 'properties/groups/g13_input_properties.dart';
 import 'properties/groups/g13_output_properties.dart';
+import 'properties/groups/gamepad_properties.dart';
 import 'properties/groups/label_properties.dart';
 import 'properties/groups/math_properties.dart';
 import 'properties/groups/merge_properties.dart';
+import 'properties/groups/midi_properties.dart';
 import 'properties/groups/mqtt_input_properties.dart';
 import 'properties/groups/mqtt_output_properties.dart';
 import 'properties/groups/noise_properties.dart';
@@ -27,6 +26,9 @@ import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/ramp_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
+import 'properties/groups/threshold_properties.dart';
+import 'properties/groups/timecode_control_properties.dart';
+import 'properties/groups/timecode_output_properties.dart';
 import 'properties/groups/value_properties.dart';
 import 'properties/groups/video_file_properties.dart';
 
@@ -200,6 +202,22 @@ class NodePropertiesPane extends StatelessWidget {
               path: node.path,
               config: NodeConfig(
                 conditionalConfig: config,
+              )))));
+    }
+    if (node.config.hasTimecodeControlConfig()) {
+      widgets.add(TimecodeControlProperties(node.config.timecodeControlConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path,
+              config: NodeConfig(
+                timecodeControlConfig: config,
+              )))));
+    }
+    if (node.config.hasTimecodeOutputConfig()) {
+      widgets.add(TimecodeOutputProperties(node.config.timecodeOutputConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path,
+              config: NodeConfig(
+                timecodeOutputConfig: config,
               )))));
     }
     return widgets;

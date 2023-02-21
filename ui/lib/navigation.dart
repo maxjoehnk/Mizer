@@ -13,6 +13,7 @@ import 'package:mizer/views/layout/layout_view.dart';
 import 'package:mizer/views/media/media_view.dart';
 import 'package:mizer/views/nodes/nodes_view.dart';
 import 'package:mizer/views/patch/fixture_patch.dart';
+import 'package:mizer/views/timecode/timecode_view.dart';
 import 'package:mizer/widgets/transport/transport_controls.dart';
 import 'package:mizer/views/sequencer/sequencer_view.dart';
 import 'package:mizer/views/session/session_view.dart';
@@ -43,6 +44,7 @@ List<Route> routes = [
   Route(() => Container(), Icons.tv, 'Surfaces'.i18n, View.Surfaces),
   Route(() => ConnectionsView(), Icons.device_hub, 'Connections'.i18n, View.Connections),
   Route(() => FixturePatchView(), MdiIcons.spotlight, 'Patch'.i18n, View.FixturePatch),
+  Route(() => TimecodeView(), MdiIcons.chartTimeline, 'Timecode'.i18n, View.Timecode),
   Route(() => SessionView(), Icons.mediation, 'Session'.i18n, View.Session),
   Route(() => HistoryView(), Icons.history, 'History'.i18n, View.History),
 ];

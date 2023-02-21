@@ -7,6 +7,7 @@ import 'package:mizer/state/nodes_bloc.dart';
 import 'package:mizer/state/plans_bloc.dart';
 import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/state/sequencer_bloc.dart';
+import 'package:mizer/state/timecode_bloc.dart';
 import 'package:provider/provider.dart';
 
 extension ContextStateExtensions on BuildContext {
@@ -19,5 +20,6 @@ extension ContextStateExtensions on BuildContext {
     this.read<PresetsBloc>().add(FetchPresets());
     this.read<PlansBloc>().add(FetchPlans());
     this.read<EffectsBloc>().add(FetchEffects());
+    this.read<TimecodeBloc>().fetch();
   }
 }

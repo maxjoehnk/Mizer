@@ -61,6 +61,8 @@ impl From<mizer_nodes::Node> for node_config::Type {
             G13Output(node) => Self::G13OutputConfig(node.into()),
             ConstantNumber(node) => Self::ConstantNumberConfig(node.into()),
             Conditional(node) => Self::ConditionalConfig(node.into()),
+            TimecodeControl(node) => Self::TimecodeControlConfig(node.into()),
+            TimecodeOutput(node) => Self::TimecodeOutputConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -126,6 +128,8 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::PlanScreenConfig(node) => Self::PlanScreen(node.into()),
             node_config::Type::ConstantNumberConfig(node) => Self::ConstantNumber(node.into()),
             node_config::Type::ConditionalConfig(node) => Self::Conditional(node.into()),
+            node_config::Type::TimecodeControlConfig(node) => Self::TimecodeControl(node.into()),
+            node_config::Type::TimecodeOutputConfig(node) => Self::TimecodeOutput(node.into()),
         }
     }
 }
@@ -1208,16 +1212,18 @@ impl From<mizer_nodes::DelayNode> for DelayNodeConfig {
 impl From<RampNodeConfig> for mizer_nodes::RampNode {
     fn from(config: RampNodeConfig) -> Self {
         Self {
-            steps: config
-                .steps
-                .into_iter()
-                .map(mizer_nodes::RampStep::from)
-                .collect(),
+            spline: mizer_util::Spline {
+                steps: config
+                    .steps
+                    .into_iter()
+                    .map(mizer_util::SplineStep::from)
+                    .collect(),
+            },
         }
     }
 }
 
-impl From<ramp_node_config::RampStep> for mizer_nodes::RampStep {
+impl From<ramp_node_config::RampStep> for mizer_util::SplineStep {
     fn from(step: ramp_node_config::RampStep) -> Self {
         Self {
             x: step.x,
@@ -1234,6 +1240,7 @@ impl From<mizer_nodes::RampNode> for RampNodeConfig {
     fn from(node: mizer_nodes::RampNode) -> Self {
         Self {
             steps: node
+                .spline
                 .steps
                 .into_iter()
                 .map(ramp_node_config::RampStep::from)
@@ -1243,8 +1250,8 @@ impl From<mizer_nodes::RampNode> for RampNodeConfig {
     }
 }
 
-impl From<mizer_nodes::RampStep> for ramp_node_config::RampStep {
-    fn from(step: mizer_nodes::RampStep) -> Self {
+impl From<mizer_util::SplineStep> for ramp_node_config::RampStep {
+    fn from(step: mizer_util::SplineStep) -> Self {
         Self {
             x: step.x,
             y: step.y,
@@ -1463,6 +1470,40 @@ impl From<ConditionalNodeConfig> for mizer_nodes::ConditionalNode {
     }
 }
 
+impl From<mizer_nodes::TimecodeControlNode> for TimecodeControlNodeConfig {
+    fn from(node: mizer_nodes::TimecodeControlNode) -> Self {
+        Self {
+            timecode_id: node.timecode_id.into(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<TimecodeControlNodeConfig> for mizer_nodes::TimecodeControlNode {
+    fn from(node: TimecodeControlNodeConfig) -> Self {
+        Self {
+            timecode_id: node.timecode_id.into(),
+        }
+    }
+}
+
+impl From<mizer_nodes::TimecodeOutputNode> for TimecodeOutputNodeConfig {
+    fn from(node: mizer_nodes::TimecodeOutputNode) -> Self {
+        Self {
+            control_id: node.control_id.into(),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<TimecodeOutputNodeConfig> for mizer_nodes::TimecodeOutputNode {
+    fn from(node: TimecodeOutputNodeConfig) -> Self {
+        Self {
+            control_id: node.control_id.into(),
+        }
+    }
+}
+
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1517,6 +1558,8 @@ impl From<NodeType> for node::NodeType {
             NodeType::G13Output => node::NodeType::G13Output,
             NodeType::ConstantNumber => node::NodeType::ConstantNumber,
             NodeType::Conditional => node::NodeType::Conditional,
+            NodeType::TimecodeControl => node::NodeType::TimecodeControl,
+            NodeType::TimecodeOutput => node::NodeType::TimecodeOutput,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1576,6 +1619,8 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::G13Output => NodeType::G13Output,
             node::NodeType::ConstantNumber => NodeType::ConstantNumber,
             node::NodeType::Conditional => NodeType::Conditional,
+            node::NodeType::TimecodeControl => NodeType::TimecodeControl,
+            node::NodeType::TimecodeOutput => NodeType::TimecodeOutput,
         }
     }
 }
@@ -1689,6 +1734,7 @@ impl From<PortType> for ChannelProtocol {
             PortType::Data => ChannelProtocol::DATA,
             PortType::Material => ChannelProtocol::MATERIAL,
             PortType::Gstreamer => ChannelProtocol::GST,
+            PortType::Clock => ChannelProtocol::CLOCK,
         }
     }
 }
@@ -1706,6 +1752,7 @@ impl From<ChannelProtocol> for PortType {
             ChannelProtocol::DATA => PortType::Data,
             ChannelProtocol::MATERIAL => PortType::Material,
             ChannelProtocol::GST => PortType::Gstreamer,
+            ChannelProtocol::CLOCK => PortType::Clock,
         }
     }
 }
@@ -1741,6 +1788,7 @@ impl From<PreviewType> for node::NodePreviewType {
             PreviewType::Waveform => node::NodePreviewType::Waveform,
             PreviewType::Multiple => node::NodePreviewType::Multiple,
             PreviewType::Texture => node::NodePreviewType::Texture,
+            PreviewType::Timecode => node::NodePreviewType::Timecode,
             PreviewType::None => node::NodePreviewType::None,
         }
     }

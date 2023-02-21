@@ -12,6 +12,7 @@ import 'nodes_bloc.dart';
 import 'presets_bloc.dart';
 import 'session_bloc.dart';
 import 'settings_bloc.dart';
+import 'timecode_bloc.dart';
 
 class StateProvider extends StatelessWidget {
   final Widget child;
@@ -33,6 +34,7 @@ class StateProvider extends StatelessWidget {
         BlocProvider(create: (context) => PresetsBloc(context.read())),
         BlocProvider(create: (context) => PlansBloc(context.read())),
         BlocProvider(create: (context) => EffectsBloc(context.read())),
+        BlocProvider(create: (context) => TimecodeBloc(context.read())),
       ],
     );
   }

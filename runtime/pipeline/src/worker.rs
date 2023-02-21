@@ -101,6 +101,7 @@ impl PipelineWorker {
                     PortType::Multi => receivers.register::<Vec<f64>>(port_id, metadata),
                     PortType::Laser => receivers.register::<Vec<LaserFrame>>(port_id, metadata),
                     PortType::Data => receivers.register::<StructuredData>(port_id, metadata),
+                    PortType::Clock => receivers.register::<u64>(port_id, metadata),
                     PortType::Gstreamer => {}
                     port_type => log::debug!("TODO: implement port type {:?}", port_type),
                 }
@@ -170,6 +171,7 @@ impl PipelineWorker {
     ) -> anyhow::Result<()> {
         match link.port_type {
             PortType::Single => self.connect_memory_ports::<f64>(link, source_meta, target_meta),
+            PortType::Clock => self.connect_memory_ports::<u64>(link, source_meta, target_meta),
             PortType::Color => self.connect_memory_ports::<Color>(link, source_meta, target_meta),
             PortType::Multi => {
                 self.connect_memory_ports::<Vec<f64>>(link, source_meta, target_meta)
@@ -195,6 +197,7 @@ impl PipelineWorker {
     pub fn disconnect_port(&mut self, link: &NodeLink) {
         match link.port_type {
             PortType::Single => self.disconnect_memory_ports::<f64>(link),
+            PortType::Clock => self.disconnect_memory_ports::<u64>(link),
             PortType::Color => self.disconnect_memory_ports::<Color>(link),
             PortType::Multi => self.disconnect_memory_ports::<Vec<f64>>(link),
             PortType::Laser => self.disconnect_memory_ports::<Vec<LaserFrame>>(link),

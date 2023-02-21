@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package mizer.timecode;
+
+service TimecodeApi {
+  rpc AddTimecode (AddTimecodeRequest) returns (NoContentResponse);
+  rpc RenameTimecode (RenameTimecodeRequest) returns (NoContentResponse);
+  rpc DeleteTimecode (DeleteTimecodeRequest) returns (NoContentResponse);
+  rpc AddTimecodeControl (AddTimecodeControlRequest) returns (NoContentResponse);
+  rpc RenameTimecodeControl (RenameTimecodeControlRequest) returns (NoContentResponse);
+  rpc DeleteTimecodeControl (DeleteTimecodeControlRequest) returns (NoContentResponse);
+}
+
+message NoContentResponse {}
+
+message AddTimecodeRequest {
+  string name = 1;
+}
+
+message RenameTimecodeRequest {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message DeleteTimecodeRequest {
+  uint32 id = 1;
+}
+
+message AddTimecodeControlRequest {
+  string name = 1;
+}
+
+message RenameTimecodeControlRequest {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message DeleteTimecodeControlRequest {
+  uint32 id = 1;
+}
+
+message AllTimecodes {
+  repeated Timecode timecodes = 1;
+  repeated TimecodeControl controls = 2;
+}
+
+message Timecode {
+  uint32 id = 1;
+  string name = 2;
+
+  repeated TimecodeControlValues controls = 3;
+}
+
+message TimecodeControl {
+  uint32 id = 1;
+  string name = 2;
+}
+
+message TimecodeControlValues {
+  uint32 control_id = 1;
+  repeated Step steps = 2;
+
+  message Step {
+    double x = 1;
+    double y = 2;
+    double c0a = 3;
+    double c0b = 4;
+    double c1a = 5;
+    double c1b = 6;
+  }
+}

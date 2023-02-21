@@ -48,6 +48,8 @@ MaterialColor getColorForProtocol(ChannelProtocol protocol) {
       return Colors.purple;
     case ChannelProtocol.DATA:
       return Colors.blue;
+    case ChannelProtocol.CLOCK:
+      return Colors.pink;
     default:
       log("no color for protocol ${protocol.name}");
       return Colors.blueGrey;

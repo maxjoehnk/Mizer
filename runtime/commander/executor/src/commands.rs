@@ -14,6 +14,7 @@ pub use mizer_protocol_mqtt::commands::*;
 pub use mizer_protocol_osc::commands::*;
 pub use mizer_runtime::commands::*;
 pub use mizer_sequencer_commands::*;
+pub use mizer_timecode::commands::*;
 
 pub trait SendableCommand<'a>: Command<'a> + Into<CommandImpl> + Send + Sync {}
 
@@ -121,6 +122,12 @@ command_impl! {
     AddOscConnectionCommand,
     ConfigureOscConnectionCommand,
     DeleteOscConnectionCommand,
+    AddTimecodeCommand,
+    RenameTimecodeCommand,
+    DeleteTimecodeCommand,
+    AddTimecodeControlCommand,
+    RenameTimecodeControlCommand,
+    DeleteTimecodeControlCommand,
 }
 
 impl CommandImpl {

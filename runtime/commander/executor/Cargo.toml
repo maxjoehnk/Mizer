@@ -15,6 +15,7 @@ mizer-module = { path = "../../module" }
 mizer-runtime = { path = "../.." }
 mizer-fixture-commands = { path = "../../../components/fixtures/commands" }
 mizer-sequencer-commands = { path = "../../../components/sequencer/commands" }
+mizer-timecode = { path = "../../../components/timecode" }
 mizer-plan = { path = "../../../components/plan" }
 mizer-layouts = { path = "../../layouts" }
 mizer-layout-commands = { path = "../../layouts/commands" }

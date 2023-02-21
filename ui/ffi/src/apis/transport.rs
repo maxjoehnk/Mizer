@@ -13,6 +13,7 @@ pub struct Timecode {
     pub minutes: u64,
     pub seconds: u64,
     pub frames: u64,
+    pub is_negative: u8,
 }
 
 impl From<mizer_clock::Timecode> for Timecode {
@@ -22,6 +23,7 @@ impl From<mizer_clock::Timecode> for Timecode {
             minutes: tc.minutes,
             seconds: tc.seconds,
             frames: tc.frames,
+            is_negative: tc.negative.into(),
         }
     }
 }

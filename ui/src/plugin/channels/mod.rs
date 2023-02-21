@@ -17,6 +17,7 @@ pub use method::connections::*;
 pub use method::mappings::*;
 pub use method::plans::*;
 pub use method::session::*;
+pub use method::timecode::*;
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 
 mod effects;
@@ -36,6 +37,8 @@ pub trait MethodCallExt {
 
 pub trait MethodReplyExt {
     fn respond_result<M: protobuf::Message>(self, message: anyhow::Result<M>);
+
+    fn respond_unit_result(self, response: anyhow::Result<()>);
 
     fn respond_msg<M: protobuf::Message>(self, message: M);
 
@@ -63,6 +66,13 @@ impl MethodReplyExt for MethodCallReply<Value> {
 
         match response {
             Ok(response) => self.send_ok(Value::U8List(response)),
+            Err(err) => self.respond_error(err),
+        }
+    }
+
+    fn respond_unit_result(self, response: anyhow::Result<()>) {
+        match response {
+            Ok(_) => self.send_ok(Value::Null),
             Err(err) => self.respond_error(err),
         }
     }

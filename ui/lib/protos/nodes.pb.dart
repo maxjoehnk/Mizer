@@ -3,7 +3,7 @@
 //  source: nodes.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -1240,6 +1240,8 @@ enum NodeConfig_Type {
   g13OutputConfig, 
   constantNumberConfig, 
   conditionalConfig, 
+  timecodeControlConfig, 
+  timecodeOutputConfig, 
   notSet
 }
 
@@ -1296,10 +1298,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     59 : NodeConfig_Type.g13OutputConfig,
     60 : NodeConfig_Type.constantNumberConfig,
     61 : NodeConfig_Type.conditionalConfig,
+    62 : NodeConfig_Type.timecodeControlConfig,
+    63 : NodeConfig_Type.timecodeOutputConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1351,6 +1355,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<G13OutputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', protoName: 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
     ..aOM<ConstantNumberNodeConfig>(60, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'constantNumberConfig', protoName: 'constantNumberConfig', subBuilder: ConstantNumberNodeConfig.create)
     ..aOM<ConditionalNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', protoName: 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
+    ..aOM<TimecodeControlNodeConfig>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeControlConfig', protoName: 'timecodeControlConfig', subBuilder: TimecodeControlNodeConfig.create)
+    ..aOM<TimecodeOutputNodeConfig>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeOutputConfig', protoName: 'timecodeOutputConfig', subBuilder: TimecodeOutputNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1407,6 +1413,8 @@ class NodeConfig extends $pb.GeneratedMessage {
     G13OutputNodeConfig? g13OutputConfig,
     ConstantNumberNodeConfig? constantNumberConfig,
     ConditionalNodeConfig? conditionalConfig,
+    TimecodeControlNodeConfig? timecodeControlConfig,
+    TimecodeOutputNodeConfig? timecodeOutputConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1561,6 +1569,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (conditionalConfig != null) {
       _result.conditionalConfig = conditionalConfig;
+    }
+    if (timecodeControlConfig != null) {
+      _result.timecodeControlConfig = timecodeControlConfig;
+    }
+    if (timecodeOutputConfig != null) {
+      _result.timecodeOutputConfig = timecodeOutputConfig;
     }
     return _result;
   }
@@ -2148,6 +2162,28 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearConditionalConfig() => clearField(61);
   @$pb.TagNumber(61)
   ConditionalNodeConfig ensureConditionalConfig() => $_ensure(50);
+
+  @$pb.TagNumber(62)
+  TimecodeControlNodeConfig get timecodeControlConfig => $_getN(51);
+  @$pb.TagNumber(62)
+  set timecodeControlConfig(TimecodeControlNodeConfig v) { setField(62, v); }
+  @$pb.TagNumber(62)
+  $core.bool hasTimecodeControlConfig() => $_has(51);
+  @$pb.TagNumber(62)
+  void clearTimecodeControlConfig() => clearField(62);
+  @$pb.TagNumber(62)
+  TimecodeControlNodeConfig ensureTimecodeControlConfig() => $_ensure(51);
+
+  @$pb.TagNumber(63)
+  TimecodeOutputNodeConfig get timecodeOutputConfig => $_getN(52);
+  @$pb.TagNumber(63)
+  set timecodeOutputConfig(TimecodeOutputNodeConfig v) { setField(63, v); }
+  @$pb.TagNumber(63)
+  $core.bool hasTimecodeOutputConfig() => $_has(52);
+  @$pb.TagNumber(63)
+  void clearTimecodeOutputConfig() => clearField(63);
+  @$pb.TagNumber(63)
+  TimecodeOutputNodeConfig ensureTimecodeOutputConfig() => $_ensure(52);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4976,6 +5012,100 @@ class ConditionalNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasThreshold() => $_has(0);
   @$pb.TagNumber(1)
   void clearThreshold() => clearField(1);
+}
+
+class TimecodeControlNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TimecodeControlNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  TimecodeControlNodeConfig._() : super();
+  factory TimecodeControlNodeConfig({
+    $core.int? timecodeId,
+  }) {
+    final _result = create();
+    if (timecodeId != null) {
+      _result.timecodeId = timecodeId;
+    }
+    return _result;
+  }
+  factory TimecodeControlNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TimecodeControlNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TimecodeControlNodeConfig clone() => TimecodeControlNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TimecodeControlNodeConfig copyWith(void Function(TimecodeControlNodeConfig) updates) => super.copyWith((message) => updates(message as TimecodeControlNodeConfig)) as TimecodeControlNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TimecodeControlNodeConfig create() => TimecodeControlNodeConfig._();
+  TimecodeControlNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<TimecodeControlNodeConfig> createRepeated() => $pb.PbList<TimecodeControlNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static TimecodeControlNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TimecodeControlNodeConfig>(create);
+  static TimecodeControlNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get timecodeId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set timecodeId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTimecodeId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTimecodeId() => clearField(1);
+}
+
+class TimecodeOutputNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TimecodeOutputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId', $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false
+  ;
+
+  TimecodeOutputNodeConfig._() : super();
+  factory TimecodeOutputNodeConfig({
+    $core.int? controlId,
+  }) {
+    final _result = create();
+    if (controlId != null) {
+      _result.controlId = controlId;
+    }
+    return _result;
+  }
+  factory TimecodeOutputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TimecodeOutputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TimecodeOutputNodeConfig clone() => TimecodeOutputNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TimecodeOutputNodeConfig copyWith(void Function(TimecodeOutputNodeConfig) updates) => super.copyWith((message) => updates(message as TimecodeOutputNodeConfig)) as TimecodeOutputNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TimecodeOutputNodeConfig create() => TimecodeOutputNodeConfig._();
+  TimecodeOutputNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<TimecodeOutputNodeConfig> createRepeated() => $pb.PbList<TimecodeOutputNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static TimecodeOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TimecodeOutputNodeConfig>(create);
+  static TimecodeOutputNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $core.int get controlId => $_getIZ(0);
+  @$pb.TagNumber(2)
+  set controlId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasControlId() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearControlId() => clearField(2);
 }
 
 class NodePosition extends $pb.GeneratedMessage {

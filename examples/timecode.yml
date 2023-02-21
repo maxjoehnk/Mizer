@@ -1,0 +1,322 @@
+---
+nodes:
+  - path: /programmer-0
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: 0.7381374513815869
+        y: 1.5294028398372408
+      scale: 0.0
+      hidden: false
+  - path: /button-0
+    type: button
+    config:
+      toggle: true
+    designer:
+      position:
+        x: -8.043144621806551
+        y: 10.741706345392279
+      scale: 0.0
+      hidden: false
+  - path: /timecode-control-1
+    type: timecode-control
+    config:
+      timecode_id: 2
+    designer:
+      position:
+        x: -2.56026170410894
+        y: 13.552414923858485
+      scale: 1.0
+      hidden: false
+  - path: /timecode-output-0
+    type: timecode-output
+    config:
+      control_id: 1
+    designer:
+      position:
+        x: 5.832474867599215
+        y: 10.89262841598511
+      scale: 1.0
+      hidden: false
+  - path: /transport-0
+    type: transport
+    config: ~
+    designer:
+      position:
+        x: 4.666666666666667
+        y: 0.48
+      scale: 0.0
+      hidden: false
+  - path: /timecode-control-0
+    type: timecode-control
+    config:
+      timecode_id: 1
+    designer:
+      position:
+        x: -2.9032539019033385
+        y: 10.576421376326001
+      scale: 1.0
+      hidden: false
+  - path: /button-1
+    type: button
+    config:
+      toggle: true
+    designer:
+      position:
+        x: -8.055807455776323
+        y: 13.622750117356258
+      scale: 0.0
+      hidden: false
+  - path: /fader-0
+    type: fader
+    config: {}
+    designer:
+      position:
+        x: 11.533333333333333
+        y: 10.333333333333334
+      scale: 0.0
+      hidden: false
+channels:
+  - value@/button-0 -> Playback@/timecode-control-0
+  - value@/button-1 -> Playback@/timecode-control-1
+  - Value@/timecode-output-0 -> value@/fader-0
+media: []
+layouts:
+  Default:
+    - label: ~
+      node: /button-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 1
+      decoration:
+        color: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - label: ~
+      node: /button-1
+      position:
+        x: 1
+        y: 0
+      size:
+        width: 1
+        height: 1
+      decoration:
+        color: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - label: ~
+      node: /fader-0
+      position:
+        x: 2
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+connections:
+  - id: dmx-0
+    name: sACN (mizer)
+    type: sacn
+fixtures: []
+groups: []
+presets:
+  intensity:
+    - id: 3
+      label: 50%
+      value: 0.5
+    - id: 1
+      label: 0%
+      value: 0.0
+    - id: 5
+      label: 100%
+      value: 1.0
+    - id: 2
+      label: 25%
+      value: 0.25
+    - id: 4
+      label: 75%
+      value: 0.75
+  shutter: []
+  color:
+    - id: 3
+      label: Green
+      value:
+        - 0.0
+        - 1.0
+        - 0.0
+    - id: 4
+      label: Blue
+      value:
+        - 0.0
+        - 0.0
+        - 1.0
+    - id: 7
+      label: Turquoise
+      value:
+        - 0.0
+        - 1.0
+        - 1.0
+    - id: 2
+      label: Red
+      value:
+        - 1.0
+        - 0.0
+        - 0.0
+    - id: 6
+      label: Purple
+      value:
+        - 1.0
+        - 0.0
+        - 1.0
+    - id: 5
+      label: Yellow
+      value:
+        - 1.0
+        - 1.0
+        - 0.0
+    - id: 1
+      label: White
+      value:
+        - 1.0
+        - 1.0
+        - 1.0
+  position: []
+sequences: []
+effects:
+  - id: 1
+    name: Circle
+    channels:
+      - control: Pan
+        steps:
+          - value: 1.0
+            control_point: Simple
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - 1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+      - control: Tilt
+        steps:
+          - value: 0.0
+            control_point: Simple
+          - value: 1.0
+            control_point:
+              Cubic:
+                - - 1.0
+                  - 0.55191502449351
+                - - 0.55191502449351
+                  - 1.0
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - 0.55191502449351
+                  - 1.0
+                - - 1.0
+                  - 0.55191502449351
+          - value: -1.0
+            control_point:
+              Cubic:
+                - - -0.55191502449351
+                  - -1.0
+                - - -1.0
+                  - -0.55191502449351
+          - value: 0.0
+            control_point:
+              Cubic:
+                - - -1.0
+                  - -0.55191502449351
+                - - -0.55191502449351
+                  - -1.0
+plans: []
+timecodes:
+  timecodes:
+    - id: 1
+      name: Test
+      controls:
+        - id: 1
+          spline:
+            steps:
+              - x: 0.0
+                y: 0.0
+                c0a: 0.0
+                c0b: 0.0
+                c1a: 0.0
+                c1b: 0.0
+              - x: 600.0
+                y: 1.0
+                c0a: 600.0
+                c0b: 1.0
+                c1a: 600.0
+                c1b: 1.0
+        - id: 2
+          spline:
+            steps: []
+        - id: 3
+          spline:
+            steps: []
+      labels: []
+    - id: 2
+      name: Test 2
+      controls:
+        - id: 1
+          spline:
+            steps:
+              - x: 0.0
+                y: 1.0
+                c0a: 0.0
+                c0b: 1.0
+                c1a: 0.0
+                c1b: 1.0
+              - x: 600.0
+                y: 0.0
+                c0a: 600.0
+                c0b: 0.0
+                c1a: 600.0
+                c1b: 0.0
+        - id: 2
+          spline:
+            steps: []
+        - id: 3
+          spline:
+            steps: []
+      labels: []
+  controls:
+    - id: 1
+      name: Strobe
+    - id: 2
+      name: Effect Fog
+    - id: 3
+      name: Test

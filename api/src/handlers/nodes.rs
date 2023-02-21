@@ -100,6 +100,13 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
+    pub fn get_node(&self, path: String) -> Option<Node> {
+        let node = self.runtime.get_node(&NodePath(path))?;
+
+        Some(node.into())
+    }
+
+    #[tracing::instrument(skip(self))]
     pub fn add_node(&self, request: AddNodeRequest) -> Node {
         let position = request.position.unwrap();
         let designer = mizer_node::NodeDesigner {

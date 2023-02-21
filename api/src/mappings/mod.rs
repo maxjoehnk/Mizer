@@ -8,4 +8,5 @@ mod plans;
 mod programmer;
 mod sequencer;
 mod settings;
+mod timecode;
 mod transport;

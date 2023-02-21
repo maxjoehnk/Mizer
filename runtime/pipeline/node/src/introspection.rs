@@ -61,6 +61,8 @@ pub enum NodeType {
     G13Output,
     ConstantNumber,
     Conditional,
+    TimecodeControl,
+    TimecodeOutput,
     // TODO: should only be available in tests
     #[doc(hidden)]
     TestSink,
@@ -122,6 +124,8 @@ impl NodeType {
             G13Output => "g13-output",
             ConstantNumber => "constant-number",
             Conditional => "conditional",
+            TimecodeControl => "timecode-control",
+            TimecodeOutput => "timecode-output",
             TestSink => "test-sink",
         }
         .to_string()

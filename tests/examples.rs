@@ -22,6 +22,7 @@ use test_case::test_case;
 #[test_case("sacn"; "sacn")]
 #[test_case("sequence"; "sequence")]
 #[test_case("sequencer"; "sequencer")]
+#[test_case("timecode"; "timecode")]
 #[test_case("video"; "video")]
 #[tokio::test]
 async fn test_build_project_pipeline(project: &str) {

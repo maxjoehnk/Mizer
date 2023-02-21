@@ -21,6 +21,7 @@ members = [
     "components/media",
     "components/sequencer",
     "components/sequencer/commands",
+    "components/timecode",
     "runtime",
     "runtime/clock",
     "runtime/commander",
@@ -59,6 +60,7 @@ members = [
     "runtime/pipeline/nodes/data",
     "runtime/pipeline/nodes/pixels",
     "runtime/pipeline/nodes/plan",
+    "runtime/pipeline/nodes/timecode",
     "runtime/pipeline/nodes/transport",
     "runtime/pipeline/nodes/video",
     "runtime/pipeline/ports",
@@ -120,6 +122,7 @@ mizer-session = { path = "runtime/session" }
 mizer-connections = { path = "components/connections" }
 mizer-devices = { path = "components/connections/devices" }
 mizer-sequencer = { path = "components/sequencer" }
+mizer-timecode = { path = "components/timecode" }
 mizer-runtime = { path = "runtime" }
 mizer-execution-planner = { path = "runtime/execution-planner" }
 mizer-node = { path = "runtime/pipeline/node" }

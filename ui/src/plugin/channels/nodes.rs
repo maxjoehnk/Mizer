@@ -1,8 +1,8 @@
 use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
-use mizer_api::handlers::NodesHandler;
+use mizer_api::handlers::{NodesHandler, TimecodeHandler};
 use mizer_api::models::nodes::*;
 use mizer_api::RuntimeApi;
-use mizer_ui_ffi::{FFIToPointer, NodeHistory};
+use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::sync::Arc;
@@ -10,6 +10,7 @@ use std::sync::Arc;
 #[derive(Clone)]
 pub struct NodesChannel<R: RuntimeApi> {
     handler: NodesHandler<R>,
+    timecode_handler: TimecodeHandler<R>,
 }
 
 impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
@@ -56,6 +57,15 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                     match self.get_history_pointer(path) {
                         Ok(ptr) => resp.send_ok(Value::I64(ptr)),
                         Err(err) => resp.respond_error(err),
+                    }
+                }
+            }
+            "getPreviewPointer" => {
+                if let Value::String(path) = call.args {
+                    let error_msg = anyhow::anyhow!("Missing preview for node {path}");
+                    match self.get_preview_pointer(path) {
+                        Some(ptr) => resp.send_ok(Value::I64(ptr)),
+                        None => resp.respond_error(error_msg),
                     }
                 }
             }
@@ -143,8 +153,11 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
 }
 
 impl<R: RuntimeApi + 'static> NodesChannel<R> {
-    pub fn new(handler: NodesHandler<R>) -> Self {
-        Self { handler }
+    pub fn new(handler: NodesHandler<R>, timecode_handler: TimecodeHandler<R>) -> Self {
+        Self {
+            handler,
+            timecode_handler,
+        }
     }
 
     pub fn channel(self, context: Context) -> MethodChannel {
@@ -172,6 +185,23 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
             Ok(history.to_pointer() as i64)
         } else {
             anyhow::bail!("{}", err_msg)
+        }
+    }
+
+    fn get_preview_pointer(&self, path: String) -> Option<i64> {
+        let node = self.handler.get_node(path)?;
+        if let node_config::Type::TimecodeControlConfig(config) =
+            node.config.into_option().and_then(|c| c.type_)?
+        {
+            let timecode = self
+                .timecode_handler
+                .get_timecode_state_ref(config.timecode_id)?;
+            let preview = NodePreview { timecode };
+            let preview = Arc::new(preview);
+
+            Some(preview.to_pointer() as i64)
+        } else {
+            None
         }
     }
 }

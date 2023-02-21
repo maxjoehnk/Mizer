@@ -4,6 +4,7 @@ pub struct TestClock {
     speed: f64,
     frame: f64,
     beat: f64,
+    frames: u64,
 }
 
 impl Default for TestClock {
@@ -12,6 +13,7 @@ impl Default for TestClock {
             speed: 60.,
             frame: 0.,
             beat: 0.,
+            frames: 0,
         }
     }
 }
@@ -25,6 +27,7 @@ impl Clock for TestClock {
         while self.beat > 4f64 {
             self.beat -= 4f64;
         }
+        self.frames += 1;
 
         ClockFrame {
             speed: self.speed,
@@ -32,6 +35,7 @@ impl Clock for TestClock {
             beat: self.beat,
             delta,
             downbeat,
+            frames: self.frames,
         }
     }
 

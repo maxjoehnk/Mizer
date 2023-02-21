@@ -1,6 +1,6 @@
 pub use apis::fixture::FixturesRef;
 pub use apis::layout::LayoutRef;
-pub use apis::node_history::NodeHistory;
+pub use apis::node_history::{NodeHistory, NodePreview};
 pub use apis::programmer::Programmer;
 pub use apis::sequencer::Sequencer;
 pub use apis::transport::Transport;

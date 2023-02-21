@@ -5,7 +5,9 @@ import 'package:mizer/protos/nodes.pb.dart';
 import 'ffi/api.dart';
 import 'ffi/bindings.dart';
 import 'ffi/history.dart';
+import 'ffi/preview.dart';
 
+export 'ffi/preview.dart' show NodePreviewPointer;
 export 'ffi/history.dart' show NodeHistoryPointer;
 
 class NodesPluginApi implements NodesApi {
@@ -67,6 +69,12 @@ class NodesPluginApi implements NodesApi {
     int pointer = await channel.invokeMethod("getHistoryPointer", path);
 
     return this.bindings.openNodeHistory(pointer);
+  }
+
+  Future<NodePreviewPointer> getPreviewPointer(String path) async {
+    int pointer = await channel.invokeMethod("getPreviewPointer", path);
+
+    return this.bindings.openNodePreview(pointer);
   }
 
   @override

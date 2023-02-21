@@ -3,7 +3,7 @@
 //  source: nodes.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 // ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
@@ -20,6 +20,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
   static const ChannelProtocol DATA = ChannelProtocol._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DATA');
   static const ChannelProtocol MATERIAL = ChannelProtocol._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MATERIAL');
   static const ChannelProtocol GST = ChannelProtocol._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GST');
+  static const ChannelProtocol CLOCK = ChannelProtocol._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLOCK');
 
   static const $core.List<ChannelProtocol> values = <ChannelProtocol> [
     SINGLE,
@@ -32,6 +33,7 @@ class ChannelProtocol extends $pb.ProtobufEnum {
     DATA,
     MATERIAL,
     GST,
+    CLOCK,
   ];
 
   static final $core.Map<$core.int, ChannelProtocol> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -92,6 +94,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType G13Output = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Output');
   static const Node_NodeType ConstantNumber = Node_NodeType._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ConstantNumber');
   static const Node_NodeType Conditional = Node_NodeType._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Conditional');
+  static const Node_NodeType TimecodeControl = Node_NodeType._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeControl');
+  static const Node_NodeType TimecodeOutput = Node_NodeType._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeOutput');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -145,6 +149,8 @@ class Node_NodeType extends $pb.ProtobufEnum {
     G13Output,
     ConstantNumber,
     Conditional,
+    TimecodeControl,
+    TimecodeOutput,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -158,13 +164,15 @@ class Node_NodePreviewType extends $pb.ProtobufEnum {
   static const Node_NodePreviewType Waveform = Node_NodePreviewType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Waveform');
   static const Node_NodePreviewType Multiple = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiple');
   static const Node_NodePreviewType Texture = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Texture');
-  static const Node_NodePreviewType None = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
+  static const Node_NodePreviewType Timecode = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Timecode');
+  static const Node_NodePreviewType None = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
 
   static const $core.List<Node_NodePreviewType> values = <Node_NodePreviewType> [
     History,
     Waveform,
     Multiple,
     Texture,
+    Timecode,
     None,
   ];
 

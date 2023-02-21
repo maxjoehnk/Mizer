@@ -16,12 +16,14 @@ use mizer_plan::Plan;
 use mizer_protocol_mqtt::MqttAddress;
 use mizer_protocol_osc::OscAddress;
 use mizer_sequencer::{Effect, Sequence};
+use mizer_timecode::{TimecodeControl, TimecodeTrack};
 
 mod connections;
 mod effects;
 mod fixtures;
 pub mod history;
 mod sequencer;
+mod timecode;
 
 lazy_static! {
     static ref CHANNEL_REGEX: Regex = RegexBuilder::new(
@@ -56,6 +58,14 @@ pub struct Project {
     pub effects: Vec<Effect>,
     #[serde(default)]
     pub plans: Vec<Plan>,
+    #[serde(default)]
+    pub timecodes: Timecodes,
+}
+
+#[derive(Default, Debug, Clone, Deserialize, Serialize, PartialEq)]
+pub struct Timecodes {
+    pub timecodes: Vec<TimecodeTrack>,
+    pub controls: Vec<TimecodeControl>,
 }
 
 impl Project {

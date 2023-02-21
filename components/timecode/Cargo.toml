@@ -1,0 +1,22 @@
+[package]
+name = "mizer-timecode"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+mizer-commander = { path = "../../runtime/commander" }
+mizer-module = { path = "../../runtime/module" }
+mizer-clock = { path = "../../runtime/clock" }
+pinboard = "2.1"
+profiling = "1"
+tracing = "0.1"
+dashmap = "5.4"
+mizer-util = { path = "../../util" }
+
+[dev-dependencies]
+test-case = "2.2"
+plotters = { version = "0.3", default-features = false, features = ["svg_backend", "line_series"] }

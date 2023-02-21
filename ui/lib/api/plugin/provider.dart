@@ -11,6 +11,7 @@ import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/api/contracts/sequencer.dart';
 import 'package:mizer/api/contracts/session.dart';
 import 'package:mizer/api/contracts/settings.dart';
+import 'package:mizer/api/contracts/timecode.dart';
 import 'package:mizer/api/contracts/transport.dart';
 import 'package:mizer/api/contracts/effects.dart';
 
@@ -24,6 +25,7 @@ import 'nodes.dart';
 import 'programmer.dart';
 import 'sequencer.dart';
 import 'session.dart';
+import 'timecode.dart';
 import 'transport.dart';
 import 'effects.dart';
 import 'plans.dart';
@@ -57,6 +59,7 @@ class PluginApiProvider extends StatelessWidget {
         RepositoryProvider<EffectsApi>(create: (_) => EffectsPluginApi()),
         RepositoryProvider<PlansApi>(create: (_) => PlansPluginApi(bindings)),
         RepositoryProvider<MappingsApi>(create: (_) => MappingsPluginApi()),
+        RepositoryProvider<TimecodeApi>(create: (_) => TimecodePluginApi()),
       ],
     );
   }

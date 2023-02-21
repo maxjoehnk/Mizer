@@ -43,7 +43,8 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
         MonitorOscEventChannel::new(handlers.connections, async_runtime.clone(), context.weak())
             .event_channel(context.weak());
     let _fixtures = FixturesChannel::new(handlers.fixtures).channel(context.weak());
-    let _nodes = NodesChannel::new(handlers.nodes).channel(context.weak());
+    let _nodes =
+        NodesChannel::new(handlers.nodes, handlers.timecode.clone()).channel(context.weak());
     let _layouts = LayoutsChannel::new(handlers.layouts).channel(context.weak());
     let _media = MediaChannel::new(handlers.media).channel(context.weak());
     let _transport = TransportChannel::new(handlers.transport.clone()).channel(context.weak());
@@ -73,6 +74,7 @@ pub fn run<R: RuntimeApi + 'static, AR: AsyncRuntime + 'static, LH: LifecycleHan
     let _effects = EffectsChannel::new(handlers.effects).channel(context.weak());
     let _plans = PlansChannel::new(handlers.plans).channel(context.weak());
     let _mappings = MappingsChannel::new(handlers.mappings).channel(context.weak());
+    let _timecode = TimecodeChannel::new(handlers.timecode).channel(context.weak());
 
     context
         .window_manager

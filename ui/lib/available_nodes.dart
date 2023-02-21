@@ -53,6 +53,8 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.G13Output: "G13 Output",
   Node_NodeType.ConstantNumber: "Constant Number",
   Node_NodeType.Conditional: "Conditional",
+  Node_NodeType.TimecodeControl: "Timecode Control",
+  Node_NodeType.TimecodeOutput: "Timecode Output",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -76,6 +78,8 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Noise,
     Node_NodeType.ConstantNumber,
     Node_NodeType.Conditional,
+    Node_NodeType.TimecodeControl,
+    Node_NodeType.TimecodeOutput,
   ]),
   buildCategory("Connections", [
     Node_NodeType.DmxOutput,

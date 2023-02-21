@@ -21,6 +21,7 @@ enum View {
   FixturePatch,
   Session,
   History,
+  Timecode,
 }
 
 const ViewHotkeyLabels = {
@@ -38,6 +39,7 @@ const ViewHotkeyLabels = {
   View.FixturePatch: "fixture_patch_view",
   View.Session: "session_view",
   View.History: "history_view",
+  View.Timecode: "timecode_view",
 };
 
 extension ViewToHotkey on View {

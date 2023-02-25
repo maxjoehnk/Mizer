@@ -36,12 +36,13 @@ pub fn init() -> anyhow::Result<()> {
 }
 
 #[cfg(target_os = "macos")]
-pub fn init() {
+pub fn init() -> anyhow::Result<()> {
     use log::LevelFilter;
     use oslog::*;
 
     OsLogger::new("live.mizer")
         .level_filter(LevelFilter::Debug)
-        .init()
-        .unwrap();
+        .init()?;
+
+    Ok(())
 }

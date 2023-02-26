@@ -1096,6 +1096,8 @@ class ControlDecorations extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlDecorations', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasColor', protoName: 'hasColor')
     ..aOM<Color>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Color.create)
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasImage', protoName: 'hasImage')
+    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -1103,6 +1105,8 @@ class ControlDecorations extends $pb.GeneratedMessage {
   factory ControlDecorations({
     $core.bool? hasColor,
     Color? color_2,
+    $core.bool? hasImage,
+    $core.List<$core.int>? image_4,
   }) {
     final _result = create();
     if (hasColor != null) {
@@ -1110,6 +1114,12 @@ class ControlDecorations extends $pb.GeneratedMessage {
     }
     if (color_2 != null) {
       _result.color_2 = color_2;
+    }
+    if (hasImage != null) {
+      _result.hasImage = hasImage;
+    }
+    if (image_4 != null) {
+      _result.image_4 = image_4;
     }
     return _result;
   }
@@ -1153,6 +1163,24 @@ class ControlDecorations extends $pb.GeneratedMessage {
   void clearColor_2() => clearField(2);
   @$pb.TagNumber(2)
   Color ensureColor_2() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.bool get hasImage => $_getBF(2);
+  @$pb.TagNumber(3)
+  set hasImage($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasHasImage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearHasImage() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.List<$core.int> get image_4 => $_getN(3);
+  @$pb.TagNumber(4)
+  set image_4($core.List<$core.int> v) { $_setBytes(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasImage_4() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearImage_4() => clearField(4);
 }
 
 class Color extends $pb.GeneratedMessage {

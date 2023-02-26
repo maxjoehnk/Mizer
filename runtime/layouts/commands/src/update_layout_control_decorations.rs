@@ -26,8 +26,8 @@ impl<'a> Command<'a> for UpdateLayoutControlDecorationsCommand {
     fn apply(&self, layout_storage: &LayoutStorage) -> anyhow::Result<(Self::Result, Self::State)> {
         let mut layouts = layout_storage.read();
         let control = get_control(&mut layouts, &self.layout_id, &self.control_id)?;
-        let previous = control.decoration;
-        control.decoration = self.decorations;
+        let previous = control.decoration.clone();
+        control.decoration = self.decorations.clone();
         layout_storage.set(layouts);
 
         Ok(((), previous))

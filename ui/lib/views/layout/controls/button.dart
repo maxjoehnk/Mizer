@@ -10,8 +10,15 @@ class ButtonControl extends StatefulWidget {
   final LayoutsRefPointer pointer;
   final LayoutControl control;
   final Color? color;
+  final MemoryImage? image;
 
-  const ButtonControl({required this.pointer, required this.control, required this.color, Key? key}) : super(key: key);
+  const ButtonControl(
+      {required this.pointer,
+      required this.control,
+      required this.color,
+      required this.image,
+      Key? key})
+      : super(key: key);
 
   @override
   _ButtonControlState createState() => _ButtonControlState();
@@ -47,6 +54,7 @@ class _ButtonControlState extends State<ButtonControl> with SingleTickerProvider
     return ButtonInput(
       label: widget.control.label,
       color: widget.color,
+      image: widget.image,
       pressed: value,
       onValue: (value) =>
           apiClient.writeControlValue(path: widget.control.node, port: "value", value: value),

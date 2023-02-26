@@ -2476,6 +2476,10 @@ pub struct ControlDecorations {
     pub hasColor: bool,
     // @@protoc_insertion_point(field:mizer.ControlDecorations.color)
     pub color: ::protobuf::MessageField<Color>,
+    // @@protoc_insertion_point(field:mizer.ControlDecorations.hasImage)
+    pub hasImage: bool,
+    // @@protoc_insertion_point(field:mizer.ControlDecorations.image)
+    pub image: ::std::vec::Vec<u8>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.ControlDecorations.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -2493,7 +2497,7 @@ impl ControlDecorations {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(4);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "hasColor",
@@ -2504,6 +2508,16 @@ impl ControlDecorations {
             "color",
             |m: &ControlDecorations| { &m.color },
             |m: &mut ControlDecorations| { &mut m.color },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "hasImage",
+            |m: &ControlDecorations| { &m.hasImage },
+            |m: &mut ControlDecorations| { &mut m.hasImage },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "image",
+            |m: &ControlDecorations| { &m.image },
+            |m: &mut ControlDecorations| { &mut m.image },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ControlDecorations>(
             "ControlDecorations",
@@ -2529,6 +2543,12 @@ impl ::protobuf::Message for ControlDecorations {
                 18 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.color)?;
                 },
+                24 => {
+                    self.hasImage = is.read_bool()?;
+                },
+                34 => {
+                    self.image = is.read_bytes()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -2548,6 +2568,12 @@ impl ::protobuf::Message for ControlDecorations {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        if self.hasImage != false {
+            my_size += 1 + 1;
+        }
+        if !self.image.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(4, &self.image);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -2559,6 +2585,12 @@ impl ::protobuf::Message for ControlDecorations {
         }
         if let Some(v) = self.color.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        }
+        if self.hasImage != false {
+            os.write_bool(3, self.hasImage)?;
+        }
+        if !self.image.is_empty() {
+            os.write_bytes(4, &self.image)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2579,6 +2611,8 @@ impl ::protobuf::Message for ControlDecorations {
     fn clear(&mut self) {
         self.hasColor = false;
         self.color.clear();
+        self.hasImage = false;
+        self.image.clear();
         self.special_fields.clear();
     }
 
@@ -2586,6 +2620,8 @@ impl ::protobuf::Message for ControlDecorations {
         static instance: ControlDecorations = ControlDecorations {
             hasColor: false,
             color: ::protobuf::MessageField::none(),
+            hasImage: false,
+            image: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -3352,33 +3388,34 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0fControlPosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x04R\x01x\x12\x0c\n\
     \x01y\x18\x02\x20\x01(\x04R\x01y\";\n\x0bControlSize\x12\x14\n\x05width\
     \x18\x01\x20\x01(\x04R\x05width\x12\x16\n\x06height\x18\x02\x20\x01(\x04\
-    R\x06height\"T\n\x12ControlDecorations\x12\x1a\n\x08hasColor\x18\x01\x20\
-    \x01(\x08R\x08hasColor\x12\"\n\x05color\x18\x02\x20\x01(\x0b2\x0c.mizer.\
-    ColorR\x05color\"C\n\x05Color\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03\
-    red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\
-    \x18\x03\x20\x01(\x01R\x04blue\"P\n\x0fControlBehavior\x12=\n\tsequencer\
-    \x18\x01\x20\x01(\x0b2\x1f.mizer.SequencerControlBehaviorR\tsequencer\"\
-    \x9d\x01\n\x18SequencerControlBehavior\x12T\n\x0eclick_behavior\x18\x01\
-    \x20\x01(\x0e2-.mizer.SequencerControlBehavior.ClickBehaviorR\rclickBeha\
-    vior\"+\n\rClickBehavior\x12\x0e\n\nGO_FORWARD\x10\0\x12\n\n\x06TOGGLE\
-    \x10\x01\"+\n\x15ReadFaderValueRequest\x12\x12\n\x04node\x18\x01\x20\x01\
-    (\tR\x04node\"*\n\x12FaderValueResponse\x12\x14\n\x05value\x18\x01\x20\
-    \x01(\x01R\x05value2\xc4\x06\n\nLayoutsApi\x126\n\nGetLayouts\x12\x18.mi\
-    zer.GetLayoutsRequest\x1a\x0e.mizer.Layouts\x124\n\tAddLayout\x12\x17.mi\
-    zer.AddLayoutRequest\x1a\x0e.mizer.Layouts\x12:\n\x0cRemoveLayout\x12\
-    \x1a.mizer.RemoveLayoutRequest\x1a\x0e.mizer.Layouts\x12:\n\x0cRenameLay\
-    out\x12\x1a.mizer.RenameLayoutRequest\x1a\x0e.mizer.Layouts\x12C\n\rRena\
-    meControl\x12\x1b.mizer.RenameControlRequest\x1a\x15.mizer.LayoutRespons\
-    e\x12?\n\x0bMoveControl\x12\x19.mizer.MoveControlRequest\x1a\x15.mizer.L\
-    ayoutResponse\x12W\n\x17UpdateControlDecoration\x12%.mizer.UpdateControl\
-    DecorationRequest\x1a\x15.mizer.LayoutResponse\x12S\n\x15UpdateControlBe\
-    havior\x12#.mizer.UpdateControlBehaviorRequest\x1a\x15.mizer.LayoutRespo\
-    nse\x12C\n\rRemoveControl\x12\x1b.mizer.RemoveControlRequest\x1a\x15.miz\
-    er.LayoutResponse\x12=\n\nAddControl\x12\x18.mizer.AddControlRequest\x1a\
-    \x15.mizer.LayoutResponse\x12M\n\x12AddExistingControl\x12\x20.mizer.Add\
-    ExistingControlRequest\x1a\x15.mizer.LayoutResponse\x12I\n\x0eReadFaderV\
-    alue\x12\x1c.mizer.ReadFaderValueRequest\x1a\x19.mizer.FaderValueRespons\
-    eb\x06proto3\
+    R\x06height\"\x86\x01\n\x12ControlDecorations\x12\x1a\n\x08hasColor\x18\
+    \x01\x20\x01(\x08R\x08hasColor\x12\"\n\x05color\x18\x02\x20\x01(\x0b2\
+    \x0c.mizer.ColorR\x05color\x12\x1a\n\x08hasImage\x18\x03\x20\x01(\x08R\
+    \x08hasImage\x12\x14\n\x05image\x18\x04\x20\x01(\x0cR\x05image\"C\n\x05C\
+    olor\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\x05green\
+    \x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\x01(\x01R\
+    \x04blue\"P\n\x0fControlBehavior\x12=\n\tsequencer\x18\x01\x20\x01(\x0b2\
+    \x1f.mizer.SequencerControlBehaviorR\tsequencer\"\x9d\x01\n\x18Sequencer\
+    ControlBehavior\x12T\n\x0eclick_behavior\x18\x01\x20\x01(\x0e2-.mizer.Se\
+    quencerControlBehavior.ClickBehaviorR\rclickBehavior\"+\n\rClickBehavior\
+    \x12\x0e\n\nGO_FORWARD\x10\0\x12\n\n\x06TOGGLE\x10\x01\"+\n\x15ReadFader\
+    ValueRequest\x12\x12\n\x04node\x18\x01\x20\x01(\tR\x04node\"*\n\x12Fader\
+    ValueResponse\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05value2\xc4\x06\
+    \n\nLayoutsApi\x126\n\nGetLayouts\x12\x18.mizer.GetLayoutsRequest\x1a\
+    \x0e.mizer.Layouts\x124\n\tAddLayout\x12\x17.mizer.AddLayoutRequest\x1a\
+    \x0e.mizer.Layouts\x12:\n\x0cRemoveLayout\x12\x1a.mizer.RemoveLayoutRequ\
+    est\x1a\x0e.mizer.Layouts\x12:\n\x0cRenameLayout\x12\x1a.mizer.RenameLay\
+    outRequest\x1a\x0e.mizer.Layouts\x12C\n\rRenameControl\x12\x1b.mizer.Ren\
+    ameControlRequest\x1a\x15.mizer.LayoutResponse\x12?\n\x0bMoveControl\x12\
+    \x19.mizer.MoveControlRequest\x1a\x15.mizer.LayoutResponse\x12W\n\x17Upd\
+    ateControlDecoration\x12%.mizer.UpdateControlDecorationRequest\x1a\x15.m\
+    izer.LayoutResponse\x12S\n\x15UpdateControlBehavior\x12#.mizer.UpdateCon\
+    trolBehaviorRequest\x1a\x15.mizer.LayoutResponse\x12C\n\rRemoveControl\
+    \x12\x1b.mizer.RemoveControlRequest\x1a\x15.mizer.LayoutResponse\x12=\n\
+    \nAddControl\x12\x18.mizer.AddControlRequest\x1a\x15.mizer.LayoutRespons\
+    e\x12M\n\x12AddExistingControl\x12\x20.mizer.AddExistingControlRequest\
+    \x1a\x15.mizer.LayoutResponse\x12I\n\x0eReadFaderValue\x12\x1c.mizer.Rea\
+    dFaderValueRequest\x1a\x19.mizer.FaderValueResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

@@ -1,3 +1,4 @@
+use base64::Engine;
 use mizer_node::{Color, NodePath};
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
@@ -45,9 +46,10 @@ impl Default for ControlSize {
     }
 }
 
-#[derive(Default, Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Hash)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Hash)]
 pub struct ControlDecorations {
     pub color: Option<Color>,
+    pub image: Option<Base64Image>,
 }
 
 #[derive(Debug, Default, Clone, Copy, Deserialize, Serialize, PartialEq, Hash)]
@@ -67,4 +69,19 @@ pub enum SequencerControlClickBehavior {
     #[default]
     GoForward,
     Toggle,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Hash)]
+pub struct Base64Image(String);
+
+impl Base64Image {
+    pub fn from_buffer(buffer: Vec<u8>) -> Self {
+        Self(base64::engine::general_purpose::STANDARD.encode(buffer))
+    }
+
+    pub fn try_to_buffer(&self) -> anyhow::Result<Vec<u8>> {
+        let buffer = base64::engine::general_purpose::STANDARD.decode(&self.0)?;
+
+        Ok(buffer)
+    }
 }

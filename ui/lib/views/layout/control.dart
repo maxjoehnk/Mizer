@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/nodes.dart';
@@ -24,7 +26,7 @@ import 'dialogs/edit_control_dialog.dart';
 import 'dialogs/edit_sequencer_control_behavior_dialog.dart';
 import 'dialogs/rename_control_dialog.dart';
 
-class LayoutControlView extends StatelessWidget {
+class LayoutControlView extends StatefulWidget {
   final LayoutsRefPointer pointer;
   final LayoutControl control;
   final String layoutId;
@@ -34,10 +36,35 @@ class LayoutControlView extends StatelessWidget {
   LayoutControlView(this.pointer, this.layoutId, this.control, this.sequencerState, this.onMove);
 
   @override
+  State<LayoutControlView> createState() => _LayoutControlViewState();
+}
+
+class _LayoutControlViewState extends State<LayoutControlView> {
+  MemoryImage? _image;
+
+  @override
+  void initState() {
+    super.initState();
+    this._image = widget.control.decoration.hasImage
+        ? MemoryImage(Uint8List.fromList(widget.control.decoration.image_4))
+        : null;
+  }
+
+  @override
+  void didUpdateWidget(LayoutControlView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.control.decoration.image_4 != widget.control.decoration.image_4) {
+      this._image = widget.control.decoration.hasImage
+          ? MemoryImage(Uint8List.fromList(widget.control.decoration.image_4))
+          : null;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     NodesBloc nodes = context.watch();
     NodesApi nodesApi = context.read();
-    Node? node = nodes.getNodeByPath(this.control.node);
+    Node? node = nodes.getNodeByPath(this.widget.control.node);
 
     var control = _getControl(node, nodesApi);
 
@@ -50,7 +77,7 @@ class LayoutControlView extends StatelessWidget {
       menu: Menu(items: [
         MenuItem(label: "Rename".i18n, action: () => _renameControl(context)),
         MenuItem(label: "Edit".i18n, action: () => _editControl(context)),
-        MenuItem(label: "Move".i18n, action: () => onMove()),
+        MenuItem(label: "Move".i18n, action: () => widget.onMove()),
         MenuItem(label: "Delete".i18n, action: () => _deleteControl(context)),
         if (node?.type == Node_NodeType.Sequencer)
           MenuItem(label: "Behavior".i18n, action: () => _editSequencerBehavior(context)),
@@ -69,20 +96,25 @@ class LayoutControlView extends StatelessWidget {
 
   Widget? _getControl(Node? node, NodesApi apiClient) {
     if (node?.type == Node_NodeType.Fader) {
-      return FaderControl(pointer: pointer, control: control, color: _color);
+      return FaderControl(pointer: widget.pointer, control: widget.control, color: _color);
     } else if (node?.type == Node_NodeType.Button) {
-      return ButtonControl(pointer: pointer, control: control, color: _color);
+      return ButtonControl(
+        pointer: widget.pointer,
+        control: widget.control,
+        color: _color,
+        image: _image,
+      );
     } else if (node?.type == Node_NodeType.Sequencer) {
       return SequencerControl(
-        label: control.label,
+        label: widget.control.label,
         color: _color,
         node: node!,
-        state: sequencerState,
-        size: control.size,
-        behavior: control.behavior.sequencer,
+        state: widget.sequencerState,
+        size: widget.control.size,
+        behavior: widget.control.behavior.sequencer,
       );
     } else if (node?.type == Node_NodeType.Label) {
-      return LabelControl(pointer: pointer, control: control, color: _color);
+      return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
     }
     return null;
   }
@@ -90,47 +122,59 @@ class LayoutControlView extends StatelessWidget {
   _editControl(BuildContext context) async {
     LayoutsBloc bloc = context.read();
     ControlDecorations? result = await showDialog(
-        context: context, builder: (context) => EditControlDialog(control: control));
+        context: context, builder: (context) => EditControlDialog(control: widget.control));
     if (result != null) {
-      bloc.add(UpdateControlDecoration(layoutId: layoutId, controlId: control.node, decorations: result));
+      bloc.add(UpdateControlDecoration(
+          layoutId: widget.layoutId, controlId: widget.control.node, decorations: result));
     }
   }
 
   _renameControl(BuildContext context) async {
     LayoutsBloc bloc = context.read();
     String? result = await showDialog(
-        context: context, builder: (context) => RenameControlDialog(name: control.label));
+        context: context, builder: (context) => RenameControlDialog(name: widget.control.label));
     if (result != null) {
-      bloc.add(RenameControl(layoutId: layoutId, controlId: control.node, name: result));
+      bloc.add(
+          RenameControl(layoutId: widget.layoutId, controlId: widget.control.node, name: result));
     }
   }
 
   _deleteControl(BuildContext context) async {
     LayoutsBloc bloc = context.read();
     bool result = await showDialog(
-        context: context, builder: (BuildContext context) => DeleteControlDialog(control: control));
+        context: context,
+        builder: (BuildContext context) => DeleteControlDialog(control: widget.control));
     if (result) {
-      bloc.add(DeleteControl(layoutId: layoutId, controlId: control.node));
+      bloc.add(DeleteControl(layoutId: widget.layoutId, controlId: widget.control.node));
     }
   }
 
   Color? get _color {
-    return control.decoration.hasColor ? control.decoration.color_2.asFlutterColor : null;
+    return widget.control.decoration.hasColor
+        ? widget.control.decoration.color_2.asFlutterColor
+        : null;
   }
 
   _addMappingForControl(BuildContext context) async {
     var request = MappingRequest(
-      layoutControl: LayoutControlAction(controlNode: control.node),
+      layoutControl: LayoutControlAction(controlNode: widget.control.node),
     );
-    await addMidiMapping(context, "Add MIDI Mapping for Control ${control.label.isNotEmpty ? control.label : control.node}", request);
+    await addMidiMapping(
+        context,
+        "Add MIDI Mapping for Control ${widget.control.label.isNotEmpty ? widget.control.label : widget.control.node}",
+        request);
   }
 
   _editSequencerBehavior(BuildContext context) async {
     LayoutsBloc bloc = context.read();
     SequencerControlBehavior? result = await showDialog(
-        context: context, builder: (context) => EditSequencerControlBehaviorDialog(control: control));
+        context: context,
+        builder: (context) => EditSequencerControlBehaviorDialog(control: widget.control));
     if (result != null) {
-      bloc.add(UpdateControlBehavior(layoutId: layoutId, controlId: control.node, behavior: ControlBehavior(sequencer: result)));
+      bloc.add(UpdateControlBehavior(
+          layoutId: widget.layoutId,
+          controlId: widget.control.node,
+          behavior: ControlBehavior(sequencer: result)));
     }
   }
 }

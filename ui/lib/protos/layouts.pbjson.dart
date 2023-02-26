@@ -200,11 +200,13 @@ const ControlDecorations$json = const {
   '2': const [
     const {'1': 'hasColor', '3': 1, '4': 1, '5': 8, '10': 'hasColor'},
     const {'1': 'color', '3': 2, '4': 1, '5': 11, '6': '.mizer.Color', '10': 'color'},
+    const {'1': 'hasImage', '3': 3, '4': 1, '5': 8, '10': 'hasImage'},
+    const {'1': 'image', '3': 4, '4': 1, '5': 12, '10': 'image'},
   ],
 };
 
 /// Descriptor for `ControlDecorations`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List controlDecorationsDescriptor = $convert.base64Decode('ChJDb250cm9sRGVjb3JhdGlvbnMSGgoIaGFzQ29sb3IYASABKAhSCGhhc0NvbG9yEiIKBWNvbG9yGAIgASgLMgwubWl6ZXIuQ29sb3JSBWNvbG9y');
+final $typed_data.Uint8List controlDecorationsDescriptor = $convert.base64Decode('ChJDb250cm9sRGVjb3JhdGlvbnMSGgoIaGFzQ29sb3IYASABKAhSCGhhc0NvbG9yEiIKBWNvbG9yGAIgASgLMgwubWl6ZXIuQ29sb3JSBWNvbG9yEhoKCGhhc0ltYWdlGAMgASgIUghoYXNJbWFnZRIUCgVpbWFnZRgEIAEoDFIFaW1hZ2U=');
 @$core.Deprecated('Use colorDescriptor instead')
 const Color$json = const {
   '1': 'Color',

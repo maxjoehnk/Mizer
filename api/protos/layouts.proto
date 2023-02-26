@@ -110,6 +110,8 @@ message ControlSize {
 message ControlDecorations {
   bool hasColor = 1;
   Color color = 2;
+  bool hasImage = 3;
+  bytes image = 4;
 }
 
 message Color {

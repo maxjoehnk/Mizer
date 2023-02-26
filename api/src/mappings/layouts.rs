@@ -1,4 +1,5 @@
 use crate::models::layouts::*;
+use mizer_layouts::Base64Image;
 use protobuf::{EnumOrUnknown, MessageField};
 
 impl From<mizer_layouts::Layout> for Layout {
@@ -72,6 +73,11 @@ impl From<mizer_layouts::ControlDecorations> for ControlDecorations {
         Self {
             hasColor: decorations.color.is_some(),
             color: decorations.color.map(Color::from).into(),
+            hasImage: decorations.image.is_some(),
+            image: decorations
+                .image
+                .and_then(|img| img.try_to_buffer().ok())
+                .unwrap_or_default(),
             ..Default::default()
         }
     }
@@ -83,6 +89,9 @@ impl From<ControlDecorations> for mizer_layouts::ControlDecorations {
             color: decorations
                 .hasColor
                 .then(|| decorations.color.unwrap().into()),
+            image: decorations
+                .hasImage
+                .then(|| Base64Image::from_buffer(decorations.image)),
         }
     }
 }

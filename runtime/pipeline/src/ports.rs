@@ -291,7 +291,7 @@ impl<V: PortValue + 'static> NodeReceiver<V> {
                 .borrow()
                 .as_ref()
                 // TODO: return reference to data
-                .and_then(|port| port.recv().map(|value| value.clone()))
+                .and_then(|port| port.recv().and_then(|value| value.clone()))
         })
     }
 }

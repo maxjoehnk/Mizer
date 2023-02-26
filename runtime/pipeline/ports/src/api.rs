@@ -106,7 +106,7 @@ where
     fn recv(&'a self) -> Option<Self::Guard>;
 }
 
-pub trait ReceiverGuard<Item>: Deref<Target = Item>
+pub trait ReceiverGuard<Item>: Deref<Target = Option<Item>>
 where
     Item: PortValue,
 {

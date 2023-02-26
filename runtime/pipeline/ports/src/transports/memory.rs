@@ -4,9 +4,8 @@ use std::rc::Rc;
 
 use crate::api::*;
 
-pub fn channel<T: Clone + Default>() -> (MemorySender<T>, MemoryReceiver<T>) {
-    // TODO: can we implement this without the default requirement?
-    let swap = Rc::new(RefCell::new(T::default()));
+pub fn channel<T: Clone>() -> (MemorySender<T>, MemoryReceiver<T>) {
+    let swap = Rc::new(RefCell::new(None));
     let sender = MemorySender { cell: swap.clone() };
     let receiver = MemoryReceiver { cell: swap };
 
@@ -14,7 +13,7 @@ pub fn channel<T: Clone + Default>() -> (MemorySender<T>, MemoryReceiver<T>) {
 }
 
 pub struct MemorySender<Item> {
-    cell: Rc<RefCell<Item>>,
+    cell: Rc<RefCell<Option<Item>>>,
 }
 
 impl<Item> MemorySender<Item> {
@@ -30,28 +29,28 @@ where
     Item: PortValue,
 {
     fn send(&self, value: Item) -> anyhow::Result<()> {
-        *self.cell.borrow_mut() = value;
+        *self.cell.borrow_mut() = Some(value);
         Ok(())
     }
 }
 
 #[derive(Clone)]
 pub struct MemoryReceiver<T> {
-    cell: Rc<RefCell<T>>,
+    cell: Rc<RefCell<Option<T>>>,
 }
 
 impl<'a, Item> NodePortReceiver<'a, Item> for MemoryReceiver<Item>
 where
     Item: PortValue + 'a,
 {
-    type Guard = Ref<'a, Item>;
+    type Guard = Ref<'a, Option<Item>>;
 
     fn recv(&'a self) -> Option<Self::Guard> {
         Some(self.cell.deref().borrow())
     }
 }
 
-impl<'a, Item: PortValue> ReceiverGuard<Item> for Ref<'a, Item> {}
+impl<'a, Item: PortValue> ReceiverGuard<Item> for Ref<'a, Option<Item>> {}
 
 #[cfg(test)]
 mod tests {
@@ -67,6 +66,6 @@ mod tests {
 
         let result = receiver.recv();
 
-        assert_eq!(result.unwrap().deref(), &payload);
+        assert_eq!(result.unwrap().deref(), &Some(payload));
     }
 }

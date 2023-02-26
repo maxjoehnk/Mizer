@@ -7,7 +7,7 @@ use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct Swap<T> {
-    buffer: Arc<epoch::Atomic<T>>,
+    buffer: Arc<epoch::Atomic<Option<T>>>,
     dirty: Arc<AtomicBool>,
 }
 
@@ -21,7 +21,7 @@ impl<T> Swap<T> {
 
     // TODO: this leaks memory
     pub fn store(&self, data: T) {
-        let owned = epoch::Owned::new(data);
+        let owned = epoch::Owned::new(Some(data));
         self.buffer.store(owned, Ordering::Release);
         self.dirty.store(true, Ordering::Release);
     }
@@ -34,12 +34,12 @@ impl<T> Swap<T> {
 }
 
 pub struct SwapReadGuard<'a, T> {
-    buffer: &'a epoch::Atomic<T>,
+    buffer: &'a epoch::Atomic<Option<T>>,
     guard: epoch::Guard,
 }
 
 impl<'a, T> SwapReadGuard<'a, T> {
-    fn new(buffer: &'a epoch::Atomic<T>) -> Self {
+    fn new(buffer: &'a epoch::Atomic<Option<T>>) -> Self {
         SwapReadGuard {
             buffer,
             guard: epoch::pin(),
@@ -47,7 +47,7 @@ impl<'a, T> SwapReadGuard<'a, T> {
     }
 
     // TODO: read when acquiring guard
-    fn read(&self) -> epoch::Shared<T> {
+    fn read(&self) -> epoch::Shared<Option<T>> {
         self.buffer.load(Ordering::Acquire, &self.guard)
     }
 }
@@ -55,7 +55,7 @@ impl<'a, T> SwapReadGuard<'a, T> {
 // impl Drop for SwapReadGuard {}
 
 impl<'a, T> Deref for SwapReadGuard<'a, T> {
-    type Target = T;
+    type Target = Option<T>;
 
     fn deref(&self) -> &Self::Target {
         let ptr = self.read();
@@ -81,7 +81,7 @@ mod tests {
         let guard = swap.get().unwrap();
         let result = guard.deref();
 
-        assert_eq!(result, &buffer);
+        assert_eq!(result, &Some(buffer));
     }
 
     #[test]
@@ -95,7 +95,7 @@ mod tests {
 
         swap.store(buffer2);
 
-        assert_eq!(result, &buffer1);
+        assert_eq!(result, &Some(buffer1));
     }
 
     #[test]
@@ -111,7 +111,7 @@ mod tests {
         let guard2 = swap.get().unwrap();
         let second_read = guard2.deref();
 
-        assert_eq!(first_read, &buffer1);
-        assert_eq!(second_read, &buffer2);
+        assert_eq!(first_read, &Some(buffer1));
+        assert_eq!(second_read, &Some(buffer2));
     }
 }

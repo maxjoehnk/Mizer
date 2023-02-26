@@ -104,6 +104,6 @@ mod tests {
             }
         }
 
-        assert_eq!(result.unwrap().deref(), &payload);
+        assert_eq!(result.unwrap().deref(), &Some(payload));
     }
 }

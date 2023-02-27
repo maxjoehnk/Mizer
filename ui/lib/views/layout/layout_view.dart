@@ -203,7 +203,7 @@ class _ControlLayoutState extends State<ControlLayout> {
                 return;
               }
               setState(() {
-                _movingNodePosition = _movingNodePosition! + event.localDelta;
+                _movingNodePosition = event.localPosition;
               });
             },
             onPointerDown: (e) {
@@ -284,7 +284,7 @@ class _ControlsContainer extends StatelessWidget {
 
   const _ControlsContainer(
       {required this.pointer,
-        required this.layout,
+      required this.layout,
       required this.startMove,
       this.movingNode,
       this.movingNodePosition,
@@ -312,9 +312,10 @@ class _ControlsContainer extends StatelessWidget {
                     ),
                     color: Colors.deepOrange.shade100.withAlpha(10),
                   ))),
-            ...layout.controls.map((e) => LayoutId(
-                id: e.node,
-                child: LayoutControlView(pointer, layout.id, e, sequencerState, () => startMove(e)))),
+            ...layout.controls.map((c) => LayoutId(
+                id: c.node,
+                child:
+                    LayoutControlView(pointer, layout.id, c, sequencerState, () => startMove(c)))),
           ]);
     });
   }

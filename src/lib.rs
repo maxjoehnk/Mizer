@@ -47,7 +47,7 @@ pub fn build_runtime(
         .context("Failed to load settings from disk")?;
     let settings = Arc::new(NonEmptyPinboard::new(settings));
     log::trace!("Building mizer runtime...");
-    let mut runtime = DefaultRuntime::new();
+    let mut runtime = DefaultRuntime::new(flags.debug);
 
     let sequencer =
         register_sequencer_module(&mut runtime).context("Failed to register sequencer module")?;

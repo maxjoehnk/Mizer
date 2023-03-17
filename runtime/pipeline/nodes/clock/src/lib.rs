@@ -56,4 +56,23 @@ impl ProcessingNode for ClockNode {
     fn update(&mut self, config: &Self) {
         self.speed = config.speed;
     }
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {
+        ui.collapsing_header("Config", |ui| {
+            ui.columns(2, |columns| {
+                columns[0].label("BPM");
+                columns[1].label(self.speed.to_string());
+            });
+        });
+        ui.collapsing_header("State", |ui| {
+            ui.columns(2, |columns| {
+                columns[0].label("Speed");
+                columns[1].label(state.speed().to_string());
+
+                let snapshot = state.snapshot();
+                columns[0].label("Timecode");
+                columns[1].label(snapshot.time.to_string());
+            });
+        });
+    }
 }

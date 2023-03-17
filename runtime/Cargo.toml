@@ -12,6 +12,7 @@ dashmap = "5"
 downcast = "0.11"
 flume = "0.10"
 mizer-clock = { path = "clock" }
+mizer-debug-ui = { path = "debug-ui" }
 mizer-node = { path = "pipeline/node" }
 mizer-nodes = { path = "pipeline/nodes" }
 mizer-pipeline = { path = "pipeline" }

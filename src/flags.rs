@@ -14,6 +14,8 @@ pub struct Flags {
     #[cfg(feature = "export_metrics")]
     #[structopt(long, default_value = "8888")]
     pub metrics_port: u16,
+    #[structopt(long)]
+    pub debug: bool,
     /// Join an existing session or start a new session
     #[structopt(long)]
     pub join: bool,

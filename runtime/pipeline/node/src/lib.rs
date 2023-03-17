@@ -8,6 +8,7 @@ pub use self::introspection::*;
 pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
+pub use mizer_debug_ui::DebugUiDrawHandle;
 use std::fmt::Debug;
 
 mod context;
@@ -76,4 +77,6 @@ pub trait ProcessingNode: PipelineNode + Clone + Default + Debug {
     fn create_state(&self) -> Self::State;
 
     fn update(&mut self, config: &Self);
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {}
 }

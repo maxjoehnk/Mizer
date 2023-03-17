@@ -2,6 +2,7 @@ use std::any::{type_name, Any};
 use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::ops::Deref;
 
 use downcast::*;
 
@@ -9,7 +10,7 @@ use mizer_clock::{Clock, ClockFrame};
 use mizer_node::*;
 use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
-use mizer_processing::Injector;
+use mizer_processing::{DebugUiDrawHandle, Injector};
 use mizer_protocol_laser::LaserFrame;
 
 use crate::ports::{NodeReceivers, NodeSenders};
@@ -20,6 +21,8 @@ use std::sync::Arc;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Box<dyn Any>);
 
     fn as_pipeline_node_mut(&mut self) -> &mut dyn PipelineNode;
 }
@@ -33,6 +36,14 @@ where
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()> {
         if let Some(state) = state.downcast_mut() {
             self.process(context, state)
+        } else {
+            unreachable!()
+        }
+    }
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Box<dyn Any>) {
+        if let Some(state) = state.downcast_ref() {
+            self.debug_ui(ui, state)
         } else {
             unreachable!()
         }
@@ -357,6 +368,20 @@ impl PipelineWorker {
                 log::error!("processing of node {} failed: {:?}", &path, e)
             }
         }
+    }
+
+    pub fn debug_ui(
+        &self,
+        ui: &mut DebugUiDrawHandle,
+        nodes: &Vec<(&NodePath, &Box<dyn ProcessingNodeExt>)>,
+    ) {
+        ui.collapsing_header("Nodes", |ui| {
+            for (path, node) in nodes {
+                let state = self.states.get(path);
+                let state = state.unwrap();
+                ui.collapsing_header(path.as_str(), |ui| node.debug_ui(ui, state));
+            }
+        });
     }
 
     pub fn get_state<S: 'static>(&self, path: &NodePath) -> Option<&S> {

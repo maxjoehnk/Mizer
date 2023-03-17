@@ -1,4 +1,4 @@
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Edge {
     last_value: Option<f64>,
 }

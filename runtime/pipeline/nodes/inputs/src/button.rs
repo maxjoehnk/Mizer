@@ -74,4 +74,22 @@ impl ProcessingNode for ButtonNode {
     fn update(&mut self, config: &Self) {
         self.toggle = config.toggle;
     }
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, (state, edge): &Self::State) {
+        ui.collapsing_header("Config", |ui| {
+            ui.columns(2, |columns| {
+                columns[0].label("Toggle");
+                columns[1].label(self.toggle.to_string());
+            });
+        });
+        ui.collapsing_header("State", |ui| {
+            ui.columns(2, |columns| {
+                columns[0].label("Value");
+                columns[1].label(state.to_string());
+
+                columns[0].label("Edge");
+                columns[1].label(format!("{edge:?}"));
+            });
+        });
+    }
 }

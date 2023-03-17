@@ -7,6 +7,7 @@ edition = "2021"
 [dependencies]
 mizer-clock = { path = "../clock" }
 mizer-injector = { path = "../injector" }
+mizer-debug-ui = { path = "../debug-ui" }
 
 [dev-dependencies]
 test-case = "3.0"

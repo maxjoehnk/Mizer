@@ -37,6 +37,15 @@ impl ProcessingNode for LabelNode {
     fn update(&mut self, config: &Self) {
         self.text = config.text.clone();
     }
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {
+        ui.collapsing_header("Config", |ui| {
+            ui.columns(2, |columns| {
+                columns[0].label("Text");
+                columns[1].label(self.text.to_string());
+            });
+        });
+    }
 }
 
 impl LabelNode {

@@ -26,6 +26,7 @@ members = [
     "runtime/clock",
     "runtime/commander",
     "runtime/commander/executor",
+    "runtime/debug-ui",
     "runtime/execution-planner",
     "runtime/injector",
     "runtime/layouts",

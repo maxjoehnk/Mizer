@@ -1,0 +1,17 @@
+[package]
+name = "mizer-debug-ui"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+egui = "0.21"
+egui-winit = "0.21"
+egui-wgpu = { version = "0.21", features = ["winit"] }
+egui_dock = "0.4"
+winit = "0.28"
+image = "0.24"
+log = "0.4"
+profiling = "1"
+futures = { version = "0.3", features = ["executor"] }

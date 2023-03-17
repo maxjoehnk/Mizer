@@ -14,7 +14,7 @@ use std::sync::{Arc, Mutex};
 #[derive(Default, Clone)]
 pub struct EffectEngine {
     pub effects: Arc<DashMap<u32, Effect>>,
-    instances: Arc<Mutex<HashMap<EffectInstanceId, EffectInstance>>>,
+    pub(crate) instances: Arc<Mutex<HashMap<EffectInstanceId, EffectInstance>>>,
     programmer_effects: Arc<Mutex<HashMap<ProgrammedEffect, EffectInstanceId>>>,
 }
 

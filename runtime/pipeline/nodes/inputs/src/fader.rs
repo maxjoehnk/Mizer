@@ -57,4 +57,13 @@ impl ProcessingNode for FaderNode {
     }
 
     fn update(&mut self, _config: &Self) {}
+
+    fn debug_ui(&self, ui: &mut DebugUiDrawHandle, state: &Self::State) {
+        ui.collapsing_header("State", |ui| {
+            ui.columns(2, |columns| {
+                columns[0].label("Value");
+                columns[1].label(state.to_string());
+            });
+        });
+    }
 }

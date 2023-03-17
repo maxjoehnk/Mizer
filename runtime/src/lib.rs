@@ -11,6 +11,7 @@ pub type DefaultRuntime = CoordinatorRuntime<SystemClock>;
 mod api;
 pub mod commands;
 mod coordinator;
+mod debug_ui;
 pub mod pipeline_access;
 mod processor;
 mod views;

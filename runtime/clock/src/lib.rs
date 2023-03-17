@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn now() -> u128 {
@@ -155,6 +156,20 @@ pub struct Timecode {
     pub seconds: u64,
     pub frames: u64,
     pub negative: bool,
+}
+
+impl Display for Timecode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}{}:{}:{}.{}",
+            if self.negative { "-" } else { "" },
+            self.hours,
+            self.minutes,
+            self.seconds,
+            self.frames
+        )
+    }
 }
 
 impl Timecode {

@@ -6,6 +6,7 @@ use pinboard::NonEmptyPinboard;
 
 use itertools::Itertools;
 use mizer_clock::{Clock, ClockSnapshot, SystemClock};
+use mizer_debug_ui::DebugUi;
 use mizer_execution_planner::*;
 use mizer_layouts::{ControlConfig, Layout, LayoutStorage};
 use mizer_module::Runtime;
@@ -34,18 +35,19 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_sender: flume::Sender<ClockSnapshot>,
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
+    ui: Option<DebugUi>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
-    pub fn new() -> Self {
+    pub fn new(debug_ui: bool) -> Self {
         let clock = SystemClock::default();
 
-        Self::with_clock(clock)
+        Self::with_clock(clock, debug_ui)
     }
 }
 
 impl<TClock: Clock> CoordinatorRuntime<TClock> {
-    pub fn with_clock(clock: TClock) -> CoordinatorRuntime<TClock> {
+    pub fn with_clock(clock: TClock, debug_ui: bool) -> CoordinatorRuntime<TClock> {
         let (clock_tx, clock_rx) = flume::unbounded();
         let snapshot = clock.snapshot();
         let mut runtime = Self {
@@ -60,6 +62,14 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
             clock_sender: clock_tx,
             clock_snapshot: NonEmptyPinboard::new(snapshot).into(),
             layout_fader_view: Default::default(),
+            ui: debug_ui.then(DebugUi::new).and_then(|ui| match ui {
+                Ok(ui) => Some(ui),
+                Err(err) => {
+                    log::error!("Debug UI is not available: {err:?}");
+
+                    None
+                }
+            }),
         };
         runtime.bootstrap();
 
@@ -285,6 +295,21 @@ impl<TClock: Clock> Runtime for CoordinatorRuntime<TClock> {
         log::trace!("post_process");
         for processor in self.processors.iter_mut() {
             processor.post_process(&self.injector, frame);
+        }
+        if let Some(ui) = self.ui.as_mut() {
+            log::trace!("Update Debug UI");
+            let mut render_handle = ui.pre_render();
+            render_handle.draw(|ui, texture_map| {
+                let pipeline_access = self.injector.get::<PipelineAccess>().unwrap();
+                let nodes = pipeline_access.nodes.iter().collect::<Vec<_>>();
+                self.pipeline.debug_ui(ui, &nodes);
+                Self::debug_ui(ui, texture_map, &self.layouts, &self.plans);
+                for processor in self.processors.iter_mut() {
+                    processor.update_debug_ui(&self.injector, ui);
+                }
+            });
+
+            ui.render();
         }
         self.read_states_into_view();
     }

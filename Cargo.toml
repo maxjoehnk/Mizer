@@ -149,8 +149,8 @@ flume = "0.10"
 profiling = "1.0"
 rayon = "1.6"
 serde = { version = "1", features = ["rc"] }
-sentry = { version = "0.29.3", features = ["anyhow", "tracing", "debug-images"] }
-sentry-tracing = "0.29.3"
+sentry = { version = "0.30", features = ["anyhow", "tracing", "debug-images"] }
+sentry-tracing = "0.30"
 
 [dev-dependencies]
 test-case = "3.0"

@@ -50,6 +50,9 @@ impl Processor for FixtureProcessor {
             }
         }
         fixture_manager.states.write(state);
+        fixture_manager
+            .get_programmer()
+            .emit_state(fixture_manager.get_groups());
     }
 
     #[tracing::instrument(skip_all)]

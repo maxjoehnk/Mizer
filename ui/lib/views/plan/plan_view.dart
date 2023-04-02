@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart' hide MenuItem;
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mizer/api/contracts/programmer.dart';
-import 'package:mizer/api/plugin/ffi/programmer.dart';
+import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/mappings.pb.dart';
 import 'package:mizer/protos/plans.pb.dart';
@@ -26,36 +25,9 @@ class PlanView extends StatefulWidget {
   State<PlanView> createState() => _PlanViewState();
 }
 
-class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin {
-  ProgrammerStatePointer? _programmerPointer;
-  Ticker? _ticker;
-  ProgrammerState? _programmerState;
+class _PlanViewState extends State<PlanView>
+    with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   bool _setupMode = false;
-
-  @override
-  void initState() {
-    super.initState();
-    ProgrammerApi programmerApi = context.read();
-    programmerApi.getProgrammerPointer().then((pointer) {
-      if (pointer == null) {
-        return;
-      }
-      setState(() {
-        _programmerPointer = pointer;
-      });
-      _ticker = createTicker((elapsed) {
-        setState(() => _programmerState = pointer.readState());
-      });
-      _ticker!.start();
-    });
-  }
-
-  @override
-  void dispose() {
-    _programmerPointer?.dispose();
-    _ticker?.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +57,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
                   child: Column(children: [
                     Expanded(
                         child: PlanLayout(
-                            plan: plan, programmerState: _programmerState, setupMode: _setupMode)),
+                            plan: plan, programmerState: programmerState, setupMode: _setupMode)),
                     if (_setupMode) AlignToolbar(),
                   ])))
               .toList(),
@@ -95,7 +67,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
                 hotkeyId: "highlight",
                 label: "Highlight",
                 onClick: _highlight,
-                activated: _programmerState?.highlight ?? false,
+                activated: programmerState.highlight,
                 menu: Menu(items: [
                   MenuItem(
                       label: "Add Midi Mapping", action: () => _addMidiMappingForHighlight(context))
@@ -160,7 +132,7 @@ class _PlanViewState extends State<PlanView> with SingleTickerProviderStateMixin
 
   void _highlight() {
     ProgrammerApi programmerApi = context.read();
-    programmerApi.highlight(!(_programmerState?.highlight ?? false));
+    programmerApi.highlight(!(programmerState.highlight));
   }
 
   void _clear() {

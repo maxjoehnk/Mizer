@@ -24,6 +24,7 @@ import 'package:mizer/widgets/tabs.dart' as tabs;
 
 import 'add_control_popup.dart';
 import 'control.dart';
+import 'dialogs/name_layout_dialog.dart';
 
 const double MULTIPLIER = 75;
 const String MovingNodeIndicatorLayoutId = "MovingNodeIndicator";
@@ -146,32 +147,6 @@ class LayoutView extends StatelessWidget {
     if (result != null) {
       bloc.add(RenameLayout(id: layout.id, name: result));
     }
-  }
-}
-
-class NameLayoutDialog extends StatelessWidget {
-  final String? name;
-  final TextEditingController nameController;
-
-  NameLayoutDialog({this.name, Key? key})
-      : nameController = TextEditingController(text: name),
-        super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-        title: Text(name != null ? "Rename Layout".i18n : "Add Layout".i18n),
-        actions: [
-          ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(nameController.text),
-              child: Text(name != null ? "Rename".i18n : "Add".i18n))
-        ],
-        content: TextField(
-          controller: nameController,
-          autofocus: true,
-          decoration: InputDecoration(labelText: "Name"),
-          onSubmitted: (text) => Navigator.of(context).pop(text),
-        ));
   }
 }
 

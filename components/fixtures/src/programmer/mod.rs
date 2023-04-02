@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
+use std::ops::Deref;
 use std::sync::Arc;
 
 use futures::stream::Stream;
@@ -15,7 +16,7 @@ pub use presets::*;
 use crate::contracts::FixtureController;
 use crate::definition::{ColorChannel, FixtureControl, FixtureControlValue, FixtureFaderControl};
 use crate::selection::FixtureSelection;
-use crate::{FixtureId, RgbColor};
+use crate::{FixtureId, GroupId, RgbColor};
 
 mod default_presets;
 mod groups;
@@ -46,11 +47,12 @@ pub struct ProgrammerState {
     pub active_fixtures: Vec<FixtureId>,
     pub tracked_fixtures: Vec<FixtureId>,
     pub fixture_effects: Vec<FixtureId>,
+    pub active_groups: Vec<GroupId>,
     pub highlight: bool,
     pub channels: Vec<ProgrammerChannel>,
-    pub block_size: Option<usize>,
-    pub wings: Option<usize>,
-    pub groups: Option<usize>,
+    pub selection_block_size: Option<usize>,
+    pub selection_wings: Option<usize>,
+    pub selection_groups: Option<usize>,
 }
 
 impl ProgrammerState {
@@ -330,7 +332,6 @@ impl Programmer {
             self.active_selection.wings = None;
             self.set();
         }
-        self.emit_state();
     }
 
     #[tracing::instrument(skip(self))]
@@ -344,7 +345,6 @@ impl Programmer {
             self.active_channels.clear();
         }
         self.active_selection.add_fixtures(fixtures);
-        self.emit_state();
     }
 
     #[tracing::instrument(skip(self))]
@@ -353,7 +353,6 @@ impl Programmer {
         for fixture in fixtures {
             self.active_selection.remove(&fixture);
         }
-        self.emit_state();
     }
 
     pub fn set_block_size(&mut self, block_size: usize) {
@@ -466,12 +465,10 @@ impl Programmer {
             }
         }
         self.has_written_to_selection = true;
-        self.emit_state();
     }
 
     pub fn set_highlight(&mut self, highlight: bool) {
         self.highlight = highlight;
-        self.emit_state();
     }
 
     pub fn get_controls(&self) -> Vec<ProgrammerControl> {
@@ -541,7 +538,7 @@ impl Programmer {
         ProgrammerView(self.programmer_view.clone())
     }
 
-    fn emit_state(&mut self) {
+    pub(crate) fn emit_state<'a>(&mut self, groups: Vec<impl Deref<Target = Group> + 'a>) {
         let state = ProgrammerState {
             tracked_fixtures: self
                 .get_tracked_selections()
@@ -555,6 +552,11 @@ impl Programmer {
                 .get_fixtures()
                 .into_iter()
                 .flatten()
+                .collect(),
+            active_groups: groups
+                .iter()
+                .filter(|g| self.is_group_active(g))
+                .map(|g| g.id)
                 .collect(),
             fixture_effects: self
                 .running_effects
@@ -570,9 +572,9 @@ impl Programmer {
                 .collect(),
             highlight: self.highlight,
             channels: self.get_channels(),
-            block_size: self.active_selection.block_size,
-            groups: self.active_selection.groups,
-            wings: self.active_selection.wings,
+            selection_block_size: self.active_selection.block_size,
+            selection_groups: self.active_selection.groups,
+            selection_wings: self.active_selection.wings,
         };
         self.programmer_view.set(state.clone());
         log::trace!("sending programmer msg");
@@ -615,7 +617,7 @@ mod tests {
 
     use crate::contracts::*;
     use crate::definition::{FixtureControlValue, FixtureFaderControl};
-    use crate::programmer::Programmer;
+    use crate::programmer::{Group, Programmer, ProgrammerState};
     use crate::selection::FixtureSelection;
     use crate::FixtureId;
 
@@ -626,7 +628,7 @@ mod tests {
 
         programmer.select_fixtures(fixtures.clone());
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.active_fixtures).is_equal_to(fixtures);
     }
 
@@ -638,7 +640,7 @@ mod tests {
         programmer.select_fixtures(vec![FixtureId::Fixture(1)]);
         programmer.select_fixtures(vec![FixtureId::Fixture(2)]);
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.active_fixtures).is_equal_to(expected);
     }
 
@@ -651,7 +653,7 @@ mod tests {
 
         programmer.write_control(value.clone());
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         let channel = &state.channels[0];
         assert_that!(channel.fixtures.iter()).contains_all_of(&selection.iter());
         assert_that!(channel.value).is_equal_to(value);
@@ -666,7 +668,7 @@ mod tests {
 
         programmer.write_control(value);
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.tracked_fixtures).is_equal_to(&selection);
     }
 
@@ -681,7 +683,7 @@ mod tests {
 
         programmer.select_fixtures(second_selection.clone());
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.active_fixtures).is_equal_to(&second_selection);
         assert_that!(state.tracked_fixtures).is_equal_to(&first_selection);
         let tracked_channel = &state.channels[0];
@@ -697,7 +699,7 @@ mod tests {
 
         programmer.clear();
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.active_fixtures).is_empty();
     }
 
@@ -711,7 +713,7 @@ mod tests {
 
         programmer.clear();
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.tracked_fixtures).is_equal_to(&selection);
         assert_that!(state.active_fixtures).is_empty();
         let channel = &state.channels[0];
@@ -728,7 +730,7 @@ mod tests {
         programmer.clear();
         programmer.clear();
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.tracked_fixtures).is_empty();
         assert_that!(state.active_fixtures).is_empty();
         assert_that!(state.channels).is_empty();
@@ -747,7 +749,7 @@ mod tests {
         programmer.select_fixtures(second_fixtures.clone());
         programmer.write_control(second_value.clone());
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.tracked_fixtures)
             .is_equal_to(&vec![FixtureId::Fixture(1), FixtureId::Fixture(2)]);
         assert_that!(state.channels).has_length(2);
@@ -767,7 +769,7 @@ mod tests {
         programmer.select_fixtures(fixtures.clone());
         programmer.select_fixtures(fixtures.clone());
 
-        let state = programmer.view().read();
+        let state = get_state(&mut programmer);
         assert_that!(state.active_fixtures).is_equal_to(&fixtures);
     }
 
@@ -998,5 +1000,12 @@ mod tests {
                 predicate::eq(value),
             )
             .return_const(());
+    }
+
+    fn get_state(programmer: &mut Programmer) -> ProgrammerState {
+        programmer.emit_state(Vec::<&Group>::new());
+        let state = programmer.view().read();
+
+        state
     }
 }

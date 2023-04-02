@@ -4,7 +4,7 @@ use crate::definition::{
 use crate::fixture::{Fixture, FixtureConfiguration, IFixtureMut};
 use crate::library::FixtureLibrary;
 use crate::programmer::{Group, Presets, Programmer};
-use crate::{FixtureId, FixtureStates};
+use crate::{FixtureId, FixtureStates, GroupId};
 use dashmap::DashMap;
 use itertools::Itertools;
 use mizer_protocol_dmx::DmxConnectionManager;
@@ -16,7 +16,7 @@ pub struct FixtureManager {
     library: FixtureLibrary,
     // TODO: this is only public for project loading/saving
     pub fixtures: Arc<DashMap<u32, Fixture>>,
-    pub groups: Arc<DashMap<u32, Group>>,
+    pub groups: Arc<DashMap<GroupId, Group>>,
     pub presets: Arc<Presets>,
     pub states: FixtureStates,
     programmer: Arc<Mutex<Programmer>>,
@@ -64,9 +64,9 @@ impl FixtureManager {
         self.fixtures.insert(fixture_id, fixture);
     }
 
-    pub fn add_group(&self, name: String) -> u32 {
+    pub fn add_group(&self, name: String) -> GroupId {
         let highest_id = self.groups.iter().map(|e| e.id).max().unwrap_or_default();
-        let group_id = highest_id + 1;
+        let group_id = highest_id.next();
         let group = Group {
             id: group_id,
             fixtures: Vec::new(),
@@ -77,7 +77,7 @@ impl FixtureManager {
         group_id
     }
 
-    pub fn delete_group(&self, group_id: u32) -> Option<Group> {
+    pub fn delete_group(&self, group_id: GroupId) -> Option<Group> {
         self.groups.remove(&group_id).map(|(_, group)| group)
     }
 
@@ -123,7 +123,7 @@ impl FixtureManager {
         self.fixtures.iter().collect()
     }
 
-    pub fn get_group(&self, group_id: u32) -> Option<impl Deref<Target = Group> + '_> {
+    pub fn get_group(&self, group_id: GroupId) -> Option<impl Deref<Target = Group> + '_> {
         self.groups.get(&group_id)
     }
 
@@ -133,7 +133,7 @@ impl FixtureManager {
 
     pub fn get_group_fixture_controls(
         &self,
-        group_id: u32,
+        group_id: GroupId,
     ) -> Vec<(FixtureControl, FixtureControlType)> {
         if let Some(group) = self.groups.get(&group_id) {
             group
@@ -161,7 +161,7 @@ impl FixtureManager {
         }
     }
 
-    pub fn write_group_control(&self, group_id: u32, control: FixtureFaderControl, value: f64) {
+    pub fn write_group_control(&self, group_id: GroupId, control: FixtureFaderControl, value: f64) {
         if let Some(group) = self.groups.get(&group_id) {
             for fixture_id in &group.fixtures {
                 self.write_fixture_control(*fixture_id, control.clone(), value);

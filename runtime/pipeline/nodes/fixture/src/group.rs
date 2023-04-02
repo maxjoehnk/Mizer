@@ -1,5 +1,6 @@
 use crate::fixture_ports::*;
 use mizer_fixtures::manager::FixtureManager;
+use mizer_fixtures::GroupId;
 use mizer_node::edge::Edge;
 use mizer_node::{
     Injector, NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId,
@@ -12,7 +13,7 @@ const ACTIVE_PORT: &str = "Active";
 
 #[derive(Default, Clone, Deserialize, Serialize)]
 pub struct GroupNode {
-    pub id: u32,
+    pub id: GroupId,
     #[serde(skip)]
     pub fixture_manager: Option<FixtureManager>,
 }

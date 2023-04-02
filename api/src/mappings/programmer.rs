@@ -200,7 +200,7 @@ impl From<mizer_fixtures::programmer::Position> for preset::Position {
 impl From<mizer_fixtures::programmer::Group> for Group {
     fn from(group: mizer_fixtures::programmer::Group) -> Self {
         Self {
-            id: group.id,
+            id: group.id.into(),
             name: group.name,
             ..Default::default()
         }

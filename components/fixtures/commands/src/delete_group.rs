@@ -1,6 +1,7 @@
 use mizer_commander::{Command, Ref, RefMut};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Group;
+use mizer_fixtures::GroupId;
 use mizer_layouts::LayoutStorage;
 use mizer_nodes::Node;
 use mizer_runtime::commands::DeleteNodeCommand;
@@ -10,7 +11,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
 pub struct DeleteGroupCommand {
-    pub id: u32,
+    pub id: GroupId,
 }
 
 impl<'a> Command<'a> for DeleteGroupCommand {

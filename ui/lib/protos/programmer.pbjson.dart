@@ -3,7 +3,7 @@
 //  source: programmer.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -21,17 +21,18 @@ const ProgrammerState$json = const {
   '2': const [
     const {'1': 'fixtures', '3': 1, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'fixtures'},
     const {'1': 'active_fixtures', '3': 2, '4': 3, '5': 11, '6': '.mizer.fixtures.FixtureId', '10': 'activeFixtures'},
-    const {'1': 'selection', '3': 3, '4': 1, '5': 11, '6': '.mizer.programmer.FixtureSelection', '10': 'selection'},
-    const {'1': 'controls', '3': 4, '4': 3, '5': 11, '6': '.mizer.programmer.ProgrammerChannel', '10': 'controls'},
-    const {'1': 'highlight', '3': 5, '4': 1, '5': 8, '10': 'highlight'},
-    const {'1': 'block_size', '3': 6, '4': 1, '5': 13, '10': 'blockSize'},
-    const {'1': 'groups', '3': 7, '4': 1, '5': 13, '10': 'groups'},
-    const {'1': 'wings', '3': 8, '4': 1, '5': 13, '10': 'wings'},
+    const {'1': 'active_groups', '3': 3, '4': 3, '5': 13, '10': 'activeGroups'},
+    const {'1': 'selection', '3': 4, '4': 1, '5': 11, '6': '.mizer.programmer.FixtureSelection', '10': 'selection'},
+    const {'1': 'controls', '3': 5, '4': 3, '5': 11, '6': '.mizer.programmer.ProgrammerChannel', '10': 'controls'},
+    const {'1': 'highlight', '3': 6, '4': 1, '5': 8, '10': 'highlight'},
+    const {'1': 'block_size', '3': 7, '4': 1, '5': 13, '10': 'blockSize'},
+    const {'1': 'groups', '3': 8, '4': 1, '5': 13, '10': 'groups'},
+    const {'1': 'wings', '3': 9, '4': 1, '5': 13, '10': 'wings'},
   ],
 };
 
 /// Descriptor for `ProgrammerState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSQAoJc2VsZWN0aW9uGAMgASgLMiIubWl6ZXIucHJvZ3JhbW1lci5GaXh0dXJlU2VsZWN0aW9uUglzZWxlY3Rpb24SPwoIY29udHJvbHMYBCADKAsyIy5taXplci5wcm9ncmFtbWVyLlByb2dyYW1tZXJDaGFubmVsUghjb250cm9scxIcCgloaWdobGlnaHQYBSABKAhSCWhpZ2hsaWdodBIdCgpibG9ja19zaXplGAYgASgNUglibG9ja1NpemUSFgoGZ3JvdXBzGAcgASgNUgZncm91cHMSFAoFd2luZ3MYCCABKA1SBXdpbmdz');
+final $typed_data.Uint8List programmerStateDescriptor = $convert.base64Decode('Cg9Qcm9ncmFtbWVyU3RhdGUSNQoIZml4dHVyZXMYASADKAsyGS5taXplci5maXh0dXJlcy5GaXh0dXJlSWRSCGZpeHR1cmVzEkIKD2FjdGl2ZV9maXh0dXJlcxgCIAMoCzIZLm1pemVyLmZpeHR1cmVzLkZpeHR1cmVJZFIOYWN0aXZlRml4dHVyZXMSIwoNYWN0aXZlX2dyb3VwcxgDIAMoDVIMYWN0aXZlR3JvdXBzEkAKCXNlbGVjdGlvbhgEIAEoCzIiLm1pemVyLnByb2dyYW1tZXIuRml4dHVyZVNlbGVjdGlvblIJc2VsZWN0aW9uEj8KCGNvbnRyb2xzGAUgAygLMiMubWl6ZXIucHJvZ3JhbW1lci5Qcm9ncmFtbWVyQ2hhbm5lbFIIY29udHJvbHMSHAoJaGlnaGxpZ2h0GAYgASgIUgloaWdobGlnaHQSHQoKYmxvY2tfc2l6ZRgHIAEoDVIJYmxvY2tTaXplEhYKBmdyb3VwcxgIIAEoDVIGZ3JvdXBzEhQKBXdpbmdzGAkgASgNUgV3aW5ncw==');
 @$core.Deprecated('Use fixtureSelectionDescriptor instead')
 const FixtureSelection$json = const {
   '1': 'FixtureSelection',

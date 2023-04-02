@@ -7,6 +7,7 @@ use mizer_module::{Module, Runtime};
 use pinboard::NonEmptyPinboard;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fmt::{Display, Formatter};
 use std::sync::Arc;
 
 mod contracts;
@@ -37,6 +38,37 @@ impl From<u32> for FixtureId {
 impl From<(u32, u32)> for FixtureId {
     fn from((fixture_id, child_id): (u32, u32)) -> Self {
         Self::SubFixture(fixture_id, child_id)
+    }
+}
+
+#[derive(
+    Default, Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Hash,
+)]
+#[repr(transparent)]
+#[serde(transparent)]
+pub struct GroupId(pub u32);
+
+impl GroupId {
+    pub fn next(&self) -> GroupId {
+        Self(self.0 + 1)
+    }
+}
+
+impl Display for GroupId {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Group({})", self.0)
+    }
+}
+
+impl From<u32> for GroupId {
+    fn from(id: u32) -> Self {
+        Self(id)
+    }
+}
+
+impl From<GroupId> for u32 {
+    fn from(group_id: GroupId) -> Self {
+        group_id.0
     }
 }
 

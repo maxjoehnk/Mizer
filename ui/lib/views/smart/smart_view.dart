@@ -1,9 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mizer/api/contracts/programmer.dart';
-import 'package:mizer/api/plugin/programmer.dart';
+import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/state/effects_bloc.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -56,36 +54,8 @@ class SmartView extends StatefulWidget {
   State<SmartView> createState() => _SmartViewState();
 }
 
-class _SmartViewState extends State<SmartView> with SingleTickerProviderStateMixin {
-  ProgrammerStatePointer? _pointer;
-  Ticker? ticker;
-  ProgrammerState programmerState = ProgrammerState();
-
-  @override
-  void initState() {
-    super.initState();
-    var programmerApi = context.read<ProgrammerApi>();
-    programmerApi.getProgrammerPointer().then((pointer) {
-      _pointer = pointer;
-      ticker = this.createTicker((elapsed) {
-        var nextState = _pointer!.readState();
-        if (nextState != programmerState) {
-          setState(() {
-            programmerState = nextState;
-          });
-        }
-      });
-      ticker!.start();
-    });
-  }
-
-  @override
-  void dispose() {
-    _pointer?.dispose();
-    ticker?.stop(canceled: true);
-    super.dispose();
-  }
-
+class _SmartViewState extends State<SmartView>
+    with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   @override
   Widget build(BuildContext context) {
     var controls = _controls();

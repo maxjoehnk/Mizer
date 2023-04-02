@@ -3,7 +3,7 @@
 //  source: programmer.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -49,12 +49,13 @@ class ProgrammerState extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProgrammerState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.programmer'), createEmptyInstance: create)
     ..pc<$0.FixtureId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
     ..pc<$0.FixtureId>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeFixtures', $pb.PbFieldType.PM, subBuilder: $0.FixtureId.create)
-    ..aOM<FixtureSelection>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selection', subBuilder: FixtureSelection.create)
-    ..pc<ProgrammerChannel>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
-    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockSize', $pb.PbFieldType.OU3)
-    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
-    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wings', $pb.PbFieldType.OU3)
+    ..p<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'activeGroups', $pb.PbFieldType.KU3)
+    ..aOM<FixtureSelection>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'selection', subBuilder: FixtureSelection.create)
+    ..pc<ProgrammerChannel>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controls', $pb.PbFieldType.PM, subBuilder: ProgrammerChannel.create)
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'highlight')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blockSize', $pb.PbFieldType.OU3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groups', $pb.PbFieldType.OU3)
+    ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'wings', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -62,6 +63,7 @@ class ProgrammerState extends $pb.GeneratedMessage {
   factory ProgrammerState({
     $core.Iterable<$0.FixtureId>? fixtures,
     $core.Iterable<$0.FixtureId>? activeFixtures,
+    $core.Iterable<$core.int>? activeGroups,
     FixtureSelection? selection,
     $core.Iterable<ProgrammerChannel>? controls,
     $core.bool? highlight,
@@ -75,6 +77,9 @@ class ProgrammerState extends $pb.GeneratedMessage {
     }
     if (activeFixtures != null) {
       _result.activeFixtures.addAll(activeFixtures);
+    }
+    if (activeGroups != null) {
+      _result.activeGroups.addAll(activeGroups);
     }
     if (selection != null) {
       _result.selection = selection;
@@ -124,54 +129,57 @@ class ProgrammerState extends $pb.GeneratedMessage {
   $core.List<$0.FixtureId> get activeFixtures => $_getList(1);
 
   @$pb.TagNumber(3)
-  FixtureSelection get selection => $_getN(2);
-  @$pb.TagNumber(3)
-  set selection(FixtureSelection v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasSelection() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSelection() => clearField(3);
-  @$pb.TagNumber(3)
-  FixtureSelection ensureSelection() => $_ensure(2);
+  $core.List<$core.int> get activeGroups => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.List<ProgrammerChannel> get controls => $_getList(3);
+  FixtureSelection get selection => $_getN(3);
+  @$pb.TagNumber(4)
+  set selection(FixtureSelection v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSelection() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSelection() => clearField(4);
+  @$pb.TagNumber(4)
+  FixtureSelection ensureSelection() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $core.bool get highlight => $_getBF(4);
-  @$pb.TagNumber(5)
-  set highlight($core.bool v) { $_setBool(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasHighlight() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearHighlight() => clearField(5);
+  $core.List<ProgrammerChannel> get controls => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.int get blockSize => $_getIZ(5);
+  $core.bool get highlight => $_getBF(5);
   @$pb.TagNumber(6)
-  set blockSize($core.int v) { $_setUnsignedInt32(5, v); }
+  set highlight($core.bool v) { $_setBool(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasBlockSize() => $_has(5);
+  $core.bool hasHighlight() => $_has(5);
   @$pb.TagNumber(6)
-  void clearBlockSize() => clearField(6);
+  void clearHighlight() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.int get groups => $_getIZ(6);
+  $core.int get blockSize => $_getIZ(6);
   @$pb.TagNumber(7)
-  set groups($core.int v) { $_setUnsignedInt32(6, v); }
+  set blockSize($core.int v) { $_setUnsignedInt32(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasGroups() => $_has(6);
+  $core.bool hasBlockSize() => $_has(6);
   @$pb.TagNumber(7)
-  void clearGroups() => clearField(7);
+  void clearBlockSize() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.int get wings => $_getIZ(7);
+  $core.int get groups => $_getIZ(7);
   @$pb.TagNumber(8)
-  set wings($core.int v) { $_setUnsignedInt32(7, v); }
+  set groups($core.int v) { $_setUnsignedInt32(7, v); }
   @$pb.TagNumber(8)
-  $core.bool hasWings() => $_has(7);
+  $core.bool hasGroups() => $_has(7);
   @$pb.TagNumber(8)
-  void clearWings() => clearField(8);
+  void clearGroups() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get wings => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set wings($core.int v) { $_setUnsignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasWings() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearWings() => clearField(9);
 }
 
 class FixtureSelection_GroupedFixtureList extends $pb.GeneratedMessage {

@@ -1,6 +1,7 @@
 use mizer_commander::{sub_command, Command, Ref, SubCommand, SubCommandRunner};
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::Group;
+use mizer_fixtures::GroupId;
 use mizer_node::{NodeDesigner, NodeType};
 use mizer_nodes::GroupNode;
 use mizer_runtime::commands::AddNodeCommand;
@@ -13,7 +14,7 @@ pub struct AddGroupCommand {
 
 impl<'a> Command<'a> for AddGroupCommand {
     type Dependencies = (Ref<FixtureManager>, SubCommand<AddNodeCommand>);
-    type State = (u32, sub_command!(AddNodeCommand));
+    type State = (GroupId, sub_command!(AddNodeCommand));
     type Result = Group;
 
     fn label(&self) -> String {

@@ -33,9 +33,11 @@ class ProgrammerStatePointer {
     var fixtures = _readFixtureSelection(state.fixtures);
     var selection = _readGroupedFixtureSelection(state.selection);
     var channels = _readProgrammerChannel(state.channels);
+    var activeGroups = _readGroupSelection(state.active_groups);
 
     return ProgrammerState(
       activeFixtures: activeFixtures,
+      activeGroups: activeGroups,
       fixtures: fixtures,
       selection: selection,
       controls: channels,
@@ -52,11 +54,16 @@ class ProgrammerStatePointer {
     return fixtures.map((id) {
       if (id.sub_fixture_id != 0) {
         return FixtureId(
-            subFixture: SubFixtureId(fixtureId: id.fixture_id, childId: id.sub_fixture_id)
-        );
+            subFixture: SubFixtureId(fixtureId: id.fixture_id, childId: id.sub_fixture_id));
       }
       return FixtureId(fixture: id.fixture_id);
     }).toList();
+  }
+
+  List<int> _readGroupSelection(Array_u32 result) {
+    var groups = new List.generate(result.len, (index) => result.array.elementAt(index).value);
+
+    return groups;
   }
 
   FixtureSelection _readGroupedFixtureSelection(Array_Array_FFIFixtureId result) {
@@ -75,8 +82,8 @@ class ProgrammerStatePointer {
       var fixtures = _readFixtureSelection(channel.fixtures);
       var control = controlMappings[channel.control];
       var result = ProgrammerChannel(
-          control: control,
-          fixtures: fixtures,
+        control: control,
+        fixtures: fixtures,
       );
       if (channel.control == FFIFixtureFaderControl.ColorMixer) {
         result.color = ColorMixerChannel(
@@ -84,12 +91,12 @@ class ProgrammerStatePointer {
           green: channel.value.color.green,
           blue: channel.value.color.blue,
         );
-      }else if (channel.control == FFIFixtureFaderControl.Generic){
+      } else if (channel.control == FFIFixtureFaderControl.Generic) {
         result.generic = ProgrammerChannel_GenericValue(
           name: channel.value.generic.channel.cast<Utf8>().toDartString(),
           value: channel.value.generic.value,
         );
-      }else {
+      } else {
         result.fader = channel.value.fader;
       }
       return result;

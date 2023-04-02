@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart' hide MenuItem;
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
-import 'package:mizer/api/plugin/programmer.dart';
 import 'package:mizer/i18n.dart';
+import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
 import 'package:mizer/protos/fixtures.extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
@@ -25,33 +24,9 @@ class FixturesView extends StatefulWidget {
   State<FixturesView> createState() => _FixturesViewState();
 }
 
-class _FixturesViewState extends State<FixturesView> with SingleTickerProviderStateMixin {
-  ProgrammerStatePointer? _pointer;
-  Ticker? ticker;
-  ProgrammerState state = ProgrammerState();
+class _FixturesViewState extends State<FixturesView>
+    with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   List<int> expandedIds = [];
-
-  @override
-  void initState() {
-    super.initState();
-    var programmerApi = context.read<ProgrammerApi>();
-    programmerApi.getProgrammerPointer().then((pointer) {
-      _pointer = pointer;
-      ticker = this.createTicker((elapsed) {
-        setState(() {
-          state = _pointer!.readState();
-        });
-      });
-      ticker!.start();
-    });
-  }
-
-  @override
-  void dispose() {
-    _pointer?.dispose();
-    ticker?.stop(canceled: true);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +44,7 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
           label: "Fixtures".i18n,
           child: FixturesTable(
               fixtures: fixtures.fixtures,
-              state: state,
+              state: programmerState,
               selectedIds: selectedIds,
               trackedIds: trackedIds,
               expandedIds: expandedIds,
@@ -113,11 +88,11 @@ class _FixturesViewState extends State<FixturesView> with SingleTickerProviderSt
   }
 
   List<FixtureId> get trackedIds {
-    return state.fixtures;
+    return programmerState.fixtures;
   }
 
   List<FixtureId> get selectedIds {
-    return state.activeFixtures;
+    return programmerState.activeFixtures;
   }
 
   List<FixtureInstance> getSelectedInstances(List<FixtureId> selectedIds, List<Fixture> fixtures) {

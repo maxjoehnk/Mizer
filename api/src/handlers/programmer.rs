@@ -5,6 +5,7 @@ use futures::stream::{Stream, StreamExt};
 use mizer_command_executor::*;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::programmer::ProgrammerView;
+use mizer_fixtures::GroupId;
 use mizer_sequencer::Sequencer;
 use std::ops::Deref;
 
@@ -52,7 +53,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     #[tracing::instrument(skip(self))]
     pub fn select_group(&self, group_id: u32) {
         log::debug!("select_group {:?}", group_id);
-        if let Some(group) = self.fixture_manager.get_group(group_id) {
+        if let Some(group) = self.fixture_manager.get_group(GroupId(group_id)) {
             let mut programmer = self.fixture_manager.get_programmer();
             programmer.select_group(&group);
         }
@@ -161,6 +162,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     pub fn assign_fixtures_to_group(&self, group_id: u32, fixture_ids: Vec<FixtureId>) {
+        let group_id = GroupId(group_id);
         let fixture_ids = fixture_ids
             .into_iter()
             .map(|id| id.into())
@@ -175,6 +177,7 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
 
     #[tracing::instrument(skip(self))]
     pub fn assign_fixture_selection_to_group(&self, group_id: u32) {
+        let group_id = GroupId(group_id);
         let fixture_ids = {
             let programmer = self.fixture_manager.get_programmer();
             let state = programmer.view().read();

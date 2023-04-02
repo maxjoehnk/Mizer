@@ -9,6 +9,7 @@ anyhow = "1"
 log = "0.4"
 serde = { version = "1", features = ["derive", "rc"] }
 mizer-node = { path = "../node" }
+mizer-audio-nodes = { path = "audio" }
 mizer-clock-nodes = { path = "clock" }
 mizer-color-nodes = { path = "behaviors/color" }
 mizer-constant-nodes = { path = "behaviors/constants" }

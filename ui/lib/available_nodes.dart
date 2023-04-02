@@ -55,6 +55,12 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.Conditional: "Conditional",
   Node_NodeType.TimecodeControl: "Timecode Control",
   Node_NodeType.TimecodeOutput: "Timecode Output",
+  Node_NodeType.AudioFile: "Audio File",
+  Node_NodeType.AudioOutput: "Audio Output",
+  Node_NodeType.AudioVolume: "Audio Volume",
+  Node_NodeType.AudioInput: "Audio Input",
+  Node_NodeType.AudioMix: "Audio Mix",
+  Node_NodeType.AudioMeter: "Audio Meter",
 };
 
 final List<PopupCategory<Node_NodeType>> NODES = [
@@ -103,6 +109,14 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Label,
     // Node_NodeType.ColorPicker,
   ]),
+  buildCategory("Audio", [
+    Node_NodeType.AudioFile,
+    Node_NodeType.AudioInput,
+    Node_NodeType.AudioOutput,
+    Node_NodeType.AudioVolume,
+    Node_NodeType.AudioMix,
+    Node_NodeType.AudioMeter,
+  ]),
   buildCategory("Video", [
     Node_NodeType.VideoFile,
     Node_NodeType.VideoEffect,
@@ -123,9 +137,5 @@ final List<PopupCategory<Node_NodeType>> NODES = [
 
 PopupCategory<Node_NodeType> buildCategory(String label, List<Node_NodeType> nodeTypes) {
   return PopupCategory(
-      label: label,
-      items: nodeTypes
-          .map((e) => PopupItem(e, NODE_LABELS[e]!))
-          .toList()
-  );
+      label: label, items: nodeTypes.map((e) => PopupItem(e, NODE_LABELS[e]!)).toList());
 }

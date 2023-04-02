@@ -491,6 +491,12 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::Conditional(node) => pipeline.register_node(path, &node),
         Node::TimecodeControl(node) => pipeline.register_node(path, &node),
         Node::TimecodeOutput(node) => pipeline.register_node(path, &node),
+        Node::AudioFile(node) => pipeline.register_node(path, &node),
+        Node::AudioOutput(node) => pipeline.register_node(path, &node),
+        Node::AudioVolume(node) => pipeline.register_node(path, &node),
+        Node::AudioInput(node) => pipeline.register_node(path, &node),
+        Node::AudioMix(node) => pipeline.register_node(path, &node),
+        Node::AudioMeter(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

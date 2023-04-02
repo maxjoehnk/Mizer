@@ -96,6 +96,12 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType Conditional = Node_NodeType._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Conditional');
   static const Node_NodeType TimecodeControl = Node_NodeType._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeControl');
   static const Node_NodeType TimecodeOutput = Node_NodeType._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeOutput');
+  static const Node_NodeType AudioFile = Node_NodeType._(74, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioFile');
+  static const Node_NodeType AudioOutput = Node_NodeType._(75, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioOutput');
+  static const Node_NodeType AudioVolume = Node_NodeType._(76, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioVolume');
+  static const Node_NodeType AudioInput = Node_NodeType._(77, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioInput');
+  static const Node_NodeType AudioMix = Node_NodeType._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMix');
+  static const Node_NodeType AudioMeter = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMeter');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -151,6 +157,12 @@ class Node_NodeType extends $pb.ProtobufEnum {
     Conditional,
     TimecodeControl,
     TimecodeOutput,
+    AudioFile,
+    AudioOutput,
+    AudioVolume,
+    AudioInput,
+    AudioMix,
+    AudioMeter,
   ];
 
   static final $core.Map<$core.int, Node_NodeType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -430,5 +442,22 @@ class G13InputNodeConfig_Key extends $pb.ProtobufEnum {
   static G13InputNodeConfig_Key? valueOf($core.int value) => _byValue[value];
 
   const G13InputNodeConfig_Key._($core.int v, $core.String n) : super(v, n);
+}
+
+class AudioFileNodeConfig_PlaybackMode extends $pb.ProtobufEnum {
+  static const AudioFileNodeConfig_PlaybackMode ONE_SHOT = AudioFileNodeConfig_PlaybackMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ONE_SHOT');
+  static const AudioFileNodeConfig_PlaybackMode LOOP = AudioFileNodeConfig_PlaybackMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOOP');
+  static const AudioFileNodeConfig_PlaybackMode PING_PONG = AudioFileNodeConfig_PlaybackMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PING_PONG');
+
+  static const $core.List<AudioFileNodeConfig_PlaybackMode> values = <AudioFileNodeConfig_PlaybackMode> [
+    ONE_SHOT,
+    LOOP,
+    PING_PONG,
+  ];
+
+  static final $core.Map<$core.int, AudioFileNodeConfig_PlaybackMode> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static AudioFileNodeConfig_PlaybackMode? valueOf($core.int value) => _byValue[value];
+
+  const AudioFileNodeConfig_PlaybackMode._($core.int v, $core.String n) : super(v, n);
 }
 

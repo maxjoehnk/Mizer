@@ -36,6 +36,7 @@ members = [
     "runtime/pipeline",
     "runtime/pipeline/node",
     "runtime/pipeline/nodes",
+    "runtime/pipeline/nodes/audio",
     "runtime/pipeline/nodes/behaviors/color",
     "runtime/pipeline/nodes/behaviors/constants",
     "runtime/pipeline/nodes/behaviors/conversions",

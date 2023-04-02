@@ -3,6 +3,7 @@ use mizer_nodes::{MidiInputConfig, MidiOutputConfig, OscArgumentType};
 use mizer_runtime::commands::StaticNodeDescriptor;
 use mizer_runtime::{NodeDescriptor, NodeDowncast};
 use protobuf::{EnumOrUnknown, MessageField};
+use std::path::Path;
 
 use crate::models::nodes::*;
 
@@ -63,6 +64,12 @@ impl From<mizer_nodes::Node> for node_config::Type {
             Conditional(node) => Self::ConditionalConfig(node.into()),
             TimecodeControl(node) => Self::TimecodeControlConfig(node.into()),
             TimecodeOutput(node) => Self::TimecodeOutputConfig(node.into()),
+            AudioFile(node) => Self::AudioFileConfig(node.into()),
+            AudioOutput(node) => Self::AudioOutputConfig(node.into()),
+            AudioVolume(node) => Self::AudioVolumeConfig(node.into()),
+            AudioInput(node) => Self::AudioInputConfig(node.into()),
+            AudioMix(node) => Self::AudioMixConfig(node.into()),
+            AudioMeter(node) => Self::AudioMeterConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -130,6 +137,12 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::ConditionalConfig(node) => Self::Conditional(node.into()),
             node_config::Type::TimecodeControlConfig(node) => Self::TimecodeControl(node.into()),
             node_config::Type::TimecodeOutputConfig(node) => Self::TimecodeOutput(node.into()),
+            node_config::Type::AudioFileConfig(node) => Self::AudioFile(node.into()),
+            node_config::Type::AudioOutputConfig(node) => Self::AudioOutput(node.into()),
+            node_config::Type::AudioVolumeConfig(node) => Self::AudioVolume(node.into()),
+            node_config::Type::AudioInputConfig(node) => Self::AudioInput(node.into()),
+            node_config::Type::AudioMixConfig(node) => Self::AudioMix(node.into()),
+            node_config::Type::AudioMeterConfig(node) => Self::AudioMeter(node.into()),
         }
     }
 }
@@ -1504,6 +1517,123 @@ impl From<TimecodeOutputNodeConfig> for mizer_nodes::TimecodeOutputNode {
     }
 }
 
+impl From<mizer_nodes::AudioFileNode> for AudioFileNodeConfig {
+    fn from(node: mizer_nodes::AudioFileNode) -> Self {
+        Self {
+            file: node
+                .path
+                .to_str()
+                .map(|path| path.to_string())
+                .unwrap_or_default(),
+            playbackMode: EnumOrUnknown::new(node.playback_mode.into()),
+            ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_nodes::PlaybackMode> for audio_file_node_config::PlaybackMode {
+    fn from(mode: mizer_nodes::PlaybackMode) -> Self {
+        use mizer_nodes::PlaybackMode::*;
+
+        match mode {
+            OneShot => Self::ONE_SHOT,
+            Loop => Self::LOOP,
+            PingPong => Self::PING_PONG,
+        }
+    }
+}
+
+impl From<AudioFileNodeConfig> for mizer_nodes::AudioFileNode {
+    fn from(node: AudioFileNodeConfig) -> Self {
+        Self {
+            path: Path::new(&node.file).to_path_buf(),
+            playback_mode: node.playbackMode.unwrap().into(),
+        }
+    }
+}
+
+impl From<audio_file_node_config::PlaybackMode> for mizer_nodes::PlaybackMode {
+    fn from(mode: audio_file_node_config::PlaybackMode) -> Self {
+        use audio_file_node_config::PlaybackMode::*;
+
+        match mode {
+            ONE_SHOT => Self::OneShot,
+            LOOP => Self::Loop,
+            PING_PONG => Self::PingPong,
+        }
+    }
+}
+
+impl From<mizer_nodes::AudioOutputNode> for AudioOutputNodeConfig {
+    fn from(node: mizer_nodes::AudioOutputNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<AudioOutputNodeConfig> for mizer_nodes::AudioOutputNode {
+    fn from(node: AudioOutputNodeConfig) -> Self {
+        Self {}
+    }
+}
+
+impl From<mizer_nodes::AudioVolumeNode> for AudioVolumeNodeConfig {
+    fn from(node: mizer_nodes::AudioVolumeNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<AudioVolumeNodeConfig> for mizer_nodes::AudioVolumeNode {
+    fn from(node: AudioVolumeNodeConfig) -> Self {
+        Self {}
+    }
+}
+
+impl From<mizer_nodes::AudioInputNode> for AudioInputNodeConfig {
+    fn from(node: mizer_nodes::AudioInputNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<AudioInputNodeConfig> for mizer_nodes::AudioInputNode {
+    fn from(node: AudioInputNodeConfig) -> Self {
+        Self {}
+    }
+}
+
+impl From<mizer_nodes::AudioMixNode> for AudioMixNodeConfig {
+    fn from(node: mizer_nodes::AudioMixNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<AudioMixNodeConfig> for mizer_nodes::AudioMixNode {
+    fn from(node: AudioMixNodeConfig) -> Self {
+        Self {}
+    }
+}
+
+impl From<mizer_nodes::AudioMeterNode> for AudioMeterNodeConfig {
+    fn from(node: mizer_nodes::AudioMeterNode) -> Self {
+        Self {
+            ..Default::default()
+        }
+    }
+}
+
+impl From<AudioMeterNodeConfig> for mizer_nodes::AudioMeterNode {
+    fn from(node: AudioMeterNodeConfig) -> Self {
+        Self {}
+    }
+}
+
 impl From<NodeType> for node::NodeType {
     fn from(node: NodeType) -> Self {
         match node {
@@ -1560,6 +1690,12 @@ impl From<NodeType> for node::NodeType {
             NodeType::Conditional => node::NodeType::Conditional,
             NodeType::TimecodeControl => node::NodeType::TimecodeControl,
             NodeType::TimecodeOutput => node::NodeType::TimecodeOutput,
+            NodeType::AudioFile => node::NodeType::AudioFile,
+            NodeType::AudioOutput => node::NodeType::AudioOutput,
+            NodeType::AudioVolume => node::NodeType::AudioVolume,
+            NodeType::AudioInput => node::NodeType::AudioInput,
+            NodeType::AudioMix => node::NodeType::AudioMix,
+            NodeType::AudioMeter => node::NodeType::AudioMeter,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1621,6 +1757,12 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::Conditional => NodeType::Conditional,
             node::NodeType::TimecodeControl => NodeType::TimecodeControl,
             node::NodeType::TimecodeOutput => NodeType::TimecodeOutput,
+            node::NodeType::AudioFile => NodeType::AudioFile,
+            node::NodeType::AudioOutput => NodeType::AudioOutput,
+            node::NodeType::AudioVolume => NodeType::AudioVolume,
+            node::NodeType::AudioInput => NodeType::AudioInput,
+            node::NodeType::AudioMix => NodeType::AudioMix,
+            node::NodeType::AudioMeter => NodeType::AudioMeter,
         }
     }
 }

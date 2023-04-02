@@ -157,6 +157,12 @@ message Node {
     Conditional = 71;
     TimecodeControl = 72;
     TimecodeOutput = 73;
+    AudioFile = 74;
+    AudioOutput = 75;
+    AudioVolume = 76;
+    AudioInput = 77;
+    AudioMix = 78;
+    AudioMeter = 79;
   }
 
   enum NodePreviewType {
@@ -232,6 +238,12 @@ message NodeConfig {
     ConditionalNodeConfig conditionalConfig = 61;
     TimecodeControlNodeConfig timecodeControlConfig = 62;
     TimecodeOutputNodeConfig timecodeOutputConfig = 63;
+    AudioFileNodeConfig audioFileConfig = 64;
+    AudioOutputNodeConfig audioOutputConfig = 65;
+    AudioVolumeNodeConfig audioVolumeConfig = 66;
+    AudioInputNodeConfig audioInputConfig = 67;
+    AudioMixNodeConfig audioMixConfig = 68;
+    AudioMeterNodeConfig audioMeterConfig = 69;
   }
 }
 
@@ -563,8 +575,25 @@ message TimecodeControlNodeConfig {
 }
 
 message TimecodeOutputNodeConfig {
-  uint32 control_id = 2;
+  uint32 control_id = 1;
 }
+
+message AudioFileNodeConfig {
+  string file = 1;
+  PlaybackMode playbackMode = 2;
+
+  enum PlaybackMode {
+    ONE_SHOT = 0;
+    LOOP = 1;
+    PING_PONG = 2;
+  }
+}
+
+message AudioOutputNodeConfig {}
+message AudioVolumeNodeConfig {}
+message AudioInputNodeConfig {}
+message AudioMixNodeConfig {}
+message AudioMeterNodeConfig {}
 
 message NodePosition {
   double x = 1;

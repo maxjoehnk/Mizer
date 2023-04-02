@@ -1242,6 +1242,12 @@ enum NodeConfig_Type {
   conditionalConfig, 
   timecodeControlConfig, 
   timecodeOutputConfig, 
+  audioFileConfig, 
+  audioOutputConfig, 
+  audioVolumeConfig, 
+  audioInputConfig, 
+  audioMixConfig, 
+  audioMeterConfig, 
   notSet
 }
 
@@ -1300,10 +1306,16 @@ class NodeConfig extends $pb.GeneratedMessage {
     61 : NodeConfig_Type.conditionalConfig,
     62 : NodeConfig_Type.timecodeControlConfig,
     63 : NodeConfig_Type.timecodeOutputConfig,
+    64 : NodeConfig_Type.audioFileConfig,
+    65 : NodeConfig_Type.audioOutputConfig,
+    66 : NodeConfig_Type.audioVolumeConfig,
+    67 : NodeConfig_Type.audioInputConfig,
+    68 : NodeConfig_Type.audioMixConfig,
+    69 : NodeConfig_Type.audioMeterConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1357,6 +1369,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<ConditionalNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', protoName: 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
     ..aOM<TimecodeControlNodeConfig>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeControlConfig', protoName: 'timecodeControlConfig', subBuilder: TimecodeControlNodeConfig.create)
     ..aOM<TimecodeOutputNodeConfig>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeOutputConfig', protoName: 'timecodeOutputConfig', subBuilder: TimecodeOutputNodeConfig.create)
+    ..aOM<AudioFileNodeConfig>(64, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioFileConfig', protoName: 'audioFileConfig', subBuilder: AudioFileNodeConfig.create)
+    ..aOM<AudioOutputNodeConfig>(65, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioOutputConfig', protoName: 'audioOutputConfig', subBuilder: AudioOutputNodeConfig.create)
+    ..aOM<AudioVolumeNodeConfig>(66, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioVolumeConfig', protoName: 'audioVolumeConfig', subBuilder: AudioVolumeNodeConfig.create)
+    ..aOM<AudioInputNodeConfig>(67, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioInputConfig', protoName: 'audioInputConfig', subBuilder: AudioInputNodeConfig.create)
+    ..aOM<AudioMixNodeConfig>(68, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMixConfig', protoName: 'audioMixConfig', subBuilder: AudioMixNodeConfig.create)
+    ..aOM<AudioMeterNodeConfig>(69, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMeterConfig', protoName: 'audioMeterConfig', subBuilder: AudioMeterNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1415,6 +1433,12 @@ class NodeConfig extends $pb.GeneratedMessage {
     ConditionalNodeConfig? conditionalConfig,
     TimecodeControlNodeConfig? timecodeControlConfig,
     TimecodeOutputNodeConfig? timecodeOutputConfig,
+    AudioFileNodeConfig? audioFileConfig,
+    AudioOutputNodeConfig? audioOutputConfig,
+    AudioVolumeNodeConfig? audioVolumeConfig,
+    AudioInputNodeConfig? audioInputConfig,
+    AudioMixNodeConfig? audioMixConfig,
+    AudioMeterNodeConfig? audioMeterConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1575,6 +1599,24 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (timecodeOutputConfig != null) {
       _result.timecodeOutputConfig = timecodeOutputConfig;
+    }
+    if (audioFileConfig != null) {
+      _result.audioFileConfig = audioFileConfig;
+    }
+    if (audioOutputConfig != null) {
+      _result.audioOutputConfig = audioOutputConfig;
+    }
+    if (audioVolumeConfig != null) {
+      _result.audioVolumeConfig = audioVolumeConfig;
+    }
+    if (audioInputConfig != null) {
+      _result.audioInputConfig = audioInputConfig;
+    }
+    if (audioMixConfig != null) {
+      _result.audioMixConfig = audioMixConfig;
+    }
+    if (audioMeterConfig != null) {
+      _result.audioMeterConfig = audioMeterConfig;
     }
     return _result;
   }
@@ -2184,6 +2226,72 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearTimecodeOutputConfig() => clearField(63);
   @$pb.TagNumber(63)
   TimecodeOutputNodeConfig ensureTimecodeOutputConfig() => $_ensure(52);
+
+  @$pb.TagNumber(64)
+  AudioFileNodeConfig get audioFileConfig => $_getN(53);
+  @$pb.TagNumber(64)
+  set audioFileConfig(AudioFileNodeConfig v) { setField(64, v); }
+  @$pb.TagNumber(64)
+  $core.bool hasAudioFileConfig() => $_has(53);
+  @$pb.TagNumber(64)
+  void clearAudioFileConfig() => clearField(64);
+  @$pb.TagNumber(64)
+  AudioFileNodeConfig ensureAudioFileConfig() => $_ensure(53);
+
+  @$pb.TagNumber(65)
+  AudioOutputNodeConfig get audioOutputConfig => $_getN(54);
+  @$pb.TagNumber(65)
+  set audioOutputConfig(AudioOutputNodeConfig v) { setField(65, v); }
+  @$pb.TagNumber(65)
+  $core.bool hasAudioOutputConfig() => $_has(54);
+  @$pb.TagNumber(65)
+  void clearAudioOutputConfig() => clearField(65);
+  @$pb.TagNumber(65)
+  AudioOutputNodeConfig ensureAudioOutputConfig() => $_ensure(54);
+
+  @$pb.TagNumber(66)
+  AudioVolumeNodeConfig get audioVolumeConfig => $_getN(55);
+  @$pb.TagNumber(66)
+  set audioVolumeConfig(AudioVolumeNodeConfig v) { setField(66, v); }
+  @$pb.TagNumber(66)
+  $core.bool hasAudioVolumeConfig() => $_has(55);
+  @$pb.TagNumber(66)
+  void clearAudioVolumeConfig() => clearField(66);
+  @$pb.TagNumber(66)
+  AudioVolumeNodeConfig ensureAudioVolumeConfig() => $_ensure(55);
+
+  @$pb.TagNumber(67)
+  AudioInputNodeConfig get audioInputConfig => $_getN(56);
+  @$pb.TagNumber(67)
+  set audioInputConfig(AudioInputNodeConfig v) { setField(67, v); }
+  @$pb.TagNumber(67)
+  $core.bool hasAudioInputConfig() => $_has(56);
+  @$pb.TagNumber(67)
+  void clearAudioInputConfig() => clearField(67);
+  @$pb.TagNumber(67)
+  AudioInputNodeConfig ensureAudioInputConfig() => $_ensure(56);
+
+  @$pb.TagNumber(68)
+  AudioMixNodeConfig get audioMixConfig => $_getN(57);
+  @$pb.TagNumber(68)
+  set audioMixConfig(AudioMixNodeConfig v) { setField(68, v); }
+  @$pb.TagNumber(68)
+  $core.bool hasAudioMixConfig() => $_has(57);
+  @$pb.TagNumber(68)
+  void clearAudioMixConfig() => clearField(68);
+  @$pb.TagNumber(68)
+  AudioMixNodeConfig ensureAudioMixConfig() => $_ensure(57);
+
+  @$pb.TagNumber(69)
+  AudioMeterNodeConfig get audioMeterConfig => $_getN(58);
+  @$pb.TagNumber(69)
+  set audioMeterConfig(AudioMeterNodeConfig v) { setField(69, v); }
+  @$pb.TagNumber(69)
+  $core.bool hasAudioMeterConfig() => $_has(58);
+  @$pb.TagNumber(69)
+  void clearAudioMeterConfig() => clearField(69);
+  @$pb.TagNumber(69)
+  AudioMeterNodeConfig ensureAudioMeterConfig() => $_ensure(58);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -5063,7 +5171,7 @@ class TimecodeControlNodeConfig extends $pb.GeneratedMessage {
 
 class TimecodeOutputNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TimecodeOutputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId', $pb.PbFieldType.OU3)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -5098,14 +5206,220 @@ class TimecodeOutputNodeConfig extends $pb.GeneratedMessage {
   static TimecodeOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TimecodeOutputNodeConfig>(create);
   static TimecodeOutputNodeConfig? _defaultInstance;
 
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
   $core.int get controlId => $_getIZ(0);
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
   set controlId($core.int v) { $_setUnsignedInt32(0, v); }
-  @$pb.TagNumber(2)
+  @$pb.TagNumber(1)
   $core.bool hasControlId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearControlId() => clearField(1);
+}
+
+class AudioFileNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioFileNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'file')
+    ..e<AudioFileNodeConfig_PlaybackMode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playbackMode', $pb.PbFieldType.OE, protoName: 'playbackMode', defaultOrMaker: AudioFileNodeConfig_PlaybackMode.ONE_SHOT, valueOf: AudioFileNodeConfig_PlaybackMode.valueOf, enumValues: AudioFileNodeConfig_PlaybackMode.values)
+    ..hasRequiredFields = false
+  ;
+
+  AudioFileNodeConfig._() : super();
+  factory AudioFileNodeConfig({
+    $core.String? file,
+    AudioFileNodeConfig_PlaybackMode? playbackMode,
+  }) {
+    final _result = create();
+    if (file != null) {
+      _result.file = file;
+    }
+    if (playbackMode != null) {
+      _result.playbackMode = playbackMode;
+    }
+    return _result;
+  }
+  factory AudioFileNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AudioFileNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AudioFileNodeConfig clone() => AudioFileNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AudioFileNodeConfig copyWith(void Function(AudioFileNodeConfig) updates) => super.copyWith((message) => updates(message as AudioFileNodeConfig)) as AudioFileNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AudioFileNodeConfig create() => AudioFileNodeConfig._();
+  AudioFileNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<AudioFileNodeConfig> createRepeated() => $pb.PbList<AudioFileNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static AudioFileNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioFileNodeConfig>(create);
+  static AudioFileNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get file => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set file($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasFile() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFile() => clearField(1);
+
   @$pb.TagNumber(2)
-  void clearControlId() => clearField(2);
+  AudioFileNodeConfig_PlaybackMode get playbackMode => $_getN(1);
+  @$pb.TagNumber(2)
+  set playbackMode(AudioFileNodeConfig_PlaybackMode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPlaybackMode() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPlaybackMode() => clearField(2);
+}
+
+class AudioOutputNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioOutputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AudioOutputNodeConfig._() : super();
+  factory AudioOutputNodeConfig() => create();
+  factory AudioOutputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AudioOutputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AudioOutputNodeConfig clone() => AudioOutputNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AudioOutputNodeConfig copyWith(void Function(AudioOutputNodeConfig) updates) => super.copyWith((message) => updates(message as AudioOutputNodeConfig)) as AudioOutputNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AudioOutputNodeConfig create() => AudioOutputNodeConfig._();
+  AudioOutputNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<AudioOutputNodeConfig> createRepeated() => $pb.PbList<AudioOutputNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static AudioOutputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioOutputNodeConfig>(create);
+  static AudioOutputNodeConfig? _defaultInstance;
+}
+
+class AudioVolumeNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioVolumeNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AudioVolumeNodeConfig._() : super();
+  factory AudioVolumeNodeConfig() => create();
+  factory AudioVolumeNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AudioVolumeNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AudioVolumeNodeConfig clone() => AudioVolumeNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AudioVolumeNodeConfig copyWith(void Function(AudioVolumeNodeConfig) updates) => super.copyWith((message) => updates(message as AudioVolumeNodeConfig)) as AudioVolumeNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AudioVolumeNodeConfig create() => AudioVolumeNodeConfig._();
+  AudioVolumeNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<AudioVolumeNodeConfig> createRepeated() => $pb.PbList<AudioVolumeNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static AudioVolumeNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioVolumeNodeConfig>(create);
+  static AudioVolumeNodeConfig? _defaultInstance;
+}
+
+class AudioInputNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioInputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AudioInputNodeConfig._() : super();
+  factory AudioInputNodeConfig() => create();
+  factory AudioInputNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AudioInputNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AudioInputNodeConfig clone() => AudioInputNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AudioInputNodeConfig copyWith(void Function(AudioInputNodeConfig) updates) => super.copyWith((message) => updates(message as AudioInputNodeConfig)) as AudioInputNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AudioInputNodeConfig create() => AudioInputNodeConfig._();
+  AudioInputNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<AudioInputNodeConfig> createRepeated() => $pb.PbList<AudioInputNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static AudioInputNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioInputNodeConfig>(create);
+  static AudioInputNodeConfig? _defaultInstance;
+}
+
+class AudioMixNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioMixNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AudioMixNodeConfig._() : super();
+  factory AudioMixNodeConfig() => create();
+  factory AudioMixNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AudioMixNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AudioMixNodeConfig clone() => AudioMixNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AudioMixNodeConfig copyWith(void Function(AudioMixNodeConfig) updates) => super.copyWith((message) => updates(message as AudioMixNodeConfig)) as AudioMixNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AudioMixNodeConfig create() => AudioMixNodeConfig._();
+  AudioMixNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<AudioMixNodeConfig> createRepeated() => $pb.PbList<AudioMixNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static AudioMixNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioMixNodeConfig>(create);
+  static AudioMixNodeConfig? _defaultInstance;
+}
+
+class AudioMeterNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AudioMeterNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  AudioMeterNodeConfig._() : super();
+  factory AudioMeterNodeConfig() => create();
+  factory AudioMeterNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AudioMeterNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AudioMeterNodeConfig clone() => AudioMeterNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AudioMeterNodeConfig copyWith(void Function(AudioMeterNodeConfig) updates) => super.copyWith((message) => updates(message as AudioMeterNodeConfig)) as AudioMeterNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static AudioMeterNodeConfig create() => AudioMeterNodeConfig._();
+  AudioMeterNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<AudioMeterNodeConfig> createRepeated() => $pb.PbList<AudioMeterNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static AudioMeterNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AudioMeterNodeConfig>(create);
+  static AudioMeterNodeConfig? _defaultInstance;
 }
 
 class NodePosition extends $pb.GeneratedMessage {

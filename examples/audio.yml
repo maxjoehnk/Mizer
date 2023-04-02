@@ -1,0 +1,184 @@
+---
+nodes:
+  - path: /audio-volume-1
+    type: audio-volume
+    config: ~
+    designer:
+      position:
+        x: 9.780598836401014
+        y: -4.807831763892241
+      scale: 1.0
+      hidden: false
+  - path: /audio-meter-0
+    type: audio-meter
+    config: ~
+    designer:
+      position:
+        x: 10.390670147139247
+        y: 2.791930213908554
+      scale: 1.0
+      hidden: false
+  - path: /audio-meter-2
+    type: audio-meter
+    config: ~
+    designer:
+      position:
+        x: 20.399418836272883
+        y: 1.6957139490360122
+      scale: 1.0
+      hidden: false
+  - path: /fader-1
+    type: fader
+    config: {}
+    designer:
+      position:
+        x: 1.6836220016417398
+        y: -5.9742260536827425
+      scale: 0.0
+      hidden: false
+  - path: /fader-0
+    type: fader
+    config: {}
+    designer:
+      position:
+        x: 1.0290602408570833
+        y: -1.6274473523252027
+      scale: 0.0
+      hidden: false
+  - path: /button-0
+    type: button
+    config:
+      toggle: true
+    designer:
+      position:
+        x: -3.16
+        y: 0.32
+      scale: 0.0
+      hidden: false
+  - path: /audio-mix-0
+    type: audio-mix
+    config: ~
+    designer:
+      position:
+        x: 15.186974103747591
+        y: -0.4373098331272892
+      scale: 1.0
+      hidden: false
+  - path: /audio-output-0
+    type: audio-output
+    config: {}
+    designer:
+      position:
+        x: 20.596436357385635
+        y: -0.21898136349356265
+      scale: 1.0
+      hidden: false
+  - path: /audio-volume-0
+    type: audio-volume
+    config: ~
+    designer:
+      position:
+        x: 9.7091801842738
+        y: -0.047268669072143436
+      scale: 1.0
+      hidden: false
+  - path: /audio-meter-1
+    type: audio-meter
+    config: ~
+    designer:
+      position:
+        x: 9.295718165382251
+        y: -6.54380511775641
+      scale: 1.0
+      hidden: false
+  - path: /audio-input-0
+    type: audio-input
+    config: ~
+    designer:
+      position:
+        x: 1.6906415199544442
+        y: -4.0412463252017305
+      scale: 1.0
+      hidden: false
+  - path: /audio-file-0
+    type: audio-file
+    config:
+      path: examples/media/audio/file_example_MP3_5MG.mp3
+      playback_mode: OneShot
+    designer:
+      position:
+        x: 4.466666666666667
+        y: 0.5866666666666667
+      scale: 1.0
+      hidden: false
+channels:
+  - value@/button-0 -> Playback@/audio-file-0
+  - Stereo@/audio-file-0 -> Stereo@/audio-volume-0
+  - value@/fader-0 -> Volume@/audio-volume-0
+  - Stereo@/audio-volume-0 -> Stereo@/audio-mix-0
+  - Stereo@/audio-mix-0 -> Stereo@/audio-output-0
+  - value@/fader-1 -> Volume@/audio-volume-1
+  - Stereo@/audio-input-0 -> Stereo@/audio-volume-1
+  - Stereo@/audio-volume-1 -> Stereo@/audio-mix-0
+  - Stereo@/audio-file-0 -> Stereo@/audio-meter-0
+  - Stereo@/audio-input-0 -> Stereo@/audio-meter-1
+  - Stereo@/audio-mix-0 -> Stereo@/audio-meter-2
+media: []
+layouts:
+  Default:
+    - label: Pause
+      node: /button-0
+      position:
+        x: 0
+        y: 0
+      size:
+        width: 1
+        height: 1
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - label: File
+      node: /fader-0
+      position:
+        x: 1
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+    - label: Input
+      node: /fader-1
+      position:
+        x: 2
+        y: 0
+      size:
+        width: 1
+        height: 4
+      decoration:
+        color: ~
+        image: ~
+      behavior:
+        sequencer:
+          click_behavior: GoForward
+connections: []
+fixtures: []
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
+sequences: []
+effects: []
+plans: []
+timecodes:
+  timecodes: []
+  controls: []

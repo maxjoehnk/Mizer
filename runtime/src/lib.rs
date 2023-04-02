@@ -89,6 +89,12 @@ pub trait NodeDowncast {
             NodeType::TimecodeOutput => {
                 Node::TimecodeOutput(self.downcast_node(node_type).unwrap())
             }
+            NodeType::AudioFile => Node::AudioFile(self.downcast_node(node_type).unwrap()),
+            NodeType::AudioOutput => Node::AudioOutput(self.downcast_node(node_type).unwrap()),
+            NodeType::AudioVolume => Node::AudioVolume(self.downcast_node(node_type).unwrap()),
+            NodeType::AudioInput => Node::AudioInput(self.downcast_node(node_type).unwrap()),
+            NodeType::AudioMix => Node::AudioMix(self.downcast_node(node_type).unwrap()),
+            NodeType::AudioMeter => Node::AudioMeter(self.downcast_node(node_type).unwrap()),
             NodeType::TestSink => Node::TestSink(self.downcast_node(node_type).unwrap()),
         }
     }

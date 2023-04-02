@@ -17,13 +17,14 @@ const double INNER_RADIUS = 2;
 const double DOT_SIZE = 16;
 
 List<Color> _TYPE_COLORS = [
-  Colors.green,          // Standard
-  Colors.orange,         // Connections
-  Colors.grey.shade700,  // Conversions
-  Colors.blue,           // Controls
-  Colors.red,            // Video
-  Colors.purple,         // Laser
-  Colors.red,            // Pixel
+  Colors.green, // Standard
+  Colors.orange, // Connections
+  Colors.grey.shade700, // Conversions
+  Colors.blue, // Controls
+  Colors.green, // Audio
+  Colors.red, // Video
+  Colors.purple, // Laser
+  Colors.red, // Pixel
 ];
 
 const _GENERATED_TYPES = [
@@ -61,8 +62,8 @@ Color getColorForType(Node_NodeType type) {
   if (_GENERATED_TYPES.contains(type)) {
     return Colors.blueGrey;
   }
-  var category = NODES.firstWhereOrNull((category) =>
-      category.items.any((item) => item.value == type));
+  var category =
+      NODES.firstWhereOrNull((category) => category.items.any((item) => item.value == type));
   if (category == null) {
     log("no color for node type ${type.name}");
     return Colors.green;

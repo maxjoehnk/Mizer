@@ -1,6 +1,10 @@
 pub use self::container_node::ContainerNode;
 use crate::test_sink::TestSink;
 use derive_more::From;
+pub use mizer_audio_nodes::{
+    AudioFileNode, AudioInputNode, AudioMeterNode, AudioMixNode, AudioOutputNode, AudioVolumeNode,
+    PlaybackMode,
+};
 pub use mizer_clock_nodes::ClockNode;
 pub use mizer_color_nodes::{HsvColorNode, RgbColorNode};
 pub use mizer_constant_nodes::ConstantNumberNode;
@@ -150,4 +154,10 @@ node_impl! {
     Conditional(ConditionalNode),
     TimecodeControl(TimecodeControlNode),
     TimecodeOutput(TimecodeOutputNode),
+    AudioFile(AudioFileNode),
+    AudioOutput(AudioOutputNode),
+    AudioVolume(AudioVolumeNode),
+    AudioInput(AudioInputNode),
+    AudioMix(AudioMixNode),
+    AudioMeter(AudioMeterNode),
 }

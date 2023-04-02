@@ -1,0 +1,14 @@
+[package]
+name = "mizer-audio-nodes"
+version = "0.1.0"
+authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+tracing = "0.1"
+symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
+cpal = "0.15"
+mizer-node = { path = "../../node" }
+serde = { version = "1", features = ["derive"] }
+rb = "0.4"

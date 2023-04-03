@@ -10,7 +10,7 @@ mod utils;
 fn main() {
     let clock = utils::TestClock::default();
     let sink = utils::TestSink::new();
-    let mut runtime = CoordinatorRuntime::with_clock(clock);
+    let mut runtime = CoordinatorRuntime::with_clock(clock, false);
     add_node(
         runtime.injector_mut(),
         NodeType::Oscillator,

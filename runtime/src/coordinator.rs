@@ -507,7 +507,7 @@ mod tests {
 
     #[test]
     fn node_runner_should_lend_state_ref() {
-        let mut runner = CoordinatorRuntime::new();
+        let mut runner = CoordinatorRuntime::new(false);
         let node = FaderNode::default();
         let path = NodePath("/test".to_string());
         runner

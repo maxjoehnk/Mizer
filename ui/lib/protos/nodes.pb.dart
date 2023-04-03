@@ -10,6 +10,8 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'programmer.pb.dart' as $1;
+
 import 'nodes.pbenum.dart';
 
 export 'nodes.pbenum.dart';
@@ -2605,11 +2607,20 @@ class ProgrammerNodeConfig extends $pb.GeneratedMessage {
 
 class GroupNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GroupNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'groupId', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
   GroupNodeConfig._() : super();
-  factory GroupNodeConfig() => create();
+  factory GroupNodeConfig({
+    $core.int? groupId,
+  }) {
+    final _result = create();
+    if (groupId != null) {
+      _result.groupId = groupId;
+    }
+    return _result;
+  }
   factory GroupNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GroupNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -2630,15 +2641,33 @@ class GroupNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static GroupNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GroupNodeConfig>(create);
   static GroupNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get groupId => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set groupId($core.int v) { $_setUnsignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGroupId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGroupId() => clearField(1);
 }
 
 class PresetNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PresetNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOM<$1.PresetId>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'presetId', subBuilder: $1.PresetId.create)
     ..hasRequiredFields = false
   ;
 
   PresetNodeConfig._() : super();
-  factory PresetNodeConfig() => create();
+  factory PresetNodeConfig({
+    $1.PresetId? presetId,
+  }) {
+    final _result = create();
+    if (presetId != null) {
+      _result.presetId = presetId;
+    }
+    return _result;
+  }
   factory PresetNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PresetNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -2659,6 +2688,17 @@ class PresetNodeConfig extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static PresetNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PresetNodeConfig>(create);
   static PresetNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.PresetId get presetId => $_getN(0);
+  @$pb.TagNumber(1)
+  set presetId($1.PresetId v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPresetId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPresetId() => clearField(1);
+  @$pb.TagNumber(1)
+  $1.PresetId ensurePresetId() => $_ensure(0);
 }
 
 class EnvelopeNodeConfig extends $pb.GeneratedMessage {

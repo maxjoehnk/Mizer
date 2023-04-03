@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package mizer.nodes;
 
+import "programmer.proto";
+
 service NodesApi {
   rpc GetNodes (NodesRequest) returns (Nodes) {}
   rpc AddNode (AddNodeRequest) returns (Node) {}
@@ -277,8 +279,12 @@ message SequenceNodeConfig {
 }
 
 message ProgrammerNodeConfig {}
-message GroupNodeConfig {}
-message PresetNodeConfig {}
+message GroupNodeConfig {
+  uint32 group_id = 1;
+}
+message PresetNodeConfig {
+  mizer.programmer.PresetId preset_id = 1;
+}
 
 message EnvelopeNodeConfig {
   double attack = 1;

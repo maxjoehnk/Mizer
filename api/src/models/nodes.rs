@@ -8381,6 +8381,9 @@ impl ::protobuf::reflect::ProtobufValue for ProgrammerNodeConfig {
 #[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.GroupNodeConfig)
 pub struct GroupNodeConfig {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.nodes.GroupNodeConfig.group_id)
+    pub group_id: u32,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.GroupNodeConfig.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -8398,8 +8401,13 @@ impl GroupNodeConfig {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(1);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "group_id",
+            |m: &GroupNodeConfig| { &m.group_id },
+            |m: &mut GroupNodeConfig| { &mut m.group_id },
+        ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<GroupNodeConfig>(
             "GroupNodeConfig",
             fields,
@@ -8418,6 +8426,9 @@ impl ::protobuf::Message for GroupNodeConfig {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
+                8 => {
+                    self.group_id = is.read_uint32()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -8430,12 +8441,18 @@ impl ::protobuf::Message for GroupNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
+        if self.group_id != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.group_id);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.group_id != 0 {
+            os.write_uint32(1, self.group_id)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -8453,11 +8470,13 @@ impl ::protobuf::Message for GroupNodeConfig {
     }
 
     fn clear(&mut self) {
+        self.group_id = 0;
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static GroupNodeConfig {
         static instance: GroupNodeConfig = GroupNodeConfig {
+            group_id: 0,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -8484,6 +8503,9 @@ impl ::protobuf::reflect::ProtobufValue for GroupNodeConfig {
 #[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.nodes.PresetNodeConfig)
 pub struct PresetNodeConfig {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.nodes.PresetNodeConfig.preset_id)
+    pub preset_id: ::protobuf::MessageField<super::programmer::PresetId>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.PresetNodeConfig.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -8501,8 +8523,13 @@ impl PresetNodeConfig {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut fields = ::std::vec::Vec::with_capacity(1);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_message_field_accessor::<_, super::programmer::PresetId>(
+            "preset_id",
+            |m: &PresetNodeConfig| { &m.preset_id },
+            |m: &mut PresetNodeConfig| { &mut m.preset_id },
+        ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PresetNodeConfig>(
             "PresetNodeConfig",
             fields,
@@ -8521,6 +8548,9 @@ impl ::protobuf::Message for PresetNodeConfig {
     fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
         while let Some(tag) = is.read_raw_tag_or_eof()? {
             match tag {
+                10 => {
+                    ::protobuf::rt::read_singular_message_into_field(is, &mut self.preset_id)?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -8533,12 +8563,19 @@ impl ::protobuf::Message for PresetNodeConfig {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u64 {
         let mut my_size = 0;
+        if let Some(v) = self.preset_id.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if let Some(v) = self.preset_id.as_ref() {
+            ::protobuf::rt::write_message_field_with_cached_size(1, v, os)?;
+        }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -8556,11 +8593,13 @@ impl ::protobuf::Message for PresetNodeConfig {
     }
 
     fn clear(&mut self) {
+        self.preset_id.clear();
         self.special_fields.clear();
     }
 
     fn default_instance() -> &'static PresetNodeConfig {
         static instance: PresetNodeConfig = PresetNodeConfig {
+            preset_id: ::protobuf::MessageField::none(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -16932,177 +16971,179 @@ impl ChannelProtocol {
 }
 
 static file_descriptor_proto_data: &'static [u8] = b"\
-    \n\x0bnodes.proto\x12\x0bmizer.nodes\"\x9f\x01\n\x0eAddNodeRequest\x12.\
-    \n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.Node.NodeTypeR\x04type\
-    \x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\
-    \x08position\x12\x1b\n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\
-    \x01\x01B\t\n\x07_parent\"R\n\x14DuplicateNodeRequest\x12\x12\n\x04path\
-    \x18\x01\x20\x01(\tR\x04path\x12\x1b\n\x06parent\x18\x02\x20\x01(\tH\0R\
-    \x06parent\x88\x01\x01B\t\n\x07_parent\"\x0e\n\x0cNodesRequest\"L\n\x0cW\
-    riteControl\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x12\n\x04p\
-    ort\x18\x02\x20\x01(\tR\x04port\x12\x14\n\x05value\x18\x03\x20\x01(\x01R\
-    \x05value\"\x0f\n\rWriteResponse\"^\n\x17UpdateNodeConfigRequest\x12\x12\
-    \n\x04path\x18\x01\x20\x01(\tR\x04path\x12/\n\x06config\x18\x02\x20\x01(\
-    \x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\x1a\n\x18UpdateNodeConfigR\
-    esponse\"\\\n\x0fMoveNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\
-    \x04path\x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePo\
-    sitionR\x08position\"\x12\n\x10MoveNodeResponse\"\x84\x01\n\x0fShowNodeR\
-    equest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x125\n\x08position\
-    \x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x1b\
-    \n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_paren\
-    t\"\x12\n\x10ShowNodeResponse\"B\n\x11RenameNodeRequest\x12\x12\n\x04pat\
-    h\x18\x01\x20\x01(\tR\x04path\x12\x19\n\x08new_name\x18\x02\x20\x01(\tR\
-    \x07newName\"\x14\n\x12RenameNodeResponse\"Q\n\x11GroupNodesRequest\x12\
-    \x14\n\x05nodes\x18\x01\x20\x03(\tR\x05nodes\x12\x1b\n\x06parent\x18\x02\
-    \x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x14\n\x12GroupNo\
-    desResponse\"'\n\x11DeleteNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\
-    \tR\x04path\"\x14\n\x12DeleteNodeResponse\"%\n\x0fHideNodeRequest\x12\
-    \x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x12\n\x10HideNodeResponse\"\
-    \x99\x01\n\x05Nodes\x12'\n\x05nodes\x18\x01\x20\x03(\x0b2\x11.mizer.node\
-    s.NodeR\x05nodes\x127\n\x08channels\x18\x02\x20\x03(\x0b2\x1b.mizer.node\
-    s.NodeConnectionR\x08channels\x12.\n\tall_nodes\x18\x03\x20\x03(\x0b2\
-    \x11.mizer.nodes.NodeR\x08allNodes\"\xf0\x01\n\x0eNodeConnection\x12\x1e\
-    \n\ntargetNode\x18\x01\x20\x01(\tR\ntargetNode\x121\n\ntargetPort\x18\
-    \x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\ntargetPort\x12\x1e\n\nsourceNo\
-    de\x18\x03\x20\x01(\tR\nsourceNode\x121\n\nsourcePort\x18\x04\x20\x01(\
-    \x0b2\x11.mizer.nodes.PortR\nsourcePort\x128\n\x08protocol\x18\x05\x20\
-    \x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\"\x9a\n\n\x04Nod\
-    e\x12.\n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.Node.NodeTypeR\
-    \x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12)\n\x06inputs\
-    \x18\x03\x20\x03(\x0b2\x11.mizer.nodes.PortR\x06inputs\x12+\n\x07outputs\
-    \x18\x04\x20\x03(\x0b2\x11.mizer.nodes.PortR\x07outputs\x125\n\x08design\
-    er\x18\x05\x20\x01(\x0b2\x19.mizer.nodes.NodeDesignerR\x08designer\x12;\
-    \n\x07preview\x18\x06\x20\x01(\x0e2!.mizer.nodes.Node.NodePreviewTypeR\
-    \x07preview\x12/\n\x06config\x18\x07\x20\x01(\x0b2\x17.mizer.nodes.NodeC\
-    onfigR\x06config\"\xef\x06\n\x08NodeType\x12\t\n\x05Fader\x10\0\x12\n\n\
-    \x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Clock\x10\
-    \x03\x12\n\n\x06Script\x10\x04\x12\x0c\n\x08Envelope\x10\x05\x12\x0c\n\
-    \x08Sequence\x10\x06\x12\n\n\x06Select\x10\x07\x12\t\n\x05Merge\x10\x08\
-    \x12\r\n\tThreshold\x10\t\x12\r\n\tDmxOutput\x10\n\x12\x0c\n\x08OscInput\
-    \x10\x0b\x12\r\n\tOscOutput\x10\x0c\x12\r\n\tMidiInput\x10\r\x12\x0e\n\n\
-    MidiOutput\x10\x0e\x12\r\n\tSequencer\x10\x0f\x12\x0b\n\x07Fixture\x10\
-    \x10\x12\x0e\n\nProgrammer\x10\x11\x12\t\n\x05Group\x10\x12\x12\n\n\x06P\
-    reset\x10\x13\x12\r\n\tVideoFile\x10\x14\x12\x0f\n\x0bVideoOutput\x10\
-    \x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\x11VideoColorBalance\x10\
-    \x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\x0e\n\nPixelToDmx\x10\x1e\
-    \x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOpcOutput\x10\x20\x12\t\n\
-    \x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\x12\x0b\n\x07Gamepad\x10-\x12\
-    \x0c\n\x08ColorRgb\x102\x12\x0c\n\x08ColorHsv\x103\x12\r\n\tContainer\
-    \x10d\x12\x0b\n\x07Encoder\x107\x12\x08\n\x04Math\x108\x12\x10\n\x0cData\
-    ToNumber\x109\x12\x10\n\x0cNumberToData\x10:\x12\t\n\x05Value\x10;\x12\r\
-    \n\tMqttInput\x10<\x12\x0e\n\nMqttOutput\x10=\x12\x0e\n\nPlanScreen\x10>\
-    \x12\t\n\x05Delay\x10?\x12\x08\n\x04Ramp\x10@\x12\t\n\x05Noise\x10A\x12\
-    \t\n\x05Label\x10B\x12\r\n\tTransport\x10C\x12\x0c\n\x08G13Input\x10D\
-    \x12\r\n\tG13Output\x10E\x12\x12\n\x0eConstantNumber\x10F\x12\x0f\n\x0bC\
-    onditional\x10G\x12\x13\n\x0fTimecodeControl\x10H\x12\x12\n\x0eTimecodeO\
-    utput\x10I\x12\r\n\tAudioFile\x10J\x12\x0f\n\x0bAudioOutput\x10K\x12\x0f\
-    \n\x0bAudioVolume\x10L\x12\x0e\n\nAudioInput\x10M\x12\x0c\n\x08AudioMix\
-    \x10N\x12\x0e\n\nAudioMeter\x10O\"_\n\x0fNodePreviewType\x12\x0b\n\x07Hi\
-    story\x10\0\x12\x0c\n\x08Waveform\x10\x01\x12\x0c\n\x08Multiple\x10\x02\
-    \x12\x0b\n\x07Texture\x10\x03\x12\x0c\n\x08Timecode\x10\x04\x12\x08\n\
-    \x04None\x10\x05\"\xd3#\n\nNodeConfig\x12O\n\x10oscillatorConfig\x18\n\
-    \x20\x01(\x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\x10oscillatorConfig\
-    \x12L\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x20.mizer.nodes.Scripti\
-    ngNodeConfigH\0R\x0fscriptingConfig\x12I\n\x0esequenceConfig\x18\x0c\x20\
-    \x01(\x0b2\x1f.mizer.nodes.SequenceNodeConfigH\0R\x0esequenceConfig\x12@\
-    \n\x0bclockConfig\x18\r\x20\x01(\x0b2\x1c.mizer.nodes.ClockNodeConfigH\0\
-    R\x0bclockConfig\x12F\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x1e.mizer.n\
-    odes.FixtureNodeConfigH\0R\rfixtureConfig\x12C\n\x0cbuttonConfig\x18\x0f\
-    \x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeConfigH\0R\x0cbuttonConfig\x12@\
-    \n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x1c.mizer.nodes.FaderNodeConfigH\
-    \0R\x0bfaderConfig\x12I\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b2\x1f.mi\
-    zer.nodes.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12@\n\x0blaserConfig\
-    \x18\x12\x20\x01(\x0b2\x1c.mizer.nodes.LaserNodeConfigH\0R\x0blaserConfi\
-    g\x12U\n\x12pixelPatternConfig\x18\x13\x20\x01(\x0b2#.mizer.nodes.PixelP\
-    atternNodeConfigH\0R\x12pixelPatternConfig\x12I\n\x0epixelDmxConfig\x18\
-    \x14\x20\x01(\x0b2\x1f.mizer.nodes.PixelDmxNodeConfigH\0R\x0epixelDmxCon\
-    fig\x12L\n\x0fdmxOutputConfig\x18\x15\x20\x01(\x0b2\x20.mizer.nodes.DmxO\
-    utputNodeConfigH\0R\x0fdmxOutputConfig\x12G\n\x0fmidiInputConfig\x18\x16\
-    \x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x0fmidiInputConfig\x12\
-    I\n\x10midiOutputConfig\x18\x17\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeCo\
-    nfigH\0R\x10midiOutputConfig\x12L\n\x0fopcOutputConfig\x18\x18\x20\x01(\
-    \x0b2\x20.mizer.nodes.OpcOutputNodeConfigH\0R\x0fopcOutputConfig\x12D\n\
-    \x0eoscInputConfig\x18\x19\x20\x01(\x0b2\x1a.mizer.nodes.OscNodeConfigH\
-    \0R\x0eoscInputConfig\x12F\n\x0foscOutputConfig\x18\x1a\x20\x01(\x0b2\
-    \x1a.mizer.nodes.OscNodeConfigH\0R\x0foscOutputConfig\x12d\n\x17videoCol\
-    orBalanceConfig\x18\x1b\x20\x01(\x0b2(.mizer.nodes.VideoColorBalanceNode\
-    ConfigH\0R\x17videoColorBalanceConfig\x12R\n\x11videoEffectConfig\x18\
-    \x1c\x20\x01(\x0b2\".mizer.nodes.VideoEffectNodeConfigH\0R\x11videoEffec\
-    tConfig\x12L\n\x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x20.mizer.nodes.\
-    VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12R\n\x11videoOutputConfig\
-    \x18\x1e\x20\x01(\x0b2\".mizer.nodes.VideoOutputNodeConfigH\0R\x11videoO\
-    utputConfig\x12[\n\x14videoTransformConfig\x18\x1f\x20\x01(\x0b2%.mizer.\
-    nodes.VideoTransformNodeConfigH\0R\x14videoTransformConfig\x12C\n\x0csel\
-    ectConfig\x18\x20\x20\x01(\x0b2\x1d.mizer.nodes.SelectNodeConfigH\0R\x0c\
-    selectConfig\x12@\n\x0bmergeConfig\x18!\x20\x01(\x0b2\x1c.mizer.nodes.Me\
-    rgeNodeConfigH\0R\x0bmergeConfig\x12I\n\x0eenvelopeConfig\x18\"\x20\x01(\
-    \x0b2\x1f.mizer.nodes.EnvelopeNodeConfigH\0R\x0eenvelopeConfig\x12L\n\
-    \x0fsequencerConfig\x18#\x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeConf\
-    igH\0R\x0fsequencerConfig\x12O\n\x10programmerConfig\x18$\x20\x01(\x0b2!\
-    .mizer.nodes.ProgrammerNodeConfigH\0R\x10programmerConfig\x12@\n\x0bgrou\
-    pConfig\x18%\x20\x01(\x0b2\x1c.mizer.nodes.GroupNodeConfigH\0R\x0bgroupC\
-    onfig\x12C\n\x0cpresetConfig\x18&\x20\x01(\x0b2\x1d.mizer.nodes.PresetNo\
-    deConfigH\0R\x0cpresetConfig\x12I\n\x0ecolorRgbConfig\x18(\x20\x01(\x0b2\
-    \x1f.mizer.nodes.ColorRgbNodeConfigH\0R\x0ecolorRgbConfig\x12I\n\x0ecolo\
-    rHsvConfig\x18)\x20\x01(\x0b2\x1f.mizer.nodes.ColorHsvNodeConfigH\0R\x0e\
-    colorHsvConfig\x12N\n\x11gamepadNodeConfig\x18*\x20\x01(\x0b2\x1e.mizer.\
-    nodes.GamepadNodeConfigH\0R\x11gamepadNodeConfig\x12L\n\x0fthresholdConf\
-    ig\x18+\x20\x01(\x0b2\x20.mizer.nodes.ThresholdNodeConfigH\0R\x0fthresho\
-    ldConfig\x12F\n\rencoderConfig\x18,\x20\x01(\x0b2\x1e.mizer.nodes.Encode\
-    rNodeConfigH\0R\rencoderConfig\x12L\n\x0fcontainerConfig\x18-\x20\x01(\
-    \x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfig\x12=\n\
-    \nmathConfig\x18.\x20\x01(\x0b2\x1b.mizer.nodes.MathNodeConfigH\0R\nmath\
-    Config\x12L\n\x0fmqttInputConfig\x18/\x20\x01(\x0b2\x20.mizer.nodes.Mqtt\
-    InputNodeConfigH\0R\x0fmqttInputConfig\x12O\n\x10mqttOutputConfig\x180\
-    \x20\x01(\x0b2!.mizer.nodes.MqttOutputNodeConfigH\0R\x10mqttOutputConfig\
-    \x12U\n\x12numberToDataConfig\x181\x20\x01(\x0b2#.mizer.nodes.NumberToDa\
-    taNodeConfigH\0R\x12numberToDataConfig\x12U\n\x12dataToNumberConfig\x182\
-    \x20\x01(\x0b2#.mizer.nodes.DataToNumberNodeConfigH\0R\x12dataToNumberCo\
-    nfig\x12@\n\x0bvalueConfig\x183\x20\x01(\x0b2\x1c.mizer.nodes.ValueNodeC\
-    onfigH\0R\x0bvalueConfig\x12O\n\x10planScreenConfig\x184\x20\x01(\x0b2!.\
-    mizer.nodes.PlanScreenNodeConfigH\0R\x10planScreenConfig\x12@\n\x0bdelay\
-    Config\x185\x20\x01(\x0b2\x1c.mizer.nodes.DelayNodeConfigH\0R\x0bdelayCo\
-    nfig\x12=\n\nrampConfig\x186\x20\x01(\x0b2\x1b.mizer.nodes.RampNodeConfi\
-    gH\0R\nrampConfig\x12@\n\x0bnoiseConfig\x187\x20\x01(\x0b2\x1c.mizer.nod\
-    es.NoiseNodeConfigH\0R\x0bnoiseConfig\x12@\n\x0blabelConfig\x188\x20\x01\
-    (\x0b2\x1c.mizer.nodes.LabelNodeConfigH\0R\x0blabelConfig\x12L\n\x0ftran\
-    sportConfig\x189\x20\x01(\x0b2\x20.mizer.nodes.TransportNodeConfigH\0R\
-    \x0ftransportConfig\x12I\n\x0eg13InputConfig\x18:\x20\x01(\x0b2\x1f.mize\
-    r.nodes.G13InputNodeConfigH\0R\x0eg13InputConfig\x12L\n\x0fg13OutputConf\
-    ig\x18;\x20\x01(\x0b2\x20.mizer.nodes.G13OutputNodeConfigH\0R\x0fg13Outp\
-    utConfig\x12[\n\x14constantNumberConfig\x18<\x20\x01(\x0b2%.mizer.nodes.\
-    ConstantNumberNodeConfigH\0R\x14constantNumberConfig\x12R\n\x11condition\
-    alConfig\x18=\x20\x01(\x0b2\".mizer.nodes.ConditionalNodeConfigH\0R\x11c\
-    onditionalConfig\x12^\n\x15timecodeControlConfig\x18>\x20\x01(\x0b2&.miz\
-    er.nodes.TimecodeControlNodeConfigH\0R\x15timecodeControlConfig\x12[\n\
-    \x14timecodeOutputConfig\x18?\x20\x01(\x0b2%.mizer.nodes.TimecodeOutputN\
-    odeConfigH\0R\x14timecodeOutputConfig\x12L\n\x0faudioFileConfig\x18@\x20\
-    \x01(\x0b2\x20.mizer.nodes.AudioFileNodeConfigH\0R\x0faudioFileConfig\
-    \x12R\n\x11audioOutputConfig\x18A\x20\x01(\x0b2\".mizer.nodes.AudioOutpu\
-    tNodeConfigH\0R\x11audioOutputConfig\x12R\n\x11audioVolumeConfig\x18B\
-    \x20\x01(\x0b2\".mizer.nodes.AudioVolumeNodeConfigH\0R\x11audioVolumeCon\
-    fig\x12O\n\x10audioInputConfig\x18C\x20\x01(\x0b2!.mizer.nodes.AudioInpu\
-    tNodeConfigH\0R\x10audioInputConfig\x12I\n\x0eaudioMixConfig\x18D\x20\
-    \x01(\x0b2\x1f.mizer.nodes.AudioMixNodeConfigH\0R\x0eaudioMixConfig\x12O\
-    \n\x10audioMeterConfig\x18E\x20\x01(\x0b2!.mizer.nodes.AudioMeterNodeCon\
-    figH\0R\x10audioMeterConfigB\x06\n\x04type\"\x87\x02\n\x14OscillatorNode\
-    Config\x12D\n\x04type\x18\x01\x20\x01(\x0e20.mizer.nodes.OscillatorNodeC\
-    onfig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\x01(\x01R\
-    \x05ratio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\x10\n\x03min\
-    \x18\x04\x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\x20\x01(\x01R\
-    \x06offset\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07reverse\"=\n\
-    \x0eOscillatorType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\x10\x01\x12\
-    \x07\n\x03Saw\x10\x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13ScriptingNod\
-    eConfig\x12\x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\xa6\x01\n\
-    \x12SequenceNodeConfig\x12B\n\x05steps\x18\x01\x20\x03(\x0b2,.mizer.node\
-    s.SequenceNodeConfig.SequenceStepR\x05steps\x1aL\n\x0cSequenceStep\x12\
-    \x12\n\x04tick\x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\x01R\x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\x04hold\
-    \"\x16\n\x14ProgrammerNodeConfig\"\x11\n\x0fGroupNodeConfig\"\x12\n\x10P\
-    resetNodeConfig\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06attack\x18\x01\
-    \x20\x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01(\x01R\x05dec\
-    ay\x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07re\
-    lease\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNodeConfig\x12\x14\n\
+    \n\x0bnodes.proto\x12\x0bmizer.nodes\x1a\x10programmer.proto\"\x9f\x01\n\
+    \x0eAddNodeRequest\x12.\n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.\
+    Node.NodeTypeR\x04type\x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mize\
+    r.nodes.NodePositionR\x08position\x12\x1b\n\x06parent\x18\x03\x20\x01(\t\
+    H\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"R\n\x14DuplicateNodeRequest\
+    \x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x1b\n\x06parent\x18\
+    \x02\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_parent\"\x0e\n\x0cNod\
+    esRequest\"L\n\x0cWriteControl\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04\
+    path\x12\x12\n\x04port\x18\x02\x20\x01(\tR\x04port\x12\x14\n\x05value\
+    \x18\x03\x20\x01(\x01R\x05value\"\x0f\n\rWriteResponse\"^\n\x17UpdateNod\
+    eConfigRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12/\n\x06c\
+    onfig\x18\x02\x20\x01(\x0b2\x17.mizer.nodes.NodeConfigR\x06config\"\x1a\
+    \n\x18UpdateNodeConfigResponse\"\\\n\x0fMoveNodeRequest\x12\x12\n\x04pat\
+    h\x18\x01\x20\x01(\tR\x04path\x125\n\x08position\x18\x02\x20\x01(\x0b2\
+    \x19.mizer.nodes.NodePositionR\x08position\"\x12\n\x10MoveNodeResponse\"\
+    \x84\x01\n\x0fShowNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04p\
+    ath\x125\n\x08position\x18\x02\x20\x01(\x0b2\x19.mizer.nodes.NodePositio\
+    nR\x08position\x12\x1b\n\x06parent\x18\x03\x20\x01(\tH\0R\x06parent\x88\
+    \x01\x01B\t\n\x07_parent\"\x12\n\x10ShowNodeResponse\"B\n\x11RenameNodeR\
+    equest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\x12\x19\n\x08new_na\
+    me\x18\x02\x20\x01(\tR\x07newName\"\x14\n\x12RenameNodeResponse\"Q\n\x11\
+    GroupNodesRequest\x12\x14\n\x05nodes\x18\x01\x20\x03(\tR\x05nodes\x12\
+    \x1b\n\x06parent\x18\x02\x20\x01(\tH\0R\x06parent\x88\x01\x01B\t\n\x07_p\
+    arent\"\x14\n\x12GroupNodesResponse\"'\n\x11DeleteNodeRequest\x12\x12\n\
+    \x04path\x18\x01\x20\x01(\tR\x04path\"\x14\n\x12DeleteNodeResponse\"%\n\
+    \x0fHideNodeRequest\x12\x12\n\x04path\x18\x01\x20\x01(\tR\x04path\"\x12\
+    \n\x10HideNodeResponse\"\x99\x01\n\x05Nodes\x12'\n\x05nodes\x18\x01\x20\
+    \x03(\x0b2\x11.mizer.nodes.NodeR\x05nodes\x127\n\x08channels\x18\x02\x20\
+    \x03(\x0b2\x1b.mizer.nodes.NodeConnectionR\x08channels\x12.\n\tall_nodes\
+    \x18\x03\x20\x03(\x0b2\x11.mizer.nodes.NodeR\x08allNodes\"\xf0\x01\n\x0e\
+    NodeConnection\x12\x1e\n\ntargetNode\x18\x01\x20\x01(\tR\ntargetNode\x12\
+    1\n\ntargetPort\x18\x02\x20\x01(\x0b2\x11.mizer.nodes.PortR\ntargetPort\
+    \x12\x1e\n\nsourceNode\x18\x03\x20\x01(\tR\nsourceNode\x121\n\nsourcePor\
+    t\x18\x04\x20\x01(\x0b2\x11.mizer.nodes.PortR\nsourcePort\x128\n\x08prot\
+    ocol\x18\x05\x20\x01(\x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\
+    \"\x9a\n\n\x04Node\x12.\n\x04type\x18\x01\x20\x01(\x0e2\x1a.mizer.nodes.\
+    Node.NodeTypeR\x04type\x12\x12\n\x04path\x18\x02\x20\x01(\tR\x04path\x12\
+    )\n\x06inputs\x18\x03\x20\x03(\x0b2\x11.mizer.nodes.PortR\x06inputs\x12+\
+    \n\x07outputs\x18\x04\x20\x03(\x0b2\x11.mizer.nodes.PortR\x07outputs\x12\
+    5\n\x08designer\x18\x05\x20\x01(\x0b2\x19.mizer.nodes.NodeDesignerR\x08d\
+    esigner\x12;\n\x07preview\x18\x06\x20\x01(\x0e2!.mizer.nodes.Node.NodePr\
+    eviewTypeR\x07preview\x12/\n\x06config\x18\x07\x20\x01(\x0b2\x17.mizer.n\
+    odes.NodeConfigR\x06config\"\xef\x06\n\x08NodeType\x12\t\n\x05Fader\x10\
+    \0\x12\n\n\x06Button\x10\x01\x12\x0e\n\nOscillator\x10\x02\x12\t\n\x05Cl\
+    ock\x10\x03\x12\n\n\x06Script\x10\x04\x12\x0c\n\x08Envelope\x10\x05\x12\
+    \x0c\n\x08Sequence\x10\x06\x12\n\n\x06Select\x10\x07\x12\t\n\x05Merge\
+    \x10\x08\x12\r\n\tThreshold\x10\t\x12\r\n\tDmxOutput\x10\n\x12\x0c\n\x08\
+    OscInput\x10\x0b\x12\r\n\tOscOutput\x10\x0c\x12\r\n\tMidiInput\x10\r\x12\
+    \x0e\n\nMidiOutput\x10\x0e\x12\r\n\tSequencer\x10\x0f\x12\x0b\n\x07Fixtu\
+    re\x10\x10\x12\x0e\n\nProgrammer\x10\x11\x12\t\n\x05Group\x10\x12\x12\n\
+    \n\x06Preset\x10\x13\x12\r\n\tVideoFile\x10\x14\x12\x0f\n\x0bVideoOutput\
+    \x10\x15\x12\x0f\n\x0bVideoEffect\x10\x16\x12\x15\n\x11VideoColorBalance\
+    \x10\x17\x12\x12\n\x0eVideoTransform\x10\x18\x12\x0e\n\nPixelToDmx\x10\
+    \x1e\x12\x10\n\x0cPixelPattern\x10\x1f\x12\r\n\tOpcOutput\x10\x20\x12\t\
+    \n\x05Laser\x10(\x12\x0c\n\x08IldaFile\x10)\x12\x0b\n\x07Gamepad\x10-\
+    \x12\x0c\n\x08ColorRgb\x102\x12\x0c\n\x08ColorHsv\x103\x12\r\n\tContaine\
+    r\x10d\x12\x0b\n\x07Encoder\x107\x12\x08\n\x04Math\x108\x12\x10\n\x0cDat\
+    aToNumber\x109\x12\x10\n\x0cNumberToData\x10:\x12\t\n\x05Value\x10;\x12\
+    \r\n\tMqttInput\x10<\x12\x0e\n\nMqttOutput\x10=\x12\x0e\n\nPlanScreen\
+    \x10>\x12\t\n\x05Delay\x10?\x12\x08\n\x04Ramp\x10@\x12\t\n\x05Noise\x10A\
+    \x12\t\n\x05Label\x10B\x12\r\n\tTransport\x10C\x12\x0c\n\x08G13Input\x10\
+    D\x12\r\n\tG13Output\x10E\x12\x12\n\x0eConstantNumber\x10F\x12\x0f\n\x0b\
+    Conditional\x10G\x12\x13\n\x0fTimecodeControl\x10H\x12\x12\n\x0eTimecode\
+    Output\x10I\x12\r\n\tAudioFile\x10J\x12\x0f\n\x0bAudioOutput\x10K\x12\
+    \x0f\n\x0bAudioVolume\x10L\x12\x0e\n\nAudioInput\x10M\x12\x0c\n\x08Audio\
+    Mix\x10N\x12\x0e\n\nAudioMeter\x10O\"_\n\x0fNodePreviewType\x12\x0b\n\
+    \x07History\x10\0\x12\x0c\n\x08Waveform\x10\x01\x12\x0c\n\x08Multiple\
+    \x10\x02\x12\x0b\n\x07Texture\x10\x03\x12\x0c\n\x08Timecode\x10\x04\x12\
+    \x08\n\x04None\x10\x05\"\xd3#\n\nNodeConfig\x12O\n\x10oscillatorConfig\
+    \x18\n\x20\x01(\x0b2!.mizer.nodes.OscillatorNodeConfigH\0R\x10oscillator\
+    Config\x12L\n\x0fscriptingConfig\x18\x0b\x20\x01(\x0b2\x20.mizer.nodes.S\
+    criptingNodeConfigH\0R\x0fscriptingConfig\x12I\n\x0esequenceConfig\x18\
+    \x0c\x20\x01(\x0b2\x1f.mizer.nodes.SequenceNodeConfigH\0R\x0esequenceCon\
+    fig\x12@\n\x0bclockConfig\x18\r\x20\x01(\x0b2\x1c.mizer.nodes.ClockNodeC\
+    onfigH\0R\x0bclockConfig\x12F\n\rfixtureConfig\x18\x0e\x20\x01(\x0b2\x1e\
+    .mizer.nodes.FixtureNodeConfigH\0R\rfixtureConfig\x12C\n\x0cbuttonConfig\
+    \x18\x0f\x20\x01(\x0b2\x1d.mizer.nodes.ButtonNodeConfigH\0R\x0cbuttonCon\
+    fig\x12@\n\x0bfaderConfig\x18\x10\x20\x01(\x0b2\x1c.mizer.nodes.FaderNod\
+    eConfigH\0R\x0bfaderConfig\x12I\n\x0eildaFileConfig\x18\x11\x20\x01(\x0b\
+    2\x1f.mizer.nodes.IldaFileNodeConfigH\0R\x0eildaFileConfig\x12@\n\x0blas\
+    erConfig\x18\x12\x20\x01(\x0b2\x1c.mizer.nodes.LaserNodeConfigH\0R\x0bla\
+    serConfig\x12U\n\x12pixelPatternConfig\x18\x13\x20\x01(\x0b2#.mizer.node\
+    s.PixelPatternNodeConfigH\0R\x12pixelPatternConfig\x12I\n\x0epixelDmxCon\
+    fig\x18\x14\x20\x01(\x0b2\x1f.mizer.nodes.PixelDmxNodeConfigH\0R\x0epixe\
+    lDmxConfig\x12L\n\x0fdmxOutputConfig\x18\x15\x20\x01(\x0b2\x20.mizer.nod\
+    es.DmxOutputNodeConfigH\0R\x0fdmxOutputConfig\x12G\n\x0fmidiInputConfig\
+    \x18\x16\x20\x01(\x0b2\x1b.mizer.nodes.MidiNodeConfigH\0R\x0fmidiInputCo\
+    nfig\x12I\n\x10midiOutputConfig\x18\x17\x20\x01(\x0b2\x1b.mizer.nodes.Mi\
+    diNodeConfigH\0R\x10midiOutputConfig\x12L\n\x0fopcOutputConfig\x18\x18\
+    \x20\x01(\x0b2\x20.mizer.nodes.OpcOutputNodeConfigH\0R\x0fopcOutputConfi\
+    g\x12D\n\x0eoscInputConfig\x18\x19\x20\x01(\x0b2\x1a.mizer.nodes.OscNode\
+    ConfigH\0R\x0eoscInputConfig\x12F\n\x0foscOutputConfig\x18\x1a\x20\x01(\
+    \x0b2\x1a.mizer.nodes.OscNodeConfigH\0R\x0foscOutputConfig\x12d\n\x17vid\
+    eoColorBalanceConfig\x18\x1b\x20\x01(\x0b2(.mizer.nodes.VideoColorBalanc\
+    eNodeConfigH\0R\x17videoColorBalanceConfig\x12R\n\x11videoEffectConfig\
+    \x18\x1c\x20\x01(\x0b2\".mizer.nodes.VideoEffectNodeConfigH\0R\x11videoE\
+    ffectConfig\x12L\n\x0fvideoFileConfig\x18\x1d\x20\x01(\x0b2\x20.mizer.no\
+    des.VideoFileNodeConfigH\0R\x0fvideoFileConfig\x12R\n\x11videoOutputConf\
+    ig\x18\x1e\x20\x01(\x0b2\".mizer.nodes.VideoOutputNodeConfigH\0R\x11vide\
+    oOutputConfig\x12[\n\x14videoTransformConfig\x18\x1f\x20\x01(\x0b2%.mize\
+    r.nodes.VideoTransformNodeConfigH\0R\x14videoTransformConfig\x12C\n\x0cs\
+    electConfig\x18\x20\x20\x01(\x0b2\x1d.mizer.nodes.SelectNodeConfigH\0R\
+    \x0cselectConfig\x12@\n\x0bmergeConfig\x18!\x20\x01(\x0b2\x1c.mizer.node\
+    s.MergeNodeConfigH\0R\x0bmergeConfig\x12I\n\x0eenvelopeConfig\x18\"\x20\
+    \x01(\x0b2\x1f.mizer.nodes.EnvelopeNodeConfigH\0R\x0eenvelopeConfig\x12L\
+    \n\x0fsequencerConfig\x18#\x20\x01(\x0b2\x20.mizer.nodes.SequencerNodeCo\
+    nfigH\0R\x0fsequencerConfig\x12O\n\x10programmerConfig\x18$\x20\x01(\x0b\
+    2!.mizer.nodes.ProgrammerNodeConfigH\0R\x10programmerConfig\x12@\n\x0bgr\
+    oupConfig\x18%\x20\x01(\x0b2\x1c.mizer.nodes.GroupNodeConfigH\0R\x0bgrou\
+    pConfig\x12C\n\x0cpresetConfig\x18&\x20\x01(\x0b2\x1d.mizer.nodes.Preset\
+    NodeConfigH\0R\x0cpresetConfig\x12I\n\x0ecolorRgbConfig\x18(\x20\x01(\
+    \x0b2\x1f.mizer.nodes.ColorRgbNodeConfigH\0R\x0ecolorRgbConfig\x12I\n\
+    \x0ecolorHsvConfig\x18)\x20\x01(\x0b2\x1f.mizer.nodes.ColorHsvNodeConfig\
+    H\0R\x0ecolorHsvConfig\x12N\n\x11gamepadNodeConfig\x18*\x20\x01(\x0b2\
+    \x1e.mizer.nodes.GamepadNodeConfigH\0R\x11gamepadNodeConfig\x12L\n\x0fth\
+    resholdConfig\x18+\x20\x01(\x0b2\x20.mizer.nodes.ThresholdNodeConfigH\0R\
+    \x0fthresholdConfig\x12F\n\rencoderConfig\x18,\x20\x01(\x0b2\x1e.mizer.n\
+    odes.EncoderNodeConfigH\0R\rencoderConfig\x12L\n\x0fcontainerConfig\x18-\
+    \x20\x01(\x0b2\x20.mizer.nodes.ContainerNodeConfigH\0R\x0fcontainerConfi\
+    g\x12=\n\nmathConfig\x18.\x20\x01(\x0b2\x1b.mizer.nodes.MathNodeConfigH\
+    \0R\nmathConfig\x12L\n\x0fmqttInputConfig\x18/\x20\x01(\x0b2\x20.mizer.n\
+    odes.MqttInputNodeConfigH\0R\x0fmqttInputConfig\x12O\n\x10mqttOutputConf\
+    ig\x180\x20\x01(\x0b2!.mizer.nodes.MqttOutputNodeConfigH\0R\x10mqttOutpu\
+    tConfig\x12U\n\x12numberToDataConfig\x181\x20\x01(\x0b2#.mizer.nodes.Num\
+    berToDataNodeConfigH\0R\x12numberToDataConfig\x12U\n\x12dataToNumberConf\
+    ig\x182\x20\x01(\x0b2#.mizer.nodes.DataToNumberNodeConfigH\0R\x12dataToN\
+    umberConfig\x12@\n\x0bvalueConfig\x183\x20\x01(\x0b2\x1c.mizer.nodes.Val\
+    ueNodeConfigH\0R\x0bvalueConfig\x12O\n\x10planScreenConfig\x184\x20\x01(\
+    \x0b2!.mizer.nodes.PlanScreenNodeConfigH\0R\x10planScreenConfig\x12@\n\
+    \x0bdelayConfig\x185\x20\x01(\x0b2\x1c.mizer.nodes.DelayNodeConfigH\0R\
+    \x0bdelayConfig\x12=\n\nrampConfig\x186\x20\x01(\x0b2\x1b.mizer.nodes.Ra\
+    mpNodeConfigH\0R\nrampConfig\x12@\n\x0bnoiseConfig\x187\x20\x01(\x0b2\
+    \x1c.mizer.nodes.NoiseNodeConfigH\0R\x0bnoiseConfig\x12@\n\x0blabelConfi\
+    g\x188\x20\x01(\x0b2\x1c.mizer.nodes.LabelNodeConfigH\0R\x0blabelConfig\
+    \x12L\n\x0ftransportConfig\x189\x20\x01(\x0b2\x20.mizer.nodes.TransportN\
+    odeConfigH\0R\x0ftransportConfig\x12I\n\x0eg13InputConfig\x18:\x20\x01(\
+    \x0b2\x1f.mizer.nodes.G13InputNodeConfigH\0R\x0eg13InputConfig\x12L\n\
+    \x0fg13OutputConfig\x18;\x20\x01(\x0b2\x20.mizer.nodes.G13OutputNodeConf\
+    igH\0R\x0fg13OutputConfig\x12[\n\x14constantNumberConfig\x18<\x20\x01(\
+    \x0b2%.mizer.nodes.ConstantNumberNodeConfigH\0R\x14constantNumberConfig\
+    \x12R\n\x11conditionalConfig\x18=\x20\x01(\x0b2\".mizer.nodes.Conditiona\
+    lNodeConfigH\0R\x11conditionalConfig\x12^\n\x15timecodeControlConfig\x18\
+    >\x20\x01(\x0b2&.mizer.nodes.TimecodeControlNodeConfigH\0R\x15timecodeCo\
+    ntrolConfig\x12[\n\x14timecodeOutputConfig\x18?\x20\x01(\x0b2%.mizer.nod\
+    es.TimecodeOutputNodeConfigH\0R\x14timecodeOutputConfig\x12L\n\x0faudioF\
+    ileConfig\x18@\x20\x01(\x0b2\x20.mizer.nodes.AudioFileNodeConfigH\0R\x0f\
+    audioFileConfig\x12R\n\x11audioOutputConfig\x18A\x20\x01(\x0b2\".mizer.n\
+    odes.AudioOutputNodeConfigH\0R\x11audioOutputConfig\x12R\n\x11audioVolum\
+    eConfig\x18B\x20\x01(\x0b2\".mizer.nodes.AudioVolumeNodeConfigH\0R\x11au\
+    dioVolumeConfig\x12O\n\x10audioInputConfig\x18C\x20\x01(\x0b2!.mizer.nod\
+    es.AudioInputNodeConfigH\0R\x10audioInputConfig\x12I\n\x0eaudioMixConfig\
+    \x18D\x20\x01(\x0b2\x1f.mizer.nodes.AudioMixNodeConfigH\0R\x0eaudioMixCo\
+    nfig\x12O\n\x10audioMeterConfig\x18E\x20\x01(\x0b2!.mizer.nodes.AudioMet\
+    erNodeConfigH\0R\x10audioMeterConfigB\x06\n\x04type\"\x87\x02\n\x14Oscil\
+    latorNodeConfig\x12D\n\x04type\x18\x01\x20\x01(\x0e20.mizer.nodes.Oscill\
+    atorNodeConfig.OscillatorTypeR\x04type\x12\x14\n\x05ratio\x18\x02\x20\
+    \x01(\x01R\x05ratio\x12\x10\n\x03max\x18\x03\x20\x01(\x01R\x03max\x12\
+    \x10\n\x03min\x18\x04\x20\x01(\x01R\x03min\x12\x16\n\x06offset\x18\x05\
+    \x20\x01(\x01R\x06offset\x12\x18\n\x07reverse\x18\x06\x20\x01(\x08R\x07r\
+    everse\"=\n\x0eOscillatorType\x12\n\n\x06Square\x10\0\x12\x08\n\x04Sine\
+    \x10\x01\x12\x07\n\x03Saw\x10\x02\x12\x0c\n\x08Triangle\x10\x03\"-\n\x13\
+    ScriptingNodeConfig\x12\x16\n\x06script\x18\x01\x20\x01(\tR\x06script\"\
+    \xa6\x01\n\x12SequenceNodeConfig\x12B\n\x05steps\x18\x01\x20\x03(\x0b2,.\
+    mizer.nodes.SequenceNodeConfig.SequenceStepR\x05steps\x1aL\n\x0cSequence\
+    Step\x12\x12\n\x04tick\x18\x01\x20\x01(\x01R\x04tick\x12\x14\n\x05value\
+    \x18\x02\x20\x01(\x01R\x05value\x12\x12\n\x04hold\x18\x03\x20\x01(\x08R\
+    \x04hold\"\x16\n\x14ProgrammerNodeConfig\",\n\x0fGroupNodeConfig\x12\x19\
+    \n\x08group_id\x18\x01\x20\x01(\rR\x07groupId\"K\n\x10PresetNodeConfig\
+    \x127\n\tpreset_id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\
+    \x08presetId\"v\n\x12EnvelopeNodeConfig\x12\x16\n\x06attack\x18\x01\x20\
+    \x01(\x01R\x06attack\x12\x14\n\x05decay\x18\x02\x20\x01(\x01R\x05decay\
+    \x12\x18\n\x07sustain\x18\x03\x20\x01(\x01R\x07sustain\x12\x18\n\x07rele\
+    ase\x18\x04\x20\x01(\x01R\x07release\"'\n\x0fClockNodeConfig\x12\x14\n\
     \x05speed\x18\x01\x20\x01(\x01R\x05speed\"2\n\x11FixtureNodeConfig\x12\
     \x1d\n\nfixture_id\x18\x01\x20\x01(\rR\tfixtureId\"6\n\x13SequencerNodeC\
     onfig\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\"*\n\x10B\
@@ -17258,7 +17299,8 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
     static file_descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::FileDescriptor> = ::protobuf::rt::Lazy::new();
     file_descriptor.get(|| {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
-            let mut deps = ::std::vec::Vec::with_capacity(0);
+            let mut deps = ::std::vec::Vec::with_capacity(1);
+            deps.push(super::programmer::file_descriptor().clone());
             let mut messages = ::std::vec::Vec::with_capacity(87);
             messages.push(AddNodeRequest::generated_message_descriptor_data());
             messages.push(DuplicateNodeRequest::generated_message_descriptor_data());

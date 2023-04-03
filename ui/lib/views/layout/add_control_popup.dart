@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/api/contracts/programmer.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
@@ -11,15 +12,24 @@ class SequenceNode {
   SequenceNode(this.sequence, this.node);
 }
 
+class GroupNode {
+  final Group group;
+  final Node node;
+
+  GroupNode(this.group, this.node);
+}
+
 class AddControlPopup extends StatelessWidget {
   final List<Node> nodes;
   final List<Sequence> sequences;
+  final List<Group> groups;
   final Function(Node_NodeType) onCreateControl;
   final Function(Node) onAddControlForExisting;
 
   const AddControlPopup(
       {required this.nodes,
       required this.sequences,
+      required this.groups,
       Key? key,
       required this.onCreateControl,
       required this.onAddControlForExisting})
@@ -38,6 +48,14 @@ class AddControlPopup extends StatelessWidget {
 
       return SequenceNode(sequence, node);
     }).toList();
+    var groupNodes = nodes
+        .where((node) => node.type == Node_NodeType.Group)
+        .where((node) => groups.any((element) => element.id == node.config.groupConfig.groupId))
+        .map((node) {
+      var group = groups.firstWhere((element) => element.id == node.config.groupConfig.groupId);
+
+      return GroupNode(group, node);
+    }).toList();
 
     return PopupMenu<dynamic>(
         categories: [
@@ -53,7 +71,11 @@ class AddControlPopup extends StatelessWidget {
           if (sequenceNodes.isNotEmpty)
             PopupCategory(
                 label: "Sequences".i18n,
-                items: sequenceNodes.map((e) => PopupItem(e.node, e.sequence.name)).toList())
+                items: sequenceNodes.map((e) => PopupItem(e.node, e.sequence.name)).toList()),
+          if (groupNodes.isNotEmpty)
+            PopupCategory(
+                label: "Groups".i18n,
+                items: groupNodes.map((e) => PopupItem(e.node, e.group.name)).toList()),
         ],
         onSelect: (value) {
           if (value is Node_NodeType) {

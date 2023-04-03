@@ -19,6 +19,7 @@ import 'package:provider/provider.dart';
 
 import 'controls/button.dart';
 import 'controls/fader.dart';
+import 'controls/group.dart';
 import 'controls/label.dart';
 import 'controls/sequencer.dart';
 import 'dialogs/delete_control_dialog.dart';
@@ -115,6 +116,13 @@ class _LayoutControlViewState extends State<LayoutControlView> {
       );
     } else if (node?.type == Node_NodeType.Label) {
       return LabelControl(pointer: widget.pointer, control: widget.control, color: _color);
+    } else if (node?.type == Node_NodeType.Group) {
+      return GroupControl(
+        label: widget.control.label,
+        color: _color,
+        node: node!,
+        size: widget.control.size,
+      );
     }
     return null;
   }

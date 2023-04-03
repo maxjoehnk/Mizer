@@ -363,14 +363,20 @@ impl From<ProgrammerNodeConfig> for mizer_nodes::ProgrammerNode {
 }
 
 impl From<mizer_nodes::GroupNode> for GroupNodeConfig {
-    fn from(_: mizer_nodes::GroupNode) -> Self {
-        Default::default()
+    fn from(node: mizer_nodes::GroupNode) -> Self {
+        Self {
+            group_id: node.id.into(),
+            ..Default::default()
+        }
     }
 }
 
 impl From<GroupNodeConfig> for mizer_nodes::GroupNode {
-    fn from(_: GroupNodeConfig) -> Self {
-        Default::default()
+    fn from(node: GroupNodeConfig) -> Self {
+        Self {
+            id: node.group_id.into(),
+            ..Default::default()
+        }
     }
 }
 

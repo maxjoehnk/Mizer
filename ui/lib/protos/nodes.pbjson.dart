@@ -475,17 +475,23 @@ final $typed_data.Uint8List programmerNodeConfigDescriptor = $convert.base64Deco
 @$core.Deprecated('Use groupNodeConfigDescriptor instead')
 const GroupNodeConfig$json = const {
   '1': 'GroupNodeConfig',
+  '2': const [
+    const {'1': 'group_id', '3': 1, '4': 1, '5': 13, '10': 'groupId'},
+  ],
 };
 
 /// Descriptor for `GroupNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List groupNodeConfigDescriptor = $convert.base64Decode('Cg9Hcm91cE5vZGVDb25maWc=');
+final $typed_data.Uint8List groupNodeConfigDescriptor = $convert.base64Decode('Cg9Hcm91cE5vZGVDb25maWcSGQoIZ3JvdXBfaWQYASABKA1SB2dyb3VwSWQ=');
 @$core.Deprecated('Use presetNodeConfigDescriptor instead')
 const PresetNodeConfig$json = const {
   '1': 'PresetNodeConfig',
+  '2': const [
+    const {'1': 'preset_id', '3': 1, '4': 1, '5': 11, '6': '.mizer.programmer.PresetId', '10': 'presetId'},
+  ],
 };
 
 /// Descriptor for `PresetNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List presetNodeConfigDescriptor = $convert.base64Decode('ChBQcmVzZXROb2RlQ29uZmln');
+final $typed_data.Uint8List presetNodeConfigDescriptor = $convert.base64Decode('ChBQcmVzZXROb2RlQ29uZmlnEjcKCXByZXNldF9pZBgBIAEoCzIaLm1pemVyLnByb2dyYW1tZXIuUHJlc2V0SWRSCHByZXNldElk');
 @$core.Deprecated('Use envelopeNodeConfigDescriptor instead')
 const EnvelopeNodeConfig$json = const {
   '1': 'EnvelopeNodeConfig',

@@ -67,25 +67,9 @@ jobs:
   build-windows:
     if: false
     runs-on: windows-latest
-    needs: gvsbuild
     steps:
       - name: Install build dependencies
         run: choco install protoc make wget
-      - name: Create GTK binaries dir
-        run: mkdir C:\gtk-build\gtk\x64\release
-
-      - name: Get GTK binaries from cache
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: C:\gtk-build\gtk\x64\release\**
-          key: ${{needs.gvsbuild.outputs.cachekey}}
-      - name: Set up env
-        run: |
-          # shellcheck disable=SC2028
-          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> "$GITHUB_ENV"
-          # shellcheck disable=SC2028
-          echo "C:\gtk-build\gtk\x64\release\bin" >> "$GITHUB_PATH"
         shell: bash
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
@@ -112,59 +96,3 @@ jobs:
             !target/debug/.fingerprint/**
             components/fixtures/open-fixture-library/.fixtures
           if-no-files-found: error
-
-  # Gtk & glib dependencies for windows
-  gvsbuild:
-    if: false
-    name: build GTK binaries with gvsbuild
-    runs-on: windows-latest
-
-    env:
-      # git revision of gvsbuild we use for to build GTK and the other dependencies
-      gvsbuildref: ed2136815a33e33e3ff15e05576416aca704cefc
-
-      # bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
-
-    outputs:
-      cachekey: ${{ steps.output.outputs.cachekey }}
-
-    steps:
-      # this is needed for the cache restore to work
-      - name: create dir
-        run: mkdir C:\gtk-build\gtk\x64\release
-
-      - name: get from cache
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: C:\gtk-build\gtk\x64\release\**
-          key: gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}
-
-      - name: checkout gvsbuild
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/checkout@v3
-        with:
-          repository: wingtk/gvsbuild
-          ref: ${{ env.gvsbuildref }}
-          path: gvsbuild
-
-      # Temporarily move the preinstalled git, it causes errors related to cygwin.
-      - name: move git binary
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
-        shell: cmd
-
-      - name: run gvsbuild
-        if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: gvsbuild
-        run: python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\msys64 gtk3 graphene gstreamer gst-plugins-base gst-plugins-bad
-
-      - name: restore git binary
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
-        shell: cmd
-
-      - name: output cache key
-        id: output
-        run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"

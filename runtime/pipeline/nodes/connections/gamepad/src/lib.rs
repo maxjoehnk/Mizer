@@ -113,6 +113,12 @@ impl ProcessingNode for GamepadNode {
                     GamepadControl::RightStick => state
                         .is_button_pressed(Button::RightStick)
                         .map(TogglePort::to_value),
+                    GamepadControl::LeftShoulder => state
+                        .is_button_pressed(Button::LeftShoulder)
+                        .map(TogglePort::to_value),
+                    GamepadControl::RightShoulder => state
+                        .is_button_pressed(Button::RightShoulder)
+                        .map(TogglePort::to_value),
                     _ => None,
                 };
                 if let Some(value) = value {

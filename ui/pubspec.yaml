@@ -32,6 +32,7 @@ dependencies:
   auto_size_text: ^3.0.0
   from_css_color: ^2.0.0
   ffi: ^2.0.1
+  filesize: ^2.0.1
 
 dev_dependencies:
   flutter_test:

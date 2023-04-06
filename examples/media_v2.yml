@@ -1,0 +1,242 @@
+---
+nodes:
+  - path: /programmer
+    type: programmer
+    config: ~
+    designer:
+      position:
+        x: -5.0
+        y: 0.0
+      scale: 1.0
+      hidden: false
+channels: []
+media:
+  import_paths:
+    - examples/media
+  files:
+    - id: 15d61b11-4bc5-44d6-8774-e21a6791e717
+      filename: file_example_WMV_1920_9_3MB.wmv
+      name: file_example_WMV_1920_9_3MB.wmv
+      tags: []
+      content_type: video/x-ms-wmv
+      media_type: Video
+      file_path: ".storage/media/file_example_WMV_1920_9_3MB.wmv"
+      source_path: video/file_example_WMV_1920_9_3MB.wmv
+      file_size: 9338829
+      metadata:
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: 2035e6f4-1f77-4369-bbf6-333460d4df68
+      filename: file_example_WAV_10MG.wav
+      name: file_example_WAV_10MG.wav
+      tags: []
+      content_type: audio/x-wav
+      media_type: Audio
+      file_path: ".storage/media/file_example_WAV_10MG.wav"
+      source_path: audio/file_example_WAV_10MG.wav
+      file_size: 10406738
+      metadata:
+        dimensions: ~
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 3c86f69f-a357-4bea-a3f5-eb5572db0136
+      filename: file_example_MP3_5MG.mp3
+      name: Impact Moderato
+      tags: []
+      content_type: audio/mpeg
+      media_type: Audio
+      file_path: ".storage/media/file_example_MP3_5MG.mp3"
+      source_path: audio/file_example_MP3_5MG.mp3
+      file_size: 5289384
+      metadata:
+        dimensions: ~
+        duration: 132
+        framerate: ~
+        name: Impact Moderato
+        artist: Kevin MacLeod
+        album: YouTube Audio Library
+    - id: 46d7c1ac-0df8-4f84-8167-2a81a40d7b2e
+      filename: file_example_PNG_3MB.png
+      name: file_example_PNG_3MB.png
+      tags: []
+      content_type: image/png
+      media_type: Image
+      file_path: ".storage/media/file_example_PNG_3MB.png"
+      source_path: image/file_example_PNG_3MB.png
+      file_size: 2964729
+      metadata:
+        dimensions:
+          - 2200
+          - 1467
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 56169810-7741-4f5a-baf1-327f52824c1d
+      filename: file_example_JPG_2500kB.jpg
+      name: file_example_JPG_2500kB.jpg
+      tags: []
+      content_type: image/jpeg
+      media_type: Image
+      file_path: ".storage/media/file_example_JPG_2500kB.jpg"
+      source_path: image/file_example_JPG_2500kB.jpg
+      file_size: 2504642
+      metadata:
+        dimensions:
+          - 5760
+          - 3840
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 8133a6c2-efff-4379-b346-fdaec779b3b2
+      filename: file_example_TIFF_10MB.tiff
+      name: file_example_TIFF_10MB.tiff
+      tags: []
+      content_type: image/tiff
+      media_type: Image
+      file_path: ".storage/media/file_example_TIFF_10MB.tiff"
+      source_path: image/file_example_TIFF_10MB.tiff
+      file_size: 10151438
+      metadata:
+        dimensions:
+          - 1950
+          - 1301
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: 8159acd7-9f09-4f0f-9edf-f6ce49459b0b
+      filename: file_example_WEBM_1920_3_7MB.webm
+      name: file_example_WEBM_1920_3_7MB.webm
+      tags: []
+      content_type: video/webm
+      media_type: Video
+      file_path: ".storage/media/file_example_WEBM_1920_3_7MB.webm"
+      source_path: video/file_example_WEBM_1920_3_7MB.webm
+      file_size: 3667214
+      metadata:
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: 8ad2de13-6044-4f16-ab54-aa4102f60018
+      filename: file_example_MP4_1920_18MG.mp4
+      name: file_example_MP4_1920_18MG.mp4
+      tags: []
+      content_type: video/mp4
+      media_type: Video
+      file_path: ".storage/media/file_example_MP4_1920_18MG.mp4"
+      source_path: video/file_example_MP4_1920_18MG.mp4
+      file_size: 17839845
+      metadata:
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: a958a1e1-78d8-46da-979f-86aa5731d857
+      filename: file_example_SVG_30kB.svg
+      name: file_example_SVG_30kB.svg
+      tags: []
+      content_type: text/xml
+      media_type: Vector
+      file_path: ".storage/media/file_example_SVG_30kB.svg"
+      source_path: vector/file_example_SVG_30kB.svg
+      file_size: 30868
+      metadata:
+        dimensions: ~
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+    - id: b1f3e20d-815f-447c-a6d4-179193a54302
+      filename: file_example_MOV_1920_2_2MB.mov
+      name: file_example_MOV_1920_2_2MB.mov
+      tags: []
+      content_type: video/quicktime
+      media_type: Video
+      file_path: ".storage/media/file_example_MOV_1920_2_2MB.mov"
+      source_path: video/file_example_MOV_1920_2_2MB.mov
+      file_size: 2247200
+      metadata:
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: b5093477-968f-4758-9244-3a346d477b00
+      filename: file_example_AVI_1920_2_3MG.avi
+      name: file_example_AVI_1920_2_3MG.avi
+      tags: []
+      content_type: video/x-msvideo
+      media_type: Video
+      file_path: ".storage/media/file_example_AVI_1920_2_3MG.avi"
+      source_path: video/file_example_AVI_1920_2_3MG.avi
+      file_size: 2279794
+      metadata:
+        dimensions:
+          - 1920
+          - 1080
+        duration: 30
+        framerate: 30.0
+        name: ~
+        artist: ~
+        album: ~
+    - id: e0b38ad7-0f4b-44ae-900f-ab328aa6bc14
+      filename: file_example_WEBP_1500kB.webp
+      name: file_example_WEBP_1500kB.webp
+      tags: []
+      content_type: image/webp
+      media_type: Image
+      file_path: ".storage/media/file_example_WEBP_1500kB.webp"
+      source_path: image/file_example_WEBP_1500kB.webp
+      file_size: 1490952
+      metadata:
+        dimensions:
+          - 5760
+          - 3840
+        duration: ~
+        framerate: ~
+        name: ~
+        artist: ~
+        album: ~
+  tags: []
+layouts: {}
+connections: []
+fixtures: []
+groups: []
+presets:
+  intensity: []
+  shutter: []
+  color: []
+  position: []
+sequences: []
+effects: []
+plans: []
+timecodes:
+  timecodes: []
+  controls: []

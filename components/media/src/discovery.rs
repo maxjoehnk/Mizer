@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
 use async_walkdir::WalkDir;
-use futures::{future, StreamExt, TryStreamExt};
+use futures::{future, FutureExt, StreamExt, TryStreamExt};
 
-use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
+use crate::{MediaCreateModel, MediaServer};
 
 const SUPPORTED_EXTENSIONS: [&str; 13] = [
     // Audio
@@ -15,11 +15,11 @@ const SUPPORTED_EXTENSIONS: [&str; 13] = [
 
 pub struct MediaDiscovery {
     walker: MediaWalker,
-    api: MediaServerApi,
+    api: MediaServer,
 }
 
 impl MediaDiscovery {
-    pub fn new<P: Into<PathBuf>>(api: MediaServerApi, path: P) -> Self {
+    pub fn new<P: Into<PathBuf>>(api: MediaServer, path: P) -> Self {
         MediaDiscovery {
             walker: MediaWalker::new(path.into()),
             api,
@@ -30,9 +30,9 @@ impl MediaDiscovery {
     pub async fn discover(&self) -> anyhow::Result<()> {
         log::info!("Discovering media files in {:?}", &self.walker.path);
         let paths = self.walker.scan().await?;
+        let mut receivers = Vec::new();
 
         for path in paths {
-            let (sender, receiver) = MediaServerApi::open_channel();
             let media_create = MediaCreateModel {
                 name: path
                     .file_name()
@@ -42,10 +42,21 @@ impl MediaDiscovery {
                     .unwrap(),
                 tags: Vec::new(),
             };
-            let cmd = MediaServerCommand::ImportFile(media_create, path, sender);
-            self.api.send_command(cmd);
+            let receiver = self
+                .api
+                .import_file(media_create, path, Some(&self.walker.path))
+                .boxed();
 
-            receiver.recv_async().await?;
+            receivers.push(receiver);
+        }
+
+        let results = futures::future::join_all(receivers).await;
+        for result in results {
+            match result {
+                Err(err) => log::error!("Importing media file failed: {err:?}"),
+                Ok(Some(document)) => log::debug!("Imported media file: {document:?}"),
+                _ => {}
+            }
         }
 
         Ok(())
@@ -103,7 +114,7 @@ mod tests {
     #[test_case("examples/media/video/file_example_WEBM_1920_3_7MB.webm")]
     #[test_case("examples/media/video/file_example_WMV_1920_9_3MB.wmv")]
     fn scan_should_list_example_files(expected: &str) {
-        let path = std::env!("CARGO_MANIFEST_DIR");
+        let path = env!("CARGO_MANIFEST_DIR");
         let workspace_path = Path::new(path).parent().unwrap().parent().unwrap();
         let expected = workspace_path.join(expected);
         let walker = MediaWalker::new(workspace_path.join("examples/media"));

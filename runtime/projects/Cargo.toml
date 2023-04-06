@@ -12,6 +12,7 @@ regex = "1.7"
 log = "0.4"
 lazy_static = "1.4"
 anyhow = "1"
+mizer-media = { path = "../../components/media" }
 mizer-node = { path = "../pipeline/node" }
 mizer-nodes = { path = "../pipeline/nodes" }
 mizer-layouts = { path = "../layouts" }

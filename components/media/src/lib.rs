@@ -1,156 +1,151 @@
-use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
-use crate::data_access::DataAccess;
-use crate::documents::MediaDocument;
-use crate::file_storage::FileStorage;
-use crate::media_handlers::*;
-use std::path::Path;
+use std::path::{Path, PathBuf};
+use std::sync::{Arc, RwLock};
+
 use uuid::Uuid;
 
+use crate::data_access::DataAccess;
 pub use crate::discovery::MediaDiscovery;
-use async_std::fs;
-use flume::{Receiver, Sender};
-use futures::{AsyncReadExt, StreamExt};
+use crate::documents::*;
+use crate::file_storage::FileStorage;
+use crate::import_handler::ImportFileHandler;
 
-pub mod api;
 mod data_access;
 mod discovery;
 pub mod documents;
 mod file_storage;
 pub mod http_api;
-mod media_handlers;
+mod import_handler;
+pub mod media_handlers;
 
+#[derive(Clone)]
+#[repr(transparent)]
+pub struct ImportPaths(Arc<RwLock<Vec<PathBuf>>>);
+
+impl ImportPaths {
+    fn new() -> Self {
+        Self(Default::default())
+    }
+
+    fn clear(&self) {
+        let mut paths = self
+            .0
+            .write()
+            .expect("Unable to lock media server import paths for writing");
+        paths.clear();
+    }
+
+    pub fn set_paths(&self, mut paths: Vec<PathBuf>) {
+        let mut handle = self
+            .0
+            .write()
+            .expect("Unable to lock media server import paths for writing");
+        *handle = paths;
+    }
+
+    pub fn paths(&self) -> Vec<PathBuf> {
+        self.0.read().unwrap().clone()
+    }
+}
+
+#[derive(Clone)]
 pub struct MediaServer {
-    pub db: DataAccess,
-    pub file_storage: FileStorage,
-    import_file: ImportFileHandler,
-    command_queue: (Sender<MediaServerCommand>, Receiver<MediaServerCommand>),
+    storage: FileStorage,
+    db: DataAccess,
+    import_paths: ImportPaths,
 }
 
 impl MediaServer {
     pub fn new() -> anyhow::Result<Self> {
-        let context = DataAccess::new()?;
-        let file_storage = FileStorage::new()?;
-        let import_file = ImportFileHandler::new(context.clone(), file_storage.clone());
+        let db = DataAccess::new()?;
+        let storage = FileStorage::new()?;
+        let import_paths = ImportPaths::new();
 
-        Ok(MediaServer {
-            db: context,
-            file_storage,
-            import_file,
-            command_queue: flume::unbounded(),
+        Ok(Self {
+            storage,
+            db,
+            import_paths,
         })
     }
 
-    pub fn get_api_handle(&self) -> MediaServerApi {
-        MediaServerApi(self.command_queue.0.clone(), self.file_storage.clone())
+    pub(crate) fn get_temp_path(&self) -> PathBuf {
+        self.storage.create_temp_file()
     }
 
-    pub async fn run_api(self) {
-        let mut stream = self.command_queue.1.into_stream();
-        while let Some(command) = stream.next().await {
-            match command {
-                MediaServerCommand::ClearFiles => {
-                    if let Err(err) = self.db.clear() {
-                        log::error!("Error clearing files: {err:?}");
-                    }
-                }
-                MediaServerCommand::ImportFile(model, file_path, resp) => {
-                    match self.import_file.import_file(model, &file_path).await {
-                        Ok(document) => {
-                            resp.send(Some(document)).unwrap();
-                        }
-                        Err(err) => {
-                            log::error!("Error importing file {err:?}");
-                            resp.send(None).unwrap();
-                        }
-                    }
-                }
-                MediaServerCommand::CreateTag(model, resp) => match self.db.add_tag(model) {
-                    Ok(document) => resp.send(document).unwrap(),
-                    Err(err) => {
-                        log::error!("Error creating tag: {:?}", err);
-                    }
-                },
-                MediaServerCommand::GetTags(resp) => match self.db.list_tags() {
-                    Ok(documents) => {
-                        resp.send(documents).unwrap();
-                    }
-                    Err(err) => {
-                        log::error!("Error listing tags: {:?}", err);
-                    }
-                },
-                MediaServerCommand::GetMedia(resp) => match self.db.list_media() {
-                    Ok(documents) => {
-                        resp.send(documents).unwrap();
-                    }
-                    Err(err) => {
-                        log::error!("Error listing tags: {:?}", err);
-                    }
-                },
+    pub fn set_import_paths(&self, paths: Vec<PathBuf>) {
+        self.import_paths.set_paths(paths);
+    }
+
+    pub fn get_import_paths(&self) -> Vec<PathBuf> {
+        self.import_paths.paths()
+    }
+
+    pub fn create_tag(&self, name: String) -> anyhow::Result<TagDocument> {
+        let document = self.db.add_tag(TagCreateModel { name })?;
+
+        Ok(document)
+    }
+
+    pub fn clear(&self) {
+        if let Err(err) = self.db.clear() {
+            log::error!("Error clearing files: {err:?}");
+        }
+        self.import_paths.clear();
+    }
+
+    pub fn import_tags(&self, tags: Vec<TagDocument>) -> anyhow::Result<()> {
+        self.db.import_tags(tags)
+    }
+
+    pub fn import_files(&self, files: Vec<MediaDocument>) -> anyhow::Result<()> {
+        self.db.import_media(files)
+    }
+
+    pub fn get_tags(&self) -> anyhow::Result<Vec<TagDocument>> {
+        self.db.list_tags()
+    }
+
+    pub fn get_media(&self) -> anyhow::Result<Vec<MediaDocument>> {
+        self.db.list_media()
+    }
+
+    pub async fn import_file(
+        &self,
+        model: MediaCreateModel,
+        file_path: PathBuf,
+        relative_to: Option<&Path>,
+    ) -> anyhow::Result<Option<MediaDocument>> {
+        let file_handler = ImportFileHandler::new(self.db.clone(), self.storage.clone());
+
+        match file_handler
+            .import_file(model, &file_path, relative_to)
+            .await
+        {
+            Ok(document) => Ok(document),
+            Err(err) => {
+                log::error!("Error importing file {err:?}");
+                Err(err)
             }
         }
     }
 }
 
-pub struct ImportFileHandler {
-    db: DataAccess,
-    file_storage: FileStorage,
-    video_handler: VideoHandler,
-    image_handler: ImageHandler,
-    audio_handler: AudioHandler,
-    svg_handler: SvgHandler,
+#[derive(Debug, Clone)]
+pub struct MediaCreateModel {
+    pub name: String,
+    pub tags: Vec<AttachedTag>,
 }
 
-impl ImportFileHandler {
-    fn new(db: DataAccess, file_storage: FileStorage) -> Self {
-        ImportFileHandler {
-            db,
-            file_storage,
-            video_handler: VideoHandler,
-            image_handler: ImageHandler,
-            audio_handler: AudioHandler,
-            svg_handler: SvgHandler,
-        }
-    }
+#[derive(Debug, Clone)]
+pub struct TagCreateModel {
+    pub name: String,
+}
 
-    async fn import_file(
-        &self,
-        model: MediaCreateModel,
-        file_path: &Path,
-    ) -> anyhow::Result<MediaDocument> {
-        log::debug!("importing file {:?}", file_path);
-        let id = Uuid::new_v4();
-        let mut temp_file = fs::File::open(file_path).await?;
-        let mut buffer = [0u8; 256];
-        temp_file.read_exact(&mut buffer).await?;
-        let content_type = infer::get(&buffer)
-            .ok_or_else(|| anyhow::anyhow!("Unknown file type"))?
-            .mime_type();
-        log::debug!("got {} content type for {:?}", content_type, model);
-
-        if VideoHandler::supported(content_type) {
-            self.video_handler
-                .handle_file(file_path, &self.file_storage, content_type)?;
-        } else if ImageHandler::supported(content_type) {
-            self.image_handler
-                .handle_file(file_path, &self.file_storage, content_type)?;
-        } else if AudioHandler::supported(content_type) {
-            self.audio_handler
-                .handle_file(file_path, &self.file_storage, content_type)?;
-        } else if SvgHandler::supported(content_type) {
-            self.svg_handler
-                .handle_file(file_path, &self.file_storage, content_type)?;
-        } else {
-            anyhow::bail!("unsupported file")
-        };
-
-        let media = self.db.add_media(MediaDocument {
-            id,
-            path: file_path.to_str().unwrap().to_string(),
-            content_type: content_type.to_string(),
+impl From<TagCreateModel> for TagDocument {
+    fn from(model: TagCreateModel) -> Self {
+        TagDocument {
+            id: Uuid::new_v4(),
             name: model.name,
-            tags: model.tags,
-        })?;
-
-        Ok(media)
+            media: Vec::new(),
+        }
     }
 }

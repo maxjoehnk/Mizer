@@ -32,9 +32,33 @@ message MediaFiles {
 message MediaFile {
   string id = 1;
   string name = 2;
+  MediaType type = 3;
+  MediaMetadata metadata = 4;
+  string thumbnailUrl = 5;
+  string contentUrl = 6;
+}
+
+message MediaMetadata {
+  string sourcePath = 1;
+  uint64 fileSize = 2;
   repeated MediaTag tags = 3;
-  string thumbnailUrl = 4;
-  string contentUrl = 5;
+  optional Dimensions dimensions = 4;
+  optional uint64 duration = 5;
+  optional double framerate = 6;
+  optional string album = 7;
+  optional string artist = 8;
+
+  message Dimensions {
+    uint64 width = 1;
+    uint64 height = 2;
+  }
+}
+
+enum MediaType {
+  IMAGE = 0;
+  AUDIO = 1;
+  VIDEO = 2;
+  VECTOR = 3;
 }
 
 message GroupedMediaFiles {

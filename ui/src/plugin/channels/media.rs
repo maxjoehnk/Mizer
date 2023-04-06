@@ -48,14 +48,14 @@ impl MediaChannel {
     }
 
     fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {
-        smol::block_on(self.handler.create_tag(name))
+        self.handler.create_tag(name)
     }
 
     fn get_media(&self) -> anyhow::Result<MediaFiles> {
-        smol::block_on(self.handler.get_media())
+        self.handler.get_media()
     }
 
     fn get_tags_with_media(&self) -> anyhow::Result<GroupedMediaFiles> {
-        smol::block_on(self.handler.get_tags_with_media())
+        self.handler.get_tags_with_media()
     }
 }

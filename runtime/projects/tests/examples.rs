@@ -8,6 +8,7 @@ use test_case::test_case;
 #[test_case("inputs"; "inputs")]
 #[test_case("laser"; "laser")]
 #[test_case("media"; "media")]
+#[test_case("media_v2"; "media_v2")]
 #[test_case("midi"; "midi")]
 #[test_case("mqtt"; "mqtt")]
 #[test_case("operations"; "operations")]

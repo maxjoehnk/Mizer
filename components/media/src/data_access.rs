@@ -1,5 +1,7 @@
-use crate::api::TagCreateModel;
 use crate::documents::*;
+use crate::TagCreateModel;
+use sled::Mode;
+use std::path::{Path, PathBuf};
 
 #[derive(Clone)]
 pub struct DataAccess {
@@ -13,6 +15,7 @@ impl DataAccess {
         let db = sled::Config::new()
             .create_new(true)
             .temporary(true)
+            .mode(Mode::HighThroughput)
             .open()?;
         let tags = db.open_tree("tags")?;
         let media = db.open_tree("media")?;
@@ -70,11 +73,40 @@ impl DataAccess {
         Ok(media_document)
     }
 
+    pub fn import_tags(&self, tags: Vec<TagDocument>) -> anyhow::Result<()> {
+        for tag in tags {
+            let id = tag.id.as_bytes();
+            let value = serde_json::to_vec(&tag)?;
+            self.tags.insert(id, value)?;
+        }
+
+        Ok(())
+    }
+
+    pub fn import_media(&self, medias: Vec<MediaDocument>) -> anyhow::Result<()> {
+        for media in medias {
+            let id = media.id.as_bytes();
+            let value = serde_json::to_vec(&media)?;
+            self.media.insert(id, value)?;
+        }
+
+        Ok(())
+    }
+
     pub fn clear(&self) -> anyhow::Result<()> {
         self.media.clear()?;
         self.tags.clear()?;
 
         Ok(())
+    }
+
+    pub(crate) fn contains_source(&self, path: &PathBuf) -> anyhow::Result<bool> {
+        let existing_files = self.list_media()?;
+        let exists = existing_files
+            .into_iter()
+            .any(|file| file.source_path.as_ref() == Some(path));
+
+        Ok(exists)
     }
 
     fn insert_media(&self, document: &MediaDocument) -> anyhow::Result<()> {

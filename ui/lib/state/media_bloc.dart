@@ -10,7 +10,9 @@ class MediaBloc extends Bloc<MediaEvent, MediaFiles> {
   MediaBloc(this.api) : super(MediaFiles()) {
     on((event, emit) async {
       if (event == MediaEvent.Fetch) {
-        emit(await api.getMedia());
+        var mediaFiles = await api.getMedia();
+        mediaFiles.files.sort((lhs, rhs) => lhs.name.compareTo(rhs.name));
+        emit(mediaFiles);
       }
     });
   }

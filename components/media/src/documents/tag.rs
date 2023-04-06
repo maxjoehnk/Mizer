@@ -1,14 +1,14 @@
 use crate::documents::MediaDocument;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct TagDocument {
     pub id: uuid::Uuid,
     pub name: String,
     pub media: Vec<AttachedMediaDocument>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type", rename_all = "lowercase")]
 pub enum AttachedMediaDocument {
     Video(AttachedDocument),
@@ -17,7 +17,7 @@ pub enum AttachedMediaDocument {
     Vector(AttachedDocument),
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct AttachedDocument {
     pub id: uuid::Uuid,
     pub name: String,

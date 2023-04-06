@@ -1,5 +1,7 @@
+use anyhow::Context;
 use std::path::Path;
 
+use crate::documents::{MediaMetadata, MediaType};
 pub use audio_handler::AudioHandler;
 pub use image_handler::ImageHandler;
 pub use svg_handler::SvgHandler;
@@ -15,6 +17,8 @@ mod video_handler;
 pub const THUMBNAIL_SIZE: u32 = 200;
 
 pub trait MediaHandler {
+    const MEDIA_TYPE: MediaType;
+
     fn supported(content_type: &str) -> bool;
 
     fn generate_thumbnail<P: AsRef<Path>>(
@@ -23,6 +27,14 @@ pub trait MediaHandler {
         storage: &FileStorage,
         content_type: &str,
     ) -> anyhow::Result<()>;
+
+    fn read_metadata<P: AsRef<Path>>(
+        &self,
+        file: P,
+        content_type: &str,
+    ) -> anyhow::Result<MediaMetadata> {
+        Ok(Default::default())
+    }
 
     fn process_file<P: AsRef<Path>>(&self, file: P, storage: &FileStorage) -> anyhow::Result<()> {
         let target = storage.get_media_path(&file);
@@ -36,16 +48,34 @@ pub trait MediaHandler {
         file_path: P,
         storage: &FileStorage,
         content_type: &str,
-    ) -> anyhow::Result<()> {
-        let thumbnail_path = storage.get_thumbnail_path(&file_path);
+    ) -> anyhow::Result<(MediaType, MediaMetadata)> {
+        let file_path = file_path.as_ref();
+        let thumbnail_path = storage.get_thumbnail_path(file_path);
         if !thumbnail_path.exists() {
-            self.generate_thumbnail(&file_path, storage, content_type)?;
+            if let Err(err) = self
+                .generate_thumbnail(file_path, storage, content_type)
+                .context("Generating Thumbnail")
+            {
+                log::warn!("Unable to generate thumbnail for {file_path:?}: {err:?}");
+            }
         }
-        let media_path = storage.get_media_path(&file_path);
+        let media_path = storage.get_media_path(file_path);
         if !media_path.exists() {
-            self.process_file(&file_path, storage)?;
+            self.process_file(file_path, storage)
+                .context("Processing media file")?;
         }
+        let metadata = match self
+            .read_metadata(file_path, content_type)
+            .context("Reading metadata")
+        {
+            Ok(metadata) => metadata,
+            Err(err) => {
+                log::warn!("Unable to read metadata for {file_path:?}: {err:?}");
 
-        Ok(())
+                Default::default()
+            }
+        };
+
+        Ok((Self::MEDIA_TYPE, metadata))
     }
 }

@@ -1,29 +1,10 @@
-use crate::api::{MediaCreateModel, MediaServerApi, MediaServerCommand};
+use crate::{MediaCreateModel, MediaServer};
 use async_std::{fs, io};
 use futures::{StreamExt, TryStreamExt};
 use multer::Multipart;
-use tide::{Body, Request, StatusCode};
+use tide::{Body, StatusCode};
 
-pub async fn start(media_server_api: MediaServerApi) -> anyhow::Result<()> {
-    let mut app = tide::with_state(media_server_api);
-    app.at("/thumbnails/").serve_dir(".storage/thumbnails")?;
-    app.at("/media/").serve_dir(".storage/media/")?;
-    app.at("/api/media")
-        .post(|mut req: Request<MediaServerApi>| async move {
-            let body = req.body_bytes().await;
-            // TODO: actually stream file instead copying whole file into memory
-            let body = async_std::stream::once(body);
-            // TODO: read boundary from request
-            let multipart = Multipart::new(body, "boundary");
-            add_media(req.state(), multipart).await
-        });
-
-    app.listen("0.0.0.0:50050").await?;
-
-    Ok(())
-}
-
-async fn add_media(api: &MediaServerApi, mut payload: Multipart<'_>) -> tide::Result {
+pub async fn handle(api: &MediaServer, mut payload: Multipart<'_>) -> tide::Result {
     let mut media_request = MediaCreateModel {
         name: String::new(),
         tags: Vec::new(),
@@ -66,14 +47,7 @@ async fn add_media(api: &MediaServerApi, mut payload: Multipart<'_>) -> tide::Re
         ));
     }
 
-    let (sender, receiver) = MediaServerApi::open_channel();
-    api.send_command(MediaServerCommand::ImportFile(
-        media_request,
-        file_path,
-        sender,
-    ));
-
-    let document = receiver.recv_async().await?;
+    let document = api.import_file(media_request, file_path, None).await?;
 
     Ok(Body::from_json(&document)?.into())
 }

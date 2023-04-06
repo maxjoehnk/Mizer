@@ -1,8 +1,11 @@
-use crate::models::media::*;
-use mizer_media::api::TagCreateModel;
-use mizer_media::documents::*;
-use protobuf::MessageField;
 use std::path::Path;
+
+use protobuf::{EnumOrUnknown, MessageField};
+
+use mizer_media::documents::{AttachedMediaDocument, AttachedTag, MediaDocument, TagDocument};
+use mizer_media::TagCreateModel;
+
+use crate::models::media::*;
 
 impl From<CreateMediaTag> for TagCreateModel {
     fn from(model: CreateMediaTag) -> Self {
@@ -22,16 +25,52 @@ impl From<TagDocument> for MediaTag {
 
 impl From<MediaDocument> for MediaFile {
     fn from(media: MediaDocument) -> Self {
-        let thumbnail_path = Path::new(&media.name).with_extension("png");
+        let thumbnail_path = Path::new(&media.filename).with_extension("png");
         let thumbnail_path = thumbnail_path.as_os_str().to_str().unwrap();
-        let content_url = format!("http://localhost:50050/media/{}", media.name);
+        let content_url = format!("http://localhost:50050/media/{}", media.filename);
+
         MediaFile {
             id: media.id.to_string(),
             name: media.name,
-            tags: media.tags.into_iter().map(MediaTag::from).collect(),
+            metadata: MessageField::some(MediaMetadata {
+                tags: media.tags.into_iter().map(MediaTag::from).collect(),
+                fileSize: media.file_size,
+                sourcePath: media
+                    .source_path
+                    .and_then(|path| path.to_str().map(|path| path.to_string()))
+                    .unwrap_or_default(),
+                dimensions: media
+                    .metadata
+                    .dimensions
+                    .map(|(width, height)| media_metadata::Dimensions {
+                        width,
+                        height,
+                        ..Default::default()
+                    })
+                    .into(),
+                duration: media.metadata.duration,
+                framerate: media.metadata.framerate,
+                album: media.metadata.album,
+                artist: media.metadata.artist,
+                ..Default::default()
+            }),
             contentUrl: content_url,
             thumbnailUrl: format!("http://localhost:50050/thumbnails/{}", thumbnail_path),
+            type_: EnumOrUnknown::new(media.media_type.into()),
             ..Default::default()
+        }
+    }
+}
+
+impl From<mizer_media::documents::MediaType> for MediaType {
+    fn from(value: mizer_media::documents::MediaType) -> Self {
+        use mizer_media::documents::MediaType::*;
+
+        match value {
+            Image => Self::IMAGE,
+            Audio => Self::AUDIO,
+            Video => Self::VIDEO,
+            Vector => Self::VECTOR,
         }
     }
 }

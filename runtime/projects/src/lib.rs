@@ -10,6 +10,7 @@ use regex::{Regex, RegexBuilder};
 use serde::{Deserialize, Serialize};
 
 use crate::fixtures::PresetsStore;
+use crate::media::Media;
 use mizer_layouts::ControlConfig;
 use mizer_node::{NodeDesigner, NodePath, PortId};
 use mizer_plan::Plan;
@@ -22,6 +23,7 @@ mod connections;
 mod effects;
 mod fixtures;
 pub mod history;
+mod media;
 mod sequencer;
 mod timecode;
 
@@ -40,8 +42,8 @@ pub struct Project {
     pub nodes: Vec<Node>,
     #[serde(default)]
     pub channels: Vec<Channel>,
-    #[serde(default, rename = "media")]
-    pub media_paths: Vec<String>,
+    #[serde(default)]
+    pub media: Media,
     #[serde(default)]
     pub layouts: IndexMap<String, Vec<ControlConfig>>,
     #[serde(default)]

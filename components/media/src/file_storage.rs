@@ -27,7 +27,7 @@ impl FileStorage {
         })
     }
 
-    pub fn store_file(&self, id: Uuid, buffer: &[u8]) -> anyhow::Result<()> {
+    pub fn store_temp_file(&self, id: Uuid, buffer: &[u8]) -> anyhow::Result<()> {
         let file_path = self.get_temp_file_path(id);
         let mut file = fs::File::create(&file_path)?;
 
@@ -52,7 +52,6 @@ impl FileStorage {
         let mut target = PathBuf::new();
         target.push(&self.media_path);
         target.push(path.as_ref().file_name().unwrap());
-        target.set_extension("mp4");
 
         target
     }

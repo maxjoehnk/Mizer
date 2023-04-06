@@ -4,6 +4,7 @@ use mizer::{build_runtime, Flags};
 use test_case::test_case;
 
 #[test_case("artnet"; "artnet")]
+#[test_case("audio"; "audio")]
 #[test_case("demo"; "demo")]
 #[test_case("effects"; "effects")]
 #[test_case("fixture"; "fixture")]

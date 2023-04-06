@@ -123,7 +123,6 @@ channels:
   - Stereo@/audio-file-0 -> Stereo@/audio-meter-0
   - Stereo@/audio-input-0 -> Stereo@/audio-meter-1
   - Stereo@/audio-mix-0 -> Stereo@/audio-meter-2
-media: []
 layouts:
   Default:
     - label: Pause
@@ -182,3 +181,5 @@ plans: []
 timecodes:
   timecodes: []
   controls: []
+media:
+  - examples/media

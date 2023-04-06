@@ -1,60 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/state/media_bloc.dart';
+import 'package:mizer/widgets/panel.dart';
 
-class MediaView extends StatelessWidget {
+import 'media_list.dart';
+import 'media_metadata.dart';
+import 'media_preview.dart';
+
+class MediaView extends StatefulWidget {
+  @override
+  State<MediaView> createState() => _MediaViewState();
+}
+
+class _MediaViewState extends State<MediaView> {
+  MediaFile? selectedFile;
+
   @override
   Widget build(BuildContext context) {
     context.read<MediaBloc>().add(MediaEvent.Fetch);
     return BlocBuilder<MediaBloc, MediaFiles>(
-        builder: (context, data) => Wrap(
-              direction: Axis.horizontal,
-              children: data.files.map((file) => MediaFileEntry(file)).toList(),
-              crossAxisAlignment: WrapCrossAlignment.start,
+        builder: (context, data) => MediaLayout(
+              list: MediaList(data.files,
+                  selectedFile: selectedFile,
+                  onSelectFile: (file) => setState(() => this.selectedFile = file)),
+              preview: Panel(
+                  label: "Preview",
+                  child: selectedFile == null ? Container() : MediaPreview(file: selectedFile!)),
+              metadata: Panel(
+                  label: "Metadata",
+                  child:
+                      selectedFile == null ? Container() : MediaMetadataPanel(file: selectedFile!)),
             ));
   }
 }
 
-class MediaFileEntry extends StatelessWidget {
-  final MediaFile file;
+class MediaLayout extends StatelessWidget {
+  final Widget list;
+  final Widget preview;
+  final Widget metadata;
 
-  MediaFileEntry(this.file);
+  const MediaLayout({Key? key, required this.list, required this.preview, required this.metadata})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: this.file.name,
-      child: Card(
-          child: Container(
-        width: 200,
+    return Row(children: [
+      Expanded(child: list),
+      Expanded(
         child: Column(
-          children: [
-            MediaThumbnail(this.file),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(this.file.name, overflow: TextOverflow.ellipsis),
-            ),
-          ],
+          children: [Flexible(child: preview, flex: 1), Flexible(child: metadata, flex: 2)],
         ),
-      )),
-    );
-  }
-}
-
-class MediaThumbnail extends StatelessWidget {
-  final MediaFile file;
-
-  MediaThumbnail(this.file);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 200,
-        height: 200,
-        alignment: Alignment.center,
-        color: Colors.black,
-        child: Image.network(this.file.thumbnailUrl));
+      )
+    ]);
   }
 }

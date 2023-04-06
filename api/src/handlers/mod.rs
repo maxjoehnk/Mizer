@@ -15,7 +15,7 @@ pub use self::transport::*;
 use crate::RuntimeApi;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
-use mizer_media::api::MediaServerApi;
+use mizer_media::MediaServer;
 use mizer_sequencer::{EffectEngine, Sequencer};
 use mizer_timecode::TimecodeManager;
 
@@ -57,7 +57,7 @@ impl<R: RuntimeApi> Handlers<R> {
         runtime: R,
         fixture_manager: FixtureManager,
         fixture_library: FixtureLibrary,
-        media_server: MediaServerApi,
+        media_server: MediaServer,
         sequencer: Sequencer,
         effect_engine: EffectEngine,
         timecode_manager: TimecodeManager,

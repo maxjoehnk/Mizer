@@ -11,7 +11,6 @@ use mizer_devices::DeviceModule;
 use mizer_fixtures::library::FixtureLibrary;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::FixtureModule;
-use mizer_media::api::MediaServerApi;
 use mizer_media::{MediaDiscovery, MediaServer};
 use mizer_message_bus::MessageBus;
 use mizer_module::{Module, Runtime};
@@ -70,8 +69,6 @@ pub fn build_runtime(
     FixtureLibrariesLoader(fixture_library.clone()).queue_load();
 
     let media_server = MediaServer::new()?;
-    let media_server_api = media_server.get_api_handle();
-    handle.spawn(media_server.run_api());
 
     let (api_handler, api) = Api::setup(&runtime, command_executor_api, settings);
 
@@ -79,21 +76,20 @@ pub fn build_runtime(
         api,
         fixture_manager,
         fixture_library,
-        media_server_api.clone(),
+        media_server.clone(),
         sequencer,
         effect_engine,
         timecode_manager,
     );
 
-    setup_media_api(handle, &flags, media_server_api.clone())
-        .context("Failed to setup media api")?;
+    setup_media_api(handle, &flags, media_server.clone()).context("Failed to setup media api")?;
     let project_file = flags.file.clone();
     let mut mizer = Mizer {
         project_path: flags.file.clone(),
         flags,
         runtime,
         handlers,
-        media_server_api,
+        media_server_api: media_server,
         session_events: MessageBus::new(),
         project_history: ProjectHistory,
     };
@@ -114,7 +110,7 @@ pub struct Mizer {
     runtime: DefaultRuntime,
     pub handlers: Handlers<Api>,
     project_path: Option<PathBuf>,
-    media_server_api: MediaServerApi,
+    media_server_api: MediaServer,
     session_events: MessageBus<SessionState>,
     project_history: ProjectHistory,
 }
@@ -170,10 +166,8 @@ impl Mizer {
     fn load_project(&mut self) -> anyhow::Result<()> {
         mizer_util::message!("Loading Project", 0);
         if let Some(ref path) = self.project_path {
-            let mut media_paths = Vec::new();
             log::info!("Loading project {:?}...", path);
             let project = Project::load_file(path)?;
-            media_paths.extend(project.media_paths.clone());
             {
                 let injector = self.runtime.injector_mut();
                 let manager: &FixtureManager = injector.get().unwrap();
@@ -199,8 +193,11 @@ impl Mizer {
                     .load(&project)
                     .context("loading osc connections")?;
             }
-            import_media_files(&media_paths, &self.media_server_api)
+            self.media_server_api
+                .load(&project)
                 .context("loading media files")?;
+            start_media_discovery(&project.media.import_paths, &self.media_server_api)
+                .context("starting media discovery")?;
             self.runtime.load(&project).context("loading project")?;
             log::info!("Loading project...Done");
 
@@ -246,6 +243,7 @@ impl Mizer {
             timecode_manager.save(&mut project);
             let effects_engine = injector.get::<EffectEngine>().unwrap();
             effects_engine.save(&mut project);
+            self.media_server_api.save(&mut project);
             project.save_file(file)?;
             log::info!("Saving project...Done");
         }
@@ -373,9 +371,10 @@ fn register_fixtures_module(
     Ok((fixture_manager, fixture_library))
 }
 
-fn import_media_files(
-    media_paths: &[String],
-    media_server_api: &MediaServerApi,
+// TODO: handle transparently by MediaServer
+fn start_media_discovery(
+    media_paths: &[PathBuf],
+    media_server_api: &MediaServer,
 ) -> anyhow::Result<()> {
     let handle = tokio::runtime::Handle::try_current()?;
     for path in media_paths {
@@ -388,7 +387,7 @@ fn import_media_files(
 fn setup_media_api(
     handle: tokio::runtime::Handle,
     flags: &Flags,
-    media_server_api: MediaServerApi,
+    media_server_api: MediaServer,
 ) -> anyhow::Result<()> {
     if !flags.disable_media_api {
         handle.spawn(mizer_media::http_api::start(media_server_api));

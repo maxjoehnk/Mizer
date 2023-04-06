@@ -1,35 +1,27 @@
-use mizer_media::api::{MediaServerApi, MediaServerCommand, TagCreateModel};
+use mizer_media::MediaServer;
 
 use crate::models::media::*;
 
 #[derive(Clone)]
 pub struct MediaHandler {
-    api: MediaServerApi,
+    api: MediaServer,
 }
 
 impl MediaHandler {
-    pub fn new(api: MediaServerApi) -> Self {
+    pub fn new(api: MediaServer) -> Self {
         Self { api }
     }
 
     #[tracing::instrument(skip(self))]
-    pub async fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {
-        let (sender, receiver) = MediaServerApi::open_channel();
-        let cmd = MediaServerCommand::CreateTag(TagCreateModel { name }, sender);
-        self.api.send_command(cmd);
-
-        let document = receiver.recv_async().await?;
+    pub fn create_tag(&self, name: String) -> anyhow::Result<MediaTag> {
+        let document = self.api.create_tag(name)?;
 
         Ok(document.into())
     }
 
     #[tracing::instrument(skip(self))]
-    pub async fn get_tags_with_media(&self) -> anyhow::Result<GroupedMediaFiles> {
-        let (sender, receiver) = MediaServerApi::open_channel();
-        let cmd = MediaServerCommand::GetTags(sender);
-        self.api.send_command(cmd);
-
-        let tags = receiver.recv_async().await?;
+    pub fn get_tags_with_media(&self) -> anyhow::Result<GroupedMediaFiles> {
+        let tags = self.api.get_tags()?;
         let tags = tags.into_iter().map(MediaTagWithFiles::from).collect();
 
         Ok(GroupedMediaFiles {
@@ -39,12 +31,8 @@ impl MediaHandler {
     }
 
     #[tracing::instrument(skip(self))]
-    pub async fn get_media(&self) -> anyhow::Result<MediaFiles> {
-        let (sender, receiver) = MediaServerApi::open_channel();
-        let cmd = MediaServerCommand::GetMedia(sender);
-        self.api.send_command(cmd);
-
-        let files = receiver.recv_async().await.unwrap();
+    pub fn get_media(&self) -> anyhow::Result<MediaFiles> {
+        let files = self.api.get_media()?;
         let files = files.into_iter().map(MediaFile::from).collect();
 
         Ok(MediaFiles {

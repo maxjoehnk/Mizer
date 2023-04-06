@@ -4,11 +4,11 @@ import 'package:mizer/widgets/popup/popup_route.dart';
 const double TABLE_ROW_HEIGHT = 36;
 
 class MizerTable extends StatefulWidget {
-  final List<Widget> columns;
+  final List<Widget>? columns;
   final List<MizerTableRow> rows;
   final Map<int, TableColumnWidth>? columnWidths;
 
-  const MizerTable({required this.columns, required this.rows, this.columnWidths, Key? key})
+  const MizerTable({this.columns, required this.rows, this.columnWidths, Key? key})
       : super(key: key);
 
   @override
@@ -20,15 +20,19 @@ class _MizerTableState extends State<MizerTable> {
 
   @override
   Widget build(BuildContext context) {
+    var header = _header();
     return Table(
-      children: [_header(), ...widget.rows.map(_mapRow)],
+      children: [if (header != null) header, ...widget.rows.map(_mapRow)],
       columnWidths: widget.columnWidths,
     );
   }
 
-  TableRow _header() {
+  TableRow? _header() {
+    if (widget.columns == null) {
+      return null;
+    }
     return TableRow(
-      children: widget.columns.map(_wrapHeader).toList(),
+      children: widget.columns!.map(_wrapHeader).toList(),
     );
   }
 
@@ -49,9 +53,11 @@ class _MizerTableState extends State<MizerTable> {
     Widget cellContent = Container(
         alignment: Alignment.centerLeft,
         height: TABLE_ROW_HEIGHT,
-        color: row.selected ? Colors.white24 : (_hoveredRow == row ? Colors.white10 : (row.highlight
-            ? Colors.deepOrange.withOpacity(0.1)
-            : null)),
+        color: row.selected
+            ? Colors.white24
+            : (_hoveredRow == row
+                ? Colors.white10
+                : (row.highlight ? Colors.deepOrange.withOpacity(0.1) : null)),
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: cell);
 
@@ -88,7 +94,13 @@ class MizerTableRow {
   final void Function()? onSecondaryTap;
 
   MizerTableRow(
-      {required this.cells, this.selected = false, this.highlight = false, this.inactive = false, this.onTap, this.onDoubleTap, this.onSecondaryTap});
+      {required this.cells,
+      this.selected = false,
+      this.highlight = false,
+      this.inactive = false,
+      this.onTap,
+      this.onDoubleTap,
+      this.onSecondaryTap});
 }
 
 class PopupTableCell extends StatelessWidget {
@@ -96,17 +108,15 @@ class PopupTableCell extends StatelessWidget {
   final Widget popup;
   final Function()? onTap;
 
-  PopupTableCell({ required this.child, required this.popup, this.onTap });
+  PopupTableCell({required this.child, required this.popup, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      onSecondaryTapDown: (details) => Navigator.of(context).push(MizerPopupRoute(
-              position: details.globalPosition,
-              child: popup
-          )),
+      onSecondaryTapDown: (details) => Navigator.of(context)
+          .push(MizerPopupRoute(position: details.globalPosition, child: popup)),
       child: Container(
         alignment: AlignmentDirectional.centerStart,
         child: child,

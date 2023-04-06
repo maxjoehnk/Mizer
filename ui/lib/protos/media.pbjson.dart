@@ -3,11 +3,24 @@
 //  source: media.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+@$core.Deprecated('Use mediaTypeDescriptor instead')
+const MediaType$json = const {
+  '1': 'MediaType',
+  '2': const [
+    const {'1': 'IMAGE', '2': 0},
+    const {'1': 'AUDIO', '2': 1},
+    const {'1': 'VIDEO', '2': 2},
+    const {'1': 'VECTOR', '2': 3},
+  ],
+};
+
+/// Descriptor for `MediaType`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List mediaTypeDescriptor = $convert.base64Decode('CglNZWRpYVR5cGUSCQoFSU1BR0UQABIJCgVBVURJTxABEgkKBVZJREVPEAISCgoGVkVDVE9SEAM=');
 @$core.Deprecated('Use getMediaTagsDescriptor instead')
 const GetMediaTags$json = const {
   '1': 'GetMediaTags',
@@ -69,14 +82,49 @@ const MediaFile$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'tags', '3': 3, '4': 3, '5': 11, '6': '.mizer.MediaTag', '10': 'tags'},
-    const {'1': 'thumbnailUrl', '3': 4, '4': 1, '5': 9, '10': 'thumbnailUrl'},
-    const {'1': 'contentUrl', '3': 5, '4': 1, '5': 9, '10': 'contentUrl'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.mizer.MediaType', '10': 'type'},
+    const {'1': 'metadata', '3': 4, '4': 1, '5': 11, '6': '.mizer.MediaMetadata', '10': 'metadata'},
+    const {'1': 'thumbnailUrl', '3': 5, '4': 1, '5': 9, '10': 'thumbnailUrl'},
+    const {'1': 'contentUrl', '3': 6, '4': 1, '5': 9, '10': 'contentUrl'},
   ],
 };
 
 /// Descriptor for `MediaFile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mediaFileDescriptor = $convert.base64Decode('CglNZWRpYUZpbGUSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSIwoEdGFncxgDIAMoCzIPLm1pemVyLk1lZGlhVGFnUgR0YWdzEiIKDHRodW1ibmFpbFVybBgEIAEoCVIMdGh1bWJuYWlsVXJsEh4KCmNvbnRlbnRVcmwYBSABKAlSCmNvbnRlbnRVcmw=');
+final $typed_data.Uint8List mediaFileDescriptor = $convert.base64Decode('CglNZWRpYUZpbGUSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSJAoEdHlwZRgDIAEoDjIQLm1pemVyLk1lZGlhVHlwZVIEdHlwZRIwCghtZXRhZGF0YRgEIAEoCzIULm1pemVyLk1lZGlhTWV0YWRhdGFSCG1ldGFkYXRhEiIKDHRodW1ibmFpbFVybBgFIAEoCVIMdGh1bWJuYWlsVXJsEh4KCmNvbnRlbnRVcmwYBiABKAlSCmNvbnRlbnRVcmw=');
+@$core.Deprecated('Use mediaMetadataDescriptor instead')
+const MediaMetadata$json = const {
+  '1': 'MediaMetadata',
+  '2': const [
+    const {'1': 'sourcePath', '3': 1, '4': 1, '5': 9, '10': 'sourcePath'},
+    const {'1': 'fileSize', '3': 2, '4': 1, '5': 4, '10': 'fileSize'},
+    const {'1': 'tags', '3': 3, '4': 3, '5': 11, '6': '.mizer.MediaTag', '10': 'tags'},
+    const {'1': 'dimensions', '3': 4, '4': 1, '5': 11, '6': '.mizer.MediaMetadata.Dimensions', '9': 0, '10': 'dimensions', '17': true},
+    const {'1': 'duration', '3': 5, '4': 1, '5': 4, '9': 1, '10': 'duration', '17': true},
+    const {'1': 'framerate', '3': 6, '4': 1, '5': 1, '9': 2, '10': 'framerate', '17': true},
+    const {'1': 'album', '3': 7, '4': 1, '5': 9, '9': 3, '10': 'album', '17': true},
+    const {'1': 'artist', '3': 8, '4': 1, '5': 9, '9': 4, '10': 'artist', '17': true},
+  ],
+  '3': const [MediaMetadata_Dimensions$json],
+  '8': const [
+    const {'1': '_dimensions'},
+    const {'1': '_duration'},
+    const {'1': '_framerate'},
+    const {'1': '_album'},
+    const {'1': '_artist'},
+  ],
+};
+
+@$core.Deprecated('Use mediaMetadataDescriptor instead')
+const MediaMetadata_Dimensions$json = const {
+  '1': 'Dimensions',
+  '2': const [
+    const {'1': 'width', '3': 1, '4': 1, '5': 4, '10': 'width'},
+    const {'1': 'height', '3': 2, '4': 1, '5': 4, '10': 'height'},
+  ],
+};
+
+/// Descriptor for `MediaMetadata`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mediaMetadataDescriptor = $convert.base64Decode('Cg1NZWRpYU1ldGFkYXRhEh4KCnNvdXJjZVBhdGgYASABKAlSCnNvdXJjZVBhdGgSGgoIZmlsZVNpemUYAiABKARSCGZpbGVTaXplEiMKBHRhZ3MYAyADKAsyDy5taXplci5NZWRpYVRhZ1IEdGFncxJECgpkaW1lbnNpb25zGAQgASgLMh8ubWl6ZXIuTWVkaWFNZXRhZGF0YS5EaW1lbnNpb25zSABSCmRpbWVuc2lvbnOIAQESHwoIZHVyYXRpb24YBSABKARIAVIIZHVyYXRpb26IAQESIQoJZnJhbWVyYXRlGAYgASgBSAJSCWZyYW1lcmF0ZYgBARIZCgVhbGJ1bRgHIAEoCUgDUgVhbGJ1bYgBARIbCgZhcnRpc3QYCCABKAlIBFIGYXJ0aXN0iAEBGjoKCkRpbWVuc2lvbnMSFAoFd2lkdGgYASABKARSBXdpZHRoEhYKBmhlaWdodBgCIAEoBFIGaGVpZ2h0Qg0KC19kaW1lbnNpb25zQgsKCV9kdXJhdGlvbkIMCgpfZnJhbWVyYXRlQggKBl9hbGJ1bUIJCgdfYXJ0aXN0');
 @$core.Deprecated('Use groupedMediaFilesDescriptor instead')
 const GroupedMediaFiles$json = const {
   '1': 'GroupedMediaFiles',

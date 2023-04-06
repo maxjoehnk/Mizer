@@ -3,11 +3,16 @@
 //  source: media.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
+
+import 'media.pbenum.dart';
+
+export 'media.pbenum.dart';
 
 class GetMediaTags extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetMediaTags', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
@@ -261,9 +266,10 @@ class MediaFile extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaFile', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pc<MediaTag>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTag.create)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thumbnailUrl', protoName: 'thumbnailUrl')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'contentUrl', protoName: 'contentUrl')
+    ..e<MediaType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: MediaType.IMAGE, valueOf: MediaType.valueOf, enumValues: MediaType.values)
+    ..aOM<MediaMetadata>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata', subBuilder: MediaMetadata.create)
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'thumbnailUrl', protoName: 'thumbnailUrl')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'contentUrl', protoName: 'contentUrl')
     ..hasRequiredFields = false
   ;
 
@@ -271,7 +277,8 @@ class MediaFile extends $pb.GeneratedMessage {
   factory MediaFile({
     $core.String? id,
     $core.String? name,
-    $core.Iterable<MediaTag>? tags,
+    MediaType? type,
+    MediaMetadata? metadata,
     $core.String? thumbnailUrl,
     $core.String? contentUrl,
   }) {
@@ -282,8 +289,11 @@ class MediaFile extends $pb.GeneratedMessage {
     if (name != null) {
       _result.name = name;
     }
-    if (tags != null) {
-      _result.tags.addAll(tags);
+    if (type != null) {
+      _result.type = type;
+    }
+    if (metadata != null) {
+      _result.metadata = metadata;
     }
     if (thumbnailUrl != null) {
       _result.thumbnailUrl = thumbnailUrl;
@@ -333,25 +343,244 @@ class MediaFile extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
+  MediaType get type => $_getN(2);
+  @$pb.TagNumber(3)
+  set type(MediaType v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasType() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearType() => clearField(3);
+
+  @$pb.TagNumber(4)
+  MediaMetadata get metadata => $_getN(3);
+  @$pb.TagNumber(4)
+  set metadata(MediaMetadata v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMetadata() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMetadata() => clearField(4);
+  @$pb.TagNumber(4)
+  MediaMetadata ensureMetadata() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $core.String get thumbnailUrl => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set thumbnailUrl($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasThumbnailUrl() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearThumbnailUrl() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get contentUrl => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set contentUrl($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasContentUrl() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearContentUrl() => clearField(6);
+}
+
+class MediaMetadata_Dimensions extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaMetadata.Dimensions', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'width', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'height', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
+  MediaMetadata_Dimensions._() : super();
+  factory MediaMetadata_Dimensions({
+    $fixnum.Int64? width,
+    $fixnum.Int64? height,
+  }) {
+    final _result = create();
+    if (width != null) {
+      _result.width = width;
+    }
+    if (height != null) {
+      _result.height = height;
+    }
+    return _result;
+  }
+  factory MediaMetadata_Dimensions.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MediaMetadata_Dimensions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MediaMetadata_Dimensions clone() => MediaMetadata_Dimensions()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MediaMetadata_Dimensions copyWith(void Function(MediaMetadata_Dimensions) updates) => super.copyWith((message) => updates(message as MediaMetadata_Dimensions)) as MediaMetadata_Dimensions; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MediaMetadata_Dimensions create() => MediaMetadata_Dimensions._();
+  MediaMetadata_Dimensions createEmptyInstance() => create();
+  static $pb.PbList<MediaMetadata_Dimensions> createRepeated() => $pb.PbList<MediaMetadata_Dimensions>();
+  @$core.pragma('dart2js:noInline')
+  static MediaMetadata_Dimensions getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaMetadata_Dimensions>(create);
+  static MediaMetadata_Dimensions? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get width => $_getI64(0);
+  @$pb.TagNumber(1)
+  set width($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasWidth() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearWidth() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get height => $_getI64(1);
+  @$pb.TagNumber(2)
+  set height($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasHeight() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearHeight() => clearField(2);
+}
+
+class MediaMetadata extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MediaMetadata', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sourcePath', protoName: 'sourcePath')
+    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileSize', $pb.PbFieldType.OU6, protoName: 'fileSize', defaultOrMaker: $fixnum.Int64.ZERO)
+    ..pc<MediaTag>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'tags', $pb.PbFieldType.PM, subBuilder: MediaTag.create)
+    ..aOM<MediaMetadata_Dimensions>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dimensions', subBuilder: MediaMetadata_Dimensions.create)
+    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'duration', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.double>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'framerate', $pb.PbFieldType.OD)
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'album')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artist')
+    ..hasRequiredFields = false
+  ;
+
+  MediaMetadata._() : super();
+  factory MediaMetadata({
+    $core.String? sourcePath,
+    $fixnum.Int64? fileSize,
+    $core.Iterable<MediaTag>? tags,
+    MediaMetadata_Dimensions? dimensions,
+    $fixnum.Int64? duration,
+    $core.double? framerate,
+    $core.String? album,
+    $core.String? artist,
+  }) {
+    final _result = create();
+    if (sourcePath != null) {
+      _result.sourcePath = sourcePath;
+    }
+    if (fileSize != null) {
+      _result.fileSize = fileSize;
+    }
+    if (tags != null) {
+      _result.tags.addAll(tags);
+    }
+    if (dimensions != null) {
+      _result.dimensions = dimensions;
+    }
+    if (duration != null) {
+      _result.duration = duration;
+    }
+    if (framerate != null) {
+      _result.framerate = framerate;
+    }
+    if (album != null) {
+      _result.album = album;
+    }
+    if (artist != null) {
+      _result.artist = artist;
+    }
+    return _result;
+  }
+  factory MediaMetadata.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MediaMetadata.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MediaMetadata clone() => MediaMetadata()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MediaMetadata copyWith(void Function(MediaMetadata) updates) => super.copyWith((message) => updates(message as MediaMetadata)) as MediaMetadata; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MediaMetadata create() => MediaMetadata._();
+  MediaMetadata createEmptyInstance() => create();
+  static $pb.PbList<MediaMetadata> createRepeated() => $pb.PbList<MediaMetadata>();
+  @$core.pragma('dart2js:noInline')
+  static MediaMetadata getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MediaMetadata>(create);
+  static MediaMetadata? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get sourcePath => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set sourcePath($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSourcePath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSourcePath() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get fileSize => $_getI64(1);
+  @$pb.TagNumber(2)
+  set fileSize($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasFileSize() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearFileSize() => clearField(2);
+
+  @$pb.TagNumber(3)
   $core.List<MediaTag> get tags => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.String get thumbnailUrl => $_getSZ(3);
+  MediaMetadata_Dimensions get dimensions => $_getN(3);
   @$pb.TagNumber(4)
-  set thumbnailUrl($core.String v) { $_setString(3, v); }
+  set dimensions(MediaMetadata_Dimensions v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasThumbnailUrl() => $_has(3);
+  $core.bool hasDimensions() => $_has(3);
   @$pb.TagNumber(4)
-  void clearThumbnailUrl() => clearField(4);
+  void clearDimensions() => clearField(4);
+  @$pb.TagNumber(4)
+  MediaMetadata_Dimensions ensureDimensions() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $core.String get contentUrl => $_getSZ(4);
+  $fixnum.Int64 get duration => $_getI64(4);
   @$pb.TagNumber(5)
-  set contentUrl($core.String v) { $_setString(4, v); }
+  set duration($fixnum.Int64 v) { $_setInt64(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasContentUrl() => $_has(4);
+  $core.bool hasDuration() => $_has(4);
   @$pb.TagNumber(5)
-  void clearContentUrl() => clearField(5);
+  void clearDuration() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.double get framerate => $_getN(5);
+  @$pb.TagNumber(6)
+  set framerate($core.double v) { $_setDouble(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasFramerate() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearFramerate() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get album => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set album($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasAlbum() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearAlbum() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get artist => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set artist($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasArtist() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearArtist() => clearField(8);
 }
 
 class GroupedMediaFiles extends $pb.GeneratedMessage {

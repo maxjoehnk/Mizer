@@ -1,13 +1,17 @@
+use crate::documents::MediaType;
 use crate::file_storage::FileStorage;
 use crate::media_handlers::{MediaHandler, THUMBNAIL_SIZE};
 use std::io::{Read, Write};
 use std::path::Path;
 use tiny_skia::Pixmap;
-use usvg::{NodeExt, Options};
+use usvg::{NodeExt, Options, TreeParsing};
 
+#[derive(Clone)]
 pub struct SvgHandler;
 
 impl MediaHandler for SvgHandler {
+    const MEDIA_TYPE: MediaType = MediaType::Vector;
+
     fn supported(content_type: &str) -> bool {
         content_type == "text/xml"
     }
@@ -26,9 +30,9 @@ impl MediaHandler for SvgHandler {
         let pixel_buffer = pixmap.as_mut();
         let bounding_box = tree.root.calculate_bbox().unwrap();
         let size = if bounding_box.width() > bounding_box.height() {
-            usvg::FitTo::Width(THUMBNAIL_SIZE)
+            resvg::FitTo::Width(THUMBNAIL_SIZE)
         } else {
-            usvg::FitTo::Height(THUMBNAIL_SIZE)
+            resvg::FitTo::Height(THUMBNAIL_SIZE)
         };
         resvg::render(&tree, size, Default::default(), pixel_buffer);
         let buffer = pixmap.encode_png()?;

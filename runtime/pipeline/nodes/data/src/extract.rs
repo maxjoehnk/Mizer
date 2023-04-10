@@ -15,7 +15,7 @@ impl PipelineNode for ExtractNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: stringify!(ExtractNode).into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Data,
         }
     }
 
@@ -52,6 +52,7 @@ impl ProcessingNode for ExtractNode {
         if let Some(data) = context.read_port::<_, StructuredData>(INPUT_PORT) {
             if let Some(value) = data.access(&self.path) {
                 context.write_port(OUTPUT_PORT, value.clone());
+                context.write_data_preview(value.clone());
             }
         }
 

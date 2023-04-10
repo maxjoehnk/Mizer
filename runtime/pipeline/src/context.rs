@@ -5,6 +5,7 @@ use mizer_ports::{NodePortSender, PortId, PortValue};
 use mizer_processing::Injector;
 
 use crate::ports::{AnyPortReceiverPort, NodeReceivers, NodeSenders};
+use mizer_util::StructuredData;
 use pinboard::NonEmptyPinboard;
 use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
 use std::cell::RefCell;
@@ -36,6 +37,7 @@ pub enum NodePreviewState {
         ConstGenericRingBuffer<f64, HISTORY_PREVIEW_SIZE>,
         Arc<NonEmptyPinboard<Vec<f64>>>,
     ),
+    Data(Arc<NonEmptyPinboard<Option<StructuredData>>>),
     None,
 }
 
@@ -44,6 +46,12 @@ impl NodePreviewState {
         if let Self::History(history, history_snapshot) = self {
             history.push(value);
             history_snapshot.set(history.to_vec());
+        }
+    }
+
+    fn push_data_value(&mut self, value: StructuredData) {
+        if let Self::Data(snapshot) = self {
+            snapshot.set(Some(value));
         }
     }
 }
@@ -163,5 +171,10 @@ impl<'a> PreviewContext for PipelineContext<'a> {
     fn push_history_value(&self, value: f64) {
         profiling::scope!("PipelineContext::push_history_value");
         self.preview.borrow_mut().push_history_value(value);
+    }
+
+    fn write_data_preview(&self, data: StructuredData) {
+        profiling::scope!("PipelineContext::write_data_preview");
+        self.preview.borrow_mut().push_data_value(data);
     }
 }

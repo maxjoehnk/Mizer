@@ -22,7 +22,7 @@ impl PipelineNode for ValueNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "ValueNode".into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Data,
         }
     }
 
@@ -49,12 +49,14 @@ impl ProcessingNode for ValueNode {
         if let Some((raw, value)) = state.as_ref() {
             if raw == &self.value {
                 context.write_port(VALUE_PORT, value.clone());
+                context.write_data_preview(value.clone());
                 return Ok(());
             }
         }
 
         let value: StructuredData = serde_json::from_str(&self.value)?;
         *state = Some((self.value.clone(), value.clone()));
+        context.write_data_preview(value.clone());
         context.write_port(VALUE_PORT, value);
 
         Ok(())

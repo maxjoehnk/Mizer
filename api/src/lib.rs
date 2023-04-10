@@ -5,7 +5,7 @@ use mizer_command_executor::SendableCommand;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, MidiEvent, OscMessage};
 use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
-use mizer_node::{NodeLink, NodePath, PortId};
+use mizer_node::{NodeLink, NodePath, NodePreviewRef, PortId};
 use mizer_plan::Plan;
 use mizer_runtime::{LayoutsView, NodeDescriptor};
 use mizer_session::SessionState;
@@ -38,10 +38,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
 
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()>;
 
-    fn get_node_history_ref(
-        &self,
-        node: NodePath,
-    ) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>>;
+    fn get_node_preview_ref(&self, node: NodePath) -> anyhow::Result<Option<NodePreviewRef>>;
 
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor>;
 

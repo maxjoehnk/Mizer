@@ -24,7 +24,7 @@ impl PipelineNode for MqttInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "MqttInputNode".into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Data,
         }
     }
 
@@ -117,6 +117,7 @@ impl MqttInputNode {
             .as_ref()
             .and_then(|subscription| subscription.next_event())
         {
+            context.write_data_preview(event.payload.clone());
             context.write_port(VALUE_PORT, event.payload);
         }
     }

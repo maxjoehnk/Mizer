@@ -1,6 +1,7 @@
 use std::iter::FromIterator;
 use std::sync::Arc;
 
+#[derive(Clone, Copy)]
 #[repr(C)]
 pub struct Array<T> {
     len: usize,

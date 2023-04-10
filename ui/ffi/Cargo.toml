@@ -15,5 +15,6 @@ mizer-fixtures = { path = "../../components/fixtures" }
 mizer-timecode = { path = "../../components/timecode" }
 mizer-node = { path = "../../runtime/pipeline/node" }
 mizer-runtime = { path = "../../runtime" }
+mizer-util = { path = "../../util" }
 lazy_static = "1.4"
 parking_lot = "0.12"

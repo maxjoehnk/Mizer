@@ -1957,6 +1957,7 @@ impl From<PreviewType> for node::NodePreviewType {
             PreviewType::Multiple => node::NodePreviewType::Multiple,
             PreviewType::Texture => node::NodePreviewType::Texture,
             PreviewType::Timecode => node::NodePreviewType::Timecode,
+            PreviewType::Data => node::NodePreviewType::Data,
             PreviewType::None => node::NodePreviewType::None,
         }
     }

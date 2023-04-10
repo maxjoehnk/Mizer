@@ -2,12 +2,10 @@ use crate::mappings::nodes::map_node_descriptor_with_config;
 use crate::models::nodes::*;
 use crate::RuntimeApi;
 use mizer_command_executor::*;
-use mizer_node::{NodePath, NodeType};
+use mizer_node::{NodePath, NodePreviewRef, NodeType};
 use mizer_nodes::ContainerNode;
 use mizer_runtime::NodeDowncast;
-use pinboard::NonEmptyPinboard;
 use protobuf::{EnumOrUnknown, MessageField};
-use std::sync::Arc;
 
 #[derive(Clone)]
 pub struct NodesHandler<R: RuntimeApi> {
@@ -154,11 +152,8 @@ impl<R: RuntimeApi> NodesHandler<R> {
     }
 
     #[tracing::instrument(skip(self))]
-    pub fn get_node_history_ref(
-        &self,
-        path: String,
-    ) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
-        self.runtime.get_node_history_ref(path.into())
+    pub fn get_node_preview_ref(&self, path: String) -> anyhow::Result<Option<NodePreviewRef>> {
+        self.runtime.get_node_preview_ref(path.into())
     }
 
     #[tracing::instrument(skip(self))]

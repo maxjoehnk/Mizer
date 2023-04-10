@@ -16,7 +16,7 @@ pub enum StructuredData {
 impl Default for StructuredData {
     fn default() -> Self {
         // TODO: should this be the default?
-        Self::Boolean(false)
+        Self::Object(HashMap::new())
     }
 }
 

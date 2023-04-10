@@ -178,11 +178,11 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
 
     fn get_history_pointer(&self, path: String) -> anyhow::Result<i64> {
         let err_msg = format!("Missing preview for node {}", path);
-        if let Some(history) = self.handler.get_node_history_ref(path)? {
-            let history = NodeHistory { history };
-            let history = Arc::new(history);
+        if let Some(preview) = self.handler.get_node_preview_ref(path)? {
+            let preview = NodeHistory::new(preview);
+            let preview = Arc::new(preview);
 
-            Ok(history.to_pointer() as i64)
+            Ok(preview.to_pointer() as i64)
         } else {
             anyhow::bail!("{}", err_msg)
         }

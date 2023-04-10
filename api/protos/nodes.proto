@@ -174,7 +174,8 @@ message Node {
     Multiple = 2;
     Texture = 3;
     Timecode = 4;
-    None = 5;
+    Data = 5;
+    None = 6;
   }
 
   NodeType type = 1;

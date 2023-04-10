@@ -56,7 +56,7 @@ impl ApiHandler {
                 sender.send(value).expect("api command sender disconnected");
             }
             ApiCommand::GetNodePreviewRef(path, sender) => sender
-                .send(mizer.runtime.get_history_ref(&path))
+                .send(mizer.runtime.get_preview_ref(&path))
                 .expect("api command sender disconnected"),
             ApiCommand::SetClockState(state) => {
                 mizer.runtime.clock.set_state(state);

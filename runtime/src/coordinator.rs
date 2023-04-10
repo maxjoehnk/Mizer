@@ -142,8 +142,8 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         }
     }
 
-    pub fn get_history_ref(&self, path: &NodePath) -> Option<Arc<NonEmptyPinboard<Vec<f64>>>> {
-        self.pipeline.get_history_ref(path)
+    pub fn get_preview_ref(&self, path: &NodePath) -> Option<NodePreviewRef> {
+        self.pipeline.get_preview_ref(path)
     }
 
     fn rebuild_pipeline(&mut self, plan: ExecutionPlan) {

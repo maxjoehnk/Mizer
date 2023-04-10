@@ -2,7 +2,6 @@ use std::any::{type_name, Any};
 use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::ops::Deref;
 
 use downcast::*;
 
@@ -17,7 +16,6 @@ use crate::ports::{NodeReceivers, NodeSenders};
 use crate::{NodePreviewState, PipelineContext};
 use mizer_util::{HashMapExtension, StructuredData};
 use pinboard::NonEmptyPinboard;
-use std::sync::Arc;
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -94,6 +92,12 @@ impl PipelineWorker {
                         Default::default(),
                         NonEmptyPinboard::new(Vec::new()).into(),
                     ),
+                );
+            }
+            PreviewType::Data => {
+                self.previews.insert(
+                    path.clone(),
+                    NodePreviewState::Data(NonEmptyPinboard::new(None).into()),
                 );
             }
             _ => {
@@ -407,10 +411,11 @@ impl PipelineWorker {
         }
     }
 
-    pub fn get_history_ref(&self, path: &NodePath) -> Option<Arc<NonEmptyPinboard<Vec<f64>>>> {
+    pub fn get_preview_ref(&self, path: &NodePath) -> Option<NodePreviewRef> {
         if let Some(preview) = self.previews.get(path) {
             match preview {
-                NodePreviewState::History(_, buf) => Some(buf.clone()),
+                NodePreviewState::History(_, buf) => Some(NodePreviewRef::History(buf.clone())),
+                NodePreviewState::Data(buf) => Some(NodePreviewRef::Data(buf.clone())),
                 _ => None,
             }
         } else {

@@ -4,7 +4,7 @@ use mizer_api::RuntimeApi;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::Layout;
-use mizer_node::{NodeDesigner, NodeLink, NodePath, PortId};
+use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, PortId};
 use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, RuntimeAccess};
 use mizer_session::SessionState;
 
@@ -86,10 +86,7 @@ impl RuntimeApi for Api {
         rx.recv()?
     }
 
-    fn get_node_history_ref(
-        &self,
-        node: NodePath,
-    ) -> anyhow::Result<Option<Arc<NonEmptyPinboard<Vec<f64>>>>> {
+    fn get_node_preview_ref(&self, node: NodePath) -> anyhow::Result<Option<NodePreviewRef>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetNodePreviewRef(node, tx))?;
 

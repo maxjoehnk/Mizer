@@ -179,7 +179,8 @@ class Node_NodePreviewType extends $pb.ProtobufEnum {
   static const Node_NodePreviewType Multiple = Node_NodePreviewType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Multiple');
   static const Node_NodePreviewType Texture = Node_NodePreviewType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Texture');
   static const Node_NodePreviewType Timecode = Node_NodePreviewType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Timecode');
-  static const Node_NodePreviewType None = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
+  static const Node_NodePreviewType Data = Node_NodePreviewType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Data');
+  static const Node_NodePreviewType None = Node_NodePreviewType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
 
   static const $core.List<Node_NodePreviewType> values = <Node_NodePreviewType> [
     History,
@@ -187,6 +188,7 @@ class Node_NodePreviewType extends $pb.ProtobufEnum {
     Multiple,
     Texture,
     Timecode,
+    Data,
     None,
   ];
 

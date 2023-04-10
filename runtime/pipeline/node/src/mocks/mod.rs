@@ -4,6 +4,7 @@ use self::write_port::WritePortFunction;
 use crate::{ClockFrame, NodeContext, PortId, PortMetadata, PreviewContext};
 use mizer_clock::ClockState;
 use mizer_ports::PortValue;
+use mizer_util::StructuredData;
 use std::cell::RefCell;
 
 mod clock;
@@ -85,5 +86,9 @@ impl NodeContext for NodeContextMock {
 impl PreviewContext for NodeContextMock {
     fn push_history_value(&self, value: f64) {
         self.history.borrow_mut().push(value);
+    }
+
+    fn write_data_preview(&self, data: StructuredData) {
+        todo!()
     }
 }

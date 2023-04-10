@@ -26,7 +26,7 @@ impl PipelineNode for MqttOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
             name: "MqttOutputNode".into(),
-            preview_type: PreviewType::None,
+            preview_type: PreviewType::Data,
         }
     }
 
@@ -59,8 +59,9 @@ impl ProcessingNode for MqttOutputNode {
 
         if let Some(value) = value {
             if let Some(output) = connection_manager.get_output(&self.connection) {
-                output.write(self.path.clone(), value, self.retain)?;
+                output.write(self.path.clone(), value.clone(), self.retain)?;
             }
+            context.write_data_preview(value);
         }
 
         Ok(())

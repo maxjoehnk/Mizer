@@ -53,6 +53,7 @@ impl From<mizer_nodes::Node> for node_config::Type {
             NumberToData(node) => Self::NumberToDataConfig(node.into()),
             DataToNumber(node) => Self::DataToNumberConfig(node.into()),
             Value(node) => Self::ValueConfig(node.into()),
+            Extract(node) => Self::ExtractConfig(node.into()),
             PlanScreen(node) => Self::PlanScreenConfig(node.into()),
             Delay(node) => Self::DelayConfig(node.into()),
             Ramp(node) => Self::RampConfig(node.into()),
@@ -126,6 +127,7 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::NumberToDataConfig(node) => Self::NumberToData(node.into()),
             node_config::Type::DataToNumberConfig(node) => Self::DataToNumber(node.into()),
             node_config::Type::ValueConfig(node) => Self::Value(node.into()),
+            node_config::Type::ExtractConfig(node) => Self::Extract(node.into()),
             node_config::Type::DelayConfig(node) => Self::Delay(node.into()),
             node_config::Type::RampConfig(node) => Self::Ramp(node.into()),
             node_config::Type::NoiseConfig(node) => Self::Noise(node.into()),
@@ -1212,6 +1214,21 @@ impl From<mizer_nodes::ValueNode> for ValueNodeConfig {
     }
 }
 
+impl From<ExtractNodeConfig> for mizer_nodes::ExtractNode {
+    fn from(config: ExtractNodeConfig) -> Self {
+        Self { path: config.path }
+    }
+}
+
+impl From<mizer_nodes::ExtractNode> for ExtractNodeConfig {
+    fn from(node: mizer_nodes::ExtractNode) -> Self {
+        Self {
+            path: node.path,
+            ..Default::default()
+        }
+    }
+}
+
 impl From<DelayNodeConfig> for mizer_nodes::DelayNode {
     fn from(config: DelayNodeConfig) -> Self {
         Self {
@@ -1686,6 +1703,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::NumberToData => node::NodeType::NumberToData,
             NodeType::DataToNumber => node::NodeType::DataToNumber,
             NodeType::Value => node::NodeType::Value,
+            NodeType::Extract => node::NodeType::Extract,
             NodeType::PlanScreen => node::NodeType::PlanScreen,
             NodeType::Delay => node::NodeType::Delay,
             NodeType::Ramp => node::NodeType::Ramp,
@@ -1753,6 +1771,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::NumberToData => NodeType::NumberToData,
             node::NodeType::DataToNumber => NodeType::DataToNumber,
             node::NodeType::Value => NodeType::Value,
+            node::NodeType::Extract => NodeType::Extract,
             node::NodeType::PlanScreen => NodeType::PlanScreen,
             node::NodeType::Delay => NodeType::Delay,
             node::NodeType::Ramp => NodeType::Ramp,

@@ -72,6 +72,7 @@ pub trait NodeDowncast {
             NodeType::NumberToData => Node::NumberToData(self.downcast_node(node_type).unwrap()),
             NodeType::DataToNumber => Node::DataToNumber(self.downcast_node(node_type).unwrap()),
             NodeType::Value => Node::Value(self.downcast_node(node_type).unwrap()),
+            NodeType::Extract => Node::Extract(self.downcast_node(node_type).unwrap()),
             NodeType::PlanScreen => Node::PlanScreen(self.downcast_node(node_type).unwrap()),
             NodeType::Delay => Node::Delay(self.downcast_node(node_type).unwrap()),
             NodeType::Ramp => Node::Ramp(self.downcast_node(node_type).unwrap()),

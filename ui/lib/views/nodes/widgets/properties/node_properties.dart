@@ -11,6 +11,7 @@ import 'properties/groups/delay_properties.dart';
 import 'properties/groups/dmx_output_properties.dart';
 import 'properties/groups/encoder_properties.dart';
 import 'properties/groups/envelope_properties.dart';
+import 'properties/groups/extract_properties.dart';
 import 'properties/groups/fixture_properties.dart';
 import 'properties/groups/g13_input_properties.dart';
 import 'properties/groups/g13_output_properties.dart';
@@ -22,8 +23,8 @@ import 'properties/groups/midi_properties.dart';
 import 'properties/groups/mqtt_input_properties.dart';
 import 'properties/groups/mqtt_output_properties.dart';
 import 'properties/groups/noise_properties.dart';
-import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/osc_properties.dart';
+import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/ramp_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
 import 'properties/groups/threshold_properties.dart';
@@ -120,13 +121,13 @@ class NodePropertiesPane extends StatelessWidget {
     }
     if (node.config.hasButtonConfig()) {
       widgets.add(ButtonProperties(node.config.buttonConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(buttonConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(buttonConfig: config)))));
     }
     if (node.config.hasMergeConfig()) {
       widgets.add(MergeProperties(node.config.mergeConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(mergeConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(mergeConfig: config)))));
     }
     if (node.config.hasSequencerConfig()) {
       widgets.add(SequencerProperties(node.config.sequencerConfig,
@@ -140,8 +141,8 @@ class NodePropertiesPane extends StatelessWidget {
     }
     if (node.config.hasMathConfig()) {
       widgets.add(MathProperties(node.config.mathConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(mathConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(mathConfig: config)))));
     }
     if (node.config.hasMqttInputConfig()) {
       widgets.add(MqttInputProperties(node.config.mqttInputConfig,
@@ -155,28 +156,33 @@ class NodePropertiesPane extends StatelessWidget {
     }
     if (node.config.hasValueConfig()) {
       widgets.add(ValueProperties(node.config.valueConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(valueConfig: config)))));
+    }
+    if (node.config.hasExtractConfig()) {
+      widgets.add(ExtractProperties(node.config.extractConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(valueConfig: config)))));
+              path: node.path, config: NodeConfig(extractConfig: config)))));
     }
     if (node.config.hasDelayConfig()) {
       widgets.add(DelayProperties(node.config.delayConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(delayConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(delayConfig: config)))));
     }
     if (node.config.hasRampConfig()) {
       widgets.add(RampProperties(node.config.rampConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(rampConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(rampConfig: config)))));
     }
     if (node.config.hasNoiseConfig()) {
       widgets.add(NoiseProperties(node.config.noiseConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(noiseConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(noiseConfig: config)))));
     }
     if (node.config.hasLabelConfig()) {
       widgets.add(LabelProperties(node.config.labelConfig,
-          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
-              path: node.path, config: NodeConfig(labelConfig: config)))));
+          onUpdate: (config) => nodesApi.updateNodeConfig(
+              UpdateNodeConfigRequest(path: node.path, config: NodeConfig(labelConfig: config)))));
     }
     if (node.config.hasG13InputConfig()) {
       widgets.add(G13InputProperties(node.config.g13InputConfig,

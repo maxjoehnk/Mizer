@@ -44,6 +44,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.NumberToData: "Number to Data",
   Node_NodeType.DataToNumber: "Data to Number",
   Node_NodeType.Value: "Value",
+  Node_NodeType.Extract: "Extract",
   Node_NodeType.PlanScreen: "Plan Screen",
   Node_NodeType.Delay: "Delay",
   Node_NodeType.Ramp: "Ramp",
@@ -78,7 +79,6 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Math,
     Node_NodeType.ColorRgb,
     Node_NodeType.ColorHsv,
-    Node_NodeType.Value,
     Node_NodeType.Delay,
     Node_NodeType.Ramp,
     Node_NodeType.Noise,
@@ -108,6 +108,10 @@ final List<PopupCategory<Node_NodeType>> NODES = [
     Node_NodeType.Button,
     Node_NodeType.Label,
     // Node_NodeType.ColorPicker,
+  ]),
+  buildCategory("Data", [
+    Node_NodeType.Value,
+    Node_NodeType.Extract,
   ]),
   buildCategory("Audio", [
     Node_NodeType.AudioFile,

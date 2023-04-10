@@ -74,6 +74,7 @@ node_type_name! {
         NumberToData,
         DataToNumber,
         Value,
+        Extract,
         PlanScreen,
         Delay,
         Noise,

@@ -1232,6 +1232,7 @@ enum NodeConfig_Type {
   numberToDataConfig, 
   dataToNumberConfig, 
   valueConfig, 
+  extractConfig, 
   planScreenConfig, 
   delayConfig, 
   rampConfig, 
@@ -1296,28 +1297,29 @@ class NodeConfig extends $pb.GeneratedMessage {
     49 : NodeConfig_Type.numberToDataConfig,
     50 : NodeConfig_Type.dataToNumberConfig,
     51 : NodeConfig_Type.valueConfig,
-    52 : NodeConfig_Type.planScreenConfig,
-    53 : NodeConfig_Type.delayConfig,
-    54 : NodeConfig_Type.rampConfig,
-    55 : NodeConfig_Type.noiseConfig,
-    56 : NodeConfig_Type.labelConfig,
-    57 : NodeConfig_Type.transportConfig,
-    58 : NodeConfig_Type.g13InputConfig,
-    59 : NodeConfig_Type.g13OutputConfig,
-    60 : NodeConfig_Type.constantNumberConfig,
-    61 : NodeConfig_Type.conditionalConfig,
-    62 : NodeConfig_Type.timecodeControlConfig,
-    63 : NodeConfig_Type.timecodeOutputConfig,
-    64 : NodeConfig_Type.audioFileConfig,
-    65 : NodeConfig_Type.audioOutputConfig,
-    66 : NodeConfig_Type.audioVolumeConfig,
-    67 : NodeConfig_Type.audioInputConfig,
-    68 : NodeConfig_Type.audioMixConfig,
-    69 : NodeConfig_Type.audioMeterConfig,
+    52 : NodeConfig_Type.extractConfig,
+    53 : NodeConfig_Type.planScreenConfig,
+    54 : NodeConfig_Type.delayConfig,
+    55 : NodeConfig_Type.rampConfig,
+    56 : NodeConfig_Type.noiseConfig,
+    57 : NodeConfig_Type.labelConfig,
+    58 : NodeConfig_Type.transportConfig,
+    59 : NodeConfig_Type.g13InputConfig,
+    60 : NodeConfig_Type.g13OutputConfig,
+    61 : NodeConfig_Type.constantNumberConfig,
+    62 : NodeConfig_Type.conditionalConfig,
+    63 : NodeConfig_Type.timecodeControlConfig,
+    64 : NodeConfig_Type.timecodeOutputConfig,
+    65 : NodeConfig_Type.audioFileConfig,
+    66 : NodeConfig_Type.audioOutputConfig,
+    67 : NodeConfig_Type.audioVolumeConfig,
+    68 : NodeConfig_Type.audioInputConfig,
+    69 : NodeConfig_Type.audioMixConfig,
+    70 : NodeConfig_Type.audioMeterConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1359,24 +1361,25 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<NumberToDataNodeConfig>(49, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'numberToDataConfig', protoName: 'numberToDataConfig', subBuilder: NumberToDataNodeConfig.create)
     ..aOM<DataToNumberNodeConfig>(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataToNumberConfig', protoName: 'dataToNumberConfig', subBuilder: DataToNumberNodeConfig.create)
     ..aOM<ValueNodeConfig>(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'valueConfig', protoName: 'valueConfig', subBuilder: ValueNodeConfig.create)
-    ..aOM<PlanScreenNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
-    ..aOM<DelayNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', protoName: 'delayConfig', subBuilder: DelayNodeConfig.create)
-    ..aOM<RampNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', protoName: 'rampConfig', subBuilder: RampNodeConfig.create)
-    ..aOM<NoiseNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', protoName: 'noiseConfig', subBuilder: NoiseNodeConfig.create)
-    ..aOM<LabelNodeConfig>(56, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelConfig', protoName: 'labelConfig', subBuilder: LabelNodeConfig.create)
-    ..aOM<TransportNodeConfig>(57, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transportConfig', protoName: 'transportConfig', subBuilder: TransportNodeConfig.create)
-    ..aOM<G13InputNodeConfig>(58, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13InputConfig', protoName: 'g13InputConfig', subBuilder: G13InputNodeConfig.create)
-    ..aOM<G13OutputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', protoName: 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
-    ..aOM<ConstantNumberNodeConfig>(60, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'constantNumberConfig', protoName: 'constantNumberConfig', subBuilder: ConstantNumberNodeConfig.create)
-    ..aOM<ConditionalNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', protoName: 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
-    ..aOM<TimecodeControlNodeConfig>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeControlConfig', protoName: 'timecodeControlConfig', subBuilder: TimecodeControlNodeConfig.create)
-    ..aOM<TimecodeOutputNodeConfig>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeOutputConfig', protoName: 'timecodeOutputConfig', subBuilder: TimecodeOutputNodeConfig.create)
-    ..aOM<AudioFileNodeConfig>(64, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioFileConfig', protoName: 'audioFileConfig', subBuilder: AudioFileNodeConfig.create)
-    ..aOM<AudioOutputNodeConfig>(65, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioOutputConfig', protoName: 'audioOutputConfig', subBuilder: AudioOutputNodeConfig.create)
-    ..aOM<AudioVolumeNodeConfig>(66, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioVolumeConfig', protoName: 'audioVolumeConfig', subBuilder: AudioVolumeNodeConfig.create)
-    ..aOM<AudioInputNodeConfig>(67, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioInputConfig', protoName: 'audioInputConfig', subBuilder: AudioInputNodeConfig.create)
-    ..aOM<AudioMixNodeConfig>(68, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMixConfig', protoName: 'audioMixConfig', subBuilder: AudioMixNodeConfig.create)
-    ..aOM<AudioMeterNodeConfig>(69, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMeterConfig', protoName: 'audioMeterConfig', subBuilder: AudioMeterNodeConfig.create)
+    ..aOM<ExtractNodeConfig>(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'extractConfig', protoName: 'extractConfig', subBuilder: ExtractNodeConfig.create)
+    ..aOM<PlanScreenNodeConfig>(53, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'planScreenConfig', protoName: 'planScreenConfig', subBuilder: PlanScreenNodeConfig.create)
+    ..aOM<DelayNodeConfig>(54, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'delayConfig', protoName: 'delayConfig', subBuilder: DelayNodeConfig.create)
+    ..aOM<RampNodeConfig>(55, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rampConfig', protoName: 'rampConfig', subBuilder: RampNodeConfig.create)
+    ..aOM<NoiseNodeConfig>(56, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noiseConfig', protoName: 'noiseConfig', subBuilder: NoiseNodeConfig.create)
+    ..aOM<LabelNodeConfig>(57, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelConfig', protoName: 'labelConfig', subBuilder: LabelNodeConfig.create)
+    ..aOM<TransportNodeConfig>(58, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transportConfig', protoName: 'transportConfig', subBuilder: TransportNodeConfig.create)
+    ..aOM<G13InputNodeConfig>(59, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13InputConfig', protoName: 'g13InputConfig', subBuilder: G13InputNodeConfig.create)
+    ..aOM<G13OutputNodeConfig>(60, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13OutputConfig', protoName: 'g13OutputConfig', subBuilder: G13OutputNodeConfig.create)
+    ..aOM<ConstantNumberNodeConfig>(61, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'constantNumberConfig', protoName: 'constantNumberConfig', subBuilder: ConstantNumberNodeConfig.create)
+    ..aOM<ConditionalNodeConfig>(62, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'conditionalConfig', protoName: 'conditionalConfig', subBuilder: ConditionalNodeConfig.create)
+    ..aOM<TimecodeControlNodeConfig>(63, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeControlConfig', protoName: 'timecodeControlConfig', subBuilder: TimecodeControlNodeConfig.create)
+    ..aOM<TimecodeOutputNodeConfig>(64, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timecodeOutputConfig', protoName: 'timecodeOutputConfig', subBuilder: TimecodeOutputNodeConfig.create)
+    ..aOM<AudioFileNodeConfig>(65, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioFileConfig', protoName: 'audioFileConfig', subBuilder: AudioFileNodeConfig.create)
+    ..aOM<AudioOutputNodeConfig>(66, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioOutputConfig', protoName: 'audioOutputConfig', subBuilder: AudioOutputNodeConfig.create)
+    ..aOM<AudioVolumeNodeConfig>(67, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioVolumeConfig', protoName: 'audioVolumeConfig', subBuilder: AudioVolumeNodeConfig.create)
+    ..aOM<AudioInputNodeConfig>(68, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioInputConfig', protoName: 'audioInputConfig', subBuilder: AudioInputNodeConfig.create)
+    ..aOM<AudioMixNodeConfig>(69, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMixConfig', protoName: 'audioMixConfig', subBuilder: AudioMixNodeConfig.create)
+    ..aOM<AudioMeterNodeConfig>(70, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMeterConfig', protoName: 'audioMeterConfig', subBuilder: AudioMeterNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1423,6 +1426,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     NumberToDataNodeConfig? numberToDataConfig,
     DataToNumberNodeConfig? dataToNumberConfig,
     ValueNodeConfig? valueConfig,
+    ExtractNodeConfig? extractConfig,
     PlanScreenNodeConfig? planScreenConfig,
     DelayNodeConfig? delayConfig,
     RampNodeConfig? rampConfig,
@@ -1565,6 +1569,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (valueConfig != null) {
       _result.valueConfig = valueConfig;
+    }
+    if (extractConfig != null) {
+      _result.extractConfig = extractConfig;
     }
     if (planScreenConfig != null) {
       _result.planScreenConfig = planScreenConfig;
@@ -2098,202 +2105,213 @@ class NodeConfig extends $pb.GeneratedMessage {
   ValueNodeConfig ensureValueConfig() => $_ensure(40);
 
   @$pb.TagNumber(52)
-  PlanScreenNodeConfig get planScreenConfig => $_getN(41);
+  ExtractNodeConfig get extractConfig => $_getN(41);
   @$pb.TagNumber(52)
-  set planScreenConfig(PlanScreenNodeConfig v) { setField(52, v); }
+  set extractConfig(ExtractNodeConfig v) { setField(52, v); }
   @$pb.TagNumber(52)
-  $core.bool hasPlanScreenConfig() => $_has(41);
+  $core.bool hasExtractConfig() => $_has(41);
   @$pb.TagNumber(52)
-  void clearPlanScreenConfig() => clearField(52);
+  void clearExtractConfig() => clearField(52);
   @$pb.TagNumber(52)
-  PlanScreenNodeConfig ensurePlanScreenConfig() => $_ensure(41);
+  ExtractNodeConfig ensureExtractConfig() => $_ensure(41);
 
   @$pb.TagNumber(53)
-  DelayNodeConfig get delayConfig => $_getN(42);
+  PlanScreenNodeConfig get planScreenConfig => $_getN(42);
   @$pb.TagNumber(53)
-  set delayConfig(DelayNodeConfig v) { setField(53, v); }
+  set planScreenConfig(PlanScreenNodeConfig v) { setField(53, v); }
   @$pb.TagNumber(53)
-  $core.bool hasDelayConfig() => $_has(42);
+  $core.bool hasPlanScreenConfig() => $_has(42);
   @$pb.TagNumber(53)
-  void clearDelayConfig() => clearField(53);
+  void clearPlanScreenConfig() => clearField(53);
   @$pb.TagNumber(53)
-  DelayNodeConfig ensureDelayConfig() => $_ensure(42);
+  PlanScreenNodeConfig ensurePlanScreenConfig() => $_ensure(42);
 
   @$pb.TagNumber(54)
-  RampNodeConfig get rampConfig => $_getN(43);
+  DelayNodeConfig get delayConfig => $_getN(43);
   @$pb.TagNumber(54)
-  set rampConfig(RampNodeConfig v) { setField(54, v); }
+  set delayConfig(DelayNodeConfig v) { setField(54, v); }
   @$pb.TagNumber(54)
-  $core.bool hasRampConfig() => $_has(43);
+  $core.bool hasDelayConfig() => $_has(43);
   @$pb.TagNumber(54)
-  void clearRampConfig() => clearField(54);
+  void clearDelayConfig() => clearField(54);
   @$pb.TagNumber(54)
-  RampNodeConfig ensureRampConfig() => $_ensure(43);
+  DelayNodeConfig ensureDelayConfig() => $_ensure(43);
 
   @$pb.TagNumber(55)
-  NoiseNodeConfig get noiseConfig => $_getN(44);
+  RampNodeConfig get rampConfig => $_getN(44);
   @$pb.TagNumber(55)
-  set noiseConfig(NoiseNodeConfig v) { setField(55, v); }
+  set rampConfig(RampNodeConfig v) { setField(55, v); }
   @$pb.TagNumber(55)
-  $core.bool hasNoiseConfig() => $_has(44);
+  $core.bool hasRampConfig() => $_has(44);
   @$pb.TagNumber(55)
-  void clearNoiseConfig() => clearField(55);
+  void clearRampConfig() => clearField(55);
   @$pb.TagNumber(55)
-  NoiseNodeConfig ensureNoiseConfig() => $_ensure(44);
+  RampNodeConfig ensureRampConfig() => $_ensure(44);
 
   @$pb.TagNumber(56)
-  LabelNodeConfig get labelConfig => $_getN(45);
+  NoiseNodeConfig get noiseConfig => $_getN(45);
   @$pb.TagNumber(56)
-  set labelConfig(LabelNodeConfig v) { setField(56, v); }
+  set noiseConfig(NoiseNodeConfig v) { setField(56, v); }
   @$pb.TagNumber(56)
-  $core.bool hasLabelConfig() => $_has(45);
+  $core.bool hasNoiseConfig() => $_has(45);
   @$pb.TagNumber(56)
-  void clearLabelConfig() => clearField(56);
+  void clearNoiseConfig() => clearField(56);
   @$pb.TagNumber(56)
-  LabelNodeConfig ensureLabelConfig() => $_ensure(45);
+  NoiseNodeConfig ensureNoiseConfig() => $_ensure(45);
 
   @$pb.TagNumber(57)
-  TransportNodeConfig get transportConfig => $_getN(46);
+  LabelNodeConfig get labelConfig => $_getN(46);
   @$pb.TagNumber(57)
-  set transportConfig(TransportNodeConfig v) { setField(57, v); }
+  set labelConfig(LabelNodeConfig v) { setField(57, v); }
   @$pb.TagNumber(57)
-  $core.bool hasTransportConfig() => $_has(46);
+  $core.bool hasLabelConfig() => $_has(46);
   @$pb.TagNumber(57)
-  void clearTransportConfig() => clearField(57);
+  void clearLabelConfig() => clearField(57);
   @$pb.TagNumber(57)
-  TransportNodeConfig ensureTransportConfig() => $_ensure(46);
+  LabelNodeConfig ensureLabelConfig() => $_ensure(46);
 
   @$pb.TagNumber(58)
-  G13InputNodeConfig get g13InputConfig => $_getN(47);
+  TransportNodeConfig get transportConfig => $_getN(47);
   @$pb.TagNumber(58)
-  set g13InputConfig(G13InputNodeConfig v) { setField(58, v); }
+  set transportConfig(TransportNodeConfig v) { setField(58, v); }
   @$pb.TagNumber(58)
-  $core.bool hasG13InputConfig() => $_has(47);
+  $core.bool hasTransportConfig() => $_has(47);
   @$pb.TagNumber(58)
-  void clearG13InputConfig() => clearField(58);
+  void clearTransportConfig() => clearField(58);
   @$pb.TagNumber(58)
-  G13InputNodeConfig ensureG13InputConfig() => $_ensure(47);
+  TransportNodeConfig ensureTransportConfig() => $_ensure(47);
 
   @$pb.TagNumber(59)
-  G13OutputNodeConfig get g13OutputConfig => $_getN(48);
+  G13InputNodeConfig get g13InputConfig => $_getN(48);
   @$pb.TagNumber(59)
-  set g13OutputConfig(G13OutputNodeConfig v) { setField(59, v); }
+  set g13InputConfig(G13InputNodeConfig v) { setField(59, v); }
   @$pb.TagNumber(59)
-  $core.bool hasG13OutputConfig() => $_has(48);
+  $core.bool hasG13InputConfig() => $_has(48);
   @$pb.TagNumber(59)
-  void clearG13OutputConfig() => clearField(59);
+  void clearG13InputConfig() => clearField(59);
   @$pb.TagNumber(59)
-  G13OutputNodeConfig ensureG13OutputConfig() => $_ensure(48);
+  G13InputNodeConfig ensureG13InputConfig() => $_ensure(48);
 
   @$pb.TagNumber(60)
-  ConstantNumberNodeConfig get constantNumberConfig => $_getN(49);
+  G13OutputNodeConfig get g13OutputConfig => $_getN(49);
   @$pb.TagNumber(60)
-  set constantNumberConfig(ConstantNumberNodeConfig v) { setField(60, v); }
+  set g13OutputConfig(G13OutputNodeConfig v) { setField(60, v); }
   @$pb.TagNumber(60)
-  $core.bool hasConstantNumberConfig() => $_has(49);
+  $core.bool hasG13OutputConfig() => $_has(49);
   @$pb.TagNumber(60)
-  void clearConstantNumberConfig() => clearField(60);
+  void clearG13OutputConfig() => clearField(60);
   @$pb.TagNumber(60)
-  ConstantNumberNodeConfig ensureConstantNumberConfig() => $_ensure(49);
+  G13OutputNodeConfig ensureG13OutputConfig() => $_ensure(49);
 
   @$pb.TagNumber(61)
-  ConditionalNodeConfig get conditionalConfig => $_getN(50);
+  ConstantNumberNodeConfig get constantNumberConfig => $_getN(50);
   @$pb.TagNumber(61)
-  set conditionalConfig(ConditionalNodeConfig v) { setField(61, v); }
+  set constantNumberConfig(ConstantNumberNodeConfig v) { setField(61, v); }
   @$pb.TagNumber(61)
-  $core.bool hasConditionalConfig() => $_has(50);
+  $core.bool hasConstantNumberConfig() => $_has(50);
   @$pb.TagNumber(61)
-  void clearConditionalConfig() => clearField(61);
+  void clearConstantNumberConfig() => clearField(61);
   @$pb.TagNumber(61)
-  ConditionalNodeConfig ensureConditionalConfig() => $_ensure(50);
+  ConstantNumberNodeConfig ensureConstantNumberConfig() => $_ensure(50);
 
   @$pb.TagNumber(62)
-  TimecodeControlNodeConfig get timecodeControlConfig => $_getN(51);
+  ConditionalNodeConfig get conditionalConfig => $_getN(51);
   @$pb.TagNumber(62)
-  set timecodeControlConfig(TimecodeControlNodeConfig v) { setField(62, v); }
+  set conditionalConfig(ConditionalNodeConfig v) { setField(62, v); }
   @$pb.TagNumber(62)
-  $core.bool hasTimecodeControlConfig() => $_has(51);
+  $core.bool hasConditionalConfig() => $_has(51);
   @$pb.TagNumber(62)
-  void clearTimecodeControlConfig() => clearField(62);
+  void clearConditionalConfig() => clearField(62);
   @$pb.TagNumber(62)
-  TimecodeControlNodeConfig ensureTimecodeControlConfig() => $_ensure(51);
+  ConditionalNodeConfig ensureConditionalConfig() => $_ensure(51);
 
   @$pb.TagNumber(63)
-  TimecodeOutputNodeConfig get timecodeOutputConfig => $_getN(52);
+  TimecodeControlNodeConfig get timecodeControlConfig => $_getN(52);
   @$pb.TagNumber(63)
-  set timecodeOutputConfig(TimecodeOutputNodeConfig v) { setField(63, v); }
+  set timecodeControlConfig(TimecodeControlNodeConfig v) { setField(63, v); }
   @$pb.TagNumber(63)
-  $core.bool hasTimecodeOutputConfig() => $_has(52);
+  $core.bool hasTimecodeControlConfig() => $_has(52);
   @$pb.TagNumber(63)
-  void clearTimecodeOutputConfig() => clearField(63);
+  void clearTimecodeControlConfig() => clearField(63);
   @$pb.TagNumber(63)
-  TimecodeOutputNodeConfig ensureTimecodeOutputConfig() => $_ensure(52);
+  TimecodeControlNodeConfig ensureTimecodeControlConfig() => $_ensure(52);
 
   @$pb.TagNumber(64)
-  AudioFileNodeConfig get audioFileConfig => $_getN(53);
+  TimecodeOutputNodeConfig get timecodeOutputConfig => $_getN(53);
   @$pb.TagNumber(64)
-  set audioFileConfig(AudioFileNodeConfig v) { setField(64, v); }
+  set timecodeOutputConfig(TimecodeOutputNodeConfig v) { setField(64, v); }
   @$pb.TagNumber(64)
-  $core.bool hasAudioFileConfig() => $_has(53);
+  $core.bool hasTimecodeOutputConfig() => $_has(53);
   @$pb.TagNumber(64)
-  void clearAudioFileConfig() => clearField(64);
+  void clearTimecodeOutputConfig() => clearField(64);
   @$pb.TagNumber(64)
-  AudioFileNodeConfig ensureAudioFileConfig() => $_ensure(53);
+  TimecodeOutputNodeConfig ensureTimecodeOutputConfig() => $_ensure(53);
 
   @$pb.TagNumber(65)
-  AudioOutputNodeConfig get audioOutputConfig => $_getN(54);
+  AudioFileNodeConfig get audioFileConfig => $_getN(54);
   @$pb.TagNumber(65)
-  set audioOutputConfig(AudioOutputNodeConfig v) { setField(65, v); }
+  set audioFileConfig(AudioFileNodeConfig v) { setField(65, v); }
   @$pb.TagNumber(65)
-  $core.bool hasAudioOutputConfig() => $_has(54);
+  $core.bool hasAudioFileConfig() => $_has(54);
   @$pb.TagNumber(65)
-  void clearAudioOutputConfig() => clearField(65);
+  void clearAudioFileConfig() => clearField(65);
   @$pb.TagNumber(65)
-  AudioOutputNodeConfig ensureAudioOutputConfig() => $_ensure(54);
+  AudioFileNodeConfig ensureAudioFileConfig() => $_ensure(54);
 
   @$pb.TagNumber(66)
-  AudioVolumeNodeConfig get audioVolumeConfig => $_getN(55);
+  AudioOutputNodeConfig get audioOutputConfig => $_getN(55);
   @$pb.TagNumber(66)
-  set audioVolumeConfig(AudioVolumeNodeConfig v) { setField(66, v); }
+  set audioOutputConfig(AudioOutputNodeConfig v) { setField(66, v); }
   @$pb.TagNumber(66)
-  $core.bool hasAudioVolumeConfig() => $_has(55);
+  $core.bool hasAudioOutputConfig() => $_has(55);
   @$pb.TagNumber(66)
-  void clearAudioVolumeConfig() => clearField(66);
+  void clearAudioOutputConfig() => clearField(66);
   @$pb.TagNumber(66)
-  AudioVolumeNodeConfig ensureAudioVolumeConfig() => $_ensure(55);
+  AudioOutputNodeConfig ensureAudioOutputConfig() => $_ensure(55);
 
   @$pb.TagNumber(67)
-  AudioInputNodeConfig get audioInputConfig => $_getN(56);
+  AudioVolumeNodeConfig get audioVolumeConfig => $_getN(56);
   @$pb.TagNumber(67)
-  set audioInputConfig(AudioInputNodeConfig v) { setField(67, v); }
+  set audioVolumeConfig(AudioVolumeNodeConfig v) { setField(67, v); }
   @$pb.TagNumber(67)
-  $core.bool hasAudioInputConfig() => $_has(56);
+  $core.bool hasAudioVolumeConfig() => $_has(56);
   @$pb.TagNumber(67)
-  void clearAudioInputConfig() => clearField(67);
+  void clearAudioVolumeConfig() => clearField(67);
   @$pb.TagNumber(67)
-  AudioInputNodeConfig ensureAudioInputConfig() => $_ensure(56);
+  AudioVolumeNodeConfig ensureAudioVolumeConfig() => $_ensure(56);
 
   @$pb.TagNumber(68)
-  AudioMixNodeConfig get audioMixConfig => $_getN(57);
+  AudioInputNodeConfig get audioInputConfig => $_getN(57);
   @$pb.TagNumber(68)
-  set audioMixConfig(AudioMixNodeConfig v) { setField(68, v); }
+  set audioInputConfig(AudioInputNodeConfig v) { setField(68, v); }
   @$pb.TagNumber(68)
-  $core.bool hasAudioMixConfig() => $_has(57);
+  $core.bool hasAudioInputConfig() => $_has(57);
   @$pb.TagNumber(68)
-  void clearAudioMixConfig() => clearField(68);
+  void clearAudioInputConfig() => clearField(68);
   @$pb.TagNumber(68)
-  AudioMixNodeConfig ensureAudioMixConfig() => $_ensure(57);
+  AudioInputNodeConfig ensureAudioInputConfig() => $_ensure(57);
 
   @$pb.TagNumber(69)
-  AudioMeterNodeConfig get audioMeterConfig => $_getN(58);
+  AudioMixNodeConfig get audioMixConfig => $_getN(58);
   @$pb.TagNumber(69)
-  set audioMeterConfig(AudioMeterNodeConfig v) { setField(69, v); }
+  set audioMixConfig(AudioMixNodeConfig v) { setField(69, v); }
   @$pb.TagNumber(69)
-  $core.bool hasAudioMeterConfig() => $_has(58);
+  $core.bool hasAudioMixConfig() => $_has(58);
   @$pb.TagNumber(69)
-  void clearAudioMeterConfig() => clearField(69);
+  void clearAudioMixConfig() => clearField(69);
   @$pb.TagNumber(69)
-  AudioMeterNodeConfig ensureAudioMeterConfig() => $_ensure(58);
+  AudioMixNodeConfig ensureAudioMixConfig() => $_ensure(58);
+
+  @$pb.TagNumber(70)
+  AudioMeterNodeConfig get audioMeterConfig => $_getN(59);
+  @$pb.TagNumber(70)
+  set audioMeterConfig(AudioMeterNodeConfig v) { setField(70, v); }
+  @$pb.TagNumber(70)
+  $core.bool hasAudioMeterConfig() => $_has(59);
+  @$pb.TagNumber(70)
+  void clearAudioMeterConfig() => clearField(70);
+  @$pb.TagNumber(70)
+  AudioMeterNodeConfig ensureAudioMeterConfig() => $_ensure(59);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4569,6 +4587,53 @@ class ValueNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
   void clearValue() => clearField(1);
+}
+
+class ExtractNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExtractNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..hasRequiredFields = false
+  ;
+
+  ExtractNodeConfig._() : super();
+  factory ExtractNodeConfig({
+    $core.String? path,
+  }) {
+    final _result = create();
+    if (path != null) {
+      _result.path = path;
+    }
+    return _result;
+  }
+  factory ExtractNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ExtractNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ExtractNodeConfig clone() => ExtractNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ExtractNodeConfig copyWith(void Function(ExtractNodeConfig) updates) => super.copyWith((message) => updates(message as ExtractNodeConfig)) as ExtractNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static ExtractNodeConfig create() => ExtractNodeConfig._();
+  ExtractNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<ExtractNodeConfig> createRepeated() => $pb.PbList<ExtractNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static ExtractNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExtractNodeConfig>(create);
+  static ExtractNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get path => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set path($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPath() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPath() => clearField(1);
 }
 
 class PlanScreenNodeConfig extends $pb.GeneratedMessage {

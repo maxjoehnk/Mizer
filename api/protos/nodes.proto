@@ -145,26 +145,27 @@ message Node {
     DataToNumber = 57;
     NumberToData = 58;
     Value = 59;
-    MqttInput = 60;
-    MqttOutput = 61;
-    PlanScreen = 62;
-    Delay = 63;
-    Ramp = 64;
-    Noise = 65;
-    Label = 66;
-    Transport = 67;
-    G13Input = 68;
-    G13Output = 69;
-    ConstantNumber = 70;
-    Conditional = 71;
-    TimecodeControl = 72;
-    TimecodeOutput = 73;
-    AudioFile = 74;
-    AudioOutput = 75;
-    AudioVolume = 76;
-    AudioInput = 77;
-    AudioMix = 78;
-    AudioMeter = 79;
+    Extract = 60;
+    MqttInput = 61;
+    MqttOutput = 62;
+    PlanScreen = 63;
+    Delay = 64;
+    Ramp = 65;
+    Noise = 66;
+    Label = 67;
+    Transport = 68;
+    G13Input = 69;
+    G13Output = 70;
+    ConstantNumber = 71;
+    Conditional = 72;
+    TimecodeControl = 73;
+    TimecodeOutput = 74;
+    AudioFile = 75;
+    AudioOutput = 76;
+    AudioVolume = 77;
+    AudioInput = 78;
+    AudioMix = 79;
+    AudioMeter = 80;
   }
 
   enum NodePreviewType {
@@ -228,24 +229,25 @@ message NodeConfig {
     NumberToDataNodeConfig numberToDataConfig = 49;
     DataToNumberNodeConfig dataToNumberConfig = 50;
     ValueNodeConfig valueConfig = 51;
-    PlanScreenNodeConfig planScreenConfig = 52;
-    DelayNodeConfig delayConfig = 53;
-    RampNodeConfig rampConfig = 54;
-    NoiseNodeConfig noiseConfig = 55;
-    LabelNodeConfig labelConfig = 56;
-    TransportNodeConfig transportConfig = 57;
-    G13InputNodeConfig g13InputConfig = 58;
-    G13OutputNodeConfig g13OutputConfig = 59;
-    ConstantNumberNodeConfig constantNumberConfig = 60;
-    ConditionalNodeConfig conditionalConfig = 61;
-    TimecodeControlNodeConfig timecodeControlConfig = 62;
-    TimecodeOutputNodeConfig timecodeOutputConfig = 63;
-    AudioFileNodeConfig audioFileConfig = 64;
-    AudioOutputNodeConfig audioOutputConfig = 65;
-    AudioVolumeNodeConfig audioVolumeConfig = 66;
-    AudioInputNodeConfig audioInputConfig = 67;
-    AudioMixNodeConfig audioMixConfig = 68;
-    AudioMeterNodeConfig audioMeterConfig = 69;
+    ExtractNodeConfig extractConfig = 52;
+    PlanScreenNodeConfig planScreenConfig = 53;
+    DelayNodeConfig delayConfig = 54;
+    RampNodeConfig rampConfig = 55;
+    NoiseNodeConfig noiseConfig = 56;
+    LabelNodeConfig labelConfig = 57;
+    TransportNodeConfig transportConfig = 58;
+    G13InputNodeConfig g13InputConfig = 59;
+    G13OutputNodeConfig g13OutputConfig = 60;
+    ConstantNumberNodeConfig constantNumberConfig = 61;
+    ConditionalNodeConfig conditionalConfig = 62;
+    TimecodeControlNodeConfig timecodeControlConfig = 63;
+    TimecodeOutputNodeConfig timecodeOutputConfig = 64;
+    AudioFileNodeConfig audioFileConfig = 65;
+    AudioOutputNodeConfig audioOutputConfig = 66;
+    AudioVolumeNodeConfig audioVolumeConfig = 67;
+    AudioInputNodeConfig audioInputConfig = 68;
+    AudioMixNodeConfig audioMixConfig = 69;
+    AudioMeterNodeConfig audioMeterConfig = 70;
   }
 }
 
@@ -485,6 +487,10 @@ message DataToNumberNodeConfig {}
 
 message ValueNodeConfig {
   string value = 1;
+}
+
+message ExtractNodeConfig {
+  string path = 1;
 }
 
 message PlanScreenNodeConfig {

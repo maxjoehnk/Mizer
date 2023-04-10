@@ -480,6 +480,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::NumberToData(node) => pipeline.register_node(path, &node),
         Node::DataToNumber(node) => pipeline.register_node(path, &node),
         Node::Value(node) => pipeline.register_node(path, &node),
+        Node::Extract(node) => pipeline.register_node(path, &node),
         Node::PlanScreen(node) => pipeline.register_node(path, &node),
         Node::Delay(node) => pipeline.register_node(path, &node),
         Node::Ramp(node) => pipeline.register_node(path, &node),

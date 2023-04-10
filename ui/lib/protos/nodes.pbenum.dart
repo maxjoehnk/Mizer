@@ -82,26 +82,27 @@ class Node_NodeType extends $pb.ProtobufEnum {
   static const Node_NodeType DataToNumber = Node_NodeType._(57, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DataToNumber');
   static const Node_NodeType NumberToData = Node_NodeType._(58, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NumberToData');
   static const Node_NodeType Value = Node_NodeType._(59, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Value');
-  static const Node_NodeType MqttInput = Node_NodeType._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttInput');
-  static const Node_NodeType MqttOutput = Node_NodeType._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttOutput');
-  static const Node_NodeType PlanScreen = Node_NodeType._(62, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PlanScreen');
-  static const Node_NodeType Delay = Node_NodeType._(63, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Delay');
-  static const Node_NodeType Ramp = Node_NodeType._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ramp');
-  static const Node_NodeType Noise = Node_NodeType._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Noise');
-  static const Node_NodeType Label = Node_NodeType._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Label');
-  static const Node_NodeType Transport = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Transport');
-  static const Node_NodeType G13Input = Node_NodeType._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Input');
-  static const Node_NodeType G13Output = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Output');
-  static const Node_NodeType ConstantNumber = Node_NodeType._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ConstantNumber');
-  static const Node_NodeType Conditional = Node_NodeType._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Conditional');
-  static const Node_NodeType TimecodeControl = Node_NodeType._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeControl');
-  static const Node_NodeType TimecodeOutput = Node_NodeType._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeOutput');
-  static const Node_NodeType AudioFile = Node_NodeType._(74, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioFile');
-  static const Node_NodeType AudioOutput = Node_NodeType._(75, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioOutput');
-  static const Node_NodeType AudioVolume = Node_NodeType._(76, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioVolume');
-  static const Node_NodeType AudioInput = Node_NodeType._(77, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioInput');
-  static const Node_NodeType AudioMix = Node_NodeType._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMix');
-  static const Node_NodeType AudioMeter = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMeter');
+  static const Node_NodeType Extract = Node_NodeType._(60, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Extract');
+  static const Node_NodeType MqttInput = Node_NodeType._(61, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttInput');
+  static const Node_NodeType MqttOutput = Node_NodeType._(62, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MqttOutput');
+  static const Node_NodeType PlanScreen = Node_NodeType._(63, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PlanScreen');
+  static const Node_NodeType Delay = Node_NodeType._(64, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Delay');
+  static const Node_NodeType Ramp = Node_NodeType._(65, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Ramp');
+  static const Node_NodeType Noise = Node_NodeType._(66, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Noise');
+  static const Node_NodeType Label = Node_NodeType._(67, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Label');
+  static const Node_NodeType Transport = Node_NodeType._(68, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Transport');
+  static const Node_NodeType G13Input = Node_NodeType._(69, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Input');
+  static const Node_NodeType G13Output = Node_NodeType._(70, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G13Output');
+  static const Node_NodeType ConstantNumber = Node_NodeType._(71, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ConstantNumber');
+  static const Node_NodeType Conditional = Node_NodeType._(72, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Conditional');
+  static const Node_NodeType TimecodeControl = Node_NodeType._(73, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeControl');
+  static const Node_NodeType TimecodeOutput = Node_NodeType._(74, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'TimecodeOutput');
+  static const Node_NodeType AudioFile = Node_NodeType._(75, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioFile');
+  static const Node_NodeType AudioOutput = Node_NodeType._(76, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioOutput');
+  static const Node_NodeType AudioVolume = Node_NodeType._(77, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioVolume');
+  static const Node_NodeType AudioInput = Node_NodeType._(78, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioInput');
+  static const Node_NodeType AudioMix = Node_NodeType._(79, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMix');
+  static const Node_NodeType AudioMeter = Node_NodeType._(80, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AudioMeter');
 
   static const $core.List<Node_NodeType> values = <Node_NodeType> [
     Fader,
@@ -143,6 +144,7 @@ class Node_NodeType extends $pb.ProtobufEnum {
     DataToNumber,
     NumberToData,
     Value,
+    Extract,
     MqttInput,
     MqttOutput,
     PlanScreen,

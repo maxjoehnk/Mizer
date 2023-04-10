@@ -21,6 +21,7 @@ List<Color> _TYPE_COLORS = [
   Colors.orange, // Connections
   Colors.grey.shade700, // Conversions
   Colors.blue, // Controls
+  Colors.green, // Data
   Colors.green, // Audio
   Colors.red, // Video
   Colors.purple, // Laser

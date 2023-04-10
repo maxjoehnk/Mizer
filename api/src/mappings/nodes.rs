@@ -1142,6 +1142,7 @@ impl From<MqttOutputNodeConfig> for mizer_nodes::MqttOutputNode {
         Self {
             connection: config.connection,
             path: config.path,
+            retain: config.retain,
         }
     }
 }

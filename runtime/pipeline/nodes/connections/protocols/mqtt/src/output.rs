@@ -8,6 +8,8 @@ use mizer_util::StructuredData;
 pub struct MqttOutputNode {
     pub path: String,
     pub connection: String,
+    #[serde(default)]
+    pub retain: bool,
 }
 
 impl Default for MqttOutputNode {
@@ -15,6 +17,7 @@ impl Default for MqttOutputNode {
         Self {
             path: "/".to_string(),
             connection: Default::default(),
+            retain: false,
         }
     }
 }
@@ -56,7 +59,7 @@ impl ProcessingNode for MqttOutputNode {
 
         if let Some(value) = value {
             if let Some(output) = connection_manager.get_output(&self.connection) {
-                output.write(self.path.clone(), value)?;
+                output.write(self.path.clone(), value, self.retain)?;
             }
         }
 
@@ -70,5 +73,6 @@ impl ProcessingNode for MqttOutputNode {
     fn update(&mut self, config: &Self) {
         self.connection = config.connection.clone();
         self.path = config.path.clone();
+        self.retain = config.retain;
     }
 }

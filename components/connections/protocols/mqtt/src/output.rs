@@ -12,14 +12,15 @@ impl<'a> MqttOutput<'a> {
         Self { command_publisher }
     }
 
-    pub fn write(&self, path: String, data: StructuredData) -> anyhow::Result<()> {
+    pub fn write(&self, path: String, data: StructuredData, retain: bool) -> anyhow::Result<()> {
         log::trace!(
             "Sending publish command to {} with payload {:?}",
             path,
             data
         );
         let payload = serde_json::to_vec(&data)?;
-        let publish = Publish::new(path, payload);
+        let mut publish = Publish::new(path, payload);
+        publish.set_retain(retain);
         let command = MqttClientCommand::Publish(publish);
         self.command_publisher.send(command)?;
 

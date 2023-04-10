@@ -13327,6 +13327,8 @@ pub struct MqttOutputNodeConfig {
     pub connection: ::std::string::String,
     // @@protoc_insertion_point(field:mizer.nodes.MqttOutputNodeConfig.path)
     pub path: ::std::string::String,
+    // @@protoc_insertion_point(field:mizer.nodes.MqttOutputNodeConfig.retain)
+    pub retain: bool,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.nodes.MqttOutputNodeConfig.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -13344,7 +13346,7 @@ impl MqttOutputNodeConfig {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut fields = ::std::vec::Vec::with_capacity(3);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "connection",
@@ -13355,6 +13357,11 @@ impl MqttOutputNodeConfig {
             "path",
             |m: &MqttOutputNodeConfig| { &m.path },
             |m: &mut MqttOutputNodeConfig| { &mut m.path },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "retain",
+            |m: &MqttOutputNodeConfig| { &m.retain },
+            |m: &mut MqttOutputNodeConfig| { &mut m.retain },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<MqttOutputNodeConfig>(
             "MqttOutputNodeConfig",
@@ -13380,6 +13387,9 @@ impl ::protobuf::Message for MqttOutputNodeConfig {
                 18 => {
                     self.path = is.read_string()?;
                 },
+                24 => {
+                    self.retain = is.read_bool()?;
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -13398,6 +13408,9 @@ impl ::protobuf::Message for MqttOutputNodeConfig {
         if !self.path.is_empty() {
             my_size += ::protobuf::rt::string_size(2, &self.path);
         }
+        if self.retain != false {
+            my_size += 1 + 1;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -13409,6 +13422,9 @@ impl ::protobuf::Message for MqttOutputNodeConfig {
         }
         if !self.path.is_empty() {
             os.write_string(2, &self.path)?;
+        }
+        if self.retain != false {
+            os.write_bool(3, self.retain)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -13429,6 +13445,7 @@ impl ::protobuf::Message for MqttOutputNodeConfig {
     fn clear(&mut self) {
         self.connection.clear();
         self.path.clear();
+        self.retain = false;
         self.special_fields.clear();
     }
 
@@ -13436,6 +13453,7 @@ impl ::protobuf::Message for MqttOutputNodeConfig {
         static instance: MqttOutputNodeConfig = MqttOutputNodeConfig {
             connection: ::std::string::String::new(),
             path: ::std::string::String::new(),
+            retain: false,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -17212,77 +17230,78 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     n\x10\x03\x12\n\n\x06Invert\x10\x04\x12\x08\n\x04Sine\x10\x05\x12\n\n\
     \x06Cosine\x10\x06\x12\x0b\n\x07Tangent\x10\x07\"I\n\x13MqttInputNodeCon\
     fig\x12\x1e\n\nconnection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04p\
-    ath\x18\x02\x20\x01(\tR\x04path\"J\n\x14MqttOutputNodeConfig\x12\x1e\n\n\
+    ath\x18\x02\x20\x01(\tR\x04path\"b\n\x14MqttOutputNodeConfig\x12\x1e\n\n\
     connection\x18\x01\x20\x01(\tR\nconnection\x12\x12\n\x04path\x18\x02\x20\
-    \x01(\tR\x04path\"\x18\n\x16NumberToDataNodeConfig\"\x18\n\x16DataToNumb\
-    erNodeConfig\"'\n\x0fValueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\
-    \tR\x05value\"L\n\x14PlanScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\
-    \x20\x01(\tR\x06planId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08scree\
-    nId\"2\n\x0fDelayNodeConfig\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\
-    \nbufferSize\"\xbc\x01\n\x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\
-    \x03(\x0b2$.mizer.nodes.RampNodeConfig.RampStepR\x05steps\x1an\n\x08Ramp\
-    Step\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\
-    \x20\x01(\x01R\x01y\x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\
-    \x10\n\x03c0b\x18\x04\x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\
-    \x01(\x01R\x03c1a\x12\x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0f\
-    NoiseNodeConfig\x12\x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\
-    \x12\x12\n\x04fade\x18\x02\x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\
-    \x12\x12\n\x04text\x18\x01\x20\x01(\tR\x04text\"\x15\n\x13TransportNodeC\
-    onfig\"\xb5\x03\n\x12G13InputNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\
-    \x01(\tR\x08deviceId\x125\n\x03key\x18\x02\x20\x01(\x0e2#.mizer.nodes.G1\
-    3InputNodeConfig.KeyR\x03key\"\xca\x02\n\x03Key\x12\x06\n\x02G1\x10\0\
-    \x12\x06\n\x02G2\x10\x01\x12\x06\n\x02G3\x10\x02\x12\x06\n\x02G4\x10\x03\
-    \x12\x06\n\x02G5\x10\x04\x12\x06\n\x02G6\x10\x05\x12\x06\n\x02G7\x10\x06\
-    \x12\x06\n\x02G8\x10\x07\x12\x06\n\x02G9\x10\x08\x12\x07\n\x03G10\x10\t\
-    \x12\x07\n\x03G11\x10\n\x12\x07\n\x03G12\x10\x0b\x12\x07\n\x03G13\x10\
-    \x0c\x12\x07\n\x03G14\x10\r\x12\x07\n\x03G15\x10\x0e\x12\x07\n\x03G16\
-    \x10\x0f\x12\x07\n\x03G17\x10\x10\x12\x07\n\x03G18\x10\x11\x12\x07\n\x03\
-    G19\x10\x12\x12\x07\n\x03G20\x10\x13\x12\x07\n\x03G21\x10\x14\x12\x07\n\
-    \x03G22\x10\x15\x12\x06\n\x02M1\x10\x16\x12\x06\n\x02M2\x10\x17\x12\x06\
-    \n\x02M3\x10\x18\x12\x06\n\x02MR\x10\x19\x12\x06\n\x02L1\x10\x1a\x12\x06\
-    \n\x02L2\x10\x1b\x12\x06\n\x02L3\x10\x1c\x12\x06\n\x02L4\x10\x1d\x12\r\n\
-    \tJoystickX\x10\x1e\x12\r\n\tJoystickY\x10\x1f\x12\x0c\n\x08Joystick\x10\
-    \x20\x12\x08\n\x04Left\x10!\x12\x08\n\x04Down\x10\"\x12\x06\n\x02BD\x10#\
-    \"2\n\x13G13OutputNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\
-    \x08deviceId\"0\n\x18ConstantNumberNodeConfig\x12\x14\n\x05value\x18\x01\
-    \x20\x01(\x01R\x05value\"5\n\x15ConditionalNodeConfig\x12\x1c\n\tthresho\
-    ld\x18\x01\x20\x01(\x01R\tthreshold\"<\n\x19TimecodeControlNodeConfig\
-    \x12\x1f\n\x0btimecode_id\x18\x01\x20\x01(\rR\ntimecodeId\"9\n\x18Timeco\
-    deOutputNodeConfig\x12\x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\
-    \"\xb3\x01\n\x13AudioFileNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\t\
-    R\x04file\x12Q\n\x0cplaybackMode\x18\x02\x20\x01(\x0e2-.mizer.nodes.Audi\
-    oFileNodeConfig.PlaybackModeR\x0cplaybackMode\"5\n\x0cPlaybackMode\x12\
-    \x0c\n\x08ONE_SHOT\x10\0\x12\x08\n\x04LOOP\x10\x01\x12\r\n\tPING_PONG\
-    \x10\x02\"\x17\n\x15AudioOutputNodeConfig\"\x17\n\x15AudioVolumeNodeConf\
-    ig\"\x16\n\x14AudioInputNodeConfig\"\x14\n\x12AudioMixNodeConfig\"\x16\n\
-    \x14AudioMeterNodeConfig\"*\n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\
-    \x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDe\
-    signer\x125\n\x08position\x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePosi\
-    tionR\x08position\x12\x14\n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\
-    \x16\n\x06hidden\x18\x03\x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\
-    \x04name\x18\x01\x20\x01(\tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\
-    \x0e2\x1c.mizer.nodes.ChannelProtocolR\x08protocol\x12\x1a\n\x08multiple\
-    \x18\x03\x20\x01(\x08R\x08multiple*\x8d\x01\n\x0fChannelProtocol\x12\n\n\
-    \x06SINGLE\x10\0\x12\t\n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\
-    \n\x07TEXTURE\x10\x02\x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\
-    \x12\x08\n\x04POLY\x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERI\
-    AL\x10\x07\x12\x07\n\x03GST\x10\x08\x12\t\n\x05CLOCK\x10\n2\x83\x07\n\
-    \x08NodesApi\x129\n\x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12\
-    .mizer.nodes.Nodes\x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\
-    \x1a\x11.mizer.nodes.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConn\
-    ection\x1a\x1b.mizer.nodes.NodeConnection\x12J\n\x11WriteControlValue\
-    \x12\x19.mizer.nodes.WriteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\
-    \n\x12UpdateNodeProperty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.m\
-    izer.nodes.UpdateNodeConfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nod\
-    es.MoveNodeRequest\x1a\x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNo\
-    de\x12\x1e.mizer.nodes.DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeR\
-    esponse\x12G\n\x08HideNode\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.m\
-    izer.nodes.HideNodeResponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowN\
-    odeRequest\x1a\x1d.mizer.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\
-    \x12!.mizer.nodes.DuplicateNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\n\
-    RenameNode\x12\x1e.mizer.nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.Ren\
-    ameNodeResponse\x12M\n\nGroupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\
-    \x1a\x1f.mizer.nodes.GroupNodesResponseb\x06proto3\
+    \x01(\tR\x04path\x12\x16\n\x06retain\x18\x03\x20\x01(\x08R\x06retain\"\
+    \x18\n\x16NumberToDataNodeConfig\"\x18\n\x16DataToNumberNodeConfig\"'\n\
+    \x0fValueNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\tR\x05value\"L\n\
+    \x14PlanScreenNodeConfig\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06pla\
+    nId\x12\x1b\n\tscreen_id\x18\x02\x20\x01(\rR\x08screenId\"2\n\x0fDelayNo\
+    deConfig\x12\x1f\n\x0bbuffer_size\x18\x01\x20\x01(\rR\nbufferSize\"\xbc\
+    \x01\n\x0eRampNodeConfig\x12:\n\x05steps\x18\x01\x20\x03(\x0b2$.mizer.no\
+    des.RampNodeConfig.RampStepR\x05steps\x1an\n\x08RampStep\x12\x0c\n\x01x\
+    \x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\x01y\x18\x02\x20\x01(\x01R\x01y\
+    \x12\x10\n\x03c0a\x18\x03\x20\x01(\x01R\x03c0a\x12\x10\n\x03c0b\x18\x04\
+    \x20\x01(\x01R\x03c0b\x12\x10\n\x03c1a\x18\x05\x20\x01(\x01R\x03c1a\x12\
+    \x10\n\x03c1b\x18\x06\x20\x01(\x01R\x03c1b\"B\n\x0fNoiseNodeConfig\x12\
+    \x1b\n\ttick_rate\x18\x01\x20\x01(\x04R\x08tickRate\x12\x12\n\x04fade\
+    \x18\x02\x20\x01(\x08R\x04fade\"%\n\x0fLabelNodeConfig\x12\x12\n\x04text\
+    \x18\x01\x20\x01(\tR\x04text\"\x15\n\x13TransportNodeConfig\"\xb5\x03\n\
+    \x12G13InputNodeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08devic\
+    eId\x125\n\x03key\x18\x02\x20\x01(\x0e2#.mizer.nodes.G13InputNodeConfig.\
+    KeyR\x03key\"\xca\x02\n\x03Key\x12\x06\n\x02G1\x10\0\x12\x06\n\x02G2\x10\
+    \x01\x12\x06\n\x02G3\x10\x02\x12\x06\n\x02G4\x10\x03\x12\x06\n\x02G5\x10\
+    \x04\x12\x06\n\x02G6\x10\x05\x12\x06\n\x02G7\x10\x06\x12\x06\n\x02G8\x10\
+    \x07\x12\x06\n\x02G9\x10\x08\x12\x07\n\x03G10\x10\t\x12\x07\n\x03G11\x10\
+    \n\x12\x07\n\x03G12\x10\x0b\x12\x07\n\x03G13\x10\x0c\x12\x07\n\x03G14\
+    \x10\r\x12\x07\n\x03G15\x10\x0e\x12\x07\n\x03G16\x10\x0f\x12\x07\n\x03G1\
+    7\x10\x10\x12\x07\n\x03G18\x10\x11\x12\x07\n\x03G19\x10\x12\x12\x07\n\
+    \x03G20\x10\x13\x12\x07\n\x03G21\x10\x14\x12\x07\n\x03G22\x10\x15\x12\
+    \x06\n\x02M1\x10\x16\x12\x06\n\x02M2\x10\x17\x12\x06\n\x02M3\x10\x18\x12\
+    \x06\n\x02MR\x10\x19\x12\x06\n\x02L1\x10\x1a\x12\x06\n\x02L2\x10\x1b\x12\
+    \x06\n\x02L3\x10\x1c\x12\x06\n\x02L4\x10\x1d\x12\r\n\tJoystickX\x10\x1e\
+    \x12\r\n\tJoystickY\x10\x1f\x12\x0c\n\x08Joystick\x10\x20\x12\x08\n\x04L\
+    eft\x10!\x12\x08\n\x04Down\x10\"\x12\x06\n\x02BD\x10#\"2\n\x13G13OutputN\
+    odeConfig\x12\x1b\n\tdevice_id\x18\x01\x20\x01(\tR\x08deviceId\"0\n\x18C\
+    onstantNumberNodeConfig\x12\x14\n\x05value\x18\x01\x20\x01(\x01R\x05valu\
+    e\"5\n\x15ConditionalNodeConfig\x12\x1c\n\tthreshold\x18\x01\x20\x01(\
+    \x01R\tthreshold\"<\n\x19TimecodeControlNodeConfig\x12\x1f\n\x0btimecode\
+    _id\x18\x01\x20\x01(\rR\ntimecodeId\"9\n\x18TimecodeOutputNodeConfig\x12\
+    \x1d\n\ncontrol_id\x18\x01\x20\x01(\rR\tcontrolId\"\xb3\x01\n\x13AudioFi\
+    leNodeConfig\x12\x12\n\x04file\x18\x01\x20\x01(\tR\x04file\x12Q\n\x0cpla\
+    ybackMode\x18\x02\x20\x01(\x0e2-.mizer.nodes.AudioFileNodeConfig.Playbac\
+    kModeR\x0cplaybackMode\"5\n\x0cPlaybackMode\x12\x0c\n\x08ONE_SHOT\x10\0\
+    \x12\x08\n\x04LOOP\x10\x01\x12\r\n\tPING_PONG\x10\x02\"\x17\n\x15AudioOu\
+    tputNodeConfig\"\x17\n\x15AudioVolumeNodeConfig\"\x16\n\x14AudioInputNod\
+    eConfig\"\x14\n\x12AudioMixNodeConfig\"\x16\n\x14AudioMeterNodeConfig\"*\
+    \n\x0cNodePosition\x12\x0c\n\x01x\x18\x01\x20\x01(\x01R\x01x\x12\x0c\n\
+    \x01y\x18\x02\x20\x01(\x01R\x01y\"s\n\x0cNodeDesigner\x125\n\x08position\
+    \x18\x01\x20\x01(\x0b2\x19.mizer.nodes.NodePositionR\x08position\x12\x14\
+    \n\x05scale\x18\x02\x20\x01(\x01R\x05scale\x12\x16\n\x06hidden\x18\x03\
+    \x20\x01(\x08R\x06hidden\"p\n\x04Port\x12\x12\n\x04name\x18\x01\x20\x01(\
+    \tR\x04name\x128\n\x08protocol\x18\x02\x20\x01(\x0e2\x1c.mizer.nodes.Cha\
+    nnelProtocolR\x08protocol\x12\x1a\n\x08multiple\x18\x03\x20\x01(\x08R\
+    \x08multiple*\x8d\x01\n\x0fChannelProtocol\x12\n\n\x06SINGLE\x10\0\x12\t\
+    \n\x05MULTI\x10\x01\x12\t\n\x05COLOR\x10\t\x12\x0b\n\x07TEXTURE\x10\x02\
+    \x12\n\n\x06VECTOR\x10\x03\x12\t\n\x05LASER\x10\x04\x12\x08\n\x04POLY\
+    \x10\x05\x12\x08\n\x04DATA\x10\x06\x12\x0c\n\x08MATERIAL\x10\x07\x12\x07\
+    \n\x03GST\x10\x08\x12\t\n\x05CLOCK\x10\n2\x83\x07\n\x08NodesApi\x129\n\
+    \x08GetNodes\x12\x19.mizer.nodes.NodesRequest\x1a\x12.mizer.nodes.Nodes\
+    \x129\n\x07AddNode\x12\x1b.mizer.nodes.AddNodeRequest\x1a\x11.mizer.node\
+    s.Node\x12C\n\x07AddLink\x12\x1b.mizer.nodes.NodeConnection\x1a\x1b.mize\
+    r.nodes.NodeConnection\x12J\n\x11WriteControlValue\x12\x19.mizer.nodes.W\
+    riteControl\x1a\x1a.mizer.nodes.WriteResponse\x12a\n\x12UpdateNodeProper\
+    ty\x12$.mizer.nodes.UpdateNodeConfigRequest\x1a%.mizer.nodes.UpdateNodeC\
+    onfigResponse\x12G\n\x08MoveNode\x12\x1c.mizer.nodes.MoveNodeRequest\x1a\
+    \x1d.mizer.nodes.MoveNodeResponse\x12M\n\nDeleteNode\x12\x1e.mizer.nodes\
+    .DeleteNodeRequest\x1a\x1f.mizer.nodes.DeleteNodeResponse\x12G\n\x08Hide\
+    Node\x12\x1c.mizer.nodes.HideNodeRequest\x1a\x1d.mizer.nodes.HideNodeRes\
+    ponse\x12G\n\x08ShowNode\x12\x1c.mizer.nodes.ShowNodeRequest\x1a\x1d.miz\
+    er.nodes.ShowNodeResponse\x12E\n\rDuplicateNode\x12!.mizer.nodes.Duplica\
+    teNodeRequest\x1a\x11.mizer.nodes.Node\x12M\n\nRenameNode\x12\x1e.mizer.\
+    nodes.RenameNodeRequest\x1a\x1f.mizer.nodes.RenameNodeResponse\x12M\n\nG\
+    roupNodes\x12\x1e.mizer.nodes.GroupNodesRequest\x1a\x1f.mizer.nodes.Grou\
+    pNodesResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

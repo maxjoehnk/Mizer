@@ -13,9 +13,14 @@ class SequenceList extends StatelessWidget {
   final Sequence? selectedSequence;
   final Function(Sequence) selectSequence;
   final Map<int, SequenceState> sequenceStates;
+  final String? searchQuery;
 
   const SequenceList(
-      {required this.selectSequence, this.selectedSequence, required this.sequenceStates, Key? key})
+      {required this.selectSequence,
+      this.selectedSequence,
+      required this.sequenceStates,
+      this.searchQuery,
+      Key? key})
       : super(key: key);
 
   @override
@@ -35,7 +40,15 @@ class SequenceList extends StatelessWidget {
         mainAxisSpacing: 4,
         childAspectRatio: 1,
       ),
-      children: sequences.map((sequence) => _sequenceRow(context, sequence)).toList(),
+      children: sequences
+          .where((s) {
+            if (searchQuery == null) {
+              return true;
+            }
+            return s.name.contains(searchQuery!);
+          })
+          .map((sequence) => _sequenceRow(context, sequence))
+          .toList(),
     );
   }
 

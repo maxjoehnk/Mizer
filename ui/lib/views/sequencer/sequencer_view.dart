@@ -28,13 +28,13 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
   SequencerPointer? _pointer;
   Map<int, SequenceState> sequenceStates = {};
   Ticker? ticker;
+  String? searchQuery;
 
   @override
   void initState() {
     super.initState();
     var sequencerApi = context.read<SequencerApi>();
-    sequencerApi.getSequencerPointer()
-        .then((pointer) => setState(() {
+    sequencerApi.getSequencerPointer().then((pointer) => setState(() {
           _pointer = pointer;
           ticker = this.createTicker((elapsed) {
             setState(() {
@@ -78,56 +78,90 @@ class _SequencerViewState extends State<SequencerView> with SingleTickerProvider
           }
         }
       },
-      child: BlocBuilder<SequencerBloc, SequencerState>(
-        builder: (context, state) {
-          return Column(
-            children: [
+      child: BlocBuilder<SequencerBloc, SequencerState>(builder: (context, state) {
+        return Column(
+          children: [
+            Expanded(
+              child: Panel(
+                label: "Sequences",
+                child: SequenceList(
+                    selectSequence: _selectSequence,
+                    selectedSequence: state.selectedSequence,
+                    sequenceStates: sequenceStates,
+                    searchQuery: searchQuery),
+                actions: [
+                  PanelAction(
+                      hotkeyId: "go_forward",
+                      label: "Go+",
+                      onClick: () => _sequenceGo(state.selectedSequenceId!),
+                      disabled: state.selectedSequenceId == null,
+                      menu: Menu(items: [
+                        MenuItem(
+                            label: "Add Midi Mapping",
+                            action: () => _addMidiMappingForGo(context, state))
+                      ])),
+                  PanelAction(
+                      label: "Stop",
+                      onClick: () => _sequenceStop(state.selectedSequenceId!),
+                      disabled: state.selectedSequenceId == null,
+                      menu: Menu(items: [
+                        MenuItem(
+                            label: "Add Midi Mapping",
+                            action: () => _addMidiMappingForStop(context, state))
+                      ])),
+                  PanelAction(
+                      hotkeyId: "delete",
+                      label: "Delete",
+                      onClick: () => _deleteSequence(state.selectedSequenceId!),
+                      disabled: state.selectedSequenceId == null),
+                  PanelAction(
+                      hotkeyId: "duplicate",
+                      label: "Duplicate",
+                      onClick: () => _duplicateSequence(state.selectedSequenceId!),
+                      disabled: state.selectedSequenceId == null),
+                ],
+                onSearch: (query) => setState(() => this.searchQuery = query),
+              ),
+            ),
+            if (state.selectedSequence != null)
               Expanded(
-                child: Panel(
-                  label: "Sequences",
-                  child: SequenceList(selectSequence: _selectSequence, selectedSequence: state.selectedSequence, sequenceStates: sequenceStates),
-                  actions: [
-                    PanelAction(hotkeyId: "go_forward", label: "Go+", onClick: () => _sequenceGo(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [
-                      MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForGo(context, state))
-                    ])),
-                    PanelAction(label: "Stop", onClick: () => _sequenceStop(state.selectedSequenceId!), disabled: state.selectedSequenceId == null, menu: Menu(items: [
-                      MenuItem(label: "Add Midi Mapping", action: () => _addMidiMappingForStop(context, state))
-                    ])),
-                    PanelAction(hotkeyId: "delete", label: "Delete", onClick: () => _deleteSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
-                    PanelAction(hotkeyId: "duplicate", label: "Duplicate", onClick: () => _duplicateSequence(state.selectedSequenceId!), disabled: state.selectedSequenceId == null),
+                child: Panel.tabs(
+                  label: "${state.selectedSequence!.name}",
+                  tabs: [
+                    tabs.Tab(
+                        label: "Cue List",
+                        child: CueList(
+                            sequence: state.selectedSequence!,
+                            activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
+                    tabs.Tab(
+                        label: "Track Sheet",
+                        child: TrackSheet(
+                            sequence: state.selectedSequence!,
+                            activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
+                    tabs.Tab(
+                        label: "Sequence Settings",
+                        child: SequencerSettings(sequence: state.selectedSequence!)),
                   ],
                 ),
               ),
-              if (state.selectedSequence != null)
-                Expanded(
-                  child: Panel.tabs(
-                    label: "${state.selectedSequence!.name}",
-                    tabs: [
-                      tabs.Tab(label: "Cue List", child: CueList(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
-                      tabs.Tab(label: "Track Sheet", child: TrackSheet(sequence: state.selectedSequence!, activeCue: sequenceStates[state.selectedSequenceId]?.cueId)),
-                      tabs.Tab(label: "Sequence Settings", child: SequencerSettings(sequence: state.selectedSequence!)),
-                    ],
-                  ),
-                ),
-            ],
-          );
-        }
-      ),
+          ],
+        );
+      }),
     );
   }
 
   Future<void> _addMidiMappingForGo(BuildContext context, SequencerState state) async {
-    var request = MappingRequest(
-        sequencerGo: SequencerGoAction(sequencerId: state.selectedSequenceId!)
-    );
-    addMidiMapping(context, "Add MIDI Mapping for Sequence Go ${state.selectedSequence!.name}", request);
+    var request =
+        MappingRequest(sequencerGo: SequencerGoAction(sequencerId: state.selectedSequenceId!));
+    addMidiMapping(
+        context, "Add MIDI Mapping for Sequence Go ${state.selectedSequence!.name}", request);
   }
 
   Future<void> _addMidiMappingForStop(BuildContext context, SequencerState state) async {
-    var request = MappingRequest(
-        sequencerStop: SequencerStopAction(sequencerId: state.selectedSequenceId!)
-    );
-    addMidiMapping(context, "Add MIDI Mapping for Sequence Stop ${state.selectedSequence!.name}", request);
+    var request =
+        MappingRequest(sequencerStop: SequencerStopAction(sequencerId: state.selectedSequenceId!));
+    addMidiMapping(
+        context, "Add MIDI Mapping for Sequence Stop ${state.selectedSequence!.name}", request);
   }
 
   _deleteSequence(int sequenceId) {

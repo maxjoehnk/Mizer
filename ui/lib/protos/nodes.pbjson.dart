@@ -902,11 +902,12 @@ const MqttOutputNodeConfig$json = const {
   '2': const [
     const {'1': 'connection', '3': 1, '4': 1, '5': 9, '10': 'connection'},
     const {'1': 'path', '3': 2, '4': 1, '5': 9, '10': 'path'},
+    const {'1': 'retain', '3': 3, '4': 1, '5': 8, '10': 'retain'},
   ],
 };
 
 /// Descriptor for `MqttOutputNodeConfig`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mqttOutputNodeConfigDescriptor = $convert.base64Decode('ChRNcXR0T3V0cHV0Tm9kZUNvbmZpZxIeCgpjb25uZWN0aW9uGAEgASgJUgpjb25uZWN0aW9uEhIKBHBhdGgYAiABKAlSBHBhdGg=');
+final $typed_data.Uint8List mqttOutputNodeConfigDescriptor = $convert.base64Decode('ChRNcXR0T3V0cHV0Tm9kZUNvbmZpZxIeCgpjb25uZWN0aW9uGAEgASgJUgpjb25uZWN0aW9uEhIKBHBhdGgYAiABKAlSBHBhdGgSFgoGcmV0YWluGAMgASgIUgZyZXRhaW4=');
 @$core.Deprecated('Use numberToDataNodeConfigDescriptor instead')
 const NumberToDataNodeConfig$json = const {
   '1': 'NumberToDataNodeConfig',

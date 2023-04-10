@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/fixtures.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
 import 'package:mizer/state/fixtures_bloc.dart';
@@ -9,9 +10,9 @@ import 'package:mizer/state/presets_bloc.dart';
 import 'package:mizer/widgets/panel.dart';
 
 import 'dialogs/assign_fixtures_to_group_dialog.dart';
-import 'fixture_table.dart';
-import 'dialogs/patch_fixture_dialog.dart';
 import 'dialogs/delete_fixture_dialog.dart';
+import 'dialogs/patch_fixture_dialog.dart';
+import 'fixture_table.dart';
 
 class FixturePatchView extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class FixturePatchView extends StatefulWidget {
 
 class _FixturePatchViewState extends State<FixturePatchView> {
   List<int> selectedIds = [];
+  String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -42,31 +44,45 @@ class _FixturePatchViewState extends State<FixturePatchView> {
               child: Panel(
                 label: "Fixtures",
                 child: FixtureTable(
-                    fixtures: fixtures.fixtures,
-                    selectedIds: selectedIds,
-                    onSelect: (id, selected) => setState(() {
-                          if (selected) {
-                            this.selectedIds.add(id);
-                          } else {
-                            this.selectedIds.remove(id);
-                          }
-                        }),
+                  fixtures: fixtures.fixtures.search(
+                      [(f) => f.name, (f) => f.manufacturer, (f) => f.mode], searchQuery).toList(),
+                  selectedIds: selectedIds,
+                  onSelect: (id, selected) => setState(() {
+                    if (selected) {
+                      this.selectedIds.add(id);
+                    } else {
+                      this.selectedIds.remove(id);
+                    }
+                  }),
                   onSelectSimilar: (fixture) => setState(() => selectedIds = fixtures.fixtures
-                            .where((f) =>
-                        f.manufacturer == fixture.manufacturer && f.model == fixture.model)
-                            .map((f) => f.id)
-                            .toList()),
-                  onUpdateFixture: (fixtureId, updateRequest) => fixturesBloc.add(UpdateFixture(fixtureId, updateRequest)),
+                      .where(
+                          (f) => f.manufacturer == fixture.manufacturer && f.model == fixture.model)
+                      .map((f) => f.id)
+                      .toList()),
+                  onUpdateFixture: (fixtureId, updateRequest) =>
+                      fixturesBloc.add(UpdateFixture(fixtureId, updateRequest)),
                 ),
                 actions: [
                   PanelAction(
                       label: "Add Fixture",
                       hotkeyId: "add_fixture",
                       onClick: () => _addFixture(context, fixturesApi, fixturesBloc)),
-                  PanelAction(label: "Clear", hotkeyId: "clear", onClick: _clear, disabled: selectedIds.isEmpty),
-                  PanelAction(label: "Delete", hotkeyId: "delete", onClick: () => _deleteFixture(context, fixturesBloc), disabled: selectedIds.isEmpty),
-                  PanelAction(label: "Assign Group", hotkeyId: "assign_group", onClick: () => _assignGroup(context, fixturesBloc)),
+                  PanelAction(
+                      label: "Clear",
+                      hotkeyId: "clear",
+                      onClick: _clear,
+                      disabled: selectedIds.isEmpty),
+                  PanelAction(
+                      label: "Delete",
+                      hotkeyId: "delete",
+                      onClick: () => _deleteFixture(context, fixturesBloc),
+                      disabled: selectedIds.isEmpty),
+                  PanelAction(
+                      label: "Assign Group",
+                      hotkeyId: "assign_group",
+                      onClick: () => _assignGroup(context, fixturesBloc)),
                 ],
+                onSearch: (query) => setState(() => searchQuery = query),
               ),
             ),
           ],
@@ -105,10 +121,13 @@ class _FixturePatchViewState extends State<FixturePatchView> {
   _assignGroup(BuildContext context, FixturesBloc fixturesBloc) async {
     var programmerApi = context.read<ProgrammerApi>();
     var presetsBloc = context.read<PresetsBloc>();
-    Group? group = await showDialog(context: context, builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
+    Group? group = await showDialog(
+        context: context,
+        builder: (context) => AssignFixturesToGroupDialog(presetsBloc, programmerApi));
     if (group == null) {
       return;
     }
-    await programmerApi.assignFixturesToGroup(selectedIds.map((id) => FixtureId(fixture: id)).toList(), group);
+    await programmerApi.assignFixturesToGroup(
+        selectedIds.map((id) => FixtureId(fixture: id)).toList(), group);
   }
 }

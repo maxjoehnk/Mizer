@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide MenuItem;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/programmer.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/mixins/programmer_mixin.dart';
 import 'package:mizer/platform/contracts/menu.dart';
@@ -27,6 +28,7 @@ class FixturesView extends StatefulWidget {
 class _FixturesViewState extends State<FixturesView>
     with SingleTickerProviderStateMixin, ProgrammerStateMixin {
   List<int> expandedIds = [];
+  String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class _FixturesViewState extends State<FixturesView>
         child: Panel(
           label: "Fixtures".i18n,
           child: FixturesTable(
-              fixtures: fixtures.fixtures,
+              fixtures: _getFixtures(fixtures),
               state: programmerState,
               selectedIds: selectedIds,
               trackedIds: trackedIds,
@@ -82,9 +84,15 @@ class _FixturesViewState extends State<FixturesView>
                       label: "Add Midi Mapping", action: () => _addMidiMappingForClear(context))
                 ])),
           ],
+          onSearch: (query) => setState(() => this.searchQuery = query),
         ),
       );
     });
+  }
+
+  List<Fixture> _getFixtures(Fixtures fixtures) {
+    return fixtures.fixtures
+        .search([(f) => f.name, (f) => f.manufacturer, (f) => f.model], searchQuery).toList();
   }
 
   List<FixtureId> get trackedIds {

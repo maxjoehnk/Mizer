@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mizer/api/contracts/effects.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/protos/fixtures.pb.dart';
 import 'package:mizer/protos/sequencer.pb.dart';
@@ -26,6 +27,7 @@ class EffectsView extends StatefulWidget {
 class _EffectsViewState extends State<EffectsView> {
   StreamSubscription<EffectState>? _subscription;
   Effect? effect;
+  String? searchQuery;
 
   @override
   void initState() {
@@ -72,6 +74,7 @@ class _EffectsViewState extends State<EffectsView> {
                       0: FixedColumnWidth(64),
                     },
                     rows: effects
+                        .search([(e) => e.name], searchQuery)
                         .map((e) => MizerTableRow(
                                 cells: [
                                   Text(e.id.toString()),
@@ -93,6 +96,7 @@ class _EffectsViewState extends State<EffectsView> {
                       disabled: this.effect == null,
                       onClick: () => _deleteEffect(bloc)),
                 ],
+                onSearch: (query) => setState(() => searchQuery = query),
               ),
             ),
             if (effect != null)

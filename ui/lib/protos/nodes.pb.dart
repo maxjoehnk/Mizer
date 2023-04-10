@@ -4395,6 +4395,7 @@ class MqttOutputNodeConfig extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MqttOutputNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connection')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'path')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'retain')
     ..hasRequiredFields = false
   ;
 
@@ -4402,6 +4403,7 @@ class MqttOutputNodeConfig extends $pb.GeneratedMessage {
   factory MqttOutputNodeConfig({
     $core.String? connection,
     $core.String? path,
+    $core.bool? retain,
   }) {
     final _result = create();
     if (connection != null) {
@@ -4409,6 +4411,9 @@ class MqttOutputNodeConfig extends $pb.GeneratedMessage {
     }
     if (path != null) {
       _result.path = path;
+    }
+    if (retain != null) {
+      _result.retain = retain;
     }
     return _result;
   }
@@ -4450,6 +4455,15 @@ class MqttOutputNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasPath() => $_has(1);
   @$pb.TagNumber(2)
   void clearPath() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get retain => $_getBF(2);
+  @$pb.TagNumber(3)
+  set retain($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRetain() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRetain() => clearField(3);
 }
 
 class NumberToDataNodeConfig extends $pb.GeneratedMessage {

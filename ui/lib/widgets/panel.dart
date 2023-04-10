@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/settings/hotkeys/hotkey_configuration.dart';
+import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/tabs.dart' as tab;
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class Panel extends StatefulWidget {
   final int? tabIndex;
   final Function(int)? onSelectTab;
   final List<Widget>? trailingHeader;
+  final Function(String)? onSearch;
 
   bool get canAdd {
     return onAdd != null;
@@ -31,7 +33,8 @@ class Panel extends StatefulWidget {
       this.onSelectTab,
       this.onAdd,
       this.padding = true,
-      this.trailingHeader}) {
+      this.trailingHeader,
+      this.onSearch}) {
     assert(child != null || tabs != null);
   }
 
@@ -43,7 +46,8 @@ class Panel extends StatefulWidget {
       Function(int)? onSelectTab,
       Function()? onAdd,
       bool padding = true,
-      List<Widget>? trailingHeader}) {
+      List<Widget>? trailingHeader,
+      Function(String)? onSearch}) {
     return Panel(
         tabs: tabs,
         label: label,
@@ -52,7 +56,8 @@ class Panel extends StatefulWidget {
         onSelectTab: onSelectTab,
         onAdd: onAdd,
         padding: padding,
-        trailingHeader: trailingHeader);
+        trailingHeader: trailingHeader,
+        onSearch: onSearch);
   }
 
   @override
@@ -61,11 +66,14 @@ class Panel extends StatefulWidget {
 
 class _PanelState extends State<Panel> {
   int activeIndex = 0;
+  bool searchExpanded = false;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     activeIndex = widget.tabIndex ?? 0;
+    searchController.addListener(() => widget.onSearch!(searchController.text));
   }
 
   @override
@@ -138,7 +146,36 @@ class _PanelState extends State<Panel> {
                   .values,
               if (widget.canAdd) tab.AddTabButton(onClick: widget.onAdd!),
               Spacer(),
-              ...(widget.trailingHeader ?? [])
+              ...(widget.trailingHeader ?? []),
+              if (widget.onSearch != null)
+                Expanded(
+                  child: Container(
+                    color: searchExpanded ? Colors.black12 : null,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (searchExpanded)
+                          Expanded(
+                              child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: 200),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 4.0),
+                                    child: TextField(controller: searchController, autofocus: true),
+                                  ))),
+                        MizerIconButton(
+                            icon: Icons.search,
+                            label: "Search",
+                            onClick: () => setState(() {
+                                  this.searchExpanded = !this.searchExpanded;
+                                  if (!this.searchExpanded) {
+                                    this.searchController.clear();
+                                  }
+                                })),
+                      ],
+                    ),
+                  ),
+                )
             ]));
   }
 
@@ -216,8 +253,8 @@ class PanelActions extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 2.0),
                         child: Text(hotkey.toCapitalCase(),
-                            style:
-                                textTheme.bodySmall!.copyWith(color: _getHotkeyColor(a), fontSize: 10)),
+                            style: textTheme.bodySmall!
+                                .copyWith(color: _getHotkeyColor(a), fontSize: 10)),
                       ),
                   ],
                 ),

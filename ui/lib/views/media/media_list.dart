@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mizer/extensions/list_extensions.dart';
 import 'package:mizer/extensions/number_extensions.dart';
 import 'package:mizer/protos/media.pb.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -6,7 +7,7 @@ import 'package:mizer/widgets/table/table.dart';
 
 const double thumbnailWidth = 100;
 
-class MediaList extends StatelessWidget {
+class MediaList extends StatefulWidget {
   final List<MediaFile> files;
   final MediaFile? selectedFile;
   final Function(MediaFile) onSelectFile;
@@ -17,6 +18,13 @@ class MediaList extends StatelessWidget {
     this.selectedFile,
     required this.onSelectFile,
   });
+
+  @override
+  State<MediaList> createState() => _MediaListState();
+}
+
+class _MediaListState extends State<MediaList> {
+  String? searchQuery;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +39,16 @@ class MediaList extends StatelessWidget {
           Text("Resolution"),
           Text("FPS"),
         ],
-        rows: files.map((file) => _row(file)).toList(),
+        rows: widget.files.search([(f) => f.name], searchQuery).map((file) => _row(file)).toList(),
         columnWidths: {
           0: FixedColumnWidth(thumbnailWidth),
           1: FlexColumnWidth(3),
           2: FlexColumnWidth(2),
           3: FlexColumnWidth(2),
-          3: FlexColumnWidth(1),
+          4: FlexColumnWidth(1),
         },
       )),
+      onSearch: (query) => setState(() => this.searchQuery = query),
     );
   }
 
@@ -54,7 +63,7 @@ class MediaList extends StatelessWidget {
           ? Text("${file.metadata.dimensions.width}x${file.metadata.dimensions.height}")
           : Container(),
       file.metadata.hasFramerate() ? Text("${file.metadata.framerate}") : Container(),
-    ], onTap: () => onSelectFile(file), selected: selectedFile == file);
+    ], onTap: () => widget.onSelectFile(file), selected: widget.selectedFile == file);
   }
 }
 

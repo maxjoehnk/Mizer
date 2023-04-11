@@ -22,3 +22,6 @@ run: build
 
 package:
 	cargo run -p mizer-package
+
+build-docker:
+	docker build -t mizer:latest .

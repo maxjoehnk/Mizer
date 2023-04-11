@@ -91,6 +91,7 @@ node_type_name! {
         AudioInput,
         AudioMix,
         AudioMeter,
+        Template,
         // TODO: should only be available in tests
         // #[doc(hidden)]
         TestSink,

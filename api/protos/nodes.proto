@@ -166,6 +166,7 @@ message Node {
     AudioInput = 78;
     AudioMix = 79;
     AudioMeter = 80;
+    Template = 81;
   }
 
   enum NodePreviewType {
@@ -249,6 +250,7 @@ message NodeConfig {
     AudioInputNodeConfig audioInputConfig = 68;
     AudioMixNodeConfig audioMixConfig = 69;
     AudioMeterNodeConfig audioMeterConfig = 70;
+    TemplateNodeConfig templateConfig = 71;
   }
 }
 
@@ -492,6 +494,10 @@ message ValueNodeConfig {
 
 message ExtractNodeConfig {
   string path = 1;
+}
+
+message TemplateNodeConfig {
+  string template = 1;
 }
 
 message PlanScreenNodeConfig {

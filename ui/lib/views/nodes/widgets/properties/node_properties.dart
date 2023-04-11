@@ -27,6 +27,7 @@ import 'properties/groups/osc_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
 import 'properties/groups/ramp_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
+import 'properties/groups/template_properties.dart';
 import 'properties/groups/threshold_properties.dart';
 import 'properties/groups/timecode_control_properties.dart';
 import 'properties/groups/timecode_output_properties.dart';
@@ -163,6 +164,11 @@ class NodePropertiesPane extends StatelessWidget {
       widgets.add(ExtractProperties(node.config.extractConfig,
           onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
               path: node.path, config: NodeConfig(extractConfig: config)))));
+    }
+    if (node.config.hasTemplateConfig()) {
+      widgets.add(TemplateProperties(node.config.templateConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path, config: NodeConfig(templateConfig: config)))));
     }
     if (node.config.hasDelayConfig()) {
       widgets.add(DelayProperties(node.config.delayConfig,

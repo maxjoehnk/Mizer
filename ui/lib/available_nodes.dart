@@ -45,6 +45,7 @@ const Map<Node_NodeType, String> NODE_LABELS = {
   Node_NodeType.DataToNumber: "Data to Number",
   Node_NodeType.Value: "Value",
   Node_NodeType.Extract: "Extract",
+  Node_NodeType.Template: "Template",
   Node_NodeType.PlanScreen: "Plan Screen",
   Node_NodeType.Delay: "Delay",
   Node_NodeType.Ramp: "Ramp",
@@ -112,6 +113,7 @@ final List<PopupCategory<Node_NodeType>> NODES = [
   buildCategory("Data", [
     Node_NodeType.Value,
     Node_NodeType.Extract,
+    Node_NodeType.Template,
   ]),
   buildCategory("Audio", [
     Node_NodeType.AudioFile,

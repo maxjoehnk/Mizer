@@ -1251,6 +1251,7 @@ enum NodeConfig_Type {
   audioInputConfig, 
   audioMixConfig, 
   audioMeterConfig, 
+  templateConfig, 
   notSet
 }
 
@@ -1316,10 +1317,11 @@ class NodeConfig extends $pb.GeneratedMessage {
     68 : NodeConfig_Type.audioInputConfig,
     69 : NodeConfig_Type.audioMixConfig,
     70 : NodeConfig_Type.audioMeterConfig,
+    71 : NodeConfig_Type.templateConfig,
     0 : NodeConfig_Type.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
-    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70])
+    ..oo(0, [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71])
     ..aOM<OscillatorNodeConfig>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oscillatorConfig', protoName: 'oscillatorConfig', subBuilder: OscillatorNodeConfig.create)
     ..aOM<ScriptingNodeConfig>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'scriptingConfig', protoName: 'scriptingConfig', subBuilder: ScriptingNodeConfig.create)
     ..aOM<SequenceNodeConfig>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceConfig', protoName: 'sequenceConfig', subBuilder: SequenceNodeConfig.create)
@@ -1380,6 +1382,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     ..aOM<AudioInputNodeConfig>(68, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioInputConfig', protoName: 'audioInputConfig', subBuilder: AudioInputNodeConfig.create)
     ..aOM<AudioMixNodeConfig>(69, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMixConfig', protoName: 'audioMixConfig', subBuilder: AudioMixNodeConfig.create)
     ..aOM<AudioMeterNodeConfig>(70, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'audioMeterConfig', protoName: 'audioMeterConfig', subBuilder: AudioMeterNodeConfig.create)
+    ..aOM<TemplateNodeConfig>(71, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'templateConfig', protoName: 'templateConfig', subBuilder: TemplateNodeConfig.create)
     ..hasRequiredFields = false
   ;
 
@@ -1445,6 +1448,7 @@ class NodeConfig extends $pb.GeneratedMessage {
     AudioInputNodeConfig? audioInputConfig,
     AudioMixNodeConfig? audioMixConfig,
     AudioMeterNodeConfig? audioMeterConfig,
+    TemplateNodeConfig? templateConfig,
   }) {
     final _result = create();
     if (oscillatorConfig != null) {
@@ -1626,6 +1630,9 @@ class NodeConfig extends $pb.GeneratedMessage {
     }
     if (audioMeterConfig != null) {
       _result.audioMeterConfig = audioMeterConfig;
+    }
+    if (templateConfig != null) {
+      _result.templateConfig = templateConfig;
     }
     return _result;
   }
@@ -2312,6 +2319,17 @@ class NodeConfig extends $pb.GeneratedMessage {
   void clearAudioMeterConfig() => clearField(70);
   @$pb.TagNumber(70)
   AudioMeterNodeConfig ensureAudioMeterConfig() => $_ensure(59);
+
+  @$pb.TagNumber(71)
+  TemplateNodeConfig get templateConfig => $_getN(60);
+  @$pb.TagNumber(71)
+  set templateConfig(TemplateNodeConfig v) { setField(71, v); }
+  @$pb.TagNumber(71)
+  $core.bool hasTemplateConfig() => $_has(60);
+  @$pb.TagNumber(71)
+  void clearTemplateConfig() => clearField(71);
+  @$pb.TagNumber(71)
+  TemplateNodeConfig ensureTemplateConfig() => $_ensure(60);
 }
 
 class OscillatorNodeConfig extends $pb.GeneratedMessage {
@@ -4634,6 +4652,53 @@ class ExtractNodeConfig extends $pb.GeneratedMessage {
   $core.bool hasPath() => $_has(0);
   @$pb.TagNumber(1)
   void clearPath() => clearField(1);
+}
+
+class TemplateNodeConfig extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'TemplateNodeConfig', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.nodes'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'template')
+    ..hasRequiredFields = false
+  ;
+
+  TemplateNodeConfig._() : super();
+  factory TemplateNodeConfig({
+    $core.String? template,
+  }) {
+    final _result = create();
+    if (template != null) {
+      _result.template = template;
+    }
+    return _result;
+  }
+  factory TemplateNodeConfig.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TemplateNodeConfig.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TemplateNodeConfig clone() => TemplateNodeConfig()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TemplateNodeConfig copyWith(void Function(TemplateNodeConfig) updates) => super.copyWith((message) => updates(message as TemplateNodeConfig)) as TemplateNodeConfig; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static TemplateNodeConfig create() => TemplateNodeConfig._();
+  TemplateNodeConfig createEmptyInstance() => create();
+  static $pb.PbList<TemplateNodeConfig> createRepeated() => $pb.PbList<TemplateNodeConfig>();
+  @$core.pragma('dart2js:noInline')
+  static TemplateNodeConfig getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TemplateNodeConfig>(create);
+  static TemplateNodeConfig? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get template => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set template($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTemplate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTemplate() => clearField(1);
 }
 
 class PlanScreenNodeConfig extends $pb.GeneratedMessage {

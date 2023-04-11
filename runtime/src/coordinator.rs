@@ -498,6 +498,7 @@ fn register_node(pipeline: &mut PipelineWorker, path: NodePath, node: Node) {
         Node::AudioInput(node) => pipeline.register_node(path, &node),
         Node::AudioMix(node) => pipeline.register_node(path, &node),
         Node::AudioMeter(node) => pipeline.register_node(path, &node),
+        Node::Template(node) => pipeline.register_node(path, &node),
         Node::TestSink(node) => pipeline.register_node(path, &node),
     }
 }

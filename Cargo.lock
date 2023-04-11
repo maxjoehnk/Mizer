@@ -4230,10 +4230,13 @@ name = "mizer-data-nodes"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "derive_more",
  "mizer-node",
  "mizer-util",
+ "nom 7.1.0",
  "serde",
  "serde_json",
+ "test-case 3.0.0",
 ]
 
 [[package]]

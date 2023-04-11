@@ -71,6 +71,7 @@ impl From<mizer_nodes::Node> for node_config::Type {
             AudioInput(node) => Self::AudioInputConfig(node.into()),
             AudioMix(node) => Self::AudioMixConfig(node.into()),
             AudioMeter(node) => Self::AudioMeterConfig(node.into()),
+            Template(node) => Self::TemplateConfig(node.into()),
             TestSink(_) => unimplemented!("Only for test"),
         }
     }
@@ -145,6 +146,7 @@ impl From<node_config::Type> for mizer_nodes::Node {
             node_config::Type::AudioInputConfig(node) => Self::AudioInput(node.into()),
             node_config::Type::AudioMixConfig(node) => Self::AudioMix(node.into()),
             node_config::Type::AudioMeterConfig(node) => Self::AudioMeter(node.into()),
+            node_config::Type::TemplateConfig(node) => Self::Template(node.into()),
         }
     }
 }
@@ -1229,6 +1231,23 @@ impl From<mizer_nodes::ExtractNode> for ExtractNodeConfig {
     }
 }
 
+impl From<TemplateNodeConfig> for mizer_nodes::TemplateNode {
+    fn from(config: TemplateNodeConfig) -> Self {
+        Self {
+            template: config.template,
+        }
+    }
+}
+
+impl From<mizer_nodes::TemplateNode> for TemplateNodeConfig {
+    fn from(node: mizer_nodes::TemplateNode) -> Self {
+        Self {
+            template: node.template,
+            ..Default::default()
+        }
+    }
+}
+
 impl From<DelayNodeConfig> for mizer_nodes::DelayNode {
     fn from(config: DelayNodeConfig) -> Self {
         Self {
@@ -1721,6 +1740,7 @@ impl From<NodeType> for node::NodeType {
             NodeType::AudioInput => node::NodeType::AudioInput,
             NodeType::AudioMix => node::NodeType::AudioMix,
             NodeType::AudioMeter => node::NodeType::AudioMeter,
+            NodeType::Template => node::NodeType::Template,
             NodeType::TestSink => unimplemented!("only for test"),
         }
     }
@@ -1789,6 +1809,7 @@ impl From<node::NodeType> for NodeType {
             node::NodeType::AudioInput => NodeType::AudioInput,
             node::NodeType::AudioMix => NodeType::AudioMix,
             node::NodeType::AudioMeter => NodeType::AudioMeter,
+            node::NodeType::Template => NodeType::Template,
         }
     }
 }

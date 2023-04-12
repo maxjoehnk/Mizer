@@ -86,7 +86,6 @@ jobs:
             libvidstab-dev \
             libgme-dev \
             librabbitmq-dev \
-            libdav1d-dev \
             libzvbi-dev \
             libsnappy-dev \
             libaom-dev \
@@ -98,7 +97,6 @@ jobs:
             libsoxr-dev \
             libcdio-paranoia-dev \
             libcdio-cdda-dev \
-            libsrt-gnutls-dev \
             libmfx-dev \
             libvorbis-dev \
             libwavpack-dev

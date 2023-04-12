@@ -17,7 +17,6 @@ fn main() -> anyhow::Result<()> {
         "fixtures/open-fixture-library",
     )?;
     artifact.link_source("components/fixtures/qlcplus/.fixtures", "fixtures/qlcplus")?;
-    artifact.link_source("components/fixtures/gdtf/.fixtures", "fixtures/gdtf")?;
     artifact.link_source(
         "components/connections/protocols/midi/device-profiles/profiles",
         "device-profiles/midi",
@@ -47,10 +46,6 @@ fn main() -> anyhow::Result<()> {
     artifact.link_source(
         "components/fixtures/qlcplus/.fixtures",
         "Mizer.app/Contents/Resources/fixtures/qlcplus",
-    )?;
-    artifact.link_source(
-        "components/fixtures/gdtf/.fixtures",
-        "Mizer.app/Contents/Resources/fixtures/gdtf",
     )?;
     artifact.link_source(
         "components/connections/protocols/midi/device-profiles/profiles",

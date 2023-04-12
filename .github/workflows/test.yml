@@ -5,7 +5,7 @@ name: Tests
 
 jobs:
   test-linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@main
@@ -86,6 +86,7 @@ jobs:
             libvidstab-dev \
             libgme-dev \
             librabbitmq-dev \
+            libdav1d-dev \
             libzvbi-dev \
             libsnappy-dev \
             libaom-dev \
@@ -97,9 +98,11 @@ jobs:
             libsoxr-dev \
             libcdio-paranoia-dev \
             libcdio-cdda-dev \
+            libsrt-gnutls-dev \
             libmfx-dev \
             libvorbis-dev \
             libwavpack-dev
+
       - name: Install Protoc 3.17.3
         run: |
           curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip

@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["Max Jöhnk <maxjoehnk@gmail.com>"]
 edition = "2021"
 
+[features]
+default = ["ui"]
+ui = []
+
 [dependencies]
 anyhow = "1"
 mizer-settings = { path = "../../runtime/settings" }

@@ -6,8 +6,11 @@ use std::path::{Path, PathBuf};
 fn main() -> anyhow::Result<()> {
     let artifact = Artifact::new()?;
     artifact.link("mizer")?;
+    #[cfg(feature = "ui")]
     artifact.link("data")?;
+    #[cfg(feature = "ui")]
     artifact.link("lib")?;
+    #[cfg(feature = "ui")]
     artifact.link_to("libmizer_ui_ffi.so", "lib/libmizer_ui_ffi.so")?;
     artifact.link_source(
         "components/fixtures/open-fixture-library/.fixtures",

@@ -97,10 +97,12 @@ WORKDIR /build
 
 COPY [".", "/build/"]
 
-RUN make build-headless
+RUN make build-headless && make package-headless && cp -rL /build/artifact /app
 
 FROM base
 
-COPY --from=build /build/target/release/mizer /mizer
+WORKDIR /app
 
-ENTRYPOINT ["/mizer"]
+COPY --from=build /app /app/
+
+ENTRYPOINT ["/app/mizer"]

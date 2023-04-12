@@ -23,5 +23,8 @@ run: build
 package:
 	cargo run -p mizer-package
 
+package-headless:
+	cargo run -p mizer-package --no-default-features
+
 build-docker:
 	docker build -t mizer:latest .

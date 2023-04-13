@@ -1136,6 +1136,7 @@ impl From<mizer_nodes::MqttOutputNode> for MqttOutputNodeConfig {
         Self {
             connection: node.connection,
             path: node.path,
+            retain: node.retain,
             ..Default::default()
         }
     }

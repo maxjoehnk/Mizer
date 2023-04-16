@@ -1,7 +1,7 @@
 mizer: test build-headless build
 
 test:
-	cargo test --workspace
+	cargo nextest run --workspace
 
 benchmarks:
 	cargo bench --workspace

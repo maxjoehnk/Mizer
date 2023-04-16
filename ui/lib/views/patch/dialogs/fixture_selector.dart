@@ -174,19 +174,30 @@ class _SelectedFixtureMode extends StatelessWidget {
     var textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          definition!.name,
-          style: textTheme.headline4,
-        ),
-        Text(
-          definition!.manufacturer,
-          style: textTheme.headline5,
-        ),
-        Row(children: definition!.tags.map((tag) => Chip(label: Text(tag))).toList()),
-        Text("Channels", style: textTheme.subtitle1),
-        ...mode!.channels.map((e) => Text(e.name, style: textTheme.bodyText2)).toList()
-      ]),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              definition!.name,
+              style: textTheme.headlineMedium,
+            ),
+            Text(
+              definition!.manufacturer,
+              style: textTheme.headlineSmall,
+            ),
+            Row(children: definition!.tags.map((tag) => Chip(label: Text(tag))).toList()),
+            Text("Channels", style: textTheme.titleMedium),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: mode!.channels
+                        .map((e) => Text(e.name, style: textTheme.bodyMedium))
+                        .toList()),
+              ),
+            )
+          ]),
     );
   }
 }

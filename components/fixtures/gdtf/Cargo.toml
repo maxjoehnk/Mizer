@@ -10,4 +10,4 @@ anyhow = "1"
 mizer-fixtures = { path = ".." }
 zip = "0.6"
 strong-xml = "0.6"
-rayon = "1.6"
+rayon = "1.7"

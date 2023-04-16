@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mizer/api/plugin/ffi/history.dart';
 import 'package:mizer/api/plugin/nodes.dart';
-import 'package:mizer/extensions/map_extensions.dart';
 
 class DataRenderer extends StatefulWidget {
   final NodesPluginApi pluginApi;
@@ -150,7 +149,20 @@ extension TreeExtensions on StructuredData {
     if (this.object != null) {
       return [
         FlattenedTreeNode(level: level, data: this, key: key, hasChildren: true),
-        ...this.object!.mapToList((key, data) => data.flatten(level: level + 1, key: key)).flattened
+        ...this
+            .object!
+            .entries
+            .sorted((lhs, rhs) {
+              if (lhs.value.object != null && rhs.value.object == null) {
+                return -1;
+              } else if (lhs.value.object == null && rhs.value.object != null) {
+                return 1;
+              } else {
+                return lhs.key.compareTo(rhs.key);
+              }
+            })
+            .map((entry) => entry.value.flatten(level: level + 1, key: entry.key))
+            .flattened
       ];
     }
     return [FlattenedTreeNode(level: level, data: this, key: key)];

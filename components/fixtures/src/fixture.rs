@@ -9,6 +9,9 @@ pub use crate::sub_fixture::*;
 
 const U24_MAX: u32 = 16_777_215;
 
+const DMX_START_ADDRESS: usize = 0;
+const DMX_END_ADDRESS: usize = 512;
+
 #[derive(Debug, Clone)]
 pub struct Fixture {
     pub id: u32,
@@ -133,13 +136,15 @@ impl Fixture {
         profiling::scope!("Fixture::flush");
         let buffer = self.get_dmx_values();
         let start = self.channel as usize;
+        let start = start.clamp(DMX_START_ADDRESS, DMX_END_ADDRESS);
         let end = start + self.current_mode.dmx_channels() as usize;
+        let end = end.clamp(start, DMX_END_ADDRESS);
         output.write_bulk(self.universe, self.channel, &buffer[start..end]);
     }
 
-    pub fn get_dmx_values(&self) -> [u8; 512] {
+    pub fn get_dmx_values(&self) -> [u8; DMX_END_ADDRESS] {
         profiling::scope!("Fixture::get_dmx_values");
-        let mut buffer = [0; 512];
+        let mut buffer = [0; DMX_END_ADDRESS];
 
         for (channel_name, value) in self.channel_values.iter() {
             if let Some(channel) = self

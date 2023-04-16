@@ -4321,6 +4321,7 @@ dependencies = [
  "mizer-runtime",
  "regex",
  "serde",
+ "test-case 3.0.0",
 ]
 
 [[package]]

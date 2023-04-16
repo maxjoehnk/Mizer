@@ -49,7 +49,12 @@ impl FixtureManager {
         universe: Option<u16>,
         configuration: FixtureConfiguration,
     ) {
-        log::trace!("Adding fixture {}", fixture_id);
+        log::trace!(
+            "Adding fixture {} with address {}.{}",
+            fixture_id,
+            universe.unwrap_or(1),
+            channel
+        );
         let fixture = Fixture::new(
             fixture_id,
             name,

@@ -6,7 +6,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1"
-rosc = "0.9"
+rosc = "0.10"
 log = "0.4"
 flume = "0.10"
 mizer-message-bus = { path = "../../../../util/bus" }

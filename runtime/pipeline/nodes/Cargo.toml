@@ -43,6 +43,6 @@ derive_more = "0.99"
 [dev-dependencies]
 mizer-node = { path = "../node", features = ["test"] }
 mizer-util = { path = "../../../util", features = ["test"] }
-test-case = "3.0"
+test-case = "3.1"
 insta = "1.23"
 plotters = { version = "0.3", default-features = false, features = ["svg_backend", "area_series"] }

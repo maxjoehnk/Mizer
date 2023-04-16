@@ -12,5 +12,5 @@ mizer-util = { path = "../../../../../util" }
 profiling = "1"
 
 [dev-dependencies]
-test-case = "3.0"
+test-case = "3.1"
 mizer-node = { path = "../../../node", features = ["test"] }

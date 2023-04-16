@@ -8,6 +8,7 @@ midi_device_profiles = "components/connections/protocols/midi/device-profiles/pr
 open_fixture_library = "components/fixtures/open-fixture-library/.fixtures"
 qlcplus = "components/fixtures/qlcplus/.fixtures"
 gdtf = "components/fixtures/gdtf/.fixtures"
+mizer = "components/fixtures/mizer-definitions/.fixtures"
 
 [hotkeys.global]
 layout_view = "f1"

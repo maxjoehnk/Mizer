@@ -1,0 +1,807 @@
+[definition]
+name = "LED Tube"
+manufacturer = "Max Jöhnk"
+tags = ["Pixel Bar"]
+
+[[mode]]
+name = "50 Pixels"
+
+[[mode.pixel]]
+name = "Pixel 1"
+channels = ["Red 1", "Green 1", "Blue 1"]
+
+[[mode.pixel]]
+name = "Pixel 2"
+channels = ["Red 2", "Green 2", "Blue 2"]
+
+[[mode.pixel]]
+name = "Pixel 3"
+channels = ["Red 3", "Green 3", "Blue 3"]
+
+[[mode.pixel]]
+name = "Pixel 4"
+channels = ["Red 4", "Green 4", "Blue 4"]
+
+[[mode.pixel]]
+name = "Pixel 5"
+channels = ["Red 5", "Green 5", "Blue 5"]
+
+[[mode.pixel]]
+name = "Pixel 6"
+channels = ["Red 6", "Green 6", "Blue 6"]
+
+[[mode.pixel]]
+name = "Pixel 7"
+channels = ["Red 7", "Green 7", "Blue 7"]
+
+[[mode.pixel]]
+name = "Pixel 8"
+channels = ["Red 8", "Green 8", "Blue 8"]
+
+[[mode.pixel]]
+name = "Pixel 9"
+channels = ["Red 9", "Green 9", "Blue 9"]
+
+[[mode.pixel]]
+name = "Pixel 10"
+channels = ["Red 10", "Green 10", "Blue 10"]
+
+[[mode.pixel]]
+name = "Pixel 11"
+channels = ["Red 11", "Green 11", "Blue 11"]
+
+[[mode.pixel]]
+name = "Pixel 12"
+channels = ["Red 12", "Green 12", "Blue 12"]
+
+[[mode.pixel]]
+name = "Pixel 13"
+channels = ["Red 13", "Green 13", "Blue 13"]
+
+[[mode.pixel]]
+name = "Pixel 14"
+channels = ["Red 14", "Green 14", "Blue 14"]
+
+[[mode.pixel]]
+name = "Pixel 15"
+channels = ["Red 15", "Green 15", "Blue 15"]
+
+[[mode.pixel]]
+name = "Pixel 16"
+channels = ["Red 16", "Green 16", "Blue 16"]
+
+[[mode.pixel]]
+name = "Pixel 17"
+channels = ["Red 17", "Green 17", "Blue 17"]
+
+[[mode.pixel]]
+name = "Pixel 18"
+channels = ["Red 18", "Green 18", "Blue 18"]
+
+[[mode.pixel]]
+name = "Pixel 19"
+channels = ["Red 19", "Green 19", "Blue 19"]
+
+[[mode.pixel]]
+name = "Pixel 20"
+channels = ["Red 20", "Green 20", "Blue 20"]
+
+[[mode.pixel]]
+name = "Pixel 21"
+channels = ["Red 21", "Green 21", "Blue 21"]
+
+[[mode.pixel]]
+name = "Pixel 22"
+channels = ["Red 22", "Green 22", "Blue 22"]
+
+[[mode.pixel]]
+name = "Pixel 23"
+channels = ["Red 23", "Green 23", "Blue 23"]
+
+[[mode.pixel]]
+name = "Pixel 24"
+channels = ["Red 24", "Green 24", "Blue 24"]
+
+[[mode.pixel]]
+name = "Pixel 25"
+channels = ["Red 25", "Green 25", "Blue 25"]
+
+[[mode.pixel]]
+name = "Pixel 26"
+channels = ["Red 26", "Green 26", "Blue 26"]
+
+[[mode.pixel]]
+name = "Pixel 27"
+channels = ["Red 27", "Green 27", "Blue 27"]
+
+[[mode.pixel]]
+name = "Pixel 28"
+channels = ["Red 28", "Green 28", "Blue 28"]
+
+[[mode.pixel]]
+name = "Pixel 29"
+channels = ["Red 29", "Green 29", "Blue 29"]
+
+[[mode.pixel]]
+name = "Pixel 30"
+channels = ["Red 30", "Green 30", "Blue 30"]
+
+[[mode.pixel]]
+name = "Pixel 31"
+channels = ["Red 31", "Green 31", "Blue 31"]
+
+[[mode.pixel]]
+name = "Pixel 32"
+channels = ["Red 32", "Green 32", "Blue 32"]
+
+[[mode.pixel]]
+name = "Pixel 33"
+channels = ["Red 33", "Green 33", "Blue 33"]
+
+[[mode.pixel]]
+name = "Pixel 34"
+channels = ["Red 34", "Green 34", "Blue 34"]
+
+[[mode.pixel]]
+name = "Pixel 35"
+channels = ["Red 35", "Green 35", "Blue 35"]
+
+[[mode.pixel]]
+name = "Pixel 36"
+channels = ["Red 36", "Green 36", "Blue 36"]
+
+[[mode.pixel]]
+name = "Pixel 37"
+channels = ["Red 37", "Green 37", "Blue 37"]
+
+[[mode.pixel]]
+name = "Pixel 38"
+channels = ["Red 38", "Green 38", "Blue 38"]
+
+[[mode.pixel]]
+name = "Pixel 39"
+channels = ["Red 39", "Green 39", "Blue 39"]
+
+[[mode.pixel]]
+name = "Pixel 40"
+channels = ["Red 40", "Green 40", "Blue 40"]
+
+[[mode.pixel]]
+name = "Pixel 41"
+channels = ["Red 41", "Green 41", "Blue 41"]
+
+[[mode.pixel]]
+name = "Pixel 42"
+channels = ["Red 42", "Green 42", "Blue 42"]
+
+[[mode.pixel]]
+name = "Pixel 43"
+channels = ["Red 43", "Green 43", "Blue 43"]
+
+[[mode.pixel]]
+name = "Pixel 44"
+channels = ["Red 44", "Green 44", "Blue 44"]
+
+[[mode.pixel]]
+name = "Pixel 45"
+channels = ["Red 45", "Green 45", "Blue 45"]
+
+[[mode.pixel]]
+name = "Pixel 46"
+channels = ["Red 46", "Green 46", "Blue 46"]
+
+[[mode.pixel]]
+name = "Pixel 47"
+channels = ["Red 47", "Green 47", "Blue 47"]
+
+[[mode.pixel]]
+name = "Pixel 48"
+channels = ["Red 48", "Green 48", "Blue 48"]
+
+[[mode.pixel]]
+name = "Pixel 49"
+channels = ["Red 49", "Green 49", "Blue 49"]
+
+[[mode.pixel]]
+name = "Pixel 50"
+channels = ["Red 50", "Green 50", "Blue 50"]
+
+[[channel]]
+name = "Red 1"
+control = "color_red"
+
+[[channel]]
+name = "Green 1"
+control = "color_green"
+
+[[channel]]
+name = "Blue 1"
+control = "color_blue"
+
+[[channel]]
+name = "Red 2"
+control = "color_red"
+
+[[channel]]
+name = "Green 2"
+control = "color_green"
+
+[[channel]]
+name = "Blue 2"
+control = "color_blue"
+
+[[channel]]
+name = "Red 3"
+control = "color_red"
+
+[[channel]]
+name = "Green 3"
+control = "color_green"
+
+[[channel]]
+name = "Blue 3"
+control = "color_blue"
+
+[[channel]]
+name = "Red 4"
+control = "color_red"
+
+[[channel]]
+name = "Green 4"
+control = "color_green"
+
+[[channel]]
+name = "Blue 4"
+control = "color_blue"
+
+[[channel]]
+name = "Red 5"
+control = "color_red"
+
+[[channel]]
+name = "Green 5"
+control = "color_green"
+
+[[channel]]
+name = "Blue 5"
+control = "color_blue"
+
+[[channel]]
+name = "Red 6"
+control = "color_red"
+
+[[channel]]
+name = "Green 6"
+control = "color_green"
+
+[[channel]]
+name = "Blue 6"
+control = "color_blue"
+
+[[channel]]
+name = "Red 7"
+control = "color_red"
+
+[[channel]]
+name = "Green 7"
+control = "color_green"
+
+[[channel]]
+name = "Blue 7"
+control = "color_blue"
+
+[[channel]]
+name = "Red 8"
+control = "color_red"
+
+[[channel]]
+name = "Green 8"
+control = "color_green"
+
+[[channel]]
+name = "Blue 8"
+control = "color_blue"
+
+[[channel]]
+name = "Red 9"
+control = "color_red"
+
+[[channel]]
+name = "Green 9"
+control = "color_green"
+
+[[channel]]
+name = "Blue 9"
+control = "color_blue"
+
+[[channel]]
+name = "Red 10"
+control = "color_red"
+
+[[channel]]
+name = "Green 10"
+control = "color_green"
+
+[[channel]]
+name = "Blue 10"
+control = "color_blue"
+
+[[channel]]
+name = "Red 11"
+control = "color_red"
+
+[[channel]]
+name = "Green 11"
+control = "color_green"
+
+[[channel]]
+name = "Blue 11"
+control = "color_blue"
+
+[[channel]]
+name = "Red 12"
+control = "color_red"
+
+[[channel]]
+name = "Green 12"
+control = "color_green"
+
+[[channel]]
+name = "Blue 12"
+control = "color_blue"
+
+[[channel]]
+name = "Red 13"
+control = "color_red"
+
+[[channel]]
+name = "Green 13"
+control = "color_green"
+
+[[channel]]
+name = "Blue 13"
+control = "color_blue"
+
+[[channel]]
+name = "Red 14"
+control = "color_red"
+
+[[channel]]
+name = "Green 14"
+control = "color_green"
+
+[[channel]]
+name = "Blue 14"
+control = "color_blue"
+
+[[channel]]
+name = "Red 15"
+control = "color_red"
+
+[[channel]]
+name = "Green 15"
+control = "color_green"
+
+[[channel]]
+name = "Blue 15"
+control = "color_blue"
+
+[[channel]]
+name = "Red 16"
+control = "color_red"
+
+[[channel]]
+name = "Green 16"
+control = "color_green"
+
+[[channel]]
+name = "Blue 16"
+control = "color_blue"
+
+[[channel]]
+name = "Red 17"
+control = "color_red"
+
+[[channel]]
+name = "Green 17"
+control = "color_green"
+
+[[channel]]
+name = "Blue 17"
+control = "color_blue"
+
+[[channel]]
+name = "Red 18"
+control = "color_red"
+
+[[channel]]
+name = "Green 18"
+control = "color_green"
+
+[[channel]]
+name = "Blue 18"
+control = "color_blue"
+
+[[channel]]
+name = "Red 19"
+control = "color_red"
+
+[[channel]]
+name = "Green 19"
+control = "color_green"
+
+[[channel]]
+name = "Blue 19"
+control = "color_blue"
+
+[[channel]]
+name = "Red 20"
+control = "color_red"
+
+[[channel]]
+name = "Green 20"
+control = "color_green"
+
+[[channel]]
+name = "Blue 20"
+control = "color_blue"
+
+[[channel]]
+name = "Red 21"
+control = "color_red"
+
+[[channel]]
+name = "Green 21"
+control = "color_green"
+
+[[channel]]
+name = "Blue 21"
+control = "color_blue"
+
+[[channel]]
+name = "Red 22"
+control = "color_red"
+
+[[channel]]
+name = "Green 22"
+control = "color_green"
+
+[[channel]]
+name = "Blue 22"
+control = "color_blue"
+
+[[channel]]
+name = "Red 23"
+control = "color_red"
+
+[[channel]]
+name = "Green 23"
+control = "color_green"
+
+[[channel]]
+name = "Blue 23"
+control = "color_blue"
+
+[[channel]]
+name = "Red 24"
+control = "color_red"
+
+[[channel]]
+name = "Green 24"
+control = "color_green"
+
+[[channel]]
+name = "Blue 24"
+control = "color_blue"
+
+[[channel]]
+name = "Red 25"
+control = "color_red"
+
+[[channel]]
+name = "Green 25"
+control = "color_green"
+
+[[channel]]
+name = "Blue 25"
+control = "color_blue"
+
+[[channel]]
+name = "Red 26"
+control = "color_red"
+
+[[channel]]
+name = "Green 26"
+control = "color_green"
+
+[[channel]]
+name = "Blue 26"
+control = "color_blue"
+
+[[channel]]
+name = "Red 27"
+control = "color_red"
+
+[[channel]]
+name = "Green 27"
+control = "color_green"
+
+[[channel]]
+name = "Blue 27"
+control = "color_blue"
+
+[[channel]]
+name = "Red 28"
+control = "color_red"
+
+[[channel]]
+name = "Green 28"
+control = "color_green"
+
+[[channel]]
+name = "Blue 28"
+control = "color_blue"
+
+[[channel]]
+name = "Red 29"
+control = "color_red"
+
+[[channel]]
+name = "Green 29"
+control = "color_green"
+
+[[channel]]
+name = "Blue 29"
+control = "color_blue"
+
+[[channel]]
+name = "Red 30"
+control = "color_red"
+
+[[channel]]
+name = "Green 30"
+control = "color_green"
+
+[[channel]]
+name = "Blue 30"
+control = "color_blue"
+
+[[channel]]
+name = "Red 31"
+control = "color_red"
+
+[[channel]]
+name = "Green 31"
+control = "color_green"
+
+[[channel]]
+name = "Blue 31"
+control = "color_blue"
+
+[[channel]]
+name = "Red 32"
+control = "color_red"
+
+[[channel]]
+name = "Green 32"
+control = "color_green"
+
+[[channel]]
+name = "Blue 32"
+control = "color_blue"
+
+[[channel]]
+name = "Red 33"
+control = "color_red"
+
+[[channel]]
+name = "Green 33"
+control = "color_green"
+
+[[channel]]
+name = "Blue 33"
+control = "color_blue"
+
+[[channel]]
+name = "Red 34"
+control = "color_red"
+
+[[channel]]
+name = "Green 34"
+control = "color_green"
+
+[[channel]]
+name = "Blue 34"
+control = "color_blue"
+
+[[channel]]
+name = "Red 35"
+control = "color_red"
+
+[[channel]]
+name = "Green 35"
+control = "color_green"
+
+[[channel]]
+name = "Blue 35"
+control = "color_blue"
+
+[[channel]]
+name = "Red 36"
+control = "color_red"
+
+[[channel]]
+name = "Green 36"
+control = "color_green"
+
+[[channel]]
+name = "Blue 36"
+control = "color_blue"
+
+[[channel]]
+name = "Red 37"
+control = "color_red"
+
+[[channel]]
+name = "Green 37"
+control = "color_green"
+
+[[channel]]
+name = "Blue 37"
+control = "color_blue"
+
+[[channel]]
+name = "Red 38"
+control = "color_red"
+
+[[channel]]
+name = "Green 38"
+control = "color_green"
+
+[[channel]]
+name = "Blue 38"
+control = "color_blue"
+
+[[channel]]
+name = "Red 39"
+control = "color_red"
+
+[[channel]]
+name = "Green 39"
+control = "color_green"
+
+[[channel]]
+name = "Blue 39"
+control = "color_blue"
+
+[[channel]]
+name = "Red 40"
+control = "color_red"
+
+[[channel]]
+name = "Green 40"
+control = "color_green"
+
+[[channel]]
+name = "Blue 40"
+control = "color_blue"
+
+[[channel]]
+name = "Red 41"
+control = "color_red"
+
+[[channel]]
+name = "Green 41"
+control = "color_green"
+
+[[channel]]
+name = "Blue 41"
+control = "color_blue"
+
+[[channel]]
+name = "Red 42"
+control = "color_red"
+
+[[channel]]
+name = "Green 42"
+control = "color_green"
+
+[[channel]]
+name = "Blue 42"
+control = "color_blue"
+
+[[channel]]
+name = "Red 43"
+control = "color_red"
+
+[[channel]]
+name = "Green 43"
+control = "color_green"
+
+[[channel]]
+name = "Blue 43"
+control = "color_blue"
+
+[[channel]]
+name = "Red 44"
+control = "color_red"
+
+[[channel]]
+name = "Green 44"
+control = "color_green"
+
+[[channel]]
+name = "Blue 44"
+control = "color_blue"
+
+[[channel]]
+name = "Red 45"
+control = "color_red"
+
+[[channel]]
+name = "Green 45"
+control = "color_green"
+
+[[channel]]
+name = "Blue 45"
+control = "color_blue"
+
+[[channel]]
+name = "Red 46"
+control = "color_red"
+
+[[channel]]
+name = "Green 46"
+control = "color_green"
+
+[[channel]]
+name = "Blue 46"
+control = "color_blue"
+
+[[channel]]
+name = "Red 47"
+control = "color_red"
+
+[[channel]]
+name = "Green 47"
+control = "color_green"
+
+[[channel]]
+name = "Blue 47"
+control = "color_blue"
+
+[[channel]]
+name = "Red 48"
+control = "color_red"
+
+[[channel]]
+name = "Green 48"
+control = "color_green"
+
+[[channel]]
+name = "Blue 48"
+control = "color_blue"
+
+[[channel]]
+name = "Red 49"
+control = "color_red"
+
+[[channel]]
+name = "Green 49"
+control = "color_green"
+
+[[channel]]
+name = "Blue 49"
+control = "color_blue"
+
+[[channel]]
+name = "Red 50"
+control = "color_red"
+
+[[channel]]
+name = "Green 50"
+control = "color_green"
+
+[[channel]]
+name = "Blue 50"
+control = "color_blue"

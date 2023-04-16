@@ -36,6 +36,7 @@ pub struct FixtureLibraryPaths {
     pub open_fixture_library: Option<PathBuf>,
     pub qlcplus: Option<PathBuf>,
     pub gdtf: Option<PathBuf>,
+    pub mizer: Option<PathBuf>,
 }
 
 impl Settings {

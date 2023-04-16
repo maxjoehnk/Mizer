@@ -15,6 +15,7 @@ members = [
     "components/fixtures",
     "components/fixtures/commands",
     "components/fixtures/gdtf",
+    "components/fixtures/mizer-definitions",
     "components/fixtures/open-fixture-library",
     "components/fixtures/qlcplus",
     "components/plan",
@@ -117,6 +118,7 @@ mizer-fixtures = { path = "components/fixtures" }
 mizer-gdtf-provider = { path = "components/fixtures/gdtf" }
 mizer-open-fixture-library-provider = { path = "components/fixtures/open-fixture-library" }
 mizer-qlcplus-provider = { path = "components/fixtures/qlcplus" }
+mizer-fixture-definition-provider = { path = "components/fixtures/mizer-definitions" }
 mizer-plan = { path = "components/plan" }
 mizer-pipeline = { path = "runtime/pipeline" }
 mizer-api = { path = "api" }

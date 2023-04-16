@@ -18,6 +18,10 @@ fn main() -> anyhow::Result<()> {
     )?;
     artifact.link_source("components/fixtures/qlcplus/.fixtures", "fixtures/qlcplus")?;
     artifact.link_source(
+        "components/fixtures/mizer-definitions/.fixtures",
+        "fixtures/mizer",
+    )?;
+    artifact.link_source(
         "components/connections/protocols/midi/device-profiles/profiles",
         "device-profiles/midi",
     )?;
@@ -28,6 +32,7 @@ fn main() -> anyhow::Result<()> {
         settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
         settings.paths.fixture_libraries.qlcplus = Some(PathBuf::from("fixtures/qlcplus"));
         settings.paths.fixture_libraries.gdtf = Some(PathBuf::from("fixtures/gdtf"));
+        settings.paths.fixture_libraries.mizer = Some(PathBuf::from("fixtures/mizer"));
     })?;
 
     Ok(())
@@ -48,6 +53,10 @@ fn main() -> anyhow::Result<()> {
         "Mizer.app/Contents/Resources/fixtures/qlcplus",
     )?;
     artifact.link_source(
+        "components/fixtures/mizer-definitions/.fixtures",
+        "fixtures/mizer",
+    )?;
+    artifact.link_source(
         "components/connections/protocols/midi/device-profiles/profiles",
         "Mizer.app/Contents/Resources/device-profiles/midi",
     )?;
@@ -61,6 +70,8 @@ fn main() -> anyhow::Result<()> {
             Some(PathBuf::from("Contents/Resources/fixtures/qlcplus"));
         settings.paths.fixture_libraries.gdtf =
             Some(PathBuf::from("Contents/Resources/fixtures/gdtf"));
+        settings.paths.fixture_libraries.mizer =
+            Some(PathBuf::from("Contents/Resources/fixtures/mizer"));
     })?;
 
     Ok(())

@@ -3,7 +3,7 @@
 //  source: settings.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -35,16 +35,18 @@ const PathSettings$json = const {
     const {'1': 'open_fixture_library', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'openFixtureLibrary', '17': true},
     const {'1': 'qlcplus', '3': 3, '4': 1, '5': 9, '9': 1, '10': 'qlcplus', '17': true},
     const {'1': 'gdtf', '3': 4, '4': 1, '5': 9, '9': 2, '10': 'gdtf', '17': true},
+    const {'1': 'mizer', '3': 5, '4': 1, '5': 9, '9': 3, '10': 'mizer', '17': true},
   ],
   '8': const [
     const {'1': '_open_fixture_library'},
     const {'1': '_qlcplus'},
     const {'1': '_gdtf'},
+    const {'1': '_mizer'},
   ],
 };
 
 /// Descriptor for `PathSettings`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pathSettingsDescriptor = $convert.base64Decode('CgxQYXRoU2V0dGluZ3MSMAoUbWlkaV9kZXZpY2VfcHJvZmlsZXMYASABKAlSEm1pZGlEZXZpY2VQcm9maWxlcxI1ChRvcGVuX2ZpeHR1cmVfbGlicmFyeRgCIAEoCUgAUhJvcGVuRml4dHVyZUxpYnJhcnmIAQESHQoHcWxjcGx1cxgDIAEoCUgBUgdxbGNwbHVziAEBEhcKBGdkdGYYBCABKAlIAlIEZ2R0ZogBAUIXChVfb3Blbl9maXh0dXJlX2xpYnJhcnlCCgoIX3FsY3BsdXNCBwoFX2dkdGY=');
+final $typed_data.Uint8List pathSettingsDescriptor = $convert.base64Decode('CgxQYXRoU2V0dGluZ3MSMAoUbWlkaV9kZXZpY2VfcHJvZmlsZXMYASABKAlSEm1pZGlEZXZpY2VQcm9maWxlcxI1ChRvcGVuX2ZpeHR1cmVfbGlicmFyeRgCIAEoCUgAUhJvcGVuRml4dHVyZUxpYnJhcnmIAQESHQoHcWxjcGx1cxgDIAEoCUgBUgdxbGNwbHVziAEBEhcKBGdkdGYYBCABKAlIAlIEZ2R0ZogBARIZCgVtaXplchgFIAEoCUgDUgVtaXplcogBAUIXChVfb3Blbl9maXh0dXJlX2xpYnJhcnlCCgoIX3FsY3BsdXNCBwoFX2dkdGZCCAoGX21pemVy');
 @$core.Deprecated('Use hotkeysDescriptor instead')
 const Hotkeys$json = const {
   '1': 'Hotkeys',

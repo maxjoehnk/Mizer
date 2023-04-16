@@ -301,6 +301,8 @@ pub struct PathSettings {
     pub qlcplus: ::std::option::Option<::std::string::String>,
     // @@protoc_insertion_point(field:mizer.settings.PathSettings.gdtf)
     pub gdtf: ::std::option::Option<::std::string::String>,
+    // @@protoc_insertion_point(field:mizer.settings.PathSettings.mizer)
+    pub mizer: ::std::option::Option<::std::string::String>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.settings.PathSettings.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -318,7 +320,7 @@ impl PathSettings {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut fields = ::std::vec::Vec::with_capacity(5);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "midi_device_profiles",
@@ -339,6 +341,11 @@ impl PathSettings {
             "gdtf",
             |m: &PathSettings| { &m.gdtf },
             |m: &mut PathSettings| { &mut m.gdtf },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "mizer",
+            |m: &PathSettings| { &m.mizer },
+            |m: &mut PathSettings| { &mut m.mizer },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<PathSettings>(
             "PathSettings",
@@ -370,6 +377,9 @@ impl ::protobuf::Message for PathSettings {
                 34 => {
                     self.gdtf = ::std::option::Option::Some(is.read_string()?);
                 },
+                42 => {
+                    self.mizer = ::std::option::Option::Some(is.read_string()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -394,6 +404,9 @@ impl ::protobuf::Message for PathSettings {
         if let Some(v) = self.gdtf.as_ref() {
             my_size += ::protobuf::rt::string_size(4, &v);
         }
+        if let Some(v) = self.mizer.as_ref() {
+            my_size += ::protobuf::rt::string_size(5, &v);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -411,6 +424,9 @@ impl ::protobuf::Message for PathSettings {
         }
         if let Some(v) = self.gdtf.as_ref() {
             os.write_string(4, v)?;
+        }
+        if let Some(v) = self.mizer.as_ref() {
+            os.write_string(5, v)?;
         }
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -433,6 +449,7 @@ impl ::protobuf::Message for PathSettings {
         self.open_fixture_library = ::std::option::Option::None;
         self.qlcplus = ::std::option::Option::None;
         self.gdtf = ::std::option::Option::None;
+        self.mizer = ::std::option::Option::None;
         self.special_fields.clear();
     }
 
@@ -442,6 +459,7 @@ impl ::protobuf::Message for PathSettings {
             open_fixture_library: ::std::option::Option::None,
             qlcplus: ::std::option::Option::None,
             gdtf: ::std::option::Option::None,
+            mizer: ::std::option::Option::None,
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -998,40 +1016,42 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \xa4\x01\n\x08Settings\x121\n\x07hotkeys\x18\x01\x20\x01(\x0b2\x17.mizer\
     .settings.HotkeysR\x07hotkeys\x122\n\x05paths\x18\x02\x20\x01(\x0b2\x1c.\
     mizer.settings.PathSettingsR\x05paths\x121\n\x07general\x18\x03\x20\x01(\
-    \x0b2\x17.mizer.settings.GeneralR\x07general\"\xdd\x01\n\x0cPathSettings\
+    \x0b2\x17.mizer.settings.GeneralR\x07general\"\x82\x02\n\x0cPathSettings\
     \x120\n\x14midi_device_profiles\x18\x01\x20\x01(\tR\x12midiDeviceProfile\
     s\x125\n\x14open_fixture_library\x18\x02\x20\x01(\tH\0R\x12openFixtureLi\
     brary\x88\x01\x01\x12\x1d\n\x07qlcplus\x18\x03\x20\x01(\tH\x01R\x07qlcpl\
     us\x88\x01\x01\x12\x17\n\x04gdtf\x18\x04\x20\x01(\tH\x02R\x04gdtf\x88\
-    \x01\x01B\x17\n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdt\
-    f\"\xdd\x07\n\x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03(\x0b2#.mizer.s\
-    ettings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07layouts\x18\x02\x20\x03\
-    (\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07layouts\x12G\n\nprogramm\
-    er\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.ProgrammerEntryR\nprogr\
-    ammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer.settings.Hotkeys.Nod\
-    esEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\".mizer.settings\
-    .Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\x20\x03(\x0b2&.m\
-    izer.settings.Hotkeys.SequencerEntryR\tsequencer\x125\n\x04plan\x18\x07\
-    \x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04plan\x12>\n\x07effe\
-    cts\x18\x08\x20\x03(\x0b2$.mizer.settings.Hotkeys.EffectsEntryR\x07effec\
-    ts\x1a9\n\x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\
-    \x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cLayouts\
-    Entry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fProgrammerEntry\x12\x10\n\
+    \x01\x01\x12\x19\n\x05mizer\x18\x05\x20\x01(\tH\x03R\x05mizer\x88\x01\
+    \x01B\x17\n\x15_open_fixture_libraryB\n\n\x08_qlcplusB\x07\n\x05_gdtfB\
+    \x08\n\x06_mizer\"\xdd\x07\n\x07Hotkeys\x12;\n\x06global\x18\x01\x20\x03\
+    (\x0b2#.mizer.settings.Hotkeys.GlobalEntryR\x06global\x12>\n\x07layouts\
+    \x18\x02\x20\x03(\x0b2$.mizer.settings.Hotkeys.LayoutsEntryR\x07layouts\
+    \x12G\n\nprogrammer\x18\x03\x20\x03(\x0b2'.mizer.settings.Hotkeys.Progra\
+    mmerEntryR\nprogrammer\x128\n\x05nodes\x18\x04\x20\x03(\x0b2\".mizer.set\
+    tings.Hotkeys.NodesEntryR\x05nodes\x128\n\x05patch\x18\x05\x20\x03(\x0b2\
+    \".mizer.settings.Hotkeys.PatchEntryR\x05patch\x12D\n\tsequencer\x18\x06\
+    \x20\x03(\x0b2&.mizer.settings.Hotkeys.SequencerEntryR\tsequencer\x125\n\
+    \x04plan\x18\x07\x20\x03(\x0b2!.mizer.settings.Hotkeys.PlanEntryR\x04pla\
+    n\x12>\n\x07effects\x18\x08\x20\x03(\x0b2$.mizer.settings.Hotkeys.Effect\
+    sEntryR\x07effects\x1a9\n\x0bGlobalEntry\x12\x10\n\x03key\x18\x01\x20\
+    \x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\
+    \x01\x1a:\n\x0cLayoutsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a=\n\x0fPro\
+    grammerEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05va\
+    lue\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\
     \x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\t\
-    R\x05value:\x028\x01\x1a8\n\nNodesEntry\x12\x10\n\x03key\x18\x01\x20\x01\
+    R\x05value:\x028\x01\x1a8\n\nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01\
     (\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\
-    \x1a8\n\nPatchEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\
-    \n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a<\n\x0eSequencerEn\
-    try\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
-    \x02\x20\x01(\tR\x05value:\x028\x01\x1a7\n\tPlanEntry\x12\x10\n\x03key\
-    \x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05va\
-    lue:\x028\x01\x1a:\n\x0cEffectsEntry\x12\x10\n\x03key\x18\x01\x20\x01(\t\
-    R\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\"%\n\
-    \x07General\x12\x1a\n\x08language\x18\x01\x20\x01(\tR\x08language2\x9c\
-    \x01\n\x0bSettingsApi\x12I\n\x0cLoadSettings\x12\x1f.mizer.settings.Requ\
-    estSettings\x1a\x18.mizer.settings.Settings\x12B\n\x0cSaveSettings\x12\
-    \x18.mizer.settings.Settings\x1a\x18.mizer.settings.Settingsb\x06proto3\
+    \x1a<\n\x0eSequencerEntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\
+    \x12\x14\n\x05value\x18\x02\x20\x01(\tR\x05value:\x028\x01\x1a7\n\tPlanE\
+    ntry\x12\x10\n\x03key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\
+    \x02\x20\x01(\tR\x05value:\x028\x01\x1a:\n\x0cEffectsEntry\x12\x10\n\x03\
+    key\x18\x01\x20\x01(\tR\x03key\x12\x14\n\x05value\x18\x02\x20\x01(\tR\
+    \x05value:\x028\x01\"%\n\x07General\x12\x1a\n\x08language\x18\x01\x20\
+    \x01(\tR\x08language2\x9c\x01\n\x0bSettingsApi\x12I\n\x0cLoadSettings\
+    \x12\x1f.mizer.settings.RequestSettings\x1a\x18.mizer.settings.Settings\
+    \x12B\n\x0cSaveSettings\x12\x18.mizer.settings.Settings\x1a\x18.mizer.se\
+    ttings.Settingsb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file

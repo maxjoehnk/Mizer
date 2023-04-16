@@ -1,3 +1,4 @@
+use mizer_fixture_definition_provider::MizerDefinitionsProvider;
 use mizer_fixtures::library::{FixtureLibrary, FixtureLibraryProvider};
 use mizer_gdtf_provider::GdtfProvider;
 use mizer_open_fixture_library_provider::OpenFixtureLibraryProvider;
@@ -31,10 +32,15 @@ impl FixtureLibrariesLoader {
     }
 
     pub fn get_providers(paths: &FixtureLibraryPaths) -> Vec<Box<dyn FixtureLibraryProvider>> {
-        [load_ofl_provider, load_gdtf_provider, load_qlcplus_provider]
-            .into_iter()
-            .filter_map(|loader| loader(paths))
-            .collect()
+        [
+            load_ofl_provider,
+            load_gdtf_provider,
+            load_qlcplus_provider,
+            load_mizer_provider,
+        ]
+        .into_iter()
+        .filter_map(|loader| loader(paths))
+        .collect()
     }
 }
 
@@ -59,5 +65,13 @@ fn load_qlcplus_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureL
         let qlcplus_provider = QlcPlusProvider::new(path.to_string_lossy().to_string());
 
         Box::new(qlcplus_provider) as Box<dyn FixtureLibraryProvider>
+    })
+}
+
+fn load_mizer_provider(paths: &FixtureLibraryPaths) -> Option<Box<dyn FixtureLibraryProvider>> {
+    paths.mizer.as_ref().map(|path| {
+        let mizer_provider = MizerDefinitionsProvider::new(path.to_string_lossy().to_string());
+
+        Box::new(mizer_provider) as Box<dyn FixtureLibraryProvider>
     })
 }

@@ -4037,6 +4037,7 @@ dependencies = [
  "mizer-connections",
  "mizer-devices",
  "mizer-execution-planner",
+ "mizer-fixture-definition-provider",
  "mizer-fixtures",
  "mizer-gdtf-provider",
  "mizer-layouts",
@@ -4319,6 +4320,20 @@ dependencies = [
  "regex",
  "serde",
  "test-case",
+]
+
+[[package]]
+name = "mizer-fixture-definition-provider"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "base64 0.21.0",
+ "log",
+ "mizer-fixtures",
+ "mizer-util",
+ "rayon",
+ "serde",
+ "toml 0.7.2",
 ]
 
 [[package]]

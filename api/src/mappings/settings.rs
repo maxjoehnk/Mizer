@@ -51,6 +51,7 @@ impl From<settings::FilePaths> for model::PathSettings {
                 .map(path_to_string),
             qlcplus: paths.fixture_libraries.qlcplus.map(path_to_string),
             gdtf: paths.fixture_libraries.gdtf.map(path_to_string),
+            mizer: paths.fixture_libraries.mizer.map(path_to_string),
             ..Default::default()
         }
     }
@@ -96,6 +97,7 @@ impl From<model::PathSettings> for settings::FilePaths {
                 gdtf: paths.gdtf.map(PathBuf::from),
                 open_fixture_library: paths.open_fixture_library.map(PathBuf::from),
                 qlcplus: paths.qlcplus.map(PathBuf::from),
+                mizer: paths.mizer.map(PathBuf::from),
             },
             midi_device_profiles: PathBuf::from(paths.midi_device_profiles),
         }

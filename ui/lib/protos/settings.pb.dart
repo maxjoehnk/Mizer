@@ -3,7 +3,7 @@
 //  source: settings.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -125,6 +125,7 @@ class PathSettings extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'openFixtureLibrary')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'qlcplus')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gdtf')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mizer')
     ..hasRequiredFields = false
   ;
 
@@ -134,6 +135,7 @@ class PathSettings extends $pb.GeneratedMessage {
     $core.String? openFixtureLibrary,
     $core.String? qlcplus,
     $core.String? gdtf,
+    $core.String? mizer,
   }) {
     final _result = create();
     if (midiDeviceProfiles != null) {
@@ -147,6 +149,9 @@ class PathSettings extends $pb.GeneratedMessage {
     }
     if (gdtf != null) {
       _result.gdtf = gdtf;
+    }
+    if (mizer != null) {
+      _result.mizer = mizer;
     }
     return _result;
   }
@@ -206,6 +211,15 @@ class PathSettings extends $pb.GeneratedMessage {
   $core.bool hasGdtf() => $_has(3);
   @$pb.TagNumber(4)
   void clearGdtf() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get mizer => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set mizer($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMizer() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMizer() => clearField(5);
 }
 
 class Hotkeys extends $pb.GeneratedMessage {

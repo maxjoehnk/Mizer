@@ -20,6 +20,7 @@ message PathSettings {
   optional string open_fixture_library = 2;
   optional string qlcplus = 3;
   optional string gdtf = 4;
+  optional string mizer = 5;
 }
 
 message Hotkeys {

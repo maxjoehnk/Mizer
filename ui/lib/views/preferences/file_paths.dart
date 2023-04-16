@@ -16,39 +16,62 @@ class PathSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, Settings>(builder: (context, settings) {
       return Column(mainAxisSize: MainAxisSize.min, children: [
-        PathSetting(label: "Midi Device Profiles".i18n, value: settings.paths.midiDeviceProfiles, update: (path) {
-          SettingsBloc bloc = context.read();
-          bloc.add(UpdateSettings((settings) {
-            settings.paths.midiDeviceProfiles = path;
+        PathSetting(
+            label: "Midi Device Profiles".i18n,
+            value: settings.paths.midiDeviceProfiles,
+            update: (path) {
+              SettingsBloc bloc = context.read();
+              bloc.add(UpdateSettings((settings) {
+                settings.paths.midiDeviceProfiles = path;
 
-            return settings;
-          }));
-        }),
+                return settings;
+              }));
+            }),
         PreferencesCategory(label: "Fixture Libraries".i18n, children: [
-          PathSetting(label: "Open Fixture Library".i18n, value: settings.paths.openFixtureLibrary, update: (path) {
-            SettingsBloc bloc = context.read();
-            bloc.add(UpdateSettings((settings) {
-              settings.paths.openFixtureLibrary = path;
+          PathSetting(
+              label: "Open Fixture Library".i18n,
+              value: settings.paths.openFixtureLibrary,
+              update: (path) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.paths.openFixtureLibrary = path;
 
-              return settings;
-            }));
-          }),
-          PathSetting(label: "QLC+".i18n, value: settings.paths.qlcplus, update: (path) {
-            SettingsBloc bloc = context.read();
-            bloc.add(UpdateSettings((settings) {
-              settings.paths.qlcplus = path;
+                  return settings;
+                }));
+              }),
+          PathSetting(
+              label: "QLC+".i18n,
+              value: settings.paths.qlcplus,
+              update: (path) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.paths.qlcplus = path;
 
-              return settings;
-            }));
-          }),
-          PathSetting(label: "GDTF".i18n, value: settings.paths.gdtf, update: (path) {
-            SettingsBloc bloc = context.read();
-            bloc.add(UpdateSettings((settings) {
-              settings.paths.gdtf = path;
+                  return settings;
+                }));
+              }),
+          PathSetting(
+              label: "GDTF".i18n,
+              value: settings.paths.gdtf,
+              update: (path) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.paths.gdtf = path;
 
-              return settings;
-            }));
-          }),
+                  return settings;
+                }));
+              }),
+          PathSetting(
+              label: "Mizer".i18n,
+              value: settings.paths.mizer,
+              update: (path) {
+                SettingsBloc bloc = context.read();
+                bloc.add(UpdateSettings((settings) {
+                  settings.paths.mizer = path;
+
+                  return settings;
+                }));
+              }),
         ])
       ]);
     });
@@ -60,7 +83,8 @@ class PathSetting extends StatefulWidget {
   final String value;
   final Function(String) update;
 
-  const PathSetting({required this.label, required this.value, required this.update, Key? key}) : super(key: key);
+  const PathSetting({required this.label, required this.value, required this.update, Key? key})
+      : super(key: key);
 
   @override
   State<PathSetting> createState() => _PathSettingState();

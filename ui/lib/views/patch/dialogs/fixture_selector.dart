@@ -24,7 +24,9 @@ class _FixtureSelectorState extends State<FixtureSelector> {
   void initState() {
     super.initState();
     if (widget.definition != null) {
-      this.manufacturer = widget.definitions.groupByManufacturer().firstWhere((group) => group.name == widget.definition!.manufacturer);
+      this.manufacturer = widget.definitions
+          .groupByManufacturer()
+          .firstWhere((group) => group.name == widget.definition!.manufacturer);
     }
     this.definition = widget.definition;
     this.mode = widget.mode;
@@ -43,13 +45,19 @@ class _FixtureSelectorState extends State<FixtureSelector> {
                 .map(_manufacturerItem)
                 .toList()),
         _FixtureSelectorColumn(
-            label: "Fixtures",
-            children: manufacturer?.definitions.map(_definitionItem).toList() ?? []),
+            label: "Fixtures", children: _definitions.map(_definitionItem).toList()),
         _FixtureSelectorColumn(
             label: "Modes", children: definition?.modes.map(_modeItem).toList() ?? []),
         _SelectedFixtureMode(definition, mode)
       ],
     );
+  }
+
+  List<FixtureDefinition> get _definitions {
+    if (manufacturer == null) {
+      return widget.definitions.definitions;
+    }
+    return manufacturer!.definitions;
   }
 
   FixtureColumnEntry _manufacturerItem(_ManufacturerGroup manufacturer) {
@@ -188,7 +196,8 @@ extension _FixtureDefinitionGrouping on FixtureDefinitions? {
     if (this == null) {
       return [];
     }
-    var groupedDefinitions = groupBy<FixtureDefinition, String>(this!.definitions, (d) => d.manufacturer);
+    var groupedDefinitions =
+        groupBy<FixtureDefinition, String>(this!.definitions, (d) => d.manufacturer);
 
     return groupedDefinitions
         .mapToList((manufacturer, definitions) => _ManufacturerGroup(manufacturer, definitions));

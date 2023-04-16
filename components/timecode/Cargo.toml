@@ -18,5 +18,5 @@ dashmap = "5.4"
 mizer-util = { path = "../../util" }
 
 [dev-dependencies]
-test-case = "2.2"
+test-case = "3.1"
 plotters = { version = "0.3", default-features = false, features = ["svg_backend", "line_series"] }

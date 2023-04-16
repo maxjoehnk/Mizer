@@ -10,4 +10,4 @@ mizer-injector = { path = "../injector" }
 mizer-debug-ui = { path = "../debug-ui" }
 
 [dev-dependencies]
-test-case = "3.0"
+test-case = "3.1"

@@ -29,4 +29,4 @@ symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 rsmpeg = { version = "0.14.1+ffmpeg.6.0", features = ["link_system_ffmpeg"] }
 
 [dev-dependencies]
-test-case = "3.0"
+test-case = "3.1"

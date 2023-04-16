@@ -29,6 +29,6 @@ rand = "0.8"
 itertools = "0.10"
 
 [dev-dependencies]
-test-case = "3.0"
+test-case = "3.1"
 spectral = { version = "0.6.0", default-features = false }
 mockall = "0.11"

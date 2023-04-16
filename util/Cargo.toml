@@ -20,4 +20,4 @@ serde = { version = "1", features = ["derive"] }
 bezier-rs = "0.1"
 
 [dev-dependencies]
-test-case = "3.0"
+test-case = "3.1"

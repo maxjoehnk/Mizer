@@ -11,4 +11,4 @@ mizer-node = { path = "../../../node" }
 serde = { version = "1", features = ["derive"] }
 
 [dev-dependencies]
-test-case = "3.0"
+test-case = "3.1"

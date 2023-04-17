@@ -18,7 +18,7 @@ futures = "0.3"
 flume = "0.10"
 async-std = "1.12"
 tide = { version = "0.16", default-features = false, features = ["h1-server", "logger"] }
-multer = "2.0"
+multer = "2.1"
 async-walkdir = "0.2"
 resvg = "0.30"
 usvg = "0.30"

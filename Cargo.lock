@@ -6110,9 +6110,9 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "pinboard"
-version = "2.1.0"
+version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6502324eee9cd4cd7dc8f22b0ed7683185a09e9ddcc0ac3028e010e2721662a3"
+checksum = "1fd5f86cbd9a742b934e6d0917ab0005988c480807913b05f4357ebf4e2a739e"
 dependencies = [
  "crossbeam-epoch",
 ]

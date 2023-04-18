@@ -7,7 +7,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1"
 log = "0.4"
-pinboard = "2.1"
+pinboard = "2.2"
 dashmap = "5"
 downcast = "0.11"
 flume = "0.10"

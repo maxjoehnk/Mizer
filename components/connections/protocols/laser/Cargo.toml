@@ -12,4 +12,4 @@ helios-dac = { version = "0.2", features = ["native"], default-features = false 
 ether-dream = "0.2"
 lasy = "0.4"
 ilda-idtf = "0.1"
-pinboard = "2.1"
+pinboard = "2.2"

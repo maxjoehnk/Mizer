@@ -18,7 +18,7 @@ mizer-ports = { path = "../ports" }
 mizer-injector = { path = "../../injector" }
 mizer-util = { path = "../../../util" }
 downcast = "0.11"
-pinboard = "2.1"
+pinboard = "2.2"
 
 [dev-dependencies]
 test-case = "3.1"

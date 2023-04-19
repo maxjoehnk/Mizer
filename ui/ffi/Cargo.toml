@@ -8,7 +8,7 @@ name = "mizer_ui_ffi"
 crate-type = ["cdylib", "lib"]
 
 [dependencies]
-pinboard = "2.1"
+pinboard = "2.2"
 mizer-sequencer = { path = "../../components/sequencer" }
 mizer-clock = { path = "../../runtime/clock" }
 mizer-fixtures = { path = "../../components/fixtures" }

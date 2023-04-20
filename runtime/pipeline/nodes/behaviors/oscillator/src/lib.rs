@@ -184,7 +184,7 @@ impl OscillatorContext {
     }
 
     fn tick(&self, beat: f64) -> f64 {
-        if self.interval == 0. {
+        if self.interval - f64::EPSILON <= 0. {
             return self.min;
         }
         match &self.oscillator_type {
@@ -335,6 +335,22 @@ mod tests {
         let node = OscillatorContext {
             oscillator_type: oscillator,
             interval: 0.,
+            ..Default::default()
+        };
+
+        let value = node.tick(1.);
+
+        assert_eq!(0., value);
+    }
+
+    #[test_case(OscillatorType::Sine)]
+    #[test_case(OscillatorType::Saw)]
+    #[test_case(OscillatorType::Triangle)]
+    #[test_case(OscillatorType::Square)]
+    fn oscillator_should_return_0_for_interval_below_0(oscillator: OscillatorType) {
+        let node = OscillatorContext {
+            oscillator_type: oscillator,
+            interval: -0.1,
             ..Default::default()
         };
 

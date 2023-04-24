@@ -19,6 +19,8 @@ service ProgrammerApi {
   rpc AddGroup (AddGroupRequest) returns (Group) {}
   rpc AssignFixturesToGroup (AssignFixturesToGroupRequest) returns (AssignFixturesToGroupResponse) {}
   rpc AssignFixtureSelectionToGroup (AssignFixtureSelectionToGroupRequest) returns (AssignFixturesToGroupResponse) {}
+  rpc WriteEffectRate (WriteEffectRateRequest) returns (WriteEffectRateResponse) {}
+  rpc WriteEffectOffset (WriteEffectOffsetRequest) returns (WriteEffectOffsetResponse) {}
 }
 
 message SubscribeProgrammerRequest {}
@@ -33,6 +35,7 @@ message ProgrammerState {
   uint32 block_size = 7;
   uint32 groups = 8;
   uint32 wings = 9;
+  repeated EffectProgrammerState effects = 10;
 }
 
 message FixtureSelection {
@@ -63,6 +66,26 @@ message ProgrammerChannel {
     double value = 2;
   }
 }
+
+message EffectProgrammerState {
+  uint32 effectId = 1;
+  double effectRate = 2;
+  optional double effectOffset = 3;
+}
+
+message WriteEffectRateRequest {
+  uint32 effectId = 1;
+  double effectRate = 2;
+}
+
+message WriteEffectRateResponse {}
+
+message WriteEffectOffsetRequest {
+  uint32 effectId = 1;
+  optional double effectOffset = 2;
+}
+
+message WriteEffectOffsetResponse {}
 
 message WriteControlRequest {
   mizer.fixtures.FixtureControl control = 1;

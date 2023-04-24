@@ -1,7 +1,8 @@
-use crate::models::fixtures::FixtureId;
-use mizer_sequencer::SequencerValue;
 use protobuf::{EnumOrUnknown, MessageField};
 
+use mizer_sequencer::{SequencerTime, SequencerValue};
+
+use crate::models::fixtures::FixtureId;
 use crate::models::sequencer::*;
 
 impl From<mizer_sequencer::Sequence> for Sequence {
@@ -28,9 +29,8 @@ impl From<mizer_sequencer::Cue> for Cue {
                 time: cue.trigger_time.map(|time| time.into()).into(),
                 ..Default::default()
             }),
-            // field_loop: matches!(cue.loop_mode, mizer_sequencer::LoopMode::JumpTo(_)),
             controls: cue.controls.into_iter().map(CueControl::from).collect(),
-            // effects: cue.effects.into_iter().map(CueEffect::from).collect(),
+            effects: cue.effects.into_iter().map(CueEffect::from).collect(),
             cue_timings: MessageField::some(CueTimings {
                 fade: MessageField::some(CueTimer::from(cue.cue_fade)),
                 delay: MessageField::some(CueTimer::from(cue.cue_delay)),
@@ -237,6 +237,22 @@ impl From<mizer_fixtures::definition::FixtureFaderControl> for cue_control::Type
             ColorMixer(ColorChannel::Blue) => Self::COLOR_BLUE,
             ColorWheel => Self::COLOR_WHEEL,
             Generic(_) => Self::GENERIC,
+        }
+    }
+}
+
+impl From<mizer_sequencer::CueEffect> for CueEffect {
+    fn from(effect: mizer_sequencer::CueEffect) -> Self {
+        Self {
+            effect_id: effect.effect,
+            effect_offsets: effect.effect_offset.and_then(|time| {
+                if let SequencerTime::Beats(value) = time {
+                    Some(value)
+                } else {
+                    None
+                }
+            }),
+            ..Default::default()
         }
     }
 }

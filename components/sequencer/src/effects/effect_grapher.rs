@@ -52,6 +52,7 @@ fn run_effect(
             .collect::<Vec<_>>()
             .into(),
         1f64,
+        None,
     );
     let frames = effect
         .channels

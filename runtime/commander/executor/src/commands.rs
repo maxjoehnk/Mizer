@@ -99,6 +99,7 @@ command_impl! {
     RenameCueCommand,
     UpdateControlDelayTimeCommand,
     UpdateControlFadeTimeCommand,
+    UpdateCueEffectOffsetCommand,
     UpdateCueTriggerCommand,
     UpdateCueTriggerTimeCommand,
     UpdateCueValueCommand,

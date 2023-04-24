@@ -150,6 +150,8 @@ pub struct ProgrammerState {
     pub groups: u32,
     // @@protoc_insertion_point(field:mizer.programmer.ProgrammerState.wings)
     pub wings: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.ProgrammerState.effects)
+    pub effects: ::std::vec::Vec<EffectProgrammerState>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.programmer.ProgrammerState.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -167,7 +169,7 @@ impl ProgrammerState {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(9);
+        let mut fields = ::std::vec::Vec::with_capacity(10);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
             "fixtures",
@@ -213,6 +215,11 @@ impl ProgrammerState {
             "wings",
             |m: &ProgrammerState| { &m.wings },
             |m: &mut ProgrammerState| { &mut m.wings },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "effects",
+            |m: &ProgrammerState| { &m.effects },
+            |m: &mut ProgrammerState| { &mut m.effects },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<ProgrammerState>(
             "ProgrammerState",
@@ -262,6 +269,9 @@ impl ::protobuf::Message for ProgrammerState {
                 72 => {
                     self.wings = is.read_uint32()?;
                 },
+                82 => {
+                    self.effects.push(is.read_message()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -305,6 +315,10 @@ impl ::protobuf::Message for ProgrammerState {
         if self.wings != 0 {
             my_size += ::protobuf::rt::uint32_size(9, self.wings);
         }
+        for value in &self.effects {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -338,6 +352,9 @@ impl ::protobuf::Message for ProgrammerState {
         if self.wings != 0 {
             os.write_uint32(9, self.wings)?;
         }
+        for v in &self.effects {
+            ::protobuf::rt::write_message_field_with_cached_size(10, v, os)?;
+        };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -364,6 +381,7 @@ impl ::protobuf::Message for ProgrammerState {
         self.block_size = 0;
         self.groups = 0;
         self.wings = 0;
+        self.effects.clear();
         self.special_fields.clear();
     }
 
@@ -378,6 +396,7 @@ impl ::protobuf::Message for ProgrammerState {
             block_size: 0,
             groups: 0,
             wings: 0,
+            effects: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -1205,6 +1224,650 @@ pub mod programmer_channel {
             ::protobuf::reflect::GeneratedEnumDescriptorData::new::<ColorChannel>("ProgrammerChannel.ColorChannel")
         }
     }
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.EffectProgrammerState)
+pub struct EffectProgrammerState {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.programmer.EffectProgrammerState.effectId)
+    pub effectId: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.EffectProgrammerState.effectRate)
+    pub effectRate: f64,
+    // @@protoc_insertion_point(field:mizer.programmer.EffectProgrammerState.effectOffset)
+    pub effectOffset: ::std::option::Option<f64>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.EffectProgrammerState.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a EffectProgrammerState {
+    fn default() -> &'a EffectProgrammerState {
+        <EffectProgrammerState as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl EffectProgrammerState {
+    pub fn new() -> EffectProgrammerState {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(3);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effectId",
+            |m: &EffectProgrammerState| { &m.effectId },
+            |m: &mut EffectProgrammerState| { &mut m.effectId },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effectRate",
+            |m: &EffectProgrammerState| { &m.effectRate },
+            |m: &mut EffectProgrammerState| { &mut m.effectRate },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "effectOffset",
+            |m: &EffectProgrammerState| { &m.effectOffset },
+            |m: &mut EffectProgrammerState| { &mut m.effectOffset },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<EffectProgrammerState>(
+            "EffectProgrammerState",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for EffectProgrammerState {
+    const NAME: &'static str = "EffectProgrammerState";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.effectId = is.read_uint32()?;
+                },
+                17 => {
+                    self.effectRate = is.read_double()?;
+                },
+                25 => {
+                    self.effectOffset = ::std::option::Option::Some(is.read_double()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.effectId != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.effectId);
+        }
+        if self.effectRate != 0. {
+            my_size += 1 + 8;
+        }
+        if let Some(v) = self.effectOffset {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.effectId != 0 {
+            os.write_uint32(1, self.effectId)?;
+        }
+        if self.effectRate != 0. {
+            os.write_double(2, self.effectRate)?;
+        }
+        if let Some(v) = self.effectOffset {
+            os.write_double(3, v)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> EffectProgrammerState {
+        EffectProgrammerState::new()
+    }
+
+    fn clear(&mut self) {
+        self.effectId = 0;
+        self.effectRate = 0.;
+        self.effectOffset = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static EffectProgrammerState {
+        static instance: EffectProgrammerState = EffectProgrammerState {
+            effectId: 0,
+            effectRate: 0.,
+            effectOffset: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for EffectProgrammerState {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("EffectProgrammerState").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for EffectProgrammerState {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for EffectProgrammerState {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.WriteEffectRateRequest)
+pub struct WriteEffectRateRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.programmer.WriteEffectRateRequest.effectId)
+    pub effectId: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.WriteEffectRateRequest.effectRate)
+    pub effectRate: f64,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.WriteEffectRateRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a WriteEffectRateRequest {
+    fn default() -> &'a WriteEffectRateRequest {
+        <WriteEffectRateRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteEffectRateRequest {
+    pub fn new() -> WriteEffectRateRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effectId",
+            |m: &WriteEffectRateRequest| { &m.effectId },
+            |m: &mut WriteEffectRateRequest| { &mut m.effectId },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effectRate",
+            |m: &WriteEffectRateRequest| { &m.effectRate },
+            |m: &mut WriteEffectRateRequest| { &mut m.effectRate },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WriteEffectRateRequest>(
+            "WriteEffectRateRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for WriteEffectRateRequest {
+    const NAME: &'static str = "WriteEffectRateRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.effectId = is.read_uint32()?;
+                },
+                17 => {
+                    self.effectRate = is.read_double()?;
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.effectId != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.effectId);
+        }
+        if self.effectRate != 0. {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.effectId != 0 {
+            os.write_uint32(1, self.effectId)?;
+        }
+        if self.effectRate != 0. {
+            os.write_double(2, self.effectRate)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> WriteEffectRateRequest {
+        WriteEffectRateRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.effectId = 0;
+        self.effectRate = 0.;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static WriteEffectRateRequest {
+        static instance: WriteEffectRateRequest = WriteEffectRateRequest {
+            effectId: 0,
+            effectRate: 0.,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for WriteEffectRateRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("WriteEffectRateRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for WriteEffectRateRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteEffectRateRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.WriteEffectRateResponse)
+pub struct WriteEffectRateResponse {
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.WriteEffectRateResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a WriteEffectRateResponse {
+    fn default() -> &'a WriteEffectRateResponse {
+        <WriteEffectRateResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteEffectRateResponse {
+    pub fn new() -> WriteEffectRateResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WriteEffectRateResponse>(
+            "WriteEffectRateResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for WriteEffectRateResponse {
+    const NAME: &'static str = "WriteEffectRateResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> WriteEffectRateResponse {
+        WriteEffectRateResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static WriteEffectRateResponse {
+        static instance: WriteEffectRateResponse = WriteEffectRateResponse {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for WriteEffectRateResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("WriteEffectRateResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for WriteEffectRateResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteEffectRateResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.WriteEffectOffsetRequest)
+pub struct WriteEffectOffsetRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.programmer.WriteEffectOffsetRequest.effectId)
+    pub effectId: u32,
+    // @@protoc_insertion_point(field:mizer.programmer.WriteEffectOffsetRequest.effectOffset)
+    pub effectOffset: ::std::option::Option<f64>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.WriteEffectOffsetRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a WriteEffectOffsetRequest {
+    fn default() -> &'a WriteEffectOffsetRequest {
+        <WriteEffectOffsetRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteEffectOffsetRequest {
+    pub fn new() -> WriteEffectOffsetRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(2);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effectId",
+            |m: &WriteEffectOffsetRequest| { &m.effectId },
+            |m: &mut WriteEffectOffsetRequest| { &mut m.effectId },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "effectOffset",
+            |m: &WriteEffectOffsetRequest| { &m.effectOffset },
+            |m: &mut WriteEffectOffsetRequest| { &mut m.effectOffset },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WriteEffectOffsetRequest>(
+            "WriteEffectOffsetRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for WriteEffectOffsetRequest {
+    const NAME: &'static str = "WriteEffectOffsetRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.effectId = is.read_uint32()?;
+                },
+                17 => {
+                    self.effectOffset = ::std::option::Option::Some(is.read_double()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.effectId != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.effectId);
+        }
+        if let Some(v) = self.effectOffset {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.effectId != 0 {
+            os.write_uint32(1, self.effectId)?;
+        }
+        if let Some(v) = self.effectOffset {
+            os.write_double(2, v)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> WriteEffectOffsetRequest {
+        WriteEffectOffsetRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.effectId = 0;
+        self.effectOffset = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static WriteEffectOffsetRequest {
+        static instance: WriteEffectOffsetRequest = WriteEffectOffsetRequest {
+            effectId: 0,
+            effectOffset: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for WriteEffectOffsetRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("WriteEffectOffsetRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for WriteEffectOffsetRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteEffectOffsetRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.programmer.WriteEffectOffsetResponse)
+pub struct WriteEffectOffsetResponse {
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.programmer.WriteEffectOffsetResponse.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a WriteEffectOffsetResponse {
+    fn default() -> &'a WriteEffectOffsetResponse {
+        <WriteEffectOffsetResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl WriteEffectOffsetResponse {
+    pub fn new() -> WriteEffectOffsetResponse {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(0);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<WriteEffectOffsetResponse>(
+            "WriteEffectOffsetResponse",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for WriteEffectOffsetResponse {
+    const NAME: &'static str = "WriteEffectOffsetResponse";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> WriteEffectOffsetResponse {
+        WriteEffectOffsetResponse::new()
+    }
+
+    fn clear(&mut self) {
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static WriteEffectOffsetResponse {
+        static instance: WriteEffectOffsetResponse = WriteEffectOffsetResponse {
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for WriteEffectOffsetResponse {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("WriteEffectOffsetResponse").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for WriteEffectOffsetResponse {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for WriteEffectOffsetResponse {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
@@ -5324,7 +5987,7 @@ impl ::protobuf::reflect::ProtobufValue for AssignFixturesToGroupResponse {
 
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x10programmer.proto\x12\x10mizer.programmer\x1a\x0efixtures.proto\"\
-    \x1c\n\x1aSubscribeProgrammerRequest\"\x9f\x03\n\x0fProgrammerState\x125\
+    \x1c\n\x1aSubscribeProgrammerRequest\"\xe2\x03\n\x0fProgrammerState\x125\
     \n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fi\
     xtures\x12B\n\x0factive_fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixture\
     s.FixtureIdR\x0eactiveFixtures\x12#\n\ractive_groups\x18\x03\x20\x03(\rR\
@@ -5333,89 +5996,103 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     2#.mizer.programmer.ProgrammerChannelR\x08controls\x12\x1c\n\thighlight\
     \x18\x06\x20\x01(\x08R\thighlight\x12\x1d\n\nblock_size\x18\x07\x20\x01(\
     \rR\tblockSize\x12\x16\n\x06groups\x18\x08\x20\x01(\rR\x06groups\x12\x14\
-    \n\x05wings\x18\t\x20\x01(\rR\x05wings\"\xb2\x01\n\x10FixtureSelection\
-    \x12Q\n\x08fixtures\x18\x01\x20\x03(\x0b25.mizer.programmer.FixtureSelec\
-    tion.GroupedFixtureListR\x08fixtures\x1aK\n\x12GroupedFixtureList\x125\n\
-    \x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixt\
-    ures\"\x96\x03\n\x11ProgrammerChannel\x125\n\x08fixtures\x18\x01\x20\x03\
-    (\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\x128\n\x07control\x18\
-    \x02\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\x07control\x12\x16\
-    \n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fader\x129\n\x05color\x18\x04\
-    \x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\x05color\x12L\n\x07\
-    generic\x18\x05\x20\x01(\x0b20.mizer.programmer.ProgrammerChannel.Generi\
-    cValueH\0R\x07generic\x1a8\n\x0cGenericValue\x12\x12\n\x04name\x18\x01\
-    \x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\x01(\x01R\x05value\"\
-    ,\n\x0cColorChannel\x12\x07\n\x03Red\x10\0\x12\t\n\x05Green\x10\x01\x12\
-    \x08\n\x04Blue\x10\x02B\x07\n\x05value\"\xb5\x02\n\x13WriteControlReques\
-    t\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureCont\
-    rolR\x07control\x12\x16\n\x05fader\x18\x02\x20\x01(\x01H\0R\x05fader\x12\
-    9\n\x05color\x18\x03\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\
-    \x05color\x12N\n\x07generic\x18\x04\x20\x01(\x0b22.mizer.programmer.Writ\
-    eControlRequest.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\x12\
-    \x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\x01R\x05valueB\x07\n\x05value\"\x16\n\x14WriteControlResponse\
-    \"N\n\x15SelectFixturesRequest\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\
-    \x19.mizer.fixtures.FixtureIdR\x08fixtures\"\x18\n\x16SelectFixturesResp\
-    onse\"P\n\x17UnselectFixturesRequest\x125\n\x08fixtures\x18\x01\x20\x03(\
-    \x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"\x1a\n\x18UnselectFixtu\
-    resResponse\"\x0e\n\x0cClearRequest\"\x0f\n\rClearResponse\"0\n\x10Highl\
-    ightRequest\x12\x1c\n\thighlight\x18\x01\x20\x01(\x08R\thighlight\"\x13\
-    \n\x11HighlightResponse\"\xc8\x01\n\x0cStoreRequest\x12\x1f\n\x0bsequenc\
-    e_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\nstore_mode\x18\x02\x20\x01(\
-    \x0e2#.mizer.programmer.StoreRequest.ModeR\tstoreMode\x12\x1a\n\x06cue_i\
-    d\x18\x03\x20\x01(\rH\0R\x05cueId\x88\x01\x01\",\n\x04Mode\x12\r\n\tOver\
-    write\x10\0\x12\t\n\x05Merge\x10\x01\x12\n\n\x06AddCue\x10\x02B\t\n\x07_\
-    cue_id\"\x0f\n\rStoreResponse\"\x10\n\x0ePresetsRequest\"\x98\x01\n\x08P\
-    resetId\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x129\n\x04type\x18\x02\
-    \x20\x01(\x0e2%.mizer.programmer.PresetId.PresetTypeR\x04type\"A\n\nPres\
-    etType\x12\r\n\tIntensity\x10\0\x12\x0b\n\x07Shutter\x10\x01\x12\t\n\x05\
-    Color\x10\x02\x12\x0c\n\x08Position\x10\x03\"\xdf\x01\n\x07Presets\x12:\
-    \n\x0bintensities\x18\x01\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x0b\
-    intensities\x122\n\x07shutter\x18\x02\x20\x03(\x0b2\x18.mizer.programmer\
-    .PresetR\x07shutter\x12.\n\x05color\x18\x03\x20\x03(\x0b2\x18.mizer.prog\
-    rammer.PresetR\x05color\x124\n\x08position\x18\x04\x20\x03(\x0b2\x18.miz\
-    er.programmer.PresetR\x08position\"\xea\x02\n\x06Preset\x12*\n\x02id\x18\
-    \x01\x20\x01(\x0b2\x1a.mizer.programmer.PresetIdR\x02id\x12\x19\n\x05lab\
-    el\x18\x02\x20\x01(\tH\0R\x05label\x88\x01\x01\x12\x16\n\x05fader\x18\
-    \x03\x20\x01(\x01H\x01R\x05fader\x126\n\x05color\x18\x04\x20\x01(\x0b2\
-    \x1e.mizer.programmer.Preset.ColorH\x01R\x05color\x12?\n\x08position\x18\
-    \x05\x20\x01(\x0b2!.mizer.programmer.Preset.PositionH\x01R\x08position\
-    \x1aC\n\x05Color\x12\x10\n\x03red\x18\x01\x20\x01(\x01R\x03red\x12\x14\n\
-    \x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\n\x04blue\x18\x03\x20\
-    \x01(\x01R\x04blue\x1a0\n\x08Position\x12\x12\n\x04tilt\x18\x01\x20\x01(\
-    \x01R\x04tilt\x12\x10\n\x03pan\x18\x02\x20\x01(\x01R\x03panB\x08\n\x06_l\
-    abelB\x07\n\x05value\"\x14\n\x12CallPresetResponse\"\x0f\n\rGroupsReques\
-    t\"9\n\x06Groups\x12/\n\x06groups\x18\x01\x20\x03(\x0b2\x17.mizer.progra\
-    mmer.GroupR\x06groups\"+\n\x05Group\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
-    \x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"$\n\x12SelectGroup\
-    Request\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x15\n\x13SelectGroup\
-    Response\"%\n\x0fAddGroupRequest\x12\x12\n\x04name\x18\x01\x20\x01(\tR\
-    \x04name\"e\n\x1cAssignFixturesToGroupRequest\x12\x0e\n\x02id\x18\x01\
-    \x20\x01(\rR\x02id\x125\n\x08fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fi\
-    xtures.FixtureIdR\x08fixtures\"6\n$AssignFixtureSelectionToGroupRequest\
-    \x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\x1f\n\x1dAssignFixturesToGr\
-    oupResponse2\x9e\n\n\rProgrammerApi\x12h\n\x15SubscribeToProgrammer\x12,\
-    .mizer.programmer.SubscribeProgrammerRequest\x1a!.mizer.programmer.Progr\
-    ammerState\x12]\n\x0cWriteControl\x12%.mizer.programmer.WriteControlRequ\
-    est\x1a&.mizer.programmer.WriteControlResponse\x12c\n\x0eSelectFixtures\
-    \x12'.mizer.programmer.SelectFixturesRequest\x1a(.mizer.programmer.Selec\
-    tFixturesResponse\x12i\n\x10UnselectFixtures\x12).mizer.programmer.Unsel\
-    ectFixturesRequest\x1a*.mizer.programmer.UnselectFixturesResponse\x12H\n\
-    \x05Clear\x12\x1e.mizer.programmer.ClearRequest\x1a\x1f.mizer.programmer\
-    .ClearResponse\x12T\n\tHighlight\x12\".mizer.programmer.HighlightRequest\
-    \x1a#.mizer.programmer.HighlightResponse\x12H\n\x05Store\x12\x1e.mizer.p\
-    rogrammer.StoreRequest\x1a\x1f.mizer.programmer.StoreResponse\x12I\n\nGe\
-    tPresets\x12\x20.mizer.programmer.PresetsRequest\x1a\x19.mizer.programme\
-    r.Presets\x12N\n\nCallPreset\x12\x1a.mizer.programmer.PresetId\x1a$.mize\
-    r.programmer.CallPresetResponse\x12F\n\tGetGroups\x12\x1f.mizer.programm\
-    er.GroupsRequest\x1a\x18.mizer.programmer.Groups\x12Z\n\x0bSelectGroup\
-    \x12$.mizer.programmer.SelectGroupRequest\x1a%.mizer.programmer.SelectGr\
-    oupResponse\x12F\n\x08AddGroup\x12!.mizer.programmer.AddGroupRequest\x1a\
-    \x17.mizer.programmer.Group\x12x\n\x15AssignFixturesToGroup\x12..mizer.p\
-    rogrammer.AssignFixturesToGroupRequest\x1a/.mizer.programmer.AssignFixtu\
-    resToGroupResponse\x12\x88\x01\n\x1dAssignFixtureSelectionToGroup\x126.m\
-    izer.programmer.AssignFixtureSelectionToGroupRequest\x1a/.mizer.programm\
-    er.AssignFixturesToGroupResponseb\x06proto3\
+    \n\x05wings\x18\t\x20\x01(\rR\x05wings\x12A\n\x07effects\x18\n\x20\x03(\
+    \x0b2'.mizer.programmer.EffectProgrammerStateR\x07effects\"\xb2\x01\n\
+    \x10FixtureSelection\x12Q\n\x08fixtures\x18\x01\x20\x03(\x0b25.mizer.pro\
+    grammer.FixtureSelection.GroupedFixtureListR\x08fixtures\x1aK\n\x12Group\
+    edFixtureList\x125\n\x08fixtures\x18\x01\x20\x03(\x0b2\x19.mizer.fixture\
+    s.FixtureIdR\x08fixtures\"\x96\x03\n\x11ProgrammerChannel\x125\n\x08fixt\
+    ures\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\x12\
+    8\n\x07control\x18\x02\x20\x01(\x0e2\x1e.mizer.fixtures.FixtureControlR\
+    \x07control\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\0R\x05fader\x129\n\
+    \x05color\x18\x04\x20\x01(\x0b2!.mizer.fixtures.ColorMixerChannelH\0R\
+    \x05color\x12L\n\x07generic\x18\x05\x20\x01(\x0b20.mizer.programmer.Prog\
+    rammerChannel.GenericValueH\0R\x07generic\x1a8\n\x0cGenericValue\x12\x12\
+    \n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\x05value\x18\x02\x20\
+    \x01(\x01R\x05value\",\n\x0cColorChannel\x12\x07\n\x03Red\x10\0\x12\t\n\
+    \x05Green\x10\x01\x12\x08\n\x04Blue\x10\x02B\x07\n\x05value\"\x8d\x01\n\
+    \x15EffectProgrammerState\x12\x1a\n\x08effectId\x18\x01\x20\x01(\rR\x08e\
+    ffectId\x12\x1e\n\neffectRate\x18\x02\x20\x01(\x01R\neffectRate\x12'\n\
+    \x0ceffectOffset\x18\x03\x20\x01(\x01H\0R\x0ceffectOffset\x88\x01\x01B\
+    \x0f\n\r_effectOffset\"T\n\x16WriteEffectRateRequest\x12\x1a\n\x08effect\
+    Id\x18\x01\x20\x01(\rR\x08effectId\x12\x1e\n\neffectRate\x18\x02\x20\x01\
+    (\x01R\neffectRate\"\x19\n\x17WriteEffectRateResponse\"p\n\x18WriteEffec\
+    tOffsetRequest\x12\x1a\n\x08effectId\x18\x01\x20\x01(\rR\x08effectId\x12\
+    '\n\x0ceffectOffset\x18\x02\x20\x01(\x01H\0R\x0ceffectOffset\x88\x01\x01\
+    B\x0f\n\r_effectOffset\"\x1b\n\x19WriteEffectOffsetResponse\"\xb5\x02\n\
+    \x13WriteControlRequest\x128\n\x07control\x18\x01\x20\x01(\x0e2\x1e.mize\
+    r.fixtures.FixtureControlR\x07control\x12\x16\n\x05fader\x18\x02\x20\x01\
+    (\x01H\0R\x05fader\x129\n\x05color\x18\x03\x20\x01(\x0b2!.mizer.fixtures\
+    .ColorMixerChannelH\0R\x05color\x12N\n\x07generic\x18\x04\x20\x01(\x0b22\
+    .mizer.programmer.WriteControlRequest.GenericValueH\0R\x07generic\x1a8\n\
+    \x0cGenericValue\x12\x12\n\x04name\x18\x01\x20\x01(\tR\x04name\x12\x14\n\
+    \x05value\x18\x02\x20\x01(\x01R\x05valueB\x07\n\x05value\"\x16\n\x14Writ\
+    eControlResponse\"N\n\x15SelectFixturesRequest\x125\n\x08fixtures\x18\
+    \x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"\x18\n\x16\
+    SelectFixturesResponse\"P\n\x17UnselectFixturesRequest\x125\n\x08fixture\
+    s\x18\x01\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"\x1a\
+    \n\x18UnselectFixturesResponse\"\x0e\n\x0cClearRequest\"\x0f\n\rClearRes\
+    ponse\"0\n\x10HighlightRequest\x12\x1c\n\thighlight\x18\x01\x20\x01(\x08\
+    R\thighlight\"\x13\n\x11HighlightResponse\"\xc8\x01\n\x0cStoreRequest\
+    \x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12B\n\nstore_\
+    mode\x18\x02\x20\x01(\x0e2#.mizer.programmer.StoreRequest.ModeR\tstoreMo\
+    de\x12\x1a\n\x06cue_id\x18\x03\x20\x01(\rH\0R\x05cueId\x88\x01\x01\",\n\
+    \x04Mode\x12\r\n\tOverwrite\x10\0\x12\t\n\x05Merge\x10\x01\x12\n\n\x06Ad\
+    dCue\x10\x02B\t\n\x07_cue_id\"\x0f\n\rStoreResponse\"\x10\n\x0ePresetsRe\
+    quest\"\x98\x01\n\x08PresetId\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
+    \x129\n\x04type\x18\x02\x20\x01(\x0e2%.mizer.programmer.PresetId.PresetT\
+    ypeR\x04type\"A\n\nPresetType\x12\r\n\tIntensity\x10\0\x12\x0b\n\x07Shut\
+    ter\x10\x01\x12\t\n\x05Color\x10\x02\x12\x0c\n\x08Position\x10\x03\"\xdf\
+    \x01\n\x07Presets\x12:\n\x0bintensities\x18\x01\x20\x03(\x0b2\x18.mizer.\
+    programmer.PresetR\x0bintensities\x122\n\x07shutter\x18\x02\x20\x03(\x0b\
+    2\x18.mizer.programmer.PresetR\x07shutter\x12.\n\x05color\x18\x03\x20\
+    \x03(\x0b2\x18.mizer.programmer.PresetR\x05color\x124\n\x08position\x18\
+    \x04\x20\x03(\x0b2\x18.mizer.programmer.PresetR\x08position\"\xea\x02\n\
+    \x06Preset\x12*\n\x02id\x18\x01\x20\x01(\x0b2\x1a.mizer.programmer.Prese\
+    tIdR\x02id\x12\x19\n\x05label\x18\x02\x20\x01(\tH\0R\x05label\x88\x01\
+    \x01\x12\x16\n\x05fader\x18\x03\x20\x01(\x01H\x01R\x05fader\x126\n\x05co\
+    lor\x18\x04\x20\x01(\x0b2\x1e.mizer.programmer.Preset.ColorH\x01R\x05col\
+    or\x12?\n\x08position\x18\x05\x20\x01(\x0b2!.mizer.programmer.Preset.Pos\
+    itionH\x01R\x08position\x1aC\n\x05Color\x12\x10\n\x03red\x18\x01\x20\x01\
+    (\x01R\x03red\x12\x14\n\x05green\x18\x02\x20\x01(\x01R\x05green\x12\x12\
+    \n\x04blue\x18\x03\x20\x01(\x01R\x04blue\x1a0\n\x08Position\x12\x12\n\
+    \x04tilt\x18\x01\x20\x01(\x01R\x04tilt\x12\x10\n\x03pan\x18\x02\x20\x01(\
+    \x01R\x03panB\x08\n\x06_labelB\x07\n\x05value\"\x14\n\x12CallPresetRespo\
+    nse\"\x0f\n\rGroupsRequest\"9\n\x06Groups\x12/\n\x06groups\x18\x01\x20\
+    \x03(\x0b2\x17.mizer.programmer.GroupR\x06groups\"+\n\x05Group\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\"$\n\x12SelectGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\
+    \x02id\"\x15\n\x13SelectGroupResponse\"%\n\x0fAddGroupRequest\x12\x12\n\
+    \x04name\x18\x01\x20\x01(\tR\x04name\"e\n\x1cAssignFixturesToGroupReques\
+    t\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x125\n\x08fixtures\x18\x02\
+    \x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\x08fixtures\"6\n$AssignFixt\
+    ureSelectionToGroupRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\"\
+    \x1f\n\x1dAssignFixturesToGroupResponse2\xf4\x0b\n\rProgrammerApi\x12h\n\
+    \x15SubscribeToProgrammer\x12,.mizer.programmer.SubscribeProgrammerReque\
+    st\x1a!.mizer.programmer.ProgrammerState\x12]\n\x0cWriteControl\x12%.miz\
+    er.programmer.WriteControlRequest\x1a&.mizer.programmer.WriteControlResp\
+    onse\x12c\n\x0eSelectFixtures\x12'.mizer.programmer.SelectFixturesReques\
+    t\x1a(.mizer.programmer.SelectFixturesResponse\x12i\n\x10UnselectFixture\
+    s\x12).mizer.programmer.UnselectFixturesRequest\x1a*.mizer.programmer.Un\
+    selectFixturesResponse\x12H\n\x05Clear\x12\x1e.mizer.programmer.ClearReq\
+    uest\x1a\x1f.mizer.programmer.ClearResponse\x12T\n\tHighlight\x12\".mize\
+    r.programmer.HighlightRequest\x1a#.mizer.programmer.HighlightResponse\
+    \x12H\n\x05Store\x12\x1e.mizer.programmer.StoreRequest\x1a\x1f.mizer.pro\
+    grammer.StoreResponse\x12I\n\nGetPresets\x12\x20.mizer.programmer.Preset\
+    sRequest\x1a\x19.mizer.programmer.Presets\x12N\n\nCallPreset\x12\x1a.miz\
+    er.programmer.PresetId\x1a$.mizer.programmer.CallPresetResponse\x12F\n\t\
+    GetGroups\x12\x1f.mizer.programmer.GroupsRequest\x1a\x18.mizer.programme\
+    r.Groups\x12Z\n\x0bSelectGroup\x12$.mizer.programmer.SelectGroupRequest\
+    \x1a%.mizer.programmer.SelectGroupResponse\x12F\n\x08AddGroup\x12!.mizer\
+    .programmer.AddGroupRequest\x1a\x17.mizer.programmer.Group\x12x\n\x15Ass\
+    ignFixturesToGroup\x12..mizer.programmer.AssignFixturesToGroupRequest\
+    \x1a/.mizer.programmer.AssignFixturesToGroupResponse\x12\x88\x01\n\x1dAs\
+    signFixtureSelectionToGroup\x126.mizer.programmer.AssignFixtureSelection\
+    ToGroupRequest\x1a/.mizer.programmer.AssignFixturesToGroupResponse\x12f\
+    \n\x0fWriteEffectRate\x12(.mizer.programmer.WriteEffectRateRequest\x1a).\
+    mizer.programmer.WriteEffectRateResponse\x12l\n\x11WriteEffectOffset\x12\
+    *.mizer.programmer.WriteEffectOffsetRequest\x1a+.mizer.programmer.WriteE\
+    ffectOffsetResponseb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -5434,11 +6111,16 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(35);
+            let mut messages = ::std::vec::Vec::with_capacity(40);
             messages.push(SubscribeProgrammerRequest::generated_message_descriptor_data());
             messages.push(ProgrammerState::generated_message_descriptor_data());
             messages.push(FixtureSelection::generated_message_descriptor_data());
             messages.push(ProgrammerChannel::generated_message_descriptor_data());
+            messages.push(EffectProgrammerState::generated_message_descriptor_data());
+            messages.push(WriteEffectRateRequest::generated_message_descriptor_data());
+            messages.push(WriteEffectRateResponse::generated_message_descriptor_data());
+            messages.push(WriteEffectOffsetRequest::generated_message_descriptor_data());
+            messages.push(WriteEffectOffsetResponse::generated_message_descriptor_data());
             messages.push(WriteControlRequest::generated_message_descriptor_data());
             messages.push(WriteControlResponse::generated_message_descriptor_data());
             messages.push(SelectFixturesRequest::generated_message_descriptor_data());

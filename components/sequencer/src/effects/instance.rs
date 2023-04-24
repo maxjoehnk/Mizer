@@ -1,4 +1,4 @@
-use crate::{Effect, Spline};
+use crate::{Effect, SequencerTime, Spline};
 use mizer_fixtures::definition::FixtureFaderControl;
 use mizer_fixtures::manager::FixtureManager;
 use mizer_fixtures::selection::FixtureSelection;
@@ -13,10 +13,16 @@ pub(crate) struct EffectInstance {
     frame: f64,
     splines: HashMap<FixtureFaderControl, Spline>,
     pub rate: f64,
+    pub(crate) fixture_offset: Option<SequencerTime>,
 }
 
 impl EffectInstance {
-    pub fn new(effect: &Effect, fixtures: FixtureSelection, rate: f64) -> Self {
+    pub fn new(
+        effect: &Effect,
+        fixtures: FixtureSelection,
+        rate: f64,
+        fixture_offset: Option<SequencerTime>,
+    ) -> Self {
         Self {
             effect_id: effect.id,
             fixtures,
@@ -24,6 +30,7 @@ impl EffectInstance {
             frame: 0.,
             splines: effect.build_splines(),
             rate,
+            fixture_offset,
         }
     }
 
@@ -41,13 +48,22 @@ impl EffectInstance {
         self.frame += frame.delta * self.rate;
 
         for (control, spline) in self.splines.iter() {
-            if let Some(value) = spline.sample(self.frame) {
-                let values = value.fixture_values(self.fixtures.total_fixtures());
-                for (i, id) in self.fixtures.get_fixtures().iter().flatten().enumerate() {
-                    fixture_manager.write_fixture_control(*id, control.clone(), values[i]);
+            let fixture_groups = self.fixtures.get_fixtures();
+            let group_count = fixture_groups.len();
+            for (i, ids) in fixture_groups.into_iter().enumerate() {
+                let group_frame = if let Some(SequencerTime::Beats(offset)) = self.fixture_offset {
+                    self.frame + (offset * i as f64)
+                } else {
+                    self.frame
+                };
+                if let Some(value) = spline.sample(group_frame) {
+                    let values = value.fixture_values(group_count);
+                    for id in ids {
+                        fixture_manager.write_fixture_control(id, control.clone(), values[i]);
+                    }
+                } else {
+                    println!("no sample");
                 }
-            } else {
-                println!("no sample");
             }
         }
     }

@@ -29,7 +29,7 @@ class UpdateCueTrigger extends SequencerCommand {
   final int cue;
   final CueTrigger_Type trigger;
 
-  UpdateCueTrigger({ required this.sequence, required this.cue, required this.trigger });
+  UpdateCueTrigger({required this.sequence, required this.cue, required this.trigger});
 }
 
 class UpdateCueTriggerTime extends SequencerCommand {
@@ -37,7 +37,17 @@ class UpdateCueTriggerTime extends SequencerCommand {
   final int cue;
   final CueTime? time;
 
-  UpdateCueTriggerTime({ required this.sequence, required this.cue, required this.time });
+  UpdateCueTriggerTime({required this.sequence, required this.cue, required this.time});
+}
+
+class UpdateCueEffectOffsetTime extends SequencerCommand {
+  final int sequence;
+  final int cue;
+  final int effect;
+  final double? time;
+
+  UpdateCueEffectOffsetTime(
+      {required this.sequence, required this.cue, required this.effect, required this.time});
 }
 
 class UpdateCueName extends SequencerCommand {
@@ -45,54 +55,54 @@ class UpdateCueName extends SequencerCommand {
   final int cue;
   final String name;
 
-  UpdateCueName({ required this.sequence, required this.cue, required this.name });
+  UpdateCueName({required this.sequence, required this.cue, required this.name});
 }
 
 class UpdateCueFade extends SequencerCommand {
   final int cue;
   final CueTimer? time;
 
-  UpdateCueFade({ required this.cue, this.time });
+  UpdateCueFade({required this.cue, this.time});
 }
 
 class UpdateCueDelay extends SequencerCommand {
   final int cue;
   final CueTimer? time;
 
-  UpdateCueDelay({ required this.cue, this.time });
+  UpdateCueDelay({required this.cue, this.time});
 }
 
 class UpdateSequenceName extends SequencerCommand {
   final int sequence;
   final String name;
 
-  UpdateSequenceName({ required this.sequence, required this.name });
+  UpdateSequenceName({required this.sequence, required this.name});
 }
 
 class UpdateWrapAround extends SequencerCommand {
   final int sequence;
   final bool wrapAround;
 
-  UpdateWrapAround({ required this.sequence, required this.wrapAround });
+  UpdateWrapAround({required this.sequence, required this.wrapAround});
 }
 
 class UpdateStopOnLastCue extends SequencerCommand {
   final int sequence;
   final bool stopOnLastCue;
 
-  UpdateStopOnLastCue({ required this.sequence, required this.stopOnLastCue });
+  UpdateStopOnLastCue({required this.sequence, required this.stopOnLastCue});
 }
 
 class SelectSequence extends SequencerCommand {
   final int sequence;
 
-  SelectSequence({ required this.sequence });
+  SelectSequence({required this.sequence});
 }
 
 class SelectCue extends SequencerCommand {
   final int cue;
 
-  SelectCue({ required this.cue });
+  SelectCue({required this.cue});
 }
 
 @immutable
@@ -100,8 +110,8 @@ class SequencerState {
   final List<Sequence> sequences;
   final int? selectedSequenceId;
   final int? selectedCueId;
-  
-  SequencerState({ required this.sequences, this.selectedSequenceId, this.selectedCueId });
+
+  SequencerState({required this.sequences, this.selectedSequenceId, this.selectedCueId});
 
   Sequence? get selectedSequence {
     return sequences.firstWhereOrNull((sequence) => sequence.id == selectedSequenceId);
@@ -111,13 +121,13 @@ class SequencerState {
     return selectedSequence?.cues.firstWhereOrNull((cue) => cue.id == selectedCueId);
   }
 
-  SequencerState copyWith({ List<Sequence>? sequences, int? selectedSequenceId, int? selectedCueId }) {
+  SequencerState copyWith(
+      {List<Sequence>? sequences, int? selectedSequenceId, int? selectedCueId}) {
     if (selectedSequenceId != null) {
       return SequencerState(
-        sequences: sequences ?? this.sequences,
-        selectedSequenceId: selectedSequenceId,
-        selectedCueId: null
-      );
+          sequences: sequences ?? this.sequences,
+          selectedSequenceId: selectedSequenceId,
+          selectedCueId: null);
     }
     return SequencerState(
       sequences: sequences ?? this.sequences,
@@ -136,6 +146,8 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
     on<DeleteSequence>((event, emit) async => emit(await _deleteSequence(event)));
     on<UpdateCueTrigger>((event, emit) async => emit(await _updateCueTrigger(event)));
     on<UpdateCueTriggerTime>((event, emit) async => emit(await _updateCueTriggerTime(event)));
+    on<UpdateCueEffectOffsetTime>(
+        (event, emit) async => emit(await _updateCueEffectOffsetTime(event)));
     on<UpdateCueName>((event, emit) async => emit(await _updateCueName(event)));
     on<UpdateCueFade>((event, emit) async => emit(await _updateCueFadeTime(event)));
     on<UpdateCueDelay>((event, emit) async => emit(await _updateCueDelayTime(event)));
@@ -180,7 +192,8 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   }
 
   Future<SequencerState> _updateCueTrigger(UpdateCueTrigger event) async {
-    log("update cue trigger ${event.sequence}.${event.cue} ${event.trigger}", name: "SequencerBloc");
+    log("update cue trigger ${event.sequence}.${event.cue} ${event.trigger}",
+        name: "SequencerBloc");
     var sequences = await api.updateCueTrigger(event.sequence, event.cue, event.trigger);
     _sortSequences(sequences);
 
@@ -188,8 +201,19 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   }
 
   Future<SequencerState> _updateCueTriggerTime(UpdateCueTriggerTime event) async {
-    log("update cue trigger time ${event.sequence}.${event.cue} ${event.time}", name: "SequencerBloc");
+    log("update cue trigger time ${event.sequence}.${event.cue} ${event.time}",
+        name: "SequencerBloc");
     var sequences = await api.updateCueTriggerTime(event.sequence, event.cue, event.time);
+    _sortSequences(sequences);
+
+    return state.copyWith(sequences: sequences.sequences);
+  }
+
+  Future<SequencerState> _updateCueEffectOffsetTime(UpdateCueEffectOffsetTime event) async {
+    log("update cue effect offset time ${event.sequence}.${event.cue} ${event.effect} ${event.time}",
+        name: "SequencerBloc");
+    var sequences =
+        await api.updateCueEffectOffsetTime(event.sequence, event.cue, event.effect, event.time);
     _sortSequences(sequences);
 
     return state.copyWith(sequences: sequences.sequences);
@@ -212,7 +236,8 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   }
 
   Future<SequencerState> _updateSequenceStopOnLastCue(UpdateStopOnLastCue event) async {
-    log("update sequence stop on last cue ${event.sequence} ${event.stopOnLastCue}", name: "SequencerBloc");
+    log("update sequence stop on last cue ${event.sequence} ${event.stopOnLastCue}",
+        name: "SequencerBloc");
     var sequences = await api.updateStopOnLastCue(event.sequence, event.stopOnLastCue);
     _sortSequences(sequences);
 
@@ -228,7 +253,8 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   }
 
   Future<SequencerState> _updateCueFadeTime(UpdateCueFade event) async {
-    log("update cue fade ${state.selectedSequenceId} ${event.cue} ${event.time}", name: "SequencerBloc");
+    log("update cue fade ${state.selectedSequenceId} ${event.cue} ${event.time}",
+        name: "SequencerBloc");
     var sequences = await api.updateCueFadeTime(state.selectedSequenceId!, event.cue, event.time);
     _sortSequences(sequences);
 
@@ -236,7 +262,8 @@ class SequencerBloc extends Bloc<SequencerCommand, SequencerState> {
   }
 
   Future<SequencerState> _updateCueDelayTime(UpdateCueDelay event) async {
-    log("update cue fade ${state.selectedSequenceId} ${event.cue} ${event.time}", name: "SequencerBloc");
+    log("update cue fade ${state.selectedSequenceId} ${event.cue} ${event.time}",
+        name: "SequencerBloc");
     var sequences = await api.updateCueDelayTime(state.selectedSequenceId!, event.cue, event.time);
     _sortSequences(sequences);
 

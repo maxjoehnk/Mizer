@@ -1,6 +1,6 @@
 use mizer_commander::{Command, Ref};
 use mizer_fixtures::programmer::{ProgrammedEffect, ProgrammerControl};
-use mizer_sequencer::{CueControl, CueEffect, Sequence, Sequencer, SequencerValue};
+use mizer_sequencer::{CueControl, CueEffect, Sequence, Sequencer, SequencerTime, SequencerValue};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Deserialize, Serialize, Hash)]
@@ -70,6 +70,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                         cue.effects.push(CueEffect {
                             effect: effect.effect_id,
                             fixtures: effect.fixtures.clone().into(),
+                            effect_offset: effect.offset.map(SequencerTime::Beats),
                         });
                     }
                 }
@@ -81,6 +82,7 @@ impl<'a> Command<'a> for StoreProgrammerInSequenceCommand {
                         .map(|effect| CueEffect {
                             effect: effect.effect_id,
                             fixtures: effect.fixtures.clone().into(),
+                            effect_offset: effect.offset.map(SequencerTime::Beats),
                         })
                         .collect();
                 }

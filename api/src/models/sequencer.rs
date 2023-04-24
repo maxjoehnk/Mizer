@@ -1037,6 +1037,182 @@ impl ::protobuf::reflect::ProtobufValue for CueTriggerTimeRequest {
 }
 
 #[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.sequencer.CueEffectOffsetTimeRequest)
+pub struct CueEffectOffsetTimeRequest {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffectOffsetTimeRequest.sequence)
+    pub sequence: u32,
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffectOffsetTimeRequest.cue)
+    pub cue: u32,
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffectOffsetTimeRequest.effect)
+    pub effect: u32,
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffectOffsetTimeRequest.time)
+    pub time: ::std::option::Option<f64>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.sequencer.CueEffectOffsetTimeRequest.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CueEffectOffsetTimeRequest {
+    fn default() -> &'a CueEffectOffsetTimeRequest {
+        <CueEffectOffsetTimeRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CueEffectOffsetTimeRequest {
+    pub fn new() -> CueEffectOffsetTimeRequest {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "sequence",
+            |m: &CueEffectOffsetTimeRequest| { &m.sequence },
+            |m: &mut CueEffectOffsetTimeRequest| { &mut m.sequence },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "cue",
+            |m: &CueEffectOffsetTimeRequest| { &m.cue },
+            |m: &mut CueEffectOffsetTimeRequest| { &mut m.cue },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effect",
+            |m: &CueEffectOffsetTimeRequest| { &m.effect },
+            |m: &mut CueEffectOffsetTimeRequest| { &mut m.effect },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "time",
+            |m: &CueEffectOffsetTimeRequest| { &m.time },
+            |m: &mut CueEffectOffsetTimeRequest| { &mut m.time },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CueEffectOffsetTimeRequest>(
+            "CueEffectOffsetTimeRequest",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CueEffectOffsetTimeRequest {
+    const NAME: &'static str = "CueEffectOffsetTimeRequest";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.sequence = is.read_uint32()?;
+                },
+                16 => {
+                    self.cue = is.read_uint32()?;
+                },
+                24 => {
+                    self.effect = is.read_uint32()?;
+                },
+                33 => {
+                    self.time = ::std::option::Option::Some(is.read_double()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.sequence != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.sequence);
+        }
+        if self.cue != 0 {
+            my_size += ::protobuf::rt::uint32_size(2, self.cue);
+        }
+        if self.effect != 0 {
+            my_size += ::protobuf::rt::uint32_size(3, self.effect);
+        }
+        if let Some(v) = self.time {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.sequence != 0 {
+            os.write_uint32(1, self.sequence)?;
+        }
+        if self.cue != 0 {
+            os.write_uint32(2, self.cue)?;
+        }
+        if self.effect != 0 {
+            os.write_uint32(3, self.effect)?;
+        }
+        if let Some(v) = self.time {
+            os.write_double(4, v)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CueEffectOffsetTimeRequest {
+        CueEffectOffsetTimeRequest::new()
+    }
+
+    fn clear(&mut self) {
+        self.sequence = 0;
+        self.cue = 0;
+        self.effect = 0;
+        self.time = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CueEffectOffsetTimeRequest {
+        static instance: CueEffectOffsetTimeRequest = CueEffectOffsetTimeRequest {
+            sequence: 0,
+            cue: 0,
+            effect: 0,
+            time: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CueEffectOffsetTimeRequest {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CueEffectOffsetTimeRequest").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CueEffectOffsetTimeRequest {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueEffectOffsetTimeRequest {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
 // @@protoc_insertion_point(message:mizer.sequencer.CueNameRequest)
 pub struct CueNameRequest {
     // message fields
@@ -2410,6 +2586,8 @@ pub struct Cue {
     pub position_timings: ::protobuf::MessageField<CueTimings>,
     // @@protoc_insertion_point(field:mizer.sequencer.Cue.color_timings)
     pub color_timings: ::protobuf::MessageField<CueTimings>,
+    // @@protoc_insertion_point(field:mizer.sequencer.Cue.effects)
+    pub effects: ::std::vec::Vec<CueEffect>,
     // special fields
     // @@protoc_insertion_point(special_field:mizer.sequencer.Cue.special_fields)
     pub special_fields: ::protobuf::SpecialFields,
@@ -2427,7 +2605,7 @@ impl Cue {
     }
 
     fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
-        let mut fields = ::std::vec::Vec::with_capacity(8);
+        let mut fields = ::std::vec::Vec::with_capacity(9);
         let mut oneofs = ::std::vec::Vec::with_capacity(0);
         fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
             "id",
@@ -2468,6 +2646,11 @@ impl Cue {
             "color_timings",
             |m: &Cue| { &m.color_timings },
             |m: &mut Cue| { &mut m.color_timings },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "effects",
+            |m: &Cue| { &m.effects },
+            |m: &mut Cue| { &mut m.effects },
         ));
         ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<Cue>(
             "Cue",
@@ -2511,6 +2694,9 @@ impl ::protobuf::Message for Cue {
                 66 => {
                     ::protobuf::rt::read_singular_message_into_field(is, &mut self.color_timings)?;
                 },
+                74 => {
+                    self.effects.push(is.read_message()?);
+                },
                 tag => {
                     ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
                 },
@@ -2553,6 +2739,10 @@ impl ::protobuf::Message for Cue {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
         }
+        for value in &self.effects {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
         self.special_fields.cached_size().set(my_size as u32);
         my_size
@@ -2583,6 +2773,9 @@ impl ::protobuf::Message for Cue {
         if let Some(v) = self.color_timings.as_ref() {
             ::protobuf::rt::write_message_field_with_cached_size(8, v, os)?;
         }
+        for v in &self.effects {
+            ::protobuf::rt::write_message_field_with_cached_size(9, v, os)?;
+        };
         os.write_unknown_fields(self.special_fields.unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -2608,6 +2801,7 @@ impl ::protobuf::Message for Cue {
         self.dimmer_timings.clear();
         self.position_timings.clear();
         self.color_timings.clear();
+        self.effects.clear();
         self.special_fields.clear();
     }
 
@@ -2621,6 +2815,7 @@ impl ::protobuf::Message for Cue {
             dimmer_timings: ::protobuf::MessageField::none(),
             position_timings: ::protobuf::MessageField::none(),
             color_timings: ::protobuf::MessageField::none(),
+            effects: ::std::vec::Vec::new(),
             special_fields: ::protobuf::SpecialFields::new(),
         };
         &instance
@@ -2641,6 +2836,183 @@ impl ::std::fmt::Display for Cue {
 }
 
 impl ::protobuf::reflect::ProtobufValue for Cue {
+    type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
+}
+
+#[derive(PartialEq,Clone,Default,Debug)]
+// @@protoc_insertion_point(message:mizer.sequencer.CueEffect)
+pub struct CueEffect {
+    // message fields
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffect.effect_id)
+    pub effect_id: u32,
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffect.fixtures)
+    pub fixtures: ::std::vec::Vec<super::fixtures::FixtureId>,
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffect.effect_offsets)
+    pub effect_offsets: ::std::option::Option<f64>,
+    // @@protoc_insertion_point(field:mizer.sequencer.CueEffect.effect_rate)
+    pub effect_rate: ::std::option::Option<f64>,
+    // special fields
+    // @@protoc_insertion_point(special_field:mizer.sequencer.CueEffect.special_fields)
+    pub special_fields: ::protobuf::SpecialFields,
+}
+
+impl<'a> ::std::default::Default for &'a CueEffect {
+    fn default() -> &'a CueEffect {
+        <CueEffect as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CueEffect {
+    pub fn new() -> CueEffect {
+        ::std::default::Default::default()
+    }
+
+    fn generated_message_descriptor_data() -> ::protobuf::reflect::GeneratedMessageDescriptorData {
+        let mut fields = ::std::vec::Vec::with_capacity(4);
+        let mut oneofs = ::std::vec::Vec::with_capacity(0);
+        fields.push(::protobuf::reflect::rt::v2::make_simpler_field_accessor::<_, _>(
+            "effect_id",
+            |m: &CueEffect| { &m.effect_id },
+            |m: &mut CueEffect| { &mut m.effect_id },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_vec_simpler_accessor::<_, _>(
+            "fixtures",
+            |m: &CueEffect| { &m.fixtures },
+            |m: &mut CueEffect| { &mut m.fixtures },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "effect_offsets",
+            |m: &CueEffect| { &m.effect_offsets },
+            |m: &mut CueEffect| { &mut m.effect_offsets },
+        ));
+        fields.push(::protobuf::reflect::rt::v2::make_option_accessor::<_, _>(
+            "effect_rate",
+            |m: &CueEffect| { &m.effect_rate },
+            |m: &mut CueEffect| { &mut m.effect_rate },
+        ));
+        ::protobuf::reflect::GeneratedMessageDescriptorData::new_2::<CueEffect>(
+            "CueEffect",
+            fields,
+            oneofs,
+        )
+    }
+}
+
+impl ::protobuf::Message for CueEffect {
+    const NAME: &'static str = "CueEffect";
+
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream<'_>) -> ::protobuf::Result<()> {
+        while let Some(tag) = is.read_raw_tag_or_eof()? {
+            match tag {
+                8 => {
+                    self.effect_id = is.read_uint32()?;
+                },
+                18 => {
+                    self.fixtures.push(is.read_message()?);
+                },
+                25 => {
+                    self.effect_offsets = ::std::option::Option::Some(is.read_double()?);
+                },
+                33 => {
+                    self.effect_rate = ::std::option::Option::Some(is.read_double()?);
+                },
+                tag => {
+                    ::protobuf::rt::read_unknown_or_skip_group(tag, is, self.special_fields.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u64 {
+        let mut my_size = 0;
+        if self.effect_id != 0 {
+            my_size += ::protobuf::rt::uint32_size(1, self.effect_id);
+        }
+        for value in &self.fixtures {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint64_size(len) + len;
+        };
+        if let Some(v) = self.effect_offsets {
+            my_size += 1 + 8;
+        }
+        if let Some(v) = self.effect_rate {
+            my_size += 1 + 8;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.special_fields.unknown_fields());
+        self.special_fields.cached_size().set(my_size as u32);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream<'_>) -> ::protobuf::Result<()> {
+        if self.effect_id != 0 {
+            os.write_uint32(1, self.effect_id)?;
+        }
+        for v in &self.fixtures {
+            ::protobuf::rt::write_message_field_with_cached_size(2, v, os)?;
+        };
+        if let Some(v) = self.effect_offsets {
+            os.write_double(3, v)?;
+        }
+        if let Some(v) = self.effect_rate {
+            os.write_double(4, v)?;
+        }
+        os.write_unknown_fields(self.special_fields.unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn special_fields(&self) -> &::protobuf::SpecialFields {
+        &self.special_fields
+    }
+
+    fn mut_special_fields(&mut self) -> &mut ::protobuf::SpecialFields {
+        &mut self.special_fields
+    }
+
+    fn new() -> CueEffect {
+        CueEffect::new()
+    }
+
+    fn clear(&mut self) {
+        self.effect_id = 0;
+        self.fixtures.clear();
+        self.effect_offsets = ::std::option::Option::None;
+        self.effect_rate = ::std::option::Option::None;
+        self.special_fields.clear();
+    }
+
+    fn default_instance() -> &'static CueEffect {
+        static instance: CueEffect = CueEffect {
+            effect_id: 0,
+            fixtures: ::std::vec::Vec::new(),
+            effect_offsets: ::std::option::Option::None,
+            effect_rate: ::std::option::Option::None,
+            special_fields: ::protobuf::SpecialFields::new(),
+        };
+        &instance
+    }
+}
+
+impl ::protobuf::MessageFull for CueEffect {
+    fn descriptor() -> ::protobuf::reflect::MessageDescriptor {
+        static descriptor: ::protobuf::rt::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::rt::Lazy::new();
+        descriptor.get(|| file_descriptor().message_by_package_relative_name("CueEffect").unwrap()).clone()
+    }
+}
+
+impl ::std::fmt::Display for CueEffect {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CueEffect {
     type RuntimeType = ::protobuf::reflect::rt::RuntimeTypeMessage<Self>;
 }
 
@@ -4338,89 +4710,100 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     Trigger.TypeR\x07trigger\"s\n\x15CueTriggerTimeRequest\x12\x1a\n\x08sequ\
     ence\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\r\
     R\x03cue\x12,\n\x04time\x18\x03\x20\x01(\x0b2\x18.mizer.sequencer.CueTim\
-    eR\x04time\"R\n\x0eCueNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\
-    \rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\x12\n\
-    \x04name\x18\x03\x20\x01(\tR\x04name\"\x9f\x01\n\x0fCueValueRequest\x12\
-    \x1f\n\x0bsequence_id\x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06cue_i\
-    d\x18\x02\x20\x01(\rR\x05cueId\x12#\n\rcontrol_index\x18\x03\x20\x01(\rR\
-    \x0ccontrolIndex\x12/\n\x05value\x18\x04\x20\x01(\x0b2\x19.mizer.sequenc\
-    er.CueValueR\x05value\"y\n\x10CueTimingRequest\x12\x1f\n\x0bsequence_id\
-    \x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06cue_id\x18\x02\x20\x01(\rR\
-    \x05cueId\x12-\n\x04time\x18\x03\x20\x01(\x0b2\x19.mizer.sequencer.CueTi\
-    merR\x04time\"W\n\x19SequenceWrapAroundRequest\x12\x1a\n\x08sequence\x18\
-    \x01\x20\x01(\rR\x08sequence\x12\x1e\n\nwrapAround\x18\x02\x20\x01(\x08R\
-    \nwrapAround\"`\n\x1cSequenceStopOnLastCueRequest\x12\x1a\n\x08sequence\
-    \x18\x01\x20\x01(\rR\x08sequence\x12$\n\rstopOnLastCue\x18\x02\x20\x01(\
-    \x08R\rstopOnLastCue\"E\n\x13SequenceNameRequest\x12\x1a\n\x08sequence\
-    \x18\x01\x20\x01(\rR\x08sequence\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
-    \x04name\"\x0f\n\rEmptyResponse\"D\n\tSequences\x127\n\tsequences\x18\
-    \x01\x20\x03(\x0b2\x19.mizer.sequencer.SequenceR\tsequences\"\xd5\x01\n\
-    \x08Sequence\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
-    \x18\x02\x20\x01(\tR\x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mi\
-    zer.sequencer.CueR\x04cues\x125\n\x08fixtures\x18\x04\x20\x03(\x0b2\x19.\
-    mizer.fixtures.FixtureIdR\x08fixtures\x12\x1e\n\nwrapAround\x18\x05\x20\
-    \x01(\x08R\nwrapAround\x12$\n\rstopOnLastCue\x18\x06\x20\x01(\x08R\rstop\
-    OnLastCue\"\xa5\x03\n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\
-    \x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\
-    \x20\x01(\x0b2\x1b.mizer.sequencer.CueTriggerR\x07trigger\x127\n\x08cont\
-    rols\x18\x04\x20\x03(\x0b2\x1b.mizer.sequencer.CueControlR\x08controls\
-    \x12<\n\x0bcue_timings\x18\x05\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimi\
-    ngsR\ncueTimings\x12B\n\x0edimmer_timings\x18\x06\x20\x01(\x0b2\x1b.mize\
-    r.sequencer.CueTimingsR\rdimmerTimings\x12F\n\x10position_timings\x18\
-    \x07\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\x0fpositionTimings\
-    \x12@\n\rcolor_timings\x18\x08\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimi\
-    ngsR\x0ccolorTimings\"l\n\nCueTimings\x12-\n\x04fade\x18\x08\x20\x01(\
-    \x0b2\x19.mizer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\t\x20\
-    \x01(\x0b2\x19.mizer.sequencer.CueTimerR\x05delay\"\xbd\x01\n\nCueTrigge\
-    r\x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueTrigger.Ty\
-    peR\x04type\x121\n\x04time\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.Cue\
-    TimeH\0R\x04time\x88\x01\x01\"=\n\x04Type\x12\x06\n\x02GO\x10\0\x12\n\n\
-    \x06FOLLOW\x10\x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\x03\
-    \x12\x0c\n\x08TIMECODE\x10\x04B\x07\n\x05_time\"\xef\x02\n\nCueControl\
-    \x124\n\x04type\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueControl.Typ\
-    eR\x04type\x12/\n\x05value\x18\x02\x20\x01(\x0b2\x19.mizer.sequencer.Cue\
-    ValueR\x05value\x125\n\x08fixtures\x18\x03\x20\x03(\x0b2\x19.mizer.fixtu\
-    res.FixtureIdR\x08fixtures\"\xc2\x01\n\x04Type\x12\r\n\tINTENSITY\x10\0\
-    \x12\x0b\n\x07SHUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\x0bCO\
-    LOR_GREEN\x10\x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x0f\n\x0bCOLOR_WHEEL\
-    \x10\x05\x12\x07\n\x03PAN\x10\x06\x12\x08\n\x04TILT\x10\x07\x12\t\n\x05F\
-    OCUS\x10\x08\x12\x08\n\x04ZOOM\x10\t\x12\t\n\x05PRISM\x10\n\x12\x08\n\
-    \x04IRIS\x10\x0b\x12\t\n\x05FROST\x10\x0c\x12\x08\n\x04GOBO\x10\r\x12\
-    \x0b\n\x07GENERIC\x10\x0e\"e\n\x08CueValue\x12\x18\n\x06direct\x18\x03\
-    \x20\x01(\x01H\0R\x06direct\x126\n\x05range\x18\x04\x20\x01(\x0b2\x1e.mi\
-    zer.sequencer.CueValueRangeH\0R\x05rangeB\x07\n\x05value\"\x9b\x01\n\x08\
-    CueTimer\x12\x1a\n\x08hasTimer\x18\x01\x20\x01(\x08R\x08hasTimer\x122\n\
-    \x06direct\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeH\0R\x06dire\
-    ct\x126\n\x05range\x18\x03\x20\x01(\x0b2\x1e.mizer.sequencer.CueTimerRan\
-    geH\0R\x05rangeB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\n\x04from\
-    \x18\x01\x20\x01(\x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01(\x01R\x02\
-    to\"E\n\x07CueTime\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\0R\x07seco\
-    nds\x12\x16\n\x05beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\n\x04time\
-    \"g\n\rCueTimerRange\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.mizer.sequ\
-    encer.CueTimeR\x04from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.mizer.sequ\
-    encer.CueTimeR\x02to2\x94\n\n\x0cSequencerApi\x12P\n\x0cGetSequences\x12\
-    $.mizer.sequencer.GetSequencesRequest\x1a\x1a.mizer.sequencer.Sequences\
-    \x12M\n\x0bGetSequence\x12#.mizer.sequencer.GetSequenceRequest\x1a\x19.m\
-    izer.sequencer.Sequence\x12M\n\x0bAddSequence\x12#.mizer.sequencer.AddSe\
-    quenceRequest\x1a\x19.mizer.sequencer.Sequence\x12T\n\x0eDeleteSequence\
-    \x12&.mizer.sequencer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequ\
-    ences\x12P\n\nSequenceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e\
-    .mizer.sequencer.EmptyResponse\x12T\n\x0cSequenceStop\x12$.mizer.sequenc\
-    er.SequenceStopRequest\x1a\x1e.mizer.sequencer.EmptyResponse\x12R\n\x10U\
-    pdateCueTrigger\x12\".mizer.sequencer.CueTriggerRequest\x1a\x1a.mizer.se\
-    quencer.Sequences\x12Z\n\x14UpdateCueTriggerTime\x12&.mizer.sequencer.Cu\
-    eTriggerTimeRequest\x1a\x1a.mizer.sequencer.Sequences\x12L\n\rUpdateCueN\
-    ame\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Seque\
-    nces\x12N\n\x0eUpdateCueValue\x12\x20.mizer.sequencer.CueValueRequest\
-    \x1a\x1a.mizer.sequencer.Sequences\x12R\n\x11UpdateCueFadeTime\x12!.mize\
-    r.sequencer.CueTimingRequest\x1a\x1a.mizer.sequencer.Sequences\x12S\n\
-    \x12UpdateCueDelayTime\x12!.mizer.sequencer.CueTimingRequest\x1a\x1a.miz\
-    er.sequencer.Sequences\x12b\n\x18UpdateSequenceWrapAround\x12*.mizer.seq\
-    uencer.SequenceWrapAroundRequest\x1a\x1a.mizer.sequencer.Sequences\x12h\
-    \n\x1bUpdateSequenceStopOnLastCue\x12-.mizer.sequencer.SequenceStopOnLas\
-    tCueRequest\x1a\x1a.mizer.sequencer.Sequences\x12Q\n\x12UpdateSequenceNa\
-    me\x12\x1f.mizer.sequencer.CueNameRequest\x1a\x1a.mizer.sequencer.Sequen\
-    cesb\x06proto3\
+    eR\x04time\"\x84\x01\n\x1aCueEffectOffsetTimeRequest\x12\x1a\n\x08sequen\
+    ce\x18\x01\x20\x01(\rR\x08sequence\x12\x10\n\x03cue\x18\x02\x20\x01(\rR\
+    \x03cue\x12\x16\n\x06effect\x18\x03\x20\x01(\rR\x06effect\x12\x17\n\x04t\
+    ime\x18\x04\x20\x01(\x01H\0R\x04time\x88\x01\x01B\x07\n\x05_time\"R\n\
+    \x0eCueNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\rR\x08sequence\
+    \x12\x10\n\x03cue\x18\x02\x20\x01(\rR\x03cue\x12\x12\n\x04name\x18\x03\
+    \x20\x01(\tR\x04name\"\x9f\x01\n\x0fCueValueRequest\x12\x1f\n\x0bsequenc\
+    e_id\x18\x01\x20\x01(\rR\nsequenceId\x12\x15\n\x06cue_id\x18\x02\x20\x01\
+    (\rR\x05cueId\x12#\n\rcontrol_index\x18\x03\x20\x01(\rR\x0ccontrolIndex\
+    \x12/\n\x05value\x18\x04\x20\x01(\x0b2\x19.mizer.sequencer.CueValueR\x05\
+    value\"y\n\x10CueTimingRequest\x12\x1f\n\x0bsequence_id\x18\x01\x20\x01(\
+    \rR\nsequenceId\x12\x15\n\x06cue_id\x18\x02\x20\x01(\rR\x05cueId\x12-\n\
+    \x04time\x18\x03\x20\x01(\x0b2\x19.mizer.sequencer.CueTimerR\x04time\"W\
+    \n\x19SequenceWrapAroundRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\r\
+    R\x08sequence\x12\x1e\n\nwrapAround\x18\x02\x20\x01(\x08R\nwrapAround\"`\
+    \n\x1cSequenceStopOnLastCueRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01\
+    (\rR\x08sequence\x12$\n\rstopOnLastCue\x18\x02\x20\x01(\x08R\rstopOnLast\
+    Cue\"E\n\x13SequenceNameRequest\x12\x1a\n\x08sequence\x18\x01\x20\x01(\r\
+    R\x08sequence\x12\x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"\x0f\n\rEmp\
+    tyResponse\"D\n\tSequences\x127\n\tsequences\x18\x01\x20\x03(\x0b2\x19.m\
+    izer.sequencer.SequenceR\tsequences\"\xd5\x01\n\x08Sequence\x12\x0e\n\
+    \x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\x18\x02\x20\x01(\tR\
+    \x04name\x12(\n\x04cues\x18\x03\x20\x03(\x0b2\x14.mizer.sequencer.CueR\
+    \x04cues\x125\n\x08fixtures\x18\x04\x20\x03(\x0b2\x19.mizer.fixtures.Fix\
+    tureIdR\x08fixtures\x12\x1e\n\nwrapAround\x18\x05\x20\x01(\x08R\nwrapAro\
+    und\x12$\n\rstopOnLastCue\x18\x06\x20\x01(\x08R\rstopOnLastCue\"\xdb\x03\
+    \n\x03Cue\x12\x0e\n\x02id\x18\x01\x20\x01(\rR\x02id\x12\x12\n\x04name\
+    \x18\x02\x20\x01(\tR\x04name\x125\n\x07trigger\x18\x03\x20\x01(\x0b2\x1b\
+    .mizer.sequencer.CueTriggerR\x07trigger\x127\n\x08controls\x18\x04\x20\
+    \x03(\x0b2\x1b.mizer.sequencer.CueControlR\x08controls\x12<\n\x0bcue_tim\
+    ings\x18\x05\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\ncueTimings\
+    \x12B\n\x0edimmer_timings\x18\x06\x20\x01(\x0b2\x1b.mizer.sequencer.CueT\
+    imingsR\rdimmerTimings\x12F\n\x10position_timings\x18\x07\x20\x01(\x0b2\
+    \x1b.mizer.sequencer.CueTimingsR\x0fpositionTimings\x12@\n\rcolor_timing\
+    s\x18\x08\x20\x01(\x0b2\x1b.mizer.sequencer.CueTimingsR\x0ccolorTimings\
+    \x124\n\x07effects\x18\t\x20\x03(\x0b2\x1a.mizer.sequencer.CueEffectR\
+    \x07effects\"\xd4\x01\n\tCueEffect\x12\x1b\n\teffect_id\x18\x01\x20\x01(\
+    \rR\x08effectId\x125\n\x08fixtures\x18\x02\x20\x03(\x0b2\x19.mizer.fixtu\
+    res.FixtureIdR\x08fixtures\x12*\n\x0eeffect_offsets\x18\x03\x20\x01(\x01\
+    H\0R\reffectOffsets\x88\x01\x01\x12$\n\x0beffect_rate\x18\x04\x20\x01(\
+    \x01H\x01R\neffectRate\x88\x01\x01B\x11\n\x0f_effect_offsetsB\x0e\n\x0c_\
+    effect_rate\"l\n\nCueTimings\x12-\n\x04fade\x18\x08\x20\x01(\x0b2\x19.mi\
+    zer.sequencer.CueTimerR\x04fade\x12/\n\x05delay\x18\t\x20\x01(\x0b2\x19.\
+    mizer.sequencer.CueTimerR\x05delay\"\xbd\x01\n\nCueTrigger\x124\n\x04typ\
+    e\x18\x01\x20\x01(\x0e2\x20.mizer.sequencer.CueTrigger.TypeR\x04type\x12\
+    1\n\x04time\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeH\0R\x04tim\
+    e\x88\x01\x01\"=\n\x04Type\x12\x06\n\x02GO\x10\0\x12\n\n\x06FOLLOW\x10\
+    \x01\x12\x08\n\x04TIME\x10\x02\x12\t\n\x05BEATS\x10\x03\x12\x0c\n\x08TIM\
+    ECODE\x10\x04B\x07\n\x05_time\"\xef\x02\n\nCueControl\x124\n\x04type\x18\
+    \x01\x20\x01(\x0e2\x20.mizer.sequencer.CueControl.TypeR\x04type\x12/\n\
+    \x05value\x18\x02\x20\x01(\x0b2\x19.mizer.sequencer.CueValueR\x05value\
+    \x125\n\x08fixtures\x18\x03\x20\x03(\x0b2\x19.mizer.fixtures.FixtureIdR\
+    \x08fixtures\"\xc2\x01\n\x04Type\x12\r\n\tINTENSITY\x10\0\x12\x0b\n\x07S\
+    HUTTER\x10\x01\x12\r\n\tCOLOR_RED\x10\x02\x12\x0f\n\x0bCOLOR_GREEN\x10\
+    \x03\x12\x0e\n\nCOLOR_BLUE\x10\x04\x12\x0f\n\x0bCOLOR_WHEEL\x10\x05\x12\
+    \x07\n\x03PAN\x10\x06\x12\x08\n\x04TILT\x10\x07\x12\t\n\x05FOCUS\x10\x08\
+    \x12\x08\n\x04ZOOM\x10\t\x12\t\n\x05PRISM\x10\n\x12\x08\n\x04IRIS\x10\
+    \x0b\x12\t\n\x05FROST\x10\x0c\x12\x08\n\x04GOBO\x10\r\x12\x0b\n\x07GENER\
+    IC\x10\x0e\"e\n\x08CueValue\x12\x18\n\x06direct\x18\x03\x20\x01(\x01H\0R\
+    \x06direct\x126\n\x05range\x18\x04\x20\x01(\x0b2\x1e.mizer.sequencer.Cue\
+    ValueRangeH\0R\x05rangeB\x07\n\x05value\"\x9b\x01\n\x08CueTimer\x12\x1a\
+    \n\x08hasTimer\x18\x01\x20\x01(\x08R\x08hasTimer\x122\n\x06direct\x18\
+    \x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeH\0R\x06direct\x126\n\x05r\
+    ange\x18\x03\x20\x01(\x0b2\x1e.mizer.sequencer.CueTimerRangeH\0R\x05rang\
+    eB\x07\n\x05timer\"3\n\rCueValueRange\x12\x12\n\x04from\x18\x01\x20\x01(\
+    \x01R\x04from\x12\x0e\n\x02to\x18\x02\x20\x01(\x01R\x02to\"E\n\x07CueTim\
+    e\x12\x1a\n\x07seconds\x18\x01\x20\x01(\x01H\0R\x07seconds\x12\x16\n\x05\
+    beats\x18\x02\x20\x01(\x01H\0R\x05beatsB\x06\n\x04time\"g\n\rCueTimerRan\
+    ge\x12,\n\x04from\x18\x01\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x04\
+    from\x12(\n\x02to\x18\x02\x20\x01(\x0b2\x18.mizer.sequencer.CueTimeR\x02\
+    to2\xfa\n\n\x0cSequencerApi\x12P\n\x0cGetSequences\x12$.mizer.sequencer.\
+    GetSequencesRequest\x1a\x1a.mizer.sequencer.Sequences\x12M\n\x0bGetSeque\
+    nce\x12#.mizer.sequencer.GetSequenceRequest\x1a\x19.mizer.sequencer.Sequ\
+    ence\x12M\n\x0bAddSequence\x12#.mizer.sequencer.AddSequenceRequest\x1a\
+    \x19.mizer.sequencer.Sequence\x12T\n\x0eDeleteSequence\x12&.mizer.sequen\
+    cer.DeleteSequenceRequest\x1a\x1a.mizer.sequencer.Sequences\x12P\n\nSequ\
+    enceGo\x12\".mizer.sequencer.SequenceGoRequest\x1a\x1e.mizer.sequencer.E\
+    mptyResponse\x12T\n\x0cSequenceStop\x12$.mizer.sequencer.SequenceStopReq\
+    uest\x1a\x1e.mizer.sequencer.EmptyResponse\x12R\n\x10UpdateCueTrigger\
+    \x12\".mizer.sequencer.CueTriggerRequest\x1a\x1a.mizer.sequencer.Sequenc\
+    es\x12Z\n\x14UpdateCueTriggerTime\x12&.mizer.sequencer.CueTriggerTimeReq\
+    uest\x1a\x1a.mizer.sequencer.Sequences\x12d\n\x19UpdateCueEffectOffsetTi\
+    me\x12+.mizer.sequencer.CueEffectOffsetTimeRequest\x1a\x1a.mizer.sequenc\
+    er.Sequences\x12L\n\rUpdateCueName\x12\x1f.mizer.sequencer.CueNameReques\
+    t\x1a\x1a.mizer.sequencer.Sequences\x12N\n\x0eUpdateCueValue\x12\x20.miz\
+    er.sequencer.CueValueRequest\x1a\x1a.mizer.sequencer.Sequences\x12R\n\
+    \x11UpdateCueFadeTime\x12!.mizer.sequencer.CueTimingRequest\x1a\x1a.mize\
+    r.sequencer.Sequences\x12S\n\x12UpdateCueDelayTime\x12!.mizer.sequencer.\
+    CueTimingRequest\x1a\x1a.mizer.sequencer.Sequences\x12b\n\x18UpdateSeque\
+    nceWrapAround\x12*.mizer.sequencer.SequenceWrapAroundRequest\x1a\x1a.miz\
+    er.sequencer.Sequences\x12h\n\x1bUpdateSequenceStopOnLastCue\x12-.mizer.\
+    sequencer.SequenceStopOnLastCueRequest\x1a\x1a.mizer.sequencer.Sequences\
+    \x12Q\n\x12UpdateSequenceName\x12\x1f.mizer.sequencer.CueNameRequest\x1a\
+    \x1a.mizer.sequencer.Sequencesb\x06proto3\
 ";
 
 /// `FileDescriptorProto` object which was a source for this generated file
@@ -4439,7 +4822,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
         let generated_file_descriptor = generated_file_descriptor_lazy.get(|| {
             let mut deps = ::std::vec::Vec::with_capacity(1);
             deps.push(super::fixtures::file_descriptor().clone());
-            let mut messages = ::std::vec::Vec::with_capacity(26);
+            let mut messages = ::std::vec::Vec::with_capacity(28);
             messages.push(GetSequencesRequest::generated_message_descriptor_data());
             messages.push(GetSequenceRequest::generated_message_descriptor_data());
             messages.push(AddSequenceRequest::generated_message_descriptor_data());
@@ -4448,6 +4831,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(SequenceStopRequest::generated_message_descriptor_data());
             messages.push(CueTriggerRequest::generated_message_descriptor_data());
             messages.push(CueTriggerTimeRequest::generated_message_descriptor_data());
+            messages.push(CueEffectOffsetTimeRequest::generated_message_descriptor_data());
             messages.push(CueNameRequest::generated_message_descriptor_data());
             messages.push(CueValueRequest::generated_message_descriptor_data());
             messages.push(CueTimingRequest::generated_message_descriptor_data());
@@ -4458,6 +4842,7 @@ pub fn file_descriptor() -> &'static ::protobuf::reflect::FileDescriptor {
             messages.push(Sequences::generated_message_descriptor_data());
             messages.push(Sequence::generated_message_descriptor_data());
             messages.push(Cue::generated_message_descriptor_data());
+            messages.push(CueEffect::generated_message_descriptor_data());
             messages.push(CueTimings::generated_message_descriptor_data());
             messages.push(CueTrigger::generated_message_descriptor_data());
             messages.push(CueControl::generated_message_descriptor_data());

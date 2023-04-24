@@ -24,12 +24,14 @@ class ProgrammerPluginApi implements ProgrammerApi {
 
   @override
   Future<void> selectFixtures(List<FixtureId> fixtureIds) async {
-    await channel.invokeMethod("selectFixtures", SelectFixturesRequest(fixtures: fixtureIds).writeToBuffer());
+    await channel.invokeMethod(
+        "selectFixtures", SelectFixturesRequest(fixtures: fixtureIds).writeToBuffer());
   }
 
   @override
   Future<void> unselectFixtures(List<FixtureId> fixtureIds) async {
-    await channel.invokeMethod("unselectFixtures", UnselectFixturesRequest(fixtures: fixtureIds).writeToBuffer());
+    await channel.invokeMethod(
+        "unselectFixtures", UnselectFixturesRequest(fixtures: fixtureIds).writeToBuffer());
   }
 
   @override
@@ -43,7 +45,7 @@ class ProgrammerPluginApi implements ProgrammerApi {
   }
 
   @override
-  Future<void> store(int sequenceId, StoreRequest_Mode storeMode, { int? cueId }) async {
+  Future<void> store(int sequenceId, StoreRequest_Mode storeMode, {int? cueId}) async {
     var request = StoreRequest(sequenceId: sequenceId, storeMode: storeMode, cueId: cueId);
     await channel.invokeMethod("store", request.writeToBuffer());
   }
@@ -98,8 +100,7 @@ class ProgrammerPluginApi implements ProgrammerApi {
 
   @override
   Future<void> assignFixturesToGroup(List<FixtureId> fixtures, Group group) async {
-    var request = AssignFixturesToGroupRequest(
-        id: group.id, fixtures: fixtures);
+    var request = AssignFixturesToGroupRequest(id: group.id, fixtures: fixtures);
     await channel.invokeMethod("assignFixturesToGroup", request.writeToBuffer());
   }
 
@@ -150,5 +151,17 @@ class ProgrammerPluginApi implements ProgrammerApi {
   @override
   Future<void> shuffle() async {
     await channel.invokeMethod("shuffle");
+  }
+
+  @override
+  Future<void> writeEffectOffset(int effectId, double? effectOffset) async {
+    var request = WriteEffectOffsetRequest(effectId: effectId, effectOffset: effectOffset);
+    await channel.invokeMethod("writeEffectOffset", request.writeToBuffer());
+  }
+
+  @override
+  Future<void> writeEffectRate(int effectId, double effectRate) async {
+    var request = WriteEffectRateRequest(effectId: effectId, effectRate: effectRate);
+    await channel.invokeMethod("writeEffectRate", request.writeToBuffer());
   }
 }

@@ -233,4 +233,18 @@ impl<R: RuntimeApi> ProgrammerHandler<R> {
     pub fn shuffle(&self) {
         self.fixture_manager.get_programmer().shuffle();
     }
+
+    #[tracing::instrument(skip(self))]
+    pub fn write_effect_rate(&self, request: WriteEffectRateRequest) {
+        self.fixture_manager
+            .get_programmer()
+            .write_rate(request.effectId, request.effectRate);
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn write_effect_offset(&self, request: WriteEffectOffsetRequest) {
+        self.fixture_manager
+            .get_programmer()
+            .write_offset(request.effectId, request.effectOffset);
+    }
 }

@@ -314,6 +314,8 @@ impl Hash for SequencerTime {
     }
 }
 
+impl Eq for SequencerTime {}
+
 impl SequencerValue<f64> {
     pub fn fixture_values(&self, count: usize) -> Vec<f64> {
         match self {

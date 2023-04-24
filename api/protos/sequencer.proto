@@ -13,6 +13,7 @@ service SequencerApi {
   rpc SequenceStop (SequenceStopRequest) returns (EmptyResponse) {}
   rpc UpdateCueTrigger (CueTriggerRequest) returns (Sequences) {}
   rpc UpdateCueTriggerTime (CueTriggerTimeRequest) returns (Sequences) {}
+  rpc UpdateCueEffectOffsetTime (CueEffectOffsetTimeRequest) returns (Sequences) {}
   rpc UpdateCueName (CueNameRequest) returns (Sequences) {}
   rpc UpdateCueValue (CueValueRequest) returns (Sequences) {}
   rpc UpdateCueFadeTime (CueTimingRequest) returns (Sequences) {}
@@ -53,6 +54,13 @@ message CueTriggerTimeRequest {
   uint32 sequence = 1;
   uint32 cue = 2;
   CueTime time = 3;
+}
+
+message CueEffectOffsetTimeRequest {
+  uint32 sequence = 1;
+  uint32 cue = 2;
+  uint32 effect = 3;
+  optional double time = 4;
 }
 
 message CueNameRequest {
@@ -113,6 +121,14 @@ message Cue {
   CueTimings dimmer_timings = 6;
   CueTimings position_timings = 7;
   CueTimings color_timings = 8;
+  repeated CueEffect effects = 9;
+}
+
+message CueEffect {
+  uint32 effect_id = 1;
+  repeated mizer.fixtures.FixtureId fixtures = 2;
+  optional double effect_offsets = 3;
+  optional double effect_rate = 4;
 }
 
 message CueTimings {

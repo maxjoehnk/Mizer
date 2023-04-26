@@ -3,6 +3,9 @@ use serde::{Deserialize, Serialize};
 use mizer_node::*;
 use mizer_util::*;
 
+const VALUE_INPUT: &str = "value";
+const VALUE_OUTPUT: &str = "value";
+
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq)]
 pub struct EnvelopeNode {
     pub attack: f64,
@@ -25,29 +28,15 @@ impl Default for EnvelopeNode {
 impl PipelineNode for EnvelopeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "EnvelopeNode".into(),
+            name: stringify!(EnvelopeNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(VALUE_INPUT, PortType::Single),
+            output_port!(VALUE_OUTPUT, PortType::Single),
         ]
     }
 
@@ -63,7 +52,7 @@ impl ProcessingNode for EnvelopeNode {
         let clock = context.clock();
         state.beat += clock.delta;
 
-        if let Some(value) = context.read_port("value") {
+        if let Some(value) = context.read_port(VALUE_INPUT) {
             state.calculate_phase(self, value, clock.delta);
         }
         let value = match state.phase {
@@ -93,7 +82,7 @@ impl ProcessingNode for EnvelopeNode {
             }
             EnvelopePhase::Sustain { value } => value,
         };
-        context.write_port("value", value);
+        context.write_port(VALUE_OUTPUT, value);
         context.push_history_value(value);
         state.previous_value = value;
 

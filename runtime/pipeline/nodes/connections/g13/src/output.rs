@@ -26,46 +26,11 @@ impl PipelineNode for G13OutputNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                KEY_COLOR.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Color,
-                    ..Default::default()
-                },
-            ),
-            (
-                M1.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                M2.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                M3.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                MR.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
+            input_port!(KEY_COLOR, PortType::Color),
+            input_port!(M1, PortType::Single),
+            input_port!(M2, PortType::Single),
+            input_port!(M3, PortType::Single),
+            input_port!(MR, PortType::Single),
         ]
     }
 

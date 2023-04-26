@@ -1,8 +1,5 @@
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
-use mizer_timecode::{TimecodeControlId, TimecodeId, TimecodeManager};
+use mizer_node::*;
+use mizer_timecode::{TimecodeControlId, TimecodeManager};
 use serde::{Deserialize, Serialize};
 
 const VALUE_OUTPUT: &str = "Value";
@@ -21,14 +18,7 @@ impl PipelineNode for TimecodeOutputNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            VALUE_OUTPUT.into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!(VALUE_OUTPUT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

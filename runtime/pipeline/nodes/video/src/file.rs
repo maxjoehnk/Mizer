@@ -21,20 +21,13 @@ pub struct VideoFileState {
 impl PipelineNode for VideoFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "VideoFileNode".into(),
+            name: stringify!(VideoFileNode).into(),
             preview_type: PreviewType::Texture,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "output".into(),
-            PortMetadata {
-                port_type: PortType::Gstreamer,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!("output", PortType::Gstreamer)]
     }
 
     fn node_type(&self) -> NodeType {

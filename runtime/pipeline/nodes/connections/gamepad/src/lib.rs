@@ -42,20 +42,13 @@ pub struct GamepadNode {
 impl PipelineNode for GamepadNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "GamepadNode".into(),
+            name: stringify!(GamepadNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            VALUE.into(),
-            PortMetadata {
-                direction: PortDirection::Output,
-                port_type: PortType::Single,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!(VALUE, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

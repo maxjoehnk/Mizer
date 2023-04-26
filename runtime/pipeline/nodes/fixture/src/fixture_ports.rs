@@ -1,7 +1,7 @@
 use mizer_fixtures::definition::{
     ColorChannel, FixtureControl, FixtureControlType, FixtureFaderControl,
 };
-use mizer_node::{Color, NodeContext, PortDirection, PortId, PortMetadata, PortType};
+use mizer_node::*;
 use std::collections::HashMap;
 
 pub(crate) fn write_ports(
@@ -48,17 +48,13 @@ impl FixtureControlPorts for Vec<(FixtureControl, FixtureControlType)> {
     fn get_ports(self) -> HashMap<PortId, PortMetadata> {
         self.into_iter()
             .map(|(name, control_type)| {
-                (
-                    name.to_string().into(),
-                    PortMetadata {
-                        port_type: if control_type == FixtureControlType::Color {
-                            PortType::Color
-                        } else {
-                            PortType::Single
-                        },
-                        direction: PortDirection::Input,
-                        ..Default::default()
-                    },
+                input_port!(
+                    name.to_string(),
+                    if control_type == FixtureControlType::Color {
+                        PortType::Color
+                    } else {
+                        PortType::Single
+                    }
                 )
             })
             .collect()

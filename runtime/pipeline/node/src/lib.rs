@@ -5,6 +5,7 @@ pub use mizer_ports::{Color, PortId, PortType};
 
 pub use self::context::*;
 pub use self::introspection::*;
+pub use self::macros::*;
 pub use self::path::*;
 pub use self::ports::*;
 pub use self::preview::*;
@@ -19,6 +20,7 @@ mod introspection;
 mod preview;
 
 pub mod edge;
+mod macros;
 #[cfg(feature = "test")]
 pub mod mocks;
 

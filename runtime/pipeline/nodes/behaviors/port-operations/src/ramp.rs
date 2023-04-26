@@ -1,9 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use mizer_util::{Spline, SplineStep};
 
 const VALUE_INPUT: &str = "value";
@@ -52,22 +49,8 @@ impl PipelineNode for RampNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                VALUE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                VALUE_OUTPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(VALUE_INPUT, PortType::Single),
+            output_port!(VALUE_OUTPUT, PortType::Single),
         ]
     }
 

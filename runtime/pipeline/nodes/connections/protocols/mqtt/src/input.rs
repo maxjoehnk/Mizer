@@ -23,20 +23,13 @@ impl Default for MqttInputNode {
 impl PipelineNode for MqttInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "MqttInputNode".into(),
+            name: stringify!(MqttInputNode).into(),
             preview_type: PreviewType::Data,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            VALUE_PORT.into(),
-            PortMetadata {
-                port_type: PortType::Data,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!(VALUE_PORT, PortType::Data)]
     }
 
     fn node_type(&self) -> NodeType {

@@ -17,20 +17,13 @@ pub struct IldaFileState {
 impl PipelineNode for IldaFileNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "IldaFileNode".into(),
+            name: stringify!(IldaFileNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "frames".into(),
-            PortMetadata {
-                port_type: PortType::Laser,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!("frames", PortType::Laser)]
     }
 
     fn node_type(&self) -> NodeType {

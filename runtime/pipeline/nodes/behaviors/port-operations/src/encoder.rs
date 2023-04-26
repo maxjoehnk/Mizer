@@ -1,8 +1,5 @@
 use mizer_node::edge::Edge;
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
 const INCREASE_INPUT: &str = "Increase";
@@ -24,45 +21,17 @@ impl Default for EncoderNode {
 impl PipelineNode for EncoderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "EncoderNode".into(),
+            name: stringify!(EncoderNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                INCREASE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                DECREASE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                RESET_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                VALUE_OUTPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(INCREASE_INPUT, PortType::Single),
+            input_port!(DECREASE_INPUT, PortType::Single),
+            input_port!(RESET_INPUT, PortType::Single),
+            output_port!(VALUE_OUTPUT, PortType::Single),
         ]
     }
 

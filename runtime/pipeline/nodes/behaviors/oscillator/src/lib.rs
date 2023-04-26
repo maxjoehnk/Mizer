@@ -9,19 +9,14 @@ const MIN_INPUT_PORT: &str = "min";
 const MAX_INPUT_PORT: &str = "max";
 const VALUE_OUTPUT_PORT: &str = "value";
 
-#[derive(Clone, Copy, Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum OscillatorType {
     Square,
+    #[default]
     Sine,
     Saw,
     Triangle,
-}
-
-impl Default for OscillatorType {
-    fn default() -> Self {
-        OscillatorType::Sine
-    }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
@@ -68,45 +63,17 @@ fn default_max() -> f64 {
 impl PipelineNode for OscillatorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "OscillatorNode".into(),
+            name: stringify!(OscillatorNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                VALUE_OUTPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
-            (
-                INTERVAL_INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                MIN_INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                MAX_INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
+            output_port!(VALUE_OUTPUT_PORT, PortType::Single),
+            input_port!(INTERVAL_INPUT_PORT, PortType::Single),
+            input_port!(MIN_INPUT_PORT, PortType::Single),
+            input_port!(MAX_INPUT_PORT, PortType::Single),
         ]
     }
 

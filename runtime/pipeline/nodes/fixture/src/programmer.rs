@@ -11,117 +11,26 @@ pub struct ProgrammerNode;
 impl PipelineNode for ProgrammerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ProgrammerNode".into(),
+            name: stringify!(ProgrammerNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "Intensity".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Shutter".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Color".into(),
-                PortMetadata {
-                    port_type: PortType::Color,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Pan".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Tilt".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Focus".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Zoom".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Prism".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Iris".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Frost".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Gobo".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Highlight".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "Clear".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
+            input_port!("Intensity", PortType::Single),
+            input_port!("Shutter", PortType::Single),
+            input_port!("Color", PortType::Color),
+            input_port!("Pan", PortType::Single),
+            input_port!("Tilt", PortType::Single),
+            input_port!("Focus", PortType::Single),
+            input_port!("Zoom", PortType::Single),
+            input_port!("Prism", PortType::Single),
+            input_port!("Iris", PortType::Single),
+            input_port!("Frost", PortType::Single),
+            input_port!("Gobo", PortType::Single),
+            input_port!("Highlight", PortType::Single),
+            input_port!("Clear", PortType::Single),
         ]
     }
 

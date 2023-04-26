@@ -8,29 +8,15 @@ pub struct FaderNode {}
 impl PipelineNode for FaderNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "FaderNode".into(),
+            name: stringify!(FaderNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                "value".into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!("value", PortType::Single),
+            output_port!("value", PortType::Single),
         ]
     }
 

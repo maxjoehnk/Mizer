@@ -12,100 +12,30 @@ const ACTIVE: &str = "Active";
 const CUE: &str = "Cue";
 const RATE: &str = "Rate";
 
-#[derive(Default, Clone, Deserialize, Serialize)]
+#[derive(Debug, Default, Clone, Deserialize, Serialize, PartialEq)]
 pub struct SequencerNode {
     #[serde(rename = "sequence")]
     pub sequence_id: u32,
 }
 
-impl std::fmt::Debug for SequencerNode {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        f.debug_struct("SequencerNode")
-            .field("sequence_id", &self.sequence_id)
-            .finish()
-    }
-}
-
-impl PartialEq<Self> for SequencerNode {
-    fn eq(&self, other: &SequencerNode) -> bool {
-        self.sequence_id == other.sequence_id
-    }
-}
-
 impl PipelineNode for SequencerNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "SequencerNode".into(),
+            name: stringify!(SequencerNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                GO_FORWARD.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                PLAYBACK.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                TOGGLE_PLAYBACK.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                STOP.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                ACTIVE.into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                CUE.into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                CUE.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                RATE.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
+            input_port!(GO_FORWARD, PortType::Single),
+            input_port!(PLAYBACK, PortType::Single),
+            input_port!(TOGGLE_PLAYBACK, PortType::Single),
+            input_port!(STOP, PortType::Single),
+            output_port!(ACTIVE, PortType::Single),
+            output_port!(CUE, PortType::Single),
+            input_port!(CUE, PortType::Single),
+            input_port!(RATE, PortType::Single),
         ]
     }
 

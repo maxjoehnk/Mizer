@@ -28,20 +28,13 @@ fn default_universe() -> u16 {
 impl PipelineNode for DmxOutputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "DmxOutputNode".into(),
+            name: stringify!(DmxOutputNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-        )]
+        vec![input_port!("value", PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

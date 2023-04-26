@@ -21,22 +21,8 @@ impl PipelineNode for ExtractNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Data,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                OUTPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Data,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(INPUT_PORT, PortType::Data),
+            output_port!(OUTPUT_PORT, PortType::Data),
         ]
     }
 

@@ -23,23 +23,8 @@ impl PipelineNode for TemplateNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                INPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Data,
-                    direction: PortDirection::Input,
-                    multiple: Some(true),
-                    ..Default::default()
-                },
-            ),
-            (
-                OUTPUT_PORT.into(),
-                PortMetadata {
-                    port_type: PortType::Data,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(INPUT_PORT, PortType::Data, multiple),
+            output_port!(OUTPUT_PORT, PortType::Data),
         ]
     }
 

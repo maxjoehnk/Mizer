@@ -1,6 +1,9 @@
 use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
+const INPUT_PORT: &str = "input";
+const OUTPUT_PORT: &str = "output";
+
 #[derive(Clone, Debug, Default, Deserialize, Serialize, PartialEq, Eq)]
 pub struct MergeNode {
     pub mode: MergeMode,
@@ -23,30 +26,15 @@ impl Default for MergeMode {
 impl PipelineNode for MergeNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "MergeNode".into(),
+            name: stringify!(MergeNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                "input".into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    multiple: true.into(),
-                    ..PortMetadata::default()
-                },
-            ),
-            (
-                "output".into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Single,
-                    ..PortMetadata::default()
-                },
-            ),
+            input_port!(INPUT_PORT, PortType::Single, multiple),
+            output_port!(OUTPUT_PORT, PortType::Single),
         ]
     }
 

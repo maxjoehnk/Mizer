@@ -56,20 +56,13 @@ fn default_midi_range() -> (u8, u8) {
 impl PipelineNode for MidiInputNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "MidiInputNode".into(),
+            name: stringify!(MidiInputNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            PortId("value".into()),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!("value", PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

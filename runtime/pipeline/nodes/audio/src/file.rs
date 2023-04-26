@@ -9,16 +9,13 @@ use serde::{Deserialize, Serialize};
 use symphonia::core::audio::SampleBuffer;
 use symphonia::core::codecs::{Decoder, CODEC_TYPE_NULL};
 use symphonia::core::errors::Error;
-use symphonia::core::formats::{FormatReader, SeekTo};
+use symphonia::core::formats::FormatReader;
 use symphonia::core::io::MediaSourceStream;
 use symphonia::core::probe::Hint;
 use symphonia::default;
 
 use mizer_node::edge::Edge;
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 
 use crate::BUFFER_SIZE;
 
@@ -52,46 +49,11 @@ impl PipelineNode for AudioFileNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                PLAYBACK_INPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                PLAYBACK_OUTPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Single,
-                    ..Default::default()
-                },
-            ),
-            (
-                TIMECODE_INPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Input,
-                    port_type: PortType::Clock,
-                    ..Default::default()
-                },
-            ),
-            (
-                TIMECODE_OUTPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Clock,
-                    ..Default::default()
-                },
-            ),
-            (
-                AUDIO_OUTPUT.into(),
-                PortMetadata {
-                    direction: PortDirection::Output,
-                    port_type: PortType::Multi,
-                    ..Default::default()
-                },
-            ),
+            input_port!(PLAYBACK_INPUT, PortType::Single),
+            input_port!(TIMECODE_INPUT, PortType::Clock),
+            output_port!(PLAYBACK_OUTPUT, PortType::Single),
+            output_port!(TIMECODE_OUTPUT, PortType::Clock),
+            output_port!(AUDIO_OUTPUT, PortType::Multi),
         ]
     }
 

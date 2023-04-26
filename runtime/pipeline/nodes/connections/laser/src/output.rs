@@ -20,20 +20,13 @@ pub struct LaserState {
 impl PipelineNode for LaserNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "LaserNode".into(),
+            name: stringify!(LaserNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "input".into(),
-            PortMetadata {
-                port_type: PortType::Laser,
-                direction: PortDirection::Input,
-                ..Default::default()
-            },
-        )]
+        vec![input_port!("input", PortType::Laser)]
     }
 
     fn node_type(&self) -> NodeType {

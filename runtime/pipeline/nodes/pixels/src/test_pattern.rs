@@ -2,17 +2,12 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
-#[derive(Debug, Copy, Clone, Deserialize, Serialize, PartialEq, Eq)]
+#[derive(Debug, Default, Copy, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case")]
 pub enum Pattern {
+    #[default]
     RgbIterate,
     RgbSnake,
-}
-
-impl Default for Pattern {
-    fn default() -> Self {
-        Pattern::RgbIterate
-    }
 }
 
 pub enum PatternState {
@@ -45,20 +40,13 @@ pub struct PixelPatternGeneratorState {
 impl PipelineNode for PixelPatternGeneratorNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "PixelPatternGeneratorNode".into(),
+            name: stringify!(PixelPatternGeneratorNode).into(),
             preview_type: PreviewType::None,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "output".into(),
-            PortMetadata {
-                port_type: PortType::Multi,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!("output", PortType::Multi)]
     }
 
     fn node_type(&self) -> NodeType {

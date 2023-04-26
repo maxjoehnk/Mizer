@@ -1,7 +1,4 @@
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
 const VALUE_INPUT: &str = "value";
@@ -36,29 +33,15 @@ impl Default for ThresholdNode {
 impl PipelineNode for ThresholdNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "ThresholdNode".into(),
+            name: stringify!(ThresholdNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                VALUE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                VALUE_OUTPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(VALUE_INPUT, PortType::Single),
+            output_port!(VALUE_OUTPUT, PortType::Single),
         ]
     }
 

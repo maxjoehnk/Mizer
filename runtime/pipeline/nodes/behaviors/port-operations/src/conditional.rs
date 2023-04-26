@@ -1,7 +1,4 @@
-use mizer_node::{
-    NodeContext, NodeDetails, NodeType, PipelineNode, PortDirection, PortId, PortMetadata,
-    PortType, PreviewType, ProcessingNode,
-};
+use mizer_node::*;
 use serde::{Deserialize, Serialize};
 
 const CONDITION_INPUT: &str = "Condition";
@@ -29,30 +26,9 @@ impl PipelineNode for ConditionalNode {
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
         vec![
-            (
-                CONDITION_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                VALUE_INPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Input,
-                    ..Default::default()
-                },
-            ),
-            (
-                VALUE_OUTPUT.into(),
-                PortMetadata {
-                    port_type: PortType::Single,
-                    direction: PortDirection::Output,
-                    ..Default::default()
-                },
-            ),
+            input_port!(CONDITION_INPUT, PortType::Single),
+            input_port!(VALUE_INPUT, PortType::Single),
+            output_port!(VALUE_OUTPUT, PortType::Single),
         ]
     }
 

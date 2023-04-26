@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 
 use mizer_node::*;
 
+const VALUE_OUTPUT: &str = "value";
+
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, PartialEq)]
 pub struct SequenceStep {
     pub tick: f64,
@@ -50,28 +52,13 @@ impl Default for SequenceState {
 impl PipelineNode for SequenceNode {
     fn details(&self) -> NodeDetails {
         NodeDetails {
-            name: "SequenceNode".into(),
+            name: stringify!(SequenceNode).into(),
             preview_type: PreviewType::History,
         }
     }
 
-    fn introspect_port(&self, port: &PortId) -> Option<PortMetadata> {
-        (port == "value").then(|| PortMetadata {
-            port_type: PortType::Single,
-            direction: PortDirection::Output,
-            ..Default::default()
-        })
-    }
-
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![(
-            "value".into(),
-            PortMetadata {
-                port_type: PortType::Single,
-                direction: PortDirection::Output,
-                ..Default::default()
-            },
-        )]
+        vec![output_port!(VALUE_OUTPUT, PortType::Single)]
     }
 
     fn node_type(&self) -> NodeType {

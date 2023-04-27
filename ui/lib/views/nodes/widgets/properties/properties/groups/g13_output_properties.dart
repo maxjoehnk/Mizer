@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -39,7 +40,9 @@ class _G13OutputPropertiesState extends State<G13OutputProperties> {
       EnumField<String>(
         label: "Device",
         initialValue: widget.config.deviceId,
-        items: devices.map((e) => SelectOption(value: e.g13.id, label: e.name)).toList(),
+        items: devices
+            .map((e) => SelectOption(value: e.g13.id, label: e.name.toCapitalCase()))
+            .toList(),
         onUpdate: _updateDevice,
       ),
     ]);

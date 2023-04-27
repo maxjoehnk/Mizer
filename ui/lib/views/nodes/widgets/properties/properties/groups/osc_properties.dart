@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/widgets/properties/properties/fields/checkbox_field.dart';
@@ -42,7 +43,8 @@ class _OscPropertiesState extends State<OscProperties> {
       EnumField<String>(
         label: "Connection",
         initialValue: widget.config.connection,
-        items: connections.map((e) => SelectOption(value: e.osc.connectionId, label: e.name)).toList(),
+        items:
+            connections.map((e) => SelectOption(value: e.osc.connectionId, label: e.name)).toList(),
         onUpdate: _updateConnection,
       ),
       TextPropertyField(
@@ -51,12 +53,18 @@ class _OscPropertiesState extends State<OscProperties> {
         onUpdate: _updatePath,
       ),
       EnumField(
-          label: "Argument Type",
-          initialValue: this.widget.config.argumentType.value,
-          items: OscNodeConfig_ArgumentType.values.map((v) => SelectOption(value: v.value, label: v.name)).toList(),
-          onUpdate: _updateArgumentType,
+        label: "Argument Type",
+        initialValue: this.widget.config.argumentType.value,
+        items: OscNodeConfig_ArgumentType.values
+            .map((v) => SelectOption(value: v.value, label: v.name.toCapitalCase()))
+            .toList(),
+        onUpdate: _updateArgumentType,
       ),
-      if (widget.isOutput) CheckboxField(label: "Only emit changes", value: this.widget.config.onlyEmitChanges, onUpdate: _updateOnlyEmitChanges),
+      if (widget.isOutput)
+        CheckboxField(
+            label: "Only emit changes",
+            value: this.widget.config.onlyEmitChanges,
+            onUpdate: _updateOnlyEmitChanges),
     ]);
   }
 
@@ -82,7 +90,8 @@ class _OscPropertiesState extends State<OscProperties> {
     var connectionsApi = context.read<ConnectionsApi>();
     var connections = await connectionsApi.getConnections();
     this.setState(() {
-      this.connections = connections.connections.where((connection) => connection.hasOsc()).toList();
+      this.connections =
+          connections.connections.where((connection) => connection.hasOsc()).toList();
     });
   }
 

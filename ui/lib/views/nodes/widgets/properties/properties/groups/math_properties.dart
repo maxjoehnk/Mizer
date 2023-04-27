@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
 
@@ -36,7 +37,7 @@ class _MathPropertiesState extends State<MathProperties> {
           label: "Mode",
           initialValue: widget.config.mode.value,
           items: MathNodeConfig_Mode.values
-              .map((e) => SelectOption(value: e.value, label: e.name))
+              .map((e) => SelectOption(value: e.value, label: e.name.toCapitalCase()))
               .toList(),
           onUpdate: _updateMode),
     ]);

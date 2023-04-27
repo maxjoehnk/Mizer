@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mizer/api/contracts/connections.dart';
+import 'package:mizer/extensions/string_extensions.dart';
 import 'package:mizer/protos/connections.pb.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/widgets/controls/select.dart';
@@ -46,19 +47,14 @@ class _MidiPropertiesState extends State<MidiProperties> {
         onUpdate: _updateDevice,
       ),
       EnumField(
-          label: "Binding",
-          initialValue: this.widget.config.whichBinding(),
-          items: [
-            SelectOption(
-                value: MidiNodeConfig_Binding.noteBinding,
-                label: "Note"
-            ),
-            if (deviceProfile != null) SelectOption(
-                value: MidiNodeConfig_Binding.controlBinding,
-                label: "Control"
-            ),
-          ],
-          onUpdate: _updateBinding,
+        label: "Binding",
+        initialValue: this.widget.config.whichBinding(),
+        items: [
+          SelectOption(value: MidiNodeConfig_Binding.noteBinding, label: "Note"),
+          if (deviceProfile != null)
+            SelectOption(value: MidiNodeConfig_Binding.controlBinding, label: "Control"),
+        ],
+        onUpdate: _updateBinding,
       ),
       if (state.hasNoteBinding()) ..._noteBinding(),
       if (state.hasControlBinding()) ..._controlBinding(),
@@ -78,7 +74,9 @@ class _MidiPropertiesState extends State<MidiProperties> {
       EnumField(
         label: "Mode",
         initialValue: this.widget.config.noteBinding.type.value,
-        items: MidiNodeConfig_NoteBinding_MidiType.values.map((v) => SelectOption(value: v.value, label: v.name)).toList(),
+        items: MidiNodeConfig_NoteBinding_MidiType.values
+            .map((v) => SelectOption(value: v.value, label: v.name.toCapitalCase()))
+            .toList(),
         onUpdate: _updateMode,
       ),
       NumberField(
@@ -115,7 +113,9 @@ class _MidiPropertiesState extends State<MidiProperties> {
     if (device == null) {
       return null;
     }
-    return this.midiDeviceProfiles.firstWhereOrNull((deviceProfile) => device!.midi.deviceProfile == deviceProfile.id);
+    return this
+        .midiDeviceProfiles
+        .firstWhereOrNull((deviceProfile) => device!.midi.deviceProfile == deviceProfile.id);
   }
 
   MidiDeviceProfile_Page? get page {
@@ -130,9 +130,11 @@ class _MidiPropertiesState extends State<MidiProperties> {
       EnumField<String>(
           label: "Page",
           initialValue: state.controlBinding.page,
-          items: deviceProfile?.pages.map((page) => SelectOption(value: page.name, label: page.name)).toList() ?? [],
-          onUpdate: _updatePage
-      ),
+          items: deviceProfile?.pages
+                  .map((page) => SelectOption(value: page.name, label: page.name))
+                  .toList() ??
+              [],
+          onUpdate: _updatePage),
       EnumField<String>(
           label: "Control",
           initialValue: state.controlBinding.control,
@@ -140,15 +142,17 @@ class _MidiPropertiesState extends State<MidiProperties> {
             ..._groups,
             ...getControls(page?.controls ?? []),
           ],
-          onUpdate: _updateControl
-      ),
+          onUpdate: _updateControl),
     ];
   }
-  
+
   List<SelectGroup<String>> get _groups {
-    return page?.groups.map((group) => SelectGroup(group.name, getControls(group.controls))).toList() ?? [];
+    return page?.groups
+            .map((group) => SelectGroup(group.name, getControls(group.controls)))
+            .toList() ??
+        [];
   }
-  
+
   List<SelectOption<String>> getControls(List<MidiDeviceProfile_Control> controls) {
     return controls.map((control) => SelectOption(value: control.id, label: control.name)).toList();
   }
@@ -176,7 +180,8 @@ class _MidiPropertiesState extends State<MidiProperties> {
     var connections = await connectionsApi.getConnections();
     var midiProfiles = await connectionsApi.getMidiDeviceProfiles();
     this.setState(() {
-      this.midiDevices = connections.connections.where((connection) => connection.hasMidi()).toList();
+      this.midiDevices =
+          connections.connections.where((connection) => connection.hasMidi()).toList();
       this.midiDeviceProfiles = midiProfiles.profiles;
     });
   }

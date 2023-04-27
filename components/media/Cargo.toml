@@ -20,10 +20,10 @@ async-std = "1.12"
 tide = { version = "0.16", default-features = false, features = ["h1-server", "logger"] }
 multer = "2.1"
 async-walkdir = "0.2"
-resvg = "0.30"
-usvg = "0.30"
+resvg = "0.32"
+usvg = "0.32"
 urlencoding = "2.1"
-tiny-skia = "0.8"
+tiny-skia = "0.9"
 sled = "0.34"
 symphonia = { version = "0.5", features = ["all-codecs", "all-formats"] }
 rsmpeg = { version = "0.14.1+ffmpeg.6.0", features = ["link_system_ffmpeg"] }

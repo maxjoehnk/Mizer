@@ -15,7 +15,11 @@ class NodeFooter extends StatelessWidget {
   final List<CustomNodeTab> tabs;
 
   const NodeFooter(
-      {required this.selectedTab, required this.onSelectTab, required this.node, required this.tabs, Key? key})
+      {required this.selectedTab,
+      required this.onSelectTab,
+      required this.node,
+      required this.tabs,
+      Key? key})
       : super(key: key);
 
   @override
@@ -29,8 +33,7 @@ class NodeFooter extends StatelessWidget {
       height: 24,
       child: Row(children: [
         _tab(context, MdiIcons.tuneVariant, NodeTab.Ports),
-        if (node.preview != Node_NodePreviewType.None)
-          _tab(context, MdiIcons.eye, NodeTab.Preview),
+        if (node.preview != Node_NodePreviewType.NONE) _tab(context, MdiIcons.eye, NodeTab.Preview),
         ...tabs.map((t) => _tab(context, t.icon, t.tab)),
         Spacer(),
         Padding(

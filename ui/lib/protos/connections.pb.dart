@@ -3,7 +3,7 @@
 //  source: connections.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -16,7 +16,7 @@ export 'connections.pbenum.dart';
 
 class MonitorDmxRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MonitorDmxRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId', protoName: 'outputId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId')
     ..hasRequiredFields = false
   ;
 
@@ -410,9 +410,9 @@ class MonitorMidiResponse extends $pb.GeneratedMessage {
     ..oo(0, [3, 4, 5, 6, 7])
     ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..aOM<MonitorMidiResponse_NoteMsg>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cc', subBuilder: MonitorMidiResponse_NoteMsg.create)
-    ..aOM<MonitorMidiResponse_NoteMsg>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOff', protoName: 'noteOff', subBuilder: MonitorMidiResponse_NoteMsg.create)
-    ..aOM<MonitorMidiResponse_NoteMsg>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOn', protoName: 'noteOn', subBuilder: MonitorMidiResponse_NoteMsg.create)
-    ..aOM<MonitorMidiResponse_SysEx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sysEx', protoName: 'sysEx', subBuilder: MonitorMidiResponse_SysEx.create)
+    ..aOM<MonitorMidiResponse_NoteMsg>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOff', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_NoteMsg>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noteOn', subBuilder: MonitorMidiResponse_NoteMsg.create)
+    ..aOM<MonitorMidiResponse_SysEx>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sysEx', subBuilder: MonitorMidiResponse_SysEx.create)
     ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unknown', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
@@ -1106,7 +1106,7 @@ enum Connection_Connection {
   dmx, 
   midi, 
   osc, 
-  proDJLink, 
+  proDjLink, 
   helios, 
   etherDream, 
   gamepad, 
@@ -1120,7 +1120,7 @@ class Connection extends $pb.GeneratedMessage {
     10 : Connection_Connection.dmx,
     11 : Connection_Connection.midi,
     12 : Connection_Connection.osc,
-    13 : Connection_Connection.proDJLink,
+    13 : Connection_Connection.proDjLink,
     14 : Connection_Connection.helios,
     15 : Connection_Connection.etherDream,
     16 : Connection_Connection.gamepad,
@@ -1134,9 +1134,9 @@ class Connection extends $pb.GeneratedMessage {
     ..aOM<DmxConnection>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dmx', subBuilder: DmxConnection.create)
     ..aOM<MidiConnection>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'midi', subBuilder: MidiConnection.create)
     ..aOM<OscConnection>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'osc', subBuilder: OscConnection.create)
-    ..aOM<ProDjLinkConnection>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proDJLink', protoName: 'proDJLink', subBuilder: ProDjLinkConnection.create)
+    ..aOM<ProDjLinkConnection>(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'proDjLink', subBuilder: ProDjLinkConnection.create)
     ..aOM<HeliosConnection>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'helios', subBuilder: HeliosConnection.create)
-    ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', protoName: 'etherDream', subBuilder: EtherDreamConnection.create)
+    ..aOM<EtherDreamConnection>(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'etherDream', subBuilder: EtherDreamConnection.create)
     ..aOM<GamepadConnection>(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gamepad', subBuilder: GamepadConnection.create)
     ..aOM<MqttConnection>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqtt', subBuilder: MqttConnection.create)
     ..aOM<G13Connection>(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'g13', subBuilder: G13Connection.create)
@@ -1149,7 +1149,7 @@ class Connection extends $pb.GeneratedMessage {
     DmxConnection? dmx,
     MidiConnection? midi,
     OscConnection? osc,
-    ProDjLinkConnection? proDJLink,
+    ProDjLinkConnection? proDjLink,
     HeliosConnection? helios,
     EtherDreamConnection? etherDream,
     GamepadConnection? gamepad,
@@ -1169,8 +1169,8 @@ class Connection extends $pb.GeneratedMessage {
     if (osc != null) {
       _result.osc = osc;
     }
-    if (proDJLink != null) {
-      _result.proDJLink = proDJLink;
+    if (proDjLink != null) {
+      _result.proDjLink = proDjLink;
     }
     if (helios != null) {
       _result.helios = helios;
@@ -1256,15 +1256,15 @@ class Connection extends $pb.GeneratedMessage {
   OscConnection ensureOsc() => $_ensure(3);
 
   @$pb.TagNumber(13)
-  ProDjLinkConnection get proDJLink => $_getN(4);
+  ProDjLinkConnection get proDjLink => $_getN(4);
   @$pb.TagNumber(13)
-  set proDJLink(ProDjLinkConnection v) { setField(13, v); }
+  set proDjLink(ProDjLinkConnection v) { setField(13, v); }
   @$pb.TagNumber(13)
-  $core.bool hasProDJLink() => $_has(4);
+  $core.bool hasProDjLink() => $_has(4);
   @$pb.TagNumber(13)
-  void clearProDJLink() => clearField(13);
+  void clearProDjLink() => clearField(13);
   @$pb.TagNumber(13)
-  ProDjLinkConnection ensureProDJLink() => $_ensure(4);
+  ProDjLinkConnection ensureProDjLink() => $_ensure(4);
 
   @$pb.TagNumber(14)
   HeliosConnection get helios => $_getN(5);
@@ -1336,7 +1336,7 @@ class DmxConnection extends $pb.GeneratedMessage {
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DmxConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..oo(0, [3, 4])
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId', protoName: 'outputId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputId')
     ..aOM<ArtnetConfig>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'artnet', subBuilder: ArtnetConfig.create)
     ..aOM<SacnConfig>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sacn', subBuilder: SacnConfig.create)
     ..hasRequiredFields = false
@@ -1844,7 +1844,7 @@ class MidiDeviceProfile_Control extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'channel', $pb.PbFieldType.OU3)
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'note', $pb.PbFieldType.OU3)
-    ..e<MidiDeviceProfile_ControlType>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: MidiDeviceProfile_ControlType.Note, valueOf: MidiDeviceProfile_ControlType.valueOf, enumValues: MidiDeviceProfile_ControlType.values)
+    ..e<MidiDeviceProfile_ControlType>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'controlType', $pb.PbFieldType.OE, defaultOrMaker: MidiDeviceProfile_ControlType.NOTE, valueOf: MidiDeviceProfile_ControlType.valueOf, enumValues: MidiDeviceProfile_ControlType.values)
     ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasOutput')
     ..hasRequiredFields = false
   ;
@@ -2054,7 +2054,7 @@ class MidiDeviceProfile extends $pb.GeneratedMessage {
 
 class OscConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'OscConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId', protoName: 'connectionId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId')
     ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputPort', $pb.PbFieldType.OU3)
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputPort', $pb.PbFieldType.OU3)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outputAddress')
@@ -2145,7 +2145,7 @@ class ProDjLinkConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProDjLinkConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'model')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3, protoName: 'playerNumber')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playerNumber', $pb.PbFieldType.OU3)
     ..aOM<CdjPlayback>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playback', subBuilder: CdjPlayback.create)
     ..hasRequiredFields = false
   ;
@@ -2298,7 +2298,7 @@ class CdjPlayback extends $pb.GeneratedMessage {
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'live')
     ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'bpm', $pb.PbFieldType.OD)
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'frame', $pb.PbFieldType.OU3)
-    ..e<CdjPlayback_State>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playback', $pb.PbFieldType.OE, defaultOrMaker: CdjPlayback_State.Loading, valueOf: CdjPlayback_State.valueOf, enumValues: CdjPlayback_State.values)
+    ..e<CdjPlayback_State>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'playback', $pb.PbFieldType.OE, defaultOrMaker: CdjPlayback_State.LOADING, valueOf: CdjPlayback_State.valueOf, enumValues: CdjPlayback_State.values)
     ..aOM<CdjPlayback_Track>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'track', subBuilder: CdjPlayback_Track.create)
     ..hasRequiredFields = false
   ;
@@ -2400,7 +2400,7 @@ class CdjPlayback extends $pb.GeneratedMessage {
 
 class MqttConnection extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MqttConnection', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId', protoName: 'connectionId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'connectionId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'url')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'password')

@@ -76,10 +76,10 @@ impl From<PresetId> for mizer_fixtures::programmer::PresetId {
     fn from(id: PresetId) -> Self {
         use preset_id::PresetType::*;
         match id.type_.unwrap() {
-            Intensity => Self::Intensity(id.id),
-            Shutter => Self::Shutter(id.id),
-            Color => Self::Color(id.id),
-            Position => Self::Position(id.id),
+            INTENSITY => Self::Intensity(id.id),
+            SHUTTER => Self::Shutter(id.id),
+            COLOR => Self::Color(id.id),
+            POSITION => Self::Position(id.id),
         }
     }
 }
@@ -91,22 +91,22 @@ impl From<mizer_fixtures::programmer::PresetId> for PresetId {
         match id {
             Intensity(id) => Self {
                 id,
-                type_: EnumOrUnknown::new(preset_id::PresetType::Intensity),
+                type_: EnumOrUnknown::new(preset_id::PresetType::INTENSITY),
                 ..Default::default()
             },
             Shutter(id) => Self {
                 id,
-                type_: EnumOrUnknown::new(preset_id::PresetType::Shutter),
+                type_: EnumOrUnknown::new(preset_id::PresetType::SHUTTER),
                 ..Default::default()
             },
             Color(id) => Self {
                 id,
-                type_: EnumOrUnknown::new(preset_id::PresetType::Color),
+                type_: EnumOrUnknown::new(preset_id::PresetType::COLOR),
                 ..Default::default()
             },
             Position(id) => Self {
                 id,
-                type_: EnumOrUnknown::new(preset_id::PresetType::Position),
+                type_: EnumOrUnknown::new(preset_id::PresetType::POSITION),
                 ..Default::default()
             },
         }
@@ -283,9 +283,9 @@ impl From<mizer_fixtures::programmer::ProgrammerChannel> for ProgrammerChannel {
 impl From<store_request::Mode> for mizer_command_executor::StoreMode {
     fn from(mode: store_request::Mode) -> Self {
         match mode {
-            store_request::Mode::Merge => Self::Merge,
-            store_request::Mode::AddCue => Self::AddCue,
-            store_request::Mode::Overwrite => Self::Overwrite,
+            store_request::Mode::MERGE => Self::Merge,
+            store_request::Mode::ADD_CUE => Self::AddCue,
+            store_request::Mode::OVERWRITE => Self::Overwrite,
         }
     }
 }

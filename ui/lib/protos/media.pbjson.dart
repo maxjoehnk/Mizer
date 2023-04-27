@@ -84,19 +84,19 @@ const MediaFile$json = const {
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.mizer.MediaType', '10': 'type'},
     const {'1': 'metadata', '3': 4, '4': 1, '5': 11, '6': '.mizer.MediaMetadata', '10': 'metadata'},
-    const {'1': 'thumbnailUrl', '3': 5, '4': 1, '5': 9, '10': 'thumbnailUrl'},
-    const {'1': 'contentUrl', '3': 6, '4': 1, '5': 9, '10': 'contentUrl'},
+    const {'1': 'thumbnail_url', '3': 5, '4': 1, '5': 9, '10': 'thumbnailUrl'},
+    const {'1': 'content_url', '3': 6, '4': 1, '5': 9, '10': 'contentUrl'},
   ],
 };
 
 /// Descriptor for `MediaFile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mediaFileDescriptor = $convert.base64Decode('CglNZWRpYUZpbGUSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSJAoEdHlwZRgDIAEoDjIQLm1pemVyLk1lZGlhVHlwZVIEdHlwZRIwCghtZXRhZGF0YRgEIAEoCzIULm1pemVyLk1lZGlhTWV0YWRhdGFSCG1ldGFkYXRhEiIKDHRodW1ibmFpbFVybBgFIAEoCVIMdGh1bWJuYWlsVXJsEh4KCmNvbnRlbnRVcmwYBiABKAlSCmNvbnRlbnRVcmw=');
+final $typed_data.Uint8List mediaFileDescriptor = $convert.base64Decode('CglNZWRpYUZpbGUSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSJAoEdHlwZRgDIAEoDjIQLm1pemVyLk1lZGlhVHlwZVIEdHlwZRIwCghtZXRhZGF0YRgEIAEoCzIULm1pemVyLk1lZGlhTWV0YWRhdGFSCG1ldGFkYXRhEiMKDXRodW1ibmFpbF91cmwYBSABKAlSDHRodW1ibmFpbFVybBIfCgtjb250ZW50X3VybBgGIAEoCVIKY29udGVudFVybA==');
 @$core.Deprecated('Use mediaMetadataDescriptor instead')
 const MediaMetadata$json = const {
   '1': 'MediaMetadata',
   '2': const [
-    const {'1': 'sourcePath', '3': 1, '4': 1, '5': 9, '10': 'sourcePath'},
-    const {'1': 'fileSize', '3': 2, '4': 1, '5': 4, '10': 'fileSize'},
+    const {'1': 'source_path', '3': 1, '4': 1, '5': 9, '10': 'sourcePath'},
+    const {'1': 'file_size', '3': 2, '4': 1, '5': 4, '10': 'fileSize'},
     const {'1': 'tags', '3': 3, '4': 3, '5': 11, '6': '.mizer.MediaTag', '10': 'tags'},
     const {'1': 'dimensions', '3': 4, '4': 1, '5': 11, '6': '.mizer.MediaMetadata.Dimensions', '9': 0, '10': 'dimensions', '17': true},
     const {'1': 'duration', '3': 5, '4': 1, '5': 4, '9': 1, '10': 'duration', '17': true},
@@ -124,7 +124,7 @@ const MediaMetadata_Dimensions$json = const {
 };
 
 /// Descriptor for `MediaMetadata`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List mediaMetadataDescriptor = $convert.base64Decode('Cg1NZWRpYU1ldGFkYXRhEh4KCnNvdXJjZVBhdGgYASABKAlSCnNvdXJjZVBhdGgSGgoIZmlsZVNpemUYAiABKARSCGZpbGVTaXplEiMKBHRhZ3MYAyADKAsyDy5taXplci5NZWRpYVRhZ1IEdGFncxJECgpkaW1lbnNpb25zGAQgASgLMh8ubWl6ZXIuTWVkaWFNZXRhZGF0YS5EaW1lbnNpb25zSABSCmRpbWVuc2lvbnOIAQESHwoIZHVyYXRpb24YBSABKARIAVIIZHVyYXRpb26IAQESIQoJZnJhbWVyYXRlGAYgASgBSAJSCWZyYW1lcmF0ZYgBARIZCgVhbGJ1bRgHIAEoCUgDUgVhbGJ1bYgBARIbCgZhcnRpc3QYCCABKAlIBFIGYXJ0aXN0iAEBGjoKCkRpbWVuc2lvbnMSFAoFd2lkdGgYASABKARSBXdpZHRoEhYKBmhlaWdodBgCIAEoBFIGaGVpZ2h0Qg0KC19kaW1lbnNpb25zQgsKCV9kdXJhdGlvbkIMCgpfZnJhbWVyYXRlQggKBl9hbGJ1bUIJCgdfYXJ0aXN0');
+final $typed_data.Uint8List mediaMetadataDescriptor = $convert.base64Decode('Cg1NZWRpYU1ldGFkYXRhEh8KC3NvdXJjZV9wYXRoGAEgASgJUgpzb3VyY2VQYXRoEhsKCWZpbGVfc2l6ZRgCIAEoBFIIZmlsZVNpemUSIwoEdGFncxgDIAMoCzIPLm1pemVyLk1lZGlhVGFnUgR0YWdzEkQKCmRpbWVuc2lvbnMYBCABKAsyHy5taXplci5NZWRpYU1ldGFkYXRhLkRpbWVuc2lvbnNIAFIKZGltZW5zaW9uc4gBARIfCghkdXJhdGlvbhgFIAEoBEgBUghkdXJhdGlvbogBARIhCglmcmFtZXJhdGUYBiABKAFIAlIJZnJhbWVyYXRliAEBEhkKBWFsYnVtGAcgASgJSANSBWFsYnVtiAEBEhsKBmFydGlzdBgIIAEoCUgEUgZhcnRpc3SIAQEaOgoKRGltZW5zaW9ucxIUCgV3aWR0aBgBIAEoBFIFd2lkdGgSFgoGaGVpZ2h0GAIgASgEUgZoZWlnaHRCDQoLX2RpbWVuc2lvbnNCCwoJX2R1cmF0aW9uQgwKCl9mcmFtZXJhdGVCCAoGX2FsYnVtQgkKB19hcnRpc3Q=');
 @$core.Deprecated('Use groupedMediaFilesDescriptor instead')
 const GroupedMediaFiles$json = const {
   '1': 'GroupedMediaFiles',

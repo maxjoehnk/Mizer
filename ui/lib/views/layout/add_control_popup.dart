@@ -39,7 +39,7 @@ class AddControlPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     var controlNodes = nodes.where((node) => isControlNode(node));
     var sequenceNodes = nodes
-        .where((node) => node.type == Node_NodeType.Sequencer)
+        .where((node) => node.type == Node_NodeType.SEQUENCER)
         .where((node) =>
             sequences.any((element) => element.id == node.config.sequencerConfig.sequenceId))
         .map((node) {
@@ -49,7 +49,7 @@ class AddControlPopup extends StatelessWidget {
       return SequenceNode(sequence, node);
     }).toList();
     var groupNodes = nodes
-        .where((node) => node.type == Node_NodeType.Group)
+        .where((node) => node.type == Node_NodeType.GROUP)
         .where((node) => groups.any((element) => element.id == node.config.groupConfig.groupId))
         .map((node) {
       var group = groups.firstWhere((element) => element.id == node.config.groupConfig.groupId);
@@ -60,9 +60,9 @@ class AddControlPopup extends StatelessWidget {
     return PopupMenu<dynamic>(
         categories: [
           PopupCategory(label: "New".i18n, items: [
-            PopupItem(Node_NodeType.Button, "Button".i18n),
-            PopupItem(Node_NodeType.Fader, "Fader".i18n),
-            PopupItem(Node_NodeType.Label, "Label".i18n),
+            PopupItem(Node_NodeType.BUTTON, "Button".i18n),
+            PopupItem(Node_NodeType.FADER, "Fader".i18n),
+            PopupItem(Node_NodeType.LABEL, "Label".i18n),
           ]),
           if (controlNodes.isNotEmpty)
             PopupCategory(
@@ -88,9 +88,9 @@ class AddControlPopup extends StatelessWidget {
 }
 
 List<Node_NodeType> CONTROL_NODES = [
-  Node_NodeType.Fader,
-  Node_NodeType.Button,
-  Node_NodeType.Label,
+  Node_NodeType.FADER,
+  Node_NodeType.BUTTON,
+  Node_NodeType.LABEL,
 ];
 
 bool isControlNode(Node node) {

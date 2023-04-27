@@ -21,9 +21,11 @@ service LayoutsApi {
   rpc ReadFaderValue (ReadFaderValueRequest) returns (FaderValueResponse) {}
 }
 
-message LayoutResponse {}
+message LayoutResponse {
+}
 
-message GetLayoutsRequest {}
+message GetLayoutsRequest {
+}
 
 message AddLayoutRequest {
   string name = 1;
@@ -108,9 +110,9 @@ message ControlSize {
 }
 
 message ControlDecorations {
-  bool hasColor = 1;
+  bool has_color = 1;
   Color color = 2;
-  bool hasImage = 3;
+  bool has_image = 3;
   bytes image = 4;
 }
 

@@ -776,7 +776,7 @@ impl ::protobuf::Message for AlignFixturesRequest {
         if !self.plan_id.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.plan_id);
         }
-        if self.direction != ::protobuf::EnumOrUnknown::new(align_fixtures_request::AlignDirection::LeftToRight) {
+        if self.direction != ::protobuf::EnumOrUnknown::new(align_fixtures_request::AlignDirection::LEFT_TO_RIGHT) {
             my_size += ::protobuf::rt::int32_size(2, self.direction.value());
         }
         if self.groups != 0 {
@@ -797,7 +797,7 @@ impl ::protobuf::Message for AlignFixturesRequest {
         if !self.plan_id.is_empty() {
             os.write_string(1, &self.plan_id)?;
         }
-        if self.direction != ::protobuf::EnumOrUnknown::new(align_fixtures_request::AlignDirection::LeftToRight) {
+        if self.direction != ::protobuf::EnumOrUnknown::new(align_fixtures_request::AlignDirection::LEFT_TO_RIGHT) {
             os.write_enum(2, ::protobuf::EnumOrUnknown::value(&self.direction))?;
         }
         if self.groups != 0 {
@@ -827,7 +827,7 @@ impl ::protobuf::Message for AlignFixturesRequest {
 
     fn clear(&mut self) {
         self.plan_id.clear();
-        self.direction = ::protobuf::EnumOrUnknown::new(align_fixtures_request::AlignDirection::LeftToRight);
+        self.direction = ::protobuf::EnumOrUnknown::new(align_fixtures_request::AlignDirection::LEFT_TO_RIGHT);
         self.groups = 0;
         self.row_gap = 0;
         self.column_gap = 0;
@@ -869,10 +869,10 @@ pub mod align_fixtures_request {
     #[derive(Clone,Copy,PartialEq,Eq,Debug,Hash)]
     // @@protoc_insertion_point(enum:mizer.plan.AlignFixturesRequest.AlignDirection)
     pub enum AlignDirection {
-        // @@protoc_insertion_point(enum_value:mizer.plan.AlignFixturesRequest.AlignDirection.LeftToRight)
-        LeftToRight = 0,
-        // @@protoc_insertion_point(enum_value:mizer.plan.AlignFixturesRequest.AlignDirection.TopToBottom)
-        TopToBottom = 1,
+        // @@protoc_insertion_point(enum_value:mizer.plan.AlignFixturesRequest.AlignDirection.LEFT_TO_RIGHT)
+        LEFT_TO_RIGHT = 0,
+        // @@protoc_insertion_point(enum_value:mizer.plan.AlignFixturesRequest.AlignDirection.TOP_TO_BOTTOM)
+        TOP_TO_BOTTOM = 1,
     }
 
     impl ::protobuf::Enum for AlignDirection {
@@ -884,15 +884,15 @@ pub mod align_fixtures_request {
 
         fn from_i32(value: i32) -> ::std::option::Option<AlignDirection> {
             match value {
-                0 => ::std::option::Option::Some(AlignDirection::LeftToRight),
-                1 => ::std::option::Option::Some(AlignDirection::TopToBottom),
+                0 => ::std::option::Option::Some(AlignDirection::LEFT_TO_RIGHT),
+                1 => ::std::option::Option::Some(AlignDirection::TOP_TO_BOTTOM),
                 _ => ::std::option::Option::None
             }
         }
 
         const VALUES: &'static [AlignDirection] = &[
-            AlignDirection::LeftToRight,
-            AlignDirection::TopToBottom,
+            AlignDirection::LEFT_TO_RIGHT,
+            AlignDirection::TOP_TO_BOTTOM,
         ];
     }
 
@@ -910,7 +910,7 @@ pub mod align_fixtures_request {
 
     impl ::std::default::Default for AlignDirection {
         fn default() -> Self {
-            AlignDirection::LeftToRight
+            AlignDirection::LEFT_TO_RIGHT
         }
     }
 
@@ -1777,13 +1777,13 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \"7\n\x11RenamePlanRequest\x12\x0e\n\x02id\x18\x01\x20\x01(\tR\x02id\x12\
     \x12\n\x04name\x18\x02\x20\x01(\tR\x04name\"J\n\x13MoveFixturesRequest\
     \x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\x06planId\x12\x0c\n\x01x\x18\
-    \x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x82\
+    \x02\x20\x01(\x05R\x01x\x12\x0c\n\x01y\x18\x03\x20\x01(\x05R\x01y\"\x86\
     \x02\n\x14AlignFixturesRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\tR\
     \x06planId\x12M\n\tdirection\x18\x02\x20\x01(\x0e2/.mizer.plan.AlignFixt\
     uresRequest.AlignDirectionR\tdirection\x12\x16\n\x06groups\x18\x03\x20\
     \x01(\rR\x06groups\x12\x17\n\x07row_gap\x18\x04\x20\x01(\rR\x06rowGap\
-    \x12\x1d\n\ncolumn_gap\x18\x05\x20\x01(\rR\tcolumnGap\"2\n\x0eAlignDirec\
-    tion\x12\x0f\n\x0bLeftToRight\x10\0\x12\x0f\n\x0bTopToBottom\x10\x01\"\
+    \x12\x1d\n\ncolumn_gap\x18\x05\x20\x01(\rR\tcolumnGap\"6\n\x0eAlignDirec\
+    tion\x12\x11\n\rLEFT_TO_RIGHT\x10\0\x12\x11\n\rTOP_TO_BOTTOM\x10\x01\"\
     \x83\x01\n\x12MoveFixtureRequest\x12\x17\n\x07plan_id\x18\x01\x20\x01(\t\
     R\x06planId\x128\n\nfixture_id\x18\x02\x20\x01(\x0b2\x19.mizer.fixtures.\
     FixtureIdR\tfixtureId\x12\x0c\n\x01x\x18\x03\x20\x01(\x05R\x01x\x12\x0c\

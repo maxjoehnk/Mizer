@@ -68,21 +68,21 @@ class ApplicationMenu extends StatelessWidget {
             ]),
             SubMenu(title: 'Edit'.i18n, children: [
               MenuItem(
-                  label: 'Undo'.i18n,
-                  action: () async {
-                    await context.read<SessionApi>().undo();
-                    _refreshViews(context);
-                  },
-                  // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ)
+                label: 'Undo'.i18n,
+                action: () async {
+                  await context.read<SessionApi>().undo();
+                  _refreshViews(context);
+                },
+                // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyZ)
               ),
               MenuItem(
-                  label: 'Redo'.i18n,
-                  action: () async {
-                    await context.read<SessionApi>().redo();
-                    _refreshViews(context);
-                  },
-                  // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
-                  //     LogicalKeyboardKey.keyZ)
+                label: 'Redo'.i18n,
+                action: () async {
+                  await context.read<SessionApi>().redo();
+                  _refreshViews(context);
+                },
+                // shortcut: LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.shift,
+                //     LogicalKeyboardKey.keyZ)
               )
             ]),
             SubMenu(title: 'Window'.i18n, children: [
@@ -90,14 +90,11 @@ class ApplicationMenu extends StatelessWidget {
                   label: 'New Window'.i18n,
                   action: () => Window.create({}).then((window) => window.show())),
               MenuItem(
-                label: 'Smart Window'.i18n,
-                  action: () => Window.create(SmartWindow.toInitData()).then((window) => window.show())
-              ),
+                  label: 'Smart Window'.i18n,
+                  action: () =>
+                      Window.create(SmartWindow.toInitData()).then((window) => window.show())),
               MenuDivider(),
-              MenuItem(
-                label: 'Close Window',
-                action: () => Window.of(context).close()
-              )
+              MenuItem(label: 'Close Window', action: () => Window.of(context).close())
             ])
           ])),
     );

@@ -10,14 +10,14 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class ProgrammerChannel_ColorChannel extends $pb.ProtobufEnum {
-  static const ProgrammerChannel_ColorChannel Red = ProgrammerChannel_ColorChannel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Red');
-  static const ProgrammerChannel_ColorChannel Green = ProgrammerChannel_ColorChannel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Green');
-  static const ProgrammerChannel_ColorChannel Blue = ProgrammerChannel_ColorChannel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Blue');
+  static const ProgrammerChannel_ColorChannel RED = ProgrammerChannel_ColorChannel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RED');
+  static const ProgrammerChannel_ColorChannel GREEN = ProgrammerChannel_ColorChannel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GREEN');
+  static const ProgrammerChannel_ColorChannel BLUE = ProgrammerChannel_ColorChannel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BLUE');
 
   static const $core.List<ProgrammerChannel_ColorChannel> values = <ProgrammerChannel_ColorChannel> [
-    Red,
-    Green,
-    Blue,
+    RED,
+    GREEN,
+    BLUE,
   ];
 
   static final $core.Map<$core.int, ProgrammerChannel_ColorChannel> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -27,14 +27,14 @@ class ProgrammerChannel_ColorChannel extends $pb.ProtobufEnum {
 }
 
 class StoreRequest_Mode extends $pb.ProtobufEnum {
-  static const StoreRequest_Mode Overwrite = StoreRequest_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Overwrite');
-  static const StoreRequest_Mode Merge = StoreRequest_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Merge');
-  static const StoreRequest_Mode AddCue = StoreRequest_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'AddCue');
+  static const StoreRequest_Mode OVERWRITE = StoreRequest_Mode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'OVERWRITE');
+  static const StoreRequest_Mode MERGE = StoreRequest_Mode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MERGE');
+  static const StoreRequest_Mode ADD_CUE = StoreRequest_Mode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ADD_CUE');
 
   static const $core.List<StoreRequest_Mode> values = <StoreRequest_Mode> [
-    Overwrite,
-    Merge,
-    AddCue,
+    OVERWRITE,
+    MERGE,
+    ADD_CUE,
   ];
 
   static final $core.Map<$core.int, StoreRequest_Mode> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -44,16 +44,16 @@ class StoreRequest_Mode extends $pb.ProtobufEnum {
 }
 
 class PresetId_PresetType extends $pb.ProtobufEnum {
-  static const PresetId_PresetType Intensity = PresetId_PresetType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Intensity');
-  static const PresetId_PresetType Shutter = PresetId_PresetType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Shutter');
-  static const PresetId_PresetType Color = PresetId_PresetType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Color');
-  static const PresetId_PresetType Position = PresetId_PresetType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Position');
+  static const PresetId_PresetType INTENSITY = PresetId_PresetType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'INTENSITY');
+  static const PresetId_PresetType SHUTTER = PresetId_PresetType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SHUTTER');
+  static const PresetId_PresetType COLOR = PresetId_PresetType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COLOR');
+  static const PresetId_PresetType POSITION = PresetId_PresetType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'POSITION');
 
   static const $core.List<PresetId_PresetType> values = <PresetId_PresetType> [
-    Intensity,
-    Shutter,
-    Color,
-    Position,
+    INTENSITY,
+    SHUTTER,
+    COLOR,
+    POSITION,
   ];
 
   static final $core.Map<$core.int, PresetId_PresetType> _byValue = $pb.ProtobufEnum.initByValue(values);

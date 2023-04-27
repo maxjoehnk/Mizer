@@ -3,7 +3,7 @@
 //  source: plans.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -75,13 +75,13 @@ const AlignFixturesRequest$json = const {
 const AlignFixturesRequest_AlignDirection$json = const {
   '1': 'AlignDirection',
   '2': const [
-    const {'1': 'LeftToRight', '2': 0},
-    const {'1': 'TopToBottom', '2': 1},
+    const {'1': 'LEFT_TO_RIGHT', '2': 0},
+    const {'1': 'TOP_TO_BOTTOM', '2': 1},
   ],
 };
 
 /// Descriptor for `AlignFixturesRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List alignFixturesRequestDescriptor = $convert.base64Decode('ChRBbGlnbkZpeHR1cmVzUmVxdWVzdBIXCgdwbGFuX2lkGAEgASgJUgZwbGFuSWQSTQoJZGlyZWN0aW9uGAIgASgOMi8ubWl6ZXIucGxhbi5BbGlnbkZpeHR1cmVzUmVxdWVzdC5BbGlnbkRpcmVjdGlvblIJZGlyZWN0aW9uEhYKBmdyb3VwcxgDIAEoDVIGZ3JvdXBzEhcKB3Jvd19nYXAYBCABKA1SBnJvd0dhcBIdCgpjb2x1bW5fZ2FwGAUgASgNUgljb2x1bW5HYXAiMgoOQWxpZ25EaXJlY3Rpb24SDwoLTGVmdFRvUmlnaHQQABIPCgtUb3BUb0JvdHRvbRAB');
+final $typed_data.Uint8List alignFixturesRequestDescriptor = $convert.base64Decode('ChRBbGlnbkZpeHR1cmVzUmVxdWVzdBIXCgdwbGFuX2lkGAEgASgJUgZwbGFuSWQSTQoJZGlyZWN0aW9uGAIgASgOMi8ubWl6ZXIucGxhbi5BbGlnbkZpeHR1cmVzUmVxdWVzdC5BbGlnbkRpcmVjdGlvblIJZGlyZWN0aW9uEhYKBmdyb3VwcxgDIAEoDVIGZ3JvdXBzEhcKB3Jvd19nYXAYBCABKA1SBnJvd0dhcBIdCgpjb2x1bW5fZ2FwGAUgASgNUgljb2x1bW5HYXAiNgoOQWxpZ25EaXJlY3Rpb24SEQoNTEVGVF9UT19SSUdIVBAAEhEKDVRPUF9UT19CT1RUT00QAQ==');
 @$core.Deprecated('Use moveFixtureRequestDescriptor instead')
 const MoveFixtureRequest$json = const {
   '1': 'MoveFixtureRequest',

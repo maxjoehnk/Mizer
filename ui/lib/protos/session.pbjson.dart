@@ -3,7 +3,7 @@
 //  source: session.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
@@ -63,17 +63,17 @@ final $typed_data.Uint8List sessionRequestDescriptor = $convert.base64Decode('Cg
 const Session$json = const {
   '1': 'Session',
   '2': const [
-    const {'1': 'filePath', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'filePath', '17': true},
+    const {'1': 'file_path', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'filePath', '17': true},
     const {'1': 'devices', '3': 2, '4': 3, '5': 11, '6': '.mizer.SessionDevice', '10': 'devices'},
-    const {'1': 'projectHistory', '3': 3, '4': 3, '5': 9, '10': 'projectHistory'},
+    const {'1': 'project_history', '3': 3, '4': 3, '5': 9, '10': 'projectHistory'},
   ],
   '8': const [
-    const {'1': '_filePath'},
+    const {'1': '_file_path'},
   ],
 };
 
 /// Descriptor for `Session`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEh8KCGZpbGVQYXRoGAEgASgJSABSCGZpbGVQYXRoiAEBEi4KB2RldmljZXMYAiADKAsyFC5taXplci5TZXNzaW9uRGV2aWNlUgdkZXZpY2VzEiYKDnByb2plY3RIaXN0b3J5GAMgAygJUg5wcm9qZWN0SGlzdG9yeUILCglfZmlsZVBhdGg=');
+final $typed_data.Uint8List sessionDescriptor = $convert.base64Decode('CgdTZXNzaW9uEiAKCWZpbGVfcGF0aBgBIAEoCUgAUghmaWxlUGF0aIgBARIuCgdkZXZpY2VzGAIgAygLMhQubWl6ZXIuU2Vzc2lvbkRldmljZVIHZGV2aWNlcxInCg9wcm9qZWN0X2hpc3RvcnkYAyADKAlSDnByb2plY3RIaXN0b3J5QgwKCl9maWxlX3BhdGg=');
 @$core.Deprecated('Use sessionDeviceDescriptor instead')
 const SessionDevice$json = const {
   '1': 'SessionDevice',

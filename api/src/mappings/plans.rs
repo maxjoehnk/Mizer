@@ -40,8 +40,8 @@ impl From<align_fixtures_request::AlignDirection> for AlignFixturesDirection {
         use align_fixtures_request::AlignDirection::*;
 
         match direction {
-            LeftToRight => Self::LeftToRight,
-            TopToBottom => Self::TopToBottom,
+            LEFT_TO_RIGHT => Self::LeftToRight,
+            TOP_TO_BOTTOM => Self::TopToBottom,
         }
     }
 }

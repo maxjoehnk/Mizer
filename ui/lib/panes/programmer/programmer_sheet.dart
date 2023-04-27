@@ -117,7 +117,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
       return;
     }
     int? cueId;
-    if (storeMode != StoreRequest_Mode.AddCue && sequence.cues.isNotEmpty) {
+    if (storeMode != StoreRequest_Mode.ADD_CUE && sequence.cues.isNotEmpty) {
       cueId = await _getCue(sequence, storeMode);
 
       if (cueId == null) {
@@ -130,7 +130,7 @@ class _ProgrammerSheetState extends State<ProgrammerSheet> {
 
   _getStoreMode(Sequence sequence) async {
     if (sequence.cues.isEmpty) {
-      return StoreRequest_Mode.Overwrite;
+      return StoreRequest_Mode.OVERWRITE;
     }
 
     return await showDialog(context: context, builder: (context) => StoreModeDialog());

@@ -10,7 +10,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'nodes.pbenum.dart' as $0;
+import 'nodes.pbenum.dart' as $2;
 import 'layouts.pbenum.dart';
 
 export 'layouts.pbenum.dart';
@@ -598,7 +598,7 @@ class RemoveControlRequest extends $pb.GeneratedMessage {
 class AddControlRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddControlRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'layoutId')
-    ..e<$0.Node_NodeType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodeType', $pb.PbFieldType.OE, defaultOrMaker: $0.Node_NodeType.Fader, valueOf: $0.Node_NodeType.valueOf, enumValues: $0.Node_NodeType.values)
+    ..e<$2.Node_NodeType>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nodeType', $pb.PbFieldType.OE, defaultOrMaker: $2.Node_NodeType.FADER, valueOf: $2.Node_NodeType.valueOf, enumValues: $2.Node_NodeType.values)
     ..aOM<ControlPosition>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: ControlPosition.create)
     ..hasRequiredFields = false
   ;
@@ -606,7 +606,7 @@ class AddControlRequest extends $pb.GeneratedMessage {
   AddControlRequest._() : super();
   factory AddControlRequest({
     $core.String? layoutId,
-    $0.Node_NodeType? nodeType,
+    $2.Node_NodeType? nodeType,
     ControlPosition? position,
   }) {
     final _result = create();
@@ -652,9 +652,9 @@ class AddControlRequest extends $pb.GeneratedMessage {
   void clearLayoutId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $0.Node_NodeType get nodeType => $_getN(1);
+  $2.Node_NodeType get nodeType => $_getN(1);
   @$pb.TagNumber(2)
-  set nodeType($0.Node_NodeType v) { setField(2, v); }
+  set nodeType($2.Node_NodeType v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasNodeType() => $_has(1);
   @$pb.TagNumber(2)
@@ -1094,9 +1094,9 @@ class ControlSize extends $pb.GeneratedMessage {
 
 class ControlDecorations extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ControlDecorations', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer'), createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasColor', protoName: 'hasColor')
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasColor')
     ..aOM<Color>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'color', subBuilder: Color.create)
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasImage', protoName: 'hasImage')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hasImage')
     ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;

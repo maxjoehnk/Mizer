@@ -159,7 +159,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
         self.runtime
             .run_command(UpdateSequenceWrapAroundCommand {
                 sequence_id: request.sequence,
-                wrap_around: request.wrapAround,
+                wrap_around: request.wrap_around,
             })
             .unwrap();
     }
@@ -169,7 +169,7 @@ impl<R: RuntimeApi> SequencerHandler<R> {
         self.runtime
             .run_command(UpdateSequenceStopOnLastCueCommand {
                 sequence_id: request.sequence,
-                stop_on_last_cue: request.stopOnLastCue,
+                stop_on_last_cue: request.stop_on_last_cue,
             })
             .unwrap();
     }

@@ -71,9 +71,9 @@ impl From<ControlSize> for mizer_layouts::ControlSize {
 impl From<mizer_layouts::ControlDecorations> for ControlDecorations {
     fn from(decorations: mizer_layouts::ControlDecorations) -> Self {
         Self {
-            hasColor: decorations.color.is_some(),
+            has_color: decorations.color.is_some(),
             color: decorations.color.map(Color::from).into(),
-            hasImage: decorations.image.is_some(),
+            has_image: decorations.image.is_some(),
             image: decorations
                 .image
                 .and_then(|img| img.try_to_buffer().ok())
@@ -87,10 +87,10 @@ impl From<ControlDecorations> for mizer_layouts::ControlDecorations {
     fn from(decorations: ControlDecorations) -> Self {
         Self {
             color: decorations
-                .hasColor
+                .has_color
                 .then(|| decorations.color.unwrap().into()),
             image: decorations
-                .hasImage
+                .has_image
                 .then(|| Base64Image::from_buffer(decorations.image)),
         }
     }

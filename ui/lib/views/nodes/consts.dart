@@ -29,11 +29,11 @@ List<Color> _TYPE_COLORS = [
 ];
 
 const _GENERATED_TYPES = [
-  Node_NodeType.Programmer,
-  Node_NodeType.Transport,
-  Node_NodeType.Sequencer,
-  Node_NodeType.Fixture,
-  Node_NodeType.Group,
+  Node_NodeType.PROGRAMMER,
+  Node_NodeType.TRANSPORT,
+  Node_NodeType.SEQUENCER,
+  Node_NodeType.FIXTURE,
+  Node_NodeType.GROUP,
 ];
 
 MaterialColor getColorForProtocol(ChannelProtocol protocol) {

@@ -9,9 +9,9 @@ import 'preview/history.dart';
 import 'preview/timecode.dart';
 
 const SUPPORTED_PREVIEW_TYPES = [
-  Node_NodePreviewType.History,
-  Node_NodePreviewType.Data,
-  Node_NodePreviewType.Timecode,
+  Node_NodePreviewType.HISTORY,
+  Node_NodePreviewType.DATA,
+  Node_NodePreviewType.TIMECODE,
 ];
 
 class NodePreview extends StatelessWidget {
@@ -30,9 +30,9 @@ class NodePreview extends StatelessWidget {
       return Container();
     }
     NodesPluginApi nodesPluginApi = nodesApi;
-    if (node.preview == Node_NodePreviewType.History) {
+    if (node.preview == Node_NodePreviewType.HISTORY) {
       return HistoryRenderer(nodesPluginApi, node.path);
-    } else if (node.preview == Node_NodePreviewType.Data) {
+    } else if (node.preview == Node_NodePreviewType.DATA) {
       return DataRenderer(nodesPluginApi, node.path);
     } else {
       return TimecodeRenderer(nodesPluginApi, node.path);

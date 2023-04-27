@@ -5,9 +5,9 @@ class PresetsState {
   final Presets presets;
   final List<Group> groups;
 
-  PresetsState({ Presets? presets, List<Group>? groups }) :
-    this.presets = presets ?? Presets(),
-    this.groups = groups ?? [];
+  PresetsState({Presets? presets, List<Group>? groups})
+      : this.presets = presets ?? Presets(),
+        this.groups = groups ?? [];
 }
 
 abstract class PresetsEvent {}
@@ -25,10 +25,7 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
 
   PresetsBloc(this.api) : super(PresetsState()) {
     on<FetchPresets>((event, emit) async {
-      List<dynamic> res = await Future.wait([
-        _getGroups(),
-        _getPresets()
-      ]);
+      List<dynamic> res = await Future.wait([_getGroups(), _getPresets()]);
       List<Group> groups = res[0];
       Presets presets = res[1];
 
@@ -46,7 +43,7 @@ class PresetsBloc extends Bloc<PresetsEvent, PresetsState> {
   Future<Presets> _getPresets() async {
     var presets = await this.api.getPresets();
     presets.intensities.sort((a, b) => a.id.id - b.id.id);
-    presets.color.sort((a, b) => a.id.id - b.id.id);
+    presets.colors.sort((a, b) => a.id.id - b.id.id);
 
     return presets;
   }

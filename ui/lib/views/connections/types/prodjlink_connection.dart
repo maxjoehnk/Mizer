@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mizer/i18n.dart';
@@ -84,16 +83,16 @@ class PlayerNumber extends StatelessWidget {
 
 class PlayingState extends StatelessWidget {
   final Map<CdjPlayback_State, Color> colors = {
-    CdjPlayback_State.Playing: Colors.green,
-    CdjPlayback_State.Cued: Colors.orange,
-    CdjPlayback_State.Cueing: Colors.deepOrange,
-    CdjPlayback_State.Loading: Colors.grey,
+    CdjPlayback_State.PLAYING: Colors.green,
+    CdjPlayback_State.CUED: Colors.orange,
+    CdjPlayback_State.CUEING: Colors.deepOrange,
+    CdjPlayback_State.LOADING: Colors.grey,
   };
   final Map<CdjPlayback_State, String> labels = {
-    CdjPlayback_State.Playing: "Playing".i18n,
-    CdjPlayback_State.Cued: "Cued".i18n,
-    CdjPlayback_State.Cueing: "Cueing".i18n,
-    CdjPlayback_State.Loading: "Loading".i18n,
+    CdjPlayback_State.PLAYING: "Playing".i18n,
+    CdjPlayback_State.CUED: "Cued".i18n,
+    CdjPlayback_State.CUEING: "Cueing".i18n,
+    CdjPlayback_State.LOADING: "Loading".i18n,
   };
 
   final CdjPlayback_State playerState;

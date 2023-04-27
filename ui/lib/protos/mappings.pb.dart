@@ -3,13 +3,13 @@
 //  source: mappings.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'nodes.pb.dart' as $0;
+import 'nodes.pb.dart' as $2;
 
 class MappingResult extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MappingResult', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.mappings'), createEmptyInstance: create)
@@ -205,14 +205,14 @@ class MappingRequest extends $pb.GeneratedMessage {
 
 class MidiMapping extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MidiMapping', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'mizer.mappings'), createEmptyInstance: create)
-    ..aOM<$0.MidiNodeConfig>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: $0.MidiNodeConfig.create)
+    ..aOM<$2.MidiNodeConfig>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'config', subBuilder: $2.MidiNodeConfig.create)
     ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'inputMapping')
     ..hasRequiredFields = false
   ;
 
   MidiMapping._() : super();
   factory MidiMapping({
-    $0.MidiNodeConfig? config,
+    $2.MidiNodeConfig? config,
     $core.bool? inputMapping,
   }) {
     final _result = create();
@@ -246,15 +246,15 @@ class MidiMapping extends $pb.GeneratedMessage {
   static MidiMapping? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $0.MidiNodeConfig get config => $_getN(0);
+  $2.MidiNodeConfig get config => $_getN(0);
   @$pb.TagNumber(1)
-  set config($0.MidiNodeConfig v) { setField(1, v); }
+  set config($2.MidiNodeConfig v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasConfig() => $_has(0);
   @$pb.TagNumber(1)
   void clearConfig() => clearField(1);
   @$pb.TagNumber(1)
-  $0.MidiNodeConfig ensureConfig() => $_ensure(0);
+  $2.MidiNodeConfig ensureConfig() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.bool get inputMapping => $_getBF(1);

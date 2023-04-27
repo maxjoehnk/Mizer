@@ -19,7 +19,7 @@ service ConnectionsApi {
 }
 
 message MonitorDmxRequest {
-  string outputId = 1;
+  string output_id = 1;
 }
 
 message MonitorDmxResponse {
@@ -38,9 +38,9 @@ message MonitorMidiResponse {
   uint64 timestamp = 2;
   oneof message {
     NoteMsg cc = 3;
-    NoteMsg noteOff = 4;
-    NoteMsg noteOn = 5;
-    SysEx sysEx = 6;
+    NoteMsg note_off = 4;
+    NoteMsg note_on = 5;
+    SysEx sys_ex = 6;
     bytes unknown = 7;
   }
 
@@ -87,8 +87,10 @@ message MonitorOscResponse {
   }
 }
 
-message GetConnectionsRequest {}
-message GetDeviceProfilesRequest {}
+message GetConnectionsRequest {
+}
+message GetDeviceProfilesRequest {
+}
 
 message ArtnetConfig {
   string name = 1;
@@ -110,9 +112,9 @@ message Connection {
     DmxConnection dmx = 10;
     MidiConnection midi = 11;
     OscConnection osc = 12;
-    ProDjLinkConnection proDJLink = 13;
+    ProDjLinkConnection pro_dj_link = 13;
     HeliosConnection helios = 14;
-    EtherDreamConnection etherDream = 15;
+    EtherDreamConnection ether_dream = 15;
     GamepadConnection gamepad = 16;
     MqttConnection mqtt = 17;
     G13Connection g13 = 18;
@@ -120,7 +122,7 @@ message Connection {
 }
 
 message DmxConnection {
-  string outputId = 1;
+  string output_id = 1;
   oneof config {
     ArtnetConfig artnet = 3;
     SacnConfig sacn = 4;
@@ -181,13 +183,13 @@ message MidiDeviceProfile {
   }
 
   enum ControlType {
-    Note = 0;
+    NOTE = 0;
     CC = 1;
   }
 }
 
 message OscConnection {
-  string connectionId = 1;
+  string connection_id = 1;
   uint32 input_port = 2;
   uint32 output_port = 3;
   string output_address = 4;
@@ -196,7 +198,7 @@ message OscConnection {
 message ProDjLinkConnection {
   string address = 1;
   string model = 2;
-  uint32 playerNumber = 3;
+  uint32 player_number = 3;
   CdjPlayback playback = 5;
 }
 
@@ -208,10 +210,10 @@ message CdjPlayback {
   Track track = 5;
 
   enum State {
-    Loading = 0;
-    Playing = 1;
-    Cued = 2;
-    Cueing = 3;
+    LOADING = 0;
+    PLAYING = 1;
+    CUED = 2;
+    CUEING = 3;
   }
 
   message Track {
@@ -221,7 +223,7 @@ message CdjPlayback {
 }
 
 message MqttConnection {
-  string connectionId = 1;
+  string connection_id = 1;
   string url = 2;
   optional string username = 3;
   optional string password = 4;

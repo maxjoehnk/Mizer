@@ -77,14 +77,14 @@ impl<R: RuntimeApi> NodesHandler<R> {
         }
         for channel in self.runtime.links() {
             res.channels.push(NodeConnection {
-                sourceNode: channel.source.to_string(),
-                sourcePort: MessageField::some(Port {
+                source_node: channel.source.to_string(),
+                source_port: MessageField::some(Port {
                     protocol: EnumOrUnknown::new(channel.port_type.into()),
                     name: channel.source_port.to_string(),
                     ..Default::default()
                 }),
-                targetNode: channel.target.to_string(),
-                targetPort: MessageField::some(Port {
+                target_node: channel.target.to_string(),
+                target_port: MessageField::some(Port {
                     protocol: EnumOrUnknown::new(channel.port_type.into()),
                     name: channel.target_port.to_string(),
                     ..Default::default()

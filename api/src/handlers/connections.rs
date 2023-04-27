@@ -138,13 +138,14 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
     #[tracing::instrument(skip(self))]
     pub fn delete_connection(&self, connection: Connection) -> anyhow::Result<()> {
         if let Some(connection::Connection::Dmx(dmx)) = connection.connection {
-            self.runtime
-                .run_command(DeleteOutputCommand { name: dmx.outputId })?;
+            self.runtime.run_command(DeleteOutputCommand {
+                name: dmx.output_id,
+            })?;
 
             Ok(())
         } else if let Some(connection::Connection::Mqtt(mqtt)) = connection.connection {
             self.runtime.run_command(DeleteMqttConnectionCommand {
-                id: mqtt.connectionId,
+                id: mqtt.connection_id,
             })?;
 
             Ok(())
@@ -159,7 +160,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             Some(configure_connection_request::Config::Dmx(connection)) => {
                 if let Some(dmx_connection::Config::Artnet(config)) = connection.config {
                     self.runtime.run_command(ConfigureArtnetOutputCommand {
-                        id: connection.outputId,
+                        id: connection.output_id,
                         name: config.name,
                         host: config.host,
                         port: Some(config.port as u16),
@@ -172,7 +173,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             }
             Some(configure_connection_request::Config::Mqtt(connection)) => {
                 self.runtime.run_command(ConfigureMqttConnectionCommand {
-                    connection_id: connection.connectionId,
+                    connection_id: connection.connection_id,
                     url: connection.url,
                     username: connection.username,
                     password: connection.password,
@@ -182,7 +183,7 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             }
             Some(configure_connection_request::Config::Osc(connection)) => {
                 self.runtime.run_command(ConfigureOscConnectionCommand {
-                    connection_id: connection.connectionId,
+                    connection_id: connection.connection_id,
                     output_host: connection.output_address,
                     output_port: connection.output_port as u16,
                     input_port: connection.input_port as u16,

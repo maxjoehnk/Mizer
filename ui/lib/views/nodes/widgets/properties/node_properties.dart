@@ -25,6 +25,7 @@ import 'properties/groups/mqtt_output_properties.dart';
 import 'properties/groups/noise_properties.dart';
 import 'properties/groups/osc_properties.dart';
 import 'properties/groups/oscillator_properties.dart';
+import 'properties/groups/pixel_pattern_properties.dart';
 import 'properties/groups/ramp_properties.dart';
 import 'properties/groups/sequencer_properties.dart';
 import 'properties/groups/template_properties.dart';
@@ -230,6 +231,14 @@ class NodePropertiesPane extends StatelessWidget {
               path: node.path,
               config: NodeConfig(
                 timecodeOutputConfig: config,
+              )))));
+    }
+    if (node.config.hasPixelPatternConfig()) {
+      widgets.add(PixelPatternProperties(node.config.pixelPatternConfig,
+          onUpdate: (config) => nodesApi.updateNodeConfig(UpdateNodeConfigRequest(
+              path: node.path,
+              config: NodeConfig(
+                pixelPatternConfig: config,
               )))));
     }
     return widgets;

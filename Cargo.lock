@@ -3121,21 +3121,12 @@ checksum = "eabb4a44450da02c90444cf74558da904edde8fb4e9035a9a6a4e15445af0bd7"
 
 [[package]]
 name = "halfbrown"
-version = "0.1.12"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3ed39577259d319b81a15176a32673271be2786cb463889703c58c90fe83c825"
+checksum = "6d9ab7d9233262d3b74ae4c4a7a090fc4379b07c6eb9b02ecab7cbb12ad67a58"
 dependencies = [
- "hashbrown 0.11.2",
+ "hashbrown 0.13.1",
  "serde",
-]
-
-[[package]]
-name = "hashbrown"
-version = "0.11.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
-dependencies = [
- "ahash 0.7.6",
 ]
 
 [[package]]
@@ -3152,6 +3143,9 @@ name = "hashbrown"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "33ff8ae62cd3a9102e5637afc8452c55acf3844001bd5374e0b0bd7b6616c038"
+dependencies = [
+ "ahash 0.8.2",
+]
 
 [[package]]
 name = "hassle-rs"
@@ -7362,9 +7356,9 @@ dependencies = [
 
 [[package]]
 name = "simd-json"
-version = "0.8.0"
+version = "0.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1663db38e6e50038d4de020667c364490d43473ad6d073822a6af6576fc343a5"
+checksum = "17c317658b6755f4acf95e96aebec72985534673261d65f27624a484b0213f5f"
 dependencies = [
  "halfbrown",
  "lexical-core",
@@ -8824,9 +8818,9 @@ dependencies = [
 
 [[package]]
 name = "value-trait"
-version = "0.5.1"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "995de1aa349a0dc50f4aa40870dce12961a30229027230bad09acd2843edbe9e"
+checksum = "733e1909354ceff16f7e1f7ddebc063455b8fda4968d91760a7c6115b96647a5"
 dependencies = [
  "float-cmp",
  "halfbrown",

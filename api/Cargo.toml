@@ -33,7 +33,7 @@ flume = "0.10"
 futures = "0.3"
 profiling = "1.0"
 pinboard = "2.2"
-regex = "1.7"
+regex = "1.8"
 lazy_static = "1.4"
 tracing = "0.1"
 

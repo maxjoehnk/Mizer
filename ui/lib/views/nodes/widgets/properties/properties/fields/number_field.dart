@@ -213,12 +213,12 @@ class _Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(2)),
+          borderRadius: BorderRadius.circular(2),
           gradient: LinearGradient(colors: [
+            Colors.deepOrange.shade500,
+            Colors.deepOrange.shade500,
             Colors.grey.shade700,
             Colors.grey.shade700,
-            Colors.grey.shade800,
-            Colors.grey.shade800,
           ], stops: [
             0,
             this.value,

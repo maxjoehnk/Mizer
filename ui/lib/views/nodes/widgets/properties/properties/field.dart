@@ -11,13 +11,10 @@ class Field extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Flexible(flex: 1, fit: FlexFit.tight, child: Text(this.label)),
-        Flexible(
-            flex: 2,
-            fit: FlexFit.tight,
-            child: child)
+        Flexible(flex: 1, fit: FlexFit.tight, child: Text(this.label, textAlign: TextAlign.end)),
+        Container(width: 8),
+        Flexible(flex: 2, fit: FlexFit.tight, child: child)
       ],
     );
   }
 }
-

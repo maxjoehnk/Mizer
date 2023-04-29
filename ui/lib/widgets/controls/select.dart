@@ -29,7 +29,13 @@ class _MizerSelectState<T> extends State<MizerSelect<T>> {
       builder: (hovered) => Container(
         color: hovered ? Colors.black12 : Colors.transparent,
         child: Row(children: [
-          Expanded(child: label == null ? Container() : Text(label!)),
+          Expanded(
+              child: label == null
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text(label!),
+                    )),
           Icon(Icons.arrow_drop_down)
         ]),
       ),
@@ -135,7 +141,7 @@ class _MizerSelectContainerState<T> extends State<MizerSelectContainer<T>> {
       setState(() {
         tree = [group];
       });
-    }else {
+    } else {
       // TODO: this will fail when switching sub groups but this feature is not used right now.
       setState(() {
         tree.add(group);
@@ -195,7 +201,8 @@ class _MizerSelectOption<T> extends StatelessWidget {
   final SelectItem<T> option;
   final void Function() onSelect;
 
-  const _MizerSelectOption({required this.option, required this.onSelect, Key? key}) : super(key: key);
+  const _MizerSelectOption({required this.option, required this.onSelect, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

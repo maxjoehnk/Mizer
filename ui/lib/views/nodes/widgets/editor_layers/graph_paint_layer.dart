@@ -1,19 +1,65 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:mizer/api/contracts/nodes.dart';
+import 'package:mizer/api/plugin/ffi/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 import 'package:mizer/views/nodes/consts.dart';
 import 'package:mizer/views/nodes/models/node_editor_model.dart';
+import 'package:provider/provider.dart';
 
-class GraphPaintLayer extends StatelessWidget {
+class GraphPaintLayer extends StatefulWidget {
   final NodeEditorModel model;
 
-  GraphPaintLayer({ required this.model });
+  GraphPaintLayer({required this.model});
+
+  @override
+  State<GraphPaintLayer> createState() => _GraphPaintLayerState();
+}
+
+class _GraphPaintLayerState extends State<GraphPaintLayer> with TickerProviderStateMixin {
+  int pulseWidth = 2;
+  late AnimationController _animationController;
+  late Animation _animation;
+  NodesPointer? _pointer;
+  List<NodePortMetadata> _metadata = [];
+  Ticker? _metadataTicker;
+
+  @override
+  void initState() {
+    super.initState();
+    var nodesApi = context.read<NodesApi>();
+    nodesApi.getNodesPointer().then((pointer) {
+      _pointer = pointer;
+      _metadataTicker = this.createTicker((elapsed) {
+        setState(() {
+          _metadata = pointer.readPortMetadata();
+        });
+      });
+      _metadataTicker!.start();
+    });
+    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animation = CurvedAnimation(parent: _animationController, curve: Curves.fastOutSlowIn);
+    _animationController.repeat(reverse: true);
+    _animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    _pointer?.dispose();
+    _metadataTicker?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      key: model.painterKey,
+      key: widget.model.painterKey,
       child: SizedBox.expand(),
-      painter: GraphLinePainter(model),
+      painter: GraphLinePainter(widget.model, _metadata, ((_animation.value + 1) * 2)),
       willChange: true,
     );
   }
@@ -21,15 +67,21 @@ class GraphPaintLayer extends StatelessWidget {
 
 class GraphLinePainter extends CustomPainter {
   final NodeEditorModel model;
+  final List<NodePortMetadata> portMetadata;
+  final double activeWidth;
 
-  GraphLinePainter(this.model);
+  GraphLinePainter(this.model, this.portMetadata, this.activeWidth);
 
   static Paint painter = Paint()
     ..strokeWidth = 2
     ..style = PaintingStyle.stroke;
 
+  Paint activePainter = Paint()..style = PaintingStyle.stroke;
+
   @override
   void paint(Canvas canvas, Size size) {
+    activePainter.strokeWidth = activeWidth;
+
     for (var channel in model.channels) {
       var fromNode = model.getNode(channel.sourceNode);
       var toNode = model.getNode(channel.targetNode);
@@ -42,7 +94,12 @@ class GraphLinePainter extends CustomPainter {
       if (fromPort == null || toPort == null) {
         continue;
       }
-      draw(canvas, fromPort.offset, toPort.offset, channel.protocol);
+      bool active = portMetadata
+              .firstWhereOrNull((element) =>
+                  element.path == channel.sourceNode && element.port == channel.sourcePort.name)
+              ?.pushedValue ??
+          false;
+      drawConnection(canvas, fromPort.offset, toPort.offset, channel.protocol, active: active);
     }
     if (model.connecting != null) {
       var fromPort = model.getPortModel(model.connecting!.node, model.connecting!.port, false);
@@ -51,7 +108,8 @@ class GraphLinePainter extends CustomPainter {
       }
       Offset fromPosition = fromPort.offset;
       Offset toPosition = model.connecting!.offset;
-      draw(canvas, fromPosition, toPosition, model.connecting!.port.protocol, hit: model.connecting!.target != null);
+      drawConnection(canvas, fromPosition, toPosition, model.connecting!.port.protocol,
+          hit: model.connecting!.target != null, active: false);
     }
   }
 
@@ -60,15 +118,14 @@ class GraphLinePainter extends CustomPainter {
     return true;
   }
 
-  void draw(Canvas canvas, Offset from, Offset to, ChannelProtocol protocol, { bool? hit }) {
-    var paint = painter
-      ..color = getColorForProtocol(protocol).shade800;
-    if (hit == true) {
-      paint.color = Colors.white;
-    }
+  void drawConnection(Canvas canvas, Offset from, Offset to, ChannelProtocol protocol,
+      {bool hit = false, bool active = true}) {
+    var paint = active ? activePainter : painter;
+    paint.color = hit ? Colors.white : getColorForProtocol(protocol).shade800;
     Path path = new Path()
       ..moveTo(from.dx, from.dy)
-      ..cubicTo(from.dx + 0.6 * (to.dx - from.dx), from.dy, to.dx + 0.6 * (from.dx - to.dx), to.dy, to.dx, to.dy);
+      ..cubicTo(from.dx + 0.6 * (to.dx - from.dx), from.dy, to.dx + 0.6 * (from.dx - to.dx), to.dy,
+          to.dx, to.dy);
     canvas.drawPath(path, paint);
   }
 }

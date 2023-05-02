@@ -4,7 +4,7 @@ use crate::RuntimeApi;
 use mizer_command_executor::*;
 use mizer_node::{NodePath, NodePreviewRef, NodeType};
 use mizer_nodes::ContainerNode;
-use mizer_runtime::NodeDowncast;
+use mizer_runtime::{NodeDowncast, NodeMetadataRef};
 use protobuf::{EnumOrUnknown, MessageField};
 
 #[derive(Clone)]
@@ -154,6 +154,11 @@ impl<R: RuntimeApi> NodesHandler<R> {
     #[tracing::instrument(skip(self))]
     pub fn get_node_preview_ref(&self, path: String) -> anyhow::Result<Option<NodePreviewRef>> {
         self.runtime.get_node_preview_ref(path.into())
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn get_node_metadata_ref(&self) -> anyhow::Result<NodeMetadataRef> {
+        self.runtime.get_node_metadata_ref()
     }
 
     #[tracing::instrument(skip(self))]

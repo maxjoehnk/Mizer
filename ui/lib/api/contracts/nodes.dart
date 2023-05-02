@@ -1,3 +1,4 @@
+import 'package:mizer/api/plugin/ffi/nodes.dart';
 import 'package:mizer/protos/nodes.pb.dart';
 
 abstract class NodesApi {
@@ -8,7 +9,8 @@ abstract class NodesApi {
   Future<void> linkNodes(NodeConnection connection);
   Future<void> unlinkNodes(NodeConnection connection);
 
-  Future<void> writeControlValue({ required String path, required String port, required double value });
+  Future<void> writeControlValue(
+      {required String path, required String port, required double value});
 
   Future<void> updateNodeConfig(UpdateNodeConfigRequest request);
 
@@ -27,4 +29,6 @@ abstract class NodesApi {
   Future<void> duplicateNode(DuplicateNodeRequest request);
 
   Future<void> groupNodes(List<String> nodes, {String? parent});
+
+  Future<NodesPointer> getNodesPointer();
 }

@@ -2,7 +2,7 @@ use crate::plugin::channels::{MethodCallExt, MethodReplyExt};
 use mizer_api::handlers::{NodesHandler, TimecodeHandler};
 use mizer_api::models::nodes::*;
 use mizer_api::RuntimeApi;
-use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview};
+use mizer_ui_ffi::{FFIToPointer, NodeHistory, NodePreview, NodesRef};
 use nativeshell::codec::{MethodCall, MethodCallReply, Value};
 use nativeshell::shell::{Context, EngineHandle, MethodCallHandler, MethodChannel};
 use std::sync::Arc;
@@ -69,6 +69,10 @@ impl<R: RuntimeApi + 'static> MethodCallHandler for NodesChannel<R> {
                     }
                 }
             }
+            "getMetadataPointer" => match self.get_nodes_pointer() {
+                Ok(pointer) => resp.send_ok(Value::I64(pointer)),
+                Err(err) => resp.respond_error(err),
+            },
             "updateNodeProperty" => match call.arguments() {
                 Ok(args) => match self.handler.update_node_property(args) {
                     Ok(()) => resp.send_ok(Value::Null),
@@ -203,5 +207,12 @@ impl<R: RuntimeApi + 'static> NodesChannel<R> {
         } else {
             None
         }
+    }
+
+    fn get_nodes_pointer(&self) -> anyhow::Result<i64> {
+        let metadata_ref = self.handler.get_node_metadata_ref()?;
+        let metadata_ref = Arc::new(NodesRef::new(metadata_ref));
+
+        Ok(metadata_ref.to_pointer() as i64)
     }
 }

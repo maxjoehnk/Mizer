@@ -20,7 +20,7 @@ use tracing_unwrap::ResultExt;
 
 use crate::api::RuntimeAccess;
 use crate::pipeline_access::PipelineAccess;
-use crate::{LayoutsView, NodeDowncast};
+use crate::{LayoutsView, NodeDowncast, NodeMetadataRef};
 
 pub struct CoordinatorRuntime<TClock: Clock> {
     executor_id: ExecutorId,
@@ -36,6 +36,7 @@ pub struct CoordinatorRuntime<TClock: Clock> {
     clock_snapshot: Arc<NonEmptyPinboard<ClockSnapshot>>,
     layout_fader_view: LayoutsView,
     ui: Option<DebugUi>,
+    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
 }
 
 impl CoordinatorRuntime<SystemClock> {
@@ -50,11 +51,12 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
     pub fn with_clock(clock: TClock, debug_ui: bool) -> CoordinatorRuntime<TClock> {
         let (clock_tx, clock_rx) = flume::unbounded();
         let snapshot = clock.snapshot();
+        let node_metadata = Arc::new(NonEmptyPinboard::new(Default::default()));
         let mut runtime = Self {
             executor_id: ExecutorId("coordinator".to_string()),
             layouts: NonEmptyPinboard::new(Default::default()).into(),
             plans: NonEmptyPinboard::new(Default::default()).into(),
-            pipeline: PipelineWorker::new(),
+            pipeline: PipelineWorker::new(Arc::clone(&node_metadata)),
             clock,
             injector: Default::default(),
             processors: Default::default(),
@@ -70,6 +72,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                     None
                 }
             }),
+            node_metadata,
         };
         runtime.bootstrap();
 
@@ -146,6 +149,10 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         self.pipeline.get_preview_ref(path)
     }
 
+    pub fn get_node_metadata_ref(&self) -> NodeMetadataRef {
+        NodeMetadataRef::new(Arc::clone(&self.node_metadata))
+    }
+
     fn rebuild_pipeline(&mut self, plan: ExecutionPlan) {
         profiling::scope!("CoordinatorRuntime::rebuild_pipeline");
         tracing::trace!(plan = debug(&plan));
@@ -186,7 +193,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
                 }
             }
         } else {
-            self.pipeline = PipelineWorker::new();
+            self.pipeline = PipelineWorker::new(Arc::clone(&self.node_metadata));
         }
     }
 
@@ -209,7 +216,7 @@ impl<TClock: Clock> CoordinatorRuntime<TClock> {
         let fader_values = nodes
             .iter()
             .filter_map(|path| {
-                let value = self.pipeline.get_state::<f64>(&path).copied();
+                let value = self.pipeline.get_state::<f64>(path).copied();
 
                 value.map(|value| (path.clone(), value))
             })
@@ -428,7 +435,7 @@ impl<TClock: Clock> ProjectManagerMut for CoordinatorRuntime<TClock> {
         }]);
         pipeline_access.links.set(Default::default());
         pipeline_access.nodes_view.clear();
-        self.pipeline = PipelineWorker::new();
+        self.pipeline = PipelineWorker::new(Arc::clone(&self.node_metadata));
         self.plans.set(Default::default());
         let executor = self.injector.get_mut::<ExecutionPlanner>().unwrap();
         executor.clear();

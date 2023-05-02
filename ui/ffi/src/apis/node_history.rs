@@ -1,11 +1,11 @@
 use crate::apis::transport::Timecode;
+use crate::pointer_inventory::PointerInventory;
 use crate::types::{drop_pointer, Array, FFIFromPointer};
 use mizer_node::NodePreviewRef;
 use mizer_timecode::TimecodeStateAccess;
 use mizer_util::StructuredData;
 use parking_lot::Mutex;
-use std::collections::HashMap;
-use std::ffi::{c_char, CString};
+use std::ffi::c_char;
 use std::sync::Arc;
 
 pub struct NodeHistory {
@@ -51,21 +51,6 @@ fn convert_with_inventory(
                 })
                 .collect(),
         ),
-    }
-}
-
-#[derive(Default)]
-pub struct PointerInventory {
-    strings: HashMap<*const c_char, CString>,
-}
-
-impl PointerInventory {
-    pub fn allocate_string(&mut self, value: String) -> *const c_char {
-        let value = CString::new(value).unwrap();
-        let value_pointer = value.as_ptr();
-        self.strings.insert(value_pointer, value);
-
-        value_pointer
     }
 }
 

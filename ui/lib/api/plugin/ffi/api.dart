@@ -5,6 +5,7 @@ import 'bindings.dart';
 import 'connections.dart';
 import 'history.dart';
 import 'layout.dart';
+import 'nodes.dart';
 import 'plans.dart';
 import 'preview.dart';
 import 'programmer.dart';
@@ -73,5 +74,11 @@ extension FFIBindingsExt on FFIBindings {
     var pointer = ffi.Pointer<GamepadConnectionRef>.fromAddress(pointerAddress);
 
     return GamepadStatePointer(this, pointer);
+  }
+
+  NodesPointer openNodesRef(int pointerAddress) {
+    var pointer = ffi.Pointer<NodesRef>.fromAddress(pointerAddress);
+
+    return NodesPointer(this, pointer);
   }
 }

@@ -8,7 +8,7 @@ use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
 use mizer_node::{NodeLink, NodePath, NodePreviewRef, PortId};
 use mizer_plan::Plan;
-use mizer_runtime::{LayoutsView, NodeDescriptor};
+use mizer_runtime::{LayoutsView, NodeDescriptor, NodeMetadataRef};
 use mizer_session::SessionState;
 use mizer_settings::Settings;
 use pinboard::NonEmptyPinboard;
@@ -40,6 +40,7 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn write_node_port(&self, node_path: NodePath, port: PortId, value: f64) -> anyhow::Result<()>;
 
     fn get_node_preview_ref(&self, node: NodePath) -> anyhow::Result<Option<NodePreviewRef>>;
+    fn get_node_metadata_ref(&self) -> anyhow::Result<NodeMetadataRef>;
 
     fn get_node(&self, path: &NodePath) -> Option<NodeDescriptor>;
 

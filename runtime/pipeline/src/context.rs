@@ -9,6 +9,7 @@ use mizer_util::StructuredData;
 use pinboard::NonEmptyPinboard;
 use ringbuffer::{ConstGenericRingBuffer, RingBufferExt, RingBufferWrite};
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::fmt::{Debug, Formatter};
 use std::sync::Arc;
 
@@ -19,6 +20,7 @@ pub struct PipelineContext<'a> {
     pub(crate) injector: &'a Injector,
     pub(crate) preview: RefCell<&'a mut NodePreviewState>,
     pub(crate) clock: RefCell<&'a mut dyn Clock>,
+    pub(crate) node_metadata: RefCell<&'a mut NodeMetadata>,
 }
 
 impl<'a> Debug for PipelineContext<'a> {
@@ -29,6 +31,16 @@ impl<'a> Debug for PipelineContext<'a> {
             .field("receivers", &self.receivers)
             .finish()
     }
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct NodeMetadata {
+    pub ports: HashMap<PortId, RuntimePortMetadata>,
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct RuntimePortMetadata {
+    pub pushed_value: bool,
 }
 
 #[derive(Debug)]
@@ -80,16 +92,22 @@ impl<'a> NodeContext for PipelineContext<'a> {
         profiling::scope!("PipelineContext::write_port");
         let port = port.into();
         let dbg_msg = format!("Trying to write to non existent port {}", &port);
-        if let Some((port, _)) = self.senders.and_then(|senders| senders.get(port)) {
+        let mut pushed_value = false;
+        if let Some((port, _)) = self.senders.and_then(|senders| senders.get(&port)) {
             let port = port
                 .downcast_ref::<MemorySender<V>>()
                 .expect("can't downcast sender to proper type");
+            pushed_value = true;
             if let Err(e) = port.send(value) {
                 log::error!("Sending data via port failed: {:?}", e);
             }
         } else {
             log::trace!("{}", dbg_msg);
         }
+        self.node_metadata
+            .borrow_mut()
+            .ports
+            .insert(port, RuntimePortMetadata { pushed_value });
     }
 
     fn read_port<P: Into<PortId>, V: PortValue + 'static>(&self, port: P) -> Option<V> {
@@ -141,7 +159,7 @@ impl<'a> NodeContext for PipelineContext<'a> {
     fn output_port<P: Into<PortId>>(&self, port: P) -> Option<&PortMetadata> {
         let port = port.into();
         self.senders
-            .and_then(|ports| ports.get(port))
+            .and_then(|ports| ports.get(&port))
             .map(|(_, metadata)| metadata)
     }
 

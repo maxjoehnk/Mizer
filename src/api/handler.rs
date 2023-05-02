@@ -59,6 +59,11 @@ impl ApiHandler {
             ApiCommand::GetNodePreviewRef(path, sender) => sender
                 .send(mizer.runtime.get_preview_ref(&path))
                 .expect("api command sender disconnected"),
+            ApiCommand::GetNodeMetadataRef(sender) => {
+                if let Err(err) = sender.send(mizer.runtime.get_node_metadata_ref()) {
+                    log::error!("Unable to respond to ApiCommand::GetNodeMetadataRef: {err:?}");
+                }
+            }
             ApiCommand::SetClockState(state) => {
                 mizer.runtime.clock.set_state(state);
             }

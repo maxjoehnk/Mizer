@@ -5,7 +5,7 @@ use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::Layout;
 use mizer_node::{NodeDesigner, NodeLink, NodePath, NodePreviewRef, PortId};
-use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, RuntimeAccess};
+use mizer_runtime::{DefaultRuntime, LayoutsView, NodeDescriptor, NodeMetadataRef, RuntimeAccess};
 use mizer_session::SessionState;
 
 use crate::{ApiCommand, ApiHandler};
@@ -89,6 +89,15 @@ impl RuntimeApi for Api {
     fn get_node_preview_ref(&self, node: NodePath) -> anyhow::Result<Option<NodePreviewRef>> {
         let (tx, rx) = flume::bounded(1);
         self.sender.send(ApiCommand::GetNodePreviewRef(node, tx))?;
+
+        let value = rx.recv()?;
+
+        Ok(value)
+    }
+
+    fn get_node_metadata_ref(&self) -> anyhow::Result<NodeMetadataRef> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender.send(ApiCommand::GetNodeMetadataRef(tx))?;
 
         let value = rx.recv()?;
 

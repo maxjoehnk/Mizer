@@ -2,8 +2,10 @@ use std::any::{type_name, Any};
 use std::cell::RefCell;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::sync::Arc;
 
 use downcast::*;
+use pinboard::NonEmptyPinboard;
 
 use mizer_clock::{Clock, ClockFrame};
 use mizer_node::*;
@@ -11,11 +13,10 @@ use mizer_ports::memory::MemorySender;
 use mizer_ports::PortValue;
 use mizer_processing::{DebugUiDrawHandle, Injector};
 use mizer_protocol_laser::LaserFrame;
+use mizer_util::{HashMapExtension, StructuredData};
 
 use crate::ports::{NodeReceivers, NodeSenders};
-use crate::{NodePreviewState, PipelineContext};
-use mizer_util::{HashMapExtension, StructuredData};
-use pinboard::NonEmptyPinboard;
+use crate::{NodeMetadata, NodePreviewState, PipelineContext};
 
 pub trait ProcessingNodeExt: PipelineNode {
     fn process(&self, context: &PipelineContext, state: &mut Box<dyn Any>) -> anyhow::Result<()>;
@@ -52,13 +53,13 @@ where
     }
 }
 
-#[derive(Default)]
 pub struct PipelineWorker {
     states: HashMap<NodePath, Box<dyn Any>>,
     senders: HashMap<NodePath, NodeSenders>,
     receivers: HashMap<NodePath, NodeReceivers>,
     dependencies: HashMap<NodePath, Vec<NodePath>>,
     previews: HashMap<NodePath, NodePreviewState>,
+    node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>,
 }
 
 impl std::fmt::Debug for PipelineWorker {
@@ -68,13 +69,21 @@ impl std::fmt::Debug for PipelineWorker {
             .field("receivers", &self.receivers)
             .field("dependencies", &self.dependencies)
             .field("previews", &self.previews)
+            .field("port_metadata", &self.node_metadata)
             .finish()
     }
 }
 
 impl PipelineWorker {
-    pub fn new() -> Self {
-        Self::default()
+    pub fn new(node_metadata: Arc<NonEmptyPinboard<HashMap<NodePath, NodeMetadata>>>) -> Self {
+        Self {
+            states: Default::default(),
+            senders: Default::default(),
+            receivers: Default::default(),
+            dependencies: Default::default(),
+            previews: Default::default(),
+            node_metadata,
+        }
     }
 
     pub fn register_node<T: 'static + ProcessingNode<State = S>, S: 'static>(
@@ -234,7 +243,7 @@ impl PipelineWorker {
             .senders
             .entry(link.source.clone())
             .or_insert_with(NodeSenders::default);
-        let rx = if let Some((port, _)) = senders.get(link.source_port.clone()) {
+        let rx = if let Some((port, _)) = senders.get(&link.source_port) {
             let port = port
                 .downcast_ref::<MemorySender<V>>()
                 .expect("port is not a memory port");
@@ -350,6 +359,7 @@ impl PipelineWorker {
         clock: &mut impl Clock,
     ) {
         profiling::scope!("PipelineWorker::process_nodes");
+        let mut node_metadata = HashMap::default();
         for (path, node) in nodes {
             let context = PipelineContext {
                 frame,
@@ -361,6 +371,7 @@ impl PipelineWorker {
                 ),
                 receivers: self.receivers.get(path),
                 senders: self.senders.get(path),
+                node_metadata: RefCell::new(node_metadata.entry(path.clone()).or_default()),
                 clock: RefCell::new(clock),
             };
             log::trace!("process_node {} with context {:?}", &path, &context);
@@ -372,6 +383,7 @@ impl PipelineWorker {
                 log::error!("processing of node {} failed: {:?}", &path, e)
             }
         }
+        self.node_metadata.set(node_metadata);
     }
 
     pub fn debug_ui(
@@ -426,6 +438,8 @@ impl PipelineWorker {
 
 #[cfg(test)]
 mod tests {
+    use pinboard::NonEmptyPinboard;
+    use std::sync::Arc;
     use test_case::test_case;
 
     use mizer_node::{NodeLink, NodePath, PortDirection, PortId, PortMetadata, PortType};
@@ -439,10 +453,11 @@ mod tests {
     #[test_case(1.)]
     #[test_case(0.)]
     fn should_connect_two_nodes(value: f64) -> anyhow::Result<()> {
+        let node_metadata = Arc::new(NonEmptyPinboard::new(Default::default()));
         let source_path: NodePath = "/source".into();
         let dest_path: NodePath = "/dest".into();
         let port_id: PortId = "value".into();
-        let mut worker = PipelineWorker::new();
+        let mut worker = PipelineWorker::new(node_metadata);
         let source = PortMetadata {
             port_type: PortType::Single,
             multiple: None,
@@ -481,7 +496,8 @@ mod tests {
     #[test_case(1.)]
     #[test_case(0.)]
     fn should_write_from_one_output_to_multiple_inputs(value: f64) -> anyhow::Result<()> {
-        let mut worker = PipelineWorker::new();
+        let node_metadata = Arc::new(NonEmptyPinboard::new(Default::default()));
+        let mut worker = PipelineWorker::new(node_metadata);
         let source = PortMetadata {
             port_type: PortType::Single,
             multiple: None,
@@ -546,7 +562,7 @@ mod tests {
         value: f64,
     ) -> anyhow::Result<()> {
         let sender = worker.senders.get(path).unwrap();
-        let (port, _) = sender.get(port).unwrap();
+        let (port, _) = sender.get(&port).unwrap();
         let port = port.downcast_ref::<MemorySender<f64>>().unwrap();
 
         port.send(value)

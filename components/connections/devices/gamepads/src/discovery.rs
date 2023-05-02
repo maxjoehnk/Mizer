@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::sync::Arc;
-use std::time::Duration;
 
 use flume::{unbounded, Receiver, Sender};
 use futures::Stream;
@@ -22,7 +21,7 @@ impl GamepadDiscoveryService {
         }
 
         loop {
-            while let Some(event) = self.gilrs.next_event() {
+            while let Some(event) = self.gilrs.next_event_blocking(None) {
                 log::trace!("{:?}", event);
                 if event.event == EventType::Connected {
                     self.add_gamepad(event.id);
@@ -33,7 +32,6 @@ impl GamepadDiscoveryService {
                     gamepad_state.set(state);
                 }
             }
-            std::thread::sleep(Duration::from_millis(50));
         }
     }
 

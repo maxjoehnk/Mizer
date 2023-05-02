@@ -49,6 +49,7 @@ pub struct GamepadState {
     state: gilrs::ev::state::GamepadState,
     button_codes: HashMap<Button, gilrs::ev::Code>,
     axis_codes: HashMap<Axis, gilrs::ev::Code>,
+    connected: bool,
 }
 
 impl GamepadState {
@@ -80,11 +81,13 @@ impl GamepadState {
             state,
             button_codes,
             axis_codes,
+            connected: true,
         }
     }
 
     fn update(&mut self, gamepad: &gilrs::Gamepad<'_>) {
         self.state = gamepad.state().clone();
+        self.connected = gamepad.is_connected();
     }
 
     pub fn buttons(&self) -> Vec<Button> {
@@ -96,12 +99,18 @@ impl GamepadState {
     }
 
     pub fn is_button_pressed(&self, button: Button) -> Option<bool> {
+        if !self.connected {
+            return Some(false);
+        }
         self.button_codes
             .get(&button)
             .map(|code| self.state.is_pressed(*code))
     }
 
     pub fn axis_value(&self, axis: Axis) -> Option<f64> {
+        if !self.connected {
+            return Some(Default::default());
+        }
         self.axis_codes
             .get(&axis)
             .map(|code| self.state.value(*code) as f64)

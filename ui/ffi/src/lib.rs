@@ -1,3 +1,4 @@
+pub use apis::connections::GamepadConnectionRef;
 pub use apis::fixture::FixturesRef;
 pub use apis::layout::LayoutRef;
 pub use apis::node_history::{NodeHistory, NodePreview};

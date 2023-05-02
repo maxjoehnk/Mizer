@@ -1,5 +1,6 @@
 use futures::{Stream, StreamExt};
 use mizer_command_executor::*;
+use mizer_gamepads::GamepadRef;
 use std::collections::HashMap;
 
 use crate::models::connections::*;
@@ -193,5 +194,10 @@ impl<R: RuntimeApi> ConnectionsHandler<R> {
             }
             _ => unimplemented!(),
         }
+    }
+
+    #[tracing::instrument(skip(self))]
+    pub fn get_gamepad_ref(&self, name: String) -> anyhow::Result<Option<GamepadRef>> {
+        self.runtime.get_gamepad_ref(name)
     }
 }

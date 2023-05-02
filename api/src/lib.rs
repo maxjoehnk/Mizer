@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_command_executor::SendableCommand;
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection, MidiEvent, OscMessage};
+pub use mizer_gamepads::GamepadRef;
 use mizer_layouts::Layout;
 use mizer_message_bus::Subscriber;
 use mizer_node::{NodeLink, NodePath, NodePreviewRef, PortId};
@@ -63,6 +64,8 @@ pub trait RuntimeApi: Clone + Send + Sync {
     fn get_midi_monitor(&self, name: String) -> anyhow::Result<Subscriber<MidiEvent>>;
 
     fn get_osc_monitor(&self, name: String) -> anyhow::Result<Subscriber<OscMessage>>;
+
+    fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>>;
 
     fn read_fader_value(&self, path: NodePath) -> anyhow::Result<f64>;
 

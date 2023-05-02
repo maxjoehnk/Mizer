@@ -1,3 +1,4 @@
+import 'package:mizer/api/plugin/ffi/connections.dart';
 import 'package:mizer/protos/connections.pb.dart';
 
 abstract class ConnectionsApi {
@@ -16,4 +17,6 @@ abstract class ConnectionsApi {
 
   Future<void> deleteConnection(Connection connection);
   Future<void> configureConnection(ConfigureConnectionRequest request);
+
+  Future<GamepadStatePointer?> getGamepadPointer(String id);
 }

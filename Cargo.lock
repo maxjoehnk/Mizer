@@ -723,9 +723,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "bitflags"
-version = "2.1.0"
+version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c70beb79cbb5ce9c4f8e20849978f34225931f665bb49efa6982875a4d5facb3"
+checksum = "24a6904aef64d73cf10ab17ebace7befb918b82164785cb89907993be7f83813"
 
 [[package]]
 name = "block"
@@ -2637,9 +2637,9 @@ dependencies = [
 
 [[package]]
 name = "gilrs"
-version = "0.10.0"
+version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf89da6f52447f12bf217e0527d39413906aa2bc201c52842bb8e80cff107d4a"
+checksum = "62fd19844d0eb919aca41d3e4ea0e0b6bf60e1e827558b101c269015b8f5f27a"
 dependencies = [
  "fnv",
  "gilrs-core",
@@ -2650,9 +2650,9 @@ dependencies = [
 
 [[package]]
 name = "gilrs-core"
-version = "0.5.0"
+version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d97f0eb2b966486c0bcd6ef4c2ff66f403a714f1bcf070de824d7b90e17929e2"
+checksum = "fd745b0cb1a207756e8fabacf5623066ad6aa543ea0be4bab34e897e6bbe24f9"
 dependencies = [
  "core-foundation",
  "io-kit-sys",
@@ -2660,12 +2660,12 @@ dependencies = [
  "libc",
  "libudev-sys",
  "log",
- "nix 0.25.0",
+ "nix 0.26.2",
  "uuid 1.3.0",
  "vec_map",
  "wasm-bindgen",
  "web-sys",
- "windows 0.43.0",
+ "windows 0.44.0",
 ]
 
 [[package]]
@@ -3391,7 +3391,7 @@ version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9389dd9c8c4671b1e4b2878a6329bccb573f9c24a75bc91c641c451ce5436501"
 dependencies = [
- "bitflags 2.1.0",
+ "bitflags 2.2.1",
  "byteorder",
  "flate2",
 ]
@@ -3511,12 +3511,12 @@ dependencies = [
 
 [[package]]
 name = "io-kit-sys"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7789f7f3c9686f96164f5109d69152de759e76e284f736bd57661c6df5091919"
+checksum = "9b2d4429acc1deff0fbdece0325b4997bdb02b2c245ab7023fd5deca0f6348de"
 dependencies = [
  "core-foundation-sys 0.8.3",
- "mach",
+ "mach2",
 ]
 
 [[package]]
@@ -4102,6 +4102,7 @@ dependencies = [
  "mizer-command-executor",
  "mizer-connections",
  "mizer-fixtures",
+ "mizer-gamepads",
  "mizer-layouts",
  "mizer-media",
  "mizer-message-bus",
@@ -5180,9 +5181,11 @@ dependencies = [
 name = "mizer-ui-ffi"
 version = "0.1.0"
 dependencies = [
+ "bitflags 2.2.1",
  "lazy_static",
  "mizer-clock",
  "mizer-fixtures",
+ "mizer-gamepads",
  "mizer-node",
  "mizer-runtime",
  "mizer-sequencer",
@@ -5501,6 +5504,18 @@ dependencies = [
  "cfg-if 1.0.0",
  "libc",
  "memoffset",
+]
+
+[[package]]
+name = "nix"
+version = "0.26.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bfdda3d196821d6af13126e40375cdf7da646a96114af134d5f417a9a1dc8e1a"
+dependencies = [
+ "bitflags 1.3.2",
+ "cfg-if 1.0.0",
+ "libc",
+ "static_assertions",
 ]
 
 [[package]]

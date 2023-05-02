@@ -67,7 +67,7 @@ impl GamepadDiscovery {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct GamepadRef {
     id: GamepadId,
     name: String,
@@ -192,6 +192,7 @@ pub enum Button {
     West,
     Select,
     Start,
+    Mode,
     DPadUp,
     DPadRight,
     DPadDown,
@@ -213,6 +214,7 @@ impl From<Button> for gilrs::Button {
             Button::West => Self::West,
             Button::Select => Self::Select,
             Button::Start => Self::Start,
+            Button::Mode => Self::Mode,
             Button::DPadUp => Self::DPadUp,
             Button::DPadRight => Self::DPadRight,
             Button::DPadDown => Self::DPadDown,

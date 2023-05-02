@@ -1,3 +1,4 @@
+use mizer_api::GamepadRef;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -142,6 +143,12 @@ impl ApiHandler {
                 sender
                     .send((result, cursor))
                     .expect("api command sender disconnected");
+            }
+            ApiCommand::GetGamepadRef(id, sender) => {
+                let gamepad_ref = self.get_gamepad(&mizer, id);
+                if let Err(err) = sender.send(gamepad_ref) {
+                    log::error!("Unable to respond to ApiCommand::GetGamepadRef: {err:?}");
+                }
             }
         }
     }
@@ -289,5 +296,13 @@ impl ApiHandler {
         let subscriber = subscription.events();
 
         Ok(subscriber)
+    }
+
+    fn get_gamepad(&self, mizer: &Mizer, id: String) -> Option<GamepadRef> {
+        let device_manager = mizer.runtime.injector().get::<DeviceManager>().unwrap();
+
+        device_manager
+            .get_gamepad(&id)
+            .map(|gamepad| gamepad.value().clone())
     }
 }

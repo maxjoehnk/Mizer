@@ -234,12 +234,13 @@ class GamepadNodeConfig_Control extends $pb.ProtobufEnum {
   static const GamepadNodeConfig_Control WEST = GamepadNodeConfig_Control._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WEST');
   static const GamepadNodeConfig_Control SELECT = GamepadNodeConfig_Control._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SELECT');
   static const GamepadNodeConfig_Control START = GamepadNodeConfig_Control._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'START');
-  static const GamepadNodeConfig_Control DPAD_UP = GamepadNodeConfig_Control._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_UP');
-  static const GamepadNodeConfig_Control DPAD_DOWN = GamepadNodeConfig_Control._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_DOWN');
-  static const GamepadNodeConfig_Control DPAD_LEFT = GamepadNodeConfig_Control._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_LEFT');
-  static const GamepadNodeConfig_Control DPAD_RIGHT = GamepadNodeConfig_Control._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_RIGHT');
-  static const GamepadNodeConfig_Control LEFT_STICK = GamepadNodeConfig_Control._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_STICK');
-  static const GamepadNodeConfig_Control RIGHT_STICK = GamepadNodeConfig_Control._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_STICK');
+  static const GamepadNodeConfig_Control MODE = GamepadNodeConfig_Control._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MODE');
+  static const GamepadNodeConfig_Control DPAD_UP = GamepadNodeConfig_Control._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_UP');
+  static const GamepadNodeConfig_Control DPAD_DOWN = GamepadNodeConfig_Control._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_DOWN');
+  static const GamepadNodeConfig_Control DPAD_LEFT = GamepadNodeConfig_Control._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_LEFT');
+  static const GamepadNodeConfig_Control DPAD_RIGHT = GamepadNodeConfig_Control._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DPAD_RIGHT');
+  static const GamepadNodeConfig_Control LEFT_STICK = GamepadNodeConfig_Control._(19, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEFT_STICK');
+  static const GamepadNodeConfig_Control RIGHT_STICK = GamepadNodeConfig_Control._(20, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RIGHT_STICK');
 
   static const $core.List<GamepadNodeConfig_Control> values = <GamepadNodeConfig_Control> [
     LEFT_STICK_X,
@@ -256,6 +257,7 @@ class GamepadNodeConfig_Control extends $pb.ProtobufEnum {
     WEST,
     SELECT,
     START,
+    MODE,
     DPAD_UP,
     DPAD_DOWN,
     DPAD_LEFT,

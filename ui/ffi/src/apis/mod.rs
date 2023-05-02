@@ -1,3 +1,4 @@
+pub mod connections;
 pub mod fixture;
 pub mod layout;
 pub mod node_history;

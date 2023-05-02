@@ -1,3 +1,4 @@
+use mizer_api::GamepadRef;
 use std::collections::HashMap;
 
 use mizer_clock::ClockState;
@@ -27,6 +28,7 @@ pub enum ApiCommand {
         String,
         flume::Sender<anyhow::Result<Subscriber<OscMessage>>>,
     ),
+    GetGamepadRef(String, flume::Sender<Option<GamepadRef>>),
     SaveProject(flume::Sender<anyhow::Result<()>>),
     SaveProjectAs(String, flume::Sender<anyhow::Result<()>>),
     NewProject(flume::Sender<anyhow::Result<()>>),

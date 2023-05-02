@@ -353,12 +353,13 @@ message GamepadNodeConfig {
     WEST = 11;
     SELECT = 12;
     START = 13;
-    DPAD_UP = 14;
-    DPAD_DOWN = 15;
-    DPAD_LEFT = 16;
-    DPAD_RIGHT = 17;
-    LEFT_STICK = 18;
-    RIGHT_STICK = 19;
+    MODE = 14;
+    DPAD_UP = 15;
+    DPAD_DOWN = 16;
+    DPAD_LEFT = 17;
+    DPAD_RIGHT = 18;
+    LEFT_STICK = 19;
+    RIGHT_STICK = 20;
   }
 }
 

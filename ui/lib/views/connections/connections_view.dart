@@ -5,6 +5,7 @@ import 'package:mizer/api/contracts/connections.dart';
 import 'package:mizer/i18n.dart';
 import 'package:mizer/platform/platform.dart';
 import 'package:mizer/protos/connections.pb.dart';
+import 'package:mizer/views/connections/types/gamepad_connection.dart';
 import 'package:mizer/widgets/controls/icon_button.dart';
 import 'package:mizer/widgets/dialog/dialog.dart';
 import 'package:mizer/widgets/panel.dart';
@@ -136,6 +137,9 @@ class _ConnectionsViewState extends State<ConnectionsView> {
     }
     if (connection.hasMqtt()) {
       return MqttConnectionView(connection: connection.mqtt);
+    }
+    if (connection.hasGamepad()) {
+      return GamepadConnectionView(device: connection.gamepad);
     }
     return Container();
   }

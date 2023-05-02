@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use mizer_api::RuntimeApi;
+use mizer_api::{GamepadRef, RuntimeApi};
 use mizer_clock::{ClockSnapshot, ClockState};
 use mizer_connections::{midi_device_profile::DeviceProfile, Connection};
 use mizer_layouts::Layout;
@@ -207,6 +207,15 @@ impl RuntimeApi for Api {
             .unwrap();
 
         rx.recv().map_err(anyhow::Error::from).and_then(|r| r)
+    }
+
+    fn get_gamepad_ref(&self, id: String) -> anyhow::Result<Option<GamepadRef>> {
+        let (tx, rx) = flume::bounded(1);
+        self.sender
+            .send(ApiCommand::GetGamepadRef(id, tx))
+            .map_err(anyhow::Error::from)?;
+
+        rx.recv().map_err(anyhow::Error::from)
     }
 
     fn read_fader_value(&self, node_path: NodePath) -> anyhow::Result<f64> {

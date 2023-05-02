@@ -27,7 +27,7 @@ impl PipelineNode for ValueNode {
     }
 
     fn list_ports(&self) -> Vec<(PortId, PortMetadata)> {
-        vec![input_port!(VALUE_PORT, PortType::Data)]
+        vec![output_port!(VALUE_PORT, PortType::Data)]
     }
 
     fn node_type(&self) -> NodeType {

@@ -102,7 +102,11 @@ jobs:
           FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
           make build-release
       - name: Package
-        run: make mizer.zip
+        run: |
+          FFMPEG_LIBS_DIR=${HOME}/ffmpeg_build/lib \
+          FFMPEG_INCLUDE_DIR=${HOME}/ffmpeg_build/include \
+          FFMPEG_PKG_CONFIG_PATH=${HOME}/ffmpeg_build/lib/pkgconfig \
+          make mizer.zip
       - uses: actions/upload-artifact@v3
         with:
           name: linux-full

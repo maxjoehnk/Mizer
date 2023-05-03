@@ -40,10 +40,10 @@ mizer.zip: artifact
 	zip -r mizer.zip artifact/*
 
 flatpak: mizer.zip
-	flatpak-builder --force-clean .flatpak me.maxjoehnk.Mizer.yml
+	flatpak-builder --install-deps-from=flathub --force-clean .flatpak flatpak/me.maxjoehnk.Mizer.yml
 
 flatpak-install: mizer.zip
-	flatpak-builder --user --install --force-clean .flatpak me.maxjoehnk.Mizer.yml
+	flatpak-builder --install-deps-from=flathub --user --install --force-clean .flatpak flatpak/me.maxjoehnk.Mizer.yml
 
 mizer.flatpak: flatpak-install
 	flatpak build-bundle ~/.local/share/flatpak/repo mizer.flatpak me.maxjoehnk.Mizer

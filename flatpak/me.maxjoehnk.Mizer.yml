@@ -2,6 +2,8 @@ app-id: me.maxjoehnk.Mizer
 runtime: org.freedesktop.Platform
 runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
+base-extensions:
+  - org.freedesktop.Platform.ffmpeg-full
 command: mizer
 #rename-icon: logo.svg
 finish-args:
@@ -41,12 +43,12 @@ modules:
       - cp me.maxjoehnk.Mizer.desktop /app/share/applications/
     sources:
       - type: archive
-        path: mizer.zip
+        path: ../mizer.zip
         dest: artifact
       - type: file
-        path: me.maxjoehnk.Mizer.desktop
+        path: ../assets/me.maxjoehnk.Mizer.desktop
       - type: file
-        path: assets/logo.svg
+        path: ../assets/logo.svg
   - name: libbz2
     buildsystem: simple
     build-commands:
@@ -75,7 +77,5 @@ modules:
       - --disable-gtk3
     sources:
       - type: archive
-        #url: http://avahi.org/download/avahi-0.8.tar.gz
-        #sha256: 060309d7a333d38d951bc27598c677af1796934dbd98e1024e7ad8de798fedda
         url: http://avahi.org/download/avahi-0.7.tar.gz
         sha256: 57a99b5dfe7fdae794e3d1ee7a62973a368e91e414bd0dfa5d84434de5b14804

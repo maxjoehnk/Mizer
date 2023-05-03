@@ -86,9 +86,9 @@ jobs:
 
       - name: Build Headless
         run: |
-          FFMPEG_LIBS_DIR=$(HOME)/ffmpeg_build/lib
-          FFMPEG_INCLUDE_DIR=$(HOME)/ffmpeg_build/include
-          FFMPEG_PKG_CONFIG_PATH=$(HOME)/ffmpeg_build/lib/pkgconfig
+          FFMPEG_LIBS_DIR=$(HOME)/ffmpeg_build/lib \
+          FFMPEG_INCLUDE_DIR=$(HOME)/ffmpeg_build/include \
+          FFMPEG_PKG_CONFIG_PATH=$(HOME)/ffmpeg_build/lib/pkgconfig \
           make build-headless
       - uses: actions/upload-artifact@v3
         with:
@@ -97,9 +97,9 @@ jobs:
           if-no-files-found: error
       - name: Build
         run: |
-          FFMPEG_LIBS_DIR=$(HOME)/ffmpeg_build/lib
-          FFMPEG_INCLUDE_DIR=$(HOME)/ffmpeg_build/include
-          FFMPEG_PKG_CONFIG_PATH=$(HOME)/ffmpeg_build/lib/pkgconfig
+          FFMPEG_LIBS_DIR=$(HOME)/ffmpeg_build/lib \
+          FFMPEG_INCLUDE_DIR=$(HOME)/ffmpeg_build/include \
+          FFMPEG_PKG_CONFIG_PATH=$(HOME)/ffmpeg_build/lib/pkgconfig \
           make build-release
       - name: Package
         run: make mizer.zip

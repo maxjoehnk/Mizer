@@ -61,6 +61,8 @@ jobs:
           cp bin/protoc "${HOME}/.local/bin/"
           echo "${HOME}/.local/bin" >> "$GITHUB_PATH"
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

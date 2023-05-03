@@ -27,7 +27,7 @@ clean:
 	rm -f mizer.zip
 	rm -f mizer.flatpak
 
-artifact:
+artifact: build-release
 	cargo run -p mizer-package
 
 package-headless:
@@ -38,6 +38,9 @@ build-docker:
 
 mizer.zip: artifact
 	zip -r mizer.zip artifact/*
+
+build-in-docker:
+	./.ci/test-local.sh
 
 flatpak: mizer.zip
 	flatpak-builder --install-deps-from=flathub --force-clean .flatpak flatpak/me.maxjoehnk.Mizer.yml

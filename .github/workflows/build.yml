@@ -117,6 +117,7 @@ jobs:
       - name: Install flatpak
         run: |
           sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
       - name: Bundle
         run: make mizer.flatpak
       - uses: actions/upload-artifact@v2

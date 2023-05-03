@@ -42,10 +42,10 @@ mizer.zip: artifact
 build-in-docker:
 	./.ci/test-local.sh
 
-flatpak: mizer.zip
+flatpak:
 	flatpak-builder --install-deps-from=flathub --force-clean .flatpak flatpak/me.maxjoehnk.Mizer.yml
 
-flatpak-install: mizer.zip
+flatpak-install:
 	flatpak-builder --install-deps-from=flathub --user --install --force-clean .flatpak flatpak/me.maxjoehnk.Mizer.yml
 
 mizer.flatpak: flatpak-install
